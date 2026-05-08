@@ -39,6 +39,7 @@ Overall plug-in status:
 
 - `OLMSmoother2`: port complete
 - `DistanceGradation`: port complete
+- `ColorKeep`: port complete
 - `OLMSmoother` v1: currently being ported
 - other OLM plug-ins: pending / not started
 
@@ -82,6 +83,7 @@ Known remaining work:
 ```txt
 mac/OLMSmoother2/
 mac/OLMDistanceGradation/
+mac/ColorKeep/
 mac/OLMSmoother/Mac/OLMSmoother_port.cpp
 mac/OLMSmoother/OLMSmoother.h
 mac/OLMSmoother/OLMSmootherPiPL.r
