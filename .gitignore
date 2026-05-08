@@ -1,0 +1,38 @@
+.DS_Store
+
+# Build products
+build/
+DerivedData/
+*.plugin/
+*.aex
+*.aex.asm.txt
+*.disasm.txt
+*.dSYM/
+
+# Ghidra projects and local MCP tooling
+ghidra_proj/
+mcp/
+mcp_test.gpr
+mcp_test.rep/
+*.lock
+*.lock~
+*.rep/
+
+# Large generated reverse-engineering dumps
+decomp/*.c.txt
+disasm/*.asm.txt
+disasm/v1_analysis/*.json
+disasm/v1_analysis/*.log
+
+# Local logs
+*.log
+
+# Upstream binary/doc package snapshots kept locally, not in this source repo
+aex/
+aex_mac/
+plugins_2025/
+
+# Local verification renders
+refs/win/
+refs/mac/
+refs/diff/

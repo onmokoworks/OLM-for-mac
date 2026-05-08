@@ -1,0 +1,641 @@
+// Full cardinal 12時 chain (FUN_1800105f0) + peers for other cardinals.
+// Collected 2026-04-20 via Ghidra MCP decompile_function_by_address.
+// Param conventions:
+//   param_1 = SmootherPolygon* (longlong*). Layout (relative to Win):
+//     +0x18 = u8 class plane base (longlong*, indexed as `char*`)
+//     +0x20..0x24 = { height, width } of class plane (longlong, hi/lo)
+//     +0x28 = byte stride of class plane
+//     +0x30 = cur_x, +0x34 = cur_y of center (int pair as (param_1+6))
+//     +0x3c = base_weight (float)
+//     +0x38 = smoothness_n (float) (param_1[7])
+//     +0x130 (0x26*8) = vertex count index (for output polygon push)
+//   param_2 = local grid descriptor { longlong base, longlong wh, longlong stride }
+//     same fields as param_1+0x18..0x28 copied to stack
+//   param_3 = int pair { x, y } input coord
+
+// ===========================================================================
+// SCANNERS — all return { x', y', class_mask } where class_mask is
+// FUN_180010550(3-bit) 8-way classification at the run endpoint.
+// ===========================================================================
+
+// FUN_18000d230 — scan up-left? (uVar8 -=1 per iter, row=y+1)
+uint * FUN_18000d230(uint *param_1,longlong *param_2,uint *param_3)
+{
+  uint uVar1;
+  longlong lVar2;
+  char *pcVar3;
+  longlong lVar4;
+  uint uVar5;
+  longlong lVar6;
+  uint uVar7;
+  ulonglong uVar8;
+  int iVar10;
+  bool bVar11;
+  ulonglong uVar9;
+  uVar7 = *param_3;
+  uVar8 = (ulonglong)(int)uVar7;
+  uVar1 = param_3[1];
+  uVar5 = uVar1 + 1;
+  if (((((int)uVar7 < 0) || ((int)param_2[1] <= (int)uVar7)) || ((int)uVar5 < 0)) ||
+     (*(int *)((longlong)param_2 + 0xc) <= (int)uVar5)) {
+    *param_1 = uVar7; param_1[1] = uVar5; param_1[2] = 0; return param_1;
+  }
+  if (0 < (int)uVar7) {
+    iVar10 = (int)param_2[2]; lVar4 = *param_2;
+    lVar2 = (longlong)(int)uVar5 * (longlong)iVar10;
+    pcVar3 = (char *)(lVar2 + uVar8 * 4 + lVar4);
+    uVar9 = uVar8;
+    while (uVar7 = (uint)uVar9, pcVar3[1] != '\0') {
+      if ((*pcVar3 != '\0') ||
+         (pcVar3[((longlong)(int)uVar5 + -1) * (longlong)iVar10 - lVar2] != '\0'))
+      goto LAB_18000d2e4;
+      uVar7 = uVar7 - 1; uVar9 = (ulonglong)uVar7; uVar8 = uVar8 - 1; pcVar3 = pcVar3 + -4;
+      if ((longlong)uVar8 < 1) goto LAB_18000d2e4;
+    }
+    uVar7 = uVar7 + 1;
+LAB_18000d2e4:
+    if (0 < (int)uVar7) goto LAB_18000d311;
+  }
+  iVar10 = (int)param_2[2]; lVar4 = *param_2;
+LAB_18000d311:
+  lVar2 = (longlong)(int)uVar7 * 4;
+  lVar6 = (longlong)(int)uVar5 * (longlong)iVar10 + lVar4;
+  if ((int)uVar7 < 1) { bVar11 = false; }
+  else { bVar11 = *(char *)(lVar6 + -3 + lVar2) != '\0'; }
+  uVar5 = FUN_180010550(bVar11,
+    *(char *)((longlong)(int)uVar1 * (longlong)iVar10 + lVar4 + lVar2) != '\0',
+    *(char *)(lVar6 + lVar2) != '\0');
+  param_1[2] = uVar5; *param_1 = uVar7; param_1[1] = uVar1;
+  return param_1;
+}
+
+// FUN_18000d3b0 — peer scanner (uVar8-=stride, x=x, col=x+1)
+int * FUN_18000d3b0(int *param_1,longlong *param_2,int *param_3)
+{
+  longlong lVar1; int iVar2; longlong lVar3; int iVar4; char *pcVar5;
+  longlong lVar6; longlong lVar7; uint uVar8; ulonglong uVar9; bool bVar11; ulonglong uVar10;
+  iVar2 = *param_3; lVar7 = (longlong)iVar2; uVar8 = param_3[1]; uVar9 = (ulonglong)(int)uVar8;
+  iVar4 = iVar2 + 1;
+  if ((((iVar4 < 0) || ((int)param_2[1] <= iVar4)) || ((int)uVar8 < 0)) ||
+     (*(int *)((longlong)param_2 + 0xc) <= (int)uVar8)) {
+    *param_1 = iVar4; param_1[1] = uVar8; param_1[2] = 0; return param_1;
+  }
+  if (0 < (int)uVar8) {
+    pcVar5 = (char *)(uVar9 * (longlong)(int)param_2[2] + (lVar7 + 1) * 4 + *param_2); uVar10 = uVar9;
+    while (uVar8 = (uint)uVar10, *pcVar5 != '\0') {
+      if ((pcVar5[1] != '\0') || (pcVar5[-3] != '\0')) goto LAB_18000d45e;
+      uVar8 = uVar8 - 1; uVar10 = (ulonglong)uVar8; uVar9 = uVar9 - 1;
+      pcVar5 = pcVar5 + -(longlong)(int)param_2[2];
+      if ((longlong)uVar9 < 1) goto LAB_18000d45e;
+    }
+    uVar8 = uVar8 + 1;
+  }
+LAB_18000d45e:
+  lVar3 = *param_2; lVar1 = lVar7 * 4 + 4;
+  lVar6 = (longlong)(int)uVar8 * (longlong)(int)param_2[2];
+  if ((int)uVar8 < 1) { bVar11 = false; }
+  else { bVar11 = *(char *)(((longlong)(int)uVar8 + -1) * (longlong)(int)param_2[2] + lVar3 + lVar1) != '\0'; }
+  iVar4 = FUN_180010550(bVar11,
+    *(char *)(lVar6 + lVar3 + 1 + lVar1) != '\0',
+    *(char *)(lVar6 + lVar7 * 4 + 1 + lVar3) != '\0');
+  param_1[2] = iVar4; *param_1 = iVar2; param_1[1] = uVar8;
+  return param_1;
+}
+
+// FUN_18000d520 — peer scanner (uVar8-=1, row=y)
+uint * FUN_18000d520(uint *param_1,longlong *param_2,uint *param_3)
+{
+  uint uVar1; uint uVar2; longlong lVar3; char *pcVar4; longlong lVar5; longlong lVar6;
+  uint uVar7; ulonglong uVar8; int iVar10; bool bVar11; ulonglong uVar9;
+  uVar7 = *param_3; uVar8 = (ulonglong)(int)uVar7; uVar1 = param_3[1]; lVar5 = (longlong)(int)uVar1;
+  if (((((int)uVar7 < 0) || ((int)param_2[1] <= (int)uVar7)) || ((int)uVar1 < 0)) ||
+     (*(int *)((longlong)param_2 + 0xc) <= (int)uVar1)) {
+    param_1[1] = uVar1; *param_1 = uVar7; param_1[2] = 0; return param_1;
+  }
+  if (0 < (int)uVar7) {
+    iVar10 = (int)param_2[2]; lVar6 = *param_2; lVar3 = lVar5 * iVar10;
+    pcVar4 = (char *)(lVar3 + uVar8 * 4 + lVar6); uVar9 = uVar8;
+    while (uVar7 = (uint)uVar9, pcVar4[1] != '\0') {
+      if ((*pcVar4 != '\0') || (pcVar4[(lVar5 + -1) * (longlong)iVar10 - lVar3] != '\0'))
+      goto LAB_18000d5c7;
+      uVar7 = uVar7 - 1; uVar9 = (ulonglong)uVar7; uVar8 = uVar8 - 1; pcVar4 = pcVar4 + -4;
+      if ((longlong)uVar8 < 1) goto LAB_18000d5c7;
+    }
+    uVar7 = uVar7 + 1;
+LAB_18000d5c7:
+    if (0 < (int)uVar7) goto LAB_18000d5ef;
+  }
+  iVar10 = (int)param_2[2]; lVar6 = *param_2;
+LAB_18000d5ef:
+  lVar3 = lVar5 * iVar10 + (longlong)(int)uVar7 * 4;
+  if ((int)uVar7 < 1) { bVar11 = false; }
+  else { bVar11 = *(char *)(lVar3 + -3 + lVar6) != '\0'; }
+  uVar2 = FUN_180010550(bVar11,
+    *(char *)((lVar5 + -1) * (longlong)iVar10 + (longlong)(int)uVar7 * 4 + lVar6) != '\0',
+    *(char *)(lVar3 + lVar6) != '\0');
+  param_1[2] = uVar2; *param_1 = uVar7; param_1[1] = uVar1;
+  return param_1;
+}
+
+// FUN_18000d6a0 — scan down (iVar7+=1, col=x)
+int * FUN_18000d6a0(int *param_1,longlong *param_2,int *param_3)
+{
+  char cVar1; int iVar2; int iVar3; char *pcVar4; longlong lVar5; longlong lVar6;
+  int iVar7; int iVar8; int iVar9; bool bVar10;
+  iVar2 = *param_3; lVar6 = (longlong)iVar2; iVar7 = param_3[1];
+  if ((((iVar2 < 0) || ((int)param_2[1] <= iVar2)) || (iVar7 < 0)) ||
+     (*(int *)((longlong)param_2 + 0xc) <= iVar7)) {
+    *param_1 = iVar2; param_1[1] = iVar7; param_1[2] = 0; return param_1;
+  }
+  iVar7 = iVar7 + 1; iVar9 = *(int *)((longlong)param_2 + 0xc) + -1;
+  if (iVar7 < iVar9) {
+    lVar5 = (longlong)iVar7; pcVar4 = (char *)(lVar5 * (int)param_2[2] + lVar6 * 4 + *param_2);
+    do {
+      if (((*pcVar4 == '\0') || (pcVar4[1] != '\0')) || (pcVar4[-3] != '\0')) break;
+      iVar7 = iVar7 + 1; lVar5 = lVar5 + 1; pcVar4 = pcVar4 + (int)param_2[2];
+    } while (lVar5 < iVar9);
+  }
+  iVar3 = 0; iVar8 = iVar7 + -1;
+  if (iVar8 < iVar9) {
+    lVar5 = (longlong)(int)param_2[2] * (longlong)iVar7;
+    pcVar4 = (char *)(lVar5 + lVar6 * 4 + *param_2);
+    if (iVar2 < 1) { bVar10 = false; cVar1 = pcVar4[1]; }
+    else { bVar10 = *(char *)(lVar5 + lVar6 * 4 + -3 + *param_2) != '\0'; cVar1 = pcVar4[1]; }
+    iVar3 = FUN_180010550(*pcVar4 != '\0',bVar10,cVar1 != '\0');
+  }
+  param_1[2] = iVar3; *param_1 = iVar2; param_1[1] = iVar8;
+  return param_1;
+}
+
+// FUN_18000d800 — scan right (iVar8+=1, row=y+1)
+int * FUN_18000d800(int *param_1,longlong *param_2,int *param_3)
+{
+  int iVar1; int iVar2; char cVar4; longlong lVar3; char *pcVar5; longlong lVar6;
+  int iVar7; int iVar8; int iVar9; bool bVar10; bool bVar11;
+  iVar8 = *param_3; iVar1 = param_3[1]; iVar2 = (int)param_2[1]; iVar7 = iVar1 + 1;
+  if ((((iVar8 < 0) || (iVar2 <= iVar8)) || (iVar7 < 0)) ||
+     (*(int *)((longlong)param_2 + 0xc) <= iVar7)) {
+    *param_1 = iVar8; param_1[1] = iVar7; param_1[2] = 0; return param_1;
+  }
+  iVar8 = iVar8 + 1;
+  if (iVar8 < iVar2 + -1) {
+    lVar6 = (longlong)iVar8; lVar3 = (longlong)iVar7 * (longlong)(int)param_2[2];
+    pcVar5 = (char *)(*param_2 + lVar6 * 4 + lVar3);
+    do {
+      if (((pcVar5[1] == '\0') || (*pcVar5 != '\0')) ||
+         (pcVar5[((longlong)iVar7 + -1) * (longlong)(int)param_2[2] - lVar3] != '\0')) break;
+      iVar8 = iVar8 + 1; lVar6 = lVar6 + 1; pcVar5 = pcVar5 + 4;
+    } while (lVar6 < iVar2 + -1);
+  }
+  iVar9 = iVar8 + -1;
+  if ((((((iVar9 < 0) || (iVar2 <= iVar9)) && (iVar8 < 0)) || (iVar2 <= iVar8)) &&
+      ((iVar8 < 0 || (iVar2 <= iVar8)))) ||
+     ((iVar1 < 0 || (*(int *)((longlong)param_2 + 0xc) <= iVar1)))) {
+    if (-1 < iVar8) { bVar10 = false;
+      if (iVar8 < iVar2) goto LAB_18000d995;
+      if (-1 < iVar8) { bVar11 = false; bVar10 = false;
+        if (iVar8 < iVar2) goto LAB_18000d9be; }
+    }
+    bVar11 = false; cVar4 = '\0'; bVar10 = false;
+  } else {
+    bVar10 = *(char *)((longlong)(int)param_2[2] * (longlong)iVar1 + (longlong)iVar8 * 4 + *param_2) != '\0';
+LAB_18000d995:
+    bVar11 = *(char *)((longlong)(int)param_2[2] * (longlong)iVar7 + (longlong)iVar8 * 4 + *param_2) != '\0';
+LAB_18000d9be:
+    cVar4 = (char)((uint)*(undefined4 *)
+      ((longlong)(int)param_2[2] * (longlong)iVar7 + (longlong)iVar8 * 4 + *param_2) >> 8);
+  }
+  iVar8 = FUN_180010550(cVar4 != '\0',bVar11,bVar10);
+  param_1[2] = iVar8; *param_1 = iVar9; param_1[1] = iVar1;
+  return param_1;
+}
+
+// FUN_18000da50 — peer scanner (iVar9+=1 down, col=x+1)
+int * FUN_18000da50(int *param_1,longlong *param_2,int *param_3)
+{
+  int iVar1; longlong lVar2; int iVar3; char *pcVar4; longlong lVar5; longlong lVar6;
+  longlong lVar7; int iVar8; int iVar9; int iVar10; int iVar11; bool bVar12;
+  iVar1 = *param_3; lVar7 = (longlong)iVar1; iVar9 = param_3[1]; iVar8 = iVar1 + 1;
+  if ((((iVar8 < 0) || ((int)param_2[1] <= iVar8)) || (iVar9 < 0)) ||
+     (*(int *)((longlong)param_2 + 0xc) <= iVar9)) {
+    *param_1 = iVar8; param_1[1] = iVar9; param_1[2] = 0; return param_1;
+  }
+  iVar9 = iVar9 + 1; iVar11 = *(int *)((longlong)param_2 + 0xc) + -1;
+  if (iVar9 < iVar11) {
+    lVar5 = (longlong)iVar9; pcVar4 = (char *)(lVar5 * (int)param_2[2] + (lVar7 + 1) * 4 + *param_2);
+    do {
+      if (((*pcVar4 == '\0') || (pcVar4[1] != '\0')) || (pcVar4[-3] != '\0')) break;
+      iVar9 = iVar9 + 1; lVar5 = lVar5 + 1; pcVar4 = pcVar4 + (int)param_2[2];
+    } while (lVar5 < iVar11);
+  }
+  iVar3 = 0; iVar10 = iVar9 + -1;
+  if (iVar10 < iVar11) {
+    lVar2 = *param_2; lVar6 = (longlong)(int)param_2[2] * (longlong)iVar9; lVar5 = lVar6 + lVar7 * 4;
+    if (iVar8 < 1) { bVar12 = false; }
+    else { bVar12 = *(char *)(lVar6 + lVar7 * 4 + 1 + lVar2) != '\0'; }
+    iVar3 = FUN_180010550(*(char *)(lVar5 + 4 + lVar2) != '\0',bVar12,
+                          *(char *)(lVar5 + 5 + lVar2) != '\0');
+  }
+  param_1[2] = iVar3; *param_1 = iVar1; param_1[1] = iVar10;
+  return param_1;
+}
+
+// FUN_18000dbd0 — peer scanner (iVar8+=1 right, row=y)
+int * FUN_18000dbd0(int *param_1,longlong *param_2,int *param_3)
+{
+  int iVar1; int iVar2; char cVar4; longlong lVar3; char *pcVar5; longlong lVar6;
+  longlong lVar7; int iVar8; int iVar9; bool bVar10; bool bVar11;
+  iVar8 = *param_3; iVar1 = param_3[1]; lVar7 = (longlong)iVar1; iVar2 = (int)param_2[1];
+  if ((((iVar8 < 0) || (iVar2 <= iVar8)) || (iVar1 < 0)) ||
+     (*(int *)((longlong)param_2 + 0xc) <= iVar1)) {
+    *param_1 = iVar8; param_1[1] = iVar1; param_1[2] = 0; return param_1;
+  }
+  iVar8 = iVar8 + 1;
+  if (iVar8 < iVar2 + -1) {
+    lVar3 = lVar7 * (int)param_2[2]; lVar6 = (longlong)iVar8;
+    pcVar5 = (char *)(*param_2 + lVar6 * 4 + lVar3);
+    do {
+      if (((pcVar5[1] == '\0') || (*pcVar5 != '\0')) ||
+         (pcVar5[(lVar7 + -1) * (longlong)(int)param_2[2] - lVar3] != '\0')) break;
+      iVar8 = iVar8 + 1; lVar6 = lVar6 + 1; pcVar5 = pcVar5 + 4;
+    } while (lVar6 < iVar2 + -1);
+  }
+  iVar9 = iVar8 + -1;
+  if ((((((iVar9 < 0) || (iVar2 <= iVar9)) && (iVar8 < 0)) || (iVar2 <= iVar8)) &&
+      ((iVar8 < 0 || (iVar2 <= iVar8)))) ||
+     ((iVar1 + -1 < 0 || (*(int *)((longlong)param_2 + 0xc) <= iVar1 + -1)))) {
+    if (-1 < iVar8) { bVar10 = false;
+      if (iVar8 < iVar2) goto LAB_18000dd57;
+      if (-1 < iVar8) { bVar11 = false; bVar10 = false;
+        if (iVar8 < iVar2) goto LAB_18000dd81; }
+    }
+    bVar11 = false; cVar4 = '\0'; bVar10 = false;
+  } else {
+    bVar10 = *(char *)((longlong)(int)param_2[2] * (lVar7 + -1) + (longlong)iVar8 * 4 + *param_2) != '\0';
+LAB_18000dd57:
+    bVar11 = *(char *)((int)param_2[2] * lVar7 + (longlong)iVar8 * 4 + *param_2) != '\0';
+LAB_18000dd81:
+    cVar4 = (char)((uint)*(undefined4 *)((int)param_2[2] * lVar7 + (longlong)iVar8 * 4 + *param_2) >> 8);
+  }
+  iVar8 = FUN_180010550(cVar4 != '\0',bVar11,bVar10);
+  param_1[2] = iVar8; *param_1 = iVar9; param_1[1] = iVar1;
+  return param_1;
+}
+
+// FUN_18000cee0 — scan up (uVar9-=1, col=x)
+int * FUN_18000cee0(int *param_1,longlong *param_2,int *param_3)
+{
+  int iVar1; longlong lVar2; int iVar3; char *pcVar4; longlong lVar5; longlong lVar6;
+  longlong lVar7; uint uVar8; ulonglong uVar9; bool bVar11; int local_28; ulonglong uVar10;
+  lVar2 = *param_2; iVar1 = *param_3; lVar6 = (longlong)iVar1;
+  uVar8 = param_3[1]; uVar9 = (ulonglong)(int)uVar8;
+  if ((((iVar1 < 0) || ((int)param_2[1] <= iVar1)) || ((int)uVar8 < 0)) ||
+     (*(int *)((longlong)param_2 + 0xc) <= (int)uVar8)) {
+    *param_1 = iVar1; param_1[1] = uVar8; param_1[2] = 0; return param_1;
+  }
+  local_28 = (int)param_2[2]; lVar7 = (longlong)local_28;
+  if (0 < (longlong)uVar9) {
+    pcVar4 = (char *)(lVar7 * uVar9 + lVar2 + lVar6 * 4 + -3); uVar10 = uVar9;
+    while (uVar8 = (uint)uVar10, pcVar4[3] != '\0') {
+      if ((pcVar4[4] != '\0') || (*pcVar4 != '\0')) goto LAB_18000cfa5;
+      uVar8 = uVar8 - 1; uVar10 = (ulonglong)uVar8; uVar9 = uVar9 - 1; pcVar4 = pcVar4 + -lVar7;
+      if ((longlong)uVar9 < 1) goto LAB_18000cfa5;
+    }
+    uVar8 = uVar8 + 1;
+  }
+LAB_18000cfa5:
+  lVar5 = lVar7 * (int)uVar8;
+  if ((int)uVar8 < 1) { bVar11 = false; }
+  else { bVar11 = *(char *)(((longlong)(int)uVar8 + -1) * lVar7 + lVar6 * 4 + lVar2) != '\0'; }
+  iVar3 = FUN_180010550(bVar11,
+    *(char *)(lVar6 * 4 + lVar5 + 1 + lVar2) != '\0',
+    *(char *)(lVar5 + lVar6 * 4 + -3 + lVar2) != '\0');
+  param_1[2] = iVar3; *param_1 = iVar1; param_1[1] = uVar8;
+  return param_1;
+}
+
+// FUN_1800108d0 — run-length up-left walker (returns (x,y) of run-end)
+uint * FUN_1800108d0(uint *param_1,longlong *param_2,uint *param_3)
+{
+  longlong lVar1; longlong lVar2; uint uVar3; int iVar4; longlong lVar5; longlong lVar6;
+  int iVar7; int iVar8; uint uVar9; ulonglong uVar10; uint uVar11;
+  uVar9 = *param_3; uVar10 = (ulonglong)(int)uVar9; iVar8 = param_3[1] + 1;
+  if (iVar8 < *(int *)((longlong)param_2 + 0xc)) {
+    uVar3 = (*(int *)((longlong)param_2 + 0xc) - iVar8) - 1;
+    uVar11 = uVar9; if ((int)uVar3 < (int)uVar9) { uVar11 = uVar3; }
+    if (uVar11 != 0) {
+      lVar6 = (longlong)(int)param_2[2]; lVar2 = *param_2; lVar5 = lVar6 * iVar8;
+      if (*(char *)(lVar5 + uVar10 * 4 + lVar2) != '\0') {
+        iVar4 = 0;
+        if (0 < (int)uVar11) {
+          while( true ) {
+            lVar5 = lVar5 + lVar6; uVar9 = (uint)uVar10; uVar3 = uVar9 - 1;
+            uVar10 = (ulonglong)uVar3; iVar7 = iVar8 + 1;
+            lVar1 = lVar5 + (longlong)(int)uVar3 * 4;
+            if (((*(char *)(lVar1 + 1 + lVar2) == '\0') || (*(char *)(lVar1 + 3 + lVar2) != '\0'))
+               || (*(char *)(((longlong)(int)uVar3 * 4 - lVar6) + lVar5 + 3 + lVar2) != '\0')) break;
+            iVar8 = iVar7; uVar9 = uVar3;
+            if ((*(char *)(lVar1 + lVar2) == '\0') || (iVar4 = iVar4 + 1, (int)uVar11 <= iVar4)) break;
+          }
+        }
+        *param_1 = uVar9; param_1[1] = iVar8 - 1; return param_1;
+      }
+    }
+  }
+  param_1[1] = param_3[1]; *param_1 = uVar9; return param_1;
+}
+
+// FUN_180010e40 — run-length down-right walker
+uint * FUN_180010e40(uint *param_1,longlong *param_2,uint *param_3)
+{
+  longlong lVar1; longlong lVar2; int iVar3; longlong lVar4; int iVar5; longlong lVar6;
+  int iVar7; ulonglong uVar8; uint uVar9; uint uVar10; ulonglong uVar11;
+  uVar9 = param_3[1]; uVar8 = (ulonglong)(int)uVar9;
+  uVar10 = *param_3; uVar11 = (ulonglong)(int)uVar10; iVar7 = uVar9 + 1;
+  if (iVar7 < *(int *)((longlong)param_2 + 0xc)) {
+    iVar5 = ((int)param_2[1] - uVar10) + -1;
+    if (iVar7 < iVar5) { iVar5 = iVar7; }
+    if (iVar5 != 0) {
+      lVar6 = (longlong)(int)param_2[2]; lVar4 = uVar11 * 4; lVar1 = *param_2;
+      if ((*(char *)(iVar7 * lVar6 + lVar4 + 3 + lVar1) == '\0') &&
+         (*(char *)(uVar8 * lVar6 + lVar4 + 3 + lVar1) == '\0')) {
+        iVar3 = 0;
+        if (0 < iVar5) {
+          while( true ) {
+            lVar4 = lVar4 + 4; iVar7 = (int)uVar8; uVar9 = (uint)uVar11;
+            lVar2 = iVar7 * lVar6 + lVar4; uVar10 = uVar9 + 1; uVar11 = (ulonglong)uVar10;
+            if ((*(char *)(lVar2 + lVar1) == '\0') || (*(char *)(lVar2 + 1 + lVar1) == '\0')) break;
+            if (((*(char *)(lVar2 + 3 + lVar1) != '\0') ||
+                (uVar8 = (ulonglong)(iVar7 - 1U),
+                *(char *)((int)(iVar7 - 1U) * lVar6 + lVar4 + 3 + lVar1) != '\0')) ||
+               (iVar3 = iVar3 + 1, iVar5 <= iVar3)) goto LAB_180010f12;
+          }
+          iVar7 = iVar7 + 1; uVar10 = uVar9;
+        }
+LAB_180010f12:
+        *param_1 = uVar10; param_1[1] = iVar7 - 1; return param_1;
+      }
+    }
+  }
+  *param_1 = uVar10; param_1[1] = uVar9; return param_1;
+}
+
+// ===========================================================================
+// 8-WAY CLASSIFIER (dispatched via jumptable DAT_1800105d0)
+// Computes 3-bit index = p1 + (p3 + p2*2)*2, returns one of 8 class values
+// via DAT_1800105d0+idx*4 -> function pointer. TARGETS NOT YET PULLED.
+// ===========================================================================
+void FUN_180010550(byte param_1,byte param_2,byte param_3)
+{
+  (*(code *)((ulonglong)
+    *(uint *)(&DAT_1800105d0 + (longlong)(int)((uint)param_1 + ((uint)param_3 + (uint)param_2 * 2) * 2) * 4)
+    + 0x180000000))(...);
+  // TODO: pull the 8 jumptable targets at DAT_1800105d0[0..7]
+}
+
+// ===========================================================================
+// EMITTER for cardinal 12時 (FUN_1800105f0 → FUN_18000fbf0)
+// Switch on (param_2[2] + (param_2[5]*5 - 1)*2). Dispatches to 8 leaf emitters.
+// ===========================================================================
+void FUN_18000fbf0(longlong *param_1,uint *param_2)
+{
+  undefined8 uVar1; float fVar2;
+  switch(param_2[2] + (param_2[5] * 5 + -1) * 2) {
+  case 0: case 6: case 0x14: case 0x1a: case 0x1e: case 0x24: case 0x50: case 0x56:
+    FUN_18000f4a0(param_1,(int *)param_2); return;
+  case 1: case 7: case 0x1b: case 0x1f: case 0x25: case 0x33: case 0x39: case 0x57:
+    FUN_18000ec40(param_1,param_2); return;
+  case 4: case 0x18: case 0x22: case 0x36: case 0x54:
+    FUN_18000f7b0(param_1,(int *)param_2); return;
+  case 8: case 9: case 0xc: case 0xf: case 0x44: case 0x45: case 0x48: case 0x4b:
+    FUN_18000f360(param_1,(int *)param_2); return;
+  case 10: case 0x10: case 0x46: case 0x4c:
+    uVar1 = FUN_18000f220(param_1,(int *)param_2,DAT_1800226a0);
+    if ((char)uVar1 != '\0') {
+      fVar2 = *(float *)((longlong)param_1 + param_1[0x26] * 0x14 + 0x3c);
+      fVar2 = fVar2 + fVar2;
+      *(float *)((longlong)param_1 + param_1[0x26] * 0x14 + 0x3c) = fVar2 * fVar2 * DAT_180022694;
+    }
+    uVar1 = FUN_18000f0e0(param_1,(int *)param_2,DAT_1800226a0);
+    if ((char)uVar1 == '\0') return;
+    fVar2 = *(float *)((longlong)param_1 + param_1[0x26] * 0x14 + 0x3c);
+    fVar2 = fVar2 + fVar2;
+    *(float *)((longlong)param_1 + param_1[0x26] * 0x14 + 0x3c) = fVar2 * fVar2 * DAT_180022694;
+    return;
+  case 0xb: case 0x47: FUN_18000ec40(param_1,param_2); goto LAB_18000fd1b;
+  case 0xd: case 0x49: FUN_18000f0e0(param_1,(int *)param_2,DAT_1800226a0); return;
+  case 0xe: case 0x4a: FUN_18000f7b0(param_1,(int *)param_2);
+LAB_18000fd1b:
+    FUN_18000f0e0(param_1,(int *)param_2,DAT_1800226a0); return;
+  case 0x11: case 0x4d: FUN_18000ec40(param_1,param_2); FUN_18000f360(param_1,(int *)param_2); return;
+  case 0x26: case 0x2a: case 0x2b: case 0x58: case 0x59: case 0x5c: case 0x5d: case 0x5f: break;
+  case 0x28: case 0x2e: FUN_18000f220(param_1,(int *)param_2,DAT_1800226a0); break;
+  case 0x29: case 0x2f: case 0x5b: case 0x61: FUN_18000ec40(param_1,param_2); break;
+  case 0x2c: case 0x5e: FUN_18000f7b0(param_1,(int *)param_2); break;
+  case 0x32: case 0x38: FUN_18000f220(param_1,(int *)param_2,DAT_1800226a0); return;
+  case 0x3c: case 0x42: FUN_18000f220(param_1,(int *)param_2,DAT_1800226a0);
+  case 0x3a: case 0x3b: case 0x3e: case 0x3f: case 0x41:
+    FUN_18000f600(param_1,(int *)param_2); return;
+  case 0x3d: case 0x43: FUN_18000ec40(param_1,param_2); FUN_18000f600(param_1,(int *)param_2); return;
+  case 0x40: FUN_18000f7b0(param_1,(int *)param_2); FUN_18000f600(param_1,(int *)param_2); return;
+  case 0x5a: case 0x60: FUN_18000f4a0(param_1,(int *)param_2);
+  default: return;
+  }
+  FUN_18000e640(param_1,(int *)param_2);
+}
+
+// ===========================================================================
+// EMITTER LEAVES (8)
+// All compute a weight from class + local geometry, push via FUN_1800104d0
+// (already ported as win_FUN_1800104d0_append).
+// ===========================================================================
+
+// FUN_18000f4a0 — predicate=e0e0; weight = base*0.5 + 0.5, param_4=1.0
+longlong FUN_18000f4a0(longlong *param_1,int *param_2)
+{
+  char cVar1; uint7 extraout_var; undefined8 uVar2;
+  cVar1 = FUN_18000e0e0((longlong)param_1,param_2);
+  if ((int)CONCAT71(extraout_var,cVar1) == 4) { return (ulonglong)extraout_var << 8; }
+  uVar2 = FUN_18000e430(param_1,param_2,
+    *(float *)((longlong)param_1 + 0x3c) * DAT_180022694 + DAT_180022694, DAT_1800226a0);
+  return uVar2;
+}
+
+// FUN_18000ec40 — predicate=e0e0; runs a d230+dbd0 run-length chase, pushes scaled weight
+undefined8 FUN_18000ec40(longlong *param_1,uint *param_2) { /* see above — 50 lines */ }
+
+// FUN_18000f7b0 — predicate=e0e0; class 2/3/6/7 → DAT_180022694 weight else DAT_1800226a0
+longlong FUN_18000f7b0(longlong *param_1,int *param_2) { /* see above */ }
+
+// FUN_18000f360 — predicate=dea0; weight = base*0.5 + 0.5, param_4=1.0
+longlong FUN_18000f360(longlong *param_1,int *param_2) { /* calls e320 */ }
+
+// FUN_18000f220 — predicate=e0e0; weight = base*_DAT_180022dd8 + 0.5, arg3 passed through
+// FUN_18000f0e0 — predicate=dea0; weight = base*_DAT_180022dd8 + 0.5, arg3 passed through
+// FUN_18000f600 — predicate=dea0; class-selected weight (0.5 or 1.0) then e320
+// FUN_18000e640 — predicate=dea0; d520+d800 run-length chase (mirror of ec40), calls e320
+
+// ===========================================================================
+// CLASSIFIER PREDICATES (return 3-bit class: 0/1/2/3/4)
+// ===========================================================================
+// Returns bitfield: bit0 = right-neighbor nonzero, bit1 = left-neighbor nonzero, bit2 = above-neighbor nonzero
+// Special return 4 if x == 0 (column 0)
+char FUN_18000e0e0(longlong param_1,int *param_2)
+{
+  longlong lVar1; int iVar2; longlong lVar3; longlong lVar4; int local_18;
+  lVar3 = *(longlong *)(param_1 + 0x18); iVar2 = param_2[1];
+  if (iVar2 == 0) { return '\x04'; }
+  local_18 = (int)*(undefined8 *)(param_1 + 0x28);
+  lVar4 = (longlong)iVar2 * (longlong)local_18; lVar1 = (longlong)*param_2 * 4;
+  return (-(*(char *)(((longlong)iVar2 + -1) * (longlong)local_18 + lVar1 + lVar3) != '\0') & 4U) +
+         (-(*(char *)(lVar4 + (longlong)*param_2 * 4 + -3 + lVar3) != '\0') & 2U) +
+         (*(char *)(lVar4 + lVar1 + 1 + lVar3) != '\0');
+}
+// Mirror of e0e0 for opposite cardinal — uses param_2+0x10 (y') and param_2+0xc (x')
+char FUN_18000dea0(longlong param_1,longlong param_2)
+{
+  longlong lVar1; int iVar2; longlong lVar3; longlong lVar4; undefined4 local_18;
+  lVar3 = *(longlong *)(param_1 + 0x18); iVar2 = *(int *)(param_2 + 0x10);
+  if (iVar2 == 0) { return '\x04'; }
+  local_18 = (int)*(undefined8 *)(param_1 + 0x28);
+  lVar4 = (longlong)local_18 * (longlong)iVar2;
+  lVar1 = (longlong)*(int *)(param_2 + 0xc) * 4 + 4;
+  return (-(*(char *)(((longlong)iVar2 + -1) * (longlong)local_18 + lVar1 + lVar3) != '\0') & 4U) +
+         (*(char *)(lVar4 + (longlong)*(int *)(param_2 + 0xc) * 4 + 1 + lVar3) != '\0') +
+         (-(*(char *)(lVar4 + lVar1 + 1 + lVar3) != '\0') & 2U);
+}
+
+// ===========================================================================
+// ACCUMULATORS — compute attenuation via FUN_180013630, push via FUN_1800104d0
+// ===========================================================================
+ulonglong FUN_18000e430(longlong *param_1,int *param_2,float param_3,float param_4)
+{
+  ulonglong extraout_RAX; undefined8 uVar1; float fVar2; int local_res8; int local_resc;
+  fVar2 = FUN_180013630((float)((param_2[3] - *param_2) + 1) * param_3 * *(float *)(param_1 + 7),
+                        (int)param_1[6] - *param_2, param_4 * DAT_180022694);
+  if (fVar2 != 0.0) {
+    local_res8 = *param_2 + -1; local_resc = param_2[1];
+    uVar1 = FUN_1800104d0(param_1,&local_res8,fVar2);
+    return CONCAT71((int7)((ulonglong)uVar1 >> 8),1);
+  }
+  return extraout_RAX & 0xffffffffffffff00;
+}
+ulonglong FUN_18000e320(longlong *param_1,int *param_2,float param_3,float param_4)
+{
+  ulonglong extraout_RAX; undefined8 uVar1; float fVar2; int local_res8; int local_resc;
+  fVar2 = FUN_180013630((float)((param_2[3] - *param_2) + 1) * param_3 * *(float *)(param_1 + 7),
+                        param_2[3] - (int)param_1[6], param_4 * DAT_180022694);
+  if (fVar2 != 0.0) {
+    local_res8 = param_2[3] + 1; local_resc = param_2[4];
+    uVar1 = FUN_1800104d0(param_1,&local_res8,fVar2);
+    return CONCAT71((int7)((ulonglong)uVar1 >> 8),1);
+  }
+  return extraout_RAX & 0xffffffffffffff00;
+}
+
+// ===========================================================================
+// FUN_180013630 — triangle/trapezoid weight attenuation
+// Inputs: param_1 = run-length * step * base_weight, param_2 = offset-from-center,
+// param_3 = class-dependent weight scale * 0.5
+// Returns: attenuated weight (trapezoid-like falloff)
+// ===========================================================================
+float FUN_180013630(float param_1,int param_2,float param_3)
+{
+  float fVar1; float fVar2;
+  if (((param_1 != 0.0) && (fVar1 = (float)param_2, fVar1 < param_1)) && (param_3 != 0.0)) {
+    fVar2 = (DAT_1800226a0 - fVar1 / param_1) * param_3 + (fVar1 / param_1) * 0.0;
+    if (param_1 < fVar1 + DAT_1800226a0) {
+      return (param_1 - fVar1) * fVar2 * DAT_180022694;
+    }
+    fVar1 = (fVar1 + DAT_1800226a0) / param_1;
+    return ((DAT_1800226a0 - fVar1) * param_3 + fVar1 * 0.0 + fVar2) * DAT_180022694;
+  }
+  return 0.0;
+}
+
+// ===========================================================================
+// Still needed:
+//  - DAT_1800105d0[0..7] = 8 jumptable targets — RESOLVED via raw read.
+//    index = p1 + p3*2 + p2*4 where p1=CL, p2=DL, p3=R8B.
+//    idx  target      class
+//    0    0x1800105ca  0  (xor eax,eax; ret)
+//    1    0x1800105ca  0
+//    2    0x180010577  1  (mov eax,1; ret)
+//    3    0x18001057d  4  (mov eax,4; ret)
+//    4    0x180010583  2
+//    5    0x180010589  3
+//    6    0x18001058f  5
+//    7    0x180010595  variable — reads R9B (p4) and byte[RSP+0x28] (p5):
+//           edx = p4 + p5*2:
+//             edx==0 -> 6 ; edx==1 -> 7 ; edx==2 -> 8 ; edx==3 -> 9 ; else 6.
+//           Scanner only passes 3 args so p4/p5 are stale stack values when
+//           the (1,1,1) branch is hit — practice: treat as always returning 6.
+//  - _DAT_180022dd8 = (float) — extra-smooth multiplier, probably 1.0 or 2.0
+//  - FUN_18000ec40/f7b0/f360/f220/f0e0/f600/e640 full bodies (elided above for brevity)
+//    ← ALL BODIES WERE PULLED; re-pull if needed for finishing port.
+//
+// ===========================================================================
+// 2026-04-20 session 3 — FUN_180002930 REAL identity (surprise!)
+// ===========================================================================
+// FUN_180002930 is NOT the u8 class plane writer.  It is a COLOR-KEY step that
+// writes pfVar3[3] = 0.0 (alpha) into the FLOAT RGBA buffer (16 bytes/pixel)
+// for pixels whose RGB does not match any palette entry from
+// *(float**)(param_6 + 0x68) with count at param_6 + 0x60.  Match tolerance is
+// DAT_18002268c with |diff| via mask DAT_180022710 (0x7FFFFFFF).
+//
+// Caller FUN_180002e90 runs it only when `*(longlong*)(param_4 + 0x18) != 0`
+// (palette pointer non-null).  Without a palette Win does NO alpha-keying at
+// all, so the scanners read the ORIGINAL u8 input plane (byte 0 = alpha).
+//
+// FUN_1800024c0 is the u8 RGBA → float RGBA converter, with layout:
+//   pbVar6[0] -> pfVar5[3]  (alpha)
+//   pbVar6[1] -> pfVar5[0]  (R)
+//   pbVar6[2] -> pfVar5[1]  (G)
+//   pbVar6[3] -> pfVar5[2]  (B)
+// So u8 byte order is [A, R, G, B] and scanners test byte[0]=alpha for class.
+//
+// Therefore the "u8 class plane" at polygon+0x18 is the INPUT u8 plane
+// post-key.  For the Mac port, in absence of a palette parameter, the
+// current heuristic (alpha>0.5 && luma>0.5) stands in as a pragmatic
+// foreground segmentation.  To match Win literally, expose a palette param
+// and run the color-key before building the class plane.
+//
+// ===========================================================================
+// 2026-04-20 session 3 — 3時/6時/9時 cardinal dispatchers
+// ===========================================================================
+// All 4 dispatchers (12時 FUN_18000fbf0, 3時 FUN_18000f8f0, 6時 FUN_18000fef0,
+// 9時 FUN_1800101e0) share IDENTICAL switch-case layout, differing only in:
+//   (a) switch-key expression:
+//       - 12時: param_2[2] + (param_2[5]*5 - 1)*2
+//       - 3時:  param_2[2] + (param_2[5]*5 - 1)*2      // same!
+//       - 6時:  param_2[2] + param_2[5]*10 - 1
+//       - 9時:  (param_2[2] - 1) + param_2[5]*10
+//   (b) 8 leaf function sets (rotated per-direction mirror images):
+//
+// CASE pattern → leaf[direction]:
+//   {0,6,20,26,30,36,80,86}       → "append_plus_X"     (f4a0/f450/f4f0/f540)
+//   {1,7,27,31,37,51,57,87}       → "append_Y"          (ec40/ead0/edb0/ef20)
+//   {4,24,34,54,84}               → "append_Z"          (f7b0/f740/f820/f890)
+//   {8,9,12,15,68,69,72,75}       → "append_big"        (f360/f310/f3b0/f400)
+//   {10,16,70,76} + boost         → "pred1+pred2 weight boost"
+//                                    (f220/f1d0/f270/f2c0, f0e0/f090/f130/f180)
+//   {11,71} → Y + pred2 + weight
+//   {13,73} → pred2 + weight
+//   {14,74} → Z + pred2 + weight
+//   {17,77} → Y + big
+//   {28,46,92,110}    → pred1
+//   {29,47,91,97}     → Y
+//   {44,94}           → Z
+//   {50,56}           → pred1 return
+//   {60,66}           → pred1 then "accum1" (f590/f670/f6e0)
+//   {61,66}           → Y then accum1
+//   {64}              → Z then accum1
+//   default/end       → "accum2" (e4b0/e7c0/e950/e640 — the "residual" accumulator)
+//
+// So the full literal port requires: 32 leaves (8 per direction) + 4
+// dispatchers.  The pattern is a 4-way rotational symmetry operating on the
+// same structural case-table.  Rotation is geometric — each direction's
+// leaves emit in their own compass direction from cur_xy.  For each leaf
+// family the 12時 body is already in this file; the 3/6/9 variants can be
+// obtained by decompile_function_by_address at the listed addresses.
+// ===========================================================================
