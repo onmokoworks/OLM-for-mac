@@ -10,6 +10,7 @@ Current progress:
 - `OLMSmoother` v1: port in progress
 - `DistanceGradation`: port complete
 - `ColorKeep`: port complete
+- `OLMBlur`: port in progress
 - all other OLM plug-ins: not started / pending
 
 Current source:
@@ -17,6 +18,7 @@ Current source:
 - `mac/OLMSmoother2/`
 - `mac/OLMDistanceGradation/`
 - `mac/ColorKeep/`
+- `mac/OLMBlur/`
 - `mac/OLMSmoother/`
 - main implementation: `mac/OLMSmoother/Mac/OLMSmoother_port.cpp`
 - reverse-engineering notes: `disasm/v1_analysis/`
@@ -91,6 +93,7 @@ OLM After Effects plug-in 群を、現行 macOS / After Effects 向けに移植�
 - `OLMSmoother` 初代: 移植中
 - `DistanceGradation`: 移植完了
 - `ColorKeep`: 移植完了
+- `OLMBlur`: 移植中
 - その他の OLM plug-in: 未着手 / 移植待ち
 
 主なソース:
@@ -98,6 +101,7 @@ OLM After Effects plug-in 群を、現行 macOS / After Effects 向けに移植�
 - `mac/OLMSmoother2/`
 - `mac/OLMDistanceGradation/`
 - `mac/ColorKeep/`
+- `mac/OLMBlur/`
 - `mac/OLMSmoother/`
 - 初代 Smoother の中心実装: `mac/OLMSmoother/Mac/OLMSmoother_port.cpp`
 - 初代 Smoother の解析メモ: `disasm/v1_analysis/`
