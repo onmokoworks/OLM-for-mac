@@ -1959,6 +1959,14 @@ behavior.
   `case_0003 mean=26.1768`, so do not adopt it. The remaining target is exact
   source/destination Mat orientation and dsize mapping across the two
   `FUN_181297ac0` calls.
+- 2026-06-06 warpAffine argument mapping: `FUN_181297ac0` is
+  `warpAffine(src, dst, M, dsize, flags, borderMode, borderValue)`, with
+  `0x1010000` InputArray wrappers and `0x2010000` OutputArray wrappers. The
+  first ray-helper call wraps `R14` as both src and dst and uses matrix
+  `[rbp+0x60]`; the rotate-back call wraps `[rbp+0x60]` as src and `R12` as
+  dst, using matrix `local_f8`. This corrects the next implementation target:
+  probe the exact in-place/temporary Mat relationship rather than just
+  full-frame or centered-ROI canvas shapes.
 - A temporary CLI probe approximating OpenCV's 5-bit `INTER_LINEAR` table
   (`bilinear-fixed5`) did not improve the current refs:
   `case_0001 mean=0.8384`, `case_0002 mean=1.1624`,

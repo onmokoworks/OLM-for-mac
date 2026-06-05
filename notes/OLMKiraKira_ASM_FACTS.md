@@ -75,6 +75,15 @@ rect.height = param_2->rows;
   `cv::warpAffine` strings and argument checks.
 - `181150f3d..18115105d` rotates back through another `FUN_1811512a0`,
   `FUN_181157ed0`, `FUN_181297ac0`, and `FUN_18115cfb0` sequence.
+- The `FUN_181297ac0` call signature follows OpenCV
+  `warpAffine(src, dst, M, dsize, flags, borderMode, borderValue)`. In the call
+  wrappers, `0x1010000` is the InputArray Mat wrapper and `0x2010000` is the
+  OutputArray Mat wrapper. The first call at `1811508d7..181150941` passes an
+  InputArray and OutputArray that both wrap `R14`, plus the matrix at
+  `[rbp+0x60]` and `dsize=(R14.cols, R14.rows)`. The rotate-back call at
+  `181150f89..181150ff8` passes an InputArray wrapping `[rbp+0x60]`, an
+  OutputArray wrapping `R12`, the matrix at `local_f8`, and
+  `dsize=(R12.cols, R12.rows)`.
 - `FUN_181157ed0` is not a transform adjustment helper. It matches
   `cv::Mat::operator=(Mat&&)` / move-assignment shape: copy header fields,
   move external `step` storage when dimensions exceed the inline buffer, and
