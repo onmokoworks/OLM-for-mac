@@ -16,11 +16,12 @@
     `scripts/setup_ae_sdk_links.sh` で repo root に ignored symlink
     `Headers` / `Util` / `Resources` を作る。これが無いとXcodeプロジェクトは
     `AEConfig.h`, `AEGP_SuiteHandler.cpp` などを見つけられない。
-  - 2026-06-05時点で既存/追加Macプロジェクト
+  - 2026-06-06時点で既存/追加Macプロジェクト
     `ColorKeep`, `OLMBlur`, `OLMColorKey`, `OLMDirectionalBlur`, `OLMRadialBlur`,
-    `OLMToonDilate`, `OLMDistanceGradation`, `OLMSmoother`, `OLMSmoother2`
+    `OLMKiraKira`, `OLMToonDilate`, `OLMDistanceGradation`, `OLMSmoother`,
+    `OLMSmoother2`
     は `xcodebuild -project mac/<Name>/Mac/<Name>.xcodeproj -configuration Debug`
-    でビルド成功確認済み。`scripts/build_all_mac_plugins.sh` で8本まとめて
+    でビルド成功確認済み。`scripts/build_all_mac_plugins.sh` で10本まとめて
     SDK symlink作成、Debugビルド、`arm64`/`x86_64` slice確認、`codesign --verify`
     まで再現できる。
   - Ghidra は GUI/MCP を**ライブでは使っていない**。事前エクスポート済みの
