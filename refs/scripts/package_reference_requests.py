@@ -15,6 +15,8 @@ import sys
 import zipfile
 from pathlib import Path
 
+from check_reference_request_status import load_status_rows
+
 
 HANDOFF_NAME = "refs/reference_requests/WIN_CODEX_HANDOFF.md"
 
@@ -27,6 +29,11 @@ def parse_args() -> argparse.Namespace:
         default=[],
         metavar="REQUEST_JSON",
         help="Package only this request JSON basename or path. May be repeated.",
+    )
+    parser.add_argument(
+        "--pending",
+        action="store_true",
+        help="Package only requests not currently covered by refs/win_references.",
     )
     parser.add_argument(
         "--output",
@@ -62,6 +69,17 @@ def resolve_requests(request_dir: Path, only: list[str]) -> list[Path]:
             raise SystemExit(f"unknown request {item!r}; known: {known}")
 
     return sorted(dict.fromkeys(selected))
+
+
+def resolve_pending_requests(root: Path, request_dir: Path) -> list[Path]:
+    rows = load_status_rows(request_dir, root / "refs" / "win_references")
+    pending_ids = {row["request_id"] for row in rows if row["status"] != "covered"}
+    requests = [
+        path
+        for path in sorted(request_dir.glob("*.json"))
+        if validate_request(path)["request_id"] in pending_ids
+    ]
+    return requests
 
 
 def validate_request(path: Path) -> dict:
@@ -186,7 +204,10 @@ def main() -> int:
     args = parse_args()
     root = repo_root()
     request_dir = root / "refs" / "reference_requests"
-    requests = resolve_requests(request_dir, args.only)
+    if args.pending and args.only:
+        print("--pending cannot be combined with --only", file=sys.stderr)
+        return 2
+    requests = resolve_pending_requests(root, request_dir) if args.pending else resolve_requests(request_dir, args.only)
     if not requests:
         print(f"no request JSON files found in {request_dir}", file=sys.stderr)
         return 1

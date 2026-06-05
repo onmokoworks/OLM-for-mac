@@ -138,15 +138,16 @@ def score_request(request: dict[str, Any], manifests: list[tuple[Path, dict[str,
     }
 
 
-def main() -> int:
-    args = parse_args()
-    request_dir = args.requests
-    reference_dir = args.references
+def load_status_rows(request_dir: Path, reference_dir: Path) -> list[dict[str, Any]]:
     request_paths = sorted(request_dir.glob("*.json"))
     manifest_paths = sorted(reference_dir.glob("**/reference_manifest.json"))
     manifests = [(path, load_json(path)) for path in manifest_paths]
+    return [score_request(load_json(path), manifests) for path in request_paths]
 
-    rows = [score_request(load_json(path), manifests) for path in request_paths]
+
+def main() -> int:
+    args = parse_args()
+    rows = load_status_rows(args.requests, args.references)
 
     if args.json:
         print(json.dumps({"requests": rows}, indent=2, sort_keys=True))
@@ -171,8 +172,7 @@ def main() -> int:
     pending = [row["request_id"] for row in rows if row["status"] != "covered"]
     if pending:
         print("\npending package command:")
-        only = " ".join(f"--only {request_id}" for request_id in pending)
-        print(f"python3 refs/scripts/package_reference_requests.py {only}")
+        print("python3 refs/scripts/package_reference_requests.py --pending")
     return 0
 
 
