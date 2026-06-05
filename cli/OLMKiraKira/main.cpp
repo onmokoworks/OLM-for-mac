@@ -917,6 +917,14 @@ std::vector<float> rotated_axis_box_blur(
         if (angle_deg == 90.0) return direction_box_blur(input, width, height, length, 0, 1, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
     }
 
+    if (warp_mode == "aex-frame") {
+        const double cx = static_cast<double>(width) * 0.5;
+        const double cy = static_cast<double>(height) * 0.5;
+        std::vector<float> rotated = warp_getrot_direct(input, width, height, width, height, cx, cy, angle_deg, rotate_filter, rotate_border);
+        std::vector<float> blurred = direction_box_blur(rotated, width, height, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
+        return warp_getrot_direct(blurred, width, height, width, height, cx, cy, -angle_deg, rotate_filter, rotate_border);
+    }
+
     if (warp_mode == "aex-direct-back") {
         const double pi = 3.14159265358979323846;
         const double rad = angle_deg * pi / 180.0;
@@ -1149,8 +1157,9 @@ Options parse_args(int argc, char **argv) {
         } else if (key == "--warp-mode") {
             args.warp_mode = need_value("--warp-mode");
             if (args.warp_mode != "current" && args.warp_mode != "opencv-center" &&
-                args.warp_mode != "aex-getrot" && args.warp_mode != "aex-direct-back") {
-                throw std::runtime_error("--warp-mode must be current, opencv-center, aex-getrot, or aex-direct-back");
+                args.warp_mode != "aex-getrot" && args.warp_mode != "aex-direct-back" &&
+                args.warp_mode != "aex-frame") {
+                throw std::runtime_error("--warp-mode must be current, opencv-center, aex-getrot, aex-direct-back, or aex-frame");
             }
         } else if (key == "--rotate-size-mode") {
             args.rotate_size_mode = need_value("--rotate-size-mode");
@@ -1185,7 +1194,7 @@ Options parse_args(int argc, char **argv) {
         } else if (key == "--filter-border" || key == "--ray-mode") {
             (void)need_value(key.c_str());
         } else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--rotate-filter bilinear|bicubic|bilinear-fixed5] [--rotate-border edge|constant] [--warp-mode current|opencv-center|aex-getrot|aex-direct-back] [--rotate-size-mode round|floor|ceil|aex-min4] [--axis-fast-path true|false] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five]\n");
+            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--rotate-filter bilinear|bicubic|bilinear-fixed5] [--rotate-border edge|constant] [--warp-mode current|opencv-center|aex-getrot|aex-direct-back|aex-frame] [--rotate-size-mode round|floor|ceil|aex-min4] [--axis-fast-path true|false] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);

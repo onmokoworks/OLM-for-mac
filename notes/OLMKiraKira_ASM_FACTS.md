@@ -181,6 +181,12 @@ Current interpretation:
   `case_0001 mean=5.9449`, `case_0002 mean=6.6790`,
   `case_0003 mean=27.6616`, versus baseline
   `0.8381/1.1623/1.7003`.
+- A C++ diagnostic `--warp-mode aex-frame` writes both forward and rotate-back
+  warps directly into the original frame dimensions using center
+  `(width*0.5, height*0.5)`. It is negative:
+  `case_0001 mean=1.4465`, `case_0002 mean=1.9139`,
+  `case_0003 mean=6.9617`. So the AEX dsize observations cannot be modeled as
+  a simple full-frame direct warp without the caller's ROI/temp-Mat placement.
 - The decomp/asm shape shows the rotate-back `warpAffine` dsize is the final
   ray descriptor (`param_5`) rather than a larger temporary canvas followed by
   an obvious center crop. A C++ diagnostic `--warp-mode aex-direct-back`
