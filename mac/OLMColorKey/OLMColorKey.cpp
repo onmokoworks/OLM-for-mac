@@ -432,6 +432,12 @@ static std::vector<float> MatteDistanceTo(const std::vector<u_char> &mask, A_lon
 	return L1DistanceTo(mask, w, h);
 }
 
+static std::vector<float> EdgeBlurDistanceTo(const std::vector<u_char> &mask, A_long w, A_long h, A_long distance_type)
+{
+	if (distance_type == 1) return EuclideanDistanceTo(mask, w, h);
+	return MatteDistanceTo(mask, w, h, distance_type);
+}
+
 static std::vector<u_char> Boundary8(const std::vector<u_char> &mask, A_long w, A_long h)
 {
 	std::vector<u_char> out((size_t)w * (size_t)h, 0);
@@ -654,7 +660,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	}
 	if (info.edge_blur_amount != 0.0 && !info.enable_replace) {
 		std::vector<u_char> boundary = Boundary8(keep_mask, w, h);
-		std::vector<float> dist = L1DistanceTo(boundary, w, h);
+		std::vector<float> dist = EdgeBlurDistanceTo(boundary, w, h, info.edge_blur_distance_type);
 		for (A_long y = 0; y < h; ++y) {
 			for (A_long x = 0; x < w; ++x) {
 				size_t idx = (size_t)y * (size_t)w + (size_t)x;

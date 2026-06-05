@@ -319,6 +319,13 @@ fn matte_distance(mask: &[u8], w: usize, h: usize, distance_type: i32) -> Vec<f3
     }
 }
 
+fn edge_blur_distance(mask: &[u8], w: usize, h: usize, distance_type: i32) -> Vec<f32> {
+    match distance_type {
+        1 => euclidean_distance(mask, w, h),
+        _ => matte_distance(mask, w, h, distance_type),
+    }
+}
+
 fn boundary8(mask: &[u8], w: usize, h: usize) -> Vec<u8> {
     let mut out = vec![0_u8; w * h];
     for y in 0..h {
@@ -491,7 +498,7 @@ fn render(input: &ImageBuffer<Rgba<u8>, Vec<u8>>, cfg: &Params) -> Result<ImageB
 
     if cfg.edge_blur_amount != 0.0 {
         let boundary = boundary8(&keep_mask, w, h);
-        let dist = l1_distance(&boundary, w, h);
+        let dist = edge_blur_distance(&boundary, w, h, cfg.edge_blur_distance_type);
         for i in 0..n {
             let keep = keep_mask[i] != 0;
             let weight = edge_blur_weight(keep, dist[i], cfg.edge_blur_amount, cfg.edge_blur_direction);

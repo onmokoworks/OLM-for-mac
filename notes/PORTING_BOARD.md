@@ -197,7 +197,7 @@ the OLMKiraKira Brightness probe all produced expected DIFF measurement output.
 | ColorKeep | none in 20260604 set | yes | complete-ish | smoke CLI works | synthetic smoke ok |
 | DistanceGradation | none in 20260604 set | yes | complete-ish | not started | n/a |
 | OLMBlur | yes | yes | in progress | C++ CLI works | 3 exact, 4 near-match max=1 |
-| OLMColorKey | yes | yes | new Mac plugin builds | Python + C++ RGB/premult/box/Edge Thin/Edge Blur CLI | C++: 1-4 & 7 exact; 5/6 erode 0.48% off; Edge Blur 8/9 improved but still DIFF; Mac plugin has cases 1-7 kernel |
+| OLMColorKey | yes | yes | new Mac plugin builds | Python + C++ + Rust RGB/premult/box/Edge Thin/Edge Blur CLI | C++: 1-4 & 7 exact; 5/6 erode 0.48% off; Edge Blur C++ now matches Python exploratory residual (`case8 mean=1.0396`, `case9 mean=1.2503`); Mac plugin has cases 1-9 scaffold |
 | OLMDirectionalBlur | yes | yes | new Mac plugin builds | Python + C++ direct/rotated CLI scaffold | front-only/no-noise DIFF; Mac plugin has 8bpc front-only/no-noise direct slice |
 | OLMKiraKira | yes | yes | new Mac plugin builds | Python ray CLI scaffold + C++ native scaffold | Python cases 1/2 improve strongly over identity, C++ scaffold added, Mac plugin has the same 4-ray repeated-box scaffold, still DIFF |
 | OLMRadialBlur | yes | yes | new Mac plugin builds | Python rotation + zoom polar CLI scaffold; C++ Zoom/Rotation/Inner diagnostic CLI | Rotation case_0010 near-match; Zoom 0009 OK in Python and C++; C++ Zoom 0003-0005 OK with Size Variation ignored; Mac plugin has 8bpc Zoom/no-inner/no-noise slice with large-Strength FFT path and Size Variation no-op pass-through; Inner 0011-0013 still DIFF; Repeat Border polar-valid probe is neutral |
@@ -343,18 +343,20 @@ resolved.
 Rust compatibility CLI: `rust/olmcolorkey_cli` and
 `refs/scripts/smoke_olmcolorkey_rust_cli.py` now cover cases 1-9. Results:
 RGB cases 1-4 exact, Edge Thin case5/6 `mean=0.3031`, case7 exact, Edge Blur
-case8 `max=142 mean=1.5386`, case9 `max=255 mean=1.2541`. Case8 matches the
-C++ CLI exactly; case9 exposed a fragile C++ EDT boundary condition. After
-porting the Rust EDT boundary handling back to C++, the C++ CLI now reaches the
-Python exploratory path's `mean=1.2503`. This makes Rust useful as an
-independent, memory-safe algorithm oracle for ColorKey while the AE plug-in
-remains C++/AE SDK.
+case8 `max=79 mean=1.0396`, case9 `max=255 mean=1.2541`. Case8 now matches the
+Python exploratory path after making Edge Blur's Distance Type 1 use Euclidean
+distance in C++/Rust/Mac; case9 exposed a fragile C++ EDT boundary condition
+earlier, and after porting the Rust EDT boundary handling back to C++, the C++
+CLI reaches the Python exploratory path's `mean=1.2503`. This makes Rust useful
+as an independent, memory-safe algorithm oracle for ColorKey while the AE
+plug-in remains C++/AE SDK.
 
-2026-06-05 probe: changing the C++ Edge Blur Distance Type 1 path from the
-current L1 distance to the Python path's Euclidean distance worsened
-`case_0008` from `mean=1.5386` to `mean=1.9652` while `case_0009` stayed
-`mean=1.5398` before the EDT fix. The change was reverted in both C++ CLI and mac plug-in; the
-remaining Python-vs-C++ Edge Blur gap is not a simple Distance Type 1 swap.
+2026-06-06 correction: the current Python Edge Blur path was the better
+measurement for `case_0008`. Aligning C++/Rust/Mac Edge Blur Distance Type 1
+with that path (Euclidean distance to the internal boundary seeds) improves C++
+`case_0008` from `max=142 mean=1.5386` to `max=79 mean=1.0396` while preserving
+`case_0009 mean=1.2503`. The tightened C++/Rust Edge Blur smoke thresholds now
+guard this improvement at `mean<=1.26`.
 
 2026-06-05 C++/Mac update: the C++ Euclidean distance transform used by Edge
 Thin Distance Type 3 now uses the Rust CLI's safer 1D EDT boundary handling.
