@@ -63,6 +63,51 @@ This matches the CLI's `aex_pad_size` formula. The combined
 (`case_0001 mean=4.4483`, `case_0005 mean=1.1703`), so the exact pad/offset
 formula is not the dominant residual either.
 
+## Host Populate / Output Callbacks
+
+Direct `llvm-objdump` over `plugins_2025/OLMDirectionalBlur.aex` confirmed the
+8bpc host callbacks that Ghidra's exported disassembly does not label as
+standalone functions.
+
+Populate callbacks:
+
+- `0x1800068e0`: 16bpc populate. Reads PF pixel words and multiplies each
+  channel by the float constant at `0x18000b33c`.
+- `0x180006980`: 8bpc populate. Reads bytes from the PF pixel in A/R/G/B order:
+  byte 1 -> work R, byte 2 -> work G, byte 3 -> work B, byte 0 -> work A. It
+  divides channels by the float constant at `0x18000b388`.
+- `0x180006a20`: 32bpc populate. Reads floats at byte offsets 4/8/12/0 into
+  work R/G/B/A.
+- All populate callbacks write to `params + 0x8078` and index the padded work
+  buffer as:
+
+```text
+work_index = ((params+0x8098 + y) * *(int *)(params+0x80a0)
+              + (params+0x809c + x)) * 4
+```
+
+Output callbacks:
+
+- `0x180006b30`: 8bpc output. Reads from `params + 0x8090`, multiplies RGB by
+  `BrightnessGain` at `params + 0x28`, clamps RGB to `1.0`, leaves alpha
+  ungained, multiplies by the float constant at `0x18000b388`, and uses
+  `CVTTSS2SI` truncation. It writes alpha to byte 0 and RGB to bytes 1/2/3.
+- `0x180006a90`: 16bpc output has the same shape, using the constant at
+  `0x18000b38c` and writing 16-bit channels.
+- `0x180006bd0`: 32bpc output multiplies/clamps RGB, leaves alpha as the work
+  alpha, and writes floats.
+- Output uses the same padded index formula with `0x8098`, `0x809c`, and
+  `0x80a0`.
+
+Current implication:
+
+- The CLI's centered padded copy/crop and `rotated-aex-trunc-output` diagnostic
+  match these host callback facts closely.
+- The remaining front-only residual is less likely to come from host
+  input/output channel order, centered offsets, or output rounding. Continue at
+  render-context scale mapping or finer `FUN_1800013e0` source/denominator
+  ownership.
+
 ## Row Driver / Component Coefficients
 
 `FUN_1800038d0` is the row driver. It loops rows from `param_1` to `param_2`
