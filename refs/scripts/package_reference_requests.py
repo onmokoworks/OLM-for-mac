@@ -16,6 +16,9 @@ import zipfile
 from pathlib import Path
 
 
+HANDOFF_NAME = "refs/reference_requests/WIN_CODEX_HANDOFF.md"
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -76,6 +79,103 @@ def validate_request(path: Path) -> dict:
     return data
 
 
+def request_summary(data: dict) -> str:
+    effect = data.get("effect", {})
+    effect_name = effect.get("name", "unknown effect")
+    match_name = effect.get("match_name", "")
+    render_sets = data.get("render_sets", [])
+    required_sets = [
+        item.get("project_gpu_accel_type.current_name", item.get("id", "unknown"))
+        for item in render_sets
+        if item.get("required")
+    ]
+    optional_sets = [
+        item.get("project_gpu_accel_type.current_name", item.get("id", "unknown"))
+        for item in render_sets
+        if not item.get("required")
+    ]
+    lines = [
+        f"### {data['request_id']}",
+        "",
+        f"- Effect: `{effect_name}`" + (f" / `{match_name}`" if match_name else ""),
+        f"- Cases: {len(data['cases'])}",
+    ]
+    if required_sets:
+        lines.append(f"- Required render set(s): {', '.join(required_sets)}")
+    if optional_sets:
+        lines.append(f"- Optional render set(s): {', '.join(optional_sets)}")
+
+    why = data.get("why", [])
+    if why:
+        lines.append("- Why: " + str(why[0]))
+
+    cases = data.get("cases", [])
+    if cases:
+        sample_ids = ", ".join(str(case.get("id", "unnamed")) for case in cases[:4])
+        if len(cases) > 4:
+            sample_ids += ", ..."
+        lines.append(f"- Case ids: {sample_ids}")
+
+    followup = data.get("mac_follow_up", data.get("mac_side_followup", []))
+    if followup:
+        lines.append("- Mac follow-up: " + str(followup[0]))
+
+    return "\n".join(lines)
+
+
+def build_handoff(validated: list[tuple[Path, dict]]) -> str:
+    total_cases = sum(len(data["cases"]) for _path, data in validated)
+    lines = [
+        "# Windows Codex Handoff: OLM Reference Requests",
+        "",
+        "You are running on the Windows AE machine. Render the selected OLM Tools",
+        "reference requests in this package and return a packed result zip to the",
+        "Mac porting workspace.",
+        "",
+        "Hard requirements:",
+        "",
+        "- Prefer `project_gpu_accel_type.current_name = SOFTWARE` first.",
+        "- CUDA renders are useful but optional unless a request marks them required.",
+        "- Record `project_gpu_accel_type.current_name` and raw value in the manifest.",
+        "- Keep `ADBE Force CPU GPU` / hidden GPU Rendering as reference-only metadata.",
+        "- Save `before_effects_frame` and the effect output PNG for every case.",
+        "- Record all selected effect property names, match_names, indices, values,",
+        "  and enabled/active state.",
+        "- If a request asks for instrumentation that AE scripting cannot access,",
+        "  record that limitation explicitly rather than inventing a value.",
+        "",
+        f"Selected requests: {len(validated)}",
+        f"Total requested cases before render-set multiplication: {total_cases}",
+        "",
+        "## Request Summaries",
+        "",
+    ]
+    for _path, data in validated:
+        lines.append(request_summary(data))
+        lines.append("")
+
+    lines.extend(
+        [
+            "## Return Shape",
+            "",
+            "Return one zip containing:",
+            "",
+            "- Rendered PNG outputs.",
+            "- Matching `before_effects_frame` PNGs.",
+            "- A manifest JSON with render-set metadata and all effect parameters.",
+            "- Any AE script/log output or error screenshots if a case fails.",
+            "",
+            "The Mac side will import the result with:",
+            "",
+            "```sh",
+            "python3 refs/scripts/import_win_reference.py path/to/returned_reference.zip",
+            "```",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
 def main() -> int:
     args = parse_args()
     root = repo_root()
@@ -104,6 +204,7 @@ def main() -> int:
     with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED) as zf:
         if readme.exists():
             zf.write(readme, readme.relative_to(root))
+        zf.writestr(HANDOFF_NAME, build_handoff(validated))
         for request, _data in validated:
             zf.write(request, request.relative_to(root))
 

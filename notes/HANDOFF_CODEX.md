@@ -558,7 +558,9 @@ Quality別ケースを指定している。`ADBE Force CPU GPU` は参考値の�
 
 2026-06-06 検証導線更新: `refs/scripts/package_reference_requests.py` は
 reference request JSONを検証して `/tmp/olm_reference_requests_YYYYMMDD.zip`
-へ梱包する。さらに `python3 refs/scripts/smoke_all_algorithm_clis.py
+へ梱包する。zipには `refs/reference_requests/WIN_CODEX_HANDOFF.md` も自動生成
+同梱され、Win側Codexへそのまま渡せる hard requirements / request summary /
+return shape を含む。さらに `python3 refs/scripts/smoke_all_algorithm_clis.py
 --profile quick` の先頭で同梱包を実行するようになった。quick profile は
 26 checks になり、`Reference request package` も green gate として通過する。
 検証済みコマンド:
@@ -566,6 +568,7 @@ reference request JSONを検証して `/tmp/olm_reference_requests_YYYYMMDD.zip`
 ```sh
 python3 -m py_compile refs/scripts/smoke_all_algorithm_clis.py refs/scripts/package_reference_requests.py
 python3 refs/scripts/package_reference_requests.py --output /tmp/olm_reference_requests_smoke.zip
+python3 refs/scripts/package_reference_requests.py --only kirakira_single_ray_20260606 --output /tmp/olm_reference_requests_kirakira_only.zip
 python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
 ```
 

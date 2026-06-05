@@ -873,6 +873,10 @@ near-match Zoom baseline for `case_0003..0005`-style settings.
   OLMColorKey Python/C++/Rust, OLMToonDilate Python/C++, OLMDistanceGradation,
   OLMSmoother build, OLMSmoother2 build/v1 compatibility/key paths/Gamma
   Colors, and RadialBlur tiny Rotation / Zoom / Zoom Offset green gates.
+- `refs/scripts/package_reference_requests.py` now includes generated
+  `refs/reference_requests/WIN_CODEX_HANDOFF.md` in the request zip. Both the
+  all-request package and `--only kirakira_single_ray_20260606` package were
+  checked for the handoff file and selected request counts.
 - `scripts/package_mac_plugins.sh --skip-build --output
   /tmp/olm_mac_plugins_test.zip` completed successfully after the verified build.
   The zip manifest parsed as JSON, listed all 10 plug-ins, and points to the
