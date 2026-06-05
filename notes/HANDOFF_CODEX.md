@@ -148,6 +148,10 @@ case3は `1.7023 -> 1.7073` に少し悪化するため、これはOpenCV境界�
 Explicit ROI/`dst=` alias probe also produced the same
 `0.8504/1.1570/1.0514`, so the remaining target is not simple Mat aliasing;
 focus on destination canvas, final composition, or another pre/post ray detail.
+Follow-up C++ `aex-two-temp-direct-back` was strongly negative
+(`10.9852/11.6630/50.6637` vs `aex-two-temp` `0.8506/1.1570/1.0563`), so do
+not model the final descriptor/dsize evidence as a naive final-size rotate-back
+with the rotated temp center.
 同日 C++ `--warp-mode aex-two-temp --axis-fast-path false` は
 `0.8506/1.1570/1.0563` でPython OpenCV probeとほぼ一致。手書きsampler差ではなく、
 0/90度rayのfast pathをAEXが通すかどうかが主な分岐。新規

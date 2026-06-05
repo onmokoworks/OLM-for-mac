@@ -248,6 +248,12 @@ Current interpretation:
   `1.1166/1.3516/5.9944`; final `y+1` `1.1166/1.3708/6.0968`.
   Next target is forward/rotate-back `warpAffine` in-place behavior or the
   exact matrix center/scale details, not final ROI position.
+- A C++ diagnostic `--warp-mode aex-two-temp-direct-back` keeps the corrected
+  two-temp setup but writes the rotate-back warp directly to the final ray
+  size. It is strongly negative: `10.9852/11.6630/50.6637` versus
+  `aex-two-temp` `0.8506/1.1570/1.0563`. So the final descriptor/dsize
+  evidence is not explained by a naive final-size rotate-back using the
+  rotated temp center.
 - A follow-up `--warp-mode aex-two-temp-center-minus-half` subtracts 0.5 from
   the two-temp forward and rotate-back matrix center. It improves only
   `case_0001` (`0.8531 -> 0.8266`) while worsening `case_0002`
