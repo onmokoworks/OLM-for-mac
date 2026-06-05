@@ -1405,6 +1405,13 @@ index modulation, not as a direct alpha attenuation.
 - This removes one ambiguity from the next DirectionalBlur pass: the remaining
   implementation work is not "which final buffer is source?" but faithfully
   reproducing that A/B choreography and the row-driver normalization details.
+- 2026-06-06 stop-condition review: A/B choreography, pad/offset, prepass,
+  exact scatter/rowdriver, component half-height/center/tail, binary alpha,
+  straight RGB, trunc output, truncated span, row init, scale sweep, and sign
+  checks are already covered by probes and are mostly neutral/negative. Current
+  opaque refs cannot separate remaining alpha/source ownership. Do not keep
+  fitting DirectionalBlur via PNG-only sweeps; wait for
+  `refs/reference_requests/directionalblur_context_scale_20260606.json`.
 
 2026-06-05 A/B choreography probe:
 
@@ -2253,6 +2260,13 @@ behavior.
   `Brightness Gain=9.4 / Strength=0`, plus an optional `Glow Rotation=13`
   diagonal sanity case. Use these refs before deeper image-only tuning of
   KiraKira ray order or angle mapping.
+- 2026-06-06 stop-condition review: existing probes already cover boxFilter
+  kernel/anchor/normalize/border, rotate/warp canvas/crop/final ROI/direct-
+  back/two-temp/no-fastpath/half-pixel variants, OpenCV same-destination
+  aliasing, and broad composition/aggregation candidates. Current equal-ray,
+  rotation-zero refs cannot isolate ray order, angle mapping, helper scalar /
+  `length^2`, or single-ray crop behavior, so do not add more KiraKira
+  image-diff toggles until the single-ray request is imported.
 
 2026-06-05 RadialBlur C++ Inner scatter RGB probe:
 

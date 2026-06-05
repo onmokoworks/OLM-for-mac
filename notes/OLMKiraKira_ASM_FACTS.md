@@ -441,6 +441,33 @@ near the current level, use `refs/reference_requests/kirakira_single_ray_2026060
 The current three references cannot isolate ray order, angle mapping, or scalar
 handling by themselves.
 
+### 2026-06-06 stop condition review
+
+Subagent review of the current KiraKira probes found that the remaining
+image-only hypotheses are mostly already covered:
+
+- `boxFilter`: `ksize=(length,1)`, OpenCV anchor, `normalize=true`,
+  `BORDER_REFLECT_101`, and output-depth candidates.
+- rotate/warp: constant border, bilinear sampling, canvas size, crop
+  floor/ceil/round, final ROI one-pixel shifts, direct-back, two-temp,
+  no-fastpath, and center-minus-half.
+- composition/aggregation: `fd90-exact` five-layer aggregation, RGB normalize,
+  and merge candidates are already broad red/neutral probes.
+- Python OpenCV two-temp alias ROI probe is neutral, so simple Mat/ROI
+  same-destination aliasing is not the residual by itself.
+
+One theoretical local probe remains: a C++ build that links real OpenCV and
+calls `warpAffine(srcMat, srcMat, ...)` twice in the exact two-temp order.
+Given the Python OpenCV alias result and the current equal-ray references, this
+is lower priority than getting isolated rays.
+
+Stop condition: do not keep adding KiraKira image-diff toggles against the
+current three references. They all use equal ray lengths and rotation zero, so
+they cannot separate ray order, angle mapping, helper scalar / `length^2`, or
+single-ray crop behavior. Use
+`refs/reference_requests/kirakira_single_ray_20260606.json` before promoting
+another KiraKira implementation change.
+
 ### FUN_181150790 warp/ROI argument audit
 
 2026-06-06 subagent audit confirmed the two-temp helper mapping:

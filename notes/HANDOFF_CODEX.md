@@ -236,6 +236,12 @@ Follow-up audit: all current old Inner / Edge Fade refs have `Size Variation=0`,
 from them. Added
 `refs/reference_requests/radialblur_inner_size_variation_20260606.json`; do not
 keep tuning `+0x40` until nonzero Size Variation refs are imported.
+Second stop-condition review: KiraKira should wait for
+`refs/reference_requests/kirakira_single_ray_20260606.json`; current equal-ray,
+rotation-zero refs cannot isolate ray order/scalar/crop. DirectionalBlur should
+wait for `refs/reference_requests/directionalblur_context_scale_20260606.json`;
+current opaque refs and neutral/negative probes have exhausted useful PNG-only
+tuning.
 2026-06-05 REFLECT_101更新後にも `python3 refs/scripts/smoke_all_algorithm_clis.py`
 を再実行し、exit 0。KiraKira の新baseline
 (`Python 0.8379/1.1627`, `C++ 0.8382/1.1627/1.7073`) と
