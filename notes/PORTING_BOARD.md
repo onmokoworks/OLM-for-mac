@@ -1938,6 +1938,13 @@ behavior.
   `INTER_LINEAR`, no `WARP_INVERSE_MAP`, `BORDER_CONSTANT`, `borderValue=0`.
   This confirms warp border handling is constant-zero even though the
   boxFilter stage uses `BORDER_REFLECT_101`.
+- 2026-06-06 AEX frame-warp probe: added diagnostic `--warp-mode aex-frame`,
+  which writes forward and rotate-back warps directly into the original frame
+  dimensions with center `(width*0.5, height*0.5)`. It is worse:
+  `case_0001 mean=1.4465`, `case_0002 mean=1.9139`,
+  `case_0003 mean=6.9617`, versus baseline `0.8381/1.1623/1.7003`.
+  Therefore the AEX dsize/Rect evidence needs the caller's ROI/temp-Mat
+  placement modeled more exactly; a simple full-frame direct warp is not enough.
 - A temporary CLI probe approximating OpenCV's 5-bit `INTER_LINEAR` table
   (`bilinear-fixed5`) did not improve the current refs:
   `case_0001 mean=0.8384`, `case_0002 mean=1.1624`,

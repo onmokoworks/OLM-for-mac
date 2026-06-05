@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Run OLMKiraKira C++ warp-center probes.
 
-This intentionally red measurement compares the current rotate center with an
-OpenCV-like width*0.5/height*0.5 affine center and min-corner translation.
+This intentionally red measurement compares the current rotate center with
+alternate OpenCV/AEX-style warp canvas hypotheses.
 """
 
 from __future__ import annotations
@@ -58,7 +58,7 @@ def main() -> int:
         return build.returncode
 
     rc = 0
-    for warp_mode in ("current", "opencv-center"):
+    for warp_mode in ("current", "opencv-center", "aex-frame"):
         result = run_probe(root, warp_mode, Path(f"/tmp/olmkirakira_cpp_warp_mode_probe_{warp_mode}"))
         if result != 0:
             rc = result
