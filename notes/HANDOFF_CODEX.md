@@ -116,6 +116,12 @@ Project Settings 差で同一ケースを撮り直して、PNG差分を見るの
 | OLMRadialBlur | ✅/🔎 decomp解析 + Python/C++ Zoom/Rotation CLI + Mac plugin(新) | Rotation `0010` Python/C++ mean 0.0104; broad Python `0001` 1.9039 / `0002` 1.3077; broad C++ `0001` 1.9034 / `0002` 1.3071 after offset port; Zoom `0009` Python max=1 mean=0.0058 OK / C++ max=1 mean=0.0046 OK; C++ Zoom `0003..0005` max=8 mean=0.0059 OK with Size Variation ignored; Inner source-scatter/prepass baseline now measures old Inner `0011/0012/0013` at 25.2972 / 10.6222 / 21.2910; Edge Fade `0024/0025/0027` conditional seed edgefade-none improves means to 5.1129 / 3.9755 / 1.9204 but is red diagnostic due coverage regression; Mac plugin builds universal for 8bpc Zoom plus 8bpc outer-only Rotation/noise-off slice, including FFT fast path and Size Variation no-op pass-through | `notes/OLMRadialBlur_RE.md`, `refs/scripts/olmradialblur_cli.py`, `cli/OLMRadialBlur/main.cpp`, `mac/OLMRadialBlur/` |
 | OLMKiraKira | 🔎 実験CLI + C++ scaffold + Mac plugin(新) | Python OpenCV two-temp probe added: baseline `0.8379/1.1627/1.7073` -> OpenCV primitive `0.8504/1.1570/1.0514`; explicit ROI/`dst=` alias probe is identical, so simple Mat aliasing is not the residual; C++ `aex-two-temp/no-fastpath` `0.8506/1.1570/1.0563`; Mac plugin now uses the same all-ray two-temp candidate path and builds universal、まだ DIFF | `refs/scripts/olmkirakira_cli.py`, `refs/scripts/smoke_olmkirakira_opencv_two_temp_probe_cli.py`, `refs/scripts/smoke_olmkirakira_opencv_two_temp_alias_probe_cli.py`, `cli/OLMKiraKira/main.cpp`, `mac/OLMKiraKira/` |
 
+OLMSmoother2 最新メモ: 2026-06-06 に `--idx0-mode
+none|suppress|half|quarter` 診断を追加し、no-key case_0001を測定。
+`none=0.1832`, `suppress=0.2720`, `half=0.2069`, `quarter=0.2349` で全て悪化。
+`idx=0x00` four-corner weightが単に強すぎる仮説は否定寄り。次は
+class-plane source と `FUN_1800104d0` sample source のplane/timing splitを追う。
+
 OLMKiraKira 最新メモ: `OLMKiraKiraLuminance` vtable は `+0x00 FUN_181150600`,
 `+0x08 FUN_18114fd90`, `+0x10 FUN_18114ffd0`, `+0x18/+0x20` が1を返す小関数。
 `FUN_18114fd90` の最終scale引数は Strength multiplier ではなく Brightness Gain

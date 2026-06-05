@@ -265,6 +265,15 @@ Current conclusion for `case_0001`:
   source/color-space plane timing mismatch. Additional Windows refs are not yet
   mandatory for `case_0001`; if both probes fail, request a no-key/v2/Gamma
   None grid over `Smoothness=0,25,50,100` and `Smooth Range=1,2,3`.
+- 2026-06-06 `idx=0` four-corner diagnostic:
+  `cli/OLMSmoother2/main.cpp` exposes `--idx0-mode
+  none|suppress|half|quarter`, backed by a default-off hook in
+  `mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp`, and
+  `refs/scripts/smoke_olmsmoother2_idx0_probe_cli.py` measures
+  `case_0001`. Results are negative: `none mean=0.1832`,
+  `suppress mean=0.2720`, `half mean=0.2069`, `quarter mean=0.2349`.
+  Therefore the residual is not explained by `idx=0x00` corner weights simply
+  being too strong; continue with the source/class-plane timing split instead.
 
 ## FUN_18000c0d0 / FUN_18000ab00 / FUN_18000b120: Per-Pixel Accumulation
 
