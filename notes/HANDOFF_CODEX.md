@@ -562,9 +562,10 @@ reference request JSONを検証して `/tmp/olm_reference_requests_YYYYMMDD.zip`
 同梱され、Win側Codexへそのまま渡せる hard requirements / request summary /
 return shape を含む。さらに `python3 refs/scripts/smoke_all_algorithm_clis.py
 --profile quick` の先頭で同梱包、返却manifest verifier smoke、pending request
-status checkを実行するようになった。quick profile は28 checks になり、
+status check、AE validation result verifier smokeを実行するようになった。
+quick profile は29 checks になり、
 `Reference request package`, `Reference request result verifier`,
-`Reference request status` も green gate として通過する。
+`Reference request status`, `AE validation result verifier` も green gate として通過する。
 検証済みコマンド:
 
 ```sh
@@ -585,13 +586,16 @@ zip内には `INSTALL.txt`, `AE_VALIDATION_CHECKLIST.txt`,
 manifestには各bundleのSHA-256と `arm64`/`x86_64` 確認情報、install/checklist/
 validation templateファイル名を記録する。返却されたAE検証JSONは
 `python3 scripts/verify_ae_validation_result.py AE_VALIDATION_RESULT.json` で
-schema/plugin load/apply/render完了を検証できる。検証:
+schema/plugin load/apply/render項目を検証でき、全plugin成功をrelease gateに
+する場合は `--require-all-pass` を付ける。検証:
 `bash -n scripts/package_mac_plugins.sh`,
 `python3 -m py_compile scripts/verify_ae_validation_result.py`,
+`python3 refs/scripts/smoke_ae_validation_result_verifier.py`,
 `scripts/package_mac_plugins.sh --skip-build --output /tmp/olm_mac_plugins_test.zip`,
 zip内 `manifest.json` のJSON parse、zip内 `.plugin` 10個確認、
 `AE_VALIDATION_CHECKLIST.txt` と `AE_VALIDATION_RESULT.template.json` 同梱確認、
-未記入templateの `--allow-incomplete` 検証、全plugin成功扱いJSONの通常検証はいずれも成功。
+未記入templateの `--allow-incomplete` 検証、全plugin成功扱いJSONの
+`--require-all-pass` 検証、失敗を含むactionable JSONのschema検証はいずれも成功。
 
 ## 4. このセッションで触ったファイル
 
@@ -624,7 +628,7 @@ zip内 `manifest.json` のJSON parse、zip内 `.plugin` 10個確認、
 
 ```sh
 cd "/Users/onmk/Documents/Projects/Personal/OLM as"
-python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick # green gates only; 2026-06-06 OK (28 checks, includes reference request package/result verifier/status)
+python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick # green gates only; 2026-06-06 OK (29 checks, includes reference request package/result verifier/status and AE validation verifier)
 refs/scripts/build_olmblur_cli.sh && refs/scripts/build_olmsmoother_cli.sh && refs/scripts/build_olmtoondilate_cli.sh && refs/scripts/build_olmradialblur_cli.sh
 refs/scripts/build_olmkirakira_cli.sh              # OLMKiraKira C++ scaffold
 scripts/build_all_mac_plugins.sh                  # Mac plugins: build + universal/codesign verify
