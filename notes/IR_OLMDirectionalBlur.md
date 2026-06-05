@@ -182,6 +182,10 @@ Rejected interpretations:
 - destination component coefficient: worsens `case_0005`
 - direct alpha attenuation by coefficient: worsens `case_0005`
 - alpha-sum final output: essentially no useful improvement
+- zero-denominator row-driver initialization is negative in the current CLI
+  scaffold. `straight-zero` and `premul-zero` both report
+  `case_0001 mean=4.4702`, `case_0005 mean=1.1762`; fully zeroed output is
+  worse (`case_0001 mean=4.5240`, `case_0005 mean=1.4931`).
 
 ### Normalize And Rotate Back
 
@@ -208,6 +212,9 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 | rotated-front-strength-preserve-alpha | 4.0897 | 1.1927 | best combined front-only diagnostic |
 | rotated-aex-choreo | 4.4483 | 1.1703 | positive A/B input-rotate signal |
 | rotated-aex-full-choreo | 4.4483 | 1.1703 | output-side padded A writeback is neutral |
+| rotated-aex-row-init-straight-zero | 4.4702 | 1.1762 | zero denominator / retained straight B is negative |
+| rotated-aex-row-init-premul-zero | 4.4702 | 1.1762 | zero denominator / retained premul B is negative |
+| rotated-aex-row-init-zero | 4.5240 | 1.4931 | cleared B+denom is strongly negative |
 | rotated-rowdriver-prepass | 4.7505 | 1.3802 | negative alpha-fade prepass |
 | rotated-rowdriver-prepass-init | 4.7724 | 1.3862 | negative copied-buffer/init hypothesis |
 
@@ -228,9 +235,10 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 
 1. Refactor `render_rotated` behind an explicit buffer/state model matching
    `A`, `B`, `denom`, `alpha_or_valid`, and `component_map`.
-2. Implement the full row-driver ownership:
-   `populate A -> rotate A into B -> copy B to A -> row-driver reads A and
-   writes B/denom -> normalize B`.
+2. Inspect `FUN_1800013e0` and `FUN_1800038d0` argument mapping for source RGB,
+   alpha/validity, output RGB, denominator, and output alpha. Current
+   zero-denominator probes are negative, so the next gap is more likely helper
+   scatter semantics or host edge handling than simple B/denom initialization.
 3. Re-measure `case_0001` and `case_0005`.
 4. If angle-0 remains around `mean=4`, inspect `LAB_1800068e0` host-populate
    callback and host-output callback `LAB_180006a90` before more parameter

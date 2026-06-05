@@ -836,6 +836,16 @@ It matches `rotated-aex-choreo` on the tracked front-only cases
 ownership alone does not explain the residual. Next focus remains row-driver
 `A/B/denom` ownership or the host populate/output callbacks.
 
+2026-06-06 row-init diagnostic: added `rotated-aex-row-init-straight-zero`,
+`rotated-aex-row-init-premul-zero`, and `rotated-aex-row-init-zero`, all covered
+by `refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_row_init_probe_cli.py`.
+Zero-denominator initialization is negative in the current full A/B scaffold:
+straight/premul retained `B` both measure `case_0001 mean=4.4702`,
+`case_0005 mean=1.1762`; fully zeroed `B+denom` worsens to
+`case_0001 mean=4.5240`, `case_0005 mean=1.4931`. Keep the next focus on
+`FUN_1800013e0`/`FUN_1800038d0` source/validity/output argument semantics or
+host edge callbacks, not another simple denominator-init toggle.
+
 Parameter reader mapping from `FUN_180006c50`:
 
 - param 1 / match `0001`: Angle, converted from degrees to radians.
