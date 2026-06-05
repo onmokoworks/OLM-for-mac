@@ -1931,6 +1931,13 @@ behavior.
   `case_0001/0002/0003 mean=0.8381/1.1623/1.7003`, so the remaining mismatch is
   not a simple final center-crop rounding issue. Continue at caller-generated
   `Rect` values and exact `warpAffine` dsize/center semantics.
+- 2026-06-06 warpAffine detail: `FUN_181297ac0` maps `param_5 & 7` to the
+  interpolation mode and checks `param_5 & 0x10` before internally inverting the
+  affine matrix. KiraKira passes `param_5=1`, `param_6=0`, and a zero scalar
+  pointer for both forward and rotate-back calls, i.e. OpenCV
+  `INTER_LINEAR`, no `WARP_INVERSE_MAP`, `BORDER_CONSTANT`, `borderValue=0`.
+  This confirms warp border handling is constant-zero even though the
+  boxFilter stage uses `BORDER_REFLECT_101`.
 - A temporary CLI probe approximating OpenCV's 5-bit `INTER_LINEAR` table
   (`bilinear-fixed5`) did not improve the current refs:
   `case_0001 mean=0.8384`, `case_0002 mean=1.1624`,
