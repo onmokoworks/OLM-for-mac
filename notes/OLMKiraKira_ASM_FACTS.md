@@ -61,6 +61,12 @@ Inside `FUN_181150790`:
   `cv::warpAffine` strings and argument checks.
 - `181150f3d..18115105d` rotates back through another `FUN_1811512a0`,
   `FUN_181157ed0`, `FUN_181297ac0`, and `FUN_18115cfb0` sequence.
+- `FUN_1811512a0` delegates matrix construction to `FUN_1812943d0`, which
+  matches OpenCV `cv::getRotationMatrix2D_`:
+  `angle *= pi/180`, `alpha = scale * cos(angle)`,
+  `beta = scale * sin(angle)`, then it writes
+  `[alpha, beta, (1-alpha)*cx - beta*cy; -beta, alpha,
+  beta*cx + (1-alpha)*cy]`.
 
 ## Blur Mode 2: cv::boxFilter Calls
 
@@ -145,9 +151,16 @@ Current interpretation:
 
 - Existing probes show `rotate_border=constant` is slightly better than the old
   edge-clamp rule, and `rotate_filter=bilinear` beats the C++ bicubic proxy.
+- A C++ diagnostic `--warp-mode aex-getrot` implements the observed
+  `getRotationMatrix2D_` formula with an output-center hypothesis and
+  `warpAffine`-style inverse mapping. It is strongly negative on current refs:
+  `case_0001 mean=5.9449`, `case_0002 mean=6.6790`,
+  `case_0003 mean=27.6616`, versus baseline
+  `0.8381/1.1623/1.7003`.
 - The remaining residual is more likely exact OpenCV 4.5.5 `warpAffine`
-  sampling/rounding or another pre/post ray detail than a simple boxFilter
-  argument mismatch.
+  source/destination Mat/ROI placement, dsize/crop behavior, sampling/rounding,
+  or another pre/post ray detail than a simple boxFilter argument mismatch or a
+  naive getRotationMatrix2D center swap.
 
 ## Rotate Canvas / dsize
 
