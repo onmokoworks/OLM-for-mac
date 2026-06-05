@@ -71,7 +71,7 @@ def main() -> int:
     root = Path(__file__).resolve().parents[2]
     py = sys.executable
     smokes = [
-        Smoke("Reference request package", [py, "refs/scripts/package_reference_requests.py", "--output", "/tmp/olm_reference_requests_smoke.zip"]),
+        Smoke("Reference request package", [py, "refs/scripts/package_reference_requests.py", "--pending", "--output", "/tmp/olm_reference_requests_smoke.zip"]),
         Smoke("Reference request result verifier", [py, "refs/scripts/smoke_reference_request_result_verifier.py"]),
         Smoke("Reference request status", [py, "refs/scripts/check_reference_request_status.py"]),
         Smoke("harness", [py, "refs/scripts/smoke_algorithm_harness.py"]),

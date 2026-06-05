@@ -569,7 +569,7 @@ status checkを実行するようになった。quick profile は28 checks に�
 
 ```sh
 python3 -m py_compile refs/scripts/smoke_all_algorithm_clis.py refs/scripts/package_reference_requests.py refs/scripts/verify_reference_request_result.py refs/scripts/smoke_reference_request_result_verifier.py refs/scripts/check_reference_request_status.py
-python3 refs/scripts/package_reference_requests.py --output /tmp/olm_reference_requests_smoke.zip
+python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_smoke.zip
 python3 refs/scripts/package_reference_requests.py --only kirakira_single_ray_20260606 --output /tmp/olm_reference_requests_kirakira_only.zip
 python3 refs/scripts/smoke_reference_request_result_verifier.py
 python3 refs/scripts/check_reference_request_status.py

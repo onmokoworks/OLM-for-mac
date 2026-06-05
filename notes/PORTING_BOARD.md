@@ -886,7 +886,7 @@ near-match Zoom baseline for `case_0003..0005`-style settings.
 - `refs/scripts/check_reference_request_status.py` reports each request as
   `covered`, `partial`, or `pending` by scanning `refs/win_references/**`.
   Current status is all five request JSONs pending, and the command prints the
-  exact `package_reference_requests.py --only ...` handoff command.
+  exact `package_reference_requests.py --pending` handoff command.
 - `scripts/package_mac_plugins.sh --skip-build --output
   /tmp/olm_mac_plugins_test.zip` completed successfully after the verified build.
   The zip manifest parsed as JSON, listed all 10 plug-ins, and points to the
