@@ -513,6 +513,27 @@ B[p].a = gathered_alpha
 - This makes a simple global-tail plus component-tail double-application
   unlikely to be the leading residual on the tracked front-only refs.
 
+2026-06-06 Size Variation scale audit:
+
+- Parameter setup at `180006dd7..180006dea` divides the UI integer by
+  `DAT_18000b384` before storing `params+0x30`.
+- Direct PE read of `plugins_2025/OLMDirectionalBlur.aex` at RVA `0xb384`
+  shows bytes `00 00 c8 42`, i.e. float `100.0`.
+- Therefore the C++ CLI parse `size_variation / 100.0` is binary-confirmed and
+  should not be treated as a tunable residual source.
+
+2026-06-06 binary-alpha diagnostic:
+
+- Added `rotated-aex-binary-alpha` to test whether `FUN_1800013e0`'s
+  `param_7`/`alpha_or_valid` side-channel behaves like a binary source-validity
+  mask instead of continuous alpha on the tracked front-only refs.
+- This keeps the full A/B choreography and only replaces the scatter
+  `source_alpha[p]` side-channel with `rotated_alpha > 0 ? 1 : 0`.
+- Measurement is neutral/negative against `rotated-aex-full-choreo`:
+  `case_0001 mean=4.4483`, `case_0005 mean=1.1753`.
+- This makes a simple binary-validity interpretation of the scatter
+  side-channel unlikely to explain the current front-only residual.
+
 2026-06-05 diagnostic:
 
 - Added C++ CLI algorithm `--algorithm rotated-aex-choreo` to test the first
