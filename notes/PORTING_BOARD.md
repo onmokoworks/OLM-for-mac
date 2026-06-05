@@ -240,6 +240,30 @@ single smoke target. Otherwise keep subagents read-only and have the parent
 agent integrate the finding into `notes/*_ASM_FACTS.md`, CLI diagnostics, and
 `smoke_all_algorithm_clis.py`.
 
+2026-06-06 continuation audit: four read-only subagents reran the stop-condition
+review for `OLMDirectionalBlur`, `OLMRadialBlur`, `OLMKiraKira`, and
+`OLMSmoother2`. All four independently reported that current references are
+still useful as regression checks, but not sufficient for more non-guesswork
+algorithm promotion on the unresolved paths:
+
+- `OLMDirectionalBlur`: A/B choreography and row-driver ownership are the best
+  current IR, but `rotated-aex-full-choreo` / `rotated-aex-exact-rowdriver`
+  remain red around `case_0001 mean~=4.44`. Need
+  `directionalblur_context_scale_20260606` to replace `--strength-scale auto`
+  with recorded `ctx_render_scale` and separate opaque/alpha behavior.
+- `OLMRadialBlur`: Zoom, Zoom Offset, and tiny Rotation remain green; Inner and
+  EdgeFade remain blocked because all current Inner/EdgeFade refs have
+  `Size Variation=0`, `Noise Variation=0`, and `Noise Layer=0`. Need
+  `radialblur_inner_size_variation_20260606` before more `+0x40` tuning.
+- `OLMKiraKira`: all-ray two-temp/no-fastpath remains the best address-backed
+  candidate (`0.8506/1.1570/1.0563`), but the three current refs all have equal
+  ray lengths and `Glow Rotation=0`. Need `kirakira_single_ray_20260606` before
+  ray order, helper scalar, angle mapping, or crop behavior can be separated.
+- `OLMSmoother2`: v1 is effectively covered by `OLMSmoother2 --force-version 1`
+  (`0.0055/0.0051/0.0200`). V2 key paths are green/near-green, but no-key
+  `case_0001` remains `mean=0.1832`; `idx0` and plane-split diagnostics both
+  worsened. Need `smoother2_no_key_grid_20260606` before more no-key tuning.
+
 ## Next Integration Target
 
 Pick the first plug-in with:
