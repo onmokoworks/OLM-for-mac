@@ -1729,6 +1729,34 @@ behavior.
   `warpAffine` pixel sampling/interpolation, OpenCV border behavior in the
   rotated intermediate, or another pre/post ray detail.
 
+2026-06-05 KiraKira asm-first boxFilter/warpAffine note:
+
+- Added `notes/OLMKiraKira_ASM_FACTS.md` as the dedicated objdump fact log for
+  this plugin. Keep using `notes/PORTING_BOARD.md` for progress and
+  measurements, but put address-level call evidence in the dedicated facts
+  page.
+- `FUN_181150790` Blur Mode 2 calls `FUN_181280bc0` (`cv::boxFilter`) three
+  times. The asm at `18115110a..18115116f`, `181151174..1811511c2`, and
+  `1811511c7..181151215` maps to `ddepth=dst.type&7`,
+  `ksize=(length,1)`, `anchor=(-1,-1)`, `borderType=4`, and a one-byte
+  normalize flag from `[RBP+0x1a0]`.
+- `borderType=4` is OpenCV `BORDER_REFLECT_101`, matching the current C++
+  smoke's `--filter-border mirror`. The existing negative probes for
+  `box-size=radius`, alternate anchors, `normalize=false`, and `u8-each`
+  are now also supported by the asm call shape rather than just image diffs.
+- `FUN_181297ac0` is the OpenCV `cv::warpAffine` wrapper. The two ray-helper
+  calls at `1811508d7..181150941` and `181150f80..181150ff8` pass
+  `flags=1` (`INTER_LINEAR`), `borderMode=0` (`BORDER_CONSTANT`), and a zero
+  scalar. Remaining KiraKira residual is therefore more likely exact OpenCV
+  4.5.5 `warpAffine` destination canvas / dsize / crop behavior, or another
+  pre/post ray detail, than a simple `boxFilter` argument mismatch.
+- A temporary CLI probe approximating OpenCV's 5-bit `INTER_LINEAR` table
+  (`bilinear-fixed5`) did not improve the current refs:
+  `case_0001 mean=0.8384`, `case_0002 mean=1.1624`,
+  `case_0003 mean=1.7034`, versus baseline `0.8381/1.1623/1.7003`.
+  The probe code was removed; keep the negative result as evidence that a
+  naive fixed-5 sampler is not the missing piece.
+
 2026-06-05 RadialBlur C++ Inner scatter RGB probe:
 
 - Fixed a latent C++ source-scatter probe wrap bug in
