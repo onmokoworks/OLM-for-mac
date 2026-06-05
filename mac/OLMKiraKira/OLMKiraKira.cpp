@@ -163,71 +163,57 @@ static float SampleBilinearZero(const std::vector<float> &input, A_long width, A
 	return (float)(a * (1.0 - ty) + b * ty);
 }
 
-static std::vector<float> RotateImage(
+static std::vector<float> WarpGetRotDirect(
 	const std::vector<float> &input,
-	A_long width,
-	A_long height,
-	double angle_deg,
-	A_long &out_width,
-	A_long &out_height)
+	A_long src_width,
+	A_long src_height,
+	A_long dst_width,
+	A_long dst_height,
+	double center_x,
+	double center_y,
+	double angle_deg)
 {
 	const double pi = 3.14159265358979323846;
-	double rad = angle_deg * pi / 180.0;
-	double c = std::cos(rad);
-	double s = std::sin(rad);
-	double bounds[4][2] = {
-		{0.0, 0.0},
-		{(double)height, 0.0},
-		{0.0, (double)width},
-		{(double)height, (double)width},
-	};
-	double min_oy = 1.0e30, min_ox = 1.0e30, max_oy = -1.0e30, max_ox = -1.0e30;
-	for (auto &corner : bounds) {
-		const double y = corner[0];
-		const double x = corner[1];
-		const double oy = y * c + x * s;
-		const double ox = -y * s + x * c;
-		min_oy = std::min(min_oy, oy);
-		max_oy = std::max(max_oy, oy);
-		min_ox = std::min(min_ox, ox);
-		max_ox = std::max(max_ox, ox);
-	}
-	out_width = (A_long)((max_ox - min_ox) + 0.5);
-	out_height = (A_long)((max_oy - min_oy) + 0.5);
-	std::vector<float> output((size_t)out_width * out_height);
-	double cx = ((double)width - 1.0) * 0.5;
-	double cy = ((double)height - 1.0) * 0.5;
-	double ocx = ((double)out_width - 1.0) * 0.5;
-	double ocy = ((double)out_height - 1.0) * 0.5;
-	for (A_long y = 0; y < out_height; ++y) {
-		for (A_long x = 0; x < out_width; ++x) {
-			double ox = (double)x - ocx;
-			double oy = (double)y - ocy;
-			double sx = ox * c + oy * s + cx;
-			double sy = -ox * s + oy * c + cy;
-			output[(size_t)y * out_width + x] = SampleBilinearZero(input, width, height, sx, sy);
+	const double rad = angle_deg * pi / 180.0;
+	const double alpha = std::cos(rad);
+	const double beta = std::sin(rad);
+	const double m00 = alpha;
+	const double m01 = beta;
+	const double m02 = (1.0 - alpha) * center_x - beta * center_y;
+	const double m10 = -beta;
+	const double m11 = alpha;
+	const double m12 = beta * center_x + (1.0 - alpha) * center_y;
+	const double det = m00 * m11 - m01 * m10;
+	std::vector<float> output((size_t)dst_width * dst_height);
+	for (A_long y = 0; y < dst_height; ++y) {
+		for (A_long x = 0; x < dst_width; ++x) {
+			const double dx = (double)x - m02;
+			const double dy = (double)y - m12;
+			const double sx = (m11 * dx - m01 * dy) / det;
+			const double sy = (-m10 * dx + m00 * dy) / det;
+			output[(size_t)y * dst_width + x] = SampleBilinearZero(input, src_width, src_height, sx, sy);
 		}
 	}
 	return output;
 }
 
-static std::vector<float> CropCenter(
+static std::vector<float> CopyCenteredRoi(
 	const std::vector<float> &input,
-	A_long in_width,
-	A_long in_height,
-	A_long width,
-	A_long height)
+	A_long src_width,
+	A_long src_height,
+	A_long dst_width,
+	A_long dst_height)
 {
-	std::vector<float> output((size_t)width * height);
-	A_long x0 = std::max<A_long>(0, (in_width - width) / 2);
-	A_long y0 = std::max<A_long>(0, (in_height - height) / 2);
-	for (A_long y = 0; y < height; ++y) {
-		A_long sy = y + y0;
-		if (sy < 0 || sy >= in_height) continue;
-		for (A_long x = 0; x < width; ++x) {
-			A_long sx = x + x0;
-			if (sx < 0 || sx >= in_width) continue;
-			output[(size_t)y * width + x] = input[(size_t)sy * in_width + sx];
+	std::vector<float> output((size_t)dst_width * dst_height);
+	const A_long x0 = (A_long)((float)src_width * 0.5f) - dst_width / 2;
+	const A_long y0 = (A_long)((float)src_height * 0.5f) - dst_height / 2;
+	for (A_long y = 0; y < dst_height; ++y) {
+		const A_long sy = y + y0;
+		if (sy < 0 || sy >= src_height) continue;
+		for (A_long x = 0; x < dst_width; ++x) {
+			const A_long sx = x + x0;
+			if (sx < 0 || sx >= src_width) continue;
+			output[(size_t)y * dst_width + x] = input[(size_t)sy * src_width + sx];
 		}
 	}
 	return output;
@@ -242,14 +228,19 @@ static std::vector<float> RotatedAxisBoxBlur(
 	A_long passes)
 {
 	if (length <= 1) return input;
-	if (angle_deg == 0.0) return DirectionBoxBlur(input, width, height, length, 1, 0, passes);
-	if (angle_deg == 90.0) return DirectionBoxBlur(input, width, height, length, 0, 1, passes);
-	A_long rw = 0, rh = 0;
-	std::vector<float> rotated = RotateImage(input, width, height, angle_deg, rw, rh);
-	std::vector<float> blurred = DirectionBoxBlur(rotated, rw, rh, length, 1, 0, passes);
-	A_long bw = 0, bh = 0;
-	std::vector<float> restored = RotateImage(blurred, rw, rh, -angle_deg, bw, bh);
-	return CropCenter(restored, bw, bh, width, height);
+	const double pi = 3.14159265358979323846;
+	const double rad = angle_deg * pi / 180.0;
+	const double ac = std::abs(std::cos(rad));
+	const double as = std::abs(std::sin(rad));
+	const A_long rw = std::max<A_long>(width + 4, (A_long)((double)width * ac + (double)height * as + 0.5));
+	const A_long rh = std::max<A_long>(height + 4, (A_long)((double)width * as + (double)height * ac + 0.5));
+	const double temp_cx = (double)rw * 0.5;
+	const double temp_cy = (double)rh * 0.5;
+	std::vector<float> temp_a = CopyCenteredRoi(input, width, height, rw, rh);
+	temp_a = WarpGetRotDirect(temp_a, rw, rh, rw, rh, temp_cx, temp_cy, angle_deg);
+	std::vector<float> temp_b = DirectionBoxBlur(temp_a, rw, rh, length, 1, 0, passes);
+	temp_b = WarpGetRotDirect(temp_b, rw, rh, rw, rh, temp_cx, temp_cy, -angle_deg);
+	return CopyCenteredRoi(temp_b, rw, rh, width, height);
 }
 
 static void AddColoredUnion(

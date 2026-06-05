@@ -2128,6 +2128,17 @@ behavior.
   `case_0003 mean=1.0563`. This is useful as a case3 diagnostic, but the ASM
   evidence favors all-ray two-temp/no-fastpath over a Strength-specific fast
   path rule.
+- Ported the all-ray two-temp/no-fastpath candidate to
+  `mac/OLMKiraKira/OLMKiraKira.cpp`: the Mac plugin now uses centered temp-A
+  ROI copy, in-place-style forward `getRotationMatrix2D` warp, horizontal
+  REFLECT_101 box passes into temp-B, rotate-back, and centered final ROI copy
+  for all four rays, including 0/90-degree rays. This mirrors the current
+  best AEX-faithful C++ candidate, not the old direct-axis fast path.
+- Verification: `xcodebuild -project mac/OLMKiraKira/Mac/OLMKiraKira.xcodeproj
+  -configuration Debug build` succeeded; the built plugin is universal
+  x86_64/arm64 and `codesign --verify` succeeds. C++ red probe
+  `smoke_olmkirakira_cpp_two_temp_no_fastpath_probe_cli.py` still reports
+  `0.8506/1.1570/1.0563`.
 
 2026-06-05 RadialBlur C++ Inner scatter RGB probe:
 
