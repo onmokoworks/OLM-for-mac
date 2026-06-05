@@ -615,6 +615,32 @@ float sample_bilinear_constant(const std::vector<float> &input, int width, int h
     return static_cast<float>(a * (1.0 - ty) + b * ty);
 }
 
+float sample_bilinear_constant_fixed5(const std::vector<float> &input, int width, int height, double x, double y) {
+    int x0 = static_cast<int>(std::floor(x));
+    int y0 = static_cast<int>(std::floor(y));
+    int fx = static_cast<int>(std::lround((x - static_cast<double>(x0)) * 32.0));
+    int fy = static_cast<int>(std::lround((y - static_cast<double>(y0)) * 32.0));
+    if (fx >= 32) {
+        fx = 0;
+        ++x0;
+    }
+    if (fy >= 32) {
+        fy = 0;
+        ++y0;
+    }
+    const int x1 = x0 + 1;
+    const int y1 = y0 + 1;
+    const double tx = static_cast<double>(fx) / 32.0;
+    const double ty = static_cast<double>(fy) / 32.0;
+    float v00 = sample_zero(input, width, height, x0, y0);
+    float v10 = sample_zero(input, width, height, x1, y0);
+    float v01 = sample_zero(input, width, height, x0, y1);
+    float v11 = sample_zero(input, width, height, x1, y1);
+    double a = v00 * (1.0 - tx) + v10 * tx;
+    double b = v01 * (1.0 - tx) + v11 * tx;
+    return static_cast<float>(a * (1.0 - ty) + b * ty);
+}
+
 double cubic_weight(double x) {
     x = std::abs(x);
     if (x < 1.0) return ((-0.5 * x + 1.5) * x - 1.5) * x + 1.0;
@@ -692,6 +718,8 @@ std::vector<float> rotate_image(
                 const double sy = -dx * s + dy * c + cy;
                 if (rotate_filter == "bicubic") {
                     output[static_cast<size_t>(y) * out_width + x] = sample_bicubic_zero(input, width, height, sx, sy);
+                } else if (rotate_filter == "bilinear-fixed5") {
+                    output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed5(input, width, height, sx, sy);
                 } else if (rotate_border == "constant") {
                     output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant(input, width, height, sx, sy);
                 } else {
@@ -756,6 +784,8 @@ std::vector<float> rotate_image(
                 const double sy = (-m10 * dx + m00 * dy) / det;
                 if (rotate_filter == "bicubic") {
                     output[static_cast<size_t>(y) * out_width + x] = sample_bicubic_zero(input, width, height, sx, sy);
+                } else if (rotate_filter == "bilinear-fixed5") {
+                    output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed5(input, width, height, sx, sy);
                 } else if (rotate_border == "constant") {
                     output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant(input, width, height, sx, sy);
                 } else {
@@ -773,6 +803,8 @@ std::vector<float> rotate_image(
             double sy = -ox * s + oy * c + cy;
             if (rotate_filter == "bicubic") {
                 output[static_cast<size_t>(y) * out_width + x] = sample_bicubic_zero(input, width, height, sx, sy);
+            } else if (rotate_filter == "bilinear-fixed5") {
+                output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed5(input, width, height, sx, sy);
             } else if (rotate_border == "constant") {
                 output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant(input, width, height, sx, sy);
             } else {
@@ -815,6 +847,8 @@ std::vector<float> warp_getrot_direct(
             const double sy = (-m10 * dx + m00 * dy) / det;
             if (rotate_filter == "bicubic") {
                 output[static_cast<size_t>(y) * dst_width + x] = sample_bicubic_zero(input, src_width, src_height, sx, sy);
+            } else if (rotate_filter == "bilinear-fixed5") {
+                output[static_cast<size_t>(y) * dst_width + x] = sample_bilinear_constant_fixed5(input, src_width, src_height, sx, sy);
             } else if (rotate_border == "constant") {
                 output[static_cast<size_t>(y) * dst_width + x] = sample_bilinear_constant(input, src_width, src_height, sx, sy);
             } else {
@@ -1103,8 +1137,9 @@ Options parse_args(int argc, char **argv) {
             }
         } else if (key == "--rotate-filter") {
             args.rotate_filter = need_value("--rotate-filter");
-            if (args.rotate_filter != "bilinear" && args.rotate_filter != "bicubic") {
-                throw std::runtime_error("--rotate-filter must be bilinear or bicubic");
+            if (args.rotate_filter != "bilinear" && args.rotate_filter != "bicubic" &&
+                args.rotate_filter != "bilinear-fixed5") {
+                throw std::runtime_error("--rotate-filter must be bilinear, bicubic, or bilinear-fixed5");
             }
         } else if (key == "--rotate-border") {
             args.rotate_border = need_value("--rotate-border");
@@ -1150,7 +1185,7 @@ Options parse_args(int argc, char **argv) {
         } else if (key == "--filter-border" || key == "--ray-mode") {
             (void)need_value(key.c_str());
         } else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--rotate-filter bilinear|bicubic] [--rotate-border edge|constant] [--warp-mode current|opencv-center|aex-getrot|aex-direct-back] [--rotate-size-mode round|floor|ceil|aex-min4] [--axis-fast-path true|false] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five]\n");
+            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--rotate-filter bilinear|bicubic|bilinear-fixed5] [--rotate-border edge|constant] [--warp-mode current|opencv-center|aex-getrot|aex-direct-back] [--rotate-size-mode round|floor|ceil|aex-min4] [--axis-fast-path true|false] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);

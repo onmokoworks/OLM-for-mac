@@ -196,6 +196,12 @@ Current interpretation:
   baseline residual (`case_0001 mean=0.8381`, `case_0002 mean=1.1623`,
   `case_0003 mean=1.7003`), so the current mismatch is not explained by a
   trivial final center-crop rounding choice.
+- A C++ diagnostic `--rotate-filter bilinear-fixed5` quantizes bilinear
+  fractions to an OpenCV-style 5-bit subpixel grid. It does not improve the
+  refs: `case_0001 mean=0.8384`, `case_0002 mean=1.1624`,
+  `case_0003 mean=1.7034`, versus baseline `0.8381/1.1623/1.7003`.
+  So the current residual is not explained by adding 1/32 interpolation-table
+  quantization alone.
 
 ## Rotate Canvas / dsize
 

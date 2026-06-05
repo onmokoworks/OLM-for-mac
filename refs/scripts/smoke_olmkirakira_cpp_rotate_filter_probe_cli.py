@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Run OLMKiraKira C++ rotation filter probes.
 
-This intentionally red measurement checks whether a portable bicubic
-rotate-back approximation moves the native CLI in the same direction as the
-Python SciPy rotate-order probe.
+This intentionally red measurement checks whether alternate portable
+warpAffine interpolation approximations move the native CLI toward the
+Windows reference.
 """
 
 from __future__ import annotations
@@ -58,7 +58,7 @@ def main() -> int:
         return build.returncode
 
     rc = 0
-    for rotate_filter in ("bilinear", "bicubic"):
+    for rotate_filter in ("bilinear", "bicubic", "bilinear-fixed5"):
         result = run_probe(root, rotate_filter, Path(f"/tmp/olmkirakira_cpp_rotate_filter_probe_{rotate_filter}"))
         if result != 0:
             rc = result
