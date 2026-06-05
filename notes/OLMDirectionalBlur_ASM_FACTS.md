@@ -248,6 +248,23 @@ Address facts from the main `FUN_180003c90` no-noise/front-only branch:
 18000489d  MOV qword ptr [RBX + 0x8090],R15
 ```
 
+- Direct `objdump` of the callback gap confirms the 8bpc output callback at
+  `180006b30` / 16bpc at `180006a90` / float at `180006bd0`. The 8bpc callback
+  reads from `params+0x8090`, indexes with `params+0x8098`/`0x809c` offsets and
+  `params+0x80a0` stride, multiplies RGB by `BrightnessGain` at `params+0x28`,
+  clamps RGB to `1.0`, leaves alpha un-gained, multiplies by `255`, then uses
+  `CVTTSS2SI` truncation rather than round-to-nearest.
+
+```asm
+180006b30  MOV R9,qword ptr [RCX + 0x8090]
+180006b37  MOVSS XMM5,dword ptr [RCX + 0x28]   ; BrightnessGain
+180006b70  MULSS XMM5,dword ptr [R9 + RCX*4]   ; R * gain
+180006b84  MINSS XMM5,XMM0                     ; clamp RGB <= 1
+180006b88  MOVSS XMM3,dword ptr [R9 + RCX*4 + 0xc] ; alpha, no gain
+180006ba0  MULSS XMM5,XMM1                     ; *255
+180006ba8  CVTTSS2SI EAX,XMM5                  ; truncate
+```
+
 Current implication:
 
 - The final rotate-back source is the normalized second RGBA work buffer, not
@@ -258,6 +275,10 @@ Current implication:
   useful negative evidence, but the next faithful implementation pass should
   mirror this explicit A -> rotate into B -> copy B back to A -> row-driver
   writes/normalizes B -> clear A -> rotate B back into A -> output A order.
+- Final output quantization should be truncating for faithful AEX output, but a
+  `rotated-aex-trunc-output` probe is mixed/minor on current refs
+  (`case_0001 mean=4.4438`, `case_0005 mean=1.1736`), so quantization is not
+  the dominant residual.
 
 2026-06-06 row-initialization diagnostic:
 
