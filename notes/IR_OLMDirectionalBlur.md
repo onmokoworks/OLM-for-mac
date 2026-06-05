@@ -129,6 +129,10 @@ Current probe status:
   `1..effective_span-1`) instead of the previous float threshold. It gives only
   a tiny case1 improvement and worsens case5, so integer span truncation is an
   AEX fact but not the remaining dominant residual.
+- `rotated-aex-trunc-output` matches the host-output callback's final
+  conversion (`clamp * 255`, then `CVTTSS2SI` truncation). It improves case1
+  slightly but worsens case5 slightly, so output quantization is another AEX
+  fact rather than the main structural residual.
 
 ### Component Map
 
@@ -224,6 +228,7 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 | rotated-aex-choreo | 4.4483 | 1.1703 | positive A/B input-rotate signal |
 | rotated-aex-full-choreo | 4.4483 | 1.1703 | output-side padded A writeback is neutral |
 | rotated-aex-prepass-full-choreo | 4.4483 | 1.1703 | center prepass + full A/B is neutral |
+| rotated-aex-trunc-output | 4.4438 | 1.1736 | exact output truncation is mixed/minor |
 | rotated-aex-truncated-span | 4.4467 | 1.1749 | exact integer span gate is mixed/minor |
 | rotated-aex-row-init-straight-zero | 4.4702 | 1.1762 | zero denominator / retained straight B is negative |
 | rotated-aex-row-init-premul-zero | 4.4702 | 1.1762 | zero denominator / retained premul B is negative |

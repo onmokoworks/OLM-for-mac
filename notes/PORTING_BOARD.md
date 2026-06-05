@@ -865,6 +865,17 @@ shape (`effective_span = int(strength * coeff)`, offsets
 `case_0005 mean=1.1749` worsens by `0.0046`. Keep as an ASM fact, not as the
 remaining primary error source.
 
+2026-06-06 output-callback diagnostic: direct `objdump` of the callback gap
+shows final 8bpc output reads from `params+0x8090`, multiplies RGB by
+BrightnessGain (`params+0x28`), clamps RGB to `1.0`, leaves alpha un-gained,
+then uses `CVTTSS2SI` truncation after `*255`. Added
+`rotated-aex-trunc-output`, covered by
+`refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_trunc_output_cli.py`.
+Result is mixed/minor against full choreography: `case_0001 mean=4.4438`
+improves by `0.0045`, while `case_0005 mean=1.1736` worsens by `0.0033`.
+Quantization should be kept as an AEX fact, but it is not the dominant
+remaining residual.
+
 Parameter reader mapping from `FUN_180006c50`:
 
 - param 1 / match `0001`: Angle, converted from degrees to radians.
