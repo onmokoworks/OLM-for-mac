@@ -538,6 +538,14 @@ high-level polar coordinate structure.
   factor plane is constant/validity-like, and pushes the remaining Inner gap
   toward exact `FUN_180001c90` scatter order, dynamic-offset semantics, or
   prepass denominator/max-alpha coupling rather than factor-as-alpha.
+- Edge Fade wrap follow-up:
+  `refs/scripts/smoke_olmradialblur_cpp_inner_edgefade_wrap_probe_cli.py`
+  measures the same `case_0024/0025/0027` set with factor `one`.
+  Circular angular wrap gives `mean=5.7833/4.7930/2.3520`; the
+  decomp-shaped `aex-next-row` inner negative wrap gives
+  `mean=5.8034/4.8054/2.3524`, slightly worse. Keep `aex-next-row` as a
+  diagnostic hook only; do not promote it into the current incomplete Inner
+  model by itself.
 - 2026-06-06 prepass writeback probe: asm around `180002c68..180002c8a`
   confirms `FUN_180002780` writes the gathered alpha to both the source-alpha
   plane (`+0x12`) and final-alpha plane (`+0xf252`) for every cell; when source
