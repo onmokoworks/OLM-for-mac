@@ -483,6 +483,10 @@ Current implication:
   `rotated-aex-trunc-output` probe is mixed/minor on current refs
   (`case_0001 mean=4.4438`, `case_0005 mean=1.1736`), so quantization is not
   the dominant residual.
+- A 2026-06-06 post-output shift sweep on the `rotated-aex-full-choreo`
+  candidate tested `dx/dy = -1..1`. The unshifted output was best for both
+  tracked cases (`case_0001 mean=4.4483`, `case_0005 mean=1.1703`); all one-pixel
+  shifts worsened. This makes a simple final crop/output offset error unlikely.
 
 2026-06-06 rotate-math diagnostic:
 
