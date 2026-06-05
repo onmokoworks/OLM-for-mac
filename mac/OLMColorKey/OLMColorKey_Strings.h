@@ -1,0 +1,33 @@
+#pragma once
+
+typedef enum {
+	StrID_NONE,
+	StrID_Name,
+	StrID_Description,
+	StrID_ColorKeep_Param_Name,
+	StrID_Threshold_Param_Name,
+	StrID_Premultiplied_Param_Name,
+	StrID_ColorSpace_Param_Name,
+	StrID_ColorSpace_Choices,
+	StrID_ForceLowerPrecision_Param_Name,
+	StrID_ForceLowerPrecision_Choices,
+	StrID_PerColor_Param_Name,
+	StrID_PerComponent_Param_Name,
+	StrID_ThresholdR_Param_Name,
+	StrID_ThresholdG_Param_Name,
+	StrID_ThresholdB_Param_Name,
+	StrID_EdgeThinAmount_Param_Name,
+	StrID_DistanceType_Param_Name,
+	StrID_DistanceType_Choices,
+	StrID_EdgeBlurAmount_Param_Name,
+	StrID_EdgeBlurDirection_Param_Name,
+	StrID_EdgeBlurDirection_Choices,
+	StrID_NumberOfColors_Param_Name,
+	StrID_EnableReplace_Param_Name,
+	StrID_Color_Param_Name,
+	StrID_ThresholdIndexed_Param_Name,
+	StrID_UseColor_Param_Name,
+	StrID_UseReplaceColor_Param_Name,
+	StrID_ReplaceColor_Param_Name,
+	StrID_NUMTYPES
+} StrIDType;

@@ -1,0 +1,30 @@
+#pragma once
+
+typedef enum {
+	StrID_NONE,
+	StrID_Name,
+	StrID_Description,
+	StrID_GlowRotation_Param_Name,
+	StrID_BrightnessGain_Param_Name,
+	StrID_VerticalLength_Param_Name,
+	StrID_HorizontalLength_Param_Name,
+	StrID_DiagonalLength_Param_Name,
+	StrID_HighlightRadius_Param_Name,
+	StrID_GlowOpacity_Param_Name,
+	StrID_Channel_Param_Name,
+	StrID_Channel_Choices,
+	StrID_BlurMode_Param_Name,
+	StrID_BlurMode_Choices,
+	StrID_ApproximatedInput_Param_Name,
+	StrID_StrengthMultiplier_Param_Name,
+	StrID_SourceOpacity_Param_Name,
+	StrID_VerticalColor_Param_Name,
+	StrID_HorizontalColor_Param_Name,
+	StrID_DiagonalColor_Param_Name,
+	StrID_MergeMode_Param_Name,
+	StrID_MergeMode_Choices,
+	StrID_Diagonal2Length_Param_Name,
+	StrID_FadeOut_Param_Name,
+	StrID_Diagonal2Color_Param_Name,
+	StrID_NUMTYPES
+} StrIDType;

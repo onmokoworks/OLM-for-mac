@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "plugin": "OLMSmoother",
+  "variant": "v1_minimal_8bpc",
+  "input": "fixtures/test_cellanim.png",
+  "reference_dir": "win",
+  "candidate_dir": "mac",
+  "diff_dir": "diff",
+  "report_dir": "reports",
+  "default_thresholds": {
+    "max_diff": 0,
+    "mean_diff": 0.0,
+    "nonzero_px_percent": 0.0
+  },
+  "cases": [
+    {
+      "id": "f0_key_off_tol0",
+      "frame": "f0.png",
+      "params": {
+        "use_color_key": false,
+        "smooth_length_tolerance": 0
+      }
+    },
+    {
+      "id": "f1_key_off_tol3",
+      "frame": "f1.png",
+      "params": {
+        "use_color_key": false,
+        "smooth_length_tolerance": 3
+      }
+    },
+    {
+      "id": "f2_key_off_tol6",
+      "frame": "f2.png",
+      "params": {
+        "use_color_key": false,
+        "smooth_length_tolerance": 6
+      }
+    },
+    {
+      "id": "f3_key_white_tol0",
+      "frame": "f3.png",
+      "params": {
+        "use_color_key": true,
+        "color_key": "#FFFFFF",
+        "smooth_length_tolerance": 0
+      }
+    },
+    {
+      "id": "f4_key_white_tol3",
+      "frame": "f4.png",
+      "params": {
+        "use_color_key": true,
+        "color_key": "#FFFFFF",
+        "smooth_length_tolerance": 3
+      }
+    },
+    {
+      "id": "f5_key_white_tol6",
+      "frame": "f5.png",
+      "params": {
+        "use_color_key": true,
+        "color_key": "#FFFFFF",
+        "smooth_length_tolerance": 6
+      }
+    },
+    {
+      "id": "f6_key_black_tol3",
+      "frame": "f6.png",
+      "params": {
+        "use_color_key": true,
+        "color_key": "#000000",
+        "smooth_length_tolerance": 3
+      }
+    },
+    {
+      "id": "f7_key_red_tol3",
+      "frame": "f7.png",
+      "params": {
+        "use_color_key": true,
+        "color_key": "#FF0000",
+        "smooth_length_tolerance": 3
+      }
+    }
+  ]
+}
