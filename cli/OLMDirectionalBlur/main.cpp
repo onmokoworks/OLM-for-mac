@@ -846,7 +846,7 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
                      int row_init_mode = -1, bool truncate_component_span = false,
                      bool truncate_output_quantize = false, bool exact_component_half_height = false,
                      bool aex_rotate_math = false, bool float_component_center_y = false,
-                     bool component_tail_only = false) {
+                     bool component_tail_only = false, bool source_alpha_binary_validity = false) {
     if (params.noise_variation != 0.0) throw std::runtime_error("noise variation is not implemented");
     if (params.back_strength != 0) throw std::runtime_error("back blur is not implemented");
 
@@ -1028,7 +1028,8 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
                 alpha = alpha_sum / std::max(weight_sum, 1.0e-8f);
             }
         }
-        source_alpha[static_cast<size_t>(p)] = alpha;
+        source_alpha[static_cast<size_t>(p)] =
+            source_alpha_binary_validity && rotated.rgba[src + 3] > 0.0f ? 1.0f : alpha;
         accum_sum[static_cast<size_t>(p)] = row_init_mode == 0 ? alpha : 0.0f;
         accum_alpha[static_cast<size_t>(p)] = row_init_mode == 3 ? 0.0f : alpha;
         for (int c = 0; c < 3; ++c) {
@@ -1258,7 +1259,7 @@ Args parse_args(int argc, char **argv) {
             if (args.direction != "front" && args.direction != "both") throw std::runtime_error("--direction must be front or both");
         } else if (key == "--ignore-noise-variation") args.ignore_noise_variation = true;
         else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmdirectionalblur_cli --input in.png --params params.json --output out.png [--algorithm direct|direct-map|rotated|rotated-aex-choreo|rotated-aex-full-choreo|rotated-aex-pad-full-choreo|rotated-aex-prepass-full-choreo|rotated-aex-halfheight|rotated-aex-float-center|rotated-aex-component-tail-only|rotated-aex-float-math|rotated-aex-trunc-output|rotated-aex-truncated-span|rotated-aex-row-init-straight-zero|rotated-aex-row-init-premul-zero|rotated-aex-row-init-zero|rotated-front-strength|rotated-front-strength-preserve-alpha|rotated-rowdriver-prepass|rotated-rowdriver-prepass-init|rotated-aex-pad|rotated-alpha-sum|rotated-strict|rotated-strict-preserve-alpha|rotated-preserve-alpha|rotated-min-alpha|rotated-max-alpha|rotated-zero-alpha|rotated-gather|rotated-alpha|rotated-alpha-in|rotated-alpha-out|rotated-aex|rotated-aex-init|rotated-map|rotated-map-dest-coeff|rotated-map-alpha-coeff|rotated-map-preserve-alpha|rotated-map-aex|rotated-map-aex-init|rotated-aex-premul|rotated-map-aex-premul] [--direction front|both] [--ignore-noise-variation] [--angle-sign -1] [--sample-sign -1] [--strength-scale auto] [--rgb-normalize front-strength]\n");
+            std::printf("Usage: olmdirectionalblur_cli --input in.png --params params.json --output out.png [--algorithm direct|direct-map|rotated|rotated-aex-choreo|rotated-aex-full-choreo|rotated-aex-pad-full-choreo|rotated-aex-prepass-full-choreo|rotated-aex-halfheight|rotated-aex-float-center|rotated-aex-component-tail-only|rotated-aex-binary-alpha|rotated-aex-float-math|rotated-aex-trunc-output|rotated-aex-truncated-span|rotated-aex-row-init-straight-zero|rotated-aex-row-init-premul-zero|rotated-aex-row-init-zero|rotated-front-strength|rotated-front-strength-preserve-alpha|rotated-rowdriver-prepass|rotated-rowdriver-prepass-init|rotated-aex-pad|rotated-alpha-sum|rotated-strict|rotated-strict-preserve-alpha|rotated-preserve-alpha|rotated-min-alpha|rotated-max-alpha|rotated-zero-alpha|rotated-gather|rotated-alpha|rotated-alpha-in|rotated-alpha-out|rotated-aex|rotated-aex-init|rotated-map|rotated-map-dest-coeff|rotated-map-alpha-coeff|rotated-map-preserve-alpha|rotated-map-aex|rotated-map-aex-init|rotated-aex-premul|rotated-map-aex-premul] [--direction front|both] [--ignore-noise-variation] [--angle-sign -1] [--sample-sign -1] [--strength-scale auto] [--rgb-normalize front-strength]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
@@ -1299,6 +1300,8 @@ int main(int argc, char **argv) {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, false, false, "blurred", false, false, false, false, false, false, false, true, true, -1, false, false, false, false, true);
         } else if (args.algorithm == "rotated-aex-component-tail-only") {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, false, false, "blurred", false, false, false, false, false, false, false, true, true, -1, false, false, false, false, false, true);
+        } else if (args.algorithm == "rotated-aex-binary-alpha") {
+            output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, false, false, "blurred", false, false, false, false, false, false, false, true, true, -1, false, false, false, false, false, false, true);
         } else if (args.algorithm == "rotated-aex-float-math") {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, false, false, "blurred", false, false, false, false, false, false, false, true, true, -1, false, false, false, true);
         } else if (args.algorithm == "rotated-aex-trunc-output") {

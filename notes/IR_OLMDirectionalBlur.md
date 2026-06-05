@@ -300,6 +300,7 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 | rotated-aex-halfheight | 4.4483 | 1.1703 | exact component half-height clamp removal is neutral |
 | rotated-aex-float-center | 4.4483 | 1.1703 | float component center_y is neutral |
 | rotated-aex-component-tail-only | 4.4484 | 1.1703 | removing global tail gate is neutral |
+| rotated-aex-binary-alpha | 4.4483 | 1.1753 | binary validity side-channel is neutral/negative |
 | rotated-aex-float-math | 4.4483 | 1.1703 | float trig + integer centers are neutral |
 | rotated-aex-trunc-output | 4.4438 | 1.1736 | exact output truncation is mixed/minor |
 | rotated-aex-truncated-span | 4.4467 | 1.1749 | exact integer span gate is mixed/minor |
@@ -313,6 +314,9 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 
 - Keep `direct` as a measurement baseline, not production truth.
 - Prefer evolving `rotated-aex-choreo` toward the confirmed A/B order.
+- Size Variation is normalized as UI integer / 100.0. The divisor is confirmed
+  by `DAT_18000b384 = 100.0` in `plugins_2025/OLMDirectionalBlur.aex`, so raw UI
+  scaling is not a tuning knob.
 - Do not tune `strength_scale` as the main fix unless Windows references record
   the render-context ratio or the diff becomes clearly scale-dominated. The
   latest full-choreography sweep shows it is not currently scale-dominated.
