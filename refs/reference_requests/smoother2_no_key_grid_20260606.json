@@ -1,0 +1,130 @@
+{
+  "request_id": "smoother2_no_key_grid_20260606",
+  "effect": {
+    "name": "OLM Smoother v2",
+    "match_name": "OLM Smoother v2"
+  },
+  "why": [
+    "Current OLMSmoother2 C++/Mac port is green or near-green for Color Key and Gamma Colors paths, but no-key case_0001 remains at mean 0.1832.",
+    "Two ASM-backed diagnostics were negative: suppressing/scaling only FUN_18000c280 idx=0x00 four-corner dispatch worsened the diff, and simple class/sample source-plane timing splits also worsened the diff.",
+    "A small no-key parameter grid is needed to separate class-plane firing, sample/color-space timing, and Smoothness/Smooth Range scaling without overfitting one existing reference."
+  ],
+  "render_sets": [
+    {
+      "id": "software",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "required": true
+    },
+    {
+      "id": "cuda",
+      "project_gpu_accel_type.current_name": "CUDA",
+      "required": false
+    }
+  ],
+  "inputs": [
+    {
+      "id": "current_olm_cells",
+      "description": "Use the same source artwork as refs/win_references/20260605_extra/OLMSmoother2 case_0001 if possible."
+    },
+    {
+      "id": "opaque_grid",
+      "description": "Fully opaque high-contrast grid/line art with subpixel-like diagonals and colored regions."
+    }
+  ],
+  "common_params": {
+    "Enable Color Key": 0,
+    "Invert Color Key": 0,
+    "Color Key": [1, 1, 1, 1],
+    "Extra Smooth": 0,
+    "Smoother Version": 2,
+    "Gamma Correction": 1,
+    "Gamma Value": 2.4,
+    "Number of Gamma Colors": 1
+  },
+  "cases": [
+    {
+      "id": "sm2_no_key_s000_r1",
+      "input": "current_olm_cells",
+      "reason": "Baseline pass-through check for Smooth Range 1.",
+      "params": { "Smoothness": 0, "Smooth Range": 1 }
+    },
+    {
+      "id": "sm2_no_key_s025_r1",
+      "input": "current_olm_cells",
+      "reason": "Low smoothness, small range.",
+      "params": { "Smoothness": 25, "Smooth Range": 1 }
+    },
+    {
+      "id": "sm2_no_key_s050_r1",
+      "input": "current_olm_cells",
+      "reason": "Medium smoothness, small range.",
+      "params": { "Smoothness": 50, "Smooth Range": 1 }
+    },
+    {
+      "id": "sm2_no_key_s100_r1",
+      "input": "current_olm_cells",
+      "reason": "Full smoothness, small range.",
+      "params": { "Smoothness": 100, "Smooth Range": 1 }
+    },
+    {
+      "id": "sm2_no_key_s000_r2",
+      "input": "current_olm_cells",
+      "reason": "Baseline pass-through check matching current case_0001 range.",
+      "params": { "Smoothness": 0, "Smooth Range": 2 }
+    },
+    {
+      "id": "sm2_no_key_s025_r2",
+      "input": "current_olm_cells",
+      "reason": "Low smoothness with current case_0001 range.",
+      "params": { "Smoothness": 25, "Smooth Range": 2 }
+    },
+    {
+      "id": "sm2_no_key_s050_r2",
+      "input": "current_olm_cells",
+      "reason": "Medium smoothness with current case_0001 range.",
+      "params": { "Smoothness": 50, "Smooth Range": 2 }
+    },
+    {
+      "id": "sm2_no_key_s100_r2",
+      "input": "current_olm_cells",
+      "reason": "Re-render current no-key case_0001 settings under explicit render set metadata.",
+      "params": { "Smoothness": 100, "Smooth Range": 2 }
+    },
+    {
+      "id": "sm2_no_key_s000_r3",
+      "input": "current_olm_cells",
+      "reason": "Baseline pass-through check for larger range.",
+      "params": { "Smoothness": 0, "Smooth Range": 3 }
+    },
+    {
+      "id": "sm2_no_key_s025_r3",
+      "input": "current_olm_cells",
+      "reason": "Low smoothness, larger range.",
+      "params": { "Smoothness": 25, "Smooth Range": 3 }
+    },
+    {
+      "id": "sm2_no_key_s050_r3",
+      "input": "current_olm_cells",
+      "reason": "Medium smoothness, larger range.",
+      "params": { "Smoothness": 50, "Smooth Range": 3 }
+    },
+    {
+      "id": "sm2_no_key_s100_r3",
+      "input": "current_olm_cells",
+      "reason": "Full smoothness, larger range.",
+      "params": { "Smoothness": 100, "Smooth Range": 3 }
+    }
+  ],
+  "manifest_requirements": [
+    "Record all OLM Smoother v2 property names, match_names, property_index, values, enabled/active state, and selected effect path.",
+    "Record project_gpu_accel_type.current_name and raw value per render set.",
+    "Keep ADBE Force CPU GPU / GPU Rendering as reference-only metadata, not as the execution-path label.",
+    "Save both before_effects_frame and effect output PNG for every case.",
+    "If possible, preserve the same comp size and source layer artwork used by refs/win_references/20260605_extra/OLMSmoother2 case_0001."
+  ],
+  "mac_follow_up": [
+    "Import with refs/scripts/import_win_reference.py.",
+    "Run the OLMSmoother2 CLI against the grid and plot mean/max by Smoothness and Smooth Range.",
+    "Use the grid to decide whether remaining case_0001 residual is Smoothness scaling, class-plane dispatch frequency, or color-space/writeback related."
+  ]
+}

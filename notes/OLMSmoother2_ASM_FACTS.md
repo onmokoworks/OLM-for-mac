@@ -274,6 +274,19 @@ Current conclusion for `case_0001`:
   `suppress mean=0.2720`, `half mean=0.2069`, `quarter mean=0.2349`.
   Therefore the residual is not explained by `idx=0x00` corner weights simply
   being too strong; continue with the source/class-plane timing split instead.
+- 2026-06-06 source/class-plane timing split diagnostic:
+  `cli/OLMSmoother2/main.cpp` exposes `--plane-split-mode
+  none|sample-pre-setup|class-pre-setup|sample-pre-gamma|class-pre-gamma`,
+  backed by a default-off hook in `mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp`,
+  and `refs/scripts/smoke_olmsmoother2_plane_split_probe_cli.py` measures
+  `case_0001`. Results are negative: `none mean=0.1832`,
+  `sample-pre-setup mean=0.4606`, `class-pre-setup mean=0.2049`,
+  `sample-pre-gamma mean=0.4606`, `class-pre-gamma mean=0.2049`.
+  Since both the idx0 and plane-split probes worsened the diff, do not keep
+  overfitting `case_0001`; request `refs/reference_requests/
+  smoother2_no_key_grid_20260606.json` and use that grid to separate
+  Smoothness scaling, Smooth Range behavior, class-plane firing frequency, and
+  remaining color-space/writeback effects.
 
 ## FUN_18000c0d0 / FUN_18000ab00 / FUN_18000b120: Per-Pixel Accumulation
 

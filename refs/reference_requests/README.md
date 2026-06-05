@@ -27,11 +27,14 @@
 3. `kirakira_single_ray_20260606.json`
    - OLMKiraKiraのray order / angle table / helper戻り値scalarを分離するための
      単独rayセット。
-4. 既存Mac移植扱いのプラグイン確認
+4. `smoother2_no_key_grid_20260606.json`
+   - OLMSmoother2 no-key v2 の残差を、Smoothness / Smooth Range gridで
+     class-plane firing・sample plane・color-space/writebackに切り分けるためのセット。
+5. 既存Mac移植扱いのプラグイン確認
    - `OLMDistanceGradation`
    - `OLMSmoother2`
    - その他READMEで port complete 扱いのもの。
-5. OLMSmoother alternate reference
+6. OLMSmoother alternate reference
    - 現参照は過剰発火原因の切り分けが弱いので、単純な高コントラスト素材で追加確認する。
 
 Mac側への取り込み:
