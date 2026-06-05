@@ -643,7 +643,7 @@ unsigned char quantize_trunc(float value) {
     return static_cast<unsigned char>(std::floor(value));
 }
 
-ComponentMap build_component_map_from_alpha(const FloatImage &image) {
+ComponentMap build_component_map_from_alpha(const FloatImage &image, bool exact_half_height = false) {
     const int w = image.width;
     const int h = image.height;
     const int pixels = w * h;
@@ -691,7 +691,8 @@ ComponentMap build_component_map_from_alpha(const FloatImage &image) {
         info.area = static_cast<float>(component_pixels.size());
         info.min_y = static_cast<float>(min_y);
         info.center_y = static_cast<float>((min_y + max_y) / 2);
-        info.half_height = std::max(static_cast<float>(max_y) - info.center_y, 1.0f);
+        info.half_height = static_cast<float>(max_y) - info.center_y;
+        if (!exact_half_height) info.half_height = std::max(info.half_height, 1.0f);
         map.max_area = std::max(map.max_area, info.area);
         for (int p : component_pixels) map.pixels[static_cast<size_t>(p)] = info;
     }
@@ -841,7 +842,7 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
                      bool front_strength_rgb_denom = false, bool rowdriver_prepass = false,
                      bool aex_two_stage_input = false, bool aex_two_stage_output = false,
                      int row_init_mode = -1, bool truncate_component_span = false,
-                     bool truncate_output_quantize = false) {
+                     bool truncate_output_quantize = false, bool exact_component_half_height = false) {
     if (params.noise_variation != 0.0) throw std::runtime_error("noise variation is not implemented");
     if (params.back_strength != 0) throw std::runtime_error("back blur is not implemented");
 
@@ -919,7 +920,7 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
     }
 
     ComponentMap component_map;
-    if (component_map_coeff || rowdriver_prepass) component_map = build_component_map_from_alpha(rotated);
+    if (component_map_coeff || rowdriver_prepass) component_map = build_component_map_from_alpha(rotated, exact_component_half_height);
 
     std::vector<float> gather_alpha(static_cast<size_t>(pad_pixels), 0.0f);
     int min_valid_y = pad_h;
@@ -1242,7 +1243,7 @@ Args parse_args(int argc, char **argv) {
             if (args.direction != "front" && args.direction != "both") throw std::runtime_error("--direction must be front or both");
         } else if (key == "--ignore-noise-variation") args.ignore_noise_variation = true;
         else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmdirectionalblur_cli --input in.png --params params.json --output out.png [--algorithm direct|direct-map|rotated|rotated-aex-choreo|rotated-aex-full-choreo|rotated-aex-pad-full-choreo|rotated-aex-prepass-full-choreo|rotated-aex-trunc-output|rotated-aex-truncated-span|rotated-aex-row-init-straight-zero|rotated-aex-row-init-premul-zero|rotated-aex-row-init-zero|rotated-front-strength|rotated-front-strength-preserve-alpha|rotated-rowdriver-prepass|rotated-rowdriver-prepass-init|rotated-aex-pad|rotated-alpha-sum|rotated-strict|rotated-strict-preserve-alpha|rotated-preserve-alpha|rotated-min-alpha|rotated-max-alpha|rotated-zero-alpha|rotated-gather|rotated-alpha|rotated-alpha-in|rotated-alpha-out|rotated-aex|rotated-aex-init|rotated-map|rotated-map-dest-coeff|rotated-map-alpha-coeff|rotated-map-preserve-alpha|rotated-map-aex|rotated-map-aex-init|rotated-aex-premul|rotated-map-aex-premul] [--direction front|both] [--ignore-noise-variation] [--angle-sign -1] [--sample-sign -1] [--strength-scale auto] [--rgb-normalize front-strength]\n");
+            std::printf("Usage: olmdirectionalblur_cli --input in.png --params params.json --output out.png [--algorithm direct|direct-map|rotated|rotated-aex-choreo|rotated-aex-full-choreo|rotated-aex-pad-full-choreo|rotated-aex-prepass-full-choreo|rotated-aex-halfheight|rotated-aex-trunc-output|rotated-aex-truncated-span|rotated-aex-row-init-straight-zero|rotated-aex-row-init-premul-zero|rotated-aex-row-init-zero|rotated-front-strength|rotated-front-strength-preserve-alpha|rotated-rowdriver-prepass|rotated-rowdriver-prepass-init|rotated-aex-pad|rotated-alpha-sum|rotated-strict|rotated-strict-preserve-alpha|rotated-preserve-alpha|rotated-min-alpha|rotated-max-alpha|rotated-zero-alpha|rotated-gather|rotated-alpha|rotated-alpha-in|rotated-alpha-out|rotated-aex|rotated-aex-init|rotated-map|rotated-map-dest-coeff|rotated-map-alpha-coeff|rotated-map-preserve-alpha|rotated-map-aex|rotated-map-aex-init|rotated-aex-premul|rotated-map-aex-premul] [--direction front|both] [--ignore-noise-variation] [--angle-sign -1] [--sample-sign -1] [--strength-scale auto] [--rgb-normalize front-strength]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
@@ -1277,6 +1278,8 @@ int main(int argc, char **argv) {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, false, false, "blurred", false, false, false, true, false, false, false, true, true);
         } else if (args.algorithm == "rotated-aex-prepass-full-choreo") {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, true, false, "blurred", false, false, false, false, false, false, true, true, true);
+        } else if (args.algorithm == "rotated-aex-halfheight") {
+            output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, false, false, "blurred", false, false, false, false, false, false, false, true, true, -1, false, false, true);
         } else if (args.algorithm == "rotated-aex-trunc-output") {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, false, false, "blurred", false, false, false, false, false, false, false, true, true, -1, false, true);
         } else if (args.algorithm == "rotated-aex-truncated-span") {

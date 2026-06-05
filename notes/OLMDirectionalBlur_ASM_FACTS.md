@@ -189,7 +189,19 @@ Current implication:
   consistent with the AEX run-merging connectivity and center/span arithmetic.
 - The remaining front-only residual is less likely to be a simple 4-vs-8
   connectivity bug or midpoint rounding issue. Prefer the next asm-first pass
-  on host populate/output callbacks or render-context scale mapping.
+  on exact rotate/validity semantics, scatter source/denominator ownership, or
+  render-context scale mapping.
+
+2026-06-06 half-height diagnostic:
+
+- Added C++ CLI algorithm `--algorithm rotated-aex-halfheight`.
+- It keeps the current full A/B choreography but removes the CLI's safety clamp
+  on component `half_height`, leaving `half_height = max_y - center_y` exactly
+  as recorded above.
+- Current measurement is neutral against `rotated-aex-full-choreo`:
+  `case_0001 mean=4.4483`, `case_0005 mean=1.1703`.
+- This makes the component half-height clamp another non-leading suspect for
+  the tracked front-only refs.
 
 ## Scatter Helper
 

@@ -185,11 +185,15 @@ The row driver uses:
 - Component area is the summed run length.
 - `center_y` is the integer floor midpoint of min/max row, and `half_height`
   is `max_y - center_y`.
+- `rotated-aex-halfheight` removes the CLI's previous `half_height >= 1`
+  safety clamp and leaves the AEX value literal. It is neutral on the tracked
+  refs (`case_0001 mean=4.4483`, `case_0005 mean=1.1703`).
 
 Current CLI's 4-neighbor component-map approximation matches these facts closely
 enough that component connectivity/center rounding is no longer the leading
 suspect. Remaining work should focus on host populate/output edge semantics,
-render-context scale mapping, or finer scatter/source-alpha ownership.
+render-context scale mapping, exact rotate/validity semantics, or finer
+scatter/source-alpha ownership.
 
 ### Alpha Fade Prepass
 
@@ -289,6 +293,7 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 | rotated-aex-full-choreo | 4.4483 | 1.1703 | output-side padded A writeback is neutral |
 | rotated-aex-pad-full-choreo | 4.4483 | 1.1703 | exact AEX pad + full A/B is neutral |
 | rotated-aex-prepass-full-choreo | 4.4483 | 1.1703 | center prepass + full A/B is neutral |
+| rotated-aex-halfheight | 4.4483 | 1.1703 | exact component half-height clamp removal is neutral |
 | rotated-aex-trunc-output | 4.4438 | 1.1736 | exact output truncation is mixed/minor |
 | rotated-aex-truncated-span | 4.4467 | 1.1749 | exact integer span gate is mixed/minor |
 | rotated-aex-row-init-straight-zero | 4.4702 | 1.1762 | zero denominator / retained straight B is negative |
