@@ -2095,6 +2095,17 @@ behavior.
   `y+1 1.1166/1.3708/6.0968`. This clears the last `R12` -> final ray ROI
   position as the main residual source and points to exact forward/rotate-back
   `warpAffine` behavior or matrix center/scale details.
+- 2026-06-06 two-temp direct rotate-back probe: added
+  `--warp-mode aex-two-temp-direct-back` and
+  `refs/scripts/smoke_olmkirakira_cpp_two_temp_direct_back_probe_cli.py`.
+  It keeps the centered ROI -> `R14`, forward warp, and `R14 -> R12` box blur
+  choreography, but writes the rotate-back warp directly into the final ray
+  descriptor size. It is strongly negative: baseline `aex-two-temp`
+  `0.8506/1.1570/1.0563`, direct-back `10.9852/11.6630/50.6637`.
+  Therefore the final descriptor/dsize evidence cannot be modeled as a naive
+  direct final-size rotate-back with the rotated temp center; keep the current
+  temp rotate-back + centered copy model until a tighter asm argument mapping
+  explains the dsize relationship.
 - 2026-06-06 center-minus-half probe: added
   `aex-two-temp-center-minus-half`, which subtracts 0.5 from the two-temp
   forward/rotate-back matrix center. It is mixed and not adoptable:
