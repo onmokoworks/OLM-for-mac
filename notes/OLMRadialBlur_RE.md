@@ -573,6 +573,23 @@ high-level polar coordinate structure.
   it as a global fix. The remaining gap is more likely in the sampled `+0xe`
   RGB/alpha representation or polar sampler feeding these buffers than in a
   single scatter RGB/span-scale toggle.
+- Polar RGBA sampler follow-up:
+  `cli/OLMRadialBlur/main.cpp` now has diagnostic
+  `--polar-sample-mode plain|aex-alpha`, and
+  `refs/scripts/smoke_olmradialblur_cpp_inner_polar_sample_probe_cli.py`
+  compares the current plain bilinear polar sampler with the AEX-shaped
+  alpha-weighted sampler from `FUN_180001270` / `FUN_180001520`. The AEX
+  sampler computes RGB weighted by tap alpha and normalizes alpha as
+  `alpha_sum / geometric_weight_sum`. On old Inner `case_0011/0012/0013`,
+  `plain` gives `mean=25.2972/10.6222/21.2910`, while `aex-alpha` gives
+  `22.9057/12.3431/20.6886`: it improves `0011/0013` but regresses the
+  variable-offset `0012`. On Edge Fade `case_0024/0025/0027`, `plain` gives
+  `5.7833/4.7930/2.3520`, while `aex-alpha` regresses to
+  `6.2887/5.5276/3.1129`. This confirms the sampled `+0xe` representation is
+  relevant, but the AEX alpha-weighted sampler is not a global fix in the
+  current source-scatter/prepass model. The next useful target is the condition
+  or caller path that makes old Inner and Edge Fade prefer different sampled
+  RGB/alpha semantics.
 - Dynamic-offset follow-up:
   `refs/scripts/smoke_olmradialblur_cpp_inner_prepass_dynamic_offset_probe_cli.py`
   applies `current`, `aex-row`, and `min-radius` denominator variants to the

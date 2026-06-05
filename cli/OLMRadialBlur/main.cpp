@@ -62,6 +62,7 @@ struct RadialBlurParams {
     std::string inner_source_scale_mode = "one";
     std::string dynamic_offset_mode = "current";
     std::string polar_valid_mode = "strict";
+    std::string polar_sample_mode = "plain";
 };
 
 struct Json {
@@ -554,6 +555,52 @@ float sample_channel(const FloatImage &image, float x, float y, int channel, boo
     return top * (1.0f - fy) + bottom * fy;
 }
 
+void sample_rgba_aex_alpha(const FloatImage &image, float x, float y, bool repeat, float out[4]) {
+    const int w = image.width;
+    const int h = image.height;
+    for (int c = 0; c < 4; ++c) out[c] = 0.0f;
+    int xi = static_cast<int>(x);
+    int yi = static_cast<int>(y);
+    if (!repeat && !(-2 < xi && xi < w && -2 < yi && yi < h)) return;
+
+    float fx = x - static_cast<float>(xi);
+    float fy = y - static_cast<float>(yi);
+    int x0 = xi;
+    int x1 = xi + 1;
+    int y0 = yi;
+    int y1 = yi + 1;
+    if (repeat) {
+        x0 = std::max(0, std::min(x0, w - 1));
+        x1 = std::max(0, std::min(x1, w - 1));
+        y0 = std::max(0, std::min(y0, h - 1));
+        y1 = std::max(0, std::min(y1, h - 1));
+    }
+
+    double rgb_sum[3] = {0.0, 0.0, 0.0};
+    double alpha_sum = 0.0;
+    double weight_sum = 0.0;
+    auto tap = [&](int px, int py, double weight) {
+        if (weight == 0.0) return;
+        if (px < 0 || px >= w || py < 0 || py >= h) return;
+        const size_t idx = (static_cast<size_t>(py) * w + px) * 4;
+        const double alpha_weight = static_cast<double>(image.rgba[idx + 3]) * weight;
+        alpha_sum += alpha_weight;
+        weight_sum += weight;
+        for (int c = 0; c < 3; ++c) {
+            rgb_sum[c] += static_cast<double>(image.rgba[idx + c]) * alpha_weight;
+        }
+    };
+
+    tap(x0, y0, (1.0f - fx) * (1.0f - fy));
+    tap(x1, y0, fx * (1.0f - fy));
+    tap(x0, y1, (1.0f - fx) * fy);
+    tap(x1, y1, fx * fy);
+    if (alpha_sum > 1.0e-12) {
+        for (int c = 0; c < 3; ++c) out[c] = static_cast<float>(rgb_sum[c] / alpha_sum);
+        out[3] = static_cast<float>(alpha_sum / std::max(1.0e-12, weight_sum));
+    }
+}
+
 std::vector<float> zoom_gaussian_weights(int length) {
     if (length <= 1) return std::vector<float>{1.0f};
     std::vector<float> weights(static_cast<size_t>(length));
@@ -910,7 +957,13 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
             const float sx = static_cast<float>(cx + cos_a * sx0 - sin_a * sy0);
             const float sy = static_cast<float>(cy + sin_a * sx0 + cos_a * sy0);
             const size_t dst = (static_cast<size_t>(ri) * angular_count + ai) * 4;
-            for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = sample_channel(src, sx, sy, c, params.repeat_border);
+            if (params.polar_sample_mode == "aex-alpha") {
+                float sampled[4];
+                sample_rgba_aex_alpha(src, sx, sy, params.repeat_border, sampled);
+                for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = sampled[c];
+            } else {
+                for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = sample_channel(src, sx, sy, c, params.repeat_border);
+            }
             polar_valid[static_cast<size_t>(ri) * angular_count + ai] =
                 polar_valid_sample(sx, sy, w, h, params.repeat_border, params.polar_valid_mode);
         }
@@ -1461,6 +1514,7 @@ struct Args {
     std::string inner_source_scale_mode = "one";
     std::string dynamic_offset_mode = "current";
     std::string polar_valid_mode = "strict";
+    std::string polar_sample_mode = "plain";
 };
 
 Args parse_args(int argc, char **argv) {
@@ -1560,6 +1614,11 @@ Args parse_args(int argc, char **argv) {
             if (args.polar_valid_mode != "strict" && args.polar_valid_mode != "aex-repeat") {
                 throw std::runtime_error("--polar-valid-mode must be strict or aex-repeat");
             }
+        } else if (key == "--polar-sample-mode") {
+            args.polar_sample_mode = need_value("--polar-sample-mode");
+            if (args.polar_sample_mode != "plain" && args.polar_sample_mode != "aex-alpha") {
+                throw std::runtime_error("--polar-sample-mode must be plain or aex-alpha");
+            }
         } else if (key == "--inner-alpha-mode") {
             args.inner_alpha_mode = need_value("--inner-alpha-mode");
             if (args.inner_alpha_mode != "max" && args.inner_alpha_mode != "sum" &&
@@ -1568,7 +1627,7 @@ Args parse_args(int argc, char **argv) {
                 throw std::runtime_error("--inner-alpha-mode must be max, sum, outer, inner, or input");
             }
         } else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmradialblur_cli --input in.png --params params.json --output out.png [--ignore-size-variation] [--inner-alpha-mode max|sum|outer|inner|input] [--inner-source-scatter-prepass] [--inner-prepass-mode simple|tail-gather] [--inner-prepass-span-mode strength|offset|edge-fade] [--inner-prepass-weight-mode row-span|aex-alpha] [--inner-prepass-factor-mode alpha|one|valid] [--inner-prepass-overwrite-seed] [--inner-scatter-rgb-mode straight|prepass-premul] [--inner-scatter-seed-mode source|none] [--inner-seed-alpha-mode input|prepass] [--inner-final-alpha-mode max|denom|source] [--inner-rgb-denominator-mode accum|max] [--inner-scatter-span-scale-mode one|source-alpha|input-alpha] [--inner-wrap-mode circular|aex-next-row] [--inner-source-scale-mode one|alpha|inv-alpha] [--dynamic-offset-mode current|aex-row|min-radius] [--polar-valid-mode strict|aex-repeat]\n");
+            std::printf("Usage: olmradialblur_cli --input in.png --params params.json --output out.png [--ignore-size-variation] [--inner-alpha-mode max|sum|outer|inner|input] [--inner-source-scatter-prepass] [--inner-prepass-mode simple|tail-gather] [--inner-prepass-span-mode strength|offset|edge-fade] [--inner-prepass-weight-mode row-span|aex-alpha] [--inner-prepass-factor-mode alpha|one|valid] [--inner-prepass-overwrite-seed] [--inner-scatter-rgb-mode straight|prepass-premul] [--inner-scatter-seed-mode source|none] [--inner-seed-alpha-mode input|prepass] [--inner-final-alpha-mode max|denom|source] [--inner-rgb-denominator-mode accum|max] [--inner-scatter-span-scale-mode one|source-alpha|input-alpha] [--inner-wrap-mode circular|aex-next-row] [--inner-source-scale-mode one|alpha|inv-alpha] [--dynamic-offset-mode current|aex-row|min-radius] [--polar-valid-mode strict|aex-repeat] [--polar-sample-mode plain|aex-alpha]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
@@ -1605,6 +1664,7 @@ int main(int argc, char **argv) {
         params.inner_source_scale_mode = args.inner_source_scale_mode;
         params.dynamic_offset_mode = args.dynamic_offset_mode;
         params.polar_valid_mode = args.polar_valid_mode;
+        params.polar_sample_mode = args.polar_sample_mode;
         Image output = params.blur_type == 2 ? render_olmradialblur_rotation(input, params)
                                              : render_olmradialblur_zoom(input, params);
         write_png(args.output, output);
