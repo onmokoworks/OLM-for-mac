@@ -409,6 +409,18 @@ Current implication:
   (`case_0001 mean=4.4438`, `case_0005 mean=1.1736`), so quantization is not
   the dominant residual.
 
+2026-06-06 rotate-math diagnostic:
+
+- `FUN_180001ec0` receives a float angle, uses `cosf` / `sinf`, and computes
+  centers from integer `width / 2` and `height / 2`.
+- Added C++ CLI algorithm `--algorithm rotated-aex-float-math` to apply those
+  details to the current full A/B choreography.
+- Current measurement is neutral against `rotated-aex-full-choreo`:
+  `case_0001 mean=4.4483`, `case_0005 mean=1.1703`.
+- The remaining front-only residual is therefore not explained by double-vs-float
+  trig or integer-center rounding in `FUN_180001ec0`. Keep looking at
+  edge/validity semantics or row-driver scatter/source ownership.
+
 2026-06-06 row-initialization diagnostic:
 
 - Added `rotated-aex-row-init-straight-zero`,
