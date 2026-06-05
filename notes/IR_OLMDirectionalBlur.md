@@ -142,6 +142,10 @@ Current probe status:
   conversion (`clamp * 255`, then `CVTTSS2SI` truncation). It improves case1
   slightly but worsens case5 slightly, so output quantization is another AEX
   fact rather than the main structural residual.
+- `rotated-aex-float-math` uses `FUN_180001ec0`-shaped float angle trig and
+  integer half-width/half-height centers. It is neutral on the tracked refs
+  (`case_0001 mean=4.4483`, `case_0005 mean=1.1703`), so those rotate-math
+  details are not the visible residual source.
 
 ### Host Populate / Output Callbacks
 
@@ -294,6 +298,7 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 | rotated-aex-pad-full-choreo | 4.4483 | 1.1703 | exact AEX pad + full A/B is neutral |
 | rotated-aex-prepass-full-choreo | 4.4483 | 1.1703 | center prepass + full A/B is neutral |
 | rotated-aex-halfheight | 4.4483 | 1.1703 | exact component half-height clamp removal is neutral |
+| rotated-aex-float-math | 4.4483 | 1.1703 | float trig + integer centers are neutral |
 | rotated-aex-trunc-output | 4.4438 | 1.1736 | exact output truncation is mixed/minor |
 | rotated-aex-truncated-span | 4.4467 | 1.1749 | exact integer span gate is mixed/minor |
 | rotated-aex-row-init-straight-zero | 4.4702 | 1.1762 | zero denominator / retained straight B is negative |
