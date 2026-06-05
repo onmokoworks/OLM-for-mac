@@ -1952,6 +1952,13 @@ behavior.
   `width=param_2.cols`, `height=param_2.rows`, followed by `copyTo(param_2)`.
   This is the next exact placement rule to model; current CLI still mostly
   approximates the flow with rotate-canvas/crop probes.
+- 2026-06-06 centered-ROI temp probe: added diagnostic
+  `--warp-mode aex-roi-temp`, which copies the centered ROI into the AEX-sized
+  temp buffer before warping. The naive model is strongly worse:
+  `case_0001 mean=5.1944`, `case_0002 mean=5.9919`,
+  `case_0003 mean=26.1768`, so do not adopt it. The remaining target is exact
+  source/destination Mat orientation and dsize mapping across the two
+  `FUN_181297ac0` calls.
 - A temporary CLI probe approximating OpenCV's 5-bit `INTER_LINEAR` table
   (`bilinear-fixed5`) did not improve the current refs:
   `case_0001 mean=0.8384`, `case_0002 mean=1.1624`,
