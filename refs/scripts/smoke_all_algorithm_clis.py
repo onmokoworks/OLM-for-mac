@@ -102,6 +102,7 @@ def main() -> int:
         Smoke("OLMRadialBlur C++ Inner Seed Alpha probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_seed_alpha_probe_cli.py"], "red-measurement"),
         Smoke("OLMRadialBlur C++ Inner Span Scale probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_span_scale_probe_cli.py"], "red-measurement"),
         Smoke("OLMRadialBlur C++ Inner Wrap probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_wrap_probe_cli.py"], "red-measurement"),
+        Smoke("OLMRadialBlur C++ Inner Polar Valid probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_polar_valid_probe_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur", [py, "refs/scripts/smoke_olmdirectionalblur_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur Back probe", [py, "refs/scripts/smoke_olmdirectionalblur_back_probe_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_cli.py"], "red-measurement"),

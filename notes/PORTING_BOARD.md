@@ -1,6 +1,6 @@
 # OLM Porting Board
 
-Updated: 2026-06-05
+Updated: 2026-06-06
 
 Goal: port Windows OLM AEX plug-ins to Apple Silicon/macOS, using Ghidra/GhidraMCP
 analysis plus Windows PNG/manifest references, with AE-free CLI verification where
@@ -129,6 +129,13 @@ Current smoke status:
 - `smoke_all_algorithm_clis.py`: one-command aggregate. It runs all green
   smokes plus known-red measurement scaffolds and treats `[DIFF]` on red
   scaffolds as expected observation rather than a missing/failed CLI.
+- `smoke_olmradialblur_cpp_inner_polar_valid_probe_cli.py`: known-red C++
+  Inner diagnostic for the polar-grid base/validity buffer. It compares strict
+  in-image validity with an AEX Repeat Border-style loose integer validity
+  (`-2 < int(coord) < size`). Current result is effectively neutral:
+  strict `case_0011/0012/0013 mean=25.2972/10.6222/21.2910`;
+  `aex-repeat` `mean=25.1925/10.6245/21.2894`. Do not promote this to the
+  production path unless later asm facts require it.
 
 ## ASM-First Porting Flow
 
@@ -186,7 +193,7 @@ the OLMKiraKira Brightness probe all produced expected DIFF measurement output.
 | OLMColorKey | yes | yes | new Mac plugin builds | Python + C++ RGB/premult/box/Edge Thin/Edge Blur CLI | C++: 1-4 & 7 exact; 5/6 erode 0.48% off; Edge Blur 8/9 improved but still DIFF; Mac plugin has cases 1-7 kernel |
 | OLMDirectionalBlur | yes | yes | new Mac plugin builds | Python + C++ direct/rotated CLI scaffold | front-only/no-noise DIFF; Mac plugin has 8bpc front-only/no-noise direct slice |
 | OLMKiraKira | yes | yes | new Mac plugin builds | Python ray CLI scaffold + C++ native scaffold | Python cases 1/2 improve strongly over identity, C++ scaffold added, Mac plugin has the same 4-ray repeated-box scaffold, still DIFF |
-| OLMRadialBlur | yes | yes | new Mac plugin builds | Python rotation + zoom polar CLI scaffold; C++ Zoom CLI | Rotation case_0010 near-match; Zoom 0009 OK in Python and C++; C++ Zoom 0003-0005 OK with Size Variation ignored; Mac plugin has 8bpc Zoom/no-inner/no-noise slice with large-Strength FFT path and Size Variation no-op pass-through; Inner 0011-0013 DIFF scaffold |
+| OLMRadialBlur | yes | yes | new Mac plugin builds | Python rotation + zoom polar CLI scaffold; C++ Zoom/Rotation/Inner diagnostic CLI | Rotation case_0010 near-match; Zoom 0009 OK in Python and C++; C++ Zoom 0003-0005 OK with Size Variation ignored; Mac plugin has 8bpc Zoom/no-inner/no-noise slice with large-Strength FFT path and Size Variation no-op pass-through; Inner 0011-0013 still DIFF; Repeat Border polar-valid probe is neutral |
 | OLMSmoother | yes | yes | in progress | C++ CLI over mac port | classifier over-fires ~20x; path gap unresolved |
 | OLMSmoother2 | yes, 20260605_extra | yes | port complete-ish | C++ CLI over mac port | first 4 cases measured: case1 mean 0.1832, case2 0.0216, case3 exact, case4 0.0189 after asm key-path + writeback-premul fixes |
 | OLMToonDilate | yes | yes | new Mac plugin builds | Python + C++ Chebyshev/BFS CLI | C++ gated: case1 mean 0.4762, case2 0.0022, case3 3.0676; Mac plugin has cases 1-3 kernel |
