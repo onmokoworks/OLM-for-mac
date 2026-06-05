@@ -59,7 +59,7 @@ def main() -> int:
         return build.returncode
 
     rc = 0
-    for aggregation_mode in ("current", "fd90-five"):
+    for aggregation_mode in ("current", "fd90-five", "fd90-exact"):
         result = run_probe(root, aggregation_mode, Path(f"/tmp/olmkirakira_cpp_aggregation_probe_{aggregation_mode}"))
         if result != 0:
             rc = result
