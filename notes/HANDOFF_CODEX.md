@@ -243,6 +243,14 @@ rotation-zero refs cannot isolate ray order/scalar/crop. DirectionalBlur should
 wait for `refs/reference_requests/directionalblur_context_scale_20260606.json`;
 current opaque refs and neutral/negative probes have exhausted useful PNG-only
 tuning.
+2026-06-06 parallel audit refresh: four read-only subagents were launched
+(`notes/SUBAGENT_ASSIGNMENTS.md`). They reconfirmed the current stop lines:
+DirectionalBlur exact rowdriver equals exact scatter helper (`4.4392/1.1761`),
+so rowdriver integration is not the residual; RadialBlur Zoom/tiny Rotation are
+green but Inner/EdgeFade still need nonzero Size Variation refs; KiraKira
+two-temp/all-ray remains the best candidate but equal ray refs cannot isolate
+scalar/order/crop; Smoother v1 is covered by `OLMSmoother2 --force-version 1`
+for current refs, while v2 no-key `case_0001` needs the no-key grid request.
 2026-06-05 REFLECT_101更新後にも `python3 refs/scripts/smoke_all_algorithm_clis.py`
 を再実行し、exit 0。KiraKira の新baseline
 (`Python 0.8379/1.1627`, `C++ 0.8382/1.1627/1.7073`) と
@@ -532,7 +540,7 @@ Quality別ケースを指定している。`ADBE Force CPU GPU` は参考値の�
 `OLMDirectionalBlur`, `OLMRadialBlur`, `OLMKiraKira`,
 `OLMSmoother/OLMSmoother2`。親エージェントが実装、回帰ゲート、ノート統合、
 コミットを握る。詳細は `notes/PORTING_BOARD.md` の
-`Active Sub-Agent Assignments`。
+`Active Sub-Agent Assignments` と `notes/SUBAGENT_ASSIGNMENTS.md`。
 
 各専任担当の現在の停止条件:
 

@@ -412,3 +412,21 @@ sweeps while `case_0001` remains around `mean=4`. Wait for
 `refs/reference_requests/directionalblur_context_scale_20260606.json`, which
 asks for `ctx+0x11c / ctx+0x120` render-context scale and non-opaque alpha
 references.
+
+### 2026-06-06 parallel audit refresh
+
+Sub-agent Tesla reran the DirectionalBlur read-only audit and confirmed that the
+current red residual is stable rather than a rowdriver integration issue:
+
+- `smoke_olmdirectionalblur_cpp_rotated_aex_full_choreo_cli.py` remains around
+  `case_0001 mean=4.4483`, `case_0005 mean=1.1703`.
+- `smoke_olmdirectionalblur_cpp_rotated_aex_exact_rowdriver_cli.py` shows
+  `rotated-aex-exact-rowdriver` exactly matching `exact-scatter-helper`
+  (`case_0001 mean=4.4392`, `case_0005 mean=1.1761`).
+- Span truncation and output truncation probes are only minor/mixed deltas.
+
+Parent action: pause DirectionalBlur implementation tuning until
+`directionalblur_context_scale_20260606.json` is rendered/imported. The imported
+refs should replace `--strength-scale auto` with recorded `ctx+0x11c/0x120`
+scale data and use non-opaque alpha cases to verify source RGB ownership,
+`FUN_180001000`, and `alpha_or_valid`.

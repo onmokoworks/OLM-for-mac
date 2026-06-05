@@ -225,6 +225,8 @@ the OLMKiraKira Brightness probe all produced expected DIFF measurement output.
 Current parallelization model is plug-in ownership, not broad effect groups.
 Use subagents for narrow read-only IR/ASM audits while the parent agent owns
 implementation, regression gates, and commits.
+Current run details and reusable prompt shape are recorded in
+`notes/SUBAGENT_ASSIGNMENTS.md`.
 
 | Owner slice | Scope | Current best use | Stop condition / next reference |
 |---|---|---|---|

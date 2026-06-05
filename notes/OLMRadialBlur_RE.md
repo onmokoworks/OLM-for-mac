@@ -739,3 +739,25 @@ Reference audit after the ownership pass:
 - Added `refs/reference_requests/radialblur_inner_size_variation_20260606.json`.
   Do not keep tuning `+0x40` against zero-variation references; use the new
   Windows grid before promoting any Size Variation / span-gate implementation.
+
+### 2026-06-06 parallel audit refresh
+
+Sub-agent Anscombe reconfirmed the current RadialBlur split:
+
+- Green slices: Zoom no-inner/no-noise (`case_0009 max=1 mean=0.0046`),
+  Zoom Offset `case_0003..0005` with `--ignore-size-variation`
+  (`max=8 mean=0.0059`), and tiny Rotation `case_0010 mean=0.0104`.
+- Red diagnostics: broad outer Rotation `case_0001/0002` remains around
+  `mean=1.9034/1.3071`; Inner source-scatter/prepass remains
+  `case_0011/0012/0013 mean=25.2972/10.6222/21.2910`; Edge Fade seed-removal
+  improves `case_0024/0025/0027` to `5.1129/3.9755/1.9204` but is not
+  promotable because it conflicts with coverage.
+- Best-supported Inner ownership remains `+0x38` sampled polar RGBA, `+0x40`
+  separate span/gate plane, `+0x48` prepass alpha from `FUN_180002780`, and
+  `+0x50` factor plane.
+
+Stop condition still holds: all current Inner/Edge Fade references have
+`Size Variation=0`, so they cannot decisively identify the true `+0x40`
+span/gate behavior. Parent action is to render/import
+`radialblur_inner_size_variation_20260606.json` and then test the explicit
+`+0x40/+0x48/+0x50` plane hypotheses across that grid.

@@ -494,3 +494,27 @@ warps to call OpenCV with the same Mat as source and destination:
 `param_2 -> ROI(R14)`, `warpAffine(R14, R14, dsize=R14.size())`,
 `blur R14 -> R12`, `warpAffine(R12, R12, dsize=R12.size())`, then
 `ROI(R12) -> param_4`.
+
+### 2026-06-06 parallel audit refresh
+
+Sub-agent Goodall reconfirmed that `FUN_181150790` is the four-ray helper and
+that there is no current asm evidence for a special 0/90-degree fast path. Keep
+the CLI axis fast path diagnostic-only.
+
+Current recorded status remains:
+
+- Default C++ smoke: `case_0001 mean=0.8381`, `case_0002 mean=1.1623`,
+  `case_0003 mean=1.7003`.
+- Python OpenCV two-temp: `0.8504/1.1570/1.0514`.
+- Python explicit ROI/`dst=` alias is identical to the OpenCV two-temp probe,
+  so simple Mat ROI aliasing is not the residual.
+- C++ all-ray two-temp/no-fastpath: `0.8506/1.1570/1.0563`.
+- `fd90-exact` five-layer aggregation is effectively unchanged at
+  `0.8381/1.1623/1.7003`, so final five-buffer aggregation is not the active
+  main residual.
+
+Stop condition still holds: the current three refs use equal ray lengths and
+`Glow Rotation=0`, so ray order, angle mapping, helper scalar / `length^2`, and
+single-ray crop behavior cannot be separated. Parent action is to render/import
+`refs/reference_requests/kirakira_single_ray_20260606.json` in Software mode
+before promoting another KiraKira implementation change.
