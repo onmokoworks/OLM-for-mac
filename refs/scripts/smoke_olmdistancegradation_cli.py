@@ -45,6 +45,8 @@ def main() -> int:
         "--case-id",
         "case_0007",
         "--case-id",
+        "case_0009",
+        "--case-id",
         "case_0015",
         "--case-id",
         "case_0017",

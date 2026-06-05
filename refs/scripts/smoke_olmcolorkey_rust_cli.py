@@ -57,8 +57,17 @@ def main() -> int:
     rc = run_group(
         root,
         reference,
-        Path("/tmp/olmcolorkey_rust_edgethin_smoke"),
-        ["case_0005", "case_0006", "case_0007"],
+        Path("/tmp/olmcolorkey_rust_edgethin_exact_smoke"),
+        ["case_0007"],
+    )
+    if rc != 0:
+        return rc
+
+    rc = run_group(
+        root,
+        reference,
+        Path("/tmp/olmcolorkey_rust_edgethin_residual_smoke"),
+        ["case_0005", "case_0006"],
         "--max-diff",
         "255",
         "--mean-diff",
