@@ -91,6 +91,7 @@ def main() -> int:
         Smoke("OLMToonDilate C++", [py, "refs/scripts/smoke_olmtoondilate_cpp_cli.py"]),
         Smoke("OLMDistanceGradation", [py, "refs/scripts/smoke_olmdistancegradation_cli.py"]),
         Smoke("OLMDistanceGradation extended", [py, "refs/scripts/smoke_olmdistancegradation_extended_cli.py"]),
+        Smoke("OLMDistanceGradation Blur", [py, "refs/scripts/smoke_olmdistancegradation_blur_cli.py"]),
         Smoke("OLMSmoother build", ["refs/scripts/build_olmsmoother_cli.sh"]),
         Smoke("OLMSmoother", [py, "refs/scripts/smoke_olmsmoother_cli.py"], "red-measurement"),
         Smoke("OLMSmoother2 build", ["refs/scripts/build_olmsmoother2_cli.sh"]),

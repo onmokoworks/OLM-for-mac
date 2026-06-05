@@ -123,10 +123,16 @@ def render(input_rgba: np.ndarray, params: dict[str, object], ds_x: float, ds_y:
         outside = dt_to_normalized(1 - mask, outside_threshold, ds)
         x = np.maximum(inside, outside).astype(np.float32)
 
+    constant_blur = interp_mode == INTERP_CONSTANT and blur_mode != BLUR_MODE_NONE and blur_size > 0
+    if constant_blur:
+        x = (x >= 1.0).astype(np.float32)
+
     if blur_mode != BLUR_MODE_NONE and blur_size > 0:
         radius = blur_size
         if blur_mode == BLUR_MODE_SCALE:
             radius = int(float(blur_size) * ds + 0.5)
+        if constant_blur:
+            radius *= 2
         x = blur_reflect101(x, max(radius, 1))
 
     if not invert:
@@ -137,7 +143,7 @@ def render(input_rgba: np.ndarray, params: dict[str, object], ds_x: float, ds_y:
         x = np.sqrt(np.maximum(1.0 - t * t, 0.0)).astype(np.float32)
     elif interp_mode == INTERP_POWER:
         x = np.power(x, power).astype(np.float32)
-    elif interp_mode == INTERP_CONSTANT:
+    elif interp_mode == INTERP_CONSTANT and not constant_blur:
         x = (x > 0.0).astype(np.float32)
 
     if in_out == IN_OUT_INSIDE:
