@@ -47,3 +47,10 @@ python3 refs/scripts/import_win_reference.py path/to/packed_reference.zip
 python3 refs/scripts/audit_olmradialblur_manifest.py
 python3 refs/scripts/smoke_olmradialblur_cpp_inner_cli.py
 ```
+
+Win側へ渡すリクエストzip作成:
+
+```sh
+python3 refs/scripts/package_reference_requests.py
+python3 refs/scripts/package_reference_requests.py --only kirakira_single_ray_20260606
+```
