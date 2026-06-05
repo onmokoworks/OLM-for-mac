@@ -21,11 +21,14 @@
 
 1. `radialblur_inner_20260605.json`
    - OLMRadialBlur Innerの未解決箇所を切るための最優先セット。
-2. 既存Mac移植扱いのプラグイン確認
+2. `directionalblur_context_scale_20260606.json`
+   - OLMDirectionalBlurの `ctx+0x11c / ctx+0x120` render-context scale と
+     非不透明alpha挙動を切るためのセット。
+3. 既存Mac移植扱いのプラグイン確認
    - `OLMDistanceGradation`
    - `OLMSmoother2`
    - その他READMEで port complete 扱いのもの。
-3. OLMSmoother alternate reference
+4. OLMSmoother alternate reference
    - 現参照は過剰発火原因の切り分けが弱いので、単純な高コントラスト素材で追加確認する。
 
 Mac側への取り込み:

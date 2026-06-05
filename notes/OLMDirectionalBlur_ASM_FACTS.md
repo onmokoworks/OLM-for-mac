@@ -41,6 +41,11 @@ Current implication:
 - If the remaining DirectionalBlur residual starts depending mainly on this
   scale, request a targeted Windows reference/manifest addition for the render
   scale/downsample fields instead of overfitting the PNGs.
+- The targeted request is
+  `refs/reference_requests/directionalblur_context_scale_20260606.json`; it also
+  asks for non-opaque alpha cases because the current tracked references cannot
+  distinguish straight-vs-premultiplied source RGB or continuous alpha side
+  channels.
 - A 2026-06-06 full-choreography scale sweep confirms this is not closing as
   one scalar conversion. With `rotated-aex-full-choreo` on front-only cases
   `0001..0005`, the mean averages were:

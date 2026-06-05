@@ -342,6 +342,8 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 - Do not tune `strength_scale` as the main fix unless Windows references record
   the render-context ratio or the diff becomes clearly scale-dominated. The
   latest full-choreography sweep shows it is not currently scale-dominated.
+  Targeted Windows request:
+  `refs/reference_requests/directionalblur_context_scale_20260606.json`.
 - Do not implement Noise Variation in production until `FUN_180003370` /
   `params+0x80b0/0x80c0` is represented in this IR.
 - Do not promote Back Blur beyond diagnostics until front-only A/B row-driver
@@ -358,8 +360,10 @@ semantics than in the final direct-to-comp sampling shortcut alone.
    zero-denominator probes are negative, so the next gap is more likely helper
    scatter semantics or host edge handling than simple B/denom initialization.
 3. Re-measure `case_0001` and `case_0005`.
-4. If angle-0 remains around `mean=4`, inspect render-context scale mapping
-   (`ctx + 0x11c / ctx + 0x120`) and finer scatter/source-alpha ownership before
-   more parameter sweeps. Host populate/output callbacks and the component-map
-   run-merging pass now look consistent with the current CLI approximation.
+4. If angle-0 remains around `mean=4`, use
+   `refs/reference_requests/directionalblur_context_scale_20260606.json` to get
+   Windows render-context scale (`ctx + 0x11c / ctx + 0x120`) and non-opaque
+   alpha references before more parameter sweeps. Host populate/output callbacks
+   and the component-map run-merging pass now look consistent with the current
+   CLI approximation.
 5. Only after front-only improves, add Back Blur / Noise IR sections.

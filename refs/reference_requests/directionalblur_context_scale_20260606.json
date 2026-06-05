@@ -1,0 +1,181 @@
+{
+  "request_id": "directionalblur_context_scale_20260606",
+  "effect": {
+    "name": "OLM DirectionalBlur",
+    "match_name": "OLM Directional Blur"
+  },
+  "why": [
+    "Current C++ CLI has ruled out simple Sharp Tail, final crop offset, output truncation, pad size, rotate float math, invalid input-rotate preservation, and simple B/denom initialization as the leading residual.",
+    "The Windows AEX scales Front/Back Blur Strength and Alpha Fade by a render-context ratio loaded from ctx+0x11c / ctx+0x120 before truncating to int.",
+    "Existing manifests do not record those render-context fields, and the current CLI uses 1/frame_rate only as a PNG-fit diagnostic.",
+    "The current references are fully opaque for the tracked front-only cases, so source RGB premultiplication and alpha side-channel behavior are not discriminating."
+  ],
+  "render_sets": [
+    {
+      "id": "software",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "required": true
+    },
+    {
+      "id": "cuda",
+      "project_gpu_accel_type.current_name": "CUDA",
+      "required": false
+    }
+  ],
+  "instrumentation_requirements": [
+    "If possible, log the two render-context integers read by OLMDirectionalBlur.aex at ctx+0x11c and ctx+0x120, plus their float ratio, for each render.",
+    "If direct ctx logging is not practical from AE scripting, record every available render/downsample/resolution/quality field that may correspond to those context integers.",
+    "Record comp frame_rate separately, but do not use it as the render-context scale label unless ctx+0x11c/0x120 proves that mapping.",
+    "Record project_gpu_accel_type.current_name and raw value per render set.",
+    "Keep ADBE Force CPU GPU / GPU Rendering as reference-only metadata, not as the execution-path label."
+  ],
+  "inputs": [
+    {
+      "id": "opaque_cell_edges",
+      "description": "Current OLM test cell/line-art source, fully opaque. This should reproduce current case_0001 and case_0005 behavior."
+    },
+    {
+      "id": "alpha_hard_edges",
+      "description": "Transparent background with several fully opaque colored shapes and hard alpha edges."
+    },
+    {
+      "id": "alpha_ramp_rgb",
+      "description": "Colored source with horizontal and vertical alpha ramps including 0, 0.25, 0.5, 0.75, and 1.0 alpha regions."
+    }
+  ],
+  "common_params": {
+    "Brightness Gain": 1.0,
+    "Back Blur Strength": 0,
+    "Back Alpha Fade": 0,
+    "Back Sharp Tail": 0,
+    "Noise Variation": 0,
+    "Noise Type": 1,
+    "Seed": 1
+  },
+  "cases": [
+    {
+      "id": "db_existing_case_0001_software_pair",
+      "input": "opaque_cell_edges",
+      "reason": "Re-render current case_0001 under SOFTWARE while recording render-context scale fields.",
+      "params": {
+        "Angle": 0,
+        "Front Blur Strength": 1690,
+        "Front Alpha Fade": 0,
+        "Front Sharp Tail": 45,
+        "Size Variation": 92
+      }
+    },
+    {
+      "id": "db_existing_case_0005_software_pair",
+      "input": "opaque_cell_edges",
+      "reason": "Re-render current case_0005 under SOFTWARE while recording render-context scale fields.",
+      "params": {
+        "Angle": -99,
+        "Front Blur Strength": 190,
+        "Front Alpha Fade": 0,
+        "Front Sharp Tail": 20,
+        "Size Variation": 31
+      }
+    },
+    {
+      "id": "db_angle0_no_tail_no_size",
+      "input": "opaque_cell_edges",
+      "reason": "Isolate row scatter and strength scale without Sharp Tail or Size Variation.",
+      "params": {
+        "Angle": 0,
+        "Front Blur Strength": 240,
+        "Front Alpha Fade": 0,
+        "Front Sharp Tail": 0,
+        "Size Variation": 0
+      }
+    },
+    {
+      "id": "db_angle0_strength_sweep_small",
+      "input": "opaque_cell_edges",
+      "reason": "Make strength-scale inference easier with a small, visible span.",
+      "params": {
+        "Angle": 0,
+        "Front Blur Strength": 48,
+        "Front Alpha Fade": 0,
+        "Front Sharp Tail": 0,
+        "Size Variation": 0
+      }
+    },
+    {
+      "id": "db_angle0_alpha_fade_hard_edges",
+      "input": "alpha_hard_edges",
+      "reason": "Discriminate FUN_180001000 alpha_or_valid and source RGB premultiplication behavior.",
+      "params": {
+        "Angle": 0,
+        "Front Blur Strength": 240,
+        "Front Alpha Fade": 96,
+        "Front Sharp Tail": 0,
+        "Size Variation": 0
+      }
+    },
+    {
+      "id": "db_diagonal_alpha_ramp",
+      "input": "alpha_ramp_rgb",
+      "reason": "Exercise rotate helper, alpha-weighted bilinear sampling, alpha_or_valid, and row scatter on non-opaque data.",
+      "params": {
+        "Angle": -45,
+        "Front Blur Strength": 240,
+        "Front Alpha Fade": 96,
+        "Front Sharp Tail": 0,
+        "Size Variation": 0
+      }
+    },
+    {
+      "id": "db_size_variation_component",
+      "input": "alpha_hard_edges",
+      "reason": "Check component area coefficient and Size Variation once alpha side-channel is discriminating.",
+      "params": {
+        "Angle": 0,
+        "Front Blur Strength": 240,
+        "Front Alpha Fade": 0,
+        "Front Sharp Tail": 0,
+        "Size Variation": 100
+      }
+    },
+    {
+      "id": "db_sharp_tail_component",
+      "input": "alpha_hard_edges",
+      "reason": "Re-check component Sharp Tail with non-opaque alpha after opaque refs made tail probes nearly neutral.",
+      "params": {
+        "Angle": 0,
+        "Front Blur Strength": 240,
+        "Front Alpha Fade": 0,
+        "Front Sharp Tail": 75,
+        "Size Variation": 0
+      }
+    }
+  ],
+  "variant_matrix": [
+    {
+      "field": "comp_frame_rate",
+      "values": [24, 30],
+      "required": true,
+      "reason": "Detect whether ctx+0x11c/0x120 maps to frame duration/rate or another render scale."
+    },
+    {
+      "field": "comp_resolution",
+      "values": ["full", "half"],
+      "required": false,
+      "reason": "If easy to automate, detect whether ctx+0x11c/0x120 tracks downsample/resolution factor."
+    }
+  ],
+  "manifest_requirements": [
+    "Record before_effects_frame for each case.",
+    "Record all OLM DirectionalBlur property names, match_names, property_index, value, and enabled/active state.",
+    "Record project_gpu_accel_type.current_name and raw value per render set.",
+    "Record comp width, height, pixel aspect, bpc, frame_rate, and resolution/downsample settings.",
+    "Record ctx+0x11c, ctx+0x120, and ctx_render_scale = float(ctx+0x11c) / float(ctx+0x120) if instrumentation can access them.",
+    "Keep ADBE Force CPU GPU / GPU Rendering as reference-only metadata, not as the execution-path label."
+  ],
+  "mac_side_followup": [
+    "Import with refs/scripts/import_win_reference.py.",
+    "Run existing OLMDirectionalBlur full-choreo and prepass CLI probes against the new cases.",
+    "Replace --strength-scale auto with ctx_render_scale when manifest provides it.",
+    "Use alpha_hard_edges / alpha_ramp cases to decide source RGB premultiplication and alpha_or_valid semantics."
+  ]
+}
