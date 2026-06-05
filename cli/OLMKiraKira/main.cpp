@@ -859,6 +859,50 @@ std::vector<float> warp_getrot_direct(
     return output;
 }
 
+std::vector<float> copy_centered_roi(
+    const std::vector<float> &input,
+    int src_width,
+    int src_height,
+    int dst_width,
+    int dst_height
+) {
+    std::vector<float> output(static_cast<size_t>(dst_width) * dst_height);
+    const int x0 = static_cast<int>(static_cast<float>(src_width) * 0.5f) - dst_width / 2;
+    const int y0 = static_cast<int>(static_cast<float>(src_height) * 0.5f) - dst_height / 2;
+    for (int y = 0; y < dst_height; ++y) {
+        const int sy = y + y0;
+        if (sy < 0 || sy >= src_height) continue;
+        for (int x = 0; x < dst_width; ++x) {
+            const int sx = x + x0;
+            if (sx < 0 || sx >= src_width) continue;
+            output[static_cast<size_t>(y) * dst_width + x] = input[static_cast<size_t>(sy) * src_width + sx];
+        }
+    }
+    return output;
+}
+
+std::vector<float> paste_centered_roi(
+    const std::vector<float> &input,
+    int src_width,
+    int src_height,
+    int dst_width,
+    int dst_height
+) {
+    std::vector<float> output(static_cast<size_t>(dst_width) * dst_height);
+    const int x0 = static_cast<int>(static_cast<float>(dst_width) * 0.5f) - src_width / 2;
+    const int y0 = static_cast<int>(static_cast<float>(dst_height) * 0.5f) - src_height / 2;
+    for (int y = 0; y < src_height; ++y) {
+        const int dy = y + y0;
+        if (dy < 0 || dy >= dst_height) continue;
+        for (int x = 0; x < src_width; ++x) {
+            const int dx = x + x0;
+            if (dx < 0 || dx >= dst_width) continue;
+            output[static_cast<size_t>(dy) * dst_width + dx] = input[static_cast<size_t>(y) * src_width + x];
+        }
+    }
+    return output;
+}
+
 std::vector<float> crop_center(
     const std::vector<float> &input,
     int in_width,
@@ -915,6 +959,23 @@ std::vector<float> rotated_axis_box_blur(
     if (axis_fast_path) {
         if (angle_deg == 0.0) return direction_box_blur(input, width, height, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
         if (angle_deg == 90.0) return direction_box_blur(input, width, height, length, 0, 1, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
+    }
+
+    if (warp_mode == "aex-roi-temp") {
+        const double pi = 3.14159265358979323846;
+        const double rad = angle_deg * pi / 180.0;
+        const double ac = std::abs(std::cos(rad));
+        const double as = std::abs(std::sin(rad));
+        const int rw = std::max(width + 4, static_cast<int>(static_cast<double>(width) * ac + static_cast<double>(height) * as + 0.5));
+        const int rh = std::max(height + 4, static_cast<int>(static_cast<double>(width) * as + static_cast<double>(height) * ac + 0.5));
+        const double cx = static_cast<double>(width) * 0.5;
+        const double cy = static_cast<double>(height) * 0.5;
+        std::vector<float> temp = copy_centered_roi(input, width, height, rw, rh);
+        std::vector<float> rotated = warp_getrot_direct(temp, rw, rh, width, height, cx, cy, angle_deg, rotate_filter, rotate_border);
+        std::vector<float> restored_temp = paste_centered_roi(rotated, width, height, rw, rh);
+        std::vector<float> blurred = direction_box_blur(restored_temp, rw, rh, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
+        std::vector<float> restored = warp_getrot_direct(blurred, rw, rh, width, height, cx, cy, -angle_deg, rotate_filter, rotate_border);
+        return restored;
     }
 
     if (warp_mode == "aex-frame") {
@@ -1158,8 +1219,8 @@ Options parse_args(int argc, char **argv) {
             args.warp_mode = need_value("--warp-mode");
             if (args.warp_mode != "current" && args.warp_mode != "opencv-center" &&
                 args.warp_mode != "aex-getrot" && args.warp_mode != "aex-direct-back" &&
-                args.warp_mode != "aex-frame") {
-                throw std::runtime_error("--warp-mode must be current, opencv-center, aex-getrot, aex-direct-back, or aex-frame");
+                args.warp_mode != "aex-frame" && args.warp_mode != "aex-roi-temp") {
+                throw std::runtime_error("--warp-mode must be current, opencv-center, aex-getrot, aex-direct-back, aex-frame, or aex-roi-temp");
             }
         } else if (key == "--rotate-size-mode") {
             args.rotate_size_mode = need_value("--rotate-size-mode");
@@ -1194,7 +1255,7 @@ Options parse_args(int argc, char **argv) {
         } else if (key == "--filter-border" || key == "--ray-mode") {
             (void)need_value(key.c_str());
         } else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--rotate-filter bilinear|bicubic|bilinear-fixed5] [--rotate-border edge|constant] [--warp-mode current|opencv-center|aex-getrot|aex-direct-back|aex-frame] [--rotate-size-mode round|floor|ceil|aex-min4] [--axis-fast-path true|false] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five]\n");
+            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--rotate-filter bilinear|bicubic|bilinear-fixed5] [--rotate-border edge|constant] [--warp-mode current|opencv-center|aex-getrot|aex-direct-back|aex-frame|aex-roi-temp] [--rotate-size-mode round|floor|ceil|aex-min4] [--axis-fast-path true|false] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);

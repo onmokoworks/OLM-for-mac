@@ -201,6 +201,13 @@ Current interpretation:
   `case_0001 mean=1.4465`, `case_0002 mean=1.9139`,
   `case_0003 mean=6.9617`. So the AEX dsize observations cannot be modeled as
   a simple full-frame direct warp without the caller's ROI/temp-Mat placement.
+- A C++ diagnostic `--warp-mode aex-roi-temp` models the first centered ROI
+  copy into the AEX-sized temp buffer before warping. The naive version is also
+  strongly negative: `case_0001 mean=5.1944`, `case_0002 mean=5.9919`,
+  `case_0003 mean=26.1768`. This rules out the simple interpretation
+  "centered ROI copy + full-frame dsize + original-frame center" and points
+  back to exact source/destination Mat orientation around the two
+  `FUN_181297ac0` calls.
 - The decomp/asm shape shows the rotate-back `warpAffine` dsize is the final
   ray descriptor (`param_5`) rather than a larger temporary canvas followed by
   an obvious center crop. A C++ diagnostic `--warp-mode aex-direct-back`
