@@ -1237,6 +1237,10 @@ index modulation, not as a direct alpha attenuation.
 - Results are negative and match the already-worse alpha-weighted/AEX split:
   `case_0001 max=255 mean=4.7505`,
   `case_0005 max=254 mean=1.3802`.
+- Added companion `rotated-rowdriver-prepass-init` to test the copied-buffer /
+  zero-denominator initialization hypothesis. It is also negative:
+  `case_0001 max=255 mean=4.7724`,
+  `case_0005 max=254 mean=1.3862`.
 - Interpretation: the prepass alone is not missing; the remaining gap is
   likely the exact caller buffer choreography around `memcpy(_Dst,_Src)`,
   denominator buffer initialization/normalization, and final rotate-back source
