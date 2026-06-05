@@ -120,6 +120,10 @@ Current probe status:
   padded `A` before cropping. It is numerically unchanged from
   `rotated-aex-choreo` for the tracked cases, so the remaining residual is not
   explained by direct-to-comp output sampling versus padded output ownership.
+- `rotated-aex-prepass-full-choreo` adds the `FUN_180001000`-shaped center
+  prepass to the full A/B choreography. It is also numerically unchanged from
+  `rotated-aex-full-choreo`, so the center prepass is not visible on the
+  current opaque front-only refs when combined with the current scaffold.
 
 ### Component Map
 
@@ -212,6 +216,7 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 | rotated-front-strength-preserve-alpha | 4.0897 | 1.1927 | best combined front-only diagnostic |
 | rotated-aex-choreo | 4.4483 | 1.1703 | positive A/B input-rotate signal |
 | rotated-aex-full-choreo | 4.4483 | 1.1703 | output-side padded A writeback is neutral |
+| rotated-aex-prepass-full-choreo | 4.4483 | 1.1703 | center prepass + full A/B is neutral |
 | rotated-aex-row-init-straight-zero | 4.4702 | 1.1762 | zero denominator / retained straight B is negative |
 | rotated-aex-row-init-premul-zero | 4.4702 | 1.1762 | zero denominator / retained premul B is negative |
 | rotated-aex-row-init-zero | 4.5240 | 1.4931 | cleared B+denom is strongly negative |
