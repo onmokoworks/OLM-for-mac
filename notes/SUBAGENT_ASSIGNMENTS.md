@@ -120,3 +120,37 @@ No implementation files were edited by sub-agents in this pass.
 | `OLMSmoother` / `OLMSmoother2` | `OLMSmoother2 --force-version 1` remains the preferred v1 compatibility route for current refs. v2 key paths are guarded; no-key `case_0001` should not be tuned after negative idx0 and plane-split diagnostics. | Keep standalone v1 low priority and wait for `smoother2_no_key_grid_20260606`; then run `refs/scripts/smoke_olmsmoother2_no_key_grid_cli.py` first. |
 | `OLMColorKey` | Current refs cover RGB exact, Edge Thin, and exploratory Edge Blur, but all have `Enable Replace=0`, only one enabled key color, and insufficient non-black color-space coverage. Python/C++/Rust reject Replace and Mac does not yet apply replace colors. | Wait for `olmcolorkey_replace_colorspace_20260606`; then run the manifest audit and request smoke before implementing the smallest RGB Replace/no-edge slice. |
 | `OLMDistanceGradation` | Constant-before-blur is decomp-backed, and current C++/Python already apply it. The wider blur radius used for `case_0029` is Windows-reference-fit evidence rather than fully decomp-proven, but it is guarded by the blur smoke. | Keep current production path and guard; only tighten the blur kernel with stronger OpenCV/binary evidence. |
+
+## 2026-06-06 Fourth Parallel Stop-Line Audit
+
+This pass was launched after the AE pixel validation preset commit
+`578380c`. It keeps the same read-only policy and asks whether each hard
+plug-in still has any objdump/decomp-backed move before the pending Windows
+reference package returns.
+
+| Plugin area | Agent | Scope | Expected output |
+| --- | --- | --- | --- |
+| `OLMDirectionalBlur` | `019e9a34-0828-7f43-be44-514f475604e6` / Herschel | `notes/IR_OLMDirectionalBlur.md`, `notes/OLMDirectionalBlur_ASM_FACTS.md`, `refs/reference_requests/directionalblur_context_scale_20260606.json`, current directional Python/C++ probes, decomp/disasm as needed. | IR checkpoints, exact metrics, whether a non-guesswork move exists before refs, and the exact stop/unblock condition. |
+| `OLMRadialBlur` Inner/EdgeFade | `019e9a34-1eac-7902-a803-6c44db80213a` / Kuhn | `notes/OLMRadialBlur_RE.md`, `notes/OLMRadialBlur_ASM_FACTS.md`, `refs/reference_requests/radialblur_inner_20260605.json`, `refs/reference_requests/radialblur_inner_size_variation_20260606.json`, current radial probes, decomp/disasm as needed. | Green/red slice map, buffer/plane facts, current-ref sufficiency, and the exact ref evidence needed. |
+| `OLMKiraKira` | `019e9a34-38ee-75b0-94ab-3381ed1007b9` / Aquinas | `notes/OLMKiraKira_ASM_FACTS.md`, `notes/OLMKiraKira_SCALAR_AGGREGATION_AUDIT.md`, `refs/reference_requests/kirakira_single_ray_20260606.json`, current Python/C++/OpenCV probes, decomp/disasm as needed. | Best candidate path, ruled-out probes, whether any non-guesswork move remains before single-ray refs, and exact unblocking evidence. |
+| `OLMSmoother` / `OLMSmoother2` | `019e9a34-5018-7593-9f08-a8053857a275` / Sagan | `notes/OLMSmoother2_ASM_FACTS.md`, `refs/reference_requests/smoother2_no_key_grid_20260606.json`, v1/v2 CLI and smoke scripts, decomp/disasm as needed. | v1-via-v2 coverage, exact metrics, no-key v2 stop condition, and exact unblocking evidence. |
+
+Parent-side status at launch:
+
+- `python3 refs/scripts/check_reference_request_status.py` reports all six
+  active requests pending.
+- `python3 refs/scripts/package_reference_requests.py --pending --output
+  /tmp/olm_reference_requests_pending.zip` regenerated the Windows handoff
+  package successfully.
+
+### Fourth Audit Results
+
+All four agents were closed after returning read-only reports. No sub-agent
+edited implementation files.
+
+| Plugin area | Result | Parent action |
+| --- | --- | --- |
+| `OLMDirectionalBlur` | A fresh exact-rowdriver probe reconfirmed that the AEX-shaped rowdriver remains red: full choreography `case_0001/0005 mean=4.4483/1.1703`, exact scatter/rowdriver `4.4392/1.1761`. Binary-backed facts still point at `ctx+0x11c/0x120` render scale, premul/straight RGB, and alpha side-channel ambiguity. | Do not tune from current opaque refs. Wait for `directionalblur_context_scale_20260606`, especially actual context scale or render/downsample metadata plus non-opaque alpha hard-edge/ramp cases. |
+| `OLMRadialBlur` Inner/EdgeFade | Zoom and tiny Rotation remain guarded green (`case_0009 max=1 mean=0.0046`, Zoom Offset `max=8 mean=0.0059`, tiny Rotation `mean=0.0104`). Inner/EdgeFade remains red (`0011/0012/0013 mean=25.2972/10.6222/21.2910`; EdgeFade best `5.1129/3.9755/1.9204`). ASM ownership for `+0x38/+0x40/+0x48/+0x50` is strong, but current refs all have `Size Variation=0`. | Wait for `radialblur_inner_size_variation_20260606`; use the returned nonzero Size Variation and alpha cases to isolate `+0x40` span/gate and `+0x50` factor semantics before promoting Inner changes. |
+| `OLMKiraKira` | Best candidate remains all-ray `aex-two-temp`/no-axis-fast-path. Default C++ is `case_0001/0002/0003 mean=0.8381/1.1623/1.7003`; no-fast-path two-temp is `0.8506/1.1570/1.0563`. Probes ruled out simple full-frame/ROI-temp/in-place-temp, one-pixel final crop fixes, final five-buffer aggregation, non-normalized box filter, bad anchors, and bicubic rotation. | Wait for `kirakira_single_ray_20260606`; isolated vertical/horizontal/diagonal rays are needed to decide ray order, angle table, scalar semantics, and crop/canvas behavior. |
+| `OLMSmoother` / `OLMSmoother2` | Standalone v1 remains red (`mean=1.0145/1.3083/1.4269`), but `OLMSmoother2 --force-version 1` covers current v1 refs (`mean=0.0055/0.0051/0.0200`). v2 key and gamma gates pass; no-key `case_0001 mean=0.1832` has no remaining safe single-case tuning after idx0 and plane-split probes worsened. | Keep standalone v1 low priority. Wait for `smoother2_no_key_grid_20260606`, then run `refs/scripts/smoke_olmsmoother2_no_key_grid_cli.py` first. |
