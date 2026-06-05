@@ -526,15 +526,52 @@ Quality別ケースを指定している。`ADBE Force CPU GPU` は参考値の�
 - 次の本命は `FUN_1800013e0` / `FUN_1800038d0` の scatter 正規化・Size Variation・Sharp Tail
   マップの再現。単純なAngle向き/Strength scaleでは詰め切れない。
 
-## 4. このセッションで触ったファイル（git 未コミット）
+2026-06-06 並列解析方針: サブエージェントは広い効果グループではなく、
+プラグイン専任の read-only IR/ASM audit に切る。現在の有効な割り当ては
+`OLMDirectionalBlur`, `OLMRadialBlur`, `OLMKiraKira`,
+`OLMSmoother/OLMSmoother2`。親エージェントが実装、回帰ゲート、ノート統合、
+コミットを握る。詳細は `notes/PORTING_BOARD.md` の
+`Active Sub-Agent Assignments`。
 
-- 追加: `refs/scripts/olmtoondilate_cli.py`, `refs/scripts/smoke_olmtoondilate_cli.py`,
+各専任担当の現在の停止条件:
+
+- DirectionalBlur: opaque refs だけでは render-context scale、source
+  premul、alpha ownership が分離不能。次は
+  `refs/reference_requests/directionalblur_context_scale_20260606.json`。
+- RadialBlur Inner: current Inner/Edge Fade refs は全て `Size Variation=0`
+  なので `+0x40` span/gate plane の正体が弱い。次は
+  `refs/reference_requests/radialblur_inner_size_variation_20260606.json`。
+- KiraKira: 現3 refs は equal ray lengths / rotation zero なので ray order、
+  helper scalar、angle mapping、single-ray crop が絡む。次は
+  `refs/reference_requests/kirakira_single_ray_20260606.json`。
+- Smoother2 no-key: `idx0` と `plane-split` probes はどちらも悪化済み。
+  次は `refs/reference_requests/smoother2_no_key_grid_20260606.json`。
+
+2026-06-06 検証導線更新: `refs/scripts/package_reference_requests.py` は
+reference request JSONを検証して `/tmp/olm_reference_requests_YYYYMMDD.zip`
+へ梱包する。さらに `python3 refs/scripts/smoke_all_algorithm_clis.py
+--profile quick` の先頭で同梱包を実行するようになった。quick profile は
+26 checks になり、`Reference request package` も green gate として通過する。
+検証済みコマンド:
+
+```sh
+python3 -m py_compile refs/scripts/smoke_all_algorithm_clis.py refs/scripts/package_reference_requests.py
+python3 refs/scripts/package_reference_requests.py --output /tmp/olm_reference_requests_smoke.zip
+python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
+```
+
+## 4. このセッションで触ったファイル
+
+- 旧Claude引き継ぎ時点の追加: `refs/scripts/olmtoondilate_cli.py`, `refs/scripts/smoke_olmtoondilate_cli.py`,
   `refs/scripts/smoke_olmsmoother_cli.py`, `refs/scripts/build_olmsmoother_cli.sh`,
   `cli/OLMSmoother/main.cpp`, `cli/OLMSmoother/shim/OLMSmoother.h`,
   `cli/OLMSmoother/shim/AEFX_SuiteHandlerTemplate.h`, `notes/HANDOFF_CODEX.md`(これ)。
-- 変更: `refs/scripts/olmcolorkey_cli.py`（拡張経路追加）, `refs/scripts/run_reference_test.py`
+- 旧Claude引き継ぎ時点の変更: `refs/scripts/olmcolorkey_cli.py`（拡張経路追加）, `refs/scripts/run_reference_test.py`
   （許容差ゲート pass-through）, `notes/PORTING_BOARD.md`（全プラグインの所見）, `.gitignore`
   （`cli/*/olm*_cli` を ignore）。
+- 現在は git commit 運用中。直近の主なコミットは
+  `Add reference request packaging helper` と
+  `Add reference request package to quick smoke`。
 - ⚠️ 既存の変更を勝手に revert しないこと。手動編集はパッチ志向。生成物/一時ファイルは `/tmp` か
   ignore 済みパスへ。`__pycache__` は消す。
 
@@ -554,7 +591,7 @@ Quality別ケースを指定している。`ADBE Force CPU GPU` は参考値の�
 
 ```sh
 cd "/Users/onmk/Documents/Projects/Personal/OLM as"
-python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick # green gates only; 2026-06-05 OK (21 checks)
+python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick # green gates only; 2026-06-06 OK (26 checks, includes reference request package)
 refs/scripts/build_olmblur_cli.sh && refs/scripts/build_olmsmoother_cli.sh && refs/scripts/build_olmtoondilate_cli.sh && refs/scripts/build_olmradialblur_cli.sh
 refs/scripts/build_olmkirakira_cli.sh              # OLMKiraKira C++ scaffold
 scripts/build_all_mac_plugins.sh                  # Mac plugins: build + universal/codesign verify
