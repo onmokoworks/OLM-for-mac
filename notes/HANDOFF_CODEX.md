@@ -288,6 +288,15 @@ source/input alphaで代用できるか確認した。current best-ish variant�
 `input-alpha 29.8855/12.6410/21.2560`。単純alpha scaleは0011/0012で悪化し、
 0013だけ微改善なので未採用。次は `param_1+0x10` の exact prepass-alpha
 生成/サンプリングを追う。
+2026-06-06 追加: サブエージェントASM監査で、RadialBlur Innerは
+`FUN_180002780(+0xe,+0x12,+0x14,...,+0xf250,+0xf252)` の後に
+`FUN_1800024c0(+0xe,+0x12,+0x10,validity,...,+0xf250,+0xf252)` が走ることを再確認。
+prepass factorは`+0x14`、scatter alphaはprepass後`+0x12`、span/gateは別サンプル`+0x10`。
+C++ CLIの `--inner-scatter-span-scale-mode source-alpha|input-alpha` を実際の
+`effective_span=int(span*param10)` に接続し直し、
+`smoke_olmradialblur_cpp_inner_aex_split_probe_cli.py` を再実行。結果は既存赤行列どおりで、
+直接alpha span/gateは一部old-innerだけ改善しEdge Fadeを悪化させるため未採用。
+`+0x14` が最後の曖昧点になったら、Size Variation / variation-layer factor有効のWin参照が必要。
 2026-06-05 追加: RadialBlur C++ CLI に
 `--inner-wrap-mode circular|aex-next-row` を診断用追加し、
 `smoke_olmradialblur_cpp_inner_wrap_probe_cli.py` をaggregateへ登録。

@@ -573,6 +573,19 @@ high-level polar coordinate structure.
   it as a global fix. The remaining gap is more likely in the sampled `+0xe`
   RGB/alpha representation or polar sampler feeding these buffers than in a
   single scatter RGB/span-scale toggle.
+- 2026-06-06 subagent ASM/caller audit confirms the exact order and roles:
+  `FUN_180002780` receives `+0xe/+0x12/+0x14` and writes `+0xf250/+0xf252`
+  before `FUN_1800024c0` receives `+0xe/+0x12/+0x10` and scatters into the
+  same `+0xf250/+0xf252` buffers. In other words, `+0x14` is the prepass
+  factor, `+0x12` is the prepass-updated scatter alpha, and `+0x10` is the
+  separately sampled scatter span/gate plane.
+- `cli/OLMRadialBlur/main.cpp` now connects
+  `--inner-scatter-span-scale-mode source-alpha|input-alpha` to the actual
+  `FUN_180001c90`-style `effective_span = int(span * param10)` path when
+  `--inner-scatter-param10-plane` is left at `one`. The re-run matrix remains
+  red: direct sampled alpha improves only isolated old-inner cases and regresses
+  Edge Fade, so the remaining gap is not solved by a simple `+0x10 = alpha`
+  substitute.
 - Polar RGBA sampler follow-up:
   `cli/OLMRadialBlur/main.cpp` now has diagnostic
   `--polar-sample-mode plain|aex-alpha`, and

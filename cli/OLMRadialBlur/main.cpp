@@ -1242,6 +1242,10 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
                 param10 = source_alpha[src_cell];
             } else if (params.inner_scatter_param10_plane == "factor") {
                 param10 = polar_valid[src_cell] ? 1.0f : 0.0f;
+            } else if (params.inner_scatter_span_scale_mode == "source-alpha") {
+                param10 = source_alpha[src_cell];
+            } else if (params.inner_scatter_span_scale_mode == "input-alpha") {
+                param10 = polar.rgba[src_cell * 4 + 3];
             }
             int effective_span = static_cast<int>(static_cast<float>(span) * param10);
             effective_span = std::max(0, std::min(effective_span, 3000));

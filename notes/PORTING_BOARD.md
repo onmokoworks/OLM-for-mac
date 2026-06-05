@@ -2325,6 +2325,22 @@ behavior.
     `param_2+0x44` flag is false, otherwise sampled from `param_2[0x11]`.
   - `param_1+0xf250` = scatter RGB/denominator accumulation buffer.
   - `param_1+0xf252` = final alpha/max-alpha buffer.
+- 2026-06-06 subagent ASM/caller audit reconfirmed the call order:
+  `FUN_180002780(+0xe,+0x12,+0x14,...,+0xf250,+0xf252)` runs before
+  `FUN_1800024c0(+0xe,+0x12,+0x10,validity,...,+0xf250,+0xf252)`. Therefore
+  prepass uses `+0x14` as its factor, while scatter uses the prepass-updated
+  `+0x12` as contribution alpha and the separately sampled `+0x10` as
+  span/gate `param_10`.
+- The C++ CLI now wires `--inner-scatter-span-scale-mode source-alpha|input-alpha`
+  into `effective_span = int(span * param10)` when no explicit
+  `--inner-scatter-param10-plane` override is selected. Re-running
+  `refs/scripts/smoke_olmradialblur_cpp_inner_aex_split_probe_cli.py` preserves
+  the current red matrix: direct sampled-alpha span/gate helps only isolated
+  old-inner cases and regresses Edge Fade, so it remains diagnostic evidence
+  rather than an adoptable fix.
+- If `+0x14` becomes decisive, request Windows Rotation Inner refs with
+  Size Variation / variation-layer factor enabled. Current refs mostly expose
+  the constant-1 `+0x14` branch.
 - Added diagnostic `--inner-scatter-seed-mode source|none`.
   `source` is the previous heuristic, while `none` tests the literal reading
   that `FUN_1800024c0` only scatters tails via `FUN_180001c90` and does not
