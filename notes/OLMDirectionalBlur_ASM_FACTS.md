@@ -215,6 +215,10 @@ table_index = (int)(offset / param_11);
 
 - RGB accumulates into `param_5.rgb`, denominator/weight into `param_6`, and
   output alpha is the max contribution in `param_5.a`.
+- The front call from `FUN_1800038d0` passes `param_3 = 1`, which makes the
+  helper step toward lower x indices inside the rotated work buffer. Do not
+  translate this helper-local direction directly into the CLI `sample-sign`
+  without the surrounding rotate/callback coordinate convention.
 
 Current implication:
 
@@ -222,6 +226,16 @@ Current implication:
   max-like unless a later asm pass proves otherwise.
 - Remaining error is more likely in the exact rotate/validity/input-buffer
   setup and render-scale mapping than in replacing max alpha with sum alpha.
+- A 2026-06-06 sign check on the current AEX full-choreography probes keeps
+  `--sample-sign 1` best despite the helper-local negative-x step:
+  - `rotated-aex-full-choreo`: sign `1` gives
+    `case_0001/0005 mean=4.4483/1.1703`; sign `-1` worsens to
+    `4.4485/1.3013`.
+  - `rotated-aex-truncated-span`: sign `1` gives `4.4467/1.1749`; sign `-1`
+    worsens to `4.4469/1.2916`.
+  - `rotated-aex-trunc-output`: sign `1` gives `4.4438/1.1736`; sign `-1`
+    worsens to `4.4439/1.3048`.
+  Keep the registered rotated AEX smokes on `--sample-sign 1`.
 
 ## Rowdriver Prepass Probe
 
