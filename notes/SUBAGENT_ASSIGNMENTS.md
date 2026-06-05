@@ -92,3 +92,17 @@ Ask each sub-agent for:
 3. Whether the stop condition still holds and which reference request unblocks
    it.
 4. One next parent action that is backed by objdump/decomp/IR evidence.
+
+## 2026-06-06 Third Parallel Stop-Line Audit
+
+This pass was launched after adding `notes/PROGRESS_MATRIX.md`. It keeps all
+agents read-only and asks whether there is any non-guesswork work left before
+the pending Windows references arrive.
+
+| Plugin area | Agent | Scope | Expected output |
+| --- | --- | --- | --- |
+| `OLMDirectionalBlur` | `019e99f3-c4e1-7521-a6f1-f006e9cb6a88` / Boyle | `notes/IR_OLMDirectionalBlur.md`, `notes/OLMDirectionalBlur_ASM_FACTS.md`, `refs/reference_requests/directionalblur_context_scale_20260606.json`, `cli/OLMDirectionalBlur/main.cpp`, directional smoke scripts. | Current metrics, whether existing refs can support non-guesswork implementation, one asm-backed next action or hard stop. |
+| `OLMRadialBlur` Inner/EdgeFade | `019e99f3-dc5b-7780-84d0-fa5c6fbb6ced` / Faraday | `notes/OLMRadialBlur_RE.md`, `notes/OLMRadialBlur_ASM_FACTS.md`, RadialBlur Inner request JSONs, `cli/OLMRadialBlur/main.cpp`, Inner smoke scripts. | Green/red slice map, sufficiency of current refs for `+0x40/+0x48/+0x50`, one asm-backed next action or hard stop. |
+| `OLMKiraKira` | `019e99f3-fd1d-7ac0-9620-f198c925d4d9` / Franklin | `notes/OLMKiraKira_ASM_FACTS.md`, `notes/OLMKiraKira_SCALAR_AGGREGATION_AUDIT.md`, `refs/reference_requests/kirakira_single_ray_20260606.json`, Python/C++ KiraKira CLIs and smokes. | Best candidate path, current residuals, current-ref sufficiency, one asm-backed next action or hard stop. |
+| `OLMSmoother` / `OLMSmoother2` | `019e99f4-16f0-7721-bf93-51382708f15b` / Ampere | `notes/OLMSmoother2_ASM_FACTS.md`, `refs/reference_requests/smoother2_no_key_grid_20260606.json`, Smoother CLIs and Mac port. | v1-via-v2 status, no-key blocker status, whether standalone v1 should stay low priority, one asm-backed next action or hard stop. |
+| `OLMColorKey` | `019e99f4-346a-7eb2-811d-0230331167d0` / Kepler | ColorKey Replace/color-space request and smoke, manifest audit, C++/Rust/Mac ColorKey code. | Guarded behavior map, current-ref sufficiency for Replace/non-RGB, one reference-backed next action or hard stop. |
