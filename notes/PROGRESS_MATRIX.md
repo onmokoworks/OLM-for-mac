@@ -12,7 +12,7 @@ the macOS AE plugin builds, and returned AE-host validation confirms the effect.
 | Plugin | Estimate | Current proof | Main remaining risk | Best next action |
 | --- | ---: | --- | --- | --- |
 | ColorKeep | 80% | Synthetic CLI smoke is green; Mac project builds in aggregate. | No Windows OLM reference set for this helper. | Keep as support utility unless a real ColorKeep ref set appears. |
-| OLMBlur | 85% | C++ CLI smoke is green: cases 1/2/4 exact, all 7 guarded; Mac project builds. | Small max=1 residual on non-exact blur cases; no AE-host validation yet. | Use as low-risk packaging/AE validation target. |
+| OLMBlur | 87% | C++ CLI smoke is green: cases 1/2/4 exact, all 7 guarded; Mac project builds; AE pixel validation request/return verifier exists. | Small max=1 residual on non-exact blur cases; returned AE-host PNG validation still pending. | Package OLMBlur AE pixel request and use it as the first host validation target. |
 | OLMColorKey | 70% | RGB cases 1-4 exact; Edge Thin case 7 exact, cases 5/6 guarded; Edge Blur cases 8/9 guarded; C++ and Rust CLIs pass; Mac project builds. | Replace, multi-key, and non-RGB color-space behavior lack returned refs. | Wait for `olmcolorkey_replace_colorspace_20260606`, then run the import-time smoke and promote only covered behavior. |
 | OLMToonDilate | 70% | Python and C++ cases 1-3 pass guarded residual gates; Mac project builds. | Boundary residual remains; case 4 belongs to RadialBlur. | Keep guarded; only revisit if AE-host validation exposes larger drift. |
 | OLMDistanceGradation | 78% | All 29 effect-bearing cases from `20260605_extra` pass guarded smokes: 12 basic, 16 extended non-blur, and Blur Mode case_0029; Mac project builds. | Case_0029 is still a near-match, not exact; GPU/OpenCV path ambiguity possible. | Keep the new blur gate as a regression guard and tighten only with binary-backed OpenCV details. |
@@ -74,6 +74,19 @@ quick aggregate:
 
 ```sh
 python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
+```
+
+For the first low-risk AE-host pixel validation target, package OLMBlur:
+
+```sh
+python3 scripts/package_ae_pixel_validation_request.py --preset olmblur --output /tmp/olm_ae_pixel_validation_olmblur.zip
+```
+
+After the AE host returns rendered PNGs, verify them against the packaged
+Windows expected frames:
+
+```sh
+python3 scripts/verify_ae_pixel_validation_result.py /tmp/olm_ae_pixel_validation_olmblur.zip path/to/returned_ae_pngs_or_zip
 ```
 
 ## 2026-06-06 Parallel Audit Results
