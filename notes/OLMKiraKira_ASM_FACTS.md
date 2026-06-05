@@ -157,10 +157,17 @@ Current interpretation:
   `case_0001 mean=5.9449`, `case_0002 mean=6.6790`,
   `case_0003 mean=27.6616`, versus baseline
   `0.8381/1.1623/1.7003`.
+- The decomp/asm shape shows the rotate-back `warpAffine` dsize is the final
+  ray descriptor (`param_5`) rather than a larger temporary canvas followed by
+  an obvious center crop. A C++ diagnostic `--warp-mode aex-direct-back`
+  approximates that direct writeback using the observed rotated-buffer center.
+  It is also negative: `case_0001 mean=0.9928`, `case_0002 mean=1.3755`,
+  `case_0003 mean=4.4660`.
 - The remaining residual is more likely exact OpenCV 4.5.5 `warpAffine`
   source/destination Mat/ROI placement, dsize/crop behavior, sampling/rounding,
-  or another pre/post ray detail than a simple boxFilter argument mismatch or a
-  naive getRotationMatrix2D center swap.
+  `FUN_181157ed0` matrix adjustment, or another pre/post ray detail than a
+  simple boxFilter argument mismatch, naive getRotationMatrix2D center swap, or
+  direct rotate-back approximation.
 
 ## Rotate Canvas / dsize
 

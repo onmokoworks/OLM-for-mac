@@ -783,6 +783,48 @@ std::vector<float> rotate_image(
     return output;
 }
 
+std::vector<float> warp_getrot_direct(
+    const std::vector<float> &input,
+    int src_width,
+    int src_height,
+    int dst_width,
+    int dst_height,
+    double center_x,
+    double center_y,
+    double angle_deg,
+    const std::string &rotate_filter,
+    const std::string &rotate_border
+) {
+    const double pi = 3.14159265358979323846;
+    const double rad = angle_deg * pi / 180.0;
+    const double alpha = std::cos(rad);
+    const double beta = std::sin(rad);
+    const double m00 = alpha;
+    const double m01 = beta;
+    const double m02 = (1.0 - alpha) * center_x - beta * center_y;
+    const double m10 = -beta;
+    const double m11 = alpha;
+    const double m12 = beta * center_x + (1.0 - alpha) * center_y;
+    const double det = m00 * m11 - m01 * m10;
+    std::vector<float> output(static_cast<size_t>(dst_width) * dst_height);
+    for (int y = 0; y < dst_height; ++y) {
+        for (int x = 0; x < dst_width; ++x) {
+            const double dx = static_cast<double>(x) - m02;
+            const double dy = static_cast<double>(y) - m12;
+            const double sx = (m11 * dx - m01 * dy) / det;
+            const double sy = (-m10 * dx + m00 * dy) / det;
+            if (rotate_filter == "bicubic") {
+                output[static_cast<size_t>(y) * dst_width + x] = sample_bicubic_zero(input, src_width, src_height, sx, sy);
+            } else if (rotate_border == "constant") {
+                output[static_cast<size_t>(y) * dst_width + x] = sample_bilinear_constant(input, src_width, src_height, sx, sy);
+            } else {
+                output[static_cast<size_t>(y) * dst_width + x] = sample_bilinear_zero(input, src_width, src_height, sx, sy);
+            }
+        }
+    }
+    return output;
+}
+
 std::vector<float> crop_center(
     const std::vector<float> &input,
     int in_width,
@@ -839,6 +881,20 @@ std::vector<float> rotated_axis_box_blur(
     if (axis_fast_path) {
         if (angle_deg == 0.0) return direction_box_blur(input, width, height, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
         if (angle_deg == 90.0) return direction_box_blur(input, width, height, length, 0, 1, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
+    }
+
+    if (warp_mode == "aex-direct-back") {
+        const double pi = 3.14159265358979323846;
+        const double rad = angle_deg * pi / 180.0;
+        const double ac = std::abs(std::cos(rad));
+        const double as = std::abs(std::sin(rad));
+        const int rw = std::max(width + 4, static_cast<int>(static_cast<double>(width) * ac + static_cast<double>(height) * as + 0.5));
+        const int rh = std::max(height + 4, static_cast<int>(static_cast<double>(width) * as + static_cast<double>(height) * ac + 0.5));
+        const double cx = static_cast<double>(rw) * 0.5;
+        const double cy = static_cast<double>(rh) * 0.5;
+        std::vector<float> rotated = warp_getrot_direct(input, width, height, rw, rh, cx, cy, angle_deg, rotate_filter, rotate_border);
+        std::vector<float> blurred = direction_box_blur(rotated, rw, rh, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
+        return warp_getrot_direct(blurred, rw, rh, width, height, cx, cy, -angle_deg, rotate_filter, rotate_border);
     }
 
     int rw = 0;
@@ -1058,8 +1114,8 @@ Options parse_args(int argc, char **argv) {
         } else if (key == "--warp-mode") {
             args.warp_mode = need_value("--warp-mode");
             if (args.warp_mode != "current" && args.warp_mode != "opencv-center" &&
-                args.warp_mode != "aex-getrot") {
-                throw std::runtime_error("--warp-mode must be current, opencv-center, or aex-getrot");
+                args.warp_mode != "aex-getrot" && args.warp_mode != "aex-direct-back") {
+                throw std::runtime_error("--warp-mode must be current, opencv-center, aex-getrot, or aex-direct-back");
             }
         } else if (key == "--rotate-size-mode") {
             args.rotate_size_mode = need_value("--rotate-size-mode");
@@ -1094,7 +1150,7 @@ Options parse_args(int argc, char **argv) {
         } else if (key == "--filter-border" || key == "--ray-mode") {
             (void)need_value(key.c_str());
         } else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--rotate-filter bilinear|bicubic] [--rotate-border edge|constant] [--warp-mode current|opencv-center|aex-getrot] [--rotate-size-mode round|floor|ceil|aex-min4] [--axis-fast-path true|false] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five]\n");
+            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--rotate-filter bilinear|bicubic] [--rotate-border edge|constant] [--warp-mode current|opencv-center|aex-getrot|aex-direct-back] [--rotate-size-mode round|floor|ceil|aex-min4] [--axis-fast-path true|false] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
