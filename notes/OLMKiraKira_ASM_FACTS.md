@@ -61,12 +61,22 @@ Inside `FUN_181150790`:
   `cv::warpAffine` strings and argument checks.
 - `181150f3d..18115105d` rotates back through another `FUN_1811512a0`,
   `FUN_181157ed0`, `FUN_181297ac0`, and `FUN_18115cfb0` sequence.
+- `FUN_181157ed0` is not a transform adjustment helper. It matches
+  `cv::Mat::operator=(Mat&&)` / move-assignment shape: copy header fields,
+  move external `step` storage when dimensions exceed the inline buffer, and
+  clear the source header to `0x42ff0000`.
 - `FUN_1811512a0` delegates matrix construction to `FUN_1812943d0`, which
   matches OpenCV `cv::getRotationMatrix2D_`:
   `angle *= pi/180`, `alpha = scale * cos(angle)`,
   `beta = scale * sin(angle)`, then it writes
   `[alpha, beta, (1-alpha)*cx - beta*cy; -beta, alpha,
   beta*cx + (1-alpha)*cy]`.
+- `FUN_181156cd0` is an ROI/header constructor. It receives a source Mat
+  descriptor plus a 4-int rectangle and creates a sub-Mat header. The rectangle
+  layout is `x`, `y`, `height`, `width` in memory, because it writes output
+  `rows = rect.height` from `[r8+0xc]`, `cols = rect.width` from `[r8+0x8]`,
+  advances the data pointer by `rect.y * step[0]`, and then by
+  `rect.x * elemSize`.
 
 ## Blur Mode 2: cv::boxFilter Calls
 
@@ -165,8 +175,8 @@ Current interpretation:
   `case_0003 mean=4.4660`.
 - The remaining residual is more likely exact OpenCV 4.5.5 `warpAffine`
   source/destination Mat/ROI placement, dsize/crop behavior, sampling/rounding,
-  `FUN_181157ed0` matrix adjustment, or another pre/post ray detail than a
-  simple boxFilter argument mismatch, naive getRotationMatrix2D center swap, or
+  or another pre/post ray detail than a simple boxFilter argument mismatch,
+  naive getRotationMatrix2D center swap, `FUN_181157ed0` matrix adjustment, or
   direct rotate-back approximation.
 
 ## Rotate Canvas / dsize
