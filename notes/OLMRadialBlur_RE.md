@@ -503,6 +503,19 @@ high-level polar coordinate structure.
   themselves; continue with caller/source ownership or request a targeted
   Windows ref with nonzero Edge Fade or Size Variation if that becomes the
   only remaining ambiguity.
+- 2026-06-06 final writeback audit: after `FUN_180002780` / `FUN_1800024c0`,
+  the caller normalizes the prepass/scatter output before the final inverse
+  sampler. If `+0xf252` alpha is zero it clears `+0xe.rgb`; otherwise it writes
+  `+0xe.rgb = +0xf250.rgb / +0xf250.alpha`, then writes `+0xe.alpha =
+  +0xf252`. The final call is still `FUN_180001000` over the normalized
+  `+0xe` polar RGBA plane. C++ diagnostics confirm this is not the current
+  Inner blocker: `--inner-final-alpha-mode max --inner-final-rgb-denom accum`
+  remains the best tested path at `case_0011/0012/0013 mean=
+  25.2972/10.6222/21.2910`; alpha `denom` gives `40.4529/13.0741/21.2045`;
+  alpha `source` gives `92.4061/13.3025/22.7382`; and RGB denom `max` gives
+  `58.5261/16.8593/21.2904`. Keep the current final normalization and continue
+  upstream in `FUN_180002780` / `FUN_180001c90` caller-populated buffers,
+  validity, and scatter order.
 - `mac/OLMRadialBlur/OLMRadialBlur.cpp` now carries the same 8bpc
   outer-only/no-noise/no-size-variation Rotation slice, including the
   radius-dependent Offset Mode=1 path. Unsupported Rotation cases (Inner,
