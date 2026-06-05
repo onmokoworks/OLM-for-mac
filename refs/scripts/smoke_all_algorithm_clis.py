@@ -120,6 +120,7 @@ def main() -> int:
         Smoke("OLMDirectionalBlur C++ Rotated AEX Float Center", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_float_center_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated AEX Component Tail", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_component_tail_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated AEX Binary Alpha", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_binary_alpha_cli.py"], "red-measurement"),
+        Smoke("OLMDirectionalBlur C++ Rotated AEX Straight Source RGB", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_straight_source_rgb_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated AEX Float Math", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_float_math_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated AEX Trunc Output", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_trunc_output_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated AEX Truncated Span", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_truncated_span_cli.py"], "red-measurement"),

@@ -534,6 +534,19 @@ B[p].a = gathered_alpha
 - This makes a simple binary-validity interpretation of the scatter
   side-channel unlikely to explain the current front-only residual.
 
+2026-06-06 straight-source-RGB diagnostic:
+
+- Added `rotated-aex-straight-source-rgb` to test whether `FUN_1800013e0`
+  reads `param_4` as straight RGB, with alpha contributing only through
+  `param_7`/denominator accumulation.
+- This keeps full A/B choreography and the existing scatter alpha side-channel,
+  but stores straight rotated RGB in `source_rgb`.
+- Measurement is exactly neutral against `rotated-aex-full-choreo`:
+  `case_0001 mean=4.4483`, `case_0005 mean=1.1703`.
+- Both tracked input PNGs have fully opaque source alpha (`min=max=255`), so
+  this probe is not discriminating for straight-vs-premultiplied source RGB on
+  the current reference cases.
+
 2026-06-05 diagnostic:
 
 - Added C++ CLI algorithm `--algorithm rotated-aex-choreo` to test the first
