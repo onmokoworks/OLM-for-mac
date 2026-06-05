@@ -180,7 +180,10 @@ zipには `INSTALL.txt`, `AE_VALIDATION_CHECKLIST.txt`, `AE_VALIDATION_RESULT.te
 
 ```sh
 python3 scripts/verify_ae_validation_result.py AE_VALIDATION_RESULT.json
+python3 scripts/verify_ae_validation_result.py --require-all-pass AE_VALIDATION_RESULT.json
 ```
+
+1行目は失敗plug-inがあっても、AE環境情報やエラー内容が揃った「解析可能な結果」なら通します。2行目は全plug-inが load/apply/render 成功したことをリリースゲートとして確認します。
 
 ```sh
 xattr -cr build/Debug/<PluginName>.plugin

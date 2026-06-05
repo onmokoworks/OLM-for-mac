@@ -900,9 +900,10 @@ near-match Zoom baseline for `case_0003..0005`-style settings.
   has both `arm64` and `x86_64` slices, and ran `codesign --verify` for each
   bundle.
 - `python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick` completed
-  successfully with 28/28 green checks. This includes the
+  successfully with 29/29 green checks. This includes the
   `Reference request package`, `Reference request result verifier`, and
-  `Reference request status` gates, the harness, ColorKeep, OLMBlur,
+  `Reference request status` gates, the `AE validation result verifier`,
+  the harness, ColorKeep, OLMBlur,
   OLMColorKey Python/C++/Rust, OLMToonDilate Python/C++, OLMDistanceGradation,
   OLMSmoother build, OLMSmoother2 build/v1 compatibility/key paths/Gamma
   Colors, and RadialBlur tiny Rotation / Zoom / Zoom Offset green gates.
@@ -924,8 +925,10 @@ near-match Zoom baseline for `case_0003..0005`-style settings.
   The zip manifest parsed as JSON, listed all 10 plug-ins, and points to the
   bundled install notes, AE host validation checklist, and AE validation result
   template. The template passes
-  `python3 scripts/verify_ae_validation_result.py --allow-incomplete`, and a
-  synthetic all-pass returned result passes the strict validator.
+  `python3 scripts/verify_ae_validation_result.py --allow-incomplete`, a
+  synthetic all-pass returned result passes `--require-all-pass`, and a
+  synthetic failed-but-actionable result passes schema validation while failing
+  the all-pass gate.
 
 ## OLMDirectionalBlur
 
