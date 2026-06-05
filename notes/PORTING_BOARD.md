@@ -1967,6 +1967,16 @@ behavior.
   dst, using matrix `local_f8`. This corrects the next implementation target:
   probe the exact in-place/temporary Mat relationship rather than just
   full-frame or centered-ROI canvas shapes.
+- 2026-06-06 in-place temp probe: added diagnostic
+  `--warp-mode aex-inplace-temp`, approximating the first same-src/dst
+  `warpAffine` wrapper as an in-place rotation of the centered temp buffer,
+  followed by temp blur and rotate-back to the full frame. It is strongly
+  negative: `case_0001 mean=8.7256`, `case_0002 mean=9.1471`,
+  `case_0003 mean=33.4284`, versus baseline
+  `0.8381/1.1623/1.7003`. Keep it as evidence only; this rules out the simple
+  "centered ROI temp + in-place forward warp" interpretation and points back to
+  exact Mat header/object lifetime mapping around `R14`, `[rbp+0x60]`, and
+  `R12`.
 - A temporary CLI probe approximating OpenCV's 5-bit `INTER_LINEAR` table
   (`bilinear-fixed5`) did not improve the current refs:
   `case_0001 mean=0.8384`, `case_0002 mean=1.1624`,
