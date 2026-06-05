@@ -46,6 +46,12 @@
 Mac側への取り込み:
 
 ```sh
+python3 refs/scripts/import_and_check_win_reference.py path/to/packed_reference.zip
+```
+
+個別に分けて実行する場合:
+
+```sh
 python3 refs/scripts/import_win_reference.py path/to/packed_reference.zip --allow-missing-optional-render-sets
 python3 refs/scripts/smoke_reference_requests_after_import.py
 python3 refs/scripts/check_reference_request_status.py
