@@ -239,8 +239,8 @@ Current run details and reusable prompt shape are recorded in
 | Owner slice | Scope | Current best use | Stop condition / next reference |
 |---|---|---|---|
 | `OLMDirectionalBlur` | `notes/IR_OLMDirectionalBlur.md`, `notes/OLMDirectionalBlur_ASM_FACTS.md`, `cli/OLMDirectionalBlur/`, `refs/scripts/smoke_olmdirectionalblur*` | Keep as read-only IR/argument-mapping audit unless new Windows refs arrive. Re-run `rotated-aex-full-choreo` / `rotated-aex-exact-rowdriver` only as regression checks. | Current opaque refs cannot separate render-context scale, source premul, and alpha ownership. Wait for `refs/reference_requests/directionalblur_context_scale_20260606.json` before further PNG-only fitting. |
-| `OLMRadialBlur` | `notes/OLMRadialBlur_RE.md`, `cli/OLMRadialBlur/`, `refs/scripts/smoke_olmradialblur*` | Zoom and tiny Rotation are regression-green; use subagents only for `FUN_180004640` Inner plane ownership and `+0x40/+0x48/+0x50` caller audits. | All current Inner/Edge Fade refs have `Size Variation=0`, so `+0x40` span/gate cannot be identified strongly. Wait for `refs/reference_requests/radialblur_inner_size_variation_20260606.json` before promoting more Inner changes. |
-| `OLMKiraKira` | `notes/OLMKiraKira_ASM_FACTS.md`, `cli/OLMKiraKira/`, `refs/scripts/smoke_olmkirakira*` | Keep all-ray two-temp/no-fastpath as the candidate path. Subagents should audit exact `FUN_181150790` warp/box/ROI facts and not add more equal-ray sweeps. | Current three refs have equal ray lengths and zero rotation, so ray order, helper scalar, angle mapping, and single-ray crop are entangled. Wait for `refs/reference_requests/kirakira_single_ray_20260606.json`. |
+| `OLMRadialBlur` | `notes/OLMRadialBlur_RE.md`, `notes/OLMRadialBlur_ASM_FACTS.md`, `cli/OLMRadialBlur/`, `refs/scripts/smoke_olmradialblur*` | Zoom and tiny Rotation are regression-green. `notes/OLMRadialBlur_ASM_FACTS.md` records the sampler/writeback audit for `+0x38/+0x40/+0x48/+0x50`; use it as the fact base for future Inner work. | All current Inner/Edge Fade refs have `Size Variation=0`, so `+0x40` span/gate cannot be identified strongly from PNGs alone. Wait for `refs/reference_requests/radialblur_inner_size_variation_20260606.json` before promoting more Inner changes. |
+| `OLMKiraKira` | `notes/OLMKiraKira_ASM_FACTS.md`, `notes/OLMKiraKira_SCALAR_AGGREGATION_AUDIT.md`, `cli/OLMKiraKira/`, `refs/scripts/smoke_olmkirakira*` | Keep all-ray two-temp/no-fastpath as the candidate path. `notes/OLMKiraKira_SCALAR_AGGREGATION_AUDIT.md` captures `FUN_18114fd90` / `FUN_18114ffd0` scalar and Brightness/Gain facts; do not add more equal-ray sweeps. | Current three refs have equal ray lengths and zero rotation, so ray order, helper scalar, angle mapping, and single-ray crop are entangled. Wait for `refs/reference_requests/kirakira_single_ray_20260606.json`. |
 | `OLMSmoother` / `OLMSmoother2` | `notes/OLMSmoother2_ASM_FACTS.md`, `cli/OLMSmoother*`, `refs/scripts/smoke_olmsmoother*` | Prefer OLMSmoother2 `--force-version 1` for v1 compatibility. Standalone v1 is low priority because its classifier over-fires. | `idx0` and plane-split probes both worsened no-key case_0001. Wait for `refs/reference_requests/smoother2_no_key_grid_20260606.json` before more no-key tuning. |
 
 Practical rule: if a subagent edits code, give it a disjoint write scope and a
@@ -271,6 +271,19 @@ algorithm promotion on the unresolved paths:
   (`0.0055/0.0051/0.0200`). V2 key paths are green/near-green, but no-key
   `case_0001` remains `mean=0.1832`; `idx0` and plane-split diagnostics both
   worsened. Need `smoother2_no_key_grid_20260606` before more no-key tuning.
+
+2026-06-06 continuation follow-up: added
+`refs/scripts/smoke_olmsmoother2_no_key_grid_cli.py` as the import-time analysis
+hook for `smoother2_no_key_grid_20260606`. It exits 0 with `[SKIP]` while the
+request is pending; once a covered manifest is imported, it runs the
+OLMSmoother2 C++ CLI and writes/prints max/mean grouped by `Smoothness` and
+`Smooth Range`. This is harness readiness only, not an algorithm-tuning change.
+
+2026-06-06 subagent fact-log follow-up: added
+`notes/OLMRadialBlur_ASM_FACTS.md` for Rotation sampler/writeback plane
+ownership and `notes/OLMKiraKira_SCALAR_AGGREGATION_AUDIT.md` for scalar
+aggregation/Brightness-Gain flow. Both are read-only audit outputs and do not
+promote any new image-diff tuning.
 
 ## Next Integration Target
 
@@ -900,7 +913,7 @@ near-match Zoom baseline for `case_0003..0005`-style settings.
   has both `arm64` and `x86_64` slices, and ran `codesign --verify` for each
   bundle.
 - `python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick` completed
-  successfully with 29/29 green checks. This includes the
+  successfully with 30/30 green checks. This includes the
   `Reference request package`, `Reference request result verifier`, and
   `Reference request status` gates, the `AE validation result verifier`,
   the harness, ColorKeep, OLMBlur,

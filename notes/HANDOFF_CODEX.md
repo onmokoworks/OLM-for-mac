@@ -550,9 +550,14 @@ Quality別ケースを指定している。`ADBE Force CPU GPU` は参考値の�
 - RadialBlur Inner: current Inner/Edge Fade refs は全て `Size Variation=0`
   なので `+0x40` span/gate plane の正体が弱い。次は
   `refs/reference_requests/radialblur_inner_size_variation_20260606.json`。
+  ただし `notes/OLMRadialBlur_ASM_FACTS.md` に sampler/writeback audit を追加済みで、
+  `+0x38/+0x40/+0x48/+0x50` のplane ownershipは次の実装時のfact baseとして使える。
 - KiraKira: 現3 refs は equal ray lengths / rotation zero なので ray order、
   helper scalar、angle mapping、single-ray crop が絡む。次は
   `refs/reference_requests/kirakira_single_ray_20260606.json`。
+  `notes/OLMKiraKira_SCALAR_AGGREGATION_AUDIT.md` に
+  `FUN_18114fd90` / `FUN_18114ffd0` のscalar aggregationとBrightness/Gain
+  flow監査を追加済み。
 - Smoother2 no-key: `idx0` と `plane-split` probes はどちらも悪化済み。
   次は `refs/reference_requests/smoother2_no_key_grid_20260606.json`。
 
@@ -563,9 +568,13 @@ reference request JSONを検証して `/tmp/olm_reference_requests_YYYYMMDD.zip`
 return shape を含む。さらに `python3 refs/scripts/smoke_all_algorithm_clis.py
 --profile quick` の先頭で同梱包、返却manifest verifier smoke、pending request
 status check、AE validation result verifier smokeを実行するようになった。
-quick profile は29 checks になり、
+quick profile は30 checks になり、
 `Reference request package`, `Reference request result verifier`,
-`Reference request status`, `AE validation result verifier` も green gate として通過する。
+`Reference request status`, `AE validation result verifier`、
+`OLMSmoother2 no-key grid request` も green gate として通過する。
+`refs/scripts/smoke_olmsmoother2_no_key_grid_cli.py` は
+`smoother2_no_key_grid_20260606` が未返却の間は `[SKIP]` で正常終了し、
+import後は12ケースを `Smoothness` / `Smooth Range` 別に一覧化する。
 検証済みコマンド:
 
 ```sh
@@ -574,6 +583,7 @@ python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_r
 python3 refs/scripts/package_reference_requests.py --only kirakira_single_ray_20260606 --output /tmp/olm_reference_requests_kirakira_only.zip
 python3 refs/scripts/smoke_reference_request_result_verifier.py
 python3 refs/scripts/check_reference_request_status.py
+python3 refs/scripts/smoke_olmsmoother2_no_key_grid_cli.py
 python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
 ```
 
@@ -628,7 +638,7 @@ zip内 `manifest.json` のJSON parse、zip内 `.plugin` 10個確認、
 
 ```sh
 cd "/Users/onmk/Documents/Projects/Personal/OLM as"
-python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick # green gates only; 2026-06-06 OK (29 checks, includes reference request package/result verifier/status and AE validation verifier)
+python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick # green gates only; 2026-06-06 OK (30 checks, includes reference request package/result verifier/status, AE validation verifier, and Smoother2 no-key grid request smoke)
 refs/scripts/build_olmblur_cli.sh && refs/scripts/build_olmsmoother_cli.sh && refs/scripts/build_olmtoondilate_cli.sh && refs/scripts/build_olmradialblur_cli.sh
 refs/scripts/build_olmkirakira_cli.sh              # OLMKiraKira C++ scaffold
 scripts/build_all_mac_plugins.sh                  # Mac plugins: build + universal/codesign verify

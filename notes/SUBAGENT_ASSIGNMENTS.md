@@ -58,6 +58,20 @@ the parent spends more implementation time.
   residual cannot be assigned to class-plane firing, sample-plane choice,
   color-space handling, or writeback.
 
+## 2026-06-06 Focused Fact-Log Follow-Up
+
+After the continuation audit, the parent kept implementation local and delegated
+two disjoint note-only audits:
+
+| Plugin area | Agent | Write scope | Result |
+| --- | --- | --- | --- |
+| `OLMKiraKira` scalar aggregation | `019e99e6-98d1-7823-a231-2e1152ccaeb4` / Sartre | `notes/OLMKiraKira_SCALAR_AGGREGATION_AUDIT.md` | Added confirmed/ambiguous facts for `FUN_18114fd90`, `FUN_18114ffd0`, five-ray scalar setup, Brightness/Gain flow, and source/glow opacity ordering. |
+| `OLMRadialBlur` sampler/writeback | `019e99e6-b0fb-7141-8fde-ae628a4a46d9` / Volta | `notes/OLMRadialBlur_ASM_FACTS.md` | Added sampler helper and plane ownership facts for `FUN_180001270`, `FUN_180001520`, `FUN_180001800`, `FUN_180001950`, `FUN_180002780`, and `FUN_1800024c0`. |
+
+The parent also added `refs/scripts/smoke_olmsmoother2_no_key_grid_cli.py`, a
+green request smoke that skips while `smoother2_no_key_grid_20260606` is pending
+and turns into grouped max/mean analysis when the Windows refs are imported.
+
 ## Reusable Prompt Shape
 
 Ask each sub-agent for:

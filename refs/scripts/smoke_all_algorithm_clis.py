@@ -98,6 +98,7 @@ def main() -> int:
         Smoke("OLMSmoother2", [py, "refs/scripts/smoke_olmsmoother2_cli.py"], "red-measurement"),
         Smoke("OLMSmoother2 idx0 probe", [py, "refs/scripts/smoke_olmsmoother2_idx0_probe_cli.py"], "red-measurement"),
         Smoke("OLMSmoother2 Plane Split probe", [py, "refs/scripts/smoke_olmsmoother2_plane_split_probe_cli.py"], "red-measurement"),
+        Smoke("OLMSmoother2 no-key grid request", [py, "refs/scripts/smoke_olmsmoother2_no_key_grid_cli.py"]),
         Smoke("OLMRadialBlur tiny Rotation", [py, "refs/scripts/smoke_olmradialblur_tiny_rotation_cli.py"]),
         Smoke("OLMRadialBlur C++ tiny Rotation", [py, "refs/scripts/smoke_olmradialblur_cpp_tiny_rotation_cli.py"]),
         Smoke("OLMRadialBlur Rotation", [py, "refs/scripts/smoke_olmradialblur_rotation_cli.py"], "red-measurement"),
