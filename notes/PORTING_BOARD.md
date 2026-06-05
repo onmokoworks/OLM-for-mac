@@ -1985,6 +1985,13 @@ behavior.
   `case_0003 mean=1.1870`, versus default `0.8381/1.1623/1.7003`. Do not adopt
   it as default yet; it is evidence that the two-temp path matters especially
   for Strength=0, while case1 still needs exact ROI/header/copyTo semantics.
+- 2026-06-06 two-temp follow-up sweeps: `aex-two-temp` with
+  `bilinear-fixed5` is almost neutral (`0.8529/1.1555/1.1822`). Anchor sweep
+  keeps OpenCV default best (`opencv 0.8531/1.1555/1.1870`; `floor-left`
+  worsens to `0.8531/1.2134/2.1904`; `origin/end` are strongly negative).
+  Border sweep is mixed (`mirror 0.8531/1.1555/1.1870`, `reflect
+  0.8531/1.1558/1.1818`). So the next exactness target is still
+  `warpAffine`/ROI/copyTo placement, not `boxFilter` anchor/border.
 - 2026-06-06 caller temp-Mat mapping: `FUN_18114f4a0` actually creates two
   same-sized PF-backed temp descriptors (`[rbp+0x190]` and `[rbp+0x120]`),
   copy-constructs them into `[rbp+0xc0]` and `[rbp+0x60]`, and zeros the copied
