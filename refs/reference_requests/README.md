@@ -47,6 +47,7 @@ Mac側への取り込み:
 
 ```sh
 python3 refs/scripts/import_win_reference.py path/to/packed_reference.zip --allow-missing-optional-render-sets
+python3 refs/scripts/smoke_reference_requests_after_import.py
 python3 refs/scripts/check_reference_request_status.py
 python3 refs/scripts/audit_olmradialblur_manifest.py
 python3 refs/scripts/smoke_olmradialblur_cpp_inner_cli.py
@@ -60,7 +61,7 @@ python3 refs/scripts/smoke_olmradialblur_cpp_inner_cli.py
 再開時の基本順序:
 
 1. `check_reference_request_status.py` で対象requestが `covered` になったか確認する。
-2. 対象プラグインの最小smoke/probeだけを先に走らせる。
+2. `smoke_reference_requests_after_import.py` でcovered manifestの検証と登録済みrequest smokeを走らせる。
 3. 結果を `notes/*_ASM_FACTS.md` または `notes/PORTING_BOARD.md` に戻す。
 4. green化または新しい停止条件を確認してから `smoke_all_algorithm_clis.py --profile quick` を走らせる。
 

@@ -59,4 +59,5 @@ Returned result import command:
 
 ```sh
 python3 refs/scripts/import_win_reference.py path/to/packed_reference.zip --allow-missing-optional-render-sets
+python3 refs/scripts/smoke_reference_requests_after_import.py
 ```
