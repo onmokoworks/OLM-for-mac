@@ -17,7 +17,7 @@ possible and final AE plug-in validation.
 - Mac plug-in build verification passes via `scripts/build_all_mac_plugins.sh`.
   The script recreates ignored AE SDK symlinks, builds `ColorKeep`, `OLMBlur`,
   `OLMColorKey`, `OLMDirectionalBlur`, `OLMRadialBlur`, `OLMToonDilate`,
-  `OLMDistanceGradation`, `OLMSmoother`, and `OLMSmoother2`
+  `OLMKiraKira`, `OLMDistanceGradation`, `OLMSmoother`, and `OLMSmoother2`
   in Debug, checks
   `arm64`/`x86_64` slices, and runs `codesign --verify`.
 - Windows references imported under `refs/win_references/20260604_olm/`.
@@ -850,6 +850,21 @@ near-match Zoom baseline for `case_0003..0005`-style settings.
   harness, ColorKeep, OLMBlur, OLMColorKey Python/C++/Rust, OLMToonDilate
   Python/C++, OLMDistanceGradation, OLMSmoother build, and OLMRadialBlur
   Zoom/tiny-Rotation guards.
+
+2026-06-06 verification refresh:
+
+- `scripts/build_all_mac_plugins.sh` completed successfully again. It built all
+  10 Debug plug-ins (`ColorKeep`, `OLMBlur`, `OLMColorKey`,
+  `OLMDirectionalBlur`, `OLMRadialBlur`, `OLMKiraKira`, `OLMToonDilate`,
+  `OLMDistanceGradation`, `OLMSmoother`, `OLMSmoother2`), verified each binary
+  has both `arm64` and `x86_64` slices, and ran `codesign --verify` for each
+  bundle.
+- `python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick` completed
+  successfully with 26/26 green checks. This includes the
+  `Reference request package` gate, the harness, ColorKeep, OLMBlur,
+  OLMColorKey Python/C++/Rust, OLMToonDilate Python/C++, OLMDistanceGradation,
+  OLMSmoother build, OLMSmoother2 build/v1 compatibility/key paths/Gamma
+  Colors, and RadialBlur tiny Rotation / Zoom / Zoom Offset green gates.
 
 ## OLMDirectionalBlur
 
