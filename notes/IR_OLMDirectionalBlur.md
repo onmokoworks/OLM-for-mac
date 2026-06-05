@@ -393,3 +393,22 @@ the remaining front-only/no-noise work to the following IR checkpoints:
   cannot be conclusively separated. If `case_0001` remains around `mean=4`
   after the argument mapping pass, stop further image-only toggles and use
   `refs/reference_requests/directionalblur_context_scale_20260606.json`.
+
+### 2026-06-06 stop condition review
+
+Subagent review of the current DirectionalBlur probes found that the remaining
+front-only/no-noise image-only hypotheses are mostly covered:
+
+- A/B choreography, pad/offset, prepass, exact scatter/rowdriver, component
+  half-height/center/tail, binary alpha, straight RGB, trunc output, truncated
+  span, row init, scale sweep, and sign checks have existing smoke/probe notes.
+- Most variants are neutral or negative, and the current tracked references are
+  opaque, so source RGB/premul/alpha ownership cannot be separated further.
+- Re-running `rotated-aex-full-choreo` or `rotated-aex-exact-rowdriver` is useful
+  as a regression check, but it is unlikely to add new algorithmic information.
+
+Stop condition: do not keep fitting DirectionalBlur with PNG-only parameter
+sweeps while `case_0001` remains around `mean=4`. Wait for
+`refs/reference_requests/directionalblur_context_scale_20260606.json`, which
+asks for `ctx+0x11c / ctx+0x120` render-context scale and non-opaque alpha
+references.
