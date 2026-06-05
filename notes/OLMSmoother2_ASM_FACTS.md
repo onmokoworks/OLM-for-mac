@@ -255,6 +255,16 @@ Current conclusion for `case_0001`:
   should focus on why those pixels enter `idx=0` in the port, or on a subtle
   source-plane / class-plane parameter mapping issue, not on changing the
   corner constants.
+- 2026-06-06 sidecar recheck confirms `FUN_1800104d0` samples integer grid
+  pixels directly from the float source plane, not bilinear samples. It also
+  rechecked that the frame setup, class-plane generation, and
+  `FUN_1800036e0` writeback-premultiply direction are aligned with the current
+  port. The next diagnostic should therefore be narrow and explicit:
+  either suppress or scale only the `idx=0x00` four-corner dispatch, or split
+  the class-plane source from the `FUN_1800104d0` sample source to test a
+  source/color-space plane timing mismatch. Additional Windows refs are not yet
+  mandatory for `case_0001`; if both probes fail, request a no-key/v2/Gamma
+  None grid over `Smoothness=0,25,50,100` and `Smooth Range=1,2,3`.
 
 ## FUN_18000c0d0 / FUN_18000ab00 / FUN_18000b120: Per-Pixel Accumulation
 

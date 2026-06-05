@@ -2225,6 +2225,25 @@ behavior.
   `smoke_olmkirakira_cpp_two_temp_no_fastpath_probe_cli.py` still reports
   `0.8506/1.1570/1.0563`.
 
+2026-06-06 KiraKira subagent ray-isolation request:
+
+- ASM sidecar rechecked `FUN_181150790` and found the next unresolved
+  questions are not another simple ROI shift: the helper returns a scalar in
+  `XMM0` (`Blur Mode=2` path multiplies it by `length^2`) and the caller stores
+  that per-ray scalar before passing the ray/scalar arrays into the vtable
+  aggregation path.
+- The same review flags angle/length table mapping as underdetermined by the
+  current references: all three existing cases have `Vertical/Horizontal/
+  Diagonal Length=50`, `Glow Rotation=0`, and no isolated Diagonal2 ray, so
+  ray order, base angle, helper scalar, and aggregation argument semantics are
+  entangled.
+- Added `refs/reference_requests/kirakira_single_ray_20260606.json` for the
+  next Windows pass. It asks for Vertical/Horizontal/Diagonal/Diagonal2
+  single-ray cases at `Brightness Gain=1 / Strength=100`, the same four at
+  `Brightness Gain=9.4 / Strength=0`, plus an optional `Glow Rotation=13`
+  diagonal sanity case. Use these refs before deeper image-only tuning of
+  KiraKira ray order or angle mapping.
+
 2026-06-05 RadialBlur C++ Inner scatter RGB probe:
 
 - Fixed a latent C++ source-scatter probe wrap bug in

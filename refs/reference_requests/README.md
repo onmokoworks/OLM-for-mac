@@ -24,11 +24,14 @@
 2. `directionalblur_context_scale_20260606.json`
    - OLMDirectionalBlurの `ctx+0x11c / ctx+0x120` render-context scale と
      非不透明alpha挙動を切るためのセット。
-3. 既存Mac移植扱いのプラグイン確認
+3. `kirakira_single_ray_20260606.json`
+   - OLMKiraKiraのray order / angle table / helper戻り値scalarを分離するための
+     単独rayセット。
+4. 既存Mac移植扱いのプラグイン確認
    - `OLMDistanceGradation`
    - `OLMSmoother2`
    - その他READMEで port complete 扱いのもの。
-4. OLMSmoother alternate reference
+5. OLMSmoother alternate reference
    - 現参照は過剰発火原因の切り分けが弱いので、単純な高コントラスト素材で追加確認する。
 
 Mac側への取り込み:
