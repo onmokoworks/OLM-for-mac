@@ -6,23 +6,28 @@ Private working repo for porting OLM After Effects plug-ins to modern macOS.
 
 Current progress:
 
-- `OLMSmoother2`: port complete
-- `OLMSmoother` v1: port in progress
-- `DistanceGradation`: port complete
-- `ColorKeep`: port complete
-- `OLMBlur`: port in progress
-- all other OLM plug-ins: not started / pending
+- 10 Mac plug-in projects build as universal Debug bundles:
+  `ColorKeep`, `OLMBlur`, `OLMColorKey`, `OLMDirectionalBlur`,
+  `OLMRadialBlur`, `OLMKiraKira`, `OLMToonDilate`, `OLMDistanceGradation`,
+  `OLMSmoother`, and `OLMSmoother2`.
+- Green AE-free CLI regression gates exist for `ColorKeep`, `OLMBlur`,
+  `OLMColorKey`, `OLMToonDilate`, stable `OLMDistanceGradation` cases,
+  `OLMRadialBlur` Zoom/tiny Rotation slices, and `OLMSmoother2` key/v1
+  compatibility slices.
+- Known-red diagnostic probes remain for unresolved paths in
+  `OLMDirectionalBlur`, `OLMRadialBlur` Inner/Edge Fade, `OLMKiraKira`, and
+  `OLMSmoother2` no-key v2. These are kept as measurement scaffolds, not
+  release gates.
+- Final AE-host load/apply/render validation is pending on a real After Effects
+  machine.
 
 Current source:
 
-- `mac/OLMSmoother2/`
-- `mac/OLMDistanceGradation/`
-- `mac/ColorKeep/`
-- `mac/OLMBlur/`
-- `mac/OLMSmoother/`
-- main implementation: `mac/OLMSmoother/Mac/OLMSmoother_port.cpp`
-- reverse-engineering notes: `disasm/v1_analysis/`
-- verification fixture/scripts: `refs/`
+- Mac plug-ins: `mac/`
+- CLI algorithm probes: `cli/` and `refs/scripts/`
+- Windows references: `refs/win_references/`
+- pending Windows reference requests: `refs/reference_requests/`
+- reverse-engineering notes: `notes/`
 
 Large local artifacts are intentionally ignored:
 
@@ -34,18 +39,17 @@ Large local artifacts are intentionally ignored:
 
 ## Build
 
-This source was developed inside the After Effects SDK template tree:
+The repo builds against the local After Effects SDK. Create/update the ignored
+SDK symlinks and build all Mac plug-ins with:
 
 ```sh
-/Users/onmk/Documents/After Effects SDK/ae25.2_20.64bit.AfterEffectsSDK/AfterEffectsSDK/Examples/Template/OLMSmoother
+scripts/build_all_mac_plugins.sh
 ```
 
-To build, copy or sync `mac/OLMSmoother/` into the AE SDK `Examples/Template`
-folder as `OLMSmoother`, then run:
+To build a single plug-in:
 
 ```sh
-cd "/Users/onmk/Documents/After Effects SDK/ae25.2_20.64bit.AfterEffectsSDK/AfterEffectsSDK/Examples/Template/OLMSmoother/Mac"
-xcodebuild -project OLMSmoother.xcodeproj -configuration Debug
+xcodebuild -project mac/<PluginName>/Mac/<PluginName>.xcodeproj -configuration Debug build
 ```
 
 Install target used during development:
@@ -56,53 +60,44 @@ Install target used during development:
 
 ## Verification
 
-Generate the shared input image:
+Run the quick AE-free regression suite:
 
 ```sh
-python3 refs/scripts/make_test_cellanim.py
+python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
 ```
 
-Render the same AE comp on Windows and macOS, then place PNGs here:
-
-- `refs/win/`
-- `refs/mac/`
-
-Run:
+Run the full aggregate suite, including registered red-measurement probes:
 
 ```sh
-refs/scripts/diff_all.sh
+python3 refs/scripts/smoke_all_algorithm_clis.py
 ```
 
-`max=0` means byte-perfect for that frame.
-
-For parameter-aware verification, use the case manifest:
+Package pending Windows reference requests:
 
 ```sh
-python3 refs/scripts/verify_cases.py
+python3 refs/scripts/check_reference_request_status.py
+python3 refs/scripts/package_reference_requests.py --pending
 ```
 
-The default manifest is `refs/cases/olmsmoother_v1_minimal.json`; it maps each
-frame to the input image and parameter values used for that render. This makes
-it easier to tell whether a mismatch is limited to key-color handling,
-tolerance, or the shared smoothing kernel.
-
-To move Windows reference renders into this Mac workspace, package them on the
-Windows side and import the zip here:
+Package Mac plug-ins for AE-host validation:
 
 ```sh
-python3 refs/scripts/normalize_render_names.py path/to/ae_png_sequence
-python3 refs/scripts/package_win_reference.py path/to/rendered_pngs --out OLMSmoother_win_reference.zip
-python3 refs/scripts/import_win_reference.py path/to/OLMSmoother_win_reference.zip
+scripts/package_mac_plugins.sh
 ```
 
-If AE outputs arbitrary sequence names, normalize them first. The normalizer maps
-sorted PNGs to the manifest case order and writes `f0.png`, `f1.png`, and so on
-into `_normalized/`. The package includes PNGs, parameter values, and SHA-256
-hashes. Importing writes the checked frames into `refs/win/`.
+Returned AE-host validation JSON can be checked in two modes:
+
+```sh
+python3 scripts/verify_ae_validation_result.py AE_VALIDATION_RESULT.json
+python3 scripts/verify_ae_validation_result.py --require-all-pass AE_VALIDATION_RESULT.json
+```
+
+The first command accepts complete, actionable reports even when a plug-in
+failed in AE. The second command is the all-pass release gate.
 
 ## Status
 
-See `notes/HANDOFF.md`.
+See `notes/HANDOFF_CODEX.md` and `notes/PORTING_BOARD.md`.
 
 ---
 
@@ -114,23 +109,26 @@ OLM After Effects plug-in 群を、現行 macOS / After Effects 向けに移植�
 
 現在の進捗:
 
-- `OLMSmoother2`: 移植完了
-- `OLMSmoother` 初代: 移植中
-- `DistanceGradation`: 移植完了
-- `ColorKeep`: 移植完了
-- `OLMBlur`: 移植中
-- その他の OLM plug-in: 未着手 / 移植待ち
+- 10本のMac plug-in projectがDebug universal bundleとしてビルド可能:
+  `ColorKeep`, `OLMBlur`, `OLMColorKey`, `OLMDirectionalBlur`,
+  `OLMRadialBlur`, `OLMKiraKira`, `OLMToonDilate`, `OLMDistanceGradation`,
+  `OLMSmoother`, `OLMSmoother2`
+- AEなしCLIのgreen回帰ゲートあり:
+  `ColorKeep`, `OLMBlur`, `OLMColorKey`, `OLMToonDilate`,
+  `OLMDistanceGradation`の安定ケース、`OLMRadialBlur`のZoom/tiny Rotation、
+  `OLMSmoother2`のkey/v1互換スライス
+- 未解決パスはknown-red診断として維持:
+  `OLMDirectionalBlur`, `OLMRadialBlur` Inner/Edge Fade, `OLMKiraKira`,
+  `OLMSmoother2` no-key v2
+- 最終AE実機のload/apply/render検証は未完了
 
 主なソース:
 
-- `mac/OLMSmoother2/`
-- `mac/OLMDistanceGradation/`
-- `mac/ColorKeep/`
-- `mac/OLMBlur/`
-- `mac/OLMSmoother/`
-- 初代 Smoother の中心実装: `mac/OLMSmoother/Mac/OLMSmoother_port.cpp`
-- 初代 Smoother の解析メモ: `disasm/v1_analysis/`
-- Win/Mac 出力比較用 fixture と scripts: `refs/`
+- Mac plug-in: `mac/`
+- CLI algorithm probe: `cli/`, `refs/scripts/`
+- Windows reference: `refs/win_references/`
+- 追加Windows reference request: `refs/reference_requests/`
+- 解析メモ: `notes/`
 
 Git に入れていないもの:
 
@@ -144,17 +142,16 @@ Git に入れていないもの:
 
 ## ビルド
 
-作業中は After Effects SDK の template tree 上でビルドしています。
+ローカルの After Effects SDK に対するignored symlinkを作り、全Mac plug-inをまとめてビルド:
 
 ```sh
-/Users/onmk/Documents/After Effects SDK/ae25.2_20.64bit.AfterEffectsSDK/AfterEffectsSDK/Examples/Template
+scripts/build_all_mac_plugins.sh
 ```
 
-例: 初代 `OLMSmoother` をビルドする場合:
+単体ビルド:
 
 ```sh
-cd "/Users/onmk/Documents/After Effects SDK/ae25.2_20.64bit.AfterEffectsSDK/AfterEffectsSDK/Examples/Template/OLMSmoother/Mac"
-xcodebuild -project OLMSmoother.xcodeproj -configuration Debug
+xcodebuild -project mac/<PluginName>/Mac/<PluginName>.xcodeproj -configuration Debug build
 ```
 
 開発中の install 先:
@@ -190,63 +187,32 @@ xattr -cr build/Debug/<PluginName>.plugin
 xcodebuild -project <PluginName>.xcodeproj -configuration Debug
 ```
 
-## 初代 OLMSmoother の検証方針
-
-Win 版 `.aex` の出力を reference として、Mac 版 `.plugin` の出力が pixel 単位で一致するか確認します。
-
-fixture 画像を生成:
+## AEなし検証
 
 ```sh
-python3 refs/scripts/make_test_cellanim.py
+python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
+python3 refs/scripts/smoke_all_algorithm_clis.py
 ```
 
-Windows AE と macOS AE で同じ comp を render し、PNG sequence を以下へ置きます。
-
-- Windows reference: `refs/win/`
-- Mac port output: `refs/mac/`
-
-比較:
+追加Windows参照の状態確認とパッケージ作成:
 
 ```sh
-refs/scripts/diff_all.sh
+python3 refs/scripts/check_reference_request_status.py
+python3 refs/scripts/package_reference_requests.py --pending
 ```
 
-`max=0` なら、その frame は byte-perfect です。
-
-パラメータ込みで検証する場合:
+Win側で返ってきたreference zipはimportしてrequestに照合します:
 
 ```sh
-python3 refs/scripts/verify_cases.py
+python3 refs/scripts/import_win_reference.py path/to/packed_reference.zip
+python3 refs/scripts/verify_reference_request_result.py refs/reference_requests/<request>.json path/to/imported/reference_manifest.json
 ```
-
-デフォルト manifest は `refs/cases/olmsmoother_v1_minimal.json` です。各
-frame と入力画像、パラメータ値を紐づけているので、ズレが key-color 側か、
-tolerance 側か、共通 smoothing kernel 側かを切り分けやすくします。
-
-Windows 実機で出した reference render をこの Mac 環境へ持ってくる場合:
-
-```sh
-python3 refs/scripts/normalize_render_names.py path/to/ae_png_sequence
-python3 refs/scripts/package_win_reference.py path/to/rendered_pngs --out OLMSmoother_win_reference.zip
-python3 refs/scripts/import_win_reference.py path/to/OLMSmoother_win_reference.zip
-```
-
-AE が任意の連番名で吐いた場合は、先に normalize します。manifest のケース順に
-sorted PNG を対応させて、`_normalized/` に `f0.png`, `f1.png` ... を作ります。
-zip には PNG、manifest 上のパラメータ値、SHA-256 hash が入ります。import 時に
-検証してから `refs/win/` へコピーします。
 
 ## 引き継ぎ
 
 詳しい引き継ぎメモは以下です。
 
 ```txt
-notes/HANDOFF.md
+notes/HANDOFF_CODEX.md
+notes/PORTING_BOARD.md
 ```
-
-初代 `OLMSmoother` の残作業は主に以下です。
-
-- first-pass key-mask path の実装
-- Win reference render との byte-perfect 検証
-- 8-bpc が合った後の 16-bpc 検証
-- 32-bpc float path の扱い確認
