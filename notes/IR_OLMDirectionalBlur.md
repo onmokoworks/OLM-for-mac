@@ -367,3 +367,29 @@ semantics than in the final direct-to-comp sampling shortcut alone.
    and the component-map run-merging pass now look consistent with the current
    CLI approximation.
 5. Only after front-only improves, add Back Blur / Noise IR sections.
+
+## 2026-06-06 Subagent IR Review
+
+Independent read-only review of the current DirectionalBlur notes/code narrowed
+the remaining front-only/no-noise work to the following IR checkpoints:
+
+- Keep `render_scale = *(int *)(ctx+0x11c) / *(int *)(ctx+0x120)` separate from
+  frame rate. The current `1/frame_rate` mapping is a PNG-fit hypothesis, not
+  yet AEX evidence.
+- Preserve the A/B choreography explicitly:
+  populate A -> rotate A to B -> copy B to A -> row-driver writes B/denom ->
+  normalize B -> clear A -> rotate B to A -> output through the repointed
+  `+0x8090` callback.
+- Model `FUN_180001000` as a prepass that writes `denom`, `alpha_or_valid`, and
+  the B seed together.
+- Treat `FUN_1800013e0` as the next address-level blocker: source RGB appears
+  to come from A, contribution alpha from `alpha_or_valid`, RGB denominator is
+  separate, and output alpha is max-like, but this needs one more objdump pass.
+- Follow-up argument audit confirms that mapping: `FUN_1800038d0` passes
+  A/source as `param_4`, B/destination as `param_5`, denom as `param_6`, and
+  `alpha_or_valid` as `param_7`; `FUN_1800013e0` adds RGB/denom and updates
+  B alpha by max contribution.
+- The current references are opaque, so straight-vs-premultiplied source RGB
+  cannot be conclusively separated. If `case_0001` remains around `mean=4`
+  after the argument mapping pass, stop further image-only toggles and use
+  `refs/reference_requests/directionalblur_context_scale_20260606.json`.

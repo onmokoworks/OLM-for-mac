@@ -682,6 +682,32 @@ B[p].a = gathered_alpha
   this probe is not discriminating for straight-vs-premultiplied source RGB on
   the current reference cases.
 
+2026-06-06 subagent argument audit:
+
+- `FUN_1800013e0 @ 1800013e0` reads source RGB from `param_4`. The
+  `18000142b..18000144a` region loads `param_4[p].r/g/b` alongside
+  `param_7[p]`.
+- `FUN_1800038d0 @ 1800038d0` passes front/back rows with
+  `param_4 = *param_3` (A/source), `param_5 = *param_4` (B/destination),
+  `param_6 = *(params+0x8080)` (denom), and
+  `param_7 = *(params+0x8088)` (alpha_or_valid).
+- The scatter contribution is `alpha_or_valid[source] *
+  weight_table[int(offset / coeff)]`; `FUN_1800013e0` accumulates
+  `B.rgb += A.rgb * contribution` and `denom += contribution`.
+- `B.a` is max-like, not summed. The loop around `180001550..1800015cc`
+  updates `param_5[dst].a = max(old, contribution)`.
+- `FUN_180001000 @ 180001000` owns the prepass seed state for `denom[p]`,
+  `alpha_or_valid[p]`, and `B[p].rgba`. Zero source alpha clears all of them
+  around `180001042..18000105b`; nonzero source alpha writes
+  `gathered_alpha` into `denom`, `B.a`, and `alpha_or_valid`, while
+  `B.rgb = A.rgb * gathered_alpha` around `18000136a..1800013c5`.
+- `FUN_1800038d0` decides scatter skip from the original `A[p].a` around
+  `180003a32..180003a3f`.
+- Current implication: the leading front-only residual is less likely this
+  argument mapping and more likely rotate/input populate, edge/validity, or
+  render-context scale. Opaque references still cannot separate straight and
+  premultiplied source RGB.
+
 2026-06-05 diagnostic:
 
 - Added C++ CLI algorithm `--algorithm rotated-aex-choreo` to test the first

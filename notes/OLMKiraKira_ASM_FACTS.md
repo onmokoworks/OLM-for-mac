@@ -400,3 +400,70 @@ in-place rotate-back canvas before copying a centered ROI into the final ray
 descriptor (`param_4`). The simple `aex-inplace-temp` probe was still wrong
 because it modeled a one-temp blur/rotate-back path rather than this R14-to-R12
 two-temp choreography.
+
+## 2026-06-06 Subagent IR Review
+
+Independent read-only review of KiraKira confirmed the current state as a
+high-precision red probe rather than a validated port. The all-ray
+two-temp/no-fastpath path is still around `case_0001/0002/0003
+mean=0.8506/1.1570/1.0563`, and the broad structure is fairly stable:
+Brightness and Strength are separated, luminance seed is understood, the
+five-layer aggregation order is known, and the repeated-box/warp path is close
+to OpenCV behavior.
+
+Next address-level facts to lock before more tuning:
+
+- In `FUN_181150790`, confirm both `warpAffine` calls' exact
+  InputArray/OutputArray Mat headers and whether the second `dsize` is derived
+  from R14, R12, or `param_4`.
+- Confirm the `FUN_181156cd0` ROI rectangles and the `FUN_18115cfb0`/`copyTo`
+  direction: source-to-temp center versus temp-ROI-to-ray.
+- Confirm how the helper return scalar, `length^2` correction, and ray-scalar
+  array reach final aggregation. The current references use equal ray lengths,
+  so image diffs alone cannot separate this.
+- Confirm merge-mode dispatch and source/glow opacity ordering for
+  `+0x08 FUN_18114fd90` and `+0x10 FUN_18114ffd0`.
+- Keep `0/90` axis fast path as a portability shortcut only; no AEX branch fact
+  currently proves it.
+
+IR components to keep separate:
+
+- `KiraRayHelper`: temp canvas sizing, ROI copy, forward warp, three-pass
+  `boxFilter`, rotate-back, final ROI copy.
+- `KiraSeed`: Channel enum seed functions; Strength is seed exponent;
+  Brightness is final scale.
+- `KiraAggregate`: five buffer order, ray scalar handling, alpha union, and RGB
+  normalization.
+- `KiraCompose`: merge-mode and opacity application order.
+
+If the next objdump/Ghidra pass confirms these facts but the residual remains
+near the current level, use `refs/reference_requests/kirakira_single_ray_20260606.json`.
+The current three references cannot isolate ray order, angle mapping, or scalar
+handling by themselves.
+
+### FUN_181150790 warp/ROI argument audit
+
+2026-06-06 subagent audit confirmed the two-temp helper mapping:
+
+- Function arguments: `R14 = param_3` first temp, `R12 = param_5` second temp,
+  and `R9/RBX = param_4` final ray Mat.
+- First `warpAffine` at `1811508d7..181150941` wraps `R14` for both
+  `InputArray(0x1010000)` and `OutputArray(0x2010000)`. Its dsize is loaded
+  from `R14+0x8/+0xc` at `18115090e..18115091a`, so it uses the first temp's
+  size.
+- Second `warpAffine` at `181150f89..181150ff8` wraps `R12` for both
+  `InputArray(0x1010000)` and `OutputArray(0x2010000)`. Its dsize is loaded
+  from `R12+0x8/+0xc` at `181150fc3..181150fd1`, not from `param_4`.
+- Initial ROI copy: `181150852..18115086b` builds an ROI in `R14`, then
+  `181150874..181150892` copies `param_2` into `ROI(R14)`.
+- Final ROI copy: `181151019..181151024` builds an ROI in `R12`, then
+  `181151033..181151049` copies `ROI(R12)` into `param_4/RBX`.
+- `FUN_181156cd0` constructs `Rect(x,y,width,height)`: `181156d08..181156d12`
+  writes rows from rect height `[r8+0xc]` and columns from rect width
+  `[r8+0x8]`.
+
+Next C++ probe should minimize the current `aex-two-temp` path and force both
+warps to call OpenCV with the same Mat as source and destination:
+`param_2 -> ROI(R14)`, `warpAffine(R14, R14, dsize=R14.size())`,
+`blur R14 -> R12`, `warpAffine(R12, R12, dsize=R12.size())`, then
+`ROI(R12) -> param_4`.

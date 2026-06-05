@@ -2552,6 +2552,14 @@ behavior.
   keep `one`/`factor` as the current diagnostic baseline and continue chasing
   exact `param_1+0x10` / `+0x14` buffer construction instead of adopting
   direct alpha scaling.
+- Follow-up ownership audit maps those decomp float-pointer offsets to concrete
+  byte planes: `+0x38` is polar RGBA from `param_2[0x13]`, `+0x40` is the
+  separately sampled scatter span/gate plane from `param_2[0x12]`, `+0x50` is
+  factor from `param_2[0x11]` or constant `1.0`, and `+0x48` is the
+  prepass-computed alpha written by `FUN_180002780`. So the alpha-param10
+  regression should be read as: the AEX span/gate plane exists, but current
+  substitutes for its sampler/layer value are wrong; do not keep cycling
+  sampled-alpha toggles.
 
 2026-06-06 RadialBlur C++ Inner conditional seed probe:
 
