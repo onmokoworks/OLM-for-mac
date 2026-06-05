@@ -240,6 +240,14 @@ Current interpretation:
   Border sweep is mixed: `mirror 0.8531/1.1555/1.1870` versus
   `reflect 0.8531/1.1558/1.1818`. This points away from anchor/border as the
   main residual and back toward exact `warpAffine`/ROI/copyTo placement.
+- Final ROI placement sweep on `aex-two-temp` is strongly negative in all
+  one-pixel directions, so the last `R12` -> final-ray `copyTo` rectangle is
+  unlikely to be the remaining issue. Results: baseline
+  `0.8531/1.1555/1.1870`; final `x-1` `1.1336/1.3811/6.1233`;
+  final `x+1` `1.1276/1.3447/5.9795`; final `y-1`
+  `1.1166/1.3516/5.9944`; final `y+1` `1.1166/1.3708/6.0968`.
+  Next target is forward/rotate-back `warpAffine` in-place behavior or the
+  exact matrix center/scale details, not final ROI position.
 - The decomp/asm shape shows the rotate-back `warpAffine` dsize is the final
   ray descriptor (`param_5`) rather than a larger temporary canvas followed by
   an obvious center crop. A C++ diagnostic `--warp-mode aex-direct-back`
