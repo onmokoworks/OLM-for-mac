@@ -136,6 +136,13 @@ Current smoke status:
   strict `case_0011/0012/0013 mean=25.2972/10.6222/21.2910`;
   `aex-repeat` `mean=25.1925/10.6245/21.2894`. Do not promote this to the
   production path unless later asm facts require it.
+- `smoke_olmradialblur_cpp_inner_prepass_factor_probe_cli.py`: known-red C++
+  Inner diagnostic for the `FUN_180002780` `+0x14` factor buffer. Strength-span
+  factor modes `alpha/one/valid` are all bad for case_0011
+  (`88.4305/90.9893/90.9893` mean). Edge-fade factor modes are currently
+  indistinguishable because the inner reference cases have Edge Fade=0. If
+  `+0x14` becomes the deciding ambiguity, ask Windows for RadialBlur Inner
+  refs with nonzero Edge Fade or Size Variation instead of guessing.
 
 ## ASM-First Porting Flow
 

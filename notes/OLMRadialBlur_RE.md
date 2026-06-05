@@ -492,6 +492,17 @@ high-level polar coordinate structure.
   `60.4338/15.0235/20.1088` for cases `0011/0012/0013`. The best current
   direction is therefore not "multiply scatter by alpha"; it is to map the
   caller-populated `+0x14` factor buffer more literally.
+- Follow-up diagnostic added `--inner-prepass-factor-mode alpha|one|valid`
+  and `refs/scripts/smoke_olmradialblur_cpp_inner_prepass_factor_probe_cli.py`.
+  With strength-span `FUN_180002780` approximation, factor `alpha` gives
+  `case_0011/0012/0013 mean=88.4305/11.7905/22.1197`; factor `one` and
+  `valid` both give `90.9893/12.6044/22.6296`. With the current edge-fade
+  span approximation, all three factor modes collapse to the previous best-ish
+  `25.2972/10.6222/21.2910` because the reference cases have Edge Fade=0.
+  So these refs cannot isolate the exact `+0x14` factor semantics by
+  themselves; continue with caller/source ownership or request a targeted
+  Windows ref with nonzero Edge Fade or Size Variation if that becomes the
+  only remaining ambiguity.
 - `mac/OLMRadialBlur/OLMRadialBlur.cpp` now carries the same 8bpc
   outer-only/no-noise/no-size-variation Rotation slice, including the
   radius-dependent Offset Mode=1 path. Unsupported Rotation cases (Inner,
