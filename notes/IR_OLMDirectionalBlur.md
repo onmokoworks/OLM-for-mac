@@ -124,6 +124,11 @@ Current probe status:
   prepass to the full A/B choreography. It is also numerically unchanged from
   `rotated-aex-full-choreo`, so the center prepass is not visible on the
   current opaque front-only refs when combined with the current scaffold.
+- `rotated-aex-truncated-span` uses the exact `FUN_1800013e0` component/tail
+  span gate (`effective_span = int(strength * coeff)`, offsets
+  `1..effective_span-1`) instead of the previous float threshold. It gives only
+  a tiny case1 improvement and worsens case5, so integer span truncation is an
+  AEX fact but not the remaining dominant residual.
 
 ### Component Map
 
@@ -176,6 +181,8 @@ coeff = component_coeff * noise_coeff * tail
 `FUN_1800013e0` then uses `coeff` structurally:
 
 - effective span: `int(strength * coeff)`
+- processed offsets: `1 <= offset < effective_span`; center offset 0 is never
+  included by the scatter helper
 - table index: `int(offset / coeff)`
 - RGB accumulates into output buffer
 - denominator accumulates separately
@@ -217,6 +224,7 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 | rotated-aex-choreo | 4.4483 | 1.1703 | positive A/B input-rotate signal |
 | rotated-aex-full-choreo | 4.4483 | 1.1703 | output-side padded A writeback is neutral |
 | rotated-aex-prepass-full-choreo | 4.4483 | 1.1703 | center prepass + full A/B is neutral |
+| rotated-aex-truncated-span | 4.4467 | 1.1749 | exact integer span gate is mixed/minor |
 | rotated-aex-row-init-straight-zero | 4.4702 | 1.1762 | zero denominator / retained straight B is negative |
 | rotated-aex-row-init-premul-zero | 4.4702 | 1.1762 | zero denominator / retained premul B is negative |
 | rotated-aex-row-init-zero | 4.5240 | 1.4931 | cleared B+denom is strongly negative |
