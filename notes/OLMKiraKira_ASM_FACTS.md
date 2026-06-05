@@ -73,10 +73,17 @@ Inside `FUN_181150790`:
   beta*cx + (1-alpha)*cy]`.
 - `FUN_181156cd0` is an ROI/header constructor. It receives a source Mat
   descriptor plus a 4-int rectangle and creates a sub-Mat header. The rectangle
-  layout is `x`, `y`, `height`, `width` in memory, because it writes output
-  `rows = rect.height` from `[r8+0xc]`, `cols = rect.width` from `[r8+0x8]`,
-  advances the data pointer by `rect.y * step[0]`, and then by
+  layout is OpenCV `Rect(x, y, width, height)` in memory, because it writes
+  output `rows = rect.height` from `[r8+0xc]`, `cols = rect.width` from
+  `[r8+0x8]`, advances the data pointer by `rect.y * step[0]`, and then by
   `rect.x * elemSize`.
+- `FUN_18115cfb0` is not KiraKira-specific copy/crop logic. Its checks and
+  assertion strings match OpenCV 4.5.5 `cv::Mat::copyTo`: it validates channel
+  compatibility, routes type conversion through `FUN_1811705a0` when needed,
+  creates/resizes the destination, and otherwise copies rows with `memcpy`.
+  Therefore the KiraKira placement question lives in the caller-built
+  `Rect(x, y, width, height)` and `warpAffine` destination Mat dimensions, not
+  inside `FUN_18115cfb0`.
 
 ## Blur Mode 2: cv::boxFilter Calls
 
@@ -178,6 +185,10 @@ Current interpretation:
   or another pre/post ray detail than a simple boxFilter argument mismatch,
   naive getRotationMatrix2D center swap, `FUN_181157ed0` matrix adjustment, or
   direct rotate-back approximation.
+- Existing C++ crop probes (`floor`, `ceil`, `round`) all produce the same
+  baseline residual (`case_0001 mean=0.8381`, `case_0002 mean=1.1623`,
+  `case_0003 mean=1.7003`), so the current mismatch is not explained by a
+  trivial final center-crop rounding choice.
 
 ## Rotate Canvas / dsize
 
