@@ -1266,6 +1266,22 @@ index modulation, not as a direct alpha attenuation.
   implementation work is not "which final buffer is source?" but faithfully
   reproducing that A/B choreography and the row-driver normalization details.
 
+2026-06-05 A/B choreography probe:
+
+- Added `--algorithm rotated-aex-choreo` to the C++ CLI plus
+  `refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_choreo_cli.py`, and
+  registered it as an expected-red aggregate measurement.
+- The probe builds a padded A buffer first, rotates A into the working B buffer,
+  then continues through the existing rotated scatter scaffold. This is closer
+  to the asm order than directly rotating the source layer into the working
+  buffer.
+- Results: `case_0001 max=254 mean=4.4483`,
+  `case_0005 max=246 mean=1.1703`. This does not fix the angle-0 group, but it
+  improves the diagonal front-only case over plain rotated (`mean=1.2174`) and
+  rotated-preserve-alpha (`mean=1.1831`). Keep it as a positive signal for the
+  A/B buffer setup while the remaining row-driver/normalization details are
+  ported.
+
 ## OLMKiraKira
 
 `refs/scripts/audit_olmkirakira_manifest.py` summarizes the three Windows

@@ -108,6 +108,7 @@ def main() -> int:
         Smoke("OLMDirectionalBlur C++ Back probe", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_back_probe_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Direct Map", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_direct_map_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_cli.py"], "red-measurement"),
+        Smoke("OLMDirectionalBlur C++ Rotated AEX Choreo", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_choreo_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated AEX Pad", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_pad_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated Alpha Sum", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_alpha_sum_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated Preserve Alpha", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_preserve_alpha_cli.py"], "red-measurement"),
