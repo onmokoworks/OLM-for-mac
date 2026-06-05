@@ -403,3 +403,30 @@ Primary evidence: `disasm/OLMSmoother2.aex.asm.txt` around `180004e10`,
   - `case_0004 mean=0.0189`
 - These should be investigated through class-plane / polygon builder / smoother
   dispatch facts, not by image-diff parameter tuning.
+
+## 2026-06-06 Parallel Audit Refresh
+
+Sub-agent Schrodinger reran the Smoother/Smoother2 coverage audit and confirmed
+that standalone `OLMSmoother` v1 can be treated as covered by
+`OLMSmoother2 --force-version 1` for the current reference set:
+
+- `OLMSmoother2 --force-version 1` against
+  `refs/win_references/20260604_olm/OLMSmoother` passes the green gate:
+  `case_0001 max=63 mean=0.0055`, `case_0002 max=63 mean=0.0051`,
+  `case_0003 max=124 mean=0.0200`, `ok=3 fail=0`.
+- Standalone `refs/scripts/smoke_olmsmoother_cli.py` remains structurally worse:
+  `case_0001 mean=1.0145`, `case_0002 mean=1.3083`,
+  `case_0003 mean=1.4269`, `ok=0 fail=3`.
+
+For Smoother2, current status remains:
+
+- `case_0001` no-key v2 is red at `max=131 mean=0.1832`.
+- Key paths are green/near: `case_0002 max=75 mean=0.0216`,
+  `case_0003 exact`, `case_0004 max=95 mean=0.0189`.
+- `idx0` and `plane-split` probes are negative or worse, so one-case no-key
+  tuning is not justified.
+
+Parent action: request/import
+`refs/reference_requests/smoother2_no_key_grid_20260606.json` and compare
+Smoothness / Smooth Range grid behavior before tuning no-key `case_0001`
+further.
