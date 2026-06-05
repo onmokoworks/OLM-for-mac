@@ -191,6 +191,13 @@ def load_requests(request_paths: list[Path], request_dir: Path) -> list[tuple[Pa
     return loaded
 
 
+def display_request_path(path: Path) -> str:
+    try:
+        return str(path.relative_to(repo_root()))
+    except ValueError:
+        return str(path)
+
+
 def matching_requests(
     manifest: dict[str, Any],
     requests: list[tuple[Path, dict[str, Any]]],
@@ -275,7 +282,7 @@ def import_request_results(
             "imported_at": datetime.now(timezone.utc).isoformat(),
             "source_manifest": str(manifest_path),
             "dest_manifest": str(dest_manifest),
-            "matched_requests": [str(path.relative_to(repo_root())) for path, _request in matches],
+            "matched_requests": [display_request_path(path) for path, _request in matches],
         }
         (dest_dir / "reference_import.json").write_text(
             json.dumps(receipt, indent=2, sort_keys=True),
