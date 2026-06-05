@@ -1757,6 +1757,31 @@ behavior.
   The probe code was removed; keep the negative result as evidence that a
   naive fixed-5 sampler is not the missing piece.
 
+2026-06-05 KiraKira C++ warp-canvas probes:
+
+- Added diagnostic `--rotate-size-mode aex-min4` to
+  `cli/OLMKiraKira/main.cpp`. This mirrors the `FUN_18114f4a0` canvas formula
+  visible at `18114f78b..18114f7f5`:
+  `int(w*abs(cos)+h*abs(sin)+0.5)` / `int(w*abs(sin)+h*abs(cos)+0.5)`,
+  clamped to at least `w+4` / `h+4`.
+- `aex-min4` is identical to the current default on the current refs:
+  `case_0001 max=22 mean=0.8381`,
+  `case_0002 max=24 mean=1.1623`,
+  `case_0003 max=60 mean=1.7003`.
+- Added diagnostic `--axis-fast-path true|false`. Default remains `true`.
+  `false` forces 0/90-degree rays through the rotate/crop path too, matching
+  the high-level `FUN_181150790` call shape more closely, but it is not a
+  global improvement:
+  - `--axis-fast-path false --rotate-size-mode aex-min4`:
+    `case_0001 mean=0.8354`, `case_0002 mean=1.1847`,
+    `case_0003 mean=2.0123`.
+  - `--axis-fast-path false` with default round size:
+    `case_0001 mean=0.8381`, `case_0002 mean=1.1847`,
+    `case_0003 mean=2.1189`.
+- Keep the default axis fast path for now. The tiny case1-only improvement is
+  outweighed by regressions on case2/case3, so this is diagnostic evidence
+  rather than a Mac-port change.
+
 2026-06-05 RadialBlur C++ Inner scatter RGB probe:
 
 - Fixed a latent C++ source-scatter probe wrap bug in

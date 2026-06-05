@@ -76,6 +76,7 @@ struct Options {
     std::string rotate_border = "constant";
     std::string warp_mode = "current";
     std::string rotate_size_mode = "round";
+    bool axis_fast_path = true;
     std::string crop_mode = "floor";
     std::string glow_normalize = "union";
     std::string aggregation_mode = "current";
@@ -720,8 +721,15 @@ std::vector<float> rotate_image(
         min_ox = std::min(min_ox, ox);
         max_ox = std::max(max_ox, ox);
     }
-    out_width = rounded_extent(max_ox - min_ox, rotate_size_mode);
-    out_height = rounded_extent(max_oy - min_oy, rotate_size_mode);
+    if (rotate_size_mode == "aex-min4") {
+        const double ac = std::abs(c);
+        const double as = std::abs(s);
+        out_width = std::max(width + 4, static_cast<int>(static_cast<double>(width) * ac + static_cast<double>(height) * as + 0.5));
+        out_height = std::max(height + 4, static_cast<int>(static_cast<double>(width) * as + static_cast<double>(height) * ac + 0.5));
+    } else {
+        out_width = rounded_extent(max_ox - min_ox, rotate_size_mode);
+        out_height = rounded_extent(max_oy - min_oy, rotate_size_mode);
+    }
     std::vector<float> output(static_cast<size_t>(out_width) * out_height);
     double cx = (static_cast<double>(width) - 1.0) * 0.5;
     double cy = (static_cast<double>(height) - 1.0) * 0.5;
@@ -794,11 +802,14 @@ std::vector<float> rotated_axis_box_blur(
     const std::string &rotate_border,
     const std::string &warp_mode,
     const std::string &rotate_size_mode,
+    bool axis_fast_path,
     const std::string &crop_mode
 ) {
     if (length <= 1) return input;
-    if (angle_deg == 0.0) return direction_box_blur(input, width, height, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
-    if (angle_deg == 90.0) return direction_box_blur(input, width, height, length, 0, 1, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
+    if (axis_fast_path) {
+        if (angle_deg == 0.0) return direction_box_blur(input, width, height, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
+        if (angle_deg == 90.0) return direction_box_blur(input, width, height, length, 0, 1, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
+    }
 
     int rw = 0;
     int rh = 0;
@@ -874,10 +885,10 @@ Image render_kirakira(const Image &input, const KiraKiraParams &params, const Op
     int passes = options.falloff == "box3" ? 3 : 1;
 
     const double glow_rotation = params.glow_rotation;
-    std::vector<float> vertical = rotated_axis_box_blur(seed, w, h, scaled_len(params.vertical_length), 90.0 + glow_rotation, passes, options.filter_border, options.box_anchor_mode, options.box_normalize, options.box_output_depth, options.rotate_filter, options.rotate_border, options.warp_mode, options.rotate_size_mode, options.crop_mode);
-    std::vector<float> horizontal = rotated_axis_box_blur(seed, w, h, scaled_len(params.horizontal_length), glow_rotation, passes, options.filter_border, options.box_anchor_mode, options.box_normalize, options.box_output_depth, options.rotate_filter, options.rotate_border, options.warp_mode, options.rotate_size_mode, options.crop_mode);
-    std::vector<float> diagonal = rotated_axis_box_blur(seed, w, h, scaled_len(params.diagonal_length), 45.0 + glow_rotation, passes, options.filter_border, options.box_anchor_mode, options.box_normalize, options.box_output_depth, options.rotate_filter, options.rotate_border, options.warp_mode, options.rotate_size_mode, options.crop_mode);
-    std::vector<float> diagonal2 = rotated_axis_box_blur(seed, w, h, scaled_len(params.diagonal2_length), -45.0 + glow_rotation, passes, options.filter_border, options.box_anchor_mode, options.box_normalize, options.box_output_depth, options.rotate_filter, options.rotate_border, options.warp_mode, options.rotate_size_mode, options.crop_mode);
+    std::vector<float> vertical = rotated_axis_box_blur(seed, w, h, scaled_len(params.vertical_length), 90.0 + glow_rotation, passes, options.filter_border, options.box_anchor_mode, options.box_normalize, options.box_output_depth, options.rotate_filter, options.rotate_border, options.warp_mode, options.rotate_size_mode, options.axis_fast_path, options.crop_mode);
+    std::vector<float> horizontal = rotated_axis_box_blur(seed, w, h, scaled_len(params.horizontal_length), glow_rotation, passes, options.filter_border, options.box_anchor_mode, options.box_normalize, options.box_output_depth, options.rotate_filter, options.rotate_border, options.warp_mode, options.rotate_size_mode, options.axis_fast_path, options.crop_mode);
+    std::vector<float> diagonal = rotated_axis_box_blur(seed, w, h, scaled_len(params.diagonal_length), 45.0 + glow_rotation, passes, options.filter_border, options.box_anchor_mode, options.box_normalize, options.box_output_depth, options.rotate_filter, options.rotate_border, options.warp_mode, options.rotate_size_mode, options.axis_fast_path, options.crop_mode);
+    std::vector<float> diagonal2 = rotated_axis_box_blur(seed, w, h, scaled_len(params.diagonal2_length), -45.0 + glow_rotation, passes, options.filter_border, options.box_anchor_mode, options.box_normalize, options.box_output_depth, options.rotate_filter, options.rotate_border, options.warp_mode, options.rotate_size_mode, options.axis_fast_path, options.crop_mode);
 
     double scale = params.brightness_gain * (params.strength_multiplier <= 1.0e-6 ? 1.0 : options.gain_scale);
     if (options.has_scale_override) scale = options.scale_override;
@@ -1022,8 +1033,17 @@ Options parse_args(int argc, char **argv) {
         } else if (key == "--rotate-size-mode") {
             args.rotate_size_mode = need_value("--rotate-size-mode");
             if (args.rotate_size_mode != "round" && args.rotate_size_mode != "floor" &&
-                args.rotate_size_mode != "ceil") {
-                throw std::runtime_error("--rotate-size-mode must be round, floor, or ceil");
+                args.rotate_size_mode != "ceil" && args.rotate_size_mode != "aex-min4") {
+                throw std::runtime_error("--rotate-size-mode must be round, floor, ceil, or aex-min4");
+            }
+        } else if (key == "--axis-fast-path") {
+            std::string value = need_value("--axis-fast-path");
+            if (value == "true") {
+                args.axis_fast_path = true;
+            } else if (value == "false") {
+                args.axis_fast_path = false;
+            } else {
+                throw std::runtime_error("--axis-fast-path must be true or false");
             }
         } else if (key == "--crop-mode") {
             args.crop_mode = need_value("--crop-mode");
@@ -1043,7 +1063,7 @@ Options parse_args(int argc, char **argv) {
         } else if (key == "--filter-border" || key == "--ray-mode") {
             (void)need_value(key.c_str());
         } else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--rotate-filter bilinear|bicubic] [--rotate-border edge|constant] [--warp-mode current|opencv-center] [--rotate-size-mode round|floor|ceil] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five]\n");
+            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--rotate-filter bilinear|bicubic] [--rotate-border edge|constant] [--warp-mode current|opencv-center] [--rotate-size-mode round|floor|ceil|aex-min4] [--axis-fast-path true|false] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
