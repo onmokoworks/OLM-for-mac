@@ -114,7 +114,7 @@ Project Settings 差で同一ケースを撮り直して、PNG差分を見るの
 | OLMDistanceGradation | ✅ Python + Mac plugin | 新規20260605参照の11ケース smoke OK（max<=7 / mean<=0.11）。Threshold=0特別扱いをWindows参照に合わせてMac側も修正。背景色linearはPNG premul補正で緑化、blur/constant系はまだ赤測定対象 | `refs/scripts/olmdistancegradation_cli.py`, `refs/scripts/smoke_olmdistancegradation_cli.py`, `mac/OLMDistanceGradation/` |
 | OLMDirectionalBlur | 🔎 実験CLI + Mac plugin(新) | front-only/no-noise は DIFF 計測中。Python/C++ direct probeあり。C++ rotated-alpha-sum はほぼ無効 (`case_0005 mean=1.2173`) なので次は `FUN_1800038d0` row driver / rotate-back alpha coupling。Mac plugin builds universal for 8bpc front-only/no-noise direct slice | `refs/scripts/olmdirectionalblur_cli.py`, `cli/OLMDirectionalBlur/main.cpp`, `mac/OLMDirectionalBlur/` |
 | OLMRadialBlur | ✅/🔎 decomp解析 + Python/C++ Zoom/Rotation CLI + Mac plugin(新) | Rotation `0010` Python/C++ mean 0.0104; broad Python `0001` 1.9039 / `0002` 1.3077; broad C++ `0001` 1.9034 / `0002` 1.3071 after offset port; Zoom `0009` Python max=1 mean=0.0058 OK / C++ max=1 mean=0.0046 OK; C++ Zoom `0003..0005` max=8 mean=0.0059 OK with Size Variation ignored; Inner alpha probe is measurement-only and now has matching C++ red guard (`0011` mean 63.4207 / `0012` 15.4790 / `0013` 20.0603); Rotation Quality/5 scaling is decomp-confirmed but measurement-only for now because it worsens current inner `0013`; Mac plugin builds universal for 8bpc Zoom plus 8bpc outer-only Rotation/noise-off slice, including FFT fast path and Size Variation no-op pass-through | `notes/OLMRadialBlur_RE.md`, `refs/scripts/olmradialblur_cli.py`, `cli/OLMRadialBlur/main.cpp`, `mac/OLMRadialBlur/` |
-| OLMKiraKira | 🔎 実験CLI + C++ scaffold + Mac plugin(新) | cases 1/2 は repeated-box/REFLECT_101-style/auto-length-scale で改善、case3 Strength=0 は Ghidra stack mapping反映で mean 1.7073 まで改善、C++ native scaffold追加、Mac plugin builds universal、まだ DIFF | `refs/scripts/olmkirakira_cli.py`, `cli/OLMKiraKira/main.cpp`, `mac/OLMKiraKira/` |
+| OLMKiraKira | 🔎 実験CLI + C++ scaffold + Mac plugin(新) | Python OpenCV two-temp probe added: baseline `0.8379/1.1627/1.7073` -> OpenCV primitive `0.8504/1.1570/1.0514`, so case3 strongly points to exact OpenCV warp/box + two-temp choreography; C++ native scaffold追加、Mac plugin builds universal、まだ DIFF | `refs/scripts/olmkirakira_cli.py`, `refs/scripts/smoke_olmkirakira_opencv_two_temp_probe_cli.py`, `cli/OLMKiraKira/main.cpp`, `mac/OLMKiraKira/` |
 
 OLMKiraKira 最新メモ: `OLMKiraKiraLuminance` vtable は `+0x00 FUN_181150600`,
 `+0x08 FUN_18114fd90`, `+0x10 FUN_18114ffd0`, `+0x18/+0x20` が1を返す小関数。
@@ -142,6 +142,11 @@ Python smoke は `0.8380/1.1630` のまま、Mac KiraKira Debug build は成功�
 REFLECT_101-style indexingへ寄せた。Python sweepでは `mirror` がcases1/2で
 `0.8379/1.1627` とわずかに改善。C++ smokeは `0.8382/1.1627/1.7073`。
 case3は `1.7023 -> 1.7073` に少し悪化するため、これはOpenCV境界寄せの小前進として扱う。
+2026-06-06 Python OpenCV two-temp probe: 一時Python 3.12 + OpenCV 4.13.0で
+`--ray-mode opencv-two-temp` を追加測定。`cv2.warpAffine` と `cv2.boxFilter`
+を直接使うと `case_0001/0002/0003 mean=0.8504/1.1570/1.0514`。
+case1は微悪化、case2は微改善、case3は大きく改善するため、次はC++/Macの手書きrayを
+OpenCV primitive/two-tempに寄せるのが最有力。
 同日 rotate/crop probe: Python CLIに `--crop-offset-y/x`, `--rotate-order`,
 `--rotate-prefilter` を診断用に追加。crop offset `[-1,0,1]` は `(0,0)` が明確に最良で、
 1px originズレ説は弱い。`order=3 --rotate-prefilter` はcases1/2を
