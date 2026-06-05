@@ -1892,6 +1892,19 @@ behavior.
   scalar. Remaining KiraKira residual is therefore more likely exact OpenCV
   4.5.5 `warpAffine` destination canvas / dsize / crop behavior, or another
   pre/post ray detail, than a simple `boxFilter` argument mismatch.
+- 2026-06-06 follow-up: `FUN_1811512a0` delegates matrix construction to
+  `FUN_1812943d0`, which matches OpenCV `cv::getRotationMatrix2D_`
+  (`alpha=cos`, `beta=sin`, and the standard
+  `(1-alpha)*cx - beta*cy` / `beta*cx + (1-alpha)*cy` translations).
+  Added diagnostic `--warp-mode aex-getrot` plus
+  `refs/scripts/smoke_olmkirakira_cpp_aex_getrot_probe_cli.py`. The naive
+  output-center/inverse-map hypothesis is strong negative evidence:
+  `case_0001 max=63 mean=5.9449`, `case_0002 max=68 mean=6.6790`,
+  `case_0003 max=255 mean=27.6616`, versus baseline
+  `0.8381/1.1623/1.7003`.
+  So the next target is not a simple getRotationMatrix2D formula swap; it is
+  exact source/destination Mat/ROI placement, dsize/crop behavior, or
+  OpenCV 4.5.5 sampling details.
 - A temporary CLI probe approximating OpenCV's 5-bit `INTER_LINEAR` table
   (`bilinear-fixed5`) did not improve the current refs:
   `case_0001 mean=0.8384`, `case_0002 mean=1.1624`,

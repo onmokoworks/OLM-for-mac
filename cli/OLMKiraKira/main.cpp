@@ -735,6 +735,36 @@ std::vector<float> rotate_image(
     double cy = (static_cast<double>(height) - 1.0) * 0.5;
     double ocx = (static_cast<double>(out_width) - 1.0) * 0.5;
     double ocy = (static_cast<double>(out_height) - 1.0) * 0.5;
+    if (warp_mode == "aex-getrot") {
+        const double aex_cx = static_cast<double>(out_width) * 0.5;
+        const double aex_cy = static_cast<double>(out_height) * 0.5;
+        const double alpha = c;
+        const double beta = s;
+        const double m00 = alpha;
+        const double m01 = beta;
+        const double m02 = (1.0 - alpha) * aex_cx - beta * aex_cy;
+        const double m10 = -beta;
+        const double m11 = alpha;
+        const double m12 = beta * aex_cx + (1.0 - alpha) * aex_cy;
+        const double det = m00 * m11 - m01 * m10;
+        std::vector<float> output(static_cast<size_t>(out_width) * out_height);
+        for (int y = 0; y < out_height; ++y) {
+            for (int x = 0; x < out_width; ++x) {
+                const double dx = static_cast<double>(x) - m02;
+                const double dy = static_cast<double>(y) - m12;
+                const double sx = (m11 * dx - m01 * dy) / det;
+                const double sy = (-m10 * dx + m00 * dy) / det;
+                if (rotate_filter == "bicubic") {
+                    output[static_cast<size_t>(y) * out_width + x] = sample_bicubic_zero(input, width, height, sx, sy);
+                } else if (rotate_border == "constant") {
+                    output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant(input, width, height, sx, sy);
+                } else {
+                    output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_zero(input, width, height, sx, sy);
+                }
+            }
+        }
+        return output;
+    }
     for (int y = 0; y < out_height; ++y) {
         for (int x = 0; x < out_width; ++x) {
             double ox = static_cast<double>(x) - ocx;
@@ -1027,8 +1057,9 @@ Options parse_args(int argc, char **argv) {
             }
         } else if (key == "--warp-mode") {
             args.warp_mode = need_value("--warp-mode");
-            if (args.warp_mode != "current" && args.warp_mode != "opencv-center") {
-                throw std::runtime_error("--warp-mode must be current or opencv-center");
+            if (args.warp_mode != "current" && args.warp_mode != "opencv-center" &&
+                args.warp_mode != "aex-getrot") {
+                throw std::runtime_error("--warp-mode must be current, opencv-center, or aex-getrot");
             }
         } else if (key == "--rotate-size-mode") {
             args.rotate_size_mode = need_value("--rotate-size-mode");
@@ -1063,7 +1094,7 @@ Options parse_args(int argc, char **argv) {
         } else if (key == "--filter-border" || key == "--ray-mode") {
             (void)need_value(key.c_str());
         } else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--rotate-filter bilinear|bicubic] [--rotate-border edge|constant] [--warp-mode current|opencv-center] [--rotate-size-mode round|floor|ceil|aex-min4] [--axis-fast-path true|false] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five]\n");
+            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--rotate-filter bilinear|bicubic] [--rotate-border edge|constant] [--warp-mode current|opencv-center|aex-getrot] [--rotate-size-mode round|floor|ceil|aex-min4] [--axis-fast-path true|false] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
