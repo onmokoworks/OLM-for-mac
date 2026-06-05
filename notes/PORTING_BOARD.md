@@ -1999,6 +1999,12 @@ behavior.
   `y+1 1.1166/1.3708/6.0968`. This clears the last `R12` -> final ray ROI
   position as the main residual source and points to exact forward/rotate-back
   `warpAffine` behavior or matrix center/scale details.
+- 2026-06-06 center-minus-half probe: added
+  `aex-two-temp-center-minus-half`, which subtracts 0.5 from the two-temp
+  forward/rotate-back matrix center. It is mixed and not adoptable:
+  `case_0001 mean=0.8266` improves over `aex-two-temp` `0.8531`, but
+  `case_0002 mean=1.1637` and `case_0003 mean=1.7709` worsen from
+  `1.1555/1.1870`. Keep this as a red diagnostic only.
 - 2026-06-06 caller temp-Mat mapping: `FUN_18114f4a0` actually creates two
   same-sized PF-backed temp descriptors (`[rbp+0x190]` and `[rbp+0x120]`),
   copy-constructs them into `[rbp+0xc0]` and `[rbp+0x60]`, and zeros the copied
