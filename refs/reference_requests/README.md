@@ -44,6 +44,7 @@ Mac側への取り込み:
 
 ```sh
 python3 refs/scripts/import_win_reference.py path/to/packed_reference.zip
+python3 refs/scripts/verify_reference_request_result.py refs/reference_requests/<request>.json path/to/imported/reference_manifest.json
 python3 refs/scripts/audit_olmradialblur_manifest.py
 python3 refs/scripts/smoke_olmradialblur_cpp_inner_cli.py
 ```

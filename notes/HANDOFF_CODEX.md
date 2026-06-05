@@ -561,14 +561,16 @@ reference request JSONを検証して `/tmp/olm_reference_requests_YYYYMMDD.zip`
 へ梱包する。zipには `refs/reference_requests/WIN_CODEX_HANDOFF.md` も自動生成
 同梱され、Win側Codexへそのまま渡せる hard requirements / request summary /
 return shape を含む。さらに `python3 refs/scripts/smoke_all_algorithm_clis.py
---profile quick` の先頭で同梱包を実行するようになった。quick profile は
-26 checks になり、`Reference request package` も green gate として通過する。
+--profile quick` の先頭で同梱包と返却manifest verifier smokeを実行するようになった。
+quick profile は27 checks になり、`Reference request package` と
+`Reference request result verifier` も green gate として通過する。
 検証済みコマンド:
 
 ```sh
-python3 -m py_compile refs/scripts/smoke_all_algorithm_clis.py refs/scripts/package_reference_requests.py
+python3 -m py_compile refs/scripts/smoke_all_algorithm_clis.py refs/scripts/package_reference_requests.py refs/scripts/verify_reference_request_result.py refs/scripts/smoke_reference_request_result_verifier.py
 python3 refs/scripts/package_reference_requests.py --output /tmp/olm_reference_requests_smoke.zip
 python3 refs/scripts/package_reference_requests.py --only kirakira_single_ray_20260606 --output /tmp/olm_reference_requests_kirakira_only.zip
+python3 refs/scripts/smoke_reference_request_result_verifier.py
 python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
 ```
 
@@ -620,7 +622,7 @@ zip内 `manifest.json` のJSON parse、zip内 `.plugin` 10個確認、
 
 ```sh
 cd "/Users/onmk/Documents/Projects/Personal/OLM as"
-python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick # green gates only; 2026-06-06 OK (26 checks, includes reference request package)
+python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick # green gates only; 2026-06-06 OK (27 checks, includes reference request package/result verifier)
 refs/scripts/build_olmblur_cli.sh && refs/scripts/build_olmsmoother_cli.sh && refs/scripts/build_olmtoondilate_cli.sh && refs/scripts/build_olmradialblur_cli.sh
 refs/scripts/build_olmkirakira_cli.sh              # OLMKiraKira C++ scaffold
 scripts/build_all_mac_plugins.sh                  # Mac plugins: build + universal/codesign verify
