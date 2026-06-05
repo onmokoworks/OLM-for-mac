@@ -255,3 +255,14 @@ Current implication:
   useful negative evidence, but the next faithful implementation pass should
   mirror this explicit A -> rotate into B -> copy B back to A -> row-driver
   writes/normalizes B -> clear A -> rotate B back into A -> output A order.
+
+2026-06-05 diagnostic:
+
+- Added C++ CLI algorithm `--algorithm rotated-aex-choreo` to test the first
+  part of this order: populate a padded A buffer and rotate A into B before the
+  existing rotated scatter scaffold.
+- Current measurements: `case_0001 max=254 mean=4.4483`; `case_0005 max=246
+  mean=1.1703`.
+- This is a partial positive signal: it does not affect the angle-0 case, but
+  it improves the diagonal front-only case compared with the previous rotated
+  and rotated-preserve-alpha probes.

@@ -833,7 +833,8 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
                      bool aex_buffer_init, const std::string &alpha_mode, bool strict_plain_sampler,
                      bool alpha_sum_output = false, bool alpha_coeff_output = false,
                      bool aex_pad_size = false, bool dest_component_coeff = false,
-                     bool front_strength_rgb_denom = false, bool rowdriver_prepass = false) {
+                     bool front_strength_rgb_denom = false, bool rowdriver_prepass = false,
+                     bool aex_two_stage_input = false) {
     if (params.noise_variation != 0.0) throw std::runtime_error("noise variation is not implemented");
     if (params.back_strength != 0) throw std::runtime_error("back blur is not implemented");
 
@@ -864,6 +865,27 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
     const float cos_a = static_cast<float>(std::cos(angle));
     const float sin_a = static_cast<float>(std::sin(angle));
 
+    FloatImage source_canvas;
+    source_canvas.width = pad_w;
+    source_canvas.height = pad_h;
+    source_canvas.rgba.resize(static_cast<size_t>(pad_pixels) * 4, 0.0f);
+    if (aex_two_stage_input) {
+        const int offset_x = pad_w / 2 - w / 2;
+        const int offset_y = pad_h / 2 - h / 2;
+        for (int y = 0; y < h; ++y) {
+            for (int x = 0; x < w; ++x) {
+                const int dx = x + offset_x;
+                const int dy = y + offset_y;
+                if (dx < 0 || dx >= pad_w || dy < 0 || dy >= pad_h) continue;
+                const size_t src = (static_cast<size_t>(y) * w + x) * 4;
+                const size_t dst = (static_cast<size_t>(dy) * pad_w + dx) * 4;
+                for (int c = 0; c < 4; ++c) {
+                    source_canvas.rgba[dst + c] = static_cast<float>(input.rgba[src + c]) / 255.0f;
+                }
+            }
+        }
+    }
+
     FloatImage rotated;
     rotated.width = pad_w;
     rotated.height = pad_h;
@@ -872,12 +894,18 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
         for (int x = 0; x < pad_w; ++x) {
             const float dx = static_cast<float>(x) - static_cast<float>(pad_w) / 2.0f;
             const float dy = static_cast<float>(y) - static_cast<float>(pad_h) / 2.0f;
-            const float src_x = dx * cos_a - dy * sin_a + static_cast<float>(w) / 2.0f;
-            const float src_y = dx * sin_a + dy * cos_a + static_cast<float>(h) / 2.0f;
+            const float src_x = dx * cos_a - dy * sin_a + static_cast<float>(aex_two_stage_input ? pad_w : w) / 2.0f;
+            const float src_y = dx * sin_a + dy * cos_a + static_cast<float>(aex_two_stage_input ? pad_h : h) / 2.0f;
             float sample[4];
-            if (alpha_weighted_input_rotate) sample_bilinear_alpha_weighted(input, src_x, src_y, sample);
-            else if (strict_plain_sampler) sample_bilinear_strict(input, src_x, src_y, sample);
-            else sample_bilinear(input, src_x, src_y, sample);
+            if (aex_two_stage_input) {
+                if (alpha_weighted_input_rotate) sample_bilinear_alpha_weighted(source_canvas, src_x, src_y, sample);
+                else if (strict_plain_sampler) sample_bilinear_strict(source_canvas, src_x, src_y, sample);
+                else sample_bilinear(source_canvas, src_x, src_y, sample);
+            } else {
+                if (alpha_weighted_input_rotate) sample_bilinear_alpha_weighted(input, src_x, src_y, sample);
+                else if (strict_plain_sampler) sample_bilinear_strict(input, src_x, src_y, sample);
+                else sample_bilinear(input, src_x, src_y, sample);
+            }
             const size_t dst = (static_cast<size_t>(y) * pad_w + x) * 4;
             for (int c = 0; c < 4; ++c) rotated.rgba[dst + c] = sample[c];
         }
@@ -1158,7 +1186,7 @@ Args parse_args(int argc, char **argv) {
             if (args.direction != "front" && args.direction != "both") throw std::runtime_error("--direction must be front or both");
         } else if (key == "--ignore-noise-variation") args.ignore_noise_variation = true;
         else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmdirectionalblur_cli --input in.png --params params.json --output out.png [--algorithm direct|direct-map|rotated|rotated-front-strength|rotated-front-strength-preserve-alpha|rotated-rowdriver-prepass|rotated-rowdriver-prepass-init|rotated-aex-pad|rotated-alpha-sum|rotated-strict|rotated-strict-preserve-alpha|rotated-preserve-alpha|rotated-min-alpha|rotated-max-alpha|rotated-zero-alpha|rotated-gather|rotated-alpha|rotated-alpha-in|rotated-alpha-out|rotated-aex|rotated-aex-init|rotated-map|rotated-map-dest-coeff|rotated-map-alpha-coeff|rotated-map-preserve-alpha|rotated-map-aex|rotated-map-aex-init|rotated-aex-premul|rotated-map-aex-premul] [--direction front|both] [--ignore-noise-variation] [--angle-sign -1] [--sample-sign -1] [--strength-scale auto] [--rgb-normalize front-strength]\n");
+            std::printf("Usage: olmdirectionalblur_cli --input in.png --params params.json --output out.png [--algorithm direct|direct-map|rotated|rotated-aex-choreo|rotated-front-strength|rotated-front-strength-preserve-alpha|rotated-rowdriver-prepass|rotated-rowdriver-prepass-init|rotated-aex-pad|rotated-alpha-sum|rotated-strict|rotated-strict-preserve-alpha|rotated-preserve-alpha|rotated-min-alpha|rotated-max-alpha|rotated-zero-alpha|rotated-gather|rotated-alpha|rotated-alpha-in|rotated-alpha-out|rotated-aex|rotated-aex-init|rotated-map|rotated-map-dest-coeff|rotated-map-alpha-coeff|rotated-map-preserve-alpha|rotated-map-aex|rotated-map-aex-init|rotated-aex-premul|rotated-map-aex-premul] [--direction front|both] [--ignore-noise-variation] [--angle-sign -1] [--sample-sign -1] [--strength-scale auto] [--rgb-normalize front-strength]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
@@ -1185,6 +1213,8 @@ int main(int argc, char **argv) {
             output = render_direct(input, params, args.strength_scale, args.angle_sign, args.sample_sign, args.rgb_normalize, true, include_back, args.ignore_noise_variation);
         } else if (args.algorithm == "rotated") {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, false, false, false, false, false, false, "blurred", false);
+        } else if (args.algorithm == "rotated-aex-choreo") {
+            output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, false, false, false, false, false, false, "blurred", false, false, false, false, false, false, false, true);
         } else if (args.algorithm == "rotated-front-strength") {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, false, false, false, false, false, false, "blurred", false, false, false, false, false, true);
         } else if (args.algorithm == "rotated-front-strength-preserve-alpha") {
