@@ -588,6 +588,16 @@ B[p].a = gathered_alpha
 - This makes a simple global-tail plus component-tail double-application
   unlikely to be the leading residual on the tracked front-only refs.
 
+2026-06-06 global-tail-only diagnostic:
+
+- Added `rotated-aex-global-tail-only`, the inverse of
+  `rotated-aex-component-tail-only`: it keeps the older global valid-range
+  Sharp Tail gate but disables the component-map Sharp Tail factor.
+- Measurement is neutral/mixed against `rotated-aex-full-choreo`:
+  `case_0001 mean=4.4490`, `case_0005 mean=1.1702`.
+- Together with `rotated-aex-component-tail-only`, this makes simple
+  global-tail vs component-tail selection unlikely to be the leading residual.
+
 2026-06-06 Size Variation scale audit:
 
 - Parameter setup at `180006dd7..180006dea` divides the UI integer by
