@@ -846,6 +846,15 @@ straight/premul retained `B` both measure `case_0001 mean=4.4702`,
 `FUN_1800013e0`/`FUN_1800038d0` source/validity/output argument semantics or
 host edge callbacks, not another simple denominator-init toggle.
 
+2026-06-06 full-prepass diagnostic: added
+`rotated-aex-prepass-full-choreo`, covered by
+`refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_prepass_full_choreo_cli.py`.
+It combines full padded A/B choreography with the `FUN_180001000`-shaped center
+prepass and is neutral against `rotated-aex-full-choreo`
+(`case_0001 mean=4.4483`, `case_0005 mean=1.1703`). The next useful target is
+the exact `FUN_1800013e0` scatter boundary/table-index behavior or host
+populate/output callback edge semantics.
+
 Parameter reader mapping from `FUN_180006c50`:
 
 - param 1 / match `0001`: Angle, converted from degrees to radians.

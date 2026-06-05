@@ -273,6 +273,17 @@ Current implication:
   asm-first pass should map the exact `FUN_1800013e0` argument roles and
   `FUN_1800038d0` source-alpha/validity handling before more init toggles.
 
+2026-06-06 full-prepass diagnostic:
+
+- Added `rotated-aex-prepass-full-choreo`, combining padded A/B input/output
+  choreography with the `FUN_180001000`-shaped center prepass.
+- Current measurements are neutral against `rotated-aex-full-choreo`:
+  `case_0001 mean=4.4483`, `case_0005 mean=1.1703`.
+- This suggests the remaining front-only residual is not exposed by simply
+  combining center prepass and A/B ownership in the current scaffold. Continue
+  with exact `FUN_1800013e0` scatter boundary/table-index semantics or the
+  host populate/output callbacks.
+
 2026-06-05 diagnostic:
 
 - Added C++ CLI algorithm `--algorithm rotated-aex-choreo` to test the first
