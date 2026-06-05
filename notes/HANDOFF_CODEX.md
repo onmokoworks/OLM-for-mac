@@ -565,13 +565,18 @@ python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
 既定では `scripts/build_all_mac_plugins.sh` を走らせて10本のDebug `.plugin`
 bundleを検証し、`/tmp/olm_mac_plugins_Debug_YYYYMMDD.zip` にまとめる。
 同じセッションでビルド検証済みなら `--skip-build` で再ビルドを省略可能。
-zip内には `INSTALL.txt`, `AE_VALIDATION_CHECKLIST.txt`, `manifest.json` が入り、
-manifestには各bundleのSHA-256と `arm64`/`x86_64` 確認情報、install/checklist
-ファイル名を記録する。検証:
+zip内には `INSTALL.txt`, `AE_VALIDATION_CHECKLIST.txt`,
+`AE_VALIDATION_RESULT.template.json`, `manifest.json` が入り、
+manifestには各bundleのSHA-256と `arm64`/`x86_64` 確認情報、install/checklist/
+validation templateファイル名を記録する。返却されたAE検証JSONは
+`python3 scripts/verify_ae_validation_result.py AE_VALIDATION_RESULT.json` で
+schema/plugin load/apply/render完了を検証できる。検証:
 `bash -n scripts/package_mac_plugins.sh`,
+`python3 -m py_compile scripts/verify_ae_validation_result.py`,
 `scripts/package_mac_plugins.sh --skip-build --output /tmp/olm_mac_plugins_test.zip`,
 zip内 `manifest.json` のJSON parse、zip内 `.plugin` 10個確認、
-`AE_VALIDATION_CHECKLIST.txt` 同梱確認はいずれも成功。
+`AE_VALIDATION_CHECKLIST.txt` と `AE_VALIDATION_RESULT.template.json` 同梱確認、
+未記入templateの `--allow-incomplete` 検証、全plugin成功扱いJSONの通常検証はいずれも成功。
 
 ## 4. このセッションで触ったファイル
 
