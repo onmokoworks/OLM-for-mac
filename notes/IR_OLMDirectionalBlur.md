@@ -120,6 +120,10 @@ Current probe status:
   padded `A` before cropping. It is numerically unchanged from
   `rotated-aex-choreo` for the tracked cases, so the remaining residual is not
   explained by direct-to-comp output sampling versus padded output ownership.
+- `rotated-aex-pad-full-choreo` combines the confirmed host populate
+  padding/offset formula with full A/B choreography. It is also numerically
+  unchanged from `rotated-aex-full-choreo`, so the one-pixel pad/offset
+  difference is not visible on the tracked refs.
 - `rotated-aex-prepass-full-choreo` adds the `FUN_180001000`-shaped center
   prepass to the full A/B choreography. It is also numerically unchanged from
   `rotated-aex-full-choreo`, so the center prepass is not visible on the
@@ -227,6 +231,7 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 | rotated-front-strength-preserve-alpha | 4.0897 | 1.1927 | best combined front-only diagnostic |
 | rotated-aex-choreo | 4.4483 | 1.1703 | positive A/B input-rotate signal |
 | rotated-aex-full-choreo | 4.4483 | 1.1703 | output-side padded A writeback is neutral |
+| rotated-aex-pad-full-choreo | 4.4483 | 1.1703 | exact AEX pad + full A/B is neutral |
 | rotated-aex-prepass-full-choreo | 4.4483 | 1.1703 | center prepass + full A/B is neutral |
 | rotated-aex-trunc-output | 4.4438 | 1.1736 | exact output truncation is mixed/minor |
 | rotated-aex-truncated-span | 4.4467 | 1.1749 | exact integer span gate is mixed/minor |
