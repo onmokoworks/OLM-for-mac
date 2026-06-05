@@ -256,6 +256,23 @@ Current implication:
   mirror this explicit A -> rotate into B -> copy B back to A -> row-driver
   writes/normalizes B -> clear A -> rotate B back into A -> output A order.
 
+2026-06-06 row-initialization diagnostic:
+
+- Added `rotated-aex-row-init-straight-zero`,
+  `rotated-aex-row-init-premul-zero`, and `rotated-aex-row-init-zero`.
+- These keep the full A/B choreography fixed and vary only the row-driver
+  output/denominator initialization.
+- Current measurements:
+  - straight retained `B`, zero denom: `case_0001 mean=4.4702`,
+    `case_0005 mean=1.1762`
+  - premultiplied retained `B`, zero denom: `case_0001 mean=4.4702`,
+    `case_0005 mean=1.1762`
+  - zeroed `B` and zero denom: `case_0001 mean=4.5240`,
+    `case_0005 mean=1.4931`
+- This is negative evidence for a simple zero-denominator/B-clear fix. The next
+  asm-first pass should map the exact `FUN_1800013e0` argument roles and
+  `FUN_1800038d0` source-alpha/validity handling before more init toggles.
+
 2026-06-05 diagnostic:
 
 - Added C++ CLI algorithm `--algorithm rotated-aex-choreo` to test the first
