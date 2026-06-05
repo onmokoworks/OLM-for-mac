@@ -42,6 +42,27 @@ Current implication:
   scale, request a targeted Windows reference/manifest addition for the render
   scale/downsample fields instead of overfitting the PNGs.
 
+## Work-Buffer Padding / Host Offsets
+
+Work-buffer dimensions and host populate/output offsets are set from the
+diagonal-derived half span. For the 16bpc path:
+
+```asm
+180003e18  MULSS XMM0,dword ptr [0x18000b390] ; diagonal * -0.5
+180003e20  CVTTSS2SI EAX,XMM0
+180003e24  MOV R9D,0x2
+180003e2a  SUB R9D,EAX                        ; half_span
+180003e39  MOV dword ptr [RBX + 0x8098],ECX   ; y offset
+180003e48  MOV dword ptr [RBX + 0x80a4],R8D   ; padded height
+180003e5c  MOV dword ptr [RBX + 0x809c],R9D   ; x offset
+180003e6c  MOV dword ptr [RBX + 0x80a0],EDX   ; padded width
+```
+
+This matches the CLI's `aex_pad_size` formula. The combined
+`rotated-aex-pad-full-choreo` probe is neutral on current refs
+(`case_0001 mean=4.4483`, `case_0005 mean=1.1703`), so the exact pad/offset
+formula is not the dominant residual either.
+
 ## Row Driver / Component Coefficients
 
 `FUN_1800038d0` is the row driver. It loops rows from `param_1` to `param_2`

@@ -876,6 +876,15 @@ improves by `0.0045`, while `case_0005 mean=1.1736` worsens by `0.0033`.
 Quantization should be kept as an AEX fact, but it is not the dominant
 remaining residual.
 
+2026-06-06 pad/full-choreo diagnostic: `objdump` confirms work-buffer offsets
+and dimensions come from the diagonal half-span formula stored at
+`params+0x8098/0x809c` and `params+0x80a0/0x80a4`. Added
+`rotated-aex-pad-full-choreo`, covered by
+`refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_pad_full_choreo_cli.py`.
+It combines that exact pad formula with full A/B choreography and is neutral:
+`case_0001 mean=4.4483`, `case_0005 mean=1.1703`. So the exact one-pixel-ish
+pad/offset difference is not the remaining dominant source.
+
 Parameter reader mapping from `FUN_180006c50`:
 
 - param 1 / match `0001`: Angle, converted from degrees to radians.
