@@ -67,6 +67,10 @@ constexpr double SRGB_OFFSET2 = 0.055;                  // DAT_1800226b8
 #define S_1292      k_olm::SRGB_1292
 #define S_OFFSET2   k_olm::SRGB_OFFSET2
 
+// CLI-only diagnostic hook. Keep default 0 for the AE plug-in path.
+// 0=normal, 1=suppress idx=0 four-corner dispatch, 2=half weight, 3=quarter weight.
+static int g_olmsmoother2_idx0_diag_mode = 0;
+
 // ============================================================================
 // Plumbing: SMParams (Win struct analog) and pixel helpers
 // ============================================================================
@@ -3016,10 +3020,15 @@ static void build_polygon(SmootherPolygon &poly,
 	float step = STEP; (void)step;
 	switch (idx) {
 	case 0:
-		win_FUN_1800134c0_NW(poly, STEP);
-		win_FUN_180013570_NE(poly, STEP);
-		win_FUN_180012ce0_SE(poly, STEP);
-		win_FUN_180012c20_SW(poly, STEP);
+		if (g_olmsmoother2_idx0_diag_mode != 1) {
+			float idx0_step = STEP;
+			if (g_olmsmoother2_idx0_diag_mode == 2) idx0_step *= 0.5f;
+			else if (g_olmsmoother2_idx0_diag_mode == 3) idx0_step *= 0.25f;
+			win_FUN_1800134c0_NW(poly, idx0_step);
+			win_FUN_180013570_NE(poly, idx0_step);
+			win_FUN_180012ce0_SE(poly, idx0_step);
+			win_FUN_180012c20_SW(poly, idx0_step);
+		}
 		break;
 	case 1:
 		win_FUN_1800122e0(poly);

@@ -122,6 +122,10 @@ Current smoke status:
   premultiplied writeback mismatch is fixed, so the remaining no-key residual
   should be investigated in polygon dispatch / helper sampling or finer
   color-space/writeback details rather than by tuning class-plane thresholds.
+  2026-06-06 `idx=0` four-corner suppression/scaling diagnostic is negative:
+  `none=0.1832`, `suppress=0.2720`, `half=0.2069`, `quarter=0.2349`.
+  This rules out a simple over-strong corner-weight fix; next no-key work should
+  split the class-plane source from the `FUN_1800104d0` sample source.
 - `smoke_olmsmoother2_keypaths_cli.py` (20260605_extra cases 2-4): green
   regression gate for the objdump/disasm-confirmed key paths. Gated at
   `max<=95`, `mean<=0.022`, `nonzero<=0.15%`; current result **ok=3**.

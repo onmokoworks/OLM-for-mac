@@ -173,6 +173,7 @@ bool find_param_color(const std::string &json, const std::string &key, PF_Pixel8
 int main(int argc, char **argv) {
 	std::string in_path, params_path, out_path;
 	double force_version = -1.0;
+	std::string idx0_mode = "none";
 	for (int i = 1; i < argc; ++i) {
 		std::string a = argv[i];
 		auto next = [&]() -> std::string { return (i + 1 < argc) ? argv[++i] : std::string(); };
@@ -180,9 +181,18 @@ int main(int argc, char **argv) {
 		else if (a == "--params") params_path = next();
 		else if (a == "--output") out_path = next();
 		else if (a == "--force-version") force_version = std::stod(next());
+		else if (a == "--idx0-mode") idx0_mode = next();
 	}
 	if (in_path.empty() || out_path.empty()) {
-		std::fprintf(stderr, "usage: olmsmoother2_cli --input in.png --params case.json --output out.png [--force-version 1|2]\n");
+		std::fprintf(stderr, "usage: olmsmoother2_cli --input in.png --params case.json --output out.png [--force-version 1|2] [--idx0-mode none|suppress|half|quarter]\n");
+		return 2;
+	}
+	if (idx0_mode == "none") g_olmsmoother2_idx0_diag_mode = 0;
+	else if (idx0_mode == "suppress") g_olmsmoother2_idx0_diag_mode = 1;
+	else if (idx0_mode == "half") g_olmsmoother2_idx0_diag_mode = 2;
+	else if (idx0_mode == "quarter") g_olmsmoother2_idx0_diag_mode = 3;
+	else {
+		std::fprintf(stderr, "--idx0-mode must be none, suppress, half, or quarter\n");
 		return 2;
 	}
 
