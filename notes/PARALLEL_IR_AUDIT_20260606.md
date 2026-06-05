@@ -30,7 +30,7 @@ Until these are imported, parent work should focus on:
 
 1. Packaging pending reference requests for the Windows machine.
 2. Keeping existing green smokes passing.
-3. Preparing import-time smoke hooks and per-plugin IR notes.
+3. Preparing import-time smoke hooks, AE-host package checks, and per-plugin IR notes.
 4. Avoiding broad implementation changes that are not backed by binary facts
    and discriminating reference cases.
 
@@ -46,6 +46,13 @@ Package all pending requests for Windows rendering:
 
 ```sh
 python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending.zip
+```
+
+Package Mac plug-ins for AE-host validation:
+
+```sh
+scripts/package_mac_plugins.sh --output /tmp/olm_mac_plugins_Debug.zip
+python3 scripts/verify_mac_plugin_package.py /tmp/olm_mac_plugins_Debug.zip
 ```
 
 After returned refs are imported, start with the plugin-specific request smoke,
