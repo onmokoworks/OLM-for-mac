@@ -595,7 +595,7 @@ std::vector<float> matte_distance(const std::vector<unsigned char> &mask, int w,
 }
 
 std::vector<float> edge_blur_distance(const std::vector<unsigned char> &mask, int w, int h, int distance_type) {
-    if (distance_type == 1) return l1_distance_to(mask, w, h);
+    if (distance_type == 1) return euclidean_distance_to(mask, w, h);
     return matte_distance(mask, w, h, distance_type);
 }
 

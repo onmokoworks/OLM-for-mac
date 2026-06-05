@@ -107,7 +107,7 @@ Project Settings 差で同一ケースを撮り直して、PNG差分を見るの
 | Plugin | AEなしCLI | 参照一致 | 実体 |
 |---|---|---|---|
 | OLMBlur | ✅ C++ | 全7ケース smoke OK（max<=1; 1/2/4 exact） | `cli/OLMBlur/main.cpp` |
-| OLMColorKey | ✅ Python + C++ + Mac plugin(新) | C++: 1–4・7 exact / 5・6 erode 0.48%; Mac plugin builds universal | `refs/scripts/olmcolorkey_cli.py`, `cli/OLMColorKey/main.cpp`, `mac/OLMColorKey/` |
+| OLMColorKey | ✅ Python + C++ + Rust + Mac plugin(新) | C++: 1–4・7 exact / 5・6 erode 0.48%; Edge Blur C++ now matches Python exploratory residual (`case8 mean=1.0396`, `case9 mean=1.2503`); Mac plugin builds universal | `refs/scripts/olmcolorkey_cli.py`, `cli/OLMColorKey/main.cpp`, `rust/olmcolorkey_cli/`, `mac/OLMColorKey/` |
 | OLMSmoother | ✅ C++(新) | v1単体CLIは過剰発火だが、OLMSmoother2 `--force-version 1` 互換probeが v1 refs 3ケース green (`mean=0.0055/0.0051/0.0200`)。v1単体の深追いは低優先 | `cli/OLMSmoother/`, `refs/scripts/smoke_olmsmoother2_v1_compat_cli.py` |
 | OLMSmoother2 | ✅ C++(新) | 20260605追加参照 cases 1-4 を測定。disasm/objdump-firstで Color Key + Invert active-palette と non-invert scalar-key path を修正。key-path smoke cases2-4 は green。現状: case1 0.4304 / case2 0.0216 / case3 exact / case4 0.0189 | `cli/OLMSmoother2/`, `mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp`, `notes/OLMSmoother2_ASM_FACTS.md` |
 | OLMToonDilate | ✅ Python + C++ + Mac plugin(新) | C++: case1 mean 0.4762 / case2 0.0022 / case3 3.0676; Mac plugin builds universal | `refs/scripts/olmtoondilate_cli.py`, `cli/OLMToonDilate/main.cpp`, `mac/OLMToonDilate/` |

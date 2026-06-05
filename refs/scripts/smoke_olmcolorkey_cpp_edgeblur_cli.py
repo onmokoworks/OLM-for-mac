@@ -45,7 +45,7 @@ def main() -> int:
         "--max-diff",
         "255",
         "--mean-diff",
-        "1.55",
+        "1.26",
         "--nonzero-px-percent",
         "50.0",
     ]
