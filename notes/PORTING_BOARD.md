@@ -2279,3 +2279,27 @@ behavior.
   or only affects a boundary not represented by the current mismatch. Continue
   chasing exact `FUN_180002780` prepass-alpha generation/sampling and weight
   table construction.
+
+2026-06-06 RadialBlur Inner scatter/prepass decomp refresh:
+
+- Re-read `FUN_180001c90`, `FUN_1800024c0`, and `FUN_180002780`.
+- `FUN_180001c90(param_2=0)` is the outer scatter: mode at `+0x24`, base
+  length/offset at `+0x3a9e8`, table `+0x68`, angular index increments and
+  wraps within the same radius row.
+- `FUN_180001c90(param_2=1)` is the inner scatter: mode at `+0x2c`, base
+  length/offset at `+0x3a9ec`, table `+0x1d528`, angular index decrements and
+  the negative-wrap pointer advances to `(radius + 1) * angular_count`.
+- Both directions apply mode `1 add dynamic offset`, mode `2 max(base,
+  dynamic)`, mode `3 dynamic only`, clamp length to `3000`, then use
+  `effective=int(length * param_10)` and table stride `30000/effective`.
+- `FUN_1800024c0` calls outer first and inner second for each source cell.
+  Dynamic offset is radius-row dependent:
+  `int((radial_count / 2) * mode_value / radius_row)`.
+- `FUN_180002780` prepass gathers alpha in both directions using separate
+  tables `+0x3a9f0` and `+0x3b990`, normalizes by total prepass weight, then
+  writes `out.rgb = gathered_alpha * input.rgb`, `out.a = gathered_alpha`.
+- Current interpretation: the existing isolated probes are consistent with
+  these pieces but no global switch closes the gap. The next useful probe
+  should model the exact `param_1+0x10` sampled base/validity buffer and feed
+  that into both `FUN_180002780` and `FUN_180001c90` table/index arithmetic,
+  rather than trying more final-alpha or seed-mode toggles.

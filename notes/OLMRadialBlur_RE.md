@@ -100,6 +100,49 @@ Constants confirmed from `plugins_2025/OLMRadialBlur.aex`:
   - `FUN_180001c90`: inner/outer strength and offset-mode helper.
 - Final inverse sampling uses `FUN_180001000` over the polar-grid buffer.
 
+### Rotation Inner/Outer Scatter Facts
+
+2026-06-06 decomp recheck:
+
+- `FUN_180001c90(param_2=0)` is the outer-direction angular scatter:
+  - blur mode/offset mode comes from `param_1 + 0x24`
+  - base strength/offset comes from `param_1 + 0x3a9e8`
+  - Gaussian table base is `param_1 + 0x68`
+  - offsets advance angular index forward in the same radius row, wrapping to
+    angular index `0`
+- `FUN_180001c90(param_2=1)` is the inner-direction angular scatter:
+  - blur mode/offset mode comes from `param_1 + 0x2c`
+  - base strength/offset comes from `param_1 + 0x3a9ec`
+  - Gaussian table base is `param_1 + 0x1d528`
+  - offsets decrement angular index; on negative wrap the pointer moves to
+    `(radius + 1) * angular_count`, matching the previously measured
+    `aex-next-row` diagnostic shape
+- For both directions, mode handling is:
+  - mode `1`: add dynamic offset `param_3` to base length
+  - mode `2`: max(base length, dynamic offset)
+  - mode `3`: use dynamic offset directly
+  - length is clamped to `3000`
+  - effective length is `int(length * param_10)`
+  - table stride is `30000 / effective_length`
+- `FUN_1800024c0` calls `FUN_180001c90` outer first and inner second for each
+  valid source cell. The dynamic offset passed as `param_3` is
+  `int((param_7 / 2) * strength_or_offset_mode_value / radius_row)`, where
+  `param_7` is radial grid height and `radius_row` is the current row index.
+- `FUN_180002780` prepass writes the source RGBA consumed by
+  `FUN_1800024c0`: when source alpha and the sampled base/validity buffer are
+  nonzero, it gathers alpha in both angular directions and writes
+  `out.rgb = gathered_alpha * input.rgb`, `out.a = gathered_alpha`.
+  The backward/outer-side prepass table is `param_1 + 0x3a9f0`; the
+  forward/inner-side prepass table is `param_1 + 0x3b990`. The gathered alpha
+  is normalized by the total prepass weight sum.
+
+Current implication: the existing C++ diagnostics already model many isolated
+pieces of this, and the rejected probes show no global switch is enough. The
+next useful implementation probe should combine exact prepass table selection,
+the `param_1+0x10` sampled base/validity buffer, and `FUN_180001c90`'s
+direction-specific row/angle pointer movement rather than tuning final alpha
+or replacing one table/seed mode globally.
+
 ## Zoom Body
 
 `FUN_1800056f0` mirrors the Rotation structure for Zoom:
@@ -370,9 +413,11 @@ Additional decomp note: `FUN_180002780` prefilters the polar alpha/validity
 before `FUN_1800024c0` calls the outer/inner scatter helper. The smoothing
 lengths come from `param_1 + 0x3c930` and `param_1 + 0x3c934`, initialized in
 `FUN_180004640` from Outer/Inner Edge Fade (`+0x6c` / `+0x70`) scaled by
-`1 / Quality`. For the current outer-only target cases the Edge Fade params are
-zero, so this path is not expected to explain the remaining `case_0001` /
-`case_0002` / `case_0010` residual by itself.
+`1 / Quality`. The prepass uses separate tables at `0x3a9f0` and `0x3b990`
+and normalizes the gathered alpha before premultiplying source RGB. For the
+current outer-only target cases the Edge Fade params are zero, so this path is
+not expected to explain the remaining `case_0001` / `case_0002` / `case_0010`
+residual by itself.
 
 The polar-grid path is now clearly better than identity but still red, so do
 not tolerance-green the broad smoke. `case_0010` is separately guarded by
