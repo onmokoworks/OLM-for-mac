@@ -864,11 +864,13 @@ std::vector<float> copy_centered_roi(
     int src_width,
     int src_height,
     int dst_width,
-    int dst_height
+    int dst_height,
+    int offset_x = 0,
+    int offset_y = 0
 ) {
     std::vector<float> output(static_cast<size_t>(dst_width) * dst_height);
-    const int x0 = static_cast<int>(static_cast<float>(src_width) * 0.5f) - dst_width / 2;
-    const int y0 = static_cast<int>(static_cast<float>(src_height) * 0.5f) - dst_height / 2;
+    const int x0 = static_cast<int>(static_cast<float>(src_width) * 0.5f) - dst_width / 2 + offset_x;
+    const int y0 = static_cast<int>(static_cast<float>(src_height) * 0.5f) - dst_height / 2 + offset_y;
     for (int y = 0; y < dst_height; ++y) {
         const int sy = y + y0;
         if (sy < 0 || sy >= src_height) continue;
@@ -995,7 +997,11 @@ std::vector<float> rotated_axis_box_blur(
         return warp_getrot_direct(blurred, rw, rh, width, height, frame_cx, frame_cy, -angle_deg, rotate_filter, rotate_border);
     }
 
-    if (warp_mode == "aex-two-temp") {
+    if (warp_mode == "aex-two-temp" ||
+        warp_mode == "aex-two-temp-final-xm" ||
+        warp_mode == "aex-two-temp-final-xp" ||
+        warp_mode == "aex-two-temp-final-ym" ||
+        warp_mode == "aex-two-temp-final-yp") {
         const double pi = 3.14159265358979323846;
         const double rad = angle_deg * pi / 180.0;
         const double ac = std::abs(std::cos(rad));
@@ -1008,7 +1014,13 @@ std::vector<float> rotated_axis_box_blur(
         temp_a = warp_getrot_direct(temp_a, rw, rh, rw, rh, temp_cx, temp_cy, angle_deg, rotate_filter, rotate_border);
         std::vector<float> temp_b = direction_box_blur(temp_a, rw, rh, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
         temp_b = warp_getrot_direct(temp_b, rw, rh, rw, rh, temp_cx, temp_cy, -angle_deg, rotate_filter, rotate_border);
-        return copy_centered_roi(temp_b, rw, rh, width, height);
+        int shift_x = 0;
+        int shift_y = 0;
+        if (warp_mode == "aex-two-temp-final-xm") shift_x = -1;
+        if (warp_mode == "aex-two-temp-final-xp") shift_x = 1;
+        if (warp_mode == "aex-two-temp-final-ym") shift_y = -1;
+        if (warp_mode == "aex-two-temp-final-yp") shift_y = 1;
+        return copy_centered_roi(temp_b, rw, rh, width, height, shift_x, shift_y);
     }
 
     if (warp_mode == "aex-frame") {
@@ -1253,8 +1265,10 @@ Options parse_args(int argc, char **argv) {
             if (args.warp_mode != "current" && args.warp_mode != "opencv-center" &&
                 args.warp_mode != "aex-getrot" && args.warp_mode != "aex-direct-back" &&
                 args.warp_mode != "aex-frame" && args.warp_mode != "aex-roi-temp" &&
-                args.warp_mode != "aex-inplace-temp" && args.warp_mode != "aex-two-temp") {
-                throw std::runtime_error("--warp-mode must be current, opencv-center, aex-getrot, aex-direct-back, aex-frame, aex-roi-temp, aex-inplace-temp, or aex-two-temp");
+                args.warp_mode != "aex-inplace-temp" && args.warp_mode != "aex-two-temp" &&
+                args.warp_mode != "aex-two-temp-final-xm" && args.warp_mode != "aex-two-temp-final-xp" &&
+                args.warp_mode != "aex-two-temp-final-ym" && args.warp_mode != "aex-two-temp-final-yp") {
+                throw std::runtime_error("--warp-mode must be current, opencv-center, aex-getrot, aex-direct-back, aex-frame, aex-roi-temp, aex-inplace-temp, aex-two-temp, or aex-two-temp-final-{xm,xp,ym,yp}");
             }
         } else if (key == "--rotate-size-mode") {
             args.rotate_size_mode = need_value("--rotate-size-mode");
@@ -1289,7 +1303,7 @@ Options parse_args(int argc, char **argv) {
         } else if (key == "--filter-border" || key == "--ray-mode") {
             (void)need_value(key.c_str());
         } else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--rotate-filter bilinear|bicubic|bilinear-fixed5] [--rotate-border edge|constant] [--warp-mode current|opencv-center|aex-getrot|aex-direct-back|aex-frame|aex-roi-temp|aex-inplace-temp|aex-two-temp] [--rotate-size-mode round|floor|ceil|aex-min4] [--axis-fast-path true|false] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five]\n");
+            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--rotate-filter bilinear|bicubic|bilinear-fixed5] [--rotate-border edge|constant] [--warp-mode current|opencv-center|aex-getrot|aex-direct-back|aex-frame|aex-roi-temp|aex-inplace-temp|aex-two-temp|aex-two-temp-final-{xm,xp,ym,yp}] [--rotate-size-mode round|floor|ceil|aex-min4] [--axis-fast-path true|false] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);

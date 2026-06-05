@@ -1992,6 +1992,13 @@ behavior.
   Border sweep is mixed (`mirror 0.8531/1.1555/1.1870`, `reflect
   0.8531/1.1558/1.1818`). So the next exactness target is still
   `warpAffine`/ROI/copyTo placement, not `boxFilter` anchor/border.
+- 2026-06-06 final ROI shift probe: added `aex-two-temp-final-{xm,xp,ym,yp}`
+  diagnostics. All one-pixel final-copy shifts are negative:
+  baseline `0.8531/1.1555/1.1870`; `x-1 1.1336/1.3811/6.1233`;
+  `x+1 1.1276/1.3447/5.9795`; `y-1 1.1166/1.3516/5.9944`;
+  `y+1 1.1166/1.3708/6.0968`. This clears the last `R12` -> final ray ROI
+  position as the main residual source and points to exact forward/rotate-back
+  `warpAffine` behavior or matrix center/scale details.
 - 2026-06-06 caller temp-Mat mapping: `FUN_18114f4a0` actually creates two
   same-sized PF-backed temp descriptors (`[rbp+0x190]` and `[rbp+0x120]`),
   copy-constructs them into `[rbp+0xc0]` and `[rbp+0x60]`, and zeros the copied
