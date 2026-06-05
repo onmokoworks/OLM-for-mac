@@ -488,6 +488,9 @@ Current implication:
 
 - `FUN_180001ec0` receives a float angle, uses `cosf` / `sinf`, and computes
   centers from integer `width / 2` and `height / 2`.
+- Inside the helper, source coordinates are converted with `CVTTSS2SI`, then
+  accepted only if `0 < ix < width - 1` and `0 < iy < height - 1`
+  (`180002010..180002048`). Invalid samples skip the destination write path.
 - Added C++ CLI algorithm `--algorithm rotated-aex-float-math` to apply those
   details to the current full A/B choreography.
 - Current measurement is neutral against `rotated-aex-full-choreo`:
@@ -495,6 +498,16 @@ Current implication:
 - The remaining front-only residual is therefore not explained by double-vs-float
   trig or integer-center rounding in `FUN_180001ec0`. Keep looking at
   edge/validity semantics or row-driver scatter/source ownership.
+
+2026-06-06 preserve-invalid-input diagnostic:
+
+- Added `rotated-aex-preserve-invalid-input`, which initializes the first
+  rotate destination from the centered source canvas and preserves that value
+  when the AEX-shaped rotate helper would skip an invalid input sample.
+- Measurement is exactly neutral against `rotated-aex-full-choreo`:
+  `case_0001 mean=4.4483`, `case_0005 mean=1.1703`.
+- This makes first-rotate invalid-pixel destination ownership unlikely to be
+  the leading residual on the tracked front-only references.
 
 2026-06-06 row-initialization diagnostic:
 

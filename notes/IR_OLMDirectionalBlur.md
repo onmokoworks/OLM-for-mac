@@ -112,8 +112,10 @@ Use `FUN_180001ec0` semantics:
 
 - strict inner-pixel sampling: source sample must satisfy
   `0 < ix < width - 1` and `0 < iy < height - 1`
+- integer coordinates use `CVTTSS2SI` truncation, not round-to-nearest
 - bilinear alpha sum is written as output alpha
 - RGB corner weights are normalized by the sampled alpha sum
+- invalid samples are skipped by the helper rather than explicitly written
 
 Current probe status:
 
@@ -314,6 +316,7 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 | rotated-aex-component-tail-only | 4.4484 | 1.1703 | removing global tail gate is neutral |
 | rotated-aex-global-tail-only | 4.4490 | 1.1702 | disabling component tail is neutral/mixed |
 | rotated-aex-no-tail | 4.4597 | 1.1702 | disabling all Sharp Tail is neutral/negative |
+| rotated-aex-preserve-invalid-input | 4.4483 | 1.1703 | input rotate invalid-pixel preserve is neutral |
 | rotated-aex-binary-alpha | 4.4483 | 1.1753 | binary validity side-channel is neutral/negative |
 | rotated-aex-straight-source-rgb | 4.4483 | 1.1703 | neutral; opaque refs cannot distinguish source RGB premul |
 | rotated-aex-float-math | 4.4483 | 1.1703 | float trig + integer centers are neutral |
