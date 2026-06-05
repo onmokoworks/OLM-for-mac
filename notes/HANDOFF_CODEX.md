@@ -147,6 +147,10 @@ case3は `1.7023 -> 1.7073` に少し悪化するため、これはOpenCV境界�
 を直接使うと `case_0001/0002/0003 mean=0.8504/1.1570/1.0514`。
 case1は微悪化、case2は微改善、case3は大きく改善するため、次はC++/Macの手書きrayを
 OpenCV primitive/two-tempに寄せるのが最有力。
+同日 C++ `--warp-mode aex-two-temp --axis-fast-path false` は
+`0.8506/1.1570/1.0563` でPython OpenCV probeとほぼ一致。手書きsampler差ではなく、
+0/90度rayのfast pathをAEXが通すかどうかが主な分岐。新規
+`smoke_olmkirakira_cpp_two_temp_no_fastpath_probe_cli.py` をred測定として追加。
 同日 rotate/crop probe: Python CLIに `--crop-offset-y/x`, `--rotate-order`,
 `--rotate-prefilter` を診断用に追加。crop offset `[-1,0,1]` は `(0,0)` が明確に最良で、
 1px originズレ説は弱い。`order=3 --rotate-prefilter` はcases1/2を
