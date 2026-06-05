@@ -75,6 +75,8 @@ manifest="$stage/manifest.json"
 install_notes="$stage/INSTALL.txt"
 validation_notes="$stage/AE_VALIDATION_CHECKLIST.txt"
 validation_template="$stage/AE_VALIDATION_RESULT.template.json"
+pixel_validation_dir="$stage/AE_PIXEL_VALIDATION"
+pixel_validation_request="$pixel_validation_dir/olmblur_request.zip"
 
 cat >"$install_notes" <<EOF
 OLM macOS AE plug-ins (${CONFIGURATION})
@@ -129,8 +131,11 @@ Return to the Mac-side porting workspace:
 - AE version and renderer/project_gpu_accel_type if available
 - For each plug-in: loaded yes/no, applied yes/no, render succeeded yes/no
 - Any AE crash, missing effect, parameter UI issue, or render error text
-- If doing pixel validation, return PNGs plus the parameter manifest using the
-  existing Windows reference package/import workflow shape
+- For the first pixel validation pass, use:
+  AE_PIXEL_VALIDATION/olmblur_request.zip
+  It contains OLM Blur input PNGs, Windows expected PNGs, thresholds, and a
+  result template. Return the rendered PNGs as a zip or folder preserving
+  frame names such as case_0001.png.
 - Prefer filling AE_VALIDATION_RESULT.template.json and return it with any PNGs
   or error screenshots/logs.
 
@@ -182,6 +187,11 @@ cat >>"$validation_template" <<'EOF'
 }
 EOF
 
+mkdir -p "$pixel_validation_dir"
+python3 "$ROOT/scripts/package_ae_pixel_validation_request.py" \
+  --preset olmblur \
+  --output "$pixel_validation_request"
+
 {
   echo "{"
   echo "  \"kind\": \"olm_mac_plugin_package\","
@@ -191,6 +201,13 @@ EOF
   echo "  \"install_notes\": \"INSTALL.txt\","
   echo "  \"validation_checklist\": \"AE_VALIDATION_CHECKLIST.txt\","
   echo "  \"validation_result_template\": \"AE_VALIDATION_RESULT.template.json\","
+  echo "  \"ae_pixel_validation_requests\": ["
+  echo "    {"
+  echo "      \"name\": \"OLMBlur\","
+  echo "      \"request_id\": \"ae_pixel_olmblur_20260606\","
+  echo "      \"zip\": \"AE_PIXEL_VALIDATION/olmblur_request.zip\""
+  echo "    }"
+  echo "  ],"
   echo "  \"plugins\": ["
 } >"$manifest"
 
