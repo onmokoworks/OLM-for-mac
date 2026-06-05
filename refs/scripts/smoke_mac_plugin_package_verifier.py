@@ -26,6 +26,26 @@ def main() -> int:
             json.dumps(template_result(), indent=2),
             encoding="utf-8",
         )
+        pixel_dir = root / "AE_PIXEL_VALIDATION"
+        pixel_dir.mkdir()
+        pixel_request = pixel_dir / "olmblur_request.zip"
+        proc = subprocess.run(
+            [
+                sys.executable,
+                str(repo / "scripts" / "package_ae_pixel_validation_request.py"),
+                "--preset",
+                "olmblur",
+                "--output",
+                str(pixel_request),
+            ],
+            cwd=repo,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        print(proc.stdout, end="")
+        if proc.returncode != 0:
+            return proc.returncode
 
         plugins = []
         for name in EXPECTED_PLUGINS:
@@ -49,6 +69,13 @@ def main() -> int:
             "install_notes": "INSTALL.txt",
             "validation_checklist": "AE_VALIDATION_CHECKLIST.txt",
             "validation_result_template": "AE_VALIDATION_RESULT.template.json",
+            "ae_pixel_validation_requests": [
+                {
+                    "name": "OLMBlur",
+                    "request_id": "ae_pixel_olmblur_20260606",
+                    "zip": "AE_PIXEL_VALIDATION/olmblur_request.zip",
+                }
+            ],
             "plugins": plugins,
         }
         (root / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")

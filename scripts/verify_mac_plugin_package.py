@@ -14,6 +14,11 @@ from pathlib import Path
 from verify_ae_validation_result import EXPECTED_PLUGINS
 
 
+EXPECTED_PIXEL_REQUESTS = {
+    "OLMBlur": "ae_pixel_olmblur_20260606",
+}
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("package", type=Path, help="zip produced by scripts/package_mac_plugins.sh")
@@ -54,6 +59,34 @@ def verify_validation_template(repo: Path, template: Path) -> int:
     return proc.returncode
 
 
+def verify_pixel_request_zip(path: Path, expected_request_id: str) -> str | None:
+    if not path.exists():
+        return f"pixel validation request missing: {path.name}"
+    if not zipfile.is_zipfile(path):
+        return f"pixel validation request is not a zip: {path.name}"
+    with tempfile.TemporaryDirectory(prefix="olm_pixel_request_verify_") as tmp:
+        tmp_path = Path(tmp)
+        with zipfile.ZipFile(path) as archive:
+            archive.extractall(tmp_path)
+        matches = list(tmp_path.rglob("request_manifest.json"))
+        if len(matches) != 1:
+            return f"pixel validation request must contain one request_manifest.json, found {len(matches)}"
+        try:
+            data = load_json(matches[0])
+        except Exception as exc:  # noqa: BLE001
+            return str(exc)
+        if data.get("kind") != "olm_ae_pixel_validation_request":
+            return "pixel request kind must be 'olm_ae_pixel_validation_request'"
+        if data.get("request_id") != expected_request_id:
+            return f"pixel request_id must be {expected_request_id!r}"
+        for rel in ("reference_manifest.json", data.get("input_dir", ""), data.get("expected_dir", "")):
+            if not isinstance(rel, str) or not rel:
+                return "pixel request has an invalid relative path"
+            if not (matches[0].parent / rel).exists():
+                return f"pixel request missing required path: {rel}"
+    return None
+
+
 def main() -> int:
     args = parse_args()
     package = args.package.resolve()
@@ -86,6 +119,23 @@ def main() -> int:
                 return fail(f"manifest.{rel_key} must be a non-empty string")
             if not (root / rel).exists():
                 return fail(f"manifest.{rel_key} missing file: {rel}")
+
+        pixel_requests = manifest.get("ae_pixel_validation_requests")
+        if not isinstance(pixel_requests, list) or not pixel_requests:
+            return fail("manifest.ae_pixel_validation_requests must be a non-empty list")
+        by_pixel_name = {entry.get("name"): entry for entry in pixel_requests if isinstance(entry, dict)}
+        for name, request_id in EXPECTED_PIXEL_REQUESTS.items():
+            entry = by_pixel_name.get(name)
+            if not entry:
+                return fail(f"missing AE pixel validation request entry: {name}")
+            if entry.get("request_id") != request_id:
+                return fail(f"{name}.request_id must be {request_id!r}")
+            rel = entry.get("zip")
+            if not isinstance(rel, str) or not rel:
+                return fail(f"{name}.zip must be a non-empty string")
+            problem = verify_pixel_request_zip(root / rel, request_id)
+            if problem:
+                return fail(f"{name}: {problem}")
 
         plugins = manifest.get("plugins")
         if not isinstance(plugins, list):
