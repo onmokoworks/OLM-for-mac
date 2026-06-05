@@ -2099,6 +2099,23 @@ behavior.
   outweighed by regressions on case2/case3, so this is diagnostic evidence
   rather than a Mac-port change.
 
+2026-06-06 KiraKira C++ two-temp/no-fastpath probe:
+
+- Added `refs/scripts/smoke_olmkirakira_cpp_two_temp_no_fastpath_probe_cli.py`
+  and registered it as a red measurement in `smoke_all_algorithm_clis.py`.
+- Important distinction: the earlier `--axis-fast-path false` result above was
+  measured on the older/default warp path. Under the corrected
+  `--warp-mode aex-two-temp` choreography, forcing 0/90-degree rays through the
+  same temp warp/box/warp path gives `case_0001 mean=0.8506`,
+  `case_0002 mean=1.1570`, `case_0003 mean=1.0563`.
+- This almost matches the Python OpenCV primitive probe
+  `0.8504/1.1570/1.0514`, so the portable C++ sampler is close enough for this
+  slice. The main KiraKira decision is now model selection: two-temp/no-fastpath
+  is much better for Strength=0 case3, slightly worse for case1, and near-tie
+  for case2. Do not flip the default blindly; instead use this as the next Mac
+  candidate path and keep probing exact AEX conditions that choose/direct the
+  fast path.
+
 2026-06-05 RadialBlur C++ Inner scatter RGB probe:
 
 - Fixed a latent C++ source-scatter probe wrap bug in
