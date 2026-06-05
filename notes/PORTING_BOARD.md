@@ -1977,6 +1977,16 @@ behavior.
   "centered ROI temp + in-place forward warp" interpretation and points back to
   exact Mat header/object lifetime mapping around `R14`, `[rbp+0x60]`, and
   `R12`.
+- 2026-06-06 caller temp-Mat mapping: `FUN_18114f4a0` actually creates two
+  same-sized PF-backed temp descriptors (`[rbp+0x190]` and `[rbp+0x120]`),
+  copy-constructs them into `[rbp+0xc0]` and `[rbp+0x60]`, and zeros the copied
+  Mat data pointers before calling `FUN_181150790`. The call passes
+  `RDX=[rbp]`, `R8=[rbp+0xc0]`, `R9=current ray descriptor`, and stack
+  `[rsp+0x20]=[rbp+0x60]`; Ghidra decomp hides part of this stack-arg shape.
+  Also confirmed `FUN_181156b90` is a `cv::Mat` copy-constructor shape with
+  refcount increment, while `FUN_181231b80` is the PF-backed Mat allocator.
+  Next implementation work should model this two-temp zero-filled choreography
+  inside the ray helper instead of adding more one-temp warp guesses.
 - A temporary CLI probe approximating OpenCV's 5-bit `INTER_LINEAR` table
   (`bilinear-fixed5`) did not improve the current refs:
   `case_0001 mean=0.8384`, `case_0002 mean=1.1624`,

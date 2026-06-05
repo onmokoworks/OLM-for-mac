@@ -287,3 +287,44 @@ support adopting it globally.
 Do not adopt any new warp/crop change without a direct asm argument mapping or
 a faithful local OpenCV 4.5.5 reproduction; image-diff-only tuning is too easy
 to overfit here.
+
+## Temp Mat Creation / Caller Placement
+
+`FUN_18114f4a0` creates the two temporary ray Mats passed into
+`FUN_181150790`.
+
+Address facts:
+
+- `18114f7f8..18114f830`: creates the first PF-backed temp descriptor at
+  `[rbp+0x190]` with `FUN_181231b80`, then copy-constructs it into
+  `[rbp+0xc0]` via `FUN_181156b90`.
+- `18114f836..18114f873`: immediately zeros the copied temp's data pointer
+  (`[rbp+0xd0]`). The byte count is
+  `tmp_w * tmp_h * channel_count * sizeof(float)`.
+- `18114f87c..18114f8ae`: creates a second same-sized PF-backed temp descriptor
+  at `[rbp+0x120]`, then copy-constructs it into `[rbp+0x60]`.
+- `18114f8b4..18114f8e4`: immediately zeros the second copied temp's data
+  pointer (`[rbp+0x70]`) with the same byte count.
+- `18114f90f..18114f929`: calls `FUN_181150790` with
+  `RCX = host/context`, `RDX = [rbp]` source Mat, `R8 = [rbp+0xc0]`,
+  `R9 = current ray descriptor`, and stack arg `[rsp+0x20] = [rbp+0x60]`.
+  Ghidra's decomp elides some of this stack-argument shape, so prefer this asm
+  mapping when reasoning about `param_5`.
+- `18114f932..18114f95d`: destructs `[rbp+0x60]`, releases `[rbp+0x120]`,
+  destructs `[rbp+0xc0]`, then releases `[rbp+0x190]`.
+
+Helper facts:
+
+- `FUN_181231b80` is a PF-backed Mat allocator/wrapper initializer: it clears
+  the destination Mat-like header, stores the AE/context pointer at `+0x68`,
+  and calls `FUN_181231ec0(rows/cols/type/channel-count)` to allocate/create
+  the backing data.
+- `FUN_181156b90` is a `cv::Mat` copy-constructor shape, not a raw data clone:
+  it copies flags/dims/rows/cols/data/step/refcount pointers, sets local step
+  pointers, and increments the refcount at `u + 0x14` when present.
+
+Implication: the caller passes two distinct zero-filled Mat headers that share
+the PF-backed allocation through copy construction. The simple
+`aex-inplace-temp` probe was still wrong because it modeled only a centered ROI
+copy into one temp, not this exact two-temp zero-filled caller choreography plus
+the inner copy/warp/blur sequence inside `FUN_181150790`.
