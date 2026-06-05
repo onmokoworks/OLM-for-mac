@@ -79,6 +79,7 @@ def main() -> int:
         Smoke("OLMSmoother build", ["refs/scripts/build_olmsmoother_cli.sh"]),
         Smoke("OLMSmoother", [py, "refs/scripts/smoke_olmsmoother_cli.py"], "red-measurement"),
         Smoke("OLMSmoother2 build", ["refs/scripts/build_olmsmoother2_cli.sh"]),
+        Smoke("OLMSmoother2 v1 compatibility", [py, "refs/scripts/smoke_olmsmoother2_v1_compat_cli.py"]),
         Smoke("OLMSmoother2 key paths", [py, "refs/scripts/smoke_olmsmoother2_keypaths_cli.py"]),
         Smoke("OLMSmoother2 Gamma Colors", [py, "refs/scripts/smoke_olmsmoother2_gamma_cli.py"]),
         Smoke("OLMSmoother2", [py, "refs/scripts/smoke_olmsmoother2_cli.py"], "red-measurement"),

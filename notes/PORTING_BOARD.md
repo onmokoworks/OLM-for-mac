@@ -201,7 +201,7 @@ the OLMKiraKira Brightness probe all produced expected DIFF measurement output.
 | OLMDirectionalBlur | yes | yes | new Mac plugin builds | Python + C++ direct/rotated CLI scaffold | front-only/no-noise DIFF; Mac plugin has 8bpc front-only/no-noise direct slice |
 | OLMKiraKira | yes | yes | new Mac plugin builds | Python ray CLI scaffold + C++ native scaffold | Python cases 1/2 improve strongly over identity, C++ scaffold added, Mac plugin has the same 4-ray repeated-box scaffold, still DIFF |
 | OLMRadialBlur | yes | yes | new Mac plugin builds | Python rotation + zoom polar CLI scaffold; C++ Zoom/Rotation/Inner diagnostic CLI | Rotation case_0010 near-match; Zoom 0009 OK in Python and C++; C++ Zoom 0003-0005 OK with Size Variation ignored; Mac plugin has 8bpc Zoom/no-inner/no-noise slice with large-Strength FFT path and Size Variation no-op pass-through; Inner 0011-0013 still DIFF; Repeat Border polar-valid probe is neutral |
-| OLMSmoother | yes | yes | lower priority | C++ CLI over mac port | classifier over-fires ~20x; path gap unresolved; user notes v1 may be covered by an OLMSmoother2 mode, so verify v2 compatibility before more standalone v1 RE |
+| OLMSmoother | yes | yes | prefer v2 compat | C++ CLI over mac port; OLMSmoother2 forced-v1 compat gate | standalone classifier over-fires ~20x, but OLMSmoother2 `Smoother Version=1` matches v1 refs closely (`mean=0.0055/0.0051/0.0200`); do not deep-dive standalone v1 unless this migration path is rejected |
 | OLMSmoother2 | yes, 20260605_extra | yes | port complete-ish | C++ CLI over mac port | first 4 cases measured: case1 mean 0.1832, case2 0.0216, case3 exact, case4 0.0189 after asm key-path + writeback-premul fixes |
 | OLMToonDilate | yes | yes | new Mac plugin builds | Python + C++ Chebyshev/BFS CLI | C++ gated: case1 mean 0.4762, case2 0.0022, case3 3.0676; Mac plugin has cases 1-3 kernel |
 
@@ -439,6 +439,23 @@ v1 port as a diagnostic asset, not the next deep RE target. Before requesting
 more alternate AE Project Settings references or digging further into v1, first
 verify whether OLMSmoother2 exposes or implements a v1-equivalent mode and
 whether that is an acceptable migration path.
+
+2026-06-06 compatibility check: OLMSmoother2 has an explicit `Smoother Version`
+popup. `cli/OLMSmoother2/main.cpp` now accepts `--force-version 1` and maps the
+v1 manifest labels (`Use Color Key`, `Do Smooth Range`) onto the v2 harness
+inputs. `refs/scripts/smoke_olmsmoother2_v1_compat_cli.py` runs the v2 port
+against the original OLMSmoother v1 references and passes as a green
+compatibility guard:
+
+- `case_0001`: `max=63 mean=0.0055`
+- `case_0002`: `max=63 mean=0.0051`
+- `case_0003`: `max=124 mean=0.0200`
+
+This is dramatically better than the standalone v1 CLI over-fire (`30k+`
+changed pixels), so the current migration policy is: prefer OLMSmoother2
+`Smoother Version=1` for v1 compatibility, keep the standalone v1 port only as
+diagnostic history, and spend reverse-engineering time elsewhere unless AE-host
+testing rejects the v2 compatibility mode.
 
 `OLMToonDilate` (CLI characterized; Mac plug-in build added):
 

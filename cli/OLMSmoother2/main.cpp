@@ -172,15 +172,17 @@ bool find_param_color(const std::string &json, const std::string &key, PF_Pixel8
 
 int main(int argc, char **argv) {
 	std::string in_path, params_path, out_path;
+	double force_version = -1.0;
 	for (int i = 1; i < argc; ++i) {
 		std::string a = argv[i];
 		auto next = [&]() -> std::string { return (i + 1 < argc) ? argv[++i] : std::string(); };
 		if (a == "--input") in_path = next();
 		else if (a == "--params") params_path = next();
 		else if (a == "--output") out_path = next();
+		else if (a == "--force-version") force_version = std::stod(next());
 	}
 	if (in_path.empty() || out_path.empty()) {
-		std::fprintf(stderr, "usage: olmsmoother2_cli --input in.png --params case.json --output out.png\n");
+		std::fprintf(stderr, "usage: olmsmoother2_cli --input in.png --params case.json --output out.png [--force-version 1|2]\n");
 		return 2;
 	}
 
@@ -197,12 +199,14 @@ int main(int argc, char **argv) {
 		};
 		if (!params_path.empty()) {
 			std::string json = slurp(params_path);
-			find_param_number(json, "Enable Color Key", enable_key);
+			if (!find_param_number(json, "Enable Color Key", enable_key))
+				find_param_number(json, "Use Color Key", enable_key);
 			find_param_color(json, "Color Key", key);
 			find_param_number(json, "Invert Color Key", invert_key);
 			find_param_number(json, "Smoothness", smoothness);
 			find_param_number(json, "Extra Smooth", extra_smooth);
-			find_param_number(json, "Smooth Range", smooth_range);
+			if (!find_param_number(json, "Smooth Range", smooth_range))
+				find_param_number(json, "Do Smooth Range", smooth_range);
 			find_param_number(json, "Smoother Version", version);
 			find_param_number(json, "Gamma Correction", gamma_mode);
 			find_param_number(json, "Gamma Value", gamma_value);
@@ -220,6 +224,7 @@ int main(int argc, char **argv) {
 				}
 			}
 		}
+		if (force_version > 0.0) version = force_version;
 
 		Image img = read_png(in_path);
 		const int W = img.width, H = img.height;

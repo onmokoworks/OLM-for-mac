@@ -37,6 +37,14 @@ Version popup:
 
 - `180004eec..180004f07` reads param disk id `6`.
 - Stores `1` at `+0x8` only when version popup equals `1`.
+- 2026-06-06 harness follow-up: `cli/OLMSmoother2/main.cpp` exposes
+  `--force-version 1` and maps standalone OLMSmoother v1 manifest labels
+  (`Use Color Key`, `Do Smooth Range`) to the v2 parameter layout. The green
+  compatibility gate `refs/scripts/smoke_olmsmoother2_v1_compat_cli.py` runs
+  OLMSmoother2 forced-v1 mode against the v1 references:
+  `case_0001/0002/0003 mean=0.0055/0.0051/0.0200`. This supports using the
+  v2 version popup as the preferred v1 migration path unless AE-host testing
+  contradicts it.
 - Frame setup later runs sRGB decode/encode when this flag is not `1`.
 
 Color Key / Invert:
