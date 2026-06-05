@@ -799,6 +799,11 @@ near-match Zoom baseline for `case_0003..0005`-style settings.
 
 ## OLMDirectionalBlur
 
+Working image-processing IR: `notes/IR_OLMDirectionalBlur.md`. Use that file
+as the implementation target for the current objdump/disasm-first flow;
+`notes/OLMDirectionalBlur_ASM_FACTS.md` keeps address-level evidence and this
+board keeps chronology/probe history.
+
 `refs/scripts/audit_olmdirectionalblur_manifest.py` summarizes the duplicate
 Front/Back parameter groups in the Windows manifest. Current cases:
 
