@@ -171,6 +171,12 @@ def build_handoff(validated: list[tuple[Path, dict]]) -> str:
             "python3 refs/scripts/import_win_reference.py path/to/returned_reference.zip",
             "```",
             "",
+            "Then validate the imported manifest against the original request with:",
+            "",
+            "```sh",
+            "python3 refs/scripts/verify_reference_request_result.py refs/reference_requests/<request>.json path/to/imported/reference_manifest.json",
+            "```",
+            "",
         ]
     )
     return "\n".join(lines)
