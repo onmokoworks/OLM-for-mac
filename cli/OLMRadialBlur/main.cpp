@@ -50,6 +50,7 @@ struct RadialBlurParams {
     std::string inner_prepass_mode = "simple";
     std::string inner_prepass_span_mode = "strength";
     std::string inner_prepass_weight_mode = "row-span";
+    std::string inner_prepass_factor_mode = "alpha";
     std::string inner_scatter_rgb_mode = "straight";
     std::string inner_scatter_seed_mode = "source";
     std::string inner_seed_alpha_mode = "input";
@@ -1090,12 +1091,18 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
                 for (int ai = 0; ai < angular_count; ++ai) {
                     const size_t cell = static_cast<size_t>(ri) * angular_count + ai;
                     const float base_alpha = polar.rgba[cell * 4 + 3];
-                    if (!polar_valid[cell] || base_alpha <= 0.0f) continue;
+                    float base_factor = base_alpha;
+                    if (params.inner_prepass_factor_mode == "one") {
+                        base_factor = 1.0f;
+                    } else if (params.inner_prepass_factor_mode == "valid") {
+                        base_factor = polar_valid[cell] ? 1.0f : 0.0f;
+                    }
+                    if (!polar_valid[cell] || base_alpha <= 0.0f || base_factor <= 0.0f) continue;
                     int effective_outer_span = row_outer_span;
                     int effective_inner_span = row_inner_span;
                     if (params.inner_prepass_weight_mode == "aex-alpha") {
-                        effective_outer_span = std::max(0, std::min(static_cast<int>(static_cast<float>(row_outer_span) * base_alpha), 3000));
-                        effective_inner_span = std::max(0, std::min(static_cast<int>(static_cast<float>(row_inner_span) * base_alpha), 3000));
+                        effective_outer_span = std::max(0, std::min(static_cast<int>(static_cast<float>(row_outer_span) * base_factor), 3000));
+                        effective_inner_span = std::max(0, std::min(static_cast<int>(static_cast<float>(row_inner_span) * base_factor), 3000));
                     }
 
                     float weighted_alpha = base_alpha;
@@ -1104,7 +1111,7 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
                         const int src_ai = positive_mod(ai - offset, angular_count);
                         const size_t src_cell = static_cast<size_t>(ri) * angular_count + src_ai;
                         const float weight = params.inner_prepass_weight_mode == "aex-alpha"
-                            ? rotation_gaussian_weight_at_scaled(outer_table_span, offset, base_alpha)
+                            ? rotation_gaussian_weight_at_scaled(outer_table_span, offset, base_factor)
                             : rotation_gaussian_weight_at(row_outer_span, offset);
                         weighted_alpha += polar.rgba[src_cell * 4 + 3] * weight;
                         weight_sum += weight;
@@ -1113,7 +1120,7 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
                         const int src_ai = positive_mod(ai + offset, angular_count);
                         const size_t src_cell = static_cast<size_t>(ri) * angular_count + src_ai;
                         const float weight = params.inner_prepass_weight_mode == "aex-alpha"
-                            ? rotation_gaussian_weight_at_scaled(inner_table_span, offset, base_alpha)
+                            ? rotation_gaussian_weight_at_scaled(inner_table_span, offset, base_factor)
                             : rotation_gaussian_weight_at(row_inner_span, offset);
                         weighted_alpha += polar.rgba[src_cell * 4 + 3] * weight;
                         weight_sum += weight;
@@ -1436,6 +1443,7 @@ struct Args {
     std::string inner_prepass_mode = "simple";
     std::string inner_prepass_span_mode = "strength";
     std::string inner_prepass_weight_mode = "row-span";
+    std::string inner_prepass_factor_mode = "alpha";
     std::string inner_scatter_rgb_mode = "straight";
     std::string inner_scatter_seed_mode = "source";
     std::string inner_seed_alpha_mode = "input";
@@ -1481,6 +1489,12 @@ Args parse_args(int argc, char **argv) {
             args.inner_prepass_weight_mode = need_value("--inner-prepass-weight-mode");
             if (args.inner_prepass_weight_mode != "row-span" && args.inner_prepass_weight_mode != "aex-alpha") {
                 throw std::runtime_error("--inner-prepass-weight-mode must be row-span or aex-alpha");
+            }
+        } else if (key == "--inner-prepass-factor-mode") {
+            args.inner_prepass_factor_mode = need_value("--inner-prepass-factor-mode");
+            if (args.inner_prepass_factor_mode != "alpha" && args.inner_prepass_factor_mode != "one" &&
+                args.inner_prepass_factor_mode != "valid") {
+                throw std::runtime_error("--inner-prepass-factor-mode must be alpha, one, or valid");
             }
         } else if (key == "--inner-scatter-rgb-mode") {
             args.inner_scatter_rgb_mode = need_value("--inner-scatter-rgb-mode");
@@ -1545,7 +1559,7 @@ Args parse_args(int argc, char **argv) {
                 throw std::runtime_error("--inner-alpha-mode must be max, sum, outer, inner, or input");
             }
         } else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmradialblur_cli --input in.png --params params.json --output out.png [--ignore-size-variation] [--inner-alpha-mode max|sum|outer|inner|input] [--inner-source-scatter-prepass] [--inner-prepass-mode simple|tail-gather] [--inner-prepass-span-mode strength|offset|edge-fade] [--inner-prepass-weight-mode row-span|aex-alpha] [--inner-scatter-rgb-mode straight|prepass-premul] [--inner-scatter-seed-mode source|none] [--inner-seed-alpha-mode input|prepass] [--inner-final-alpha-mode max|denom|source] [--inner-rgb-denominator-mode accum|max] [--inner-scatter-span-scale-mode one|source-alpha|input-alpha] [--inner-wrap-mode circular|aex-next-row] [--inner-source-scale-mode one|alpha|inv-alpha] [--dynamic-offset-mode current|aex-row|min-radius] [--polar-valid-mode strict|aex-repeat]\n");
+            std::printf("Usage: olmradialblur_cli --input in.png --params params.json --output out.png [--ignore-size-variation] [--inner-alpha-mode max|sum|outer|inner|input] [--inner-source-scatter-prepass] [--inner-prepass-mode simple|tail-gather] [--inner-prepass-span-mode strength|offset|edge-fade] [--inner-prepass-weight-mode row-span|aex-alpha] [--inner-prepass-factor-mode alpha|one|valid] [--inner-scatter-rgb-mode straight|prepass-premul] [--inner-scatter-seed-mode source|none] [--inner-seed-alpha-mode input|prepass] [--inner-final-alpha-mode max|denom|source] [--inner-rgb-denominator-mode accum|max] [--inner-scatter-span-scale-mode one|source-alpha|input-alpha] [--inner-wrap-mode circular|aex-next-row] [--inner-source-scale-mode one|alpha|inv-alpha] [--dynamic-offset-mode current|aex-row|min-radius] [--polar-valid-mode strict|aex-repeat]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
@@ -1570,6 +1584,7 @@ int main(int argc, char **argv) {
         params.inner_prepass_mode = args.inner_prepass_mode;
         params.inner_prepass_span_mode = args.inner_prepass_span_mode;
         params.inner_prepass_weight_mode = args.inner_prepass_weight_mode;
+        params.inner_prepass_factor_mode = args.inner_prepass_factor_mode;
         params.inner_scatter_rgb_mode = args.inner_scatter_rgb_mode;
         params.inner_scatter_seed_mode = args.inner_scatter_seed_mode;
         params.inner_seed_alpha_mode = args.inner_seed_alpha_mode;
