@@ -222,6 +222,15 @@ scale refs are available; OLMKiraKira destination canvas / final composition /
 pre-post ray details after simple Mat aliasing went neutral;
 OLMRadialBlur Inner + Edge Fade caller-populated +0x10/+0x14 and
 0xf250/0xf252 coupling. OLMSmoother stays v2-compat-first.
+2026-06-06 subagent parallel review update: DirectionalBlur `FUN_1800013e0`
+argument ownership is now mostly confirmed (`A.rgb` source, `alpha_or_valid`
+contribution, denom sum, B.a max), so remaining front-only residual likely sits
+in populate/edge/render-scale. KiraKira `FUN_181150790` uses in-place
+`warpAffine(R14,R14)` then in-place `warpAffine(R12,R12)`, with second dsize
+from R12, not final ray Mat. RadialBlur `FUN_180004640` maps `+0x38` polar
+RGBA, `+0x40` scatter span/gate, `+0x48` prepass alpha, and `+0x50` factor;
+existing param10 alpha probes are negative, so next Radial Inner work is
+source-layer/sampler semantics for `+0x40` or prepass/scatter normalization.
 2026-06-05 REFLECT_101更新後にも `python3 refs/scripts/smoke_all_algorithm_clis.py`
 を再実行し、exit 0。KiraKira の新baseline
 (`Python 0.8379/1.1627`, `C++ 0.8382/1.1627/1.7073`) と

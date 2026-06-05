@@ -636,3 +636,89 @@ high-level polar coordinate structure.
   Noise, Size Variation, 16/32bpc) still copy input. `xcodebuild -project
   mac/OLMRadialBlur/Mac/OLMRadialBlur.xcodeproj -configuration Debug build
   CODE_SIGNING_ALLOWED=NO` succeeds after the update.
+
+## 2026-06-06 Subagent IR Review
+
+Independent read-only review of the RadialBlur state confirmed that Zoom is
+near-green (`case_0009 max=1 mean=0.0046` in C++), tiny Rotation is near-green
+(`case_0010 mean=0.0104`), broad Rotation is still red, and Inner remains the
+largest unresolved section. Old Inner currently sits around
+`case_0011/0012/0013 mean=25.2972/10.6222/21.2910`; Edge Fade diagnostics can
+improve to `5.1129/3.9755/1.9204` but are not coverage-safe.
+
+Next objdump/Ghidra facts to lock:
+
+- In `FUN_180004640`, map polar buffer fields `+0x38/+0x40/+0x48/+0x50` to the
+  exact source layer, sampler helper, and return value feeding them.
+- Determine whether the `+0x10` span/gate plane is sampled alpha, validity, or
+  another caller-populated side-channel.
+- In `FUN_180002780`, confirm the exact prepass writeback conditions for
+  `0xf250` and `0xf252`, especially whether Edge Fade changes seed/clear/
+  overwrite behavior.
+- In `FUN_180001c90`, confirm whether the decomp-looking inner negative wrap
+  to the next radius row is real mainline behavior or only a boundary side
+  effect. Current C++ probes worsen when promoting it blindly.
+- In `FUN_180001270/1520/1800/1950`, confirm which RGBA sampling semantics are
+  used for each plane: plain bilinear versus AEX alpha-weighted sampling.
+
+For implementation, keep Inner as named planes rather than anonymous buffers:
+`+0x10`, `+0x12`, `+0x14`, `0xf250`, and `0xf252` should remain explicit in the
+C++ diagnostic path. Existing Edge Fade references (`case_0024/0025/0027`) mean
+no immediate Windows stop is needed unless the next address pass shows `+0x14`
+depends decisively on Size Variation or Noise-layer state not covered by the
+current references.
+
+### FUN_180004640 polar buffer ownership audit
+
+2026-06-06 subagent audit established the main Inner polar wiring:
+
+- `param_1+0x38` is the polar RGBA input. It is allocated/locked around
+  `1800048c7 -> 1800048db`; `180004add..180004b0f` samples
+  `R14+0x98 = param_2[0x13]` through `FUN_180001270/180001520` and writes this
+  plane. The helper return `AL` is also saved into a separate valid-byte buffer
+  at `180004b19`.
+- `param_1+0x40` is a separate sampled float plane. It is allocated around
+  `1800048e4 -> 1800048f8`; `180004b1c..180004b42` samples
+  `R14+0x90 = param_2[0x12]` through `FUN_180001800/180001950`. Later this is
+  passed to `FUN_1800024c0` as `param_4`, the scatter span/gate plane.
+- `param_1+0x50` is the factor plane. It is allocated around
+  `18000491e -> 180004932`; if `R14+0x44 == 0`, `180004b77` fills it with
+  `1.0f`, otherwise `180004b4c..180004b72` samples
+  `R14+0x88 = param_2[0x11]` through `FUN_180001800/180001950`.
+- `param_1+0x48` is not populated by the initial polar sampler. It is passed to
+  `FUN_180002780` as `R8=[RSI+0x48]` at `180004c5f`; inside that helper,
+  `180002c7c` / `180002c85` write the computed alpha `XMM2` into both `+0x48`
+  and the final-alpha plane `+0x3c948`.
+- Ghidra/decomp names like `param_1+0x10/+0x12/+0x14` are float-pointer
+  arithmetic. In byte offsets they correspond to `+0x40/+0x48/+0x50`.
+  Therefore `FUN_180002780` receives `+0x38/+0x48/+0x50`, and
+  `FUN_1800024c0` receives `+0x38/+0x48/+0x40`.
+
+Immediate C++ diagnostic: add an AEX-wiring mode that fixes
+`FUN_180002780 = polar_rgba(+0x38), prepass_alpha_out(+0x48), factor(+0x50)`
+and `FUN_1800024c0 = polar_rgba(+0x38), prepass_alpha(+0x48),
+span_gate(+0x40)`. The smallest hook is to extend
+`refs/scripts/smoke_olmradialblur_cpp_inner_param10_plane_probe_cli.py` with a
+`prepass-alpha` versus `polar-alpha` comparison for the scatter span/gate plane.
+
+Re-run note: that comparison already exists in
+`refs/scripts/smoke_olmradialblur_cpp_inner_param10_plane_probe_cli.py` and was
+re-run after the ownership audit. Results:
+
+- Old Inner `case_0011/0012/0013`:
+  - `one`: `25.2972/10.6222/21.2910`
+  - `polar-alpha`: `29.8855/12.6410/21.2560`
+  - `prepass-alpha`: `29.8855/12.6410/21.2560`
+  - `factor`: `25.2972/10.6222/21.2910`
+- Edge Fade `case_0024/0025/0027`:
+  - `one`: `5.7833/4.7930/2.3520`
+  - `polar-alpha`: `6.5779/5.4893/2.8157`
+  - `prepass-alpha`: `7.2705/5.7969/2.7246`
+  - `factor`: `5.7833/4.7930/2.3520`
+
+Interpretation: even though `+0x40` is the AEX scatter span/gate plane, the
+current model gets worse when that plane is substituted with sampled alpha or
+prepass alpha. Keep the AEX ownership fact, but do not promote an
+alpha-scaled span fix. The next useful Inner work is exact `+0x40` source-layer
+identity / sampler semantics, or prepass/scatter normalization and seed
+conditions, not another simple alpha-param10 toggle.
