@@ -97,11 +97,15 @@ future Rotation work.
 known-good residual as a **regression guard** (default is still 0 = exact).
 Current smoke status:
 
-- `smoke_olmblur_cli.py` (cases 1-7): gated at max-diff 1 / mean 0.01 /
-  nz 3.0%, **ok=7** — exact for 1/2/4, PNG/rounding-level residual elsewhere.
+- `smoke_olmblur_cli.py` (cases 1-7): exact gate for cases 1/2/4 plus
+  residual gate for cases 3/5/6/7 at max-diff 1 / mean 0.01 / nz 3.0%,
+  **ok=7**. Keeping the gates separate prevents exact cases from regressing
+  inside the known rounding-level tolerance.
 - `smoke_olmcolorkey_cli.py` (cases 1-4): exact gate, **ok=4**.
-- `smoke_olmcolorkey_extended_cli.py` (cases 5-7): gated at max-diff 255 /
-  mean 0.31 / nz 0.49%, **ok=3** — guards the known erode boundary shell.
+- `smoke_olmcolorkey_extended_cli.py` (cases 5-7): exact gate for case 7 plus
+  residual gate for cases 5/6 at max-diff 255 / mean 0.31 / nz 0.49%,
+  **ok=3** — guards the known erode boundary shell without weakening the
+  exact no-residual case.
 - `smoke_olmcolorkey_edgeblur_cli.py` (cases 8-9): gated at max-diff 255 /
   mean 1.26 / nz 50.0%, **ok=2** — exploratory Edge Blur/Lab76 regression guard.
 - `smoke_olmcolorkey_rust_cli.py` (cases 1-9): Rust compatibility CLI,
@@ -110,6 +114,10 @@ Current smoke status:
   entrypoint.
 - `smoke_olmtoondilate_cli.py` (1-3): gated at max-diff 255 / mean 4.0 /
   nz 1.7% (known boundary residual), **ok=3** — guards against regressing worse.
+- `smoke_olmdistancegradation_cli.py` (12 stable cases): gated at max-diff 7 /
+  mean 0.11 / nz 22.0%, **ok=12**. This covers cases
+  1/2/3/4/5/6/7/9/15/17/18/19; omitted blur/constant/interpolation cases remain
+  red measurement targets rather than promoted green behavior.
 - `smoke_olmsmoother_cli.py` (1-3): intentionally **not** gated green; the CPU
   MLAA path diverges structurally from the current reference (kept honest as DIFF).
 - `smoke_olmsmoother2_cli.py` (20260605_extra cases 1-4): intentionally
@@ -210,7 +218,7 @@ the OLMKiraKira Brightness probe all produced expected DIFF measurement output.
 | Plugin | Win Ref | Ghidra Dump | Mac AE Source | AE-Free CLI | Reference Diff |
 |---|---|---|---|---|---|
 | ColorKeep | none in 20260604 set | yes | complete-ish | smoke CLI works | synthetic smoke ok |
-| DistanceGradation | yes, 20260605_extra | yes | complete-ish | Python CLI works | 11-case smoke OK (`max<=7`, `mean<=0.11`) |
+| DistanceGradation | yes, 20260605_extra | yes | complete-ish | Python CLI works | 12-case smoke OK (`max<=7`, `mean<=0.11`) |
 | OLMBlur | yes | yes | in progress | C++ CLI works | 3 exact, 4 near-match max=1 |
 | OLMColorKey | yes | yes | new Mac plugin builds | Python + C++ + Rust RGB/premult/box/Edge Thin/Edge Blur CLI | C++: 1-4 & 7 exact; 5/6 erode 0.48% off; Edge Blur C++ now matches Python exploratory residual (`case8 mean=1.0396`, `case9 mean=1.2503`); Mac plugin has cases 1-9 scaffold |
 | OLMDirectionalBlur | yes | yes | new Mac plugin builds | Python + C++ direct/rotated CLI scaffold | front-only/no-noise DIFF; Mac plugin has 8bpc front-only/no-noise direct slice; rotate-back denom-alpha is neutral/negative; exact row-driver equals exact-scatter-helper (`4.4392/1.1761`), so residual needs ASM argument mapping or extra refs |
@@ -601,8 +609,8 @@ python3 refs/scripts/smoke_olmdistancegradation_cli.py
 
 - Added `refs/scripts/olmdistancegradation_cli.py`, a compact AE-free Python
   implementation of the current Distance Gradation distance-field core.
-- The green gate now covers `case_0001..0007`, `case_0015`, `case_0017`,
-  `case_0018`, and `case_0019`, and passes with `max-diff<=7`,
+- The green gate now covers `case_0001..0007`, `case_0009`, `case_0015`,
+  `case_0017`, `case_0018`, and `case_0019`, and passes with `max-diff<=7`,
   `mean<=0.11`, `nonzero<=22%`.
 - Important PNG/export finding: AE's reference PNGs are premultiplied. The CLI
   multiplies RGB by output alpha for both no-background and background-color
