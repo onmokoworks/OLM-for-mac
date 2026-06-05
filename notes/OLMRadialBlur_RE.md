@@ -546,6 +546,15 @@ high-level polar coordinate structure.
   `mean=5.8034/4.8054/2.3524`, slightly worse. Keep `aex-next-row` as a
   diagnostic hook only; do not promote it into the current incomplete Inner
   model by itself.
+- Edge Fade seed follow-up:
+  `refs/scripts/smoke_olmradialblur_cpp_inner_edgefade_seed_probe_cli.py`
+  compares source/self seed against no seed on `case_0024/0025/0027` with
+  factor `one`. Source seed gives `mean=5.7833/4.7930/2.3520`; no seed gives
+  `mean=5.1129/3.9755/1.9204` but increases the nonzero-pixel count
+  substantially. This is the first Edge Fade-only probe where removing the
+  self seed improves all tracked means, while the older `case_0011..0013`
+  seed-none probes worsen `0011/0013`. Treat it as evidence for conditional
+  prepass/scatter writeback semantics, not as a global seed removal.
 - Dynamic-offset follow-up:
   `refs/scripts/smoke_olmradialblur_cpp_inner_prepass_dynamic_offset_probe_cli.py`
   applies `current`, `aex-row`, and `min-radius` denominator variants to the
