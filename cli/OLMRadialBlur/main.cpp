@@ -957,7 +957,13 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
             const float sx = static_cast<float>(cx + cos_a * sx0 - sin_a * sy0);
             const float sy = static_cast<float>(cy + sin_a * sx0 + cos_a * sy0);
             const size_t dst = (static_cast<size_t>(ri) * angular_count + ai) * 4;
-            if (params.polar_sample_mode == "aex-alpha") {
+            const bool use_aex_alpha_sample =
+                params.polar_sample_mode == "aex-alpha" ||
+                (params.polar_sample_mode == "conditional-inner" &&
+                 params.outer_edge_fade == 0 &&
+                 params.inner_edge_fade == 0 &&
+                 params.inner_offset_mode != 3);
+            if (use_aex_alpha_sample) {
                 float sampled[4];
                 sample_rgba_aex_alpha(src, sx, sy, params.repeat_border, sampled);
                 for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = sampled[c];
@@ -1616,8 +1622,9 @@ Args parse_args(int argc, char **argv) {
             }
         } else if (key == "--polar-sample-mode") {
             args.polar_sample_mode = need_value("--polar-sample-mode");
-            if (args.polar_sample_mode != "plain" && args.polar_sample_mode != "aex-alpha") {
-                throw std::runtime_error("--polar-sample-mode must be plain or aex-alpha");
+            if (args.polar_sample_mode != "plain" && args.polar_sample_mode != "aex-alpha" &&
+                args.polar_sample_mode != "conditional-inner") {
+                throw std::runtime_error("--polar-sample-mode must be plain, aex-alpha, or conditional-inner");
             }
         } else if (key == "--inner-alpha-mode") {
             args.inner_alpha_mode = need_value("--inner-alpha-mode");
@@ -1627,7 +1634,7 @@ Args parse_args(int argc, char **argv) {
                 throw std::runtime_error("--inner-alpha-mode must be max, sum, outer, inner, or input");
             }
         } else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmradialblur_cli --input in.png --params params.json --output out.png [--ignore-size-variation] [--inner-alpha-mode max|sum|outer|inner|input] [--inner-source-scatter-prepass] [--inner-prepass-mode simple|tail-gather] [--inner-prepass-span-mode strength|offset|edge-fade] [--inner-prepass-weight-mode row-span|aex-alpha] [--inner-prepass-factor-mode alpha|one|valid] [--inner-prepass-overwrite-seed] [--inner-scatter-rgb-mode straight|prepass-premul] [--inner-scatter-seed-mode source|none] [--inner-seed-alpha-mode input|prepass] [--inner-final-alpha-mode max|denom|source] [--inner-rgb-denominator-mode accum|max] [--inner-scatter-span-scale-mode one|source-alpha|input-alpha] [--inner-wrap-mode circular|aex-next-row] [--inner-source-scale-mode one|alpha|inv-alpha] [--dynamic-offset-mode current|aex-row|min-radius] [--polar-valid-mode strict|aex-repeat] [--polar-sample-mode plain|aex-alpha]\n");
+            std::printf("Usage: olmradialblur_cli --input in.png --params params.json --output out.png [--ignore-size-variation] [--inner-alpha-mode max|sum|outer|inner|input] [--inner-source-scatter-prepass] [--inner-prepass-mode simple|tail-gather] [--inner-prepass-span-mode strength|offset|edge-fade] [--inner-prepass-weight-mode row-span|aex-alpha] [--inner-prepass-factor-mode alpha|one|valid] [--inner-prepass-overwrite-seed] [--inner-scatter-rgb-mode straight|prepass-premul] [--inner-scatter-seed-mode source|none] [--inner-seed-alpha-mode input|prepass] [--inner-final-alpha-mode max|denom|source] [--inner-rgb-denominator-mode accum|max] [--inner-scatter-span-scale-mode one|source-alpha|input-alpha] [--inner-wrap-mode circular|aex-next-row] [--inner-source-scale-mode one|alpha|inv-alpha] [--dynamic-offset-mode current|aex-row|min-radius] [--polar-valid-mode strict|aex-repeat] [--polar-sample-mode plain|aex-alpha|conditional-inner]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);

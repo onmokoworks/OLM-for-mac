@@ -201,7 +201,7 @@ the OLMKiraKira Brightness probe all produced expected DIFF measurement output.
 | OLMDirectionalBlur | yes | yes | new Mac plugin builds | Python + C++ direct/rotated CLI scaffold | front-only/no-noise DIFF; Mac plugin has 8bpc front-only/no-noise direct slice |
 | OLMKiraKira | yes | yes | new Mac plugin builds | Python ray CLI scaffold + C++ native scaffold | Python cases 1/2 improve strongly over identity, C++ scaffold added, Mac plugin has the same 4-ray repeated-box scaffold, still DIFF |
 | OLMRadialBlur | yes | yes | new Mac plugin builds | Python rotation + zoom polar CLI scaffold; C++ Zoom/Rotation/Inner diagnostic CLI | Rotation case_0010 near-match; Zoom 0009 OK in Python and C++; C++ Zoom 0003-0005 OK with Size Variation ignored; Mac plugin has 8bpc Zoom/no-inner/no-noise slice with large-Strength FFT path and Size Variation no-op pass-through; Inner 0011-0013 still DIFF; Repeat Border polar-valid probe is neutral |
-| OLMSmoother | yes | yes | in progress | C++ CLI over mac port | classifier over-fires ~20x; path gap unresolved |
+| OLMSmoother | yes | yes | lower priority | C++ CLI over mac port | classifier over-fires ~20x; path gap unresolved; user notes v1 may be covered by an OLMSmoother2 mode, so verify v2 compatibility before more standalone v1 RE |
 | OLMSmoother2 | yes, 20260605_extra | yes | port complete-ish | C++ CLI over mac port | first 4 cases measured: case1 mean 0.1832, case2 0.0216, case3 exact, case4 0.0189 after asm key-path + writeback-premul fixes |
 | OLMToonDilate | yes | yes | new Mac plugin builds | Python + C++ Chebyshev/BFS CLI | C++ gated: case1 mean 0.4762, case2 0.0022, case3 3.0676; Mac plugin has cases 1-3 kernel |
 
@@ -433,10 +433,12 @@ edge selection. This rules out a simple threshold-scale fix and keeps suspect
 MLAA path the CLI drives.
 
 Conclusion: OLMSmoother cannot be matched to these references by tuning the CPU
-port alone. Next OLMSmoother task is to obtain a reference from an alternate AE
-Project Settings renderer (`project_gpu_accel_type`, CUDA vs Software), or
-otherwise identify which AE path the current reference uses. The AE-free CLI +
-smoke harness are in place to iterate the moment such a reference exists.
+port alone. However, user feedback on 2026-06-06 is that OLMSmoother v1 may be
+covered by a mode/compatibility path inside OLMSmoother2. Treat the standalone
+v1 port as a diagnostic asset, not the next deep RE target. Before requesting
+more alternate AE Project Settings references or digging further into v1, first
+verify whether OLMSmoother2 exposes or implements a v1-equivalent mode and
+whether that is an acceptable migration path.
 
 `OLMToonDilate` (CLI characterized; Mac plug-in build added):
 

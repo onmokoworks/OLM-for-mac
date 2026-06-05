@@ -14,7 +14,7 @@ import sys
 from pathlib import Path
 
 
-PROBES = ("plain", "aex-alpha")
+PROBES = ("plain", "aex-alpha", "conditional-inner")
 
 
 def run_probe(root: Path, ref_dir: Path, case_ids: tuple[str, ...], label: str, mode: str) -> int:

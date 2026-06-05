@@ -108,7 +108,7 @@ Project Settings 差で同一ケースを撮り直して、PNG差分を見るの
 |---|---|---|---|
 | OLMBlur | ✅ C++ | 全7ケース smoke OK（max<=1; 1/2/4 exact） | `cli/OLMBlur/main.cpp` |
 | OLMColorKey | ✅ Python + C++ + Mac plugin(新) | C++: 1–4・7 exact / 5・6 erode 0.48%; Mac plugin builds universal | `refs/scripts/olmcolorkey_cli.py`, `cli/OLMColorKey/main.cpp`, `mac/OLMColorKey/` |
-| OLMSmoother | ✅ C++(新) | 動くが過剰発火（構造差） | `cli/OLMSmoother/` |
+| OLMSmoother | ✅ C++(新) | 動くが過剰発火（構造差）。ユーザー所見: v1 は OLMSmoother2 内の互換/モードで代替できる可能性があるため、v1単体の深追いは低優先。まず v2 互換確認 | `cli/OLMSmoother/` |
 | OLMSmoother2 | ✅ C++(新) | 20260605追加参照 cases 1-4 を測定。disasm/objdump-firstで Color Key + Invert active-palette と non-invert scalar-key path を修正。key-path smoke cases2-4 は green。現状: case1 0.4304 / case2 0.0216 / case3 exact / case4 0.0189 | `cli/OLMSmoother2/`, `mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp`, `notes/OLMSmoother2_ASM_FACTS.md` |
 | OLMToonDilate | ✅ Python + C++ + Mac plugin(新) | C++: case1 mean 0.4762 / case2 0.0022 / case3 3.0676; Mac plugin builds universal | `refs/scripts/olmtoondilate_cli.py`, `cli/OLMToonDilate/main.cpp`, `mac/OLMToonDilate/` |
 | OLMDistanceGradation | ✅ Python + Mac plugin | 新規20260605参照の11ケース smoke OK（max<=7 / mean<=0.11）。Threshold=0特別扱いをWindows参照に合わせてMac側も修正。背景色linearはPNG premul補正で緑化、blur/constant系はまだ赤測定対象 | `refs/scripts/olmdistancegradation_cli.py`, `refs/scripts/smoke_olmdistancegradation_cli.py`, `mac/OLMDistanceGradation/` |

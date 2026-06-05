@@ -590,6 +590,14 @@ high-level polar coordinate structure.
   current source-scatter/prepass model. The next useful target is the condition
   or caller path that makes old Inner and Edge Fade prefer different sampled
   RGB/alpha semantics.
+- Conditional sampler follow-up: the same probe now includes diagnostic
+  `--polar-sample-mode conditional-inner`, which uses the AEX alpha-weighted
+  sampler only when both Edge Fade params are zero and Inner Offset Mode is not
+  `3`; otherwise it keeps the plain sampler. This gives old Inner
+  `case_0011/0012/0013 mean=22.9057/10.6222/20.6886` and keeps Edge Fade
+  `case_0024/0025/0027 mean=5.7833/4.7930/2.3520`. Treat this as a useful
+  branching clue only, not as a promoted implementation rule: it is selected
+  from observed case behavior and still needs a matching caller/decomp reason.
 - Dynamic-offset follow-up:
   `refs/scripts/smoke_olmradialblur_cpp_inner_prepass_dynamic_offset_probe_cli.py`
   applies `current`, `aex-row`, and `min-radius` denominator variants to the
