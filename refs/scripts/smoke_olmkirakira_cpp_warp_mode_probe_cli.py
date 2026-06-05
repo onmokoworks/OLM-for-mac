@@ -69,6 +69,7 @@ def main() -> int:
         "aex-two-temp-final-xp",
         "aex-two-temp-final-ym",
         "aex-two-temp-final-yp",
+        "aex-two-temp-center-minus-half",
     ):
         result = run_probe(root, warp_mode, Path(f"/tmp/olmkirakira_cpp_warp_mode_probe_{warp_mode}"))
         if result != 0:

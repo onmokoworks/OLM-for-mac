@@ -248,6 +248,12 @@ Current interpretation:
   `1.1166/1.3516/5.9944`; final `y+1` `1.1166/1.3708/6.0968`.
   Next target is forward/rotate-back `warpAffine` in-place behavior or the
   exact matrix center/scale details, not final ROI position.
+- A follow-up `--warp-mode aex-two-temp-center-minus-half` subtracts 0.5 from
+  the two-temp forward and rotate-back matrix center. It improves only
+  `case_0001` (`0.8531 -> 0.8266`) while worsening `case_0002`
+  (`1.1555 -> 1.1637`) and `case_0003` (`1.1870 -> 1.7709`). Keep it as a
+  diagnostic probe, but do not adopt the half-pixel center shift as the default
+  model.
 - The decomp/asm shape shows the rotate-back `warpAffine` dsize is the final
   ray descriptor (`param_5`) rather than a larger temporary canvas followed by
   an obvious center crop. A C++ diagnostic `--warp-mode aex-direct-back`
