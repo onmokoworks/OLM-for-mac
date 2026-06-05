@@ -1942,8 +1942,10 @@ behavior.
   (`bilinear-fixed5`) did not improve the current refs:
   `case_0001 mean=0.8384`, `case_0002 mean=1.1624`,
   `case_0003 mean=1.7034`, versus baseline `0.8381/1.1623/1.7003`.
-  The probe code was removed; keep the negative result as evidence that a
-  naive fixed-5 sampler is not the missing piece.
+  The probe is now available as `--rotate-filter bilinear-fixed5` in the C++
+  CLI and included in `smoke_olmkirakira_cpp_rotate_filter_probe_cli.py`, but
+  remains diagnostic-only. Interpolation-table quantization alone is not the
+  missing KiraKira piece.
 
 2026-06-05 KiraKira C++ warp-canvas probes:
 
