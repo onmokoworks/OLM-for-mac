@@ -2020,6 +2020,18 @@ behavior.
   `case_0003 mean=1.1870`, versus default `0.8381/1.1623/1.7003`. Do not adopt
   it as default yet; it is evidence that the two-temp path matters especially
   for Strength=0, while case1 still needs exact ROI/header/copyTo semantics.
+- 2026-06-06 Python OpenCV primitive probe: added diagnostic
+  `--ray-mode opencv-two-temp` to `refs/scripts/olmkirakira_cli.py` plus
+  `refs/scripts/smoke_olmkirakira_opencv_two_temp_probe_cli.py`. This calls
+  `cv2.warpAffine(..., INTER_LINEAR, BORDER_CONSTANT)` and
+  `cv2.boxFilter(..., ddepth=-1, ksize=(length,1), anchor=(-1,-1),
+  normalize=True, BORDER_REFLECT_101)` directly in the same two-temp
+  choreography. With temporary Python 3.12 + OpenCV 4.13.0, results are
+  `case_0001 mean=0.8504`, `case_0002 mean=1.1570`,
+  `case_0003 mean=1.0514`, versus the current Python axis-rotate baseline
+  `0.8379/1.1627/1.7073`. This strongly supports moving the native C++/Mac
+  ray path toward exact OpenCV primitives/two-temp behavior for case3, while
+  keeping case1 as a remaining placement/Mat-header exactness problem.
 - 2026-06-06 two-temp follow-up sweeps: `aex-two-temp` with
   `bilinear-fixed5` is almost neutral (`0.8529/1.1555/1.1822`). Anchor sweep
   keeps OpenCV default best (`opencv 0.8531/1.1555/1.1870`; `floor-left`
