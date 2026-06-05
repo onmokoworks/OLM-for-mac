@@ -29,7 +29,7 @@ The port is roughly 62% complete as an AE-free, Mac-buildable migration effort:
 - All 10 macOS plugin projects build in aggregate.
 - Green CLI gates cover the simpler or partially isolated behavior.
 - Hard paths now have registered red diagnostics instead of invisible failure.
-- Five targeted Windows reference requests are pending for non-guesswork
+- Six targeted Windows reference requests are pending for non-guesswork
   promotion of the remaining difficult paths.
 
 It is not release-complete because AE-host validation is still absent and the
