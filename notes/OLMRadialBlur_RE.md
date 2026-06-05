@@ -555,6 +555,24 @@ high-level polar coordinate structure.
   self seed improves all tracked means, while the older `case_0011..0013`
   seed-none probes worsen `0011/0013`. Treat it as evidence for conditional
   prepass/scatter writeback semantics, not as a global seed removal.
+- AEX buffer-split follow-up:
+  `refs/scripts/smoke_olmradialblur_cpp_inner_aex_split_probe_cli.py` checks
+  the decomp-shaped split where `FUN_1800024c0` scatters sampled `+0xe` RGB,
+  uses `+0x12` prepass alpha as contribution alpha, and uses the separately
+  sampled `+0x10` alpha plane as span/gate scale. On old Inner
+  `case_0011/0012/0013`, `straight/one` gives
+  `mean=22.1632/16.6793/19.8113`, `straight/input-alpha` gives
+  `30.9621/15.5486/20.9156`, `prepass-premul/one` gives
+  `25.2972/10.6222/21.2910`, and `prepass-premul/input-alpha` gives
+  `29.8855/12.6410/21.2560`. On Edge Fade `case_0024/0025/0027`,
+  `straight/one` gives `22.8589/19.9536/10.1472`,
+  `straight/input-alpha` gives `27.6158/22.5298/10.3025`,
+  `prepass-premul/one` gives `5.7833/4.7930/2.3520`, and
+  `prepass-premul/input-alpha` gives `6.5779/5.4893/2.8157`. The split helps
+  selected old cases but badly worsens Edge Fade references, so do not promote
+  it as a global fix. The remaining gap is more likely in the sampled `+0xe`
+  RGB/alpha representation or polar sampler feeding these buffers than in a
+  single scatter RGB/span-scale toggle.
 - Dynamic-offset follow-up:
   `refs/scripts/smoke_olmradialblur_cpp_inner_prepass_dynamic_offset_probe_cli.py`
   applies `current`, `aex-row`, and `min-radius` denominator variants to the
