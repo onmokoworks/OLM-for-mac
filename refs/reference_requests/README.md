@@ -54,3 +54,6 @@ Win側へ渡すリクエストzip作成:
 python3 refs/scripts/package_reference_requests.py
 python3 refs/scripts/package_reference_requests.py --only kirakira_single_ray_20260606
 ```
+
+生成zipにはこのREADME、選択されたrequest JSON、Win側Codexへそのまま渡すための
+`WIN_CODEX_HANDOFF.md` が入ります。
