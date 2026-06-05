@@ -124,6 +124,7 @@ def main() -> int:
         Smoke("OLMDirectionalBlur C++ Rotated AEX Full Choreo", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_full_choreo_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated AEX Rotateback Denom Alpha", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_rotateback_denom_alpha_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated AEX Exact Scatter", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_exact_scatter_cli.py"], "red-measurement"),
+        Smoke("OLMDirectionalBlur C++ Rotated AEX Exact Rowdriver", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_exact_rowdriver_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated AEX Pad Full Choreo", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_pad_full_choreo_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated AEX Prepass Full Choreo", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_prepass_full_choreo_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated AEX Half-height", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_halfheight_cli.py"], "red-measurement"),
