@@ -101,6 +101,9 @@ Address/decomp facts:
 span = (int)(span * param_11);
 ```
 
+- It starts at offset 1 and uses `offset < span`; offset 0 is not scattered by
+  this helper, and a truncated span of 1 skips the helper body.
+
 - If `param_11 > 0`, the weight table index is scaled by `1 / param_11`:
 
 ```c
@@ -283,6 +286,16 @@ Current implication:
   combining center prepass and A/B ownership in the current scaffold. Continue
   with exact `FUN_1800013e0` scatter boundary/table-index semantics or the
   host populate/output callbacks.
+
+2026-06-06 truncated-span diagnostic:
+
+- Added `rotated-aex-truncated-span` to test the exact `FUN_1800013e0` gate:
+  `effective_span = int(strength * coeff)`, then process offsets
+  `1..effective_span-1`.
+- Measurement is mixed/minor against `rotated-aex-full-choreo`:
+  `case_0001 mean=4.4467` (tiny improvement), `case_0005 mean=1.1749`
+  (worse). This confirms the integer span boundary is worth keeping in the IR,
+  but it is not the dominant remaining residual on current refs.
 
 2026-06-05 diagnostic:
 

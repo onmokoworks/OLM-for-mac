@@ -855,6 +855,16 @@ prepass and is neutral against `rotated-aex-full-choreo`
 the exact `FUN_1800013e0` scatter boundary/table-index behavior or host
 populate/output callback edge semantics.
 
+2026-06-06 truncated-span diagnostic: added
+`rotated-aex-truncated-span`, covered by
+`refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_truncated_span_cli.py`.
+It switches component/tail gating to the exact `FUN_1800013e0` integer span
+shape (`effective_span = int(strength * coeff)`, offsets
+`1..effective_span-1`). Result is mixed/minor against full choreography:
+`case_0001 mean=4.4467` improves by only `0.0016`, while
+`case_0005 mean=1.1749` worsens by `0.0046`. Keep as an ASM fact, not as the
+remaining primary error source.
+
 Parameter reader mapping from `FUN_180006c50`:
 
 - param 1 / match `0001`: Angle, converted from degrees to radians.
