@@ -109,6 +109,33 @@ Current implication:
 - The current `direct` path is numerically useful but not structurally faithful
   to this row driver. Use it as a measurement baseline only.
 
+## Component Map Builder
+
+`FUN_1800028e0` builds the `params + 0x8118` per-pixel component map from the
+rotated valid mask. A 2026-06-06 asm/decomp pass confirmed the high-level shape:
+
+- The helper first scans each row into horizontal non-zero runs. Each run stores
+  row, start x, end x, and run length.
+- Adjacent rows are merged only when their x ranges overlap inclusively
+  (`FUN_180002250`). This is equivalent to 4-connected components for the
+  binary valid mask, not 8-connected diagonal merging.
+- For each merged component, the area is the sum of run lengths.
+- The vertical minimum and maximum are tracked from the run row values.
+- `center_y` is integer floor midpoint for positive coordinates:
+  `(min_y + max_y) / 2`.
+- `half_height` is `max_y - center_y`.
+- Every pixel in every run receives four floats:
+  component area, min_y, center_y, and half_height. The caller stores the
+  maximum component area in `params + 0x38`.
+
+Current implication:
+
+- `cli/OLMDirectionalBlur/main.cpp`'s 4-neighbor component-map approximation is
+  consistent with the AEX run-merging connectivity and center/span arithmetic.
+- The remaining front-only residual is less likely to be a simple 4-vs-8
+  connectivity bug or midpoint rounding issue. Prefer the next asm-first pass
+  on host populate/output callbacks or render-context scale mapping.
+
 ## Scatter Helper
 
 `FUN_1800013e0` is the one-sided row scatter helper.

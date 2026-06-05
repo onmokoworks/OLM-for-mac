@@ -149,8 +149,20 @@ The row driver uses:
 - center Y
 - half-height / span
 
-Current CLI approximates this, but exact connectivity and span details remain
-open.
+2026-06-06 asm/decomp check:
+
+- The AEX scans each row into horizontal non-zero runs and merges runs between
+  adjacent rows when their x ranges overlap inclusively.
+- This matches 4-connected binary-component behavior, not 8-connected diagonal
+  connectivity.
+- Component area is the summed run length.
+- `center_y` is the integer floor midpoint of min/max row, and `half_height`
+  is `max_y - center_y`.
+
+Current CLI's 4-neighbor component-map approximation matches these facts closely
+enough that component connectivity/center rounding is no longer the leading
+suspect. Remaining work should focus on host populate/output edge semantics,
+render-context scale mapping, or finer scatter/source-alpha ownership.
 
 ### Alpha Fade Prepass
 
@@ -265,5 +277,6 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 3. Re-measure `case_0001` and `case_0005`.
 4. If angle-0 remains around `mean=4`, inspect `LAB_1800068e0` host-populate
    callback and host-output callback `LAB_180006a90` before more parameter
-   sweeps.
+   sweeps. The component-map run-merging pass now looks consistent with the
+   current CLI approximation.
 5. Only after front-only improves, add Back Blur / Noise IR sections.
