@@ -136,12 +136,19 @@ Current implication:
   - `case_0005`: `max=254 mean=1.3802 nz=48065/518400`
 - This matches the already-negative `rotated-alpha` / `rotated-aex` pattern
   rather than improving `rotated` or `rotated-front-strength-preserve-alpha`.
+- Added companion `--algorithm rotated-rowdriver-prepass-init` to test the
+  copied-buffer / zero-denominator style initialization already used by the
+  older `rotated-aex-init` diagnostic. Results are also negative:
+  - `case_0001`: `max=255 mean=4.7724 nz=82879/518400`
+  - `case_0005`: `max=254 mean=1.3862 nz=47999/518400`
 
 Interpretation:
 
 - AEX-shaped `FUN_180001000` prepass alone is not the missing DirectionalBlur
   piece for the current opaque front-only refs.
+- Pairing that prepass with the current copied-buffer initialization hypothesis
+  is also negative.
 - Keep this as negative diagnostic evidence. The next useful target is the
-  exact caller buffer choreography around `memcpy(_Dst,_Src)`,
-  `param_6[0x1010]` denominator initialization, and the final
-  `FUN_180001ec0` rotate-back source/destination pairing.
+  exact caller buffer ownership around `_Dst`/`_Src`/`param_6[0x1010]` and
+  the final `FUN_180001ec0` rotate-back source/destination pairing, not another
+  simple prepass/init toggle.

@@ -1158,7 +1158,7 @@ Args parse_args(int argc, char **argv) {
             if (args.direction != "front" && args.direction != "both") throw std::runtime_error("--direction must be front or both");
         } else if (key == "--ignore-noise-variation") args.ignore_noise_variation = true;
         else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmdirectionalblur_cli --input in.png --params params.json --output out.png [--algorithm direct|direct-map|rotated|rotated-front-strength|rotated-front-strength-preserve-alpha|rotated-rowdriver-prepass|rotated-aex-pad|rotated-alpha-sum|rotated-strict|rotated-strict-preserve-alpha|rotated-preserve-alpha|rotated-min-alpha|rotated-max-alpha|rotated-zero-alpha|rotated-gather|rotated-alpha|rotated-alpha-in|rotated-alpha-out|rotated-aex|rotated-aex-init|rotated-map|rotated-map-dest-coeff|rotated-map-alpha-coeff|rotated-map-preserve-alpha|rotated-map-aex|rotated-map-aex-init|rotated-aex-premul|rotated-map-aex-premul] [--direction front|both] [--ignore-noise-variation] [--angle-sign -1] [--sample-sign -1] [--strength-scale auto] [--rgb-normalize front-strength]\n");
+            std::printf("Usage: olmdirectionalblur_cli --input in.png --params params.json --output out.png [--algorithm direct|direct-map|rotated|rotated-front-strength|rotated-front-strength-preserve-alpha|rotated-rowdriver-prepass|rotated-rowdriver-prepass-init|rotated-aex-pad|rotated-alpha-sum|rotated-strict|rotated-strict-preserve-alpha|rotated-preserve-alpha|rotated-min-alpha|rotated-max-alpha|rotated-zero-alpha|rotated-gather|rotated-alpha|rotated-alpha-in|rotated-alpha-out|rotated-aex|rotated-aex-init|rotated-map|rotated-map-dest-coeff|rotated-map-alpha-coeff|rotated-map-preserve-alpha|rotated-map-aex|rotated-map-aex-init|rotated-aex-premul|rotated-map-aex-premul] [--direction front|both] [--ignore-noise-variation] [--angle-sign -1] [--sample-sign -1] [--strength-scale auto] [--rgb-normalize front-strength]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
@@ -1191,6 +1191,8 @@ int main(int argc, char **argv) {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, false, false, false, false, false, false, "input", false, false, false, false, false, true);
         } else if (args.algorithm == "rotated-rowdriver-prepass") {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, true, false, "blurred", false, false, false, false, false, false, true);
+        } else if (args.algorithm == "rotated-rowdriver-prepass-init") {
+            output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, true, true, "blurred", false, false, false, false, false, false, true);
         } else if (args.algorithm == "rotated-aex-pad") {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, false, false, false, false, false, false, "blurred", false, false, false, true);
         } else if (args.algorithm == "rotated-alpha-sum") {
