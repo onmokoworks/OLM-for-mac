@@ -133,6 +133,7 @@ def main() -> int:
         Smoke("OLMKiraKira C++ Rotate Size probe", [py, "refs/scripts/smoke_olmkirakira_cpp_rotate_size_probe_cli.py"], "red-measurement"),
         Smoke("OLMKiraKira C++ Warp Mode probe", [py, "refs/scripts/smoke_olmkirakira_cpp_warp_mode_probe_cli.py"], "red-measurement"),
         Smoke("OLMKiraKira C++ AEX getRotationMatrix2D probe", [py, "refs/scripts/smoke_olmkirakira_cpp_aex_getrot_probe_cli.py"], "red-measurement"),
+        Smoke("OLMKiraKira C++ Direct Rotate-Back probe", [py, "refs/scripts/smoke_olmkirakira_cpp_direct_back_probe_cli.py"], "red-measurement"),
         Smoke("OLMKiraKira C++ Crop Mode probe", [py, "refs/scripts/smoke_olmkirakira_cpp_crop_mode_probe_cli.py"], "red-measurement"),
         Smoke("OLMKiraKira C++ Glow Normalize probe", [py, "refs/scripts/smoke_olmkirakira_cpp_glow_normalize_probe_cli.py"], "red-measurement"),
         Smoke("OLMKiraKira C++ Aggregation probe", [py, "refs/scripts/smoke_olmkirakira_cpp_aggregation_probe_cli.py"], "red-measurement"),

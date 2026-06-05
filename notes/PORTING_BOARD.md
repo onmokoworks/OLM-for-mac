@@ -1905,6 +1905,16 @@ behavior.
   So the next target is not a simple getRotationMatrix2D formula swap; it is
   exact source/destination Mat/ROI placement, dsize/crop behavior, or
   OpenCV 4.5.5 sampling details.
+- The same pass added diagnostic `--warp-mode aex-direct-back` plus
+  `refs/scripts/smoke_olmkirakira_cpp_direct_back_probe_cli.py` after checking
+  that the rotate-back `warpAffine` dsize is the final ray descriptor in
+  `FUN_181150790`. The approximation writes the inverse rotation directly into
+  the final ray buffer using the observed rotated-buffer center. It is negative:
+  `case_0001 max=35 mean=0.9928`, `case_0002 max=43 mean=1.3755`,
+  `case_0003 max=255 mean=4.4660`, versus baseline
+  `0.8381/1.1623/1.7003`. Keep this as diagnostic evidence; the next target is
+  likely `FUN_181157ed0`'s matrix adjustment or exact Mat/ROI placement rather
+  than adopting direct-back in the port.
 - A temporary CLI probe approximating OpenCV's 5-bit `INTER_LINEAR` table
   (`bilinear-fixed5`) did not improve the current refs:
   `case_0001 mean=0.8384`, `case_0002 mean=1.1624`,
