@@ -1,0 +1,180 @@
+{
+  "request_id": "kirakira_single_ray_20260606",
+  "effect": {
+    "name": "OLM Kira Kira",
+    "match_name": "OLM OLM Kira Kira"
+  },
+  "why": [
+    "Current references have Vertical, Horizontal, and Diagonal Length all set to 50 with Glow Rotation = 0, so they cannot isolate which ray helper or angle/length table entry is mismatched.",
+    "Ghidra/objdump shows FUN_181150790 returns a scalar that is stored per ray and later passed into the vtable aggregation path; existing fd90-exact probes clear much of final aggregation but do not distinguish per-ray scalar semantics.",
+    "Single-ray references are needed before further image-only tuning of OLMKiraKira, otherwise ray order, angle mapping, helper scalar use, and OpenCV primitive residuals are entangled."
+  ],
+  "render_sets": [
+    {
+      "id": "software",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "required": true
+    },
+    {
+      "id": "cuda",
+      "project_gpu_accel_type.current_name": "CUDA",
+      "required": false
+    }
+  ],
+  "inputs": [
+    {
+      "id": "current_olm_cells",
+      "description": "Use the same source artwork as refs/win_references/20260604_olm/OLMKiraKira so current residuals are comparable."
+    },
+    {
+      "id": "opaque_grid",
+      "description": "Fully opaque high-contrast grid/points source, useful if the current artwork is not easy to reuse."
+    }
+  ],
+  "common_params": {
+    "Channel": 2,
+    "Blur Mode": 2,
+    "Merge mode": 1,
+    "Highlight Radius": 0,
+    "Glow Rotation": 0,
+    "Approximated Input": 0,
+    "Color Ramp": 0,
+    "Vertical Color": [1, 1, 1, 1],
+    "Horizontal Color": [1, 1, 1, 1],
+    "Diagonal Color": [1, 1, 1, 1],
+    "Diagonal2 Color": [1, 1, 1, 1]
+  },
+  "cases": [
+    {
+      "id": "kk_vertical_len50_brightness1_strength100",
+      "input": "current_olm_cells",
+      "reason": "Isolate the vertical ray helper and final aggregation argument order.",
+      "params": {
+        "Brightness Gain": 1,
+        "Strength": 100,
+        "Vertical Length": 50,
+        "Horizontal Length": 0,
+        "Diagonal Length": 0,
+        "Diagonal2 Length": 0
+      }
+    },
+    {
+      "id": "kk_horizontal_len50_brightness1_strength100",
+      "input": "current_olm_cells",
+      "reason": "Isolate the horizontal ray helper and 0-degree/axis handling.",
+      "params": {
+        "Brightness Gain": 1,
+        "Strength": 100,
+        "Vertical Length": 0,
+        "Horizontal Length": 50,
+        "Diagonal Length": 0,
+        "Diagonal2 Length": 0
+      }
+    },
+    {
+      "id": "kk_diagonal_len50_brightness1_strength100",
+      "input": "current_olm_cells",
+      "reason": "Isolate the +45-degree ray and angle table mapping.",
+      "params": {
+        "Brightness Gain": 1,
+        "Strength": 100,
+        "Vertical Length": 0,
+        "Horizontal Length": 0,
+        "Diagonal Length": 50,
+        "Diagonal2 Length": 0
+      }
+    },
+    {
+      "id": "kk_diagonal2_len50_brightness1_strength100",
+      "input": "current_olm_cells",
+      "reason": "Isolate the -45-degree ray and Diagonal2 parameter mapping.",
+      "params": {
+        "Brightness Gain": 1,
+        "Strength": 100,
+        "Vertical Length": 0,
+        "Horizontal Length": 0,
+        "Diagonal Length": 0,
+        "Diagonal2 Length": 50
+      }
+    },
+    {
+      "id": "kk_vertical_len50_brightness94_strength0",
+      "input": "current_olm_cells",
+      "reason": "Separate Brightness Gain from Strength/seed exponent behavior for the vertical ray.",
+      "params": {
+        "Brightness Gain": 9.4,
+        "Strength": 0,
+        "Vertical Length": 50,
+        "Horizontal Length": 0,
+        "Diagonal Length": 0,
+        "Diagonal2 Length": 0
+      }
+    },
+    {
+      "id": "kk_horizontal_len50_brightness94_strength0",
+      "input": "current_olm_cells",
+      "reason": "Separate Brightness Gain from Strength/seed exponent behavior for the horizontal ray.",
+      "params": {
+        "Brightness Gain": 9.4,
+        "Strength": 0,
+        "Vertical Length": 0,
+        "Horizontal Length": 50,
+        "Diagonal Length": 0,
+        "Diagonal2 Length": 0
+      }
+    },
+    {
+      "id": "kk_diagonal_len50_brightness94_strength0",
+      "input": "current_olm_cells",
+      "reason": "Separate Brightness Gain from Strength/seed exponent behavior for the +45-degree ray.",
+      "params": {
+        "Brightness Gain": 9.4,
+        "Strength": 0,
+        "Vertical Length": 0,
+        "Horizontal Length": 0,
+        "Diagonal Length": 50,
+        "Diagonal2 Length": 0
+      }
+    },
+    {
+      "id": "kk_diagonal2_len50_brightness94_strength0",
+      "input": "current_olm_cells",
+      "reason": "Separate Brightness Gain from Strength/seed exponent behavior for the -45-degree ray.",
+      "params": {
+        "Brightness Gain": 9.4,
+        "Strength": 0,
+        "Vertical Length": 0,
+        "Horizontal Length": 0,
+        "Diagonal Length": 0,
+        "Diagonal2 Length": 50
+      }
+    },
+    {
+      "id": "kk_diagonal_len50_rotation13",
+      "input": "current_olm_cells",
+      "reason": "Optional angle-table sanity check for Glow Rotation and diagonal base-angle mapping.",
+      "optional": true,
+      "params": {
+        "Brightness Gain": 1,
+        "Strength": 100,
+        "Glow Rotation": 13,
+        "Vertical Length": 0,
+        "Horizontal Length": 0,
+        "Diagonal Length": 50,
+        "Diagonal2 Length": 0
+      }
+    }
+  ],
+  "manifest_requirements": [
+    "Record all OLM Kira Kira property names, match_names, property_index, values, enabled/active state, and selected effect path.",
+    "Record project_gpu_accel_type.current_name and raw value per render set.",
+    "Keep ADBE Force CPU GPU / GPU Rendering as reference-only metadata, not as the execution-path label.",
+    "Save both before_effects_frame and effect output PNG for every case.",
+    "If possible, preserve the same comp size and source layer artwork used by refs/win_references/20260604_olm/OLMKiraKira."
+  ],
+  "mac_follow_up": [
+    "Import with refs/scripts/import_win_reference.py.",
+    "Run existing OLMKiraKira Python/C++ smoke probes against the single-ray cases.",
+    "Use the single-ray diffs to decide whether to continue with helper-return scalar aggregation probes or angle/length table mapping probes."
+  ]
+}

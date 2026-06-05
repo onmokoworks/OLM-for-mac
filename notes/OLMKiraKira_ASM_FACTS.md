@@ -172,6 +172,20 @@ Current port alignment:
 - `--box-output-depth float` remains plausible; `u8-each` worsened and
   `u16-each` was neutral in existing probes.
 
+Helper return scalar:
+
+- `FUN_181150790` returns a scalar in `XMM0`; in the Blur Mode 2 path the helper
+  multiplies that scalar by `length^2` before returning. The caller stores the
+  value per ray before later passing the ray/scalar arrays into the vtable
+  aggregation path.
+- Existing `fd90-exact` aggregation probes clear the basic five-buffer
+  alpha/RGB formula, but the exact use of this helper-return scalar remains
+  underdetermined by the current references because all tracked cases have the
+  same `Vertical/Horizontal/Diagonal Length=50` and `Glow Rotation=0`.
+- `refs/reference_requests/kirakira_single_ray_20260606.json` asks for isolated
+  ray references so this scalar/ray-order ambiguity can be tested without
+  further image-only tuning.
+
 ## cv::warpAffine Calls
 
 `FUN_181297ac0` is the OpenCV `cv::warpAffine` wrapper:
