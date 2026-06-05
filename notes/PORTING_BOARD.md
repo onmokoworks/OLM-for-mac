@@ -77,13 +77,12 @@ future Rotation work.
 ## Suggested Porting Order
 
 1. `OLMBlur`: existing Mac source has a compact blur kernel and reference data exists.
-2. `OLMDirectionalBlur`: reference priority is high, but implementation source is not present yet.
+2. `OLMDirectionalBlur`: Mac plugin and Python/C++ direct/rotated CLI scaffolds exist; continue row-driver/host-edge RE, not initial source discovery.
 3. `OLMColorKey`: reference exists; separate from already-ported `ColorKeep`.
-4. `OLMRadialBlur`: reference exists and now has Rotation plus first Zoom
-   polar-grid probes; continue from AEX pass details before mac AE integration.
+4. `OLMRadialBlur`: Mac plugin exists for Zoom/no-inner/no-noise plus outer-only Rotation/noise-off; continue Inner/Edge Fade diagnostics, especially +0x10/+0x14 and 0xf250/0xf252 coupling.
 5. `OLMSmoother` / `OLMSmoother2`: existing work exists, but algorithm is more complex.
 6. `OLMToonDilate`: pure cases 1-3 are now CLI-characterized and have a Mac plug-in build; case 4 remains a mixed RadialBlur reference.
-7. `OLMKiraKira` / `DistanceGradation`: huge dumps, higher complexity; use after harness conventions harden.
+7. `OLMKiraKira`: Mac plugin exists and now uses all-ray two-temp/no-fastpath; remaining work is exact Mat/ROI/copyTo/destination/final composition.
 
 ## Verification gates
 
@@ -195,12 +194,12 @@ the OLMKiraKira Brightness probe all produced expected DIFF measurement output.
 | Plugin | Win Ref | Ghidra Dump | Mac AE Source | AE-Free CLI | Reference Diff |
 |---|---|---|---|---|---|
 | ColorKeep | none in 20260604 set | yes | complete-ish | smoke CLI works | synthetic smoke ok |
-| DistanceGradation | none in 20260604 set | yes | complete-ish | not started | n/a |
+| DistanceGradation | yes, 20260605_extra | yes | complete-ish | Python CLI works | 11-case smoke OK (`max<=7`, `mean<=0.11`) |
 | OLMBlur | yes | yes | in progress | C++ CLI works | 3 exact, 4 near-match max=1 |
 | OLMColorKey | yes | yes | new Mac plugin builds | Python + C++ + Rust RGB/premult/box/Edge Thin/Edge Blur CLI | C++: 1-4 & 7 exact; 5/6 erode 0.48% off; Edge Blur C++ now matches Python exploratory residual (`case8 mean=1.0396`, `case9 mean=1.2503`); Mac plugin has cases 1-9 scaffold |
-| OLMDirectionalBlur | yes | yes | new Mac plugin builds | Python + C++ direct/rotated CLI scaffold | front-only/no-noise DIFF; Mac plugin has 8bpc front-only/no-noise direct slice |
-| OLMKiraKira | yes | yes | new Mac plugin builds | Python ray CLI scaffold + C++ native scaffold | Python cases 1/2 improve strongly over identity, C++ scaffold added, Mac plugin has the same 4-ray repeated-box scaffold, still DIFF |
-| OLMRadialBlur | yes | yes | new Mac plugin builds | Python rotation + zoom polar CLI scaffold; C++ Zoom/Rotation/Inner diagnostic CLI | Rotation case_0010 near-match; Zoom 0009 OK in Python and C++; C++ Zoom 0003-0005 OK with Size Variation ignored; Mac plugin has 8bpc Zoom/no-inner/no-noise slice with large-Strength FFT path and Size Variation no-op pass-through; Inner 0011-0013 still DIFF; Repeat Border polar-valid probe is neutral |
+| OLMDirectionalBlur | yes | yes | new Mac plugin builds | Python + C++ direct/rotated CLI scaffold | front-only/no-noise DIFF; Mac plugin has 8bpc front-only/no-noise direct slice; rotated-aex-rotateback-denom-alpha is neutral/negative, so residual is not rotate-back denom alpha |
+| OLMKiraKira | yes | yes | new Mac plugin builds | Python OpenCV/two-temp ray probe + C++ native scaffold | Python OpenCV 4.5.5 two-temp `0.8504/1.1570/1.0514`; C++ all-ray two-temp/no-fastpath `0.8506/1.1570/1.0563`; Mac plugin uses that same all-ray two-temp candidate and still DIFF |
+| OLMRadialBlur | yes | yes | new Mac plugin builds | Python rotation + zoom polar CLI scaffold; C++ Zoom/Rotation/Inner diagnostic CLI | Rotation case_0010 near-match; Zoom 0009 OK in Python and C++; C++ Zoom 0003-0005 OK with Size Variation ignored; Mac plugin has 8bpc Zoom/no-inner/no-noise slice with large-Strength FFT path and Size Variation no-op pass-through; Inner source-scatter/prepass old refs baseline 25.2972/10.6222/21.2910; Edge Fade conditional seed improves means but remains red diagnostic due coverage; continue exact +0x10/+0x14 buffer construction |
 | OLMSmoother | yes | yes | prefer v2 compat | C++ CLI over mac port; OLMSmoother2 forced-v1 compat gate | standalone classifier over-fires ~20x, but OLMSmoother2 `Smoother Version=1` matches v1 refs closely (`mean=0.0055/0.0051/0.0200`); do not deep-dive standalone v1 unless this migration path is rejected |
 | OLMSmoother2 | yes, 20260605_extra | yes | port complete-ish | C++ CLI over mac port | first 4 cases measured: case1 mean 0.1832, case2 0.0216, case3 exact, case4 0.0189 after asm key-path + writeback-premul fixes |
 | OLMToonDilate | yes | yes | new Mac plugin builds | Python + C++ Chebyshev/BFS CLI | C++ gated: case1 mean 0.4762, case2 0.0022, case3 3.0676; Mac plugin has cases 1-3 kernel |
@@ -1584,9 +1583,11 @@ Mac plug-in scaffold:
 
 - `mac/OLMKiraKira/` is now added with match name `OLM OLM Kira Kira` and a
   parameter layout keyed to the Windows manifest suffix/disk-id order.
-- The renderer wires the current native 4-ray model into AE SDK render paths:
-  AEX-style luminance seed, repeated-box/REFLECT_101-style rays, comp-width
-  length scaling, premultiply-add merge, and 8/16/32bpc pixel traits.
+- The renderer now uses the all-ray two-temp/no-fastpath candidate: centered
+  temp-A ROI copy, in-place-style forward rotation, horizontal REFLECT_101 box
+  passes into temp-B, rotate-back, and centered final ROI copy for all four
+  rays. Current red probe remains `0.8506/1.1570/1.0563`; build is universal
+  and codesign OK.
 - Verified 2026-06-05:
   `xcodebuild -project mac/OLMKiraKira/Mac/OLMKiraKira.xcodeproj -configuration Debug build`
   succeeds, the output is a universal `x86_64/arm64` bundle, and
@@ -1595,8 +1596,8 @@ Mac plug-in scaffold:
 - `scripts/build_all_mac_plugins.sh` now includes `OLMKiraKira` and completed
   with `all mac plugin builds verified (Debug)` after the addition.
 - This is a buildable scaffold, not an exact port yet. It inherits the C++ CLI
-  baseline discrepancy: `case_0001 max=22 mean=0.8382`, `case_0002 max=24
-  mean=1.1627`, and `case_0003 max=60 mean=1.7073`.
+  all-ray two-temp/no-fastpath discrepancy: `case_0001 mean=0.8506`,
+  `case_0002 mean=1.1570`, and `case_0003 mean=1.0563`.
 
 Implementation note: the Python CLI now preserves manifest zero values via a
 `float_param()` helper. The earlier `params.get(...) or default` pattern
