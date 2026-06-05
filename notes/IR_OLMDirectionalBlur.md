@@ -312,6 +312,7 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 | rotated-aex-halfheight | 4.4483 | 1.1703 | exact component half-height clamp removal is neutral |
 | rotated-aex-float-center | 4.4483 | 1.1703 | float component center_y is neutral |
 | rotated-aex-component-tail-only | 4.4484 | 1.1703 | removing global tail gate is neutral |
+| rotated-aex-global-tail-only | 4.4490 | 1.1702 | disabling component tail is neutral/mixed |
 | rotated-aex-binary-alpha | 4.4483 | 1.1753 | binary validity side-channel is neutral/negative |
 | rotated-aex-straight-source-rgb | 4.4483 | 1.1703 | neutral; opaque refs cannot distinguish source RGB premul |
 | rotated-aex-float-math | 4.4483 | 1.1703 | float trig + integer centers are neutral |
