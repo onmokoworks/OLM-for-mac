@@ -2560,6 +2560,11 @@ behavior.
   regression should be read as: the AEX span/gate plane exists, but current
   substitutes for its sampler/layer value are wrong; do not keep cycling
   sampled-alpha toggles.
+- All tracked old Inner and Edge Fade refs used by this probe have
+  `Size Variation=0`, `Noise Variation=0`, and `Noise Layer=0`. Added
+  `refs/reference_requests/radialblur_inner_size_variation_20260606.json` to
+  request the nonzero Size Variation grid needed to identify `+0x40`; stop
+  deeper `+0x40` tuning until that reference exists.
 
 2026-06-06 RadialBlur C++ Inner conditional seed probe:
 

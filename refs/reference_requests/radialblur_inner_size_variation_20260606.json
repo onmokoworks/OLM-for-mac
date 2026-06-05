@@ -1,0 +1,150 @@
+{
+  "request_id": "radialblur_inner_size_variation_20260606",
+  "effect": {
+    "name": "OLM RadialBlur",
+    "match_name": "OLM RadialBlur"
+  },
+  "why": [
+    "Current OLMRadialBlur Inner references all have Size Variation=0, Noise Variation=0, and Noise Layer=0.",
+    "Objdump/decomp audit maps FUN_180004640 +0x40 to the separately sampled scatter span/gate plane from param_2[0x12], while +0x48 is prepass alpha and +0x50 is the factor plane.",
+    "Existing param10 probes show alpha substitutes for +0x40 are negative, but with Size Variation disabled the real +0x40 plane cannot be distinguished from constant/validity-like behavior.",
+    "A targeted Size Variation grid is needed before further +0x40 tuning, otherwise the port risks overfitting zero-variation references."
+  ],
+  "render_sets": [
+    {
+      "id": "software",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "required": true
+    },
+    {
+      "id": "cuda",
+      "project_gpu_accel_type.current_name": "CUDA",
+      "required": false
+    }
+  ],
+  "inputs": [
+    {
+      "id": "current_olm_cells",
+      "description": "Use the same source artwork as existing OLMRadialBlur Inner references if possible."
+    },
+    {
+      "id": "alpha_grid",
+      "description": "A source with opaque regions, semi-transparent colored regions, and transparent holes, to expose sampler alpha behavior."
+    }
+  ],
+  "common_params": {
+    "Blur Type": 2,
+    "Center": [
+      960,
+      540
+    ],
+    "Outer Strength": 0,
+    "Outer Offset Mode": 1,
+    "Outer Offset": 0,
+    "Inner Strength": 100,
+    "Inner Offset Mode": 1,
+    "Inner Offset": 0,
+    "Repeat Border": 1,
+    "Ratio": 1,
+    "Angle": 0,
+    "Quality": 5,
+    "Brightness": 100,
+    "Noise Variation": 0,
+    "Noise Layer": 0
+  },
+  "cases": [
+    {
+      "id": "rb_inner_sv000_edge000",
+      "input": "current_olm_cells",
+      "reason": "Baseline matching the current zero Size Variation ambiguity.",
+      "params": {
+        "Size Variation": 0,
+        "Outer Edge Fade": 0,
+        "Inner Edge Fade": 0
+      }
+    },
+    {
+      "id": "rb_inner_sv025_edge000",
+      "input": "current_olm_cells",
+      "reason": "Low nonzero Size Variation with fixed Inner scatter.",
+      "params": {
+        "Size Variation": 25,
+        "Outer Edge Fade": 0,
+        "Inner Edge Fade": 0
+      }
+    },
+    {
+      "id": "rb_inner_sv050_edge000",
+      "input": "current_olm_cells",
+      "reason": "Medium Size Variation to identify +0x40 span/gate scaling.",
+      "params": {
+        "Size Variation": 50,
+        "Outer Edge Fade": 0,
+        "Inner Edge Fade": 0
+      }
+    },
+    {
+      "id": "rb_inner_sv100_edge000",
+      "input": "current_olm_cells",
+      "reason": "Full Size Variation stress case for +0x40 sampler semantics.",
+      "params": {
+        "Size Variation": 100,
+        "Outer Edge Fade": 0,
+        "Inner Edge Fade": 0
+      }
+    },
+    {
+      "id": "rb_inner_sv050_edge025",
+      "input": "current_olm_cells",
+      "reason": "Size Variation plus Edge Fade to separate +0x40 and +0x50 paths.",
+      "params": {
+        "Size Variation": 50,
+        "Outer Edge Fade": 25,
+        "Inner Edge Fade": 25
+      }
+    },
+    {
+      "id": "rb_inner_sv100_edge050",
+      "input": "current_olm_cells",
+      "reason": "Strong Size Variation plus stronger Edge Fade for prepass/scatter coupling.",
+      "params": {
+        "Size Variation": 100,
+        "Outer Edge Fade": 50,
+        "Inner Edge Fade": 50
+      }
+    },
+    {
+      "id": "rb_inner_alpha_sv050_edge000",
+      "input": "alpha_grid",
+      "reason": "Nonopaque source alpha to distinguish plain bilinear, AEX alpha-weighted sampler, and validity behavior.",
+      "params": {
+        "Size Variation": 50,
+        "Outer Edge Fade": 0,
+        "Inner Edge Fade": 0
+      }
+    },
+    {
+      "id": "rb_inner_alpha_sv050_edge025",
+      "input": "alpha_grid",
+      "reason": "Nonopaque alpha with both Size Variation and Edge Fade active.",
+      "params": {
+        "Size Variation": 50,
+        "Outer Edge Fade": 25,
+        "Inner Edge Fade": 25
+      }
+    }
+  ],
+  "manifest_requirements": [
+    "Record all OLM RadialBlur property names, match_names, property_index, values, enabled/active state, and selected effect path.",
+    "Record project_gpu_accel_type.current_name and raw value per render set.",
+    "Keep ADBE Force CPU GPU / GPU Rendering as reference-only metadata, not as the execution-path label.",
+    "Save both before_effects_frame and effect output PNG for every case.",
+    "If possible, preserve the same comp size and source layer artwork used by refs/win_references/20260604_olm/OLMRadialBlur Inner cases."
+  ],
+  "mac_follow_up": [
+    "Import with refs/scripts/import_win_reference.py.",
+    "Run the OLMRadialBlur C++ Inner source-scatter/prepass probes against the Size Variation grid.",
+    "Compare +0x40 candidates: constant/validity, sampled Size Variation layer, sampled alpha, and AEX alpha-weighted sampler output.",
+    "Use the alpha_grid cases to decide whether +0x40 sampler semantics or prepass/scatter normalization is the remaining blocker."
+  ]
+}

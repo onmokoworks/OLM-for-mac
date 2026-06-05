@@ -722,3 +722,20 @@ prepass alpha. Keep the AEX ownership fact, but do not promote an
 alpha-scaled span fix. The next useful Inner work is exact `+0x40` source-layer
 identity / sampler semantics, or prepass/scatter normalization and seed
 conditions, not another simple alpha-param10 toggle.
+
+Reference audit after the ownership pass:
+
+- Tracked old Inner cases `0011/0012/0013` and Edge Fade cases
+  `0024/0025/0027` all have `Size Variation=0`, `Noise Variation=0`, and
+  `Noise Layer=0`.
+- Parameter setup reads Size Variation through property index `0x11`, scales it
+  by `0.01`, and stores the active/nonzero gate at `param_4+0x44`; this is the
+  same gate used by `FUN_180004640` to either sample `param_2[0x11]` into
+  `+0x50` or fill `+0x50` with `1.0`.
+- Therefore current references cannot strongly distinguish the real `+0x40`
+  span/gate source from constant/validity-like behavior. The existing alpha
+  substitutes are negative, but the decisive `+0x40` test needs nonzero Size
+  Variation references.
+- Added `refs/reference_requests/radialblur_inner_size_variation_20260606.json`.
+  Do not keep tuning `+0x40` against zero-variation references; use the new
+  Windows grid before promoting any Size Variation / span-gate implementation.

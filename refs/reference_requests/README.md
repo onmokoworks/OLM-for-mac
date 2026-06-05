@@ -21,20 +21,23 @@
 
 1. `radialblur_inner_20260605.json`
    - OLMRadialBlur Innerの未解決箇所を切るための最優先セット。
-2. `directionalblur_context_scale_20260606.json`
+2. `radialblur_inner_size_variation_20260606.json`
+   - RadialBlur Inner `FUN_180004640` の `+0x40` scatter span/gate planeを、
+     Size Variation非ゼロ参照で切り分けるためのセット。
+3. `directionalblur_context_scale_20260606.json`
    - OLMDirectionalBlurの `ctx+0x11c / ctx+0x120` render-context scale と
      非不透明alpha挙動を切るためのセット。
-3. `kirakira_single_ray_20260606.json`
+4. `kirakira_single_ray_20260606.json`
    - OLMKiraKiraのray order / angle table / helper戻り値scalarを分離するための
      単独rayセット。
-4. `smoother2_no_key_grid_20260606.json`
+5. `smoother2_no_key_grid_20260606.json`
    - OLMSmoother2 no-key v2 の残差を、Smoothness / Smooth Range gridで
      class-plane firing・sample plane・color-space/writebackに切り分けるためのセット。
-5. 既存Mac移植扱いのプラグイン確認
+6. 既存Mac移植扱いのプラグイン確認
    - `OLMDistanceGradation`
    - `OLMSmoother2`
    - その他READMEで port complete 扱いのもの。
-6. OLMSmoother alternate reference
+7. OLMSmoother alternate reference
    - 現参照は過剰発火原因の切り分けが弱いので、単純な高コントラスト素材で追加確認する。
 
 Mac側への取り込み:
