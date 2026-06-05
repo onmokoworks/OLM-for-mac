@@ -74,6 +74,7 @@ mkdir -p "$stage"
 manifest="$stage/manifest.json"
 install_notes="$stage/INSTALL.txt"
 validation_notes="$stage/AE_VALIDATION_CHECKLIST.txt"
+validation_template="$stage/AE_VALIDATION_RESULT.template.json"
 
 cat >"$install_notes" <<EOF
 OLM macOS AE plug-ins (${CONFIGURATION})
@@ -130,12 +131,55 @@ Return to the Mac-side porting workspace:
 - Any AE crash, missing effect, parameter UI issue, or render error text
 - If doing pixel validation, return PNGs plus the parameter manifest using the
   existing Windows reference package/import workflow shape
+- Prefer filling AE_VALIDATION_RESULT.template.json and return it with any PNGs
+  or error screenshots/logs.
 
 Important:
 Do not use the hidden Compositing Options > GPU Rendering / ADBE Force CPU GPU
 value as proof that a render used the GPU or CPU path. Record it as a reference
 field only; use Project Settings renderer/project_gpu_accel_type for path
 context.
+EOF
+
+cat >"$validation_template" <<EOF
+{
+  "kind": "olm_ae_host_validation_result",
+  "package_configuration": "$CONFIGURATION",
+  "ae_version": "",
+  "macos_version": "",
+  "machine": "",
+  "project_gpu_accel_type": {
+    "current_name": "",
+    "raw": null
+  },
+  "clean_ae_launch_after_install": null,
+  "install_path": "~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/",
+  "notes": "",
+  "plugins": [
+EOF
+
+for idx in "${!plugins[@]}"; do
+  plugin="${plugins[$idx]}"
+  comma=","
+  if [[ "$idx" -eq "$((${#plugins[@]} - 1))" ]]; then
+    comma=""
+  fi
+  cat >>"$validation_template" <<EOF
+    {
+      "name": "$plugin",
+      "loaded": null,
+      "applied": null,
+      "render_succeeded": null,
+      "effect_menu_name": "",
+      "error": "",
+      "returned_artifacts": []
+    }$comma
+EOF
+done
+
+cat >>"$validation_template" <<'EOF'
+  ]
+}
 EOF
 
 {
@@ -146,6 +190,7 @@ EOF
   echo "  \"packaged_at\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\","
   echo "  \"install_notes\": \"INSTALL.txt\","
   echo "  \"validation_checklist\": \"AE_VALIDATION_CHECKLIST.txt\","
+  echo "  \"validation_result_template\": \"AE_VALIDATION_RESULT.template.json\","
   echo "  \"plugins\": ["
 } >"$manifest"
 
