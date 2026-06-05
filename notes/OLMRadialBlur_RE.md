@@ -538,6 +538,17 @@ high-level polar coordinate structure.
   factor plane is constant/validity-like, and pushes the remaining Inner gap
   toward exact `FUN_180001c90` scatter order, dynamic-offset semantics, or
   prepass denominator/max-alpha coupling rather than factor-as-alpha.
+- 2026-06-06 prepass writeback probe: asm around `180002c68..180002c8a`
+  confirms `FUN_180002780` writes the gathered alpha to both the source-alpha
+  plane (`+0x12`) and final-alpha plane (`+0xf252`) for every cell; when source
+  alpha or factor is zero it also clears the prepass RGBA output (`+0xf250`).
+  Added diagnostic `--inner-prepass-overwrite-seed` and
+  `refs/scripts/smoke_olmradialblur_cpp_inner_prepass_overwrite_probe_cli.py`
+  to force the C++ source-scatter path to clear/reseed `0xf250/0xf252` from
+  the prepass output. It is neutral on current Inner refs: baseline and
+  overwrite both give `case_0011/0012/0013 mean=25.2972/10.6222/21.2910`.
+  So the exposed residual is not simply stale source seeding after prepass
+  writeback.
 - `mac/OLMRadialBlur/OLMRadialBlur.cpp` now carries the same 8bpc
   outer-only/no-noise/no-size-variation Rotation slice, including the
   radius-dependent Offset Mode=1 path. Unsupported Rotation cases (Inner,

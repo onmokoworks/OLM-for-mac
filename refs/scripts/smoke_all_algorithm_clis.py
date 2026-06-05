@@ -95,6 +95,7 @@ def main() -> int:
         Smoke("OLMRadialBlur C++ Inner Alpha Mode probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_alpha_mode_probe_cli.py"], "red-measurement"),
         Smoke("OLMRadialBlur C++ Inner Source Scatter Prepass probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_source_scatter_prepass_cli.py"], "red-measurement"),
         Smoke("OLMRadialBlur C++ Inner Prepass Mode probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_prepass_mode_probe_cli.py"], "red-measurement"),
+        Smoke("OLMRadialBlur C++ Inner Prepass Overwrite probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_prepass_overwrite_probe_cli.py"], "red-measurement"),
         Smoke("OLMRadialBlur C++ Inner Prepass Factor probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_prepass_factor_probe_cli.py"], "red-measurement"),
         Smoke("OLMRadialBlur C++ Inner Edge Fade Factor probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_edgefade_factor_probe_cli.py"], "red-measurement"),
         Smoke("OLMRadialBlur C++ Inner Scatter RGB probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_scatter_rgb_probe_cli.py"], "red-measurement"),
