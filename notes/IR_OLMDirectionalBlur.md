@@ -298,6 +298,7 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 | rotated-aex-pad-full-choreo | 4.4483 | 1.1703 | exact AEX pad + full A/B is neutral |
 | rotated-aex-prepass-full-choreo | 4.4483 | 1.1703 | center prepass + full A/B is neutral |
 | rotated-aex-halfheight | 4.4483 | 1.1703 | exact component half-height clamp removal is neutral |
+| rotated-aex-float-center | 4.4483 | 1.1703 | float component center_y is neutral |
 | rotated-aex-float-math | 4.4483 | 1.1703 | float trig + integer centers are neutral |
 | rotated-aex-trunc-output | 4.4438 | 1.1736 | exact output truncation is mixed/minor |
 | rotated-aex-truncated-span | 4.4467 | 1.1749 | exact integer span gate is mixed/minor |
