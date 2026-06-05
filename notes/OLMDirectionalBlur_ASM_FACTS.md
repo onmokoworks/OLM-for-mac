@@ -598,6 +598,18 @@ B[p].a = gathered_alpha
 - Together with `rotated-aex-component-tail-only`, this makes simple
   global-tail vs component-tail selection unlikely to be the leading residual.
 
+2026-06-06 no-tail diagnostic:
+
+- Added `rotated-aex-no-tail`, which disables both the older global valid-range
+  Sharp Tail gate and the component-map Sharp Tail factor.
+- Measurement is neutral/negative against `rotated-aex-full-choreo`:
+  `case_0001 mean=4.4597`, `case_0005 mean=1.1702`.
+- `FUN_1800038d0` uses `SUBSS` followed by `ANDPS XMM?, XMM10` for the vertical
+  Sharp Tail distance, so the Ghidra-looking cast/mask expression is a float
+  absolute-value operation. The CLI's `fabs` shape is correct.
+- Together with the component/global-tail probes, Sharp Tail itself is unlikely
+  to be the leading front-only residual on the tracked references.
+
 2026-06-06 Size Variation scale audit:
 
 - Parameter setup at `180006dd7..180006dea` divides the UI integer by
