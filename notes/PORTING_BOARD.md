@@ -890,6 +890,17 @@ prepass and is neutral against `rotated-aex-full-choreo`
 the exact `FUN_1800013e0` scatter boundary/table-index behavior or host
 populate/output callback edge semantics.
 
+2026-06-06 source-driven scatter diagnostic: added
+`rotated-aex-exact-scatter-helper`, covered by
+`refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_exact_scatter_cli.py`.
+This keeps the current full A/B choreography but changes the horizontal row
+blur from an offset-driven loop to a source-pixel-driven scatter loop shaped
+after `FUN_1800013e0`. Result is mixed/minor against full choreography:
+`case_0001 mean=4.4392` improves by `0.0091`, while
+`case_0005 mean=1.1761` worsens by `0.0058`. Keep source-driven scatter as an
+address-level implementation clue, but do not treat it as the dominant residual
+until the caller argument roles and host edge/populate callbacks are mapped.
+
 2026-06-06 truncated-span diagnostic: added
 `rotated-aex-truncated-span`, covered by
 `refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_truncated_span_cli.py`.
@@ -2391,3 +2402,34 @@ behavior.
   should model the exact `param_1+0x10` sampled base/validity buffer and feed
   that into both `FUN_180002780` and `FUN_180001c90` table/index arithmetic,
   rather than trying more final-alpha or seed-mode toggles.
+
+2026-06-06 RadialBlur C++ Inner scatter `param_10` plane probe:
+
+- Added CLI-only diagnostic `--inner-scatter-param10-plane
+  one|polar-alpha|prepass-alpha|factor`, exercised by
+  `refs/scripts/smoke_olmradialblur_cpp_inner_param10_plane_probe_cli.py`.
+  It replaces the old source/input-alpha span scaling inside the
+  source-scatter/prepass branch with an explicit `param_10` plane selected
+  immediately before `effective_span = int(span * param10)`.
+- Fixed measurement baseline:
+  `--inner-source-scatter-prepass --inner-prepass-mode tail-gather
+  --inner-prepass-span-mode edge-fade --inner-prepass-weight-mode aex-alpha
+  --inner-prepass-factor-mode one --inner-scatter-rgb-mode prepass-premul
+  --inner-scatter-seed-mode source`.
+- Old Inner (`20260604_olm/OLMRadialBlur` cases `0011/0012/0013`) results:
+  - `one`: `25.2972 / 10.6222 / 21.2910`.
+  - `polar-alpha`: `29.8855 / 12.6410 / 21.2560`.
+  - `prepass-alpha`: `29.8855 / 12.6410 / 21.2560`.
+  - `factor`: `25.2972 / 10.6222 / 21.2910`.
+- Edge Fade (`20260605_extra/OLMRadialBlur_img2` cases `0024/0025/0027`)
+  results:
+  - `one`: `5.7833 / 4.7930 / 2.3520`.
+  - `polar-alpha`: `6.5779 / 5.4893 / 2.8157`.
+  - `prepass-alpha`: `7.2705 / 5.7969 / 2.7246`.
+  - `factor`: `5.7833 / 4.7930 / 2.3520`.
+- Interpretation: alpha-based `param_10` planes are negative with the current
+  prepass model. They regress Old Inner `0011/0012` and all Edge Fade cases,
+  with only tiny isolated `0013`/`0027` movements. Treat this as a red probe;
+  keep `one`/`factor` as the current diagnostic baseline and continue chasing
+  exact `param_1+0x10` / `+0x14` buffer construction instead of adopting
+  direct alpha scaling.

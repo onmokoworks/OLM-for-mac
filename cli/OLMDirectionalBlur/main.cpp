@@ -854,7 +854,7 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
                      bool aex_rotate_math = false, bool float_component_center_y = false,
                      bool component_tail_only = false, bool source_alpha_binary_validity = false,
                      bool source_rgb_straight = false, bool disable_component_tail = false,
-                     bool preserve_invalid_input_rotate = false) {
+                     bool preserve_invalid_input_rotate = false, bool source_driven_scatter = false) {
     if (params.noise_variation != 0.0) throw std::runtime_error("noise variation is not implemented");
     if (params.back_strength != 0) throw std::runtime_error("back blur is not implemented");
 
@@ -1063,6 +1063,53 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
     const float tail_center = has_tail ? (static_cast<float>(min_valid_y) + static_cast<float>(max_valid_y)) * 0.5f : 0.0f;
     const float tail_span = has_tail ? std::max((static_cast<float>(max_valid_y) - static_cast<float>(min_valid_y)) * 0.5f, 1.0f) : 1.0f;
 
+    auto scatter_sample = [&](int dst_p, int src_p, float coeff, float local_weight) {
+        const float alpha = source_alpha[static_cast<size_t>(src_p)] * local_weight;
+        const float output_alpha = alpha_coeff_output ? alpha * coeff : alpha;
+        for (int c = 0; c < 3; ++c) {
+            const float rgb_weight = gather_first ? alpha : local_weight;
+            accum_rgb[static_cast<size_t>(dst_p) * 3 + c] += source_rgb[static_cast<size_t>(src_p) * 3 + c] * rgb_weight;
+        }
+        accum_sum[static_cast<size_t>(dst_p)] += alpha;
+        if (alpha_sum_output) accum_alpha[static_cast<size_t>(dst_p)] += output_alpha;
+        else accum_alpha[static_cast<size_t>(dst_p)] = std::max(accum_alpha[static_cast<size_t>(dst_p)], output_alpha);
+    };
+
+    if (source_driven_scatter) {
+        const int direction = sample_sign >= 0.0 ? 1 : -1;
+        for (int y = 0; y < pad_h; ++y) {
+            for (int x = 0; x < pad_w; ++x) {
+                const int src_p = y * pad_w + x;
+                float coeff = 1.0f;
+                if (has_tail) {
+                    coeff = std::max(0.0f, 1.0f - std::fabs(static_cast<float>(y) - tail_center) *
+                                                     static_cast<float>(params.front_sharp_tail) / tail_span);
+                }
+                if (component_map_coeff) {
+                    const ComponentInfo &comp = component_map.pixels[static_cast<size_t>(src_p)];
+                    if (comp.area <= 0.0f) continue;
+                    const float area_factor = std::pow(std::clamp(comp.area / component_map.max_area, 0.0f, 1.0f),
+                                                       static_cast<float>(params.size_variation));
+                    float tail_factor = 1.0f;
+                    if (params.front_sharp_tail > 0.0 && !disable_component_tail) {
+                        tail_factor = std::max(0.0f, 1.0f - std::fabs(static_cast<float>(y) - comp.center_y) *
+                                                        static_cast<float>(params.front_sharp_tail) / comp.half_height);
+                    }
+                    coeff *= area_factor * tail_factor;
+                }
+                const int span = static_cast<int>(static_cast<float>(front_strength) * coeff);
+                if (coeff <= 0.0f || span <= 1) continue;
+                for (int offset = 1; offset < span; ++offset) {
+                    const int dst_x = x + direction * offset;
+                    if (dst_x < 0 || dst_x >= pad_w) break;
+                    const int dst_p = y * pad_w + dst_x;
+                    const int weight_idx = std::clamp(static_cast<int>(static_cast<float>(offset) / std::max(coeff, 1.0e-6f)),
+                                                      0, front_strength - 1);
+                    scatter_sample(dst_p, src_p, coeff, weights[static_cast<size_t>(weight_idx)]);
+                }
+            }
+        }
+    } else {
     for (int i = 1; i < front_strength; ++i) {
         const int shift = static_cast<int>(sample_sign) * i;
         for (int y = 0; y < pad_h; ++y) {
@@ -1107,15 +1154,7 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
                                                       0, front_strength - 1);
                     }
                     const float local_weight = component_map_coeff ? weights[static_cast<size_t>(local_weight_idx)] : weight;
-                    const float alpha = source_alpha[static_cast<size_t>(src_p)] * local_weight;
-                    const float output_alpha = alpha_coeff_output ? alpha * coeff : alpha;
-                    for (int c = 0; c < 3; ++c) {
-                        const float rgb_weight = gather_first ? alpha : local_weight;
-                        accum_rgb[static_cast<size_t>(dst_p) * 3 + c] += source_rgb[static_cast<size_t>(src_p) * 3 + c] * rgb_weight;
-                    }
-                    accum_sum[static_cast<size_t>(dst_p)] += alpha;
-                    if (alpha_sum_output) accum_alpha[static_cast<size_t>(dst_p)] += output_alpha;
-                    else accum_alpha[static_cast<size_t>(dst_p)] = std::max(accum_alpha[static_cast<size_t>(dst_p)], output_alpha);
+                    scatter_sample(dst_p, src_p, coeff, local_weight);
                 }
             } else {
                 const int nshift = -shift;
@@ -1147,18 +1186,11 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
                                                       0, front_strength - 1);
                     }
                     const float local_weight = component_map_coeff ? weights[static_cast<size_t>(local_weight_idx)] : weight;
-                    const float alpha = source_alpha[static_cast<size_t>(src_p)] * local_weight;
-                    const float output_alpha = alpha_coeff_output ? alpha * coeff : alpha;
-                    for (int c = 0; c < 3; ++c) {
-                        const float rgb_weight = gather_first ? alpha : local_weight;
-                        accum_rgb[static_cast<size_t>(dst_p) * 3 + c] += source_rgb[static_cast<size_t>(src_p) * 3 + c] * rgb_weight;
-                    }
-                    accum_sum[static_cast<size_t>(dst_p)] += alpha;
-                    if (alpha_sum_output) accum_alpha[static_cast<size_t>(dst_p)] += output_alpha;
-                    else accum_alpha[static_cast<size_t>(dst_p)] = std::max(accum_alpha[static_cast<size_t>(dst_p)], output_alpha);
+                    scatter_sample(dst_p, src_p, coeff, local_weight);
                 }
             }
         }
+    }
     }
 
     FloatImage blurred;
@@ -1275,7 +1307,7 @@ Args parse_args(int argc, char **argv) {
             if (args.direction != "front" && args.direction != "both") throw std::runtime_error("--direction must be front or both");
         } else if (key == "--ignore-noise-variation") args.ignore_noise_variation = true;
         else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmdirectionalblur_cli --input in.png --params params.json --output out.png [--algorithm direct|direct-map|rotated|rotated-aex-choreo|rotated-aex-full-choreo|rotated-aex-pad-full-choreo|rotated-aex-prepass-full-choreo|rotated-aex-halfheight|rotated-aex-float-center|rotated-aex-component-tail-only|rotated-aex-global-tail-only|rotated-aex-no-tail|rotated-aex-preserve-invalid-input|rotated-aex-binary-alpha|rotated-aex-straight-source-rgb|rotated-aex-float-math|rotated-aex-trunc-output|rotated-aex-truncated-span|rotated-aex-row-init-straight-zero|rotated-aex-row-init-premul-zero|rotated-aex-row-init-zero|rotated-front-strength|rotated-front-strength-preserve-alpha|rotated-rowdriver-prepass|rotated-rowdriver-prepass-init|rotated-aex-pad|rotated-alpha-sum|rotated-strict|rotated-strict-preserve-alpha|rotated-preserve-alpha|rotated-min-alpha|rotated-max-alpha|rotated-zero-alpha|rotated-gather|rotated-alpha|rotated-alpha-in|rotated-alpha-out|rotated-aex|rotated-aex-init|rotated-map|rotated-map-dest-coeff|rotated-map-alpha-coeff|rotated-map-preserve-alpha|rotated-map-aex|rotated-map-aex-init|rotated-aex-premul|rotated-map-aex-premul] [--direction front|both] [--ignore-noise-variation] [--angle-sign -1] [--sample-sign -1] [--strength-scale auto] [--rgb-normalize front-strength]\n");
+            std::printf("Usage: olmdirectionalblur_cli --input in.png --params params.json --output out.png [--algorithm direct|direct-map|rotated|rotated-aex-choreo|rotated-aex-full-choreo|rotated-aex-exact-scatter-helper|rotated-aex-pad-full-choreo|rotated-aex-prepass-full-choreo|rotated-aex-halfheight|rotated-aex-float-center|rotated-aex-component-tail-only|rotated-aex-global-tail-only|rotated-aex-no-tail|rotated-aex-preserve-invalid-input|rotated-aex-binary-alpha|rotated-aex-straight-source-rgb|rotated-aex-float-math|rotated-aex-trunc-output|rotated-aex-truncated-span|rotated-aex-row-init-straight-zero|rotated-aex-row-init-premul-zero|rotated-aex-row-init-zero|rotated-front-strength|rotated-front-strength-preserve-alpha|rotated-rowdriver-prepass|rotated-rowdriver-prepass-init|rotated-aex-pad|rotated-alpha-sum|rotated-strict|rotated-strict-preserve-alpha|rotated-preserve-alpha|rotated-min-alpha|rotated-max-alpha|rotated-zero-alpha|rotated-gather|rotated-alpha|rotated-alpha-in|rotated-alpha-out|rotated-aex|rotated-aex-init|rotated-map|rotated-map-dest-coeff|rotated-map-alpha-coeff|rotated-map-preserve-alpha|rotated-map-aex|rotated-map-aex-init|rotated-aex-premul|rotated-map-aex-premul] [--direction front|both] [--ignore-noise-variation] [--angle-sign -1] [--sample-sign -1] [--strength-scale auto] [--rgb-normalize front-strength]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
@@ -1306,6 +1338,8 @@ int main(int argc, char **argv) {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, false, false, false, false, false, false, "blurred", false, false, false, false, false, false, false, true);
         } else if (args.algorithm == "rotated-aex-full-choreo") {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, false, false, "blurred", false, false, false, false, false, false, false, true, true);
+        } else if (args.algorithm == "rotated-aex-exact-scatter-helper") {
+            output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, false, false, "blurred", false, false, false, false, false, false, false, true, true, -1, false, false, false, false, false, false, false, false, false, false, true);
         } else if (args.algorithm == "rotated-aex-pad-full-choreo") {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, false, false, "blurred", false, false, false, true, false, false, false, true, true);
         } else if (args.algorithm == "rotated-aex-prepass-full-choreo") {

@@ -58,6 +58,7 @@ struct RadialBlurParams {
     std::string inner_final_alpha_mode = "max";
     std::string inner_rgb_denominator_mode = "accum";
     std::string inner_scatter_span_scale_mode = "one";
+    std::string inner_scatter_param10_plane = "one";
     std::string inner_wrap_mode = "circular";
     std::string inner_source_scale_mode = "one";
     std::string dynamic_offset_mode = "current";
@@ -1230,12 +1231,15 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
             if (span <= 1) return;
             const size_t src_cell = static_cast<size_t>(ri) * angular_count + ai;
             if (!polar_valid[src_cell] || source_alpha[src_cell] == 0.0f || source_scale[src_cell] == 0.0f) return;
-            int effective_span = span;
-            if (params.inner_scatter_span_scale_mode == "source-alpha") {
-                effective_span = static_cast<int>(static_cast<float>(span) * source_alpha[src_cell]);
-            } else if (params.inner_scatter_span_scale_mode == "input-alpha") {
-                effective_span = static_cast<int>(static_cast<float>(span) * polar.rgba[src_cell * 4 + 3]);
+            float param10 = 1.0f;
+            if (params.inner_scatter_param10_plane == "polar-alpha") {
+                param10 = polar.rgba[src_cell * 4 + 3];
+            } else if (params.inner_scatter_param10_plane == "prepass-alpha") {
+                param10 = source_alpha[src_cell];
+            } else if (params.inner_scatter_param10_plane == "factor") {
+                param10 = polar_valid[src_cell] ? 1.0f : 0.0f;
             }
+            int effective_span = static_cast<int>(static_cast<float>(span) * param10);
             effective_span = std::max(0, std::min(effective_span, 3000));
             if (effective_span <= 1) return;
             const std::vector<float> &row_weights = weights_for_span(effective_span);
@@ -1516,6 +1520,7 @@ struct Args {
     std::string inner_final_alpha_mode = "max";
     std::string inner_rgb_denominator_mode = "accum";
     std::string inner_scatter_span_scale_mode = "one";
+    std::string inner_scatter_param10_plane = "one";
     std::string inner_wrap_mode = "circular";
     std::string inner_source_scale_mode = "one";
     std::string dynamic_offset_mode = "current";
@@ -1598,6 +1603,14 @@ Args parse_args(int argc, char **argv) {
                 args.inner_scatter_span_scale_mode != "input-alpha") {
                 throw std::runtime_error("--inner-scatter-span-scale-mode must be one, source-alpha, or input-alpha");
             }
+        } else if (key == "--inner-scatter-param10-plane") {
+            args.inner_scatter_param10_plane = need_value("--inner-scatter-param10-plane");
+            if (args.inner_scatter_param10_plane != "one" &&
+                args.inner_scatter_param10_plane != "polar-alpha" &&
+                args.inner_scatter_param10_plane != "prepass-alpha" &&
+                args.inner_scatter_param10_plane != "factor") {
+                throw std::runtime_error("--inner-scatter-param10-plane must be one, polar-alpha, prepass-alpha, or factor");
+            }
         } else if (key == "--inner-wrap-mode") {
             args.inner_wrap_mode = need_value("--inner-wrap-mode");
             if (args.inner_wrap_mode != "circular" && args.inner_wrap_mode != "aex-next-row") {
@@ -1634,7 +1647,7 @@ Args parse_args(int argc, char **argv) {
                 throw std::runtime_error("--inner-alpha-mode must be max, sum, outer, inner, or input");
             }
         } else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmradialblur_cli --input in.png --params params.json --output out.png [--ignore-size-variation] [--inner-alpha-mode max|sum|outer|inner|input] [--inner-source-scatter-prepass] [--inner-prepass-mode simple|tail-gather] [--inner-prepass-span-mode strength|offset|edge-fade] [--inner-prepass-weight-mode row-span|aex-alpha] [--inner-prepass-factor-mode alpha|one|valid] [--inner-prepass-overwrite-seed] [--inner-scatter-rgb-mode straight|prepass-premul] [--inner-scatter-seed-mode source|none] [--inner-seed-alpha-mode input|prepass] [--inner-final-alpha-mode max|denom|source] [--inner-rgb-denominator-mode accum|max] [--inner-scatter-span-scale-mode one|source-alpha|input-alpha] [--inner-wrap-mode circular|aex-next-row] [--inner-source-scale-mode one|alpha|inv-alpha] [--dynamic-offset-mode current|aex-row|min-radius] [--polar-valid-mode strict|aex-repeat] [--polar-sample-mode plain|aex-alpha|conditional-inner]\n");
+            std::printf("Usage: olmradialblur_cli --input in.png --params params.json --output out.png [--ignore-size-variation] [--inner-alpha-mode max|sum|outer|inner|input] [--inner-source-scatter-prepass] [--inner-prepass-mode simple|tail-gather] [--inner-prepass-span-mode strength|offset|edge-fade] [--inner-prepass-weight-mode row-span|aex-alpha] [--inner-prepass-factor-mode alpha|one|valid] [--inner-prepass-overwrite-seed] [--inner-scatter-rgb-mode straight|prepass-premul] [--inner-scatter-seed-mode source|none] [--inner-seed-alpha-mode input|prepass] [--inner-final-alpha-mode max|denom|source] [--inner-rgb-denominator-mode accum|max] [--inner-scatter-span-scale-mode one|source-alpha|input-alpha] [--inner-scatter-param10-plane one|polar-alpha|prepass-alpha|factor] [--inner-wrap-mode circular|aex-next-row] [--inner-source-scale-mode one|alpha|inv-alpha] [--dynamic-offset-mode current|aex-row|min-radius] [--polar-valid-mode strict|aex-repeat] [--polar-sample-mode plain|aex-alpha|conditional-inner]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
@@ -1667,6 +1680,7 @@ int main(int argc, char **argv) {
         params.inner_final_alpha_mode = args.inner_final_alpha_mode;
         params.inner_rgb_denominator_mode = args.inner_rgb_denominator_mode;
         params.inner_scatter_span_scale_mode = args.inner_scatter_span_scale_mode;
+        params.inner_scatter_param10_plane = args.inner_scatter_param10_plane;
         params.inner_wrap_mode = args.inner_wrap_mode;
         params.inner_source_scale_mode = args.inner_source_scale_mode;
         params.dynamic_offset_mode = args.dynamic_offset_mode;
