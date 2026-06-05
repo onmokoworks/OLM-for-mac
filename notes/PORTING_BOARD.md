@@ -2043,6 +2043,18 @@ behavior.
   `0.8379/1.1627/1.7073`. This strongly supports moving the native C++/Mac
   ray path toward exact OpenCV primitives/two-temp behavior for case3, while
   keeping case1 as a remaining placement/Mat-header exactness problem.
+- 2026-06-06 OpenCV 4.5.5 parity check: created a temporary Python 3.9 venv at
+  `/tmp/olm-opencv455-venv` with `opencv-python==4.5.5.64`, `numpy==1.26.4`,
+  and Pillow, then ran
+  `OLM_PROBE_PYTHON=/tmp/olm-opencv455-venv/bin/python python3
+  refs/scripts/smoke_olmkirakira_opencv_two_temp_probe_cli.py`. Results are
+  `case_0001 mean=0.8504`, `case_0002 mean=1.1570`,
+  `case_0003 mean=1.0514`, matching the prior OpenCV 4.13 measurement and
+  closely matching the C++ two-temp/no-fastpath probe
+  `0.8506/1.1570/1.0563`. The remaining KiraKira residual is therefore not
+  explained by OpenCV version drift between 4.13 and AEX's 4.5.5; keep chasing
+  exact Mat/ROI/copyTo aliasing, destination canvas, or final composition
+  details.
 - 2026-06-06 two-temp follow-up sweeps: `aex-two-temp` with
   `bilinear-fixed5` is almost neutral (`0.8529/1.1555/1.1822`). Anchor sweep
   keeps OpenCV default best (`opencv 0.8531/1.1555/1.1870`; `floor-left`
