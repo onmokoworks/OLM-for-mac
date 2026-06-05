@@ -565,11 +565,13 @@ python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
 既定では `scripts/build_all_mac_plugins.sh` を走らせて10本のDebug `.plugin`
 bundleを検証し、`/tmp/olm_mac_plugins_Debug_YYYYMMDD.zip` にまとめる。
 同じセッションでビルド検証済みなら `--skip-build` で再ビルドを省略可能。
-zip内には `INSTALL.txt` と `manifest.json` が入り、manifestには各bundleの
-SHA-256と `arm64`/`x86_64` 確認情報を記録する。検証:
+zip内には `INSTALL.txt`, `AE_VALIDATION_CHECKLIST.txt`, `manifest.json` が入り、
+manifestには各bundleのSHA-256と `arm64`/`x86_64` 確認情報、install/checklist
+ファイル名を記録する。検証:
 `bash -n scripts/package_mac_plugins.sh`,
 `scripts/package_mac_plugins.sh --skip-build --output /tmp/olm_mac_plugins_test.zip`,
-zip内 `manifest.json` のJSON parse、zip内 `.plugin` 10個確認はいずれも成功。
+zip内 `manifest.json` のJSON parse、zip内 `.plugin` 10個確認、
+`AE_VALIDATION_CHECKLIST.txt` 同梱確認はいずれも成功。
 
 ## 4. このセッションで触ったファイル
 

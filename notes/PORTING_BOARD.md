@@ -23,7 +23,7 @@ possible and final AE plug-in validation.
 - Mac plug-in package export works via `scripts/package_mac_plugins.sh`.
   It can build/verify first or use `--skip-build` after a verified build, then
   writes a zip for AE-host install containing the 10 `.plugin` bundles,
-  `INSTALL.txt`, and a JSON manifest.
+  `INSTALL.txt`, `AE_VALIDATION_CHECKLIST.txt`, and a JSON manifest.
 - Windows references imported under `refs/win_references/20260604_olm/`.
 - Extra Windows references imported under `refs/win_references/20260605_extra/`.
 
@@ -871,7 +871,8 @@ near-match Zoom baseline for `case_0003..0005`-style settings.
   Colors, and RadialBlur tiny Rotation / Zoom / Zoom Offset green gates.
 - `scripts/package_mac_plugins.sh --skip-build --output
   /tmp/olm_mac_plugins_test.zip` completed successfully after the verified build.
-  The zip manifest parsed as JSON and listed all 10 plug-ins.
+  The zip manifest parsed as JSON, listed all 10 plug-ins, and points to the
+  bundled install notes and AE host validation checklist.
 
 ## OLMDirectionalBlur
 
