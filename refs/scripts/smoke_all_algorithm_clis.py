@@ -102,6 +102,7 @@ def main() -> int:
         Smoke("OLMRadialBlur C++ Inner Scatter RGB probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_scatter_rgb_probe_cli.py"], "red-measurement"),
         Smoke("OLMRadialBlur C++ Inner Source Scale probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_source_scale_probe_cli.py"], "red-measurement"),
         Smoke("OLMRadialBlur C++ Dynamic Offset probe", [py, "refs/scripts/smoke_olmradialblur_cpp_dynamic_offset_probe_cli.py"], "red-measurement"),
+        Smoke("OLMRadialBlur C++ Inner Prepass Dynamic Offset probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_prepass_dynamic_offset_probe_cli.py"], "red-measurement"),
         Smoke("OLMRadialBlur C++ Inner Final Norm probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_final_norm_probe_cli.py"], "red-measurement"),
         Smoke("OLMRadialBlur C++ Inner Seed Alpha probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_seed_alpha_probe_cli.py"], "red-measurement"),
         Smoke("OLMRadialBlur C++ Inner Span Scale probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_span_scale_probe_cli.py"], "red-measurement"),

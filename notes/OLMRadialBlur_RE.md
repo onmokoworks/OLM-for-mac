@@ -546,6 +546,14 @@ high-level polar coordinate structure.
   `mean=5.8034/4.8054/2.3524`, slightly worse. Keep `aex-next-row` as a
   diagnostic hook only; do not promote it into the current incomplete Inner
   model by itself.
+- Dynamic-offset follow-up:
+  `refs/scripts/smoke_olmradialblur_cpp_inner_prepass_dynamic_offset_probe_cli.py`
+  applies `current`, `aex-row`, and `min-radius` denominator variants to the
+  source-scatter/prepass diagnostic. All three give the same
+  `case_0011/0012/0013 mean=25.2972/10.6222/21.2910`. The older direct
+  dynamic-offset probe is also identical across the three modes at
+  `63.4207/15.4790/20.0603`. This makes dynamic-offset denominator selection
+  unlikely to be the current Inner blocker for the tracked references.
 - 2026-06-06 prepass writeback probe: asm around `180002c68..180002c8a`
   confirms `FUN_180002780` writes the gathered alpha to both the source-alpha
   plane (`+0x12`) and final-alpha plane (`+0xf252`) for every cell; when source
