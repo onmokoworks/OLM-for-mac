@@ -144,6 +144,10 @@ Current probe status:
   conversion (`clamp * 255`, then `CVTTSS2SI` truncation). It improves case1
   slightly but worsens case5 slightly, so output quantization is another AEX
   fact rather than the main structural residual.
+- A post-output shift sweep of the current `rotated-aex-full-choreo` candidate
+  across all `dx/dy = -1..1` worsens both tracked cases. The unshifted candidate
+  remains best (`case_0001 mean=4.4483`, `case_0005 mean=1.1703`), so a simple
+  final crop/output offset error is unlikely.
 - `rotated-aex-float-math` uses `FUN_180001ec0`-shaped float angle trig and
   integer half-width/half-height centers. It is neutral on the tracked refs
   (`case_0001 mean=4.4483`, `case_0005 mean=1.1703`), so those rotate-math
