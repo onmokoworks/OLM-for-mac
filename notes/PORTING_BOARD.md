@@ -1913,8 +1913,15 @@ behavior.
   `case_0001 max=35 mean=0.9928`, `case_0002 max=43 mean=1.3755`,
   `case_0003 max=255 mean=4.4660`, versus baseline
   `0.8381/1.1623/1.7003`. Keep this as diagnostic evidence; the next target is
-  likely `FUN_181157ed0`'s matrix adjustment or exact Mat/ROI placement rather
-  than adopting direct-back in the port.
+  exact Mat/ROI placement rather than adopting direct-back in the port.
+- 2026-06-06 follow-up: `FUN_181157ed0` is not a matrix adjustment helper; its
+  decomp/asm matches `cv::Mat` move-assignment (`cv::Mat::operator =` strings
+  are in the failure path). It copies/moves header and step storage, then clears
+  the source header. `FUN_181156cd0` is the ROI/header constructor: its rectangle
+  memory layout is `x`, `y`, `height`, `width`, and it sets `rows=height`,
+  `cols=width`, `data = src.data + y * step[0] + x * elemSize`. Therefore the
+  next KiraKira target is exact ROI/source-destination placement around
+  `FUN_181156cd0` and `FUN_18115cfb0`, not `FUN_181157ed0`.
 - A temporary CLI probe approximating OpenCV's 5-bit `INTER_LINEAR` table
   (`bilinear-fixed5`) did not improve the current refs:
   `case_0001 mean=0.8384`, `case_0002 mean=1.1624`,
