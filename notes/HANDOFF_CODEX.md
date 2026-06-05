@@ -561,6 +561,16 @@ python3 refs/scripts/package_reference_requests.py --output /tmp/olm_reference_r
 python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
 ```
 
+2026-06-06 Mac plugin成果物導線: `scripts/package_mac_plugins.sh` を追加。
+既定では `scripts/build_all_mac_plugins.sh` を走らせて10本のDebug `.plugin`
+bundleを検証し、`/tmp/olm_mac_plugins_Debug_YYYYMMDD.zip` にまとめる。
+同じセッションでビルド検証済みなら `--skip-build` で再ビルドを省略可能。
+zip内には `INSTALL.txt` と `manifest.json` が入り、manifestには各bundleの
+SHA-256と `arm64`/`x86_64` 確認情報を記録する。検証:
+`bash -n scripts/package_mac_plugins.sh`,
+`scripts/package_mac_plugins.sh --skip-build --output /tmp/olm_mac_plugins_test.zip`,
+zip内 `manifest.json` のJSON parse、zip内 `.plugin` 10個確認はいずれも成功。
+
 ## 4. このセッションで触ったファイル
 
 - 旧Claude引き継ぎ時点の追加: `refs/scripts/olmtoondilate_cli.py`, `refs/scripts/smoke_olmtoondilate_cli.py`,
@@ -596,6 +606,7 @@ python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick # green gates o
 refs/scripts/build_olmblur_cli.sh && refs/scripts/build_olmsmoother_cli.sh && refs/scripts/build_olmtoondilate_cli.sh && refs/scripts/build_olmradialblur_cli.sh
 refs/scripts/build_olmkirakira_cli.sh              # OLMKiraKira C++ scaffold
 scripts/build_all_mac_plugins.sh                  # Mac plugins: build + universal/codesign verify
+scripts/package_mac_plugins.sh                    # Mac plugins: verify + package zip for AE host install
 python3 refs/scripts/smoke_olmblur_cli.py            # ok=7 (max<=1 gate)
 python3 refs/scripts/smoke_olmcolorkey_cli.py      # ok=4 (exact)
 python3 refs/scripts/smoke_olmcolorkey_extended_cli.py # ok=3 (gated erode residual)
