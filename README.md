@@ -176,6 +176,7 @@ scripts/package_mac_plugins.sh --skip-build --output /tmp/olm_mac_plugins_Debug.
 ```
 
 zipを展開し、中の `*.plugin` bundle を上記 MediaCore へコピーしてからAfter Effectsを再起動します。codesign が `resource fork, Finder information, or similar detritus not allowed` で落ちる場合は、build product に付いた xattr を消してから再実行します。
+zipには `INSTALL.txt`, `AE_VALIDATION_CHECKLIST.txt`, `manifest.json` も入ります。AE実機検証時はチェックリストに沿って、AE version、renderer/project_gpu_accel_type、各plug-inのload/apply/render結果を返してください。
 
 ```sh
 xattr -cr build/Debug/<PluginName>.plugin

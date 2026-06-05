@@ -73,6 +73,7 @@ mkdir -p "$stage"
 
 manifest="$stage/manifest.json"
 install_notes="$stage/INSTALL.txt"
+validation_notes="$stage/AE_VALIDATION_CHECKLIST.txt"
 
 cat >"$install_notes" <<EOF
 OLM macOS AE plug-ins (${CONFIGURATION})
@@ -88,12 +89,63 @@ The packaging script verifies each binary has arm64 and x86_64 slices and passes
 codesign --verify before adding it to this archive.
 EOF
 
+cat >"$validation_notes" <<'EOF'
+OLM macOS AE host validation checklist
+
+Purpose:
+Confirm that the packaged macOS .plugin bundles load in After Effects and can be
+used for real AE-host render checks. The current Mac-side repository can verify
+CLI algorithms and bundle builds, but it cannot prove final AE host behavior
+without a real AE install.
+
+Environment to record:
+- macOS version
+- Apple Silicon or Intel
+- After Effects version, for example 25.2x131
+- Project Settings > Video Rendering and Effects renderer name
+- Whether the test was run from a clean AE launch after copying the plug-ins
+
+Install:
+1. Quit After Effects.
+2. Copy all *.plugin bundles from this package into:
+   ~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/
+3. Restart After Effects.
+4. Confirm the effects appear in AE's Effect menu or can be applied to a layer.
+
+Minimum load check:
+- ColorKeep
+- OLM Blur
+- OLM Color Key
+- OLM Directional Blur
+- OLM RadialBlur
+- OLM OLM Kira Kira
+- OLM Toon Dilate
+- OLM Distance Gradation
+- OLM Smoother
+- OLM Smoother v2
+
+Return to the Mac-side porting workspace:
+- AE version and renderer/project_gpu_accel_type if available
+- For each plug-in: loaded yes/no, applied yes/no, render succeeded yes/no
+- Any AE crash, missing effect, parameter UI issue, or render error text
+- If doing pixel validation, return PNGs plus the parameter manifest using the
+  existing Windows reference package/import workflow shape
+
+Important:
+Do not use the hidden Compositing Options > GPU Rendering / ADBE Force CPU GPU
+value as proof that a render used the GPU or CPU path. Record it as a reference
+field only; use Project Settings renderer/project_gpu_accel_type for path
+context.
+EOF
+
 {
   echo "{"
   echo "  \"kind\": \"olm_mac_plugin_package\","
   echo "  \"configuration\": \"$CONFIGURATION\","
   echo "  \"source_root\": \"$ROOT\","
   echo "  \"packaged_at\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\","
+  echo "  \"install_notes\": \"INSTALL.txt\","
+  echo "  \"validation_checklist\": \"AE_VALIDATION_CHECKLIST.txt\","
   echo "  \"plugins\": ["
 } >"$manifest"
 
