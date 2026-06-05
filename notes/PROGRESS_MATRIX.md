@@ -1,0 +1,117 @@
+# OLM Port Progress Matrix
+
+Updated: 2026-06-06
+
+This is the parent-owned progress matrix for the OLM Tools Apple Silicon port.
+Percentages are engineering estimates, not release claims. A plugin is only
+100% when Windows-reference behavior is implemented, AE-free CLI gates pass,
+the macOS AE plugin builds, and returned AE-host validation confirms the effect.
+
+## Percent Snapshot
+
+| Plugin | Estimate | Current proof | Main remaining risk | Best next action |
+| --- | ---: | --- | --- | --- |
+| ColorKeep | 80% | Synthetic CLI smoke is green; Mac project builds in aggregate. | No Windows OLM reference set for this helper. | Keep as support utility unless a real ColorKeep ref set appears. |
+| OLMBlur | 85% | C++ CLI smoke is green: cases 1/2/4 exact, all 7 guarded; Mac project builds. | Small max=1 residual on non-exact blur cases; no AE-host validation yet. | Use as low-risk packaging/AE validation target. |
+| OLMColorKey | 70% | RGB cases 1-4 exact; Edge Thin case 7 exact, cases 5/6 guarded; Edge Blur cases 8/9 guarded; C++ and Rust CLIs pass; Mac project builds. | Replace, multi-key, and non-RGB color-space behavior lack returned refs. | Wait for `olmcolorkey_replace_colorspace_20260606`, then run the import-time smoke and promote only covered behavior. |
+| OLMToonDilate | 70% | Python and C++ cases 1-3 pass guarded residual gates; Mac project builds. | Boundary residual remains; case 4 belongs to RadialBlur. | Keep guarded; only revisit if AE-host validation exposes larger drift. |
+| OLMDistanceGradation | 65% | 12 stable cases from `20260605_extra` pass guarded smoke; Mac project builds. | Blur/constant/interpolation cases remain red or unpromoted; GPU/OpenCV path ambiguity possible. | Add focused red-to-green slices for omitted cases using existing refs before requesting more. |
+| OLMSmoother | 55% | Standalone v1 CLI exists; OLMSmoother2 `--force-version 1` matches v1 refs closely. | Standalone v1 classifier over-fires; v1 may be redundant if v2 compatibility is accepted. | Treat v1 as covered by v2 compatibility unless user requires a separate faithful v1 plugin. |
+| OLMSmoother2 | 65% | Key paths cases 2-4 are green; gamma cases guarded; no-key case 1 improved to mean 0.1832; Mac project builds. | No-key residual cannot be separated by current idx0/plane-split probes. | Wait for `smoother2_no_key_grid_20260606` before more no-key tuning. |
+| OLMDirectionalBlur | 40% | Python/C++ direct and rotated scaffolds exist; Mac project builds; red probes are registered. | Current opaque refs cannot separate render-context scale, premul, alpha ownership, and residual row/populate behavior. | Wait for `directionalblur_context_scale_20260606` unless a new ASM-only argument fact appears. |
+| OLMRadialBlur | 55% | Zoom and tiny Rotation are green in Python/C++; Mac project builds; Inner diagnostics are registered. | Inner/Edge Fade and Size Variation coupling remain ambiguous; current Inner refs have Size Variation 0. | Wait for `radialblur_inner_size_variation_20260606` before promoting more Inner changes. |
+| OLMKiraKira | 40% | Python/C++ two-temp all-ray candidate is measured; Mac project builds; red probes are registered. | Current refs have equal ray lengths and zero rotation, entangling ray order, scalar, crop, and angle behavior. | Wait for `kirakira_single_ray_20260606` before more equal-ray tuning. |
+
+## Overall Estimate
+
+The port is roughly 62% complete as an AE-free, Mac-buildable migration effort:
+
+- All 10 macOS plugin projects build in aggregate.
+- Green CLI gates cover the simpler or partially isolated behavior.
+- Hard paths now have registered red diagnostics instead of invisible failure.
+- Five targeted Windows reference requests are pending for non-guesswork
+  promotion of the remaining difficult paths.
+
+It is not release-complete because AE-host validation is still absent and the
+hard procedural effects remain partially scaffolded.
+
+## Parallelization Policy
+
+Use subagents aggressively, but with narrow ownership:
+
+| Agent slice | Mode | Allowed output | Avoid |
+| --- | --- | --- | --- |
+| `OLMDirectionalBlur` | Read-only explorer until refs return. | ASM/IR argument facts, stop-line review, smoke metrics. | PNG-only parameter fitting. |
+| `OLMRadialBlur Inner` | Read-only explorer until Size Variation refs return. | Buffer ownership facts for `+0x40/+0x48/+0x50`, red metric map. | Promoting Inner heuristics from Size Variation 0 refs. |
+| `OLMKiraKira` | Read-only explorer until single-ray refs return. | Facts around `FUN_181150790`, scalar aggregation, crop/canvas hypotheses. | More equal-ray sweeps without new evidence. |
+| `OLMSmoother2` | Read-only explorer until no-key grid refs return. | v1-via-v2 status, no-key blocker audit, writeback/sample facts. | Standalone v1 rabbit holes unless explicitly required. |
+| `OLMColorKey` | Read-only or bounded implementation after ColorKey refs return. | Replace/color-space coverage audit and per-case promotion plan. | Implementing Lab94/YUV/YCrCb replacement from black-key refs. |
+| `OLMDistanceGradation` | Bounded worker candidate. | Promote one omitted existing-ref slice at a time. | Broad refactors without per-case gates. |
+| `OLMBlur` / `OLMToonDilate` | Verification worker candidate. | Package/AE-validation prep and regression checks. | Spending RE time before host validation asks for it. |
+
+Parent agent owns integration, implementation merges, smoke updates,
+`notes/PORTING_BOARD.md`, commits, and deciding when to ask the user for new
+Windows references.
+
+## Current Pending Reference Requests
+
+- `directionalblur_context_scale_20260606`
+- `kirakira_single_ray_20260606`
+- `olmcolorkey_replace_colorspace_20260606`
+- `radialblur_inner_20260605`
+- `radialblur_inner_size_variation_20260606`
+- `smoother2_no_key_grid_20260606`
+
+Run:
+
+```sh
+python3 refs/scripts/check_reference_request_status.py
+python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending.zip
+```
+
+When returned refs are imported, run the relevant request smoke first, then the
+quick aggregate:
+
+```sh
+python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
+```
+
+## 2026-06-06 Parallel Audit Results
+
+- `OLMKiraKira` / Franklin: current C++ default smoke remains a red/probe path
+  around `case_0001 mean=0.8381`, `case_0002 mean=1.1623`,
+  `case_0003 mean=1.7003`; all-ray two-temp/no-fastpath is
+  `0.8506/1.1570/1.0563`. The asm-backed primitive details
+  (`ksize=(length,1)`, OpenCV anchor, `BORDER_REFLECT_101`) are already folded
+  into the candidate, but the equal-ray, zero-rotation refs cannot isolate ray
+  order, helper scalar, or single-ray crop. Stop implementation promotion until
+  `kirakira_single_ray_20260606` is imported.
+- `OLMDirectionalBlur` / Boyle: `rotated-aex-exact-rowdriver` exactly matches
+  `exact-scatter-helper` at `case_0001 mean=4.4392`,
+  `case_0005 mean=1.1761`, while `rotated-aex-full-choreo` is still around
+  `4.4483/1.1703`. Current refs cannot separate the render context scale read
+  from `ctx+0x11c/ctx+0x120`, straight/premultiplied source RGB, and alpha
+  side-channel behavior. Stop implementation tuning until
+  `directionalblur_context_scale_20260606` is imported.
+- `OLMRadialBlur` / Faraday: ASM ownership for the Inner/EdgeFade buffers is
+  strong (`+0x38` polar RGBA, `+0x40` scatter span/gate, `+0x48` prepass
+  alpha, `+0x50` prepass factor). Current C++ Inner source-scatter/prepass is
+  still red at `case_0011/0012/0013 mean=25.2972/10.6222/21.2910`; EdgeFade
+  seed removal improves to `5.1129/3.9755/1.9204` but conflicts with older
+  Inner coverage. Existing refs have `Size Variation=0`, so they cannot
+  identify real `+0x40` or Size Variation behavior. Stop tuning until
+  `radialblur_inner_size_variation_20260606` is imported.
+- `OLMSmoother` / Ampere: standalone v1 remains red, but
+  `OLMSmoother2 --force-version 1` covers current v1 refs at
+  `case_0001/0002/0003 mean=0.0055/0.0051/0.0200`, so standalone v1 should
+  stay low priority unless AE-host testing rejects the compatibility route.
+  v2 key paths are guarded (`case_0002 mean=0.0216`, `case_0003 exact`,
+  `case_0004 mean=0.0189`), while no-key `case_0001 mean=0.1832` should not be
+  tuned further until `smoother2_no_key_grid_20260606` is imported.
+- `OLMColorKey` / Kepler: current refs cover only `Enable Replace=0`, one
+  enabled key color, RGB exact paths, Edge Thin, and exploratory Lab76 Edge
+  Blur. C++ and Rust explicitly reject Replace, and Mac reads `enable_replace`
+  without applying replace colors. HSV/Lab94/YUV/YCrCb are not distinguishable
+  from current black-key refs. Stop Replace/non-RGB promotion until
+  `olmcolorkey_replace_colorspace_20260606` is imported, then run the dedicated
+  request smoke and manifest audit.

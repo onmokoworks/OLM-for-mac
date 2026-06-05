@@ -102,6 +102,8 @@ Project Settings 差で同一ケースを撮り直して、PNG差分を見るの
   - `OLMRadialBlur_img2`: 30 cases（Blur Type 2 / Rotation 系の追加参照）
   - `OLMSmoother2`: 12 cases
 - アルゴリズム解説: `refs/ALGORITHM_HARNESS.md`。状態ボード: `notes/PORTING_BOARD.md`（詳細はこちらが一次情報）。
+- 進捗率とサブエージェント投入方針: `notes/PROGRESS_MATRIX.md`。%はリリース保証ではなく、
+  AEなしCLI・Macビルド・参照待ちブロッカーを含めた親エージェント用の見積もり。
 
 ## 3. プラグイン別ステータス
 

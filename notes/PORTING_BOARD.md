@@ -11,6 +11,8 @@ possible and final AE plug-in validation.
 - Ghidra headless export works via `scripts/ghidra_export_one.sh`.
 - GhidraMCP HTTP endpoint works at `127.0.0.1:8080` when Ghidra GUI has a program open.
 - Direct helper: `scripts/ghidra_http.py`.
+- Progress estimates and sub-agent routing live in `notes/PROGRESS_MATRIX.md`.
+  Treat those percentages as planning estimates, not release guarantees.
 - AE-free harness smoke test passes via `python3 refs/scripts/smoke_algorithm_harness.py`.
 - Aggregate AE-free algorithm smoke passes via `python3 refs/scripts/smoke_all_algorithm_clis.py`;
   known experimental scaffolds are expected as `DIFF-observed`.
