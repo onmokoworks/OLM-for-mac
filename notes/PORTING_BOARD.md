@@ -901,6 +901,19 @@ after `FUN_1800013e0`. Result is mixed/minor against full choreography:
 address-level implementation clue, but do not treat it as the dominant residual
 until the caller argument roles and host edge/populate callbacks are mapped.
 
+2026-06-06 rotate-back denominator-alpha diagnostic: added
+`rotated-aex-rotateback-denom-alpha`, covered by
+`refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_rotateback_denom_alpha_cli.py`.
+It keeps the current full A/B choreography and row scatter, but replaces the
+rotate-back source alpha with `min(denom, 1.0)` just before the final padded
+`B -> A` output rotation. This isolates whether the row driver's max-alpha
+buffer is wrongly coupling into `FUN_180001ec0`'s alpha-weighted RGB
+interpolation. Result is neutral/negative against full choreography:
+`case_0001 mean=4.4483` is exactly unchanged, while
+`case_0005 mean=1.1749` worsens from `1.1703`. Keep this as negative evidence:
+the remaining DirectionalBlur residual is not explained by replacing
+rotate-back source alpha with the denominator plane.
+
 2026-06-06 truncated-span diagnostic: added
 `rotated-aex-truncated-span`, covered by
 `refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_truncated_span_cli.py`.

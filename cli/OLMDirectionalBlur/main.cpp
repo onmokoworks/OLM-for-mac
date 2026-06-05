@@ -854,7 +854,8 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
                      bool aex_rotate_math = false, bool float_component_center_y = false,
                      bool component_tail_only = false, bool source_alpha_binary_validity = false,
                      bool source_rgb_straight = false, bool disable_component_tail = false,
-                     bool preserve_invalid_input_rotate = false, bool source_driven_scatter = false) {
+                     bool preserve_invalid_input_rotate = false, bool source_driven_scatter = false,
+                     bool rotateback_denom_alpha = false) {
     if (params.noise_variation != 0.0) throw std::runtime_error("noise variation is not implemented");
     if (params.back_strength != 0) throw std::runtime_error("back blur is not implemented");
 
@@ -1206,6 +1207,13 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
         }
         blurred.rgba[dst + 3] = std::min(accum_alpha[static_cast<size_t>(p)], 1.0f);
     }
+    FloatImage blurred_for_rotateback = blurred;
+    if (rotateback_denom_alpha) {
+        for (int p = 0; p < pad_pixels; ++p) {
+            blurred_for_rotateback.rgba[static_cast<size_t>(p) * 4 + 3] =
+                std::min(accum_sum[static_cast<size_t>(p)], 1.0f);
+        }
+    }
 
     FloatImage output_canvas;
     if (aex_two_stage_output) {
@@ -1221,9 +1229,9 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
                 const float bx = odx * cos_a + ody * sin_a + center_x;
                 const float by = -odx * sin_a + ody * cos_a + center_y;
                 float sample[4];
-                if (alpha_weighted_output_rotate) sample_bilinear_alpha_weighted(blurred, bx, by, sample);
-                else if (strict_plain_sampler) sample_bilinear_strict(blurred, bx, by, sample);
-                else sample_bilinear(blurred, bx, by, sample);
+                if (alpha_weighted_output_rotate) sample_bilinear_alpha_weighted(blurred_for_rotateback, bx, by, sample);
+                else if (strict_plain_sampler) sample_bilinear_strict(blurred_for_rotateback, bx, by, sample);
+                else sample_bilinear(blurred_for_rotateback, bx, by, sample);
                 const size_t dst = (static_cast<size_t>(y) * pad_w + x) * 4;
                 for (int c = 0; c < 4; ++c) output_canvas.rgba[dst + c] = sample[c];
             }
@@ -1249,9 +1257,9 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
                 const float ody = static_cast<float>(y) - static_cast<float>(h) / 2.0f;
                 const float bx = odx * cos_a + ody * sin_a + static_cast<float>(pad_w) / 2.0f;
                 const float by = -odx * sin_a + ody * cos_a + static_cast<float>(pad_h) / 2.0f;
-                if (alpha_weighted_output_rotate) sample_bilinear_alpha_weighted(blurred, bx, by, sample);
-                else if (strict_plain_sampler) sample_bilinear_strict(blurred, bx, by, sample);
-                else sample_bilinear(blurred, bx, by, sample);
+                if (alpha_weighted_output_rotate) sample_bilinear_alpha_weighted(blurred_for_rotateback, bx, by, sample);
+                else if (strict_plain_sampler) sample_bilinear_strict(blurred_for_rotateback, bx, by, sample);
+                else sample_bilinear(blurred_for_rotateback, bx, by, sample);
             }
             const size_t dst = (static_cast<size_t>(y) * w + x) * 4;
             for (int c = 0; c < 3; ++c) {
@@ -1307,7 +1315,7 @@ Args parse_args(int argc, char **argv) {
             if (args.direction != "front" && args.direction != "both") throw std::runtime_error("--direction must be front or both");
         } else if (key == "--ignore-noise-variation") args.ignore_noise_variation = true;
         else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmdirectionalblur_cli --input in.png --params params.json --output out.png [--algorithm direct|direct-map|rotated|rotated-aex-choreo|rotated-aex-full-choreo|rotated-aex-exact-scatter-helper|rotated-aex-pad-full-choreo|rotated-aex-prepass-full-choreo|rotated-aex-halfheight|rotated-aex-float-center|rotated-aex-component-tail-only|rotated-aex-global-tail-only|rotated-aex-no-tail|rotated-aex-preserve-invalid-input|rotated-aex-binary-alpha|rotated-aex-straight-source-rgb|rotated-aex-float-math|rotated-aex-trunc-output|rotated-aex-truncated-span|rotated-aex-row-init-straight-zero|rotated-aex-row-init-premul-zero|rotated-aex-row-init-zero|rotated-front-strength|rotated-front-strength-preserve-alpha|rotated-rowdriver-prepass|rotated-rowdriver-prepass-init|rotated-aex-pad|rotated-alpha-sum|rotated-strict|rotated-strict-preserve-alpha|rotated-preserve-alpha|rotated-min-alpha|rotated-max-alpha|rotated-zero-alpha|rotated-gather|rotated-alpha|rotated-alpha-in|rotated-alpha-out|rotated-aex|rotated-aex-init|rotated-map|rotated-map-dest-coeff|rotated-map-alpha-coeff|rotated-map-preserve-alpha|rotated-map-aex|rotated-map-aex-init|rotated-aex-premul|rotated-map-aex-premul] [--direction front|both] [--ignore-noise-variation] [--angle-sign -1] [--sample-sign -1] [--strength-scale auto] [--rgb-normalize front-strength]\n");
+            std::printf("Usage: olmdirectionalblur_cli --input in.png --params params.json --output out.png [--algorithm direct|direct-map|rotated|rotated-aex-choreo|rotated-aex-full-choreo|rotated-aex-rotateback-denom-alpha|rotated-aex-exact-scatter-helper|rotated-aex-pad-full-choreo|rotated-aex-prepass-full-choreo|rotated-aex-halfheight|rotated-aex-float-center|rotated-aex-component-tail-only|rotated-aex-global-tail-only|rotated-aex-no-tail|rotated-aex-preserve-invalid-input|rotated-aex-binary-alpha|rotated-aex-straight-source-rgb|rotated-aex-float-math|rotated-aex-trunc-output|rotated-aex-truncated-span|rotated-aex-row-init-straight-zero|rotated-aex-row-init-premul-zero|rotated-aex-row-init-zero|rotated-front-strength|rotated-front-strength-preserve-alpha|rotated-rowdriver-prepass|rotated-rowdriver-prepass-init|rotated-aex-pad|rotated-alpha-sum|rotated-strict|rotated-strict-preserve-alpha|rotated-preserve-alpha|rotated-min-alpha|rotated-max-alpha|rotated-zero-alpha|rotated-gather|rotated-alpha|rotated-alpha-in|rotated-alpha-out|rotated-aex|rotated-aex-init|rotated-map|rotated-map-dest-coeff|rotated-map-alpha-coeff|rotated-map-preserve-alpha|rotated-map-aex|rotated-map-aex-init|rotated-aex-premul|rotated-map-aex-premul] [--direction front|both] [--ignore-noise-variation] [--angle-sign -1] [--sample-sign -1] [--strength-scale auto] [--rgb-normalize front-strength]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
@@ -1338,6 +1346,8 @@ int main(int argc, char **argv) {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, false, false, false, false, false, false, "blurred", false, false, false, false, false, false, false, true);
         } else if (args.algorithm == "rotated-aex-full-choreo") {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, false, false, "blurred", false, false, false, false, false, false, false, true, true);
+        } else if (args.algorithm == "rotated-aex-rotateback-denom-alpha") {
+            output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, false, false, "blurred", false, false, false, false, false, false, false, true, true, -1, false, false, false, false, false, false, false, false, false, false, false, true);
         } else if (args.algorithm == "rotated-aex-exact-scatter-helper") {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, false, false, "blurred", false, false, false, false, false, false, false, true, true, -1, false, false, false, false, false, false, false, false, false, false, true);
         } else if (args.algorithm == "rotated-aex-pad-full-choreo") {
