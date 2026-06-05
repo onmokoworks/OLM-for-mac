@@ -1963,10 +1963,10 @@ behavior.
   `warpAffine(src, dst, M, dsize, flags, borderMode, borderValue)`, with
   `0x1010000` InputArray wrappers and `0x2010000` OutputArray wrappers. The
   first ray-helper call wraps `R14` as both src and dst and uses matrix
-  `[rbp+0x60]`; the rotate-back call wraps `[rbp+0x60]` as src and `R12` as
-  dst, using matrix `local_f8`. This corrects the next implementation target:
-  probe the exact in-place/temporary Mat relationship rather than just
-  full-frame or centered-ROI canvas shapes.
+  `[rbp+0x60]`. The rotate-back call wraps `R12` as both src and dst and uses
+  matrix `local_f8`; `[rbp+0x60]` is the forward matrix local, not the
+  rotate-back source Mat. This corrects the next implementation target: model
+  the R14-to-R12 two-temp relationship rather than a one-temp rotate-back path.
 - 2026-06-06 in-place temp probe: added diagnostic
   `--warp-mode aex-inplace-temp`, approximating the first same-src/dst
   `warpAffine` wrapper as an in-place rotation of the centered temp buffer,
@@ -1977,16 +1977,27 @@ behavior.
   "centered ROI temp + in-place forward warp" interpretation and points back to
   exact Mat header/object lifetime mapping around `R14`, `[rbp+0x60]`, and
   `R12`.
+- 2026-06-06 corrected two-temp probe: after rechecking `FUN_181297ac0`, added
+  `--warp-mode aex-two-temp`, which follows the observed `R14 -> R12`
+  choreography: ROI copy into `R14`, in-place forward warp on `R14`, blur into
+  `R12`, in-place rotate-back on `R12`, then centered ROI copy to the final
+  output. It is mixed: `case_0001 mean=0.8531`, `case_0002 mean=1.1555`,
+  `case_0003 mean=1.1870`, versus default `0.8381/1.1623/1.7003`. Do not adopt
+  it as default yet; it is evidence that the two-temp path matters especially
+  for Strength=0, while case1 still needs exact ROI/header/copyTo semantics.
 - 2026-06-06 caller temp-Mat mapping: `FUN_18114f4a0` actually creates two
   same-sized PF-backed temp descriptors (`[rbp+0x190]` and `[rbp+0x120]`),
   copy-constructs them into `[rbp+0xc0]` and `[rbp+0x60]`, and zeros the copied
   Mat data pointers before calling `FUN_181150790`. The call passes
   `RDX=[rbp]`, `R8=[rbp+0xc0]`, `R9=current ray descriptor`, and stack
   `[rsp+0x20]=[rbp+0x60]`; Ghidra decomp hides part of this stack-arg shape.
-  Also confirmed `FUN_181156b90` is a `cv::Mat` copy-constructor shape with
-  refcount increment, while `FUN_181231b80` is the PF-backed Mat allocator.
-  Next implementation work should model this two-temp zero-filled choreography
-  inside the ray helper instead of adding more one-temp warp guesses.
+  Inside the helper, the first temp (`R14`) is filled from a centered ROI and
+  forward-warped in place; the second temp (`R12`) is the blur/output and
+  rotate-back canvas, then a centered ROI is copied into the final ray
+  descriptor (`param_4`). Also confirmed `FUN_181156b90` is a `cv::Mat`
+  copy-constructor shape with refcount increment, while `FUN_181231b80` is the
+  PF-backed Mat allocator. Next implementation work should model this two-temp
+  zero-filled choreography instead of adding more one-temp warp guesses.
 - A temporary CLI probe approximating OpenCV's 5-bit `INTER_LINEAR` table
   (`bilinear-fixed5`) did not improve the current refs:
   `case_0001 mean=0.8384`, `case_0002 mean=1.1624`,
