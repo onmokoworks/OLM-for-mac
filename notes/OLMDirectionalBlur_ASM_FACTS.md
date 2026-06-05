@@ -210,6 +210,13 @@ Current implication:
 Address/decomp facts:
 
 - It reads source RGB from `param_4` and source alpha/validity from `param_7`.
+- Register-level mapping from `disasm/OLMDirectionalBlur.aex.asm.txt`
+  `18000142b..18000144a`:
+  - `XMM4 = param_4[p].r`
+  - `XMM5 = param_4[p].g`
+  - `XMM6 = param_4[p].b`
+  - `XMM7 = param_7[p]`
+  These are loaded once for the current source pixel before the scatter loop.
 - It multiplies the effective span by `param_11`:
 
 ```c
@@ -227,17 +234,85 @@ table_index = (int)(offset / param_11);
 
 - RGB accumulates into `param_5.rgb`, denominator/weight into `param_6`, and
   output alpha is the max contribution in `param_5.a`.
+- The per-offset contribution is:
+
+```text
+contribution = param_7[source_p] * table[int(offset / param_11)]
+param_5[dst].rgb += param_4[source_p].rgb * contribution
+param_6[dst]     += contribution
+param_5[dst].a    = max(param_5[dst].a, contribution)
+```
+
+  This is visible in the repeated block at `180001550..1800015cc`: `XMM2` is
+  initialized from `XMM7`, multiplied by `[weight_table + index*4]`, then
+  multiplied by `XMM4/XMM5/XMM6` for RGB, added directly to the denominator
+  buffer, and maxed into output alpha.
 - The front call from `FUN_1800038d0` passes `param_3 = 1`, which makes the
   helper step toward lower x indices inside the rotated work buffer. Do not
   translate this helper-local direction directly into the CLI `sample-sign`
   without the surrounding rotate/callback coordinate convention.
 
+Caller mapping from `FUN_1800038d0`:
+
+- First/front call at `180003ad5..180003b5b`:
+  - `param_3 = 1`
+  - `param_4 = lVar2 = *param_3` (source A buffer)
+  - `param_5 = lVar1 = *param_4` (destination B buffer)
+  - `param_6 = *(params+0x8080)` denominator
+  - `param_7 = *(params+0x8088)` alpha_or_valid
+  - `param_8 = params+0x58` front weight table
+  - `param_9 = *(params+0x48)` front strength
+  - `param_11 = front_tail * component/noise coeff`
+- Second/back call at `180003b60..180003bde` is the same shape with
+  `param_3 = 0`, `param_8 = params+0x4068`, and
+  `param_9 = *(params+0x50)`.
+
+`FUN_180001000` buffer ownership:
+
+- `FUN_1800038d0` calls the prepass as:
+
+```c
+FUN_180001000(x, row_offset, lVar2, lVar1,
+              *(params+0x8088), *(params+0x8080),
+              front_fade_table, front_alpha_fade,
+              back_fade_table, back_alpha_fade,
+              width, component_coeff)
+```
+
+- Therefore:
+  - `param_3 = lVar2` source A buffer
+  - `param_4 = lVar1` destination B seed buffer
+  - `param_5 = *(params+0x8088)` alpha_or_valid
+  - `param_6 = *(params+0x8080)` denominator
+- For zero source alpha, `180001042..18000105b` clears denominator,
+  alpha_or_valid, and B RGBA for that pixel.
+- For nonzero source alpha, `18000136a..1800013c5` writes:
+
+```text
+gathered_alpha = weighted neighboring source alpha / weight_sum
+denom[p] = gathered_alpha
+B[p].rgb = A[p].rgb * gathered_alpha
+B[p].a = gathered_alpha
+alpha_or_valid[p] = gathered_alpha
+```
+
+- Scatter does not read B as its source. `FUN_1800013e0` gets source RGB from
+  `lVar2`/A and contribution alpha from `alpha_or_valid`.
+
 Current implication:
 
 - A simple alpha-sum final output is not the AEX shape; final alpha should stay
   max-like unless a later asm pass proves otherwise.
-- Remaining error is more likely in the exact rotate/validity/input-buffer
-  setup and render-scale mapping than in replacing max alpha with sum alpha.
+- Current CLI `source_rgb = raw_rgb * alpha; accum += source_rgb * weight` is
+  algebraically equivalent to the helper's
+  `A.rgb * alpha_or_valid * weight` as long as CLI `alpha` is the same
+  `alpha_or_valid` produced by the prepass. It is an implementation
+  representation difference, not evidence that scatter reads B as source.
+  The 2026-06-06 straight-source-RGB probe only showed that current opaque refs
+  cannot distinguish representations that differ by source alpha placement.
+- Remaining error is more likely in exact rotate/input-buffer ownership,
+  non-opaque source behavior, or render-scale/context mapping than in replacing
+  max alpha with sum alpha.
 - A 2026-06-06 sign check on the current AEX full-choreography probes keeps
   `--sample-sign 1` best despite the helper-local negative-x step:
   - `rotated-aex-full-choreo`: sign `1` gives

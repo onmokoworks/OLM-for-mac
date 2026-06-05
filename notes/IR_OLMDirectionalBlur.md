@@ -250,14 +250,26 @@ coeff = component_coeff * noise_coeff * tail
 - processed offsets: `1 <= offset < effective_span`; center offset 0 is never
   included by the scatter helper
 - table index: `int(offset / coeff)`
-- RGB accumulates into output buffer
-- denominator accumulates separately
+- source RGB is loaded once from `param_4[source].rgb`
+- source alpha/validity is loaded once from `param_7[source]`
+- per-offset contribution is `param_7[source] * weight_table[int(offset / coeff)]`
+- RGB accumulates as `param_4[source].rgb * contribution`
+- denominator accumulates the same contribution separately
 - output alpha is max-like, not simple alpha sum
+- In the `FUN_1800038d0` call sites, `param_4` is `lVar2` / source A buffer.
+  `FUN_180001000` writes premultiplied seed pixels into `lVar1` / B, but
+  scatter still reads source RGB from A and alpha from `alpha_or_valid`.
 - Although the front helper call steps toward lower x indices locally, the
   current rotated AEX probe family still matches references better with CLI
   `--sample-sign 1` after the surrounding rotate/callback coordinate convention
   is included. Rechecking `sample-sign -1` worsens `case_0005` from about
   `1.17` to `1.29..1.30` mean.
+- The current CLI representation `source_rgb = raw_rgb * alpha` plus
+  `rgb += source_rgb * weight` is algebraically equivalent to AEX
+  `rgb += A.rgb * alpha_or_valid * weight` when CLI `alpha` matches the
+  prepass `alpha_or_valid`. The remaining source-ownership risk is therefore
+  not "scatter reads B as source"; it is whether the prepass alpha and rotate
+  population match exactly.
 
 Rejected interpretations:
 
