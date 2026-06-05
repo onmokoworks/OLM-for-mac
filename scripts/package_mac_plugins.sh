@@ -76,7 +76,12 @@ install_notes="$stage/INSTALL.txt"
 validation_notes="$stage/AE_VALIDATION_CHECKLIST.txt"
 validation_template="$stage/AE_VALIDATION_RESULT.template.json"
 pixel_validation_dir="$stage/AE_PIXEL_VALIDATION"
-pixel_validation_request="$pixel_validation_dir/olmblur_request.zip"
+
+pixel_validation_presets=(
+  "OLMBlur:olmblur:ae_pixel_olmblur_20260606:olmblur_request.zip"
+  "OLMColorKey:olmcolorkey:ae_pixel_olmcolorkey_20260606:olmcolorkey_request.zip"
+  "OLMToonDilate:olmtoondilate:ae_pixel_olmtoondilate_20260606:olmtoondilate_request.zip"
+)
 
 cat >"$install_notes" <<EOF
 OLM macOS AE plug-ins (${CONFIGURATION})
@@ -131,11 +136,11 @@ Return to the Mac-side porting workspace:
 - AE version and renderer/project_gpu_accel_type if available
 - For each plug-in: loaded yes/no, applied yes/no, render succeeded yes/no
 - Any AE crash, missing effect, parameter UI issue, or render error text
-- For the first pixel validation pass, use:
-  AE_PIXEL_VALIDATION/olmblur_request.zip
-  It contains OLM Blur input PNGs, Windows expected PNGs, thresholds, and a
-  result template. Return the rendered PNGs as a zip or folder preserving
-  frame names such as case_0001.png.
+- For the first pixel validation pass, use the request zips in:
+  AE_PIXEL_VALIDATION/
+  They contain input PNGs, Windows expected PNGs, thresholds, and a result
+  template. Return the rendered PNGs as a zip or folder preserving frame names
+  such as case_0001.png.
 - Prefer filling AE_VALIDATION_RESULT.template.json and return it with any PNGs
   or error screenshots/logs.
 
@@ -188,9 +193,12 @@ cat >>"$validation_template" <<'EOF'
 EOF
 
 mkdir -p "$pixel_validation_dir"
-python3 "$ROOT/scripts/package_ae_pixel_validation_request.py" \
-  --preset olmblur \
-  --output "$pixel_validation_request"
+for entry in "${pixel_validation_presets[@]}"; do
+  IFS=: read -r _plugin preset _request_id zip_name <<<"$entry"
+  python3 "$ROOT/scripts/package_ae_pixel_validation_request.py" \
+    --preset "$preset" \
+    --output "$pixel_validation_dir/$zip_name"
+done
 
 {
   echo "{"
@@ -202,11 +210,18 @@ python3 "$ROOT/scripts/package_ae_pixel_validation_request.py" \
   echo "  \"validation_checklist\": \"AE_VALIDATION_CHECKLIST.txt\","
   echo "  \"validation_result_template\": \"AE_VALIDATION_RESULT.template.json\","
   echo "  \"ae_pixel_validation_requests\": ["
-  echo "    {"
-  echo "      \"name\": \"OLMBlur\","
-  echo "      \"request_id\": \"ae_pixel_olmblur_20260606\","
-  echo "      \"zip\": \"AE_PIXEL_VALIDATION/olmblur_request.zip\""
-  echo "    }"
+  for idx in "${!pixel_validation_presets[@]}"; do
+    IFS=: read -r plugin _preset request_id zip_name <<<"${pixel_validation_presets[$idx]}"
+    comma=","
+    if [[ "$idx" -eq "$((${#pixel_validation_presets[@]} - 1))" ]]; then
+      comma=""
+    fi
+    echo "    {"
+    echo "      \"name\": \"$plugin\","
+    echo "      \"request_id\": \"$request_id\","
+    echo "      \"zip\": \"AE_PIXEL_VALIDATION/$zip_name\""
+    echo "    }$comma"
+  done
   echo "  ],"
   echo "  \"plugins\": ["
 } >"$manifest"

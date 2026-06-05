@@ -28,24 +28,29 @@ def main() -> int:
         )
         pixel_dir = root / "AE_PIXEL_VALIDATION"
         pixel_dir.mkdir()
-        pixel_request = pixel_dir / "olmblur_request.zip"
-        proc = subprocess.run(
-            [
-                sys.executable,
-                str(repo / "scripts" / "package_ae_pixel_validation_request.py"),
-                "--preset",
-                "olmblur",
-                "--output",
-                str(pixel_request),
-            ],
-            cwd=repo,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-        )
-        print(proc.stdout, end="")
-        if proc.returncode != 0:
-            return proc.returncode
+        pixel_requests = [
+            ("OLMBlur", "olmblur", "ae_pixel_olmblur_20260606", "olmblur_request.zip"),
+            ("OLMColorKey", "olmcolorkey", "ae_pixel_olmcolorkey_20260606", "olmcolorkey_request.zip"),
+            ("OLMToonDilate", "olmtoondilate", "ae_pixel_olmtoondilate_20260606", "olmtoondilate_request.zip"),
+        ]
+        for _name, preset, _request_id, zip_name in pixel_requests:
+            proc = subprocess.run(
+                [
+                    sys.executable,
+                    str(repo / "scripts" / "package_ae_pixel_validation_request.py"),
+                    "--preset",
+                    preset,
+                    "--output",
+                    str(pixel_dir / zip_name),
+                ],
+                cwd=repo,
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+            )
+            print(proc.stdout, end="")
+            if proc.returncode != 0:
+                return proc.returncode
 
         plugins = []
         for name in EXPECTED_PLUGINS:
@@ -70,11 +75,8 @@ def main() -> int:
             "validation_checklist": "AE_VALIDATION_CHECKLIST.txt",
             "validation_result_template": "AE_VALIDATION_RESULT.template.json",
             "ae_pixel_validation_requests": [
-                {
-                    "name": "OLMBlur",
-                    "request_id": "ae_pixel_olmblur_20260606",
-                    "zip": "AE_PIXEL_VALIDATION/olmblur_request.zip",
-                }
+                {"name": name, "request_id": request_id, "zip": f"AE_PIXEL_VALIDATION/{zip_name}"}
+                for name, _preset, request_id, zip_name in pixel_requests
             ],
             "plugins": plugins,
         }

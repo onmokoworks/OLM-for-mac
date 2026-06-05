@@ -21,13 +21,19 @@ from pathlib import Path
 
 OLMBLUR_EXACT_CASES = ["case_0001", "case_0002", "case_0004"]
 OLMBLUR_RESIDUAL_CASES = ["case_0003", "case_0005", "case_0006", "case_0007"]
+OLMCOLORKEY_RGB_EXACT_CASES = ["case_0001", "case_0002", "case_0003", "case_0004"]
+OLMCOLORKEY_EDGETHIN_EXACT_CASES = ["case_0007"]
+OLMCOLORKEY_EDGETHIN_RESIDUAL_CASES = ["case_0005", "case_0006"]
+OLMCOLORKEY_EDGEBLUR_RESIDUAL_CASES = ["case_0008", "case_0009"]
+OLMTOONDILATE_CASES = ["case_0001", "case_0002", "case_0003"]
+PRESETS = ["olmblur", "olmcolorkey", "olmtoondilate"]
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--preset",
-        choices=["olmblur"],
+        choices=PRESETS,
         default="olmblur",
         help="Known validation preset to package.",
     )
@@ -79,30 +85,87 @@ def find_png(reference: Path, frame: str) -> Path:
 
 
 def preset_config(root: Path, preset: str, reference: Path | None) -> dict:
-    if preset != "olmblur":
-        raise ValueError(f"unsupported preset: {preset}")
-    return {
-        "request_id": "ae_pixel_olmblur_20260606",
-        "effect_name": "OLM Blur",
-        "effect_match_name": "OLM OLM Blur",
-        "reference": reference or root / "refs" / "win_references" / "20260604_olm" / "OLMBlur",
-        "threshold_groups": [
-            {
-                "name": "exact",
-                "case_ids": OLMBLUR_EXACT_CASES,
-                "max_diff": 0,
-                "mean_diff": 0.0,
-                "nonzero_px_percent": 0.0,
-            },
-            {
-                "name": "residual_max1",
-                "case_ids": OLMBLUR_RESIDUAL_CASES,
-                "max_diff": 1,
-                "mean_diff": 0.01,
-                "nonzero_px_percent": 3.0,
-            },
-        ],
+    configs = {
+        "olmblur": {
+            "request_id": "ae_pixel_olmblur_20260606",
+            "effect_name": "OLM Blur",
+            "effect_match_name": "OLM OLM Blur",
+            "reference": root / "refs" / "win_references" / "20260604_olm" / "OLMBlur",
+            "threshold_groups": [
+                {
+                    "name": "exact",
+                    "case_ids": OLMBLUR_EXACT_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
+                },
+                {
+                    "name": "residual_max1",
+                    "case_ids": OLMBLUR_RESIDUAL_CASES,
+                    "max_diff": 1,
+                    "mean_diff": 0.01,
+                    "nonzero_px_percent": 3.0,
+                },
+            ],
+        },
+        "olmcolorkey": {
+            "request_id": "ae_pixel_olmcolorkey_20260606",
+            "effect_name": "OLM Color Key",
+            "effect_match_name": "OLM OLM Color Key",
+            "reference": root / "refs" / "win_references" / "20260604_olm" / "OLMColorKey",
+            "threshold_groups": [
+                {
+                    "name": "rgb_exact",
+                    "case_ids": OLMCOLORKEY_RGB_EXACT_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
+                },
+                {
+                    "name": "edgethin_exact",
+                    "case_ids": OLMCOLORKEY_EDGETHIN_EXACT_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
+                },
+                {
+                    "name": "edgethin_residual",
+                    "case_ids": OLMCOLORKEY_EDGETHIN_RESIDUAL_CASES,
+                    "max_diff": 255,
+                    "mean_diff": 0.31,
+                    "nonzero_px_percent": 0.49,
+                },
+                {
+                    "name": "edgeblur_residual",
+                    "case_ids": OLMCOLORKEY_EDGEBLUR_RESIDUAL_CASES,
+                    "max_diff": 255,
+                    "mean_diff": 1.26,
+                    "nonzero_px_percent": 50.0,
+                },
+            ],
+        },
+        "olmtoondilate": {
+            "request_id": "ae_pixel_olmtoondilate_20260606",
+            "effect_name": "OLM Toon Dilate",
+            "effect_match_name": "OLM OLM Toon Dilate",
+            "reference": root / "refs" / "win_references" / "20260604_olm" / "OLMToonDilate",
+            "threshold_groups": [
+                {
+                    "name": "guarded",
+                    "case_ids": OLMTOONDILATE_CASES,
+                    "max_diff": 255,
+                    "mean_diff": 3.1,
+                    "nonzero_px_percent": 1.7,
+                },
+            ],
+        },
     }
+    if preset not in configs:
+        raise ValueError(f"unsupported preset: {preset}")
+    config = configs[preset]
+    if reference:
+        config = {**config, "reference": reference}
+    return config
 
 
 def build_readme(request_manifest: dict) -> str:

@@ -28,45 +28,52 @@ def main() -> int:
     repo = Path(__file__).resolve().parents[2]
     with tempfile.TemporaryDirectory(prefix="olm_ae_pixel_smoke_") as tmp:
         tmp_path = Path(tmp)
-        request_zip = tmp_path / "olmblur_request.zip"
-        proc = run(
-            [
-                sys.executable,
-                repo / "scripts" / "package_ae_pixel_validation_request.py",
-                "--preset",
-                "olmblur",
-                "--output",
-                request_zip,
-            ],
-            repo,
-        )
-        if proc.returncode != 0:
-            return proc.returncode
+        presets = [
+            ("olmblur", "OLMBlur", ("case_0001", "case_0002", "case_0003", "case_0004", "case_0005", "case_0006", "case_0007")),
+            ("olmcolorkey", "OLMColorKey", ("case_0001", "case_0002", "case_0003", "case_0004", "case_0005", "case_0006", "case_0007", "case_0008", "case_0009")),
+            ("olmtoondilate", "OLMToonDilate", ("case_0001", "case_0002", "case_0003")),
+        ]
+        for preset, reference_name, case_ids in presets:
+            request_zip = tmp_path / f"{preset}_request.zip"
+            proc = run(
+                [
+                    sys.executable,
+                    repo / "scripts" / "package_ae_pixel_validation_request.py",
+                    "--preset",
+                    preset,
+                    "--output",
+                    request_zip,
+                ],
+                repo,
+            )
+            if proc.returncode != 0:
+                return proc.returncode
 
-        result_dir = tmp_path / "returned" / "candidate"
-        result_dir.mkdir(parents=True)
-        reference = repo / "refs" / "win_references" / "20260604_olm" / "OLMBlur"
-        for case_id in ("case_0001", "case_0002", "case_0003", "case_0004", "case_0005", "case_0006", "case_0007"):
-            shutil.copy2(reference / f"{case_id}.png", result_dir / f"{case_id}.png")
+            result_root = tmp_path / f"returned_{preset}"
+            result_dir = result_root / "candidate"
+            result_dir.mkdir(parents=True)
+            reference = repo / "refs" / "win_references" / "20260604_olm" / reference_name
+            for case_id in case_ids:
+                shutil.copy2(reference / f"{case_id}.png", result_dir / f"{case_id}.png")
 
-        result_zip = tmp_path / "returned.zip"
-        with zipfile.ZipFile(result_zip, "w", compression=zipfile.ZIP_DEFLATED) as archive:
-            for path in (tmp_path / "returned").rglob("*"):
-                archive.write(path, path.relative_to(tmp_path / "returned"))
+            result_zip = tmp_path / f"returned_{preset}.zip"
+            with zipfile.ZipFile(result_zip, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+                for path in result_root.rglob("*"):
+                    archive.write(path, path.relative_to(result_root))
 
-        proc = run(
-            [
-                sys.executable,
-                repo / "scripts" / "verify_ae_pixel_validation_result.py",
-                request_zip,
-                result_zip,
-                "--run-dir",
-                tmp_path / "verify_run",
-            ],
-            repo,
-        )
-        if proc.returncode != 0:
-            return proc.returncode
+            proc = run(
+                [
+                    sys.executable,
+                    repo / "scripts" / "verify_ae_pixel_validation_result.py",
+                    request_zip,
+                    result_zip,
+                    "--run-dir",
+                    tmp_path / f"verify_run_{preset}",
+                ],
+                repo,
+            )
+            if proc.returncode != 0:
+                return proc.returncode
 
     print("[OK] AE pixel validation request smoke")
     return 0
