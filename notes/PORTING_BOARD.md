@@ -1945,6 +1945,13 @@ behavior.
   `case_0003 mean=6.9617`, versus baseline `0.8381/1.1623/1.7003`.
   Therefore the AEX dsize/Rect evidence needs the caller's ROI/temp-Mat
   placement modeled more exactly; a simple full-frame direct warp is not enough.
+- 2026-06-06 ROI placement detail: in `FUN_181150790`, the first ROI uses
+  `param_3` as the centering frame and `param_2` as the temp size:
+  `x=int(param_3.cols*0.5)-param_2.cols/2`,
+  `y=int(param_3.rows*0.5)-param_2.rows/2`,
+  `width=param_2.cols`, `height=param_2.rows`, followed by `copyTo(param_2)`.
+  This is the next exact placement rule to model; current CLI still mostly
+  approximates the flow with rotate-canvas/crop probes.
 - A temporary CLI probe approximating OpenCV's 5-bit `INTER_LINEAR` table
   (`bilinear-fixed5`) did not improve the current refs:
   `case_0001 mean=0.8384`, `case_0002 mean=1.1624`,

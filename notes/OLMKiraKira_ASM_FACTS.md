@@ -54,6 +54,20 @@ Inside `FUN_181150790`:
 - `.rdata 181486c10` shows `DAT_181486c1c = 0.5f`.
 - `181150852..18115086b` builds an ROI-like rectangle and calls
   `FUN_181156cd0`.
+- The first ROI rectangle is centered in the descriptor passed as `param_3`,
+  but its width/height come from `param_2`:
+
+```c
+rect.x = (int)(param_3->cols * 0.5f) - param_2->cols / 2;
+rect.y = (int)(param_3->rows * 0.5f) - param_2->rows / 2;
+rect.width = param_2->cols;
+rect.height = param_2->rows;
+```
+
+  The integer conversions are `cvttss2si` for the half-sized source dimension
+  and signed integer half (`(n - signbit(n)) >> 1`) for the temp dimension; for
+  the positive image sizes here this is trunc/floor half. This ROI is then
+  copied into `param_2`.
 - `181150874..181150892` copies the source into an intermediate via
   `FUN_18115cfb0`.
 - `1811508a1..1811508c3` calls `FUN_1811512a0` to build a transform matrix.
