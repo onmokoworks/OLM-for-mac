@@ -234,12 +234,18 @@ coeff = component_coeff * noise_coeff * tail
 - RGB accumulates into output buffer
 - denominator accumulates separately
 - output alpha is max-like, not simple alpha sum
+- Although the front helper call steps toward lower x indices locally, the
+  current rotated AEX probe family still matches references better with CLI
+  `--sample-sign 1` after the surrounding rotate/callback coordinate convention
+  is included. Rechecking `sample-sign -1` worsens `case_0005` from about
+  `1.17` to `1.29..1.30` mean.
 
 Rejected interpretations:
 
 - destination component coefficient: worsens `case_0005`
 - direct alpha attenuation by coefficient: worsens `case_0005`
 - alpha-sum final output: essentially no useful improvement
+- direct helper-local sign flip as CLI `sample-sign -1`: worsens `case_0005`
 - zero-denominator row-driver initialization is negative in the current CLI
   scaffold. `straight-zero` and `premul-zero` both report
   `case_0001 mean=4.4702`, `case_0005 mean=1.1762`; fully zeroed output is
