@@ -216,11 +216,21 @@ the OLMKiraKira Brightness probe all produced expected DIFF measurement output.
 
 ## Active Sub-Agent Assignments
 
-- Reference audit: verify imported Windows manifests and suspicious cases.
-- Blur group: inspect `OLMBlur` and `OLMDirectionalBlur` dumps for CLI kernel extraction.
-- Color-key group: inspect `OLMColorKey` and `ColorKeep`.
-- Radial/Smoother group: inspect `OLMRadialBlur`, `OLMSmoother`, `OLMSmoother2`.
-- Large-effect group: inspect `DistanceGradation`, `OLMKiraKira`, `OLMToonDilate`.
+Current parallelization model is plug-in ownership, not broad effect groups.
+Use subagents for narrow read-only IR/ASM audits while the parent agent owns
+implementation, regression gates, and commits.
+
+| Owner slice | Scope | Current best use | Stop condition / next reference |
+|---|---|---|---|
+| `OLMDirectionalBlur` | `notes/IR_OLMDirectionalBlur.md`, `notes/OLMDirectionalBlur_ASM_FACTS.md`, `cli/OLMDirectionalBlur/`, `refs/scripts/smoke_olmdirectionalblur*` | Keep as read-only IR/argument-mapping audit unless new Windows refs arrive. Re-run `rotated-aex-full-choreo` / `rotated-aex-exact-rowdriver` only as regression checks. | Current opaque refs cannot separate render-context scale, source premul, and alpha ownership. Wait for `refs/reference_requests/directionalblur_context_scale_20260606.json` before further PNG-only fitting. |
+| `OLMRadialBlur` | `notes/OLMRadialBlur_RE.md`, `cli/OLMRadialBlur/`, `refs/scripts/smoke_olmradialblur*` | Zoom and tiny Rotation are regression-green; use subagents only for `FUN_180004640` Inner plane ownership and `+0x40/+0x48/+0x50` caller audits. | All current Inner/Edge Fade refs have `Size Variation=0`, so `+0x40` span/gate cannot be identified strongly. Wait for `refs/reference_requests/radialblur_inner_size_variation_20260606.json` before promoting more Inner changes. |
+| `OLMKiraKira` | `notes/OLMKiraKira_ASM_FACTS.md`, `cli/OLMKiraKira/`, `refs/scripts/smoke_olmkirakira*` | Keep all-ray two-temp/no-fastpath as the candidate path. Subagents should audit exact `FUN_181150790` warp/box/ROI facts and not add more equal-ray sweeps. | Current three refs have equal ray lengths and zero rotation, so ray order, helper scalar, angle mapping, and single-ray crop are entangled. Wait for `refs/reference_requests/kirakira_single_ray_20260606.json`. |
+| `OLMSmoother` / `OLMSmoother2` | `notes/OLMSmoother2_ASM_FACTS.md`, `cli/OLMSmoother*`, `refs/scripts/smoke_olmsmoother*` | Prefer OLMSmoother2 `--force-version 1` for v1 compatibility. Standalone v1 is low priority because its classifier over-fires. | `idx0` and plane-split probes both worsened no-key case_0001. Wait for `refs/reference_requests/smoother2_no_key_grid_20260606.json` before more no-key tuning. |
+
+Practical rule: if a subagent edits code, give it a disjoint write scope and a
+single smoke target. Otherwise keep subagents read-only and have the parent
+agent integrate the finding into `notes/*_ASM_FACTS.md`, CLI diagnostics, and
+`smoke_all_algorithm_clis.py`.
 
 ## Next Integration Target
 
