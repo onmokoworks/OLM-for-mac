@@ -81,8 +81,8 @@ rect.height = param_2->rows;
   OutputArray Mat wrapper. The first call at `1811508d7..181150941` passes an
   InputArray and OutputArray that both wrap `R14`, plus the matrix at
   `[rbp+0x60]` and `dsize=(R14.cols, R14.rows)`. The rotate-back call at
-  `181150f89..181150ff8` passes an InputArray wrapping `[rbp+0x60]`, an
-  OutputArray wrapping `R12`, the matrix at `local_f8`, and
+  `181150f89..181150ff8` passes an InputArray and OutputArray that both wrap
+  `param_5`/`R12`, plus the matrix at `local_f8`, and
   `dsize=(R12.cols, R12.rows)`.
 - `FUN_181157ed0` is not a transform adjustment helper. It matches
   `cv::Mat::operator=(Mat&&)` / move-assignment shape: copy header fields,
@@ -224,6 +224,14 @@ Current interpretation:
   `case_0003 mean=33.4284`. Do not adopt this model; the observed same
   src/dst wrapper at the call site is not explained by a simple centered ROI
   temp copy followed by in-place rotation.
+- A C++ diagnostic `--warp-mode aex-two-temp` models the corrected two-temp
+  choreography: centered ROI into `R14`, in-place forward warp on `R14`, blur
+  into `R12`, in-place rotate-back on `R12`, then centered ROI copy to the
+  final output size. It is mixed but useful evidence:
+  `case_0001 mean=0.8531`, `case_0002 mean=1.1555`,
+  `case_0003 mean=1.1870` versus default `0.8381/1.1623/1.7003`.
+  This improves the Strength=0 case substantially without solving case1, so
+  keep it as a probe; the default port still stays on `current`.
 - The decomp/asm shape shows the rotate-back `warpAffine` dsize is the final
   ray descriptor (`param_5`) rather than a larger temporary canvas followed by
   an obvious center crop. A C++ diagnostic `--warp-mode aex-direct-back`
@@ -324,7 +332,10 @@ Helper facts:
   pointers, and increments the refcount at `u + 0x14` when present.
 
 Implication: the caller passes two distinct zero-filled Mat headers that share
-the PF-backed allocation through copy construction. The simple
-`aex-inplace-temp` probe was still wrong because it modeled only a centered ROI
-copy into one temp, not this exact two-temp zero-filled caller choreography plus
-the inner copy/warp/blur sequence inside `FUN_181150790`.
+the PF-backed allocation through copy construction. `FUN_181150790` then uses
+the first temp (`R14`/`param_3`) for the initial centered ROI copy and in-place
+forward warp, and the second temp (`R12`/`param_5`) as the blur/output and
+in-place rotate-back canvas before copying a centered ROI into the final ray
+descriptor (`param_4`). The simple `aex-inplace-temp` probe was still wrong
+because it modeled a one-temp blur/rotate-back path rather than this R14-to-R12
+two-temp choreography.

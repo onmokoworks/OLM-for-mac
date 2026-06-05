@@ -58,7 +58,7 @@ def main() -> int:
         return build.returncode
 
     rc = 0
-    for warp_mode in ("current", "opencv-center", "aex-frame", "aex-roi-temp", "aex-inplace-temp"):
+    for warp_mode in ("current", "opencv-center", "aex-frame", "aex-roi-temp", "aex-inplace-temp", "aex-two-temp"):
         result = run_probe(root, warp_mode, Path(f"/tmp/olmkirakira_cpp_warp_mode_probe_{warp_mode}"))
         if result != 0:
             rc = result
