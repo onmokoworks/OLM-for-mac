@@ -41,6 +41,16 @@ Current implication:
 - If the remaining DirectionalBlur residual starts depending mainly on this
   scale, request a targeted Windows reference/manifest addition for the render
   scale/downsample fields instead of overfitting the PNGs.
+- A 2026-06-06 full-choreography scale sweep confirms this is not closing as
+  one scalar conversion. With `rotated-aex-full-choreo` on front-only cases
+  `0001..0005`, the mean averages were:
+  - `auto` / `1/24`: `3.7928`
+  - `0.03`: `3.7731`
+  - `0.06`: `3.8490`
+  - `0.08`: `3.9352`
+  `case_0005` alone prefers `0.08` (`mean=1.1540`), while cases `0001..0004`
+  worsen to `mean=4.6304`. Keep `auto` for registered smoke stability; do not
+  promote `0.03` as a fix without the actual context fields.
 
 ## Work-Buffer Padding / Host Offsets
 
