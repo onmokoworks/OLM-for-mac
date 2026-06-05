@@ -492,6 +492,17 @@ B[p].a = gathered_alpha
   (worse). This confirms the integer span boundary is worth keeping in the IR,
   but it is not the dominant remaining residual on current refs.
 
+2026-06-06 component-center diagnostic:
+
+- Added `rotated-aex-float-center` to test whether the component map's
+  vertical center should be `(min_y + max_y) * 0.5` instead of integer-dividing
+  `(min_y + max_y) / 2` in the current C++ scaffold.
+- Measurement is neutral against `rotated-aex-full-choreo`:
+  `case_0001 mean=4.4483`, `case_0005 mean=1.1703`.
+- This makes component `center_y` rounding unlikely to be the front-only
+  residual. The next useful target remains exact `FUN_1800013e0`
+  scatter/source ownership or host edge/populate semantics.
+
 2026-06-05 diagnostic:
 
 - Added C++ CLI algorithm `--algorithm rotated-aex-choreo` to test the first
