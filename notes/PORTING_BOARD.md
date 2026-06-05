@@ -922,13 +922,15 @@ near-match Zoom baseline for `case_0003..0005`-style settings.
   has both `arm64` and `x86_64` slices, and ran `codesign --verify` for each
   bundle.
 - `python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick` completed
-  successfully with 30/30 green checks. This includes the
+  successfully with 31/31 green checks. This includes the
   `Reference request package`, `Reference request result verifier`, and
   `Reference request status` gates, the `AE validation result verifier`,
   the harness, ColorKeep, OLMBlur,
   OLMColorKey Python/C++/Rust, OLMToonDilate Python/C++, OLMDistanceGradation,
   OLMSmoother build, OLMSmoother2 build/v1 compatibility/key paths/Gamma
   Colors, and RadialBlur tiny Rotation / Zoom / Zoom Offset green gates.
+  The ColorKey Replace/color-space request smoke skips while pending and will
+  audit the returned manifest plus current-CLI-safe non-Replace subset after import.
 - `refs/scripts/package_reference_requests.py` now includes generated
   `refs/reference_requests/WIN_CODEX_HANDOFF.md` in the request zip. Both the
   all-request package and `--only kirakira_single_ray_20260606` package were

@@ -574,13 +574,17 @@ reference request JSONを検証して `/tmp/olm_reference_requests_YYYYMMDD.zip`
 return shape を含む。さらに `python3 refs/scripts/smoke_all_algorithm_clis.py
 --profile quick` の先頭で同梱包、返却manifest verifier smoke、pending request
 status check、AE validation result verifier smokeを実行するようになった。
-quick profile は30 checks になり、
+quick profile は31 checks になり、
 `Reference request package`, `Reference request result verifier`,
 `Reference request status`, `AE validation result verifier`、
-`OLMSmoother2 no-key grid request` も green gate として通過する。
+`OLMSmoother2 no-key grid request`,
+`OLMColorKey Replace/color-space request` も green gate として通過する。
 `refs/scripts/smoke_olmsmoother2_no_key_grid_cli.py` は
 `smoother2_no_key_grid_20260606` が未返却の間は `[SKIP]` で正常終了し、
 import後は12ケースを `Smoothness` / `Smooth Range` 別に一覧化する。
+`refs/scripts/smoke_olmcolorkey_replace_colorspace_request_cli.py` も
+`olmcolorkey_replace_colorspace_20260606` が未返却の間は `[SKIP]` で正常終了し、
+import後はReplace/color-space coverageをCSV化し、現CLIで安全に走れる非Replace subsetだけ差分測定する。
 検証済みコマンド:
 
 ```sh
@@ -644,7 +648,7 @@ zip内 `manifest.json` のJSON parse、zip内 `.plugin` 10個確認、
 
 ```sh
 cd "/Users/onmk/Documents/Projects/Personal/OLM as"
-python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick # green gates only; 2026-06-06 OK (30 checks, includes reference request package/result verifier/status, AE validation verifier, and Smoother2 no-key grid request smoke)
+python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick # green gates only; 2026-06-06 OK (31 checks, includes reference request package/result verifier/status, AE validation verifier, Smoother2 no-key grid request smoke, and ColorKey Replace/color-space request smoke)
 refs/scripts/build_olmblur_cli.sh && refs/scripts/build_olmsmoother_cli.sh && refs/scripts/build_olmtoondilate_cli.sh && refs/scripts/build_olmradialblur_cli.sh
 refs/scripts/build_olmkirakira_cli.sh              # OLMKiraKira C++ scaffold
 scripts/build_all_mac_plugins.sh                  # Mac plugins: build + universal/codesign verify
