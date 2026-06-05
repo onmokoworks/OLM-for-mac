@@ -302,17 +302,25 @@ CLI probe results:
   intermediate sizes. On the current refs it is identical to the default:
   `case_0001 mean=0.8381`, `case_0002 mean=1.1623`,
   `case_0003 mean=1.7003`.
-- `--axis-fast-path false --rotate-size-mode aex-min4` forces 0/90-degree rays
-  through the rotate/crop path too. It is mixed/negative:
+- `--axis-fast-path false --rotate-size-mode aex-min4` on the older/default
+  warp path forces 0/90-degree rays through the rotate/crop path too. It is
+  mixed/negative:
   `case_0001 mean=0.8354`, `case_0002 mean=1.1847`,
   `case_0003 mean=2.0123`.
-- `--axis-fast-path false` with the default round sizing is also negative:
+- `--axis-fast-path false` with the older/default round sizing is also
+  negative:
   `case_0001 mean=0.8381`, `case_0002 mean=1.1847`,
   `case_0003 mean=2.1189`.
+- Later two-temp correction changes this interpretation: with
+  `--warp-mode aex-two-temp --axis-fast-path false`, C++ reports
+  `case_0001 mean=0.8506`, `case_0002 mean=1.1570`,
+  `case_0003 mean=1.0563`, nearly matching the Python OpenCV primitive probe
+  `0.8504/1.1570/1.0514`.
 
-Keep the default axis fast path for current references. The no-axis-fast probe
-is useful diagnostic evidence for future refs, but the current refs do not
-support adopting it globally.
+There is currently no asm evidence for a 0/90-degree fast path in AEX:
+the caller sets up temp Mats and calls `FUN_181150790`, and the helper contains
+the forward warp, Blur Mode work, and rotate-back path. Treat the CLI fast path
+as a portability shortcut/diagnostic, not as confirmed AEX behavior.
 
 Do not adopt any new warp/crop change without a direct asm argument mapping or
 a faithful local OpenCV 4.5.5 reproduction; image-diff-only tuning is too easy
