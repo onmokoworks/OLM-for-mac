@@ -54,3 +54,9 @@ then run:
 ```sh
 python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
 ```
+
+Returned result import command:
+
+```sh
+python3 refs/scripts/import_win_reference.py path/to/packed_reference.zip --allow-missing-optional-render-sets
+```
