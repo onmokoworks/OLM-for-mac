@@ -1876,6 +1876,12 @@ behavior.
   `1811511c7..181151215` maps to `ddepth=dst.type&7`,
   `ksize=(length,1)`, `anchor=(-1,-1)`, `borderType=4`, and a one-byte
   normalize flag from `[RBP+0x1a0]`.
+- 2026-06-06 follow-up objdump pass traced that normalize byte back through the
+  caller: `FUN_18114f4a0` calls the seed/descriptor vtable function at `+0x20`
+  (`18114f65e..18114f667`) and stores returned `AL` at `[rsp+0x50]`; the ray
+  call then copies it to outgoing `[rsp+0x40]`, where `FUN_181150790` receives
+  it as `param_9`/`RBP+0x1a0`. For current `Channel=2` refs this vtable slot is
+  `FUN_18114ed90`, which returns `1`, matching the normalized boxFilter path.
 - `borderType=4` is OpenCV `BORDER_REFLECT_101`, matching the current C++
   smoke's `--filter-border mirror`. The existing negative probes for
   `box-size=radius`, alternate anchors, `normalize=false`, and `u8-each`

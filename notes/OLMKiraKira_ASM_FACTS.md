@@ -39,6 +39,13 @@ Caller setup in `FUN_18114f4a0`:
   - `[rsp+0x30] = per-ray length value from R15[...]`.
   - `[rsp+0x38] = RBP+0x5d8`: Blur Mode.
   - `[rsp+0x40] = byte [rsp+0x50]`: one-byte flag later passed to boxFilter.
+- `18114f65e..18114f667` sets that caller byte once per core invocation:
+  it loads the seed/descriptor vtable from `R14`, calls function pointer
+  `+0x20`, and stores the returned `AL` into `[rsp+0x50]`.
+- For the current `Channel=2` references, the vtable notes identify that
+  `+0x20` function as `FUN_18114ed90`, which returns `1`. This supports the
+  current normalized boxFilter path without treating `normalize=true` as a
+  magic CLI-only constant.
 
 Inside `FUN_181150790`:
 
@@ -68,6 +75,8 @@ The first pass:
   is `R12`.
 - `181151146`: stack `[rsp+0x30] = 4`.
 - `18115114e..181151155`: stack `[rsp+0x28] = byte [RBP+0x1a0]`.
+  `RBP+0x1a0` is the helper's incoming `param_9`, populated by the caller
+  from the `AL` value saved at `[rsp+0x50]`.
 - `181151159`: stack `[rsp+0x20] = -1`.
 - `181151162`: `R9 = RDI = (1 << 32) | length`, i.e.
   `ksize=(length,1)` in OpenCV `Size(width,height)` packing.
@@ -99,8 +108,10 @@ Therefore the current ray path is:
 - `ksize = (length, 1)`, not `(length, length)` and not
   `(2 * length + 1, 1)`.
 - `anchor = (-1, -1)`.
-- `normalize = byte [caller + 0x1a0]`; current refs have no evidence that this
-  is false, and normalize=false probes are strongly negative.
+- `normalize = param_9`, copied from the caller's seed/descriptor vtable
+  `+0x20` return byte; for current `Channel=2` refs this is `1`. The
+  normalize=false probes are strongly negative, so there is no evidence that
+  current references exercise a false normalize path.
 - `borderType = 4`, which is OpenCV `BORDER_REFLECT_101`.
 
 Current port alignment:
