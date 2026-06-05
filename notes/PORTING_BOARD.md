@@ -1819,15 +1819,22 @@ behavior.
   `case_0001 max=41 mean=2.3386`,
   `case_0002 max=48 mean=2.6722`,
   `case_0003 max=133 mean=21.7350`.
-- Added diagnostic `--aggregation-mode current|fd90-five` plus
+- Added diagnostic `--aggregation-mode current|fd90-five|fd90-exact` plus
   `refs/scripts/smoke_olmkirakira_cpp_aggregation_probe_cli.py`.
   `fd90-five` mirrors the decompiled `FUN_18114fd90` shape by aggregating
   five layers (`vertical`, `horizontal`, `diagonal`, zero highlight,
   `diagonal2`) into a fresh output buffer before final source/glow compose.
+  `fd90-exact` keeps the same five-layer shape but spells out the
+  `FUN_18114fd90`-style `ray > epsilon`, `clamp(ray * brightness)`, RGB add,
+  alpha-union, and final RGB normalization order.
 - `fd90-five` is effectively neutral against current:
   `case_0001 max=22 mean=0.8381 nz=302780/518400`,
   `case_0002 max=24 mean=1.1623 nz=1373909/2073600`,
   `case_0003 max=60 mean=1.7003 nz=1367180/2073600`.
+  `fd90-exact` is also neutral:
+  `case_0001 max=22 mean=0.8381 nz=302780/518400`,
+  `case_0002 max=24 mean=1.1623 nz=1373909/2073600`,
+  `case_0003 max=60 mean=1.7003 nz=1367172/2073600`.
   Current differs only by one non-zero pixel in case 0001. This strongly
   clears final five-buffer aggregation as the main residual source. Next
   KiraKira target should be exact OpenCV `boxFilter` phase/anchor/border or
@@ -2091,6 +2098,13 @@ behavior.
   `case_0003 mean=1.0514`. Therefore simple Mat header / ROI view /
   same-destination aliasing is not the remaining residual; focus next on the
   destination canvas, final composition, or another pre/post ray detail.
+- 2026-06-06 harness update: the ordinary and ROI/alias OpenCV probes are now
+  registered in `refs/scripts/smoke_all_algorithm_clis.py` as
+  `optional-red-measurement` entries. Use
+  `python3 refs/scripts/smoke_all_algorithm_clis.py --profile opencv` to run
+  just these probes. If the selected Python lacks `cv2`, the aggregate reports
+  `SKIP missing optional cv2`; set `OLM_PROBE_PYTHON` to an OpenCV environment
+  such as the temporary 4.5.5 venv to reproduce the numeric measurements.
 - 2026-06-06 two-temp follow-up sweeps: `aex-two-temp` with
   `bilinear-fixed5` is almost neutral (`0.8529/1.1555/1.1822`). Anchor sweep
   keeps OpenCV default best (`opencv 0.8531/1.1555/1.1870`; `floor-left`

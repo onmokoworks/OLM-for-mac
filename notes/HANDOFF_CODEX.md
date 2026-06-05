@@ -148,10 +148,21 @@ case3は `1.7023 -> 1.7073` に少し悪化するため、これはOpenCV境界�
 Explicit ROI/`dst=` alias probe also produced the same
 `0.8504/1.1570/1.0514`, so the remaining target is not simple Mat aliasing;
 focus on destination canvas, final composition, or another pre/post ray detail.
+OpenCV probes are now available through the optional aggregate profile:
+`python3 refs/scripts/smoke_all_algorithm_clis.py --profile opencv`. If the
+selected Python lacks `cv2`, this profile reports `SKIP missing optional cv2`;
+set `OLM_PROBE_PYTHON` to an OpenCV environment to reproduce the numeric
+measurements.
 Follow-up C++ `aex-two-temp-direct-back` was strongly negative
 (`10.9852/11.6630/50.6637` vs `aex-two-temp` `0.8506/1.1570/1.0563`), so do
 not model the final descriptor/dsize evidence as a naive final-size rotate-back
 with the rotated temp center.
+2026-06-06 追加: C++ `--aggregation-mode fd90-exact` を追加し、
+`smoke_olmkirakira_cpp_aggregation_probe_cli.py` へ登録。`FUN_18114fd90` 風に
+`ray > epsilon`、`clamp(ray * brightness)`、RGB加算、alpha union、final RGB normalizeを
+式レベルで分けたが、`fd90-five/current` と同値 (`0.8381/1.1623/1.7003`)。
+最終五枚集約は主残差ではない。次は `FUN_181150790` の中間 forward warp /
+boxFilter / rotate-back dump、またはWin側per-ray isolate参照が有効。
 同日 C++ `--warp-mode aex-two-temp --axis-fast-path false` は
 `0.8506/1.1570/1.0563` でPython OpenCV probeとほぼ一致。手書きsampler差ではなく、
 0/90度rayのfast pathをAEXが通すかどうかが主な分岐。新規

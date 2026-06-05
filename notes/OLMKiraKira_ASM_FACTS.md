@@ -281,6 +281,15 @@ Current interpretation:
   `case_0003 mean=1.7034`, versus baseline `0.8381/1.1623/1.7003`.
   So the current residual is not explained by adding 1/32 interpolation-table
   quantization alone.
+- A C++ diagnostic `--aggregation-mode fd90-exact` now spells out the
+  `FUN_18114fd90`-style five-layer aggregation order: skip `ray <= epsilon`,
+  clamp `ray * brightness`, add RGB as `color * alpha`, update alpha with the
+  union formula, then normalize RGB by final alpha. It is effectively identical
+  to `fd90-five` and current on the tracked refs:
+  `case_0001 mean=0.8381`, `case_0002 mean=1.1623`,
+  `case_0003 mean=1.7003`. This further clears final five-buffer aggregation
+  as the active residual source; keep focus on `FUN_181150790` intermediate
+  forward-warp / boxFilter / rotate-back behavior or per-ray isolation refs.
 
 ## Rotate Canvas / dsize
 

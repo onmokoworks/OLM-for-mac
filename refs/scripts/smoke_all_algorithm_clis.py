@@ -19,7 +19,7 @@ from pathlib import Path
 class Smoke:
     name: str
     command: list[str]
-    expected: str = "green"  # green | red-measurement
+    expected: str = "green"  # green | red-measurement | optional-red-measurement
 
 
 def run(root: Path, smoke: Smoke) -> tuple[bool, str]:
@@ -39,6 +39,15 @@ def run(root: Path, smoke: Smoke) -> tuple[bool, str]:
             return True, "OK"
         return False, f"FAILED exit={proc.returncode}"
 
+    if smoke.expected == "optional-red-measurement":
+        if proc.returncode == 0:
+            return True, "OK-now-green"
+        if "[DIFF]" in output:
+            return True, "DIFF-observed"
+        if "missing cv2" in output or "opencv-python" in output:
+            return True, "SKIP missing optional cv2"
+        return False, f"FAILED exit={proc.returncode} without DIFF"
+
     if proc.returncode == 0:
         return True, "OK-now-green"
     if "[DIFF]" in output:
@@ -50,9 +59,9 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--profile",
-        choices=("quick", "full"),
+        choices=("quick", "full", "opencv"),
         default="full",
-        help="quick runs only green gates; full also runs expected-red diagnostic probes",
+        help="quick runs only green gates; full also runs expected-red diagnostics; opencv runs optional OpenCV probes",
     )
     return parser.parse_args()
 
@@ -150,6 +159,8 @@ def main() -> int:
         Smoke("OLMDirectionalBlur C++ Rotated Map Preserve Alpha", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_map_preserve_alpha_cli.py"], "red-measurement"),
         Smoke("OLMKiraKira", [py, "refs/scripts/smoke_olmkirakira_cli.py"], "red-measurement"),
         Smoke("OLMKiraKira C++", [py, "refs/scripts/smoke_olmkirakira_cpp_cli.py"], "red-measurement"),
+        Smoke("OLMKiraKira OpenCV two-temp probe", [py, "refs/scripts/smoke_olmkirakira_opencv_two_temp_probe_cli.py"], "optional-red-measurement"),
+        Smoke("OLMKiraKira OpenCV two-temp alias probe", [py, "refs/scripts/smoke_olmkirakira_opencv_two_temp_alias_probe_cli.py"], "optional-red-measurement"),
         Smoke("OLMKiraKira Brightness probe", [py, "refs/scripts/smoke_olmkirakira_brightness_probe_cli.py"], "red-measurement"),
         Smoke("OLMKiraKira Rotate probe", [py, "refs/scripts/smoke_olmkirakira_rotate_probe_cli.py"], "red-measurement"),
         Smoke("OLMKiraKira C++ Rotate Filter probe", [py, "refs/scripts/smoke_olmkirakira_cpp_rotate_filter_probe_cli.py"], "red-measurement"),
@@ -171,6 +182,8 @@ def main() -> int:
     ]
     if args.profile == "quick":
         smokes = [smoke for smoke in smokes if smoke.expected == "green"]
+    elif args.profile == "opencv":
+        smokes = [smoke for smoke in smokes if smoke.expected == "optional-red-measurement"]
 
     results: list[tuple[str, bool, str]] = []
     print(f"running smoke profile: {args.profile} ({len(smokes)} checks)", flush=True)

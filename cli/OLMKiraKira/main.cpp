@@ -1114,6 +1114,37 @@ FloatImage aggregate_fd90_five(
     return glow;
 }
 
+FloatImage aggregate_fd90_exact(
+    int width,
+    int height,
+    const std::vector<std::vector<float>> &amounts,
+    const std::vector<Color> &colors,
+    double brightness
+) {
+    FloatImage glow(width, height, 4);
+    const int pixels = width * height;
+    for (int i = 0; i < pixels; ++i) {
+        size_t p = static_cast<size_t>(i) * 4;
+        float alpha_union = 0.0f;
+        for (size_t layer = 0; layer < amounts.size(); ++layer) {
+            const float ray = amounts[layer][static_cast<size_t>(i)];
+            if (ray <= 1.0e-6f) continue;
+            const float alpha = clamp01(static_cast<float>(ray * brightness) * colors[layer].a);
+            glow.data[p + 0] += alpha * colors[layer].r;
+            glow.data[p + 1] += alpha * colors[layer].g;
+            glow.data[p + 2] += alpha * colors[layer].b;
+            alpha_union = alpha_union + alpha - alpha_union * alpha;
+        }
+        glow.data[p + 3] = clamp01(alpha_union);
+        if (alpha_union > 1.0e-6f) {
+            glow.data[p + 0] /= alpha_union;
+            glow.data[p + 1] /= alpha_union;
+            glow.data[p + 2] /= alpha_union;
+        }
+    }
+    return glow;
+}
+
 Image render_kirakira(const Image &input, const KiraKiraParams &params, const Options &options) {
     const int w = input.width;
     const int h = input.height;
@@ -1142,15 +1173,15 @@ Image render_kirakira(const Image &input, const KiraKiraParams &params, const Op
     if (options.has_scale_override) scale = options.scale_override;
 
     FloatImage glow;
-    if (options.aggregation_mode == "fd90-five") {
+    if (options.aggregation_mode == "fd90-five" || options.aggregation_mode == "fd90-exact") {
         std::vector<float> highlight_zero(static_cast<size_t>(w) * h, 0.0f);
-        glow = aggregate_fd90_five(
-            w,
-            h,
-            {vertical, horizontal, diagonal, highlight_zero, diagonal2},
-            {params.vertical_color, params.horizontal_color, params.diagonal_color, Color{}, params.diagonal2_color},
-            scale
-        );
+        std::vector<std::vector<float>> rays = {vertical, horizontal, diagonal, highlight_zero, diagonal2};
+        std::vector<Color> colors = {params.vertical_color, params.horizontal_color, params.diagonal_color, Color{}, params.diagonal2_color};
+        if (options.aggregation_mode == "fd90-exact") {
+            glow = aggregate_fd90_exact(w, h, rays, colors, scale);
+        } else {
+            glow = aggregate_fd90_five(w, h, rays, colors, scale);
+        }
     } else {
         glow = FloatImage(w, h, 4);
         std::vector<float> glow_weight_sum(static_cast<size_t>(w) * h, 0.0f);
@@ -1324,13 +1355,14 @@ Options parse_args(int argc, char **argv) {
             }
         } else if (key == "--aggregation-mode") {
             args.aggregation_mode = need_value("--aggregation-mode");
-            if (args.aggregation_mode != "current" && args.aggregation_mode != "fd90-five") {
-                throw std::runtime_error("--aggregation-mode must be current or fd90-five");
+            if (args.aggregation_mode != "current" && args.aggregation_mode != "fd90-five" &&
+                args.aggregation_mode != "fd90-exact") {
+                throw std::runtime_error("--aggregation-mode must be current, fd90-five, or fd90-exact");
             }
         } else if (key == "--filter-border" || key == "--ray-mode") {
             (void)need_value(key.c_str());
         } else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--rotate-filter bilinear|bicubic|bilinear-fixed5] [--rotate-border edge|constant] [--warp-mode current|opencv-center|aex-getrot|aex-direct-back|aex-frame|aex-roi-temp|aex-inplace-temp|aex-two-temp|aex-two-temp-direct-back|aex-two-temp-final-{xm,xp,ym,yp}|aex-two-temp-center-minus-half] [--rotate-size-mode round|floor|ceil|aex-min4] [--axis-fast-path true|false] [--axis-fast-path-mode true|false|strength-nonzero] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five]\n");
+            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--rotate-filter bilinear|bicubic|bilinear-fixed5] [--rotate-border edge|constant] [--warp-mode current|opencv-center|aex-getrot|aex-direct-back|aex-frame|aex-roi-temp|aex-inplace-temp|aex-two-temp|aex-two-temp-direct-back|aex-two-temp-final-{xm,xp,ym,yp}|aex-two-temp-center-minus-half] [--rotate-size-mode round|floor|ceil|aex-min4] [--axis-fast-path true|false] [--axis-fast-path-mode true|false|strength-nonzero] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five|fd90-exact]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
