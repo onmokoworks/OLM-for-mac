@@ -27,6 +27,19 @@ integration, and commits.
 | `OLMKiraKira` | `019e99be-59f1-7710-b08d-ed4963911ab1` / Goodall | Read `notes/OLMKiraKira_ASM_FACTS.md`, current C++/Python/OpenCV probes, single-ray request, decomp/disasm as needed. | Two-temp/all-ray facts, measured status, stop condition, one next action. |
 | `OLMSmoother` / `OLMSmoother2` | `019e99be-719f-7171-b4a5-2e1cc1082dd9` / Schrodinger | Read `notes/OLMSmoother2_ASM_FACTS.md`, v1/v2 CLI and Mac bridge, no-key-grid request, Smoother refs. | Whether v1 is covered by v2 compatibility, measured status, no-key-grid unblocker, one next action. |
 
+## Active 2026-06-06 Continuation Audit
+
+The continuation pass reuses the same plug-in ownership model, but asks each
+agent to decide whether any no-new-reference work remains worth doing before
+the parent spends more implementation time.
+
+| Plugin area | Agent | Scope | Expected output |
+| --- | --- | --- | --- |
+| `OLMDirectionalBlur` | `019e99d0-d239-7e91-a9ee-fda087e63c75` / Zeno | Read `notes/IR_OLMDirectionalBlur.md`, `notes/OLMDirectionalBlur_ASM_FACTS.md`, current probes, and `refs/reference_requests/directionalblur_context_scale_20260606.json`. | Current IR status, whether refs are sufficient, next action after refs arrive, any worthwhile no-ref action. |
+| `OLMRadialBlur` | `019e99d0-ea50-7611-8d7c-2053e1e8232f` / Ohm | Read `notes/OLMRadialBlur_RE.md`, Inner/EdgeFade probes, and `refs/reference_requests/radialblur_inner_size_variation_20260606.json`. | Green/red slice map, whether Inner/EdgeFade refs are sufficient, next action after refs arrive, any worthwhile no-ref action. |
+| `OLMKiraKira` | `019e99d0-ff94-7850-9e7e-8bd8bbc38202` / Pascal | Read `notes/OLMKiraKira_ASM_FACTS.md`, current two-temp/OpenCV probes, and `refs/reference_requests/kirakira_single_ray_20260606.json`. | Best candidate path, current residuals, next action after single-ray refs arrive, any worthwhile no-ref action. |
+| `OLMSmoother` / `OLMSmoother2` | `019e99d1-17ec-7af3-9a6f-bf09e142d458` / Parfit | Read `notes/OLMSmoother2_ASM_FACTS.md`, v1/v2 CLI status, and `refs/reference_requests/smoother2_no_key_grid_20260606.json`. | v1 compatibility status, no-key v2 blocker, next action after grid refs arrive, any worthwhile no-ref action. |
+
 ## Current Stop Conditions
 
 - `OLMDirectionalBlur`: wait for
@@ -54,4 +67,3 @@ Ask each sub-agent for:
 3. Whether the stop condition still holds and which reference request unblocks
    it.
 4. One next parent action that is backed by objdump/decomp/IR evidence.
-
