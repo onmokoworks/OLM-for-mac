@@ -217,6 +217,13 @@ Current interpretation:
   "centered ROI copy + full-frame dsize + original-frame center" and points
   back to exact source/destination Mat orientation around the two
   `FUN_181297ac0` calls.
+- A C++ diagnostic `--warp-mode aex-inplace-temp` models the observed first
+  `warpAffine` wrapper as an in-place temp-buffer warp, then blurs the temp and
+  rotates it back to the full frame. It is the worst tested warp hypothesis:
+  `case_0001 mean=8.7256`, `case_0002 mean=9.1471`,
+  `case_0003 mean=33.4284`. Do not adopt this model; the observed same
+  src/dst wrapper at the call site is not explained by a simple centered ROI
+  temp copy followed by in-place rotation.
 - The decomp/asm shape shows the rotate-back `warpAffine` dsize is the final
   ray descriptor (`param_5`) rather than a larger temporary canvas followed by
   an obvious center crop. A C++ diagnostic `--warp-mode aex-direct-back`
