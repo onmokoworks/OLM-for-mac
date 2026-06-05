@@ -197,7 +197,7 @@ the OLMKiraKira Brightness probe all produced expected DIFF measurement output.
 | DistanceGradation | yes, 20260605_extra | yes | complete-ish | Python CLI works | 11-case smoke OK (`max<=7`, `mean<=0.11`) |
 | OLMBlur | yes | yes | in progress | C++ CLI works | 3 exact, 4 near-match max=1 |
 | OLMColorKey | yes | yes | new Mac plugin builds | Python + C++ + Rust RGB/premult/box/Edge Thin/Edge Blur CLI | C++: 1-4 & 7 exact; 5/6 erode 0.48% off; Edge Blur C++ now matches Python exploratory residual (`case8 mean=1.0396`, `case9 mean=1.2503`); Mac plugin has cases 1-9 scaffold |
-| OLMDirectionalBlur | yes | yes | new Mac plugin builds | Python + C++ direct/rotated CLI scaffold | front-only/no-noise DIFF; Mac plugin has 8bpc front-only/no-noise direct slice; rotated-aex-rotateback-denom-alpha is neutral/negative, so residual is not rotate-back denom alpha |
+| OLMDirectionalBlur | yes | yes | new Mac plugin builds | Python + C++ direct/rotated CLI scaffold | front-only/no-noise DIFF; Mac plugin has 8bpc front-only/no-noise direct slice; rotate-back denom-alpha is neutral/negative; exact row-driver equals exact-scatter-helper (`4.4392/1.1761`), so residual needs ASM argument mapping or extra refs |
 | OLMKiraKira | yes | yes | new Mac plugin builds | Python OpenCV/two-temp ray probe + C++ native scaffold | Python OpenCV 4.5.5 two-temp `0.8504/1.1570/1.0514`; explicit ROI/`dst=` alias probe is identical, so simple Mat aliasing is not the residual; C++ all-ray two-temp/no-fastpath `0.8506/1.1570/1.0563`; Mac plugin uses that same all-ray two-temp candidate and still DIFF |
 | OLMRadialBlur | yes | yes | new Mac plugin builds | Python rotation + zoom polar CLI scaffold; C++ Zoom/Rotation/Inner diagnostic CLI | Rotation case_0010 near-match; Zoom 0009 OK in Python and C++; C++ Zoom 0003-0005 OK with Size Variation ignored; Mac plugin has 8bpc Zoom/no-inner/no-noise slice with large-Strength FFT path and Size Variation no-op pass-through; Inner source-scatter/prepass old refs baseline 25.2972/10.6222/21.2910; Edge Fade conditional seed improves means but remains red diagnostic due coverage; continue exact +0x10/+0x14 buffer construction |
 | OLMSmoother | yes | yes | prefer v2 compat | C++ CLI over mac port; OLMSmoother2 forced-v1 compat gate | standalone classifier over-fires ~20x, but OLMSmoother2 `Smoother Version=1` matches v1 refs closely (`mean=0.0055/0.0051/0.0200`); do not deep-dive standalone v1 unless this migration path is rejected |
@@ -899,6 +899,17 @@ after `FUN_1800013e0`. Result is mixed/minor against full choreography:
 `case_0005 mean=1.1761` worsens by `0.0058`. Keep source-driven scatter as an
 address-level implementation clue, but do not treat it as the dominant residual
 until the caller argument roles and host edge/populate callbacks are mapped.
+
+2026-06-06 exact row-driver diagnostic: added
+`rotated-aex-exact-rowdriver`, covered by
+`refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_exact_rowdriver_cli.py`.
+It combines full padded A/B choreography, the `FUN_180001000` prepass, and the
+`FUN_1800013e0` source-driven scatter path in one probe. Results exactly match
+`rotated-aex-exact-scatter-helper`: `case_0001 mean=4.4392`,
+`case_0005 mean=1.1761`, while full choreography remains `4.4483/1.1703`.
+This clears simple row-driver integration as the residual. Next work should map
+exact ASM argument roles, render-context scale, or nonopaque-alpha Windows refs
+before more image-only tuning.
 
 2026-06-06 rotate-back denominator-alpha diagnostic: added
 `rotated-aex-rotateback-denom-alpha`, covered by

@@ -546,6 +546,22 @@ Current implication:
   with exact `FUN_1800013e0` scatter boundary/table-index semantics or the
   host populate/output callbacks.
 
+2026-06-06 exact row-driver diagnostic:
+
+- Added `rotated-aex-exact-rowdriver`, combining the full padded A/B
+  choreography, `FUN_180001000` prepass, and `FUN_1800013e0`-shaped
+  source-driven scatter in one probe.
+- Dedicated smoke:
+  `refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_exact_rowdriver_cli.py`.
+- Measurements exactly match `rotated-aex-exact-scatter-helper`:
+  `case_0001 mean=4.4392`, `case_0005 mean=1.1761`.
+- `rotated-aex-full-choreo` remains `case_0001 mean=4.4483`,
+  `case_0005 mean=1.1703`.
+- This is negative evidence for simple row-driver integration as the missing
+  residual. The next useful pass should map caller argument roles,
+  render-context scale, or nonopaque-alpha Windows references rather than
+  continuing image-only toggles.
+
 2026-06-06 asm/decomp recheck of `FUN_180001000`:
 
 - The prepass is not just a source-alpha replacement. For each row pixel it
