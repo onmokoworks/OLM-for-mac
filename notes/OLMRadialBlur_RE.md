@@ -516,6 +516,28 @@ high-level polar coordinate structure.
   `58.5261/16.8593/21.2904`. Keep the current final normalization and continue
   upstream in `FUN_180002780` / `FUN_180001c90` caller-populated buffers,
   validity, and scatter order.
+- Caller buffer map, confirmed around `FUN_180004640` / asm
+  `18000487b..180004932` and `180004a50..180004b77`: `+0x3c940` is the
+  prepass/scatter RGBA accumulation buffer, `+0x3c948` is the final
+  max-alpha buffer, `+0x38` is the sampled polar RGBA input, `+0x40` is the
+  sampled source-alpha/prepass-alpha plane, `+0x48` is the sampled source
+  alpha plane used by `FUN_1800024c0` gating, and `+0x50` is the factor plane
+  passed to `FUN_180002780` as `param_4`. The factor plane is filled with
+  literal `1.0f` when the size-variation flag at render params `+0x44` is
+  false; otherwise it samples the Size Variation layer (`param_2[0x11]` in
+  decomp / `R14+0x88` in asm). It is not simply the source alpha.
+- Extra reference audit: `20260605_extra/OLMRadialBlur_img2` contains usable
+  Inner Edge Fade cases without Size Variation (`case_0024`, `case_0025`,
+  `case_0027`), so no Windows stop/request is needed for this ambiguity yet.
+  New red diagnostic
+  `refs/scripts/smoke_olmradialblur_cpp_inner_edgefade_factor_probe_cli.py`
+  measures those cases. With edge-fade span and AEX-alpha prepass weighting,
+  factor `alpha` gives `case_0024/0025/0027 mean=6.4162/5.4286/2.7546`;
+  factor `one` gives `5.7833/4.7930/2.3520`; factor `valid` is identical to
+  `one`. This supports the asm reading that Size Variation disabled means the
+  factor plane is constant/validity-like, and pushes the remaining Inner gap
+  toward exact `FUN_180001c90` scatter order, dynamic-offset semantics, or
+  prepass denominator/max-alpha coupling rather than factor-as-alpha.
 - `mac/OLMRadialBlur/OLMRadialBlur.cpp` now carries the same 8bpc
   outer-only/no-noise/no-size-variation Rotation slice, including the
   radius-dependent Offset Mode=1 path. Unsupported Rotation cases (Inner,
