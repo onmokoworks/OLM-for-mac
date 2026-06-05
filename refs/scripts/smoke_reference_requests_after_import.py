@@ -17,11 +17,63 @@ from check_reference_request_status import load_status_rows
 
 
 FOLLOW_UP_SMOKES = {
+    "directionalblur_context_scale_20260606": [
+        [
+            "refs/scripts/smoke_reference_request_cli_probe.py",
+            "--request-id",
+            "directionalblur_context_scale_20260606",
+            "--expected-effect",
+            "OLM DirectionalBlur",
+            "--build-script",
+            "refs/scripts/build_olmdirectionalblur_cli.sh",
+            "--command",
+            '"cli/OLMDirectionalBlur/olmdirectionalblur_cli" --input "{input}" --params "{params}" --output "{output}" --algorithm rotated-aex-full-choreo --angle-sign -1 --sample-sign 1 --strength-scale auto',
+        ],
+    ],
+    "kirakira_single_ray_20260606": [
+        [
+            "refs/scripts/smoke_reference_request_cli_probe.py",
+            "--request-id",
+            "kirakira_single_ray_20260606",
+            "--expected-effect",
+            "OLM Kira Kira",
+            "--build-script",
+            "refs/scripts/build_olmkirakira_cli.sh",
+            "--command",
+            '"cli/OLMKiraKira/olmkirakira_cli" --input "{input}" --params "{params}" --output "{output}" --seed-mode aex --falloff box3 --gain-scale 0.72 --ray-mode axis-rotate --compose-mode aex-premul --filter-border mirror --auto-length-scale --comp-width 1920',
+        ],
+    ],
     "olmcolorkey_replace_colorspace_20260606": [
-        "refs/scripts/smoke_olmcolorkey_replace_colorspace_request_cli.py",
+        ["refs/scripts/smoke_olmcolorkey_replace_colorspace_request_cli.py"],
+    ],
+    "radialblur_inner_20260605": [
+        [
+            "refs/scripts/smoke_reference_request_cli_probe.py",
+            "--request-id",
+            "radialblur_inner_20260605",
+            "--expected-effect",
+            "OLM RadialBlur",
+            "--build-script",
+            "refs/scripts/build_olmradialblur_cli.sh",
+            "--command",
+            '"cli/OLMRadialBlur/olmradialblur_cli" --input "{input}" --params "{params}" --output "{output}" --inner-source-scatter-prepass',
+        ],
+    ],
+    "radialblur_inner_size_variation_20260606": [
+        [
+            "refs/scripts/smoke_reference_request_cli_probe.py",
+            "--request-id",
+            "radialblur_inner_size_variation_20260606",
+            "--expected-effect",
+            "OLM RadialBlur",
+            "--build-script",
+            "refs/scripts/build_olmradialblur_cli.sh",
+            "--command",
+            '"cli/OLMRadialBlur/olmradialblur_cli" --input "{input}" --params "{params}" --output "{output}" --inner-source-scatter-prepass --ignore-size-variation',
+        ],
     ],
     "smoother2_no_key_grid_20260606": [
-        "refs/scripts/smoke_olmsmoother2_no_key_grid_cli.py",
+        ["refs/scripts/smoke_olmsmoother2_no_key_grid_cli.py"],
     ],
 }
 
@@ -127,8 +179,8 @@ def main() -> int:
         if not follow_ups:
             print(f"[INFO] {request_id}: no registered request-specific smoke; manifest verification only")
             continue
-        for script in follow_ups:
-            if run([sys.executable, script], root) != 0:
+        for follow_up in follow_ups:
+            if run([sys.executable, *follow_up], root) != 0:
                 failures += 1
 
     return 1 if failures else 0
