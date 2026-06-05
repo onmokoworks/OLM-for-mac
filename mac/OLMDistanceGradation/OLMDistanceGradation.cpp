@@ -399,14 +399,23 @@ static void build_distance_field(
 		for (long i = 0; i < w * h; ++i) df.x[i] = std::max(inside[i], outside[i]);
 	}
 
+	bool constant_blur = (p.interp_mode == INTERP_CONSTANT &&
+	                      p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0);
+	if (constant_blur) {
+		for (long i = 0; i < w * h; ++i) df.x[i] = (df.x[i] >= 1.0f) ? 1.0f : 0.0f;
+	}
+
 	// Blur: blur_size is full-res pixels.
 	//   BLUR_MODE_NO_SCALE (2): use size as-is at full-res even when downsampled
 	//   BLUR_MODE_SCALE    (3): scale to current-res pixels
+	// Constant interpolation blurs a binary full-distance field; Windows refs
+	// show Blur Size 30 behaving like radius 60 for this path.
 	if (p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) {
 		long bs = p.blur_size;
 		if (p.blur_mode == BLUR_MODE_SCALE) {
 			bs = (long)((float)p.blur_size * ds + 0.5f);
 		}
+		if (constant_blur) bs *= 2;
 		if (bs < 1) bs = 1;
 		int ksize = (int)(2 * bs + 1);
 		if (ksize > 1) gauss_blur_separable(df.x.data(), w, h, ksize);
@@ -433,7 +442,12 @@ static inline void compose_pixel(
 	} else if (p.interp_mode == INTERP_POWER) {
 		X = powf(X, p.power);
 	}
-	// CONSTANT / LINEAR: X passes through
+	// CONSTANT / LINEAR: X passes through. For CONSTANT+Blur, X is already the
+	// blurred binary field prepared in build_distance_field().
+	if (p.interp_mode == INTERP_CONSTANT &&
+	    !(p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0)) {
+		X = (X > 0.0f) ? 1.0f : 0.0f;
+	}
 
 	// d_alpha derived from src_a per in_out mode (matches Win shader)
 	float d_alpha;
