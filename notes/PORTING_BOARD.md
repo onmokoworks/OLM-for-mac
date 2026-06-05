@@ -1207,6 +1207,41 @@ index modulation, not as a direct alpha attenuation.
   mainly shows that the missing behavior is split between RGB denominator and
   alpha/rotate-back coupling.
 
+2026-06-05 asm fact log refresh:
+
+- Added `notes/OLMDirectionalBlur_ASM_FACTS.md` to keep address-level evidence
+  separate from image-diff diagnostics.
+- `FUN_180003c90` at `180003d39..180003dac` multiplies Front/Back Blur
+  Strength and Alpha Fade (`+0x48/+0x4c/+0x50/+0x54`) by a render-context
+  ratio read from `ctx+0x11c` / `ctx+0x120`, then truncates to int. The current
+  CLI's `--strength-scale auto = 1 / comp.frame_rate` remains a useful PNG
+  measurement hypothesis, but it is not the AEX field mapping.
+- `FUN_1800038d0` facts are now recorded with addresses: component coefficient
+  comes from `pow(map[p].area / max_area, size_variation)`, `FUN_180001000`
+  receives that coefficient before scatter, and `FUN_1800013e0` receives
+  Sharp Tail multiplied into the coefficient for front/back row scatter.
+- Next DirectionalBlur implementation work should map the render-context scale
+  and exact rotated buffer/validity setup before promoting any direct or
+  front-strength-denominator probe to the Mac plugin.
+
+2026-06-05 rowdriver prepass diagnostic:
+
+- Added `--algorithm rotated-rowdriver-prepass` to
+  `cli/OLMDirectionalBlur/main.cpp` plus
+  `refs/scripts/smoke_olmdirectionalblur_cpp_rotated_rowdriver_prepass_cli.py`,
+  registered as an expected-red aggregate measurement.
+- The probe ports the `FUN_180001000`-shaped prepass more literally than the
+  older gather modes: component coefficient scales Alpha Fade span and weight
+  table index, and source RGB is premultiplied by derived prepass alpha before
+  scatter.
+- Results are negative and match the already-worse alpha-weighted/AEX split:
+  `case_0001 max=255 mean=4.7505`,
+  `case_0005 max=254 mean=1.3802`.
+- Interpretation: the prepass alone is not missing; the remaining gap is
+  likely the exact caller buffer choreography around `memcpy(_Dst,_Src)`,
+  denominator buffer initialization/normalization, and final rotate-back source
+  selection.
+
 ## OLMKiraKira
 
 `refs/scripts/audit_olmkirakira_manifest.py` summarizes the three Windows

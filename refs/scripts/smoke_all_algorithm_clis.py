@@ -112,6 +112,7 @@ def main() -> int:
         Smoke("OLMDirectionalBlur C++ Rotated Alpha Sum", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_alpha_sum_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated Preserve Alpha", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_preserve_alpha_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated Front Strength Preserve Alpha", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_front_strength_preserve_alpha_cli.py"], "red-measurement"),
+        Smoke("OLMDirectionalBlur C++ Rotated Rowdriver Prepass", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_rowdriver_prepass_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated Gather", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_gather_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated Map", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_map_cli.py"], "red-measurement"),
         Smoke("OLMDirectionalBlur C++ Rotated Map Alpha Coeff", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_map_alpha_coeff_cli.py"], "red-measurement"),
