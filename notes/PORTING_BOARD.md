@@ -2433,3 +2433,31 @@ behavior.
   keep `one`/`factor` as the current diagnostic baseline and continue chasing
   exact `param_1+0x10` / `+0x14` buffer construction instead of adopting
   direct alpha scaling.
+
+2026-06-06 RadialBlur C++ Inner conditional seed probe:
+
+- Added CLI-only diagnostic `--inner-scatter-seed-mode edgefade-none`, exercised
+  by `refs/scripts/smoke_olmradialblur_cpp_inner_conditional_seed_probe_cli.py`.
+  It keeps the current source/self seed for fixed Inner references but uses the
+  tail-only `none` seed path when either Edge Fade parameter is nonzero.
+- Fixed measurement baseline:
+  `--inner-source-scatter-prepass --inner-prepass-mode tail-gather
+  --inner-prepass-span-mode edge-fade --inner-prepass-weight-mode aex-alpha
+  --inner-prepass-factor-mode one --inner-scatter-rgb-mode prepass-premul`.
+- Old Inner (`20260604_olm/OLMRadialBlur` cases `0011/0012/0013`) results:
+  - `source`: `25.2972 / 10.6222 / 21.2910`.
+  - `none`: `25.4927 / 11.0549 / 21.3756`.
+  - `edgefade-none`: `25.2972 / 10.6222 / 21.2910`.
+- Edge Fade (`20260605_extra/OLMRadialBlur_img2` cases `0024/0025/0027`)
+  results:
+  - `source`: `5.7833 / 4.7930 / 2.3520`.
+  - `none`: `5.1129 / 3.9755 / 1.9204`.
+  - `edgefade-none`: `5.1129 / 3.9755 / 1.9204`.
+- Interpretation: this is the first simple conditional probe that improves all
+  tracked Edge Fade means while preserving the fixed Inner baseline. However,
+  `none`/`edgefade-none` greatly increase Edge Fade nonzero coverage, so treat
+  it as a red diagnostic for conditional `FUN_180002780`/`FUN_1800024c0`
+  writeback semantics rather than an adoptable fix. The next RadialBlur Inner
+  task should inspect why Edge Fade prefers tail-only scatter while fixed Inner
+  still needs a source/self seed, especially the caller-populated `+0x10`
+  alpha plane and final `0xf250/0xf252` coverage coupling.

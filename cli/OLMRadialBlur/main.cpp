@@ -1105,6 +1105,10 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
         std::vector<float> source_scale(static_cast<size_t>(radius_count) * angular_count, 1.0f);
         FloatImage source_rgba = polar;
         std::map<int, std::vector<float>> weight_cache;
+        const bool seed_source =
+            params.inner_scatter_seed_mode == "source" ||
+            (params.inner_scatter_seed_mode == "edgefade-none" &&
+             params.outer_edge_fade == 0 && params.inner_edge_fade == 0);
 
         for (int ri = 0; ri < radius_count; ++ri) {
             for (int ai = 0; ai < angular_count; ++ai) {
@@ -1117,7 +1121,7 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
                     for (int c = 0; c < 3; ++c) source_rgba.rgba[dst + c] = polar.rgba[dst + c] * alpha;
                     source_rgba.rgba[dst + 3] = alpha;
                 }
-                if (params.inner_scatter_seed_mode == "source") {
+                if (seed_source) {
                     for (int c = 0; c < 3; ++c) accum.rgba[dst + c] = polar.rgba[dst + c] * alpha;
                     accum.rgba[dst + 3] = alpha;
                     max_alpha[cell] = alpha;
@@ -1203,7 +1207,7 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
                     source_alpha[cell] = alpha;
                     source_scale[cell] = 1.0f;
                     if (params.inner_prepass_overwrite_seed ||
-                        (params.inner_scatter_seed_mode == "source" &&
+                        (seed_source &&
                          params.inner_seed_alpha_mode == "prepass")) {
                         for (int c = 0; c < 3; ++c) accum.rgba[dst + c] = polar.rgba[dst + c] * alpha;
                         accum.rgba[dst + 3] = alpha;
@@ -1577,8 +1581,9 @@ Args parse_args(int argc, char **argv) {
             }
         } else if (key == "--inner-scatter-seed-mode") {
             args.inner_scatter_seed_mode = need_value("--inner-scatter-seed-mode");
-            if (args.inner_scatter_seed_mode != "source" && args.inner_scatter_seed_mode != "none") {
-                throw std::runtime_error("--inner-scatter-seed-mode must be source or none");
+            if (args.inner_scatter_seed_mode != "source" && args.inner_scatter_seed_mode != "none" &&
+                args.inner_scatter_seed_mode != "edgefade-none") {
+                throw std::runtime_error("--inner-scatter-seed-mode must be source, none, or edgefade-none");
             }
         } else if (key == "--inner-seed-alpha-mode") {
             args.inner_seed_alpha_mode = need_value("--inner-seed-alpha-mode");
@@ -1647,7 +1652,7 @@ Args parse_args(int argc, char **argv) {
                 throw std::runtime_error("--inner-alpha-mode must be max, sum, outer, inner, or input");
             }
         } else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmradialblur_cli --input in.png --params params.json --output out.png [--ignore-size-variation] [--inner-alpha-mode max|sum|outer|inner|input] [--inner-source-scatter-prepass] [--inner-prepass-mode simple|tail-gather] [--inner-prepass-span-mode strength|offset|edge-fade] [--inner-prepass-weight-mode row-span|aex-alpha] [--inner-prepass-factor-mode alpha|one|valid] [--inner-prepass-overwrite-seed] [--inner-scatter-rgb-mode straight|prepass-premul] [--inner-scatter-seed-mode source|none] [--inner-seed-alpha-mode input|prepass] [--inner-final-alpha-mode max|denom|source] [--inner-rgb-denominator-mode accum|max] [--inner-scatter-span-scale-mode one|source-alpha|input-alpha] [--inner-scatter-param10-plane one|polar-alpha|prepass-alpha|factor] [--inner-wrap-mode circular|aex-next-row] [--inner-source-scale-mode one|alpha|inv-alpha] [--dynamic-offset-mode current|aex-row|min-radius] [--polar-valid-mode strict|aex-repeat] [--polar-sample-mode plain|aex-alpha|conditional-inner]\n");
+            std::printf("Usage: olmradialblur_cli --input in.png --params params.json --output out.png [--ignore-size-variation] [--inner-alpha-mode max|sum|outer|inner|input] [--inner-source-scatter-prepass] [--inner-prepass-mode simple|tail-gather] [--inner-prepass-span-mode strength|offset|edge-fade] [--inner-prepass-weight-mode row-span|aex-alpha] [--inner-prepass-factor-mode alpha|one|valid] [--inner-prepass-overwrite-seed] [--inner-scatter-rgb-mode straight|prepass-premul] [--inner-scatter-seed-mode source|none|edgefade-none] [--inner-seed-alpha-mode input|prepass] [--inner-final-alpha-mode max|denom|source] [--inner-rgb-denominator-mode accum|max] [--inner-scatter-span-scale-mode one|source-alpha|input-alpha] [--inner-scatter-param10-plane one|polar-alpha|prepass-alpha|factor] [--inner-wrap-mode circular|aex-next-row] [--inner-source-scale-mode one|alpha|inv-alpha] [--dynamic-offset-mode current|aex-row|min-radius] [--polar-valid-mode strict|aex-repeat] [--polar-sample-mode plain|aex-alpha|conditional-inner]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
