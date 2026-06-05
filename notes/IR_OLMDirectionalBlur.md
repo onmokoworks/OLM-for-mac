@@ -52,6 +52,11 @@ Internal/runtime parameters:
   `render_scale`.
 - Current CLI `--strength-scale auto = 1 / frame_rate` is a PNG-fit
   measurement hypothesis only. It is not the AEX field mapping.
+- 2026-06-06 full-choreography scale sweep on cases `0001..0005` did not expose
+  a scalar fix: average mean was `3.7928` at `auto` / `1/24`, `3.7731` at
+  `0.03`, `3.8490` at `0.06`, and `3.9352` at `0.08`. `case_0005` improves
+  at `0.08`, but cases `0001..0004` worsen. Keep scale as a diagnostic until
+  the Windows reference records the actual render-context ratio.
 
 ## Buffer Model
 
@@ -280,7 +285,8 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 - Keep `direct` as a measurement baseline, not production truth.
 - Prefer evolving `rotated-aex-choreo` toward the confirmed A/B order.
 - Do not tune `strength_scale` as the main fix unless Windows references record
-  the render-context ratio or the diff becomes clearly scale-dominated.
+  the render-context ratio or the diff becomes clearly scale-dominated. The
+  latest full-choreography sweep shows it is not currently scale-dominated.
 - Do not implement Noise Variation in production until `FUN_180003370` /
   `params+0x80b0/0x80c0` is represented in this IR.
 - Do not promote Back Blur beyond diagnostics until front-only A/B row-driver
