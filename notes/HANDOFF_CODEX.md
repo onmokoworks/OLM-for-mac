@@ -151,6 +151,11 @@ OpenCV primitive/two-tempに寄せるのが最有力。
 `0.8506/1.1570/1.0563` でPython OpenCV probeとほぼ一致。手書きsampler差ではなく、
 0/90度rayのfast pathをAEXが通すかどうかが主な分岐。新規
 `smoke_olmkirakira_cpp_two_temp_no_fastpath_probe_cli.py` をred測定として追加。
+サブエージェントASM確認ではAEX側0/90度fast pathの証拠はなく、全rayが
+`FUN_181150790` を通る見方が強い。追加の
+`--axis-fast-path-mode strength-nonzero` probeは
+`0.8531/1.1555/1.0563` でcase3診断には有用だが、ASM根拠はall-ray
+two-temp/no-fastpath側。
 同日 rotate/crop probe: Python CLIに `--crop-offset-y/x`, `--rotate-order`,
 `--rotate-prefilter` を診断用に追加。crop offset `[-1,0,1]` は `(0,0)` が明確に最良で、
 1px originズレ説は弱い。`order=3 --rotate-prefilter` はcases1/2を

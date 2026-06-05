@@ -2115,6 +2115,19 @@ behavior.
   for case2. Do not flip the default blindly; instead use this as the next Mac
   candidate path and keep probing exact AEX conditions that choose/direct the
   fast path.
+- Subagent ASM review found no evidence that AEX has a 0/90-degree fast path:
+  the caller allocates/zeros the temp Mats and calls `FUN_181150790`, and the
+  helper contains forward `warpAffine`, Blur Mode work, and rotate-back
+  `warpAffine`. `Strength=0` does not appear to bypass the ray helper; Blur
+  Mode=2 only changes the internal boxFilter stage.
+- Added `--axis-fast-path-mode true|false|strength-nonzero` and
+  `refs/scripts/smoke_olmkirakira_cpp_strength_fastpath_probe_cli.py` to test a
+  Strength-gated shortcut hypothesis. With
+  `--warp-mode aex-two-temp --axis-fast-path-mode strength-nonzero`, results are
+  `case_0001 mean=0.8531`, `case_0002 mean=1.1555`,
+  `case_0003 mean=1.0563`. This is useful as a case3 diagnostic, but the ASM
+  evidence favors all-ray two-temp/no-fastpath over a Strength-specific fast
+  path rule.
 
 2026-06-05 RadialBlur C++ Inner scatter RGB probe:
 
