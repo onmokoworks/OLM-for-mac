@@ -360,6 +360,13 @@ same Lab76 constants plus RGB/alpha feather scaffold used by the CLI paths.
 The plugin builds as a universal `arm64`/`x86_64` bundle and passes
 `codesign --verify`; exact AE-host validation is still pending.
 
+2026-06-05 manifest audit: `refs/scripts/audit_olmcolorkey_manifest.py` prints
+the ColorKey reference slice with grouped Edge Thin / Edge Blur values. Current
+`20260604_olm` cases have `Enable Replace=0` for all nine cases, and no enabled
+replace-color slots. Therefore the existing `replace color is not implemented`
+guard in the Python/C++ CLIs is not exercised by current Windows PNGs; do not
+claim or deep-implement Replace until a targeted Windows reference enables it.
+
 Next OLMColorKey task: tighten remaining Edge Blur boundary/transparent-RGB
 handling and confirm the erode shell against references that record
 `project_gpu_accel_type` (CUDA vs Software) or a better distance contour model.
