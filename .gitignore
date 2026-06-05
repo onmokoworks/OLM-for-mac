@@ -9,6 +9,10 @@ dist/
 *.aex.asm.txt
 *.disasm.txt
 *.dSYM/
+cli/OLMBlur/olmblur_cli
+cli/OLMSmoother/olmsmoother_cli
+# compiled AE-free CLI binaries (built via refs/scripts/build_*_cli.sh)
+cli/*/olm*_cli
 
 # Ghidra projects and local MCP tooling
 ghidra_proj/
@@ -36,4 +40,16 @@ plugins_2025/
 # Local verification renders
 refs/win/
 refs/mac/
+refs/mac_cli/
 refs/diff/
+refs/reports/
+refs/runs/
+refs/win_references/
+
+# External local tools
+tools/GhidraMCP/
+
+# Local After Effects SDK links
+Headers
+Util
+Resources

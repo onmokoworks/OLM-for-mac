@@ -75,6 +75,31 @@ refs/scripts/diff_all.sh
 
 `max=0` means byte-perfect for that frame.
 
+For parameter-aware verification, use the case manifest:
+
+```sh
+python3 refs/scripts/verify_cases.py
+```
+
+The default manifest is `refs/cases/olmsmoother_v1_minimal.json`; it maps each
+frame to the input image and parameter values used for that render. This makes
+it easier to tell whether a mismatch is limited to key-color handling,
+tolerance, or the shared smoothing kernel.
+
+To move Windows reference renders into this Mac workspace, package them on the
+Windows side and import the zip here:
+
+```sh
+python3 refs/scripts/normalize_render_names.py path/to/ae_png_sequence
+python3 refs/scripts/package_win_reference.py path/to/rendered_pngs --out OLMSmoother_win_reference.zip
+python3 refs/scripts/import_win_reference.py path/to/OLMSmoother_win_reference.zip
+```
+
+If AE outputs arbitrary sequence names, normalize them first. The normalizer maps
+sorted PNGs to the manifest case order and writes `f0.png`, `f1.png`, and so on
+into `_normalized/`. The package includes PNGs, parameter values, and SHA-256
+hashes. Importing writes the checked frames into `refs/win/`.
+
 ## Status
 
 See `notes/HANDOFF.md`.
@@ -167,6 +192,29 @@ refs/scripts/diff_all.sh
 ```
 
 `max=0` なら、その frame は byte-perfect です。
+
+パラメータ込みで検証する場合:
+
+```sh
+python3 refs/scripts/verify_cases.py
+```
+
+デフォルト manifest は `refs/cases/olmsmoother_v1_minimal.json` です。各
+frame と入力画像、パラメータ値を紐づけているので、ズレが key-color 側か、
+tolerance 側か、共通 smoothing kernel 側かを切り分けやすくします。
+
+Windows 実機で出した reference render をこの Mac 環境へ持ってくる場合:
+
+```sh
+python3 refs/scripts/normalize_render_names.py path/to/ae_png_sequence
+python3 refs/scripts/package_win_reference.py path/to/rendered_pngs --out OLMSmoother_win_reference.zip
+python3 refs/scripts/import_win_reference.py path/to/OLMSmoother_win_reference.zip
+```
+
+AE が任意の連番名で吐いた場合は、先に normalize します。manifest のケース順に
+sorted PNG を対応させて、`_normalized/` に `f0.png`, `f1.png` ... を作ります。
+zip には PNG、manifest 上のパラメータ値、SHA-256 hash が入ります。import 時に
+検証してから `refs/win/` へコピーします。
 
 ## 引き継ぎ
 

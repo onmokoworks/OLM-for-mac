@@ -77,11 +77,11 @@ struct SMParams {
 	bool          invert_key;     // param_8[5] lsbyte
 	bool          keep_premul;    // (char)((longlong)param_8 + 0x19) — pre-mul output flag
 	PF_PixelFloat key_color;      // offset 0x0c (RGBA stored as R,G,B,A floats)
-	int           smoothness_raw; // *(int*)(param_8 + 0x20) — slider counts, /100 later
-	int           extra_smooth_raw; // *(int*)(param_8 + 0x24)
-	int           smooth_range;   // *(int*)(param_8 + 0x14) — radius slider
-	int           gamma_mode;     // param_8[9] lsbyte: 1=None, 2=Colors, 3=All (matches UI popup)
-	float         gamma_value;    // float at param_8[6]
+	int           smoothness_raw; // Win +0x28 — slider counts, /100 later
+	int           extra_smooth_raw; // Win +0x2c
+	int           smooth_range;   // Win +0x24 — radius slider
+	int           gamma_mode;     // UI popup: 1=None, 2=Gamma Colors, 3=All Colors
+	float         gamma_value;    // Win gamma config +0x30
 	int           num_gamma_colors;
 	PF_PixelFloat gamma_colors[NUM_GAMMA_COLORS];
 
@@ -124,11 +124,10 @@ FetchParams(PF_InData *in_data, PF_ParamDef *params[], SMParams *p)
 	p->gamma_mode       = params[SM_GAMMA_MODE]->u.pd.value;   // 1/2/3
 	p->gamma_value      = (float)FIX_2_FLOAT(params[SM_GAMMA_VALUE]->u.fs_d.value);
 	p->num_gamma_colors = params[SM_NUM_GAMMA_COLORS]->u.sd.value;
-	// Re-premul only when we un-premul'd at the frame-setup stage (mirrors Win
-	// symmetric unpremul/repremul bracket gated on enable_key).  Otherwise the
-	// input is already premul and multiplying again would double-premul alpha
-	// edges (produces dark halos around anti-aliased pixels).
-	p->keep_premul      = params[SM_ENABLE_KEY]->u.bd.value != 0;
+	// Win writeback checks byte param_8+0x19, independent of the Color Key UI
+	// gate. The Windows PNG refs are premultiplied at low alpha even in no-key
+	// cases, so keep the writeback premul path enabled for the AE/CLI output.
+	p->keep_premul      = true;
 
 	PF_ColorParamSuite1 *cps = suites.ColorParamSuite1();
 	cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,
@@ -197,16 +196,18 @@ static void win_FUN_180002840_unpremul(FPix *scratch, int32_t w, int32_t h)
 // confirmed via Ghidra disassembly @ 0x180002930:
 //   - Reads list base ptr from SMParams byte offset 0x68 (= setter param_1[0xd])
 //     and list count from byte offset 0x60 (= setter param_1[0xc]).
-//   - These two slots are populated by FUN_180004e10 ONLY when iVar3==2
-//     (gamma_mode == COLORS_ONLY), pointing at the gamma_colors palette.
-//     For gamma_mode==None or ==All, count stays 0 and the OUTER caller
-//     FUN_180002e90 gate `*(longlong *)(param_4 + 0x60) != 0` is FALSE, so
-//     this routine is skipped entirely.
-//   - For each pixel, walks the palette list (4 floats per entry, 16 bytes).
+//   - These two slots are populated by FUN_180004e10 when Enable Color Key +
+//     Invert Color Key stores a one-entry palette = Color Key.
+//     Gamma Correction == COLORS_ONLY uses the separate bb10/a9c0 gamma-color
+//     config, not this frame-level alpha filter.
+//     For other states the OUTER caller FUN_180002e90 gate
+//     `*(longlong *)(param_4 + 0x60) != 0` is FALSE, so this routine is skipped.
+//   - For each pixel, walks the active palette list (4 floats per entry, 16 bytes).
 //     If any entry's RGB is within K_COLOR_TOL of the pixel RGB, keep alpha;
 //     otherwise set alpha=0 (LAB_180002a31: pfVar3[3] = 0.0).
-// The single SM_KEY_COLOR param is unrelated — it is consumed by FUN_180002a70
-// (invert-key) and the unpremul gate (enable_key), NOT by this function.
+// The single SM_KEY_COLOR param is therefore consumed by this function only in
+// the invert-key path; in the non-invert key path it is stored in the scalar
+// key slot instead.
 static void win_FUN_180002930_palette_filter(FPix *scratch, int32_t w, int32_t h,
                                              const PF_PixelFloat *palette,
                                              int palette_count)
@@ -231,6 +232,7 @@ static void win_FUN_180002930_palette_filter(FPix *scratch, int32_t w, int32_t h
 
 // FUN_180002a70 — invert-key: if pixel RGB is within tolerance of the key
 // color, force alpha=0 (opposite of key_test).
+[[maybe_unused]]
 static void win_FUN_180002a70_invert_key(FPix *scratch, int32_t w, int32_t h,
                                          const PF_PixelFloat &key)
 {
@@ -3343,23 +3345,32 @@ static inline float win_FUN_18000bb10_curve(float t, int curve_idx) {
 	}
 }
 
+// Output-path sRGB encoder used by FUN_18000a9c0's gamma-color test.
+static inline double win_FUN_180004d70_literal(double v);
+
 // Returns the per-pixel adaptive gamma exponent.  out_apply=true means
 // "apply gamma decode/encode for this pixel" (i.e. mode 1, 2, or 3 + match).
 // gamma_in is the configured gamma (p.gamma_value); curve_idx selects easing.
 static float win_FUN_18000bb10_adaptive_gamma(const FPix &center,
                                               const SmootherPolygon &poly,
-                                              int gamma_mode,
-                                              float gamma_in,
+                                              const SMParams &p,
                                               int curve_idx,
                                               bool &out_apply)
 {
-	// Mode 1 — passthrough.
-	if (gamma_mode == 1) {
+	const int win_gamma_mode =
+		(p.gamma_mode == GAMMA_ALL_COLORS)  ? 1 :
+		(p.gamma_mode == GAMMA_COLORS_ONLY) ? 3 : 0;
+	const float gamma_in = p.gamma_value;
+
+	// Win internal mode 1 — apply to all colors. UI "All Colors" maps here.
+	if (win_gamma_mode == 1) {
 		out_apply = true;
 		return gamma_in;
 	}
-	// Mode 2 — luma-adaptive blend.
-	if (gamma_mode == 2) {
+
+	// Win internal mode 2 — luma-adaptive blend. The current AE UI does not
+	// expose this mode directly, but keep the literal body for completeness.
+	if (win_gamma_mode == 2) {
 		const float c_lum = luma_bt709(center);
 		float sum = 0.0f;
 		for (int i = 0; i < poly.count; ++i) {
@@ -3373,15 +3384,32 @@ static float win_FUN_18000bb10_adaptive_gamma(const FPix &center,
 		out_apply = true;
 		return (K_ONE - t) * gamma_in + t;
 	}
-	// Mode 3 — key-color test (FUN_18000a9c0).  Conservative: treat as
-	// passthrough when any sample's alpha is non-zero (proxy for "key match").
-	// Without the full key list plumbed into bb10's path we use this proxy.
-	if (gamma_mode == 3) {
-		bool match = (center.a > 0.0f);
-		if (!match) {
-			for (int i = 0; i < poly.count; ++i) {
-				if (poly.samples[i].a > 0.0f) { match = true; break; }
+
+	// Win internal mode 3 — key-color test against the Gamma Color list.
+	// UI "Gamma Colors" maps here. FUN_18000a9c0 compares RGB only using
+	// DAT_18002268c; for v2 inputs the candidate is first encoded back to sRGB.
+	if (win_gamma_mode == 3 && p.num_gamma_colors > 0) {
+		auto matches_gamma_color = [&](float r, float g, float b) -> bool {
+			if (p.version != SMOOTHER_V1) {
+				r = (float)win_FUN_180004d70_literal(r);
+				g = (float)win_FUN_180004d70_literal(g);
+				b = (float)win_FUN_180004d70_literal(b);
 			}
+			const int n = std::min(p.num_gamma_colors, NUM_GAMMA_COLORS);
+			for (int i = 0; i < n; ++i) {
+				const PF_PixelFloat &key = p.gamma_colors[i];
+				if (fabs_bits(r - key.red)   < K_COLOR_TOL &&
+				    fabs_bits(g - key.green) < K_COLOR_TOL &&
+				    fabs_bits(b - key.blue)  < K_COLOR_TOL) {
+					return true;
+				}
+			}
+			return false;
+		};
+		bool match = matches_gamma_color(center.r, center.g, center.b);
+		for (int i = 0; !match && i < poly.count; ++i) {
+			const PolySample &s = poly.samples[i];
+			match = matches_gamma_color(s.r, s.g, s.b);
 		}
 		out_apply = match;
 		return gamma_in;
@@ -3504,11 +3532,9 @@ static void win_FUN_18000cce0_orchestrate(FPix &out_pixel,
 	int curve_idx = (p.extra_smooth_raw > 0) ? ((p.extra_smooth_raw % 6) + 1) : 5;
 	bool bb10_apply = false;
 	float adaptive_gamma = win_FUN_18000bb10_adaptive_gamma(
-		center, poly, p.gamma_mode, p.gamma_value, curve_idx, bb10_apply);
+		center, poly, p, curve_idx, bb10_apply);
 
-	bool gamma_enable = bb10_apply
-	                    && (p.gamma_mode != GAMMA_NONE)
-	                    && (adaptive_gamma > 0.0f);
+	bool gamma_enable = bb10_apply && (adaptive_gamma > 0.0f);
 	FPix working = center;
 	gamma_decode_premul(working, poly, gamma_enable, adaptive_gamma);
 
@@ -3592,20 +3618,30 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	}
 	// FUN_180002930 guard (Win FUN_180002e90 @ 0x180002e90):
 	//   `*(longlong *)(param_4 + 0x60) != 0`
-	// param_4 here is `int*` so byte offset 0x60 = setter param_1[0xc] = palette
-	// COUNT slot.  FUN_180004e10 (@0x180004e10) populates that slot ONLY when
-	// iVar3==2 (gamma_mode == COLORS_ONLY); for None/All it stays zero and the
-	// routine is skipped.  agentUU fix (2026-04-28): previously gated on
-	// `enable_key` and passed the single key_color, which is wrong on both
-	// counts — FUN_180002930 reads SMParams+0x68 (palette ptr) and +0x60
-	// (count), not the single key.
-	if (p.gamma_mode == GAMMA_COLORS_ONLY && p.num_gamma_colors > 0) {
-		win_FUN_180002930_palette_filter(scratch.data(), w, h,
-		                                 p.gamma_colors, p.num_gamma_colors);
+	// ASM at FUN_180004e10 shows one way to populate this active palette:
+	//   - Enable Color Key + Invert Color Key stores the Color Key at the inline
+	//     one-entry palette and points +0x68/+0x70 at it.
+	// Gamma Correction == COLORS_ONLY stores its list in the separate gamma
+	// config at +0x98/+0xe8 and is consumed later by FUN_18000bb10/a9c0, not by
+	// this frame-level alpha filter.
+	PF_PixelFloat active_palette[NUM_GAMMA_COLORS];
+	const PF_PixelFloat *active_palette_ptr = nullptr;
+	int active_palette_count = 0;
+	if (p.enable_key && p.invert_key) {
+		active_palette[0] = p.key_color;
+		active_palette_ptr = active_palette;
+		active_palette_count = 1;
 	}
-	if (p.invert_key) {
+	if (active_palette_ptr && active_palette_count > 0) {
+		win_FUN_180002930_palette_filter(scratch.data(), w, h,
+		                                 active_palette_ptr, active_palette_count);
+	}
+	if (p.enable_key && !p.invert_key) {
 		win_FUN_180002a70_invert_key(scratch.data(), w, h, p.key_color);
 	}
+	// FUN_180002a70 is the non-invert scalar-key path. The asm frame gate is
+	// byte [SMParams+0x14], inside the scalar key-color storage written only by
+	// FUN_180004e10's non-invert branch; do not wire it to the UI invert boolean.
 	// FUN_180002ba0 guard: "*param_4 != 1" — ASM-verified that *param_4 reads
 	// SMParams offset +8, which FUN_180004e10 sets to (version_popup == 1) ? 1 : 0.
 	// So Win runs sRGB decode whenever version != v1, INDEPENDENT of gamma_mode.

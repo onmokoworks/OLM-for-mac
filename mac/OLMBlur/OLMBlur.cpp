@@ -189,7 +189,8 @@ static void legacy_blur_1d_horizontal(
 			}
 			float sumR = 0.0f, sumG = 0.0f, sumB = 0.0f, sumW = 0.0f;
 			bool all_same = true;
-			float firstR = srcRGB[idx*3+0], firstG = srcRGB[idx*3+1], firstB = srcRGB[idx*3+2];
+			bool have_prev = false;
+			float prevR = 0.0f, prevG = 0.0f, prevB = 0.0f;
 			for (A_long off = -radius; off <= radius; ++off) {
 				A_long sx = x + off;
 				if (sx <= 0 || sx >= w) continue;
@@ -200,9 +201,16 @@ static void legacy_blur_1d_horizontal(
 				sumR += wr * srcRGB[si*3+0];
 				sumG += wr * srcRGB[si*3+1];
 				sumB += wr * srcRGB[si*3+2];
-				if (srcRGB[si*3+0] != firstR || srcRGB[si*3+1] != firstG || srcRGB[si*3+2] != firstB) {
+				float curR = srcRGB[si*3+0];
+				float curG = srcRGB[si*3+1];
+				float curB = srcRGB[si*3+2];
+				if (have_prev && (curR != prevR || curG != prevG || curB != prevB)) {
 					all_same = false;
 				}
+				prevR = curR;
+				prevG = curG;
+				prevB = curB;
+				have_prev = true;
 			}
 			if (all_same || sumW == 0.0f) {
 				dstRGB[idx*3+0] = srcRGB[idx*3+0];
@@ -235,7 +243,8 @@ static void legacy_blur_1d_vertical(
 			}
 			float sumR = 0.0f, sumG = 0.0f, sumB = 0.0f, sumW = 0.0f;
 			bool all_same = true;
-			float firstR = srcRGB[idx*3+0], firstG = srcRGB[idx*3+1], firstB = srcRGB[idx*3+2];
+			bool have_prev = false;
+			float prevR = 0.0f, prevG = 0.0f, prevB = 0.0f;
 			for (A_long off = -radius; off <= radius; ++off) {
 				A_long sy = y + off;
 				if (sy <= 0 || sy >= h) continue;
@@ -246,9 +255,16 @@ static void legacy_blur_1d_vertical(
 				sumR += wr * srcRGB[si*3+0];
 				sumG += wr * srcRGB[si*3+1];
 				sumB += wr * srcRGB[si*3+2];
-				if (srcRGB[si*3+0] != firstR || srcRGB[si*3+1] != firstG || srcRGB[si*3+2] != firstB) {
+				float curR = srcRGB[si*3+0];
+				float curG = srcRGB[si*3+1];
+				float curB = srcRGB[si*3+2];
+				if (have_prev && (curR != prevR || curG != prevG || curB != prevB)) {
 					all_same = false;
 				}
+				prevR = curR;
+				prevG = curG;
+				prevB = curB;
+				have_prev = true;
 			}
 			if (all_same || sumW == 0.0f) {
 				dstRGB[idx*3+0] = srcRGB[idx*3+0];
@@ -421,11 +437,11 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 					weights[radius + k] = v;
 				}
 				if (bp->bias_dir == BIAS_DIR_VERTICAL) {
-					legacy_blur_1d_vertical  (buf1, alpha1, buf2, alpha2, w, h, radius, weights);
-					legacy_blur_1d_horizontal(buf2, alpha2, buf1, alpha1, w, h, radius, weights);
-				} else if (bp->bias_dir == BIAS_DIR_HORIZONTAL) {
 					legacy_blur_1d_horizontal(buf1, alpha1, buf2, alpha2, w, h, radius, weights);
 					legacy_blur_1d_vertical  (buf2, alpha2, buf1, alpha1, w, h, radius, weights);
+				} else if (bp->bias_dir == BIAS_DIR_HORIZONTAL) {
+					legacy_blur_1d_vertical  (buf1, alpha1, buf2, alpha2, w, h, radius, weights);
+					legacy_blur_1d_horizontal(buf2, alpha2, buf1, alpha1, w, h, radius, weights);
 				}
 			}
 		}

@@ -385,11 +385,7 @@ static void build_distance_field(
 	float ds = (p.ds_x + p.ds_y) * 0.5f;
 	if (ds <= 0.0f) ds = 1.0f;
 
-	// Interpolation Sphere (3) has a special path: if in_out==Inside and threshold==0 just invert
-	if (p.in_out == IN_OUT_INSIDE && p.inside_threshold == 0) {
-		// Output = inverted mask directly
-		for (long i = 0; i < w * h; ++i) df.x[i] = mask[i] ? 0.0f : 1.0f;
-	} else if (p.in_out == IN_OUT_INSIDE) {
+	if (p.in_out == IN_OUT_INSIDE) {
 		dt_to_normalized(mask.data(), df.x.data(), w, h, p.inside_threshold, ds);
 	} else if (p.in_out == IN_OUT_OUTSIDE) {
 		invert_mask(mask.data(), w, h);

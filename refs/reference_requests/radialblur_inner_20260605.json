@@ -1,0 +1,218 @@
+{
+  "request_id": "radialblur_inner_20260605",
+  "effect": {
+    "name": "OLM RadialBlur",
+    "match_name": "OLM RadialBlur"
+  },
+  "why": [
+    "Current Mac/C++ CLI is green for Zoom and tiny Rotation but still red for Rotation Inner.",
+    "Existing inner references have Edge Fade = 0, so they do not isolate FUN_180002780 prepass-alpha behavior.",
+    "Need CUDA vs SOFTWARE pairs when possible to distinguish port bugs from AE render path differences."
+  ],
+  "render_sets": [
+    {
+      "id": "cuda",
+      "project_gpu_accel_type.current_name": "CUDA",
+      "required": false
+    },
+    {
+      "id": "software",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "required": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "opaque_grid",
+      "description": "Fully opaque source with sharp grid/diagonal edges and varied RGB colors."
+    },
+    {
+      "id": "alpha_hard_edges",
+      "description": "Transparent background with several fully opaque colored shapes and hard alpha edges."
+    },
+    {
+      "id": "alpha_ramp",
+      "description": "RGB content with horizontal/vertical alpha ramp regions, including 0, 0.25, 0.5, 0.75, 1.0 alpha."
+    }
+  ],
+  "common_params": {
+    "Blur Type": 2,
+    "Center": [960, 540],
+    "Repeat Edge Pixels": 1,
+    "Ratio": 1.0,
+    "Angle": 0,
+    "Brightness": 1.0,
+    "Size Variation": 0,
+    "Noise Variation": 0,
+    "Noise Type": 1,
+    "Seed": 1
+  },
+  "cases": [
+    {
+      "id": "rb_inner_existing_0011_software_pair",
+      "input": "alpha_hard_edges",
+      "reason": "Re-render current case_0011 shape under SOFTWARE to check render path drift.",
+      "params": {
+        "Outer Blur/Strength": 62,
+        "Outer Blur/Offset Mode": 1,
+        "Outer Blur/Offset": 0,
+        "Outer Blur/Edge Fade": 0,
+        "Inner Blur/Strength": 478,
+        "Inner Blur/Offset Mode": 1,
+        "Inner Blur/Offset": 0,
+        "Inner Blur/Edge Fade": 0,
+        "Quality": 5
+      }
+    },
+    {
+      "id": "rb_inner_existing_0012_software_pair",
+      "input": "alpha_hard_edges",
+      "reason": "Re-render current case_0012 shape under SOFTWARE to isolate Offset Mode=2/3 drift.",
+      "params": {
+        "Outer Blur/Strength": 0,
+        "Outer Blur/Offset Mode": 2,
+        "Outer Blur/Offset": 29,
+        "Outer Blur/Edge Fade": 0,
+        "Inner Blur/Strength": 478,
+        "Inner Blur/Offset Mode": 3,
+        "Inner Blur/Offset": 11,
+        "Inner Blur/Edge Fade": 0,
+        "Quality": 5
+      }
+    },
+    {
+      "id": "rb_inner_existing_0013_software_pair",
+      "input": "alpha_hard_edges",
+      "reason": "Re-render current case_0013 shape under SOFTWARE to isolate high-Quality behavior.",
+      "params": {
+        "Outer Blur/Strength": 0,
+        "Outer Blur/Offset Mode": 2,
+        "Outer Blur/Offset": 29,
+        "Outer Blur/Edge Fade": 0,
+        "Inner Blur/Strength": 18,
+        "Inner Blur/Offset Mode": 1,
+        "Inner Blur/Offset": 0,
+        "Inner Blur/Edge Fade": 0,
+        "Quality": 50
+      }
+    },
+    {
+      "id": "rb_inner_only_strength_small",
+      "input": "opaque_grid",
+      "reason": "Check pure inner scatter without alpha/prepass ambiguity.",
+      "params": {
+        "Outer Blur/Strength": 0,
+        "Outer Blur/Offset Mode": 1,
+        "Outer Blur/Offset": 0,
+        "Outer Blur/Edge Fade": 0,
+        "Inner Blur/Strength": 32,
+        "Inner Blur/Offset Mode": 1,
+        "Inner Blur/Offset": 0,
+        "Inner Blur/Edge Fade": 0,
+        "Quality": 5
+      }
+    },
+    {
+      "id": "rb_inner_only_strength_large",
+      "input": "opaque_grid",
+      "reason": "Check pure inner scatter with a large span.",
+      "params": {
+        "Outer Blur/Strength": 0,
+        "Outer Blur/Offset Mode": 1,
+        "Outer Blur/Offset": 0,
+        "Outer Blur/Edge Fade": 0,
+        "Inner Blur/Strength": 478,
+        "Inner Blur/Offset Mode": 1,
+        "Inner Blur/Offset": 0,
+        "Inner Blur/Edge Fade": 0,
+        "Quality": 5
+      }
+    },
+    {
+      "id": "rb_inner_offset_mode_3",
+      "input": "opaque_grid",
+      "reason": "Isolate Inner Offset Mode=3 without outer blur.",
+      "params": {
+        "Outer Blur/Strength": 0,
+        "Outer Blur/Offset Mode": 1,
+        "Outer Blur/Offset": 0,
+        "Outer Blur/Edge Fade": 0,
+        "Inner Blur/Strength": 0,
+        "Inner Blur/Offset Mode": 3,
+        "Inner Blur/Offset": 80,
+        "Inner Blur/Edge Fade": 0,
+        "Quality": 5
+      }
+    },
+    {
+      "id": "rb_inner_edgefade_only",
+      "input": "alpha_ramp",
+      "reason": "Force FUN_180002780 prepass-alpha path with nonzero Inner Edge Fade.",
+      "params": {
+        "Outer Blur/Strength": 0,
+        "Outer Blur/Offset Mode": 1,
+        "Outer Blur/Offset": 0,
+        "Outer Blur/Edge Fade": 0,
+        "Inner Blur/Strength": 256,
+        "Inner Blur/Offset Mode": 1,
+        "Inner Blur/Offset": 0,
+        "Inner Blur/Edge Fade": 64,
+        "Quality": 5
+      }
+    },
+    {
+      "id": "rb_outer_inner_edgefade",
+      "input": "alpha_ramp",
+      "reason": "Exercise both 0x3a9f0 and 0x3b990 prepass tables.",
+      "params": {
+        "Outer Blur/Strength": 128,
+        "Outer Blur/Offset Mode": 1,
+        "Outer Blur/Offset": 0,
+        "Outer Blur/Edge Fade": 64,
+        "Inner Blur/Strength": 256,
+        "Inner Blur/Offset Mode": 1,
+        "Inner Blur/Offset": 0,
+        "Inner Blur/Edge Fade": 96,
+        "Quality": 5
+      }
+    },
+    {
+      "id": "rb_inner_quality_1",
+      "input": "alpha_hard_edges",
+      "reason": "Check angular grid and strength scaling at low Quality.",
+      "params": {
+        "Outer Blur/Strength": 0,
+        "Outer Blur/Offset Mode": 1,
+        "Outer Blur/Offset": 0,
+        "Outer Blur/Edge Fade": 0,
+        "Inner Blur/Strength": 256,
+        "Inner Blur/Offset Mode": 1,
+        "Inner Blur/Offset": 0,
+        "Inner Blur/Edge Fade": 0,
+        "Quality": 1
+      }
+    },
+    {
+      "id": "rb_inner_quality_50",
+      "input": "alpha_hard_edges",
+      "reason": "Check angular grid and strength scaling at high Quality.",
+      "params": {
+        "Outer Blur/Strength": 0,
+        "Outer Blur/Offset Mode": 1,
+        "Outer Blur/Offset": 0,
+        "Outer Blur/Edge Fade": 0,
+        "Inner Blur/Strength": 256,
+        "Inner Blur/Offset Mode": 1,
+        "Inner Blur/Offset": 0,
+        "Inner Blur/Edge Fade": 0,
+        "Quality": 50
+      }
+    }
+  ],
+  "manifest_requirements": [
+    "Record before_effects_frame for each case.",
+    "Record all OLM RadialBlur property names, match_names, property_index, value, and enabled/active state.",
+    "Record project_gpu_accel_type.current_name and raw value per render set.",
+    "Keep ADBE Force CPU GPU / GPU Rendering as reference-only metadata, not as the execution-path label."
+  ]
+}
