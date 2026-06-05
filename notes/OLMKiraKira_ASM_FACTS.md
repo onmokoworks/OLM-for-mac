@@ -138,6 +138,44 @@ Current interpretation:
   sampling/rounding or another pre/post ray detail than a simple boxFilter
   argument mismatch.
 
+## Rotate Canvas / dsize
+
+`FUN_18114f4a0` computes the intermediate ray canvas before calling
+`FUN_181150790`.
+
+Address facts:
+
+- `18114f78b`: calls `FUN_18132b2e0`, then masks both returned float lanes
+  with an absolute-value mask.
+- `18114f7a0..18114f7e4`: computes two dimensions with the shape:
+
+```c
+tmp_w = (int)(src_w * abs(cos) + src_h * abs(sin) + 0.5f);
+tmp_h = (int)(src_w * abs(sin) + src_h * abs(cos) + 0.5f);
+```
+
+- `18114f7e8..18114f7f5`: clamps these to at least `src_w + 4` and
+  `src_h + 4`.
+- `18114f7f8..18114f81c`: passes those dimensions to `FUN_181231b80`.
+
+CLI probe results:
+
+- `--rotate-size-mode aex-min4` implements the formula above for rotated
+  intermediate sizes. On the current refs it is identical to the default:
+  `case_0001 mean=0.8381`, `case_0002 mean=1.1623`,
+  `case_0003 mean=1.7003`.
+- `--axis-fast-path false --rotate-size-mode aex-min4` forces 0/90-degree rays
+  through the rotate/crop path too. It is mixed/negative:
+  `case_0001 mean=0.8354`, `case_0002 mean=1.1847`,
+  `case_0003 mean=2.0123`.
+- `--axis-fast-path false` with the default round sizing is also negative:
+  `case_0001 mean=0.8381`, `case_0002 mean=1.1847`,
+  `case_0003 mean=2.1189`.
+
+Keep the default axis fast path for current references. The no-axis-fast probe
+is useful diagnostic evidence for future refs, but the current refs do not
+support adopting it globally.
+
 Do not adopt any new warp/crop change without a direct asm argument mapping or
 a faithful local OpenCV 4.5.5 reproduction; image-diff-only tuning is too easy
 to overfit here.
