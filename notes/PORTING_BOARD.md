@@ -868,9 +868,9 @@ near-match Zoom baseline for `case_0003..0005`-style settings.
   has both `arm64` and `x86_64` slices, and ran `codesign --verify` for each
   bundle.
 - `python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick` completed
-  successfully with 27/27 green checks. This includes the
-  `Reference request package` and `Reference request result verifier` gates,
-  the harness, ColorKeep, OLMBlur,
+  successfully with 28/28 green checks. This includes the
+  `Reference request package`, `Reference request result verifier`, and
+  `Reference request status` gates, the harness, ColorKeep, OLMBlur,
   OLMColorKey Python/C++/Rust, OLMToonDilate Python/C++, OLMDistanceGradation,
   OLMSmoother build, OLMSmoother2 build/v1 compatibility/key paths/Gamma
   Colors, and RadialBlur tiny Rotation / Zoom / Zoom Offset green gates.
@@ -883,6 +883,10 @@ near-match Zoom baseline for `case_0003..0005`-style settings.
   request cases, PNG/before-frame files, requested effect, and render-set/GPU
   metadata. The synthetic smoke checks both a passing result and a missing-case
   failure.
+- `refs/scripts/check_reference_request_status.py` reports each request as
+  `covered`, `partial`, or `pending` by scanning `refs/win_references/**`.
+  Current status is all five request JSONs pending, and the command prints the
+  exact `package_reference_requests.py --only ...` handoff command.
 - `scripts/package_mac_plugins.sh --skip-build --output
   /tmp/olm_mac_plugins_test.zip` completed successfully after the verified build.
   The zip manifest parsed as JSON, listed all 10 plug-ins, and points to the
