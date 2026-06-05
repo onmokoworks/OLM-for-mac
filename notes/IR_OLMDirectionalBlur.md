@@ -199,7 +199,14 @@ Observed role:
 
 - uses Front/Back Alpha Fade lengths, not Blur Strength lengths
 - coefficient scales span and table index
-- zero alpha clears source contribution
+- zero original source alpha clears `B[p]`, `denom[p]`, and
+  `alpha_or_valid[p]`
+- nonzero original source alpha gathers a weighted alpha from the source row,
+  then seeds `B[p].rgb = gathered_alpha * A[p].rgb`, `B[p].a =
+  gathered_alpha`, `denom[p] = gathered_alpha`, and
+  `alpha_or_valid[p] = gathered_alpha`
+- scatter skip in `FUN_1800038d0` still checks original `A[p].a`, while
+  `FUN_1800013e0` receives `alpha_or_valid` as its alpha/validity input
 
 Probe status:
 
@@ -207,9 +214,13 @@ Probe status:
   (`case_0001 mean=4.7505`, `case_0005 mean=1.3802`)
 - `rotated-rowdriver-prepass-init`: also negative
   (`case_0001 mean=4.7724`, `case_0005 mean=1.3862`)
+- `rotated-aex-prepass-full-choreo`: neutral against full A/B choreography
+  (`case_0001 mean=4.4483`, `case_0005 mean=1.1703`)
 
 Interpretation: the prepass alone is not the missing behavior for opaque
-front-only refs. Keep it in the IR, but do not treat it as the next isolated
+front-only refs, and the current full-choreography prepass scaffold already
+models the confirmed seed outputs closely enough to rule out another simple
+prepass toggle. Keep it in the IR, but do not treat it as the next isolated
 fix.
 
 ### Row Driver

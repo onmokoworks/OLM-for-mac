@@ -425,6 +425,39 @@ Current implication:
   with exact `FUN_1800013e0` scatter boundary/table-index semantics or the
   host populate/output callbacks.
 
+2026-06-06 asm/decomp recheck of `FUN_180001000`:
+
+- The prepass is not just a source-alpha replacement. For each row pixel it
+  writes all three row-driver support outputs:
+  - `param_6` / `params+0x8080`: denominator/alpha seed
+  - `param_5` / `params+0x8088`: alpha-or-valid seed used later by scatter
+  - `param_4` / current `B`: prepass output RGBA seed
+- If the original rotated source alpha at `param_3[p].a` is exactly zero, the
+  helper immediately clears `denom[p]`, `alpha_or_valid[p]`, and `B[p].rgba`.
+- Otherwise it starts with center weight `1.0` and center alpha, gathers
+  forward/backward source alpha using the Front/Back Alpha Fade tables, divides
+  the alpha sum by total weight, and writes:
+
+```text
+denom[p] = gathered_alpha
+alpha_or_valid[p] = gathered_alpha
+B[p].rgb = gathered_alpha * A[p].rgb
+B[p].a = gathered_alpha
+```
+
+- The Front/Back Alpha Fade spans are scaled by the component coefficient:
+  `int(alpha_fade * coeff)`. The table index uses `int(offset / coeff)` when
+  `coeff > 0`, otherwise `offset`.
+- `FUN_1800038d0` calls this prepass before scatter for every pixel in the row.
+  The later scatter skip still checks the original source alpha in `A[p].a`,
+  while `FUN_1800013e0` reads its alpha/validity contribution from
+  `params+0x8088`.
+- Current CLI `rotated-aex-prepass-full-choreo` already models this
+  prepass/seed shape closely enough to be neutral on the tracked refs, so a
+  second isolated prepass toggle is unlikely to be useful. The next implementation
+  pass should target exact `FUN_1800013e0` caller/source ownership or
+  `FUN_180001ec0` edge/validity semantics.
+
 2026-06-06 truncated-span diagnostic:
 
 - Added `rotated-aex-truncated-span` to test the exact `FUN_1800013e0` gate:
