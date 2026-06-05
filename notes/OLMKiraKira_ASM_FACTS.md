@@ -163,6 +163,13 @@ Current port alignment:
   size from the destination descriptor before calling `FUN_181297ac0`.
 - `181150f80..181150ff8` performs the rotate-back call with the same flag
   shape.
+- Inside `FUN_181297ac0`, `param_5 & 7` selects interpolation and `param_5 &
+  0x10` controls whether the affine matrix is inverted internally. The
+  KiraKira calls pass `param_5=1`, so this is OpenCV `INTER_LINEAR` without
+  `WARP_INVERSE_MAP`.
+- KiraKira passes `param_6=0` and a zero scalar pointer as `param_7`, matching
+  `borderMode=BORDER_CONSTANT` and `borderValue=0`. This is separate from the
+  `boxFilter` calls, which use `borderType=4` (`BORDER_REFLECT_101`).
 
 Current interpretation:
 
