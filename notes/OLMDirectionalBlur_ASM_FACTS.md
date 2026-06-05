@@ -152,3 +152,106 @@ Interpretation:
   exact caller buffer ownership around `_Dst`/`_Src`/`param_6[0x1010]` and
   the final `FUN_180001ec0` rotate-back source/destination pairing, not another
   simple prepass/init toggle.
+
+## Rotated Buffer Ownership / Final Rotate-Back
+
+Address facts from the main `FUN_180003c90` no-noise/front-only branch:
+
+- `180003e79..180003f09`: allocates and locks the first rotated RGBA work
+  buffer, then stores the locked pointer at `params + 0x8078`.
+
+```asm
+180003ee6  MOV RCX,RSI
+180003ee9  CALL qword ptr [RAX + 0x8]
+180003eec  MOV R15,RAX
+180003f09  MOV qword ptr [RBX + 0x8078],R15
+```
+
+- `180003f20..180003f4b`: allocates and locks the second rotated RGBA work
+  buffer, then stores it at `params + 0x8090`.
+
+```asm
+180003f37  MOV RSI,RAX
+180003f3a  MOV qword ptr [RBP + -0x60],RAX
+180003f4b  MOV qword ptr [RBX + 0x8090],RAX
+```
+
+- `180003f52..180003faa`: allocates the per-pixel accumulator/support buffers:
+  `params + 0x8080`, `params + 0x8088`, and the component map at
+  `params + 0x8118`.
+
+```asm
+180003f76  MOV qword ptr [RBX + 0x8080],RAX
+180003faa  MOV qword ptr [RBX + 0x8088],RAX
+180003fe1  MOV qword ptr [RBX + 0x8118],RAX
+```
+
+- `FUN_180001ec0` uses `RCX/param_1` as the source image and `RDX/param_2` as
+  the destination image. In the helper body, `RDI = RCX` is read for bilinear
+  samples and `RBP = RDX + 8` is advanced/written as the output pointer
+  (`180001eda..180001efe`, `180002078..1800020d2`).
+
+- `18000451c..180004529`: the first `FUN_180001ec0` call rotates the first
+  RGBA work buffer into the second RGBA work buffer. The first buffer has just
+  been populated by the `FUN_180006610(..., LAB_1800068e0, ...)` callback.
+
+```asm
+180004523  MOV RDX,RSI        ; destination = params+0x8090 work buffer
+180004526  MOV RCX,R15        ; source = params+0x8078 work buffer
+180004529  CALL 0x180001ec0
+```
+
+- `180004575..18000457b`: immediately after that first rotate, the second work
+  buffer is copied back into the first work buffer. The helper uses the normal
+  Windows x64 `memcpy`-style argument order (`RCX` destination, `RDX` source).
+
+```asm
+180004575  MOV RDX,RSI        ; source = params+0x8090 work buffer
+180004578  MOV RCX,R15        ; destination = params+0x8078 work buffer
+18000457b  CALL 0x18000a646   ; memcpy-like helper
+```
+
+  This matches the decompiler's later `memcpy(_Dst, _Src, ...)`, but note that
+  register names have been reused by then. The assembly-level relationship is:
+  first rotate writes into the second locked RGBA work buffer, then that
+  rotated image is copied back into the first locked RGBA work buffer before
+  component-map and row-driver processing.
+
+- `1800047f0..180004850`: after `FUN_1800038d0` row scatter, RGB in the second
+  RGBA work buffer is divided by the per-pixel denominator at
+  `params + 0x8080`; the first RGBA work buffer is cleared pixel-by-pixel.
+
+```asm
+1800047fb  MOV RAX,qword ptr [RBX + 0x8080]
+180004819  MOVSS XMM0,dword ptr [RSI + RCX*0x4]
+18000481e  DIVSS XMM0,XMM2
+180004847  MOV dword ptr [R15 + RCX*0x4],EDI
+18000484b  MOV qword ptr [R15 + RAX*0x4 + 0x4],RDI
+180004850  MOV dword ptr [R15 + RAX*0x4 + 0xc],EDI
+```
+
+- `180004880..18000489d`: the final `FUN_180001ec0` call rotates the normalized
+  second RGBA work buffer back into the cleared first RGBA work buffer, using
+  the negated angle. The output callback then reads from `params + 0x8090`,
+  which is repointed to the first work buffer after the final rotate.
+
+```asm
+180004880  MOVSS XMM0,dword ptr [RBX + 0x24]
+180004885  XORPS XMM0,xmmword ptr [0x18000b3b0]
+18000488c  MOVSS dword ptr [RSP + 0x20],XMM0
+180004892  MOV RDX,R15        ; destination = params+0x8078 work buffer
+180004895  MOV RCX,RSI        ; source = params+0x8090 work buffer
+180004898  CALL 0x180001ec0
+18000489d  MOV qword ptr [RBX + 0x8090],R15
+```
+
+Current implication:
+
+- The final rotate-back source is the normalized second RGBA work buffer, not
+  the just-cleared first buffer.
+- The final rotate-back destination is the first RGBA work buffer, and
+  `params + 0x8090` is repointed to that destination for the host-output pass.
+- The CLI's older "copied-buffer / zero-denominator init" probes are still
+  useful negative evidence, but the next faithful implementation pass should
+  mirror this explicit A -> rotate into B -> copy B back to A -> row-driver
+  writes/normalizes B -> clear A -> rotate B back into A -> output A order.

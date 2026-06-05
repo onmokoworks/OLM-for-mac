@@ -1253,6 +1253,19 @@ index modulation, not as a direct alpha attenuation.
   denominator buffer initialization/normalization, and final rotate-back source
   selection.
 
+2026-06-05 asm buffer-ownership refresh:
+
+- `notes/OLMDirectionalBlur_ASM_FACTS.md` now records the no-noise/front-only
+  branch's rotated work-buffer ownership around `FUN_180001ec0`.
+- `FUN_180001ec0` reads `RCX/param_1` as source and writes `RDX/param_2` as
+  destination. The observed order is: first work buffer populated by the AE
+  callback -> rotate A into B -> copy B back to A -> row-driver writes and
+  normalizes B -> clear A -> rotate B back into A -> output A by repointing
+  `params+0x8090`.
+- This removes one ambiguity from the next DirectionalBlur pass: the remaining
+  implementation work is not "which final buffer is source?" but faithfully
+  reproducing that A/B choreography and the row-driver normalization details.
+
 ## OLMKiraKira
 
 `refs/scripts/audit_olmkirakira_manifest.py` summarizes the three Windows
