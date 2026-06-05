@@ -503,6 +503,16 @@ B[p].a = gathered_alpha
   residual. The next useful target remains exact `FUN_1800013e0`
   scatter/source ownership or host edge/populate semantics.
 
+2026-06-06 component-tail diagnostic:
+
+- Added `rotated-aex-component-tail-only` to disable the older global
+  valid-range Sharp Tail gate while keeping the component-map Sharp Tail used by
+  `FUN_1800038d0`.
+- Measurement is neutral against `rotated-aex-full-choreo`:
+  `case_0001 mean=4.4484`, `case_0005 mean=1.1703`.
+- This makes a simple global-tail plus component-tail double-application
+  unlikely to be the leading residual on the tracked front-only refs.
+
 2026-06-05 diagnostic:
 
 - Added C++ CLI algorithm `--algorithm rotated-aex-choreo` to test the first
