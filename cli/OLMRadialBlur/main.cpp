@@ -59,6 +59,7 @@ struct RadialBlurParams {
     std::string inner_wrap_mode = "circular";
     std::string inner_source_scale_mode = "one";
     std::string dynamic_offset_mode = "current";
+    std::string polar_valid_mode = "strict";
 };
 
 struct Json {
@@ -645,6 +646,16 @@ double combine_inner_alpha(const std::string &mode,
     return std::max(outer_alpha, inner_alpha);
 }
 
+bool polar_valid_sample(float x, float y, int width, int height, bool repeat_border, const std::string &mode) {
+    if (mode == "aex-repeat" && repeat_border) {
+        const int ix = static_cast<int>(x);
+        const int iy = static_cast<int>(y);
+        return -2 < ix && ix < width && -2 < iy && iy < height;
+    }
+    return x >= 0.0f && x <= static_cast<float>(width - 1) &&
+           y >= 0.0f && y <= static_cast<float>(height - 1);
+}
+
 class CircularConvolver {
 public:
     CircularConvolver(int value_count, const std::vector<float> &weights)
@@ -899,8 +910,7 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
             const size_t dst = (static_cast<size_t>(ri) * angular_count + ai) * 4;
             for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = sample_channel(src, sx, sy, c, params.repeat_border);
             polar_valid[static_cast<size_t>(ri) * angular_count + ai] =
-                sx >= 0.0f && sx <= static_cast<float>(w - 1) &&
-                sy >= 0.0f && sy <= static_cast<float>(h - 1);
+                polar_valid_sample(sx, sy, w, h, params.repeat_border, params.polar_valid_mode);
         }
     }
 
@@ -1435,6 +1445,7 @@ struct Args {
     std::string inner_wrap_mode = "circular";
     std::string inner_source_scale_mode = "one";
     std::string dynamic_offset_mode = "current";
+    std::string polar_valid_mode = "strict";
 };
 
 Args parse_args(int argc, char **argv) {
@@ -1521,6 +1532,11 @@ Args parse_args(int argc, char **argv) {
                 args.dynamic_offset_mode != "min-radius") {
                 throw std::runtime_error("--dynamic-offset-mode must be current, aex-row, or min-radius");
             }
+        } else if (key == "--polar-valid-mode") {
+            args.polar_valid_mode = need_value("--polar-valid-mode");
+            if (args.polar_valid_mode != "strict" && args.polar_valid_mode != "aex-repeat") {
+                throw std::runtime_error("--polar-valid-mode must be strict or aex-repeat");
+            }
         } else if (key == "--inner-alpha-mode") {
             args.inner_alpha_mode = need_value("--inner-alpha-mode");
             if (args.inner_alpha_mode != "max" && args.inner_alpha_mode != "sum" &&
@@ -1529,7 +1545,7 @@ Args parse_args(int argc, char **argv) {
                 throw std::runtime_error("--inner-alpha-mode must be max, sum, outer, inner, or input");
             }
         } else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmradialblur_cli --input in.png --params params.json --output out.png [--ignore-size-variation] [--inner-alpha-mode max|sum|outer|inner|input] [--inner-source-scatter-prepass] [--inner-prepass-mode simple|tail-gather] [--inner-prepass-span-mode strength|offset|edge-fade] [--inner-prepass-weight-mode row-span|aex-alpha] [--inner-scatter-rgb-mode straight|prepass-premul] [--inner-scatter-seed-mode source|none] [--inner-seed-alpha-mode input|prepass] [--inner-final-alpha-mode max|denom|source] [--inner-rgb-denominator-mode accum|max] [--inner-scatter-span-scale-mode one|source-alpha|input-alpha] [--inner-wrap-mode circular|aex-next-row] [--inner-source-scale-mode one|alpha|inv-alpha] [--dynamic-offset-mode current|aex-row|min-radius]\n");
+            std::printf("Usage: olmradialblur_cli --input in.png --params params.json --output out.png [--ignore-size-variation] [--inner-alpha-mode max|sum|outer|inner|input] [--inner-source-scatter-prepass] [--inner-prepass-mode simple|tail-gather] [--inner-prepass-span-mode strength|offset|edge-fade] [--inner-prepass-weight-mode row-span|aex-alpha] [--inner-scatter-rgb-mode straight|prepass-premul] [--inner-scatter-seed-mode source|none] [--inner-seed-alpha-mode input|prepass] [--inner-final-alpha-mode max|denom|source] [--inner-rgb-denominator-mode accum|max] [--inner-scatter-span-scale-mode one|source-alpha|input-alpha] [--inner-wrap-mode circular|aex-next-row] [--inner-source-scale-mode one|alpha|inv-alpha] [--dynamic-offset-mode current|aex-row|min-radius] [--polar-valid-mode strict|aex-repeat]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
@@ -1563,6 +1579,7 @@ int main(int argc, char **argv) {
         params.inner_wrap_mode = args.inner_wrap_mode;
         params.inner_source_scale_mode = args.inner_source_scale_mode;
         params.dynamic_offset_mode = args.dynamic_offset_mode;
+        params.polar_valid_mode = args.polar_valid_mode;
         Image output = params.blur_type == 2 ? render_olmradialblur_rotation(input, params)
                                              : render_olmradialblur_zoom(input, params);
         write_png(args.output, output);

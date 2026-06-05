@@ -468,6 +468,16 @@ high-level polar coordinate structure.
   RGBA sampling from validity sampling (`FUN_180001520`/`FUN_180001950`); then
   port `FUN_1800024c0` offset/inner handling instead of treating inner as a
   simple reverse blur.
+- 2026-06-06 probe: `cli/OLMRadialBlur/main.cpp` now has a diagnostic
+  `--polar-valid-mode strict|aex-repeat`, and
+  `refs/scripts/smoke_olmradialblur_cpp_inner_polar_valid_probe_cli.py`
+  measures whether Repeat Border should loosen the polar-grid validity buffer
+  like `FUN_180001520` (`-2 < int(x) < width`, `-2 < int(y) < height`) instead
+  of the previous strict image bounds. Result: mostly neutral. Strict gives
+  `case_0011 mean=25.2972`, `case_0012 mean=10.6222`,
+  `case_0013 mean=21.2910`; `aex-repeat` gives `case_0011 mean=25.1925`,
+  `case_0012 mean=10.6245`, `case_0013 mean=21.2894`. Keep this as a
+  measurement hook only; it does not explain the Inner residual.
 - `mac/OLMRadialBlur/OLMRadialBlur.cpp` now carries the same 8bpc
   outer-only/no-noise/no-size-variation Rotation slice, including the
   radius-dependent Offset Mode=1 path. Unsupported Rotation cases (Inner,
