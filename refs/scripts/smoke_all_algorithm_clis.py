@@ -74,6 +74,8 @@ def main() -> int:
         Smoke("Reference request package", [py, "refs/scripts/package_reference_requests.py", "--pending", "--output", "/tmp/olm_reference_requests_smoke.zip"]),
         Smoke("Reference request result verifier", [py, "refs/scripts/smoke_reference_request_result_verifier.py"]),
         Smoke("Reference request importer", [py, "refs/scripts/smoke_import_win_reference.py"]),
+        Smoke("Reference requests after import runner", [py, "refs/scripts/smoke_reference_requests_after_import_runner.py"]),
+        Smoke("Reference requests after import", [py, "refs/scripts/smoke_reference_requests_after_import.py"]),
         Smoke("Reference request status", [py, "refs/scripts/check_reference_request_status.py"]),
         Smoke("AE validation result verifier", [py, "refs/scripts/smoke_ae_validation_result_verifier.py"]),
         Smoke("harness", [py, "refs/scripts/smoke_algorithm_harness.py"]),
