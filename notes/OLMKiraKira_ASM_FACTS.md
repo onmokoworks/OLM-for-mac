@@ -261,10 +261,10 @@ Current interpretation:
   It is also negative: `case_0001 mean=0.9928`, `case_0002 mean=1.3755`,
   `case_0003 mean=4.4660`.
 - The remaining residual is more likely exact OpenCV 4.5.5 `warpAffine`
-  source/destination Mat/ROI placement, dsize/crop behavior, sampling/rounding,
-  or another pre/post ray detail than a simple boxFilter argument mismatch,
-  naive getRotationMatrix2D center swap, `FUN_181157ed0` matrix adjustment, or
-  direct rotate-back approximation.
+  destination canvas / dsize behavior, sampling/rounding, final composition, or
+  another pre/post ray detail than a simple boxFilter argument mismatch, naive
+  getRotationMatrix2D center swap, `FUN_181157ed0` matrix adjustment, direct
+  rotate-back approximation, or simple Mat ROI / same-destination aliasing.
 - Existing C++ crop probes (`floor`, `ceil`, `round`) all produce the same
   baseline residual (`case_0001 mean=0.8381`, `case_0002 mean=1.1623`,
   `case_0003 mean=1.7003`), so the current mismatch is not explained by a
@@ -322,9 +322,11 @@ the caller sets up temp Mats and calls `FUN_181150790`, and the helper contains
 the forward warp, Blur Mode work, and rotate-back path. Treat the CLI fast path
 as a portability shortcut/diagnostic, not as confirmed AEX behavior.
 
-Do not adopt any new warp/crop change without a direct asm argument mapping or
-a faithful local OpenCV 4.5.5 reproduction; image-diff-only tuning is too easy
-to overfit here.
+OpenCV 4.5.5 `dst=` / ROI aliasing has been reproduced locally and is neutral:
+`opencv-two-temp-alias-roi` matches ordinary `opencv-two-temp` at
+`0.8504/1.1570/1.0514`. Do not adopt any new warp/crop change without a direct
+asm argument mapping or a faithful local OpenCV 4.5.5 reproduction;
+image-diff-only tuning is too easy to overfit here.
 
 ## Temp Mat Creation / Caller Placement
 

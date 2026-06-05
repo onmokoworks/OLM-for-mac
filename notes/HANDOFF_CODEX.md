@@ -114,7 +114,7 @@ Project Settings 差で同一ケースを撮り直して、PNG差分を見るの
 | OLMDistanceGradation | ✅ Python + Mac plugin | 新規20260605参照の11ケース smoke OK（max<=7 / mean<=0.11）。Threshold=0特別扱いをWindows参照に合わせてMac側も修正。背景色linearはPNG premul補正で緑化、blur/constant系はまだ赤測定対象 | `refs/scripts/olmdistancegradation_cli.py`, `refs/scripts/smoke_olmdistancegradation_cli.py`, `mac/OLMDistanceGradation/` |
 | OLMDirectionalBlur | 🔎 実験CLI + Mac plugin(新) | front-only/no-noise は DIFF 計測中。Python/C++ direct probeあり。rotate-back denominator-alpha probe is neutral/negative (`case_0001` unchanged 4.4483; `case_0005` worsens 1.1703 -> 1.1749), so next focus is row-driver A/B/denom ownership, scatter argument roles, or host edge/populate callbacks。Mac plugin builds universal for 8bpc front-only/no-noise direct slice | `refs/scripts/olmdirectionalblur_cli.py`, `cli/OLMDirectionalBlur/main.cpp`, `mac/OLMDirectionalBlur/` |
 | OLMRadialBlur | ✅/🔎 decomp解析 + Python/C++ Zoom/Rotation CLI + Mac plugin(新) | Rotation `0010` Python/C++ mean 0.0104; broad Python `0001` 1.9039 / `0002` 1.3077; broad C++ `0001` 1.9034 / `0002` 1.3071 after offset port; Zoom `0009` Python max=1 mean=0.0058 OK / C++ max=1 mean=0.0046 OK; C++ Zoom `0003..0005` max=8 mean=0.0059 OK with Size Variation ignored; Inner source-scatter/prepass baseline now measures old Inner `0011/0012/0013` at 25.2972 / 10.6222 / 21.2910; Edge Fade `0024/0025/0027` conditional seed edgefade-none improves means to 5.1129 / 3.9755 / 1.9204 but is red diagnostic due coverage regression; Mac plugin builds universal for 8bpc Zoom plus 8bpc outer-only Rotation/noise-off slice, including FFT fast path and Size Variation no-op pass-through | `notes/OLMRadialBlur_RE.md`, `refs/scripts/olmradialblur_cli.py`, `cli/OLMRadialBlur/main.cpp`, `mac/OLMRadialBlur/` |
-| OLMKiraKira | 🔎 実験CLI + C++ scaffold + Mac plugin(新) | Python OpenCV two-temp probe added: baseline `0.8379/1.1627/1.7073` -> OpenCV primitive `0.8504/1.1570/1.0514`; C++ `aex-two-temp/no-fastpath` `0.8506/1.1570/1.0563`; Mac plugin now uses the same all-ray two-temp candidate path and builds universal、まだ DIFF | `refs/scripts/olmkirakira_cli.py`, `refs/scripts/smoke_olmkirakira_opencv_two_temp_probe_cli.py`, `cli/OLMKiraKira/main.cpp`, `mac/OLMKiraKira/` |
+| OLMKiraKira | 🔎 実験CLI + C++ scaffold + Mac plugin(新) | Python OpenCV two-temp probe added: baseline `0.8379/1.1627/1.7073` -> OpenCV primitive `0.8504/1.1570/1.0514`; explicit ROI/`dst=` alias probe is identical, so simple Mat aliasing is not the residual; C++ `aex-two-temp/no-fastpath` `0.8506/1.1570/1.0563`; Mac plugin now uses the same all-ray two-temp candidate path and builds universal、まだ DIFF | `refs/scripts/olmkirakira_cli.py`, `refs/scripts/smoke_olmkirakira_opencv_two_temp_probe_cli.py`, `refs/scripts/smoke_olmkirakira_opencv_two_temp_alias_probe_cli.py`, `cli/OLMKiraKira/main.cpp`, `mac/OLMKiraKira/` |
 
 OLMKiraKira 最新メモ: `OLMKiraKiraLuminance` vtable は `+0x00 FUN_181150600`,
 `+0x08 FUN_18114fd90`, `+0x10 FUN_18114ffd0`, `+0x18/+0x20` が1を返す小関数。
@@ -145,8 +145,9 @@ case3は `1.7023 -> 1.7073` に少し悪化するため、これはOpenCV境界�
 2026-06-06 OpenCV 4.5.5 parity confirmed the same two-temp results as 4.13
 (`0.8504/1.1570/1.0514`); C++ `aex-two-temp/no-fastpath` is
 `0.8506/1.1570/1.0563` and Mac is already ported to that candidate.
-Remaining target is exact Mat/ROI/copyTo aliasing, destination canvas, or
-final composition.
+Explicit ROI/`dst=` alias probe also produced the same
+`0.8504/1.1570/1.0514`, so the remaining target is not simple Mat aliasing;
+focus on destination canvas, final composition, or another pre/post ray detail.
 同日 C++ `--warp-mode aex-two-temp --axis-fast-path false` は
 `0.8506/1.1570/1.0563` でPython OpenCV probeとほぼ一致。手書きsampler差ではなく、
 0/90度rayのfast pathをAEXが通すかどうかが主な分岐。新規
@@ -188,10 +189,10 @@ Tiny Rotation `case_0010 max=255 mean=0.0104` でOK。`scripts/build_all_mac_plu
 同日 `python3 refs/scripts/smoke_all_algorithm_clis.py` も exit 0 で完走。green gatesは通過し、
 registered red-measurement はすべて `DIFF-observed` として観測できた。
 Next candidates: OLMDirectionalBlur row-driver/host edge semantics after
-rotate-back denom-alpha went negative; OLMKiraKira exact
-Mat/ROI/copyTo/destination/final composition; OLMRadialBlur Inner + Edge Fade
-caller-populated +0x10/+0x14 and 0xf250/0xf252 coupling. OLMSmoother stays
-v2-compat-first.
+rotate-back denom-alpha went negative; OLMKiraKira destination canvas / final
+composition / pre-post ray details after simple Mat aliasing went neutral;
+OLMRadialBlur Inner + Edge Fade caller-populated +0x10/+0x14 and
+0xf250/0xf252 coupling. OLMSmoother stays v2-compat-first.
 2026-06-05 REFLECT_101更新後にも `python3 refs/scripts/smoke_all_algorithm_clis.py`
 を再実行し、exit 0。KiraKira の新baseline
 (`Python 0.8379/1.1627`, `C++ 0.8382/1.1627/1.7073`) と

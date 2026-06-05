@@ -82,7 +82,7 @@ future Rotation work.
 4. `OLMRadialBlur`: Mac plugin exists for Zoom/no-inner/no-noise plus outer-only Rotation/noise-off; continue Inner/Edge Fade diagnostics, especially +0x10/+0x14 and 0xf250/0xf252 coupling.
 5. `OLMSmoother` / `OLMSmoother2`: existing work exists, but algorithm is more complex.
 6. `OLMToonDilate`: pure cases 1-3 are now CLI-characterized and have a Mac plug-in build; case 4 remains a mixed RadialBlur reference.
-7. `OLMKiraKira`: Mac plugin exists and now uses all-ray two-temp/no-fastpath; remaining work is exact Mat/ROI/copyTo/destination/final composition.
+7. `OLMKiraKira`: Mac plugin exists and now uses all-ray two-temp/no-fastpath; simple Mat/ROI/`dst=` aliasing probe is neutral, so remaining work is destination canvas/final composition/pre-post ray details.
 
 ## Verification gates
 
@@ -198,7 +198,7 @@ the OLMKiraKira Brightness probe all produced expected DIFF measurement output.
 | OLMBlur | yes | yes | in progress | C++ CLI works | 3 exact, 4 near-match max=1 |
 | OLMColorKey | yes | yes | new Mac plugin builds | Python + C++ + Rust RGB/premult/box/Edge Thin/Edge Blur CLI | C++: 1-4 & 7 exact; 5/6 erode 0.48% off; Edge Blur C++ now matches Python exploratory residual (`case8 mean=1.0396`, `case9 mean=1.2503`); Mac plugin has cases 1-9 scaffold |
 | OLMDirectionalBlur | yes | yes | new Mac plugin builds | Python + C++ direct/rotated CLI scaffold | front-only/no-noise DIFF; Mac plugin has 8bpc front-only/no-noise direct slice; rotated-aex-rotateback-denom-alpha is neutral/negative, so residual is not rotate-back denom alpha |
-| OLMKiraKira | yes | yes | new Mac plugin builds | Python OpenCV/two-temp ray probe + C++ native scaffold | Python OpenCV 4.5.5 two-temp `0.8504/1.1570/1.0514`; C++ all-ray two-temp/no-fastpath `0.8506/1.1570/1.0563`; Mac plugin uses that same all-ray two-temp candidate and still DIFF |
+| OLMKiraKira | yes | yes | new Mac plugin builds | Python OpenCV/two-temp ray probe + C++ native scaffold | Python OpenCV 4.5.5 two-temp `0.8504/1.1570/1.0514`; explicit ROI/`dst=` alias probe is identical, so simple Mat aliasing is not the residual; C++ all-ray two-temp/no-fastpath `0.8506/1.1570/1.0563`; Mac plugin uses that same all-ray two-temp candidate and still DIFF |
 | OLMRadialBlur | yes | yes | new Mac plugin builds | Python rotation + zoom polar CLI scaffold; C++ Zoom/Rotation/Inner diagnostic CLI | Rotation case_0010 near-match; Zoom 0009 OK in Python and C++; C++ Zoom 0003-0005 OK with Size Variation ignored; Mac plugin has 8bpc Zoom/no-inner/no-noise slice with large-Strength FFT path and Size Variation no-op pass-through; Inner source-scatter/prepass old refs baseline 25.2972/10.6222/21.2910; Edge Fade conditional seed improves means but remains red diagnostic due coverage; continue exact +0x10/+0x14 buffer construction |
 | OLMSmoother | yes | yes | prefer v2 compat | C++ CLI over mac port; OLMSmoother2 forced-v1 compat gate | standalone classifier over-fires ~20x, but OLMSmoother2 `Smoother Version=1` matches v1 refs closely (`mean=0.0055/0.0051/0.0200`); do not deep-dive standalone v1 unless this migration path is rejected |
 | OLMSmoother2 | yes, 20260605_extra | yes | port complete-ish | C++ CLI over mac port | first 4 cases measured: case1 mean 0.1832, case2 0.0216, case3 exact, case4 0.0189 after asm key-path + writeback-premul fixes |
@@ -2044,7 +2044,7 @@ behavior.
   output. It is mixed: `case_0001 mean=0.8531`, `case_0002 mean=1.1555`,
   `case_0003 mean=1.1870`, versus default `0.8381/1.1623/1.7003`. Do not adopt
   it as default yet; it is evidence that the two-temp path matters especially
-  for Strength=0, while case1 still needs exact ROI/header/copyTo semantics.
+  for Strength=0, while case1 still needs another exact pre/post ray detail.
 - 2026-06-06 Python OpenCV primitive probe: added diagnostic
   `--ray-mode opencv-two-temp` to `refs/scripts/olmkirakira_cli.py` plus
   `refs/scripts/smoke_olmkirakira_opencv_two_temp_probe_cli.py`. This calls
@@ -2069,13 +2069,25 @@ behavior.
   explained by OpenCV version drift between 4.13 and AEX's 4.5.5; keep chasing
   exact Mat/ROI/copyTo aliasing, destination canvas, or final composition
   details.
+- 2026-06-06 OpenCV two-temp ROI/alias probe: added
+  `--ray-mode opencv-two-temp-alias-roi` and
+  `refs/scripts/smoke_olmkirakira_opencv_two_temp_alias_probe_cli.py`. This
+  keeps the same OpenCV 4.5.5 two-temp choreography but allocates explicit
+  zero temp buffers, writes the centered source ROI into temp-A, and uses
+  `dst=temp_a` / `dst=temp_b` for `warpAffine` and `boxFilter`. Results are
+  identical to the ordinary OpenCV two-temp probe:
+  `case_0001 mean=0.8504`, `case_0002 mean=1.1570`,
+  `case_0003 mean=1.0514`. Therefore simple Mat header / ROI view /
+  same-destination aliasing is not the remaining residual; focus next on the
+  destination canvas, final composition, or another pre/post ray detail.
 - 2026-06-06 two-temp follow-up sweeps: `aex-two-temp` with
   `bilinear-fixed5` is almost neutral (`0.8529/1.1555/1.1822`). Anchor sweep
   keeps OpenCV default best (`opencv 0.8531/1.1555/1.1870`; `floor-left`
   worsens to `0.8531/1.2134/2.1904`; `origin/end` are strongly negative).
   Border sweep is mixed (`mirror 0.8531/1.1555/1.1870`, `reflect
   0.8531/1.1558/1.1818`). So the next exactness target is still
-  `warpAffine`/ROI/copyTo placement, not `boxFilter` anchor/border.
+  `warpAffine` destination/canvas or pre/post ray placement, not `boxFilter`
+  anchor/border or simple ROI aliasing.
 - 2026-06-06 final ROI shift probe: added `aex-two-temp-final-{xm,xp,ym,yp}`
   diagnostics. All one-pixel final-copy shifts are negative:
   baseline `0.8531/1.1555/1.1870`; `x-1 1.1336/1.3811/6.1233`;

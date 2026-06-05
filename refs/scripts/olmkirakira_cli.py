@@ -221,7 +221,13 @@ def copy_centered_roi(
     return out
 
 
-def opencv_two_temp_axis_blur(seed: np.ndarray, length: int, angle: float, passes: int) -> np.ndarray:
+def opencv_two_temp_axis_blur(
+    seed: np.ndarray,
+    length: int,
+    angle: float,
+    passes: int,
+    alias_roi: bool = False,
+) -> np.ndarray:
     try:
         import cv2
     except ImportError as exc:
@@ -236,36 +242,73 @@ def opencv_two_temp_axis_blur(seed: np.ndarray, length: int, angle: float, passe
     rw = max(width + 4, int(float(width) * abs(np.cos(rad)) + float(height) * abs(np.sin(rad)) + 0.5))
     rh = max(height + 4, int(float(width) * abs(np.sin(rad)) + float(height) * abs(np.cos(rad)) + 0.5))
     center = (float(rw) * 0.5, float(rh) * 0.5)
-    temp_a = copy_centered_roi(seed.astype(np.float32), rh, rw)
+    temp_a = np.zeros((rh, rw), dtype=np.float32)
+    y0 = max(0, (rh - height) // 2)
+    x0 = max(0, (rw - width) // 2)
+    temp_a[y0 : y0 + height, x0 : x0 + width] = seed.astype(np.float32)
     matrix = cv2.getRotationMatrix2D(center, angle, 1.0)
-    temp_a = cv2.warpAffine(
-        temp_a,
-        matrix,
-        (rw, rh),
-        flags=cv2.INTER_LINEAR,
-        borderMode=cv2.BORDER_CONSTANT,
-        borderValue=0,
-    )
-    temp_b = temp_a
-    ksize = (max(1, length), 1)
-    for _ in range(max(1, passes)):
-        temp_b = cv2.boxFilter(
-            temp_b,
-            ddepth=-1,
-            ksize=ksize,
-            anchor=(-1, -1),
-            normalize=True,
-            borderType=cv2.BORDER_REFLECT_101,
+    if alias_roi:
+        cv2.warpAffine(
+            temp_a,
+            matrix,
+            (rw, rh),
+            dst=temp_a,
+            flags=cv2.INTER_LINEAR,
+            borderMode=cv2.BORDER_CONSTANT,
+            borderValue=0,
         )
+    else:
+        temp_a = cv2.warpAffine(
+            temp_a,
+            matrix,
+            (rw, rh),
+            flags=cv2.INTER_LINEAR,
+            borderMode=cv2.BORDER_CONSTANT,
+            borderValue=0,
+        )
+    temp_b = np.zeros_like(temp_a) if alias_roi else temp_a
+    ksize = (max(1, length), 1)
+    for pass_index in range(max(1, passes)):
+        src = temp_a if alias_roi and pass_index == 0 else temp_b
+        if alias_roi:
+            cv2.boxFilter(
+                src,
+                ddepth=-1,
+                ksize=ksize,
+                dst=temp_b,
+                anchor=(-1, -1),
+                normalize=True,
+                borderType=cv2.BORDER_REFLECT_101,
+            )
+        else:
+            temp_b = cv2.boxFilter(
+                src,
+                ddepth=-1,
+                ksize=ksize,
+                anchor=(-1, -1),
+                normalize=True,
+                borderType=cv2.BORDER_REFLECT_101,
+            )
     matrix = cv2.getRotationMatrix2D(center, -angle, 1.0)
-    temp_b = cv2.warpAffine(
-        temp_b,
-        matrix,
-        (rw, rh),
-        flags=cv2.INTER_LINEAR,
-        borderMode=cv2.BORDER_CONSTANT,
-        borderValue=0,
-    )
+    if alias_roi:
+        cv2.warpAffine(
+            temp_b,
+            matrix,
+            (rw, rh),
+            dst=temp_b,
+            flags=cv2.INTER_LINEAR,
+            borderMode=cv2.BORDER_CONSTANT,
+            borderValue=0,
+        )
+    else:
+        temp_b = cv2.warpAffine(
+            temp_b,
+            matrix,
+            (rw, rh),
+            flags=cv2.INTER_LINEAR,
+            borderMode=cv2.BORDER_CONSTANT,
+            borderValue=0,
+        )
     return crop_center(temp_b, height, width)
 
 
@@ -347,17 +390,23 @@ def axis_rotate_rays(
     ]
 
 
-def opencv_two_temp_rays(seed: np.ndarray, params: dict[str, Any], falloff: str, length_scale: float) -> list[np.ndarray]:
+def opencv_two_temp_rays(
+    seed: np.ndarray,
+    params: dict[str, Any],
+    falloff: str,
+    length_scale: float,
+    alias_roi: bool = False,
+) -> list[np.ndarray]:
     def scaled_length(key: str) -> int:
         return max(0, int(round(float_param(params, key, 0.0) * length_scale)))
 
     passes = 3 if falloff.startswith("box3") else 1
     glow_rotation = float_param(params, "glow_rotation", 0.0)
     return [
-        opencv_two_temp_axis_blur(seed, scaled_length("vertical_length"), 90.0 + glow_rotation, passes),
-        opencv_two_temp_axis_blur(seed, scaled_length("horizontal_length"), glow_rotation, passes),
-        opencv_two_temp_axis_blur(seed, scaled_length("diagonal_length"), 45.0 + glow_rotation, passes),
-        opencv_two_temp_axis_blur(seed, scaled_length("diagonal2_length"), -45.0 + glow_rotation, passes),
+        opencv_two_temp_axis_blur(seed, scaled_length("vertical_length"), 90.0 + glow_rotation, passes, alias_roi),
+        opencv_two_temp_axis_blur(seed, scaled_length("horizontal_length"), glow_rotation, passes, alias_roi),
+        opencv_two_temp_axis_blur(seed, scaled_length("diagonal_length"), 45.0 + glow_rotation, passes, alias_roi),
+        opencv_two_temp_axis_blur(seed, scaled_length("diagonal2_length"), -45.0 + glow_rotation, passes, alias_roi),
     ]
 
 
@@ -443,8 +492,14 @@ def render_kirakira(
     source_opacity = float_param(params, "source_opacity", 100.0) / 100.0
 
     glow = np.zeros_like(rgba)
-    if ray_mode == "opencv-two-temp":
-        vertical, horizontal, diagonal, diagonal2 = opencv_two_temp_rays(seed, params, falloff, length_scale)
+    if ray_mode in ("opencv-two-temp", "opencv-two-temp-alias-roi"):
+        vertical, horizontal, diagonal, diagonal2 = opencv_two_temp_rays(
+            seed,
+            params,
+            falloff,
+            length_scale,
+            alias_roi=ray_mode == "opencv-two-temp-alias-roi",
+        )
     elif ray_mode == "axis-rotate":
         vertical, horizontal, diagonal, diagonal2 = axis_rotate_rays(
             seed, params, falloff, include_center, filter_border, length_scale, crop_offset_y, crop_offset_x,
@@ -500,7 +555,11 @@ def main() -> int:
     )
     parser.add_argument("--gain-scale", type=float, default=1.0)
     parser.add_argument("--bidirectional", action="store_true")
-    parser.add_argument("--ray-mode", choices=["shift", "axis-rotate", "opencv-two-temp"], default="shift")
+    parser.add_argument(
+        "--ray-mode",
+        choices=["shift", "axis-rotate", "opencv-two-temp", "opencv-two-temp-alias-roi"],
+        default="shift",
+    )
     parser.add_argument("--compose-mode", choices=["simple", "aex-premul"], default="simple")
     parser.add_argument("--include-center", action="store_true")
     parser.add_argument(
