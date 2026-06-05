@@ -829,6 +829,13 @@ Initial files:
 - `refs/scripts/smoke_olmdirectionalblur_cpp_rotated_cli.py`
 - `refs/scripts/smoke_olmdirectionalblur_cpp_rotated_gather_cli.py`
 
+2026-06-06 update: `rotated-aex-full-choreo` now extends the A/B choreography
+probe by rotating normalized padded `B` back into padded `A` before cropping.
+It matches `rotated-aex-choreo` on the tracked front-only cases
+(`case_0001 mean=4.4483`, `case_0005 mean=1.1703`), so output-side padded
+ownership alone does not explain the residual. Next focus remains row-driver
+`A/B/denom` ownership or the host populate/output callbacks.
+
 Parameter reader mapping from `FUN_180006c50`:
 
 - param 1 / match `0001`: Angle, converted from degrees to radians.
