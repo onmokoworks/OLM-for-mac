@@ -138,6 +138,28 @@ Current probe status:
   slightly but worsens case5 slightly, so output quantization is another AEX
   fact rather than the main structural residual.
 
+### Host Populate / Output Callbacks
+
+Direct `llvm-objdump` confirmed the 8bpc callback pair:
+
+- populate at `0x180006980`
+- output at `0x180006b30`
+
+Both use the same padded index:
+
+```text
+((params+0x8098 + y) * *(int *)(params+0x80a0) + (params+0x809c + x)) * 4
+```
+
+8bpc populate maps AE PF pixel A/R/G/B bytes into work R/G/B/A floats, divided
+by the channel max. 8bpc output reads work R/G/B/A, applies `BrightnessGain` to
+RGB only, clamps RGB to `1.0`, leaves alpha ungained, multiplies by 255, and
+truncates with `CVTTSS2SI`.
+
+Current CLI's centered padded copy/crop and truncating-output diagnostic match
+these facts. Host channel order, centered offsets, and output rounding are no
+longer leading suspects for the current `case_0001` / `case_0005` residual.
+
 ### Component Map
 
 `FUN_1800028e0` builds a per-pixel map from the rotated valid mask.
@@ -275,8 +297,8 @@ semantics than in the final direct-to-comp sampling shortcut alone.
    zero-denominator probes are negative, so the next gap is more likely helper
    scatter semantics or host edge handling than simple B/denom initialization.
 3. Re-measure `case_0001` and `case_0005`.
-4. If angle-0 remains around `mean=4`, inspect `LAB_1800068e0` host-populate
-   callback and host-output callback `LAB_180006a90` before more parameter
-   sweeps. The component-map run-merging pass now looks consistent with the
-   current CLI approximation.
+4. If angle-0 remains around `mean=4`, inspect render-context scale mapping
+   (`ctx + 0x11c / ctx + 0x120`) and finer scatter/source-alpha ownership before
+   more parameter sweeps. Host populate/output callbacks and the component-map
+   run-merging pass now look consistent with the current CLI approximation.
 5. Only after front-only improves, add Back Blur / Noise IR sections.
