@@ -163,7 +163,19 @@ xcodebuild -project OLMSmoother.xcodeproj -configuration Debug
 ~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/
 ```
 
-`OLMSmoother2` と `DistanceGradation` は build 済み確認済みです。codesign が `resource fork, Finder information, or similar detritus not allowed` で落ちる場合は、build product に付いた xattr を消してから再実行します。
+全Macプラグインをビルド・universal slice確認・codesign確認して、AE実機へ渡すzipにまとめる:
+
+```sh
+scripts/package_mac_plugins.sh
+```
+
+既に `scripts/build_all_mac_plugins.sh` を同じセッションで通している場合だけ、再ビルドを省略して梱包できます:
+
+```sh
+scripts/package_mac_plugins.sh --skip-build --output /tmp/olm_mac_plugins_Debug.zip
+```
+
+zipを展開し、中の `*.plugin` bundle を上記 MediaCore へコピーしてからAfter Effectsを再起動します。codesign が `resource fork, Finder information, or similar detritus not allowed` で落ちる場合は、build product に付いた xattr を消してから再実行します。
 
 ```sh
 xattr -cr build/Debug/<PluginName>.plugin
