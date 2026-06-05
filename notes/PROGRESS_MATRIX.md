@@ -78,6 +78,9 @@ python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
 
 ## 2026-06-06 Parallel Audit Results
 
+Consolidated stop lines and post-reference actions are tracked in
+`notes/PARALLEL_IR_AUDIT_20260606.md`.
+
 - `OLMKiraKira` / Franklin: current C++ default smoke remains a red/probe path
   around `case_0001 mean=0.8381`, `case_0002 mean=1.1623`,
   `case_0003 mean=1.7003`; all-ray two-temp/no-fastpath is
