@@ -85,6 +85,7 @@ def main() -> int:
         Smoke("OLMColorKey C++", [py, "refs/scripts/smoke_olmcolorkey_cpp_cli.py"]),
         Smoke("OLMColorKey C++ Edge Blur", [py, "refs/scripts/smoke_olmcolorkey_cpp_edgeblur_cli.py"]),
         Smoke("OLMColorKey Rust", [py, "refs/scripts/smoke_olmcolorkey_rust_cli.py"]),
+        Smoke("OLMColorKey Replace/color-space request", [py, "refs/scripts/smoke_olmcolorkey_replace_colorspace_request_cli.py"]),
         Smoke("OLMToonDilate", [py, "refs/scripts/smoke_olmtoondilate_cli.py"]),
         Smoke("OLMToonDilate C++ build", ["refs/scripts/build_olmtoondilate_cli.sh"]),
         Smoke("OLMToonDilate C++", [py, "refs/scripts/smoke_olmtoondilate_cpp_cli.py"]),
