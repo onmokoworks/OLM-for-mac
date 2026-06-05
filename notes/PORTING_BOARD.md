@@ -116,10 +116,15 @@ Current smoke status:
   entrypoint.
 - `smoke_olmtoondilate_cli.py` (1-3): gated at max-diff 255 / mean 4.0 /
   nz 1.7% (known boundary residual), **ok=3** — guards against regressing worse.
-- `smoke_olmdistancegradation_cli.py` (12 stable cases): gated at max-diff 7 /
-  mean 0.11 / nz 22.0%, **ok=12**. This covers cases
-  1/2/3/4/5/6/7/9/15/17/18/19; omitted blur/constant/interpolation cases remain
-  red measurement targets rather than promoted green behavior.
+- `smoke_olmdistancegradation_cli.py` (12 stable basic cases): gated at
+  max-diff 7 / mean 0.11 / nz 22.0%, **ok=12**. This covers cases
+  1/2/3/4/5/6/7/9/15/17/18/19.
+- `smoke_olmdistancegradation_extended_cli.py` (16 non-blur extended cases):
+  gated at max-diff 255 / mean 0.72 / nz 51.0%, **ok=16**. This covers the
+  near-matching outside-threshold, render-layer, background, constant, sphere,
+  and power interpolation cases 8/10/11/12/13/14/16/20/21/22/23/24/25/26/27/28.
+  Blur Mode `case_0029` remains a red target (`mean~=30.88`) and is not
+  promoted.
 - `smoke_olmsmoother_cli.py` (1-3): intentionally **not** gated green; the CPU
   MLAA path diverges structurally from the current reference (kept honest as DIFF).
 - `smoke_olmsmoother2_cli.py` (20260605_extra cases 1-4): intentionally
@@ -220,7 +225,7 @@ the OLMKiraKira Brightness probe all produced expected DIFF measurement output.
 | Plugin | Win Ref | Ghidra Dump | Mac AE Source | AE-Free CLI | Reference Diff |
 |---|---|---|---|---|---|
 | ColorKeep | none in 20260604 set | yes | complete-ish | smoke CLI works | synthetic smoke ok |
-| DistanceGradation | yes, 20260605_extra | yes | complete-ish | Python CLI works | 12-case smoke OK (`max<=7`, `mean<=0.11`) |
+| DistanceGradation | yes, 20260605_extra | yes | complete-ish | Python CLI works | 12-case basic smoke OK (`max<=7`, `mean<=0.11`) plus 16-case extended non-blur smoke OK (`mean<=0.72`); Blur Mode `case_0029` still red |
 | OLMBlur | yes | yes | in progress | C++ CLI works | 3 exact, 4 near-match max=1 |
 | OLMColorKey | yes | yes | new Mac plugin builds | Python + C++ + Rust RGB/premult/box/Edge Thin/Edge Blur CLI | C++: 1-4 & 7 exact; 5/6 erode 0.48% off; Edge Blur C++ now matches Python exploratory residual (`case8 mean=1.0396`, `case9 mean=1.2503`); Mac plugin has cases 1-9 scaffold |
 | OLMDirectionalBlur | yes | yes | new Mac plugin builds | Python + C++ direct/rotated CLI scaffold | front-only/no-noise DIFF; Mac plugin has 8bpc front-only/no-noise direct slice; rotate-back denom-alpha is neutral/negative; exact row-driver equals exact-scatter-helper (`4.4392/1.1761`), so residual needs ASM argument mapping or extra refs |
@@ -924,7 +929,7 @@ near-match Zoom baseline for `case_0003..0005`-style settings.
   has both `arm64` and `x86_64` slices, and ran `codesign --verify` for each
   bundle.
 - `python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick` completed
-  successfully with 31/31 green checks. This includes the
+  successfully with 32/32 green checks. This includes the
   `Reference request package`, `Reference request result verifier`, and
   `Reference request status` gates, the `AE validation result verifier`,
   the harness, ColorKeep, OLMBlur,

@@ -114,7 +114,7 @@ Project Settings 差で同一ケースを撮り直して、PNG差分を見るの
 | OLMSmoother | ✅ C++(新) | v1単体CLIは過剰発火だが、OLMSmoother2 `--force-version 1` 互換probeが v1 refs 3ケース green (`mean=0.0055/0.0051/0.0200`)。v1単体の深追いは低優先 | `cli/OLMSmoother/`, `refs/scripts/smoke_olmsmoother2_v1_compat_cli.py` |
 | OLMSmoother2 | ✅ C++(新) | 20260605追加参照 cases 1-4 を測定。disasm/objdump-firstで Color Key + Invert active-palette と non-invert scalar-key path を修正。key-path smoke cases2-4 は green。現状: case1 0.1832 / case2 0.0216 / case3 exact / case4 0.0189 after writeback-premul + key-path fixes | `cli/OLMSmoother2/`, `mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp`, `notes/OLMSmoother2_ASM_FACTS.md` |
 | OLMToonDilate | ✅ Python + C++ + Mac plugin(新) | C++: case1 mean 0.4762 / case2 0.0022 / case3 3.0676; Mac plugin builds universal | `refs/scripts/olmtoondilate_cli.py`, `cli/OLMToonDilate/main.cpp`, `mac/OLMToonDilate/` |
-| OLMDistanceGradation | ✅ Python + Mac plugin | 新規20260605参照の12ケース smoke OK（max<=7 / mean<=0.11）。Threshold=0特別扱いをWindows参照に合わせてMac側も修正。背景色linearはPNG premul補正で緑化、blur/constant系はまだ赤測定対象 | `refs/scripts/olmdistancegradation_cli.py`, `refs/scripts/smoke_olmdistancegradation_cli.py`, `mac/OLMDistanceGradation/` |
+| OLMDistanceGradation | ✅ Python + Mac plugin | 新規20260605参照の12 basicケース smoke OK（max<=7 / mean<=0.11）に加え、16 extended non-blurケースも smoke OK（max<=255 / mean<=0.72）。Threshold=0特別扱いをWindows参照に合わせてMac側も修正。Blur Mode `case_0029` は mean約30.88でまだ赤測定対象 | `refs/scripts/olmdistancegradation_cli.py`, `refs/scripts/smoke_olmdistancegradation_cli.py`, `refs/scripts/smoke_olmdistancegradation_extended_cli.py`, `mac/OLMDistanceGradation/` |
 | OLMDirectionalBlur | 🔎 実験CLI + Mac plugin(新) | front-only/no-noise は DIFF 計測中。Python/C++ direct probeあり。rotate-back denominator-alpha は neutral/negative。`rotated-aex-exact-rowdriver` は `exact-scatter-helper` と完全同値 (`4.4392/1.1761`) で、row-driver統合だけでは残差説明不能。次はASM引数対応の精査か、非opaque alpha / render-context scaleを識別できる追加Win参照なしに深追いしない。Mac plugin builds universal for 8bpc front-only/no-noise direct slice | `refs/scripts/olmdirectionalblur_cli.py`, `cli/OLMDirectionalBlur/main.cpp`, `mac/OLMDirectionalBlur/` |
 | OLMRadialBlur | ✅/🔎 decomp解析 + Python/C++ Zoom/Rotation CLI + Mac plugin(新) | Rotation `0010` Python/C++ mean 0.0104; broad Python `0001` 1.9039 / `0002` 1.3077; broad C++ `0001` 1.9034 / `0002` 1.3071 after offset port; Zoom `0009` Python max=1 mean=0.0058 OK / C++ max=1 mean=0.0046 OK; C++ Zoom `0003..0005` max=8 mean=0.0059 OK with Size Variation ignored; Inner source-scatter/prepass baseline now measures old Inner `0011/0012/0013` at 25.2972 / 10.6222 / 21.2910; Edge Fade `0024/0025/0027` conditional seed edgefade-none improves means to 5.1129 / 3.9755 / 1.9204 but is red diagnostic due coverage regression; Mac plugin builds universal for 8bpc Zoom plus 8bpc outer-only Rotation/noise-off slice, including FFT fast path and Size Variation no-op pass-through | `notes/OLMRadialBlur_RE.md`, `refs/scripts/olmradialblur_cli.py`, `cli/OLMRadialBlur/main.cpp`, `mac/OLMRadialBlur/` |
 | OLMKiraKira | 🔎 実験CLI + C++ scaffold + Mac plugin(新) | Python OpenCV two-temp probe added: baseline `0.8379/1.1627/1.7073` -> OpenCV primitive `0.8504/1.1570/1.0514`; explicit ROI/`dst=` alias probe is identical, so simple Mat aliasing is not the residual; C++ `aex-two-temp/no-fastpath` `0.8506/1.1570/1.0563`; Mac plugin now uses the same all-ray two-temp candidate path and builds universal、まだ DIFF | `refs/scripts/olmkirakira_cli.py`, `refs/scripts/smoke_olmkirakira_opencv_two_temp_probe_cli.py`, `refs/scripts/smoke_olmkirakira_opencv_two_temp_alias_probe_cli.py`, `cli/OLMKiraKira/main.cpp`, `mac/OLMKiraKira/` |
@@ -576,7 +576,7 @@ reference request JSONを検証して `/tmp/olm_reference_requests_YYYYMMDD.zip`
 return shape を含む。さらに `python3 refs/scripts/smoke_all_algorithm_clis.py
 --profile quick` の先頭で同梱包、返却manifest verifier smoke、pending request
 status check、AE validation result verifier smokeを実行するようになった。
-quick profile は31 checks になり、
+quick profile は32 checks になり、
 `Reference request package`, `Reference request result verifier`,
 `Reference request status`, `AE validation result verifier`、
 `OLMSmoother2 no-key grid request`,
@@ -650,7 +650,7 @@ zip内 `manifest.json` のJSON parse、zip内 `.plugin` 10個確認、
 
 ```sh
 cd "/Users/onmk/Documents/Projects/Personal/OLM as"
-python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick # green gates only; 2026-06-06 OK (31 checks, includes reference request package/result verifier/status, AE validation verifier, Smoother2 no-key grid request smoke, and ColorKey Replace/color-space request smoke)
+python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick # green gates only; 2026-06-06 OK (32 checks, includes reference request package/result verifier/status, AE validation verifier, Smoother2 no-key grid request smoke, ColorKey Replace/color-space request smoke, and DistanceGradation extended smoke)
 refs/scripts/build_olmblur_cli.sh && refs/scripts/build_olmsmoother_cli.sh && refs/scripts/build_olmtoondilate_cli.sh && refs/scripts/build_olmradialblur_cli.sh
 refs/scripts/build_olmkirakira_cli.sh              # OLMKiraKira C++ scaffold
 scripts/build_all_mac_plugins.sh                  # Mac plugins: build + universal/codesign verify
