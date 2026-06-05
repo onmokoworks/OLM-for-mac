@@ -126,6 +126,12 @@ Current smoke status:
   `none=0.1832`, `suppress=0.2720`, `half=0.2069`, `quarter=0.2349`.
   This rules out a simple over-strong corner-weight fix; next no-key work should
   split the class-plane source from the `FUN_1800104d0` sample source.
+  2026-06-06 source/class-plane timing split is also negative:
+  `none=0.1832`, `sample-pre-setup=0.4606`, `class-pre-setup=0.2049`,
+  `sample-pre-gamma=0.4606`, `class-pre-gamma=0.2049`. Because both
+  diagnostics worsened, stop blind tuning and use
+  `refs/reference_requests/smoother2_no_key_grid_20260606.json` for the next
+  Windows reference pass.
 - `smoke_olmsmoother2_keypaths_cli.py` (20260605_extra cases 2-4): green
   regression gate for the objdump/disasm-confirmed key paths. Gated at
   `max<=95`, `mean<=0.022`, `nonzero<=0.15%`; current result **ok=3**.

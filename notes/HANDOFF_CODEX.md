@@ -121,6 +121,13 @@ none|suppress|half|quarter` 診断を追加し、no-key case_0001を測定。
 `none=0.1832`, `suppress=0.2720`, `half=0.2069`, `quarter=0.2349` で全て悪化。
 `idx=0x00` four-corner weightが単に強すぎる仮説は否定寄り。次は
 class-plane source と `FUN_1800104d0` sample source のplane/timing splitを追う。
+同日に `--plane-split-mode
+none|sample-pre-setup|class-pre-setup|sample-pre-gamma|class-pre-gamma` も追加。
+結果は `none=0.1832`, `sample-pre-setup=0.4606`,
+`class-pre-setup=0.2049`, `sample-pre-gamma=0.4606`,
+`class-pre-gamma=0.2049` で全て悪化。idx0/plane split の両方が否定寄りなので、
+`refs/reference_requests/smoother2_no_key_grid_20260606.json` の追加Win参照で
+Smoothness / Smooth Range / class-plane firingを切り分ける。
 
 OLMKiraKira 最新メモ: `OLMKiraKiraLuminance` vtable は `+0x00 FUN_181150600`,
 `+0x08 FUN_18114fd90`, `+0x10 FUN_18114ffd0`, `+0x18/+0x20` が1を返す小関数。

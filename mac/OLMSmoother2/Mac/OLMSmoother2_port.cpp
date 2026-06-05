@@ -70,6 +70,10 @@ constexpr double SRGB_OFFSET2 = 0.055;                  // DAT_1800226b8
 // CLI-only diagnostic hook. Keep default 0 for the AE plug-in path.
 // 0=normal, 1=suppress idx=0 four-corner dispatch, 2=half weight, 3=quarter weight.
 static int g_olmsmoother2_idx0_diag_mode = 0;
+// CLI-only source/class plane split diagnostic.
+// 0=post setup for both, 1=sample pre-setup, 2=class pre-setup,
+// 3=sample pre-gamma, 4=class pre-gamma.
+static int g_olmsmoother2_plane_split_diag_mode = 0;
 
 // ============================================================================
 // Plumbing: SMParams (Win struct analog) and pixel helpers
@@ -3619,6 +3623,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 			dst[x].r = r; dst[x].g = g; dst[x].b = b; dst[x].a = a;
 		}
 	}
+	const std::vector<FPix> scratch_pre_setup = scratch;
 
 	// FUN_180002e90's orchestration: unpremul if key enabled, apply key/invert,
 	// apply gamma encode.  Gate flags from the SMParams.
@@ -3648,6 +3653,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	if (p.enable_key && !p.invert_key) {
 		win_FUN_180002a70_invert_key(scratch.data(), w, h, p.key_color);
 	}
+	const std::vector<FPix> scratch_pre_gamma = scratch;
 	// FUN_180002a70 is the non-invert scalar-key path. The asm frame gate is
 	// byte [SMParams+0x14], inside the scalar key-color storage written only by
 	// FUN_180004e10's non-invert branch; do not wire it to the UI invert boolean.
@@ -3668,7 +3674,19 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	// in-place feedback.  Allocate an output scratch.
 	std::vector<FPix> scratch_out((size_t)w * (size_t)h);
 
-	FPlane plane_in  = { scratch.data(),     (size_t)w * sizeof(FPix), 0 };
+	FPix *sample_base = scratch.data();
+	const FPix *class_base = scratch.data();
+	if (g_olmsmoother2_plane_split_diag_mode == 1) {
+		sample_base = const_cast<FPix *>(scratch_pre_setup.data());
+	} else if (g_olmsmoother2_plane_split_diag_mode == 2) {
+		class_base = scratch_pre_setup.data();
+	} else if (g_olmsmoother2_plane_split_diag_mode == 3) {
+		sample_base = const_cast<FPix *>(scratch_pre_gamma.data());
+	} else if (g_olmsmoother2_plane_split_diag_mode == 4) {
+		class_base = scratch_pre_gamma.data();
+	}
+
+	FPlane plane_in  = { sample_base,        (size_t)w * sizeof(FPix), 0 };
 	FPlane plane_out = { scratch_out.data(), (size_t)w * sizeof(FPix), 0 };
 
 	// Frame-level u8 class plane — LITERAL port of FUN_18000ac00 / FUN_18000ae10.
@@ -3714,7 +3732,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 
 	std::vector<uint8_t> class_plane((size_t)w * (size_t)h * 4, 0);
 	auto fpix_at = [&](int xx, int yy) -> const FPix& {
-		return scratch[(size_t)yy * w + xx];
+		return class_base[(size_t)yy * w + xx];
 	};
 	for (int32_t y = 0; y < h; ++y) {
 		uint8_t *row = class_plane.data() + (size_t)y * w * 4;
