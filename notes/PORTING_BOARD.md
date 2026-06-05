@@ -1918,10 +1918,19 @@ behavior.
   decomp/asm matches `cv::Mat` move-assignment (`cv::Mat::operator =` strings
   are in the failure path). It copies/moves header and step storage, then clears
   the source header. `FUN_181156cd0` is the ROI/header constructor: its rectangle
-  memory layout is `x`, `y`, `height`, `width`, and it sets `rows=height`,
-  `cols=width`, `data = src.data + y * step[0] + x * elemSize`. Therefore the
+  memory layout is OpenCV `Rect(x, y, width, height)`, and it sets
+  `rows=height`, `cols=width`,
+  `data = src.data + y * step[0] + x * elemSize`. Therefore the
   next KiraKira target is exact ROI/source-destination placement around
   `FUN_181156cd0` and `FUN_18115cfb0`, not `FUN_181157ed0`.
+- 2026-06-06 follow-up: `FUN_18115cfb0` itself is OpenCV 4.5.5
+  `cv::Mat::copyTo` shape, not KiraKira-specific copy logic. It validates
+  channel/type compatibility, creates the destination, and falls through to
+  row `memcpy` when no conversion is needed. Existing C++ crop probes
+  (`floor`, `ceil`, `round`) all stayed at the baseline
+  `case_0001/0002/0003 mean=0.8381/1.1623/1.7003`, so the remaining mismatch is
+  not a simple final center-crop rounding issue. Continue at caller-generated
+  `Rect` values and exact `warpAffine` dsize/center semantics.
 - A temporary CLI probe approximating OpenCV's 5-bit `INTER_LINEAR` table
   (`bilinear-fixed5`) did not improve the current refs:
   `case_0001 mean=0.8384`, `case_0002 mean=1.1624`,
