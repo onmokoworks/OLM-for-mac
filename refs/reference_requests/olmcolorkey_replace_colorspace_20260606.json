@@ -1,0 +1,298 @@
+{
+  "request_id": "olmcolorkey_replace_colorspace_20260606",
+  "effect": {
+    "name": "OLM Color Key",
+    "match_name": "OLM Color Key"
+  },
+  "why": [
+    "Current OLMColorKey references cover RGB simple keying, premultiplied black-key Edge Thin, and partial Edge Blur/Lab76 scaffolds, but every current case has Enable Replace = 0.",
+    "Existing non-RGB cases mostly use a black key, which is invariant across color spaces and cannot verify non-black Lab76/Lab94/YUV/YCrCb conversion behavior.",
+    "Replace color, multiple key colors, and non-black color-space comparisons need targeted Windows references before the Mac/C++/Rust paths can be promoted beyond scaffolding."
+  ],
+  "render_sets": [
+    {
+      "id": "software",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "required": true
+    },
+    {
+      "id": "cuda",
+      "project_gpu_accel_type.current_name": "CUDA",
+      "required": false
+    }
+  ],
+  "inputs": [
+    {
+      "id": "current_olm_colorkey",
+      "description": "Use the same source artwork as refs/win_references/20260604_olm/OLMColorKey if possible so existing Edge Thin/Edge Blur residuals stay comparable."
+    },
+    {
+      "id": "opaque_color_grid",
+      "description": "Fully opaque grid with saturated red, green, blue, yellow, cyan, magenta, gray ramps, and some antialiased/transparent edges."
+    },
+    {
+      "id": "transparent_color_grid",
+      "description": "Same color-grid idea, but include low-alpha and zero-alpha pixels with nonzero RGB around keyed boundaries for transparent-RGB writeback checks."
+    }
+  ],
+  "common_params": {
+    "Color Keep": 0,
+    "Threshold": 0.12,
+    "Premultiplied Color": 0,
+    "Force Lower Precision": 1,
+    "Per Color": 0,
+    "Per Component": 0,
+    "Number of Colors": 1,
+    "Use Color 1": 1,
+    "Edge Thin Amount": 0,
+    "Edge Thin Distance Type": 1,
+    "Edge Blur Amount": 0,
+    "Edge Blur Distance Type": 1,
+    "Edge Blur Direction": 2,
+    "Enable Replace": 0
+  },
+  "cases": [
+    {
+      "id": "ck_rgb_nonblack_remove_red",
+      "input": "opaque_color_grid",
+      "reason": "Baseline non-black RGB key without replace.",
+      "params": {
+        "Color Space": 1,
+        "Color 1": [1.0, 0.0, 0.0, 1.0],
+        "Threshold": 0.12,
+        "Enable Replace": 0
+      }
+    },
+    {
+      "id": "ck_rgb_nonblack_keep_red",
+      "input": "opaque_color_grid",
+      "reason": "Baseline non-black RGB key with Color Keep enabled.",
+      "params": {
+        "Color Keep": 1,
+        "Color Space": 1,
+        "Color 1": [1.0, 0.0, 0.0, 1.0],
+        "Threshold": 0.12,
+        "Enable Replace": 0
+      }
+    },
+    {
+      "id": "ck_hsv_nonblack_remove_red",
+      "input": "opaque_color_grid",
+      "reason": "Verify Color Space 2 / HSV conversion on a non-black key.",
+      "params": {
+        "Color Space": 2,
+        "Color 1": [1.0, 0.0, 0.0, 1.0],
+        "Threshold": 0.12,
+        "Enable Replace": 0
+      }
+    },
+    {
+      "id": "ck_lab76_nonblack_remove_cyan",
+      "input": "opaque_color_grid",
+      "reason": "Verify Color Space 3 / Lab76 conversion on a non-black key.",
+      "params": {
+        "Color Space": 3,
+        "Color 1": [0.0, 1.0, 1.0, 1.0],
+        "Threshold": 0.18,
+        "Enable Replace": 0
+      }
+    },
+    {
+      "id": "ck_lab94_nonblack_remove_cyan",
+      "input": "opaque_color_grid",
+      "reason": "Verify Color Space 4 / Lab94 conversion separately from Lab76.",
+      "params": {
+        "Color Space": 4,
+        "Color 1": [0.0, 1.0, 1.0, 1.0],
+        "Threshold": 0.18,
+        "Enable Replace": 0
+      }
+    },
+    {
+      "id": "ck_yuv_nonblack_remove_yellow",
+      "input": "opaque_color_grid",
+      "reason": "Verify Color Space 5 / YUV conversion on a non-black key.",
+      "params": {
+        "Color Space": 5,
+        "Color 1": [1.0, 1.0, 0.0, 1.0],
+        "Threshold": 0.16,
+        "Enable Replace": 0
+      }
+    },
+    {
+      "id": "ck_ycrcb_nonblack_remove_yellow",
+      "input": "opaque_color_grid",
+      "reason": "Verify Color Space 6 / YCrCb conversion on a non-black key.",
+      "params": {
+        "Color Space": 6,
+        "Color 1": [1.0, 1.0, 0.0, 1.0],
+        "Threshold": 0.16,
+        "Enable Replace": 0
+      }
+    },
+    {
+      "id": "ck_lab76_per_component_cyan",
+      "input": "opaque_color_grid",
+      "reason": "Verify per-component thresholds in Lab76 on a non-black key.",
+      "params": {
+        "Color Space": 3,
+        "Color 1": [0.0, 1.0, 1.0, 1.0],
+        "Threshold": 0.18,
+        "Per Component": 1,
+        "Threshold(R,H,L,Y,Y) 1": 8,
+        "Threshold(G,S,a,U,Cr) 1": 4,
+        "Threshold(B,V,b,V,Cb) 1": 4,
+        "Enable Replace": 0
+      }
+    },
+    {
+      "id": "ck_lab94_per_component_cyan",
+      "input": "opaque_color_grid",
+      "reason": "Verify per-component thresholds in Lab94 separately from Lab76.",
+      "params": {
+        "Color Space": 4,
+        "Color 1": [0.0, 1.0, 1.0, 1.0],
+        "Threshold": 0.18,
+        "Per Component": 1,
+        "Threshold(R,H,L,Y,Y) 1": 8,
+        "Threshold(G,S,a,U,Cr) 1": 4,
+        "Threshold(B,V,b,V,Cb) 1": 4,
+        "Enable Replace": 0
+      }
+    },
+    {
+      "id": "ck_rgb_replace_red_with_blue",
+      "input": "opaque_color_grid",
+      "reason": "First direct Enable Replace reference with one key and one replacement color.",
+      "params": {
+        "Color Space": 1,
+        "Color 1": [1.0, 0.0, 0.0, 1.0],
+        "Threshold": 0.12,
+        "Enable Replace": 1,
+        "Use Replace Color 1": 1,
+        "Replace Color 1": [0.0, 0.0, 1.0, 1.0]
+      }
+    },
+    {
+      "id": "ck_rgb_keep_replace_red_with_blue",
+      "input": "opaque_color_grid",
+      "reason": "Determine how Color Keep interacts with Enable Replace.",
+      "params": {
+        "Color Keep": 1,
+        "Color Space": 1,
+        "Color 1": [1.0, 0.0, 0.0, 1.0],
+        "Threshold": 0.12,
+        "Enable Replace": 1,
+        "Use Replace Color 1": 1,
+        "Replace Color 1": [0.0, 0.0, 1.0, 1.0]
+      }
+    },
+    {
+      "id": "ck_lab76_replace_cyan_with_magenta",
+      "input": "opaque_color_grid",
+      "reason": "Replace behavior combined with Lab76 non-black comparison.",
+      "params": {
+        "Color Space": 3,
+        "Color 1": [0.0, 1.0, 1.0, 1.0],
+        "Threshold": 0.18,
+        "Enable Replace": 1,
+        "Use Replace Color 1": 1,
+        "Replace Color 1": [1.0, 0.0, 1.0, 1.0]
+      }
+    },
+    {
+      "id": "ck_rgb_two_keys_replace",
+      "input": "opaque_color_grid",
+      "reason": "Separate Number of Colors / multiple Use Color flags from single-key replace behavior.",
+      "params": {
+        "Color Space": 1,
+        "Number of Colors": 2,
+        "Use Color 1": 1,
+        "Color 1": [1.0, 0.0, 0.0, 1.0],
+        "Use Color 2": 1,
+        "Color 2": [0.0, 1.0, 0.0, 1.0],
+        "Threshold": 0.12,
+        "Enable Replace": 1,
+        "Use Replace Color 1": 1,
+        "Replace Color 1": [0.0, 0.0, 1.0, 1.0],
+        "Use Replace Color 2": 1,
+        "Replace Color 2": [1.0, 1.0, 0.0, 1.0]
+      }
+    },
+    {
+      "id": "ck_rgb_replace_edge_thin_dilate",
+      "input": "opaque_color_grid",
+      "reason": "Determine whether replacement is applied before or after positive Edge Thin morphology.",
+      "params": {
+        "Color Space": 1,
+        "Color 1": [1.0, 0.0, 0.0, 1.0],
+        "Threshold": 0.12,
+        "Edge Thin Amount": 8,
+        "Edge Thin Distance Type": 2,
+        "Enable Replace": 1,
+        "Use Replace Color 1": 1,
+        "Replace Color 1": [0.0, 0.0, 1.0, 1.0]
+      }
+    },
+    {
+      "id": "ck_rgb_replace_edge_thin_erode",
+      "input": "opaque_color_grid",
+      "reason": "Determine whether replacement is applied before or after negative Edge Thin morphology.",
+      "params": {
+        "Color Space": 1,
+        "Color 1": [1.0, 0.0, 0.0, 1.0],
+        "Threshold": 0.12,
+        "Edge Thin Amount": -8,
+        "Edge Thin Distance Type": 2,
+        "Enable Replace": 1,
+        "Use Replace Color 1": 1,
+        "Replace Color 1": [0.0, 0.0, 1.0, 1.0]
+      }
+    },
+    {
+      "id": "ck_edgeblur_replace_red_with_blue",
+      "input": "opaque_color_grid",
+      "reason": "Optional interaction check for Replace with Edge Blur feathering; only needed after basic replace cases render.",
+      "optional": true,
+      "params": {
+        "Color Space": 1,
+        "Color 1": [1.0, 0.0, 0.0, 1.0],
+        "Threshold": 0.12,
+        "Edge Blur Amount": 25,
+        "Edge Blur Distance Type": 1,
+        "Edge Blur Direction": 3,
+        "Enable Replace": 1,
+        "Use Replace Color 1": 1,
+        "Replace Color 1": [0.0, 0.0, 1.0, 1.0]
+      }
+    },
+    {
+      "id": "ck_edgeblur_transparent_rgb",
+      "input": "transparent_color_grid",
+      "reason": "Optional transparent-RGB/premult writeback probe for the remaining Edge Blur boundary residual.",
+      "optional": true,
+      "params": {
+        "Color Space": 1,
+        "Color 1": [1.0, 0.0, 0.0, 1.0],
+        "Threshold": 0.12,
+        "Edge Blur Amount": 25,
+        "Edge Blur Distance Type": 1,
+        "Edge Blur Direction": 3,
+        "Enable Replace": 0
+      }
+    }
+  ],
+  "manifest_requirements": [
+    "Record all OLM Color Key property names, match_names, property_index, values, enabled/active state, and selected effect path.",
+    "Record grouped Edge Thin, Edge Blur, Key Colors, and Replace Colors parameter values in the same raw property tree shape as existing manifests.",
+    "Record project_gpu_accel_type.current_name and raw value per render set.",
+    "Keep ADBE Force CPU GPU / GPU Rendering as reference-only metadata, not as the execution-path label.",
+    "Save both before_effects_frame and effect output PNG for every case.",
+    "If possible, preserve the same comp size and source layer artwork used by refs/win_references/20260604_olm/OLMColorKey for at least the current_olm_colorkey input."
+  ],
+  "mac_follow_up": [
+    "Import with refs/scripts/import_win_reference.py.",
+    "Run refs/scripts/audit_olmcolorkey_manifest.py on the imported folder to confirm Replace and non-black color-space coverage.",
+    "Use the new cases to implement or reject Replace, Lab94/YUV/YCrCb conversion, and multiple-key replacement in the Python/C++/Rust/Mac paths."
+  ]
+}

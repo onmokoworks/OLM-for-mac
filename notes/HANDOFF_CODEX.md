@@ -379,13 +379,19 @@ Quality別ケースを指定している。`ADBE Force CPU GPU` は参考値の�
     case9 max=255 mean=1.2503）。フレーム端をEdge Blur境界として扱わない修正と、
     Edge Blur feather weight をRGBにも掛けるpremult修正で改善済み。
     C++ CLIにもEdge Blur/Lab76 scaffoldを追加し、
-    `smoke_olmcolorkey_cpp_edgeblur_cli.py` は ok=2（case8 mean=1.5386 / case9 mean=1.2503）。
+    `smoke_olmcolorkey_cpp_edgeblur_cli.py` は ok=2（case8 mean=1.0396 / case9 mean=1.2503）。
     Rust互換CLIで見つけた1D EDT境界処理をC++へ反映し、case9 はPython探索版と同等まで改善済み。
     Edge Blur内部境界/透明RGBの厳密化と replace color は未完。
 - 検証: `python3 refs/scripts/smoke_olmcolorkey_cli.py`（1–4, ok=4）。5–7 は run_reference_test 直叩き。
 - C++移植核: `cli/OLMColorKey/main.cpp`。
   `refs/scripts/build_olmcolorkey_cli.sh && python3 refs/scripts/smoke_olmcolorkey_cpp_cli.py`
   で cases 1–7 を検証。RGB 1–4 exact、Edge Thin 7 exact、5/6 はPython版と同じ既知erode残差。
+- 2026-06-06 追加参照request:
+  `refs/reference_requests/olmcolorkey_replace_colorspace_20260606.json`。
+  既存9ケースは全て `Enable Replace=0`、enabled key color は1のみで、非RGBケースも黒キー中心。
+  そのため Replace、非黒HSV/Lab76/Lab94/YUV/YCrCb、per-component Lab76/Lab94、
+  Color Keep + Replace、multi-key Replace、Edge Blur + transparent RGB はこのrequestが返るまで
+  推測実装をpromoteしない。
 - Mac AEプラグイン: `mac/OLMColorKey/`。
   `ColorKeep` Xcodeプロジェクトを元に追加。`OLM Color Key` match name、2.3.1 develop。
   AE側レンダー核はC++ CLIの cases 1–7 相当（RGB/simple key、premultiplied

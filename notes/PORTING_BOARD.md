@@ -242,6 +242,7 @@ Current run details and reusable prompt shape are recorded in
 | `OLMRadialBlur` | `notes/OLMRadialBlur_RE.md`, `notes/OLMRadialBlur_ASM_FACTS.md`, `cli/OLMRadialBlur/`, `refs/scripts/smoke_olmradialblur*` | Zoom and tiny Rotation are regression-green. `notes/OLMRadialBlur_ASM_FACTS.md` records the sampler/writeback audit for `+0x38/+0x40/+0x48/+0x50`; use it as the fact base for future Inner work. | All current Inner/Edge Fade refs have `Size Variation=0`, so `+0x40` span/gate cannot be identified strongly from PNGs alone. Wait for `refs/reference_requests/radialblur_inner_size_variation_20260606.json` before promoting more Inner changes. |
 | `OLMKiraKira` | `notes/OLMKiraKira_ASM_FACTS.md`, `notes/OLMKiraKira_SCALAR_AGGREGATION_AUDIT.md`, `cli/OLMKiraKira/`, `refs/scripts/smoke_olmkirakira*` | Keep all-ray two-temp/no-fastpath as the candidate path. `notes/OLMKiraKira_SCALAR_AGGREGATION_AUDIT.md` captures `FUN_18114fd90` / `FUN_18114ffd0` scalar and Brightness/Gain facts; do not add more equal-ray sweeps. | Current three refs have equal ray lengths and zero rotation, so ray order, helper scalar, angle mapping, and single-ray crop are entangled. Wait for `refs/reference_requests/kirakira_single_ray_20260606.json`. |
 | `OLMSmoother` / `OLMSmoother2` | `notes/OLMSmoother2_ASM_FACTS.md`, `cli/OLMSmoother*`, `refs/scripts/smoke_olmsmoother*` | Prefer OLMSmoother2 `--force-version 1` for v1 compatibility. Standalone v1 is low priority because its classifier over-fires. | `idx0` and plane-split probes both worsened no-key case_0001. Wait for `refs/reference_requests/smoother2_no_key_grid_20260606.json` before more no-key tuning. |
+| `OLMColorKey` | `refs/scripts/olmcolorkey_cli.py`, `cli/OLMColorKey/`, `rust/olmcolorkey_cli/`, `mac/OLMColorKey/`, `refs/scripts/audit_olmcolorkey_manifest.py` | RGB, Edge Thin, and exploratory Edge Blur are guarded. Do not deep-implement Replace or non-black non-RGB color spaces from black-key refs. | Current refs have `Enable Replace=0` and only key color 1 enabled. Wait for `refs/reference_requests/olmcolorkey_replace_colorspace_20260606.json` before promoting Replace/Lab94/YUV/YCrCb/multi-key behavior. |
 
 Practical rule: if a subagent edits code, give it a disjoint write scope and a
 single smoke target. Otherwise keep subagents read-only and have the parent
@@ -284,6 +285,14 @@ OLMSmoother2 C++ CLI and writes/prints max/mean grouped by `Smoothness` and
 ownership and `notes/OLMKiraKira_SCALAR_AGGREGATION_AUDIT.md` for scalar
 aggregation/Brightness-Gain flow. Both are read-only audit outputs and do not
 promote any new image-diff tuning.
+
+2026-06-06 ColorKey reference follow-up: added
+`refs/reference_requests/olmcolorkey_replace_colorspace_20260606.json` after a
+read-only audit confirmed that current nine cases all have `Enable Replace=0`,
+only key color 1 enabled, and black-key-heavy non-RGB coverage. The request asks
+for non-black HSV/Lab76/Lab94/YUV/YCrCb, per-component Lab76/Lab94, Replace,
+Color Keep + Replace, multi-key Replace, and optional Edge Blur/transparent-RGB
+interaction cases.
 
 ## Next Integration Target
 
@@ -931,7 +940,7 @@ near-match Zoom baseline for `case_0003..0005`-style settings.
   failure.
 - `refs/scripts/check_reference_request_status.py` reports each request as
   `covered`, `partial`, or `pending` by scanning `refs/win_references/**`.
-  Current status is all five request JSONs pending, and the command prints the
+  Current status is all six request JSONs pending, and the command prints the
   exact `package_reference_requests.py --pending` handoff command.
 - `scripts/package_mac_plugins.sh --skip-build --output
   /tmp/olm_mac_plugins_test.zip` completed successfully after the verified build.

@@ -33,11 +33,14 @@
 5. `smoother2_no_key_grid_20260606.json`
    - OLMSmoother2 no-key v2 の残差を、Smoothness / Smooth Range gridで
      class-plane firing・sample plane・color-space/writebackに切り分けるためのセット。
-6. 既存Mac移植扱いのプラグイン確認
+6. `olmcolorkey_replace_colorspace_20260606.json`
+   - OLMColorKey の Enable Replace、非黒キー、複数キー、Lab76/Lab94/YUV/YCrCbを
+     既存9ケースから分離して確認するためのセット。
+7. 既存Mac移植扱いのプラグイン確認
    - `OLMDistanceGradation`
    - `OLMSmoother2`
    - その他READMEで port complete 扱いのもの。
-7. OLMSmoother alternate reference
+8. OLMSmoother alternate reference
    - 現参照は過剰発火原因の切り分けが弱いので、単純な高コントラスト素材で追加確認する。
 
 Mac側への取り込み:
@@ -64,6 +67,7 @@ python3 refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_full_choreo_cli.py
 python3 refs/scripts/smoke_olmradialblur_cpp_inner_source_scatter_prepass_cli.py
 python3 refs/scripts/smoke_olmkirakira_cpp_two_temp_no_fastpath_probe_cli.py
 python3 refs/scripts/smoke_olmsmoother2_cli.py
+python3 refs/scripts/audit_olmcolorkey_manifest.py path/to/imported/OLMColorKey/reference_manifest.json
 ```
 
 Win側へ渡すリクエストzip作成:

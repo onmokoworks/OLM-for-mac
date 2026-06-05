@@ -57,6 +57,11 @@ the parent spends more implementation time.
   `refs/reference_requests/smoother2_no_key_grid_20260606.json` if no-key v2
   residual cannot be assigned to class-plane firing, sample-plane choice,
   color-space handling, or writeback.
+- `OLMColorKey`: wait for
+  `refs/reference_requests/olmcolorkey_replace_colorspace_20260606.json` before
+  promoting Replace, non-black HSV/Lab94/YUV/YCrCb, per-component Lab76/Lab94,
+  or multi-key replacement behavior beyond the current RGB/Edge Thin/Edge Blur
+  scaffolds.
 
 ## 2026-06-06 Focused Fact-Log Follow-Up
 
@@ -71,6 +76,12 @@ two disjoint note-only audits:
 The parent also added `refs/scripts/smoke_olmsmoother2_no_key_grid_cli.py`, a
 green request smoke that skips while `smoother2_no_key_grid_20260606` is pending
 and turns into grouped max/mean analysis when the Windows refs are imported.
+
+## 2026-06-06 ColorKey Reference Gap Audit
+
+| Plugin area | Agent | Scope | Result |
+| --- | --- | --- | --- |
+| `OLMColorKey` Replace/color-space gap | `019e99ea-9fed-7373-8c55-e85b44ac2929` / Darwin | Read current ColorKey notes, manifest audit, refs, Python/C++ CLI, and Mac plug-in source. | Confirmed current refs cover RGB exact, Edge Thin gated, and Edge Blur exploratory paths, but all current cases have `Enable Replace=0`, only key color 1 enabled, and insufficient non-black color-space coverage. Parent added `olmcolorkey_replace_colorspace_20260606.json`. |
 
 ## Reusable Prompt Shape
 
