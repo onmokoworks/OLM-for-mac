@@ -232,6 +232,14 @@ Current interpretation:
   `case_0003 mean=1.1870` versus default `0.8381/1.1623/1.7003`.
   This improves the Strength=0 case substantially without solving case1, so
   keep it as a probe; the default port still stays on `current`.
+- Follow-up probes on `aex-two-temp` did not identify a better `boxFilter`
+  setup. `--rotate-filter bilinear-fixed5` only nudges case3
+  (`0.8531/1.1555/1.1822`). Anchor sweep keeps OpenCV's default anchor best:
+  `opencv 0.8531/1.1555/1.1870`, `floor-left 0.8531/1.2134/2.1904`,
+  `origin 7.6422/8.5897/41.1816`, `end 7.7674/8.6221/41.2038`.
+  Border sweep is mixed: `mirror 0.8531/1.1555/1.1870` versus
+  `reflect 0.8531/1.1558/1.1818`. This points away from anchor/border as the
+  main residual and back toward exact `warpAffine`/ROI/copyTo placement.
 - The decomp/asm shape shows the rotate-back `warpAffine` dsize is the final
   ray descriptor (`param_5`) rather than a larger temporary canvas followed by
   an obvious center crop. A C++ diagnostic `--warp-mode aex-direct-back`
