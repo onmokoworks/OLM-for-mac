@@ -478,6 +478,20 @@ high-level polar coordinate structure.
   `case_0013 mean=21.2910`; `aex-repeat` gives `case_0011 mean=25.1925`,
   `case_0012 mean=10.6245`, `case_0013 mean=21.2894`. Keep this as a
   measurement hook only; it does not explain the Inner residual.
+- Same-day Inner audit: `FUN_180002780` takes separate buffers from the caller:
+  source RGBA (`param_2` / `+0xe`), source alpha or prepass alpha
+  (`param_3` / `+0x12`), the `param_4` base/validity factor (`+0x14`), and
+  the prepass output RGBA (`param_9` / `+0xf250`). The prepass span is scaled
+  by `param_4` (`int(*(param_1+0x3c930/0x3c934) * fVar4)`) and indexes the
+  `+0x3a9f0`/`+0x3b990` tables by `offset / fVar4`, then writes the normalized
+  gathered alpha back to both `+0x12` and `+0xf252`. Current C++ diagnostics
+  that treat this factor as source alpha do not solve the diff:
+  `inner-source-scale=alpha` gives `31.9445/20.5490/19.6004`,
+  `inner-source-scale=inv-alpha` gives `46.2016/16.8535/21.3305`, and
+  `inner-prepass-weight-mode=aex-alpha` with strength span gives
+  `60.4338/15.0235/20.1088` for cases `0011/0012/0013`. The best current
+  direction is therefore not "multiply scatter by alpha"; it is to map the
+  caller-populated `+0x14` factor buffer more literally.
 - `mac/OLMRadialBlur/OLMRadialBlur.cpp` now carries the same 8bpc
   outer-only/no-noise/no-size-variation Rotation slice, including the
   radius-dependent Offset Mode=1 path. Unsupported Rotation cases (Inner,
