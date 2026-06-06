@@ -81,6 +81,7 @@ pixel_validation_presets=(
   "OLMBlur:olmblur:ae_pixel_olmblur_20260606:olmblur_request.zip"
   "OLMColorKey:olmcolorkey:ae_pixel_olmcolorkey_20260606:olmcolorkey_request.zip"
   "OLMToonDilate:olmtoondilate:ae_pixel_olmtoondilate_20260606:olmtoondilate_request.zip"
+  "OLMDistanceGradation:olmdistancegradation:ae_pixel_olmdistancegradation_20260606:olmdistancegradation_request.zip"
 )
 
 cat >"$install_notes" <<EOF
@@ -144,6 +145,7 @@ Return to the Mac-side porting workspace:
   - olmblur/
   - olmcolorkey/
   - olmtoondilate/
+  - olmdistancegradation/
   Preserve frame names such as case_0001.png inside each folder.
 - Fill AE_VALIDATION_RESULT.template.json and return it with any PNGs or error
   screenshots/logs. Renaming it to AE_VALIDATION_RESULT.json is preferred, but

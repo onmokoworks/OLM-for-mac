@@ -32,6 +32,12 @@ def main() -> int:
             ("OLMBlur", "olmblur", "ae_pixel_olmblur_20260606", "olmblur_request.zip"),
             ("OLMColorKey", "olmcolorkey", "ae_pixel_olmcolorkey_20260606", "olmcolorkey_request.zip"),
             ("OLMToonDilate", "olmtoondilate", "ae_pixel_olmtoondilate_20260606", "olmtoondilate_request.zip"),
+            (
+                "OLMDistanceGradation",
+                "olmdistancegradation",
+                "ae_pixel_olmdistancegradation_20260606",
+                "olmdistancegradation_request.zip",
+            ),
         ]
         for _name, preset, _request_id, zip_name in pixel_requests:
             proc = subprocess.run(

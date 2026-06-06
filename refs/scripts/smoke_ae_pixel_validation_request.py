@@ -29,11 +29,51 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="olm_ae_pixel_smoke_") as tmp:
         tmp_path = Path(tmp)
         presets = [
-            ("olmblur", "OLMBlur", ("case_0001", "case_0002", "case_0003", "case_0004", "case_0005", "case_0006", "case_0007")),
-            ("olmcolorkey", "OLMColorKey", ("case_0001", "case_0002", "case_0003", "case_0004", "case_0005", "case_0006", "case_0007", "case_0008", "case_0009")),
-            ("olmtoondilate", "OLMToonDilate", ("case_0001", "case_0002", "case_0003")),
+            (
+                "olmblur",
+                repo / "refs" / "win_references" / "20260604_olm" / "OLMBlur",
+                ("case_0001", "case_0002", "case_0003", "case_0004", "case_0005", "case_0006", "case_0007"),
+            ),
+            (
+                "olmcolorkey",
+                repo / "refs" / "win_references" / "20260604_olm" / "OLMColorKey",
+                (
+                    "case_0001",
+                    "case_0002",
+                    "case_0003",
+                    "case_0004",
+                    "case_0005",
+                    "case_0006",
+                    "case_0007",
+                    "case_0008",
+                    "case_0009",
+                ),
+            ),
+            (
+                "olmtoondilate",
+                repo / "refs" / "win_references" / "20260604_olm" / "OLMToonDilate",
+                ("case_0001", "case_0002", "case_0003"),
+            ),
+            (
+                "olmdistancegradation",
+                repo / "refs" / "win_references" / "20260605_extra" / "OLMDistanceGradation",
+                (
+                    "case_0001",
+                    "case_0002",
+                    "case_0003",
+                    "case_0004",
+                    "case_0005",
+                    "case_0006",
+                    "case_0007",
+                    "case_0009",
+                    "case_0015",
+                    "case_0017",
+                    "case_0018",
+                    "case_0019",
+                ),
+            ),
         ]
-        for preset, reference_name, case_ids in presets:
+        for preset, reference, case_ids in presets:
             request_zip = tmp_path / f"{preset}_request.zip"
             proc = run(
                 [
@@ -52,7 +92,6 @@ def main() -> int:
             result_root = tmp_path / f"returned_{preset}"
             result_dir = result_root / "candidate"
             result_dir.mkdir(parents=True)
-            reference = repo / "refs" / "win_references" / "20260604_olm" / reference_name
             for case_id in case_ids:
                 shutil.copy2(reference / f"{case_id}.png", result_dir / f"{case_id}.png")
 

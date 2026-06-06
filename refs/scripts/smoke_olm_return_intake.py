@@ -53,6 +53,7 @@ def make_ae_host_return(repo: Path, tmp_path: Path) -> tuple[Path, Path]:
         ("olmblur", "olmblur_request.zip"),
         ("olmcolorkey", "olmcolorkey_request.zip"),
         ("olmtoondilate", "olmtoondilate_request.zip"),
+        ("olmdistancegradation", "olmdistancegradation_request.zip"),
     ):
         copy_expected_as_returned(mac_root / "AE_PIXEL_VALIDATION" / zip_name, result_root, target_name)
 
