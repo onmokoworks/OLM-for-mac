@@ -85,7 +85,7 @@ Win側へ渡すリクエストzip作成:
 
 ```sh
 python3 refs/scripts/check_reference_request_status.py
-python3 refs/scripts/package_reference_requests.py --pending
+python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending_20260606.zip
 python3 refs/scripts/package_reference_requests.py --only kirakira_single_ray_20260606
 ```
 

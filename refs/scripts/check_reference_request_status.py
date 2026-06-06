@@ -172,7 +172,7 @@ def main() -> int:
     pending = [row["request_id"] for row in rows if row["status"] != "covered"]
     if pending:
         print("\npending package command:")
-        print("python3 refs/scripts/package_reference_requests.py --pending")
+        print("python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending_20260606.zip")
     return 0
 
 
