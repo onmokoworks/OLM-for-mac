@@ -114,8 +114,15 @@ def main() -> int:
             capture=True,
         )
         covered_doc = json.loads(covered.stdout)
-        assert covered_doc["next_action"]["request_id"] == "smoother2_no_key_grid_20260606"
-        assert "smoke_olmsmoother2_no_key_grid_cli.py" in covered_doc["next_action"]["command"]
+        action = covered_doc["next_action"]
+        assert action["request_id"] == "smoother2_no_key_grid_20260606"
+        assert action["plugin_area"] == "OLMSmoother2 no-key"
+        assert action["mode"] == "explorer"
+        assert action["write_scope"] == "none"
+        assert "notes/OLMSmoother2_ASM_FACTS.md" in action["read_files"]
+        assert "smoke_olmsmoother2_no_key_grid_cli.py" in action["command"]
+        assert action["smoke_command"] == action["command"]
+        assert "Do not edit" in action["agent_prompt"]
 
     print("[OK] next reference actions smoke")
     return 0

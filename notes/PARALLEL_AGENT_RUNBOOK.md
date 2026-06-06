@@ -94,6 +94,9 @@ summary, and any residual risk.
    newly covered request with the largest unblock value.
 4. Run `python3 refs/scripts/next_reference_actions.py` to get the prioritized
    request-specific smoke and parent/sub-agent action.
+   Use `python3 refs/scripts/next_reference_actions.py --json` when spawning an
+   agent; `next_action` includes `plugin_area`, `mode`, `read_files`,
+   `write_scope`, `smoke_command`, and a ready-to-paste `agent_prompt`.
 5. Spawn exactly one plugin-specific explorer for the newly covered request.
 6. Parent integrates the finding into IR/ASM notes, implements the smallest
    backed change, and runs the plugin smoke followed by
