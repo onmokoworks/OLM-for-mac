@@ -65,6 +65,11 @@ def main() -> int:
         assert "avoid restating old audits" in pending_actions[0]["agent_prompt"]
         assert "Workspace: /Users/onmk/Documents/Projects/Personal/OLM as" in pending_actions[0]["copy_paste_prompt"]
         assert "First run or inspect:" in pending_actions[0]["copy_paste_prompt"]
+        directional = next(action for action in pending_actions if action["request_id"] == "directionalblur_context_scale_20260606")
+        assert "refs/scripts/smoke_olmdirectionalblur*.py" in directional["copy_paste_prompt"]
+        assert "refs/scripts/smoke_olmdirectionalblur_cpp_cli.py" not in directional["copy_paste_prompt"]
+        assert "refs/scripts/smoke_olmdirectionalblur_cpp_cli.py" in directional["read_files_resolved"]
+        assert directional["read_file_patterns"] == ["refs/scripts/smoke_olmdirectionalblur*.py"]
 
         dispatch_dir = tmpdir / "dispatch"
         run(

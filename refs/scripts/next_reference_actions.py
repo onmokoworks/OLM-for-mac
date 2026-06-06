@@ -144,8 +144,17 @@ def read_file_patterns(read_files: list[str]) -> list[str]:
 
 
 def copy_paste_prompt(action: dict[str, Any]) -> str:
-    read_files = "\n".join(f"- {path}" for path in action["read_files_resolved"])
+    read_files = "\n".join(f"- {path}" for path in action["read_files"])
     prior_refs = "\n".join(f"- {path}" for path in action["prior_audit_refs"])
+    pattern_note = []
+    if action["read_file_patterns"]:
+        patterns = "\n".join(f"- {path}" for path in action["read_file_patterns"])
+        pattern_note = [
+            "",
+            "Pattern note:",
+            "Use the glob patterns above as focused smoke families; action.json also records read_files_resolved for exact expansion.",
+            patterns,
+        ]
     return "\n".join(
         [
             f"Workspace: /Users/onmk/Documents/Projects/Personal/OLM as",
@@ -160,6 +169,7 @@ def copy_paste_prompt(action: dict[str, Any]) -> str:
             "",
             "Then read:",
             read_files,
+            *pattern_note,
             "",
             f"First run or inspect: {action['smoke_command']}",
             f"Stop condition: {action['stop_condition']}",
