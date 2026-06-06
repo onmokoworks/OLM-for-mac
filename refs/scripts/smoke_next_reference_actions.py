@@ -1,0 +1,125 @@
+#!/usr/bin/env python3
+"""Smoke-test next_reference_actions.py pending and covered outputs."""
+
+from __future__ import annotations
+
+import json
+import shutil
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+
+def repo_root() -> Path:
+    return Path(__file__).resolve().parents[2]
+
+
+def run(cmd: list[str], root: Path, *, capture: bool = False) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        cmd,
+        cwd=root,
+        check=True,
+        text=True,
+        stdout=subprocess.PIPE if capture else None,
+        stderr=subprocess.STDOUT if capture else None,
+    )
+
+
+def main() -> int:
+    root = repo_root()
+    script = root / "refs" / "scripts" / "next_reference_actions.py"
+    with tempfile.TemporaryDirectory(prefix="olm_next_ref_action_smoke_") as tmp:
+        tmpdir = Path(tmp)
+        requests = tmpdir / "requests"
+        references = tmpdir / "references"
+        shutil.copytree(root / "refs" / "reference_requests", requests)
+        references.mkdir()
+
+        pending = run(
+            [
+                sys.executable,
+                str(script),
+                "--requests",
+                str(requests),
+                "--references",
+                str(references),
+                "--json",
+            ],
+            root,
+            capture=True,
+        )
+        pending_doc = json.loads(pending.stdout)
+        assert pending_doc["next_action"] is None
+        assert "smoother2_no_key_grid_20260606" in pending_doc["pending"]
+
+        source = tmpdir / "returned"
+        effect_dir = source / "OLMSmoother2"
+        effect_dir.mkdir(parents=True)
+        manifest = {
+            "kind": "ae_effect_reference_manifest",
+            "effect": {"name": "OLM Smoother v2"},
+            "render_set": "software",
+            "project_gpu_accel_type": {"current_name": "SOFTWARE"},
+            "cases": [],
+        }
+        request = json.loads((requests / "smoother2_no_key_grid_20260606.json").read_text(encoding="utf-8"))
+        for case in request["cases"]:
+            before = f"{case['id']}_before.png"
+            after = f"{case['id']}.png"
+            (effect_dir / before).write_bytes(b"\x89PNG\r\n\x1a\n")
+            (effect_dir / after).write_bytes(b"\x89PNG\r\n\x1a\n")
+            manifest["cases"].append(
+                {
+                    "id": f"SOFTWARE_{case['id']}",
+                    "request_case_id": case["id"],
+                    "frame": after,
+                    "before_effects_frame": before,
+                    "params": dict(case.get("params", {})),
+                    "render_set": "software",
+                    "project_gpu_accel_type": {"current_name": "SOFTWARE"},
+                }
+            )
+        (effect_dir / "reference_manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+
+        covered = run(
+            [
+                sys.executable,
+                str(script),
+                "--requests",
+                str(requests),
+                "--references",
+                str(references),
+                "--json",
+            ],
+            root,
+            capture=True,
+        )
+        # First call should still be pending because the synthetic source was not imported.
+        assert json.loads(covered.stdout)["next_action"] is None
+
+        imported = references / "synthetic_return"
+        shutil.copytree(source, imported)
+        covered = run(
+            [
+                sys.executable,
+                str(script),
+                "--requests",
+                str(requests),
+                "--references",
+                str(references),
+                "--json",
+            ],
+            root,
+            capture=True,
+        )
+        covered_doc = json.loads(covered.stdout)
+        assert covered_doc["next_action"]["request_id"] == "smoother2_no_key_grid_20260606"
+        assert "smoke_olmsmoother2_no_key_grid_cli.py" in covered_doc["next_action"]["command"]
+
+    print("[OK] next reference actions smoke")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

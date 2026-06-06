@@ -90,6 +90,7 @@ Mac-side import and verification after the returned Windows refs arrive:
 \`\`\`sh
 python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick
 python3 refs/scripts/import_and_check_win_reference.py path/to/returned_reference.zip --quick
+python3 refs/scripts/next_reference_actions.py
 \`\`\`
 
 If a request remains pending after import:
@@ -97,6 +98,9 @@ If a request remains pending after import:
 \`\`\`sh
 python3 refs/scripts/check_reference_request_status.py
 \`\`\`
+
+If multiple requests are covered, \`next_reference_actions.py\` prints the
+priority order and the request-specific smoke to run before implementation.
 
 ## 2. macOS AE host validation
 

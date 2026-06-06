@@ -90,7 +90,9 @@ summary, and any residual risk.
    `python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick`
 3. Run `python3 refs/scripts/check_reference_request_status.py` and pick the
    newly covered request with the largest unblock value.
-4. Spawn exactly one plugin-specific explorer for the newly covered request.
-5. Parent integrates the finding into IR/ASM notes, implements the smallest
+4. Run `python3 refs/scripts/next_reference_actions.py` to get the prioritized
+   request-specific smoke and parent/sub-agent action.
+5. Spawn exactly one plugin-specific explorer for the newly covered request.
+6. Parent integrates the finding into IR/ASM notes, implements the smallest
    backed change, and runs the plugin smoke followed by
    `python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick`.

@@ -69,6 +69,7 @@ Run:
 
 ```sh
 python3 refs/scripts/check_reference_request_status.py
+python3 refs/scripts/next_reference_actions.py
 python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending.zip
 ```
 
@@ -87,6 +88,8 @@ algorithm blocker: v2 key/gamma paths are already guarded, no-key `case_0001`
 is the remaining residual, and
 `refs/scripts/smoke_olmsmoother2_no_key_grid_cli.py` is ready to group the
 returned grid by Smoothness and Smooth Range.
+`refs/scripts/next_reference_actions.py` encodes this priority order and prints
+the next request-specific smoke plus the parent/sub-agent action after imports.
 
 For the first low-risk AE-host pixel validation target, package OLMBlur
 standalone:
