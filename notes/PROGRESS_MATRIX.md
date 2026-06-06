@@ -97,13 +97,14 @@ python3 scripts/verify_ae_pixel_validation_result.py /tmp/olm_ae_pixel_validatio
 2026-06-06 package verification:
 
 ```sh
-scripts/package_mac_plugins.sh --output /tmp/olm_mac_plugins_ready_20260606.zip
+scripts/package_mac_plugins.sh --skip-build --output /tmp/olm_mac_plugins_clean_20260606.zip
 ```
 
-This completed a full Debug build for all 10 macOS plug-ins, verified universal
-`x86_64`/`arm64` bundles and signatures, embedded the three current
-`AE_PIXEL_VALIDATION` request zips, and passed
-`scripts/verify_mac_plugin_package.py`.
+This used the already verified Debug build products to create a clean AE-host
+handoff zip with no `__MACOSX`, `._*`, or `.DS_Store` entries. The package
+contains all 10 macOS plug-ins, preserves executable zip metadata for each
+bundle binary, embeds the three current `AE_PIXEL_VALIDATION` request zips, and
+passes `scripts/verify_mac_plugin_package.py`.
 
 ## 2026-06-06 Parallel Audit Results
 

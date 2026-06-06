@@ -57,6 +57,7 @@ def main() -> int:
             binary = root / f"{name}.plugin" / "Contents" / "MacOS" / name
             binary.parent.mkdir(parents=True)
             binary.write_bytes(b"synthetic-binary")
+            binary.chmod(0o755)
             plugins.append(
                 {
                     "name": name,
