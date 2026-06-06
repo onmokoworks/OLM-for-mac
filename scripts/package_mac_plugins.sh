@@ -272,7 +272,7 @@ done
 } >>"$manifest"
 
 mkdir -p "$(dirname "$OUTPUT")"
-(cd "$stage_parent" && ditto -c -k --sequesterRsrc --keepParent "$package_name" "$OUTPUT")
+python3 "$ROOT/scripts/zip_clean.py" "$stage" "$OUTPUT"
 
 python3 "$ROOT/scripts/verify_mac_plugin_package.py" "$OUTPUT"
 

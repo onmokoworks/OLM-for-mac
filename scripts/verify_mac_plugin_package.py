@@ -32,6 +32,27 @@ def fail(message: str) -> int:
     return 1
 
 
+def has_macos_metadata(package: Path) -> str | None:
+    with zipfile.ZipFile(package) as archive:
+        for name in archive.namelist():
+            parts = Path(name).parts
+            if "__MACOSX" in parts:
+                return name
+            if any(part.startswith("._") for part in parts):
+                return name
+            if any(part == ".DS_Store" for part in parts):
+                return name
+    return None
+
+
+def zip_modes(package: Path) -> dict[str, int]:
+    modes: dict[str, int] = {}
+    with zipfile.ZipFile(package) as archive:
+        for info in archive.infolist():
+            modes[info.filename.rstrip("/")] = (info.external_attr >> 16) & 0xFFFF
+    return modes
+
+
 def load_json(path: Path) -> dict:
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
@@ -97,6 +118,10 @@ def main() -> int:
         return fail(f"package not found: {package}")
     if not zipfile.is_zipfile(package):
         return fail(f"not a zip file: {package}")
+    metadata_entry = has_macos_metadata(package)
+    if metadata_entry:
+        return fail(f"package contains macOS metadata entry: {metadata_entry}")
+    archive_modes = zip_modes(package)
 
     with tempfile.TemporaryDirectory(prefix="olm_mac_plugin_pkg_verify_") as tmp:
         tmp_path = Path(tmp)
@@ -161,6 +186,9 @@ def main() -> int:
             binary_path = bundle_path / "Contents" / "MacOS" / name
             if not binary_path.exists():
                 return fail(f"{name} bundle binary missing: {binary_path.relative_to(root)}")
+            archive_binary = f"{root.name}/{entry['bundle']}/Contents/MacOS/{name}"
+            if archive_modes.get(archive_binary, 0) & 0o111 == 0:
+                return fail(f"{name} bundle binary is not executable in zip metadata: {archive_binary}")
             sha = entry.get("binary_sha256")
             if not isinstance(sha, str) or len(sha) != 64:
                 return fail(f"{name}.binary_sha256 must be a 64-char hex string")
