@@ -27,7 +27,9 @@ possible and final AE plug-in validation.
   writes a zip for AE-host install containing the 10 `.plugin` bundles,
   `INSTALL.txt`, `AE_VALIDATION_CHECKLIST.txt`,
   `AE_VALIDATION_RESULT.template.json`, and a JSON manifest. Returned AE host
-  validation JSON can be checked with `scripts/verify_ae_validation_result.py`.
+  validation JSON can be checked with `scripts/verify_ae_validation_result.py`,
+  and combined AE-host return zips/folders can be checked with
+  `scripts/verify_ae_host_return.py`.
 - Windows references imported under `refs/win_references/20260604_olm/`.
 - Extra Windows references imported under `refs/win_references/20260605_extra/`.
 

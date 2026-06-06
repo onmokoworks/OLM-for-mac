@@ -5,6 +5,9 @@ Sub-agents are useful for read-only objdump/Ghidra/decomp/PNG-reference audits;
 the parent agent owns implementation, verification gates, documentation
 integration, and commits.
 
+Reusable dispatch prompts for new agents live in
+`notes/PARALLEL_AGENT_RUNBOOK.md`.
+
 ## Operating Rules
 
 - Parent agent keeps the canonical status in `notes/PORTING_BOARD.md` and
@@ -82,6 +85,14 @@ and turns into grouped max/mean analysis when the Windows refs are imported.
 | Plugin area | Agent | Scope | Result |
 | --- | --- | --- | --- |
 | `OLMColorKey` Replace/color-space gap | `019e99ea-9fed-7373-8c55-e85b44ac2929` / Darwin | Read current ColorKey notes, manifest audit, refs, Python/C++ CLI, and Mac plug-in source. | Confirmed current refs cover RGB exact, Edge Thin gated, and Edge Blur exploratory paths, but all current cases have `Enable Replace=0`, only key color 1 enabled, and insufficient non-black color-space coverage. Parent added `olmcolorkey_replace_colorspace_20260606.json`. |
+
+## 2026-06-06 AE Host / Reference Workflow Audit
+
+| Area | Agent | Scope | Result |
+| --- | --- | --- | --- |
+| Non-blocked next action | `019e9a49-3546-7571-a382-6c2a4824b8bf` / Fermat | Read progress board and green smoke coverage for support/low-risk plugins. | Recommended advancing AE-host pixel validation first, with OLMBlur as the lowest-risk target. Avoided more PNG-only tuning for currently stopped hard paths. |
+| AE-host return flow | `019e9a49-4ae7-7e32-89ca-4c64e780baae` / James | Read package, handoff, and AE return verifier scripts. | Confirmed the one-shot return verifier is ready, then identified gaps: template filename handling, clearer returned pixel grouping docs, and a release-style `--require-all-pixel-requests` gate. Parent implemented those fixes. |
+| Pending reference workflow | `019e9a49-5edc-7872-89af-972adad10a21` / Averroes | Read request JSONs, packaging/import scripts, and request smokes. | Confirmed all six pending requests are packageable/import-checkable. Recommended processing `smoother2_no_key_grid_20260606` first if multiple returned requests arrive, because it has the most isolated current blocker and a dedicated grid smoke. |
 
 ## Reusable Prompt Shape
 

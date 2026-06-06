@@ -39,6 +39,9 @@ hard procedural effects remain partially scaffolded.
 
 Use subagents aggressively, but with narrow ownership:
 
+Reusable dispatch prompts and parent/child handoff rules are in
+`notes/PARALLEL_AGENT_RUNBOOK.md`.
+
 | Agent slice | Mode | Allowed output | Avoid |
 | --- | --- | --- | --- |
 | `OLMDirectionalBlur` | Read-only explorer until refs return. | ASM/IR argument facts, stop-line review, smoke metrics. | PNG-only parameter fitting. |
@@ -73,8 +76,16 @@ When returned refs are imported, run the relevant request smoke first, then the
 quick aggregate:
 
 ```sh
+python3 refs/scripts/import_and_check_win_reference.py path/to/returned_reference.zip --quick
 python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
 ```
+
+If multiple returned requests arrive at once, process
+`smoother2_no_key_grid_20260606` first. It is the most isolated current
+algorithm blocker: v2 key/gamma paths are already guarded, no-key `case_0001`
+is the remaining residual, and
+`refs/scripts/smoke_olmsmoother2_no_key_grid_cli.py` is ready to group the
+returned grid by Smoothness and Smooth Range.
 
 For the first low-risk AE-host pixel validation target, package OLMBlur
 standalone:
@@ -91,8 +102,15 @@ After the AE host returns rendered PNGs, verify them against the packaged
 Windows expected frames:
 
 ```sh
+python3 scripts/verify_ae_host_return.py /tmp/olm_port_handoff_20260606.zip path/to/returned_ae_host.zip --require-all-pass
+python3 scripts/verify_ae_host_return.py /tmp/olm_port_handoff_20260606.zip path/to/returned_ae_host.zip --require-all-pass --require-all-pixel-requests
 python3 scripts/verify_ae_pixel_validation_result.py /tmp/olm_ae_pixel_validation_olmblur.zip path/to/returned_ae_pngs_or_zip
 ```
+
+Use `--require-all-pixel-requests` only when the AE host intentionally returned
+all bundled pixel validation requests. For a first partial pass, omit it and the
+verifier will check returned groups while reporting missing pixel groups as
+`[SKIP]`.
 
 2026-06-06 package verification:
 

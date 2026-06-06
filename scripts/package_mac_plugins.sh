@@ -139,10 +139,18 @@ Return to the Mac-side porting workspace:
 - For the first pixel validation pass, use the request zips in:
   AE_PIXEL_VALIDATION/
   They contain input PNGs, Windows expected PNGs, thresholds, and a result
-  template. Return the rendered PNGs as a zip or folder preserving frame names
-  such as case_0001.png.
-- Prefer filling AE_VALIDATION_RESULT.template.json and return it with any PNGs
-  or error screenshots/logs.
+  template. Return the rendered PNGs in folders or zips named after the request
+  or preset, for example:
+  - olmblur/
+  - olmcolorkey/
+  - olmtoondilate/
+  Preserve frame names such as case_0001.png inside each folder.
+- Fill AE_VALIDATION_RESULT.template.json and return it with any PNGs or error
+  screenshots/logs. Renaming it to AE_VALIDATION_RESULT.json is preferred, but
+  the Mac verifier also accepts the template filename when it is the returned
+  result JSON.
+- Mac-side one-shot verification for the returned zip/folder:
+  python3 scripts/verify_ae_host_return.py path/to/olm_mac_plugins_Debug_clean.zip path/to/returned_ae_host.zip --require-all-pass
 
 Important:
 Do not use the hidden Compositing Options > GPU Rendering / ADBE Force CPU GPU
