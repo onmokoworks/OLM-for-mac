@@ -252,9 +252,18 @@ def main() -> int:
 
     if pending:
         print("\npending requests:")
-        for row in pending:
-            pending_action = action_for(row, covered=False)
-            print(f"- {row['request_id']}: {pending_action['plugin_area']} ({pending_action['mode']})")
+        pending_action_list = [action_for(row, covered=False) for row in pending]
+        for pending_action in pending_action_list:
+            print(f"- {pending_action['request_id']}: {pending_action['plugin_area']} ({pending_action['mode']})")
+        first_pending = pending_action_list[0]
+        print("\nnext pending subagent")
+        print(f"- request: {first_pending['request_id']} ({first_pending['effect']})")
+        print(f"- plugin area: {first_pending['plugin_area']}")
+        print(f"- unblock: {first_pending['unblock_request']}")
+        print(f"- stop: {first_pending['stop_condition']}")
+        print(f"- smoke after import: {first_pending['smoke_command']}")
+        print(f"- read files: {', '.join(first_pending['read_files'])}")
+        print(f"- subagent prompt: {first_pending['agent_prompt']}")
         print("\npending subagent dispatch JSON:")
         print("python3 refs/scripts/next_reference_actions.py --json")
         print("\npending package command:")
