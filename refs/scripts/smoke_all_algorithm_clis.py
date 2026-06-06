@@ -79,6 +79,7 @@ def main() -> int:
         Smoke("Reference requests after import runner", [py, "refs/scripts/smoke_reference_requests_after_import_runner.py"]),
         Smoke("Reference requests after import", [py, "refs/scripts/smoke_reference_requests_after_import.py"]),
         Smoke("Reference request status", [py, "refs/scripts/check_reference_request_status.py"]),
+        Smoke("Next reference actions", [py, "refs/scripts/smoke_next_reference_actions.py"]),
         Smoke("AE validation result verifier", [py, "refs/scripts/smoke_ae_validation_result_verifier.py"]),
         Smoke("AE pixel validation request", [py, "refs/scripts/smoke_ae_pixel_validation_request.py"]),
         Smoke("AE host return verifier", [py, "refs/scripts/smoke_ae_host_return_verifier.py"]),

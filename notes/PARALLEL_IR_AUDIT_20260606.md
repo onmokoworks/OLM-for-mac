@@ -56,6 +56,7 @@ Check request coverage:
 
 ```sh
 python3 refs/scripts/check_reference_request_status.py
+python3 refs/scripts/next_reference_actions.py
 ```
 
 Package all pending requests for Windows rendering:
