@@ -68,9 +68,10 @@ Windows references.
 Run:
 
 ```sh
+python3 scripts/print_current_handoff.py
 python3 refs/scripts/check_reference_request_status.py
 python3 refs/scripts/next_reference_actions.py
-python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending.zip
+python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending_20260606.zip
 ```
 
 When returned refs are imported, run the relevant request smoke first, then the
@@ -109,9 +110,9 @@ Windows expected frames:
 ```sh
 python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --require-all-pass
 python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --require-all-pass --require-all-pixel-requests
-python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --package /tmp/olm_port_handoff_20260606_distancegradation_pixel.zip --require-all-pass
-python3 scripts/verify_ae_host_return.py /tmp/olm_port_handoff_20260606_distancegradation_pixel.zip path/to/returned_ae_host.zip --require-all-pass
-python3 scripts/verify_ae_host_return.py /tmp/olm_port_handoff_20260606_distancegradation_pixel.zip path/to/returned_ae_host.zip --require-all-pass --require-all-pixel-requests
+python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --require-all-pass
+python3 scripts/verify_ae_host_return.py /tmp/olm_port_handoff_20260606_current.zip path/to/returned_ae_host.zip --require-all-pass
+python3 scripts/verify_ae_host_return.py /tmp/olm_port_handoff_20260606_current.zip path/to/returned_ae_host.zip --require-all-pass --require-all-pixel-requests
 python3 scripts/verify_ae_pixel_validation_result.py /tmp/olm_ae_pixel_validation_olmblur.zip path/to/returned_ae_pngs_or_zip
 ```
 
@@ -132,11 +133,12 @@ contains all 10 macOS plug-ins, preserves executable zip metadata for each
 bundle binary, embeds the four current `AE_PIXEL_VALIDATION` request zips, and
 passes `scripts/verify_mac_plugin_package.py`.
 
-2026-06-06 refreshed handoff after adding DistanceGradation pixel validation:
+2026-06-06 current handoff after adding DistanceGradation pixel validation and
+AE-host package autodetect:
 
 ```sh
-scripts/package_olm_handoff.sh --output /tmp/olm_port_handoff_20260606_distancegradation_pixel.zip
-python3 scripts/verify_olm_handoff_package.py /tmp/olm_port_handoff_20260606_distancegradation_pixel.zip
+scripts/package_olm_handoff.sh --output /tmp/olm_port_handoff_20260606_current.zip
+python3 scripts/verify_olm_handoff_package.py /tmp/olm_port_handoff_20260606_current.zip
 ```
 
 The verified handoff contains the six pending Windows reference requests plus

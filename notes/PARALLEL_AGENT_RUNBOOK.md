@@ -84,8 +84,10 @@ summary, and any residual risk.
 
 ## Parent Triage Order
 
+0. To print the current canonical Windows/Mac handoff, run:
+   `python3 scripts/print_current_handoff.py`
 1. If AE-host validation results arrive, run:
-   `python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --package /tmp/olm_port_handoff_20260606.zip --require-all-pass`
+   `python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --require-all-pass`
 2. If Windows reference results arrive, run:
    `python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick`
 3. Run `python3 refs/scripts/check_reference_request_status.py` and pick the
