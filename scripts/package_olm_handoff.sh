@@ -51,6 +51,12 @@ if [[ -z "$OUTPUT" ]]; then
   OUTPUT="/tmp/olm_port_handoff_${stamp}.zip"
 fi
 OUTPUT="$(cd "$(dirname "$OUTPUT")" && pwd)/$(basename "$OUTPUT")"
+git_commit="$(git -C "$ROOT" rev-parse HEAD 2>/dev/null || echo unknown)"
+if git -C "$ROOT" diff --quiet --ignore-submodules HEAD -- 2>/dev/null; then
+  git_dirty=false
+else
+  git_dirty=true
+fi
 
 stage_parent="$(mktemp -d "${TMPDIR:-/tmp}/olm_port_handoff.XXXXXX")"
 trap 'rm -rf "$stage_parent"' EXIT
@@ -155,6 +161,8 @@ cat >"$stage/manifest.json" <<EOF
   "configuration": "$CONFIGURATION",
   "source_root": "$ROOT",
   "created_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+  "git_commit": "$git_commit",
+  "git_dirty": $git_dirty,
   "reference_requests_zip": "olm_reference_requests_pending.zip",
   "mac_plugins_zip": "olm_mac_plugins_${CONFIGURATION}_clean.zip",
   "next_reference_actions_json": "next_reference_actions.json",

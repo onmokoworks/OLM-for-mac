@@ -138,6 +138,13 @@ def main() -> int:
         for key in ("configuration", "source_root", "created_at"):
             if not isinstance(manifest.get(key), str) or not manifest[key]:
                 return fail(f"manifest.{key} must be a non-empty string")
+        git_commit = manifest.get("git_commit")
+        if not isinstance(git_commit, str) or not git_commit:
+            return fail("manifest.git_commit must be a non-empty string")
+        if git_commit != "unknown" and len(git_commit) != 40:
+            return fail("manifest.git_commit must be a 40-character hash or 'unknown'")
+        if not isinstance(manifest.get("git_dirty"), bool):
+            return fail("manifest.git_dirty must be a boolean")
         if not (root / "README.md").exists():
             return fail("README.md missing")
 
