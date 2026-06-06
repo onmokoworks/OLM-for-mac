@@ -155,6 +155,7 @@ def main() -> int:
             "--require-all-pass --require-all-pixel-requests"
         ),
         "next_reference_dispatch_json": "python3 refs/scripts/next_reference_actions.py --json",
+        "list_return_candidates": "python3 scripts/list_olm_return_candidates.py ~/Downloads /tmp",
     }
 
     if args.json:
@@ -197,6 +198,7 @@ def main() -> int:
     print("- AE host: run bundled Mac plugins and return AE_VALIDATION_RESULT*.json plus pixel PNGs")
     print("")
     print("Mac commands after return:")
+    print(f"- find returned zips: {commands['list_return_candidates']}")
     print(f"- Windows refs: {commands['mac_import_windows_refs']}")
     print(f"- AE host partial/current: {commands['mac_import_ae_host']}")
     print(f"- AE host all bundled pixel requests: {commands['mac_import_ae_host_all_pixels']}")

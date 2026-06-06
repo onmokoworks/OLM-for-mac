@@ -86,6 +86,7 @@ def main() -> int:
         Smoke("AE pixel validation request", [py, "refs/scripts/smoke_ae_pixel_validation_request.py"]),
         Smoke("AE host return verifier", [py, "refs/scripts/smoke_ae_host_return_verifier.py"]),
         Smoke("OLM return intake", [py, "refs/scripts/smoke_olm_return_intake.py"]),
+        Smoke("OLM return candidate lister", [py, "refs/scripts/smoke_list_olm_return_candidates.py"]),
         Smoke("Mac plugin package verifier", [py, "refs/scripts/smoke_mac_plugin_package_verifier.py"]),
         Smoke("OLM handoff package verifier", [py, "refs/scripts/smoke_olm_handoff_package_verifier.py"]),
         Smoke("harness", [py, "refs/scripts/smoke_algorithm_harness.py"]),

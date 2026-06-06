@@ -97,6 +97,7 @@ result zip/folder to the Mac porting workspace.
 Mac-side import and verification after the returned Windows refs arrive:
 
 \`\`\`sh
+python3 scripts/list_olm_return_candidates.py ~/Downloads /tmp
 python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick --dispatch-dir /tmp/olm_reference_dispatch
 python3 refs/scripts/import_and_check_win_reference.py path/to/returned_reference.zip --quick --dispatch-dir /tmp/olm_reference_dispatch
 python3 refs/scripts/next_reference_actions.py
