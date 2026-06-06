@@ -1,0 +1,160 @@
+#!/usr/bin/env python3
+"""List likely OLM return/package artifacts and suggested next commands."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import zipfile
+from pathlib import Path
+from typing import Any
+
+
+RETURN_EXTENSIONS = {".zip"}
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "paths",
+        nargs="*",
+        type=Path,
+        help="Files or directories to inspect. Defaults to ~/Downloads and /tmp.",
+    )
+    parser.add_argument("--json", action="store_true", help="Print machine-readable JSON.")
+    parser.add_argument("--limit", type=int, default=40, help="Maximum candidates to print.")
+    return parser.parse_args()
+
+
+def repo_root() -> Path:
+    return Path(__file__).resolve().parents[1]
+
+
+def candidate_paths(paths: list[Path]) -> list[Path]:
+    roots = paths or [Path.home() / "Downloads", Path("/tmp")]
+    candidates: list[Path] = []
+    for root in roots:
+        root = root.expanduser()
+        if root.is_file():
+            candidates.append(root)
+        elif root.is_dir():
+            candidates.extend(
+                path
+                for path in root.iterdir()
+                if path.is_file() and path.suffix.lower() in RETURN_EXTENSIONS
+            )
+    return sorted(set(candidates), key=lambda path: path.stat().st_mtime, reverse=True)
+
+
+def clean_zip_names(path: Path) -> list[str]:
+    try:
+        with zipfile.ZipFile(path) as archive:
+            return [
+                name
+                for name in archive.namelist()
+                if "__MACOSX" not in Path(name).parts
+                and not any(part.startswith("._") for part in Path(name).parts)
+            ]
+    except Exception:
+        return []
+
+
+def read_zip_json(path: Path, name: str) -> dict[str, Any] | None:
+    try:
+        with zipfile.ZipFile(path) as archive:
+            data = json.loads(archive.read(name).decode("utf-8"))
+    except Exception:
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def classify_zip(path: Path) -> tuple[str, list[str]]:
+    names = clean_zip_names(path)
+    if not names:
+        return ("unknown", [])
+
+    hints: list[str] = []
+    if any(name.endswith("manifest.json") for name in names):
+        for name in names:
+            if not name.endswith("manifest.json"):
+                continue
+            data = read_zip_json(path, name)
+            kind = data.get("kind") if data else None
+            if kind == "olm_port_handoff_package":
+                return ("olm-handoff-package", [f"{name}: {kind}"])
+            if kind == "olm_mac_plugin_package":
+                return ("mac-plugin-package", [f"{name}: {kind}"])
+            if kind == "ae_effect_reference_manifest":
+                return ("win-reference-return", [f"{name}: {kind}"])
+    for name in names:
+        if not (Path(name).name.startswith("AE_VALIDATION_RESULT") and name.endswith(".json")):
+            continue
+        data = read_zip_json(path, name)
+        kind = data.get("kind") if data else None
+        if kind == "olm_ae_host_validation_result":
+            return ("ae-host-return", [f"{name}: {kind}"])
+    if any(name.endswith("AE_PIXEL_VALIDATION/request_manifest.json") for name in names):
+        return ("mac-plugin-package", ["contains AE_PIXEL_VALIDATION requests"])
+    if any(name.endswith("reference_manifest.json") for name in names):
+        return ("win-reference-return", ["contains reference_manifest.json"])
+    if any(name.endswith("WIN_CODEX_HANDOFF.md") for name in names):
+        return ("reference-request-package", ["contains WIN_CODEX_HANDOFF.md"])
+    if any(name.endswith("next_reference_actions.json") for name in names):
+        hints.append("contains next_reference_actions.json")
+    return ("unknown", hints)
+
+
+def suggested_command(kind: str, path: Path) -> str:
+    path_text = str(path)
+    if kind == "win-reference-return":
+        return (
+            f"python3 scripts/intake_olm_return.py {path_text!r} "
+            "--quick --dispatch-dir /tmp/olm_reference_dispatch"
+        )
+    if kind == "ae-host-return":
+        return f"python3 scripts/intake_olm_return.py {path_text!r} --require-all-pass"
+    if kind == "olm-handoff-package":
+        return f"python3 scripts/verify_olm_handoff_package.py {path_text!r}"
+    if kind == "mac-plugin-package":
+        return f"python3 scripts/verify_mac_plugin_package.py {path_text!r}"
+    if kind == "reference-request-package":
+        return "send this package to the Windows AE renderer"
+    return ""
+
+
+def build_row(path: Path) -> dict[str, Any]:
+    kind, hints = classify_zip(path)
+    return {
+        "path": str(path),
+        "kind": kind,
+        "mtime": path.stat().st_mtime,
+        "size": path.stat().st_size,
+        "hints": hints,
+        "suggested_command": suggested_command(kind, path),
+    }
+
+
+def main() -> int:
+    args = parse_args()
+    rows = [build_row(path) for path in candidate_paths(args.paths)]
+    interesting = [row for row in rows if row["kind"] != "unknown"]
+    output = interesting[: args.limit]
+    if args.json:
+        print(json.dumps({"candidates": output}, indent=2, sort_keys=True))
+        return 0
+
+    if not output:
+        print("no likely OLM return/package candidates found")
+        return 0
+    print("OLM return/package candidates")
+    for row in output:
+        print(f"- {row['kind']}: {row['path']}")
+        if row["hints"]:
+            print(f"  hints: {', '.join(row['hints'])}")
+        if row["suggested_command"]:
+            print(f"  run: {row['suggested_command']}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
