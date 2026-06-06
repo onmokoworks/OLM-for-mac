@@ -91,6 +91,13 @@ def run(cmd: list[str], repo: Path) -> int:
     return proc.returncode
 
 
+def run_capture(cmd: list[str], repo: Path) -> subprocess.CompletedProcess[str]:
+    print("$ " + " ".join(cmd), flush=True)
+    proc = subprocess.run(cmd, cwd=repo, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    print(proc.stdout, end="")
+    return proc
+
+
 def main() -> int:
     repo = Path(__file__).resolve().parents[2]
     intake = repo / "scripts" / "intake_olm_return.py"
@@ -116,7 +123,7 @@ def main() -> int:
         if rc != 0:
             return rc
 
-        rc = run(
+        proc = run_capture(
             [
                 sys.executable,
                 str(intake),
@@ -132,8 +139,11 @@ def main() -> int:
             ],
             repo,
         )
-        if rc != 0:
-            return rc
+        if proc.returncode != 0:
+            return proc.returncode
+        if "next covered reference action" not in proc.stdout:
+            print("[FAIL] intake did not print next covered reference action", file=sys.stderr)
+            return 1
 
     print("[OK] OLM return intake smoke")
     return 0

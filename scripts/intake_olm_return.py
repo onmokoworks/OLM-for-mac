@@ -61,6 +61,11 @@ def parse_args() -> argparse.Namespace:
         help="Windows refs: require optional render sets during post-import checks.",
     )
     parser.add_argument("--quick", action="store_true", help="Windows refs: run quick aggregate after import.")
+    parser.add_argument(
+        "--no-next-actions",
+        action="store_true",
+        help="Windows refs: do not print next prioritized reference action after import.",
+    )
     return parser.parse_args()
 
 
@@ -162,7 +167,19 @@ def run_win_reference(args: argparse.Namespace, root: Path) -> int:
         cmd.append("--quick")
     for request in args.request:
         cmd.extend(["--request", str(request)])
-    return run(cmd, root)
+    rc = run(cmd, root)
+    if rc != 0 or args.no_next_actions:
+        return rc
+
+    next_cmd = [
+        sys.executable,
+        "refs/scripts/next_reference_actions.py",
+        "--requests",
+        str(args.requests_dir),
+        "--references",
+        str(args.dest_root),
+    ]
+    return run(next_cmd, root)
 
 
 def main() -> int:
