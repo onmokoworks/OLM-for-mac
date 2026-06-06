@@ -24,8 +24,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--package",
         type=Path,
-        default=Path("/tmp/olm_port_handoff_20260606.zip"),
-        help="Mac plug-in or OLM handoff package for AE-host returns.",
+        default=None,
+        help="Mac plug-in or OLM handoff package for AE-host returns. Defaults to the newest valid package in /tmp.",
+    )
+    parser.add_argument(
+        "--package-search-dir",
+        action="append",
+        type=Path,
+        default=[],
+        help="AE-host: directory to search for a package when --package is omitted. May be repeated.",
     )
     parser.add_argument("--require-all-pass", action="store_true", help="AE-host: require all plugins to pass.")
     parser.add_argument(
@@ -103,6 +110,73 @@ def load_json(path: Path) -> dict | None:
     return data if isinstance(data, dict) else None
 
 
+def package_kind(path: Path) -> str | None:
+    if path.is_dir():
+        data = load_json(path / "manifest.json")
+        if data:
+            kind = data.get("kind")
+            if kind in {"olm_port_handoff_package", "olm_mac_plugin_package"}:
+                return kind
+        return None
+
+    if not path.exists() or not zipfile.is_zipfile(path):
+        return None
+    try:
+        with zipfile.ZipFile(path) as archive:
+            manifests = [
+                name
+                for name in archive.namelist()
+                if name.endswith("manifest.json")
+                and "__MACOSX" not in Path(name).parts
+                and not any(part.startswith("._") for part in Path(name).parts)
+            ]
+            top_manifests = [name for name in manifests if len(Path(name).parts) == 2]
+            for name in top_manifests:
+                data = json.loads(archive.read(name).decode("utf-8"))
+                if isinstance(data, dict):
+                    kind = data.get("kind")
+                    if kind in {"olm_port_handoff_package", "olm_mac_plugin_package"}:
+                        return kind
+    except Exception:
+        return None
+    return None
+
+
+def verify_package_candidate(root: Path, path: Path, verifier: str) -> str | None:
+    cmd = [sys.executable, verifier, str(path)]
+    proc = subprocess.run(cmd, cwd=root, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    if proc.returncode == 0:
+        return None
+    lines = [line.strip() for line in proc.stdout.splitlines() if line.strip()]
+    return lines[-1] if lines else f"{verifier} exited {proc.returncode}"
+
+
+def sorted_candidates(search_dirs: list[Path], pattern: str) -> list[Path]:
+    candidates: list[Path] = []
+    for search_dir in search_dirs:
+        if not search_dir.exists() or not search_dir.is_dir():
+            continue
+        candidates.extend(search_dir.glob(pattern))
+    return sorted(set(candidates), key=lambda path: path.stat().st_mtime, reverse=True)
+
+
+def find_latest_ae_package(root: Path, search_dirs: list[Path]) -> Path | None:
+    for pattern, verifier in (
+        ("olm_port_handoff*.zip", "scripts/verify_olm_handoff_package.py"),
+        ("olm_mac_plugins*.zip", "scripts/verify_mac_plugin_package.py"),
+    ):
+        for candidate in sorted_candidates(search_dirs, pattern):
+            if not package_kind(candidate):
+                print(f"[INFO] skipping AE-host package candidate: {candidate} (unrecognized package kind)")
+                continue
+            problem = verify_package_candidate(root, candidate, verifier)
+            if problem:
+                print(f"[INFO] skipping AE-host package candidate: {candidate} ({problem})")
+                continue
+            return candidate.resolve()
+    return None
+
+
 def detect_kind(root: Path) -> str | None:
     ae_jsons = [
         path
@@ -129,7 +203,14 @@ def run(cmd: list[str], root: Path) -> int:
 
 
 def run_ae_host(args: argparse.Namespace, root: Path) -> int:
-    package = args.package.resolve()
+    package = args.package.resolve() if args.package else None
+    if package is None:
+        search_dirs = [path.resolve() for path in args.package_search_dir] or [Path("/tmp")]
+        package = find_latest_ae_package(root, search_dirs)
+        if package is None:
+            rendered_dirs = ", ".join(str(path) for path in search_dirs)
+            return fail(f"could not auto-detect AE-host package in: {rendered_dirs}; pass --package", 2)
+        print(f"[INFO] using AE-host package: {package}")
     if not package.exists():
         return fail(f"AE-host package not found: {package}", 2)
     cmd = [

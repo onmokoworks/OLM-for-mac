@@ -123,8 +123,9 @@ for example \`olmblur/\`, \`olmcolorkey/\`, \`olmtoondilate/\`, and
 Mac-side pixel verification examples:
 
 \`\`\`sh
+python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --require-all-pass
+python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --require-all-pass --require-all-pixel-requests
 python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --package $OUTPUT --require-all-pass
-python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --package $OUTPUT --require-all-pass --require-all-pixel-requests
 python3 scripts/verify_ae_host_return.py $OUTPUT path/to/returned_ae_host.zip --require-all-pass
 python3 scripts/verify_ae_host_return.py $OUTPUT path/to/returned_ae_host.zip --require-all-pass --require-all-pixel-requests
 python3 scripts/verify_ae_pixel_validation_result.py path/to/olmblur_request.zip path/to/returned_pngs_or_zip
