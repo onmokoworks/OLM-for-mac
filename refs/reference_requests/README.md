@@ -19,23 +19,31 @@
 
 優先度:
 
-1. `radialblur_inner_20260605.json`
-   - OLMRadialBlur Innerの未解決箇所を切るための最優先セット。
-2. `radialblur_inner_size_variation_20260606.json`
-   - RadialBlur Inner `FUN_180004640` の `+0x40` scatter span/gate planeを、
-     Size Variation非ゼロ参照で切り分けるためのセット。
+最新の優先順は、固定メモではなく次のコマンドを正とする。
+
+```sh
+python3 refs/scripts/next_reference_actions.py
+```
+
+2026-06-06時点の次アクション:
+
+1. `smoother2_no_key_grid_20260606.json`
+   - OLMSmoother2 no-key v2 の残差を、Smoothness / Smooth Range gridで
+     class-plane firing・sample plane・color-space/writebackに切り分けるためのセット。
+2. `olmcolorkey_replace_colorspace_20260606.json`
+   - OLMColorKey の Enable Replace、非黒キー、複数キー、Lab76/Lab94/YUV/YCrCbを
+     既存9ケースから分離して確認するためのセット。
 3. `directionalblur_context_scale_20260606.json`
    - OLMDirectionalBlurの `ctx+0x11c / ctx+0x120` render-context scale と
      非不透明alpha挙動を切るためのセット。
 4. `kirakira_single_ray_20260606.json`
    - OLMKiraKiraのray order / angle table / helper戻り値scalarを分離するための
      単独rayセット。
-5. `smoother2_no_key_grid_20260606.json`
-   - OLMSmoother2 no-key v2 の残差を、Smoothness / Smooth Range gridで
-     class-plane firing・sample plane・color-space/writebackに切り分けるためのセット。
-6. `olmcolorkey_replace_colorspace_20260606.json`
-   - OLMColorKey の Enable Replace、非黒キー、複数キー、Lab76/Lab94/YUV/YCrCbを
-     既存9ケースから分離して確認するためのセット。
+5. `radialblur_inner_size_variation_20260606.json`
+   - RadialBlur Inner `FUN_180004640` の `+0x40` scatter span/gate planeを、
+     Size Variation非ゼロ参照で切り分けるためのセット。
+6. `radialblur_inner_20260605.json`
+   - OLMRadialBlur Innerの未解決箇所を切るためのセット。
 7. 既存Mac移植扱いのプラグイン確認
    - `OLMDistanceGradation`
    - `OLMSmoother2`
@@ -46,12 +54,16 @@
 Mac側への取り込み:
 
 ```sh
-python3 refs/scripts/import_and_check_win_reference.py path/to/packed_reference.zip
+python3 scripts/intake_olm_return.py path/to/packed_reference.zip --quick
 ```
 
-個別に分けて実行する場合:
+`intake_olm_return.py` は戻りzipを自動判定し、import、request検証、次アクション表示、
+quick aggregate smokeまで一度に走らせる。
+
+低レベルに分けて実行する場合:
 
 ```sh
+python3 refs/scripts/import_and_check_win_reference.py path/to/packed_reference.zip --quick
 python3 refs/scripts/import_win_reference.py path/to/packed_reference.zip --allow-missing-optional-render-sets
 python3 refs/scripts/smoke_reference_requests_after_import.py
 python3 refs/scripts/check_reference_request_status.py
