@@ -74,6 +74,8 @@ def classify_zip(path: Path) -> tuple[str, list[str]]:
         return ("unknown", [])
 
     hints: list[str] = []
+    if any(name.endswith("AE_PIXEL_VALIDATION_REQUEST.md") for name in names):
+        return ("ae-pixel-validation-request", ["contains AE_PIXEL_VALIDATION_REQUEST.md"])
     if any(name.endswith("manifest.json") for name in names):
         for name in names:
             if not name.endswith("manifest.json"):
@@ -86,6 +88,8 @@ def classify_zip(path: Path) -> tuple[str, list[str]]:
                 return ("mac-plugin-package", [f"{name}: {kind}"])
             if kind == "ae_effect_reference_manifest":
                 return ("win-reference-return", [f"{name}: {kind}"])
+            if kind == "olm_ae_pixel_validation_request":
+                return ("ae-pixel-validation-request", [f"{name}: {kind}"])
     for name in names:
         if not (Path(name).name.startswith("AE_VALIDATION_RESULT") and name.endswith(".json")):
             continue
@@ -117,6 +121,8 @@ def suggested_command(kind: str, path: Path) -> str:
         return f"python3 scripts/verify_olm_handoff_package.py {path_text!r}"
     if kind == "mac-plugin-package":
         return f"python3 scripts/verify_mac_plugin_package.py {path_text!r}"
+    if kind == "ae-pixel-validation-request":
+        return f"send {path_text!r} to the AE host for pixel validation"
     if kind == "reference-request-package":
         return "send this package to the Windows AE renderer"
     return ""

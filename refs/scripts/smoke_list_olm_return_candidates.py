@@ -41,6 +41,7 @@ def main() -> int:
         ae_host = tmp_path / "ae_host.zip"
         handoff = tmp_path / "handoff.zip"
         request_pkg = tmp_path / "requests.zip"
+        ae_pixel_request = tmp_path / "ae_pixel_request.zip"
         unknown = tmp_path / "other.zip"
 
         write_zip(
@@ -68,6 +69,18 @@ def main() -> int:
             },
         )
         write_zip(request_pkg, {"refs/reference_requests/WIN_CODEX_HANDOFF.md": "render these\n"})
+        write_zip(
+            ae_pixel_request,
+            {
+                "ae_pixel_olmblur/AE_PIXEL_VALIDATION_REQUEST.md": "render these\n",
+                "ae_pixel_olmblur/reference_manifest.json": json.dumps(
+                    {"kind": "ae_effect_reference_manifest", "cases": []}
+                ),
+                "ae_pixel_olmblur/request_manifest.json": json.dumps(
+                    {"kind": "olm_ae_pixel_validation_request"}
+                ),
+            },
+        )
         write_zip(unknown, {"hello.txt": "not olm\n"})
 
         proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
@@ -77,10 +90,12 @@ def main() -> int:
         assert kinds["ae_host.zip"] == "ae-host-return"
         assert kinds["handoff.zip"] == "olm-handoff-package"
         assert kinds["requests.zip"] == "reference-request-package"
+        assert kinds["ae_pixel_request.zip"] == "ae-pixel-validation-request"
         assert "other.zip" not in kinds
         commands = {Path(row["path"]).name: row["suggested_command"] for row in data["candidates"]}
         assert "--dispatch-dir /tmp/olm_reference_dispatch" in commands["returned_refs.zip"]
         assert "--require-all-pass" in commands["ae_host.zip"]
+        assert "AE host" in commands["ae_pixel_request.zip"]
 
         human = run([sys.executable, str(script), str(tmp_path)], repo)
         assert "win-reference-return" in human.stdout

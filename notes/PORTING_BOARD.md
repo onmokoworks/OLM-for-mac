@@ -92,8 +92,9 @@ the hard paths have CLI diagnostics, so the best next work is split by evidence:
 
 1. AE-host validation for covered low-risk paths, starting with `OLMBlur`, then
    covered `OLMColorKey`, `OLMToonDilate`, and `OLMDistanceGradation`.
-2. Windows reference returns. First locate returned/package zips with
-   `python3 scripts/list_olm_return_candidates.py ~/Downloads /tmp`, then import them with
+2. Windows reference returns. First ask the local router with
+   `python3 scripts/print_next_olm_action.py ~/Downloads /tmp`; if it finds a
+   returned Windows reference zip, import it with
    `python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick --dispatch-dir /tmp/olm_reference_dispatch`
    so each covered/pending action gets a ready-to-send `SUBAGENT.md`.
 3. Process returned refs in `refs/scripts/next_reference_actions.py` priority:
