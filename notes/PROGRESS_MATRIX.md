@@ -76,6 +76,7 @@ When returned refs are imported, run the relevant request smoke first, then the
 quick aggregate:
 
 ```sh
+python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick
 python3 refs/scripts/import_and_check_win_reference.py path/to/returned_reference.zip --quick
 python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
 ```
@@ -102,6 +103,7 @@ After the AE host returns rendered PNGs, verify them against the packaged
 Windows expected frames:
 
 ```sh
+python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --package /tmp/olm_port_handoff_20260606.zip --require-all-pass
 python3 scripts/verify_ae_host_return.py /tmp/olm_port_handoff_20260606.zip path/to/returned_ae_host.zip --require-all-pass
 python3 scripts/verify_ae_host_return.py /tmp/olm_port_handoff_20260606.zip path/to/returned_ae_host.zip --require-all-pass --require-all-pixel-requests
 python3 scripts/verify_ae_pixel_validation_result.py /tmp/olm_ae_pixel_validation_olmblur.zip path/to/returned_ae_pngs_or_zip
