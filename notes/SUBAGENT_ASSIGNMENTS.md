@@ -94,6 +94,19 @@ and turns into grouped max/mean analysis when the Windows refs are imported.
 | AE-host return flow | `019e9a49-4ae7-7e32-89ca-4c64e780baae` / James | Read package, handoff, and AE return verifier scripts. | Confirmed the one-shot return verifier is ready, then identified gaps: template filename handling, clearer returned pixel grouping docs, and a release-style `--require-all-pixel-requests` gate. Parent implemented those fixes. |
 | Pending reference workflow | `019e9a49-5edc-7872-89af-972adad10a21` / Averroes | Read request JSONs, packaging/import scripts, and request smokes. | Confirmed all six pending requests are packageable/import-checkable. Recommended processing `smoother2_no_key_grid_20260606` first if multiple returned requests arrive, because it has the most isolated current blocker and a dedicated grid smoke. |
 
+## 2026-06-06 Pending Dispatch Recheck
+
+This pass used the machine-readable `pending_actions` from
+`refs/scripts/next_reference_actions.py --json` to confirm whether per-plugin
+sub-agents can advance anything before the Windows references return. All
+agents were read-only and have been closed.
+
+| Plugin area | Agent | Scope | Result |
+| --- | --- | --- | --- |
+| `OLMDirectionalBlur` / `OLMKiraKira` | `019e9aa4-c5f2-71d2-a327-00e110881f55` / Erdos the 2nd | Read current progress, IR/ASM notes, request JSONs, CLIs, and red probe smokes. | No implementation promotion without `directionalblur_context_scale_20260606` and `kirakira_single_ray_20260606`. Only regression-style red probe checks remain useful before refs return. |
+| `OLMRadialBlur` Inner/EdgeFade | `019e9aa4-e672-7e52-b7f8-abea07cf61f0` / Nietzsche the 2nd | Read RadialBlur RE/ASM notes, Inner requests, CLI, and Inner smokes. | No implementation promotion without `radialblur_inner_size_variation_20260606`; `radialblur_inner_20260605` is supporting evidence only. |
+| `OLMSmoother2` / `OLMColorKey` | `019e9aa5-0957-7710-81f2-bacc2ed26e7e` / McClintock the 2nd | Read Smoother2 and ColorKey notes, requests, CLIs, Rust, and Mac source. | No implementation promotion without `smoother2_no_key_grid_20260606` and `olmcolorkey_replace_colorspace_20260606`. After import, run the Smoother2 grid smoke first and ColorKey manifest audit before implementation. |
+
 ## Reusable Prompt Shape
 
 Ask each sub-agent for:

@@ -63,6 +63,23 @@ def main() -> int:
         assert "do not tune from current PNG residuals" in pending_actions[0]["agent_prompt"]
         assert "avoid restating old audits" in pending_actions[0]["agent_prompt"]
 
+        pending_human = run(
+            [
+                sys.executable,
+                str(script),
+                "--requests",
+                str(requests),
+                "--references",
+                str(references),
+            ],
+            root,
+            capture=True,
+        )
+        assert "next pending subagent" in pending_human.stdout
+        assert "- request: smoother2_no_key_grid_20260606" in pending_human.stdout
+        assert "stop before PNG-only implementation tuning" in pending_human.stdout
+        assert "smoke_olmsmoother2_no_key_grid_cli.py" in pending_human.stdout
+
         source = tmpdir / "returned"
         effect_dir = source / "OLMSmoother2"
         effect_dir.mkdir(parents=True)
