@@ -15,7 +15,7 @@ the macOS AE plugin builds, and returned AE-host validation confirms the effect.
 | OLMBlur | 88% | C++ CLI smoke is green: cases 1/2/4 exact, all 7 guarded; Mac project builds; AE pixel validation request/return verifier exists and is bundled into the Mac plug-in package. | Small max=1 residual on non-exact blur cases; returned AE-host PNG validation still pending. | Send the Mac package to AE host and use bundled OLMBlur pixel request as the first host validation target. |
 | OLMColorKey | 72% | RGB cases 1-4 exact; Edge Thin case 7 exact, cases 5/6 guarded; Edge Blur cases 8/9 guarded; C++ and Rust CLIs pass; Mac project builds; AE pixel validation request is bundled for current covered cases. | Replace, multi-key, and non-RGB color-space behavior lack returned refs. | Use bundled ColorKey pixel request for AE-host covered-case validation; wait for `olmcolorkey_replace_colorspace_20260606` before promoting Replace/non-RGB behavior. |
 | OLMToonDilate | 72% | Python and C++ cases 1-3 pass guarded residual gates; Mac project builds; AE pixel validation request is bundled for valid ToonDilate cases. | Boundary residual remains; case 4 belongs to RadialBlur. | Use bundled ToonDilate pixel request for AE-host validation; only revisit if host validation exposes larger drift. |
-| OLMDistanceGradation | 78% | All 29 effect-bearing cases from `20260605_extra` pass guarded smokes: 12 basic, 16 extended non-blur, and Blur Mode case_0029; Mac project builds. | Case_0029 is still a near-match, not exact; GPU/OpenCV path ambiguity possible. | Keep the new blur gate as a regression guard and tighten only with binary-backed OpenCV details. |
+| OLMDistanceGradation | 79% | All 29 effect-bearing cases from `20260605_extra` pass guarded smokes: 12 basic, 16 extended non-blur, and Blur Mode case_0029; Mac project builds; basic 12-case AE pixel validation request is bundled for host validation. | Case_0029 is still a near-match, not exact; GPU/OpenCV path ambiguity possible. | Use bundled DistanceGradation basic pixel request for AE-host validation; tighten Blur Mode only with binary-backed OpenCV details. |
 | OLMSmoother | 55% | Standalone v1 CLI exists; OLMSmoother2 `--force-version 1` matches v1 refs closely. | Standalone v1 classifier over-fires; v1 may be redundant if v2 compatibility is accepted. | Treat v1 as covered by v2 compatibility unless user requires a separate faithful v1 plugin. |
 | OLMSmoother2 | 65% | Key paths cases 2-4 are green; gamma cases guarded; no-key case 1 improved to mean 0.1832; Mac project builds. | No-key residual cannot be separated by current idx0/plane-split probes. | Wait for `smoother2_no_key_grid_20260606` before more no-key tuning. |
 | OLMDirectionalBlur | 40% | Python/C++ direct and rotated scaffolds exist; Mac project builds; red probes are registered. | Current opaque refs cannot separate render-context scale, premul, alpha ownership, and residual row/populate behavior. | Wait for `directionalblur_context_scale_20260606` unless a new ASM-only argument fact appears. |
@@ -100,7 +100,8 @@ python3 scripts/package_ae_pixel_validation_request.py --preset olmblur --output
 
 `scripts/package_mac_plugins.sh` also embeds current covered-case requests at
 `AE_PIXEL_VALIDATION/` in the Mac plug-in package manifest. Current bundled
-pixel request presets are `olmblur`, `olmcolorkey`, and `olmtoondilate`.
+pixel request presets are `olmblur`, `olmcolorkey`, `olmtoondilate`, and
+`olmdistancegradation`.
 
 After the AE host returns rendered PNGs, verify them against the packaged
 Windows expected frames:
@@ -126,7 +127,7 @@ scripts/package_mac_plugins.sh --skip-build --output /tmp/olm_mac_plugins_clean_
 This used the already verified Debug build products to create a clean AE-host
 handoff zip with no `__MACOSX`, `._*`, or `.DS_Store` entries. The package
 contains all 10 macOS plug-ins, preserves executable zip metadata for each
-bundle binary, embeds the three current `AE_PIXEL_VALIDATION` request zips, and
+bundle binary, embeds the four current `AE_PIXEL_VALIDATION` request zips, and
 passes `scripts/verify_mac_plugin_package.py`.
 
 Combined handoff:

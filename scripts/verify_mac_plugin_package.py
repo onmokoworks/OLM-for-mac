@@ -18,6 +18,7 @@ EXPECTED_PIXEL_REQUESTS = {
     "OLMBlur": "ae_pixel_olmblur_20260606",
     "OLMColorKey": "ae_pixel_olmcolorkey_20260606",
     "OLMToonDilate": "ae_pixel_olmtoondilate_20260606",
+    "OLMDistanceGradation": "ae_pixel_olmdistancegradation_20260606",
 }
 
 

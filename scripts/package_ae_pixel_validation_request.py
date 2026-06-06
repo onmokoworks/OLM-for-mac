@@ -26,7 +26,21 @@ OLMCOLORKEY_EDGETHIN_EXACT_CASES = ["case_0007"]
 OLMCOLORKEY_EDGETHIN_RESIDUAL_CASES = ["case_0005", "case_0006"]
 OLMCOLORKEY_EDGEBLUR_RESIDUAL_CASES = ["case_0008", "case_0009"]
 OLMTOONDILATE_CASES = ["case_0001", "case_0002", "case_0003"]
-PRESETS = ["olmblur", "olmcolorkey", "olmtoondilate"]
+OLMDISTANCEGRADATION_BASIC_CASES = [
+    "case_0001",
+    "case_0002",
+    "case_0003",
+    "case_0004",
+    "case_0005",
+    "case_0006",
+    "case_0007",
+    "case_0009",
+    "case_0015",
+    "case_0017",
+    "case_0018",
+    "case_0019",
+]
+PRESETS = ["olmblur", "olmcolorkey", "olmtoondilate", "olmdistancegradation"]
 
 
 def parse_args() -> argparse.Namespace:
@@ -156,6 +170,21 @@ def preset_config(root: Path, preset: str, reference: Path | None) -> dict:
                     "max_diff": 255,
                     "mean_diff": 3.1,
                     "nonzero_px_percent": 1.7,
+                },
+            ],
+        },
+        "olmdistancegradation": {
+            "request_id": "ae_pixel_olmdistancegradation_20260606",
+            "effect_name": "OLM Distance Gradation",
+            "effect_match_name": "OLM Distance Gradation",
+            "reference": root / "refs" / "win_references" / "20260605_extra" / "OLMDistanceGradation",
+            "threshold_groups": [
+                {
+                    "name": "basic_guarded",
+                    "case_ids": OLMDISTANCEGRADATION_BASIC_CASES,
+                    "max_diff": 7,
+                    "mean_diff": 0.11,
+                    "nonzero_px_percent": 22.0,
                 },
             ],
         },
