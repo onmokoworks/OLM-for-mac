@@ -122,6 +122,27 @@ def newest(rows: list[dict[str, Any]], kind: str) -> dict[str, Any] | None:
     return max(matches, key=lambda row: float(row.get("mtime", 0)))
 
 
+def reference_request_package(rows: list[dict[str, Any]]) -> dict[str, Any] | None:
+    matches = [row for row in rows if row.get("kind") == "reference-request-package"]
+    if not matches:
+        return None
+    canonical = [
+        row
+        for row in matches
+        if Path(str(row.get("path", ""))).name == "olm_reference_requests_pending_20260606.zip"
+    ]
+    if canonical:
+        return canonical[0]
+    pending_named = [
+        row
+        for row in matches
+        if "pending" in Path(str(row.get("path", ""))).name
+    ]
+    if pending_named:
+        return max(pending_named, key=lambda row: float(row.get("mtime", 0)))
+    return max(matches, key=lambda row: float(row.get("mtime", 0)))
+
+
 def zip_contains_file(names: set[str], root: str, value: Any) -> bool:
     if not isinstance(value, str) or not value:
         return False
@@ -223,7 +244,7 @@ def decide(
 
     pending = status["pending"]
     if pending:
-        request_pkg = newest(rows, "reference-request-package")
+        request_pkg = reference_request_package(rows)
         if request_pkg:
             return {
                 "action": "send-windows-reference-package",
@@ -277,6 +298,9 @@ def main() -> int:
     print("OLM next action")
     print(f"- action: {decision['action']}")
     print(f"- reason: {decision['reason']}")
+    target = decision.get("target")
+    if isinstance(target, dict) and target.get("path"):
+        print(f"- target: {target['path']}")
     if decision.get("command"):
         print(f"- run/do: {decision['command']}")
     print(f"- pending Windows refs: {len(status['pending'])}")

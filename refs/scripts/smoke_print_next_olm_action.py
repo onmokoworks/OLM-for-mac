@@ -39,6 +39,8 @@ def main() -> int:
         tmp_path = Path(tmp)
         returned = tmp_path / "returned_refs.zip"
         ae_pixel_request = tmp_path / "ae_pixel_request.zip"
+        canonical_pending = tmp_path / "olm_reference_requests_pending_20260606.zip"
+        smoke_request = tmp_path / "olm_reference_requests_smoke.zip"
         request = json.loads(
             (repo / "refs/reference_requests/smoother2_no_key_grid_20260606.json").read_text(
                 encoding="utf-8"
@@ -98,6 +100,15 @@ def main() -> int:
         human = run([sys.executable, str(script), str(tmp_path)], repo)
         assert "OLM next action" in human.stdout
         assert "import-windows-reference-return" in human.stdout
+        assert "- target:" in human.stdout
+
+        write_zip(canonical_pending, {"refs/reference_requests/WIN_CODEX_HANDOFF.md": "real\n"})
+        write_zip(smoke_request, {"refs/reference_requests/WIN_CODEX_HANDOFF.md": "smoke\n"})
+        returned.unlink()
+        proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
+        data = json.loads(proc.stdout)
+        assert data["decision"]["action"] == "send-windows-reference-package"
+        assert Path(data["decision"]["target"]["path"]).name == "olm_reference_requests_pending_20260606.zip"
 
     print("[OK] OLM next action printer smoke")
     return 0
