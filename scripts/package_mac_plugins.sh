@@ -151,7 +151,9 @@ Return to the Mac-side porting workspace:
   result JSON.
 - Mac-side one-shot verification for the returned zip/folder:
   python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --package path/to/olm_mac_plugins_Debug_clean.zip --require-all-pass
+  python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --package path/to/olm_mac_plugins_Debug_clean.zip --require-all-pass --require-all-pixel-requests
   python3 scripts/verify_ae_host_return.py path/to/olm_mac_plugins_Debug_clean.zip path/to/returned_ae_host.zip --require-all-pass
+  python3 scripts/verify_ae_host_return.py path/to/olm_mac_plugins_Debug_clean.zip path/to/returned_ae_host.zip --require-all-pass --require-all-pixel-requests
 
 Important:
 Do not use the hidden Compositing Options > GPU Rendering / ADBE Force CPU GPU
