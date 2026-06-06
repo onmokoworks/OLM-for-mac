@@ -88,6 +88,7 @@ result zip/folder to the Mac porting workspace.
 Mac-side import and verification after the returned Windows refs arrive:
 
 \`\`\`sh
+python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick
 python3 refs/scripts/import_and_check_win_reference.py path/to/returned_reference.zip --quick
 \`\`\`
 
@@ -117,6 +118,8 @@ for example \`olmblur/\`, \`olmcolorkey/\`, and \`olmtoondilate/\`.
 Mac-side pixel verification examples:
 
 \`\`\`sh
+python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --package $OUTPUT --require-all-pass
+python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --package $OUTPUT --require-all-pass --require-all-pixel-requests
 python3 scripts/verify_ae_host_return.py $OUTPUT path/to/returned_ae_host.zip --require-all-pass
 python3 scripts/verify_ae_host_return.py $OUTPUT path/to/returned_ae_host.zip --require-all-pass --require-all-pixel-requests
 python3 scripts/verify_ae_pixel_validation_result.py path/to/olmblur_request.zip path/to/returned_pngs_or_zip

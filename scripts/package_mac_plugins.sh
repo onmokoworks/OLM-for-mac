@@ -150,6 +150,7 @@ Return to the Mac-side porting workspace:
   the Mac verifier also accepts the template filename when it is the returned
   result JSON.
 - Mac-side one-shot verification for the returned zip/folder:
+  python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --package path/to/olm_mac_plugins_Debug_clean.zip --require-all-pass
   python3 scripts/verify_ae_host_return.py path/to/olm_mac_plugins_Debug_clean.zip path/to/returned_ae_host.zip --require-all-pass
 
 Important:
