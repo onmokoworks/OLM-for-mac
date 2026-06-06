@@ -14,8 +14,9 @@ easy to merge back into the canonical notes.
   commits unless a worker is explicitly given a disjoint write scope.
 - Stop a plugin path when the next discriminating evidence is a pending Windows
   reference request.
-- After any returned Windows refs or AE-host validation bundle, run the importer
-  or verifier first, then decide which plugin-specific agent to wake.
+- After any returned Windows refs or AE-host validation bundle, run
+  `scripts/intake_olm_return.py` first, then decide which plugin-specific agent
+  to wake.
 
 ## Standard Sub-Agent Output
 
@@ -84,9 +85,9 @@ summary, and any residual risk.
 ## Parent Triage Order
 
 1. If AE-host validation results arrive, run:
-   `python3 scripts/verify_ae_host_return.py /tmp/olm_port_handoff_20260606.zip path/to/returned_ae_host.zip --require-all-pass`
+   `python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --package /tmp/olm_port_handoff_20260606.zip --require-all-pass`
 2. If Windows reference results arrive, run:
-   `python3 refs/scripts/import_and_check_win_reference.py path/to/returned_reference.zip --quick`
+   `python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick`
 3. Run `python3 refs/scripts/check_reference_request_status.py` and pick the
    newly covered request with the largest unblock value.
 4. Spawn exactly one plugin-specific explorer for the newly covered request.
