@@ -100,6 +100,7 @@ def main() -> int:
             "python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip "
             "--require-all-pass --require-all-pixel-requests"
         ),
+        "next_reference_dispatch_json": "python3 refs/scripts/next_reference_actions.py --json",
     }
 
     if args.json:
@@ -134,6 +135,7 @@ def main() -> int:
     print(f"- Windows refs: {commands['mac_import_windows_refs']}")
     print(f"- AE host partial/current: {commands['mac_import_ae_host']}")
     print(f"- AE host all bundled pixel requests: {commands['mac_import_ae_host_all_pixels']}")
+    print(f"- next subagent dispatch JSON: {commands['next_reference_dispatch_json']}")
     print("")
     print("Regenerate packages:")
     print(f"- pending refs only: {commands['make_reference_zip']}")

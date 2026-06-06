@@ -110,7 +110,6 @@ Windows expected frames:
 ```sh
 python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --require-all-pass
 python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --require-all-pass --require-all-pixel-requests
-python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --require-all-pass
 python3 scripts/verify_ae_host_return.py /tmp/olm_port_handoff_20260606_current.zip path/to/returned_ae_host.zip --require-all-pass
 python3 scripts/verify_ae_host_return.py /tmp/olm_port_handoff_20260606_current.zip path/to/returned_ae_host.zip --require-all-pass --require-all-pixel-requests
 python3 scripts/verify_ae_pixel_validation_result.py /tmp/olm_ae_pixel_validation_olmblur.zip path/to/returned_ae_pngs_or_zip
