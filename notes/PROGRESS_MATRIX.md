@@ -94,6 +94,17 @@ Windows expected frames:
 python3 scripts/verify_ae_pixel_validation_result.py /tmp/olm_ae_pixel_validation_olmblur.zip path/to/returned_ae_pngs_or_zip
 ```
 
+2026-06-06 package verification:
+
+```sh
+scripts/package_mac_plugins.sh --output /tmp/olm_mac_plugins_ready_20260606.zip
+```
+
+This completed a full Debug build for all 10 macOS plug-ins, verified universal
+`x86_64`/`arm64` bundles and signatures, embedded the three current
+`AE_PIXEL_VALIDATION` request zips, and passed
+`scripts/verify_mac_plugin_package.py`.
+
 ## 2026-06-06 Parallel Audit Results
 
 Consolidated stop lines and post-reference actions are tracked in
