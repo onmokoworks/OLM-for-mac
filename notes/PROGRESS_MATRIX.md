@@ -130,6 +130,17 @@ contains all 10 macOS plug-ins, preserves executable zip metadata for each
 bundle binary, embeds the four current `AE_PIXEL_VALIDATION` request zips, and
 passes `scripts/verify_mac_plugin_package.py`.
 
+2026-06-06 refreshed handoff after adding DistanceGradation pixel validation:
+
+```sh
+scripts/package_olm_handoff.sh --output /tmp/olm_port_handoff_20260606_distancegradation_pixel.zip
+python3 scripts/verify_olm_handoff_package.py /tmp/olm_port_handoff_20260606_distancegradation_pixel.zip
+```
+
+The verified handoff contains the six pending Windows reference requests plus
+the four bundled AE pixel validation requests:
+`olmblur`, `olmcolorkey`, `olmtoondilate`, and `olmdistancegradation`.
+
 Combined handoff:
 
 ```sh
