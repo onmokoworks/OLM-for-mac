@@ -41,6 +41,7 @@ def main() -> int:
         assert f"send to Windows: {handoff_zip.resolve()}" in human.stdout
         assert "source commit: " + ("0" * 40) in human.stdout
         assert "next_reference_actions.json inside the zip" in human.stdout
+        assert "python3 scripts/print_next_olm_action.py ~/Downloads /tmp" in human.stdout
         assert "python3 scripts/list_olm_return_candidates.py ~/Downloads /tmp" in human.stdout
         assert "python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick --dispatch-dir" in human.stdout
         assert "python3 refs/scripts/next_reference_actions.py --json" in human.stdout
@@ -56,6 +57,7 @@ def main() -> int:
         assert data["handoff_contents"]["git_dirty"] is False
         assert "--quick --dispatch-dir" in data["commands"]["mac_import_windows_refs"]
         assert data["commands"]["list_return_candidates"].endswith("~/Downloads /tmp")
+        assert data["commands"]["next_olm_action"].endswith("~/Downloads /tmp")
         assert data["commands"]["next_reference_dispatch_json"].endswith("--json")
         assert "WIN_CODEX_HANDOFF.md" in data["windows_note"]
 
