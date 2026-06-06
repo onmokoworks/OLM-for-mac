@@ -26,10 +26,10 @@ def extract_zip(source: Path, dest: Path) -> Path:
     return roots[0] if len(roots) == 1 else dest
 
 
-def copy_expected_as_returned(request_zip: Path, result_dir: Path) -> None:
-    request_root = extract_zip(request_zip, result_dir.parent / "_request_extract")
+def copy_expected_as_returned(request_zip: Path, result_dir: Path, target_name: str) -> None:
+    request_root = extract_zip(request_zip, result_dir.parent / f"_request_extract_{target_name}")
     manifest = json.loads((request_root / "request_manifest.json").read_text(encoding="utf-8"))
-    target = result_dir / "olmblur"
+    target = result_dir / target_name
     target.mkdir()
     for case in manifest["cases"]:
         frame = case["frame"]
@@ -47,15 +47,19 @@ def main() -> int:
         handoff_zip = make_handoff_package(tmp_path, mac_zip, reference_zip)
 
         mac_root = extract_zip(mac_zip, tmp_path / "mac_extract")
-        request_zip = mac_root / "AE_PIXEL_VALIDATION" / "olmblur_request.zip"
 
         result_root = tmp_path / "returned"
         result_root.mkdir()
-        (result_root / "AE_VALIDATION_RESULT.json").write_text(
+        (result_root / "AE_VALIDATION_RESULT.template.json").write_text(
             json.dumps(base_result(), indent=2),
             encoding="utf-8",
         )
-        copy_expected_as_returned(request_zip, result_root)
+        for target_name, zip_name in (
+            ("olmblur", "olmblur_request.zip"),
+            ("olmcolorkey", "olmcolorkey_request.zip"),
+            ("olmtoondilate", "olmtoondilate_request.zip"),
+        ):
+            copy_expected_as_returned(mac_root / "AE_PIXEL_VALIDATION" / zip_name, result_root, target_name)
 
         result_zip = tmp_path / "returned_ae_host.zip"
         with zipfile.ZipFile(result_zip, "w", compression=zipfile.ZIP_DEFLATED) as archive:
@@ -69,6 +73,7 @@ def main() -> int:
                 str(handoff_zip),
                 str(result_zip),
                 "--require-all-pass",
+                "--require-all-pixel-requests",
                 "--run-dir",
                 str(tmp_path / "verify_run"),
             ],

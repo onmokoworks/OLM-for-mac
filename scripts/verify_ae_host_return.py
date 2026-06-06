@@ -23,6 +23,11 @@ def parse_args() -> argparse.Namespace:
         help="Require all plug-ins in AE_VALIDATION_RESULT*.json to load/apply/render.",
     )
     parser.add_argument(
+        "--require-all-pixel-requests",
+        action="store_true",
+        help="Fail if any pixel validation request embedded in the package has no returned PNG folder/zip.",
+    )
+    parser.add_argument(
         "--run-dir",
         type=Path,
         default=None,
@@ -147,12 +152,19 @@ def find_pixel_result(result_root: Path, request_id: str, request_zip: Path) -> 
 
 
 def find_validation_jsons(result_root: Path) -> list[Path]:
-    matches = [
+    matches = sorted(
         path
         for path in result_root.rglob("AE_VALIDATION_RESULT*.json")
         if "template" not in path.name.lower() and "__MACOSX" not in path.parts
+    )
+    if matches:
+        return matches
+    template_matches = [
+        path
+        for path in result_root.rglob("AE_VALIDATION_RESULT*.json")
+        if "__MACOSX" not in path.parts
     ]
-    return sorted(matches)
+    return sorted(template_matches)
 
 
 def run(cmd: list[str], root: Path) -> int:
@@ -189,7 +201,12 @@ def main() -> int:
         for request_id, request_zip in pixel_request_entries(mac_root):
             candidate = find_pixel_result(result_root, request_id, request_zip)
             if candidate is None:
-                print(f"[SKIP] {request_id}: no matching pixel return found")
+                message = f"{request_id}: no matching pixel return found"
+                if args.require_all_pixel_requests:
+                    print(f"[FAIL] {message}", file=sys.stderr)
+                    failures += 1
+                else:
+                    print(f"[SKIP] {message}")
                 continue
             cmd = [
                 sys.executable,

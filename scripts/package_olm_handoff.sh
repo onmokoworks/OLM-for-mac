@@ -111,11 +111,14 @@ Install the packaged \`*.plugin\` bundles into:
 
 Then restart After Effects and use the included checklist/template. For pixel
 validation, use the request zips under \`AE_PIXEL_VALIDATION/\` inside the Mac
-plug-in package and return the rendered PNGs.
+plug-in package and return the rendered PNGs grouped by request/preset name,
+for example \`olmblur/\`, \`olmcolorkey/\`, and \`olmtoondilate/\`.
 
 Mac-side pixel verification examples:
 
 \`\`\`sh
+python3 scripts/verify_ae_host_return.py $OUTPUT path/to/returned_ae_host.zip --require-all-pass
+python3 scripts/verify_ae_host_return.py $OUTPUT path/to/returned_ae_host.zip --require-all-pass --require-all-pixel-requests
 python3 scripts/verify_ae_pixel_validation_result.py path/to/olmblur_request.zip path/to/returned_pngs_or_zip
 python3 scripts/verify_ae_pixel_validation_result.py path/to/olmcolorkey_request.zip path/to/returned_pngs_or_zip
 python3 scripts/verify_ae_pixel_validation_result.py path/to/olmtoondilate_request.zip path/to/returned_pngs_or_zip
