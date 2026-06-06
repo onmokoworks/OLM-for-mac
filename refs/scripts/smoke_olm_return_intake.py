@@ -105,6 +105,25 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="olm_return_intake_smoke_") as tmp:
         tmp_path = Path(tmp)
         handoff_zip, ae_return_zip = make_ae_host_return(repo, tmp_path)
+        auto_handoff_zip = tmp_path / "olm_port_handoff_auto.zip"
+        shutil.copy2(handoff_zip, auto_handoff_zip)
+        broken_handoff_zip = tmp_path / "olm_port_handoff_newer_broken.zip"
+        with zipfile.ZipFile(broken_handoff_zip, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            archive.writestr(
+                "OLM_Port_Handoff/manifest.json",
+                json.dumps(
+                    {
+                        "kind": "olm_port_handoff_package",
+                        "configuration": "Debug",
+                        "source_root": str(repo),
+                        "created_at": "2026-06-06T00:00:01Z",
+                        "reference_requests_zip": "missing_reference_requests.zip",
+                        "mac_plugins_zip": "missing_mac_plugins.zip",
+                    },
+                    indent=2,
+                ),
+            )
+            archive.writestr("OLM_Port_Handoff/README.md", "broken handoff\n")
         win_return_zip, requests_dir, request_path = make_windows_ref_return(tmp_path)
 
         rc = run(
@@ -112,8 +131,8 @@ def main() -> int:
                 sys.executable,
                 str(intake),
                 str(ae_return_zip),
-                "--package",
-                str(handoff_zip),
+                "--package-search-dir",
+                str(tmp_path),
                 "--require-all-pass",
                 "--require-all-pixel-requests",
                 "--run-dir",
