@@ -47,6 +47,12 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Also run smoke_all_algorithm_clis.py --profile quick after post-import checks.",
     )
+    parser.add_argument(
+        "--next-actions-json",
+        type=Path,
+        default=None,
+        help="Write refs/scripts/next_reference_actions.py --json output after import checks.",
+    )
     return parser.parse_args()
 
 
@@ -113,6 +119,32 @@ def main() -> int:
     if args.quick:
         if run([sys.executable, "refs/scripts/smoke_all_algorithm_clis.py", "--profile", "quick"], root) != 0:
             failures += 1
+
+    if args.next_actions_json:
+        next_cmd = [
+            sys.executable,
+            "refs/scripts/next_reference_actions.py",
+            "--requests",
+            str(args.requests_dir),
+            "--references",
+            str(args.dest_root),
+            "--json",
+        ]
+        print("$ " + " ".join(next_cmd) + f" > {args.next_actions_json}", flush=True)
+        proc = subprocess.run(
+            next_cmd,
+            cwd=root,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        if proc.returncode != 0:
+            print(proc.stdout, end="")
+            failures += 1
+        else:
+            args.next_actions_json.parent.mkdir(parents=True, exist_ok=True)
+            args.next_actions_json.write_text(proc.stdout, encoding="utf-8")
+            print(f"wrote next reference actions JSON: {args.next_actions_json}")
 
     return 1 if failures else 0
 
