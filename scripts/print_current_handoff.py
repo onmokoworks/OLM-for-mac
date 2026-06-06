@@ -113,6 +113,12 @@ def main() -> int:
     next_actions_snapshot = manifest.get("next_reference_actions_json")
     if not isinstance(next_actions_snapshot, str):
         next_actions_snapshot = ""
+    git_commit = manifest.get("git_commit")
+    if not isinstance(git_commit, str):
+        git_commit = ""
+    git_dirty = manifest.get("git_dirty")
+    if not isinstance(git_dirty, bool):
+        git_dirty = None
 
     windows_reference_zip = "/tmp/olm_reference_requests_pending_20260606.zip"
     commands = {
@@ -138,6 +144,8 @@ def main() -> int:
                     "skipped": skipped,
                     "handoff_contents": {
                         "next_reference_actions_json": next_actions_snapshot,
+                        "git_commit": git_commit,
+                        "git_dirty": git_dirty,
                     },
                     "commands": commands,
                     "windows_note": (
@@ -155,6 +163,9 @@ def main() -> int:
         print(f"[INFO] skipped candidate: {line}")
     print("OLM handoff")
     print(f"- send to Windows: {package}")
+    if git_commit:
+        dirty_suffix = " dirty" if git_dirty else ""
+        print(f"- source commit: {git_commit}{dirty_suffix}")
     print("- Windows: read refs/reference_requests/WIN_CODEX_HANDOFF.md inside the zip")
     if next_actions_snapshot:
         print(f"- Subagents: read {next_actions_snapshot} inside the zip for dispatch snapshot")

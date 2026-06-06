@@ -143,6 +143,8 @@ def make_handoff_package(tmp_path: Path, mac_zip: Path, reference_zip: Path) -> 
         "configuration": "Debug",
         "source_root": str(tmp_path),
         "created_at": "2026-06-06T00:00:00Z",
+        "git_commit": "0" * 40,
+        "git_dirty": False,
         "reference_requests_zip": ref_target.name,
         "mac_plugins_zip": mac_target.name,
         "next_reference_actions_json": "next_reference_actions.json",
