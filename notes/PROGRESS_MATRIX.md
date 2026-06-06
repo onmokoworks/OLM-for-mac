@@ -106,6 +106,17 @@ contains all 10 macOS plug-ins, preserves executable zip metadata for each
 bundle binary, embeds the three current `AE_PIXEL_VALIDATION` request zips, and
 passes `scripts/verify_mac_plugin_package.py`.
 
+Combined handoff:
+
+```sh
+scripts/package_olm_handoff.sh --output /tmp/olm_port_handoff_20260606.zip
+```
+
+This creates a single clean zip containing
+`olm_reference_requests_pending.zip`, `olm_mac_plugins_Debug_clean.zip`, a
+README, and a manifest. The script verifies the nested Mac plug-in package and
+the top-level handoff with `scripts/verify_olm_handoff_package.py`.
+
 ## 2026-06-06 Parallel Audit Results
 
 Consolidated stop lines and post-reference actions are tracked in
