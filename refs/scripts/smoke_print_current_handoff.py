@@ -34,7 +34,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="olm_current_handoff_smoke_") as tmp:
         tmp_path = Path(tmp)
         mac_zip = make_mac_package(repo, tmp_path)
-        reference_zip = make_reference_package(tmp_path)
+        reference_zip = make_reference_package(repo, tmp_path)
         handoff_zip = make_handoff_package(tmp_path, mac_zip, reference_zip)
 
         human = run([sys.executable, str(script), "--package", str(handoff_zip)], repo)
