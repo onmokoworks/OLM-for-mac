@@ -74,6 +74,7 @@ def main() -> int:
         request.write_text(json.dumps(data, indent=2), encoding="utf-8")
         zip_path = write_synthetic_result(tmp_path, data)
         dest_root = tmp_path / "win_references"
+        next_actions_json = tmp_path / "next_actions_after_import.json"
         cmd = [
             sys.executable,
             str(runner),
@@ -86,11 +87,18 @@ def main() -> int:
             str(requests_dir),
             "--request",
             str(request),
+            "--next-actions-json",
+            str(next_actions_json),
         ]
         proc = subprocess.run(cmd, cwd=repo, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         print(proc.stdout, end="")
         if proc.returncode != 0:
             return proc.returncode
+        next_actions = json.loads(next_actions_json.read_text(encoding="utf-8"))
+        action = next_actions["next_action"]
+        if action["request_id"] != "synthetic_import_and_check_20260606":
+            print("[FAIL] next actions JSON did not record the imported request", file=sys.stderr)
+            return 1
 
     print("[OK] import and check smoke")
     return 0

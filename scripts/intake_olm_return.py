@@ -73,6 +73,12 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Windows refs: do not print next prioritized reference action after import.",
     )
+    parser.add_argument(
+        "--next-actions-json",
+        type=Path,
+        default=None,
+        help="Windows refs: write next_reference_actions.py --json output after import.",
+    )
     return parser.parse_args()
 
 
@@ -246,6 +252,8 @@ def run_win_reference(args: argparse.Namespace, root: Path) -> int:
         cmd.append("--require-optional-render-sets")
     if args.quick:
         cmd.append("--quick")
+    if args.next_actions_json:
+        cmd.extend(["--next-actions-json", str(args.next_actions_json)])
     for request in args.request:
         cmd.extend(["--request", str(request)])
     rc = run(cmd, root)

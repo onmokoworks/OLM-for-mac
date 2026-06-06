@@ -156,6 +156,8 @@ def main() -> int:
                 str(request_path),
                 "--set-id",
                 "synthetic_return",
+                "--next-actions-json",
+                str(tmp_path / "intake_next_actions.json"),
             ],
             repo,
         )
@@ -163,6 +165,10 @@ def main() -> int:
             return proc.returncode
         if "next covered reference action" not in proc.stdout:
             print("[FAIL] intake did not print next covered reference action", file=sys.stderr)
+            return 1
+        next_actions = json.loads((tmp_path / "intake_next_actions.json").read_text(encoding="utf-8"))
+        if next_actions["next_action"]["request_id"] != "synthetic_intake_20260606":
+            print("[FAIL] intake did not write next actions JSON", file=sys.stderr)
             return 1
 
     print("[OK] OLM return intake smoke")
