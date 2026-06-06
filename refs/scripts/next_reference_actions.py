@@ -4,7 +4,9 @@
 from __future__ import annotations
 
 import argparse
+import glob
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -126,6 +128,54 @@ PRIOR_AUDIT_REFS = [
 ]
 
 
+def resolved_read_files(read_files: list[str]) -> list[str]:
+    resolved: list[str] = []
+    for path in read_files:
+        if any(char in path for char in "*?[]"):
+            matches = sorted(glob.glob(path))
+            resolved.extend(matches or [path])
+        else:
+            resolved.append(path)
+    return sorted(dict.fromkeys(resolved))
+
+
+def read_file_patterns(read_files: list[str]) -> list[str]:
+    return [path for path in read_files if any(char in path for char in "*?[]")]
+
+
+def copy_paste_prompt(action: dict[str, Any]) -> str:
+    read_files = "\n".join(f"- {path}" for path in action["read_files_resolved"])
+    prior_refs = "\n".join(f"- {path}" for path in action["prior_audit_refs"])
+    return "\n".join(
+        [
+            f"Workspace: /Users/onmk/Documents/Projects/Personal/OLM as",
+            "",
+            f"Plugin area: {action['plugin_area']}",
+            f"Request: {action['request_id']} ({action['status']})",
+            f"Mode: {action['mode']}",
+            f"Write scope: {action['write_scope']}",
+            "",
+            "Read first:",
+            prior_refs,
+            "",
+            "Then read:",
+            read_files,
+            "",
+            f"First run or inspect: {action['smoke_command']}",
+            f"Stop condition: {action['stop_condition']}",
+            "",
+            "Task:",
+            action["agent_prompt"],
+            "",
+            "Return exactly:",
+            "1. Current best-supported IR checkpoints.",
+            "2. Exact measured status with commands or file references.",
+            "3. Whether the stop condition still holds and what unblocks it.",
+            "4. One parent action backed by objdump/decomp/IR/reference evidence.",
+        ]
+    )
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -141,6 +191,12 @@ def parse_args() -> argparse.Namespace:
         help="Directory containing imported Windows reference manifests.",
     )
     parser.add_argument("--json", action="store_true", help="Print machine-readable JSON.")
+    parser.add_argument(
+        "--dispatch-dir",
+        type=Path,
+        default=None,
+        help="Write index.json and per-action SUBAGENT.md/action.json files for sub-agent dispatch.",
+    )
     return parser.parse_args()
 
 
@@ -165,13 +221,16 @@ def action_for(row: dict[str, Any], *, covered: bool = True) -> dict[str, Any]:
         f"Read the request JSON and imported manifest for {request_id}. Do not edit. Report the current measured status, whether the stop condition is lifted, and one parent action backed by reference or IR evidence.",
     )
     if not covered:
+        prior_refs = ", ".join(PRIOR_AUDIT_REFS)
         agent_prompt = (
             f"Pending reference request: {request_id}. Do not edit and do not tune from current PNG residuals. "
-            f"First read notes/SUBAGENT_ASSIGNMENTS.md and notes/PROGRESS_MATRIX.md to avoid restating old audits. "
+            f"First read {prior_refs} to avoid restating old audits. "
             f"Then read the listed files, report only new stop-line deltas, audit whether the stop condition still holds, "
             f"and report the exact first action after this request is imported. "
             f"Original post-import prompt: {agent_prompt}"
         )
+    else:
+        agent_prompt = f"First run or inspect: {command}. {agent_prompt}"
 
     stop_condition = (
         f"{request_id} is not covered yet; keep this slice read-only and stop before PNG-only implementation tuning."
@@ -179,14 +238,17 @@ def action_for(row: dict[str, Any], *, covered: bool = True) -> dict[str, Any]:
         else f"{request_id} is covered; run the request smoke before proposing implementation changes."
     )
 
-    return {
+    read_files = follow_up.get("read_files", [f"refs/reference_requests/{request_id}.json"])
+    action = {
         "request_id": request_id,
         "status": row.get("status"),
         "effect": row.get("effect"),
         "manifest": (row.get("best") or {}).get("manifest"),
         "plugin_area": follow_up.get("plugin_area", request_id),
         "mode": follow_up.get("mode", "explorer"),
-        "read_files": follow_up.get("read_files", [f"refs/reference_requests/{request_id}.json"]),
+        "read_files": read_files,
+        "read_file_patterns": read_file_patterns(read_files),
+        "read_files_resolved": resolved_read_files(read_files),
         "write_scope": follow_up.get("write_scope", "none"),
         "reason": follow_up.get("reason", "No registered priority note."),
         "stop_condition": stop_condition,
@@ -197,6 +259,30 @@ def action_for(row: dict[str, Any], *, covered: bool = True) -> dict[str, Any]:
         "agent": follow_up.get("agent", "Inspect the covered manifest and update the relevant IR note."),
         "agent_prompt": agent_prompt,
     }
+    action["copy_paste_prompt"] = copy_paste_prompt(action)
+    return action
+
+
+def write_dispatch_dir(dispatch_dir: Path, data: dict[str, Any]) -> None:
+    dispatch_dir.mkdir(parents=True, exist_ok=True)
+    (dispatch_dir / "index.json").write_text(json.dumps(data, indent=2, sort_keys=True), encoding="utf-8")
+    for bucket_name, actions in (
+        ("covered", data["covered_actions"]),
+        ("pending", data["pending_actions"]),
+    ):
+        bucket = dispatch_dir / bucket_name
+        bucket.mkdir(parents=True, exist_ok=True)
+        for index, action in enumerate(actions, start=1):
+            action_dir = bucket / f"{index:02d}_{action['request_id']}"
+            action_dir.mkdir(parents=True, exist_ok=True)
+            (action_dir / "action.json").write_text(
+                json.dumps(action, indent=2, sort_keys=True),
+                encoding="utf-8",
+            )
+            (action_dir / "SUBAGENT.md").write_text(
+                action["copy_paste_prompt"] + "\n",
+                encoding="utf-8",
+            )
 
 
 def main() -> int:
@@ -207,21 +293,20 @@ def main() -> int:
     pending = sorted([row for row in rows if row.get("status") == "pending"], key=priority_key)
     actions = [action_for(row) for row in covered]
     pending_actions = [action_for(row, covered=False) for row in pending]
+    data = {
+        "next_action": actions[0] if actions else None,
+        "covered_actions": actions,
+        "pending_actions": pending_actions,
+        "partial": partial,
+        "pending": [row.get("request_id") for row in pending],
+    }
+
+    if args.dispatch_dir:
+        write_dispatch_dir(args.dispatch_dir, data)
+        print(f"wrote subagent dispatch files: {args.dispatch_dir}", file=sys.stderr)
 
     if args.json:
-        print(
-            json.dumps(
-                {
-                    "next_action": actions[0] if actions else None,
-                    "covered_actions": actions,
-                    "pending_actions": pending_actions,
-                    "partial": partial,
-                    "pending": [row.get("request_id") for row in pending],
-                },
-                indent=2,
-                sort_keys=True,
-            )
-        )
+        print(json.dumps(data, indent=2, sort_keys=True))
         return 0
 
     if actions:
@@ -237,6 +322,7 @@ def main() -> int:
         print(f"- read files: {', '.join(first['read_files'])}")
         print(f"- parent: {first['agent']}")
         print(f"- subagent prompt: {first['agent_prompt']}")
+        print(f"- copy-paste prompt: next_reference_actions.py --json | .next_action.copy_paste_prompt")
         if len(actions) > 1:
             print("\nother covered requests, in priority order:")
             for action in actions[1:]:
@@ -264,6 +350,7 @@ def main() -> int:
         print(f"- smoke after import: {first_pending['smoke_command']}")
         print(f"- read files: {', '.join(first_pending['read_files'])}")
         print(f"- subagent prompt: {first_pending['agent_prompt']}")
+        print(f"- copy-paste prompt: next_reference_actions.py --json | .pending_actions[0].copy_paste_prompt")
         print("\npending subagent dispatch JSON:")
         print("python3 refs/scripts/next_reference_actions.py --json")
         print("\npending package command:")

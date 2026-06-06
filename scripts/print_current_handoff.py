@@ -90,6 +90,25 @@ def package_manifest(package: Path) -> dict:
             return {}
 
 
+def package_json_entry(package: Path, entry_name: str) -> dict:
+    if not entry_name:
+        return {}
+    with tempfile.TemporaryDirectory(prefix="olm_handoff_json_") as tmp:
+        tmp_path = Path(tmp)
+        with zipfile.ZipFile(package) as archive:
+            member = next(
+                (name for name in archive.namelist() if name.endswith(f"/{entry_name}") or name == entry_name),
+                None,
+            )
+            if member is None:
+                return {}
+            archive.extract(member, tmp_path)
+        try:
+            return json.loads((tmp_path / member).read_text(encoding="utf-8"))
+        except Exception:  # noqa: BLE001 - optional display metadata only.
+            return {}
+
+
 def main() -> int:
     args = parse_args()
     root = repo_root()
@@ -113,6 +132,7 @@ def main() -> int:
     next_actions_snapshot = manifest.get("next_reference_actions_json")
     if not isinstance(next_actions_snapshot, str):
         next_actions_snapshot = ""
+    next_reference_dispatch = package_json_entry(package, next_actions_snapshot)
     git_commit = manifest.get("git_commit")
     if not isinstance(git_commit, str):
         git_commit = ""
@@ -125,7 +145,10 @@ def main() -> int:
         "make_reference_zip": f"python3 refs/scripts/package_reference_requests.py --pending --output {windows_reference_zip}",
         "make_handoff_zip": f"scripts/package_olm_handoff.sh --output {package}",
         "verify_handoff_zip": f"python3 scripts/verify_olm_handoff_package.py {package}",
-        "mac_import_windows_refs": "python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick",
+        "mac_import_windows_refs": (
+            "python3 scripts/intake_olm_return.py path/to/returned_reference.zip "
+            "--quick --dispatch-dir /tmp/olm_reference_dispatch"
+        ),
         "mac_import_ae_host": "python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --require-all-pass",
         "mac_import_ae_host_all_pixels": (
             "python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip "
@@ -144,6 +167,7 @@ def main() -> int:
                     "skipped": skipped,
                     "handoff_contents": {
                         "next_reference_actions_json": next_actions_snapshot,
+                        "next_reference_dispatch": next_reference_dispatch,
                         "git_commit": git_commit,
                         "git_dirty": git_dirty,
                     },

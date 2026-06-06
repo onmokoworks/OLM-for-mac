@@ -58,10 +58,35 @@ def main() -> int:
         assert pending_actions[0]["write_scope"] == "none"
         assert pending_actions[0]["unblock_request"] == "smoother2_no_key_grid_20260606"
         assert "notes/SUBAGENT_ASSIGNMENTS.md" in pending_actions[0]["prior_audit_refs"]
+        assert "notes/PARALLEL_IR_AUDIT_20260606.md" in pending_actions[0]["agent_prompt"]
         assert "stop before PNG-only implementation tuning" in pending_actions[0]["stop_condition"]
         assert "Pending reference request" in pending_actions[0]["agent_prompt"]
         assert "do not tune from current PNG residuals" in pending_actions[0]["agent_prompt"]
         assert "avoid restating old audits" in pending_actions[0]["agent_prompt"]
+        assert "Workspace: /Users/onmk/Documents/Projects/Personal/OLM as" in pending_actions[0]["copy_paste_prompt"]
+        assert "First run or inspect:" in pending_actions[0]["copy_paste_prompt"]
+
+        dispatch_dir = tmpdir / "dispatch"
+        run(
+            [
+                sys.executable,
+                str(script),
+                "--requests",
+                str(requests),
+                "--references",
+                str(references),
+                "--json",
+                "--dispatch-dir",
+                str(dispatch_dir),
+            ],
+            root,
+            capture=True,
+        )
+        assert (dispatch_dir / "index.json").exists()
+        pending_md = dispatch_dir / "pending" / "01_smoother2_no_key_grid_20260606" / "SUBAGENT.md"
+        assert pending_md.exists()
+        assert "OLMSmoother2 no-key" in pending_md.read_text(encoding="utf-8")
+        assert (dispatch_dir / "pending" / "01_smoother2_no_key_grid_20260606" / "action.json").exists()
 
         pending_human = run(
             [
@@ -151,7 +176,9 @@ def main() -> int:
         assert action["smoke_command"] == action["command"]
         assert action["unblock_request"] == "smoother2_no_key_grid_20260606"
         assert "run the request smoke" in action["stop_condition"]
+        assert "First run or inspect:" in action["agent_prompt"]
         assert "Do not edit" in action["agent_prompt"]
+        assert "copy_paste_prompt" in action
         assert covered_doc["pending_actions"][0]["request_id"] == "olmcolorkey_replace_colorspace_20260606"
 
     print("[OK] next reference actions smoke")

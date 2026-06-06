@@ -102,11 +102,21 @@ def verify_next_actions(path: Path) -> str | None:
     for index, action in enumerate([*pending_actions, *data.get("covered_actions", [])]):
         if not isinstance(action, dict):
             return f"next reference action #{index} must be an object"
-        for key in ("request_id", "plugin_area", "mode", "write_scope", "smoke_command", "agent_prompt"):
+        for key in (
+            "request_id",
+            "plugin_area",
+            "mode",
+            "write_scope",
+            "smoke_command",
+            "agent_prompt",
+            "copy_paste_prompt",
+        ):
             if not isinstance(action.get(key), str) or not action[key]:
                 return f"next reference action #{index}.{key} must be a non-empty string"
         if not isinstance(action.get("read_files"), list):
             return f"next reference action #{index}.read_files must be a list"
+        if not isinstance(action.get("read_files_resolved"), list):
+            return f"next reference action #{index}.read_files_resolved must be a list"
     return None
 
 

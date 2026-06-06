@@ -158,6 +158,8 @@ def main() -> int:
                 "synthetic_return",
                 "--next-actions-json",
                 str(tmp_path / "intake_next_actions.json"),
+                "--dispatch-dir",
+                str(tmp_path / "intake_dispatch"),
             ],
             repo,
         )
@@ -169,6 +171,10 @@ def main() -> int:
         next_actions = json.loads((tmp_path / "intake_next_actions.json").read_text(encoding="utf-8"))
         if next_actions["next_action"]["request_id"] != "synthetic_intake_20260606":
             print("[FAIL] intake did not write next actions JSON", file=sys.stderr)
+            return 1
+        subagent_md = tmp_path / "intake_dispatch" / "covered" / "01_synthetic_intake_20260606" / "SUBAGENT.md"
+        if not subagent_md.exists() or "synthetic_intake_20260606" not in subagent_md.read_text(encoding="utf-8"):
+            print("[FAIL] intake did not write dispatch SUBAGENT.md", file=sys.stderr)
             return 1
 
     print("[OK] OLM return intake smoke")

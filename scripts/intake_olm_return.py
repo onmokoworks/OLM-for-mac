@@ -79,6 +79,12 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Windows refs: write next_reference_actions.py --json output after import.",
     )
+    parser.add_argument(
+        "--dispatch-dir",
+        type=Path,
+        default=None,
+        help="Windows refs: write per-action sub-agent dispatch files after import.",
+    )
     return parser.parse_args()
 
 
@@ -254,6 +260,8 @@ def run_win_reference(args: argparse.Namespace, root: Path) -> int:
         cmd.append("--quick")
     if args.next_actions_json:
         cmd.extend(["--next-actions-json", str(args.next_actions_json)])
+    if args.dispatch_dir:
+        cmd.extend(["--dispatch-dir", str(args.dispatch_dir)])
     for request in args.request:
         cmd.extend(["--request", str(request)])
     rc = run(cmd, root)
