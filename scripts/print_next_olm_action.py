@@ -21,6 +21,7 @@ from check_reference_request_status import (  # noqa: E402
     manifest_case_ids,
     manifest_render_sets,
 )
+from verify_reference_request_package import packaged_request_ids  # noqa: E402
 from verify_reference_request_result import effect_matches, load_json  # noqa: E402
 
 
@@ -122,8 +123,17 @@ def newest(rows: list[dict[str, Any]], kind: str) -> dict[str, Any] | None:
     return max(matches, key=lambda row: float(row.get("mtime", 0)))
 
 
-def reference_request_package(rows: list[dict[str, Any]]) -> dict[str, Any] | None:
+def package_matches_pending(row: dict[str, Any], pending: list[str]) -> bool:
+    try:
+        ids = packaged_request_ids(Path(row["path"]).resolve())
+    except Exception:
+        return False
+    return ids == sorted(pending)
+
+
+def reference_request_package(rows: list[dict[str, Any]], pending: list[str]) -> dict[str, Any] | None:
     matches = [row for row in rows if row.get("kind") == "reference-request-package"]
+    matches = [row for row in matches if package_matches_pending(row, pending)]
     if not matches:
         return None
     canonical = [
@@ -244,7 +254,7 @@ def decide(
 
     pending = status["pending"]
     if pending:
-        request_pkg = reference_request_package(rows)
+        request_pkg = reference_request_package(rows, pending)
         if request_pkg:
             return {
                 "action": "send-windows-reference-package",

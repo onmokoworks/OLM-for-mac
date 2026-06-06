@@ -32,6 +32,24 @@ def write_zip(path: Path, files: dict[str, str]) -> None:
             archive.writestr(name, text)
 
 
+def package_pending_requests(repo: Path, output: Path) -> None:
+    proc = subprocess.run(
+        [
+            sys.executable,
+            str(repo / "refs" / "scripts" / "package_reference_requests.py"),
+            "--pending",
+            "--output",
+            str(output),
+        ],
+        cwd=repo,
+        check=True,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
+    print(proc.stdout, end="")
+
+
 def main() -> int:
     repo = repo_root()
     script = repo / "scripts" / "print_next_olm_action.py"
@@ -102,13 +120,30 @@ def main() -> int:
         assert "import-windows-reference-return" in human.stdout
         assert "- target:" in human.stdout
 
-        write_zip(canonical_pending, {"refs/reference_requests/WIN_CODEX_HANDOFF.md": "real\n"})
-        write_zip(smoke_request, {"refs/reference_requests/WIN_CODEX_HANDOFF.md": "smoke\n"})
+        package_pending_requests(repo, canonical_pending)
+        write_zip(
+            smoke_request,
+            {
+                "refs/reference_requests/WIN_CODEX_HANDOFF.md": "stale\n",
+                "refs/reference_requests/stale_request_20260606.json": json.dumps(
+                    {
+                        "request_id": "stale_request_20260606",
+                        "manifest_requirements": [],
+                        "cases": [{"id": "case_a"}],
+                    }
+                ),
+            },
+        )
         returned.unlink()
         proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
         data = json.loads(proc.stdout)
         assert data["decision"]["action"] == "send-windows-reference-package"
         assert Path(data["decision"]["target"]["path"]).name == "olm_reference_requests_pending_20260606.zip"
+
+        canonical_pending.unlink()
+        proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
+        data = json.loads(proc.stdout)
+        assert data["decision"]["action"] == "package-windows-reference-requests"
 
     print("[OK] OLM next action printer smoke")
     return 0
