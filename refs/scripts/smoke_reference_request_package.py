@@ -40,8 +40,8 @@ def main() -> int:
 
     assert "project_gpu_accel_type.current_name = SOFTWARE" in handoff
     assert "ADBE Force CPU GPU" in handoff
-    assert "python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick" in handoff
-    assert "python3 refs/scripts/import_and_check_win_reference.py path/to/returned_reference.zip --quick" in handoff
+    assert "python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick --dispatch-dir" in handoff
+    assert "python3 refs/scripts/import_and_check_win_reference.py path/to/returned_reference.zip --quick --dispatch-dir" in handoff
     assert "Import with refs/scripts/import_win_reference.py" not in handoff
     assert "python3 refs/scripts/next_reference_actions.py" in readme
     assert "python3 scripts/intake_olm_return.py path/to/packed_reference.zip --quick" in readme

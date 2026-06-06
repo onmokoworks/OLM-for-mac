@@ -78,8 +78,8 @@ When returned refs are imported, run the relevant request smoke first, then the
 quick aggregate:
 
 ```sh
-python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick
-python3 refs/scripts/import_and_check_win_reference.py path/to/returned_reference.zip --quick
+python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick --dispatch-dir /tmp/olm_reference_dispatch
+python3 refs/scripts/import_and_check_win_reference.py path/to/returned_reference.zip --quick --dispatch-dir /tmp/olm_reference_dispatch
 python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
 ```
 
@@ -91,6 +91,8 @@ is the remaining residual, and
 returned grid by Smoothness and Smooth Range.
 `refs/scripts/next_reference_actions.py` encodes this priority order and prints
 the next request-specific smoke plus the parent/sub-agent action after imports.
+With `--dispatch-dir`, it also writes per-request `SUBAGENT.md` files for the
+covered and still-pending actions.
 
 For the first low-risk AE-host pixel validation target, package OLMBlur
 standalone:

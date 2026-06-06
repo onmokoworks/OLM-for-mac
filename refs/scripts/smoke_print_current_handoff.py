@@ -41,7 +41,7 @@ def main() -> int:
         assert f"send to Windows: {handoff_zip.resolve()}" in human.stdout
         assert "source commit: " + ("0" * 40) in human.stdout
         assert "next_reference_actions.json inside the zip" in human.stdout
-        assert "python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick" in human.stdout
+        assert "python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick --dispatch-dir" in human.stdout
         assert "python3 refs/scripts/next_reference_actions.py --json" in human.stdout
         assert "--require-all-pass --require-all-pixel-requests" in human.stdout
 
@@ -49,9 +49,11 @@ def main() -> int:
         data = json.loads(machine.stdout)
         assert data["handoff_package"] == str(handoff_zip.resolve())
         assert data["handoff_contents"]["next_reference_actions_json"] == "next_reference_actions.json"
+        dispatch = data["handoff_contents"]["next_reference_dispatch"]
+        assert dispatch["pending_actions"][0]["copy_paste_prompt"]
         assert data["handoff_contents"]["git_commit"] == "0" * 40
         assert data["handoff_contents"]["git_dirty"] is False
-        assert data["commands"]["mac_import_windows_refs"].endswith("--quick")
+        assert "--quick --dispatch-dir" in data["commands"]["mac_import_windows_refs"]
         assert data["commands"]["next_reference_dispatch_json"].endswith("--json")
         assert "WIN_CODEX_HANDOFF.md" in data["windows_note"]
 

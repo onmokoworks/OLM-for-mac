@@ -85,15 +85,28 @@ First CLI probe against the new RadialBlur set also works:
 `max=255 mean=7.4415`, so the set is usable as a red measurement target for
 future Rotation work.
 
-## Suggested Porting Order
+## Current Integration Order
 
-1. `OLMBlur`: existing Mac source has a compact blur kernel and reference data exists.
-2. `OLMDirectionalBlur`: Mac plugin and Python/C++ direct/rotated CLI scaffolds exist; continue row-driver/host-edge RE, not initial source discovery.
-3. `OLMColorKey`: reference exists; separate from already-ported `ColorKeep`.
-4. `OLMRadialBlur`: Mac plugin exists for Zoom/no-inner/no-noise plus outer-only Rotation/noise-off; continue Inner/Edge Fade diagnostics, especially +0x10/+0x14 and 0xf250/0xf252 coupling.
-5. `OLMSmoother` / `OLMSmoother2`: existing work exists, but algorithm is more complex.
-6. `OLMToonDilate`: pure cases 1-3 are now CLI-characterized and have a Mac plug-in build; case 4 remains a mixed RadialBlur reference.
-7. `OLMKiraKira`: Mac plugin exists and now uses all-ray two-temp/no-fastpath; simple Mat/ROI/`dst=` aliasing probe is neutral, so remaining work is destination canvas/final composition/pre-post ray details.
+This is no longer an initial porting order. All current Mac projects build and
+the hard paths have CLI diagnostics, so the best next work is split by evidence:
+
+1. AE-host validation for covered low-risk paths, starting with `OLMBlur`, then
+   covered `OLMColorKey`, `OLMToonDilate`, and `OLMDistanceGradation`.
+2. Windows reference returns. Import them with
+   `python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick --dispatch-dir /tmp/olm_reference_dispatch`
+   so each covered/pending action gets a ready-to-send `SUBAGENT.md`.
+3. Process returned refs in `refs/scripts/next_reference_actions.py` priority:
+   `smoother2_no_key_grid_20260606`,
+   `olmcolorkey_replace_colorspace_20260606`,
+   `directionalblur_context_scale_20260606`,
+   `kirakira_single_ray_20260606`,
+   `radialblur_inner_size_variation_20260606`,
+   then supporting `radialblur_inner_20260605`.
+4. Keep `OLMDirectionalBlur`, `OLMRadialBlur` Inner/EdgeFade,
+   `OLMKiraKira`, `OLMSmoother2` no-key, and `OLMColorKey` Replace/non-RGB as
+   read-only sub-agent targets until their discriminating Windows refs return.
+5. Treat standalone `OLMSmoother` v1 as low priority while
+   `OLMSmoother2 --force-version 1` continues to cover the v1 references.
 
 ## Verification gates
 

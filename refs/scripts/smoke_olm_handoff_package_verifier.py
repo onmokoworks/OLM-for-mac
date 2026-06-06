@@ -132,8 +132,10 @@ def make_handoff_package(tmp_path: Path, mac_zip: Path, reference_zip: Path) -> 
                 "mode": "explorer",
                 "write_scope": "none",
                 "read_files": ["refs/reference_requests/synthetic_handoff_request_20260606.json"],
+                "read_files_resolved": ["refs/reference_requests/synthetic_handoff_request_20260606.json"],
                 "smoke_command": "python3 refs/scripts/smoke_reference_requests_after_import.py --request synthetic_handoff_request_20260606",
                 "agent_prompt": "Do not edit. Report current status.",
+                "copy_paste_prompt": "Workspace: /tmp\n\nDo not edit. Report current status.",
             }
         ],
     }

@@ -89,19 +89,22 @@ summary, and any residual risk.
 1. If AE-host validation results arrive, run:
    `python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --require-all-pass`
 2. If Windows reference results arrive, run:
-   `python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick`
+   `python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick --dispatch-dir /tmp/olm_reference_dispatch`
 3. Run `python3 refs/scripts/check_reference_request_status.py` and pick the
    newly covered request with the largest unblock value.
 4. Run `python3 refs/scripts/next_reference_actions.py` to get the prioritized
    request-specific smoke and parent/sub-agent action.
    Use `python3 refs/scripts/next_reference_actions.py --json` when spawning an
    agent; `next_action` includes `plugin_area`, `mode`, `read_files`,
-   `write_scope`, `smoke_command`, and a ready-to-paste `agent_prompt`.
+   `write_scope`, `smoke_command`, `agent_prompt`, and a ready-to-paste
+   `copy_paste_prompt`.
    While all requests are still pending, use `pending_actions` for read-only
    stop-line explorers. Pending prompts explicitly prohibit PNG-only tuning and
    ask for the first action after the request is imported. They also include
-   `prior_audit_refs`, `stop_condition`, and `unblock_request`; require agents
-   to read those prior audit notes and report only deltas.
+   `prior_audit_refs`, `stop_condition`, `unblock_request`, and
+   `copy_paste_prompt`; require agents to read those prior audit notes and
+   report only deltas. Add `--dispatch-dir /tmp/olm_reference_dispatch` to write
+   per-request `SUBAGENT.md` and `action.json` files.
 5. Spawn exactly one plugin-specific explorer for the newly covered request, or
    multiple disjoint read-only `pending_actions` explorers when the parent has
    independent local integration work to do.

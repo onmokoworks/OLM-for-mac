@@ -97,8 +97,8 @@ result zip/folder to the Mac porting workspace.
 Mac-side import and verification after the returned Windows refs arrive:
 
 \`\`\`sh
-python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick
-python3 refs/scripts/import_and_check_win_reference.py path/to/returned_reference.zip --quick
+python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick --dispatch-dir /tmp/olm_reference_dispatch
+python3 refs/scripts/import_and_check_win_reference.py path/to/returned_reference.zip --quick --dispatch-dir /tmp/olm_reference_dispatch
 python3 refs/scripts/next_reference_actions.py
 python3 refs/scripts/next_reference_actions.py --json
 \`\`\`
@@ -114,7 +114,9 @@ priority order and the request-specific smoke to run before implementation.
 This handoff also includes \`next_reference_actions.json\`, a snapshot of the
 current covered/pending dispatch payloads. Use its \`pending_actions\` entries
 for read-only sub-agent stop-line audits while Windows references are still
-pending, and \`next_action\` / \`covered_actions\` after imports.
+pending, and \`next_action\` / \`covered_actions\` after imports. The import
+commands above also write per-request \`SUBAGENT.md\` files under
+\`/tmp/olm_reference_dispatch\`.
 
 ## 2. macOS AE host validation
 

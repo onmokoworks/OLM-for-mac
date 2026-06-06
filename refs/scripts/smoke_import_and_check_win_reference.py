@@ -75,6 +75,7 @@ def main() -> int:
         zip_path = write_synthetic_result(tmp_path, data)
         dest_root = tmp_path / "win_references"
         next_actions_json = tmp_path / "next_actions_after_import.json"
+        dispatch_dir = tmp_path / "dispatch"
         cmd = [
             sys.executable,
             str(runner),
@@ -89,6 +90,8 @@ def main() -> int:
             str(request),
             "--next-actions-json",
             str(next_actions_json),
+            "--dispatch-dir",
+            str(dispatch_dir),
         ]
         proc = subprocess.run(cmd, cwd=repo, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         print(proc.stdout, end="")
@@ -98,6 +101,10 @@ def main() -> int:
         action = next_actions["next_action"]
         if action["request_id"] != "synthetic_import_and_check_20260606":
             print("[FAIL] next actions JSON did not record the imported request", file=sys.stderr)
+            return 1
+        subagent_md = dispatch_dir / "covered" / "01_synthetic_import_and_check_20260606" / "SUBAGENT.md"
+        if not subagent_md.exists() or "synthetic_import_and_check_20260606" not in subagent_md.read_text(encoding="utf-8"):
+            print("[FAIL] dispatch SUBAGENT.md was not written", file=sys.stderr)
             return 1
 
     print("[OK] import and check smoke")
