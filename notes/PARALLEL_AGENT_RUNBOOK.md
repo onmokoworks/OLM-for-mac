@@ -97,7 +97,14 @@ summary, and any residual risk.
    Use `python3 refs/scripts/next_reference_actions.py --json` when spawning an
    agent; `next_action` includes `plugin_area`, `mode`, `read_files`,
    `write_scope`, `smoke_command`, and a ready-to-paste `agent_prompt`.
-5. Spawn exactly one plugin-specific explorer for the newly covered request.
+   While all requests are still pending, use `pending_actions` for read-only
+   stop-line explorers. Pending prompts explicitly prohibit PNG-only tuning and
+   ask for the first action after the request is imported. They also include
+   `prior_audit_refs`, `stop_condition`, and `unblock_request`; require agents
+   to read those prior audit notes and report only deltas.
+5. Spawn exactly one plugin-specific explorer for the newly covered request, or
+   multiple disjoint read-only `pending_actions` explorers when the parent has
+   independent local integration work to do.
 6. Parent integrates the finding into IR/ASM notes, implements the smallest
    backed change, and runs the plugin smoke followed by
    `python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick`.
