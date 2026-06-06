@@ -34,6 +34,22 @@ Until these are imported, parent work should focus on:
 4. Avoiding broad implementation changes that are not backed by binary facts
    and discriminating reference cases.
 
+## Latest Live Pass
+
+The 2026-06-06 live continuation pass reconfirmed the same stop lines with
+fresh read-only agents:
+
+| Plugin | Agent | Result |
+| --- | --- | --- |
+| OLMDirectionalBlur | `019e9a59-73e0-7ca2-8acf-15d7cb0e3bb4` / Carson | Still about 40%. `rotated-aex-full-choreo` remains red at `case_0001/case_0005 mean=4.4483/1.1703`; `rotated-aex-exact-rowdriver` remains `4.4392/1.1761`. A/B buffer choreography and scatter ownership are credible, but render-context scale and non-opaque alpha behavior remain unidentifiable from current opaque refs. |
+| OLMRadialBlur | `019e9a59-7523-7822-b7e4-818bf183ec97` / Noether | Still about 55%. Zoom and Zoom Offset remain green/near-green, tiny Rotation remains green-ish, but Inner `case_0011/0012/0013` remains red at `25.2972/10.6222/21.2910`. Nonzero Size Variation refs are still required before promoting `+0x40/+0x50` plane semantics. |
+| OLMKiraKira | `019e9a59-7640-7ae1-bfde-800506e00dcc` / Boole | Still about 40%. The best C++ candidate remains all-ray two-temp/no-fastpath at `case_0001/0002/0003 mean=0.8506/1.1570/1.0563`. Existing refs all use equal ray lengths and zero rotation, so single-ray refs are still required. |
+| OLMSmoother / OLMSmoother2 | `019e9a59-796d-7083-8d3d-e2a5930abc22` / Newton | Standalone v1 stays low priority. `OLMSmoother2 --force-version 1` remains the preferred compatibility path for v1 refs at `mean=0.0055/0.0051/0.0200`; v2 no-key should wait for the no-key grid request. |
+
+No implementation files were edited by these agents. The parent should not
+launch more agents for the same stop-line question until at least one pending
+reference request or AE-host validation result is imported.
+
 ## Verification Commands
 
 Check request coverage:
@@ -65,6 +81,14 @@ python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
 Returned result import command:
 
 ```sh
-python3 refs/scripts/import_win_reference.py path/to/packed_reference.zip --allow-missing-optional-render-sets
+python3 scripts/intake_olm_return.py path/to/packed_reference.zip --quick
+python3 refs/scripts/import_and_check_win_reference.py path/to/packed_reference.zip --quick
 python3 refs/scripts/smoke_reference_requests_after_import.py
+```
+
+Returned AE-host validation command:
+
+```sh
+python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --package /tmp/olm_port_handoff_20260606.zip --require-all-pass
+python3 scripts/verify_ae_host_return.py /tmp/olm_port_handoff_20260606.zip path/to/returned_ae_host.zip --require-all-pass
 ```
