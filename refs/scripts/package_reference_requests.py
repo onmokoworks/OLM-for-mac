@@ -136,7 +136,10 @@ def request_summary(data: dict) -> str:
 
     followup = data.get("mac_follow_up", data.get("mac_side_followup", []))
     if followup:
-        lines.append("- Mac follow-up: " + str(followup[0]))
+        first_followup = str(followup[0])
+        if "import_win_reference.py" in first_followup:
+            first_followup = "Import with scripts/intake_olm_return.py path/to/returned_reference.zip --quick."
+        lines.append("- Mac follow-up: " + first_followup)
 
     return "\n".join(lines)
 
@@ -186,12 +189,17 @@ def build_handoff(validated: list[tuple[Path, dict]]) -> str:
             "The Mac side will import the result with:",
             "",
             "```sh",
-            "python3 refs/scripts/import_win_reference.py path/to/returned_reference.zip",
+            "python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick",
             "```",
             "",
-            "Then validate the imported manifest against the original request with:",
+            "That command auto-detects Windows reference returns, imports the manifest,",
+            "runs post-import request checks, prints the prioritized next action, and",
+            "runs the quick AE-free aggregate smoke.",
+            "",
+            "If manual low-level validation is needed, use:",
             "",
             "```sh",
+            "python3 refs/scripts/import_and_check_win_reference.py path/to/returned_reference.zip --quick",
             "python3 refs/scripts/verify_reference_request_result.py refs/reference_requests/<request>.json path/to/imported/reference_manifest.json",
             "```",
             "",
