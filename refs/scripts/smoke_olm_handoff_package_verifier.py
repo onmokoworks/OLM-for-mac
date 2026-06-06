@@ -120,6 +120,24 @@ def make_handoff_package(tmp_path: Path, mac_zip: Path, reference_zip: Path) -> 
     ref_target = root / "olm_reference_requests_pending.zip"
     mac_target.write_bytes(mac_zip.read_bytes())
     ref_target.write_bytes(reference_zip.read_bytes())
+    next_actions = {
+        "next_action": None,
+        "covered_actions": [],
+        "partial": [],
+        "pending": ["synthetic_handoff_request_20260606"],
+        "pending_actions": [
+            {
+                "request_id": "synthetic_handoff_request_20260606",
+                "plugin_area": "Synthetic Effect",
+                "mode": "explorer",
+                "write_scope": "none",
+                "read_files": ["refs/reference_requests/synthetic_handoff_request_20260606.json"],
+                "smoke_command": "python3 refs/scripts/smoke_reference_requests_after_import.py --request synthetic_handoff_request_20260606",
+                "agent_prompt": "Do not edit. Report current status.",
+            }
+        ],
+    }
+    (root / "next_reference_actions.json").write_text(json.dumps(next_actions, indent=2), encoding="utf-8")
     manifest = {
         "kind": "olm_port_handoff_package",
         "configuration": "Debug",
@@ -127,6 +145,7 @@ def make_handoff_package(tmp_path: Path, mac_zip: Path, reference_zip: Path) -> 
         "created_at": "2026-06-06T00:00:00Z",
         "reference_requests_zip": ref_target.name,
         "mac_plugins_zip": mac_target.name,
+        "next_reference_actions_json": "next_reference_actions.json",
         "mac_build_rebuilt": False,
     }
     (root / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")

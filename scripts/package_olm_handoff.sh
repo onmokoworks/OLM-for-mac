@@ -59,6 +59,7 @@ mkdir -p "$stage"
 
 reference_zip="$stage/olm_reference_requests_pending.zip"
 mac_zip="$stage/olm_mac_plugins_${CONFIGURATION}_clean.zip"
+next_actions_json="$stage/next_reference_actions.json"
 
 python3 "$ROOT/refs/scripts/package_reference_requests.py" \
   --pending \
@@ -69,6 +70,8 @@ if [[ "$BUILD_MAC" -eq 0 ]]; then
   mac_args+=(--skip-build)
 fi
 "$ROOT/scripts/package_mac_plugins.sh" "${mac_args[@]}"
+
+python3 "$ROOT/refs/scripts/next_reference_actions.py" --json >"$next_actions_json"
 
 cat >"$stage/README.md" <<EOF
 # OLM Port Handoff
@@ -91,6 +94,7 @@ Mac-side import and verification after the returned Windows refs arrive:
 python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick
 python3 refs/scripts/import_and_check_win_reference.py path/to/returned_reference.zip --quick
 python3 refs/scripts/next_reference_actions.py
+python3 refs/scripts/next_reference_actions.py --json
 \`\`\`
 
 If a request remains pending after import:
@@ -101,6 +105,10 @@ python3 refs/scripts/check_reference_request_status.py
 
 If multiple requests are covered, \`next_reference_actions.py\` prints the
 priority order and the request-specific smoke to run before implementation.
+This handoff also includes \`next_reference_actions.json\`, a snapshot of the
+current covered/pending dispatch payloads. Use its \`pending_actions\` entries
+for read-only sub-agent stop-line audits while Windows references are still
+pending, and \`next_action\` / \`covered_actions\` after imports.
 
 ## 2. macOS AE host validation
 
@@ -149,6 +157,7 @@ cat >"$stage/manifest.json" <<EOF
   "created_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
   "reference_requests_zip": "olm_reference_requests_pending.zip",
   "mac_plugins_zip": "olm_mac_plugins_${CONFIGURATION}_clean.zip",
+  "next_reference_actions_json": "next_reference_actions.json",
   "mac_build_rebuilt": $([[ "$BUILD_MAC" -eq 1 ]] && echo true || echo false)
 }
 EOF
@@ -160,3 +169,4 @@ echo "wrote $OUTPUT"
 echo "included:"
 echo "- $reference_zip"
 echo "- $mac_zip"
+echo "- $next_actions_json"

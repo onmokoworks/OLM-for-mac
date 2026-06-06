@@ -84,6 +84,32 @@ def verify_mac_zip(repo: Path, path: Path) -> int:
     return proc.returncode
 
 
+def verify_next_actions(path: Path) -> str | None:
+    if not path.exists():
+        return f"next reference actions JSON missing: {path}"
+    try:
+        data = load_json(path)
+    except ValueError as exc:
+        return str(exc)
+    for key in ("covered_actions", "partial", "pending"):
+        if not isinstance(data.get(key), list):
+            return f"next reference actions JSON .{key} must be a list"
+    if "next_action" not in data:
+        return "next reference actions JSON missing .next_action"
+    pending_actions = data.get("pending_actions")
+    if not isinstance(pending_actions, list):
+        return "next reference actions JSON .pending_actions must be a list"
+    for index, action in enumerate([*pending_actions, *data.get("covered_actions", [])]):
+        if not isinstance(action, dict):
+            return f"next reference action #{index} must be an object"
+        for key in ("request_id", "plugin_area", "mode", "write_scope", "smoke_command", "agent_prompt"):
+            if not isinstance(action.get(key), str) or not action[key]:
+                return f"next reference action #{index}.{key} must be a non-empty string"
+        if not isinstance(action.get("read_files"), list):
+            return f"next reference action #{index}.read_files must be a list"
+    return None
+
+
 def main() -> int:
     args = parse_args()
     package = args.package.resolve()
@@ -117,14 +143,20 @@ def main() -> int:
 
         ref_zip = manifest.get("reference_requests_zip")
         mac_zip = manifest.get("mac_plugins_zip")
+        next_actions_json = manifest.get("next_reference_actions_json")
         if not isinstance(ref_zip, str) or not ref_zip:
             return fail("manifest.reference_requests_zip must be a non-empty string")
         if not isinstance(mac_zip, str) or not mac_zip:
             return fail("manifest.mac_plugins_zip must be a non-empty string")
+        if not isinstance(next_actions_json, str) or not next_actions_json:
+            return fail("manifest.next_reference_actions_json must be a non-empty string")
 
         reference_problem = verify_reference_zip(root / ref_zip)
         if reference_problem:
             return fail(reference_problem)
+        next_actions_problem = verify_next_actions(root / next_actions_json)
+        if next_actions_problem:
+            return fail(next_actions_problem)
         if verify_mac_zip(repo, root / mac_zip) != 0:
             return fail("nested Mac plugin package failed verification")
 
