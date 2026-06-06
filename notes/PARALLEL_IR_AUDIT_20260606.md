@@ -50,6 +50,20 @@ No implementation files were edited by these agents. The parent should not
 launch more agents for the same stop-line question until at least one pending
 reference request or AE-host validation result is imported.
 
+## Latest Dispatch Follow-up
+
+The later 2026-06-06 parent pass launched and closed fresh read-only
+subagents for the highest-priority pending requests. These agents did not edit
+files and reconfirmed the reference boundary:
+
+| Plugin | Agent | Result |
+| --- | --- | --- |
+| OLMDirectionalBlur | `019e9ac8-c078-7e31-816b-0bfa63900ecd` / Planck | Stop line still holds. `ctx+0x11c/ctx+0x120` render scale is binary-backed, but current `--strength-scale auto = 1/frame_rate` is still PNG-fit. After `directionalblur_context_scale_20260606` import, rerun the request probe, then replace `auto` with manifest `ctx_render_scale` if present. |
+| OLMSmoother2 no-key | `019e9ac8-5bbf-7620-8059-1e958565dace` / Mill | Stop line still holds. Current no-key residual is not explained by final premul; `idx0` suppression and plane-split probes worsen the result. After `smoother2_no_key_grid_20260606` import, run `python3 refs/scripts/smoke_olmsmoother2_no_key_grid_cli.py` and update `notes/OLMSmoother2_ASM_FACTS.md` with residuals grouped by Smoothness and Smooth Range before implementation. |
+| OLMColorKey Replace/color-space | `019e9ac8-9396-77a3-bc6c-fc5f323ca74c` / Kierkegaard | Stop line still holds. Current refs all have `enable_replace=0`; C++ rejects Replace and Mac reads but does not write replacement colors. After `olmcolorkey_replace_colorspace_20260606` import, run the dedicated request smoke and implement only `ck_rgb_replace_red_with_blue` first. |
+| OLMKiraKira | `019e9aca-3c41-77f0-86e1-562d00839611` / Hypatia | Stop line still holds. `FUN_181150790` ray helper and `FUN_18114fd90` aggregation facts remain stable, but ray order, diagonal angle table, helper scalar, crop/canvas, and any axis fast path remain unproven. After `kirakira_single_ray_20260606` import, rerun the request probe; compare vertical/horizontal first, diagonal/diagonal2 second, and Brightness 9.4 / Strength 0 last. |
+| OLMRadialBlur Inner/EdgeFade | `019e9acb-34aa-7260-8030-43f053dda8c4` / Bacon | Stop line still holds. Plane ownership remains `+0x38` source RGBA, `+0x40` scatter span/gate, `+0x48` prepass alpha, and `+0x50` Size Variation factor. After `radialblur_inner_size_variation_20260606` import, rerun the request probe with `--ignore-size-variation`, then compare a small set: `+0x40` constant/validity vs sampled Size Variation, `+0x50` one vs sampled factor, and alpha-grid AEX alpha-weighted vs plain scalar sampling. |
+
 ## Verification Commands
 
 Check request coverage:
@@ -82,8 +96,9 @@ python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
 Returned result import command:
 
 ```sh
-python3 scripts/intake_olm_return.py path/to/packed_reference.zip --quick
-python3 refs/scripts/import_and_check_win_reference.py path/to/packed_reference.zip --quick
+python3 scripts/list_olm_return_candidates.py ~/Downloads /tmp
+python3 scripts/intake_olm_return.py path/to/packed_reference.zip --quick --dispatch-dir /tmp/olm_reference_dispatch
+python3 refs/scripts/import_and_check_win_reference.py path/to/packed_reference.zip --quick --dispatch-dir /tmp/olm_reference_dispatch
 python3 refs/scripts/smoke_reference_requests_after_import.py
 ```
 
