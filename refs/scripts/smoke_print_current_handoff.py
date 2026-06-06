@@ -39,6 +39,7 @@ def main() -> int:
 
         human = run([sys.executable, str(script), "--package", str(handoff_zip)], repo)
         assert f"send to Windows: {handoff_zip.resolve()}" in human.stdout
+        assert "next_reference_actions.json inside the zip" in human.stdout
         assert "python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick" in human.stdout
         assert "python3 refs/scripts/next_reference_actions.py --json" in human.stdout
         assert "--require-all-pass --require-all-pixel-requests" in human.stdout
@@ -46,6 +47,7 @@ def main() -> int:
         machine = run([sys.executable, str(script), "--package", str(handoff_zip), "--json"], repo)
         data = json.loads(machine.stdout)
         assert data["handoff_package"] == str(handoff_zip.resolve())
+        assert data["handoff_contents"]["next_reference_actions_json"] == "next_reference_actions.json"
         assert data["commands"]["mac_import_windows_refs"].endswith("--quick")
         assert data["commands"]["next_reference_dispatch_json"].endswith("--json")
         assert "WIN_CODEX_HANDOFF.md" in data["windows_note"]
