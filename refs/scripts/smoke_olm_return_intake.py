@@ -39,7 +39,7 @@ def copy_expected_as_returned(request_zip: Path, result_dir: Path, target_name: 
 
 def make_ae_host_return(repo: Path, tmp_path: Path) -> tuple[Path, Path]:
     mac_zip = make_mac_package(repo, tmp_path)
-    reference_zip = make_reference_package(tmp_path)
+    reference_zip = make_reference_package(repo, tmp_path)
     handoff_zip = make_handoff_package(tmp_path, mac_zip, reference_zip)
     mac_root = extract_zip(mac_zip, tmp_path / "mac_extract")
 

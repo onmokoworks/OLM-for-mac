@@ -95,20 +95,24 @@ def make_mac_package(repo: Path, tmp_path: Path) -> Path:
     return zip_path
 
 
-def make_reference_package(tmp_path: Path) -> Path:
+def make_reference_package(repo: Path, tmp_path: Path) -> Path:
     zip_path = tmp_path / "synthetic_reference_requests.zip"
-    request = {
-        "request_id": "synthetic_handoff_request_20260606",
-        "effect": {"name": "Synthetic Effect", "match_name": "Synthetic Effect"},
-        "manifest_requirements": [],
-        "cases": [{"id": "case_a"}],
-    }
-    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
-        archive.writestr("refs/reference_requests/WIN_CODEX_HANDOFF.md", "# handoff\n")
-        archive.writestr(
-            "refs/reference_requests/synthetic_handoff_request_20260606.json",
-            json.dumps(request, indent=2),
-        )
+    proc = subprocess.run(
+        [
+            sys.executable,
+            str(repo / "refs" / "scripts" / "package_reference_requests.py"),
+            "--pending",
+            "--output",
+            str(zip_path),
+        ],
+        cwd=repo,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
+    print(proc.stdout, end="")
+    if proc.returncode != 0:
+        raise SystemExit(proc.returncode)
     return zip_path
 
 
@@ -167,7 +171,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="olm_handoff_smoke_") as tmp:
         tmp_path = Path(tmp)
         mac_zip = make_mac_package(repo, tmp_path)
-        reference_zip = make_reference_package(tmp_path)
+        reference_zip = make_reference_package(repo, tmp_path)
         handoff_zip = make_handoff_package(tmp_path, mac_zip, reference_zip)
 
         proc = subprocess.run(

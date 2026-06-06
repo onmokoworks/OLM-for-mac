@@ -46,6 +46,22 @@ def main() -> int:
     assert "python3 refs/scripts/next_reference_actions.py" in readme
     assert "python3 scripts/intake_olm_return.py path/to/packed_reference.zip --quick" in readme
 
+    verify = subprocess.run(
+        [
+            sys.executable,
+            "refs/scripts/verify_reference_request_package.py",
+            str(output),
+            "--expect-pending",
+        ],
+        cwd=repo,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
+    print(verify.stdout, end="")
+    if verify.returncode != 0:
+        return verify.returncode
+
     print("[OK] reference request package handoff smoke")
     return 0
 

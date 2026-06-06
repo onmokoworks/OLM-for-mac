@@ -73,6 +73,7 @@ def main() -> int:
     smokes = [
         Smoke("Reference request package", [py, "refs/scripts/package_reference_requests.py", "--pending", "--output", "/tmp/olm_reference_requests_smoke.zip"]),
         Smoke("Reference request package handoff", [py, "refs/scripts/smoke_reference_request_package.py"]),
+        Smoke("Reference request package verifier", [py, "refs/scripts/verify_reference_request_package.py", "/tmp/olm_reference_requests_smoke.zip", "--expect-pending"]),
         Smoke("Reference request result verifier", [py, "refs/scripts/smoke_reference_request_result_verifier.py"]),
         Smoke("Reference request importer", [py, "refs/scripts/smoke_import_win_reference.py"]),
         Smoke("Reference import and check runner", [py, "refs/scripts/smoke_import_and_check_win_reference.py"]),

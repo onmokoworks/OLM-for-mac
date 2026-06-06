@@ -72,6 +72,19 @@ def verify_reference_zip(path: Path) -> str | None:
     return None
 
 
+def verify_reference_zip_pending(repo: Path, path: Path) -> int:
+    verifier = repo / "refs" / "scripts" / "verify_reference_request_package.py"
+    proc = subprocess.run(
+        [sys.executable, str(verifier), str(path), "--expect-pending"],
+        cwd=repo,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
+    print(proc.stdout, end="" if proc.stdout.endswith("\n") else "\n")
+    return proc.returncode
+
+
 def verify_mac_zip(repo: Path, path: Path) -> int:
     verifier = repo / "scripts" / "verify_mac_plugin_package.py"
     proc = subprocess.run(
@@ -171,6 +184,8 @@ def main() -> int:
         reference_problem = verify_reference_zip(root / ref_zip)
         if reference_problem:
             return fail(reference_problem)
+        if verify_reference_zip_pending(repo, root / ref_zip) != 0:
+            return fail("nested reference request package failed verification")
         next_actions_problem = verify_next_actions(root / next_actions_json)
         if next_actions_problem:
             return fail(next_actions_problem)
