@@ -62,7 +62,7 @@ python3 refs/scripts/next_reference_actions.py
 Package all pending requests for Windows rendering:
 
 ```sh
-python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending.zip
+python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending_20260606.zip
 ```
 
 Package Mac plug-ins for AE-host validation:
@@ -90,6 +90,6 @@ python3 refs/scripts/smoke_reference_requests_after_import.py
 Returned AE-host validation command:
 
 ```sh
-python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --package /tmp/olm_port_handoff_20260606.zip --require-all-pass
-python3 scripts/verify_ae_host_return.py /tmp/olm_port_handoff_20260606.zip path/to/returned_ae_host.zip --require-all-pass
+python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --require-all-pass
+python3 scripts/verify_ae_host_return.py /tmp/olm_port_handoff_20260606_current.zip path/to/returned_ae_host.zip --require-all-pass
 ```

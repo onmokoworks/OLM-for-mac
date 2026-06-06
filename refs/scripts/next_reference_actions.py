@@ -147,7 +147,7 @@ def main() -> int:
         for row in pending:
             print(f"- {row['request_id']}")
         print("\npending package command:")
-        print("python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending.zip")
+        print("python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending_20260606.zip")
 
     return 0
 
