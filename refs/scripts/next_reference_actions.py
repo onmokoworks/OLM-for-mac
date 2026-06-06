@@ -119,6 +119,12 @@ FOLLOW_UPS = {
     },
 }
 
+PRIOR_AUDIT_REFS = [
+    "notes/SUBAGENT_ASSIGNMENTS.md",
+    "notes/PROGRESS_MATRIX.md",
+    "notes/PARALLEL_IR_AUDIT_20260606.md",
+]
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -147,13 +153,32 @@ def priority_key(row: dict[str, Any]) -> tuple[int, str]:
     return (index, request_id)
 
 
-def action_for(row: dict[str, Any]) -> dict[str, Any]:
+def action_for(row: dict[str, Any], *, covered: bool = True) -> dict[str, Any]:
     request_id = str(row.get("request_id", ""))
     follow_up = FOLLOW_UPS.get(request_id, {})
     command = follow_up.get(
         "command",
         f"python3 refs/scripts/smoke_reference_requests_after_import.py --request {request_id}",
     )
+    agent_prompt = follow_up.get(
+        "agent_prompt",
+        f"Read the request JSON and imported manifest for {request_id}. Do not edit. Report the current measured status, whether the stop condition is lifted, and one parent action backed by reference or IR evidence.",
+    )
+    if not covered:
+        agent_prompt = (
+            f"Pending reference request: {request_id}. Do not edit and do not tune from current PNG residuals. "
+            f"First read notes/SUBAGENT_ASSIGNMENTS.md and notes/PROGRESS_MATRIX.md to avoid restating old audits. "
+            f"Then read the listed files, report only new stop-line deltas, audit whether the stop condition still holds, "
+            f"and report the exact first action after this request is imported. "
+            f"Original post-import prompt: {agent_prompt}"
+        )
+
+    stop_condition = (
+        f"{request_id} is not covered yet; keep this slice read-only and stop before PNG-only implementation tuning."
+        if not covered
+        else f"{request_id} is covered; run the request smoke before proposing implementation changes."
+    )
+
     return {
         "request_id": request_id,
         "status": row.get("status"),
@@ -164,13 +189,13 @@ def action_for(row: dict[str, Any]) -> dict[str, Any]:
         "read_files": follow_up.get("read_files", [f"refs/reference_requests/{request_id}.json"]),
         "write_scope": follow_up.get("write_scope", "none"),
         "reason": follow_up.get("reason", "No registered priority note."),
+        "stop_condition": stop_condition,
+        "unblock_request": request_id,
+        "prior_audit_refs": PRIOR_AUDIT_REFS,
         "command": command,
         "smoke_command": command,
         "agent": follow_up.get("agent", "Inspect the covered manifest and update the relevant IR note."),
-        "agent_prompt": follow_up.get(
-            "agent_prompt",
-            f"Read the request JSON and imported manifest for {request_id}. Do not edit. Report the current measured status, whether the stop condition is lifted, and one parent action backed by reference or IR evidence.",
-        ),
+        "agent_prompt": agent_prompt,
     }
 
 
@@ -181,6 +206,7 @@ def main() -> int:
     partial = sorted([row for row in rows if row.get("status") == "partial"], key=priority_key)
     pending = sorted([row for row in rows if row.get("status") == "pending"], key=priority_key)
     actions = [action_for(row) for row in covered]
+    pending_actions = [action_for(row, covered=False) for row in pending]
 
     if args.json:
         print(
@@ -188,6 +214,7 @@ def main() -> int:
                 {
                     "next_action": actions[0] if actions else None,
                     "covered_actions": actions,
+                    "pending_actions": pending_actions,
                     "partial": partial,
                     "pending": [row.get("request_id") for row in pending],
                 },
@@ -226,7 +253,10 @@ def main() -> int:
     if pending:
         print("\npending requests:")
         for row in pending:
-            print(f"- {row['request_id']}")
+            pending_action = action_for(row, covered=False)
+            print(f"- {row['request_id']}: {pending_action['plugin_area']} ({pending_action['mode']})")
+        print("\npending subagent dispatch JSON:")
+        print("python3 refs/scripts/next_reference_actions.py --json")
         print("\npending package command:")
         print("python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending_20260606.zip")
 
