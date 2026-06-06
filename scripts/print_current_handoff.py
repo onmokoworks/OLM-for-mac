@@ -4,8 +4,11 @@
 from __future__ import annotations
 
 import argparse
+import json
 import subprocess
 import sys
+import tempfile
+import zipfile
 from pathlib import Path
 
 
@@ -70,6 +73,23 @@ def fail(message: str) -> int:
     return 1
 
 
+def package_manifest(package: Path) -> dict:
+    with tempfile.TemporaryDirectory(prefix="olm_handoff_manifest_") as tmp:
+        tmp_path = Path(tmp)
+        with zipfile.ZipFile(package) as archive:
+            manifest_name = next(
+                (name for name in archive.namelist() if name.endswith("/manifest.json")),
+                None,
+            )
+            if manifest_name is None:
+                return {}
+            archive.extract(manifest_name, tmp_path)
+        try:
+            return json.loads((tmp_path / manifest_name).read_text(encoding="utf-8"))
+        except Exception:  # noqa: BLE001 - optional display metadata only.
+            return {}
+
+
 def main() -> int:
     args = parse_args()
     root = repo_root()
@@ -88,6 +108,11 @@ def main() -> int:
         if package is None:
             searched = ", ".join(str(path) for path in search_dirs)
             return fail(f"no valid OLM handoff package found in: {searched}")
+
+    manifest = package_manifest(package)
+    next_actions_snapshot = manifest.get("next_reference_actions_json")
+    if not isinstance(next_actions_snapshot, str):
+        next_actions_snapshot = ""
 
     windows_reference_zip = "/tmp/olm_reference_requests_pending_20260606.zip"
     commands = {
@@ -111,6 +136,9 @@ def main() -> int:
                 {
                     "handoff_package": str(package),
                     "skipped": skipped,
+                    "handoff_contents": {
+                        "next_reference_actions_json": next_actions_snapshot,
+                    },
                     "commands": commands,
                     "windows_note": (
                         "Read refs/reference_requests/WIN_CODEX_HANDOFF.md inside the package. "
@@ -128,6 +156,8 @@ def main() -> int:
     print("OLM handoff")
     print(f"- send to Windows: {package}")
     print("- Windows: read refs/reference_requests/WIN_CODEX_HANDOFF.md inside the zip")
+    if next_actions_snapshot:
+        print(f"- Subagents: read {next_actions_snapshot} inside the zip for dispatch snapshot")
     print("- Windows refs: render SOFTWARE required sets first; CUDA sets are optional")
     print("- AE host: run bundled Mac plugins and return AE_VALIDATION_RESULT*.json plus pixel PNGs")
     print("")
