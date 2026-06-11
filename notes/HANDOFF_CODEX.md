@@ -7,12 +7,11 @@
 - **目的**: OLM Tools の Windows 版 AEX 群を Ghidra 解析＋Windows 参照PNG/manifest
   検証に基づき Apple Silicon/macOS 版へ移植。各プラグインを「AEなしCLIハーネス」で
   検証できる状態にし、最終的に macOS/AppleSilicon の AE プラグインへ反映する。
-- **作業ディレクトリ**: `/Users/onmk/Documents/Projects/Personal/OLM as`
+- **作業ディレクトリ**: `<repo-root>`
 - **重要な環境制約**:
   - この環境に **After Effects 実機が無い** → 「最終AEプラグイン検証」はここでは不可。
     AEなしCLIとmacOS `.plugin` ビルド確認までが現環境の到達点。
-  - AE SDK はローカルにあり:
-    `/Users/onmk/Documents/After Effects SDK/ae25.2_20.64bit.AfterEffectsSDK/AfterEffectsSDK/Examples`
+  - AE SDK はローカルにあり、`AE_SDK_EXAMPLES_DIR` で Examples ディレクトリを指定する。
     `scripts/setup_ae_sdk_links.sh` で repo root に ignored symlink
     `Headers` / `Util` / `Resources` を作る。これが無いとXcodeプロジェクトは
     `AEConfig.h`, `AEGP_SuiteHandler.cpp` などを見つけられない。
@@ -649,7 +648,7 @@ zip内 `manifest.json` のJSON parse、zip内 `.plugin` 10個確認、
 ## 6. 全スモーク再現コマンド（回帰確認用）
 
 ```sh
-cd "/Users/onmk/Documents/Projects/Personal/OLM as"
+cd "<repo-root>"
 python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick # green gates only; 2026-06-06 OK (33 checks, includes reference request package/result verifier/status, AE validation verifier, Smoother2 no-key grid request smoke, ColorKey Replace/color-space request smoke, and DistanceGradation extended/blur smokes)
 refs/scripts/build_olmblur_cli.sh && refs/scripts/build_olmsmoother_cli.sh && refs/scripts/build_olmtoondilate_cli.sh && refs/scripts/build_olmradialblur_cli.sh
 refs/scripts/build_olmkirakira_cli.sh              # OLMKiraKira C++ scaffold

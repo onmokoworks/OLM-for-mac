@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-DEFAULT_EXAMPLES_DIR="/Users/onmk/Documents/After Effects SDK/ae25.2_20.64bit.AfterEffectsSDK/AfterEffectsSDK/Examples"
+DEFAULT_EXAMPLES_DIR="$HOME/Documents/After Effects SDK/ae25.2_20.64bit.AfterEffectsSDK/AfterEffectsSDK/Examples"
 EXAMPLES_DIR="${AE_SDK_EXAMPLES_DIR:-$DEFAULT_EXAMPLES_DIR}"
 
 if [[ ! -d "$EXAMPLES_DIR/Headers" || ! -d "$EXAMPLES_DIR/Util" || ! -d "$EXAMPLES_DIR/Resources" ]]; then

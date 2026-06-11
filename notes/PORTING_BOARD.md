@@ -708,7 +708,7 @@ scaling and legacy pass-order/all-same behavior have been mirrored into
 
 Mac AE build baseline:
 
-- The local AE SDK is at `/Users/onmk/Documents/After Effects SDK/ae25.2_20.64bit.AfterEffectsSDK/AfterEffectsSDK/Examples`.
+- Set `AE_SDK_EXAMPLES_DIR` to the local After Effects SDK Examples directory.
 - `scripts/setup_ae_sdk_links.sh` creates ignored repo-root symlinks:
   `Headers`, `Util`, and `Resources`.
 - With those links present, these existing projects build Debug successfully:

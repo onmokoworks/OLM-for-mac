@@ -191,7 +191,7 @@ Helper return scalar:
 `FUN_181297ac0` is the OpenCV `cv::warpAffine` wrapper:
 
 - Decomp contains `cv::warpAffine` and
-  `C:\Users\devbuild\Documents\4.5.5\sources\modules\imgproc\src\imgwarp.cpp`.
+  an OpenCV `modules/imgproc/src/imgwarp.cpp` build path.
 - It checks `_src.channels() <= 4 || (interpolation != INTER_LANCZOS4 &&
   interpolation != INTER_CUBIC)`.
 - It checks matrix shape `(M0.type() == CV_32F || M0.type() == CV_64F) &&

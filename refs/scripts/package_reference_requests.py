@@ -188,7 +188,7 @@ def build_handoff(validated: list[tuple[Path, dict]]) -> str:
             "",
             "Windows-side setup:",
             "",
-            "- Create any working folder, for example `C:\\olm_reference_requests`.",
+            "- Create any working folder for the extracted request package.",
             "- Extract this zip there.",
             "- Use the JSON files under `refs/reference_requests/` as render specs.",
             "- If no existing AE runner is available, create a minimal ExtendScript",
