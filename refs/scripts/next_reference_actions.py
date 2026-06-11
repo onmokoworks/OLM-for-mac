@@ -157,7 +157,7 @@ def copy_paste_prompt(action: dict[str, Any]) -> str:
         ]
     return "\n".join(
         [
-            f"Workspace: /Users/onmk/Documents/Projects/Personal/OLM as",
+            "Workspace: <repo-root>",
             "",
             f"Plugin area: {action['plugin_area']}",
             f"Request: {action['request_id']} ({action['status']})",

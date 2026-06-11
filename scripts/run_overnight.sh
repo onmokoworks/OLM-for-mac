@@ -6,7 +6,7 @@
 set -u
 export JAVA_HOME="/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"
 export PATH="$JAVA_HOME/bin:$PATH"
-ROOT="/Users/onmk/Documents/Projects/Personal/OLM as"
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 export OLM_OUT_DIR="$ROOT"
 HEADLESS="/opt/homebrew/Cellar/ghidra/12.0.4/libexec/support/analyzeHeadless"
 LOG="$ROOT/scripts/overnight.log"

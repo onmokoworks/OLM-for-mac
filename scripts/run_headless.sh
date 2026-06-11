@@ -2,7 +2,7 @@
 set -e
 export JAVA_HOME="/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"
 export PATH="$JAVA_HOME/bin:$PATH"
-ROOT="/Users/onmk/Documents/Projects/Personal/OLM as"
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PROJ_DIR="$ROOT/ghidra_proj"
 PROJ_NAME="OLM2025"
 SCRIPT_DIR="$ROOT/scripts"

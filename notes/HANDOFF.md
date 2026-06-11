@@ -18,19 +18,19 @@ https://github.com/hakumeilab/OLM-for-mac.git
 Repo staging directory:
 
 ```txt
-/Users/onmk/Documents/Projects/Personal/OLM as
+<repo-root>
 ```
 
 Active SDK build directory used by the previous session:
 
 ```txt
-/Users/onmk/Documents/After Effects SDK/ae25.2_20.64bit.AfterEffectsSDK/AfterEffectsSDK/Examples/Template/OLMSmoother
+<AE_SDK_EXAMPLES_DIR>/Template/OLMSmoother
 ```
 
 Installed plugin path:
 
 ```txt
-/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin
+~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin
 ```
 
 ## Current State
