@@ -94,6 +94,18 @@ Send or unpack:
 On the Windows AE machine, render the requests inside that zip and return the
 result zip/folder to the Mac porting workspace.
 
+Windows-side note:
+
+- This handoff zip does not contain the Mac OLM source worktree.
+- The Windows reference request zip is self-contained as render specs, but it
+  does not include a Windows AE automation runner.
+- You do not need the Mac worktree to render the requests. You do need Windows
+  After Effects with the original OLM Tools AEX plug-ins installed, plus an AE
+  script/runner that can read the request JSON, set effect parameters, render
+  PNGs, and write the return manifest.
+- The commands below are Mac-side import/verification commands for after the
+  returned Windows zip is copied back to this Mac repository.
+
 Mac-side import and verification after the returned Windows refs arrive:
 
 \`\`\`sh
