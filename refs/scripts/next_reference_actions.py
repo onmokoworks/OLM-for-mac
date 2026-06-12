@@ -66,10 +66,10 @@ FOLLOW_UPS = {
             "refs/scripts/smoke_olmdirectionalblur*.py",
         ],
         "write_scope": "none",
-        "reason": "Unblocks render-context scale, premul/straight RGB, and alpha ownership for DirectionalBlur.",
-        "command": "python3 refs/scripts/smoke_reference_request_cli_probe.py --request-id directionalblur_context_scale_20260606 --expected-effect 'OLM DirectionalBlur' --build-script refs/scripts/build_olmdirectionalblur_cli.sh --command '\"cli/OLMDirectionalBlur/olmdirectionalblur_cli\" --input \"{input}\" --params \"{params}\" --output \"{output}\" --algorithm rotated-aex-full-choreo --angle-sign -1 --sample-sign 1 --strength-scale auto'",
+        "reason": "Confirms render-context scale is AE downsample_x and leaves premul/straight RGB plus alpha ownership as the remaining DirectionalBlur blockers.",
+        "command": "python3 refs/scripts/smoke_reference_request_cli_probe.py --request-id directionalblur_context_scale_20260606 --expected-effect 'OLM DirectionalBlur' --build-script refs/scripts/build_olmdirectionalblur_cli.sh --command '\"cli/OLMDirectionalBlur/olmdirectionalblur_cli\" --input \"{input}\" --params \"{params}\" --output \"{output}\" --algorithm rotated-aex-exact-rowdriver --angle-sign -1 --sample-sign 1 --strength-scale auto'",
         "agent": "Spawn/read OLMDirectionalBlur explorer to reconcile manifest/context scale with the A/B buffer IR.",
-        "agent_prompt": "Read notes/IR_OLMDirectionalBlur.md, notes/OLMDirectionalBlur_ASM_FACTS.md, refs/reference_requests/directionalblur_context_scale_20260606.json, cli/OLMDirectionalBlur/, and the directional smoke scripts. Do not edit. Use the returned manifest/context-scale and non-opaque alpha cases to decide whether the current A/B buffer IR needs render-scale, premul, or alpha side-channel changes.",
+        "agent_prompt": "Read notes/IR_OLMDirectionalBlur.md, notes/OLMDirectionalBlur_ASM_FACTS.md, refs/reference_requests/directionalblur_context_scale_20260606.json, cli/OLMDirectionalBlur/, and the directional smoke scripts. Do not edit. Treat ctx+0x11c/0x120 as PF_InData.downsample_x.num/den unless you find contradictory objdump evidence. Use the returned non-opaque alpha cases to decide whether the current A/B buffer IR needs premul/straight RGB or alpha side-channel changes.",
     },
     "kirakira_single_ray_20260606": {
         "plugin_area": "OLMKiraKira",

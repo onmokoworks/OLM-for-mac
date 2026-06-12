@@ -208,7 +208,7 @@ static PF_Err RenderDirectional8(PF_EffectWorld *input, PF_EffectWorld *output,
 		}
 	}
 
-	const double scale = info.frame_rate > 0.0 ? 1.0 / info.frame_rate : 1.0;
+	const double scale = info.render_scale > 0.0 ? info.render_scale : 1.0;
 	const A_long strength = std::max<A_long>(0, (A_long)((double)info.front_strength * scale));
 	if (strength <= 1) {
 		CopyWorld<PF_Pixel8>(input, output);
@@ -295,7 +295,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	return PF_Err_BAD_CALLBACK_PARAM;
 }
 
-static OLMDirectionalBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong frame_rate)
+static OLMDirectionalBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong render_scale)
 {
 	OLMDirectionalBlurInfo info;
 	info.angle_deg = params[OLMDIRECTIONALBLUR_ANGLE]->u.fs_d.value;
@@ -308,28 +308,28 @@ static OLMDirectionalBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong fr
 	info.back_alpha_fade = params[OLMDIRECTIONALBLUR_BACK_ALPHA_FADE]->u.sd.value;
 	info.back_sharp_tail = params[OLMDIRECTIONALBLUR_BACK_SHARP_TAIL]->u.fs_d.value;
 	info.noise_variation = params[OLMDIRECTIONALBLUR_NOISE_VARIATION]->u.fs_d.value;
-	info.frame_rate = frame_rate;
+	info.render_scale = render_scale;
 	return info;
 }
 
-static PF_FpLong FrameRateFromInData(PF_InData *in_data)
+static PF_FpLong RenderScaleFromInData(PF_InData *in_data)
 {
-	if (in_data && in_data->time_step != 0) {
-		return (PF_FpLong)in_data->time_scale / (PF_FpLong)in_data->time_step;
+	if (in_data && in_data->downsample_x.den != 0) {
+		return (PF_FpLong)in_data->downsample_x.num / (PF_FpLong)in_data->downsample_x.den;
 	}
-	return 24.0;
+	return 1.0;
 }
 
 static PF_Err
 Render(PF_InData *in_data, PF_OutData *, PF_ParamDef *params[], PF_LayerDef *output)
 {
-	OLMDirectionalBlurInfo info = InfoFromParams(params, FrameRateFromInData(in_data));
+	OLMDirectionalBlurInfo info = InfoFromParams(params, RenderScaleFromInData(in_data));
 	short bitdepth = PF_WORLD_IS_DEEP(output) ? 16 : 8;
 	return RenderWorld(&params[OLMDIRECTIONALBLUR_INPUT]->u.ld, output, info, bitdepth);
 }
 
 typedef struct {
-	PF_FpLong frame_rate;
+	PF_FpLong render_scale;
 } PreRenderData;
 
 static void DeletePreRenderData(void *data)
@@ -353,7 +353,7 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 		UnionLRect(&in_result.result_rect, &extra->output->result_rect);
 		UnionLRect(&in_result.max_result_rect, &extra->output->max_result_rect);
 		PreRenderData *pre = new PreRenderData;
-		pre->frame_rate = FrameRateFromInData(in_data);
+		pre->render_scale = RenderScaleFromInData(in_data);
 		extra->output->pre_render_data = pre;
 		extra->output->delete_pre_render_data_func = DeletePreRenderData;
 	}
@@ -383,13 +383,13 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 	}
 	param_ptrs[OLMDIRECTIONALBLUR_INPUT] = NULL;
 
-	PF_FpLong frame_rate = FrameRateFromInData(in_data);
+	PF_FpLong render_scale = RenderScaleFromInData(in_data);
 	if (PreRenderData *pre = reinterpret_cast<PreRenderData *>(extra->input->pre_render_data)) {
-		if (pre->frame_rate > 0.0) frame_rate = pre->frame_rate;
+		if (pre->render_scale > 0.0) render_scale = pre->render_scale;
 	}
 
 	if (!err) {
-		OLMDirectionalBlurInfo info = InfoFromParams(param_ptrs, frame_rate);
+		OLMDirectionalBlurInfo info = InfoFromParams(param_ptrs, render_scale);
 		ERR(RenderWorld(input_world, output_world, info, extra->input->bitdepth));
 	}
 

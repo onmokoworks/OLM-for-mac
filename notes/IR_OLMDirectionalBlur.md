@@ -47,7 +47,9 @@ Manifest-visible parameters used by the current refs:
 
 Internal/runtime parameters:
 
-- `render_scale = *(int *)(ctx+0x11c) / *(int *)(ctx+0x120)`
+- `render_scale = *(int *)(ctx+0x11c) / *(int *)(ctx+0x120)`, mapped to
+  `PF_InData.downsample_x.num / PF_InData.downsample_x.den` by AE SDK
+  `offsetof` (`0x11c` / `0x120`) and the matching Mac OLMBlur source pattern.
 - AEX scales and truncates Front/Back Blur Strength and Alpha Fade by
   `render_scale`.
 - Current CLI `--strength-scale auto` reads recorded `ctx_render_scale` or
@@ -377,8 +379,9 @@ Independent read-only review of the current DirectionalBlur notes/code narrowed
 the remaining front-only/no-noise work to the following IR checkpoints:
 
 - Keep `render_scale = *(int *)(ctx+0x11c) / *(int *)(ctx+0x120)` separate from
-  frame rate. The current `1/frame_rate` mapping is a PNG-fit hypothesis, not
-  yet AEX evidence.
+  frame rate. This is now mapped to `PF_InData.downsample_x.num / den`; the
+  older `1/frame_rate` mapping was only a PNG-fit hypothesis and has been
+  contradicted by the returned `fr24`/`fr30` references.
 - Preserve the A/B choreography explicitly:
   populate A -> rotate A to B -> copy B to A -> row-driver writes B/denom ->
   normalize B -> clear A -> rotate B to A -> output through the repointed
@@ -411,9 +414,10 @@ front-only/no-noise image-only hypotheses are mostly covered:
   as a regression check, but it is unlikely to add new algorithmic information.
 
 Stop condition: do not keep fitting DirectionalBlur with PNG-only parameter
-sweeps while `case_0001` remains around `mean=4`. Wait for
-`refs/reference_requests/directionalblur_context_scale_20260606.json`, which
-asks for `ctx+0x11c / ctx+0x120` render-context scale and non-opaque alpha
+sweeps while `case_0001` remains around `mean=4`. The returned
+`refs/reference_requests/directionalblur_context_scale_20260606.json` evidence
+maps `ctx+0x11c / ctx+0x120` to `PF_InData.downsample_x.num / den`; use the
+non-opaque alpha
 references.
 
 ### 2026-06-06 parallel audit refresh
@@ -430,6 +434,7 @@ current red residual is stable rather than a rowdriver integration issue:
 
 Parent action: pause DirectionalBlur implementation tuning until
 `directionalblur_context_scale_20260606.json` is rendered/imported. The imported
-refs should replace `--strength-scale auto` with recorded `ctx+0x11c/0x120`
-scale data and use non-opaque alpha cases to verify source RGB ownership,
-`FUN_180001000`, and `alpha_or_valid`.
+refs confirmed the frame-rate proxy is wrong and support the
+`PF_InData.downsample_x.num / den` mapping. The next DirectionalBlur work should
+use the non-opaque alpha cases to verify source RGB ownership, `FUN_180001000`,
+and `alpha_or_valid`, not scalar PNG tuning.

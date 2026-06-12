@@ -5,9 +5,10 @@ objdump evidence as primary and Ghidra decomp as navigation only.
 
 ## Render Scale / Strength Scale
 
-Current CLI diagnostics often use `--strength-scale auto`, implemented as
-`1 / comp.frame_rate` because it is a better current PNG fit than raw UI
-Strength. That is a measurement hypothesis, not an asm-confirmed field.
+Current CLI diagnostics use `--strength-scale auto` to read recorded
+`ctx_render_scale` / `ctx_0x11c / ctx_0x120` values when present, falling back
+to `1.0`. The older `1 / comp.frame_rate` setting was a measurement hypothesis
+and is now only available as an explicit frame-rate diagnostic.
 
 Address facts from `FUN_180003c90`:
 
@@ -29,11 +30,11 @@ back_blur_strength  = (int)(back_blur_strength  * scale); // +0x50
 back_alpha_fade     = (int)(back_alpha_fade     * scale); // +0x54
 ```
 
-- The ratio is read from the AE/render context (`ctx + 0x11c` and
-  `ctx + 0x120`), not from the manifest frame rate. It is likely a render
-  scale/downsample ratio or similar host field. Do not treat the current
-  `1/24` CLI setting as the AEX implementation without mapping these context
-  fields.
+- The ratio is read from `PF_InData.downsample_x.num` and
+  `PF_InData.downsample_x.den`. Local AE SDK `offsetof` confirms
+  `downsample_x.num == 0x11c` and `downsample_x.den == 0x120`, and Mac OLMBlur
+  uses the same `in_data->downsample_x.num / in_data->downsample_x.den` pattern
+  for pixel-distance slider scaling.
 
 Current implication:
 
