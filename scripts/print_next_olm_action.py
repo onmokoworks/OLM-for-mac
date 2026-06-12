@@ -36,8 +36,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--handoff",
         type=Path,
-        default=Path("/tmp/olm_port_handoff_20260606_current.zip"),
-        help="Current handoff package path.",
+        default=None,
+        help="Current handoff package path. When omitted, the newest handoff in the scanned paths is used.",
     )
     parser.add_argument("--json", action="store_true", help="Print machine-readable JSON.")
     return parser.parse_args()
@@ -88,7 +88,9 @@ def pending_requests(root: Path, request_ids: list[str]) -> list[dict[str, Any]]
     return requests
 
 
-def handoff_summary(root: Path, handoff: Path) -> dict[str, Any]:
+def handoff_summary(root: Path, handoff: Path | None) -> dict[str, Any]:
+    if handoff is None:
+        return {"path": "", "valid": False, "problem": "no handoff package found in scanned paths"}
     script = root / "scripts" / "print_current_handoff.py"
     proc = subprocess.run(
         [sys.executable, str(script), "--package", str(handoff), "--json"],
@@ -136,13 +138,6 @@ def reference_request_package(rows: list[dict[str, Any]], pending: list[str]) ->
     matches = [row for row in matches if package_matches_pending(row, pending)]
     if not matches:
         return None
-    canonical = [
-        row
-        for row in matches
-        if Path(str(row.get("path", ""))).name == "olm_reference_requests_pending_20260606.zip"
-    ]
-    if canonical:
-        return canonical[0]
     pending_named = [
         row
         for row in matches
@@ -266,7 +261,7 @@ def decide(
             "action": "package-windows-reference-requests",
             "reason": "Pending Windows references exist, but no request package was found in the scanned paths.",
             "target": None,
-            "command": "python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending_20260606.zip",
+            "command": "python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending.zip",
         }
 
     if handoff.get("valid"):
@@ -280,7 +275,7 @@ def decide(
         "action": "rebuild-handoff-package",
         "reason": "No valid current handoff package was found.",
         "target": handoff,
-        "command": "scripts/package_olm_handoff.sh --output /tmp/olm_port_handoff_20260606_current.zip",
+        "command": "scripts/package_olm_handoff.sh --output /tmp/olm_port_handoff_current.zip",
     }
 
 
@@ -291,7 +286,12 @@ def main() -> int:
     interesting = [row for row in rows if row.get("kind") != "unknown"]
     status = request_status(root)
     pending_request_defs = pending_requests(root, status["pending"])
-    handoff = handoff_summary(root, args.handoff)
+    handoff_path = args.handoff
+    if handoff_path is None:
+        latest_handoff = newest(interesting, "olm-handoff-package")
+        if latest_handoff and latest_handoff.get("path"):
+            handoff_path = Path(str(latest_handoff["path"]))
+    handoff = handoff_summary(root, handoff_path)
     decision = decide(interesting, status, handoff, pending_request_defs)
 
     output = {

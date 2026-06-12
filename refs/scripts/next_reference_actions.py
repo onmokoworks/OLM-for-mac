@@ -364,7 +364,7 @@ def main() -> int:
         print("\npending subagent dispatch JSON:")
         print("python3 refs/scripts/next_reference_actions.py --json")
         print("\npending package command:")
-        print("python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending_20260606.zip")
+        print("python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending.zip")
 
     return 0
 
