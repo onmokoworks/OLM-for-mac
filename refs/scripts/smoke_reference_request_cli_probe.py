@@ -108,8 +108,9 @@ def matching_cases(
             {
                 "case_id": case_id,
                 "request_case_id": req_id,
-                "render_set": case.get("render_set", ""),
+                "render_set": case.get("render_set") or case.get("render_set_id") or "",
                 "params": request_case_params[req_id],
+                "case": case,
             }
         )
     return case_ids, rows
@@ -153,11 +154,47 @@ def run_probe(root: Path, manifest_path: Path, args: argparse.Namespace, case_id
     run_dir = out_dir / "cli_probe"
     if run_dir.exists():
         shutil.rmtree(run_dir)
+    filtered_source = out_dir / "filtered_reference"
+    if filtered_source.exists():
+        shutil.rmtree(filtered_source)
+    filtered_source.mkdir(parents=True)
+
+    manifest = load_json(manifest_path)
+    allow_ids = set(case_ids)
+    filtered_cases = []
+    copied = set()
+    for case in manifest.get("cases", []):
+        if not isinstance(case, dict):
+            continue
+        case_id = str(case.get("id") or case_request_id(case) or "")
+        if case_id not in allow_ids:
+            continue
+        frame = case.get("frame")
+        before = case.get("before_effects_frame")
+        if not isinstance(frame, str) or not isinstance(before, str):
+            continue
+        if not (manifest_path.parent / frame).exists() or not (manifest_path.parent / before).exists():
+            continue
+        filtered_cases.append(case)
+        for name in (frame, before):
+            if name in copied:
+                continue
+            shutil.copy2(manifest_path.parent / name, filtered_source / name)
+            copied.add(name)
+    if not filtered_cases:
+        print(f"[FAIL] no matching cases have complete PNG files: {manifest_path}", file=sys.stderr)
+        return 1
+    filtered_manifest = dict(manifest)
+    filtered_manifest["cases"] = filtered_cases
+    (filtered_source / "reference_manifest.json").write_text(
+        json.dumps(filtered_manifest, indent=2, sort_keys=True),
+        encoding="utf-8",
+    )
 
     cmd = [
         sys.executable,
         str(root / "refs" / "scripts" / "run_reference_test.py"),
-        str(manifest_path.parent),
+        str(filtered_source),
         "--run-dir",
         str(run_dir),
         "--expected-effect",
@@ -171,8 +208,6 @@ def run_probe(root: Path, manifest_path: Path, args: argparse.Namespace, case_id
         "--nonzero-px-percent",
         "100",
     ]
-    for case_id in case_ids:
-        cmd.extend(["--case-id", case_id])
     print("$ " + " ".join(cmd), flush=True)
     result = subprocess.run(cmd, cwd=root)
     report = run_dir / "reports" / "diff.json"

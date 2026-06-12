@@ -169,6 +169,29 @@ def request_case_ids(request: dict[str, Any]) -> set[str]:
     }
 
 
+def request_id(request: dict[str, Any]) -> str | None:
+    value = request.get("request_id")
+    return value if isinstance(value, str) and value else None
+
+
+def manifest_request_ids(manifest: dict[str, Any]) -> set[str]:
+    ids: set[str] = set()
+    value = manifest.get("request_id")
+    if isinstance(value, str) and value:
+        ids.add(value)
+    for item in manifest.get("requests", []):
+        if isinstance(item, dict):
+            value = item.get("request_id")
+            if isinstance(value, str) and value:
+                ids.add(value)
+    for case in manifest.get("cases", []):
+        if isinstance(case, dict):
+            value = case.get("request_id")
+            if isinstance(value, str) and value:
+                ids.add(value)
+    return ids
+
+
 def manifest_request_case_ids(manifest: dict[str, Any]) -> set[str]:
     ids: set[str] = set()
     for case in manifest.get("cases", []):
@@ -203,12 +226,15 @@ def matching_requests(
     requests: list[tuple[Path, dict[str, Any]]],
 ) -> list[tuple[Path, dict[str, Any]]]:
     manifest_names = manifest_effect_names(manifest)
+    manifest_req_ids = manifest_request_ids(manifest)
     manifest_ids = manifest_request_case_ids(manifest)
     matches = []
     for path, request in requests:
+        req_id = request_id(request)
+        request_id_match = bool(req_id and req_id in manifest_req_ids)
         effect_overlap = bool(manifest_names & request_effect_names(request))
         case_overlap = bool(manifest_ids & request_case_ids(request))
-        if case_overlap or (effect_overlap and not manifest_ids):
+        if request_id_match or case_overlap or (effect_overlap and not manifest_ids and not manifest_req_ids):
             matches.append((path, request))
     return matches
 
@@ -291,15 +317,21 @@ def import_request_results(
 
         if not matches:
             print(f"[WARN] imported without matching request: {dest_manifest}")
-        elif len(matches) > 1:
-            names = ", ".join(path.name for path, _request in matches)
-            print(f"[WARN] imported with multiple matching requests ({names}): {dest_manifest}")
         else:
-            request_path = matches[0][0]
-            proc = run_verifier(request_path, dest_manifest, allow_missing_optional_render_sets)
-            print(proc.stdout, end="" if proc.stdout.endswith("\n") else "\n")
-            if proc.returncode != 0:
-                failures += 1
+            if len(matches) > 1:
+                names = ", ".join(path.name for path, _request in matches)
+                print(f"[INFO] imported aggregate manifest with matching requests ({names}): {dest_manifest}")
+            verified_ok = 0
+            verified_failed = 0
+            for request_path, _request in matches:
+                proc = run_verifier(request_path, dest_manifest, allow_missing_optional_render_sets)
+                print(proc.stdout, end="" if proc.stdout.endswith("\n") else "\n")
+                if proc.returncode != 0:
+                    verified_failed += 1
+                else:
+                    verified_ok += 1
+            if verified_failed and (len(matches) == 1 or verified_ok == 0):
+                failures += verified_failed
 
         imported.append(dest_manifest)
 

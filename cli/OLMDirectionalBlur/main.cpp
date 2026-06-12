@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <filesystem>
 #include <fstream>
+#include <limits>
 #include <map>
 #include <stdexcept>
 #include <string>
@@ -53,6 +54,7 @@ struct DirectionalBlurParams {
     double back_sharp_tail = 0.0;
     double noise_variation = 0.0;
     double frame_rate = 0.0;
+    double ctx_render_scale = std::numeric_limits<double>::quiet_NaN();
 };
 
 struct Json {
@@ -260,6 +262,37 @@ double json_number_or(const Json *value, double fallback) {
     return fallback;
 }
 
+const Json *find_number_key(const Json &json, const std::vector<std::string> &keys) {
+    if (json.type == Json::Object) {
+        for (const std::string &key : keys) {
+            const Json *value = json.get(key);
+            if (value && (value->type == Json::Number || value->type == Json::Bool || value->type == Json::String)) return value;
+        }
+        for (const auto &item : json.object_value) {
+            const Json *found = find_number_key(item.second, keys);
+            if (found) return found;
+        }
+    } else if (json.type == Json::Array) {
+        for (const Json &item : json.array_value) {
+            const Json *found = find_number_key(item, keys);
+            if (found) return found;
+        }
+    }
+    return nullptr;
+}
+
+double read_ctx_render_scale(const Json &root) {
+    const Json *direct = find_number_key(root, {"ctx_render_scale", "render_scale"});
+    if (direct) return json_number_or(direct, std::numeric_limits<double>::quiet_NaN());
+
+    const Json *num = find_number_key(root, {"ctx_0x11c"});
+    const Json *den = find_number_key(root, {"ctx_0x120"});
+    const double numerator = json_number_or(num, std::numeric_limits<double>::quiet_NaN());
+    const double denominator = json_number_or(den, std::numeric_limits<double>::quiet_NaN());
+    if (std::isfinite(numerator) && std::isfinite(denominator) && denominator != 0.0) return numerator / denominator;
+    return std::numeric_limits<double>::quiet_NaN();
+}
+
 std::string key_for_name(const std::string &name) {
     std::string key;
     for (char c : name) key.push_back(c == ' ' ? '_' : static_cast<char>(std::tolower(static_cast<unsigned char>(c))));
@@ -340,6 +373,7 @@ DirectionalBlurParams read_params(const std::string &path) {
     dp.back_sharp_tail = json_number_or(get("back_sharp_tail_1"), 0.0) / 100.0;
     dp.noise_variation = json_number_or(get("noise_variation"), 0.0);
     if (const Json *comp = root.get("comp")) dp.frame_rate = json_number_or(comp->get("frame_rate"), 0.0);
+    dp.ctx_render_scale = read_ctx_render_scale(root);
     return dp;
 }
 
@@ -723,6 +757,8 @@ Image render_direct(const Image &input, const DirectionalBlurParams &params, dou
     out.rgba.resize(static_cast<size_t>(pixels) * 4);
 
     if (strength_scale < 0.0) {
+        strength_scale = std::isfinite(params.ctx_render_scale) ? params.ctx_render_scale : 1.0;
+    } else if (strength_scale == -2.0) {
         strength_scale = params.frame_rate > 0.0 ? 1.0 / params.frame_rate : 1.0;
     }
     const int front_strength = static_cast<int>(static_cast<double>(params.front_strength) * strength_scale);
@@ -878,6 +914,8 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
     const int pad_pixels = pad_w * pad_h;
 
     if (strength_scale < 0.0) {
+        strength_scale = std::isfinite(params.ctx_render_scale) ? params.ctx_render_scale : 1.0;
+    } else if (strength_scale == -2.0) {
         strength_scale = params.frame_rate > 0.0 ? 1.0 / params.frame_rate : 1.0;
     }
     const int front_strength = static_cast<int>(static_cast<double>(params.front_strength) * strength_scale);
@@ -1308,14 +1346,16 @@ Args parse_args(int argc, char **argv) {
         else if (key == "--sample-sign") args.sample_sign = std::strtod(need_value("--sample-sign").c_str(), nullptr);
         else if (key == "--strength-scale") {
             std::string value = need_value("--strength-scale");
-            args.strength_scale = value == "auto" ? -1.0 : std::strtod(value.c_str(), nullptr);
+            if (value == "auto" || value == "ctx" || value == "ctx-render") args.strength_scale = -1.0;
+            else if (value == "frame-rate" || value == "frame-rate-auto") args.strength_scale = -2.0;
+            else args.strength_scale = std::strtod(value.c_str(), nullptr);
         } else if (key == "--rgb-normalize") args.rgb_normalize = need_value("--rgb-normalize");
         else if (key == "--direction") {
             args.direction = need_value("--direction");
             if (args.direction != "front" && args.direction != "both") throw std::runtime_error("--direction must be front or both");
         } else if (key == "--ignore-noise-variation") args.ignore_noise_variation = true;
         else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmdirectionalblur_cli --input in.png --params params.json --output out.png [--algorithm direct|direct-map|rotated|rotated-aex-choreo|rotated-aex-full-choreo|rotated-aex-rotateback-denom-alpha|rotated-aex-exact-scatter-helper|rotated-aex-exact-rowdriver|rotated-aex-pad-full-choreo|rotated-aex-prepass-full-choreo|rotated-aex-halfheight|rotated-aex-float-center|rotated-aex-component-tail-only|rotated-aex-global-tail-only|rotated-aex-no-tail|rotated-aex-preserve-invalid-input|rotated-aex-binary-alpha|rotated-aex-straight-source-rgb|rotated-aex-float-math|rotated-aex-trunc-output|rotated-aex-truncated-span|rotated-aex-row-init-straight-zero|rotated-aex-row-init-premul-zero|rotated-aex-row-init-zero|rotated-front-strength|rotated-front-strength-preserve-alpha|rotated-rowdriver-prepass|rotated-rowdriver-prepass-init|rotated-aex-pad|rotated-alpha-sum|rotated-strict|rotated-strict-preserve-alpha|rotated-preserve-alpha|rotated-min-alpha|rotated-max-alpha|rotated-zero-alpha|rotated-gather|rotated-alpha|rotated-alpha-in|rotated-alpha-out|rotated-aex|rotated-aex-init|rotated-map|rotated-map-dest-coeff|rotated-map-alpha-coeff|rotated-map-preserve-alpha|rotated-map-aex|rotated-map-aex-init|rotated-aex-premul|rotated-map-aex-premul] [--direction front|both] [--ignore-noise-variation] [--angle-sign -1] [--sample-sign -1] [--strength-scale auto] [--rgb-normalize front-strength]\n");
+            std::printf("Usage: olmdirectionalblur_cli --input in.png --params params.json --output out.png [--algorithm direct|direct-map|rotated|rotated-aex-choreo|rotated-aex-full-choreo|rotated-aex-rotateback-denom-alpha|rotated-aex-exact-scatter-helper|rotated-aex-exact-rowdriver|rotated-aex-pad-full-choreo|rotated-aex-prepass-full-choreo|rotated-aex-halfheight|rotated-aex-float-center|rotated-aex-component-tail-only|rotated-aex-global-tail-only|rotated-aex-no-tail|rotated-aex-preserve-invalid-input|rotated-aex-binary-alpha|rotated-aex-straight-source-rgb|rotated-aex-float-math|rotated-aex-trunc-output|rotated-aex-truncated-span|rotated-aex-row-init-straight-zero|rotated-aex-row-init-premul-zero|rotated-aex-row-init-zero|rotated-front-strength|rotated-front-strength-preserve-alpha|rotated-rowdriver-prepass|rotated-rowdriver-prepass-init|rotated-aex-pad|rotated-alpha-sum|rotated-strict|rotated-strict-preserve-alpha|rotated-preserve-alpha|rotated-min-alpha|rotated-max-alpha|rotated-zero-alpha|rotated-gather|rotated-alpha|rotated-alpha-in|rotated-alpha-out|rotated-aex|rotated-aex-init|rotated-map|rotated-map-dest-coeff|rotated-map-alpha-coeff|rotated-map-preserve-alpha|rotated-map-aex|rotated-map-aex-init|rotated-aex-premul|rotated-map-aex-premul] [--direction front|both] [--ignore-noise-variation] [--angle-sign -1] [--sample-sign -1] [--strength-scale auto|ctx|frame-rate|<number>] [--rgb-normalize front-strength]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);

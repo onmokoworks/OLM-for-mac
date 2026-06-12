@@ -41,6 +41,13 @@ Current implication:
 - If the remaining DirectionalBlur residual starts depending mainly on this
   scale, request a targeted Windows reference/manifest addition for the render
   scale/downsample fields instead of overfitting the PNGs.
+- 2026-06-12 returned `directionalblur_context_scale_20260606` refs show
+  byte-identical `fr24` vs `fr30` outputs for sampled cases, so the previous
+  CLI `--strength-scale auto = 1 / comp.frame_rate` proxy is contradicted by
+  the new evidence. `auto` now means "use recorded `ctx_render_scale` /
+  `ctx_0x11c / ctx_0x120` when present, otherwise fall back to `1.0`"; the old
+  frame-rate diagnostic remains available only as `--strength-scale
+  frame-rate`.
 - The targeted request is
   `refs/reference_requests/directionalblur_context_scale_20260606.json`; it also
   asks for non-opaque alpha cases because the current tracked references cannot

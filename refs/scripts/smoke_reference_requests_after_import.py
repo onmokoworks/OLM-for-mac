@@ -27,7 +27,7 @@ FOLLOW_UP_SMOKES = {
             "--build-script",
             "refs/scripts/build_olmdirectionalblur_cli.sh",
             "--command",
-            '"cli/OLMDirectionalBlur/olmdirectionalblur_cli" --input "{input}" --params "{params}" --output "{output}" --algorithm rotated-aex-full-choreo --angle-sign -1 --sample-sign 1 --strength-scale auto',
+            '"cli/OLMDirectionalBlur/olmdirectionalblur_cli" --input "{input}" --params "{params}" --output "{output}" --algorithm rotated-aex-exact-rowdriver --angle-sign -1 --sample-sign 1 --strength-scale auto',
         ],
     ],
     "kirakira_single_ray_20260606": [
