@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -57,7 +58,8 @@ def main() -> int:
         tmp_path = Path(tmp)
         returned = tmp_path / "returned_refs.zip"
         ae_pixel_request = tmp_path / "ae_pixel_request.zip"
-        canonical_pending = tmp_path / "olm_reference_requests_pending_20260606.zip"
+        old_pending = tmp_path / "olm_reference_requests_pending_20260606.zip"
+        fresh_pending = tmp_path / "olm_reference_requests_pending_20260612.zip"
         smoke_request = tmp_path / "olm_reference_requests_smoke.zip"
         request = json.loads(
             (repo / "refs/reference_requests/smoother2_no_key_grid_20260606.json").read_text(
@@ -120,7 +122,9 @@ def main() -> int:
         assert "import-windows-reference-return" in human.stdout
         assert "- target:" in human.stdout
 
-        package_pending_requests(repo, canonical_pending)
+        package_pending_requests(repo, old_pending)
+        package_pending_requests(repo, fresh_pending)
+        os.utime(fresh_pending, (old_pending.stat().st_mtime + 10, old_pending.stat().st_mtime + 10))
         write_zip(
             smoke_request,
             {
@@ -138,9 +142,10 @@ def main() -> int:
         proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
         data = json.loads(proc.stdout)
         assert data["decision"]["action"] == "send-windows-reference-package"
-        assert Path(data["decision"]["target"]["path"]).name == "olm_reference_requests_pending_20260606.zip"
+        assert Path(data["decision"]["target"]["path"]).name == "olm_reference_requests_pending_20260612.zip"
 
-        canonical_pending.unlink()
+        old_pending.unlink()
+        fresh_pending.unlink()
         proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
         data = json.loads(proc.stdout)
         assert data["decision"]["action"] == "package-windows-reference-requests"

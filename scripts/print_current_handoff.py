@@ -140,7 +140,7 @@ def main() -> int:
     if not isinstance(git_dirty, bool):
         git_dirty = None
 
-    windows_reference_zip = "/tmp/olm_reference_requests_pending_20260606.zip"
+    windows_reference_zip = "/tmp/olm_reference_requests_pending.zip"
     commands = {
         "make_reference_zip": f"python3 refs/scripts/package_reference_requests.py --pending --output {windows_reference_zip}",
         "make_handoff_zip": f"scripts/package_olm_handoff.sh --output {package}",
