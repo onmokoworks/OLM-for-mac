@@ -84,6 +84,7 @@ def main() -> int:
         Smoke("Next reference actions", [py, "refs/scripts/smoke_next_reference_actions.py"]),
         Smoke("Current handoff printer", [py, "refs/scripts/smoke_print_current_handoff.py"]),
         Smoke("Next OLM action printer", [py, "refs/scripts/smoke_print_next_olm_action.py"]),
+        Smoke("Prepare Windows handoff", [py, "refs/scripts/smoke_prepare_windows_reference_handoff.py"]),
         Smoke("AE validation result verifier", [py, "refs/scripts/smoke_ae_validation_result_verifier.py"]),
         Smoke("AE pixel validation request", [py, "refs/scripts/smoke_ae_pixel_validation_request.py"]),
         Smoke("AE host return verifier", [py, "refs/scripts/smoke_ae_host_return_verifier.py"]),
