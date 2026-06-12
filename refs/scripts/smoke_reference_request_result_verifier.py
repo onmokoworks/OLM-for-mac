@@ -51,6 +51,47 @@ def write_synthetic_result(root: Path, request: dict) -> tuple[Path, Path]:
     return good_manifest, bad_manifest
 
 
+def write_aggregate_result(root: Path, request: dict) -> Path:
+    aggregate_dir = root / "aggregate"
+    aggregate_dir.mkdir()
+    cases = []
+    request_id = request["request_id"]
+    for case in request["cases"]:
+        if case.get("optional"):
+            continue
+        frame = f"{request_id}__software__{case['id']}.png"
+        before = f"{request_id}__software__{case['id']}_before_effects.png"
+        (aggregate_dir / frame).write_bytes(b"png")
+        (aggregate_dir / before).write_bytes(b"png")
+        cases.append(
+            {
+                "id": case["id"],
+                "request_id": request_id,
+                "render_set_id": "software",
+                "project_gpu_accel_type": {"current_name": "SOFTWARE", "raw": 1816},
+                "frame": frame,
+                "before_effects_frame": before,
+                "effects": [
+                    {"name": "OLM Kira Kira", "match_name": "OLM OLM Kira Kira"}
+                ],
+            }
+        )
+
+    manifest = {
+        "kind": "ae_effect_reference_manifest",
+        "requests": [
+            {
+                "request_id": request_id,
+                "effect": {"name": "OLM Kira Kira", "match_name": "OLM OLM Kira Kira"},
+            }
+        ],
+        "cases": cases,
+    }
+    path = aggregate_dir / "reference_manifest.json"
+    path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    return path
+
+
 def run(cmd: list[str]) -> subprocess.CompletedProcess[str]:
     return subprocess.run(cmd, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
@@ -79,6 +120,12 @@ def main() -> int:
         if bad.returncode == 0:
             print("[FAIL] missing-case negative test unexpectedly passed")
             return 1
+
+        aggregate_manifest = write_aggregate_result(Path(tmp), data)
+        aggregate = run(base_cmd + [str(aggregate_manifest)])
+        print(aggregate.stdout, end="")
+        if aggregate.returncode != 0:
+            return aggregate.returncode
 
     print("[OK] reference request result verifier smoke")
     return 0

@@ -50,8 +50,11 @@ Internal/runtime parameters:
 - `render_scale = *(int *)(ctx+0x11c) / *(int *)(ctx+0x120)`
 - AEX scales and truncates Front/Back Blur Strength and Alpha Fade by
   `render_scale`.
-- Current CLI `--strength-scale auto = 1 / frame_rate` is a PNG-fit
-  measurement hypothesis only. It is not the AEX field mapping.
+- Current CLI `--strength-scale auto` reads recorded `ctx_render_scale` or
+  `ctx_0x11c / ctx_0x120` from the per-case params JSON when present; without
+  those fields it falls back to `1.0`. The old `1 / frame_rate` proxy is now
+  only available as `--strength-scale frame-rate` because the 2026-06-12
+  DirectionalBlur return produced identical `fr24` and `fr30` images.
 - 2026-06-06 full-choreography scale sweep on cases `0001..0005` did not expose
   a scalar fix: average mean was `3.7928` at `auto` / `1/24`, `3.7731` at
   `0.03`, `3.8490` at `0.06`, and `3.9352` at `0.08`. `case_0005` improves

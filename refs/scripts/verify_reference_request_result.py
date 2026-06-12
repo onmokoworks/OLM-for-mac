@@ -81,12 +81,14 @@ def effect_matches(request: dict[str, Any], manifest: dict[str, Any]) -> bool:
     manifest_text = json.dumps(
         {
             "effect": manifest.get("effect"),
+            "requests": manifest.get("requests"),
             "layer": manifest.get("layer"),
             "cases": [
                 {
                     "effect": case.get("effect"),
                     "selected_effect": case.get("selected_effect"),
                     "selected_layer_effects": case.get("selected_layer_effects"),
+                    "effects": case.get("effects"),
                 }
                 for case in manifest.get("cases", [])
                 if isinstance(case, dict)
@@ -103,6 +105,20 @@ def case_request_id(case: dict[str, Any]) -> str | None:
         if isinstance(value, str) and value:
             return value
     return None
+
+
+def request_id_value(request: dict[str, Any]) -> str | None:
+    value = request.get("request_id")
+    return value if isinstance(value, str) and value else None
+
+
+def case_matches_request(case: dict[str, Any], request: dict[str, Any], request_case_ids: set[str]) -> bool:
+    req_id = request_id_value(request)
+    case_req_id = case.get("request_id")
+    if req_id and isinstance(case_req_id, str):
+        return case_req_id == req_id
+    case_id = case_request_id(case)
+    return bool(case_id and case_id in request_case_ids)
 
 
 def render_set_id(case: dict[str, Any], manifest: dict[str, Any]) -> str | None:
@@ -124,6 +140,17 @@ def render_set_id(case: dict[str, Any], manifest: dict[str, Any]) -> str | None:
 
 def file_exists(root: Path, value: Any) -> bool:
     return isinstance(value, str) and bool(value) and (root / value).exists()
+
+
+def case_is_required_render_set(
+    case: dict[str, Any],
+    manifest: dict[str, Any],
+    expected_required_sets: list[set[str]],
+) -> bool:
+    if not expected_required_sets:
+        return True
+    observed = render_set_id(case, manifest)
+    return bool(observed and any(observed in values for values in expected_required_sets))
 
 
 def main() -> int:
@@ -152,8 +179,21 @@ def main() -> int:
     if not effect_matches(request, manifest):
         return fail("manifest does not appear to contain the requested effect")
 
+    request_case_id_set = {
+        case["id"]
+        for case in request_cases
+        if isinstance(case, dict) and isinstance(case.get("id"), str)
+    }
+    relevant_cases = [
+        case
+        for case in manifest_cases
+        if isinstance(case, dict) and case_matches_request(case, request, request_case_id_set)
+    ]
+    if not relevant_cases:
+        return fail("manifest has no cases for the requested request_id/case ids")
+
     by_request_case: dict[str, list[dict[str, Any]]] = {}
-    for case in manifest_cases:
+    for case in relevant_cases:
         if not isinstance(case, dict):
             return fail("manifest cases must be objects")
         case_id = case_request_id(case)
@@ -186,7 +226,7 @@ def main() -> int:
 
     observed_render_sets = {
         value
-        for case in manifest_cases
+        for case in relevant_cases
         if isinstance(case, dict)
         for value in [render_set_id(case, manifest)]
         if value
@@ -203,7 +243,15 @@ def main() -> int:
     missing_frames = []
     missing_before = []
     missing_gpu = []
-    for case in manifest_cases:
+    cases_to_check_files = relevant_cases
+    if args.allow_missing_optional_render_sets:
+        cases_to_check_files = [
+            case
+            for case in relevant_cases
+            if case_is_required_render_set(case, manifest, expected_required_sets)
+        ]
+
+    for case in cases_to_check_files:
         if not isinstance(case, dict):
             continue
         case_id = case.get("id", case.get("request_case_id", "<unknown>"))
@@ -223,7 +271,7 @@ def main() -> int:
 
     print(
         f"[OK] {manifest_path}: {len(required_case_ids)} required request cases, "
-        f"{len(manifest_cases)} rendered cases, render_sets={','.join(sorted(observed_render_sets))}"
+        f"{len(relevant_cases)} matching rendered cases, render_sets={','.join(sorted(observed_render_sets))}"
     )
     return 0
 

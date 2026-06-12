@@ -51,6 +51,48 @@ def write_synthetic_result(root: Path, request: dict) -> Path:
     return zip_path
 
 
+def write_aggregate_result(root: Path, requests: list[dict]) -> Path:
+    result_dir = root / "returned_aggregate" / "Aggregate"
+    result_dir.mkdir(parents=True)
+    manifest_cases = []
+    manifest_requests = []
+    for request in requests:
+        request_id = request["request_id"]
+        effect = request["effect"]
+        manifest_requests.append({"request_id": request_id, "effect": effect})
+        for case in request["cases"]:
+            if case.get("optional"):
+                continue
+            frame = f"{request_id}__software__{case['id']}.png"
+            before = f"{request_id}__software__{case['id']}_before_effects.png"
+            (result_dir / frame).write_bytes(b"png")
+            (result_dir / before).write_bytes(b"png")
+            manifest_cases.append(
+                {
+                    "id": case["id"],
+                    "request_id": request_id,
+                    "render_set_id": "software",
+                    "project_gpu_accel_type": {"current_name": "SOFTWARE", "raw": 1816},
+                    "frame": frame,
+                    "before_effects_frame": before,
+                    "effects": [{"name": effect["name"], "match_name": effect["match_name"]}],
+                }
+            )
+
+    manifest = {
+        "kind": "ae_effect_reference_manifest",
+        "requests": manifest_requests,
+        "cases": manifest_cases,
+    }
+    (result_dir / "reference_manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+
+    zip_path = root / "returned_aggregate.zip"
+    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for path in result_dir.rglob("*"):
+            archive.write(path, path.relative_to(root / "returned_aggregate"))
+    return zip_path
+
+
 def run(cmd: list[str]) -> subprocess.CompletedProcess[str]:
     return subprocess.run(cmd, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
@@ -82,6 +124,27 @@ def main() -> int:
         imported = dest_root / "synthetic_return" / "OLMKiraKira" / "reference_manifest.json"
         if not imported.exists():
             print(f"[FAIL] imported manifest missing: {imported}")
+            return 1
+
+        aggregate_zip = write_aggregate_result(tmp_path, [data])
+        aggregate_dest_root = tmp_path / "win_references_aggregate"
+        aggregate_cmd = [
+            sys.executable,
+            str(importer),
+            str(aggregate_zip),
+            "--dest-root",
+            str(aggregate_dest_root),
+            "--set-id",
+            "synthetic_aggregate_return",
+            "--allow-missing-optional-render-sets",
+        ]
+        aggregate_proc = run(aggregate_cmd)
+        print(aggregate_proc.stdout, end="")
+        if aggregate_proc.returncode != 0:
+            return aggregate_proc.returncode
+        aggregate_imported = aggregate_dest_root / "synthetic_aggregate_return" / "OLMKiraKira" / "reference_manifest.json"
+        if not aggregate_imported.exists():
+            print(f"[FAIL] aggregate imported manifest missing: {aggregate_imported}")
             return 1
 
     print("[OK] import_win_reference smoke")

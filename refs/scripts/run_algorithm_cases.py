@@ -28,6 +28,20 @@ def case_params(case):
     return {}
 
 
+def case_metadata(case, manifest):
+    metadata = {
+        "comp": case.get("comp") or manifest.get("comp"),
+        "project_gpu_accel_type": case.get("project_gpu_accel_type") or manifest.get("project_gpu_accel_type"),
+        "render_set": case.get("render_set") or case.get("render_set_id") or manifest.get("render_set"),
+    }
+    for key in ("ctx_render_scale", "render_scale", "ctx_0x11c", "ctx_0x120", "render_context"):
+        if key in case:
+            metadata[key] = case[key]
+        elif key in manifest:
+            metadata[key] = manifest[key]
+    return metadata
+
+
 def case_has_effect(case, expected_effect):
     if not expected_effect:
         return True
@@ -95,11 +109,13 @@ def main():
         params_path = params_dir / f"{Path(frame).stem}.json"
 
         with params_path.open("w", encoding="utf-8") as handle:
+            metadata = case_metadata(case, manifest)
             json.dump(
                 {
                     "case_id": case_id,
-                    "comp": manifest.get("comp"),
+                    "comp": metadata.get("comp"),
                     "frame": frame,
+                    "metadata": metadata,
                     "time": case.get("time"),
                     "params": case_params(case),
                 },

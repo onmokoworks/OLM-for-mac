@@ -9,6 +9,8 @@ from pathlib import Path
 from typing import Any
 
 from verify_reference_request_result import (
+    case_is_required_render_set,
+    case_matches_request,
     case_request_id,
     effect_matches,
     file_exists,
@@ -56,31 +58,46 @@ def expected_required_sets(request: dict[str, Any]) -> list[set[str]]:
     return expected
 
 
-def manifest_case_ids(manifest: dict[str, Any]) -> set[str]:
+def relevant_manifest_cases(request: dict[str, Any], manifest: dict[str, Any]) -> list[dict[str, Any]]:
+    req_cases = set(required_case_ids(request))
+    return [
+        case
+        for case in manifest.get("cases", [])
+        if isinstance(case, dict) and case_matches_request(case, request, req_cases)
+    ]
+
+
+def manifest_case_ids(cases: list[dict[str, Any]]) -> set[str]:
     return {
         case_id
-        for case in manifest.get("cases", [])
-        if isinstance(case, dict)
+        for case in cases
         for case_id in [case_request_id(case)]
         if case_id
     }
 
 
-def manifest_render_sets(manifest: dict[str, Any]) -> set[str]:
+def manifest_render_sets(cases: list[dict[str, Any]], manifest: dict[str, Any]) -> set[str]:
     return {
         render_set
-        for case in manifest.get("cases", [])
-        if isinstance(case, dict)
+        for case in cases
         for render_set in [render_set_id(case, manifest)]
         if render_set
     }
 
 
-def manifest_files_ok(manifest_path: Path, manifest: dict[str, Any]) -> bool:
+def manifest_files_ok(
+    manifest_path: Path,
+    manifest: dict[str, Any],
+    cases: list[dict[str, Any]],
+    required_sets: list[set[str]],
+) -> bool:
     root = manifest_path.parent
-    for case in manifest.get("cases", []):
-        if not isinstance(case, dict):
-            return False
+    check_cases = [
+        case
+        for case in cases
+        if case_is_required_render_set(case, manifest, required_sets)
+    ]
+    for case in check_cases:
         if not file_exists(root, case.get("frame")):
             return False
         if not file_exists(root, case.get("before_effects_frame")):
@@ -95,15 +112,18 @@ def score_request(request: dict[str, Any], manifests: list[tuple[Path, dict[str,
     for manifest_path, manifest in manifests:
         if not effect_matches(request, manifest):
             continue
-        found_cases = manifest_case_ids(manifest)
-        found_sets = manifest_render_sets(manifest)
+        relevant_cases = relevant_manifest_cases(request, manifest)
+        if not relevant_cases:
+            continue
+        found_cases = manifest_case_ids(relevant_cases)
+        found_sets = manifest_render_sets(relevant_cases, manifest)
         missing_cases = sorted(req_cases - found_cases)
         missing_sets = [
             sorted(values)
             for values in req_sets
             if values and not (values & found_sets)
         ]
-        files_ok = manifest_files_ok(manifest_path, manifest)
+        files_ok = manifest_files_ok(manifest_path, manifest, relevant_cases, req_sets)
         complete = not missing_cases and not missing_sets and files_ok
         candidates.append(
             {
