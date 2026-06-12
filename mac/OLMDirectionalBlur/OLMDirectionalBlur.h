@@ -77,7 +77,7 @@ typedef struct {
 	A_long back_alpha_fade;
 	PF_FpLong back_sharp_tail;
 	PF_FpLong noise_variation;
-	PF_FpLong frame_rate;
+	PF_FpLong render_scale;
 } OLMDirectionalBlurInfo;
 
 extern "C" {
