@@ -603,6 +603,25 @@ B[p].a = gathered_alpha
   pass should target exact `FUN_1800013e0` caller/source ownership or
   `FUN_180001ec0` edge/validity semantics.
 
+2026-06-13 returned non-opaque alpha probes:
+
+- The discriminating returned cases are `db_angle0_alpha_fade_hard_edges`,
+  `db_diagonal_alpha_ramp`, `db_size_variation_component`, and
+  `db_sharp_tail_component`.
+- Existing large switches are negative or neutral on those cases:
+  straight-source RGB (`mean avg=35.4938`), binary alpha (`36.7963`),
+  rotate-back denom alpha (`31.6693`), row-init zero (`22.9762`), trunc output
+  (`22.9332`), and truncated span (`22.8996`) all trail the current
+  `rotated-aex-exact-rowdriver` baseline (`22.2983`).
+- New exact-rowdriver rotate-sampler probes are also neutral: plain input
+  (`22.3134`), plain output (`22.2984`), and plain input+output (`22.3135`).
+  Therefore the AEX rotate helper is not explained by simply switching between
+  alpha-weighted and plain bilinear sampling.
+- For `db_diagonal_alpha_ramp`, the current exact-rowdriver candidate is
+  generally too dark in RGB while alpha is too high. Keep the next asm pass on
+  exact `FUN_1800013e0` denominator/RGB normalization or the B alpha/RGB state
+  immediately before rotate-back.
+
 2026-06-06 truncated-span diagnostic:
 
 - Added `rotated-aex-truncated-span` to test the exact `FUN_1800013e0` gate:

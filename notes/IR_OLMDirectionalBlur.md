@@ -438,3 +438,47 @@ refs confirmed the frame-rate proxy is wrong and support the
 `PF_InData.downsample_x.num / den` mapping. The next DirectionalBlur work should
 use the non-opaque alpha cases to verify source RGB ownership, `FUN_180001000`,
 and `alpha_or_valid`, not scalar PNG tuning.
+
+## 2026-06-13 non-opaque alpha return audit
+
+Discriminating returned cases from
+`directionalblur_context_scale_20260606`:
+
+- `db_angle0_alpha_fade_hard_edges`
+- `db_diagonal_alpha_ramp`
+- `db_size_variation_component`
+- `db_sharp_tail_component`
+
+On those cases, `rotated-aex-exact-rowdriver` remains the best baseline among
+the existing large switches:
+
+| algorithm | mean avg | alpha fade | diagonal ramp | size variation | sharp tail |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| rotated-aex-exact-rowdriver | 22.2983 | 29.9884 | 16.3346 | 23.4683 | 16.5056 |
+| rotated-aex-straight-source-rgb | 35.4938 | 31.2920 | 60.3349 | 23.5879 | 18.0268 |
+| rotated-aex-binary-alpha | 36.7963 | 31.0441 | 65.2806 | 23.4699 | 17.9851 |
+| rotated-aex-rotateback-denom-alpha | 31.6693 | 31.4367 | 46.6301 | 23.7265 | 18.0982 |
+| rotated-aex-row-init-zero | 22.9762 | 31.2118 | 16.6175 | 23.5661 | 18.0422 |
+| rotated-aex-trunc-output | 22.9332 | 31.0731 | 16.8498 | 23.4053 | 17.8760 |
+| rotated-aex-truncated-span | 22.8996 | 31.1853 | 16.5228 | 23.4683 | 17.9442 |
+
+Additional focused rotate-sampler probes keep the exact rowdriver and only
+toggle alpha-weighted bilinear sampling during input/output rotate:
+
+| algorithm | mean avg | alpha fade | diagonal ramp | size variation | sharp tail |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| rotated-aex-exact-rowdriver-plain-input | 22.3134 | 29.9884 | 16.3874 | 23.4683 | 16.5056 |
+| rotated-aex-exact-rowdriver-plain-output | 22.2984 | 29.9884 | 16.3349 | 23.4683 | 16.5056 |
+| rotated-aex-exact-rowdriver-plain-rotate | 22.3135 | 29.9884 | 16.3876 | 23.4683 | 16.5056 |
+
+Implications:
+
+- Do not promote straight source RGB, binary alpha, rotate-back denom alpha, or
+  plain rotate sampling. They are neutral or negative on the returned
+  non-opaque cases.
+- `FUN_180001000` loop bounds match the decomp shape (`i < scaled_span`), so
+  simple inclusive-span tuning is not the next best target.
+- The remaining diagonal-ramp signed error has candidate RGB too dark and alpha
+  too high, which points back to exact `FUN_1800013e0` denominator/RGB
+  normalization or the pre-rotate-back B alpha/RGB relationship rather than
+  frame rate, downsample scale, or bilinear alpha-weighting.
