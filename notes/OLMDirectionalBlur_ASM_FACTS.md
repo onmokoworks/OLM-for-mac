@@ -622,6 +622,138 @@ B[p].a = gathered_alpha
   exact `FUN_1800013e0` denominator/RGB normalization or the B alpha/RGB state
   immediately before rotate-back.
 
+2026-06-14 signed-error correction (measured, software fr24 ramp):
+
+- Re-ran exact-rowdriver through `run_reference_test.py` on the 4 returned
+  cases and measured signed candidate-minus-reference error on
+  `db_diagonal_alpha_ramp`. The earlier "RGB too dark" note is wrong for this
+  case: in premultiplied space the candidate is too BRIGHT (R +7.31, G +7.88,
+  B +5.57) and alpha is too HIGH (+10.86). The candidate over-accumulates; it
+  does not under-darken.
+- This rules out the rotate-back re-darkening hypothesis (alpha-weighted output
+  rotate would make RGB darker, the opposite of what is observed), consistent
+  with the earlier neutral plain-output/plain-rotate probes.
+- The ramp fills the whole frame (both ref and candidate alpha > 0 on all
+  2,073,600 px; 0 extra-spread and 0 missing px). So the error is NOT a
+  span/edge/spread problem. It is a smooth ~8.6% gain on alpha
+  (mean 136.70 vs ref 125.84) with premul RGB tracking it proportionally.
+- Localizes to the max-based alpha output (`accum_alpha = max(source_alpha *
+  weight)`), which over-picks the brightest neighbor across the 240px front
+  blur on a smooth ramp. On hard-edge cases (`db_angle0_alpha_fade_hard_edges`)
+  the max is needed, which is why `rotateback-denom-alpha` (sum/average alpha)
+  lost on the global mean while it would likely help this ramp. The alpha
+  reconstruction in `FUN_1800013e0`/`FUN_180001000` is therefore probably NOT a
+  pure per-pixel max; the next asm pass should pin down how the max tracker
+  (`pfVar7`) feeds the final alpha vs the denominator accumulator (`pfVar9`),
+  rather than tuning a single global alpha switch.
+
+2026-06-14 live Ghidra confirmation (MCP, program = OLMDirectionalBlur):
+
+- Live decompile of `FUN_1800013e0` is byte-identical to the text dump in
+  `decomp/OLMDirectionalBlur.aex.c.txt` -> the dump is current.
+- Constants resolved live:
+  - `DAT_18000b1e8 = 0x3F800000 = 1.0f`. This is both the weight-index stride
+    base (`fVar17 = 1.0 / param_11`) and the "full" value in the taper.
+  - `DAT_18000b3a0 = 0x7FFFFFFF` = the fabs bitmask; `(uint)(x) & DAT_18000b3a0`
+    is `fabsf(x)`.
+- `FUN_1800013e0`'s only callers are two `FUN_1800038d0` call sites
+  (`0x180003b5b`, `0x180003bde`). `FUN_1800038d0` is the per-row driver and it
+  runs TWO passes per row over the columns:
+  1. `FUN_180001000(...)` first = the alpha prepass/gather (front table
+     `+0x3ed8` strength `+0x4c`, back table `+0x7ee8` strength `+0x54`,
+     exponent `+0x30`, scale `+0x38`). This is what the CLI `rowdriver_prepass`
+     models.
+  2. then, per column, the front+back `FUN_1800013e0` scatter calls.
+- Front/Back Alpha Fade is, confirmed, a PER-COLUMN LINEAR TAPER fed as
+  `param_11`, not a gather-window size:
+
+  ```
+  fVar11 = powf(comp_value / scale(+0x38), exponent(+0x30)) * key_factor   // size-variation / key
+  fVar12 = 1.0 - fabsf((float)row - center_x(+8)) * fade_rate / size_y(+0xc)
+  fVar10 = max(0.0, fVar12)
+  FUN_1800013e0(..., front_table(+0x58), front_strength(+0x48), width, fVar10 * fVar11)  // front, fade_rate(+0x40)
+  FUN_1800013e0(..., back_table(+0x4068), back_strength(+0x50), width, <back fVar10> * fVar11)  // back, fade_rate(+0x44)
+  ```
+
+  The per-component reference column `center_x` and span `size_y` come from the
+  `param_7+0x8118` table (`+8` = center, `+0xc` = size). `key_factor` is 1.0
+  unless OLM key mode (`+0x20 == 2|3`) is active.
+- Inside `FUN_1800013e0`, `param_11` does the two things noted earlier:
+  `param_9 = (int)(param_9 * param_11)` (shortens scatter span) and
+  `fVar17 = 1.0 / param_11` (steepens the weight-index stride). So a small
+  per-column taper both shortens the streak and front-loads the weights.
+- Conclusion: the CLI must apply Front Alpha Fade as this per-column taper on
+  the SCATTER `coeff` (`fVar10 * fVar11`), feeding both the effective span and
+  the weight stride, instead of a box-average of alpha over a gather window.
+  This is the implement-now target; the returned refs are already on disk so it
+  needs no new Windows capture.
+
+2026-06-14 param-struct mapping confirmed (FUN_180004a20 SmartRender setup):
+
+The context struct (param_6 here, == param_7 in FUN_1800038d0 / FUN_1800013e0)
+offsets are now pinned:
+
+- `+0x48` = front scatter strength (span); `+0x50` = back scatter strength.
+  Both scaled by the downsample factor `+0x34 = downsample_x.num/den`.
+- `+0x4c` = front gather count (alpha prepass); `+0x54` = back gather count.
+  Also downsample-scaled.
+- `+0x58` / `+0x4068` = front / back scatter weight tables, built by
+  `FUN_180001830(table, strength)` (the gaussian/weight builder), lengths
+  `+0x48` / `+0x50`.
+- `+0x3ed8` / `+0x7ee8` = front / back gather weight tables, built with lengths
+  `+0x4c` / `+0x54`.
+- `+0x30` = size-variation exponent; `+0x38` = its scale denominator (used in
+  `powf(area/scale, exponent)` = `fVar11`).
+- `+0x40` = front fade rate; `+0x44` = back fade rate.
+
+CORRECTED param->offset mapping (from `FUN_180006c50`, the param checkout). The
+checkout index (2nd arg to the param suite call) maps to struct offsets, and the
+front/back trios are unambiguous:
+
+- idx 5 -> `+0x48` front scatter strength  = Front Blur Strength
+- idx 6 -> `+0x4c` front gather count      = Front Alpha Fade
+- idx 7 -> `+0x40` = param/100 taper rate  = Front Sharp Tail
+- idx 10 -> `+0x50` back scatter strength  = Back Blur Strength
+- idx 11 -> `+0x54` back gather count       = Back Alpha Fade
+- idx 12 -> `+0x44` = param/100 taper rate  = Back Sharp Tail
+- idx 3 -> `+0x30` = param/100              = Size Variation exponent
+
+So the EARLIER 2026-06-14 claim that `+0x40 = Front Alpha Fade` is WRONG and is
+retracted. The truth:
+
+- Front Alpha Fade = `+0x4c` = the GATHER count fed to `FUN_180001000` (the
+  alpha prepass). The CLI `rowdriver_prepass` already models this.
+- Front Sharp Tail = `+0x40` = the per-column TAPER rate (`fade_rate/100`) fed as
+  `param_11` into `FUN_1800013e0`. The CLI `tail_factor` is the right shape for
+  this.
+
+The short-circuit guard `if (+0x44 < eps && +0x40 < eps && +0x30 < eps) -> fill
+alpha = 1.0` is therefore "no sharp tail and no size variation -> full alpha".
+For `db_diagonal_alpha_ramp` (Front/Back Sharp Tail 0, Size Variation 0) the
+guard is TRUE, so NO scatter taper applies. The taper was a red herring for this
+case; a taper probe would have driven the wrong parameter.
+
+`FUN_180001000` (alpha prepass) decompiled and compared to the CLI
+`rowdriver_prepass` (main.cpp:1057-1084): they match structurally --
+`front_count = int(front_gather * size_factor)`, weight index `int(i /
+size_factor)`, weighted average `sum(w*alpha)/sum(w)` seeded with center weight
+1.0, then premult RGB = avg_alpha * center_rgb and alpha-channel = avg_alpha.
+
+So the `db_diagonal_alpha_ramp` alpha/RGB over-accumulation (+10.9 alpha, +7
+premul RGB, measured) is NOT explained by the taper or by a simple prepass bug.
+The remaining suspects, in priority order:
+1. The final two-stage normalization in `FUN_180004a20`: after scatter, RGB is
+   divided by a separate denominator buffer `param_6[0x1010]`, and there is a
+   `FUN_180001ec0` edge/validity pass plus the `param_6[0x1023]` validity buffer
+   (set to 1.0 under the guard). The CLI divides `accum_rgb / accum_sum` instead
+   -- the denominator construction may differ.
+2. The scatter alpha max semantics (`pfVar7 = max(.., fVar16)` -> channel 3) vs
+   the CLI `accum_alpha = max(...)`, including how the prepass-seeded alpha
+   interacts with the max.
+Next asm pass: trace what fills `param_6[0x1010]` (the RGB denominator) and how
+`FUN_180001ec0` / `param_6[0x1023]` feed the final alpha, then compare to the
+CLI's `accum_sum` / `accum_alpha`.
+
 2026-06-06 truncated-span diagnostic:
 
 - Added `rotated-aex-truncated-span` to test the exact `FUN_1800013e0` gate:

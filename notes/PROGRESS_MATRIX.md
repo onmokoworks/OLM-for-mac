@@ -1,11 +1,69 @@
 # OLM Port Progress Matrix
 
-Updated: 2026-06-06
+Updated: 2026-06-14 (status correction below supersedes the 2026-06-06 snapshot)
 
 This is the parent-owned progress matrix for the OLM Tools Apple Silicon port.
-Percentages are engineering estimates, not release claims. A plugin is only
-100% when Windows-reference behavior is implemented, AE-free CLI gates pass,
-the macOS AE plugin builds, and returned AE-host validation confirms the effect.
+
+## 2026-06-14 status correction (read first)
+
+Two things changed since the 2026-06-06 snapshot below; treat the snapshot's
+percentages and "wait for refs" stop-lines as superseded where they conflict.
+
+**1. Correctness bar is now byte match, not subjective %.** The "% estimate"
+column and "guarded green" (tolerance-gated) language below are retired. A port
+path is judged by `max_diff` against the Windows software (CPU) reference at
+8-bit output: `exact(0)` is the gold bar, `off-by-1 (<=1)` is the accepted
+math-library/quantization tier, cuda is excluded from the exact bar. See the
+`port-correctness-bar-bytematch` memory and `notes/OLMDirectionalBlur_ASM_FACTS.md`.
+"covered" in the reference status only means the reference set is complete; it
+does NOT mean the port matches.
+
+**2. Reference returns.** `directionalblur_context_scale_20260606` returned
+(`refs/win_references/olm_reference_return_windows_20260611/`); `kirakira_single_ray`
+and `olmcolorkey_replace_colorspace` returned and were imported
+(`.../olm_reference_return_windows_20260614/`, split per request). So the
+DirectionalBlur / KiraKira / ColorKey "wait for refs" stop-lines are LIFTED —
+those are now active implementation targets. Still genuinely pending (manifest
+written but PNGs not exported by the renderer): `radialblur_inner_20260605`
+(5/40 frames), `radialblur_inner_size_variation_20260606` (0), and
+`smoother2_no_key_grid_20260606` (0). Recapture package:
+`/tmp/olm_reference_requests_recapture_20260614.zip`.
+
+Measured-bar results so far (software set, `max_diff`):
+
+| Plugin / path | result |
+| --- | --- |
+| OLMColorKey RGB nonblack remove/keep | exact(0) |
+| OLMColorKey LAB76 per-component | exact(0) |
+| OLMColorKey LAB76 nonblack remove | exact(0) — FIXED 2026-06-14 (was max=255) |
+| OLMColorKey HSV nonblack remove | exact(0) — IMPLEMENTED 2026-06-14 (per-space comparator) |
+| OLMColorKey Lab94 nonblack + per-component | exact(0) — IMPLEMENTED 2026-06-14 (CIE94 comparator) |
+| OLMColorKey YUV nonblack | exact(0) — IMPLEMENTED 2026-06-14 |
+| OLMColorKey YCrCb nonblack | exact(0) — IMPLEMENTED 2026-06-14 |
+| OLMColorKey ALL 6 color spaces | 9/9 returned color-space cases exact(0) |
+| OLMColorKey edge-blur transparent rgb | near (max=8, 0.25% px) — separate edge-blur issue |
+| OLMKiraKira single-ray (9 cases) | all FAIL (max 113-142) — untuned |
+| OLMDirectionalBlur (4 cases) | all FAIL (max 248-255) — algorithm wrong, see ASM_FACTS |
+
+2026-06-14 ColorKey LAB fix (landed, measured): the non-per-component keying
+distance in `cli/OLMColorKey/main.cpp` averaged raw per-channel diffs without the
+per-channel `comp_scale` normalization that the per-component path uses, so for
+LAB76 the [0,1] `Threshold` never matched LAB-magnitude distances (nothing keyed
+-> input passed through, max=255). Fixed by dividing each channel diff by
+`comp_scale[c]` in the mean (RGB `comp_scale=1` so RGB stays exact; per-component
+LAB already exact confirmed `comp_scale` is the right normalizer). Result:
+`ck_lab76_nonblack_remove_cyan` max=255 -> 0. No regression: RGB/per-component
+exact, edge-thin (case5/6) and edge-blur (case8/9) gated smokes still ok=2/2.
+
+Next ColorKey step: only color_space==3 (LAB76) sets `comp_scale`; HSV(2),
+Lab94(4), YUV(5), YCrCb(6) still use `comp_scale={1,1,1}` and will mis-key in
+non-per-component mode. Measure the full 34-case set (not just the safe subset)
+and add the per-space `comp_scale` constants from the decomp/.rdata.
+
+---
+
+Original 2026-06-06 snapshot follows. Percentages are engineering estimates, not
+release claims, and are retained for history only.
 
 ## Percent Snapshot
 
@@ -57,6 +115,12 @@ Parent agent owns integration, implementation merges, smoke updates,
 Windows references.
 
 ## Current Pending Reference Requests
+
+(2026-06-14: superseded — see status correction at top. Returned/imported:
+`directionalblur_context_scale_20260606`, `kirakira_single_ray_20260606`,
+`olmcolorkey_replace_colorspace_20260606`. Still pending recapture:
+`radialblur_inner_20260605`, `radialblur_inner_size_variation_20260606`,
+`smoother2_no_key_grid_20260606`. Original list below.)
 
 - `directionalblur_context_scale_20260606`
 - `kirakira_single_ray_20260606`

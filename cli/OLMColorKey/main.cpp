@@ -641,6 +641,65 @@ void rgb_to_plugin_lab76(const float rgb[3], float out[3]) {
     out[2] = (fx - lab_f(b_source)) * 200.0f;
 }
 
+// RGB -> HSV matching FUN_180009e10: standard 6-sector hue in degrees
+// (sector coeff 60, offsets 120/240), wrapped mod 360 then normalized to [0,1];
+// S = (max-min)/max; V = max. Inputs are 0..1 (premultiplied when enabled).
+void rgb_to_plugin_hsv(const float rgb[3], float out[3]) {
+    const float r = rgb[0], g = rgb[1], b = rgb[2];
+    const float mx = std::max(r, std::max(g, b));
+    const float mn = std::min(r, std::min(g, b));
+    const float delta = mx - mn;
+    float h;
+    if (delta == 0.0f) h = 0.0f;
+    else if (mx == r) h = (g - b) * 60.0f / delta;
+    else if (mx == g) h = (b - r) * 60.0f / delta + 120.0f;
+    else h = (r - g) * 60.0f / delta + 240.0f;
+    h = std::fmod(h, 360.0f);
+    if (h < 0.0f) h += 360.0f;
+    out[0] = h / 360.0f;
+    out[1] = mx == 0.0f ? 0.0f : delta / mx;
+    out[2] = mx;
+}
+
+// RGB -> YUV (color space 5), inline matrix in FUN_1800029d0.
+void rgb_to_plugin_yuv(const float rgb[3], float out[3]) {
+    const float r = rgb[0], g = rgb[1], b = rgb[2];
+    out[0] = g * 0.5870000123977661f + r * 0.29899999499320984f + b * 0.11400000005960464f;
+    out[1] = b * 0.4359999895095825f - (g * 0.2888599932193756f + r * 0.14712999761104584f);
+    out[2] = r * 0.6150000095367432f - g * 0.514989972114563f - b * 0.10001000016927719f;
+}
+
+// RGB -> YCrCb (color space 6), FUN_18000a190. out = {Y, Cb, Cr}.
+void rgb_to_plugin_ycrcb(const float rgb[3], float out[3]) {
+    const float r = rgb[0], g = rgb[1], b = rgb[2];
+    out[0] = r * 0.298909991979599f + g * 0.5866100192070007f + b * 0.11448000371456146f;
+    out[1] = b * 0.5f - (r * 0.16874000430107117f + g * 0.33125999569892883f);
+    out[2] = r * 0.5f - g * 0.4186899960041046f - b * 0.08130999654531479f;
+}
+
+// Lab94 (color space 4) distance, matching FUN_180004510 non-per-component path:
+// CIE94-style with geometric-mean chroma sqrt(C1*C2), hue angle in degrees
+// (atan2*180/pi + 180, mod 360), SC = 1 + 0.045*Cmean, SH = 1 + 0.015*Cmean.
+float lab94_distance(const float a[3], const float b[3]) {
+    const float C1 = std::sqrt(a[1] * a[1] + a[2] * a[2]);
+    const float C2 = std::sqrt(b[1] * b[1] + b[2] * b[2]);
+    const float cmean = std::sqrt(C2 * C1);
+    auto hue = [](float aa, float bb) {
+        float h = std::atan2(bb, aa) * 57.2957763671875f + 180.0f;
+        if (h != 0.0f) {
+            if (h < 0.0f) h += 540.0f;
+            h = std::fmod(h, 360.0f);
+        }
+        return h;
+    };
+    const float h1 = hue(a[1], a[2]);
+    const float h2 = hue(b[1], b[2]);
+    const float dL = b[0] - a[0];
+    const float dC = (C2 - C1) / (cmean * 0.04500000178813934f + 1.0f);
+    const float dH = (h2 - h1) / (cmean * 0.014999999664723873f + 1.0f);
+    return std::sqrt(dL * dL + dC * dC + dH * dH);
+}
+
 float edge_blur_weight(bool inside, float dist, float amount, int direction) {
     if (amount <= 0.0f) return inside ? 1.0f : 0.0f;
     if (direction == 1) {
@@ -684,12 +743,30 @@ Image render_olmcolorkey(const Image &input, const ColorKeyParams &cfg) {
             cfg.premultiplied ? rgb[1] * a : rgb[1],
             cfg.premultiplied ? rgb[2] * a : rgb[2],
         };
-        if (cfg.color_space == 3) {
+        if (cfg.color_space == 3 || cfg.color_space == 4) {
             float lab[3];
             rgb_to_plugin_lab76(cmp, lab);
             cmp[0] = lab[0];
             cmp[1] = lab[1];
             cmp[2] = lab[2];
+        } else if (cfg.color_space == 2) {
+            float hsv[3];
+            rgb_to_plugin_hsv(cmp, hsv);
+            cmp[0] = hsv[0];
+            cmp[1] = hsv[1];
+            cmp[2] = hsv[2];
+        } else if (cfg.color_space == 5) {
+            float yuv[3];
+            rgb_to_plugin_yuv(cmp, yuv);
+            cmp[0] = yuv[0];
+            cmp[1] = yuv[1];
+            cmp[2] = yuv[2];
+        } else if (cfg.color_space == 6) {
+            float yc[3];
+            rgb_to_plugin_ycrcb(cmp, yc);
+            cmp[0] = yc[0];
+            cmp[1] = yc[1];
+            cmp[2] = yc[2];
         }
         bool hit_any = false;
         for (const KeyColor &kc : cfg.colors) {
@@ -700,14 +777,68 @@ Image render_olmcolorkey(const Image &input, const ColorKeyParams &cfg) {
                 comp_scale[0] = 151.30099487304688f;
                 comp_scale[1] = 264.36700439453125f;
                 comp_scale[2] = 295.572998046875f;
+            } else if (cfg.color_space == 4) {
+                rgb_to_plugin_lab76(key, key);
+                comp_scale[0] = 151.30099487304688f;
+                comp_scale[1] = 264.36700439453125f;
+                comp_scale[2] = 295.572998046875f;
+            } else if (cfg.color_space == 2) {
+                rgb_to_plugin_hsv(key, key);
+            } else if (cfg.color_space == 5) {
+                rgb_to_plugin_yuv(key, key);
+            } else if (cfg.color_space == 6) {
+                rgb_to_plugin_ycrcb(key, key);
             }
             bool hit = false;
-            if (cfg.per_component) {
+            if (cfg.color_space == 5) {
+                // YUV comparator FUN_180004850: ch0 (Y) direct, ch1 (U)
+                // normalized via (double)u*1.146789+0.5, ch2 (V) ignored.
+                const float t0 = cfg.per_component ? kc.comp[0] : cfg.threshold;
+                const float t1 = cfg.per_component ? kc.comp[1] : cfg.threshold;
+                auto un = [](float u) {
+                    return static_cast<float>(static_cast<double>(u) * 1.146788990825688 + 0.5);
+                };
+                hit = std::fabs(cmp[0] - key[0]) <= t0 + eps8
+                    && std::fabs(un(cmp[1]) - un(key[1])) <= t1 + eps8;
+            } else if (cfg.color_space == 6) {
+                // YCrCb comparator FUN_180004910: ch0 (Y), ch1 (Cb); ch2 (Cr) ignored.
+                const float t0 = cfg.per_component ? kc.comp[0] : cfg.threshold;
+                const float t1 = cfg.per_component ? kc.comp[1] : cfg.threshold;
+                hit = std::fabs(cmp[0] - key[0]) <= t0 + eps8
+                    && std::fabs(cmp[1] - key[1]) <= t1 + eps8;
+            } else if (cfg.color_space == 4) {
+                // Lab94 comparator FUN_180004510.
+                if (cfg.per_component) {
+                    hit = std::fabs(cmp[0] - key[0]) <= (eps8 + kc.comp[0]) * comp_scale[0]
+                        && std::fabs(cmp[1] - key[1]) <= (eps8 + kc.comp[1]) * comp_scale[1]
+                        && std::fabs(cmp[2] - key[2]) <= (eps8 + kc.comp[2]) * comp_scale[2];
+                } else {
+                    hit = lab94_distance(key, cmp)
+                        <= static_cast<float>(static_cast<double>(eps8 + cfg.threshold) * 352.978);
+                }
+            } else if (cfg.color_space == 2) {
+                // HSV comparator FUN_180004290: comp_scale = {1,1,1}.
+                if (cfg.per_component) {
+                    float sh = cmp[0];
+                    if (sh < key[0]) sh += 1.0f;  // hue wraps in [0,1]
+                    hit = (sh - key[0]) <= eps8 + kc.comp[0]
+                        && std::fabs(cmp[1] - key[1]) <= eps8 + kc.comp[1]
+                        && std::fabs(cmp[2] - key[2]) <= eps8 + kc.comp[2];
+                } else {
+                    const float d0 = cmp[0] - key[0];
+                    const float d1 = cmp[1] - key[1];
+                    const float d2 = cmp[2] - key[2];
+                    const float dist = std::sqrt(d0 * d0 + d1 * d1 + d2 * d2);
+                    hit = dist <= std::sqrt(3.0f) * (eps8 + cfg.threshold);
+                }
+            } else if (cfg.per_component) {
                 hit = std::fabs(cmp[0] - key[0]) <= eps8 + kc.comp[0] * comp_scale[0]
                     && std::fabs(cmp[1] - key[1]) <= eps8 + kc.comp[1] * comp_scale[1]
                     && std::fabs(cmp[2] - key[2]) <= eps8 + kc.comp[2] * comp_scale[2];
             } else {
-                float mean = (std::fabs(cmp[0] - key[0]) + std::fabs(cmp[1] - key[1]) + std::fabs(cmp[2] - key[2])) / 3.0f;
+                float mean = (std::fabs(cmp[0] - key[0]) / comp_scale[0]
+                            + std::fabs(cmp[1] - key[1]) / comp_scale[1]
+                            + std::fabs(cmp[2] - key[2]) / comp_scale[2]) / 3.0f;
                 hit = mean <= cfg.threshold;
             }
             hit_any = hit_any || hit;

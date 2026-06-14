@@ -482,3 +482,56 @@ Implications:
   too high, which points back to exact `FUN_1800013e0` denominator/RGB
   normalization or the pre-rotate-back B alpha/RGB relationship rather than
   frame rate, downsample scale, or bilinear alpha-weighting.
+
+## 2026-06-14 Front Alpha Fade is a per-column taper, not a gather window
+
+Measured (not inferred) signed error on `db_diagonal_alpha_ramp` corrects the
+prior note: the candidate is too BRIGHT and alpha too HIGH (over-accumulating),
+uniform across the full frame, no spread/edge error. See
+`OLMDirectionalBlur_ASM_FACTS.md` 2026-06-14 entry for the per-channel numbers.
+
+The asm-grounded cause is how Front Alpha Fade is modeled. In the scatter
+caller (`@180003ac1` region, the two `FUN_1800013e0` calls at the back/front
+tables `param_7+0x58` / `param_7+0x4068`):
+
+```
+fVar10 = max(0, fVar3 - |col - X| * fade_rate(+0x40 / +0x44) / Y(+0xc))
+param_11 = fVar10 * fVar11          // per-column taper * gate
+FUN_1800013e0(..., front_table, front_strength(+0x48), width, param_11)
+```
+
+Inside `FUN_1800013e0`, `param_11` does two things:
+- `param_9 = (int)(param_9 * param_11)` -> shortens the effective scatter span
+- `fVar17 = DAT_18000b1e8 / param_11` -> steepens the weight-index stride
+
+So Front Alpha Fade is a **per-column linear taper of scatter strength**: it
+both shrinks the span and accelerates weight falloff, which reduces total
+accumulated alpha/RGB toward the faded columns.
+
+The current CLI (`render_rotated`) instead models Front Alpha Fade as a
+**box-average of alpha over a `front_alpha_fade * scale` gather window**
+(`use_alpha_fade_gather` -> `front_gather`, applied in the `gather_first` smooth
+loop at ~main.cpp:1018 and the `rowdriver_prepass` at ~main.cpp:1057). A box
+average smooths but does not reduce total contribution, so it leaves alpha (and
+premultiplied RGB) too high on a faded ramp. This is the structural mismatch,
+not `FUN_1800013e0` denom-vs-max normalization (max and denom coexist in the
+real buffer: `param_5` ch0-2 = sum(fVar16*rgb), ch3 = max(fVar16); `param_6` =
+sum(fVar16)).
+
+Next implementation step: add a probe that applies Front Alpha Fade as a
+per-column/per-step linear taper on the scatter `coeff` (mirroring `fVar10`)
+instead of a gather-window average, and re-measure the 4 returned cases via
+`run_reference_test.py`. Keep the gather-window path for comparison until the
+taper is shown to win on the mean without regressing the hard-edge case.
+
+RETRACTED 2026-06-14 (live Ghidra param checkout `FUN_180006c50`): the above
+"Front Alpha Fade = per-column taper" conclusion is WRONG. Param checkout shows
+Front Alpha Fade = `+0x4c` = the gather count (the prepass `FUN_180001000`,
+already modeled by the CLI `rowdriver_prepass`), while the per-column taper at
+`+0x40` is Front Sharp Tail (`/100`). For `db_diagonal_alpha_ramp` (Sharp Tail
+0, Size Var 0) the taper is inactive (guard fills alpha=1.0), so the taper is
+not the cause. `FUN_180001000` matches the CLI prepass structurally. The
+measured over-accumulation now points at the final two-stage RGB-denominator
+normalization / validity pass in `FUN_180004a20` (`param_6[0x1010]`,
+`FUN_180001ec0`, `param_6[0x1023]`), not the scatter taper. See the corrected
+mapping in `OLMDirectionalBlur_ASM_FACTS.md` 2026-06-14 param-struct entry.

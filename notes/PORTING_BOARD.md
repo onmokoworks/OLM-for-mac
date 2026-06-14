@@ -1,6 +1,14 @@
 # OLM Porting Board
 
-Updated: 2026-06-06
+Updated: 2026-06-06 (see 2026-06-14 correction in `notes/PROGRESS_MATRIX.md`)
+
+> 2026-06-14: The board below is a historical detail log. For current status read
+> the "2026-06-14 status correction" at the top of `notes/PROGRESS_MATRIX.md`.
+> Key deltas: correctness is now judged by byte match (`max_diff`) on the
+> software reference, not "guarded green" tolerances; and the DirectionalBlur /
+> KiraKira / ColorKey "wait for refs" stop-conditions in the tables below are
+> LIFTED (those refs returned and were imported). Still pending recapture:
+> `radialblur_inner*`, `smoother2_no_key_grid`.
 
 Goal: port Windows OLM AEX plug-ins to Apple Silicon/macOS, using Ghidra/GhidraMCP
 analysis plus Windows PNG/manifest references, with AE-free CLI verification where
