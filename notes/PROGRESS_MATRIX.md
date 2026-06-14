@@ -42,8 +42,10 @@ Measured-bar results so far (software set, `max_diff`):
 | OLMColorKey YCrCb nonblack | exact(0) — IMPLEMENTED 2026-06-14 |
 | OLMColorKey ALL 6 color spaces | 9/9 returned color-space cases exact(0) |
 | OLMColorKey edge-blur transparent rgb | near (max=8, 0.25% px) — separate edge-blur issue |
-| OLMKiraKira single-ray (9 cases) | all FAIL (max 113-142) — untuned |
-| OLMDirectionalBlur (4 cases) | all FAIL (max 248-255) — algorithm wrong, see ASM_FACTS |
+| OLMColorKey Replace (RGB/Lab76/two-key/dilate, keep+remove) | 5/5 replace-active cases exact(0) — IMPLEMENTED 2026-06-14. ctx+0x24=Color Keep; replace only paints in Keep mode |
+| OLMColorKey edge-thin erode / edge-blur | FAIL (max 255/61) — pre-existing edge residuals, NOT replace; blockers in ASM_FACTS |
+| OLMKiraKira single-ray | improved 2026-06-14: screen-blend compose + zero-ray skip (asm-confirmed) cut axis-aligned to max=13 mean~1.4 (was 135/25.9), diagonal max=43, rotation13 max=76. strength=0 cases stuck at max=113 — underdetermined brightness->param_10 constant (needs a 2nd strength=0 ref at different brightness). box-blur/warp are the residuals |
+| OLMDirectionalBlur (4 cases) | improved 2026-06-14: gaussian table divisor 0.5->3.0 (binary-confirmed) cut means ~15-30% (alpha_fade 30.0->27.4, diagonal 16.3->11.9, size_var 23.5->21.0, sharp_tail 16.5->14.9); still max~254 — residual is GPU-vs-CPU (refs are GPU Rendering=1) + max-alpha/rotate-back edge |
 
 2026-06-14 ColorKey LAB fix (landed, measured): the non-per-component keying
 distance in `cli/OLMColorKey/main.cpp` averaged raw per-channel diffs without the

@@ -60,8 +60,8 @@ struct Options {
     std::string output;
     std::string seed_mode = "aex";
     std::string falloff = "box3";
-    std::string compose_mode = "aex-premul";
-    double gain_scale = 0.72;
+    std::string compose_mode = "aex-screen-over";
+    double gain_scale = 0.62;
     double scale_override = -1.0;
     bool has_scale_override = false;
     bool auto_length_scale = false;
@@ -1164,10 +1164,22 @@ Image render_kirakira(const Image &input, const KiraKiraParams &params, const Op
     }
 
     const double glow_rotation = params.glow_rotation;
-    std::vector<float> vertical = rotated_axis_box_blur(seed, w, h, scaled_len(params.vertical_length), 90.0 + glow_rotation, passes, options.filter_border, options.box_anchor_mode, options.box_normalize, options.box_output_depth, options.rotate_filter, options.rotate_border, options.warp_mode, options.rotate_size_mode, axis_fast_path, options.crop_mode);
-    std::vector<float> horizontal = rotated_axis_box_blur(seed, w, h, scaled_len(params.horizontal_length), glow_rotation, passes, options.filter_border, options.box_anchor_mode, options.box_normalize, options.box_output_depth, options.rotate_filter, options.rotate_border, options.warp_mode, options.rotate_size_mode, axis_fast_path, options.crop_mode);
-    std::vector<float> diagonal = rotated_axis_box_blur(seed, w, h, scaled_len(params.diagonal_length), 45.0 + glow_rotation, passes, options.filter_border, options.box_anchor_mode, options.box_normalize, options.box_output_depth, options.rotate_filter, options.rotate_border, options.warp_mode, options.rotate_size_mode, axis_fast_path, options.crop_mode);
-    std::vector<float> diagonal2 = rotated_axis_box_blur(seed, w, h, scaled_len(params.diagonal2_length), -45.0 + glow_rotation, passes, options.filter_border, options.box_anchor_mode, options.box_normalize, options.box_output_depth, options.rotate_filter, options.rotate_border, options.warp_mode, options.rotate_size_mode, axis_fast_path, options.crop_mode);
+    // AEX FUN_18114f4a0 skips any ray whose length value is 0 (decomp:
+    // `if (iVar6 != 0) { ... build ray ... }`). A zero-length ray therefore
+    // contributes nothing to the glow union. The previous CLI fed length 0
+    // into the box blur, which returns the raw seed, so all four rays became
+    // active at once and the glow was roughly quadrupled. Emit an all-zero
+    // buffer for length-0 rays instead.
+    const std::vector<float> zero_ray(static_cast<size_t>(w) * h, 0.0f);
+    auto make_ray = [&](int raw_len, double angle) -> std::vector<float> {
+        const int len = scaled_len(raw_len);
+        if (raw_len <= 0 || len <= 0) return zero_ray;
+        return rotated_axis_box_blur(seed, w, h, len, angle, passes, options.filter_border, options.box_anchor_mode, options.box_normalize, options.box_output_depth, options.rotate_filter, options.rotate_border, options.warp_mode, options.rotate_size_mode, axis_fast_path, options.crop_mode);
+    };
+    std::vector<float> vertical = make_ray(params.vertical_length, 90.0 + glow_rotation);
+    std::vector<float> horizontal = make_ray(params.horizontal_length, glow_rotation);
+    std::vector<float> diagonal = make_ray(params.diagonal_length, 45.0 + glow_rotation);
+    std::vector<float> diagonal2 = make_ray(params.diagonal2_length, -45.0 + glow_rotation);
 
     double scale = params.brightness_gain * (params.strength_multiplier <= 1.0e-6 ? 1.0 : options.gain_scale);
     if (options.has_scale_override) scale = options.scale_override;
@@ -1223,6 +1235,22 @@ Image render_kirakira(const Image &input, const KiraKiraParams &params, const Op
             out_r = 1.0f - (1.0f - src_r) * (1.0f - glow.data[p + 0] * glow_a);
             out_g = 1.0f - (1.0f - src_g) * (1.0f - glow.data[p + 1] * glow_a);
             out_b = 1.0f - (1.0f - src_b) * (1.0f - glow.data[p + 2] * glow_a);
+        } else if (options.compose_mode == "aex-screen-over") {
+            // Confirmed by single-ray software refs (2026-06-14):
+            //   out_rgb = 1 - (1 - src_rgb) * (1 - glow_rgb * glow_a)
+            //   out_a   = src_a   (glow does not modify alpha for merge mode 1)
+            // strength=0 refs match this to max_diff 0 with a uniform glow.
+            const float src_r = input.rgba[p + 0] / 255.0f;
+            const float src_g = input.rgba[p + 1] / 255.0f;
+            const float src_b = input.rgba[p + 2] / 255.0f;
+            out_r = 1.0f - (1.0f - src_r) * (1.0f - clamp01(glow.data[p + 0] * glow_a));
+            out_g = 1.0f - (1.0f - src_g) * (1.0f - clamp01(glow.data[p + 1] * glow_a));
+            out_b = 1.0f - (1.0f - src_b) * (1.0f - clamp01(glow.data[p + 2] * glow_a));
+            out.rgba[p + 0] = quantize(out_r);
+            out.rgba[p + 1] = quantize(out_g);
+            out.rgba[p + 2] = quantize(out_b);
+            out.rgba[p + 3] = input.rgba[p + 3];
+            continue;
         } else if (denom > 1.0e-6f) {
             out_r = ((input.rgba[p + 0] / 255.0f) * src_a + glow.data[p + 0] * glow_a) / denom;
             out_g = ((input.rgba[p + 1] / 255.0f) * src_a + glow.data[p + 1] * glow_a) / denom;

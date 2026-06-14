@@ -108,8 +108,22 @@ Confirmed front-only/no-noise order:
 - front alpha fade: `params + 0x3ed8`
 - back alpha fade: `params + 0x7ee8`
 
-The current broad Gaussian table is decomp-confirmed. Earlier narrow-table
-probes sometimes gave lower diffs but are not faithful.
+`FUN_180001830(table, length)` builds, per element:
+
+```text
+w[i] = expf(-(i*i) / (2*(length/3.0)^2 + 1e-5))
+```
+
+Binary-confirmed constants (PE read, image base 0x180000000):
+`DAT_18000b1ec` (RVA 0xb1ec) = float 3.0 (the divisor),
+`DAT_18000b1e0` (RVA 0xb1e0) = double 1e-5 (additive eps). 2026-06-14 FIX: the
+CLI `gaussian_weights` previously used a divisor of 0.5, which made the
+denominator ~36x too large and the gaussian far too flat. Corrected to 3.0.
+This is the dominant over-accumulation fix; it lowered all 4 returned
+software cases (alpha_fade 29.99->27.37, diagonal_ramp 16.33->11.88,
+size_var 23.47->21.01, sharp_tail 16.51->14.93) and did not regress the
+existing GPU-rendered pairs. Earlier narrow-table probes that "felt" closer
+were chasing this same width error empirically.
 
 ### Input Rotate
 

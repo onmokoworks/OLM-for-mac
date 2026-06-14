@@ -4,6 +4,117 @@ This page records objdump-first facts for the OLMKiraKira port. Treat Ghidra
 decompilation as a map, not as proof. Treat Windows PNGs as verification data,
 not as an algorithm source.
 
+## 2026-06-14 Single-Ray References (DISENTANGLED AXES)
+
+New software single-ray refs in
+`refs/win_references/olm_reference_return_windows_20260614/OLMKiraKira/`
+finally separated the entangled axes. Case matrix (all Channel=2, Blur Mode=2,
+Merge mode=1, Glow Opacity/Source Opacity=100, comp 1920x1080):
+
+- `kk_{vertical,horizontal,diagonal,diagonal2}_len50_brightness1_strength100`:
+  exactly ONE ray active at length 50, Brightness Gain=1, Strength=100.
+- `kk_{...}_len50_brightness94_strength0`: one ray length 50 but Strength=0
+  (so NO ray), Brightness Gain=9.4 (the "94" label = 9.4, not 94).
+- `kk_diagonal_len50_rotation13`: diagonal ray, Glow Rotation=13.
+
+(Note: GPU Rendering=1 even in the SOFTWARE render set — the usual reference
+caveat. The matches below are still byte-exact on the strength=0 compose, so
+the software path is faithful there.)
+
+### CONFIRMED: compose is a screen blend, alpha passthrough
+
+The merge-mode-1 compose is, per channel:
+
+```
+out_rgb = 1 - (1 - src_rgb) * (1 - glow_rgb * glow_a)   // SCREEN
+out_a   = src_a                                          // glow does NOT add alpha
+```
+
+Proof: the four `strength=0` refs are spatially AND channel uniform with an
+effective screen-glow of 0.498 regardless of source color; feeding glow=0.498
+into the screen formula reproduces every pixel to `max_diff=0` (exact window
+0.498..0.4995). The old `aex-premul` (divide-by `src_a+glow_a`) was wrong.
+Implemented as CLI `--compose-mode aex-screen-over` and made the default.
+
+### CONFIRMED: zero-length rays contribute nothing
+
+`FUN_18114f4a0` @ 3524019 guards each ray with `if (iVar6 != 0) { build ray }`
+where `iVar6` is the per-ray length. A length-0 ray is skipped entirely. The
+previous CLI box-blurred with length 0, which returns the raw seed, so all four
+ray buffers were active simultaneously and the glow was ~quadrupled
+(1-(1-x)^4). Fix: emit an all-zero buffer for any ray with raw length <= 0
+(`make_ray` lambda in `apply_kirakira`). This alone moved the strength100 ray
+cases from max~135/mean~26 to max~13/mean~1.4.
+
+### CONFIRMED: per-ray helper scalar is NOT used by merge-mode-1 aggregator
+
+`FUN_18114f4a0` stores `*pfVar8 = FUN_181150790(...)` into the `local_2a8`
+scalar array and the `length^2` square only into the layer-4 (highlight)
+entry, but the aggregator dispatch passes the RAY POINTER array `local_290`
+(plus brightness) — `local_2a8` is never handed to `FUN_18114fd90`. So the
+helper-return scalar / `length^2` does not affect merge-mode-1 output. This
+removes a long-standing ambiguity.
+
+### CONFIRMED .rdata constants (binary read, image base 0x180000000)
+
+- `DAT_181486c20 = 1.0f` — fd90 RGB normalize numerator (`rgb *= 1.0/alpha`).
+- `DAT_181489990 = 0.001` (double) — fd90 skip epsilon (`ray <= 0.001`).
+  (CLI currently uses 1e-6; immaterial at 8-bit but should be 0.001.)
+- `DAT_181486c1c = 0.5f` — helper half-size center factor.
+- `DAT_18148b840 = 0x7fffffff` — abs-value mask for cos/sin in canvas sizing.
+- `DAT_18148b830 = 4.0f` — used in the rotate-canvas dimension formula.
+
+### fd90 brightness arg
+
+`FUN_18114fd90` param_10 (the `ray * param_10` gain before clamp) is loaded in
+asm at `18114fc34: MOVSS XMM0,[RBP+0x608]` and passed at `[RSP+0x48]` for both
+the `+0x08` and `+0x10` dispatch. `[rbp+0x608]` is set earlier in
+`FUN_18114f4a0` from the effect params; its exact transform from Brightness
+Gain was not fully traced this pass (see blocker below).
+
+### MEASURED (software cases) before -> after this pass
+
+Command: `--seed-mode aex --falloff box3 --gain-scale 0.62 --ray-mode
+axis-rotate --compose-mode aex-screen-over --filter-border mirror
+--auto-length-scale --comp-width 1920`
+
+| case | before max/mean | after max/mean |
+|---|---|---|
+| vertical   b1 s100 | 135/25.88 | 13/1.39 |
+| horizontal b1 s100 | 133/26.11 | 13/1.42 |
+| diagonal   b1 s100 | 142/25.71 | 43/1.70 |
+| diagonal2  b1 s100 | 138/25.71 | 45/1.69 |
+| rotation13         | 139/25.76 | 76/1.84 |
+| vertical   b9.4 s0 | 113/27.76 | 113/27.76 |
+| horizontal b9.4 s0 | 113/27.76 | 113/27.76 |
+| diagonal   b9.4 s0 | 113/27.76 | 113/27.76 |
+| diagonal2  b9.4 s0 | 113/27.76 | 113/27.76 |
+
+The axis-aligned ray residual (max~13) is now the box-blur shape (3-pass
+uniform box vs OpenCV `boxFilter` REFLECT_101/anchor) — an OpenCV-primitive
+residual, not a compose/seed error. An offline numpy reimplementation of the
+exact CLI box reproduces the CLI ray to the float, and the screen model then
+lands mean~1.3, confirming the residual is the box approximation. Diagonal /
+rotation residual (43-76) is the warp path, still the hardest axis.
+
+### REMAINING BLOCKER: strength=0 uniform glow = 0.498
+
+With Strength=0, AEX emits a uniform glow of 0.498 (white RGB, alpha 0.498),
+independent of source. In our model seed = `luma^exponent * a`; exponent 0 =>
+seed=1 uniform, so `glow = clamp01(1 * scale)`. To hit 0.498 the effective
+`scale` at strength=0 must be ~0.498, NOT Brightness Gain (9.4) and NOT
+`9.4 * gain_scale` (which would clamp to 1 = white). The CLI still produces
+white here, so the 4 strength0 cases stay at max=113.
+
+This cannot be resolved from the refs in hand: there is only ONE
+brightness/strength=0 sample (9.4 -> 0.498), so the Brightness-Gain ->
+fd90-`param_10` transform at strength=0 is underdetermined (0.498 fits b/(b+9.5),
+1-exp(-ln2), and many others equally). Resolving it requires either (a) tracing
+the `[rbp+0x608]` write in `FUN_18114f4a0` to the exact Brightness-Gain
+expression, or (b) a second strength=0 reference at a different Brightness Gain.
+Do NOT PNG-fit a single 0.498 constant — it would silently hardcode one
+brightness value.
+
 ## Current Reference Slice
 
 Current C++ smoke command:

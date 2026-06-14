@@ -120,6 +120,91 @@ functions, so decompile-by-name/address fails; raw-disassemble instead).
 Both YUV and YCrCb intentionally key on luma + blue-difference chroma only and
 ignore the red-difference chroma channel.
 
-Remaining OLMColorKey work (separate from color spaces): the Replace feature
-(`Enable Replace=1`, ~17 returned cases — CLI currently throws) and the edge-blur
-transparent-rgb residual (`ck_edgeblur_transparent_rgb` max=8).
+## Replace feature — IMPLEMENTED and exact(0) (2026-06-14)
+
+Param-struct mapping confirmed from the runtime reader `FUN_18000a3d0` (the
+function that populates the keyer ctx from AE params) and the registration
+`FUN_180001000` (which assigns each param its 1-based index). The keyer ctx is a
+packed struct, NOT the raw AE param block; `FUN_18000dbf0`/`d510`/`de90` copy each
+AE param (by 1-based index) into a fixed ctx offset:
+
+| ctx offset | AE param index | param name | reader |
+| --- | --- | --- | --- |
+| +0x24 | 1 | **Color Keep** | dbf0 (bool) |
+| +0x25 | 4 | Premultiplied Color | dbf0 |
+| +0x30 | 5 | Color Space | e050 |
+| +0x38 | 0x15 | Number of Colors | dcd0 |
+| +0x4d | 0x20b | **Enable Replace** | dbf0 (bool) |
+| +0x74 + i*0x10 | 0x16+5i | Color N (ARGB float) | d510 |
+| +0x524 + i | 0x20c+3i | Use Color N (bool) | dbf0 |
+| +0x53d + i | 0x20d+3i | **Use Replace Color N** (bool) | dbf0 |
+| +0x204 + i*0x10 | 0x20e+3i | **Replace Color N** (ARGB float) | d510 |
+| +0x394/0x3f8/0x45c/0x4c0 +i*4 | 0x17+5i.. | Threshold N / per-comp | de90 |
+
+KEY FACT (resolves the spec's open question): **ctx+0x24 IS Color Keep.** The
+keyer tail (`@LAB_180003253` in `FUN_1800029d0`; identical in the 8-bit
+`FUN_1800029d0` predecessor and the float keyer) applies the Replace output ONLY
+when ALL of: `ctx+0x24 (Color Keep) != 0` && `ctx+0x53d+idx (Use Replace Color
+idx) != 0` && `ctx+0x4d (Enable Replace) != 0` && `idx != -1`. So **Replace only
+takes visible effect in Keep mode (Color Keep=1).** Verified against the returned
+references by decoding pixels:
+- `ck_rgb_replace_red_with_blue` (Color Keep=0): matched red -> TRANSPARENT, no
+  blue. `ck_rgb_keep_replace_red_with_blue` (Color Keep=1): matched red -> blue.
+- `ck_lab76_replace_*`, `ck_rgb_two_keys_replace`, `ck_rgb_replace_edge_thin_*`,
+  `ck_edgeblur_replace_*` are all Color Keep=0 -> plain remove, replace ignored.
+
+Replace output (8-bit), keyer tail, ARGB layout (`out[0]=A,1=R,2=G,3=B`):
+  scale = FUN_180011790(ctx+0x20 bit-depth) = 255 for 8-bit;
+  out R = (byte)(int)(255 * ReplaceColor[+0x208+idx*0x10]) (= R slot, base+4),
+  out G = (byte)(int)(255 * ReplaceColor[+0x20c+idx*0x10]),
+  out B = (byte)(int)(255 * ReplaceColor[+0x210+idx*0x10]);
+  alpha untouched (matched -> keeps original alpha). Cast is truncating int.
+
+CLI impl (`cli/OLMColorKey/main.cpp`): `KeyColor` gained `use_replace` +
+`replace_rgb[3]` (parsed from "Use Replace Color N" / "Replace Color N"); the
+match loop records the first matching color index per pixel (`matched_idx`); the
+keep loop overwrites kept-pixel RGB with the replace color when
+`color_keep && enable_replace && idx>=0 && colors[idx].use_replace`. The earlier
+`throw "replace color is not implemented"` is removed.
+
+Measured (software frames, max_diff):
+- ck_rgb_replace_red_with_blue ........ 0  exact
+- ck_rgb_keep_replace_red_with_blue ... 0  exact
+- ck_lab76_replace_cyan_with_magenta .. 0  exact
+- ck_rgb_two_keys_replace ............. 0  exact
+- ck_rgb_replace_edge_thin_dilate ..... 0  exact
+- ck_rgb_replace_edge_thin_erode ...... 255  FAIL (pre-existing edge-thin erode
+  residual, NOT replace; see blocker below — same residual as regression smoke
+  case_0005/0006)
+- ck_edgeblur_replace_red_with_blue ... 61  FAIL (pre-existing edge-blur blend)
+- ck_edgeblur_transparent_rgb ......... 8   FAIL (pre-existing edge-blur blend)
+
+Regression: smoke_olmcolorkey_cpp_cli.py and
+smoke_olmcolorkey_replace_colorspace_request_cli.py both exit 0; all 6 color
+spaces still exact(0); edge-thin residual cases unchanged at their documented
+tolerance.
+
+## BLOCKERS (edge-thin erode + edge-blur blend) — not guessed
+
+These are independent of Replace (all the failing cases have Color Keep=0 so no
+replace pixel is written) and require decompiling the morphology/blend, not a
+constant guess; stopped per the byte-match-or-decomp-fact rule.
+
+1. **Edge-thin ERODE off-by-one (L1, distance_type=2)**, `ck_rgb_replace_edge_thin_erode`
+   max=255 on ~932 px (0.04%). The dilate sibling (amount=+8, type=2) is exact(0),
+   so the forward L1 distance is correct; the erode band keeps matched pixels one
+   L1 step too far (e.g. ref transparent at x=221,y=161 but CLI keeps red). The
+   binary's erode is `FUN_180008320` (ctx+0x40 amount / +0x44 type / +0x48); the
+   CLI's `limit = |amount| + (type 0/2 ? 1 : 0)` with `dist > limit` is the
+   suspect. This is the SAME residual already tracked by regression smoke
+   case_0005/0006 (max=255, mean~0.30) — pre-existing, not introduced here.
+
+2. **Edge-blur blend residual**, `ck_edgeblur_transparent_rgb` max=8 and
+   `ck_edgeblur_replace_red_with_blue` max=61. The per-pixel edge-blur WEIGHT is
+   `FUN_1800049a0` (sin ramp; matches the CLI `edge_blur_weight`). The residual is
+   in the APPLY/BLEND step, not the weight: the CLI does `out_channel = src *
+   weight` (truncated), which drives RGB toward 0 at low weight, but the reference
+   keeps a small constant source RGB (e.g. ref (1,1,1,a) where CLI gives (0,0,0,a))
+   and attenuates differently near the (245,245,245) background boundary. Resolving
+   needs the blend function that consumes the `FUN_1800049a0` weight buffer
+   (likely an unmultiplied composite / bilinear sample), decompiled — deferred.

@@ -466,8 +466,16 @@ void write_png(const std::string &path, const Image &image) {
 std::vector<float> gaussian_weights(int length) {
     length = std::max(length, 1);
     std::vector<float> weights(static_cast<size_t>(length), 1.0f);
-    const float denom = 2.0f * (static_cast<float>(length) / 0.5f) * (static_cast<float>(length) / 0.5f) + 1.0e-5f;
-    for (int i = 0; i < length; ++i) weights[static_cast<size_t>(i)] = std::exp(-(static_cast<float>(i * i)) / denom);
+    // FUN_180001830 (the AEX weight-table builder) computes, per element:
+    //   t   = (length / DAT_18000b1ec)^2      with DAT_18000b1ec = 3.0f (binary-confirmed)
+    //   den = 2*t + DAT_18000b1e0             with DAT_18000b1e0 = 1e-5 (double)
+    //   w[i] = expf(-(i*i) / den)
+    // The earlier CLI divisor of 0.5 made den ~36x too large, flattening the
+    // gaussian and over-weighting far samples (over-accumulated alpha + RGB).
+    const float ratio = static_cast<float>(length) / 3.0f;
+    const double den = 2.0 * static_cast<double>(ratio) * static_cast<double>(ratio) + 1.0e-5;
+    for (int i = 0; i < length; ++i)
+        weights[static_cast<size_t>(i)] = std::exp(-(static_cast<float>(i * i)) / static_cast<float>(den));
     return weights;
 }
 

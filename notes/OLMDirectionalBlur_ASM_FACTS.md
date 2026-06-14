@@ -754,6 +754,101 @@ Next asm pass: trace what fills `param_6[0x1010]` (the RGB denominator) and how
 `FUN_180001ec0` / `param_6[0x1023]` feed the final alpha, then compare to the
 CLI's `accum_sum` / `accum_alpha`.
 
+2026-06-14 RESOLVED: ctx[0x1010] / final normalization traced, gaussian-table
+divisor was the over-accumulation bug.
+
+Buffer map pinned from the 8bpc SmartRender body (`FUN_180004a20`, the branch
+using populate `LAB_180006980` / output `LAB_180006b30`). `param_6` is a
+`undefined8*`, so the `0x100f..0x1012` indices ARE the `0x8078..0x8090` byte
+offsets:
+
+- `param_6[0x100f]` = byte `+0x8078` = `_Dst` = RGBA buffer A
+  (`iVar17*iVar9*4` floats).
+- `param_6[0x1010]` = byte `+0x8080` = the per-pixel RGB DENOMINATOR
+  (`iVar17*iVar9` floats, one per pixel).
+- `param_6[0x1011]` = byte `+0x8088` = `alpha_or_valid` (one float/pixel).
+- `param_6[0x1012]` = byte `+0x8090` = `_Src` = RGBA buffer B.
+- `param_6[0x1023]` = a 4x (RGBA-sized) validity buffer, zeroed then set to
+  `0x3f800000` (1.0) for every element ONLY under the no-tail/no-size guard
+  `(+0x44 < 1e-4 && +0x8 < 1e-4 && +0x6 < 1e-4)`. It is consumed by
+  `FUN_1800028e0` (component map) as a validity mask, NOT by the RGB divide.
+
+What fills `ctx[0x1010]` (denominator):
+- prepass `FUN_180001000` SEEDS `denom[p] = gathered_avg_alpha = sum(w*a)/sum(w)`
+  (weight_sum seeded 1.0 with center weight, alpha_sum seeded center alpha),
+  i.e. the SAME value it writes to `B[p].a` and `alpha_or_valid[p]`.
+- scatter `FUN_1800013e0` then ADDS, at each scattered destination,
+  `denom[dst] += fVar16` where `fVar16 = alpha_or_valid[src] * weight_table[idx]`.
+- The matching RGB accumulation is `B[dst].rgb += A[src].rgb * fVar16` (raw
+  source RGB times the same `fVar16`), and `B[dst].a = max(B[dst].a, fVar16)`.
+
+Exact final normalization (8bpc, `FUN_180004a20` lines ~2540-2565):
+- for every pixel `i`: `fVar22 = denom[i]`; if `fVar22 > 0.0`,
+  `B.rgb[i] /= fVar22` (channels 0/1/2 only). `B.a` (offset +0xc) is NOT divided.
+  `A[i]` is cleared.
+- then `FUN_180001ec0(_Src=B, _Dst=A, w, h, -angle)` rotates B back into A. The
+  rotate helper writes `dst.alpha = bilinear corner-sum of source alpha` and
+  `dst.rgb = (sum of corner_weight*corner_alpha*corner_rgb)/alpha_sum`, then
+  output reads A. So final alpha is the alpha-weighted bilinear of B.a (the max
+  channel), final RGB is the alpha-weighted bilinear of the denom-normalized B.
+
+CLI comparison (`render_rotated`, exact-rowdriver path): the per-pixel math
+already matches -- `accum_sum` seed = prepass avg alpha = decomp denom seed;
+`accum_rgb` seed = avg_alpha * raw_rgb; scatter adds `source_rgb*alpha*weight`
+to RGB and `alpha*weight` to `accum_sum`, with `accum_alpha = max`. Final
+`rgb /= accum_sum`, alpha = max, rotate-back alpha-weighted. So the
+normalization shape was NOT the bug.
+
+THE BUG (binary-confirmed): the weight-table builder `FUN_180001830` divisor.
+Direct PE read of `aex/.../OLMDirectionalBlur.aex` (image base 0x180000000,
+RVA->file via section headers):
+
+- `DAT_18000b1ec` @ RVA 0xb1ec = `0x40400000` = float **3.0** (the divisor).
+- `DAT_18000b1e0` @ RVA 0xb1e0 = double **1e-05** (the additive epsilon).
+- `DAT_18000b1e8` @ RVA 0xb1e8 = float 1.0.
+- `DAT_18000b340` @ RVA 0xb340 = double 1e-04 (the no-tail/no-size guard eps).
+
+`FUN_180001830(table, length)` therefore builds
+`w[i] = expf(-(i*i) / (2*(length/3.0)^2 + 1e-5))`.
+
+The CLI `gaussian_weights` used a divisor of **0.5** instead of 3.0, making the
+denominator ~36x too large, flattening the gaussian and over-weighting far
+samples. Because the same builder feeds BOTH the scatter table (length
+`+0x48` = Front Blur Strength) and the gather/alpha-fade table (length
+`+0x4c` = Front Alpha Fade), this inflated both the prepass average alpha and
+the scattered RGB/alpha -> the measured uniform over-accumulation
+(`db_diagonal_alpha_ramp`: alpha +6.9, premul RGB up to +0).
+
+Fix applied in `cli/OLMDirectionalBlur/main.cpp` `gaussian_weights`: divisor
+0.5 -> 3.0 with the `2*ratio^2 + 1e-5` denominator. Measured software fr24
+(returned cases, `rotated-aex-exact-rowdriver`, mean_diff):
+
+| case | before | after |
+| --- | ---: | ---: |
+| db_angle0_alpha_fade_hard_edges | 29.9884 | 27.3729 |
+| db_diagonal_alpha_ramp | 16.3346 | 11.8807 |
+| db_size_variation_component | 23.4683 | 21.0120 |
+| db_sharp_tail_component | 16.5056 | 14.9299 |
+
+Also strictly improves the existing GPU-rendered pairs (no regression):
+`db_existing_case_0001_software_pair` 38.52 -> 37.34,
+`db_existing_case_0005_software_pair` 20.91 -> 17.60.
+
+Remaining gap (measured signed candidate-minus-reference, after fix):
+- `db_diagonal_alpha_ramp` (cleanest, full-frame, angle -45): alpha +3.05,
+  premul RGB R/G/B = -2.18 / -2.00 / +0.28. Mild remaining under-darkening +
+  small alpha excess.
+- `db_angle0_alpha_fade_hard_edges`: alpha now -11.38 (was +4.69), premul RGB
+  -3.27/-2.17/+0.05 -- alpha now slightly UNDER on the hard-edge case.
+- `db_size_variation_component`: alpha -9.82, premul RGB -6.20/-4.09/+0.61.
+- `db_sharp_tail_component`: alpha -9.36, premul RGB -5.34/-3.54/-0.64.
+The fade-hard-edge / size-var / sharp-tail cases now read alpha slightly LOW
+while the ramp reads slightly HIGH. The max-vs-bilinear interaction at edges
+(`FUN_180001ec0` rotate-back alpha = bilinear corner-sum of the max-tracked
+B.a) is the most likely remaining residual; all of these are GPU Rendering=1
+references (see GPU-rendering caveat). No further change made without a new
+binary/decomp fact to avoid PNG-fitting.
+
 2026-06-06 truncated-span diagnostic:
 
 - Added `rotated-aex-truncated-span` to test the exact `FUN_1800013e0` gate:

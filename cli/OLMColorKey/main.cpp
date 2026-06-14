@@ -30,6 +30,10 @@ struct KeyColor {
     Color rgb;
     float threshold = 0.0f;
     float comp[3] = {0.0f, 0.0f, 0.0f};
+    bool use_replace = false;
+    // Replace color, RGB in 0..1 (param "Replace Color N", stored as ARGB float
+    // in the keyer ctx at +0x204+idx*0x10; keyer reads R/G/B from +4/+8/+0xc).
+    float replace_rgb[3] = {0.0f, 0.0f, 0.0f};
 };
 
 struct ColorKeyParams {
@@ -364,6 +368,11 @@ ColorKeyParams read_params(const std::string &path) {
         kc.comp[0] = static_cast<float>(json_number_or(get("Threshold(R,H,L,Y,Y) " + suffix), 0.0));
         kc.comp[1] = static_cast<float>(json_number_or(get("Threshold(G,S,a,U,Cr) " + suffix), 0.0));
         kc.comp[2] = static_cast<float>(json_number_or(get("Threshold(B,V,b,V,Cb) " + suffix), 0.0));
+        kc.use_replace = json_number_or(get("Use Replace Color " + suffix), 0.0) != 0.0;
+        Color rep = json_color_or(get("Replace Color " + suffix));
+        kc.replace_rgb[0] = rep.r;
+        kc.replace_rgb[1] = rep.g;
+        kc.replace_rgb[2] = rep.b;
         cfg.colors.push_back(kc);
     }
     if (cfg.colors.empty()) {
@@ -721,13 +730,15 @@ float edge_blur_weight(bool inside, float dist, float amount, int direction) {
 }
 
 Image render_olmcolorkey(const Image &input, const ColorKeyParams &cfg) {
-    if (cfg.enable_replace) throw std::runtime_error("replace color is not implemented");
-
     Image out = input;
     const int w = input.width;
     const int h = input.height;
     const int n = w * h;
     std::vector<unsigned char> matched(n, 0);
+    // Index (into cfg.colors) of the first key that matched each pixel, or -1.
+    // The keyer (FUN_1800029d0) records the matched index to drive the Replace
+    // output path; see notes/OLMColorKey_ASM_FACTS.md.
+    std::vector<int> matched_idx(n, -1);
     constexpr float eps8 = 0.5f / 255.0f;
 
     for (int i = 0; i < n; ++i) {
@@ -769,7 +780,9 @@ Image render_olmcolorkey(const Image &input, const ColorKeyParams &cfg) {
             cmp[2] = yc[2];
         }
         bool hit_any = false;
-        for (const KeyColor &kc : cfg.colors) {
+        int hit_idx = -1;
+        for (size_t ci = 0; ci < cfg.colors.size(); ++ci) {
+            const KeyColor &kc = cfg.colors[ci];
             float key[3] = {kc.rgb.r, kc.rgb.g, kc.rgb.b};
             float comp_scale[3] = {1.0f, 1.0f, 1.0f};
             if (cfg.color_space == 3) {
@@ -841,9 +854,11 @@ Image render_olmcolorkey(const Image &input, const ColorKeyParams &cfg) {
                             + std::fabs(cmp[2] - key[2]) / comp_scale[2]) / 3.0f;
                 hit = mean <= cfg.threshold;
             }
+            if (hit && hit_idx == -1) hit_idx = static_cast<int>(ci);
             hit_any = hit_any || hit;
         }
         matched[i] = hit_any ? 1 : 0;
+        matched_idx[i] = hit_idx;
     }
 
     if (cfg.edge_thin_amount < 0.0f) {
@@ -867,6 +882,21 @@ Image render_olmcolorkey(const Image &input, const ColorKeyParams &cfg) {
             out.rgba[p + 1] = 0;
             out.rgba[p + 2] = 0;
             out.rgba[p + 3] = 0;
+        } else {
+            // Replace output (keyer FUN_1800029d0 tail @LAB_180003253): the
+            // matched pixel's RGB is overwritten with Replace Color N, gated on
+            //   ctx+0x24 (Color Keep) && ctx+0x4d (Enable Replace)
+            //   && ctx+0x53d+idx (Use Replace Color N) && idx != -1.
+            // Scale = FUN_180011790(8-bit) = 255; cast is truncating int.
+            // Alpha is untouched (matched -> keeps original alpha).
+            const int idx = matched_idx[i];
+            if (cfg.color_keep && cfg.enable_replace && idx >= 0
+                && cfg.colors[static_cast<size_t>(idx)].use_replace) {
+                const float *rep = cfg.colors[static_cast<size_t>(idx)].replace_rgb;
+                out.rgba[p + 0] = static_cast<unsigned char>(static_cast<int>(255.0f * rep[0]));
+                out.rgba[p + 1] = static_cast<unsigned char>(static_cast<int>(255.0f * rep[1]));
+                out.rgba[p + 2] = static_cast<unsigned char>(static_cast<int>(255.0f * rep[2]));
+            }
         }
     }
     if (cfg.edge_blur_amount != 0.0f) {
