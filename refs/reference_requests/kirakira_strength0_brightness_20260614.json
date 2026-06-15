@@ -1,0 +1,87 @@
+{
+  "request_id": "kirakira_strength0_brightness_20260614",
+  "effect": {
+    "name": "OLM Kira Kira",
+    "match_name": "OLM OLM Kira Kira"
+  },
+  "why": [
+    "The 2026-06-14 single-ray return resolved compose (screen blend, alpha passthrough) and zero-ray handling, but the Strength=0 cases stay at max=113 because the Brightness Gain -> internal fd90 gain (param_10) transform is underdetermined.",
+    "At Strength=0 the seed is uniform (exponent -> 0 so seed = 1), so the output glow is a single constant per case. The only existing Strength=0 sample is Brightness Gain 9.4 -> uniform glow 0.498, which is one data point for a transform with unknown shape (linear? scaled? clamped?).",
+    "Two or more Strength=0 references at different Brightness Gain values pin the transform without PNG-fitting a constant. See notes/OLMKiraKira_ASM_FACTS.md (the [rbp+0x608] brightness arg into FUN_18114fd90)."
+  ],
+  "render_sets": [
+    {
+      "id": "software",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "required": true
+    },
+    {
+      "id": "cuda",
+      "project_gpu_accel_type.current_name": "CUDA",
+      "required": false
+    }
+  ],
+  "inputs": [
+    {
+      "id": "current_olm_cells",
+      "description": "Use the same source artwork as refs/win_references/20260604_olm/OLMKiraKira and the kirakira_single_ray_20260606 return so the constant is directly comparable."
+    }
+  ],
+  "common_params": {
+    "Channel": 2,
+    "Blur Mode": 2,
+    "Merge mode": 1,
+    "Highlight Radius": 0,
+    "Glow Rotation": 0,
+    "Approximated Input": 0,
+    "Color Ramp": 0,
+    "Strength": 0,
+    "Vertical Length": 50,
+    "Horizontal Length": 0,
+    "Diagonal Length": 0,
+    "Diagonal2 Length": 0,
+    "Vertical Color": [1, 1, 1, 1],
+    "Horizontal Color": [1, 1, 1, 1],
+    "Diagonal Color": [1, 1, 1, 1],
+    "Diagonal2 Color": [1, 1, 1, 1]
+  },
+  "cases": [
+    {
+      "id": "kk_s0_brightness1",
+      "input": "current_olm_cells",
+      "reason": "Strength=0 low brightness anchor for the Brightness Gain -> param_10 transform.",
+      "params": {"Brightness Gain": 1, "Strength": 0}
+    },
+    {
+      "id": "kk_s0_brightness25",
+      "input": "current_olm_cells",
+      "reason": "Strength=0 mid-low brightness sample.",
+      "params": {"Brightness Gain": 25, "Strength": 0}
+    },
+    {
+      "id": "kk_s0_brightness50",
+      "input": "current_olm_cells",
+      "reason": "Strength=0 mid brightness sample to test linearity vs clamping.",
+      "params": {"Brightness Gain": 50, "Strength": 0}
+    },
+    {
+      "id": "kk_s0_brightness94",
+      "input": "current_olm_cells",
+      "reason": "Strength=0 high brightness sample matching the existing 9.4 -> 0.498 point (confirm reproduction).",
+      "params": {"Brightness Gain": 94, "Strength": 0}
+    }
+  ],
+  "manifest_requirements": [
+    "Record all OLM Kira Kira property names, match_names, property_index, values, enabled/active state, and selected effect path.",
+    "Record project_gpu_accel_type.current_name and raw value per render set.",
+    "Keep ADBE Force CPU GPU / GPU Rendering as reference-only metadata, not as the execution-path label.",
+    "Save both before_effects_frame and effect output PNG for every case.",
+    "CRITICAL: verify the number of exported PNGs equals the number of manifest cases (the 2026-06-14 render wrote a manifest but omitted PNGs for several requests).",
+    "Preserve the same comp size and source artwork used by the kirakira_single_ray_20260606 return."
+  ],
+  "mac_follow_up": [
+    "Import with refs/scripts/import_win_reference.py (or scripts/intake_olm_return.py).",
+    "Fit the Brightness Gain -> uniform-glow transform from the Strength=0 samples and set the OLMKiraKira fd90 param_10 mapping accordingly.",
+    "Re-measure the kirakira_single_ray Strength=0 cases (currently max=113) for exact(0)."
+  ]
+}
