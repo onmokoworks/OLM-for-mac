@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""Measure the unresolved OLMKiraKira Brightness/Strength=0 path.
-
-This smoke is intentionally red. case_0003 has Brightness Gain=9.4 and
-Strength multiplier=0, but the Windows reference still emits dense white
-KiraKira rays. The probe keeps that discrepancy reproducible while the vtable
-and source/glow routing are still being reverse engineered.
-"""
+"""Measure the OLMKiraKira Strength=0 Brightness half-gain path."""
 
 from __future__ import annotations
 
@@ -17,21 +11,25 @@ from pathlib import Path
 
 def main() -> int:
     root = Path(__file__).resolve().parents[2]
-    reference = root / "refs" / "win_references" / "20260604_olm" / "OLMKiraKira"
+    reference = root / "refs" / "win_references" / "olm_reference_return_windows_recapture_20260615" / "OLMKiraKira"
     if not reference.exists():
         print(f"missing Windows reference directory: {reference}", file=sys.stderr)
         return 1
+
+    build = subprocess.run([str(root / "refs" / "scripts" / "build_olmkirakira_cli.sh")], cwd=root)
+    if build.returncode != 0:
+        return build.returncode
 
     run_dir = Path("/tmp/olmkirakira_brightness_probe_smoke")
     if run_dir.exists():
         shutil.rmtree(run_dir)
 
     command = (
-        'python3 "refs/scripts/olmkirakira_cli.py" '
+        '"cli/OLMKiraKira/olmkirakira_cli" '
         '--input "{input}" --params "{params}" --output "{output}" '
-        "--seed-mode aex --falloff box3 --gain-scale 0.72 "
-        "--ray-mode axis-rotate --compose-mode aex-premul "
-        "--scale-mode aex --filter-border mirror "
+        "--seed-mode aex --falloff box3 --gain-scale 0.62 "
+        "--ray-mode axis-rotate --compose-mode aex-screen-over "
+        "--filter-border mirror "
         "--auto-length-scale --comp-width 1920"
     )
     args = [
@@ -40,10 +38,14 @@ def main() -> int:
         str(reference),
         "--run-dir",
         str(run_dir),
-        "--case-id",
-        "case_0003",
         "--expected-effect",
         "OLM Kira Kira",
+        "--max-diff",
+        "1",
+        "--mean-diff",
+        "0.04",
+        "--nonzero-px-percent",
+        "6.2",
         "--command",
         command,
     ]

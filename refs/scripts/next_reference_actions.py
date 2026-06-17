@@ -83,7 +83,7 @@ FOLLOW_UPS = {
         ],
         "write_scope": "none",
         "reason": "Unblocks ray order, angle table, helper scalar, and crop/canvas behavior for KiraKira.",
-        "command": "python3 refs/scripts/smoke_reference_request_cli_probe.py --request-id kirakira_single_ray_20260606 --expected-effect 'OLM Kira Kira' --build-script refs/scripts/build_olmkirakira_cli.sh --command '\"cli/OLMKiraKira/olmkirakira_cli\" --input \"{input}\" --params \"{params}\" --output \"{output}\" --seed-mode aex --falloff box3 --gain-scale 0.72 --ray-mode axis-rotate --compose-mode aex-premul --filter-border mirror --auto-length-scale --comp-width 1920'",
+        "command": "python3 refs/scripts/smoke_reference_request_cli_probe.py --request-id kirakira_single_ray_20260606 --expected-effect 'OLM Kira Kira' --build-script refs/scripts/build_olmkirakira_cli.sh --command '\"cli/OLMKiraKira/olmkirakira_cli\" --input \"{input}\" --params \"{params}\" --output \"{output}\" --seed-mode aex --falloff box3 --gain-scale 0.62 --ray-mode axis-rotate --compose-mode aex-screen-over --filter-border mirror --auto-length-scale --comp-width 1920'",
         "agent": "Spawn/read OLMKiraKira explorer to isolate vertical/horizontal, diagonal, and scalar behavior in that order.",
         "agent_prompt": "Read notes/OLMKiraKira_ASM_FACTS.md, notes/OLMKiraKira_SCALAR_AGGREGATION_AUDIT.md, refs/reference_requests/kirakira_single_ray_20260606.json, cli/OLMKiraKira/, and refs/scripts/smoke_olmkirakira*.py. Do not edit. Use the single-ray returned cases to separate ray order, angle table, helper scalar, crop/canvas, and axis fast-path behavior.",
     },

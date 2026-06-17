@@ -306,13 +306,22 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	std::vector<float> seed = MakeSeed<PixelT>(input, info);
 	const A_long passes = 3;
 	const double glow_rotation = info.glow_rotation;
-	std::vector<float> vertical = RotatedAxisBoxBlur(seed, w, h, scaled_len(info.vertical_length), 90.0 + glow_rotation, passes);
-	std::vector<float> horizontal = RotatedAxisBoxBlur(seed, w, h, scaled_len(info.horizontal_length), glow_rotation, passes);
-	std::vector<float> diagonal = RotatedAxisBoxBlur(seed, w, h, scaled_len(info.diagonal_length), 45.0 + glow_rotation, passes);
-	std::vector<float> diagonal2 = RotatedAxisBoxBlur(seed, w, h, scaled_len(info.diagonal2_length), -45.0 + glow_rotation, passes);
+	const std::vector<float> zero_ray((size_t)w * h, 0.0f);
+	auto make_ray = [&](A_long raw_len, double angle) -> std::vector<float> {
+		const A_long len = scaled_len(raw_len);
+		if (raw_len <= 0 || len <= 0) return zero_ray;
+		return RotatedAxisBoxBlur(seed, w, h, len, angle, passes);
+	};
+	std::vector<float> vertical = make_ray(info.vertical_length, 90.0 + glow_rotation);
+	std::vector<float> horizontal = make_ray(info.horizontal_length, glow_rotation);
+	std::vector<float> diagonal = make_ray(info.diagonal_length, 45.0 + glow_rotation);
+	std::vector<float> diagonal2 = make_ray(info.diagonal2_length, -45.0 + glow_rotation);
 
-	const double gain_scale = 0.72;
-	double scale = info.brightness_gain * (info.strength_multiplier <= 1.0e-6 ? 1.0 : gain_scale);
+	const double gain_scale = 0.62;
+	double scale = info.brightness_gain * gain_scale;
+	if (info.strength_multiplier <= 1.0e-6) {
+		scale = 127.0 / 255.0;
+	}
 	std::vector<FloatRGBA> glow((size_t)w * h);
 	AddColoredUnion(glow, vertical, info.vertical_color, scale);
 	AddColoredUnion(glow, horizontal, info.horizontal_color, scale);
@@ -333,14 +342,11 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			FloatRGBA src = PixelTraits<PixelT>::Read(*PixelAtConst<PixelT>(input, x, y));
 			float src_a = src.a * (float)info.source_opacity;
 			float glow_a = Clamp01(glow[idx].a * (float)info.glow_opacity);
-			float denom = src_a + glow_a;
 			FloatRGBA out;
-			if (denom > 1.0e-6f) {
-				out.r = (src.r * src_a + glow[idx].r * glow_a) / denom;
-				out.g = (src.g * src_a + glow[idx].g * glow_a) / denom;
-				out.b = (src.b * src_a + glow[idx].b * glow_a) / denom;
-			}
-			out.a = std::min(1.0f, denom);
+			out.r = 1.0f - (1.0f - src.r) * (1.0f - Clamp01(glow[idx].r * glow_a));
+			out.g = 1.0f - (1.0f - src.g) * (1.0f - Clamp01(glow[idx].g * glow_a));
+			out.b = 1.0f - (1.0f - src.b) * (1.0f - Clamp01(glow[idx].b * glow_a));
+			out.a = src_a;
 			*PixelAt<PixelT>(output, x, y) = PixelTraits<PixelT>::Write(out);
 		}
 	}

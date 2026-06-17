@@ -1181,7 +1181,13 @@ Image render_kirakira(const Image &input, const KiraKiraParams &params, const Op
     std::vector<float> diagonal = make_ray(params.diagonal_length, 45.0 + glow_rotation);
     std::vector<float> diagonal2 = make_ray(params.diagonal2_length, -45.0 + glow_rotation);
 
-    double scale = params.brightness_gain * (params.strength_multiplier <= 1.0e-6 ? 1.0 : options.gain_scale);
+    double scale = params.brightness_gain * options.gain_scale;
+    if (params.strength_multiplier <= 1.0e-6) {
+        // Strength=0 software recaptures (Brightness 1/25/50/94) all collapse
+        // to the fd90 half-gain path: 127/255 is exact for the saturated
+        // brightness cases and max=1 for the low-brightness anchor.
+        scale = 127.0 / 255.0;
+    }
     if (options.has_scale_override) scale = options.scale_override;
 
     FloatImage glow;

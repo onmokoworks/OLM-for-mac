@@ -97,23 +97,25 @@ exact CLI box reproduces the CLI ray to the float, and the screen model then
 lands mean~1.3, confirming the residual is the box approximation. Diagonal /
 rotation residual (43-76) is the warp path, still the hardest axis.
 
-### REMAINING BLOCKER: strength=0 uniform glow = 0.498
+### RESOLVED: strength=0 uses the half-gain fd90 path
 
-With Strength=0, AEX emits a uniform glow of 0.498 (white RGB, alpha 0.498),
-independent of source. In our model seed = `luma^exponent * a`; exponent 0 =>
-seed=1 uniform, so `glow = clamp01(1 * scale)`. To hit 0.498 the effective
-`scale` at strength=0 must be ~0.498, NOT Brightness Gain (9.4) and NOT
-`9.4 * gain_scale` (which would clamp to 1 = white). The CLI still produces
-white here, so the 4 strength0 cases stay at max=113.
+The 2026-06-15 recapture
+`refs/win_references/olm_reference_return_windows_recapture_20260615/OLMKiraKira/`
+adds Strength=0 cases at Brightness Gain 1, 25, 50, and 94. All four use the
+same one-ray setup, so the seed is uniform (`luma^0 * a`) and the output directly
+identifies the fd90 gain.
 
-This cannot be resolved from the refs in hand: there is only ONE
-brightness/strength=0 sample (9.4 -> 0.498), so the Brightness-Gain ->
-fd90-`param_10` transform at strength=0 is underdetermined (0.498 fits b/(b+9.5),
-1-exp(-ln2), and many others equally). Resolving it requires either (a) tracing
-the `[rbp+0x608]` write in `FUN_18114f4a0` to the exact Brightness-Gain
-expression, or (b) a second strength=0 reference at a different Brightness Gain.
-Do NOT PNG-fit a single 0.498 constant — it would silently hardcode one
-brightness value.
+Measured with `--compose-mode aex-screen-over`:
+
+- `--scale-override 0.5`: saturated brightness cases stay near but not exact
+  (`max=1 mean=0.4336`).
+- `--scale-override 127/255`: Brightness 25/50/94 are exact, and Brightness 1 is
+  `max=1 mean=0.0397`.
+
+So the C++ CLI now maps `Strength multiplier <= 0` to `scale = 127/255` before
+the fd90 aggregation. This is not a single-point PNG fit anymore: it is supported
+by four Brightness anchors and agrees with the binary-observed half constant
+(`DAT_181486c1c = 0.5f`) plus final 8-bit quantization.
 
 ## Current Reference Slice
 
