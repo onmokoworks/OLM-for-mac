@@ -972,3 +972,40 @@ binary/decomp fact to avoid PNG-fitting.
 - This is a partial positive signal: it does not affect the angle-0 case, but
   it improves the diagonal front-only case compared with the previous rotated
   and rotated-preserve-alpha probes.
+
+2026-06-17 live Ghidra rotate-back audit:
+
+- User opened `OLMDirectionalBlur.aex` in Ghidra MCP. Live decompile of
+  `FUN_180001ec0 @ 180001ec0` confirms the existing IR/source-destination
+  convention: `param_1` is source, `param_2` is destination, `param_3/4` are
+  width/height, and `param_5` is the float angle. The helper uses `cosf/sinf`,
+  integer-centered coordinates `(x - width/2, y - height/2)`, rejects samples
+  unless `0 < int(src_x) < width-1` and `0 < int(src_y) < height-1`, writes
+  destination alpha as the bilinear corner alpha sum, and writes RGB as
+  alpha-weighted bilinear RGB divided by that alpha sum.
+- Live decompile of `FUN_1800013e0 @ 1800013e0` also reconfirms the existing
+  scatter IR: source RGB is read from `param_4`, destination RGBA from
+  `param_5`, denominator from `param_6`, alpha/valid from `param_7`, and the
+  contribution is `alpha_or_valid[src] * weight_table[int(offset / coeff)]`
+  after `param_11` scales both the integer span and inverse table index.
+- Re-ran the returned `directionalblur_context_scale_20260606` reference set to
+  test final rotate-back alpha/output variants:
+
+| algorithm | case0001 | case0005 | angle0 hard | diagonal ramp | size var | sharp tail |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| exact-rowdriver | 37.3363 | 17.6044 | 27.3729 | 11.8807 | 21.0120 | 14.9299 |
+| plain-output | 37.3363 | 17.6042 | 27.3729 | 11.8810 | 21.0120 | 14.9299 |
+| rotateback-denom-alpha | 37.7719 | 17.8455 | 30.7026 | 43.1009 | 23.1246 | 17.7014 |
+
+- `plain-output` is effectively identical to `exact-rowdriver`, so the
+  remaining error is not explained by an extra output premultiply/unpremultiply
+  mismatch after rotate-back.
+- `rotateback-denom-alpha` is clearly worse, especially on
+  `db_diagonal_alpha_ramp`, so replacing the max-tracked B alpha with the
+  denominator/summed alpha is the wrong branch.
+- Current implication: keep `FUN_180001ec0` alpha-weighted rotate-back and
+  `FUN_1800013e0` max-alpha scatter semantics as pinned facts. The next useful
+  DirectionalBlur asm target is not another rotate-back alpha variant; inspect
+  the populate/edge/validity path around `FUN_1800028e0`, `param_6[0x1023]`,
+  and the `FUN_1800038d0` caller conditions that decide component ranges and
+  row scatter coverage.
