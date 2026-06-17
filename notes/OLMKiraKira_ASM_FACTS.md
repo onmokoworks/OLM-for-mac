@@ -688,3 +688,56 @@ OpenCV `boxFilter(..., ksize=(length,1), anchor=(-1,-1), normalize=1,
 BORDER_REFLECT_101)` plus `warpAffine` two-temp canvas with the binary-backed
 `+4.0` truncation. Do not chase more brightness/scalar/ray-order refs unless
 that OpenCV primitive pass still leaves an unexplained pattern.
+
+### 2026-06-17 OpenCV primitive with current screen-over compose
+
+Added Python probe support for the current C++ best hypothesis:
+
+- `--compose-mode aex-screen-over`: screen source RGB against
+  `glow_rgb * glow_alpha`, preserve source alpha.
+- `--scale-mode aex-screen-over`: normal strength uses
+  `Brightness Gain * 0.62`; Strength=0 uses `127/255`.
+- `--zero-ray-skip`: length-0 rays contribute zero, not the raw seed.
+- `refs/scripts/smoke_olmkirakira_opencv_screenover_probe_cli.py` runs the
+  imported `kirakira_single_ray_20260606` refs through Python cv2
+  `warpAffine` + `boxFilter` + two-temp canvas. It requires
+  `OLM_PROBE_PYTHON` to point at a Python with `cv2`.
+
+Measurement command used locally:
+
+```text
+python3 -m venv /tmp/olm_cv_probe_venv
+/tmp/olm_cv_probe_venv/bin/python -m pip install opencv-python-headless pillow numpy scipy
+OLM_PROBE_PYTHON=/tmp/olm_cv_probe_venv/bin/python \
+  python3 refs/scripts/smoke_olmkirakira_opencv_screenover_probe_cli.py
+```
+
+Environment caveat: local probe used OpenCV 4.13.0, while the AEX embeds
+OpenCV 4.5.5 paths. Treat this as primitive-shape evidence, not a bit-exact
+library-version proof.
+
+Result on `kirakira_single_ray_20260606`:
+
+| case | max | mean |
+| --- | ---: | ---: |
+| vertical strength100 | 13 | 1.3508 |
+| horizontal strength100 | 13 | 1.4214 |
+| diagonal strength100 | 23 | 1.2605 |
+| diagonal2 strength100 | 23 | 1.2960 |
+| vertical strength0 | 3 | 0.0227 |
+| horizontal strength0 | 0 | 0.0000 |
+| diagonal strength0 | 3 | 0.0237 |
+| diagonal2 strength0 | 3 | 0.0237 |
+| diagonal rotation13 | 66 | 1.6628 |
+
+The explicit `opencv-two-temp-alias-roi` variant is identical to
+`opencv-two-temp` under these screen-over conditions.
+
+Implication: swapping the hand-written C++ two-temp approximation for actual
+OpenCV primitives is not enough by itself. It slightly improves the vertical
+strength100 case relative to C++ (`1.3931 -> 1.3508`) but leaves horizontal,
+diagonal, diagonal2, and rotation13 effectively unchanged. The active residual
+is therefore more likely exact `FUN_1811512a0` matrix/center/dsize semantics,
+OpenCV 4.5.5 interpolation details, or a small pre/post ROI copy convention
+than brightness, scalar aggregation, ray order, zero-ray handling, or ordinary
+boxFilter border/anchor settings.

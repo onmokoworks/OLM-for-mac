@@ -453,6 +453,13 @@ def compose_aex_premul(rgba: np.ndarray, glow: np.ndarray, source_opacity: float
     return np.dstack([out_rgb, out_alpha])
 
 
+def compose_aex_screen_over(rgba: np.ndarray, glow: np.ndarray, glow_opacity: float) -> np.ndarray:
+    glow_alpha = np.clip(glow[..., 3] * glow_opacity, 0.0, 1.0)
+    glow_rgb = np.clip(glow[..., :3] * glow_alpha[..., None], 0.0, 1.0)
+    out_rgb = 1.0 - (1.0 - rgba[..., :3]) * (1.0 - glow_rgb)
+    return np.dstack([out_rgb, rgba[..., 3]])
+
+
 def render_kirakira(
     image: Image.Image,
     params: dict[str, Any],
@@ -476,6 +483,7 @@ def render_kirakira(
     crop_offset_x: int = 0,
     rotate_order: int = 1,
     rotate_prefilter: bool = False,
+    zero_ray_skip: bool = False,
 ) -> Image.Image:
     rgba = np.asarray(image.convert("RGBA"), dtype=np.uint8).astype(np.float32) / 255.0
     if auto_length_scale:
@@ -511,11 +519,26 @@ def render_kirakira(
         diagonal = ray_axis(seed, int(float_param(params, "diagonal_length", 0.0)), 1, 1, falloff, bidirectional)
         diagonal2 = ray_axis(seed, int(float_param(params, "diagonal2_length", 0.0)), 1, -1, falloff, bidirectional)
 
+    if zero_ray_skip:
+        ray_specs = [
+            ("vertical_length", vertical),
+            ("horizontal_length", horizontal),
+            ("diagonal_length", diagonal),
+            ("diagonal2_length", diagonal2),
+        ]
+        zero = np.zeros_like(seed)
+        vertical, horizontal, diagonal, diagonal2 = [
+            zero if int(round(float_param(params, key, 0.0) * length_scale)) <= 0 else ray
+            for key, ray in ray_specs
+        ]
+
     if scale_mode == "aex":
         # Ghidra shows Brightness Gain as the final premul aggregation scale.
         # Keep the existing empirical gain for normal strength cases, but do
         # not let Strength=0 zero out the glow path.
         scale = brightness_gain * (1.0 if strength <= 1.0e-6 else gain_scale)
+    elif scale_mode == "aex-screen-over":
+        scale = 127.0 / 255.0 if strength <= 1.0e-6 else brightness_gain * gain_scale
     elif scale_mode == "brightness":
         scale = brightness_gain * gain_scale
     elif scale_mode == "strength":
@@ -524,13 +547,16 @@ def render_kirakira(
         scale = brightness_gain * strength * gain_scale
     if scale_override is not None:
         scale = scale_override
-    if compose_mode == "aex-premul":
+    if compose_mode == "aex-premul" or compose_mode == "aex-screen-over":
         add_colored_union(glow, np.clip(vertical * scale, 0.0, 1.0), params.get("vertical_color"))
         add_colored_union(glow, np.clip(horizontal * scale, 0.0, 1.0), params.get("horizontal_color"))
         add_colored_union(glow, np.clip(diagonal * scale, 0.0, 1.0), params.get("diagonal_color"))
         add_colored_union(glow, np.clip(diagonal2 * scale, 0.0, 1.0), params.get("diagonal2_color"))
         normalize_glow(glow)
-        out = compose_aex_premul(rgba, glow, source_opacity, glow_opacity)
+        if compose_mode == "aex-screen-over":
+            out = compose_aex_screen_over(rgba, glow, glow_opacity)
+        else:
+            out = compose_aex_premul(rgba, glow, source_opacity, glow_opacity)
     else:
         add_colored(glow, vertical, params.get("vertical_color"))
         add_colored(glow, horizontal, params.get("horizontal_color"))
@@ -560,7 +586,7 @@ def main() -> int:
         choices=["shift", "axis-rotate", "opencv-two-temp", "opencv-two-temp-alias-roi"],
         default="shift",
     )
-    parser.add_argument("--compose-mode", choices=["simple", "aex-premul"], default="simple")
+    parser.add_argument("--compose-mode", choices=["simple", "aex-premul", "aex-screen-over"], default="simple")
     parser.add_argument("--include-center", action="store_true")
     parser.add_argument(
         "--filter-border",
@@ -617,7 +643,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--scale-mode",
-        choices=["brightness-strength", "brightness", "strength", "aex"],
+        choices=["brightness-strength", "brightness", "strength", "aex", "aex-screen-over"],
         default="brightness-strength",
         help="Experimental final aggregation scale model.",
     )
@@ -632,6 +658,11 @@ def main() -> int:
         type=float,
         default=None,
         help="Experimental override for the seed brightness exponent.",
+    )
+    parser.add_argument(
+        "--zero-ray-skip",
+        action="store_true",
+        help="Match AEX ray helper dispatch: length-0 rays contribute an all-zero ray, not the seed image.",
     )
     args = parser.parse_args()
 
@@ -659,6 +690,7 @@ def main() -> int:
         args.crop_offset_x,
         args.rotate_order,
         args.rotate_prefilter,
+        args.zero_ray_skip,
     )
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
