@@ -146,8 +146,37 @@ keyer tail (`@LAB_180003253` in `FUN_1800029d0`; identical in the 8-bit
 `FUN_1800029d0` predecessor and the float keyer) applies the Replace output ONLY
 when ALL of: `ctx+0x24 (Color Keep) != 0` && `ctx+0x53d+idx (Use Replace Color
 idx) != 0` && `ctx+0x4d (Enable Replace) != 0` && `idx != -1`. So **Replace only
-takes visible effect in Keep mode (Color Keep=1).** Verified against the returned
-references by decoding pixels:
+takes visible effect in Keep mode (Color Keep=1).** Verified against the
+returned references; decoded-pixel details and measured status are below.
+
+### 2026-06-17 Mac Replace parity slice
+
+The C++ CLI already records the first matched key index and uses it for the
+Replace tail. A read-only explorer re-ran the covered Replace/color-space set
+and confirmed exact C++ evidence for the simple Replace cases:
+
+- `ck_rgb_replace_red_with_blue`: exact
+- `ck_rgb_keep_replace_red_with_blue`: exact
+- `ck_lab76_replace_cyan_with_magenta`: exact
+- `ck_rgb_two_keys_replace`: exact
+- `ck_rgb_replace_edge_thin_dilate`: exact
+
+The Mac plug-in was still missing this tail. `mac/OLMColorKey` now:
+
+- checks out `Use Replace Color N` and `Replace Color N`;
+- records the first matched key index per pixel;
+- replaces RGB only when `Color Keep && Enable Replace && Use Replace Color[idx]`;
+- leaves alpha untouched, matching the binary-backed `FUN_1800029d0` tail.
+
+Build check:
+
+```sh
+scripts/setup_ae_sdk_links.sh >/dev/null
+xcodebuild -project mac/OLMColorKey/Mac/OLMColorKey.xcodeproj -configuration Debug build
+```
+
+Result: build succeeded. Remaining ColorKey gaps are not this Replace tail:
+Edge Thin erode and Edge Blur still need separate binary-backed work.
 - `ck_rgb_replace_red_with_blue` (Color Keep=0): matched red -> TRANSPARENT, no
   blue. `ck_rgb_keep_replace_red_with_blue` (Color Keep=1): matched red -> blue.
 - `ck_lab76_replace_*`, `ck_rgb_two_keys_replace`, `ck_rgb_replace_edge_thin_*`,

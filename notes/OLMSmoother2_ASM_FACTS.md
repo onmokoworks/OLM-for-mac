@@ -750,3 +750,65 @@ Regression smoke after all-scanner classifier fix:
   - `case_0010`: max `167`, mean `0.0492`
   - `case_0011`: max `167`, mean `0.0561`
   - `case_0012`: max `167`, mean `0.1048`
+
+### 2026-06-17 current no-key grid verification
+
+Re-ran the default no-key grid after the scanner classifier fixes:
+
+```sh
+python3 refs/scripts/smoke_olmsmoother2_no_key_grid_cli.py
+```
+
+Current result:
+
+- Smoothness `0` is exact for all Smooth Range values.
+- Smooth Range `1` is now near-exact as well:
+  - `s025`: max `4`, mean `0.0000`, nz `56/2073600`
+  - `s050`: max `8`, mean `0.0000`, nz `60/2073600`
+  - `s100`: max `9`, mean `0.0001`, nz `104/2073600`
+- Smooth Range `2` remains near-exact:
+  - `s025`: max `4`, mean `0.0000`, nz `116/2073600`
+  - `s050`: max `8`, mean `0.0001`, nz `132/2073600`
+  - `s100`: max `9`, mean `0.0002`, nz `204/2073600`
+- Smooth Range `3` remains near-exact:
+  - `s025`: max `4`, mean `0.0001`, nz `160/2073600`
+  - `s050`: max `8`, mean `0.0001`, nz `176/2073600`
+  - `s100`: max `9`, mean `0.0003`, nz `284/2073600`
+
+This effectively closes the no-key grid as a blocker. The old mixed
+`20260605_extra` smoke still exits red under exact thresholds:
+
+```sh
+python3 refs/scripts/smoke_olmsmoother2_cli.py
+```
+
+Measured status is improved and localized:
+
+- `case_0001`: max `101`, mean `0.1548`
+- `case_0002`: max `75`, mean `0.0196`
+- `case_0003`: exact
+- `case_0004`: max `94`, mean `0.0105`
+
+Green/guarded regression gates:
+
+- `python3 refs/scripts/smoke_olmsmoother2_keypaths_cli.py`
+  - `case_0002`: max `75`, mean `0.0196`
+  - `case_0003`: exact
+  - `case_0004`: max `94`, mean `0.0105`
+- `python3 refs/scripts/smoke_olmsmoother2_gamma_cli.py`
+  - `case_0010`: max `167`, mean `0.0492`
+  - `case_0011`: max `167`, mean `0.0561`
+  - `case_0012`: max `167`, mean `0.1048`
+- `python3 refs/scripts/smoke_olmsmoother2_v1_compat_cli.py`
+  - `case_0001`: max `63`, mean `0.0055`
+  - `case_0002`: max `63`, mean `0.0051`
+  - `case_0003`: max `123`, mean `0.0067`
+
+Next action:
+
+- Treat OLMSmoother2 no-key as solved to the current Windows reference
+  precision, with only tiny boundary residue in the explicit no-key grid.
+- Keep the older mixed smoke as a red informational regression report rather
+  than a blocking exactness gate.
+- The remaining OLMSmoother2 work should be AE-host validation and broader
+  Mac integration, not more single-case PNG tuning.

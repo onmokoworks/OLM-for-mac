@@ -236,6 +236,11 @@ CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], OLMColorKeyInfo *info)
 		info->thresholds_g[i] = params[ColorParamIndex(i, COLOR_OFFSET_THRESHOLD_G)]->u.fs_d.value;
 		info->thresholds_b[i] = params[ColorParamIndex(i, COLOR_OFFSET_THRESHOLD_B)]->u.fs_d.value;
 		info->use_color[i] = params[ColorParamIndex(i, COLOR_OFFSET_USE_COLOR)]->u.bd.value;
+		info->use_replace_color[i] = params[ColorParamIndex(i, COLOR_OFFSET_USE_REPLACE)]->u.bd.value;
+		PF_ParamDef *rp = params[ColorParamIndex(i, COLOR_OFFSET_REPLACE_COLOR)];
+		PF_PixelFloat rep = {0};
+		ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref, rp, &rep));
+		info->replace_colors[i] = rep;
 	}
 	return err;
 }
@@ -288,6 +293,14 @@ CheckoutSmartInfo(PF_InData *in_data, OLMColorKeyInfo *info)
 		ERR(checkout(ColorParamIndex(i, COLOR_OFFSET_THRESHOLD_G), &p)); info->thresholds_g[i] = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
 		ERR(checkout(ColorParamIndex(i, COLOR_OFFSET_THRESHOLD_B), &p)); info->thresholds_b[i] = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
 		ERR(checkout(ColorParamIndex(i, COLOR_OFFSET_USE_COLOR), &p)); info->use_color[i] = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
+		ERR(checkout(ColorParamIndex(i, COLOR_OFFSET_USE_REPLACE), &p)); info->use_replace_color[i] = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
+		ERR(checkout(ColorParamIndex(i, COLOR_OFFSET_REPLACE_COLOR), &p));
+		if (!err) {
+			PF_PixelFloat rep = {0};
+			ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref, &p, &rep));
+			info->replace_colors[i] = rep;
+			PF_CHECKIN_PARAM(in_data, &p);
+		}
 	}
 	return err;
 }
@@ -516,6 +529,12 @@ struct OLMCKPixelTraits<PF_Pixel8> {
 	static float b(const PF_Pixel8 &p) { return (float)p.blue / 255.0f; }
 	static float a(const PF_Pixel8 &p) { return (float)p.alpha / 255.0f; }
 	static void zero(PF_Pixel8 &p) { p.alpha = p.red = p.green = p.blue = 0; }
+	static void replace_rgb(PF_Pixel8 &p, const PF_PixelFloat &rep)
+	{
+		p.red = (A_u_char)ClampValue<int>((int)(rep.red * 255.0f), 0, 255);
+		p.green = (A_u_char)ClampValue<int>((int)(rep.green * 255.0f), 0, 255);
+		p.blue = (A_u_char)ClampValue<int>((int)(rep.blue * 255.0f), 0, 255);
+	}
 	static void scale(PF_Pixel8 &dst, const PF_Pixel8 &src, float weight)
 	{
 		dst.red = (A_u_char)ClampValue<int>((int)((float)src.red * weight), 0, 255);
@@ -533,6 +552,13 @@ struct OLMCKPixelTraits<PF_Pixel16> {
 	static float b(const PF_Pixel16 &p) { return (float)p.blue / max_chan(); }
 	static float a(const PF_Pixel16 &p) { return (float)p.alpha / max_chan(); }
 	static void zero(PF_Pixel16 &p) { p.alpha = p.red = p.green = p.blue = 0; }
+	static void replace_rgb(PF_Pixel16 &p, const PF_PixelFloat &rep)
+	{
+		int maxv = (int)PF_MAX_CHAN16;
+		p.red = (A_u_short)ClampValue<int>((int)(rep.red * (float)maxv), 0, maxv);
+		p.green = (A_u_short)ClampValue<int>((int)(rep.green * (float)maxv), 0, maxv);
+		p.blue = (A_u_short)ClampValue<int>((int)(rep.blue * (float)maxv), 0, maxv);
+	}
 	static void scale(PF_Pixel16 &dst, const PF_Pixel16 &src, float weight)
 	{
 		int maxv = (int)PF_MAX_CHAN16;
@@ -550,6 +576,12 @@ struct OLMCKPixelTraits<PF_PixelFloat> {
 	static float b(const PF_PixelFloat &p) { return p.blue; }
 	static float a(const PF_PixelFloat &p) { return p.alpha; }
 	static void zero(PF_PixelFloat &p) { p.alpha = p.red = p.green = p.blue = 0.0f; }
+	static void replace_rgb(PF_PixelFloat &p, const PF_PixelFloat &rep)
+	{
+		p.red = ClampValue<float>(rep.red, 0.0f, 1.0f);
+		p.green = ClampValue<float>(rep.green, 0.0f, 1.0f);
+		p.blue = ClampValue<float>(rep.blue, 0.0f, 1.0f);
+	}
 	static void scale(PF_PixelFloat &dst, const PF_PixelFloat &src, float weight)
 	{
 		dst.red = ClampValue<float>(src.red * weight, 0.0f, 1.0f);
@@ -577,6 +609,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	A_long w = output->width;
 	A_long h = output->height;
 	std::vector<u_char> matched((size_t)w * (size_t)h, 0);
+	std::vector<int> matched_index((size_t)w * (size_t)h, -1);
 	const float eps8 = 0.5f / 255.0f;
 
 	for (A_long y = 0; y < h; ++y) {
@@ -601,6 +634,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				cmp[2] = lab[2];
 			}
 			bool hit_any = false;
+			int hit_index = -1;
 			for (A_long i = 0; i < info.number_of_colors; ++i) {
 				if (!info.use_color[i]) continue;
 				float key[3] = { info.colors[i].red, info.colors[i].green, info.colors[i].blue };
@@ -626,9 +660,12 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					              std::fabs(cmp[2] - key[2])) / 3.0f;
 					hit = mean <= threshold;
 				}
+				if (hit && hit_index == -1) hit_index = (int)i;
 				hit_any = hit_any || hit;
 			}
-			matched[(size_t)y * (size_t)w + (size_t)x] = hit_any ? 1 : 0;
+			size_t idx = (size_t)y * (size_t)w + (size_t)x;
+			matched[idx] = hit_any ? 1 : 0;
+			matched_index[idx] = hit_index;
 		}
 	}
 
@@ -656,6 +693,14 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			                            : matched[(size_t)y * (size_t)w + (size_t)x] == 0;
 			keep_mask[(size_t)y * (size_t)w + (size_t)x] = keep ? 1 : 0;
 			if (!keep) OLMCKPixelTraits<PixelT>::zero(*outP);
+			else {
+				size_t idx = (size_t)y * (size_t)w + (size_t)x;
+				int key_index = matched_index[idx];
+				if (info.color_keep && info.enable_replace && key_index >= 0 &&
+				    key_index < OLMCOLORKEY_MAX_COLORS && info.use_replace_color[key_index]) {
+					OLMCKPixelTraits<PixelT>::replace_rgb(*outP, info.replace_colors[key_index]);
+				}
+			}
 		}
 	}
 	if (info.edge_blur_amount != 0.0 && !info.enable_replace) {

@@ -122,11 +122,13 @@ typedef struct {
 	PF_Boolean enable_replace;
 	PF_Pixel8 colors8[OLMCOLORKEY_MAX_COLORS];
 	PF_PixelFloat colors[OLMCOLORKEY_MAX_COLORS];
+	PF_PixelFloat replace_colors[OLMCOLORKEY_MAX_COLORS];
 	PF_FpLong thresholds[OLMCOLORKEY_MAX_COLORS];
 	PF_FpLong thresholds_r[OLMCOLORKEY_MAX_COLORS];
 	PF_FpLong thresholds_g[OLMCOLORKEY_MAX_COLORS];
 	PF_FpLong thresholds_b[OLMCOLORKEY_MAX_COLORS];
 	PF_Boolean use_color[OLMCOLORKEY_MAX_COLORS];
+	PF_Boolean use_replace_color[OLMCOLORKEY_MAX_COLORS];
 } OLMColorKeyInfo;
 
 extern "C" {
