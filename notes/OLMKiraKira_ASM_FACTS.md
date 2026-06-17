@@ -779,8 +779,52 @@ The half-pixel variants only make tiny local movements and do not improve the
 hard rotation13 case; swapped center worsens rotation13. Combined with the
 binary call-site evidence, keep the standard temp-center model pinned.
 
-Remaining narrow binary task: disassemble the actual call sites
-`1811508a1..1811508c3`, `181150f3d..18115105d`, and `1811512a0` to verify the
-first `FUN_1811512a0` scale register, because the checked-in decompilation's
-wrapper prototype drops the extra parameters. There is still no evidence for a
-non-1 scale, but that is now the smallest unresolved matrix-side fact.
+### 2026-06-17 actual objdump scale-register audit
+
+`objdump` against `plugins_2025/OLMKiraKira.aex` closes the remaining
+matrix-side scale ambiguity. The first forward-rotation call at
+`1811508a1..1811508c3` passes:
+
+```text
+1811508a1  movd    %r15d,%xmm2
+1811508a6  cvtdq2pd %xmm2,%xmm2
+1811508aa  movsd   0x33cdc6(%rip),%xmm3  # 0x18148d678
+1811508b2  movaps  %xmm6,%xmm10
+1811508b6  unpcklps %xmm7,%xmm10
+1811508ba  movq    %xmm10,%rdx
+1811508bf  leaq    0x60(%rbp),%rcx
+1811508c3  callq   0x1811512a0
+```
+
+Interpretation under Windows x64 ABI:
+
+- `xmm2` is `(double)r15d`, i.e. the forward angle in degrees.
+- `xmm3` is loaded from `0x18148d678`, the same `1.0` constant used inside the
+  OpenCV matrix helper.
+- `rdx` is the packed `{cx, cy}` center from `xmm6/xmm7`.
+- `rcx` points to the destination matrix at `rbp+0x60`.
+
+The rotate-back call at `181150f3d..181150f5a` is the symmetric inverse:
+
+```text
+181150f3d  negl    %r15d
+181150f40  movd    %r15d,%xmm2
+181150f45  cvtdq2pd %xmm2,%xmm2
+181150f49  movsd   0x33c727(%rip),%xmm3  # 0x18148d678
+181150f51  movq    %xmm10,%rdx
+181150f56  leaq    (%rbp),%rcx
+181150f5a  callq   0x1811512a0
+```
+
+`FUN_1811512a0` changes `rcx` to a stack-local matrix before calling
+`FUN_1812943d0`, but does not rewrite `rdx`, `xmm2`, or `xmm3` before that
+call. Those registers therefore flow through to OpenCV
+`getRotationMatrix2D_`. The direct disassembly of `FUN_1812943d0` confirms it
+copies `xmm3` to its scale register, converts angle via the `pi/180` constant,
+then writes the standard OpenCV 2x3 matrix.
+
+Implication: KiraKira's matrix scale is pinned at `1.0` for both forward and
+rotate-back passes. The current residual should no longer be chased as a
+center/scale/sign ambiguity; likely remaining causes are OpenCV 4.5.5
+interpolation/rounding behavior, a small ROI copy convention, or another
+pre/post ray detail.
