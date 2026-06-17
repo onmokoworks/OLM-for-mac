@@ -2527,12 +2527,12 @@ static bool win_leaf_ead0(SmootherPolygon &poly, const int *p2) {  // T2: e050 +
 		int x = p2[0], y = p2[1];
 		while (true) {
 			int py = y - 1;
-			wsh = K_ONE;
+			wsh = K_HALF;
 			if (x < 0 || x >= poly.cplane_w || py < 0 || py >= poly.cplane_h) break;
 			int s2[3]; int in2[2] = { x, py }; scan_cee0(s2, &g, in2);
-			wsh = K_HALF;
-			if (s2[2] == 1) break;
 			wsh = K_ONE;
+			if (s2[2] == 1) break;
+			wsh = K_HALF;
 			x = s2[0]; y = s2[1];
 			if (s2[2] != 4) break;
 		}
@@ -2586,12 +2586,12 @@ static bool win_leaf_e4b0(SmootherPolygon &poly, const int *p2) {  // T8: de10 +
 		int x = p2[3], y = p2[4];
 		while (true) {
 			int py = y + 1;
-			wsh = K_ONE;
+			wsh = K_HALF;
 			if (x < 0 || x >= poly.cplane_w || py < 0 || py >= poly.cplane_h) break;
 			int s2[3]; int in2[2] = { x, py }; scan_d6a0(s2, &g, in2);
-			wsh = K_HALF;
-			if (s2[2] == 2) break;
 			wsh = K_ONE;
+			if (s2[2] == 2) break;
+			wsh = K_HALF;
 			x = s2[0]; y = s2[1];
 			if (s2[2] != 3) break;
 		}
@@ -2619,12 +2619,12 @@ static bool win_leaf_edb0(SmootherPolygon &poly, const int *p2) {
 		int x = p2[0], y = p2[1];
 		while (true) {
 			int py = y - 1;
-			wsh = K_ONE;
+			wsh = K_HALF;
 			if (x < 0 || x >= poly.cplane_w || py < 0 || py >= poly.cplane_h) break;
 			int s2[3]; int in2[2] = { x, py }; scan_d3b0(s2, &g, in2);
-			wsh = K_HALF;
-			if (s2[2] == 2) break;
 			wsh = K_ONE;
+			if (s2[2] == 2) break;
+			wsh = K_HALF;
 			x = s2[0]; y = s2[1];
 			if (s2[2] != 3) break;
 		}
@@ -2678,12 +2678,12 @@ static bool win_leaf_e7c0(SmootherPolygon &poly, const int *p2) {
 		int x = p2[3], y = p2[4];
 		while (true) {
 			int py = y + 1;
-			wsh = K_ONE;
+			wsh = K_HALF;
 			if (x < 0 || x >= poly.cplane_w || py < 0 || py >= poly.cplane_h) break;
 			int s2[3]; int in2[2] = { x, py }; scan_da50(s2, &g, in2);
-			wsh = K_HALF;
-			if (s2[2] == 1) break;
 			wsh = K_ONE;
+			if (s2[2] == 1) break;
+			wsh = K_HALF;
 			x = s2[0]; y = s2[1];
 			if (s2[2] != 4) break;
 		}

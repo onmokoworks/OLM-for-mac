@@ -600,3 +600,49 @@ Next action:
 - Continue with literal comparison of the dominant keys:
   - `FUN_18000fbf0` keys `0x29` and `0x40`
   - `FUN_1800101e0` keys `0x21` and `0x41`
+
+### 2026-06-17 all-direction chase weight order fix
+
+The same decomp-backed `0.5 -> scanner -> 1.0 -> optional 0.5 continuation`
+pattern also applies to the other direction-pair chase leaves:
+
+- `win_leaf_ead0`
+- `win_leaf_e4b0`
+- `win_leaf_edb0`
+- `win_leaf_e7c0`
+
+These had the same reversed `wsh` assignment order as the first four fixed
+`idx=0x18` leaves. The correction is still binary-backed by the chase-loop
+assignment order, not PNG fitting.
+
+No-key grid after fixing all eight chase leaves:
+
+- Smoothness `0` remains exact.
+- Smooth Range `1` is unchanged from the previous fix:
+  - `s025`: mean `0.0355`
+  - `s050`: mean `0.0703`
+  - `s100`: mean `0.1390`
+- Smooth Range `2` improves:
+  - `s025`: mean `0.0363 -> 0.0282`
+  - `s050`: mean `0.0718 -> 0.0557`
+  - `s100`: mean `0.1416 -> 0.1089`
+- Smooth Range `3` improves:
+  - `s025`: mean `0.0362 -> 0.0282`
+  - `s050`: mean `0.0717 -> 0.0556`
+  - `s100`: mean `0.1414 -> 0.1086`
+
+Explorer cross-check:
+
+- Dispatch order for dominant keys remains matched:
+  - `FUN_18000fbf0` key `0x29`: `ec40 + e640`
+  - `FUN_18000fbf0` key `0x40`: `f7b0 + f600`
+  - `FUN_1800101e0` key `0x21`: `ef20 + e950`
+  - `FUN_1800101e0` key `0x41`: `f890 + f6e0`
+- Simple leaf constants for keys `0x40` and `0x41` match the binary's
+  `_DAT_180022dd8 + DAT_180022694` and `DAT_1800226a0/DAT_180022694` paths.
+
+Next action:
+
+- Audit scanner/classifier descriptor generation, especially
+  `FUN_18000d230`, `FUN_18000d800`, `FUN_18000d520`, `FUN_18000dbd0`, and
+  `FUN_180010550`, before changing any remaining leaf weights.
