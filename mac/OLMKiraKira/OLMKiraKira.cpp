@@ -42,6 +42,11 @@ static int Reflect101Index(int i, int n)
 	return i;
 }
 
+static A_long AexRotatedExtent(A_long major, A_long minor, double abs_major, double abs_minor)
+{
+	return std::max<A_long>(major + 4, (A_long)((double)major * abs_major + (double)minor * abs_minor + 4.0));
+}
+
 template <typename PixelT>
 static PixelT *PixelAt(PF_EffectWorld *world, A_long x, A_long y)
 {
@@ -234,8 +239,8 @@ static std::vector<float> RotatedAxisBoxBlur(
 	const double rad = angle_deg * pi / 180.0;
 	const double ac = std::abs(std::cos(rad));
 	const double as = std::abs(std::sin(rad));
-	const A_long rw = std::max<A_long>(width + 4, (A_long)((double)width * ac + (double)height * as + 0.5));
-	const A_long rh = std::max<A_long>(height + 4, (A_long)((double)width * as + (double)height * ac + 0.5));
+	const A_long rw = AexRotatedExtent(width, height, ac, as);
+	const A_long rh = AexRotatedExtent(height, width, ac, as);
 	const double temp_cx = (double)rw * 0.5;
 	const double temp_cy = (double)rh * 0.5;
 	std::vector<float> temp_a = CopyCenteredRoi(input, width, height, rw, rh);

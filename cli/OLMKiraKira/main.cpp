@@ -76,7 +76,7 @@ struct Options {
     std::string box_output_depth = "float";
     std::string rotate_filter = "bilinear";
     std::string rotate_border = "constant";
-    std::string warp_mode = "current";
+    std::string warp_mode = "aex-two-temp";
     std::string rotate_size_mode = "round";
     bool axis_fast_path = true;
     std::string axis_fast_path_mode = "true";
@@ -671,6 +671,10 @@ int rounded_extent(double value, const std::string &rotate_size_mode) {
     return std::max(1, static_cast<int>(value + 0.5));
 }
 
+int aex_rotated_extent(int major, int minor, double abs_major, double abs_minor) {
+    return std::max(major + 4, static_cast<int>(static_cast<double>(major) * abs_major + static_cast<double>(minor) * abs_minor + 4.0));
+}
+
 std::vector<float> rotate_image(
     const std::vector<float> &input,
     int width,
@@ -755,8 +759,8 @@ std::vector<float> rotate_image(
     if (rotate_size_mode == "aex-min4") {
         const double ac = std::abs(c);
         const double as = std::abs(s);
-        out_width = std::max(width + 4, static_cast<int>(static_cast<double>(width) * ac + static_cast<double>(height) * as + 0.5));
-        out_height = std::max(height + 4, static_cast<int>(static_cast<double>(width) * as + static_cast<double>(height) * ac + 0.5));
+        out_width = aex_rotated_extent(width, height, ac, as);
+        out_height = aex_rotated_extent(height, width, ac, as);
     } else {
         out_width = rounded_extent(max_ox - min_ox, rotate_size_mode);
         out_height = rounded_extent(max_oy - min_oy, rotate_size_mode);
@@ -971,8 +975,8 @@ std::vector<float> rotated_axis_box_blur(
         const double rad = angle_deg * pi / 180.0;
         const double ac = std::abs(std::cos(rad));
         const double as = std::abs(std::sin(rad));
-        const int rw = std::max(width + 4, static_cast<int>(static_cast<double>(width) * ac + static_cast<double>(height) * as + 0.5));
-        const int rh = std::max(height + 4, static_cast<int>(static_cast<double>(width) * as + static_cast<double>(height) * ac + 0.5));
+        const int rw = aex_rotated_extent(width, height, ac, as);
+        const int rh = aex_rotated_extent(height, width, ac, as);
         const double cx = static_cast<double>(width) * 0.5;
         const double cy = static_cast<double>(height) * 0.5;
         std::vector<float> temp = copy_centered_roi(input, width, height, rw, rh);
@@ -988,8 +992,8 @@ std::vector<float> rotated_axis_box_blur(
         const double rad = angle_deg * pi / 180.0;
         const double ac = std::abs(std::cos(rad));
         const double as = std::abs(std::sin(rad));
-        const int rw = std::max(width + 4, static_cast<int>(static_cast<double>(width) * ac + static_cast<double>(height) * as + 0.5));
-        const int rh = std::max(height + 4, static_cast<int>(static_cast<double>(width) * as + static_cast<double>(height) * ac + 0.5));
+        const int rw = aex_rotated_extent(width, height, ac, as);
+        const int rh = aex_rotated_extent(height, width, ac, as);
         const double temp_cx = static_cast<double>(rw) * 0.5;
         const double temp_cy = static_cast<double>(rh) * 0.5;
         const double frame_cx = static_cast<double>(width) * 0.5;
@@ -1011,8 +1015,8 @@ std::vector<float> rotated_axis_box_blur(
         const double rad = angle_deg * pi / 180.0;
         const double ac = std::abs(std::cos(rad));
         const double as = std::abs(std::sin(rad));
-        const int rw = std::max(width + 4, static_cast<int>(static_cast<double>(width) * ac + static_cast<double>(height) * as + 0.5));
-        const int rh = std::max(height + 4, static_cast<int>(static_cast<double>(width) * as + static_cast<double>(height) * ac + 0.5));
+        const int rw = aex_rotated_extent(width, height, ac, as);
+        const int rh = aex_rotated_extent(height, width, ac, as);
         double temp_cx = static_cast<double>(rw) * 0.5;
         double temp_cy = static_cast<double>(rh) * 0.5;
         if (warp_mode == "aex-two-temp-center-minus-half") {
@@ -1048,8 +1052,8 @@ std::vector<float> rotated_axis_box_blur(
         const double rad = angle_deg * pi / 180.0;
         const double ac = std::abs(std::cos(rad));
         const double as = std::abs(std::sin(rad));
-        const int rw = std::max(width + 4, static_cast<int>(static_cast<double>(width) * ac + static_cast<double>(height) * as + 0.5));
-        const int rh = std::max(height + 4, static_cast<int>(static_cast<double>(width) * as + static_cast<double>(height) * ac + 0.5));
+        const int rw = aex_rotated_extent(width, height, ac, as);
+        const int rh = aex_rotated_extent(height, width, ac, as);
         const double cx = static_cast<double>(rw) * 0.5;
         const double cy = static_cast<double>(rh) * 0.5;
         std::vector<float> rotated = warp_getrot_direct(input, width, height, rw, rh, cx, cy, angle_deg, rotate_filter, rotate_border);

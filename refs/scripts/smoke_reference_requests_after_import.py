@@ -40,7 +40,7 @@ FOLLOW_UP_SMOKES = {
             "--build-script",
             "refs/scripts/build_olmkirakira_cli.sh",
             "--command",
-            '"cli/OLMKiraKira/olmkirakira_cli" --input "{input}" --params "{params}" --output "{output}" --seed-mode aex --falloff box3 --gain-scale 0.62 --ray-mode axis-rotate --compose-mode aex-screen-over --filter-border mirror --auto-length-scale --comp-width 1920',
+            '"cli/OLMKiraKira/olmkirakira_cli" --input "{input}" --params "{params}" --output "{output}" --seed-mode aex --falloff box3 --gain-scale 0.62 --ray-mode axis-rotate --compose-mode aex-screen-over --filter-border mirror --warp-mode aex-two-temp --auto-length-scale --comp-width 1920',
         ],
     ],
     "kirakira_strength0_brightness_20260614": [

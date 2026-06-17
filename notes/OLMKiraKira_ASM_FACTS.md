@@ -66,6 +66,21 @@ removes a long-standing ambiguity.
 - `DAT_18148b840 = 0x7fffffff` — abs-value mask for cos/sin in canvas sizing.
 - `DAT_18148b830 = 4.0f` — used in the rotate-canvas dimension formula.
 
+### CONFIRMED: rotated temp extents use `+4.0`, not rounded `+0.5`
+
+`FUN_18114f4a0` computes each four-ray temp canvas before calling
+`FUN_181150790`:
+
+```c
+temp_w = max(src_w + 4, int(src_w * abs(cos) + src_h * abs(sin) + 4.0f));
+temp_h = max(src_h + 4, int(src_w * abs(sin) + src_h * abs(cos) + 4.0f));
+```
+
+The relevant instructions are `ADDSS XMM?, DAT_18148b830` followed by
+`CVTTSS2SI`, so this is truncation after adding `4.0`, not nearest rounding.
+The C++ CLI and Mac plugin now use this formula for their AEX two-temp path,
+and the CLI default warp mode is the binary-backed `aex-two-temp` path.
+
 ### fd90 brightness arg
 
 `FUN_18114fd90` param_10 (the `ray * param_10` gain before clamp) is loaded in
@@ -84,9 +99,9 @@ axis-rotate --compose-mode aex-screen-over --filter-border mirror
 |---|---|---|
 | vertical   b1 s100 | 135/25.88 | 13/1.39 |
 | horizontal b1 s100 | 133/26.11 | 13/1.42 |
-| diagonal   b1 s100 | 142/25.71 | 43/1.70 |
-| diagonal2  b1 s100 | 138/25.71 | 45/1.69 |
-| rotation13         | 139/25.76 | 76/1.84 |
+| diagonal   b1 s100 | 142/25.71 | 23/1.26 |
+| diagonal2  b1 s100 | 138/25.71 | 23/1.30 |
+| rotation13         | 139/25.76 | 66/1.66 |
 | vertical   b9.4 s0 | 113/27.76 | 113/27.76 |
 | horizontal b9.4 s0 | 113/27.76 | 113/27.76 |
 | diagonal   b9.4 s0 | 113/27.76 | 113/27.76 |
@@ -97,7 +112,8 @@ uniform box vs OpenCV `boxFilter` REFLECT_101/anchor) — an OpenCV-primitive
 residual, not a compose/seed error. An offline numpy reimplementation of the
 exact CLI box reproduces the CLI ray to the float, and the screen model then
 lands mean~1.3, confirming the residual is the box approximation. Diagonal /
-rotation residual (43-76) is the warp path, still the hardest axis.
+rotation residual improved after switching to the binary-backed two-temp
+canvas formula, but remains the hardest axis.
 
 ### RESOLVED: strength=0 uses the half-gain fd90 path
 
@@ -129,9 +145,9 @@ python3 refs/scripts/smoke_olmkirakira_cpp_cli.py
 
 Current expected-red measurements:
 
-- `case_0001`: `max=22 mean=0.8381 nz=302781/518400`
-- `case_0002`: `max=24 mean=1.1623 nz=1373909/2073600`
-- `case_0003`: `max=60 mean=1.7003 nz=1367180/2073600`
+- `case_0001`: `max=21 mean=0.8291 nz=296977/518400`
+- `case_0002`: `max=24 mean=1.1609 nz=1366956/2073600`
+- `case_0003`: `max=233 mean=53.8132 nz=1821785/2073600`
 
 The current reference cases are all `Blur Mode=2`, `Channel=2`,
 `Merge mode=1`, `Highlight Radius=0`, `Glow Rotation=0`, and ray lengths
