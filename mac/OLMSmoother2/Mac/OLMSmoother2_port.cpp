@@ -1289,7 +1289,9 @@ static void scan_d0d0(int out[3], const GridDesc *g, const int in[2]) {
 	bool p1 = (y > 0) && cp_b(g, x,     y - 1, 0) != 0;  // A@(x,   y-1)
 	bool p2 = cp_b(g, x,     y, 1) != 0;                  // R@(x,   y)
 	bool p3 = (x > 0) && cp_b(g, x - 1, y, 1) != 0;       // R@(x-1, y)
-	out[0] = x; out[1] = y; out[2] = win_FUN_180010550(p1, p2, p3);
+	bool p4 = (x > 0) && cp_b(g, x - 1, y, 3) != 0;      // B@(x-1, y)
+	bool p5 = cp_b(g, x,     y, 2) != 0;                  // G@(x,   y)
+	out[0] = x; out[1] = y; out[2] = win_FUN_180010550(p1, p2, p3, p4, p5);
 }
 
 // FUN_18000d3b0 — walk UP col x+1 while A@(x+1,iy)!=0 && R@(x+1,iy)==0 && R@(x,iy)==0.
@@ -1315,7 +1317,9 @@ static void scan_d3b0(int out[3], const GridDesc *g, const int in[2]) {
 	bool p1 = (y > 0) && cp_b(g, xp1, y - 1, 0) != 0;
 	bool p2 = cp_b(g, xp1, y, 1) != 0;
 	bool p3 = cp_b(g, x,   y, 1) != 0;
-	out[0] = x; out[1] = y; out[2] = win_FUN_180010550(p1, p2, p3);
+	bool p4 = cp_b(g, x,   y, 3) != 0;
+	bool p5 = cp_b(g, xp1, y, 2) != 0;
+	out[0] = x; out[1] = y; out[2] = win_FUN_180010550(p1, p2, p3, p4, p5);
 }
 
 // FUN_18000d520 — walk LEFT row y while R@(ix,y)!=0 && A@(ix,y)==0 && A@(ix,y-1)==0.
@@ -1368,7 +1372,9 @@ static void scan_d6a0(int out[3], const GridDesc *g, const int in[2]) {
 		bool p1 = cp_b(g, x, y, 0) != 0;                  // A@(x, y)
 		bool p2 = (x > 0) && cp_b(g, x - 1, y, 1) != 0;   // R@(x-1, y)
 		bool p3 = cp_b(g, x, y, 1) != 0;                  // R@(x, y)
-		cls = win_FUN_180010550(p1, p2, p3);
+		bool p4 = (x > 0) && cp_b(g, x - 1, y, 3) != 0;   // B@(x-1, y)
+		bool p5 = cp_b(g, x, y, 2) != 0;                  // G@(x, y)
+		cls = win_FUN_180010550(p1, p2, p3, p4, p5);
 	}
 	out[0] = x; out[1] = iVar8; out[2] = cls;
 }
@@ -1396,7 +1402,9 @@ static void scan_da50(int out[3], const GridDesc *g, const int in[2]) {
 		bool p1 = cp_b(g, xp1, y, 0) != 0;
 		bool p2 = cp_b(g, x,   y, 1) != 0;
 		bool p3 = cp_b(g, xp1, y, 1) != 0;
-		cls = win_FUN_180010550(p1, p2, p3);
+		bool p4 = cp_b(g, x,   y, 3) != 0;
+		bool p5 = cp_b(g, xp1, y, 2) != 0;
+		cls = win_FUN_180010550(p1, p2, p3, p4, p5);
 	}
 	out[0] = x; out[1] = iVar10; out[2] = cls;
 }
@@ -2446,7 +2454,9 @@ static void scan_cee0(int out[3], const GridDesc *g, const int in[2]) {
 	bool p1 = (y > 0) && cp_b(g, x,     y - 1, 0) != 0;     // A@(x, y-1)
 	bool p2 = cp_b(g, x,     y, 1) != 0;                     // R@(x, y)
 	bool p3 = (x > 0) && cp_b(g, x - 1, y, 1) != 0;          // R@(x-1, y)
-	out[0] = x; out[1] = y; out[2] = win_FUN_180010550(p1, p2, p3);
+	bool p4 = (x > 0) && cp_b(g, x - 1, y, 3) != 0;         // B@(x-1, y)
+	bool p5 = cp_b(g, x,     y, 2) != 0;                     // G@(x, y)
+	out[0] = x; out[1] = y; out[2] = win_FUN_180010550(p1, p2, p3, p4, p5);
 }
 
 // --- 6 sibling predicates (β/γ/δ × 2 endpoints) ---

@@ -696,3 +696,57 @@ Next action:
 - Extend the same five-argument classifier audit to the sibling scanners
   `d0d0`, `d3b0`, `d6a0`, `da50`, `cee0`, and the remaining vertical families
   before adjusting any more leaf weights.
+
+### 2026-06-17 all scanner five-argument classifier fix
+
+Extended the same `FUN_180010550` five-argument mapping to the sibling scanner
+family:
+
+- `scan_d0d0`: `p4=B@(x-1,y)`, `p5=G@(x,y)`
+- `scan_d3b0`: `p4=B@(x,y)`, `p5=G@(x+1,y)`
+- `scan_d6a0`: `p4=B@(x-1,y)`, `p5=G@(x,y)`
+- `scan_da50`: `p4=B@(x,y)`, `p5=G@(x+1,y)`
+- `scan_cee0`: `p4=B@(x-1,y)`, `p5=G@(x,y)`
+
+These mappings come from the disassembly immediately before each
+`CALL 0x180010550`:
+
+- `R9D` carries `p4`.
+- `[RSP+0x20]` carries `p5`.
+
+No-key grid after all scanner classifier fixes:
+
+- Smoothness `0` remains exact.
+- Smooth Range `1` improves but still has a visible residual:
+  - `s025`: mean `0.0274 -> 0.0151`
+  - `s050`: mean `0.0543 -> 0.0298`
+  - `s100`: mean `0.1065 -> 0.0577`
+- Smooth Range `2` is near exact:
+  - `s025`: max `4`, mean `0.0000`, nz `116/2073600`
+  - `s050`: max `8`, mean `0.0001`, nz `132/2073600`
+  - `s100`: max `9`, mean `0.0002`, nz `204/2073600`
+- Smooth Range `3` is near exact:
+  - `s025`: max `4`, mean `0.0001`, nz `160/2073600`
+  - `s050`: max `8`, mean `0.0001`, nz `176/2073600`
+  - `s100`: max `9`, mean `0.0003`, nz `284/2073600`
+
+Next action:
+
+- Treat Smooth Range `2/3` no-key as effectively solved except for tiny
+  boundary residue.
+- Focus remaining Smoother2 no-key work on Smooth Range `1` specific paths;
+  do not change global Smoothness scaling.
+
+Regression smoke after all-scanner classifier fix:
+
+- `python3 refs/scripts/smoke_olmsmoother2_cli.py` still exits red because the
+  older key/no-key mixed request has non-exact cases, but the measured means are
+  improved/not regressed:
+  - `case_0001`: max `101`, mean `0.1548`
+  - `case_0002`: max `75`, mean `0.0196`
+  - `case_0003`: exact
+  - `case_0004`: max `94`, mean `0.0105`
+- `python3 refs/scripts/smoke_olmsmoother2_gamma_cli.py` remains green:
+  - `case_0010`: max `167`, mean `0.0492`
+  - `case_0011`: max `167`, mean `0.0561`
+  - `case_0012`: max `167`, mean `0.1048`
