@@ -506,3 +506,50 @@ Next smallest objdump-backed action: split index `0x18` diagnostics between
 (`win_cardinal_12`) before changing implementation. The current evidence says
 the remaining no-key residual is concentrated around the `0x18` dispatch
 family, not global Smoothness scaling or idx0 suppression.
+
+### 2026-06-17 idx=0x18 cardinal split
+
+Added CLI-only diagnostic:
+
+- `--idx18-mode skip-cardinal3` skips `win_cardinal_3(poly)` only when
+  `FUN_18000c280` switch index is `0x18`.
+- `--idx18-mode skip-cardinal12` skips `win_cardinal_12(poly)` only when the
+  switch index is `0x18`.
+- The default `--idx18-mode none` preserves normal behavior.
+
+Grid results:
+
+- Baseline / `--idx18-mode none` remains:
+  - `s025`: mean `0.0464..0.0472`
+  - `s050`: mean `0.0921..0.0936`
+  - `s100`: mean `0.1827..0.1853`
+- `--idx18-mode skip-cardinal3`:
+  - `s025`: mean `0.0311..0.0319`
+  - `s050`: mean `0.0605..0.0620`
+  - `s100`: mean `0.1185..0.1212`
+- `--idx18-mode skip-cardinal12` is essentially identical:
+  - `s025`: mean `0.0311..0.0319`
+  - `s050`: mean `0.0605..0.0620`
+  - `s100`: mean `0.1185..0.1211`
+
+Interpretation:
+
+- Since skipping either one of the two `idx=0x18` cardinal calls improves by
+  the same amount, this is unlikely to be a global Smoothness scale problem.
+- The Windows binary really does call both:
+  - `FUN_180010820`: `FUN_18000d520` + `FUN_18000dbd0` + `FUN_1800101e0`
+  - `FUN_1800105f0`: `FUN_18000d230` + `FUN_18000d800` + `FUN_18000fbf0`
+- The port already has separate dispatchers (`win_disp_101e0` and
+  `win_disp_fbf0`), but the cardinal/scanner block still contains older
+  structural approximation notes. The residual is therefore most likely a
+  scanner or leaf-emitter literalness issue inside the `d230/d800/d520/dbd0`
+  cardinal family, where the two ported paths over-contribute similar samples.
+
+Next action:
+
+- Do not promote `skip-cardinal3` or `skip-cardinal12` as a fix; they are
+  diagnostics only and contradict the two-call Win control flow.
+- Compare `scan_d230`, `scan_d800`, `scan_d520`, and `scan_dbd0` against
+  `FUN_18000d230`, `FUN_18000d800`, `FUN_18000d520`, and `FUN_18000dbd0`
+  first. If those are literal, then compare the leaf emitters used by
+  `win_disp_fbf0` and `win_disp_101e0`.

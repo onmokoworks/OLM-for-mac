@@ -174,6 +174,7 @@ int main(int argc, char **argv) {
 	std::string in_path, params_path, out_path;
 	double force_version = -1.0;
 	std::string idx0_mode = "none";
+	std::string idx18_mode = "none";
 	std::string plane_split_mode = "none";
 	std::string index_hist_path;
 	int skip_index = -1;
@@ -185,12 +186,13 @@ int main(int argc, char **argv) {
 		else if (a == "--output") out_path = next();
 		else if (a == "--force-version") force_version = std::stod(next());
 		else if (a == "--idx0-mode") idx0_mode = next();
+		else if (a == "--idx18-mode") idx18_mode = next();
 		else if (a == "--plane-split-mode") plane_split_mode = next();
 		else if (a == "--index-hist") index_hist_path = next();
 		else if (a == "--skip-index") skip_index = std::stoi(next());
 	}
 	if (in_path.empty() || out_path.empty()) {
-		std::fprintf(stderr, "usage: olmsmoother2_cli --input in.png --params case.json --output out.png [--force-version 1|2] [--idx0-mode none|suppress|half|quarter] [--plane-split-mode none|sample-pre-setup|class-pre-setup|sample-pre-gamma|class-pre-gamma] [--index-hist out.csv] [--skip-index 0..255]\n");
+		std::fprintf(stderr, "usage: olmsmoother2_cli --input in.png --params case.json --output out.png [--force-version 1|2] [--idx0-mode none|suppress|half|quarter] [--idx18-mode none|skip-cardinal3|skip-cardinal12] [--plane-split-mode none|sample-pre-setup|class-pre-setup|sample-pre-gamma|class-pre-gamma] [--index-hist out.csv] [--skip-index 0..255]\n");
 		return 2;
 	}
 	if (idx0_mode == "none") g_olmsmoother2_idx0_diag_mode = 0;
@@ -199,6 +201,13 @@ int main(int argc, char **argv) {
 	else if (idx0_mode == "quarter") g_olmsmoother2_idx0_diag_mode = 3;
 	else {
 		std::fprintf(stderr, "--idx0-mode must be none, suppress, half, or quarter\n");
+		return 2;
+	}
+	if (idx18_mode == "none") g_olmsmoother2_idx18_diag_mode = 0;
+	else if (idx18_mode == "skip-cardinal3") g_olmsmoother2_idx18_diag_mode = 1;
+	else if (idx18_mode == "skip-cardinal12") g_olmsmoother2_idx18_diag_mode = 2;
+	else {
+		std::fprintf(stderr, "--idx18-mode must be none, skip-cardinal3, or skip-cardinal12\n");
 		return 2;
 	}
 	if (plane_split_mode == "none") g_olmsmoother2_plane_split_diag_mode = 0;

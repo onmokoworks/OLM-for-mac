@@ -76,6 +76,7 @@ static int g_olmsmoother2_idx0_diag_mode = 0;
 // 3=sample pre-gamma, 4=class pre-gamma.
 static int g_olmsmoother2_plane_split_diag_mode = 0;
 static int g_olmsmoother2_skip_index_diag = -1;
+static int g_olmsmoother2_idx18_diag_mode = 0;
 static bool g_olmsmoother2_index_hist_enabled = false;
 static uint64_t g_olmsmoother2_index_hist[256] = {};
 
@@ -3101,8 +3102,12 @@ static void build_polygon(SmootherPolygon &poly,
 	case 8: case 0x10: case 0x18: case 0x19: case 0x1c:
 	case 0x31: case 0x38: case 0x39: case 0x3c:
 	case 0x8c: case 0x98: case 0x99: case 0x9c:
-		win_cardinal_3(poly);
-		win_cardinal_12(poly);
+		if (idx != 0x18 || g_olmsmoother2_idx18_diag_mode != 1) {
+			win_cardinal_3(poly);
+		}
+		if (idx != 0x18 || g_olmsmoother2_idx18_diag_mode != 2) {
+			win_cardinal_12(poly);
+		}
 		break;
 	case 9: case 0x89:
 		win_FUN_1800122e0(poly);
