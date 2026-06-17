@@ -14,6 +14,8 @@
 
 namespace {
 
+constexpr float kFd90RayEpsilon = 0.001f;
+
 struct Image {
     int width = 0;
     int height = 0;
@@ -1074,6 +1076,7 @@ void add_colored_union(
 ) {
     const int pixels = glow.width * glow.height;
     for (int i = 0; i < pixels; ++i) {
+        if (amount[static_cast<size_t>(i)] <= kFd90RayEpsilon) continue;
         float alpha = clamp01(static_cast<float>(amount[static_cast<size_t>(i)] * scale) * color.a);
         size_t p = static_cast<size_t>(i) * 4;
         glow.data[p + 0] += alpha * color.r;
@@ -1097,8 +1100,8 @@ FloatImage aggregate_fd90_five(
         size_t p = static_cast<size_t>(i) * 4;
         float alpha_union = 0.0f;
         for (size_t layer = 0; layer < amounts.size(); ++layer) {
+            if (amounts[layer][static_cast<size_t>(i)] <= kFd90RayEpsilon) continue;
             float alpha = clamp01(static_cast<float>(amounts[layer][static_cast<size_t>(i)] * scale) * colors[layer].a);
-            if (alpha <= 1.0e-6f) continue;
             glow.data[p + 0] += alpha * colors[layer].r;
             glow.data[p + 1] += alpha * colors[layer].g;
             glow.data[p + 2] += alpha * colors[layer].b;
@@ -1128,7 +1131,7 @@ FloatImage aggregate_fd90_exact(
         float alpha_union = 0.0f;
         for (size_t layer = 0; layer < amounts.size(); ++layer) {
             const float ray = amounts[layer][static_cast<size_t>(i)];
-            if (ray <= 1.0e-6f) continue;
+            if (ray <= kFd90RayEpsilon) continue;
             const float alpha = clamp01(static_cast<float>(ray * brightness) * colors[layer].a);
             glow.data[p + 0] += alpha * colors[layer].r;
             glow.data[p + 1] += alpha * colors[layer].g;

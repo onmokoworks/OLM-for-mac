@@ -6,6 +6,8 @@
 
 namespace {
 
+constexpr float kFd90RayEpsilon = 0.001f;
+
 struct FloatRGBA {
 	float r = 0.0f;
 	float g = 0.0f;
@@ -251,6 +253,7 @@ static void AddColoredUnion(
 {
 	const size_t pixels = glow.size();
 	for (size_t i = 0; i < pixels; ++i) {
+		if (amount[i] <= kFd90RayEpsilon) continue;
 		float alpha = Clamp01((float)(amount[i] * scale) * color.alpha);
 		glow[i].r += alpha * color.red;
 		glow[i].g += alpha * color.green;

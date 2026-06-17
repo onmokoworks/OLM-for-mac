@@ -59,7 +59,9 @@ removes a long-standing ambiguity.
 
 - `DAT_181486c20 = 1.0f` — fd90 RGB normalize numerator (`rgb *= 1.0/alpha`).
 - `DAT_181489990 = 0.001` (double) — fd90 skip epsilon (`ray <= 0.001`).
-  (CLI currently uses 1e-6; immaterial at 8-bit but should be 0.001.)
+  Implemented in the C++ CLI and Mac plugin as `kFd90RayEpsilon`; this is
+  mostly immaterial at the current 8-bit references but keeps the merge path
+  aligned with `FUN_18114fd90`.
 - `DAT_181486c1c = 0.5f` — helper half-size center factor.
 - `DAT_18148b840 = 0x7fffffff` — abs-value mask for cos/sin in canvas sizing.
 - `DAT_18148b830 = 4.0f` — used in the rotate-canvas dimension formula.
