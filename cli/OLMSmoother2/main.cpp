@@ -175,6 +175,8 @@ int main(int argc, char **argv) {
 	double force_version = -1.0;
 	std::string idx0_mode = "none";
 	std::string plane_split_mode = "none";
+	std::string index_hist_path;
+	int skip_index = -1;
 	for (int i = 1; i < argc; ++i) {
 		std::string a = argv[i];
 		auto next = [&]() -> std::string { return (i + 1 < argc) ? argv[++i] : std::string(); };
@@ -184,9 +186,11 @@ int main(int argc, char **argv) {
 		else if (a == "--force-version") force_version = std::stod(next());
 		else if (a == "--idx0-mode") idx0_mode = next();
 		else if (a == "--plane-split-mode") plane_split_mode = next();
+		else if (a == "--index-hist") index_hist_path = next();
+		else if (a == "--skip-index") skip_index = std::stoi(next());
 	}
 	if (in_path.empty() || out_path.empty()) {
-		std::fprintf(stderr, "usage: olmsmoother2_cli --input in.png --params case.json --output out.png [--force-version 1|2] [--idx0-mode none|suppress|half|quarter] [--plane-split-mode none|sample-pre-setup|class-pre-setup|sample-pre-gamma|class-pre-gamma]\n");
+		std::fprintf(stderr, "usage: olmsmoother2_cli --input in.png --params case.json --output out.png [--force-version 1|2] [--idx0-mode none|suppress|half|quarter] [--plane-split-mode none|sample-pre-setup|class-pre-setup|sample-pre-gamma|class-pre-gamma] [--index-hist out.csv] [--skip-index 0..255]\n");
 		return 2;
 	}
 	if (idx0_mode == "none") g_olmsmoother2_idx0_diag_mode = 0;
@@ -206,6 +210,12 @@ int main(int argc, char **argv) {
 		std::fprintf(stderr, "--plane-split-mode must be none, sample-pre-setup, class-pre-setup, sample-pre-gamma, or class-pre-gamma\n");
 		return 2;
 	}
+	if (skip_index < -1 || skip_index > 255) {
+		std::fprintf(stderr, "--skip-index must be between 0 and 255\n");
+		return 2;
+	}
+	g_olmsmoother2_skip_index_diag = skip_index;
+	OLMSmoother2ResetIndexHistogram(!index_hist_path.empty());
 
 	try {
 		double enable_key = 0.0, invert_key = 0.0, smoothness = 100.0, extra_smooth = 0.0;
@@ -296,6 +306,10 @@ int main(int argc, char **argv) {
 		PF_Err err = RenderBits<PF_Pixel8>(&in_data, params, &input, &output);
 		if (err != PF_Err_NONE) {
 			std::fprintf(stderr, "RenderBits failed: %d\n", (int)err);
+			return 1;
+		}
+		if (!index_hist_path.empty() && !OLMSmoother2WriteIndexHistogram(index_hist_path.c_str())) {
+			std::fprintf(stderr, "failed to write index histogram: %s\n", index_hist_path.c_str());
 			return 1;
 		}
 

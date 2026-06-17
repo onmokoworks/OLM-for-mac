@@ -13,6 +13,7 @@
 #include <vector>
 #include <algorithm>
 #include <cstdint>
+#include <cstdio>
 
 // ============================================================================
 // Constants read directly from the Windows binary (see DAT_180022xxx).
@@ -74,6 +75,29 @@ static int g_olmsmoother2_idx0_diag_mode = 0;
 // 0=post setup for both, 1=sample pre-setup, 2=class pre-setup,
 // 3=sample pre-gamma, 4=class pre-gamma.
 static int g_olmsmoother2_plane_split_diag_mode = 0;
+static int g_olmsmoother2_skip_index_diag = -1;
+static bool g_olmsmoother2_index_hist_enabled = false;
+static uint64_t g_olmsmoother2_index_hist[256] = {};
+
+static void OLMSmoother2ResetIndexHistogram(bool enabled)
+{
+	g_olmsmoother2_index_hist_enabled = enabled;
+	for (uint64_t &count : g_olmsmoother2_index_hist) count = 0;
+}
+
+static bool OLMSmoother2WriteIndexHistogram(const char *path)
+{
+	FILE *fp = std::fopen(path, "w");
+	if (!fp) return false;
+	std::fprintf(fp, "idx,count\n");
+	for (int i = 0; i < 256; ++i) {
+		if (g_olmsmoother2_index_hist[i] != 0) {
+			std::fprintf(fp, "%d,%llu\n", i, (unsigned long long)g_olmsmoother2_index_hist[i]);
+		}
+	}
+	std::fclose(fp);
+	return true;
+}
 
 // ============================================================================
 // Plumbing: SMParams (Win struct analog) and pixel helpers
@@ -3019,6 +3043,12 @@ static void build_polygon(SmootherPolygon &poly,
 
 	int idx = (iVar3 + eR0 + (((bSE ? 0 : 1) + uVar7 * 2) * 4)) * 0x10 +
 	          iVar4 + iGbit + iVar11 + iVar10;
+	if (g_olmsmoother2_index_hist_enabled && idx >= 0 && idx < 256) {
+		++g_olmsmoother2_index_hist[idx];
+	}
+	if (idx == g_olmsmoother2_skip_index_diag) {
+		return;
+	}
 
 	// --- 222-case dispatch (literal port of FUN_18000c280 switch body) ---
 	float step = STEP; (void)step;

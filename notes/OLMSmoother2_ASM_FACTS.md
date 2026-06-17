@@ -435,3 +435,74 @@ Parent action: request/import
 `refs/reference_requests/smoother2_no_key_grid_20260606.json` and compare
 Smoothness / Smooth Range grid behavior before tuning no-key `case_0001`
 further.
+
+## 2026-06-17 no-key grid dispatch diagnostics
+
+Reference set:
+`refs/win_references/olm_reference_return_windows_recapture_20260615/OLMSmoother2`
+covering `smoother2_no_key_grid_20260606`.
+
+Baseline command:
+
+```sh
+python3 refs/scripts/smoke_olmsmoother2_no_key_grid_cli.py --run-suffix baseline
+```
+
+Result:
+
+- Smoothness `0` is exact for all Smooth Range values.
+- Nonzero Smoothness residual scales almost linearly with Smoothness and only
+  weakly with Smooth Range:
+  - `s025`: mean `0.0464..0.0472`
+  - `s050`: mean `0.0921..0.0936`
+  - `s100`: mean `0.1827..0.1853`
+- `idx0` diagnostics are negative on the full grid:
+  - `--idx0-mode half`: `s100/r2 mean=0.2292`
+  - `--idx0-mode suppress`: `s100/r2 mean=0.2793`
+  - baseline `s100/r2 mean=0.1853`
+- plane-split diagnostics are also not the fix:
+  - `sample-pre-setup` breaks Smoothness `0` globally (`mean ~=22`)
+  - `class-pre-setup` / `class-pre-gamma` worsen `s100/r2` to `mean=0.2277`
+
+Added CLI-only diagnostics:
+
+- `refs/scripts/smoke_olmsmoother2_no_key_grid_cli.py --cli-extra=...`
+  appends diagnostic arguments to the CLI and `--run-suffix` keeps `/tmp`
+  runs side-by-side.
+- `cli/OLMSmoother2/olmsmoother2_cli --index-hist out.csv` records the
+  `FUN_18000c280` switch-index distribution.
+- `--skip-index N` is diagnostic only; it returns an empty polygon for one
+  switch index so dispatch groups can be isolated without changing normal
+  plugin behavior.
+
+Representative `sm2_no_key_s100_r2` index histogram:
+
+- `255`: `1864576` pixels, mostly pass-through/default region.
+- top non-255 indices: `31`, `248`, `24`, `0`, `214`, `107`, `66`.
+
+Grid skip probes:
+
+- `--skip-index 31`: unchanged vs baseline.
+- `--skip-index 248`: unchanged vs baseline.
+- `--skip-index 0`: worsens to the same shape as the older idx0 suppress
+  probe (`s100/r2 mean=0.2793`).
+- `--skip-index 24`: consistently improves mean without changing the broad
+  residual shape:
+  - `s025`: `0.0464..0.0472 -> 0.0367..0.0375`
+  - `s050`: `0.0921..0.0936 -> 0.0723..0.0738`
+  - `s100`: `0.1827..0.1853 -> 0.1425..0.1452`
+
+Objdump/decomp fact for index `0x18`:
+
+- `decomp/OLMSmoother2.aex.c.txt` `FUN_18000c280` groups `case 8, 0x10,
+  0x18, ...` through `switchD_18000c530_caseD_8`.
+- That label calls `FUN_180010820` and then falls through/gotos
+  `switchD_18000c530_caseD_1a`, which calls `FUN_1800105f0`.
+- The port maps those to `win_cardinal_3(poly)` and
+  `win_cardinal_12(poly)`.
+
+Next smallest objdump-backed action: split index `0x18` diagnostics between
+`FUN_180010820` (`win_cardinal_3`) and `FUN_1800105f0`
+(`win_cardinal_12`) before changing implementation. The current evidence says
+the remaining no-key residual is concentrated around the `0x18` dispatch
+family, not global Smoothness scaling or idx0 suppression.

@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import csv
 import json
+import shlex
 import shutil
 import subprocess
 import sys
@@ -69,12 +70,13 @@ def selected_case_params(manifest_path: Path, request_params: dict[str, dict[str
     return result
 
 
-def run_grid(root: Path, manifest_path: Path, case_ids: list[str]) -> Path:
+def run_grid(root: Path, manifest_path: Path, case_ids: list[str], cli_extra: list[str], run_suffix: str) -> Path:
     cli = root / "cli" / "OLMSmoother2" / "olmsmoother2_cli"
     if not cli.exists():
         raise FileNotFoundError(f"missing CLI binary (run build_olmsmoother2_cli.sh): {cli}")
 
-    run_dir = Path("/tmp/olmsmoother2_no_key_grid_smoke")
+    safe_suffix = "".join(ch if ch.isalnum() or ch in ("-", "_") else "_" for ch in run_suffix).strip("_")
+    run_dir = Path("/tmp/olmsmoother2_no_key_grid_smoke" + (f"_{safe_suffix}" if safe_suffix else ""))
     if run_dir.exists():
         shutil.rmtree(run_dir)
 
@@ -82,6 +84,8 @@ def run_grid(root: Path, manifest_path: Path, case_ids: list[str]) -> Path:
         '"cli/OLMSmoother2/olmsmoother2_cli" '
         '--input "{input}" --params "{params}" --output "{output}"'
     )
+    if cli_extra:
+        command += " " + " ".join(shlex.quote(arg) for arg in cli_extra)
     args = [
         sys.executable,
         str(root / "refs" / "scripts" / "run_reference_test.py"),
@@ -149,6 +153,22 @@ def print_grouped_report(report_path: Path, case_params: dict[str, dict[str, Any
 
 
 def main() -> int:
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--cli-extra",
+        action="append",
+        default=[],
+        help="Extra argument string appended to olmsmoother2_cli, e.g. --cli-extra='--idx0-mode half'. May be repeated.",
+    )
+    parser.add_argument(
+        "--run-suffix",
+        default="",
+        help="Suffix for the /tmp run directory so diagnostic runs can be compared side by side.",
+    )
+    args = parser.parse_args()
+
     root = Path(__file__).resolve().parents[2]
     manifest_path = covered_manifest(root)
     if manifest_path is None:
@@ -163,7 +183,8 @@ def main() -> int:
         return 1
 
     try:
-        report_path = run_grid(root, manifest_path, list(case_params))
+        cli_extra = [part for extra in args.cli_extra for part in shlex.split(extra)]
+        report_path = run_grid(root, manifest_path, list(case_params), cli_extra, args.run_suffix)
         return print_grouped_report(report_path, case_params)
     except Exception as exc:  # noqa: BLE001 - command-line smoke should be direct.
         print(f"[FAIL] {exc}", file=sys.stderr)
