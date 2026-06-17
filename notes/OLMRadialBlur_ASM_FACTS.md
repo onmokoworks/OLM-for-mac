@@ -47,6 +47,44 @@ Scope: read-only sampler/writeback audit for Rotation polar buffers. Sources:
 Decompiler pointer-index aliases: `+0xe == +0x38`, `+0x10 == +0x40`,
 `+0x12 == +0x48`, and `+0x14 == +0x50`.
 
+## Size-Variation / Scatter-Span Source (2026-06-15, RESOLVED)
+
+The two scalar source-space layers feeding `+0x40` and `+0x50` are built before
+`FUN_180004640` runs, in the layer-allocation/fill function (decomp
+`~3160..3398`):
+
+- `param_5[0x21]` is the per-pixel **size map**. When the Size Variation gate
+  `+0x44 == 0`, it is filled with constant `1.0f` (`FUN_180006500`, decomp
+  3270-3273). When enabled, `FUN_180008930` builds it from a connected-component
+  /run-length distance transform over the alpha mask `mask[i] = (src.alpha > 0)`
+  (decomp 3284-3286), and `+0x4c` stores the map maximum for normalization.
+- `param_5[0x11]` (= `param_2[0x11]`, the `+0x50` **factor** plane in source
+  space) is computed (decomp 3309-3324) as
+  `size_factor[i] = (sizemap[i] / sizemap_max) * SV + (1.0 - SV)`,
+  where `SV = +0x40_render_param = Size Variation * 0.01`. With `SV = 0` this is
+  exactly `1.0` for every pixel.
+- `param_5[0x12]` (= `param_2[0x12]`, the `+0x40` **scatter span/gate** plane in
+  source space) is computed by `FUN_1800065c0` (decomp 2858-2887) as
+  `span_gate[i] = (NV * noise[i] + (1.0 - NV)) * size_factor[i]`, where
+  `NV = +0x3c_render_param = Noise Variation * 0.01`. With `NV = 0` this is
+  exactly `size_factor[i]`; with both `NV = 0` and `SV = 0` it is exactly `1.0`.
+
+`FUN_180001c90` reads `+0x40` as `param_10` and sets the effective scatter
+length `effective_len = int(base_len * param_10)` (decomp 599). So the
+size-variation map scales the per-cell inner/outer scatter length, and the
+size factor / noise factor are NOT a final alpha multiply — they retune the
+Gaussian span before the table is reindexed by `30000 / effective_len`.
+
+Empirical confirmation from the 2026-06-15 sizevar references: for the fully
+opaque `current_olm_cells` input, `sv000_edge000`, `sv050_edge000`, and
+`sv100_edge000` outputs are **byte-identical**. This is consistent with the
+formula: a fully opaque mask is a single region, so the normalized distance map
+is (near-)uniform and `size_factor` is constant; a constant span scale that is
+applied per cell and then re-normalized by the accumulated alpha-weight sum
+cancels out, leaving the image unchanged. Size Variation therefore only has a
+visible effect on inputs with non-trivial alpha structure (the `alpha_*`
+references), where the distance transform is non-uniform.
+
 ## Prepass And Scatter Wiring
 
 - `FUN_180002780` call site (`180004c31..180004c6a`) receives
