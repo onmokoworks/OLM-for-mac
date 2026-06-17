@@ -3726,9 +3726,25 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 		float maxv = std::max(std::max(dr, dg), std::max(db, dy));
 		return maxv + std::fabs(a.a - b.a);
 	};
-	// Reproduce Win param +0x1c: 1 iff enable_key AND not invert_key, else 0.
+	// Class-plane threshold = (float)*(int *)(param_5 + 0x1c) / 100.0 + 0.001.
+	// 2026-06-15 grid finding: in the no-key path, the render-time SMParams
+	// pointer is the setter struct base + 8 (the setter stores a pointer at +0
+	// and the scalar params follow).  Under that shift FUN_18000ae10's
+	// render +0x1c read is the setter's +0x24 = SMOOTH RANGE.
+	//   - render +0x1c (ae10 threshold)  == setter +0x24 == Smooth Range
+	//   - render +0x20 (c280 corner bw)  == setter +0x28 == Smoothness
+	//   - render +0x24 (c280 local_14c)  == setter +0x2c == Extra Smooth
+	// Confirmed against disasm: FUN_18000ae10 @18000ae72 `MOVD XMM8,[R15+0x1c]`,
+	// FUN_18000c280 @18000c2bb `MOVD XMM2,[RAX+0x20]` / @18000c33f `[RAX+0x24]`.
+	// The no-key software grid (sm2_no_key_s*_r{1,2,3}) shows the reference
+	// smooths FEWER pixels as Smooth Range rises (r1>r2>r3), i.e. a rising
+	// threshold = SmoothRange/100 + 0.001.  The earlier "key predicate" reading
+	// was the source of the no-key over-firing residual.  Keep the key-enabled
+	// path on the predicate byte to preserve the covered key-path references.
+	const int   smooth_range_field = p.smooth_range;
 	const int   key_pred_byte = (p.enable_key && !p.invert_key) ? 1 : 0;
-	const float threshold = (float)key_pred_byte / 100.0f + WIN_THRESH_BIAS;
+	const int   class_threshold_field = p.enable_key ? key_pred_byte : smooth_range_field;
+	const float threshold = (float)class_threshold_field / 100.0f + WIN_THRESH_BIAS;
 
 	std::vector<uint8_t> class_plane((size_t)w * (size_t)h * 4, 0);
 	auto fpix_at = [&](int xx, int yy) -> const FPix& {

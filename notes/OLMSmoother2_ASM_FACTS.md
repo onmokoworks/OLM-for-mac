@@ -166,9 +166,14 @@ Threshold:
 - `FUN_18000ae10` reads `dword [SMParams + 0x1c]`.
 - The effective threshold is:
   `float(*(int *)(SMParams + 0x1c)) / 100.0 + 0.001`.
-- For no-key `case_0001`, `+0x1c` remains zero, so threshold is `0.001`.
-- For non-invert scalar key, setter writes byte `+0x1c = 1`, so threshold is
-  effectively `0.011` because the upper three bytes are zero.
+- 2026-06-15 no-key grid finding: in the no-key path, the render-time
+  `SMParams` pointer is the setter struct base + 8, so render `+0x1c` maps to
+  setter `+0x24` = Smooth Range. The no-key grid confirms this direction:
+  references smooth fewer pixels as Smooth Range rises (`r1 > r2 > r3`), so
+  the no-key class threshold is `SmoothRange / 100.0 + 0.001`.
+- For key-enabled covered refs, keep the predicate-byte behavior
+  (`enable_key && !invert_key ? 1 : 0`) to preserve the existing key-path gate;
+  this maintains `case_0002..0004` while the no-key grid improves.
 
 Byte layout written by `FUN_18000ae10`:
 
