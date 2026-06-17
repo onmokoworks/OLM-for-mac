@@ -133,6 +133,19 @@ references), where the distance transform is non-uniform.
 - The current C++ CLI has diagnostic mirrors for the AEX sampler
   (`sample_rgba_aex_alpha`), polar valid mode, prepass factor modes, seed modes,
   scatter span/param10 planes, and final alpha/RGB denominator modes.
+- 2026-06-17: the CLI now has a diagnostic Size Variation plane path for
+  Rotation Inner when `--inner-source-scatter-prepass` is used without
+  `--ignore-size-variation`. It builds a source alpha-mask size factor, samples
+  it into the polar `+0x50` factor plane, and feeds the same factor into the
+  `+0x40` span/gate plane for `effective_span = int(span * param10)`. This is
+  a diagnostic mirror of the resolved ownership, not a byte-match claim.
+- Measurement against `radialblur_inner_size_variation_20260606`:
+  `--ignore-size-variation` had `rb_inner_alpha_sv050_edge000 max=213
+  mean=5.194305` and `rb_inner_alpha_sv050_edge025 max=230 mean=9.485505`.
+  The new plane path gives `edge000 max=236 mean=5.2167` and improves
+  `edge025` to `max=250 mean=6.0182`. Opaque SV 0/25/50/100 remain at the
+  same `max=255 mean=0.3415` diagnostic residual, while byte-identical
+  reference outputs confirm Size Variation cancels on the fully opaque input.
 - The CLI still contains diagnostic alternatives; do not treat those switches
   as settled AEX behavior. The settled asm facts are the caller plane ownership,
   helper selection, prepass writeback to `+0x48/+0x3c948`, and scatter gating

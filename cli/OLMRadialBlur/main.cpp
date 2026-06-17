@@ -556,6 +556,87 @@ float sample_channel(const FloatImage &image, float x, float y, int channel, boo
     return top * (1.0f - fy) + bottom * fy;
 }
 
+float sample_scalar_plane(const std::vector<float> &plane, int w, int h, float x, float y, bool repeat) {
+    bool valid = true;
+    if (repeat) {
+        x = clamp_float(x, 0.0f, static_cast<float>(w - 1));
+        y = clamp_float(y, 0.0f, static_cast<float>(h - 1));
+    } else {
+        valid = x >= 0.0f && x <= static_cast<float>(w - 1) && y >= 0.0f && y <= static_cast<float>(h - 1);
+        x = clamp_float(x, 0.0f, static_cast<float>(w - 1));
+        y = clamp_float(y, 0.0f, static_cast<float>(h - 1));
+    }
+    if (!valid) return 0.0f;
+    int x0 = static_cast<int>(std::floor(x));
+    int y0 = static_cast<int>(std::floor(y));
+    int x1 = std::min(x0 + 1, w - 1);
+    int y1 = std::min(y0 + 1, h - 1);
+    float fx = x - static_cast<float>(x0);
+    float fy = y - static_cast<float>(y0);
+    auto at = [&](int px, int py) -> float {
+        return plane[static_cast<size_t>(py) * w + px];
+    };
+    float top = at(x0, y0) * (1.0f - fx) + at(x1, y0) * fx;
+    float bottom = at(x0, y1) * (1.0f - fx) + at(x1, y1) * fx;
+    return top * (1.0f - fy) + bottom * fy;
+}
+
+std::vector<float> build_size_factor_plane(const FloatImage &src, double size_variation_percent) {
+    const int w = src.width;
+    const int h = src.height;
+    const size_t count = static_cast<size_t>(w) * h;
+    std::vector<float> factor(count, 1.0f);
+    const float sv = clamp_float(static_cast<float>(size_variation_percent * 0.01), 0.0f, 1.0f);
+    if (sv <= 0.0f || count == 0) return factor;
+
+    std::vector<int> dist(count, 0);
+    bool has_opaque = false;
+    bool has_transparent = false;
+    constexpr int inf = 1 << 28;
+    for (int y = 0; y < h; ++y) {
+        for (int x = 0; x < w; ++x) {
+            const size_t cell = static_cast<size_t>(y) * w + x;
+            const float alpha = src.rgba[cell * 4 + 3];
+            if (alpha > 0.0f) {
+                dist[cell] = inf;
+                has_opaque = true;
+            } else {
+                dist[cell] = 0;
+                has_transparent = true;
+            }
+        }
+    }
+    if (!has_opaque || !has_transparent) return factor;
+
+    for (int y = 0; y < h; ++y) {
+        for (int x = 0; x < w; ++x) {
+            const size_t cell = static_cast<size_t>(y) * w + x;
+            int best = dist[cell];
+            if (x > 0) best = std::min(best, dist[cell - 1] + 1);
+            if (y > 0) best = std::min(best, dist[cell - static_cast<size_t>(w)] + 1);
+            dist[cell] = best;
+        }
+    }
+    int max_dist = 0;
+    for (int y = h - 1; y >= 0; --y) {
+        for (int x = w - 1; x >= 0; --x) {
+            const size_t cell = static_cast<size_t>(y) * w + x;
+            int best = dist[cell];
+            if (x + 1 < w) best = std::min(best, dist[cell + 1] + 1);
+            if (y + 1 < h) best = std::min(best, dist[cell + static_cast<size_t>(w)] + 1);
+            dist[cell] = best;
+            if (best < inf) max_dist = std::max(max_dist, best);
+        }
+    }
+    if (max_dist <= 0) return factor;
+
+    for (size_t cell = 0; cell < count; ++cell) {
+        const float normalized = dist[cell] >= inf ? 1.0f : static_cast<float>(dist[cell]) / static_cast<float>(max_dist);
+        factor[cell] = normalized * sv + (1.0f - sv);
+    }
+    return factor;
+}
+
 void sample_rgba_aex_alpha(const FloatImage &image, float x, float y, bool repeat, float out[4]) {
     const int w = image.width;
     const int h = image.height;
@@ -911,7 +992,7 @@ Image render_olmradialblur_zoom(const Image &input, const RadialBlurParams &para
 Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &params) {
     if (params.blur_type != 2) throw std::runtime_error("C++ OLMRadialBlur rotation supports only Blur Type=2");
     if (params.noise_variation != 0.0) throw std::runtime_error("C++ OLMRadialBlur rotation currently does not support Noise Variation");
-    if (params.size_variation != 0.0 && !params.ignore_size_variation) {
+    if (params.size_variation != 0.0 && !params.ignore_size_variation && !params.inner_source_scatter_prepass) {
         throw std::runtime_error("C++ OLMRadialBlur rotation currently does not support Size Variation");
     }
 
@@ -947,6 +1028,12 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
     polar.height = radius_count;
     polar.rgba.resize(static_cast<size_t>(radius_count) * angular_count * 4);
     std::vector<uint8_t> polar_valid(static_cast<size_t>(radius_count) * angular_count, 0);
+    const bool use_size_variation_planes = params.size_variation != 0.0 && !params.ignore_size_variation;
+    const std::vector<float> source_size_factor = use_size_variation_planes
+        ? build_size_factor_plane(src, params.size_variation)
+        : std::vector<float>{};
+    std::vector<float> polar_size_factor(static_cast<size_t>(radius_count) * angular_count, 1.0f);
+    std::vector<float> polar_span_gate(static_cast<size_t>(radius_count) * angular_count, 1.0f);
     const double cos_a = std::cos(base_angle);
     const double sin_a = std::sin(base_angle);
     for (int ri = 0; ri < radius_count; ++ri) {
@@ -973,6 +1060,12 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
             }
             polar_valid[static_cast<size_t>(ri) * angular_count + ai] =
                 polar_valid_sample(sx, sy, w, h, params.repeat_border, params.polar_valid_mode);
+            if (use_size_variation_planes) {
+                const size_t cell = static_cast<size_t>(ri) * angular_count + ai;
+                const float size_factor = sample_scalar_plane(source_size_factor, w, h, sx, sy, params.repeat_border);
+                polar_size_factor[cell] = size_factor;
+                polar_span_gate[cell] = size_factor;
+            }
         }
     }
 
@@ -1156,10 +1249,10 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
                 for (int ai = 0; ai < angular_count; ++ai) {
                     const size_t cell = static_cast<size_t>(ri) * angular_count + ai;
                     const float base_alpha = polar.rgba[cell * 4 + 3];
-                    float base_factor = base_alpha;
-                    if (params.inner_prepass_factor_mode == "one") {
+                    float base_factor = use_size_variation_planes ? polar_size_factor[cell] : base_alpha;
+                    if (!use_size_variation_planes && params.inner_prepass_factor_mode == "one") {
                         base_factor = 1.0f;
-                    } else if (params.inner_prepass_factor_mode == "valid") {
+                    } else if (!use_size_variation_planes && params.inner_prepass_factor_mode == "valid") {
                         base_factor = polar_valid[cell] ? 1.0f : 0.0f;
                     }
                     if (!polar_valid[cell] || base_alpha <= 0.0f || base_factor <= 0.0f) continue;
@@ -1242,6 +1335,8 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
                 param10 = source_alpha[src_cell];
             } else if (params.inner_scatter_param10_plane == "factor") {
                 param10 = polar_valid[src_cell] ? 1.0f : 0.0f;
+            } else if (use_size_variation_planes) {
+                param10 = polar_span_gate[src_cell];
             } else if (params.inner_scatter_span_scale_mode == "source-alpha") {
                 param10 = source_alpha[src_cell];
             } else if (params.inner_scatter_span_scale_mode == "input-alpha") {

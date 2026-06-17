@@ -649,3 +649,42 @@ Stop condition still holds: the current three refs use equal ray lengths and
 single-ray crop behavior cannot be separated. Parent action is to render/import
 `refs/reference_requests/kirakira_single_ray_20260606.json` in Software mode
 before promoting another KiraKira implementation change.
+
+### 2026-06-17 returned single-ray / strength0 brightness audit
+
+The old single-ray and strength0 brightness stop conditions are lifted:
+`kirakira_single_ray_20260606` and `kirakira_strength0_brightness_20260614`
+are covered and imported.
+
+Current best-supported IR checkpoints:
+
+- Merge mode 1 is `aex-screen-over`: screen source RGB with glow RGB multiplied
+  by glow alpha, and keep source alpha.
+- Zero-length rays are skipped rather than blurred as the raw seed.
+- Ray order/angles are `{vertical=90+rotation, horizontal=0+rotation,
+  diagonal=45+rotation, highlight_zero, diagonal2=-45+rotation}`.
+- `FUN_181150790`'s helper scalar is not needed by merge-mode-1
+  `FUN_18114fd90`; final aggregation consumes ray buffers plus Brightness/Gain.
+- Strength=0 Brightness maps `fd90`'s trailing `param_10` to `127/255`.
+- Axis fast-path is diagnostic only. Disabling it does not solve the main
+  residual.
+
+Measured status:
+
+- `python3 refs/scripts/smoke_reference_requests_after_import.py --request
+  kirakira_strength0_brightness_20260614`: `kk_s0_brightness1 max=1
+  mean=0.0397`; brightness25/50/94 are exact.
+- `kirakira_single_ray_20260606` with `--warp-mode aex-two-temp`:
+  vertical/horizontal strength100 `max=13 mean=1.3931/1.4214`;
+  diagonal/diagonal2 `max=23 mean=1.2602/1.2959`; strength0
+  vertical/horizontal exact; strength0 diagonal/diagonal2 `max=3
+  mean=0.0238`; rotation13 `max=66 mean=1.6628`.
+- `--warp-mode current` worsens diagonal and rotation13
+  (`max=43/45`, rotation13 `max=76 mean=1.8365`), so keep `aex-two-temp` as
+  the better current hypothesis.
+
+Next parent action: compare the hand-written box/warp path against actual
+OpenCV `boxFilter(..., ksize=(length,1), anchor=(-1,-1), normalize=1,
+BORDER_REFLECT_101)` plus `warpAffine` two-temp canvas with the binary-backed
+`+4.0` truncation. Do not chase more brightness/scalar/ray-order refs unless
+that OpenCV primitive pass still leaves an unexplained pattern.
