@@ -227,6 +227,7 @@ def opencv_two_temp_axis_blur(
     angle: float,
     passes: int,
     alias_roi: bool = False,
+    center_mode: str = "normal",
 ) -> np.ndarray:
     try:
         import cv2
@@ -241,7 +242,16 @@ def opencv_two_temp_axis_blur(
     rad = np.deg2rad(angle)
     rw = max(width + 4, int(float(width) * abs(np.cos(rad)) + float(height) * abs(np.sin(rad)) + 0.5))
     rh = max(height + 4, int(float(width) * abs(np.sin(rad)) + float(height) * abs(np.cos(rad)) + 0.5))
-    center = (float(rw) * 0.5, float(rh) * 0.5)
+    center_x = float(rw) * 0.5
+    center_y = float(rh) * 0.5
+    if center_mode == "swapped":
+        center_x, center_y = center_y, center_x
+    elif center_mode == "minus-half":
+        center_x -= 0.5
+        center_y -= 0.5
+    elif center_mode == "swapped-minus-half":
+        center_x, center_y = center_y - 0.5, center_x - 0.5
+    center = (center_x, center_y)
     temp_a = np.zeros((rh, rw), dtype=np.float32)
     y0 = max(0, (rh - height) // 2)
     x0 = max(0, (rw - width) // 2)
@@ -396,6 +406,7 @@ def opencv_two_temp_rays(
     falloff: str,
     length_scale: float,
     alias_roi: bool = False,
+    center_mode: str = "normal",
 ) -> list[np.ndarray]:
     def scaled_length(key: str) -> int:
         return max(0, int(round(float_param(params, key, 0.0) * length_scale)))
@@ -403,10 +414,10 @@ def opencv_two_temp_rays(
     passes = 3 if falloff.startswith("box3") else 1
     glow_rotation = float_param(params, "glow_rotation", 0.0)
     return [
-        opencv_two_temp_axis_blur(seed, scaled_length("vertical_length"), 90.0 + glow_rotation, passes, alias_roi),
-        opencv_two_temp_axis_blur(seed, scaled_length("horizontal_length"), glow_rotation, passes, alias_roi),
-        opencv_two_temp_axis_blur(seed, scaled_length("diagonal_length"), 45.0 + glow_rotation, passes, alias_roi),
-        opencv_two_temp_axis_blur(seed, scaled_length("diagonal2_length"), -45.0 + glow_rotation, passes, alias_roi),
+        opencv_two_temp_axis_blur(seed, scaled_length("vertical_length"), 90.0 + glow_rotation, passes, alias_roi, center_mode),
+        opencv_two_temp_axis_blur(seed, scaled_length("horizontal_length"), glow_rotation, passes, alias_roi, center_mode),
+        opencv_two_temp_axis_blur(seed, scaled_length("diagonal_length"), 45.0 + glow_rotation, passes, alias_roi, center_mode),
+        opencv_two_temp_axis_blur(seed, scaled_length("diagonal2_length"), -45.0 + glow_rotation, passes, alias_roi, center_mode),
     ]
 
 
@@ -484,6 +495,7 @@ def render_kirakira(
     rotate_order: int = 1,
     rotate_prefilter: bool = False,
     zero_ray_skip: bool = False,
+    opencv_center_mode: str = "normal",
 ) -> Image.Image:
     rgba = np.asarray(image.convert("RGBA"), dtype=np.uint8).astype(np.float32) / 255.0
     if auto_length_scale:
@@ -507,6 +519,7 @@ def render_kirakira(
             falloff,
             length_scale,
             alias_roi=ray_mode == "opencv-two-temp-alias-roi",
+            center_mode=opencv_center_mode,
         )
     elif ray_mode == "axis-rotate":
         vertical, horizontal, diagonal, diagonal2 = axis_rotate_rays(
@@ -664,6 +677,12 @@ def main() -> int:
         action="store_true",
         help="Match AEX ray helper dispatch: length-0 rays contribute an all-zero ray, not the seed image.",
     )
+    parser.add_argument(
+        "--opencv-center-mode",
+        choices=["normal", "swapped", "minus-half", "swapped-minus-half"],
+        default="normal",
+        help="Experimental cv2 getRotationMatrix2D center candidate for OLMKiraKira two-temp probes.",
+    )
     args = parser.parse_args()
 
     params, _payload = load_params(Path(args.params))
@@ -691,6 +710,7 @@ def main() -> int:
         args.rotate_order,
         args.rotate_prefilter,
         args.zero_ray_skip,
+        args.opencv_center_mode,
     )
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)

@@ -741,3 +741,46 @@ is therefore more likely exact `FUN_1811512a0` matrix/center/dsize semantics,
 OpenCV 4.5.5 interpolation details, or a small pre/post ROI copy convention
 than brightness, scalar aggregation, ray order, zero-ray handling, or ordinary
 boxFilter border/anchor settings.
+
+### 2026-06-17 getRotationMatrix2D center audit
+
+Read-only sub-agent audit and local decomp review confirm that
+`FUN_1812943d0 @ 1812943d0` is OpenCV `cv::getRotationMatrix2D_`:
+
+```text
+angle_rad = angle_deg * (pi / 180)
+alpha = cos(angle_rad) * scale
+beta  = sin(angle_rad) * scale
+
+[ alpha   beta   (1-alpha)*cx - beta*cy
+ -beta    alpha   beta*cx + (1-alpha)*cy ]
+```
+
+`FUN_181150790` passes the rotated temp Mat center to `FUN_1811512a0`:
+`cx = cols * 0.5f`, `cy = rows * 0.5f`. This matches current C++ two-temp
+`temp_cx = rw * 0.5`, `temp_cy = rh * 0.5`; it is not `(w-1)/2`.
+`FUN_181297ac0` receives `param_5=1`, so OpenCV uses `INTER_LINEAR` without
+`WARP_INVERSE_MAP`; the existing CLI's inverse sampling convention is the right
+shape for default `warpAffine`.
+
+Added Python OpenCV probe option `--opencv-center-mode` to isolate only the
+binary-plausible center ambiguities (`normal`, `swapped`, `minus-half`,
+`swapped-minus-half`). Measured against `kirakira_single_ray_20260606` with
+screen-over / zero-ray skip:
+
+| center mode | vertical | horizontal | diagonal | diagonal2 | strength0 V/H/D/D2 | rotation13 |
+| --- | ---: | ---: | ---: | ---: | --- | ---: |
+| normal | 1.3508 | 1.4214 | 1.2605 | 1.2960 | 0.0227 / 0 / 0.0237 / 0.0237 | 1.6628 |
+| swapped | 1.3508 | 1.4214 | 1.2605 | 1.2960 | 0.0227 / 0 / 0.0237 / 0.0237 | 1.6878 |
+| minus-half | 1.3500 | 1.4214 | 1.2607 | 1.2978 | 0.0215 / 0 / 0.0237 / 0.0237 | 1.6628 |
+| swapped-minus-half | 1.3500 | 1.4214 | 1.2607 | 1.2978 | 0.0215 / 0 / 0.0237 / 0.0237 | 1.6878 |
+
+The half-pixel variants only make tiny local movements and do not improve the
+hard rotation13 case; swapped center worsens rotation13. Combined with the
+binary call-site evidence, keep the standard temp-center model pinned.
+
+Remaining narrow binary task: disassemble the actual call sites
+`1811508a1..1811508c3`, `181150f3d..18115105d`, and `1811512a0` to verify the
+first `FUN_1811512a0` scale register, because the checked-in decompilation's
+wrapper prototype drops the extra parameters. There is still no evidence for a
+non-1 scale, but that is now the smallest unresolved matrix-side fact.
