@@ -79,11 +79,22 @@ static int g_olmsmoother2_skip_index_diag = -1;
 static int g_olmsmoother2_idx18_diag_mode = 0;
 static bool g_olmsmoother2_index_hist_enabled = false;
 static uint64_t g_olmsmoother2_index_hist[256] = {};
+static bool g_olmsmoother2_idx18_key_hist_enabled = false;
+static int g_olmsmoother2_current_switch_idx = -1;
+static uint64_t g_olmsmoother2_idx18_cardinal3_key_hist[128] = {};
+static uint64_t g_olmsmoother2_idx18_cardinal12_key_hist[128] = {};
 
 static void OLMSmoother2ResetIndexHistogram(bool enabled)
 {
 	g_olmsmoother2_index_hist_enabled = enabled;
 	for (uint64_t &count : g_olmsmoother2_index_hist) count = 0;
+}
+
+static void OLMSmoother2ResetIdx18KeyHistogram(bool enabled)
+{
+	g_olmsmoother2_idx18_key_hist_enabled = enabled;
+	for (uint64_t &count : g_olmsmoother2_idx18_cardinal3_key_hist) count = 0;
+	for (uint64_t &count : g_olmsmoother2_idx18_cardinal12_key_hist) count = 0;
 }
 
 static bool OLMSmoother2WriteIndexHistogram(const char *path)
@@ -94,6 +105,23 @@ static bool OLMSmoother2WriteIndexHistogram(const char *path)
 	for (int i = 0; i < 256; ++i) {
 		if (g_olmsmoother2_index_hist[i] != 0) {
 			std::fprintf(fp, "%d,%llu\n", i, (unsigned long long)g_olmsmoother2_index_hist[i]);
+		}
+	}
+	std::fclose(fp);
+	return true;
+}
+
+static bool OLMSmoother2WriteIdx18KeyHistogram(const char *path)
+{
+	FILE *fp = std::fopen(path, "w");
+	if (!fp) return false;
+	std::fprintf(fp, "cardinal,key,count\n");
+	for (int i = 0; i < 128; ++i) {
+		if (g_olmsmoother2_idx18_cardinal3_key_hist[i] != 0) {
+			std::fprintf(fp, "3,%d,%llu\n", i, (unsigned long long)g_olmsmoother2_idx18_cardinal3_key_hist[i]);
+		}
+		if (g_olmsmoother2_idx18_cardinal12_key_hist[i] != 0) {
+			std::fprintf(fp, "12,%d,%llu\n", i, (unsigned long long)g_olmsmoother2_idx18_cardinal12_key_hist[i]);
 		}
 	}
 	std::fclose(fp);
@@ -708,14 +736,14 @@ static bool win_leaf_ec40(SmootherPolygon &poly, const int *p2) {
 			int py = y;
 			// Win sets fVar11 = fVar3 (=K_HALF) inside the while-condition,
 			// so bounds-fail leaves wscale_h at K_HALF.
-			wscale_h = K_ONE;
+			wscale_h = K_HALF;
 			if (px < 0 || px >= poly.cplane_w || py < 0 || py >= poly.cplane_h) break;
 			int s2[3];
 			int in2[2] = { px, py };
 			scan_d230(s2, &g, in2);
-			wscale_h = K_HALF;
-			if (s2[2] == 1) break;
 			wscale_h = K_ONE;
+			if (s2[2] == 1) break;
+			wscale_h = K_HALF;
 			x = s2[0]; y = s2[1];
 			if (s2[2] != 4) break;
 		}
@@ -787,14 +815,14 @@ static bool win_leaf_e640(SmootherPolygon &poly, const int *p2) {
 		while (true) {
 			int px = x + 1;
 			int py = y;
-			wscale_h = K_ONE;
+			wscale_h = K_HALF;
 			if (px < 0 || px >= poly.cplane_w || py < 0 || py >= poly.cplane_h) break;
 			int s2[3];
 			int in3[2] = { px, py };
 			scan_d800(s2, &g, in3);
-			wscale_h = K_HALF;
-			if (s2[2] == 2) break;
 			wscale_h = K_ONE;
+			if (s2[2] == 2) break;
+			wscale_h = K_HALF;
 			x = s2[0]; y = s2[1];
 			if (s2[2] != 3) break;
 		}
@@ -902,6 +930,10 @@ static void win_cardinal_12(SmootherPolygon &poly) {
 	int sR[3]; scan_d800(sR, &g2, center);
 	// Descriptor layout: { xL, yL, clsL, xR, yR, clsR }
 	int desc[6] = { sL[0], sL[1], sL[2], sR[0], sR[1], sR[2] };
+	if (g_olmsmoother2_idx18_key_hist_enabled && g_olmsmoother2_current_switch_idx == 0x18) {
+		int k = desc[2] + (desc[5] * 5 - 1) * 2;
+		if (k >= 0 && k < 128) ++g_olmsmoother2_idx18_cardinal12_key_hist[k];
+	}
 	win_disp_fbf0(poly, desc);
 }
 
@@ -2679,12 +2711,12 @@ static bool win_leaf_ef20(SmootherPolygon &poly, const int *p2) {
 		int x = p2[0], y = p2[1];
 		while (true) {
 			int px = x - 1;
-			wsh = K_ONE;
+			wsh = K_HALF;
 			if (px < 0 || px >= poly.cplane_w || y < 0 || y >= poly.cplane_h) break;
 			int s2[3]; int in2[2] = { px, y }; scan_d520(s2, &g, in2);
-			wsh = K_HALF;
-			if (s2[2] == 2) break;
 			wsh = K_ONE;
+			if (s2[2] == 2) break;
+			wsh = K_HALF;
 			x = s2[0]; y = s2[1];
 			if (s2[2] != 3) break;
 		}
@@ -2738,12 +2770,12 @@ static bool win_leaf_e950(SmootherPolygon &poly, const int *p2) {
 		int x = p2[3], y = p2[4];
 		while (true) {
 			int px = x + 1;
-			wsh = K_ONE;
+			wsh = K_HALF;
 			if (px < 0 || px >= poly.cplane_w || y < 0 || y >= poly.cplane_h) break;
 			int s2[3]; int in2[2] = { px, y }; scan_dbd0(s2, &g, in2);
-			wsh = K_HALF;
-			if (s2[2] == 1) break;
 			wsh = K_ONE;
+			if (s2[2] == 1) break;
+			wsh = K_HALF;
 			x = s2[0]; y = s2[1];
 			if (s2[2] != 4) break;
 		}
@@ -2971,6 +3003,10 @@ static void win_cardinal_3(SmootherPolygon &poly) {
 	int s1[3]; scan_d520(s1, &g, center);
 	int s2[3]; scan_dbd0(s2, &g, center);
 	int desc[6] = { s1[0], s1[1], s1[2], s2[0], s2[1], s2[2] };
+	if (g_olmsmoother2_idx18_key_hist_enabled && g_olmsmoother2_current_switch_idx == 0x18) {
+		int k = (desc[2] - 1) + desc[5] * 10;
+		if (k >= 0 && k < 128) ++g_olmsmoother2_idx18_cardinal3_key_hist[k];
+	}
 	win_disp_101e0(poly, desc);
 }
 
@@ -3053,6 +3089,7 @@ static void build_polygon(SmootherPolygon &poly,
 
 	// --- 222-case dispatch (literal port of FUN_18000c280 switch body) ---
 	float step = STEP; (void)step;
+	g_olmsmoother2_current_switch_idx = idx;
 	switch (idx) {
 	case 0:
 		if (g_olmsmoother2_idx0_diag_mode != 1) {
@@ -3312,6 +3349,7 @@ static void build_polygon(SmootherPolygon &poly,
 	default:
 		break;
 	}
+	g_olmsmoother2_current_switch_idx = -1;
 }
 
 // Stage 2: per-sample luminance-diff weight (BT.709).

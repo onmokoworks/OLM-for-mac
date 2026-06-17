@@ -553,3 +553,50 @@ Next action:
   `FUN_18000d230`, `FUN_18000d800`, `FUN_18000d520`, and `FUN_18000dbd0`
   first. If those are literal, then compare the leaf emitters used by
   `win_disp_fbf0` and `win_disp_101e0`.
+
+### 2026-06-17 Ghidra-confirmed idx=0x18 leaf weighting fix
+
+Ghidra MCP checks:
+
+- `FUN_18000d800`, `FUN_18000dbd0`, `FUN_1800101e0`, and `FUN_18000fbf0`
+  decompile cleanly and match the local `decomp/OLMSmoother2.aex.c.txt`.
+- The dominant `idx=0x18` paths are not random spread; `--idx18-key-hist`
+  on representative `sm2_no_key_s100_r2` shows:
+  - cardinal12 key `41`: `11500`
+  - cardinal12 key `64`: `11376`
+  - cardinal3 key `33`: `11376`
+  - cardinal3 key `65`: `11376`
+
+This narrowed the residual to four chase-loop leaf pairs:
+
+- `win_leaf_ec40` + `win_leaf_e640` from `win_disp_fbf0`
+- `win_leaf_ef20` + `win_leaf_e950` from `win_disp_101e0`
+
+Port bug found:
+
+- The Windows decomp sets the `0.5` weight before the bounds check in these
+  chase loops, then switches to `1.0` after the scanner returns, and only
+  restores `0.5` before following a continuation class.
+- The port had that order reversed in the four listed leaf functions.
+
+After fixing only that literal `wscale` order, the no-key grid improves:
+
+- Smoothness `0` remains exact.
+- `s025` mean: `0.0464..0.0472 -> 0.0355..0.0363`
+- `s050` mean: `0.0921..0.0936 -> 0.0703..0.0718`
+- `s100` mean: `0.1827..0.1853 -> 0.1390..0.1416`
+
+Post-fix diagnostic-only cardinal skips still improve further, so the remaining
+residual is real and remains concentrated in the `idx=0x18` scanner/leaf
+family:
+
+- `--idx18-mode skip-cardinal3`: `s100` mean `0.0953..0.0979`
+- `--idx18-mode skip-cardinal12`: `s100` mean `0.0952..0.0979`
+
+Next action:
+
+- Keep the `wscale` fix.
+- Do not promote either cardinal skip to implementation behavior.
+- Continue with literal comparison of the dominant keys:
+  - `FUN_18000fbf0` keys `0x29` and `0x40`
+  - `FUN_1800101e0` keys `0x21` and `0x41`
