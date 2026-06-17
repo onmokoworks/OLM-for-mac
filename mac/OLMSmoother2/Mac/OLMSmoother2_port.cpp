@@ -522,9 +522,11 @@ static inline GridDesc grid_of(const SmootherPolygon &poly) {
 	return { poly.cplane_base, poly.cplane_w, poly.cplane_h, poly.cplane_stride, 0 };
 }
 
-// FUN_180010550 — 8-way classifier.  Index = p1 + p3*2 + p2*4.
+// FUN_180010550 — classifier. Index = p1 + p3*2 + p2*4.
+// The idx=7 target reads p4 (R9B) and p5 (stack arg); scanner call sites set
+// both, even though Ghidra's decompiler often recovers only the first 3 args.
 // Jumptable targets resolved by capstone (see cardinal_chain.c.txt).
-static inline int win_FUN_180010550(int p1, int p2, int p3) {
+static inline int win_FUN_180010550(int p1, int p2, int p3, int p4 = 0, int p5 = 0) {
 	int idx = (p1 & 1) | ((p3 & 1) << 1) | ((p2 & 1) << 2);
 	switch (idx) {
 		case 0: case 1: return 0;
@@ -533,7 +535,15 @@ static inline int win_FUN_180010550(int p1, int p2, int p3) {
 		case 4: return 2;
 		case 5: return 3;
 		case 6: return 5;
-		case 7: default: return 6;
+		case 7: {
+			switch ((p4 & 1) | ((p5 & 1) << 1)) {
+				case 0: return 6;
+				case 1: return 7;
+				case 2: return 8;
+				case 3: return 9;
+			}
+		}
+		default: return 6;
 	}
 }
 
@@ -580,7 +590,9 @@ static void scan_d230(int out[3], const GridDesc *g, const int in[2]) {
 	bool p1 = (i > 0) && cp_b(g, i - 1, yp, 1) != 0;   // R@(i-1, yp)
 	bool p2 = cp_b(g, i, y,  0) != 0;                   // A@(i,  y)
 	bool p3 = cp_b(g, i, yp, 0) != 0;                   // A@(i, yp)
-	out[0] = i; out[1] = y; out[2] = win_FUN_180010550(p1, p2, p3);
+	bool p4 = cp_b(g, i, yp, 2) != 0;                   // G@(i, yp)
+	bool p5 = (i > 0) && cp_b(g, i - 1, yp, 3) != 0;    // B@(i-1, yp)
+	out[0] = i; out[1] = y; out[2] = win_FUN_180010550(p1, p2, p3, p4, p5);
 }
 
 // FUN_18000d800 — scan RIGHT on row yp=y+1 while (A@(i,yp)!=0) && (R@(i,yp)==0) && (A@(i,y)==0).
@@ -610,7 +622,9 @@ static void scan_d800(int out[3], const GridDesc *g, const int in[2]) {
 	bool p1 = cp_b(g, i, yp, 1) != 0;   // R@(i, yp)
 	bool p2 = cp_b(g, i, yp, 0) != 0;   // A@(i, yp)
 	bool p3 = cp_b(g, i, y,  0) != 0;   // A@(i, y)
-	out[0] = j; out[1] = y; out[2] = win_FUN_180010550(p1, p2, p3);
+	bool p4 = cp_b(g, i, yp, 2) != 0;   // G@(i, yp)
+	bool p5 = (i > 0) && cp_b(g, i - 1, yp, 3) != 0; // B@(i-1, yp)
+	out[0] = j; out[1] = y; out[2] = win_FUN_180010550(p1, p2, p3, p4, p5);
 }
 
 // --- emit helpers (Win e3a0 / e290 / e430 / e320) ---
@@ -1326,7 +1340,9 @@ static void scan_d520(int out[3], const GridDesc *g, const int in[2]) {
 	bool p1 = (x > 0) && cp_b(g, x - 1, y,     1) != 0;
 	bool p2 = (y > 0) && cp_b(g, x,     y - 1, 0) != 0;
 	bool p3 = cp_b(g, x, y, 0) != 0;
-	out[0] = x; out[1] = y; out[2] = win_FUN_180010550(p1, p2, p3);
+	bool p4 = cp_b(g, x, y, 2) != 0;
+	bool p5 = (x > 0) && cp_b(g, x - 1, y, 3) != 0;
+	out[0] = x; out[1] = y; out[2] = win_FUN_180010550(p1, p2, p3, p4, p5);
 }
 
 // FUN_18000d6a0 — walk DOWN col x starting at y+1 while A@(x,iy)!=0 && R@(x,iy)==0 && R@(x-1,iy)==0.
@@ -1408,7 +1424,9 @@ static void scan_dbd0(int out[3], const GridDesc *g, const int in[2]) {
 		bool p1 = cp_b(g, x, y, 1) != 0;                  // R@(x, y)
 		bool p2 = cp_b(g, x, y, 0) != 0;                  // A@(x, y)
 		bool p3 = (y > 0) && cp_b(g, x, y - 1, 0) != 0;   // A@(x, y-1)
-		cls = win_FUN_180010550(p1, p2, p3);
+		bool p4 = cp_b(g, x, y, 2) != 0;                  // G@(x, y)
+		bool p5 = (x > 0) && cp_b(g, x - 1, y, 3) != 0;   // B@(x-1, y)
+		cls = win_FUN_180010550(p1, p2, p3, p4, p5);
 	}
 	out[0] = iVar9; out[1] = y; out[2] = cls;
 }

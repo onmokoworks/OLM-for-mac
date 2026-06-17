@@ -646,3 +646,53 @@ Next action:
 - Audit scanner/classifier descriptor generation, especially
   `FUN_18000d230`, `FUN_18000d800`, `FUN_18000d520`, `FUN_18000dbd0`, and
   `FUN_180010550`, before changing any remaining leaf weights.
+
+### 2026-06-17 classifier idx=7 five-argument fix
+
+Binary-backed scanner/classifier issue:
+
+- `FUN_180010550` computes index `p1 + p3*2 + p2*4`.
+- For indices `0..6`, the jump table returns fixed classes
+  `0,0,1,4,2,3,5`.
+- For index `7`, the jump target reads two additional call-site values:
+  - `p4` from `R9B`
+  - `p5` from the fifth Windows x64 stack argument
+- The class is then selected by `p4 + p5*2`:
+  - `0 -> 6`
+  - `1 -> 7`
+  - `2 -> 8`
+  - `3 -> 9`
+
+The previous port treated index `7` as always class `6`. That matched an older
+comment in `disasm/OLMSmoother2_cardinal_chain.c.txt`, but the scanner disasm
+shows these arguments are not stale: call sites explicitly set `R9D` and
+`[RSP+0x20]` before `CALL 0x180010550`.
+
+Implemented for the dominant scanner family:
+
+- `scan_d230`: passes `G@(i,yp)` as `p4` and `B@(i-1,yp)` as `p5`.
+- `scan_d800`: passes `G@(i,yp)` as `p4` and `B@(i-1,yp)` as `p5`.
+- `scan_d520`: passes `G@(x,y)` as `p4` and `B@(x-1,y)` as `p5`.
+- `scan_dbd0`: passes `G@(x,y)` as `p4` and `B@(x-1,y)` as `p5`.
+
+No-key grid after the five-argument classifier fix:
+
+- Smoothness `0` remains exact.
+- Smooth Range `1` improves:
+  - `s025`: mean `0.0355 -> 0.0274`
+  - `s050`: mean `0.0703 -> 0.0543`
+  - `s100`: mean `0.1390 -> 0.1065`
+- Smooth Range `2` improves:
+  - `s025`: mean `0.0282 -> 0.0158`
+  - `s050`: mean `0.0557 -> 0.0311`
+  - `s100`: mean `0.1089 -> 0.0600`
+- Smooth Range `3` improves:
+  - `s025`: mean `0.0282 -> 0.0158`
+  - `s050`: mean `0.0556 -> 0.0311`
+  - `s100`: mean `0.1086 -> 0.0601`
+
+Next action:
+
+- Extend the same five-argument classifier audit to the sibling scanners
+  `d0d0`, `d3b0`, `d6a0`, `da50`, `cee0`, and the remaining vertical families
+  before adjusting any more leaf weights.
