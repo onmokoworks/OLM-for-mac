@@ -62,7 +62,7 @@ def main() -> int:
         fresh_pending = tmp_path / "olm_reference_requests_pending_20260612.zip"
         smoke_request = tmp_path / "olm_reference_requests_smoke.zip"
         request = json.loads(
-            (repo / "refs/reference_requests/smoother2_no_key_grid_20260606.json").read_text(
+            (repo / "refs/reference_requests/radialblur_inner_20260605.json").read_text(
                 encoding="utf-8"
             )
         )

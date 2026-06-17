@@ -20,6 +20,7 @@ from check_reference_request_status import (  # noqa: E402
     expected_required_sets,
     manifest_case_ids,
     manifest_render_sets,
+    relevant_manifest_cases,
 )
 from verify_reference_request_package import packaged_request_ids  # noqa: E402
 from verify_reference_request_result import effect_matches, load_json  # noqa: E402
@@ -173,14 +174,17 @@ def zip_files_ok(names: set[str], manifest_name: str, manifest: dict[str, Any]) 
 def manifest_covers_request(manifest: dict[str, Any], request: dict[str, Any]) -> bool:
     if not effect_matches(request, manifest):
         return False
+    relevant_cases = relevant_manifest_cases(request, manifest)
+    if not relevant_cases:
+        return False
     required_cases = {
         case["id"]
         for case in request.get("cases", [])
         if isinstance(case, dict) and isinstance(case.get("id"), str) and not case.get("optional")
     }
-    if required_cases and not required_cases <= manifest_case_ids(manifest):
+    if required_cases and not required_cases <= manifest_case_ids(relevant_cases):
         return False
-    found_sets = manifest_render_sets(manifest)
+    found_sets = manifest_render_sets(relevant_cases, manifest)
     for acceptable in expected_required_sets(request):
         if acceptable and not (acceptable & found_sets):
             return False

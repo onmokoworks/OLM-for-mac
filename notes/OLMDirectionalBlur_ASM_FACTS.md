@@ -1009,3 +1009,39 @@ binary/decomp fact to avoid PNG-fitting.
   the populate/edge/validity path around `FUN_1800028e0`, `param_6[0x1023]`,
   and the `FUN_1800038d0` caller conditions that decide component ranges and
   row scatter coverage.
+
+2026-06-17 live Ghidra component-map guard audit:
+
+- Live decompile of `FUN_180004a20 @ 180004a20` reconfirms the 8bpc caller
+  around `FUN_1800028e0` and clarifies the guard:
+
+  ```
+  if (+0x44 < 1e-4 && +0x40 < 1e-4 && +0x30 < 1e-4) {
+      fill param_6[0x1023] as float 1.0;
+      *(float *)(param_6 + 7) = 1.0;  // max-area denominator used by powf
+  } else {
+      build a temporary byte mask from rotated _Dst.a > 0;
+      FUN_1800028e0(aegp_context, byte_mask, param_6[0x1023], width, height);
+      *(float *)(param_6 + 7) = component_max_area;
+  }
+  ```
+
+- So `param_6[0x1023]` is not a direct alpha plane in the normal component-map
+  path. In the non-guard path, `FUN_1800028e0` receives a compact `width*height`
+  byte mask generated from rotated `_Dst.a > 0` and writes the float component
+  table to `param_6[0x1023]` / `params+0x8118`.
+- In the guard path (no front/back Sharp Tail and no Size Variation), the AEX
+  does not call `FUN_1800028e0`; it only sets the max-area denominator to 1.0.
+  This is safe because `powf(component_area / max_area, 0)` collapses to 1.0
+  and the Sharp Tail rates are zero. The row prepass still clears pixels whose
+  original rotated source alpha is zero.
+- `FUN_1800028e0` itself matches the existing component-map IR: it scans
+  horizontal nonzero byte runs, merges overlapping runs between adjacent rows,
+  sums run lengths into area, stores integer-floor center
+  `float((min_y + max_y) / 2)`, and stores `half_height = max_y - center_y`.
+- Current implication: the CLI's BFS component map from `rotated.a > 0` is
+  equivalent for the non-guard path, and guard-vs-map generation should not be
+  the leading residual for the current no-tail/no-size refs. The remaining
+  DirectionalBlur risk is more likely exact host-scale/padded populate,
+  alpha-weighted input rotate validity, or a still-missed `FUN_180001000`
+  prepass detail than component connectivity.
