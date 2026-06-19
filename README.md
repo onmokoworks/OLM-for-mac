@@ -1,243 +1,187 @@
 # OLM for Mac
 
-Private working repo for porting OLM After Effects plug-ins to modern macOS.
+OLM Tools の Windows 版 After Effects plug-in を、現行 macOS / Apple
+Silicon / After Effects 向けに移植するための作業リポジトリです。
 
-## Porting Status
+この repo では、単に「似た出力」を作るのではなく、Windows AE の
+Software render を基準にして、Mac AE 上で同じ入力・同じパラメータ・同じ
+bit depth の出力が一致することを目標にしています。
 
-Correctness policy:
+## 目標
 
-- Final completion means `AE exact`: Mac AE output matches the Windows AE
-  Software render reference with zero diff for the declared bit depth.
-- AE-free CLI exactness is intermediate evidence, not final completion.
-- Tolerance-gated regression smokes, off-by-1 results, and known-red probes are
-  not release-complete.
-- Current conformance status is tracked in `notes/CONFORMANCE_LEDGER.md`; terms
-  are defined in `notes/AE_EXACT_CONFORMANCE.md`.
+最終完了は `AE exact` のみです。
 
-Current progress:
+- Windows AE Software render の参照 PNG と Mac AE render が `max_diff=0`
+- 8bpc を固めてから、16bpc、32bpc へ広げる
+- PNG 差分だけで合わせ込まず、Ghidra / objdump / runtime trace で
+  定数・分岐・丸め・境界処理を説明する
+- 実装だけでなく、binary-grounded IR と conformance suite も残す
 
-- 10 Mac plug-in projects build as universal Debug bundles:
-  `ColorKeep`, `OLMBlur`, `OLMColorKey`, `OLMDirectionalBlur`,
-  `OLMRadialBlur`, `OLMKiraKira`, `OLMToonDilate`, `OLMDistanceGradation`,
-  `OLMSmoother`, and `OLMSmoother2`.
-- AE-free CLI regression gates exist for `ColorKeep`, `OLMBlur`,
-  `OLMColorKey`, `OLMToonDilate`, stable `OLMDistanceGradation` cases,
-  `OLMRadialBlur` Zoom/tiny Rotation slices, and `OLMSmoother2` key/v1
-  compatibility slices. These are regression checks, not final completion
-  claims.
-- Known-red diagnostic probes remain for unresolved paths in
-  `OLMDirectionalBlur`, `OLMRadialBlur` Inner/Edge Fade, `OLMKiraKira`, and
-  `OLMSmoother2` no-key v2. These are kept as measurement scaffolds, not
-  release gates.
-- Final AE-host load/apply/render validation is pending on a real After Effects
-  machine.
+`CLI exact` は強い中間証拠ですが、最終完了ではありません。
+`off-by-1`、tolerance gate、guarded、known-red probe も完了扱いしません。
 
-Current source:
+## 現状
 
-- Mac plug-ins: `mac/`
-- CLI algorithm probes: `cli/` and `refs/scripts/`
-- Windows references: `refs/win_references/`
-- pending Windows reference requests: `refs/reference_requests/`
-- reverse-engineering notes: `notes/`
+Mac plug-in project は 10 本あります。
 
-Large local artifacts are intentionally ignored:
+- `ColorKeep`
+- `OLMBlur`
+- `OLMColorKey`
+- `OLMDirectionalBlur`
+- `OLMRadialBlur`
+- `OLMKiraKira`
+- `OLMToonDilate`
+- `OLMDistanceGradation`
+- `OLMSmoother`
+- `OLMSmoother2`
 
-- Ghidra projects
-- full decompiler dumps
-- raw disassembly dumps
-- built `.aex` / `.plugin` binaries
-- local Win/Mac render outputs
+現在の大まかな状態です。
 
-## Build
+直近の packaged 8bpc AE-host validation では、意味のある比較対象
+70 ケース中 59 ケースが `max_diff=0` でした。これは現在の検証セット内の
+数字であり、全体完了率ではありません。
 
-The repo builds against the local After Effects SDK. Create/update the ignored
-SDK symlinks and build all Mac plug-ins with:
+| 範囲 | 状態 |
+| --- | --- |
+| Mac plug-in project | 10 本とも Debug universal bundle としてビルド可能 |
+| OLMBlur | 8bpc packaged slice は Mac AE exact。残る CLI `max=1` は runtime trace で binary-grounding 中 |
+| OLMToonDilate | 8bpc packaged slice は Mac AE exact |
+| OLMDistanceGradation | basic / extended / blur の 8bpc packaged slice は Mac AE exact。CLI 側の説明はまだ詰め中 |
+| OLMColorKey | core はかなり進んでいる。Edge Blur `case_0009` が残差あり |
+| OLMSmoother2 | no-key grid は 8bpc Mac AE exact。legacy key / gamma 系が未解決 |
+| OLMSmoother v1 | 返却画像サイズ不一致で検証が無効。v2 互換扱いに寄せるか再検証が必要 |
+| OLMDirectionalBlur | 参照は多いが、まだ blocked。PNG-only tuning は止めて asm/runtime evidence 待ち |
+| OLMRadialBlur | 一部 binary-grounded。Inner / Edge Fade などは未完 |
+| OLMKiraKira | ray order などはかなり分離済み。OpenCV 4.5.5 AVX2 / stage trace 待ち |
 
-```sh
-scripts/build_all_mac_plugins.sh
-```
+詳しい台帳は `notes/CONFORMANCE_LEDGER.md`、用語定義は
+`notes/AE_EXACT_CONFORMANCE.md` にあります。
 
-To build a single plug-in:
+## 方針
 
-```sh
-xcodebuild -project mac/<PluginName>/Mac/<PluginName>.xcodeproj -configuration Debug build
-```
+作業は以下の流れで進めます。
 
-Install target used during development:
+1. Windows AEX を Ghidra / objdump / runtime trace で読む
+2. 画像処理仕様を binary-grounded IR に落とす
+3. AE なし CLI で Windows 参照 PNG と比較する
+4. Mac AE plug-in に反映する
+5. Windows Software 参照と Mac AE 出力を比較する
+6. 差分が残ったら、PNG だけで調整せず IR / asm / trace に戻る
 
-```sh
-~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin
-```
+公開時は、互換実装だけでなく次も同梱する想定です。
 
-## Verification
+- binary-grounded IR
+- Windows reference manifest
+- AE なし CLI 比較ツール
+- AE-host validation 手順
+- bit depth 別 conformance suite
 
-Run the quick AE-free regression suite:
+## ディレクトリ
 
-```sh
-python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
-```
+| Path | 内容 |
+| --- | --- |
+| `mac/` | Mac After Effects plug-in project |
+| `cli/` | AE なし検証用のアルゴリズム CLI |
+| `refs/scripts/` | smoke test、参照比較、dashboard 生成など |
+| `refs/reference_requests/` | Windows 側で追加取得する参照 request |
+| `refs/ae_pixel_validation_packages/` | Mac AE exact 検証用 request zip |
+| `refs/upstream_official/` | 公式 README / site / manual text の控え |
+| `notes/` | IR、逆解析メモ、進捗台帳、作業方針 |
+| `scripts/` | handoff、runtime trace、AE-host 検証、packaging |
 
-Run the full aggregate suite, including registered red-measurement probes:
-
-```sh
-python3 refs/scripts/smoke_all_algorithm_clis.py
-```
-
-Package pending Windows reference requests:
-
-```sh
-python3 refs/scripts/check_reference_request_status.py
-python3 refs/scripts/package_reference_requests.py --pending
-```
-
-Package Mac plug-ins for AE-host validation:
-
-```sh
-scripts/package_mac_plugins.sh
-```
-
-Returned AE-host validation JSON can be checked in two modes:
-
-```sh
-python3 scripts/verify_ae_validation_result.py AE_VALIDATION_RESULT.json
-python3 scripts/verify_ae_validation_result.py --require-all-pass AE_VALIDATION_RESULT.json
-```
-
-The first command accepts complete, actionable reports even when a plug-in
-failed in AE. The second command is the all-pass release gate.
-
-## Status
-
-See `notes/CONFORMANCE_LEDGER.md`, `notes/AE_EXACT_CONFORMANCE.md`,
-`notes/HANDOFF_CODEX.md`, and `notes/PORTING_BOARD.md`.
-
----
-
-# OLM for Mac 日本語メモ
-
-OLM After Effects plug-in 群を、現行 macOS / After Effects 向けに移植するためのプライベート作業 repo です。
-
-## 移植状況
-
-正しさの基準:
-
-- 最終完了は `AE exact` のみです。同一bit depthで、Mac AE出力がWindows
-  AE Software render参照と差分ゼロになった状態を指します。
-- AEなしCLIのexactは強い中間証拠ですが、最終完了ではありません。
-- tolerance付き回帰ゲート、off-by-1、known-red probeは完了扱いしません。
-- 現在のconformance状態は `notes/CONFORMANCE_LEDGER.md`、用語定義は
-  `notes/AE_EXACT_CONFORMANCE.md` を見ます。
-
-現在の進捗:
-
-- 10本のMac plug-in projectがDebug universal bundleとしてビルド可能:
-  `ColorKeep`, `OLMBlur`, `OLMColorKey`, `OLMDirectionalBlur`,
-  `OLMRadialBlur`, `OLMKiraKira`, `OLMToonDilate`, `OLMDistanceGradation`,
-  `OLMSmoother`, `OLMSmoother2`
-- AEなしCLIの回帰ゲートあり:
-  `ColorKeep`, `OLMBlur`, `OLMColorKey`, `OLMToonDilate`,
-  `OLMDistanceGradation`の安定ケース、`OLMRadialBlur`のZoom/tiny Rotation、
-  `OLMSmoother2`のkey/v1互換スライス。これは回帰確認であり、最終完了の
-  主張ではありません。
-- 未解決パスはknown-red診断として維持:
-  `OLMDirectionalBlur`, `OLMRadialBlur` Inner/Edge Fade, `OLMKiraKira`,
-  `OLMSmoother2` no-key v2
-- 最終AE実機のload/apply/render検証は未完了
-
-主なソース:
-
-- Mac plug-in: `mac/`
-- CLI algorithm probe: `cli/`, `refs/scripts/`
-- Windows reference: `refs/win_references/`
-- 追加Windows reference request: `refs/reference_requests/`
-- 解析メモ: `notes/`
-
-Git に入れていないもの:
+大きいローカル生成物は git に入れません。
 
 - Ghidra project DB
-- decompiler の巨大 dump
-- raw disassembly dump
+- decompiler dump / raw disassembly dump
 - build 済み `.aex` / `.plugin`
-- Win/Mac のローカル render 結果
-
-これらはサイズが大きい、差分レビューしづらい、またはローカル生成物なので `.gitignore` で除外しています。
+- Windows / Mac の render 出力
+- handoff zip
+- runtime trace package
+- report 出力
 
 ## ビルド
 
-ローカルの After Effects SDK に対するignored symlinkを作り、全Mac plug-inをまとめてビルド:
+全 Mac plug-in をビルドします。
 
 ```sh
 scripts/build_all_mac_plugins.sh
 ```
 
-単体ビルド:
+単体ビルド例です。
 
 ```sh
-xcodebuild -project mac/<PluginName>/Mac/<PluginName>.xcodeproj -configuration Debug build
+xcodebuild -project mac/OLMBlur/Mac/OLMBlur.xcodeproj -configuration Debug build
 ```
 
-開発中の install 先:
-
-```sh
-~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/
-```
-
-全Macプラグインをビルド・universal slice確認・codesign確認して、AE実機へ渡すzipにまとめる:
+Mac AE 実機へ渡す zip を作ります。
 
 ```sh
 scripts/package_mac_plugins.sh
 ```
 
-既に `scripts/build_all_mac_plugins.sh` を同じセッションで通している場合だけ、再ビルドを省略して梱包できます:
+## 検証
 
-```sh
-scripts/package_mac_plugins.sh --skip-build --output /tmp/olm_mac_plugins_Debug.zip
-```
-
-zipを展開し、中の `*.plugin` bundle を上記 MediaCore へコピーしてからAfter Effectsを再起動します。codesign が `resource fork, Finder information, or similar detritus not allowed` で落ちる場合は、build product に付いた xattr を消してから再実行します。
-zipには `INSTALL.txt`, `AE_VALIDATION_CHECKLIST.txt`, `AE_VALIDATION_RESULT.template.json`, `manifest.json` も入ります。AE実機検証時はチェックリストに沿って、AE version、renderer/project_gpu_accel_type、各plug-inのload/apply/render結果を返してください。戻ってきたJSONは以下で検証できます:
-
-```sh
-python3 scripts/verify_ae_validation_result.py AE_VALIDATION_RESULT.json
-python3 scripts/verify_ae_validation_result.py --require-all-pass AE_VALIDATION_RESULT.json
-```
-
-1行目は失敗plug-inがあっても、AE環境情報やエラー内容が揃った「解析可能な結果」なら通します。2行目は全plug-inが load/apply/render 成功したことをリリースゲートとして確認します。
-
-```sh
-xattr -cr build/Debug/<PluginName>.plugin
-xcodebuild -project <PluginName>.xcodeproj -configuration Debug
-```
-
-## AEなし検証
+AE なしの主要 smoke です。
 
 ```sh
 python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick
-python3 refs/scripts/smoke_all_algorithm_clis.py
+python3 refs/scripts/smoke_all_algorithm_clis.py --profile nonhard
 ```
 
-追加Windows参照の状態確認とパッケージ作成:
+Blur / KiraKira の現在の重点 smoke です。
 
 ```sh
-python3 refs/scripts/check_reference_request_status.py
-python3 refs/scripts/package_reference_requests.py --pending
+python3 refs/scripts/smoke_all_algorithm_clis.py --profile blur-kirakira --timeout 180
 ```
 
-Win側で返ってきたreference zipはimportしてrequestに照合します:
+次に Windows 側へ送るものを確認します。
 
 ```sh
-python3 refs/scripts/import_win_reference.py path/to/packed_reference.zip
-python3 refs/scripts/verify_reference_request_result.py refs/reference_requests/<request>.json path/to/imported/reference_manifest.json
+python3 scripts/print_next_olm_action.py handoffs/windows_batch refs/runtime_trace_packages refs/ae_pixel_validation_packages
 ```
 
-## 引き継ぎ
+runtime trace の返却を取り込みます。
 
-詳しい引き継ぎメモは以下です。
+```sh
+python3 scripts/intake_olm_return.py path/to/returned_runtime_trace.zip \
+  --runtime-summary-json refs/reports/runtime_trace_summary.json \
+  --runtime-summary-md refs/reports/runtime_trace_summary.md \
+  --runtime-comparison-dir refs/reports/runtime_trace_comparisons
+```
+
+AE-host / AE pixel validation の返却を取り込みます。
+
+```sh
+python3 scripts/intake_olm_return.py path/to/returned_ae_host_or_pixel.zip \
+  --require-all-pixel-requests
+```
+
+## 現在の次アクション
+
+次に Windows 側へ送る候補は、Blur / KiraKira に絞った runtime trace
+bundle です。
 
 ```txt
-notes/HANDOFF_CODEX.md
-notes/PORTING_BOARD.md
+handoffs/windows_batch/olm_windows_action_bundle_20260620_overnight_blur_kirakira.zip
+```
+
+これは git ignore されるローカル handoff artifact です。返却後は
+`scripts/intake_olm_return.py` で summary と comparison index を作ります。
+
+## 主要メモ
+
+```txt
 notes/CONFORMANCE_LEDGER.md
 notes/AE_EXACT_CONFORMANCE.md
+notes/BINARY_GROUNDED_IR_TEMPLATE.md
 notes/BIT_DEPTH_REFERENCE_STRATEGY.md
+notes/PORTING_BOARD.md
+notes/WINDOWS_RETURN_INTAKE_PLAYBOOK_20260619.md
 ```
+
+## English
+
+This is a private working repository for porting OLM Tools After Effects
+plug-ins from Windows AEX binaries to modern macOS / Apple Silicon. The final
+compatibility bar is Mac AE output matching Windows AE Software-rendered
+references exactly for the declared bit depth.
