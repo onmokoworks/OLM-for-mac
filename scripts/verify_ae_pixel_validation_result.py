@@ -38,7 +38,16 @@ def extract_zip(path: Path, dest: Path) -> Path:
     if not zipfile.is_zipfile(path):
         raise ValueError(f"not a zip file: {path}")
     with zipfile.ZipFile(path) as archive:
-        archive.extractall(dest)
+        for member in archive.infolist():
+            normalized = member.filename.replace("\\", "/")
+            if not normalized or normalized.endswith("/"):
+                continue
+            if normalized.startswith("/") or ".." in Path(normalized).parts:
+                raise ValueError(f"unsafe zip member: {member.filename}")
+            target = dest / normalized
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with archive.open(member) as src, target.open("wb") as out:
+                shutil.copyfileobj(src, out)
     roots = [child for child in dest.iterdir() if child.is_dir() and child.name != "__MACOSX"]
     if len(roots) == 1:
         return roots[0]

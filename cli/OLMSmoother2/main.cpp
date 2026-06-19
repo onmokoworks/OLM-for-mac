@@ -179,6 +179,8 @@ int main(int argc, char **argv) {
 	std::string index_hist_path;
 	std::string idx18_key_hist_path;
 	int skip_index = -1;
+	int trace_x = -1;
+	int trace_y = -1;
 	for (int i = 1; i < argc; ++i) {
 		std::string a = argv[i];
 		auto next = [&]() -> std::string { return (i + 1 < argc) ? argv[++i] : std::string(); };
@@ -192,9 +194,19 @@ int main(int argc, char **argv) {
 		else if (a == "--index-hist") index_hist_path = next();
 		else if (a == "--idx18-key-hist") idx18_key_hist_path = next();
 		else if (a == "--skip-index") skip_index = std::stoi(next());
+		else if (a == "--trace-pixel") {
+			std::string xy = next();
+			size_t comma = xy.find(',');
+			if (comma == std::string::npos) {
+				std::fprintf(stderr, "--trace-pixel must be x,y\n");
+				return 2;
+			}
+			trace_x = std::stoi(xy.substr(0, comma));
+			trace_y = std::stoi(xy.substr(comma + 1));
+		}
 	}
 	if (in_path.empty() || out_path.empty()) {
-		std::fprintf(stderr, "usage: olmsmoother2_cli --input in.png --params case.json --output out.png [--force-version 1|2] [--idx0-mode none|suppress|half|quarter] [--idx18-mode none|skip-cardinal3|skip-cardinal12] [--plane-split-mode none|sample-pre-setup|class-pre-setup|sample-pre-gamma|class-pre-gamma] [--index-hist out.csv] [--idx18-key-hist out.csv] [--skip-index 0..255]\n");
+		std::fprintf(stderr, "usage: olmsmoother2_cli --input in.png --params case.json --output out.png [--force-version 1|2] [--idx0-mode none|suppress|half|quarter] [--idx18-mode none|skip-cardinal3|skip-cardinal12] [--plane-split-mode none|sample-pre-setup|class-pre-setup|sample-pre-gamma|class-pre-gamma] [--index-hist out.csv] [--idx18-key-hist out.csv] [--skip-index 0..255] [--trace-pixel x,y]\n");
 		return 2;
 	}
 	if (idx0_mode == "none") g_olmsmoother2_idx0_diag_mode = 0;
@@ -226,6 +238,7 @@ int main(int argc, char **argv) {
 		return 2;
 	}
 	g_olmsmoother2_skip_index_diag = skip_index;
+	OLMSmoother2SetTracePixel(trace_x, trace_y);
 	OLMSmoother2ResetIndexHistogram(!index_hist_path.empty());
 	OLMSmoother2ResetIdx18KeyHistogram(!idx18_key_hist_path.empty());
 

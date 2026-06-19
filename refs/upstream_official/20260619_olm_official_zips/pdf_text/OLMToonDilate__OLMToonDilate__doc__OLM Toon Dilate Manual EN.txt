@@ -1,0 +1,36 @@
+# Source: OLMToonDilate/OLMToonDilate/doc/OLM Toon Dilate Manual EN.pdf
+
+
+--- page 1 ---
+OLM Toon Dilate Manual
+Introduction
+Dilates non-transparent image regions towards their transparent borders.
+Release notes
+Version Date Notes
+1.1.0 2024/10/10 Bug correction: the output is now adapted to the resolution
+Usage
+With OLM Toon Dilate you can expand the color towards transparent pixels. A little bit like the Minimax effect of
+After Effects, but simple to use in Japanese animation production.
+In production it's very useful to add specific taste to outlines of a drawing while setting the color under the line to
+something coherent with the drawing. Start with a drawing, key the outlines and then apply OLM Toon Dilate as
+shown below.
+©ナナシ・講談社／「イジらないで、長瀞さん」2製作委員会
+Original drawing, outline deleted, OLM Toon Dilate applied
+Add any kind of process to the keyed outline to create the taste you want (blur, choke, dilate, noise…).
+1
+OLM Digital, Inc. R&D
+
+
+--- page 2 ---
+©ナナシ・講談社／「イジらないで、長瀞さん」2製作委員会
+Original Lines VS Taste lines
+Then you can overlap the lines on top of the output of OLM Toon dilate, add compositing magic and you are
+done.
+©ナナシ・講談社／「イジらないで、長瀞さん」2製作委員会
+Final output without taste, with taste
+Parameters
+OLM Toon Dilate is a very simple effect. It just has one parameter:Search Radius.
+Search Radius determines the amount of dilation in pixels. The following image shows the plugin applied to an
+image with search radius 0px (the original image), 4px and 8px.
+2
+OLM Digital, Inc. R&D

@@ -1,0 +1,327 @@
+#!/usr/bin/env python3
+"""Verify and summarize returned OLM runtime trace facts."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+import tempfile
+import zipfile
+from pathlib import Path
+from typing import Any
+
+
+RUNTIME_KIND = "olm_runtime_trace_result"
+RUNTIME_RETURN_KIND = "olm_runtime_trace_return"
+DEFAULT_REQUIRED_IDS = [
+    "radialblur_inner_runtime_trace_20260618",
+    "kirakira_opencv455_primitive_fact_20260618",
+]
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("source", type=Path, help="Returned runtime trace result zip, folder, or JSON file.")
+    parser.add_argument(
+        "--package",
+        type=Path,
+        default=None,
+        help="Runtime trace request package zip. If omitted, uses the newest refs/runtime_trace_packages/*.zip.",
+    )
+    parser.add_argument(
+        "--require-all",
+        action="store_true",
+        help="Require every runtime action from the request package to have an answered result.",
+    )
+    parser.add_argument("--summary-json", type=Path, default=None, help="Write normalized summary JSON.")
+    parser.add_argument("--summary-md", type=Path, default=None, help="Write a human-readable Markdown summary.")
+    return parser.parse_args()
+
+
+def repo_root() -> Path:
+    return Path(__file__).resolve().parents[1]
+
+
+def fail(message: str, code: int = 1) -> int:
+    print(f"[FAIL] {message}", file=sys.stderr)
+    return code
+
+
+def load_json(path: Path) -> Any:
+    return json.loads(path.read_text(encoding="utf-8-sig"))
+
+
+def extract_if_zip(source: Path, dest: Path) -> Path:
+    source = source.resolve()
+    if source.is_dir() or source.suffix.lower() == ".json":
+        return source
+    if not source.exists() or not zipfile.is_zipfile(source):
+        raise ValueError(f"source is neither a directory, JSON, nor zip: {source}")
+    with zipfile.ZipFile(source) as archive:
+        archive.extractall(dest)
+    visible = [
+        child
+        for child in dest.iterdir()
+        if child.name != "__MACOSX" and not child.name.startswith("._")
+    ]
+    roots = [child for child in visible if child.is_dir()]
+    return roots[0] if len(visible) == 1 and len(roots) == 1 else dest
+
+
+def latest_package(root: Path) -> Path | None:
+    package_dir = root / "refs" / "runtime_trace_packages"
+    packages = sorted(package_dir.glob("*.zip"), key=lambda path: path.stat().st_mtime)
+    return packages[-1] if packages else None
+
+
+def runtime_action_ids(package: Path | None) -> list[str]:
+    if package is None:
+        return list(DEFAULT_REQUIRED_IDS)
+    if not package.exists() or not zipfile.is_zipfile(package):
+        raise ValueError(f"runtime trace package not found or not zip: {package}")
+    with zipfile.ZipFile(package) as archive:
+        data = json.loads(archive.read("runtime_trace_package_manifest.json").decode("utf-8"))
+    actions = data.get("runtime_actions", [])
+    ids = [str(action.get("request_id")) for action in actions if isinstance(action, dict) and action.get("request_id")]
+    return ids or list(DEFAULT_REQUIRED_IDS)
+
+
+def is_trace_result(data: Any) -> bool:
+    if not isinstance(data, dict):
+        return False
+    if data.get("kind") in {RUNTIME_KIND, RUNTIME_RETURN_KIND}:
+        return True
+    return isinstance(data.get("runtime_trace_results"), list) or isinstance(data.get("results"), list)
+
+
+def find_result_jsons(root: Path) -> list[Path]:
+    if root.is_file():
+        return [root]
+    candidates: list[Path] = []
+    for path in sorted(root.rglob("*.json")):
+        if "__MACOSX" in path.parts or path.name.startswith("._"):
+            continue
+        try:
+            data = load_json(path)
+        except Exception:
+            continue
+        if is_trace_result(data):
+            candidates.append(path)
+    return candidates
+
+
+def find_payload_file(source_root: Path, manifest_path: str) -> Path | None:
+    normalized_target = manifest_path.replace("\\", "/")
+    for path in source_root.rglob("*"):
+        if not path.is_file():
+            continue
+        if str(path.relative_to(source_root)).replace("\\", "/") == normalized_target:
+            return path
+    return None
+
+
+def read_answer_summary(source_root: Path, manifest_path: str | None) -> str:
+    if not manifest_path:
+        return ""
+    payload = find_payload_file(source_root, manifest_path)
+    if payload is None:
+        return f"answer file not found: {manifest_path}"
+    try:
+        return payload.read_text(encoding="utf-8-sig").strip()
+    except Exception as exc:  # noqa: BLE001
+        return f"answer file unreadable: {manifest_path}: {exc}"
+
+
+def normalize_results(data: dict[str, Any], source_path: Path, source_root: Path) -> list[dict[str, Any]]:
+    if data.get("kind") == RUNTIME_RETURN_KIND and isinstance(data.get("requests_answered"), list):
+        normalized: list[dict[str, Any]] = []
+        for index, row in enumerate(data["requests_answered"], start=1):
+            if not isinstance(row, dict):
+                raise ValueError(f"{source_path}: requests_answered #{index} must be an object")
+            request_id = row.get("request_id")
+            if not request_id:
+                raise ValueError(f"{source_path}: requests_answered #{index} missing request_id")
+            status = str(row.get("status", "answered")).lower()
+            answer_file = row.get("answer_file")
+            evidence_files = row.get("evidence_files", [])
+            normalized.append(
+                {
+                    "request_id": str(request_id),
+                    "status": status,
+                    "summary": read_answer_summary(source_root, str(answer_file) if answer_file else None),
+                    "observations": {
+                        "answer_file": answer_file or "",
+                        "evidence_files": evidence_files if isinstance(evidence_files, list) else [],
+                    },
+                    "source_file": str(source_path),
+                }
+            )
+        return normalized
+
+    raw_results = data.get("results", data.get("runtime_trace_results", []))
+    if not isinstance(raw_results, list):
+        raise ValueError(f"{source_path}: results must be a list")
+    normalized: list[dict[str, Any]] = []
+    for index, row in enumerate(raw_results, start=1):
+        if not isinstance(row, dict):
+            raise ValueError(f"{source_path}: result #{index} must be an object")
+        request_id = row.get("request_id")
+        if not request_id:
+            raise ValueError(f"{source_path}: result #{index} missing request_id")
+        status = str(row.get("status", "answered")).lower()
+        summary = row.get("summary") or row.get("answer") or row.get("notes") or ""
+        observations = row.get("observations", row.get("values", row.get("fact", {})))
+        normalized.append(
+            {
+                "request_id": str(request_id),
+                "status": status,
+                "summary": str(summary),
+                "observations": observations,
+                "source_file": str(source_path),
+            }
+        )
+    return normalized
+
+
+def build_summary(source_root: Path, package: Path | None) -> dict[str, Any]:
+    required_ids = runtime_action_ids(package)
+    result_files = find_result_jsons(source_root)
+    if not result_files:
+        raise ValueError("no runtime trace result JSON found")
+    results: list[dict[str, Any]] = []
+    for path in result_files:
+        data = load_json(path)
+        if not isinstance(data, dict):
+            continue
+        results.extend(normalize_results(data, path, source_root))
+
+    by_id: dict[str, list[dict[str, Any]]] = {}
+    for row in results:
+        by_id.setdefault(row["request_id"], []).append(row)
+
+    required = []
+    for request_id in required_ids:
+        rows = by_id.get(request_id, [])
+        answered = [row for row in rows if row["status"] in {"answered", "ok", "done", "complete", "completed"}]
+        required.append(
+            {
+                "request_id": request_id,
+                "count": len(rows),
+                "answered": bool(answered),
+                "statuses": sorted({row["status"] for row in rows}),
+            }
+        )
+    extra_ids = sorted(set(by_id) - set(required_ids))
+    return {
+        "kind": "olm_runtime_trace_return_summary",
+        "schema": 1,
+        "source_root": str(source_root),
+        "package": str(package) if package else None,
+        "required": required,
+        "extra_request_ids": extra_ids,
+        "results": results,
+    }
+
+
+def format_observations(value: Any) -> str:
+    if isinstance(value, dict):
+        lines = []
+        for key in sorted(value):
+            item = value[key]
+            if isinstance(item, (dict, list)):
+                rendered = json.dumps(item, ensure_ascii=False, sort_keys=True)
+            else:
+                rendered = str(item)
+            lines.append(f"  - {key}: {rendered}")
+        return "\n".join(lines) if lines else "  - none"
+    if isinstance(value, list):
+        return "\n".join(f"  - {json.dumps(item, ensure_ascii=False, sort_keys=True)}" for item in value) or "  - none"
+    return f"  - {value}"
+
+
+def render_markdown(summary: dict[str, Any]) -> str:
+    lines = [
+        "# OLM Runtime Trace Return Summary",
+        "",
+        f"- Source: {summary.get('source_root', '-')}",
+        f"- Package: {summary.get('package') or '-'}",
+        "",
+        "## Required Requests",
+        "",
+        "| Request | Answered | Count | Statuses |",
+        "| --- | --- | ---: | --- |",
+    ]
+    for row in summary.get("required", []):
+        answered = "yes" if row.get("answered") else "no"
+        statuses = ", ".join(row.get("statuses") or []) or "-"
+        lines.append(f"| {row.get('request_id', '-')} | {answered} | {row.get('count', 0)} | {statuses} |")
+
+    extra = summary.get("extra_request_ids") or []
+    if extra:
+        lines.extend(["", "## Extra Request IDs", ""])
+        lines.extend(f"- {request_id}" for request_id in extra)
+
+    lines.extend(["", "## Results", ""])
+    for row in summary.get("results", []):
+        lines.extend(
+            [
+                f"### {row.get('request_id', '-')}",
+                "",
+                f"- Status: {row.get('status', '-')}",
+                f"- Source file: {row.get('source_file', '-')}",
+                f"- Summary: {row.get('summary') or '-'}",
+                "",
+                "Observations:",
+                "",
+                format_observations(row.get("observations", {})),
+                "",
+            ]
+        )
+    return "\n".join(lines)
+
+
+def main() -> int:
+    args = parse_args()
+    root = repo_root()
+    if not args.source.exists():
+        return fail(f"source not found: {args.source}", 2)
+    package = args.package
+    if package is None:
+        package = latest_package(root)
+    elif not package.is_absolute():
+        package = root / package
+
+    with tempfile.TemporaryDirectory(prefix="olm_runtime_trace_return_") as tmp:
+        try:
+            source_root = extract_if_zip(args.source, Path(tmp) / "source")
+            summary = build_summary(source_root, package)
+        except Exception as exc:  # noqa: BLE001
+            return fail(str(exc), 2)
+
+    missing = [row for row in summary["required"] if not row["answered"]]
+    for row in summary["required"]:
+        mark = "OK" if row["answered"] else "MISS"
+        print(f"[{mark}] {row['request_id']} count={row['count']} statuses={','.join(row['statuses']) or '-'}")
+    if summary["extra_request_ids"]:
+        print("[INFO] extra request ids: " + ", ".join(summary["extra_request_ids"]))
+
+    if args.summary_json:
+        output = args.summary_json if args.summary_json.is_absolute() else root / args.summary_json
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
+        print(f"summary_json={output}")
+    if args.summary_md:
+        output = args.summary_md if args.summary_md.is_absolute() else root / args.summary_md
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(render_markdown(summary), encoding="utf-8")
+        print(f"summary_md={output}")
+
+    if args.require_all and missing:
+        return fail("missing answered runtime trace result(s): " + ", ".join(row["request_id"] for row in missing))
+    print("[OK] runtime trace return verified")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

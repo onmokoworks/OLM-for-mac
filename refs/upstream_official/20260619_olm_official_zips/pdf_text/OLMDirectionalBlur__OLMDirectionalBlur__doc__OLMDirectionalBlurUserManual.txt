@@ -1,0 +1,123 @@
+# Source: OLMDirectionalBlur/OLMDirectionalBlur/doc/OLMDirectionalBlurUserManual.pdf
+
+
+--- page 1 ---
+OLM Open Tools OLM Directional Blurユーザーマニュアル
+OLM Open Tools
+OLM Directional Blur
+ユーザーマニュアル
+オー・エル・エム・デジタル
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 1
+
+
+--- page 2 ---
+OLM Open Tools OLM Directional Blurユーザーマニュアル
+目次
+1. はじめに 4
+1.1. 対応している環境 4
+1.2. インストール方法 4
+2. OLM Directional Blurの適用方法 4
+3. OLM Directional Blurのパラメータ 4
+4. その他 8
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 2
+
+
+--- page 3 ---
+OLM Open Tools OLM Directional Blurユーザーマニュアル
+著作権・使用許諾について
+OLM Open Tools は Apache License Version 2.0 に基づいてライセンスされます。
+更新履歴
+2017/10/02 初版作成
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 3
+
+
+--- page 4 ---
+OLM Open Tools OLM Directional Blurユーザーマニュアル
+1. はじめに
+OLM Directional Blurは、特定の方向のブラーをかけることのできるAdobe® After Effects®用のエフェクトプラグ
+インです。通常のブラーと違い、不透明なピクセルからの一方向への影響のみを扱うことができます。
+図 1 （左）元画像（右）OLM Directional Blur適用画像
+1.1. 対応している環境
+OLM Open Toolsのウェブサイトを参照ください。
+1.2. インストール方法
+OLM Open Toolsサイトよりダウンロードしたzipファイルには、表 1に示すファイルが収められています。OLM
+Directional Blurをインストールするには、プラグインファイル「OLM DirectionalBlur.aex」をAfter Effectsのプラグ
+インディレクトリにコピーしてください。
+(例：C:\Program Files\Adobe After Effects 2022\Support Files\Plug-ins\OLM）
+フォルダ名 ファイル名 説明
+Plugins\[32/64]\[バージョン] OLM Directional Blur.aex 各OS、AEバージョンに対応した
+プラグイン本体です。
+Doc OLM Directional BlurUserManual.pdf OLM Directional Blurのユー
+ザーマニュアルです。このファイ
+ルです。
+表 1：zipファイル内に収められているファイル
+2. OLM Directional Blurの適用方法
+他のエフェクトと同じようにメニューバーの「エフェクト >> OLM Plug-ins >> OLM Directional Blur」と選択すること
+で適用できます。
+3. OLM Directional Blurのパラメータ
+OLM Directional Blurには、以下に示すパラメータがあります。
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 4
+
+
+--- page 5 ---
+OLM Open Tools OLM Directional Blurユーザーマニュアル
+図 2 OLM Directional Blurエフェクトのパラメータ
+1. Angle - ブラーの方向です。
+2. Brightness gain - 結果画像の輝度を調整するパラメータです。
+3. Size Variation - サイズの異なる成分（不透明なピクセルの集合）ごとにブラーの強さを変更するためのパラ
+メータです。一番大きな成分を基準として大きさに比例してブラーの強さが変わります。画像上でのつながっ
+ている集合をひとつの成分とみなしているので、重なっているものはひとつの成分と認識されます。このパラ
+メータは後述のEdge Fadeにも影響を与えます。設定可能な値は「0.0」から「100.0」までです。
+図3 （左）元画像 （中央）Size Variation = 0 （右）Size Variation = 70
+4. Front (Back) Blur - Frontは指定した方向、Backは逆方向へのブラーのパラメータです。
+i. Blur Strength - ブラーの強さを調整できます。設定できる値は「0」から「4000」までです。
+ii. Edge Fade - ブラーと同じ向きにアルファ値のフェードを発生させるパラメータです。Edge Fadeが1以
+上のときは、まずアルファ値のフェード処理が行われてから、その結果に対して通常のブラー処理が行
+われます。設定できる値は「0」から「100」までです。
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 5
+
+
+--- page 6 ---
+OLM Open Tools OLM Directional Blurユーザーマニュアル
+図４ （左）元画像 （中央）Edge Fade = 0 （右）Edge Fade = 100
+iii. Sharp Tail - ブラーを尖らせる度合いです。この値が大きいほどブラーの尾が尖ります。Size
+Variationと同様にブラーの尾は連結成分（不透明なピクセルの集合）ごとに求められます。設定できる
+値は「0.0」から「100.0」までです。
+図5 （左）元画像 （中央）Sharp Tail = 0 （右）Sharp Tail = 70
+5. Noise Parameters - ブラーの強さにノイズを入れるときに使用するパラメータです。これらのパラメータを調
+整することで、ピクセルごとにブラーの強さを変更し、ギザギザなブラーを生成することができます。
+i. Noise Variation - ノイズの影響の強さです。設定できる値は「0.0」から「100.0」までです。
+図6（左）Noise Variation = 0（中央）Noise Variation = 50（右）Noise Variation = 100
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 6
+
+
+--- page 7 ---
+OLM Open Tools OLM Directional Blurユーザーマニュアル
+iii. Noise Type - ノイズの種類です。設定可能なパラメータは以下の通りです。
+Smooth - ピクセルごとのブラーの強さに滑らかなノイズを付与します。デフォルトのパラメータです。
+Block - ピクセルごとのブラーの強さにブロックノイズを付与します。
+図7 SmoothノイズとBlockノイズの違い（左）Smooth （右）Block
+Layer - レイヤーを用いて任意のノイズを適用することができます。輝度の大きなピクセルはブラーが
+強く、輝度の小さいピクセルはブラーが弱くなります。このモードで用いるレイヤーはOLM Directional
+Blurを適用しているレイヤーと同じサイズである必要があります。また、エフェクトが適用される前のピ
+クセルが参照されるため、ノイズをエフェクトで生成する場合はプリコンポしたレイヤーを用いる必要が
+あります。
+図8 レイヤーノイズを用いた結果 （左）ノイズレイヤー （右）適用画像
+iv. Seed - 自動で生成されるノイズのランダムシードです。この値を変えるとノイズのパターンが変化しま
+す。Noise TypeがSmooth及びBlockのときに有効です。
+v. Offset - Seedと同様にこの値を変更するとノイズのパターンが変化します。Seedと異なり、この変化
+は連続的なものとなります。Noise TypeがSmooth及びBlockのときに有効です。
+vi. Thickness - ノイズの変化の粗さを変更することができます。Noise TypeがSmooth及びBlockのとき
+に有効です。設定できる値は「1.0」から「100.0」までです。
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 7
+
+
+--- page 8 ---
+OLM Open Tools OLM Directional Blurユーザーマニュアル
+図9 （左）Thickness = 10 （右）Thickness = 30
+vii. Noise Layer - ノイズとして用いるレイヤーを指定します。Noise typeがLayerのときのみ有効です。
+4. その他
+正常に動作しない、バグを発見した、もしくは機能追加要望などがある場合は、下記のメールアドレス宛にご連絡
+ください。
+opentools@olm.co.jp
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 8

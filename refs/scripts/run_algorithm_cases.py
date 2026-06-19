@@ -80,7 +80,7 @@ def main():
     args = parser.parse_args()
 
     manifest_path = Path(args.manifest).resolve()
-    with manifest_path.open(encoding="utf-8") as handle:
+    with manifest_path.open(encoding="utf-8-sig") as handle:
         manifest = json.load(handle)
 
     if args.root:

@@ -1,0 +1,147 @@
+# Source: OLMColorKey/OLMColorKey/doc/OLMColorKeyUserManualEN.pdf
+
+
+--- page 1 ---
+OLM Open Tools OLM Color Key User Manual
+OLM Open Tools
+OLM Color Key
+User Manual
+OLM Digital, Inc.
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 1
+
+
+--- page 2 ---
+OLM Open Tools OLM Color Key User Manual
+Table of Contents
+1. Introduction 4
+1.1. Supported Environment 4
+1.2. Install 4
+2. Using OLM Color Key 4
+3. OLM Color Key parameters 4
+4. Other 8
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 2
+
+
+--- page 3 ---
+OLM Open Tools OLM Color Key User Manual
+Copyright, End User License Agreement
+OLM Open Tools are licensed under the Apache License, Version 2.0.
+Change Logs
+2014/10/08 First Version
+2014/12/22 Second Version
+2015/08/31 Third Version
+2017/11/02 Change License terms
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 3
+
+
+--- page 4 ---
+OLM Open Tools OLM Color Key User Manual
+1. Introduction
+OLM Color Key is an After Effects plug-in specialized in color keying/keeping effects.
+Figure 1 (Left) Original Image, (Middle) After OLM Color Key (Key-ing effect)
+(Right) After OLM Color Key (Keeping effect)
+1.1. Supported Environment
+Please refer to OLM Open Tools website for a complete list of supported environment.
+1.2. Install
+The zip archive you can download from OLM OpenTools web site contains the files listed in
+Table 1. To install OLM Color Key copy the plug-in file (for windows: OLMColorKey.aex, for
+Mac: unzip OLMColorKey.plugin.zip) in A E plug-in directory
+(example:
+for windows: C:\Program Files\Adobe\Adobe After Effects 2022\Support Files\Plug-ins\OLM
+)
+Folder File Name Explanation
+Plugins\[32/64] \[Version] OLMColorKey.aex The plug-in files.
+OLMColorKey.plugin.zip
+doc OLMColorKeyUserManu The user manual for OLM
+al.pdf Color Key
+Table 1：Content of the zip archive
+2. Using OLM Color Key
+To apply the effect, use the menu: (Effects)→(OLM Plug-ins)→(OLM Color Key)
+3. OLM Color Key parameters
+OLM Color Key parameters are as follows:
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 4
+
+
+--- page 5 ---
+OLM Open Tools OLM Color Key User Manual
+Figure 2 OLM Color Key parameters
+● Color Keep: When “Color Keep” parameter is off, we can remove specified colors
+(Keying effect). Conversely, when “Color Keep" parameter is on, we can keep specified
+colors (Keeping effect). Pick up the color you want to key/keep with the “Color”
+parameters.
+Figure 3 Color Keep Off (left), Color Keep On (right)
+● Threshold: Determines the range of color being keyed/kept. Value go from 0 to 1, 1
+being the maximum value according to the chosen color space
+● Threshold parameters: A set of parameters to control the threshold
+Premultiplied Color: When on, the colors will be multiplied by the final alpha channel
+before being keyed. When off, only color channel will be considered.
+Figure 4 shows that when keying green color, some other transparent green will
+be keyed together or not depending on the "Premultiplied Color" parameter value.
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 5
+
+
+--- page 6 ---
+OLM Open Tools OLM Color Key User Manual
+Figure 4 Original Image (left)
+Premultiplied Color Off (center), Premultiplied Color On (right)
+Color Space: Sets the color space to be used for color comparison. You can choose
+between RGB, HSV, Lab, YUV and YCrCb color spaces.
+Force Lower Precision: A parameter to reduce the keying precision from 32bits to 16/8, or
+from 16bits to 8 bits. Useful for people who work at low precision to save memory
+and raise the precision at render time. Forcing lower precision to the keying effect
+may ensure same output between both rendering.
+Per Color: When on, the user can set a threshold for each color parameter.
+Per Component: When on, the user can setup a threshold parameter for each component
+of color parameters.
+● Edge Thin: Parameters to adjust the size of the keyed region by extending/reducing
+the border of the region
+Amount: The amount of extension/reduction of the region (see Figure 5). A positive value
+extends the region, negative values reduce the regions. Range from +-4000, but
+for display reasons, default range is set to +-100. To get over those values, directly
+type the value in After Effects parameter box.
+●
+Figure 5 Edge Thin: amount value change, 100 (left), 400 (right)
+Distance Type: The method used to compute distance from the border of the region. Three
+different type of distance are available: Box, Approximate and Euclidian (see
+Figure 6).
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 6
+
+
+--- page 7 ---
+OLM Open Tools OLM Color Key User Manual
+Figure 6 Distance Type: Box (left), Approximate (middle), Euclidian (right).
+The black region is the region being keyed
+● Edge Blur: Parameters to blur the border of the keyed region. We adjust the alpha
+channel of the border according to the following parameters
+Amount: The range of the border to be blurred. Big value increases the range. To get
+values over 100, type directly the value in the parameter box
+Figure 7 Edge Blur: Amount parameter value, 100 (left), 400 (right)
+Distance Type: The method used to compute distance from the border of the region. As for
+Edge Thin parameter, three different type of distance are available: Box,
+Approximate and Euclidian (see Figure 6).
+Direction: How the blur is applied relative to the border of the keyed region. Three type of
+direction are available: Inside, Outside and Around (see Figure 8)
+Figure 8 Direction: Inside (left), Outside (center), Around (right).
+The black area is the region being keyed
+● Number of Colors: The number of color to be keyed. Maximum of 25 colors
+● Enable Replace: When “Color Keep” and this check box are on, the keyed color may
+be replaced. When off, the parameters for color replace are hidden
+● Use Color XXX: When on, the color set in "Color XXX" is keyed/kept
+● Use Replace Color XXX: Switch between the use or not of color replace. When Color
+Keep” and this check box are on, the color set in "Color XXX" is replaced by "Replace
+Color XXX". By default this parameter is hidden, you need to set "Enable Replace" to
+show it
+● Colors XXX: The color to be keyed
+● Replace Color XXX: The color to replace with
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 7
+
+
+--- page 8 ---
+OLM Open Tools OLM Color Key User Manual
+Figure 9 Color Replacement:（left）Original (right) After Replacement
+The red color of the cloak is replaced with yellow and is overlaid over the original layer
+4. Other
+If you have problem using the plug-in in any environment, if you find a bug, have a feature
+request, or for any kind of feedback feel free to contact us at the following mail address:
+opentools@olm.co.jp
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 8

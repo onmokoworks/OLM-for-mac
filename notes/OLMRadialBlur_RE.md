@@ -756,8 +756,124 @@ Sub-agent Anscombe reconfirmed the current RadialBlur split:
   separate span/gate plane, `+0x48` prepass alpha from `FUN_180002780`, and
   `+0x50` factor plane.
 
-Stop condition still holds: all current Inner/Edge Fade references have
-`Size Variation=0`, so they cannot decisively identify the true `+0x40`
-span/gate behavior. Parent action is to render/import
-`radialblur_inner_size_variation_20260606.json` and then test the explicit
-`+0x40/+0x48/+0x50` plane hypotheses across that grid.
+2026-06-17 update: `radialblur_inner_size_variation_20260606` is now imported
+and covered. The C++ CLI no longer blanket-rejects nonzero Rotation Inner Size
+Variation: Size Variation cases auto-route through the source-scatter/prepass
+size-factor planes. This improves the alpha+edge Size Variation reference
+relative to the old `--ignore-size-variation` gate, while leaving
+`radialblur_inner_20260605` default metrics unchanged.
+
+Remaining Inner stop condition: do not promote global prepass/Edge Fade flag
+sets just because they help the Size Variation grid. The AEX-shaped
+tail-gather/prepass flags improve the Size Variation aggregate but regress
+`radialblur_inner_20260605` Edge Fade badly, so the next work should stay
+Ghidra-backed around `FUN_1800024c0`, `FUN_180001c90`, and the final
+normalization/Quality-sensitive scatter path.
+
+2026-06-17 RadialBlur Ghidra MCP + returned software refs:
+
+- `olm_reference_return_windows_20260617_radialblur_inner_full_software` is
+  imported and contains 10 software-only Inner cases. Current CLI metrics show
+  close cases for small inner strength (`max=2 mean=0.1662`) and offset mode 3
+  (`max=8 mean=0.1255`), but high-strength, Quality 1/50, and Edge Fade remain
+  red (`mean=2.0896..37.2623`).
+- `FUN_180004640` confirms the scatter writeback sequence:
+  `FUN_180002780` prepass, `FUN_1800024c0` scatter, normalize from
+  `+0x3c940` RGBA accumulation using the accumulated alpha channel, and write
+  output alpha from `+0x3c948` scalar max/denom plane.
+- This makes final-alpha/max-denom the best-supported model. The remaining
+  red cases should be pursued through exact `FUN_180002780` population,
+  `FUN_180001c90` table sampling, and Quality/radius grid geometry, not a
+  broad denominator toggle or another PNG-only Edge Fade flag flip.
+- Existing flags can already test the seemingly decomp-shaped full-Inner AEX
+  prepass route. The candidate with `tail-gather`, factor `one`,
+  `aex-alpha` weights, `param10=factor`, and max/max final writeback was
+  measured on the 10-case software set and regressed badly (`mean=23.2612` to
+  `132.8091` depending on case). This closes that promotion path for now:
+  do not make full Inner default to the Size Variation prepass route until a
+narrower binary fact explains the mismatch.
+
+2026-06-17 live Ghidra follow-up: `FUN_180002780` and `FUN_180001c90` were
+re-read through MCP while RadialBlur was open. A read-only explorer found the
+missing Quality setup fact: `FUN_180004640` scales strength/offset/edge-fade
+spans by `Quality / 5` before table/span construction. The CLI now exposes this
+as `--aex-quality-span-scale`; alone it improves `rb_inner_quality_1`
+`mean=25.5424 -> 15.2878` without moving the other default cases materially.
+Combined with `--inner-source-scatter-prepass --inner-wrap-mode aex-next-row`,
+it improves the full-Inner hard cluster (`existing_0011 19.3659`, `edgefade
+4.3039`, `quality1 15.4989`, `quality50 14.6018`) but regresses the already
+close small/offset probes. A subsequent direct MCP re-read confirmed
+`FUN_180001c90` inner underflow advances to the next radius row, so
+`aex-next-row` is now default rather than diagnostic. Next RadialBlur work
+should explain the low-span regression through exact span ownership, weight
+reindex length, or scatter write population.
+
+Follow-up probes: next-row wrap is neutral versus circular, so the low-span
+regression is not primarily wrap. Removing the source seed is negative, which
+keeps the AEX prepass/self seed model intact. A new diagnostic
+`--inner-scatter-span-minus-one` gives the best current full-Inner candidate
+with source-scatter + Quality/5 scaling: `existing_0011 mean=19.3342`,
+`existing_0012=4.1421`, `small=0.2275`, `large=0.1246`, `offset3=0.1770`,
+`edgefade=4.3049`, `outer_inner_edgefade=2.3305`, `quality1=15.2553`,
+`quality50=14.5948`. The CLI diagnostic is limited to the inner helper path.
+Do not promote it as binary-final yet; `FUN_180001c90` itself still looks like
+`span` rather than `span-1`, so the likely unresolved fact is caller-resolved
+inner distance or loop-bound ownership.
+
+Split probes make the diagnosis narrower. `--inner-scatter-loop-minus-one`
+does not explain the low-span improvement (`small mean=0.5051`,
+`offset3=0.2894`), while `--inner-scatter-table-span-minus-one` only partially
+tracks it (`small=0.2542`, `offset3=0.1810`) and worsens Quality=1
+(`15.6519`). The combined `span-minus-one` result is therefore not a clean
+loop-bound fact. It is a marker that the inner span owner, weight reindex
+length, or caller distance is still slightly off.
+
+`FUN_180002780` prepass ownership and `FUN_180001c90` inner wrap ownership were
+promoted into the C++ CLI default Inner path: Inner now uses the
+source-scatter/prepass path by default, Quality/5 span scaling is default,
+inner wrap is `aex-next-row`, and prepass uses Edge Fade tables with AEX factor
+reindexing and factor `1.0` when Size Variation is disabled. The default
+full-Inner software means are now `existing_0011=19.3659`, `0012=4.3034`,
+`small=0.5244`, `large=0.1911`, `offset3=0.3159`, `edgefade=3.9581`,
+`outer_inner_edgefade=2.0832`, `quality1=15.4989`, `0013=4.2821`,
+`quality50=14.6018`. Adding the still-diagnostic
+`--inner-scatter-span-minus-one` keeps the low-span gains and the Edge Fade
+prepass gains together (`small=0.2346`, `offset3=0.2057`,
+`edgefade=3.9571`, `outer_inner_edgefade=2.0825`, `quality1=15.2530`).
+
+Size Variation defaults after the promotion are mostly stable on opaque cases
+(`edge000 mean=0.3654`, `edge025/050 means=0.3634/0.3703`), but
+`alpha_sv050_edge025` is `mean=6.5061`. Keep that as an alpha +
+Edge-Fade factor/writeback residual; do not revert the prepass ownership unless
+new binary evidence contradicts `FUN_180002780`.
+
+Additional live Ghidra check: `FUN_1800024c0` has no low-span alternate caller
+path; it always gates each polar cell and then calls `FUN_180001c90` outer then
+inner. `FUN_18000b680` also matches the expected Gaussian family, with
+30000-entry scatter tables reindexed by integer `30000 / effective_len`.
+Therefore the `span-minus-one` diagnostic is best understood as an inner-path
+loop-bound or effective-length mismatch marker, not as a confirmed new AEX
+branch or Gaussian formula change.
+
+`--dynamic-offset-mode aex-row` was rechecked on top of the current best
+diagnostic and is neutral (`offset3 mean=0.1769` vs `0.1770`; other means
+unchanged within rounding), so the live `FUN_1800024c0` radius-row distance
+formula is probably not the next blocker.
+
+`param10` alpha-plane substitutes were remeasured after the Quality/5 fix and
+remain negative: polar-alpha and prepass-alpha both keep low-span residuals at
+`small mean=0.5182`, `offset3 mean=0.2884` and worsen the Quality probes
+slightly (`quality1 mean=15.7157`, `quality50 mean=14.8290`). The next useful
+RadialBlur audit is still exact `FUN_180001c90` loop/effective-length ownership.
+
+Population diagnostic added: `cli/OLMRadialBlur/olmradialblur_cli` now accepts
+`--inner-scatter-stats path.json`, which writes inner scatter effective-span,
+loop-limit, write-count, and next-row-underflow stats without changing rendered
+PNG output. On `rb_inner_only_strength_small`, the default writes
+`43,984,691` inner neighbor contributions from `1,418,861` active sources
+with `effective_span=32`; adding `--inner-scatter-span-minus-one` writes
+`42,565,830`, exactly one fewer neighbor write per active source, with
+`effective_span=31`. This confirms the diagnostic is a real population change,
+but objdump still shows `FUN_180001c90` looping from offset `1` while
+`offset < effective_span`, not a confirmed AEX `span-1` rule. Keep the flag as
+a diagnostic until caller distance or table-divisor ownership is proven.

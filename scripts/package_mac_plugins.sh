@@ -5,10 +5,11 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 CONFIGURATION="Debug"
 OUTPUT=""
 SKIP_BUILD=0
+PIXEL_REFERENCE_PROFILE="legacy"
 
 usage() {
   cat <<'EOF'
-Usage: scripts/package_mac_plugins.sh [--configuration Debug] [--output /tmp/olm_mac_plugins.zip] [--skip-build]
+Usage: scripts/package_mac_plugins.sh [--configuration Debug] [--output /tmp/olm_mac_plugins.zip] [--skip-build] [--pixel-reference-profile legacy|normalized-20260618]
 
 Build/verify the macOS AE plug-in bundles and package them for an AE host.
 By default this runs scripts/build_all_mac_plugins.sh first. Use --skip-build
@@ -29,6 +30,10 @@ while [[ $# -gt 0 ]]; do
     --skip-build)
       SKIP_BUILD=1
       shift
+      ;;
+    --pixel-reference-profile)
+      PIXEL_REFERENCE_PROFILE="$2"
+      shift 2
       ;;
     -h|--help)
       usage
@@ -82,6 +87,8 @@ pixel_validation_presets=(
   "OLMColorKey:olmcolorkey:ae_pixel_olmcolorkey_20260606:olmcolorkey_request.zip"
   "OLMToonDilate:olmtoondilate:ae_pixel_olmtoondilate_20260606:olmtoondilate_request.zip"
   "OLMDistanceGradation:olmdistancegradation:ae_pixel_olmdistancegradation_20260606:olmdistancegradation_request.zip"
+  "OLMDistanceGradationExtended:olmdistancegradation_extended:ae_pixel_olmdistancegradation_extended_20260618:olmdistancegradation_extended_request.zip"
+  "OLMDistanceGradationBlur:olmdistancegradation_blur:ae_pixel_olmdistancegradation_blur_20260618:olmdistancegradation_blur_request.zip"
 )
 
 cat >"$install_notes" <<EOF
@@ -90,7 +97,20 @@ OLM macOS AE plug-ins (${CONFIGURATION})
 Install target for development:
 ~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/
 
-Copy the *.plugin bundles in this folder into MediaCore, then restart After Effects.
+Preferred local install command from this repository:
+scripts/install_mac_plugins_to_mediacore.sh --package path/to/this_package.zip
+
+Optional preflight duplicate check:
+scripts/install_mac_plugins_to_mediacore.sh --audit-only
+
+That command requires After Effects to be closed, backs up any existing OLM
+bundles under MediaCore, installs only this package's bundles, and verifies
+exactly one installed bundle per expected OLM plug-in.
+
+Manual fallback: copy the *.plugin bundles in this folder into MediaCore, then
+restart After Effects. Before manual copying, remove or move old OLM backup
+folders out of MediaCore; After Effects scans nested backup plug-ins too.
+
 These bundles were packaged from:
 $ROOT
 
@@ -146,6 +166,8 @@ Return to the Mac-side porting workspace:
   - olmcolorkey/
   - olmtoondilate/
   - olmdistancegradation/
+  - olmdistancegradation_extended/
+  - olmdistancegradation_blur/
   Preserve frame names such as case_0001.png inside each folder.
 - Fill AE_VALIDATION_RESULT.template.json and return it with any PNGs or error
   screenshots/logs. Renaming it to AE_VALIDATION_RESULT.json is preferred, but
@@ -210,6 +232,7 @@ for entry in "${pixel_validation_presets[@]}"; do
   IFS=: read -r _plugin preset _request_id zip_name <<<"$entry"
   python3 "$ROOT/scripts/package_ae_pixel_validation_request.py" \
     --preset "$preset" \
+    --reference-profile "$PIXEL_REFERENCE_PROFILE" \
     --output "$pixel_validation_dir/$zip_name"
 done
 
@@ -222,6 +245,7 @@ done
   echo "  \"install_notes\": \"INSTALL.txt\","
   echo "  \"validation_checklist\": \"AE_VALIDATION_CHECKLIST.txt\","
   echo "  \"validation_result_template\": \"AE_VALIDATION_RESULT.template.json\","
+  echo "  \"pixel_reference_profile\": \"$PIXEL_REFERENCE_PROFILE\","
   echo "  \"ae_pixel_validation_requests\": ["
   for idx in "${!pixel_validation_presets[@]}"; do
     IFS=: read -r plugin _preset request_id zip_name <<<"${pixel_validation_presets[$idx]}"

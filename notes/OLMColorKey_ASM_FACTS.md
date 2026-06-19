@@ -196,6 +196,24 @@ keep loop overwrites kept-pixel RGB with the replace color when
 `color_keep && enable_replace && idx>=0 && colors[idx].use_replace`. The earlier
 `throw "replace color is not implemented"` is removed.
 
+Rust/Mac parity follow-up (2026-06-17): `rust/olmcolorkey_cli/src/main.rs` now
+mirrors the same Replace tail and the exact C++ HSV/Lab94/YUV/YCrCb comparator
+branches. It parses `Use Replace Color N` and `Replace Color N`, stores the first
+matched key index, and overwrites RGB only under the same
+`Color Keep && Enable Replace && Use Replace Color[idx]` gate. Mac
+`OLMColorKey.cpp` now has the same converter/comparator dispatch and builds.
+
+```sh
+cargo check && cargo build
+python3 refs/scripts/run_reference_test.py refs/win_references/olm_reference_return_windows_20260614/OLMColorKey --run-dir /tmp/olmcolorkey_rust_all_colors_probe_after_build --expected-effect 'OLM Color Key' --command '"rust/olmcolorkey_cli/target/debug/olmcolorkey_cli" --input "{input}" --params "{params}" --output "{output}"' --case-id ck_rgb_nonblack_remove_red --case-id ck_rgb_nonblack_keep_red --case-id ck_hsv_nonblack_remove_red --case-id ck_lab76_nonblack_remove_cyan --case-id ck_lab94_nonblack_remove_cyan --case-id ck_yuv_nonblack_remove_yellow --case-id ck_ycrcb_nonblack_remove_yellow --case-id ck_lab76_per_component_cyan --case-id ck_lab94_per_component_cyan --case-id ck_rgb_replace_red_with_blue --case-id ck_rgb_keep_replace_red_with_blue --case-id ck_rgb_two_keys_replace --max-diff 0 --mean-diff 0 --nonzero-px-percent 0
+scripts/setup_ae_sdk_links.sh >/dev/null
+xcodebuild -project mac/OLMColorKey/Mac/OLMColorKey.xcodeproj -configuration Debug build
+```
+
+Result: Rust returned exact(0) for all 24 checked software/CUDA frames covering
+RGB, HSV, Lab76, Lab94, YUV, YCrCb, Lab per-component, and RGB Replace. Mac
+build succeeded; host-rendered PNG parity still requires AE validation.
+
 Measured (software frames, max_diff):
 - ck_rgb_replace_red_with_blue ........ 0  exact
 - ck_rgb_keep_replace_red_with_blue ... 0  exact
@@ -218,6 +236,56 @@ tolerance.
 These are independent of Replace (all the failing cases have Color Keep=0 so no
 replace pixel is written) and require decompiling the morphology/blend, not a
 constant guess; stopped per the byte-match-or-decomp-fact rule.
+
+### 2026-06-19 Edge Blur Distance Type dispatch correction
+
+`FUN_1800094b0` runs Edge Blur by first converting the keyed 8-bit matte through
+`FUN_180008c90(local_208 -> local_108)`, then selecting the distance transform
+from `ctx+0x44` before calling `FUN_1800085b0`:
+
+- `ctx+0x44 == 1` -> `FUN_180006e20`
+- `ctx+0x44 == 2` -> `FUN_180005d60`
+- `ctx+0x44 == 3` -> `FUN_180007ec0`
+
+`FUN_180008c90` writes zero on nonzero matte pixels that touch an in-frame zero
+neighbor; the distance functions treat zero as the distance seed. This confirms
+the seed is the keep-side inner boundary, not the removed/drop side.
+
+`FUN_180007ec0` is the only branch that squares and then writes `sqrt(distance)`,
+so Edge Blur Distance Type 1 must not be forced to Euclidean. The Python, C++,
+Rust, and Mac implementations now route Edge Blur through the same
+`matte_distance`/`MatteDistanceTo` dispatch as Edge Thin.
+
+Measured against the normalized Windows AE Software return
+`refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMColorKey`:
+
+- Python CLI: `case_0008 max=26 mean=1.1044`, `case_0009 max=255 mean=1.3169`
+- C++ CLI: `case_0008 max=15 mean=1.1104`, `case_0009 max=255 mean=1.3169`
+- Rust CLI: `case_0008 max=15 mean=1.1104`, `case_0009 max=255 mean=1.3208`
+
+This is binary-grounded progress, not completion: `case_0009` still has a keep
+matte / Lab per-component / Edge Thin interaction residual, and `case_0008`
+still has broad contour differences. The rejected exploratory `drop`-side seed
+probe lowered mean on the returned PNGs, but contradicts `FUN_180008c90`, so it
+was not promoted.
+
+### 2026-06-19 rejected Edge Blur/Edge Thin probes
+
+Two tempting PNG-fit changes were tested and rejected because they contradict
+the binary or make other evidence worse:
+
+- Directly applying the apparent `FUN_180004cf0` Direction=3 formula as
+  "inside=1, outside=cosine fade" made the normalized Software refs explode
+  (`case_0008/0009` mean around `51.7/40.1`). This means the `param_2` world
+  consumed by the weight function is not equivalent to the CLI's current
+  `keep_mask` boolean. Keep the previous guarded weight mapping until the
+  caller/world semantics are traced more precisely.
+- For `case_0009`, changing positive Edge Thin from `dist <= 16` to the
+  equivalent of `dist < 16` lowers mean (`1.3169 -> 0.6425`) on the returned PNG,
+  but the 8-bit positive Edge Thin loop in `FUN_1800094b0` compiles to
+  `COMISS amount, dist; JC skip`, i.e. copy when `dist <= amount`. Do not promote
+  the `< amount` PNG fit without runtime proof that the ctx amount or distance
+  scale differs from the manifest.
 
 1. **Edge-thin ERODE off-by-one (L1, distance_type=2)**, `ck_rgb_replace_edge_thin_erode`
    max=255 on ~932 px (0.04%). The dilate sibling (amount=+8, type=2) is exact(0),

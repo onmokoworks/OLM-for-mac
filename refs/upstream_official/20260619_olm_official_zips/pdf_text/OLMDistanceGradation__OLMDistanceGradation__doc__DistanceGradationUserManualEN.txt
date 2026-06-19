@@ -1,0 +1,137 @@
+# Source: OLMDistanceGradation/OLMDistanceGradation/doc/DistanceGradationUserManualEN.pdf
+
+
+--- page 1 ---
+OLM Open Tools
+Distance Gradation
+User Manual
+OLM Digital, Inc.
+1
+
+
+--- page 2 ---
+OLM Open Tools Distance Gradation User Manual
+Table of Contents
+1. Introduction 4
+1.1. Supported Environment 4
+1.2. Install 4
+2. Using Distance Gradation 4
+3. Distance Gradation Parameters 5
+4. Others 8
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved.
+2
+
+
+--- page 3 ---
+OLM Open Tools Distance Gradation User Manual
+Copyright, End User License Agreement
+OLM Open Tools are licensed under the Apache License, Version 2.0.
+Change Logs
+2014/11/21 First version
+2017/11/02 Change License terms
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved.
+3
+
+
+--- page 4 ---
+OLM Open Tools Distance Gradation User Manual
+1. Introduction
+Distance Gradation is a plugin for Adobe® After Effects® (AE). It will generate gradation
+inside/outside of mask (alpha channel). It can then be used to create aura or light effects.
+Also by using black and white gradation inside a mask, it produces depth map that could be
+used for 2D/3D conversion.
+Figure 1 Example of uses of Distance Gradation
+1.1. Supported Environment
+Please refer to OLM Open Tools website for a complete list of supported environment.
+1.2. Install
+The zip archive you can download from OLM OpenTools web site contains the files listed in
+Table 1. To install OLM Smoother copy the plug-in file (DistanceGradation.aex) in A E
+plug-in directory.
+(ex: C:\Program Files\Adobe\Adobe After Effects 2022\Support Files\Plug-ins\OLM)
+Folder File Name Explanation
+Plugins\[32/64]\[Version] DistanceGradation.aex The plug-in files
+Doc DistanceGradationUserManual.pdf The user manual for
+Distance Gradation
+Table 1 Content of the zip archive
+2. Using Distance Gradation
+To apply the effect, use the menu: (Effects)→(OLM Plug-ins)→(Distance Gradation).
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved.
+4
+
+
+--- page 5 ---
+OLM Open Tools Distance Gradation User Manual
+3. Distance Gradation Parameters
+Figure 2 Distance Gradation parameters
+● In/ Out －The gradation can be generated in three different regions (Figure 3)
+● Inside － Inside the mask
+● Outside － Outside the mask
+● Both －Inside and outside the mask
+Figure 3 In/out gradation mode comparison (from the left: inside, outside, both)
+● Inside Threshold － The threshold to use when the gradation is generated inside
+the mask. It defines the maximum distance to generate gradation to (Figure 4).
+With a small value, the inner part of the mask gets flat and will generate an
+emboss like gradation.
+● Outside Threshold －The threshold to use when the gradation is generated
+outside the mask. It defines the maximum distance to generate gradation to.
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved.
+5
+
+
+--- page 6 ---
+OLM Open Tools Distance Gradation User Manual
+Figure 4 Inside/Outside threshold effect (left:70, right:256).
+With small values the overall pictures get dark.
+● Render Mode － We can choose between the three following rendering mode
+(Figure 5).
+RGB － Generates a colored picture from the distance. At 0 distance from the
+mask, Gradation Color will be used, at the maximum distance, Background color
+will be used. In between, color will be computed according to the interpolation
+method chosen.
+Layer － Use the color from the input image to generate gradation
+Figure 5 The different render mode (from left: RGB, Layer)
+● Use Background Color － When off, alpha gradation of the Gradation Color is
+generated. When on, alpha channel is generated with a value of 1, and BG Color
+is used to generate the color gradation.
+● Gradation Color － The color of the gradation
+● BG Color － When Use Background is ON, is used for the background color.
+● Invert －When Use Background is OFF, will invert the alpha channel, resulting in
+transparent alpha close to the mask and opaque alpha far from it. When Use
+Background is ON, will invert the Gradation Color and BG Color.
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved.
+6
+
+
+--- page 7 ---
+OLM Open Tools Distance Gradation User Manual
+Figure 6 Invert On/Off comparison (left: off, right: on)
+● Interpolation Mode － There is 3 interpolation mode (Figure 7, Figure 8)
+Linear－Linear interpolation
+Sphere－Interpolate with a sphere-round shape
+Power －Interpolate with power function. Uses Power parameter to create
+sharp shape( Power >1), and round shape (Power <1).
+Constant －Fill-up with color without interpolation
+● Power －This parameter is valid only when Interpolation Mode is Power. Adjust
+the interpolation shape.
+Figure 7 Interpolation Mode comparison
+From left: linear, sphere, power (=2.2)
+Figure 8 Curve used for interpolation
+From left: Linear, Sphere, Power (top= small value, down=high values)
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved.
+7
+
+
+--- page 8 ---
+OLM Open Tools Distance Gradation User Manual
+● Blur Mode － Defines what kind of blur is applied at post process (Figure 9)
+No Blur － no blur applied
+Blur No Scale－ simple blur
+Blur － add some scaling to the blur, keeping more details than simple blur
+Figure 9 Blur Mode comparison. Left: Blur no scale, Right: Blur
+● Blur Size － Strength of the blur effect. Bigger value means stronger blur.
+4. Others
+If you have problem using the plug-in in any environment, if you find a bug, have a feature
+request, or for any kind of feedback feel free to contact us at the following mail address:
+opentools@olm.co.jp
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved.
+8

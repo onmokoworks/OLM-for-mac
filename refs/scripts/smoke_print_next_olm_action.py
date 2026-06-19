@@ -11,6 +11,12 @@ import tempfile
 import zipfile
 from pathlib import Path
 
+from smoke_olm_handoff_package_verifier import (
+    make_handoff_package,
+    make_mac_package,
+    make_reference_package,
+)
+
 
 def repo_root() -> Path:
     return Path(__file__).resolve().parents[2]
@@ -51,104 +57,202 @@ def package_pending_requests(repo: Path, output: Path) -> None:
     print(proc.stdout, end="")
 
 
+def make_runtime_trace_return(path: Path) -> None:
+    write_zip(
+        path,
+        {
+            "runtime_trace_result.json": json.dumps(
+                {
+                    "kind": "olm_runtime_trace_result",
+                    "schema": 1,
+                    "results": [
+                        {
+                            "request_id": "radialblur_inner_runtime_trace_20260618",
+                            "status": "answered",
+                            "summary": "Synthetic RadialBlur span witness.",
+                            "observations": {"r14d_after_0x1d18": 31},
+                        },
+                        {
+                            "request_id": "kirakira_opencv455_primitive_fact_20260618",
+                            "status": "answered",
+                            "summary": "Synthetic KiraKira branch witness.",
+                            "observations": {"filterengine_branch": "FUN_1812e39d0"},
+                        },
+                    ],
+                }
+            )
+        },
+    )
+
+
+def pending_request_ids(repo: Path) -> list[str]:
+    proc = run(
+        [
+            sys.executable,
+            str(repo / "refs" / "scripts" / "check_reference_request_status.py"),
+            "--json",
+        ],
+        repo,
+    )
+    data = json.loads(proc.stdout)
+    requests = data.get("requests", [])
+    return [
+        row["request_id"]
+        for row in requests
+        if isinstance(row, dict)
+        and isinstance(row.get("request_id"), str)
+        and row.get("status") != "covered"
+    ]
+
+
 def main() -> int:
     repo = repo_root()
     script = repo / "scripts" / "print_next_olm_action.py"
+    summary_json = repo / "refs" / "reports" / "runtime_trace_summary.json"
+    summary_md = repo / "refs" / "reports" / "runtime_trace_summary.md"
+    old_summary_json = summary_json.read_text(encoding="utf-8") if summary_json.exists() else None
+    old_summary_md = summary_md.read_text(encoding="utf-8") if summary_md.exists() else None
     with tempfile.TemporaryDirectory(prefix="olm_next_action_smoke_") as tmp:
-        tmp_path = Path(tmp)
-        returned = tmp_path / "returned_refs.zip"
-        ae_pixel_request = tmp_path / "ae_pixel_request.zip"
-        old_pending = tmp_path / "olm_reference_requests_pending_20260606.zip"
-        fresh_pending = tmp_path / "olm_reference_requests_pending_20260612.zip"
-        smoke_request = tmp_path / "olm_reference_requests_smoke.zip"
-        request = json.loads(
-            (repo / "refs/reference_requests/radialblur_inner_20260605.json").read_text(
-                encoding="utf-8"
-            )
-        )
-        required_set = next(item for item in request["render_sets"] if item.get("required"))
-        render_set = required_set.get("id") or required_set["project_gpu_accel_type"]["current_name"]
-        cases = []
-        files = {}
-        for case in request["cases"]:
-            if case.get("optional"):
-                continue
-            case_id = case["id"]
-            frame = f"{case_id}.png"
-            before = f"{case_id}_before.png"
-            cases.append(
+        try:
+            tmp_path = Path(tmp)
+            ae_pixel_request = tmp_path / "ae_pixel_request.zip"
+            old_pending = tmp_path / "olm_reference_requests_pending_20260606.zip"
+            fresh_pending = tmp_path / "olm_reference_requests_pending_20260612.zip"
+            write_zip(
+                ae_pixel_request,
                 {
-                    "id": case_id,
-                    "request_case_id": case_id,
-                    "frame": frame,
-                    "before_effects_frame": before,
-                    "render_set": render_set,
-                    "selected_effect": request["effect"]["name"],
-                }
+                    "ae_pixel_olmblur/AE_PIXEL_VALIDATION_REQUEST.md": "render these\n",
+                    "ae_pixel_olmblur/reference_manifest.json": json.dumps(
+                        {"kind": "ae_effect_reference_manifest", "cases": []}
+                    ),
+                },
             )
-            files[f"OLMSmoother2/{frame}"] = "png\n"
-            files[f"OLMSmoother2/{before}"] = "png\n"
-        write_zip(
-            returned,
-            {
-                "OLMSmoother2/reference_manifest.json": json.dumps(
-                    {
-                        "kind": "ae_effect_reference_manifest",
-                        "effect": {"name": request["effect"]["name"]},
-                        "cases": cases,
-                    }
-                ),
-                **files,
-            },
-        )
-        write_zip(
-            ae_pixel_request,
-            {
-                "ae_pixel_olmblur/AE_PIXEL_VALIDATION_REQUEST.md": "render these\n",
-                "ae_pixel_olmblur/reference_manifest.json": json.dumps(
-                    {"kind": "ae_effect_reference_manifest", "cases": []}
-                ),
-            },
-        )
-        proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
-        data = json.loads(proc.stdout)
-        assert data["decision"]["action"] == "import-windows-reference-return"
-        assert "intake_olm_return.py" in data["decision"]["command"]
-        kinds = {Path(row["path"]).name: row["kind"] for row in data["candidates"]}
-        assert kinds["ae_pixel_request.zip"] == "ae-pixel-validation-request"
+            pending_ids = pending_request_ids(repo)
+            if pending_ids:
+                package_pending_requests(repo, old_pending)
+                package_pending_requests(repo, fresh_pending)
+                os.utime(
+                    fresh_pending,
+                    (old_pending.stat().st_mtime + 10, old_pending.stat().st_mtime + 10),
+                )
+                proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
+                data = json.loads(proc.stdout)
+                assert data["decision"]["action"] == "send-windows-reference-package"
+                assert (
+                    Path(data["decision"]["target"]["path"]).name
+                    == "olm_reference_requests_pending_20260612.zip"
+                )
 
-        human = run([sys.executable, str(script), str(tmp_path)], repo)
-        assert "OLM next action" in human.stdout
-        assert "import-windows-reference-return" in human.stdout
-        assert "- target:" in human.stdout
+                old_pending.unlink()
+                fresh_pending.unlink()
+                proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
+                data = json.loads(proc.stdout)
+                assert data["decision"]["action"] == "package-windows-reference-requests"
+            else:
+                mac_zip = make_mac_package(repo, tmp_path)
+                reference_zip = make_reference_package(repo, tmp_path)
+                handoff_zip = make_handoff_package(tmp_path, mac_zip, reference_zip)
+                proc = run(
+                    [sys.executable, str(script), "--json", str(tmp_path), "--handoff", str(handoff_zip)],
+                    repo,
+                )
+                data = json.loads(proc.stdout)
+                first_action = data["decision"]["action"]
+                assert first_action in {
+                    "await-runtime-trace-return",
+                    "send-windows-action-bundle",
+                    "send-runtime-trace-package",
+                    "continue-binary-grounded-followup",
+                }
+                if first_action == "await-runtime-trace-return":
+                    assert data["decision"]["target"]["kind"] == "runtime-trace-request-package"
+                elif first_action == "send-windows-action-bundle":
+                    assert data["decision"]["target"]["kind"] == "windows-action-bundle"
+                elif first_action == "send-runtime-trace-package":
+                    assert data["decision"]["target"]["kind"] == "runtime-trace-request-package"
+                else:
+                    assert data["decision"]["target"]["kind"] == "ae-host-exact-failure-classification"
+                kinds = {Path(row["path"]).name: row["kind"] for row in data["candidates"]}
+                assert kinds["ae_pixel_request.zip"] == "ae-pixel-validation-request"
 
-        package_pending_requests(repo, old_pending)
-        package_pending_requests(repo, fresh_pending)
-        os.utime(fresh_pending, (old_pending.stat().st_mtime + 10, old_pending.stat().st_mtime + 10))
-        write_zip(
-            smoke_request,
-            {
-                "refs/reference_requests/WIN_CODEX_HANDOFF.md": "stale\n",
-                "refs/reference_requests/stale_request_20260606.json": json.dumps(
-                    {
-                        "request_id": "stale_request_20260606",
-                        "manifest_requirements": [],
-                        "cases": [{"id": "case_a"}],
-                    }
-                ),
-            },
-        )
-        returned.unlink()
-        proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
-        data = json.loads(proc.stdout)
-        assert data["decision"]["action"] == "send-windows-reference-package"
-        assert Path(data["decision"]["target"]["path"]).name == "olm_reference_requests_pending_20260612.zip"
+                human = run([sys.executable, str(script), str(tmp_path), "--handoff", str(handoff_zip)], repo)
+                assert "OLM next action" in human.stdout
+                assert first_action in human.stdout
+                assert "- target:" in human.stdout
+                if first_action not in {"send-ae-host-validation-package", "rebuild-handoff-package"}:
+                    assert "handoff problem:" not in human.stdout
 
-        old_pending.unlink()
-        fresh_pending.unlink()
-        proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
-        data = json.loads(proc.stdout)
-        assert data["decision"]["action"] == "package-windows-reference-requests"
+                summary_json.parent.mkdir(parents=True, exist_ok=True)
+                summary_json.write_text(
+                    json.dumps(
+                        {
+                            "kind": "olm_runtime_trace_return_summary",
+                            "schema": 1,
+                            "required": [
+                                {
+                                    "request_id": "radialblur_inner_runtime_trace_20260618",
+                                    "answered": True,
+                                    "count": 1,
+                                    "statuses": ["answered"],
+                                },
+                                {
+                                    "request_id": "kirakira_opencv455_primitive_fact_20260618",
+                                    "answered": True,
+                                    "count": 1,
+                                    "statuses": ["answered"],
+                                },
+                            ],
+                            "results": [],
+                        },
+                        indent=2,
+                    ),
+                    encoding="utf-8",
+                )
+                summary_md.write_text("# synthetic runtime summary\n", encoding="utf-8")
+                runtime_return = tmp_path / "runtime_trace_return.zip"
+                make_runtime_trace_return(runtime_return)
+                old_time = summary_json.stat().st_mtime - 10
+                os.utime(runtime_return, (old_time, old_time))
+                proc = run(
+                    [sys.executable, str(script), "--json", str(tmp_path), "--handoff", str(handoff_zip)],
+                    repo,
+                )
+                data = json.loads(proc.stdout)
+                assert data["decision"]["action"] in {
+                    "await-runtime-trace-return",
+                    "send-windows-action-bundle",
+                    "send-runtime-trace-package",
+                    "dispatch-runtime-trace-followup",
+                    "continue-binary-grounded-followup",
+                }
+                if data["decision"]["action"] == "await-runtime-trace-return":
+                    assert data["decision"]["target"]["kind"] == "runtime-trace-request-package"
+                elif data["decision"]["action"] == "send-windows-action-bundle":
+                    assert data["decision"]["target"]["kind"] == "windows-action-bundle"
+                elif data["decision"]["action"] == "send-runtime-trace-package":
+                    assert data["decision"]["target"]["kind"] == "runtime-trace-request-package"
+                elif data["decision"]["action"] == "dispatch-runtime-trace-followup":
+                    assert data["decision"]["target"]["kind"] == "runtime-trace-summary"
+                else:
+                    assert data["decision"]["target"]["kind"] == "ae-host-exact-failure-classification"
+
+                new_time = summary_json.stat().st_mtime + 10
+                os.utime(runtime_return, (new_time, new_time))
+                proc = run(
+                    [sys.executable, str(script), "--json", str(tmp_path), "--handoff", str(handoff_zip)],
+                    repo,
+                )
+                data = json.loads(proc.stdout)
+                assert data["decision"]["action"] == "import-runtime-trace-return"
+        finally:
+            if old_summary_json is None:
+                summary_json.unlink(missing_ok=True)
+            else:
+                summary_json.write_text(old_summary_json, encoding="utf-8")
+            if old_summary_md is None:
+                summary_md.unlink(missing_ok=True)
+            else:
+                summary_md.write_text(old_summary_md, encoding="utf-8")
 
     print("[OK] OLM next action printer smoke")
     return 0

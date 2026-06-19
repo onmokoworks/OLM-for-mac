@@ -613,6 +613,7 @@ Image render_olmblur(const Image &input, const BlurParams &bp) {
     size_t npix = static_cast<size_t>(w) * static_cast<size_t>(h);
     std::vector<float> buf1(npix * 3), buf2(npix * 3);
     std::vector<unsigned char> alpha1(npix), alpha2(npix);
+
     for (size_t i = 0; i < npix; ++i) {
         buf1[i * 3 + 0] = static_cast<float>(input.rgba[i * 4 + 0]);
         buf1[i * 3 + 1] = static_cast<float>(input.rgba[i * 4 + 1]);
@@ -653,10 +654,11 @@ Image render_olmblur(const Image &input, const BlurParams &bp) {
         if (bp.repeat > 1) decay = std::pow(3.0f / blur_amount, 1.0f / static_cast<float>(bp.repeat - 1));
 
         for (long iter = 0; iter < bp.repeat; ++iter) {
-            float radius_f = blur_amount * std::pow(decay, static_cast<float>(iter));
-            long radius = static_cast<long>(radius_f);
+            double radius_d = static_cast<double>(blur_amount) *
+                              std::pow(static_cast<double>(decay), static_cast<double>(iter));
+            long radius = static_cast<long>(radius_d);
             if (radius == 0) break;
-            float sigma = radius_f / 3.0f;
+            float sigma = static_cast<float>(radius_d) / 3.0f;
             float denom = 2.0f * sigma * sigma;
             for (long k = 0; k <= radius; ++k) {
                 weights[k] = std::exp(-static_cast<float>(k * k) / denom);
@@ -671,9 +673,43 @@ Image render_olmblur(const Image &input, const BlurParams &bp) {
         }
     }
 
+    if (const char *trace = std::getenv("OLMBLUR_TRACE_PIXELS")) {
+        const char *p = trace;
+        while (*p) {
+            int tx = -1;
+            int ty = -1;
+            int consumed = 0;
+            if (std::sscanf(p, "%d,%d%n", &tx, &ty, &consumed) == 2 && consumed > 0) {
+                if (0 <= tx && tx < input.width && 0 <= ty && ty < input.height) {
+                    size_t ti = static_cast<size_t>(ty) * static_cast<size_t>(input.width) +
+                                static_cast<size_t>(tx);
+                    std::fprintf(stderr,
+                                 "OLMBLUR_TRACE x=%d y=%d rgb=(%.9g,%.9g,%.9g) rgb_hex=(%a,%a,%a) floor05=(%.9g,%.9g,%.9g) nearby=(%.9g,%.9g,%.9g) legacy=%ld repeat=%ld\n",
+                                 tx, ty,
+                                 buf1[ti * 3 + 0], buf1[ti * 3 + 1], buf1[ti * 3 + 2],
+                                 static_cast<double>(buf1[ti * 3 + 0]),
+                                 static_cast<double>(buf1[ti * 3 + 1]),
+                                 static_cast<double>(buf1[ti * 3 + 2]),
+                                 std::floor(buf1[ti * 3 + 0] + 0.5f),
+                                 std::floor(buf1[ti * 3 + 1] + 0.5f),
+                                 std::floor(buf1[ti * 3 + 2] + 0.5f),
+                                 std::nearbyint(buf1[ti * 3 + 0]),
+                                 std::nearbyint(buf1[ti * 3 + 1]),
+                                 std::nearbyint(buf1[ti * 3 + 2]),
+                                 bp.legacy, bp.repeat);
+                }
+                p += consumed;
+                while (*p == ';' || *p == ' ' || *p == '\t' || *p == '\n') ++p;
+            } else {
+                break;
+            }
+        }
+    }
+
     for (size_t i = 0; i < npix; ++i) {
         for (int c = 0; c < 3; ++c) {
-            float v = std::floor(buf1[i * 3 + c] + 0.5f);
+            float v = bp.legacy ? std::floor(buf1[i * 3 + c] + 0.5f)
+                                : std::nearbyint(buf1[i * 3 + c]);
             v = std::max(0.0f, std::min(255.0f, v));
             output.rgba[i * 4 + c] = static_cast<unsigned char>(v);
         }

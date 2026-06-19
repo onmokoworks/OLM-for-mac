@@ -1,9 +1,10 @@
 #include "OLMToonDilate.h"
 
 #include <algorithm>
+#include <cstdint>
 #include <cmath>
 #include <cstdio>
-#include <deque>
+#include <limits>
 #include <vector>
 
 static void UnionLRect(const PF_LRect *src, PF_LRect *dst)
@@ -62,16 +63,34 @@ struct ToonPixelTraits;
 template <>
 struct ToonPixelTraits<PF_Pixel8> {
 	static bool opaque(const PF_Pixel8 &p) { return p.alpha == PF_MAX_CHAN8; }
+	static void premultiply_semi_alpha(PF_Pixel8 &p) {
+		if (p.alpha == 0 || p.alpha == PF_MAX_CHAN8) return;
+		p.red   = (A_u_char)(((A_long)p.red   * (A_long)p.alpha + 127) / 255);
+		p.green = (A_u_char)(((A_long)p.green * (A_long)p.alpha + 127) / 255);
+		p.blue  = (A_u_char)(((A_long)p.blue  * (A_long)p.alpha + 127) / 255);
+	}
 };
 
 template <>
 struct ToonPixelTraits<PF_Pixel16> {
 	static bool opaque(const PF_Pixel16 &p) { return p.alpha == PF_MAX_CHAN16; }
+	static void premultiply_semi_alpha(PF_Pixel16 &p) {
+		if (p.alpha == 0 || p.alpha == PF_MAX_CHAN16) return;
+		p.red   = (A_u_short)(((A_long)p.red   * (A_long)p.alpha + 16383) / 32768);
+		p.green = (A_u_short)(((A_long)p.green * (A_long)p.alpha + 16383) / 32768);
+		p.blue  = (A_u_short)(((A_long)p.blue  * (A_long)p.alpha + 16383) / 32768);
+	}
 };
 
 template <>
 struct ToonPixelTraits<PF_PixelFloat> {
 	static bool opaque(const PF_PixelFloat &p) { return p.alpha >= 1.0f; }
+	static void premultiply_semi_alpha(PF_PixelFloat &p) {
+		if (p.alpha <= 0.0f || p.alpha >= 1.0f) return;
+		p.red *= p.alpha;
+		p.green *= p.alpha;
+		p.blue *= p.alpha;
+	}
 };
 
 template <typename PixelT>
@@ -112,10 +131,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	}
 
 	const A_long n = w * h;
-	std::vector<A_long> dist((size_t)n, -1);
-	std::vector<A_long> sx((size_t)n, -1);
-	std::vector<A_long> sy((size_t)n, -1);
-	std::deque<A_long> queue;
+	const uint32_t INF = std::numeric_limits<uint32_t>::max();
+	std::vector<uint32_t> dist((size_t)n, INF);
+	bool has_seed = false;
 
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
@@ -123,43 +141,54 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			A_long idx = y * w + x;
 			if (ToonPixelTraits<PixelT>::opaque(*PixelAtConst<PixelT>(input, x, y))) {
 				dist[idx] = 0;
-				sx[idx] = x;
-				sy[idx] = y;
-				queue.push_back(idx);
+				has_seed = true;
 			}
 		}
 	}
-	if (queue.empty()) return PF_Err_NONE;
+	if (!has_seed) return PF_Err_NONE;
 
-	static const A_long DX[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
-	static const A_long DY[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
-	while (!queue.empty()) {
-		A_long idx = queue.front();
-		queue.pop_front();
-		A_long d = dist[idx];
-		if (d >= r_eff) continue;
-		A_long x = idx % w;
-		A_long y = idx / w;
-		for (int k = 0; k < 8; ++k) {
-			A_long nx = x + DX[k];
-			A_long ny = y + DY[k];
+	auto try_relax = [&](A_long x, A_long y, const A_long coords[][2], int count) {
+		A_long idx = y * w + x;
+		if (dist[(size_t)idx] == 0) return;
+		uint32_t best = INF;
+		A_long best_x = -1;
+		A_long best_y = -1;
+		for (int i = 0; i < count; ++i) {
+			A_long nx = coords[i][0];
+			A_long ny = coords[i][1];
 			if (nx < 0 || nx >= w || ny < 0 || ny >= h) continue;
-			A_long nidx = ny * w + nx;
-			if (dist[nidx] >= 0) continue;
-			dist[nidx] = d + 1;
-			sx[nidx] = sx[idx];
-			sy[nidx] = sy[idx];
-			queue.push_back(nidx);
+			uint32_t d = dist[(size_t)(ny * w + nx)];
+			if (d < best) {
+				best = d;
+				best_x = nx;
+				best_y = ny;
+			}
+		}
+		if (best == INF) return;
+		uint32_t candidate = best + 1;
+		if (candidate >= dist[(size_t)idx]) return;
+		dist[(size_t)idx] = candidate;
+		if (candidate <= (uint32_t)r_eff) {
+			*PixelAt<PixelT>(output, x, y) = *PixelAt<PixelT>(output, best_x, best_y);
+		}
+	};
+
+	for (A_long y = 0; y < h; ++y) {
+		for (A_long x = 0; x < w; ++x) {
+			const A_long coords[4][2] = {{x - 1, y}, {x - 1, y - 1}, {x, y - 1}, {x + 1, y - 1}};
+			try_relax(x, y, coords, 4);
 		}
 	}
-
-	for (A_long idx = 0; idx < n; ++idx) {
-		if (dist[idx] <= 0 || dist[idx] > r_eff) continue;
-		A_long x = idx % w;
-		A_long y = idx / w;
-		const PixelT *inP = PixelAtConst<PixelT>(input, x, y);
-		if (ToonPixelTraits<PixelT>::opaque(*inP)) continue;
-		*PixelAt<PixelT>(output, x, y) = *PixelAtConst<PixelT>(input, sx[idx], sy[idx]);
+	for (A_long y = h - 1; y >= 0; --y) {
+		for (A_long x = w - 1; x >= 0; --x) {
+			const A_long coords[4][2] = {{x + 1, y}, {x + 1, y + 1}, {x, y + 1}, {x - 1, y + 1}};
+			try_relax(x, y, coords, 4);
+		}
+	}
+	for (A_long y = 0; y < h; ++y) {
+		for (A_long x = 0; x < w; ++x) {
+			ToonPixelTraits<PixelT>::premultiply_semi_alpha(*PixelAt<PixelT>(output, x, y));
+		}
 	}
 
 	return PF_Err_NONE;

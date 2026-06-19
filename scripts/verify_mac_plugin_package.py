@@ -19,6 +19,8 @@ EXPECTED_PIXEL_REQUESTS = {
     "OLMColorKey": "ae_pixel_olmcolorkey_20260606",
     "OLMToonDilate": "ae_pixel_olmtoondilate_20260606",
     "OLMDistanceGradation": "ae_pixel_olmdistancegradation_20260606",
+    "OLMDistanceGradationExtended": "ae_pixel_olmdistancegradation_extended_20260618",
+    "OLMDistanceGradationBlur": "ae_pixel_olmdistancegradation_blur_20260618",
 }
 
 
@@ -151,13 +153,23 @@ def main() -> int:
         pixel_requests = manifest.get("ae_pixel_validation_requests")
         if not isinstance(pixel_requests, list) or not pixel_requests:
             return fail("manifest.ae_pixel_validation_requests must be a non-empty list")
-        by_pixel_name = {entry.get("name"): entry for entry in pixel_requests if isinstance(entry, dict)}
         for name, request_id in EXPECTED_PIXEL_REQUESTS.items():
-            entry = by_pixel_name.get(name)
-            if not entry:
+            matches = [
+                entry
+                for entry in pixel_requests
+                if isinstance(entry, dict) and entry.get("name") == name and entry.get("request_id") == request_id
+            ]
+            if not matches:
                 return fail(f"missing AE pixel validation request entry: {name}")
-            if entry.get("request_id") != request_id:
-                return fail(f"{name}.request_id must be {request_id!r}")
+        for entry in pixel_requests:
+            if not isinstance(entry, dict):
+                return fail("manifest.ae_pixel_validation_requests entries must be objects")
+            name = entry.get("name")
+            request_id = entry.get("request_id")
+            if not isinstance(name, str) or not name:
+                return fail("pixel request name must be a non-empty string")
+            if not isinstance(request_id, str) or not request_id:
+                return fail(f"{name}.request_id must be a non-empty string")
             rel = entry.get("zip")
             if not isinstance(rel, str) or not rel:
                 return fail(f"{name}.zip must be a non-empty string")

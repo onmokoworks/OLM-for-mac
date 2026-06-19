@@ -83,6 +83,8 @@ static bool g_olmsmoother2_idx18_key_hist_enabled = false;
 static int g_olmsmoother2_current_switch_idx = -1;
 static uint64_t g_olmsmoother2_idx18_cardinal3_key_hist[128] = {};
 static uint64_t g_olmsmoother2_idx18_cardinal12_key_hist[128] = {};
+static int g_olmsmoother2_trace_x = -1;
+static int g_olmsmoother2_trace_y = -1;
 
 static void OLMSmoother2ResetIndexHistogram(bool enabled)
 {
@@ -126,6 +128,12 @@ static bool OLMSmoother2WriteIdx18KeyHistogram(const char *path)
 	}
 	std::fclose(fp);
 	return true;
+}
+
+static void OLMSmoother2SetTracePixel(int x, int y)
+{
+	g_olmsmoother2_trace_x = x;
+	g_olmsmoother2_trace_y = y;
 }
 
 // ============================================================================
@@ -429,6 +437,11 @@ static inline void win_FUN_1800104d0_append(SmootherPolygon &poly,
 	const FPlane &pl = *poly.plane;
 	const size_t stride = pl.rowbytes / sizeof(FPix);
 	const FPix &px = pl.base[(size_t)gi_y * stride + (size_t)gi_x];
+	if (poly.cur_x == g_olmsmoother2_trace_x && poly.cur_y == g_olmsmoother2_trace_y) {
+		std::fprintf(stderr,
+		             "trace append src=(%d,%d) dst_center=(%d,%d) rgba=(%.8g,%.8g,%.8g,%.8g) w=%.8g before_count=%d\n",
+		             gi_x, gi_y, poly.cur_x, poly.cur_y, px.r, px.g, px.b, px.a, w, poly.count);
+	}
 	PolyVertex &v = poly.samples[poly.count++];
 	v.r = px.r; v.g = px.g; v.b = px.b; v.a = px.a; v.w = w;
 }
@@ -944,6 +957,12 @@ static void win_cardinal_12(SmootherPolygon &poly) {
 	int sR[3]; scan_d800(sR, &g2, center);
 	// Descriptor layout: { xL, yL, clsL, xR, yR, clsR }
 	int desc[6] = { sL[0], sL[1], sL[2], sR[0], sR[1], sR[2] };
+	if (poly.cur_x == g_olmsmoother2_trace_x && poly.cur_y == g_olmsmoother2_trace_y) {
+		int k = desc[2] + (desc[5] * 5 - 1) * 2;
+		std::fprintf(stderr,
+		             "trace cardinal12 desc=(%d,%d,%d,%d,%d,%d) key=%d\n",
+		             desc[0], desc[1], desc[2], desc[3], desc[4], desc[5], k);
+	}
 	if (g_olmsmoother2_idx18_key_hist_enabled && g_olmsmoother2_current_switch_idx == 0x18) {
 		int k = desc[2] + (desc[5] * 5 - 1) * 2;
 		if (k >= 0 && k < 128) ++g_olmsmoother2_idx18_cardinal12_key_hist[k];
@@ -954,12 +973,11 @@ static void win_cardinal_12(SmootherPolygon &poly) {
 // ============================================================================
 // Task #17 — 222-case dispatcher (FUN_18000c280) + 12 mid-helpers + 3 missing
 // cardinals.  The 12 mid-helpers fire conditional edge/corner emits based on
-// run-length classification of the 8-neighborhood.  The 3 missing cardinal
-// entries (3時/6時/9時) share the 12時 infrastructure by rotation: we reuse
-// scan_d230/scan_d800 on a rotated grid descriptor.  Until full sibling
-// dispatchers (FUN_18000f8f0/fef0/1800101e0) are ported, they forward to
-// win_disp_fbf0 on a rotated {x,y} space — this gives directionally-correct
-// emits with 12時 leaf behavior (close enough for anti-aliased edge shaping).
+// run-length classification of the 8-neighborhood.  The sibling cardinal
+// entries (3時/6時/9時) now have their own dispatcher families instead of
+// forwarding through the 12時 dispatcher.  The remaining no-key residual is
+// therefore tracked as scanner/leaf fidelity around hot dispatch keys, not as
+// a missing cardinal-family placeholder.
 // ============================================================================
 
 // Win DAT aliases local to this port block.  Using distinct names to avoid
@@ -3031,6 +3049,12 @@ static void win_cardinal_3(SmootherPolygon &poly) {
 	int s1[3]; scan_d520(s1, &g, center);
 	int s2[3]; scan_dbd0(s2, &g, center);
 	int desc[6] = { s1[0], s1[1], s1[2], s2[0], s2[1], s2[2] };
+	if (poly.cur_x == g_olmsmoother2_trace_x && poly.cur_y == g_olmsmoother2_trace_y) {
+		int k = (desc[2] - 1) + desc[5] * 10;
+		std::fprintf(stderr,
+		             "trace cardinal3 desc=(%d,%d,%d,%d,%d,%d) key=%d\n",
+		             desc[0], desc[1], desc[2], desc[3], desc[4], desc[5], k);
+	}
 	if (g_olmsmoother2_idx18_key_hist_enabled && g_olmsmoother2_current_switch_idx == 0x18) {
 		int k = (desc[2] - 1) + desc[5] * 10;
 		if (k >= 0 && k < 128) ++g_olmsmoother2_idx18_cardinal3_key_hist[k];
@@ -3108,6 +3132,14 @@ static void build_polygon(SmootherPolygon &poly,
 
 	int idx = (iVar3 + eR0 + (((bSE ? 0 : 1) + uVar7 * 2) * 4)) * 0x10 +
 	          iVar4 + iGbit + iVar11 + iVar10;
+	const bool trace_this_pixel =
+	    (x == g_olmsmoother2_trace_x && y == g_olmsmoother2_trace_y);
+	if (trace_this_pixel) {
+		std::fprintf(stderr,
+		             "trace build_polygon x=%d y=%d idx=%d c=%02x%02x%02x%02x eR0=%d bSW=%d bSE=%d uVar7=%d bits=%d,%d,%d,%d,%d\n",
+		             x, y, idx, c_A, c_R, c_G, c_B, eR0, bSW ? 1 : 0, bSE ? 1 : 0, uVar7,
+		             iVar3, iVar4, iVar11, iVar10, iGbit);
+	}
 	if (g_olmsmoother2_index_hist_enabled && idx >= 0 && idx < 256) {
 		++g_olmsmoother2_index_hist[idx];
 	}
@@ -3376,6 +3408,16 @@ static void build_polygon(SmootherPolygon &poly,
 		break;
 	default:
 		break;
+	}
+	if (trace_this_pixel) {
+		std::fprintf(stderr, "trace build_polygon_done x=%d y=%d idx=%d count=%d\n",
+		             x, y, idx, poly.count);
+		for (int i = 0; i < poly.count && i < 16; ++i) {
+			const PolyVertex &v = poly.samples[i];
+			std::fprintf(stderr,
+			             "trace sample[%d] rgba=(%.8g,%.8g,%.8g,%.8g) w=%.8g\n",
+			             i, v.r, v.g, v.b, v.a, v.w);
+		}
 	}
 	g_olmsmoother2_current_switch_idx = -1;
 }

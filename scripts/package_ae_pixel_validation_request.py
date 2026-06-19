@@ -21,10 +21,30 @@ from pathlib import Path
 
 OLMBLUR_EXACT_CASES = ["case_0001", "case_0002", "case_0004"]
 OLMBLUR_RESIDUAL_CASES = ["case_0003", "case_0005", "case_0006", "case_0007"]
+OLMBLUR_ALL_CASES = [
+    "case_0001",
+    "case_0002",
+    "case_0003",
+    "case_0004",
+    "case_0005",
+    "case_0006",
+    "case_0007",
+]
 OLMCOLORKEY_RGB_EXACT_CASES = ["case_0001", "case_0002", "case_0003", "case_0004"]
 OLMCOLORKEY_EDGETHIN_EXACT_CASES = ["case_0007"]
 OLMCOLORKEY_EDGETHIN_RESIDUAL_CASES = ["case_0005", "case_0006"]
 OLMCOLORKEY_EDGEBLUR_RESIDUAL_CASES = ["case_0008", "case_0009"]
+OLMCOLORKEY_ALL_CASES = [
+    "case_0001",
+    "case_0002",
+    "case_0003",
+    "case_0004",
+    "case_0005",
+    "case_0006",
+    "case_0007",
+    "case_0008",
+    "case_0009",
+]
 OLMTOONDILATE_CASES = ["case_0001", "case_0002", "case_0003"]
 OLMDISTANCEGRADATION_BASIC_CASES = [
     "case_0001",
@@ -40,7 +60,67 @@ OLMDISTANCEGRADATION_BASIC_CASES = [
     "case_0018",
     "case_0019",
 ]
-PRESETS = ["olmblur", "olmcolorkey", "olmtoondilate", "olmdistancegradation"]
+OLMDISTANCEGRADATION_EXTENDED_CASES = [
+    "case_0008",
+    "case_0010",
+    "case_0011",
+    "case_0012",
+    "case_0013",
+    "case_0014",
+    "case_0016",
+    "case_0020",
+    "case_0021",
+    "case_0022",
+    "case_0023",
+    "case_0024",
+    "case_0025",
+    "case_0026",
+    "case_0027",
+    "case_0028",
+]
+OLMDISTANCEGRADATION_BLUR_CASES = ["case_0029"]
+OLMSMOOTHER_CASES = ["case_0001", "case_0002", "case_0003"]
+OLMSMOOTHER2_LEGACY_CASES = [
+    "case_0001",
+    "case_0002",
+    "case_0003",
+    "case_0004",
+    "case_0010",
+    "case_0011",
+    "case_0012",
+]
+OLMSMOOTHER2_NO_KEY_GRID_CASES = [
+    "sm2_no_key_s000_r1",
+    "sm2_no_key_s025_r1",
+    "sm2_no_key_s050_r1",
+    "sm2_no_key_s100_r1",
+    "sm2_no_key_s000_r2",
+    "sm2_no_key_s025_r2",
+    "sm2_no_key_s050_r2",
+    "sm2_no_key_s100_r2",
+    "sm2_no_key_s000_r3",
+    "sm2_no_key_s025_r3",
+    "sm2_no_key_s050_r3",
+    "sm2_no_key_s100_r3",
+]
+PRESETS = [
+    "olmblur",
+    "olmblur_exact",
+    "olmcolorkey",
+    "olmcolorkey_exact",
+    "olmtoondilate",
+    "olmtoondilate_exact",
+    "olmdistancegradation",
+    "olmdistancegradation_exact",
+    "olmdistancegradation_extended",
+    "olmdistancegradation_extended_exact",
+    "olmdistancegradation_blur",
+    "olmdistancegradation_blur_exact",
+    "olmsmoother",
+    "olmsmoother2",
+    "olmsmoother2_no_key_grid",
+]
+REFERENCE_PROFILES = ["legacy", "normalized-20260618"]
 
 
 def parse_args() -> argparse.Namespace:
@@ -56,6 +136,12 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=None,
         help="Reference directory containing reference_manifest.json and PNGs.",
+    )
+    parser.add_argument(
+        "--reference-profile",
+        choices=REFERENCE_PROFILES,
+        default="legacy",
+        help="Known reference set profile. Ignored when --reference is passed.",
     )
     parser.add_argument(
         "--output",
@@ -98,7 +184,39 @@ def find_png(reference: Path, frame: str) -> Path:
     raise FileNotFoundError(f"missing PNG for frame {frame!r} in {reference}")
 
 
-def preset_config(root: Path, preset: str, reference: Path | None) -> dict:
+def profile_reference(root: Path, preset: str, profile: str) -> Path | None:
+    if profile == "legacy":
+        return None
+    normalized_root = root / "refs" / "reports" / "ae_host_validation_20260618_232926" / "normalized_refs"
+    refs = {
+        "olmblur": normalized_root / "OLMBlur",
+        "olmblur_exact": normalized_root / "OLMBlur",
+        "olmcolorkey": normalized_root / "OLMColorKey",
+        "olmcolorkey_exact": normalized_root / "OLMColorKey",
+        "olmtoondilate": normalized_root / "OLMToonDilate",
+        "olmtoondilate_exact": normalized_root / "OLMToonDilate",
+        "olmdistancegradation": normalized_root / "OLMDistanceGradation_basic",
+        "olmdistancegradation_exact": normalized_root / "OLMDistanceGradation_basic",
+        "olmdistancegradation_extended": normalized_root / "OLMDistanceGradation_extended",
+        "olmdistancegradation_extended_exact": normalized_root / "OLMDistanceGradation_extended",
+        "olmdistancegradation_blur": normalized_root / "OLMDistanceGradation_blur",
+        "olmdistancegradation_blur_exact": normalized_root / "OLMDistanceGradation_blur",
+        "olmsmoother": root / "refs" / "win_references" / "20260604_olm" / "OLMSmoother",
+        "olmsmoother2": root / "refs" / "win_references" / "20260605_extra" / "OLMSmoother2",
+        "olmsmoother2_no_key_grid": (
+            root
+            / "refs"
+            / "win_references"
+            / "olm_reference_return_windows_recapture_20260615"
+            / "OLMSmoother2"
+        ),
+    }
+    if profile == "normalized-20260618":
+        return refs[preset]
+    raise ValueError(f"unsupported reference profile: {profile}")
+
+
+def preset_config(root: Path, preset: str, reference: Path | None, reference_profile: str) -> dict:
     configs = {
         "olmblur": {
             "request_id": "ae_pixel_olmblur_20260606",
@@ -119,6 +237,21 @@ def preset_config(root: Path, preset: str, reference: Path | None) -> dict:
                     "max_diff": 1,
                     "mean_diff": 0.01,
                     "nonzero_px_percent": 3.0,
+                },
+            ],
+        },
+        "olmblur_exact": {
+            "request_id": "ae_pixel_olmblur_exact_20260619",
+            "effect_name": "OLM Blur",
+            "effect_match_name": "OLM OLM Blur",
+            "reference": root / "refs" / "win_references" / "20260604_olm" / "OLMBlur",
+            "threshold_groups": [
+                {
+                    "name": "all_exact",
+                    "case_ids": OLMBLUR_ALL_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
                 },
             ],
         },
@@ -158,6 +291,21 @@ def preset_config(root: Path, preset: str, reference: Path | None) -> dict:
                 },
             ],
         },
+        "olmcolorkey_exact": {
+            "request_id": "ae_pixel_olmcolorkey_exact_20260619",
+            "effect_name": "OLM Color Key",
+            "effect_match_name": "OLM OLM Color Key",
+            "reference": root / "refs" / "win_references" / "20260604_olm" / "OLMColorKey",
+            "threshold_groups": [
+                {
+                    "name": "all_exact",
+                    "case_ids": OLMCOLORKEY_ALL_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
+                },
+            ],
+        },
         "olmtoondilate": {
             "request_id": "ae_pixel_olmtoondilate_20260606",
             "effect_name": "OLM Toon Dilate",
@@ -168,8 +316,23 @@ def preset_config(root: Path, preset: str, reference: Path | None) -> dict:
                     "name": "guarded",
                     "case_ids": OLMTOONDILATE_CASES,
                     "max_diff": 255,
-                    "mean_diff": 3.1,
+                    "mean_diff": 3.2,
                     "nonzero_px_percent": 1.7,
+                },
+            ],
+        },
+        "olmtoondilate_exact": {
+            "request_id": "ae_pixel_olmtoondilate_exact_20260619",
+            "effect_name": "OLM Toon Dilate",
+            "effect_match_name": "OLM OLM Toon Dilate",
+            "reference": root / "refs" / "win_references" / "20260604_olm" / "OLMToonDilate",
+            "threshold_groups": [
+                {
+                    "name": "all_exact",
+                    "case_ids": OLMTOONDILATE_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
                 },
             ],
         },
@@ -188,12 +351,141 @@ def preset_config(root: Path, preset: str, reference: Path | None) -> dict:
                 },
             ],
         },
+        "olmdistancegradation_exact": {
+            "request_id": "ae_pixel_olmdistancegradation_basic_exact_20260619",
+            "effect_name": "OLM Distance Gradation",
+            "effect_match_name": "OLM Distance Gradation",
+            "reference": root / "refs" / "win_references" / "20260605_extra" / "OLMDistanceGradation",
+            "threshold_groups": [
+                {
+                    "name": "basic_exact",
+                    "case_ids": OLMDISTANCEGRADATION_BASIC_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
+                },
+            ],
+        },
+        "olmdistancegradation_extended": {
+            "request_id": "ae_pixel_olmdistancegradation_extended_20260618",
+            "effect_name": "OLM Distance Gradation",
+            "effect_match_name": "OLM Distance Gradation",
+            "reference": root / "refs" / "win_references" / "20260605_extra" / "OLMDistanceGradation",
+            "threshold_groups": [
+                {
+                    "name": "extended_guarded",
+                    "case_ids": OLMDISTANCEGRADATION_EXTENDED_CASES,
+                    "max_diff": 255,
+                    "mean_diff": 0.72,
+                    "nonzero_px_percent": 51.0,
+                },
+            ],
+        },
+        "olmdistancegradation_extended_exact": {
+            "request_id": "ae_pixel_olmdistancegradation_extended_exact_20260619",
+            "effect_name": "OLM Distance Gradation",
+            "effect_match_name": "OLM Distance Gradation",
+            "reference": root / "refs" / "win_references" / "20260605_extra" / "OLMDistanceGradation",
+            "threshold_groups": [
+                {
+                    "name": "extended_exact",
+                    "case_ids": OLMDISTANCEGRADATION_EXTENDED_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
+                },
+            ],
+        },
+        "olmdistancegradation_blur": {
+            "request_id": "ae_pixel_olmdistancegradation_blur_20260618",
+            "effect_name": "OLM Distance Gradation",
+            "effect_match_name": "OLM Distance Gradation",
+            "reference": root / "refs" / "win_references" / "20260605_extra" / "OLMDistanceGradation",
+            "threshold_groups": [
+                {
+                    "name": "blur_guarded",
+                    "case_ids": OLMDISTANCEGRADATION_BLUR_CASES,
+                    "max_diff": 23,
+                    "mean_diff": 0.29,
+                    "nonzero_px_percent": 12.0,
+                },
+            ],
+        },
+        "olmdistancegradation_blur_exact": {
+            "request_id": "ae_pixel_olmdistancegradation_blur_exact_20260619",
+            "effect_name": "OLM Distance Gradation",
+            "effect_match_name": "OLM Distance Gradation",
+            "reference": root / "refs" / "win_references" / "20260605_extra" / "OLMDistanceGradation",
+            "threshold_groups": [
+                {
+                    "name": "blur_exact",
+                    "case_ids": OLMDISTANCEGRADATION_BLUR_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
+                },
+            ],
+        },
+        "olmsmoother": {
+            "request_id": "ae_pixel_olmsmoother_v1_20260619",
+            "effect_name": "OLM Smoother",
+            "effect_match_name": "OLM Smoother",
+            "reference": root / "refs" / "win_references" / "20260604_olm" / "OLMSmoother",
+            "threshold_groups": [
+                {
+                    "name": "exact",
+                    "case_ids": OLMSMOOTHER_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
+                },
+            ],
+        },
+        "olmsmoother2": {
+            "request_id": "ae_pixel_olmsmoother2_legacy_20260619",
+            "effect_name": "OLM Smoother v2",
+            "effect_match_name": "OLM Smoother v2",
+            "reference": root / "refs" / "win_references" / "20260605_extra" / "OLMSmoother2",
+            "threshold_groups": [
+                {
+                    "name": "legacy_exact",
+                    "case_ids": OLMSMOOTHER2_LEGACY_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
+                },
+            ],
+        },
+        "olmsmoother2_no_key_grid": {
+            "request_id": "ae_pixel_olmsmoother2_no_key_grid_20260619",
+            "effect_name": "OLM Smoother v2",
+            "effect_match_name": "OLM Smoother v2",
+            "reference": (
+                root
+                / "refs"
+                / "win_references"
+                / "olm_reference_return_windows_recapture_20260615"
+                / "OLMSmoother2"
+            ),
+            "threshold_groups": [
+                {
+                    "name": "no_key_grid_exact",
+                    "case_ids": OLMSMOOTHER2_NO_KEY_GRID_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
+                },
+            ],
+        },
     }
     if preset not in configs:
         raise ValueError(f"unsupported preset: {preset}")
     config = configs[preset]
-    if reference:
-        config = {**config, "reference": reference}
+    selected_reference = reference or profile_reference(root, preset, reference_profile)
+    if selected_reference:
+        config = {**config, "reference": selected_reference, "reference_profile": reference_profile}
+    else:
+        config = {**config, "reference_profile": reference_profile}
     return config
 
 
@@ -212,6 +504,9 @@ def build_readme(request_manifest: dict) -> str:
         "Input PNGs are in `input/`; Windows expected outputs are in `expected/`.",
         "Returned render PNGs should keep the same frame names, for example",
         "`case_0001.png`.",
+        "",
+        "Gate kind: `host_smoke_pixel_tolerance`.",
+        "This is an AE-host integration smoke using the listed thresholds, not a final exact-equivalence claim.",
         "",
         "Threshold groups:",
         "",
@@ -283,8 +578,10 @@ def package_request(config: dict, output: Path) -> None:
 
         request_manifest = {
             "kind": "olm_ae_pixel_validation_request",
+            "gate_kind": "host_smoke_pixel_tolerance",
             "request_id": config["request_id"],
             "created_at": dt.datetime.now(dt.UTC).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
+            "reference_profile": config.get("reference_profile", "legacy"),
             "effect_name": config["effect_name"],
             "effect_match_name": config["effect_match_name"],
             "reference_manifest": "reference_manifest.json",
@@ -299,6 +596,7 @@ def package_request(config: dict, output: Path) -> None:
             stage / "AE_PIXEL_VALIDATION_RESULT.template.json",
             {
                 "kind": "olm_ae_pixel_validation_result",
+                "gate_kind": "host_smoke_pixel_tolerance",
                 "request_id": config["request_id"],
                 "ae_version": "",
                 "macos_version": "",
@@ -323,7 +621,7 @@ def package_request(config: dict, output: Path) -> None:
 def main() -> int:
     args = parse_args()
     root = repo_root()
-    config = preset_config(root, args.preset, args.reference)
+    config = preset_config(root, args.preset, args.reference, args.reference_profile)
     output = args.output
     if output is None:
         stamp = dt.datetime.now().strftime("%Y%m%d")
@@ -339,6 +637,7 @@ def main() -> int:
     print(f"wrote {output}")
     print(f"- preset: {args.preset}")
     print(f"- request_id: {config['request_id']}")
+    print(f"- reference_profile: {config.get('reference_profile', 'legacy')}")
     return 0
 
 

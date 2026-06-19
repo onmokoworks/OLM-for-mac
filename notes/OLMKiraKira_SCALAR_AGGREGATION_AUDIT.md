@@ -59,5 +59,11 @@ Scope: fact log for `FUN_18114fd90` / `FUN_18114ffd0`, per-ray scalar arrays, Br
 
 ## Reference Gap
 
-- The current tracked refs use equal ray lengths and `Glow Rotation=0`, so they cannot separate ray order, angle mapping, helper scalar / `length^2`, or single-ray crop behavior.
-- The already pending `refs/reference_requests/kirakira_single_ray_20260606.json` remains the right reference request for isolating these scalar/ray-order questions.
+- 2026-06-17 update: `kirakira_single_ray_20260606` is returned/imported and
+  the broad scalar/ray-order gap is closed. Current refs separate ray order,
+  angle mapping, helper scalar non-use in `FUN_18114fd90`, compose behavior,
+  and strength0 brightness scale.
+- Remaining red residuals are localized to the `FUN_181150790` helper path
+  shape: OpenCV ROI/copy, `warpAffine`, `boxFilter` border/anchor behavior,
+  rotate-back, and final centered copy. Another Windows reference is only
+  justified after a specific helper primitive ambiguity remains.

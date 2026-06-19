@@ -1,0 +1,120 @@
+# Source: OLMDirectionalBlur/OLMDirectionalBlur/doc/OLMDirectionalBlurUserManualEN.pdf
+
+
+--- page 1 ---
+OLM Open Tools OLM Directional Blur User Manual
+OLM Open Tools
+OLM Directional Blur
+User Manual
+OLM Digital, Inc.
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 1
+
+
+--- page 2 ---
+OLM Open Tools OLM Directional Blur User Manual
+Table of Contents
+1. Introduction 4
+1.1. Supported Environment 4
+1.2. Install 4
+2. Using OLM Directional Blur 4
+3. OLM Directional Blur parameters 4
+4. Other 8
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 2
+
+
+--- page 3 ---
+OLM Open Tools OLM Directional Blur User Manual
+Copyright, End User License Agreement
+OLM Open Tools are licensed under the Apache License, Version 2.0.
+Change Logs
+2017/10/06 First Version
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 3
+
+
+--- page 4 ---
+OLM Open Tools OLM Directional Blur User Manual
+1. Introduction
+OLM Directional Blur is an After Effects plug-in which can apply a special directional blur.
+Unlike normal directional blur, it’s anisotropic (blurring both sides with different intensities)
+and ignores fully transparent pixels.
+Fig. 1 (Left) Original image, (Right) After OLM Directional Blur
+1.1. Supported Environment
+Please refer to OLM Open Tools website for a complete list of supported environment.
+1.2. Install
+The zip archive you can download from OLM OpenTools web site contains the files listed in
+Table 1. To install OLM Directional Blur copy the plug-in file (OLM Directional Blur.aex) in
+A E plug-in directory
+(example : C:\Program Files\Adobe\Adobe After Effects 2022\Support Files\Plug-ins\OLM)
+Folder File Name Explanation
+Plugins\64 \[Version] OLM Directional Blur.aex The plug-in files.
+doc OLM Directional The user manual for OLM
+BlurUserManual.pdf Directional Blur
+Table 1：Content of the zip archive
+2. Using OLM Directional Blur
+To apply the effect, use the menu: (Effects)→(OLM Plug-ins)→(OLM Directional Blur)
+3. OLM Directional Blur parameters
+OLM Directional Blur parameters are as follows:
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 4
+
+
+--- page 5 ---
+OLM Open Tools OLM Directional Blur User Manual
+Fig. 2 OLM Directional Blur parameters
+1. Angle – The direction of blur.
+2. Brightness Gain – Controls the brightness of the result image.
+3. Size Variation – Parameter to change the blur strength according to the size of each
+pixel group (opaque pixels). Overlapping group of pixels are considered as one group.
+Value go from 0 (no variation) to 100 (the smallest group will have no blur applied).
+This parameter will determine the size of the region Edge Fade occurs.
+Fig. 3 (Left) Original image, (Middle) Size Variation=0, (Right) Size Variation=70
+4. Front (Back) Blur – Blur parameters of front (back) direction.
+i. Blur Strength - The strength of the blur. Value go from 0 to 4000 pixels.
+ii. Edge Fade – Generates fade-in in the back (front) side. The fade-in region is
+synchronized with the size variation parameter.
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 5
+
+
+--- page 6 ---
+OLM Open Tools OLM Directional Blur User Manual
+Fig. 4 (Left) Original image, (Middle) Alpha Fade=0, (Right) Alpha Fade=100
+iii. Sharp Tail – Controls the sharpness of the tail of blur. Like “Size Variation”, a tail
+is calculated for each group of opaque pixels.
+Fig. 5 (Left) Original image, (Middle) Sharp Tail=0, (Right) Sharp Tail=70
+5. Noise Parameters – The parameters to control blur strength for each pixel. By
+adjusting these parameters, jagged blur as shown in fig.6 can be generated.
+i. Noise Variation – Controls the influence of noise. Value go from 0 to100.
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 6
+
+
+--- page 7 ---
+OLM Open Tools OLM Directional Blur User Manual
+Fig. 6 (Left) Noise Variation=0, (Middle) Noise Variation=50,
+(Right) Noise Variation=100
+ii. Noise Type - A set of parameters to control the noise type.
+Smooth – Adds smooth noise.
+Block – Adds block noise.
+Fig. 7 Difference between “Smooth” and “Block”. (Left) Smooth, (Right) Block
+Layer – Uses user defined noise. The noise is given as layer, the brighter the
+noise layer pixel, the bigger the blur strength. Noise layer should be same size as
+the layer applied “OLM Directional Blur”. Don’t forget to pre-compose a layer if you
+want its effects, translation/scaling… to be considered.
+Fig. 8 Layer noise (Left) referenced layer, (Right) result
+iii. Seed – A random seed used for noise generation. It changes the noise pattern.
+It’s valid only when “Noise Type” is “Smooth” or “Block”.
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 7
+
+
+--- page 8 ---
+OLM Open Tools OLM Directional Blur User Manual
+iv. Offset – Can be animated to change noise pattern smoothly. It’s valid only when
+“Noise Type” is “Smooth” or “Block”.
+v. Thickness - Controls the frequency of noise as shown in fig. 9. It’s valid only
+when “Noise Type” is “Smooth” or “Block”. Value go from 1.0 to 100.
+Fig. 9 (Left) Thickness=10, (Right) thickness=30
+vi. Noise Layer – The layer used as noise. It’s valid only when “Noise Type” is
+“Layer”.
+4. Other
+If you have problem using the plug-in in any environment, if you find a bug, have a feature
+request, or for any kind of feedback feel free to contact us at the following mail address:
+opentools@olm.co.jp
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 8

@@ -25,7 +25,7 @@ def copy_reference(source_root, run_dir):
     reference_dir.mkdir(parents=True, exist_ok=True)
     shutil.copy2(manifest_src, manifest_dst)
 
-    with manifest_src.open(encoding="utf-8") as handle:
+    with manifest_src.open(encoding="utf-8-sig") as handle:
         manifest = json.load(handle)
 
     missing = []

@@ -139,15 +139,29 @@ def main() -> int:
     git_dirty = manifest.get("git_dirty")
     if not isinstance(git_dirty, bool):
         git_dirty = None
+    runtime_trace_zip = manifest.get("runtime_trace_requests_zip")
+    if not isinstance(runtime_trace_zip, str):
+        runtime_trace_zip = ""
+    runtime_trace_mode = manifest.get("runtime_trace_requests_mode")
+    if not isinstance(runtime_trace_mode, str):
+        runtime_trace_mode = ""
 
     windows_reference_zip = "/tmp/olm_reference_requests_pending.zip"
+    runtime_trace_out = "/tmp/olm_runtime_trace_requests.zip"
     commands = {
         "make_reference_zip": f"python3 refs/scripts/package_reference_requests.py --pending --output {windows_reference_zip}",
+        "make_runtime_trace_zip": f"python3 scripts/package_runtime_trace_requests.py --output {runtime_trace_out}",
         "make_handoff_zip": f"scripts/package_olm_handoff.sh --output {package}",
         "verify_handoff_zip": f"python3 scripts/verify_olm_handoff_package.py {package}",
         "mac_import_windows_refs": (
             "python3 scripts/intake_olm_return.py path/to/returned_reference.zip "
             "--quick --dispatch-dir /tmp/olm_reference_dispatch"
+        ),
+        "mac_import_runtime_trace": (
+            "python3 scripts/intake_olm_return.py path/to/returned_runtime_trace.zip "
+            "--runtime-summary-json refs/reports/runtime_trace_summary.json "
+            "--runtime-summary-md refs/reports/runtime_trace_summary.md "
+            "--runtime-comparison-dir refs/reports/runtime_trace_comparisons"
         ),
         "mac_import_ae_host": "python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --require-all-pass",
         "mac_import_ae_host_all_pixels": (
@@ -170,6 +184,8 @@ def main() -> int:
                     "handoff_contents": {
                         "next_reference_actions_json": next_actions_snapshot,
                         "next_reference_dispatch": next_reference_dispatch,
+                        "runtime_trace_requests_zip": runtime_trace_zip,
+                        "runtime_trace_requests_mode": runtime_trace_mode,
                         "git_commit": git_commit,
                         "git_dirty": git_dirty,
                     },
@@ -196,18 +212,22 @@ def main() -> int:
     if next_actions_snapshot:
         print(f"- Subagents: read {next_actions_snapshot} inside the zip for dispatch snapshot")
     print("- Windows refs: render SOFTWARE required sets first; CUDA sets are optional")
+    if runtime_trace_zip:
+        print(f"- Runtime trace: send {runtime_trace_zip} ({runtime_trace_mode or 'unknown mode'}) before more PNG-only tuning")
     print("- AE host: run bundled Mac plugins and return AE_VALIDATION_RESULT*.json plus pixel PNGs")
     print("")
     print("Mac commands after return:")
     print(f"- next action: {commands['next_olm_action']}")
     print(f"- find returned zips: {commands['list_return_candidates']}")
     print(f"- Windows refs: {commands['mac_import_windows_refs']}")
+    print(f"- Runtime trace: {commands['mac_import_runtime_trace']}")
     print(f"- AE host partial/current: {commands['mac_import_ae_host']}")
     print(f"- AE host all bundled pixel requests: {commands['mac_import_ae_host_all_pixels']}")
     print(f"- next subagent dispatch JSON: {commands['next_reference_dispatch_json']}")
     print("")
     print("Regenerate packages:")
     print(f"- pending refs only: {commands['make_reference_zip']}")
+    print(f"- runtime trace only: {commands['make_runtime_trace_zip']}")
     print(f"- full handoff: {commands['make_handoff_zip']}")
     print(f"- verify handoff: {commands['verify_handoff_zip']}")
     return 0

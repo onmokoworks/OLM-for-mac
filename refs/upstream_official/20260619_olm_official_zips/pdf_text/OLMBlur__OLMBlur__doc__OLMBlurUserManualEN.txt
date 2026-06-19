@@ -1,0 +1,81 @@
+# Source: OLMBlur/OLMBlur/doc/OLMBlurUserManualEN.pdf
+
+
+--- page 1 ---
+OLM Open Tools
+OLM Blur
+User Manual
+OLM Digital, Inc.
+
+
+--- page 2 ---
+OLM Open Tools OLM Blur User Manual
+Table of Contents
+1. Introduction 4
+1.1. Supported Environment 4
+1.2. Install 4
+2. Using OLM Blur 5
+3. OLM Blur parameters 5
+4. Other 6
+Ⓒ Copyright 2018-2023 OLM Digital, Inc. All rights reserved. 2
+
+
+--- page 3 ---
+OLM Open Tools OLM Blur User Manual
+Copyright, End User License Agreement
+OLM Open Tools are licensed under the Apache License, Version 2.0.
+Change Logs
+2017/10/05 First Version
+2017/11/02 Change License terms
+Ⓒ Copyright 2018-2023 OLM Digital, Inc. All rights reserved. 3
+
+
+--- page 4 ---
+OLM Open Tools OLM Blur User Manual
+1. Introduction
+OLM Blur is an After Effects plug-in that applies blur to not fully transparent pixels
+(alpha>0). Using OLM Color Key together, this plugin enables users to blur only boundary
+between specified colors.
+Figure 1 (Left) Original Image, (Middle) After Gaussian Blur in Adobe After Effects
+(Right) After OLM Blur with OLM Color Key (Keeping effect)
+1.1. Supported Environment
+Please refer to OLM Open Tools website for a complete list of supported environment.
+1.2. Install
+The zip archive you can download from OLM OpenTools web site contains the files listed in
+Table 1. To install OLM Blur copy the plug-in file: OLMBlur.aex in A E plug-in directory
+(example: C:\Program Files\Adobe\Adobe After Effects 2023\Support Files\Plug-ins\OLM)
+Folder File Name Explanation
+Plugins\64\[Version] OLMBlur.aex The plug-in files.
+doc OLMBlurUserManual.pdf The user manual for OLM Blur
+Table 1：Content of the zip archive
+Ⓒ Copyright 2018-2023 OLM Digital, Inc. All rights reserved. 4
+
+
+--- page 5 ---
+OLM Open Tools OLM Blur User Manual
+2. Using OLM Blur
+To apply the effect, use the menu: (Effects)→(OLM Plug-ins)→(OLM Blur)
+3. OLM Blur parameters
+OLM Blur parameters are as follows:
+Figure 2 OLM Blur parameters
+● Blur Amount: Determines the coverage of blur. Value go from 1.0 to 100.0. With big
+amount and smoothness the blur is applied in wider area.
+● Blur Smoothness: Determines the smoothness of blur. Value go from 1.0 to 100.0.
+Big value of smoothness result in stronger blur.
+● Number of Repeat: Determines the number of iteration of blur. Value go from 0 to 10.
+Larger the number of repetitions results in smoother result with less artifacts. The
+rendering cost also increases with the number of repeat.
+● Bias Direction: Determines the bias direction of the result. Vertical or horizontal is
+selectable. Please see the Fig. 3 for the difference between two modes.
+Figure 3 Blur bias Comparison between two bias direction modes;
+Vertical and Horizontal
+Ⓒ Copyright 2018-2023 OLM Digital, Inc. All rights reserved. 5
+
+
+--- page 6 ---
+OLM Open Tools OLM Blur User Manual
+4. Other
+If you have problem using the plug-in in any environment, if you find a bug, have a feature
+request, or for any kind of feedback feel free to contact us at the following mail address:
+opentools@olm.co.jp
+Ⓒ Copyright 2018-2023 OLM Digital, Inc. All rights reserved. 6

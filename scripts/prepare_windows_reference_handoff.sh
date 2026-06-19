@@ -42,11 +42,19 @@ REQUEST_TMP="/tmp/olm_reference_requests_pending_${STAMP}.zip"
 HANDOFF_TMP="/tmp/olm_port_handoff_${STAMP}_current.zip"
 REQUEST_OUT="$OUT_DIR/olm_reference_requests_pending_${STAMP}.zip"
 HANDOFF_OUT="$OUT_DIR/olm_port_handoff_${STAMP}_current.zip"
+REQUEST_MODE="pending"
 
 cd "$ROOT"
 
-python3 refs/scripts/package_reference_requests.py --pending --output "$REQUEST_TMP"
-python3 refs/scripts/verify_reference_request_package.py "$REQUEST_TMP" --expect-pending
+if python3 refs/scripts/package_reference_requests.py --pending --output "$REQUEST_TMP"; then
+  REQUEST_MODE="pending"
+  python3 refs/scripts/verify_reference_request_package.py "$REQUEST_TMP" --expect-pending
+else
+  echo "[INFO] no pending Windows reference requests; packaging all request specs as a snapshot"
+  REQUEST_MODE="snapshot"
+  python3 refs/scripts/package_reference_requests.py --output "$REQUEST_TMP"
+  python3 refs/scripts/verify_reference_request_package.py "$REQUEST_TMP"
+fi
 
 scripts/package_olm_handoff.sh --output "$HANDOFF_TMP"
 python3 scripts/verify_olm_handoff_package.py "$HANDOFF_TMP"
@@ -55,7 +63,7 @@ cp "$REQUEST_TMP" "$REQUEST_OUT"
 cp "$HANDOFF_TMP" "$HANDOFF_OUT"
 
 echo "Windows reference handoff is ready:"
-echo "- request package: $REQUEST_OUT"
+echo "- request package: $REQUEST_OUT ($REQUEST_MODE)"
 echo "- full handoff: $HANDOFF_OUT"
 echo
 python3 scripts/print_next_olm_action.py "$OUT_DIR" /tmp

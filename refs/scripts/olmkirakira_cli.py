@@ -221,6 +221,32 @@ def copy_centered_roi(
     return out
 
 
+def json_float(value: float) -> float:
+    return float(np.float32(value))
+
+
+def sample_float(arr: np.ndarray, x: int, y: int) -> float | None:
+    if y < 0 or x < 0 or y >= arr.shape[0] or x >= arr.shape[1]:
+        return None
+    return json_float(arr[y, x])
+
+
+def sample_vector(arr: np.ndarray, x: int, y: int) -> list[float] | None:
+    if y < 0 or x < 0 or y >= arr.shape[0] or x >= arr.shape[1]:
+        return None
+    return [json_float(value) for value in np.ravel(arr[y, x])]
+
+
+def sample_stage(arr: np.ndarray, points: list[dict[str, Any]], key: str) -> None:
+    for point in points:
+        x, y = point[key]
+        point.setdefault("values", {})[key] = sample_float(arr, x, y)
+
+
+def matrix_to_json(matrix: np.ndarray) -> list[float]:
+    return [json_float(value) for value in matrix.reshape(-1)]
+
+
 def opencv_two_temp_axis_blur(
     seed: np.ndarray,
     length: int,
@@ -228,6 +254,8 @@ def opencv_two_temp_axis_blur(
     passes: int,
     alias_roi: bool = False,
     center_mode: str = "normal",
+    trace_records: list[dict[str, Any]] | None = None,
+    trace_label: str = "",
 ) -> np.ndarray:
     try:
         import cv2
@@ -240,8 +268,9 @@ def opencv_two_temp_axis_blur(
     if length <= 1:
         return seed.copy()
     rad = np.deg2rad(angle)
-    rw = max(width + 4, int(float(width) * abs(np.cos(rad)) + float(height) * abs(np.sin(rad)) + 0.5))
-    rh = max(height + 4, int(float(width) * abs(np.sin(rad)) + float(height) * abs(np.cos(rad)) + 0.5))
+    # FUN_18114f4a0 uses ADDSS +4.0 followed by CVTTSS2SI for the temp extents.
+    rw = max(width + 4, int(float(width) * abs(np.cos(rad)) + float(height) * abs(np.sin(rad)) + 4.0))
+    rh = max(height + 4, int(float(width) * abs(np.sin(rad)) + float(height) * abs(np.cos(rad)) + 4.0))
     center_x = float(rw) * 0.5
     center_y = float(rh) * 0.5
     if center_mode == "swapped":
@@ -256,7 +285,41 @@ def opencv_two_temp_axis_blur(
     y0 = max(0, (rh - height) // 2)
     x0 = max(0, (rw - width) // 2)
     temp_a[y0 : y0 + height, x0 : x0 + width] = seed.astype(np.float32)
+    trace: dict[str, Any] | None = None
+    if trace_records is not None:
+        source_points = [
+            ("center", width // 2, height // 2),
+            ("ray_length_up", width // 2, max(0, height // 2 - max(1, length))),
+            ("ray_length_right", min(width - 1, width // 2 + max(1, length)), height // 2),
+        ]
+        points = [
+            {
+                "label": label,
+                "source_xy": [int(sx), int(sy)],
+                "temp_xy": [int(x0 + sx), int(y0 + sy)],
+                "values": {"seed": sample_float(seed, sx, sy)},
+            }
+            for label, sx, sy in source_points
+        ]
+        for point in points:
+            tx, ty = point["temp_xy"]
+            point["values"]["after_center_copy"] = sample_float(temp_a, tx, ty)
+        trace = {
+            "ray": trace_label,
+            "length": int(length),
+            "angle": json_float(angle),
+            "passes": int(max(1, passes)),
+            "alias_roi": bool(alias_roi),
+            "center_mode": center_mode,
+            "source_size": [int(width), int(height)],
+            "temp_size": [int(rw), int(rh)],
+            "center": [json_float(center[0]), json_float(center[1])],
+            "copy_origin": [int(x0), int(y0)],
+            "sample_points": points,
+        }
     matrix = cv2.getRotationMatrix2D(center, angle, 1.0)
+    if trace is not None:
+        trace["forward_matrix"] = matrix_to_json(matrix)
     if alias_roi:
         cv2.warpAffine(
             temp_a,
@@ -276,8 +339,13 @@ def opencv_two_temp_axis_blur(
             borderMode=cv2.BORDER_CONSTANT,
             borderValue=0,
         )
+    if trace is not None:
+        for point in trace["sample_points"]:
+            tx, ty = point["temp_xy"]
+            point["values"]["after_forward_warp"] = sample_float(temp_a, tx, ty)
     temp_b = np.zeros_like(temp_a) if alias_roi else temp_a
     ksize = (max(1, length), 1)
+    box_traces: list[dict[str, Any]] = []
     for pass_index in range(max(1, passes)):
         src = temp_a if alias_roi and pass_index == 0 else temp_b
         if alias_roi:
@@ -299,7 +367,18 @@ def opencv_two_temp_axis_blur(
                 normalize=True,
                 borderType=cv2.BORDER_REFLECT_101,
             )
+        if trace is not None:
+            box_trace = {"pass": pass_index + 1, "ksize": [int(ksize[0]), int(ksize[1])], "samples": []}
+            for point in trace["sample_points"]:
+                tx, ty = point["temp_xy"]
+                value = sample_float(temp_b, tx, ty)
+                point["values"][f"after_box_{pass_index + 1}"] = value
+                box_trace["samples"].append({"label": point["label"], "temp_xy": point["temp_xy"], "value": value})
+            box_traces.append(box_trace)
     matrix = cv2.getRotationMatrix2D(center, -angle, 1.0)
+    if trace is not None:
+        trace["box_filters"] = box_traces
+        trace["back_matrix"] = matrix_to_json(matrix)
     if alias_roi:
         cv2.warpAffine(
             temp_b,
@@ -319,7 +398,17 @@ def opencv_two_temp_axis_blur(
             borderMode=cv2.BORDER_CONSTANT,
             borderValue=0,
         )
-    return crop_center(temp_b, height, width)
+    if trace is not None:
+        for point in trace["sample_points"]:
+            tx, ty = point["temp_xy"]
+            point["values"]["after_rotate_back"] = sample_float(temp_b, tx, ty)
+    out = crop_center(temp_b, height, width)
+    if trace is not None:
+        for point in trace["sample_points"]:
+            sx, sy = point["source_xy"]
+            point["values"]["after_final_center_copy"] = sample_float(out, sx, sy)
+        trace_records.append(trace)
+    return out
 
 
 def rotated_axis_blur(
@@ -407,6 +496,7 @@ def opencv_two_temp_rays(
     length_scale: float,
     alias_roi: bool = False,
     center_mode: str = "normal",
+    trace_records: list[dict[str, Any]] | None = None,
 ) -> list[np.ndarray]:
     def scaled_length(key: str) -> int:
         return max(0, int(round(float_param(params, key, 0.0) * length_scale)))
@@ -414,10 +504,22 @@ def opencv_two_temp_rays(
     passes = 3 if falloff.startswith("box3") else 1
     glow_rotation = float_param(params, "glow_rotation", 0.0)
     return [
-        opencv_two_temp_axis_blur(seed, scaled_length("vertical_length"), 90.0 + glow_rotation, passes, alias_roi, center_mode),
-        opencv_two_temp_axis_blur(seed, scaled_length("horizontal_length"), glow_rotation, passes, alias_roi, center_mode),
-        opencv_two_temp_axis_blur(seed, scaled_length("diagonal_length"), 45.0 + glow_rotation, passes, alias_roi, center_mode),
-        opencv_two_temp_axis_blur(seed, scaled_length("diagonal2_length"), -45.0 + glow_rotation, passes, alias_roi, center_mode),
+        opencv_two_temp_axis_blur(
+            seed, scaled_length("vertical_length"), 90.0 + glow_rotation, passes,
+            alias_roi, center_mode, trace_records, "vertical"
+        ),
+        opencv_two_temp_axis_blur(
+            seed, scaled_length("horizontal_length"), glow_rotation, passes,
+            alias_roi, center_mode, trace_records, "horizontal"
+        ),
+        opencv_two_temp_axis_blur(
+            seed, scaled_length("diagonal_length"), 45.0 + glow_rotation, passes,
+            alias_roi, center_mode, trace_records, "diagonal"
+        ),
+        opencv_two_temp_axis_blur(
+            seed, scaled_length("diagonal2_length"), -45.0 + glow_rotation, passes,
+            alias_roi, center_mode, trace_records, "diagonal2"
+        ),
     ]
 
 
@@ -496,6 +598,7 @@ def render_kirakira(
     rotate_prefilter: bool = False,
     zero_ray_skip: bool = False,
     opencv_center_mode: str = "normal",
+    trace_records: list[dict[str, Any]] | None = None,
 ) -> Image.Image:
     rgba = np.asarray(image.convert("RGBA"), dtype=np.uint8).astype(np.float32) / 255.0
     if auto_length_scale:
@@ -520,6 +623,7 @@ def render_kirakira(
             length_scale,
             alias_roi=ray_mode == "opencv-two-temp-alias-roi",
             center_mode=opencv_center_mode,
+            trace_records=trace_records,
         )
     elif ray_mode == "axis-rotate":
         vertical, horizontal, diagonal, diagonal2 = axis_rotate_rays(
@@ -577,7 +681,41 @@ def render_kirakira(
         add_colored(glow, diagonal2, params.get("diagonal2_color"))
         glow *= scale * glow_opacity
         out = compose_simple(rgba, glow, source_opacity)
-    return Image.fromarray(quantize_rgba(out, quantize), "RGBA")
+    quantized = quantize_rgba(out, quantize)
+    if trace_records is not None:
+        height, width = rgba.shape[:2]
+        source_points = [
+            ("center", width // 2, height // 2),
+            ("upper_mid", width // 2, max(0, height // 4)),
+            ("right_mid", min(width - 1, (width * 3) // 4), height // 2),
+        ]
+        trace_records.append(
+            {
+                "stage": "aggregation_and_compose",
+                "compose_mode": compose_mode,
+                "quantize": quantize,
+                "scale_mode": scale_mode,
+                "scale": json_float(scale),
+                "glow_opacity": json_float(glow_opacity),
+                "source_opacity": json_float(source_opacity),
+                "strength": json_float(strength),
+                "brightness_gain": json_float(brightness_gain),
+                "sample_points": [
+                    {
+                        "label": label,
+                        "source_xy": [int(sx), int(sy)],
+                        "values": {
+                            "source_rgba": sample_vector(rgba, sx, sy),
+                            "glow_rgba": sample_vector(glow, sx, sy),
+                            "out_rgba_float": sample_vector(out, sx, sy),
+                            "out_rgba_u8": [int(value) for value in np.ravel(quantized[sy, sx])],
+                        },
+                    }
+                    for label, sx, sy in source_points
+                ],
+            }
+        )
+    return Image.fromarray(quantized, "RGBA")
 
 
 def main() -> int:
@@ -683,9 +821,16 @@ def main() -> int:
         default="normal",
         help="Experimental cv2 getRotationMatrix2D center candidate for OLMKiraKira two-temp probes.",
     )
+    parser.add_argument(
+        "--trace-json",
+        type=Path,
+        default=None,
+        help="Optional JSON stage dump for opencv-two-temp ray probes.",
+    )
     args = parser.parse_args()
 
     params, _payload = load_params(Path(args.params))
+    trace_records: list[dict[str, Any]] = []
     out = render_kirakira(
         Image.open(args.input),
         params,
@@ -711,10 +856,28 @@ def main() -> int:
         args.rotate_prefilter,
         args.zero_ray_skip,
         args.opencv_center_mode,
+        trace_records if args.trace_json else None,
     )
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out.save(out_path)
+    if args.trace_json:
+        args.trace_json.parent.mkdir(parents=True, exist_ok=True)
+        args.trace_json.write_text(
+            json.dumps(
+                {
+                    "kind": "olmkirakira_opencv_two_temp_stage_trace",
+                    "input": args.input,
+                    "params": args.params,
+                    "ray_mode": args.ray_mode,
+                    "opencv_center_mode": args.opencv_center_mode,
+                    "rays": trace_records,
+                },
+                indent=2,
+                sort_keys=True,
+            ),
+            encoding="utf-8",
+        )
     print(f"wrote: {out_path} (experimental kirakira slice)")
     return 0
 

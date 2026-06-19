@@ -4,16 +4,27 @@ Private working repo for porting OLM After Effects plug-ins to modern macOS.
 
 ## Porting Status
 
+Correctness policy:
+
+- Final completion means `AE exact`: Mac AE output matches the Windows AE
+  Software render reference with zero diff for the declared bit depth.
+- AE-free CLI exactness is intermediate evidence, not final completion.
+- Tolerance-gated regression smokes, off-by-1 results, and known-red probes are
+  not release-complete.
+- Current conformance status is tracked in `notes/CONFORMANCE_LEDGER.md`; terms
+  are defined in `notes/AE_EXACT_CONFORMANCE.md`.
+
 Current progress:
 
 - 10 Mac plug-in projects build as universal Debug bundles:
   `ColorKeep`, `OLMBlur`, `OLMColorKey`, `OLMDirectionalBlur`,
   `OLMRadialBlur`, `OLMKiraKira`, `OLMToonDilate`, `OLMDistanceGradation`,
   `OLMSmoother`, and `OLMSmoother2`.
-- Green AE-free CLI regression gates exist for `ColorKeep`, `OLMBlur`,
+- AE-free CLI regression gates exist for `ColorKeep`, `OLMBlur`,
   `OLMColorKey`, `OLMToonDilate`, stable `OLMDistanceGradation` cases,
   `OLMRadialBlur` Zoom/tiny Rotation slices, and `OLMSmoother2` key/v1
-  compatibility slices.
+  compatibility slices. These are regression checks, not final completion
+  claims.
 - Known-red diagnostic probes remain for unresolved paths in
   `OLMDirectionalBlur`, `OLMRadialBlur` Inner/Edge Fade, `OLMKiraKira`, and
   `OLMSmoother2` no-key v2. These are kept as measurement scaffolds, not
@@ -97,7 +108,8 @@ failed in AE. The second command is the all-pass release gate.
 
 ## Status
 
-See `notes/HANDOFF_CODEX.md` and `notes/PORTING_BOARD.md`.
+See `notes/CONFORMANCE_LEDGER.md`, `notes/AE_EXACT_CONFORMANCE.md`,
+`notes/HANDOFF_CODEX.md`, and `notes/PORTING_BOARD.md`.
 
 ---
 
@@ -107,16 +119,26 @@ OLM After Effects plug-in 群を、現行 macOS / After Effects 向けに移植�
 
 ## 移植状況
 
+正しさの基準:
+
+- 最終完了は `AE exact` のみです。同一bit depthで、Mac AE出力がWindows
+  AE Software render参照と差分ゼロになった状態を指します。
+- AEなしCLIのexactは強い中間証拠ですが、最終完了ではありません。
+- tolerance付き回帰ゲート、off-by-1、known-red probeは完了扱いしません。
+- 現在のconformance状態は `notes/CONFORMANCE_LEDGER.md`、用語定義は
+  `notes/AE_EXACT_CONFORMANCE.md` を見ます。
+
 現在の進捗:
 
 - 10本のMac plug-in projectがDebug universal bundleとしてビルド可能:
   `ColorKeep`, `OLMBlur`, `OLMColorKey`, `OLMDirectionalBlur`,
   `OLMRadialBlur`, `OLMKiraKira`, `OLMToonDilate`, `OLMDistanceGradation`,
   `OLMSmoother`, `OLMSmoother2`
-- AEなしCLIのgreen回帰ゲートあり:
+- AEなしCLIの回帰ゲートあり:
   `ColorKeep`, `OLMBlur`, `OLMColorKey`, `OLMToonDilate`,
   `OLMDistanceGradation`の安定ケース、`OLMRadialBlur`のZoom/tiny Rotation、
-  `OLMSmoother2`のkey/v1互換スライス
+  `OLMSmoother2`のkey/v1互換スライス。これは回帰確認であり、最終完了の
+  主張ではありません。
 - 未解決パスはknown-red診断として維持:
   `OLMDirectionalBlur`, `OLMRadialBlur` Inner/Edge Fade, `OLMKiraKira`,
   `OLMSmoother2` no-key v2
@@ -215,4 +237,7 @@ python3 refs/scripts/verify_reference_request_result.py refs/reference_requests/
 ```txt
 notes/HANDOFF_CODEX.md
 notes/PORTING_BOARD.md
+notes/CONFORMANCE_LEDGER.md
+notes/AE_EXACT_CONFORMANCE.md
+notes/BIT_DEPTH_REFERENCE_STRATEGY.md
 ```

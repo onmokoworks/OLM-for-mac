@@ -58,7 +58,17 @@ def main() -> int:
         return build.returncode
 
     rc = 0
-    for rotate_filter in ("bilinear", "bicubic", "bilinear-fixed5"):
+    for rotate_filter in (
+        "bilinear",
+        "bicubic",
+        "bilinear-fixed5",
+        "bilinear-fixed5-u16",
+        "bilinear-fixed1024-floor5",
+        "bilinear-fixed1024-round5",
+        "bilinear-fixed1024-round5-u16",
+        "nearest-fixed1024-u16-byteoffset",
+        "bilinear-fixed1024-opencvtab",
+    ):
         result = run_probe(root, rotate_filter, Path(f"/tmp/olmkirakira_cpp_rotate_filter_probe_{rotate_filter}"))
         if result != 0:
             rc = result

@@ -171,6 +171,12 @@ Current probe status:
   integer half-width/half-height centers. It is neutral on the tracked refs
   (`case_0001 mean=4.4483`, `case_0005 mean=1.1703`), so those rotate-math
   details are not the visible residual source.
+- 2026-06-17 local audit: `FUN_180001ec0` invalid samples are no-write, not
+  explicit-black writes. Because the CLI's AEX rowdriver path zero-initializes
+  the first rotated destination before sampling, the current alpha-weighted
+  input rotate already mirrors that behavior. The next unresolved input-side
+  IR target is the `LAB_180006980` PF Iterate8 populate callback that writes
+  padded `A`, not another first-rotate validity toggle.
 
 ### Host Populate / Output Callbacks
 
@@ -193,6 +199,16 @@ truncates with `CVTTSS2SI`.
 Current CLI's centered padded copy/crop and truncating-output diagnostic match
 these facts. Host channel order, centered offsets, and output rounding are no
 longer leading suspects for the current `case_0001` / `case_0005` residual.
+
+2026-06-17 direct `/usr/bin/objdump` recheck on `plugins_2025/OLMDirectionalBlur.aex`
+confirms the same callback bodies even though the checked-in Ghidra disasm does
+not expose them as standalone labeled functions. Treat host populate/output as
+closed unless a future bit-depth-specific host validation contradicts it.
+
+2026-06-17 rowdriver/final-normalization closeout: `FUN_180004a20` guards final
+RGB normalization with `denom > 0.0`; the CLI was patched from `> 1.0e-8f` to
+match. The context-scale smoke metrics did not change, so this is a correctness
+cleanup rather than the visible residual source.
 
 ### Component Map
 

@@ -1,0 +1,87 @@
+# Source: OLMSmoother2AE/OLMSmoother2AE/doc/OLM Smoother v2 AE Manual JP.pdf
+
+
+--- page 1 ---
+OLM Smoother v2 マニュアル
+概要
+OLM Smootherは、アニメ特有のスムージング処理を行うAfter Effects用エフェクトプラグインです。v2はv1と比べてカ
+ラースペース変換への対応や斜めの線などのスムージングの改善が施されています。
+©IIS-P／ぽんのみち製作委員会
+元の画像 / OLM Smoother v1 適用結果 / OLM Smoother v2 適用結果
+リリースノート
+● v2
+○ Smoothnessを追加
+○ Extra Smoothを追加
+○ Smoother Versionを追加
+○ Gamma Correctionを追加
+■ Gamma Valueを追加
+■ Number of Gammaを追加
+■ Gamma Colorを追加
+○ MFR対応
+○ 32ビット対応
+使用方法
+OLM Smootherを適用するには、After Effectsのメニューから「エフェクト >> OLM Plug-ins >> OLM Smoother」を選ん
+でください。
+セルに対してこのエフェクトを適用して、背景が透けるようにカラーキーを適用してスムージングを行います。グラデーショ
+ンがあればSmoothRangeのパラメーターを使って微調整します。Gamma Correctionを使うと線の濃さにも影響がありま
+す。
+1
+OLM Digital, Inc. R&D
+
+
+--- page 2 ---
+OLM Smoother v2のパラメータ
+Use Color Key
+Use Color Keyのチェックをいれると、Color Keyパラメータで指定された色が抜け、下のレイヤーが見えるようになりま
+す。
+©IIS-P／ぽんのみち製作委員会
+カラーキー適用なし / 適用あり
+SmoothnessとExtra Smooth
+Smoothnessはスムージング処理の強さを表すパラメータです。0だとスムージングなしの状態になるため、入力画像のま
+まになります。100だと通常のスムージングになります。Extra Smoothはさらになめらかな線を出したい場合に使います。
+©IIS-P／ぽんのみち製作委員会
+2
+OLM Digital, Inc. R&D
+
+
+--- page 3 ---
+Smootheness/Extra Smooth 比較： 0/0、100/0、100/100
+Smoother Version
+Gamma処理に関する部分について、v1とv2を切り替えることができます。
+v1にした場合、前処理のsRGBからLinearへの変換が行われないようになります。
+これはv1の結果を再現したい場合に使用します。(完全に結果が一致するわけではないのでご注意ください。)
+Do Smooth Range
+OLM Smootherを適用したい対象にグラデーションがある場合は、単純に適用するとスムーズな線にならない場合があ
+ります。この場合は、もうひとつのパラメータ「Do Smooth Range」を調整するとスムーズな線になります。
+©IIS-P／ぽんのみち製作委員会
+入力、「Do Smooth Range」は０の出力、「Do Smooth Range」は6の出力
+このパラメータは色の差がどのくらい違っていても同じ色と見なすのかというパラメータです。0から255までの値が指定可
+能です。255だとOLM Smootherをかけない状態と同じになります。通常は0から20程度で、きれいにスムージングをかけ
+ることができます。
+Gamma Correction
+OLM Smootherの入力はsRGBを前提にして処理します。まずはLinearに戻してスムージングをかけてからsRGBに戻し
+ます。Gamma Correction(ガンマ補正)は、Linearにしてからスムージング処理を行なう前後において実行されます。
+sRGBを前提にするメリットは色のブレンドがきれいになることですが、黒い線が細くなります。ＯＬＭではそちらの方が望
+ましい場合が多いのでデフォルトにしています。
+下記が出力の比較となります。
+3
+OLM Digital, Inc. R&D
+
+
+--- page 4 ---
+©BANDAI/TV TOKYO・ここたま製作委員会
+入力、Gamma Correction なし、Gamma correctionがAllColors + Gamma Value = 2.4
+真ん中の画像は青と赤が正しくブレンドされていて、線が右に比べて細くなっています。右の方の画像は、青と赤のブレン
+ド部分が黒くなってしまっています。
+sRGBの変換が望ましくない場合は「Smoother Version」のパラメーターをv1にしてください。そうすれば、Linear変換は
+行われません。
+Gamma CorrectionをAll Colorsにすると全ての色にガンマをかけることになり、Gamma Valueの値が大きいほど黒い線
+が濃くなり、青と赤のような極端なブレンドも黒くなったりします。
+黒い線の濃さを保ちつつ、その他の色のブレンドをきれいにしたい場合は、Gamma CorrectionのGamma Colorsモード
+を使ってください。たとえば、Gamma Colorsのリストに黒線だけをいれた場合は、下図のような出力になります。
+©BANDAI/TV TOKYO・ここたま製作委員会
+Smoother Version = v2
+Gamma Correction = Gamma Colors, 黒色だけ追加
+入力、Ganma Value=1、Gamma Value = 2.4
+4
+OLM Digital, Inc. R&D

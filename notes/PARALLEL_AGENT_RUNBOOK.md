@@ -13,10 +13,10 @@ easy to merge back into the canonical notes.
 - Own all implementation changes, smoke registration, package verification, and
   commits unless a worker is explicitly given a disjoint write scope.
 - Stop a plugin path when the next discriminating evidence is a pending Windows
-  reference request.
-- After any returned Windows refs or AE-host validation bundle, run
-  `scripts/intake_olm_return.py` first, then decide which plugin-specific agent
-  to wake.
+  reference request or a Windows runtime trace request.
+- After any returned Windows refs, runtime trace bundle, or AE-host validation
+  bundle, run `scripts/intake_olm_return.py` first, then decide which
+  plugin-specific agent to wake.
 
 ## Standard Sub-Agent Output
 
@@ -41,11 +41,11 @@ Sub-agents should not return broad prose, speculative parameter tuning, or
 | `OLMToonDilate` | verifier | none | AE-host pixel validation for cases 1-3; only revisit boundary residual if host drift exceeds guarded CLI residual. | Returned AE-host PNGs. |
 | `OLMDistanceGradation` | bounded worker candidate | parent-approved specific files only | Tighten one existing-ref slice at a time, preferably with decomp/OpenCV evidence. | Do not broaden beyond guarded cases without a new smoke. |
 | `OLMSmoother` v1 | explorer | none | Verify v1-via-v2 compatibility remains acceptable; avoid standalone v1 unless user requires it. | AE-host rejection of v2 compatibility or explicit user request. |
-| `OLMSmoother2` no-key | explorer until refs arrive | none | After import, run grid smoke and group residual by Smoothness/Smooth Range before implementation. | `smoother2_no_key_grid_20260606` covered. |
-| `OLMDirectionalBlur` | explorer until refs arrive | none | Reconcile context scale, premul/straight RGB, alpha ownership from returned refs. | `directionalblur_context_scale_20260606` covered. |
+| `OLMSmoother2` no-key | explorer | none | Keep no-key grid guarded; avoid more tuning unless AE-host validation contradicts current precision. | AE-host rejection or new binary evidence. |
+| `OLMDirectionalBlur` | explorer | none | Reconcile context scale, premul/straight RGB, alpha ownership only with new objdump/runtime evidence. | New binary evidence or AE-host regression. |
 | `OLMRadialBlur` Zoom/outer Rotation | verifier | none | Keep green Zoom/Zoom Offset/tiny Rotation gates and AE-host validation path honest. | AE-host result or regression. |
-| `OLMRadialBlur` Inner/EdgeFade | explorer until refs arrive | none | Use nonzero Size Variation refs to isolate `+0x40/+0x48/+0x50` planes. | `radialblur_inner_size_variation_20260606` covered. |
-| `OLMKiraKira` | explorer until refs arrive | none | Use single-ray refs to isolate ray order, angle table, scalar, crop/canvas. | `kirakira_single_ray_20260606` covered. |
+| `OLMRadialBlur` Inner/EdgeFade | external trace / explorer | none | Answer `radialblur_inner_runtime_trace_20260618` before promoting the span-minus-one diagnostic. | Runtime trace result. |
+| `OLMKiraKira` | external trace / explorer | none | Answer `kirakira_opencv455_primitive_fact_20260618` before more high-level warp/box toggles. | Runtime trace / exact OpenCV 4.5.5 primitive fact. |
 
 ## Ready-To-Paste Prompts
 
@@ -86,13 +86,15 @@ summary, and any residual risk.
 
 0. To print the current canonical Windows/Mac handoff, run:
    `python3 scripts/print_current_handoff.py`
-1. If AE-host validation results arrive, run:
+1. If runtime trace results arrive, run:
+   `python3 scripts/intake_olm_return.py path/to/returned_runtime_trace.zip --runtime-summary-json refs/reports/runtime_trace_summary.json --runtime-summary-md refs/reports/runtime_trace_summary.md --runtime-comparison-dir refs/reports/runtime_trace_comparisons`
+2. If AE-host validation results arrive, run:
    `python3 scripts/intake_olm_return.py path/to/returned_ae_host.zip --require-all-pass`
-2. If Windows reference results arrive, run:
+3. If Windows reference results arrive, run:
    `python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick --dispatch-dir /tmp/olm_reference_dispatch`
-3. Run `python3 refs/scripts/check_reference_request_status.py` and pick the
+4. Run `python3 refs/scripts/check_reference_request_status.py` and pick the
    newly covered request with the largest unblock value.
-4. Run `python3 refs/scripts/next_reference_actions.py` to get the prioritized
+5. Run `python3 refs/scripts/next_reference_actions.py` to get the prioritized
    request-specific smoke and parent/sub-agent action.
    Use `python3 refs/scripts/next_reference_actions.py --json` when spawning an
    agent; `next_action` includes `plugin_area`, `mode`, `read_files`,
@@ -105,9 +107,13 @@ summary, and any residual risk.
    `copy_paste_prompt`; require agents to read those prior audit notes and
    report only deltas. Add `--dispatch-dir /tmp/olm_reference_dispatch` to write
    per-request `SUBAGENT.md` and `action.json` files.
-5. Spawn exactly one plugin-specific explorer for the newly covered request, or
+6. If it reports `runtime-trace` actions, package/send them with
+   `python3 scripts/package_runtime_trace_requests.py` or use the
+   `olm_runtime_trace_requests.zip` included in the full handoff. Do not
+   deep-tune those hard paths from PNG residuals while the trace is unanswered.
+7. Spawn exactly one plugin-specific explorer for the newly covered request, or
    multiple disjoint read-only `pending_actions` explorers when the parent has
    independent local integration work to do.
-6. Parent integrates the finding into IR/ASM notes, implements the smallest
+8. Parent integrates the finding into IR/ASM notes, implements the smallest
    backed change, and runs the plugin smoke followed by
    `python3 refs/scripts/smoke_all_algorithm_clis.py --profile quick`.

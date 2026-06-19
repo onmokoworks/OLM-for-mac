@@ -1,19 +1,17 @@
 #!/usr/bin/env python3
 """AE-free OLMToonDilate CLI.
 
-OLM Toon Dilate grows opaque regions into the transparent background: every
-non-opaque pixel within Search Radius (in render pixels) of a fully-opaque
-pixel is filled with the colour of the nearest opaque pixel. Reconstructed from
-decomp/OLMToonDilate.aex.c.txt (FUN_1801a6150):
+OLM Toon Dilate grows opaque regions into the transparent background.
+Reconstructed from decomp/OLMToonDilate.aex.c.txt (FUN_1801a6150):
 
   - seed = (alpha == 255)            # only fully-opaque pixels are sources
   - R_eff = ceil(SearchRadius * img_width / comp_width)   # downsample scaling
-  - mask  = (~seed) & (chebyshev_distance_to_seed <= R_eff)   # 8-conn chamfer
-  - fill colour = nearest opaque pixel's RGBA
+  - forward/backward raster passes over an 8-connected chamfer distance buffer
+  - each relaxed pixel immediately copies the winning neighbour's current RGBA
+  - remaining semi-alpha pixels are premultiplied on output
 
-The decomp uses an 8-connected (Chebyshev / chessboard) chamfer for the mask;
-colour rides the chamfer propagation, which coincides with the Euclidean-nearest
-opaque pixel in practice (verified exact on the reference's filled pixels).
+The immediate neighbour-copy rule is important: it is not an Euclidean nearest
+source lookup, and case_0003 exposes the difference.
 
 NOTE: ADBE Force CPU GPU=1 is a reference property, not a render-path
 indicator. Compare CUDA vs Software renders using a separately recorded
@@ -29,9 +27,8 @@ import json
 import math
 from pathlib import Path
 
-import numpy as np
 from PIL import Image
-from scipy.ndimage import distance_transform_cdt, distance_transform_edt
+import numpy as np
 
 
 def effect_params(payload):
@@ -68,14 +65,44 @@ def render(image, search_radius, comp_width):
     scale = (w / comp_width) if comp_width else 1.0
     r_eff = math.ceil(search_radius * scale)
 
-    # Mask: 8-connected (Chebyshev) chamfer distance from each pixel to the
-    # nearest opaque pixel; fill where 0 < dist <= R_eff.
-    cheb = distance_transform_cdt(~seed, metric="chessboard")
-    fill = (~seed) & (cheb <= r_eff)
+    inf = np.iinfo(np.uint32).max
+    dist = np.full((h, w), inf, dtype=np.uint32)
+    dist[seed] = 0
 
-    # Colour: nearest opaque pixel (Euclidean feature transform).
-    _, (iy, ix) = distance_transform_edt(~seed, return_indices=True)
-    arr[fill] = arr[iy[fill], ix[fill]]
+    def relax(x, y, coords):
+        if dist[y, x] == 0:
+            return
+        best = inf
+        best_xy = None
+        for nx, ny in coords:
+            if nx < 0 or nx >= w or ny < 0 or ny >= h:
+                continue
+            d = int(dist[ny, nx])
+            if d < best:
+                best = d
+                best_xy = (nx, ny)
+        if best_xy is None:
+            return
+        candidate = best + 1
+        if candidate >= int(dist[y, x]):
+            return
+        dist[y, x] = candidate
+        if candidate <= r_eff:
+            bx, by = best_xy
+            arr[y, x] = arr[by, bx]
+
+    for y in range(h):
+        for x in range(w):
+            relax(x, y, ((x - 1, y), (x - 1, y - 1), (x, y - 1), (x + 1, y - 1)))
+    for y in range(h - 1, -1, -1):
+        for x in range(w - 1, -1, -1):
+            relax(x, y, ((x + 1, y), (x + 1, y + 1), (x, y + 1), (x - 1, y + 1)))
+
+    alpha = arr[..., 3].astype(np.uint16)
+    semi = (alpha != 0) & (alpha != 255)
+    rgb = arr[..., :3].astype(np.uint16)
+    rgb[semi] = (rgb[semi] * alpha[semi, None] + 127) // 255
+    arr[..., :3] = rgb.astype(np.uint8)
     return Image.fromarray(arr, "RGBA")
 
 

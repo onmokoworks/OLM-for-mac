@@ -38,6 +38,18 @@ def main() -> int:
                 "ae_pixel_olmdistancegradation_20260606",
                 "olmdistancegradation_request.zip",
             ),
+            (
+                "OLMDistanceGradationExtended",
+                "olmdistancegradation_extended",
+                "ae_pixel_olmdistancegradation_extended_20260618",
+                "olmdistancegradation_extended_request.zip",
+            ),
+            (
+                "OLMDistanceGradationBlur",
+                "olmdistancegradation_blur",
+                "ae_pixel_olmdistancegradation_blur_20260618",
+                "olmdistancegradation_blur_request.zip",
+            ),
         ]
         for _name, preset, _request_id, zip_name in pixel_requests:
             proc = subprocess.run(

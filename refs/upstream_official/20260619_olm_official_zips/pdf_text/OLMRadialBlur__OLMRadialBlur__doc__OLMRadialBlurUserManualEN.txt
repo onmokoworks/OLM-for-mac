@@ -1,0 +1,138 @@
+# Source: OLMRadialBlur/OLMRadialBlur/doc/OLMRadialBlurUserManualEN.pdf
+
+
+--- page 1 ---
+OLM Open Tools OLM Radial Blur User Manual
+OLM Open Tools
+OLM Radial Blur
+User Manual
+OLM Digital, Inc.
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 1
+
+
+--- page 2 ---
+OLM Open Tools OLM Radial Blur User Manual
+Table of Contents
+1. Introduction 4
+1.1. Supported Environment 4
+1.2. Install 4
+2. Using OLM Radial Blur 4
+3. OLM Radial Blur parameters 4
+4. Other 9
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 2
+
+
+--- page 3 ---
+OLM Open Tools OLM Radial Blur User Manual
+Copyright, End User License Agreement
+OLM Open Tools are licensed under the Apache License, Version 2.0.
+Change Logs
+2017/10/10 First Version
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 3
+
+
+--- page 4 ---
+OLM Open Tools OLM Radial Blur User Manual
+1. Introduction
+OLM Radial Blur is an After Effects plug-in which can apply a special zoom/rotation blur.
+Unlike normal zoom/rotation blur, it’s anisotropic. Zoom blur blurs towards/outwards center
+with different strength. Rotation blur blurs clockwise/counterclockwise with different
+strength. Both blur ignore fully transparent pixels and enable cartoon like motion blurs.
+Fig1. (Left) Original image, (Right) After OLM Radial Blur
+1.1. Supported Environment
+Please refer to OLM Open Tools website for a complete list of supported environment.
+1.2. Install
+The zip archive you can download from OLM OpenTools web site contains the files listed in
+Table 1. To install OLM Directional Blur copy the plug-in file (OLM Radial Blur.aex) in A E
+plug-in directory
+(example : C:\Program Files\Adobe\Adobe After Effects 2022\Support Files\Plug-ins\OLM)
+Folder File Name Explanation
+Plugins\64\[Version] OLM Radial Blur.aex The plug-in files.
+Doc OLM Radial Blur The user manual for OLM
+UserManual.pdf Radial Blur
+Table 1：Content of the zip archive
+2. Using OLM Radial Blur
+To apply the effect, use the menu: (Effects)→(OLM Plug-ins)→(OLM Radial Blur)
+3. OLM Radial Blur parameters
+OLM Radial Blur parameters are as follows.
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 4
+
+
+--- page 5 ---
+OLM Open Tools OLM Radial Blur User Manual
+Fig. 2 OLM Radial Blur parameters
+1. Blur Type – A set of parameters to control the blur type.
+Rotation – Applies rotation blur.
+Zoom – Applies zoom blur.
+Fig. 3 Type of blur (Left) Original image, (Middle) Zoom, (Right)Rrotation
+2. Center – Center point of zoom/rotation.
+3. Outer (Inner) Blur – The parameters of blur. Outer is for outward/clockwise direction,
+and Inner is for inward/counterclockwise direction.
+i. Strength - Determines the strength of the blur. Value go from 0 to 800 pixels.
+ii. Edge Fade – Generates fade-in on the inner (outer) side. Value go from 0 to100.
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 5
+
+
+--- page 6 ---
+OLM Open Tools OLM Radial Blur User Manual
+The fade-in region is synchronized with the size variation parameter.
+Fig. 4 (Left) Original image, (Middle) Alpha Fade=0, (Right) Alpha Fade=100
+4. Repeat Border – Prevents fading at image boundaries as shown in Fig. 5. Such fading
+occurs only when “Edge Fade” is used.
+Fig.5 The effect of “Repeat Border” (Left) Off, (Right) On
+5. Ellipse – A set of parameters to transform the circle of radial blur in an ellipse.
+i. Ratio – A ratio of major axis to minor axis of base ellipse. Value go from 0.0 to
+5.0.
+ii. Angle – An angle of major axis of base ellipse.
+Fig. 6 Ellipse (Left) Ratio=1.0, Angle=0°, (Right) Ratio=2.0, Angle=45°
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 6
+
+
+--- page 7 ---
+OLM Open Tools OLM Radial Blur User Manual
+6. Quality – Quality of the transformation to ellipse. Smaller value results in faster
+computation but less quality for pixels far from the center. Value go from 1.0 to 50.0.
+7. Brightness Gain - Controls the brightness of result image.
+8. Size Variation - Parameter to change the blur strength according to the size of each
+pixel group (opaque pixels). Overlapping group of pixels are considered as one group.
+Value go from 0 (no variation) to 100 (the smallest group will have no blur applied).
+This parameter will determine the size of the region Alpha fade occurs.
+Fig. 7 (Left) Original image, (Middle) Size Variation=0, (Right) Size Variation=70
+9. Noise Parameters - The parameters to add per pixel variation in blur strength. By
+adjusting these parameters, jagged blur as shown in fig.6 can be generated.
+i. Noise Variation - Controls the amount of noise. Value go from 0 to100.
+Fig. 8 (Left) Noise Variation=0, (Middle) Noise Variation=50,
+(Right) Noise Variation=100
+ii. Noise Type - A set of parameters to control the noise type.
+Smooth – Adds smooth noise.
+Block – Adds block noise.
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 7
+
+
+--- page 8 ---
+OLM Open Tools OLM Radial Blur User Manual
+Fig. 9 Difference between “Smooth” and “Block”. (Left) Smooth, (Right) Block
+Layer - Uses user defined noise. The noise is given as layer, the brighter the
+noise layer pixel, the bigger the blur strength. Noise layer should be same size as
+the layer applied “OLM Radial Blur”. Don’t forget to pre-compose a layer if you
+want its effects, translation/scaling… to be considered.
+Fig. 10 Layer noise (Left) referenced layer, (Right) result
+iii. Seed - A random seed used for noise generation. It changes the noise pattern. It’s
+valid only when “Noise Type” is “Smooth” or “Block”.
+iv. Offset - Can be animated to change noise pattern smoothly. It’s valid only when
+“Noise Type” is “Smooth” or “Block”.
+v. Thickness - Controls the frequency of noise as shown in fig. 9. It’s valid only
+when “Noise Type” is “Smooth” or “Block”. Value go from 1.0 to100.
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 8
+
+
+--- page 9 ---
+OLM Open Tools OLM Radial Blur User Manual
+Fig. 11 (Left) Thickness=5, (Middle) Thickness=15, (Right) Thickness=30
+vi. Noise Layer - The layer used as noise. It’s valid only when “Noise Type” is
+“Layer”.
+4. Other
+If you find a bug, have a feature request, or for any kind of feedback feel free to contact us
+at the following mail address:
+opentools@olm.co.jp
+Ⓒ Copyright 2017-2022 OLM Digital, Inc. All rights reserved. 9

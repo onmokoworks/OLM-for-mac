@@ -1,0 +1,138 @@
+# Source: OLMDistanceGradation/OLMDistanceGradation/doc/DistanceGradationUserManual.pdf
+
+
+--- page 1 ---
+OLM Open Tools
+Distance Gradation
+ユーザーマニュアル
+オー・エル・エム・デジタル
+1
+
+
+--- page 2 ---
+OLM Open Tools Distance Gradation ユーザーマニュアル
+目次
+1. はじめに 4
+1.1. 対応している環境 4
+1.2. インストール方法 4
+2. Distance Gradationの適用方法 4
+3. Distance Gradationのパラメータ 5
+4. その他 8
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved.
+2
+
+
+--- page 3 ---
+OLM Open Tools Distance Gradation ユーザーマニュアル
+著作権・使用許諾について
+OLM Open Tools は Apache License Version 2.0 に基づいてライセンスされます。
+更新履歴
+2014/11/21 初版作成
+2017/11/02 ライセンス規約変更
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved.
+3
+
+
+--- page 4 ---
+OLM Open Tools Distance Gradation ユーザーマニュアル
+1. はじめに
+Distance Gradationはマスク形状の輪郭からの距離に応じてグラデーションを作るAdobe® After Effects® (以
+降、AEと略します) 用エフェクトプラグインです。マスクの内側、外側またはその両方にグラデーションを作成できま
+す。主な用途としてはキャラクタの周囲に出ているオーラ光や光の回り込みの表現などが考えられます。また、マ
+スクの内側に白黒のグラデーションを作れば2D/3D変換時のデプス情報としても使えます。
+図 1：Distance Gradationの結果画像
+1.1. 対応している環境
+OLM Open Toolsのウェブサイトを参照ください。
+1.2. インストール方法
+OLM Open Toolsサイトよりダウンロードしたzipファイルには、表 1に示すファイルが収められています。Distance
+Gradationをインストールするには、プラグインファイル「DistanceGradation.aex」After Effectsのプラグインディレ
+クトリにコピーしてください。
+(例： C:\Program Files\Adobe\Adobe After Effects 2022\Support Files\Plug-ins\OLM）
+フォルダ名 ファイル名 説明
+Plugins\[32/64]\[バージョン] DistanceGradation.aex 各AEバージョンに対応したプラグ
+イン本体です。
+doc DistanceGradation Distance Gradationのユーザーマ
+UserManual.pdf ニュアルです。このファイルです。
+表 1：zipファイル内に収められているファイル
+2. Distance Gradationの適用方法
+他のエフェクトと同じようにメニューバーの「エフェクト >> OLM Plug-ins >> Distance Gradation」と選択すること
+で適用できます。
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved.
+4
+
+
+--- page 5 ---
+OLM Open Tools Distance Gradation ユーザーマニュアル
+3. Distance Gradationのパラメータ
+図 2 : Distance Gradationのパラメータ
+● In/ Out : グラデーションを作成する範囲を下記3つから指定します(図 3参照)。
+Inside : マスクの内側にグラデーションを作成します。
+Outside : マスクの外側にグラデーションを作成します。
+Both : マスクの内側と外側両方にグラデーションを作成します。
+図 3：In/Outモードの比較
+左からInside、Outside、Both
+● Inside Threshold : マスクの内側にグラデーションを作る際の、距離の最大値を指定します(図 4参
+照)。小さい値にすると、画像中心部の値が一定値になり(=平らになる)エンボスのようなグラデーション
+になります。
+● Outside Threshold : マスクの外側にグラデーションを作る際の、距離の最大値を指定します。
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved.
+5
+
+
+--- page 6 ---
+OLM Open Tools Distance Gradation ユーザーマニュアル
+図 4：Inside/Outside Thresholdの効果 (左)Threshold=70 (右)Threshold=256
+Threshold値を小さくすると最大値が小さくなるため全体的に暗くなる
+● Render Mode : レンダリングモードを下記3つの方法から選びます(図 5参照)。
+RGB : 距離データをもとに、RGBのカラー画像を表示します。距離=0の部分にGradation Colorで
+指定した色、距離=Maxの部分にBG Colorで指定した色を割り当てます。その間の色の割り当ては
+補間方法によって変わります。
+Layer : 距離データをもとに、入力画像の色を使ったグラデーションを作ります。
+図 5：Render Modeの違い
+左からGrayscale、RGB、Layer
+● Use Background Color : 基本的にアルファチャンネルのグラデーションを出力しますがこのチェッ
+クボックスをONにすると、アルファチャンネルは1になり、Gradation ColorとBG Colorで決めた色の
+グラデーションを出力します。
+● Gradation Color : グラデーションの色を指定します。
+● BG Color : Use BackgroundがONの時のみ有効なパラメータで、背景を塗りつぶす色を指定します。
+● Invert : 通常は輪郭に近い部分が不透明になり距離に応じて透明になっていきますが、このチェックを
+ONにすると、逆になり、輪郭に近い部分が透明になり距離に応じて不透明になります。
+図 6：Invert オン/オフ比較
+左)Invertオフ 右)Invertオン
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved.
+6
+
+
+--- page 7 ---
+OLM Open Tools Distance Gradation ユーザーマニュアル
+● Interpolation Mode : Linear、Sphere、Powerの3つから補間方法を選択します(図 7、図 8参照)。
+Linear：直線で補間されます
+Sphere：球体のような丸みをもった形状に補間されます
+Power：曲線で補間されます。Powerパラメータで指定した値次第でとがった形 (Powerを1より大
+きく) も丸い形 (Powerを1より小さく) も作成できます。
+Constant：グラデーションを作らず、単色で塗りつぶします。
+● Power : Interpolation ModeがPowerの時にのみ有効なパラメータで、補間具合が調整できます。
+図 7：Interpolation Modeの比較
+左からLinear、Sphere、Power(=2.2)
+図 8：Interpolationで使う補間カーブ
+左からLinear、Sphere、Power(上に行くほど値が小さいカーブ)
+● Blur Mode : 画像にかけるブラー処理の方法を下記3つより選びます(図 9参照)。
+No Blur : ブラー処理を行いません。
+Blur No Scale : 単純なブラーです。
+Blur : Blur No Scale にスケーリング処理を加えています。こちらの方がディティールが残りやす
+いです。
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved.
+7
+
+
+--- page 8 ---
+OLM Open Tools Distance Gradation ユーザーマニュアル
+図 9：Blur Modeの比較 左：Blur No Scale、右：Blur
+● Blur Size : ブラー処理を行う際のブラーの強さを指定します。数値が大きいほどブラーが強くかかりま
+す。
+4. その他
+正常に動作しない、バグを発見した、もしくは機能追加要望などがある場合は、下記のメールアドレス宛にご連絡
+ください。
+opentools@olm.co.jp
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved.
+8

@@ -447,7 +447,6 @@ static std::vector<float> MatteDistanceTo(const std::vector<u_char> &mask, A_lon
 
 static std::vector<float> EdgeBlurDistanceTo(const std::vector<u_char> &mask, A_long w, A_long h, A_long distance_type)
 {
-	if (distance_type == 1) return EuclideanDistanceTo(mask, w, h);
 	return MatteDistanceTo(mask, w, h, distance_type);
 }
 
@@ -494,6 +493,61 @@ static void RGBToPluginLab76(const float rgb[3], float out[3])
 	float b_source = g * 0.35758259892463684f + r * 0.05800257995724678f + b * 2.8507096767425537f;
 	out[1] = (LabF(a_source) - fx) * 500.0f;
 	out[2] = (fx - LabF(b_source)) * 200.0f;
+}
+
+static void RGBToPluginHSV(const float rgb[3], float out[3])
+{
+	const float r = rgb[0], g = rgb[1], b = rgb[2];
+	const float mx = std::max(r, std::max(g, b));
+	const float mn = std::min(r, std::min(g, b));
+	const float delta = mx - mn;
+	float h;
+	if (delta == 0.0f) h = 0.0f;
+	else if (mx == r) h = (g - b) * 60.0f / delta;
+	else if (mx == g) h = (b - r) * 60.0f / delta + 120.0f;
+	else h = (r - g) * 60.0f / delta + 240.0f;
+	h = std::fmod(h, 360.0f);
+	if (h < 0.0f) h += 360.0f;
+	out[0] = h / 360.0f;
+	out[1] = mx == 0.0f ? 0.0f : delta / mx;
+	out[2] = mx;
+}
+
+static void RGBToPluginYUV(const float rgb[3], float out[3])
+{
+	const float r = rgb[0], g = rgb[1], b = rgb[2];
+	out[0] = g * 0.5870000123977661f + r * 0.29899999499320984f + b * 0.11400000005960464f;
+	out[1] = b * 0.4359999895095825f - (g * 0.2888599932193756f + r * 0.14712999761104584f);
+	out[2] = r * 0.6150000095367432f - g * 0.514989972114563f - b * 0.10001000016927719f;
+}
+
+static void RGBToPluginYCrCb(const float rgb[3], float out[3])
+{
+	const float r = rgb[0], g = rgb[1], b = rgb[2];
+	out[0] = r * 0.298909991979599f + g * 0.5866100192070007f + b * 0.11448000371456146f;
+	out[1] = b * 0.5f - (r * 0.16874000430107117f + g * 0.33125999569892883f);
+	out[2] = r * 0.5f - g * 0.4186899960041046f - b * 0.08130999654531479f;
+}
+
+static float Lab94Distance(const float a[3], const float b[3])
+{
+	const float c1 = std::sqrt(a[1] * a[1] + a[2] * a[2]);
+	const float c2 = std::sqrt(b[1] * b[1] + b[2] * b[2]);
+	const float cmean = std::sqrt(c2 * c1);
+	auto hue = [](float aa, float bb) {
+		float h = std::atan2(bb, aa) * 57.2957763671875f + 180.0f;
+		if (h != 0.0f) {
+			if (h < 0.0f) h += 540.0f;
+			h = std::fmod(h, 360.0f);
+		}
+		return h;
+	};
+	const float h1 = hue(a[1], a[2]);
+	const float h2 = hue(b[1], b[2]);
+	const float dL = b[0] - a[0];
+	const float dC = (c2 - c1) / (cmean * 0.04500000178813934f + 1.0f);
+	const float dH = (h2 - h1) / (cmean * 0.014999999664723873f + 1.0f);
+	return std::sqrt(dL * dL + dC * dC + dH * dH);
 }
 
 static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direction)
@@ -626,12 +680,30 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				info.premultiplied ? rgb[1] * alpha : rgb[1],
 				info.premultiplied ? rgb[2] * alpha : rgb[2]
 			};
-			if (info.color_space == 3) {
+			if (info.color_space == 3 || info.color_space == 4) {
 				float lab[3];
 				RGBToPluginLab76(cmp, lab);
 				cmp[0] = lab[0];
 				cmp[1] = lab[1];
 				cmp[2] = lab[2];
+			} else if (info.color_space == 2) {
+				float hsv[3];
+				RGBToPluginHSV(cmp, hsv);
+				cmp[0] = hsv[0];
+				cmp[1] = hsv[1];
+				cmp[2] = hsv[2];
+			} else if (info.color_space == 5) {
+				float yuv[3];
+				RGBToPluginYUV(cmp, yuv);
+				cmp[0] = yuv[0];
+				cmp[1] = yuv[1];
+				cmp[2] = yuv[2];
+			} else if (info.color_space == 6) {
+				float yc[3];
+				RGBToPluginYCrCb(cmp, yc);
+				cmp[0] = yc[0];
+				cmp[1] = yc[1];
+				cmp[2] = yc[2];
 			}
 			bool hit_any = false;
 			int hit_index = -1;
@@ -639,14 +711,71 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				if (!info.use_color[i]) continue;
 				float key[3] = { info.colors[i].red, info.colors[i].green, info.colors[i].blue };
 				float comp_scale[3] = {1.0f, 1.0f, 1.0f};
-				if (info.color_space == 3) {
+				if (info.color_space == 3 || info.color_space == 4) {
 					RGBToPluginLab76(key, key);
 					comp_scale[0] = 151.30099487304688f;
 					comp_scale[1] = 264.36700439453125f;
 					comp_scale[2] = 295.572998046875f;
+				} else if (info.color_space == 2) {
+					RGBToPluginHSV(key, key);
+				} else if (info.color_space == 5) {
+					RGBToPluginYUV(key, key);
+				} else if (info.color_space == 6) {
+					RGBToPluginYCrCb(key, key);
 				}
 				bool hit = false;
-				if (info.per_component) {
+				if (info.color_space == 5) {
+					PF_FpLong t0 = info.per_component ? info.threshold_r : info.threshold;
+					PF_FpLong t1 = info.per_component ? info.threshold_g : info.threshold;
+					if (info.per_color) {
+						t0 = info.per_component ? info.thresholds_r[i] : info.thresholds[i];
+						t1 = info.per_component ? info.thresholds_g[i] : info.thresholds[i];
+					}
+					auto un = [](float u) {
+						return (float)((double)u * 1.146788990825688 + 0.5);
+					};
+					hit = std::fabs(cmp[0] - key[0]) <= t0 + eps8
+					    && std::fabs(un(cmp[1]) - un(key[1])) <= t1 + eps8;
+				} else if (info.color_space == 6) {
+					PF_FpLong t0 = info.per_component ? info.threshold_r : info.threshold;
+					PF_FpLong t1 = info.per_component ? info.threshold_g : info.threshold;
+					if (info.per_color) {
+						t0 = info.per_component ? info.thresholds_r[i] : info.thresholds[i];
+						t1 = info.per_component ? info.thresholds_g[i] : info.thresholds[i];
+					}
+					hit = std::fabs(cmp[0] - key[0]) <= t0 + eps8
+					    && std::fabs(cmp[1] - key[1]) <= t1 + eps8;
+				} else if (info.color_space == 4) {
+					if (info.per_component) {
+						PF_FpLong tr = info.per_color ? info.thresholds_r[i] : info.threshold_r;
+						PF_FpLong tg = info.per_color ? info.thresholds_g[i] : info.threshold_g;
+						PF_FpLong tb = info.per_color ? info.thresholds_b[i] : info.threshold_b;
+						hit = std::fabs(cmp[0] - key[0]) <= (eps8 + tr) * comp_scale[0]
+						    && std::fabs(cmp[1] - key[1]) <= (eps8 + tg) * comp_scale[1]
+						    && std::fabs(cmp[2] - key[2]) <= (eps8 + tb) * comp_scale[2];
+					} else {
+						PF_FpLong threshold = info.per_color ? info.thresholds[i] : info.threshold;
+						hit = Lab94Distance(key, cmp) <= (float)((double)(eps8 + threshold) * 352.978);
+					}
+				} else if (info.color_space == 2) {
+					if (info.per_component) {
+						PF_FpLong tr = info.per_color ? info.thresholds_r[i] : info.threshold_r;
+						PF_FpLong tg = info.per_color ? info.thresholds_g[i] : info.threshold_g;
+						PF_FpLong tb = info.per_color ? info.thresholds_b[i] : info.threshold_b;
+						float sh = cmp[0];
+						if (sh < key[0]) sh += 1.0f;
+						hit = (sh - key[0]) <= eps8 + tr
+						    && std::fabs(cmp[1] - key[1]) <= eps8 + tg
+						    && std::fabs(cmp[2] - key[2]) <= eps8 + tb;
+					} else {
+						PF_FpLong threshold = info.per_color ? info.thresholds[i] : info.threshold;
+						float d0 = cmp[0] - key[0];
+						float d1 = cmp[1] - key[1];
+						float d2 = cmp[2] - key[2];
+						float dist = std::sqrt(d0 * d0 + d1 * d1 + d2 * d2);
+						hit = dist <= std::sqrt(3.0f) * (eps8 + threshold);
+					}
+				} else if (info.per_component) {
 					PF_FpLong tr = info.per_color ? info.thresholds_r[i] : info.threshold_r;
 					PF_FpLong tg = info.per_color ? info.thresholds_g[i] : info.threshold_g;
 					PF_FpLong tb = info.per_color ? info.thresholds_b[i] : info.threshold_b;
@@ -668,7 +797,6 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			matched_index[idx] = hit_index;
 		}
 	}
-
 	if (!info.enable_replace) {
 		if (info.edge_thin_amount < 0.0) {
 			std::vector<u_char> nonmatch((size_t)w * (size_t)h, 0);

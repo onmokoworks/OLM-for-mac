@@ -72,10 +72,10 @@ def verify_reference_zip(path: Path) -> str | None:
     return None
 
 
-def verify_reference_zip_pending(repo: Path, path: Path) -> int:
+def verify_reference_zip_contents(repo: Path, path: Path) -> int:
     verifier = repo / "refs" / "scripts" / "verify_reference_request_package.py"
     proc = subprocess.run(
-        [sys.executable, str(verifier), str(path), "--expect-pending"],
+        [sys.executable, str(verifier), str(path)],
         cwd=repo,
         text=True,
         stdout=subprocess.PIPE,
@@ -83,6 +83,41 @@ def verify_reference_zip_pending(repo: Path, path: Path) -> int:
     )
     print(proc.stdout, end="" if proc.stdout.endswith("\n") else "\n")
     return proc.returncode
+
+
+def verify_runtime_trace_zip(path: Path) -> str | None:
+    if not path.exists():
+        return f"runtime trace request zip missing: {path}"
+    if not zipfile.is_zipfile(path):
+        return f"runtime trace request package is not a zip: {path.name}"
+    with zipfile.ZipFile(path) as archive:
+        names = set(archive.namelist())
+        required = {
+            "README_RUNTIME_TRACE.md",
+            "runtime_trace_package_manifest.json",
+            "next_reference_actions_snapshot.json",
+            "notes/WINDOWS_RUNTIME_TRACE_REQUESTS.md",
+        }
+        missing = required - names
+        if missing:
+            return "runtime trace request package missing entries: " + ", ".join(sorted(missing))
+        try:
+            manifest = json.loads(archive.read("runtime_trace_package_manifest.json").decode("utf-8"))
+        except Exception as exc:  # noqa: BLE001
+            return f"runtime trace manifest could not be read: {exc}"
+    if not isinstance(manifest, dict):
+        return "runtime trace manifest top-level JSON must be an object"
+    if manifest.get("kind") != "olm_runtime_trace_request_package":
+        return "runtime trace manifest.kind must be 'olm_runtime_trace_request_package'"
+    actions = manifest.get("runtime_actions")
+    if not isinstance(actions, list) or not actions:
+        return "runtime trace manifest.runtime_actions must be a non-empty list"
+    for index, action in enumerate(actions):
+        if not isinstance(action, dict):
+            return f"runtime trace action #{index} must be an object"
+        if not isinstance(action.get("request_id"), str) or not action["request_id"]:
+            return f"runtime trace action #{index}.request_id must be a non-empty string"
+    return None
 
 
 def verify_mac_zip(repo: Path, path: Path) -> int:
@@ -172,10 +207,13 @@ def main() -> int:
             return fail("README.md missing")
 
         ref_zip = manifest.get("reference_requests_zip")
+        runtime_trace_zip = manifest.get("runtime_trace_requests_zip", "")
         mac_zip = manifest.get("mac_plugins_zip")
         next_actions_json = manifest.get("next_reference_actions_json")
         if not isinstance(ref_zip, str) or not ref_zip:
             return fail("manifest.reference_requests_zip must be a non-empty string")
+        if not isinstance(runtime_trace_zip, str):
+            return fail("manifest.runtime_trace_requests_zip must be a string")
         if not isinstance(mac_zip, str) or not mac_zip:
             return fail("manifest.mac_plugins_zip must be a non-empty string")
         if not isinstance(next_actions_json, str) or not next_actions_json:
@@ -184,8 +222,12 @@ def main() -> int:
         reference_problem = verify_reference_zip(root / ref_zip)
         if reference_problem:
             return fail(reference_problem)
-        if verify_reference_zip_pending(repo, root / ref_zip) != 0:
+        if verify_reference_zip_contents(repo, root / ref_zip) != 0:
             return fail("nested reference request package failed verification")
+        if runtime_trace_zip:
+            runtime_trace_problem = verify_runtime_trace_zip(root / runtime_trace_zip)
+            if runtime_trace_problem:
+                return fail(runtime_trace_problem)
         next_actions_problem = verify_next_actions(root / next_actions_json)
         if next_actions_problem:
             return fail(next_actions_problem)

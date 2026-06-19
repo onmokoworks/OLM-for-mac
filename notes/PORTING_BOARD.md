@@ -1,11 +1,18 @@
 # OLM Porting Board
 
-Updated: 2026-06-06 (see 2026-06-14 correction in `notes/PROGRESS_MATRIX.md`)
+Updated: 2026-06-06 (historical board; see current conformance notes)
+
+> 2026-06-18: Current correctness tracking moved to
+> `notes/CONFORMANCE_LEDGER.md`; terms are defined in
+> `notes/AE_EXACT_CONFORMANCE.md`. Final completion means `AE exact`: Mac AE
+> output matches the Windows AE Software reference with zero diff for the
+> declared bit depth. CLI exactness, off-by-1 candidates, tolerance-gated
+> smokes, and old percentages are intermediate evidence only.
 
 > 2026-06-14: The board below is a historical detail log. For current status read
-> the "2026-06-14 status correction" at the top of `notes/PROGRESS_MATRIX.md`.
-> Key deltas: correctness is now judged by byte match (`max_diff`) on the
-> software reference, not "guarded green" tolerances; and the DirectionalBlur /
+> `notes/CONFORMANCE_LEDGER.md` first, then the status correction at the top of
+> `notes/PROGRESS_MATRIX.md`. Key deltas: correctness is no longer judged by
+> tolerance-gated smokes; and the DirectionalBlur /
 > KiraKira / ColorKey "wait for refs" stop-conditions in the tables below are
 > LIFTED (those refs returned and were imported). Still pending recapture:
 > `radialblur_inner*`, `smoother2_no_key_grid`.
@@ -19,8 +26,8 @@ possible and final AE plug-in validation.
 - Ghidra headless export works via `scripts/ghidra_export_one.sh`.
 - GhidraMCP HTTP endpoint works at `127.0.0.1:8080` when Ghidra GUI has a program open.
 - Direct helper: `scripts/ghidra_http.py`.
-- Progress estimates and sub-agent routing live in `notes/PROGRESS_MATRIX.md`.
-  Treat those percentages as planning estimates, not release guarantees.
+- Conformance state lives in `notes/CONFORMANCE_LEDGER.md`. Historical progress
+  and sub-agent routing notes live in `notes/PROGRESS_MATRIX.md`.
 - AE-free harness smoke test passes via `python3 refs/scripts/smoke_algorithm_harness.py`.
 - Aggregate AE-free algorithm smoke passes via `python3 refs/scripts/smoke_all_algorithm_clis.py`;
   known experimental scaffolds are expected as `DIFF-observed`.
@@ -98,23 +105,28 @@ future Rotation work.
 This is no longer an initial porting order. All current Mac projects build and
 the hard paths have CLI diagnostics, so the best next work is split by evidence:
 
-1. AE-host validation for covered low-risk paths, starting with `OLMBlur`, then
-   covered `OLMColorKey`, `OLMToonDilate`, and `OLMDistanceGradation`.
-2. Windows reference returns. First ask the local router with
+1. First ask the local router with
    `python3 scripts/print_next_olm_action.py ~/Downloads /tmp`; if it finds a
    returned Windows reference zip, import it with
    `python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick --dispatch-dir /tmp/olm_reference_dispatch`
-   so each covered/pending action gets a ready-to-send `SUBAGENT.md`.
-3. Process returned refs in `refs/scripts/next_reference_actions.py` priority:
+   so each covered/pending action gets a ready-to-send `SUBAGENT.md`. If it
+   points at a runtime trace package, send that package to the Windows
+   debugger/helper before more PNG-only tuning; returned trace facts import with
+   `python3 scripts/intake_olm_return.py path/to/returned_runtime_trace.zip --runtime-summary-json refs/reports/runtime_trace_summary.json --runtime-summary-md refs/reports/runtime_trace_summary.md --runtime-comparison-dir refs/reports/runtime_trace_comparisons`.
+2. Process returned refs in `refs/scripts/next_reference_actions.py` priority:
    `smoother2_no_key_grid_20260606`,
    `olmcolorkey_replace_colorspace_20260606`,
    `directionalblur_context_scale_20260606`,
    `kirakira_single_ray_20260606`,
    `radialblur_inner_size_variation_20260606`,
    then supporting `radialblur_inner_20260605`.
-4. Keep `OLMDirectionalBlur`, `OLMRadialBlur` Inner/EdgeFade,
-   `OLMKiraKira`, `OLMSmoother2` no-key, and `OLMColorKey` Replace/non-RGB as
-   read-only sub-agent targets until their discriminating Windows refs return.
+3. Runtime trace blockers currently take priority over AE-host validation for
+   the hard paths (`OLMRadialBlur` Inner span ownership and `OLMKiraKira`
+   OpenCV 4.5.5 FilterEngine branch). Do not promote PNG-only guesses while
+   those trace requests are unanswered.
+4. AE-host validation for covered low-risk paths remains the next integration
+   proof after the runtime trace blocker is answered, starting with `OLMBlur`,
+   then covered `OLMColorKey`, `OLMToonDilate`, and `OLMDistanceGradation`.
 5. Treat standalone `OLMSmoother` v1 as low priority while
    `OLMSmoother2 --force-version 1` continues to cover the v1 references.
 
@@ -223,6 +235,14 @@ Use this order for every unresolved algorithm path:
    setting behavior with the current references, stop that path and request a
    targeted Windows reference instead of guessing.
 
+Final-equivalence target: do not aim for Windows AEX byte-for-byte output or
+source recovery. The portable target is asm-grounded equivalence: match the
+observed instructions, constants, branches, enum mapping, loop bounds,
+sampling order, boundary mode, rounding/truncation rules, clamp behavior,
+alpha/RGB ownership, SIMD-sensitive accumulation order, and lookup/random
+tables. PNG diffs are symptoms and regression gates; asm/objdump facts are the
+reason to promote a behavior into the port.
+
 For OLMSmoother2 specifically, the 2026-06-05 asm pass confirmed that
 `FUN_18000ab00` is the simple center-residual plus weighted-sample accumulator,
 so the remaining `case_0001` work should stay focused on polygon/sample
@@ -253,15 +273,15 @@ the OLMKiraKira Brightness probe all produced expected DIFF measurement output.
 
 | Plugin | Win Ref | Ghidra Dump | Mac AE Source | AE-Free CLI | Reference Diff |
 |---|---|---|---|---|---|
-| ColorKeep | none in 20260604 set | yes | complete-ish | smoke CLI works | synthetic smoke ok |
-| DistanceGradation | yes, 20260605_extra | yes | complete-ish | Python CLI works | All 29 effect-bearing cases guarded: 12-case basic smoke OK (`max<=7`, `mean<=0.11`), 16-case extended non-blur smoke OK (`mean<=0.72`), and Blur Mode `case_0029` OK (`mean=0.2827`) |
+| ColorKeep | none in 20260604 set | yes | support utility | smoke CLI works | synthetic smoke ok |
+| DistanceGradation | yes, 20260605_extra | yes | guarded | Python CLI works | All 29 effect-bearing cases guarded: 12-case basic smoke OK (`max<=7`, `mean<=0.11`), 16-case extended non-blur smoke OK (`mean<=0.72`), and Blur Mode `case_0029` OK (`mean=0.2827`) |
 | OLMBlur | yes | yes | in progress | C++ CLI works | 3 exact, 4 near-match max=1 |
 | OLMColorKey | yes | yes | new Mac plugin builds | Python + C++ + Rust RGB/premult/box/Edge Thin/Edge Blur CLI | C++: 1-4 & 7 exact; 5/6 erode 0.48% off; returned Replace/color-space refs show simple Replace and all color spaces exact in C++; Mac plugin now has the Color Keep + Replace tail wired; Edge Blur C++ still residual (`case8 mean=1.0396`, `case9 mean=1.2503`) |
 | OLMDirectionalBlur | yes | yes | new Mac plugin builds | Python + C++ direct/rotated CLI scaffold | front-only/no-noise DIFF; Mac plugin has 8bpc front-only/no-noise direct slice; rotate-back denom-alpha is neutral/negative; exact row-driver equals exact-scatter-helper (`4.4392/1.1761`), so residual needs ASM argument mapping or extra refs |
 | OLMKiraKira | yes | yes | new Mac plugin builds | Python OpenCV/two-temp ray probe + C++ native scaffold | Python OpenCV 4.5.5 two-temp `0.8504/1.1570/1.0514`; explicit ROI/`dst=` alias probe is identical, so simple Mat aliasing is not the residual; C++ all-ray two-temp/no-fastpath `0.8506/1.1570/1.0563`; Mac plugin uses that same all-ray two-temp candidate and still DIFF |
 | OLMRadialBlur | yes | yes | new Mac plugin builds | Python rotation + zoom polar CLI scaffold; C++ Zoom/Rotation/Inner diagnostic CLI | Rotation case_0010 near-match; Zoom 0009 OK in Python and C++; C++ Zoom 0003-0005 OK with Size Variation ignored; Mac plugin has 8bpc Zoom/no-inner/no-noise slice with large-Strength FFT path and Size Variation no-op pass-through; Inner source-scatter/prepass old refs baseline 25.2972/10.6222/21.2910; Edge Fade conditional seed improves means but remains red diagnostic due coverage; continue exact +0x10/+0x14 buffer construction |
 | OLMSmoother | yes | yes | prefer v2 compat | C++ CLI over mac port; OLMSmoother2 forced-v1 compat gate | standalone classifier over-fires ~20x, but OLMSmoother2 `Smoother Version=1` matches v1 refs closely (`mean=0.0055/0.0051/0.0200`); do not deep-dive standalone v1 unless this migration path is rejected |
-| OLMSmoother2 | yes, 20260605_extra + no-key grid | yes | port complete-ish | C++ CLI over mac port | no-key grid now near-exact across Smooth Range 1/2/3 (`max<=9`, tiny nz); guarded key path gate passes (`case2 mean=0.0196`, `case3 exact`, `case4 mean=0.0105`); gamma gate passes; v1 compatibility via `--force-version 1` passes |
+| OLMSmoother2 | yes, 20260605_extra + no-key grid | yes | guarded | C++ CLI over mac port | no-key grid now near-exact across Smooth Range 1/2/3 (`max<=9`, tiny nz); guarded key path gate passes (`case2 mean=0.0196`, `case3 exact`, `case4 mean=0.0105`); gamma gate passes; v1 compatibility via `--force-version 1` passes |
 | OLMToonDilate | yes | yes | new Mac plugin builds | Python + C++ Chebyshev/BFS CLI | C++ gated: case1 mean 0.4762, case2 0.0022, case3 3.0676; Mac plugin has cases 1-3 kernel |
 
 ## Active Sub-Agent Assignments
@@ -474,6 +494,17 @@ with that path (Euclidean distance to the internal boundary seeds) improves C++
 `case_0008` from `max=142 mean=1.5386` to `max=79 mean=1.0396` while preserving
 `case_0009 mean=1.2503`. The tightened C++/Rust Edge Blur smoke thresholds now
 guard this improvement at `mean<=1.26`.
+
+2026-06-19 correction against normalized Windows AE Software refs: the 2026-06-06
+Euclidean interpretation was a PNG-fit hypothesis, not the final binary fact.
+`FUN_1800094b0` dispatches Edge Blur distance by `ctx+0x44` exactly like Edge
+Thin (`1 -> FUN_180006e20`, `2 -> FUN_180005d60`, `3 -> FUN_180007ec0`), and
+only `FUN_180007ec0` is the sqrt/Euclidean branch. Python/C++/Rust/Mac now use
+the shared matte-distance dispatch for Edge Blur as well. On the normalized
+Software return this gives Python `case_0008 max=26 mean=1.1044`,
+`case_0009 max=255 mean=1.3169`, and C++ `case_0008 max=15 mean=1.1104`,
+`case_0009 max=255 mean=1.3169`. This is more binary-grounded but still guarded,
+not AE exact.
 
 2026-06-05 C++/Mac update: the C++ Euclidean distance transform used by Edge
 Thin Distance Type 3 now uses the Rust CLI's safer 1D EDT boundary handling.
@@ -705,9 +736,23 @@ AE `in_data->downsample_x` behavior:
 - `case_0002`: `max=0`
 - `case_0003` high-radius legacy: `max=1`, `nonzero_px=10753`
 - `case_0004`: `max=0`
-- `case_0005`: `max=1`, `nonzero_px=1`
+- `case_0005`: `max=0` after non-Legacy writeback was temporarily split to
+  round-to-nearest-even (`nearbyint`/`nearbyintf`); keep this as a compatibility
+  shim, not the final binary fact, because the Windows AEX writeback constant
+  at `DAT_18000d24c` is exactly `0.5` and decomp emits `floorf(value + 0.5)`
 - `case_0006`: `max=1`, `nonzero_px=6`
 - `case_0007` legacy: `max=1`, `nonzero_px=3`
+
+2026-06-19 OLMBlur trace note: `OLMBLUR_TRACE_PIXELS` can now dump the
+post-blur/pre-writeback RGB values for selected CLI coordinates, including `%a`
+hex-float values. Matching the AEX non-Legacy radius path (`pow(double,double)`
+followed by float sigma) reduces normalized `case_0006` from 6 residual pixels
+to 1. The remaining `case_0006` red pixel is exactly `185.5` (`0x1.73p+7`) at
+`(498,940)`, while `case_0007` includes two red pixels just below `.5`
+(`250.499954`, `250.499985`) and one top-left Legacy border spill
+(`1.49396968`). The next OLMBlur work should inspect repeat-10
+accumulation/writeback ordering and Legacy border ownership against asm/runtime
+facts before changing production rounding again.
 
 Tolerance policy is now encoded in `refs/scripts/smoke_olmblur_cli.py`
 (`max-diff=1`, `mean=0.01`, `nonzero<=3.0%`). The CLI-verified downsample

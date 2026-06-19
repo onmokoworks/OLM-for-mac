@@ -52,7 +52,16 @@ def extract_if_zip(source: Path, dest: Path) -> Path:
     if not source.exists() or not zipfile.is_zipfile(source):
         raise ValueError(f"not a directory or zip: {source}")
     with zipfile.ZipFile(source) as archive:
-        archive.extractall(dest)
+        for member in archive.infolist():
+            normalized = member.filename.replace("\\", "/")
+            if not normalized or normalized.endswith("/"):
+                continue
+            if normalized.startswith("/") or ".." in Path(normalized).parts:
+                raise ValueError(f"unsafe zip member: {member.filename}")
+            target = dest / normalized
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with archive.open(member) as src, target.open("wb") as out:
+                shutil.copyfileobj(src, out)
     visible_children = [
         path
         for path in dest.iterdir()
@@ -138,6 +147,36 @@ def find_pixel_result(result_root: Path, request_id: str, request_zip: Path) -> 
         if any(alias in stem or alias in name for alias in aliases):
             if path.is_dir() or (path.is_file() and zipfile.is_zipfile(path)):
                 candidates.append(path)
+    exact_candidates = [
+        path for path in candidates
+        if path.stem.lower() == request_id.lower() or path.name.lower() == request_id.lower()
+    ]
+    exact_alias_candidates = [
+        path for path in candidates
+        if path.stem.lower() in aliases or path.name.lower() in aliases
+    ]
+    exact_png_candidates = [
+        path for path in exact_candidates
+        if any(part.lower() in {"png", "pngs", "candidate", "rendered", "output"} for part in path.parts)
+    ]
+    if len(exact_png_candidates) == 1:
+        return exact_png_candidates[0]
+    if len(exact_candidates) == 1:
+        return exact_candidates[0]
+    exact_alias_png_candidates = [
+        path for path in exact_alias_candidates
+        if any(part.lower() in {"png", "pngs", "candidate", "rendered", "output"} for part in path.parts)
+    ]
+    if len(exact_alias_png_candidates) == 1:
+        return exact_alias_png_candidates[0]
+    if len(exact_alias_candidates) == 1:
+        return exact_alias_candidates[0]
+    png_candidates = [
+        path for path in candidates
+        if any(part.lower() in {"png", "pngs", "candidate", "rendered", "output"} for part in path.parts)
+    ]
+    if len(png_candidates) == 1:
+        return png_candidates[0]
     if len(candidates) == 1:
         return candidates[0]
 
@@ -167,6 +206,14 @@ def find_validation_jsons(result_root: Path) -> list[Path]:
     return sorted(template_matches)
 
 
+def is_host_validation_json(path: Path) -> bool:
+    try:
+        data = load_json(path)
+    except Exception:
+        return False
+    return data.get("kind") == "olm_ae_host_validation_result"
+
+
 def run(cmd: list[str], root: Path) -> int:
     print("$ " + " ".join(cmd), flush=True)
     return subprocess.run(cmd, cwd=root).returncode
@@ -192,6 +239,8 @@ def main() -> int:
         checks = 0
         failures = 0
         for validation_json in find_validation_jsons(result_root):
+            if not is_host_validation_json(validation_json):
+                continue
             cmd = [sys.executable, "scripts/verify_ae_validation_result.py", str(validation_json)]
             if args.require_all_pass:
                 cmd.append("--require-all-pass")

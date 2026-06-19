@@ -48,6 +48,12 @@ refs/diff/
 refs/reports/
 refs/runs/
 refs/win_references/
+refs/runtime_trace_packages/
+handoff/
+handoffs/
+refs/upstream_official/**/zips/
+refs/upstream_official/**/listings/
+refs/upstream_official/**/extracted/
 
 # External local tools
 tools/GhidraMCP/

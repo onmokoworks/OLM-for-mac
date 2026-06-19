@@ -17,7 +17,8 @@ def main() -> int:
         [
             sys.executable,
             "refs/scripts/package_reference_requests.py",
-            "--pending",
+            "--only",
+            "kirakira_single_ray_20260606",
             "--output",
             str(output),
         ],
@@ -51,7 +52,6 @@ def main() -> int:
             sys.executable,
             "refs/scripts/verify_reference_request_package.py",
             str(output),
-            "--expect-pending",
         ],
         cwd=repo,
         text=True,

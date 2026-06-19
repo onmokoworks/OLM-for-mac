@@ -1,0 +1,147 @@
+# Source: OLMColorKey/OLMColorKey/doc/OLMColorKeyUserManual.pdf
+
+
+--- page 1 ---
+OLM Open Tools OLM Color Keyユーザーマニュアル
+OLM Open Tools
+OLM Color Key
+ユーザーマニュアル
+オー・エル・エム・デジタル
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved. 1
+
+
+--- page 2 ---
+OLM Open Tools OLM Color Keyユーザーマニュアル
+目次
+1. はじめに 4
+1.1. 対応している環境 4
+1.2. インストール方法 4
+2. OLM Color Keyの適用方法 4
+3. OLM Color keyのパラメータ 4
+4. その他 8
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved. 2
+
+
+--- page 3 ---
+OLM Open Tools OLM Color Keyユーザーマニュアル
+著作権・使用許諾について
+OLM Open Tools は Apache License Version 2.0 に基づいてライセンスされます。
+更新履歴
+2014/10/08 初版作成
+2014/12/22 第2版作成
+2015/08/31 第3版作成
+2017/11/02 ライセンス規約変更
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved. 3
+
+
+--- page 4 ---
+OLM Open Tools OLM Color Keyユーザーマニュアル
+1. はじめに
+OLM Color Keyは、レイヤーのアルファチャンネルを変更し指定した色を表示させないカラーキーエフェクトと、指
+定された色のみを表示させるカラーキープエフェクトをかけることが可能なAdobe® After Effects®用のエフェクト
+プラグインです。
+図 1 (左)元画像 (中央)カラーキーエフェクト（右）カラーキープエフェクト
+1.1. 対応している環境
+OLM Open Toolsのウェブサイトを参照ください。
+1.2. インストール方法
+OLM Open Toolsサイトよりダウンロードしたzipファイルには、表 1に示すファイルが収められています。OLM
+Color Keyをインストールするには、プラグインファイル「OLMColorKey.aex」(Windowsの場合)か「
+OLMColorKey.plugin.zip」を展開後に(Macの場合)After Effectsのプラグインディレクトリにコピーしてください。
+(例：Winの場合 C:\Program Files\Adobe\Adobe After Effects 2022\Support Files\Plug-ins\OLM）
+フォルダ名 ファイル名 説明
+Plugins\[32/64]\[バージョン] OLMColorKey.aex 各OS、AEバージョンに対応した
+OLMColorKey.plugin.zip プラグイン本体です。
+doc OLMColorKeyUserManual.pdf OLM Color Keyのユーザーマ
+ニュアルです。このファイルで
+す。
+表 1：zipファイル内に収められているファイル
+2. OLM Color Keyの適用方法
+他のエフェクトと同じようにメニューバーの「エフェクト >> OLM Plug-ins >> OLM Color Key」と選択することで適
+用できます。
+3. OLM Color Keyのパラメータ
+OLM Color Keyには、以下に示すパラメータがあります。
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved. 4
+
+
+--- page 5 ---
+OLM Open Tools OLM Color Keyユーザーマニュアル
+図 2 OLM Color Keyエフェクトのパラメータ
+（デフォルトではThreshold Paramters, EdgeThin, Edge Blurのトピックは閉じています）
+● Color Keep－オフにするとColorで指定した色が取り除かれます(カラーキーエフェクト)。オンにするとColor
+で指定した色のみが残ります（カラーキープエフェクト）。取り除かれた色は透明になり、下のレイヤーが見え
+るようになります（図３）。
+図 3 （左）Color Keepオフ（右）Color Keepオン
+● Threshold－ ユーザが選択した色に対するキーイングの厳密さを指定できます。設定可能な値は「0.0」か
+ら「1.0」までで、1.0が選択された色空間内での最大距離に相当します。
+● Threshold Parameters－キーイングの設定を変更できます。設定可能なパラメータは以下の通りです。
+Premultiplied Color－オンにすることで、レイヤーのRGB値にエフェクト適用後のアルファチャンネルの値
+を乗算します。たとえば図4左のように中央に水色（RGBA = 0.0, 1.0, 1.0, 1.0）、左上に緑色（RGBA = 0.0,
+1.0, 0.0, 1.0）、左下に半透明の緑色（RGBA = 0.0, 1.0, 0.0, 0.5）の単色レイヤーを重ねた32bit画像を元
+画像としたときに、緑色（RGB = 0.0, 1.0 ,0.0)を指定すると、通常は図５の中図のようにレイヤー中の半透
+明の緑色（RGBA = 0.0, 1.0, 0.0, 0.5)もエフェクト対象色になりますが、この機能を使用すると図4右のよう
+に対象色にならなくなります。
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved. 5
+
+
+--- page 6 ---
+OLM Open Tools OLM Color Keyユーザーマニュアル
+図 ４(左)元画像（中央) Premultiplied Color 機能 OFF (右) Premultiplied Color 機能 ON
+Color Space－閾値処理に用いる色空間を変更できます。RGB, HSV, Lab, YUV, YCrCb色空間から選択できま
+す。
+Force Lower Precision－閾値処理の精度を下げてキーイングできます。Full(元と同じ精度), 16bit, 8bit
+精度をサポートしており、例えば、レイヤーとキーイングカラーの色深度が異なる場合に、PresicionをFullか
+ら16/8bit へ下げることで正しくキーイングされるようになります。
+Per Color －オンにすることでユーザが選択した色に対するキーイングの厳密さを指定できます。
+Per Component －オンにすることでユーザが選択した色の各要素に対するキーイングの厳密さを指定で
+きます。
+● Edge Thin－カラーキーやカラーキープにより取り除かれた色と残された色の境界（エッジ）の幅を調整でき
+ます。以下の二つのパラメータを指定することができます。
+Amount －エッジの太さ設定できます。値を大きくすることでエッジが太くなります。負の値を設定した場合
+には逆にエッジが細くなります。設定可能な値は「-4000.0」から「4000.0」までです。ただし、-100以下、100
+以上の値を設定する場合は、数値を左右にドラッグするか、テキストボックスに直接数値を入力して下さい。
+図 ５ EdgeThinのAmount変更の様子。(左) 100（右）400
+Distance Type －エッジの太さの計算に用いられる距離を変更できます。「Box」「Approximate」「
+Euclidean」の３つの距離から選択できます。それぞれ図６のような違いがあります。
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved. 6
+
+
+--- page 7 ---
+OLM Open Tools OLM Color Keyユーザーマニュアル
+図６：Distance Typeによる結果の違い （左）Box (中央) Approximate (右) Euclidean
+（黒色は現在キーイングされている領域を表す）
+● Edge Blur－カラーキーやカラーキープエフェクトにより取り除かれた色と残された色の境界をぼかします。
+ぼかしは境界付近のアルファ値を変更することにより実現しています。以下の３つのパラメータを指定できま
+す。
+Amount－ぼかす範囲を設定できます。値を大きくすることでぼかしの範囲が拡がります。設定可能な値は「
+0.0」から「100.0」までです。ただし、100以上の値を設定する場合は、数値を左右にドラッグするか、テキスト
+ボックスに直接数値を入力して下さい。
+図 7 Edge BlurのAmount変更の様子。(左)100（右）400
+DistanceType－ぼかしの計算に用いられる距離を変更できます。「Box」「Approximate」「Euclidean」の３
+つの距離から選択できます。
+Direction －残された色と取り除かれた色の境界からその内側、外側または両側のアルファ値をぼかします
+（図８）
+図８：Blur Modeによる結果の違い （左）Inside (中央) Outside (右) Around
+（黒色は現在キーイングされている領域を表します）
+● Number of Colors－キーイングしたい色の数を設定できます。この数を増やすことでColorパラメータを追
+加することができます。指定可能な値は「０」から「25」までです。
+● Enable Replace－Color Keepにチェックが入っている状態でこれをオンにした場合、色の置換を許可しま
+す。オフにすると色の入れ替えに関するパラメータが非表示になります。
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved. 7
+
+
+--- page 8 ---
+OLM Open Tools OLM Color Keyユーザーマニュアル
+● Use Color XXX－オンにした場合、「ColorXXX」で選択された色をキーあるいはキープします。
+● Use Replace Color XXX－Color Keepにチェックが入っている状態で、個別の色の置き換えのオン・オフ
+を指定することができます。オンにした場合、「ColorXXX」で選択された色を「Replace Color XXX」 で指定
+された色に置き換えます。デフォルトでは非表示になっておりEnable Replace がオンのときのみ表示されま
+す。
+● Color XXX－キーあるいはキープしたい色を指定します。
+● Replace Color XXX－置き換える色を指定します。
+図９：色の置き換え （左）原画像 (右) 置き換え後
+（この例では色を置き換えたレイヤーを元のレイヤーの上に重ねています）
+4. その他
+正常に動作しない、バグを発見した、もしくは機能追加要望などがある場合は、下記のメールアドレス宛にご連絡
+ください。
+opentools@olm.co.jp
+Ⓒ Copyright 2014-2022 OLM Digital, Inc. All rights reserved. 8

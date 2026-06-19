@@ -50,10 +50,10 @@ def clean_zip_names(path: Path) -> list[str]:
     try:
         with zipfile.ZipFile(path) as archive:
             return [
-                name
+                name.replace("\\", "/")
                 for name in archive.namelist()
-                if "__MACOSX" not in Path(name).parts
-                and not any(part.startswith("._") for part in Path(name).parts)
+                if "__MACOSX" not in Path(name.replace("\\", "/")).parts
+                and not any(part.startswith("._") for part in Path(name.replace("\\", "/")).parts)
             ]
     except Exception:
         return []
@@ -62,7 +62,11 @@ def clean_zip_names(path: Path) -> list[str]:
 def read_zip_json(path: Path, name: str) -> dict[str, Any] | None:
     try:
         with zipfile.ZipFile(path) as archive:
-            data = json.loads(archive.read(name).decode("utf-8"))
+            member_name = next(
+                (member for member in archive.namelist() if member.replace("\\", "/") == name),
+                name,
+            )
+            data = json.loads(archive.read(member_name).decode("utf-8"))
     except Exception:
         return None
     return data if isinstance(data, dict) else None
@@ -74,8 +78,26 @@ def classify_zip(path: Path) -> tuple[str, list[str]]:
         return ("unknown", [])
 
     hints: list[str] = []
+    if any(name.endswith("AE_VALIDATION_EXACT_REPORT.json") for name in names):
+        return ("ae-pixel-validation-return", ["contains AE_VALIDATION_EXACT_REPORT.json"])
+    if any("/ae_pixel_validation_return/returns/" in f"/{name}" and name.endswith("_return.zip") for name in names):
+        return ("ae-pixel-validation-return", ["contains nested AE pixel return zips"])
     if any(name.endswith("AE_PIXEL_VALIDATION_REQUEST.md") for name in names):
         return ("ae-pixel-validation-request", ["contains AE_PIXEL_VALIDATION_REQUEST.md"])
+    for name in names:
+        if Path(name).name != "windows_action_bundle_manifest.json":
+            continue
+        data = read_zip_json(path, name)
+        kind = data.get("kind") if data else None
+        if kind == "olm_windows_action_bundle":
+            return ("windows-action-bundle", [f"{name}: {kind}"])
+    for name in names:
+        if Path(name).name != "runtime_trace_package_manifest.json":
+            continue
+        data = read_zip_json(path, name)
+        kind = data.get("kind") if data else None
+        if kind == "olm_runtime_trace_request_package":
+            return ("runtime-trace-request-package", [f"{name}: {kind}"])
     if any(name.endswith("manifest.json") for name in names):
         for name in names:
             if not name.endswith("manifest.json"):
@@ -97,6 +119,17 @@ def classify_zip(path: Path) -> tuple[str, list[str]]:
         kind = data.get("kind") if data else None
         if kind == "olm_ae_host_validation_result":
             return ("ae-host-return", [f"{name}: {kind}"])
+    for name in names:
+        if not name.endswith(".json"):
+            continue
+        data = read_zip_json(path, name)
+        kind = data.get("kind") if data else None
+        if (
+            kind == "olm_runtime_trace_result"
+            or (data and isinstance(data.get("runtime_trace_results"), list))
+            or (data and isinstance(data.get("results"), list))
+        ):
+            return ("runtime-trace-return", [f"{name}: {kind or 'runtime_trace_results'}"])
     if any(name.endswith("AE_PIXEL_VALIDATION/request_manifest.json") for name in names):
         return ("mac-plugin-package", ["contains AE_PIXEL_VALIDATION requests"])
     if any(name.endswith("reference_manifest.json") for name in names):
@@ -117,14 +150,27 @@ def suggested_command(kind: str, path: Path) -> str:
         )
     if kind == "ae-host-return":
         return f"python3 scripts/intake_olm_return.py {path_text!r} --require-all-pass"
+    if kind == "ae-pixel-validation-return":
+        return f"python3 scripts/intake_olm_return.py {path_text!r} --kind ae-pixel-validation"
     if kind == "olm-handoff-package":
         return f"python3 scripts/verify_olm_handoff_package.py {path_text!r}"
     if kind == "mac-plugin-package":
         return f"python3 scripts/verify_mac_plugin_package.py {path_text!r}"
     if kind == "ae-pixel-validation-request":
         return f"send {path_text!r} to the AE host for pixel validation"
+    if kind == "windows-action-bundle":
+        return f"send {path_text!r} to the Windows helper"
     if kind == "reference-request-package":
         return "send this package to the Windows AE renderer"
+    if kind == "runtime-trace-request-package":
+        return "send this package to the Windows debugger/helper"
+    if kind == "runtime-trace-return":
+        return (
+            f"python3 scripts/intake_olm_return.py {path_text!r} "
+            "--runtime-summary-json refs/reports/runtime_trace_summary.json "
+            "--runtime-summary-md refs/reports/runtime_trace_summary.md "
+            "--runtime-comparison-dir refs/reports/runtime_trace_comparisons"
+        )
     return ""
 
 

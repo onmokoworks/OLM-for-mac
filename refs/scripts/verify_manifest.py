@@ -132,7 +132,7 @@ def main():
     diff_dir = Path(args.diff_dir).resolve()
     report_dir = Path(args.report_dir).resolve()
 
-    with manifest_path.open(encoding="utf-8") as handle:
+    with manifest_path.open(encoding="utf-8-sig") as handle:
         manifest = json.load(handle)
 
     ok = fail = missing = 0

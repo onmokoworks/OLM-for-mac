@@ -876,7 +876,7 @@ Image render_direct(const Image &input, const DirectionalBlurParams &params, dou
         else if (rgb_normalize == "kernel-sum") denom = std::max(kernel_sum, 1.0e-8f);
         const size_t dst = static_cast<size_t>(p) * 4;
         for (int c = 0; c < 3; ++c) {
-            float rgb = denom > 1.0e-8f ? accum_rgb[static_cast<size_t>(p) * 3 + c] / denom : 0.0f;
+            float rgb = denom > 0.0f ? accum_rgb[static_cast<size_t>(p) * 3 + c] / denom : 0.0f;
             out.rgba[dst + c] = quantize(rgb * static_cast<float>(params.brightness_gain));
         }
         out.rgba[dst + 3] = quantize(accum_alpha[static_cast<size_t>(p)]);
@@ -1248,7 +1248,7 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
         const float denom = front_strength_rgb_denom ? std::max(static_cast<float>(front_strength), 1.0f)
                                                      : accum_sum[static_cast<size_t>(p)];
         const size_t dst = static_cast<size_t>(p) * 4;
-        if (denom > 1.0e-8f) {
+        if (denom > 0.0f) {
             for (int c = 0; c < 3; ++c) blurred.rgba[dst + c] = accum_rgb[static_cast<size_t>(p) * 3 + c] / denom;
         }
         blurred.rgba[dst + 3] = std::min(accum_alpha[static_cast<size_t>(p)], 1.0f);

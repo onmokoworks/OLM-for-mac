@@ -1,0 +1,168 @@
+# Source: OLMKiraKira/OLMKiraKira/doc/OLMKiraKiraUserManual.pdf
+
+
+--- page 1 ---
+OLM Open Tools OLM KiraKiraユーザーマニュアル
+OLM Open Tools
+OLM KiraKira
+ユーザーマニュアル
+オー・エル・エム・デジタル
+Ⓒ Copyright 2016-2022 OLM Digital, Inc. All rights reserved.
+1
+
+
+--- page 2 ---
+OLM Open Tools OLM KiraKiraユーザーマニュアル
+目次
+1. はじめに 4
+1.1 対応している環境 4
+1.2 インストール方法 4
+2. OLM KiraKiraの適用方法 4
+3. OLM KiraKiraのパラメータ 5
+4. その他 8
+Ⓒ Copyright 2016-2022 OLM Digital, Inc. All rights reserved.
+2
+
+
+--- page 3 ---
+OLM Open Tools OLM KiraKiraユーザーマニュアル
+著作権・使用許諾について
+OLM Open Tools は Apache License Version 2.0 に基づいてライセンスされます。
+更新履歴
+2016/06/13 初版作成
+2017/11/02 ライセンス規約変更
+Ⓒ Copyright 2016-2022 OLM Digital, Inc. All rights reserved.
+3
+
+
+--- page 4 ---
+OLM Open Tools OLM KiraKiraユーザーマニュアル
+1. はじめに
+OLM KiraKiraは、ハイライト画像に対してグローエフェクトを付けることができるプラグインです。ハイライト画像の
+アルファ・輝度・RGB＋アルファチャンネルに対する、縦・横・対角方向のブラー出力を組み合わせることにより簡
+易的に発光や煌きを表現できます。
+OLM KiraKira の適用結果
+（左：適用前、右：適用後）
+1.1. 対応している環境
+OLM Open Toolsのウェブサイトを参照ください。
+1.2. インストール方法
+OLM Open Toolsサイトよりダウンロードしたzipファイルには、下記の表に示すファイルが収められています。
+OLM KiraKiraをインストールするには、プラグインファイル「OLMKiraKira.aex」をAfter Effectsのプラグインディレ
+クトリにコピーしてください。
+(例：C:\Program Files\Adobe\Adobe After Effects 2022\Support Files\Plug-ins\OLM）
+フォルダ名 ファイル名 説明
+Plugins\64\[バージョン] OLMKiraKira.aex 各AEバージョンに対応したプラ
+グイン本体です。
+Doc OLMKiraKiraUserManual.pdf OLM KiraKiraのユーザーマニュ
+アルです。このファイルです。
+zipファイル内に収められているファイル
+2. OLM KiraKiraの適用方法
+他のエフェクトと同じようにメニューバーの「エフェクト >> OLM Plug-ins >> OLM KiraKira」と選択することで適用
+できます。
+Ⓒ Copyright 2016-2022 OLM Digital, Inc. All rights reserved.
+4
+
+
+--- page 5 ---
+OLM Open Tools OLM KiraKiraユーザーマニュアル
+3. OLM KiraKiraのパラメータ
+OLM KiraKiraには、下図に示すパラメータがあります。
+OLM KiraKiraエフェクトのパラメータ
+（Glow ColorのカラーピッカーはChannelがRGB以外の場合にアクティブになります）
+● Channel
+グローエフェクトの生成の元になるチャンネルを以下の４つから指定します
+（デフォルトはAlpha）
+- Alpha : ハイライト画像のアルファチャンネルのみを参照します。
+- Luminance: ハイライト画像の輝度情報のみを参照します。
+- RGB: RGB＋アルファの全てのチャンネルを参照します。
+- Brightness: ハイライト画像のRGBチャンネルの値のうち一番大きな値を参照します。
+Ⓒ Copyright 2016-2022 OLM Digital, Inc. All rights reserved.
+5
+
+
+--- page 6 ---
+OLM Open Tools OLM KiraKiraユーザーマニュアル
+元画像
+Channelの指定による結果の違い
+（上段左： Alpha （文字部分のアルファ値255, 黒色部分のアルファ値0）,
+上段右：Luminance 下段左:RGB, 下段：Brightness）
+● Blur Mode
+ブラーの種類を指定できます（デフォルトはApproximated Gaussian）。Boxはレンダリングは高速ですが
+Gaussianほど滑らかな見た目になりません。見た目とレンダリング時間に応じてBox~Gaussian を切り替え
+て下さい。
+- Box : ブラー（ボックス）と同じボックスブラーです。
+- Approximated Gaussian: 近似的なガウシアンブラーです。
+- Gaussian : ブラー（ガウス）と同じガウシアンブラーです。
+- Exponential : ガウスより尾が長いです。
+Ⓒ Copyright 2016-2022 OLM Digital, Inc. All rights reserved.
+6
+
+
+--- page 7 ---
+OLM Open Tools OLM KiraKiraユーザーマニュアル
+Blur Modeの指定による結果の違い
+（1段目: Box, 2段目：Approximated Gaussian, 3段目: Gaussian, 4段目: Exponential）
+● Merge Mode
+入力レイヤーとグローの合成方法を指定します。
+- add: アルファを使った重み付き和
+- premultiply: アルファを使った加重平均
+● Approximated Input
+オンにすると内部的に入力レイヤーの解像度を下げてグローエフェクトを生成するためレンダリング速度が
+向上します。（デフォルトはオフ）。ただし全体的にグローがぼやけた見た目になります。最終的な見た目とレ
+ンダリング時間に応じてオン・オフを切り替えて下さい。
+● Brightness Gain
+グローの強度を指定します。スライダーでは０～200、テキストボックスでは０～１０００の値を設定できます。
+（デフォルトは１）
+● Strength multiplier
+Channelで選択された値をソースとして使うとき、この値を使って累乗することで入力値を調整できます。
+● Fade Out
+ChannelがBrightnessまたはLuminanceの場合に使用されます。特にStrength multiplierの効果をなめら
+かにします。
+● Glow Opacity
+Ⓒ Copyright 2016-2022 OLM Digital, Inc. All rights reserved.
+7
+
+
+--- page 8 ---
+OLM Open Tools OLM KiraKiraユーザーマニュアル
+グローエフェクトの不透明度を指定します（デフォルトは100）
+● Source Opacity
+ソースレイヤの不透明度を指定します（デフォルトは100）
+● Vertical Length※
+縦方向のグローの長さを指定します。スライダーでは０～200、テキストボックスでは０～１０００の値を設定で
+きます。（デフォルトは５０）
+● Vertical Color
+垂直方向のグローの色を指定します。（デフォルトは白 (255, 255, 255) )
+● Vertical Color Ramp
+垂直方向のグローの色をランプで指定します。
+● Horizontal Length※
+横方向のグローの長さを指定します。スライダーでは０～200、テキストボックスでは０～１０００の値を設定で
+きます。（デフォルトは５０）
+● Horizontal Color
+水平方向のグローの色を指定します。（デフォルトは白)
+● Horizontal Color Ramp
+水平方向のグローの色をRampで指定します。
+● Diagonal Length※
+対角方向(Glow Rotation が0度の場合45度、135度方向)のグローの長さを指定します。スライダーでは０
+～200、テキストボックスでは０～１０００の値を設定できます。（デフォルトは0）
+● Diagonal Color
+対角方向のグローの色を指定します。（デフォルトは白）
+● Diagonal Color Ramp
+対角方向のグローの色をRampで指定します。
+● HighLight Radius※
+ハイライトの周りのグローの半径を指定します。スライダーでは０～200、テキストボックスでは０～５００の値
+を設定できます。（デフォルトは０）
+※Vertical, Horizontal, Diagonal Length, および HighLight Radiusは、値を0に設定した場合処理をスキップ
+するため計算時間がやや短くなります。不要な場合には必ず値を0に設定して下さい。
+● Highlight Color
+ハイライト周りのグローの色を指定します。（デフォルトは白）
+● Highlight Color Ramp
+ハイライト周りのグローの色をRampで指定します。
+● Glow Rotation
+グローの回転角度を指定します。（デフォルトは0度）
+4. その他
+正常に動作しない、バグを発見した、もしくは機能追加要望などがある場合は、下記のメールアドレス宛にご連絡
+ください。
+opentools@olm.co.jp
+Ⓒ Copyright 2016-2022 OLM Digital, Inc. All rights reserved.
+8

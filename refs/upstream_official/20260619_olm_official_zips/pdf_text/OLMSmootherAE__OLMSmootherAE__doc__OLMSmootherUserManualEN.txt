@@ -1,0 +1,89 @@
+# Source: OLMSmootherAE/OLMSmootherAE/doc/OLMSmootherUserManualEN.pdf
+
+
+--- page 1 ---
+OLM Open Tools OLM Smoother User Manual
+OLM Open Tools
+OLM Smoother
+User Manual
+OLM Digital, Inc.
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved.
+1
+
+
+--- page 2 ---
+OLM Open Tools OLM Smoother User Manual
+Table of Contents
+1. Introduction 4
+1.1. Supported Environment 4
+1.2. Install 4
+2. Using OLM Smoother 4
+3. OLM Smoother parameters 4
+4. Other 5
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved.
+2
+
+
+--- page 3 ---
+OLM Open Tools OLM Smoother User Manual
+Copyright, End User License Agreement
+OLM Open Tools are licensed under the Apache License, Version 2.0.
+Change Logs
+2011/08/01 First Version
+2017/11/02 Change License terms
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved.
+3
+
+
+--- page 4 ---
+OLM Open Tools OLM Smoother User Manual
+1. Introduction
+OLM Smoother is an After Effects plug-in specialized in smoothing cel animation drawings.
+Figure 1 (Left) Original Image, (Right) After OLM Smoother
+1.1. Supported Environment
+Please refer to OLM Open Tools website for a complete list of supported environment.
+1.2. Install
+The zip archive you can download from OLM OpenTools web site contains the files listed in
+Table 1. To install OLM Smoother copy the plug-in file (for windows: OLMSmoother.aex,
+for Mac: unzip OLMSmoother.plugin.zip) in A E plug-in directory
+(example:
+for windows: C:\Program Files\Adobe\Adobe After Effects 2022\Support Files\Plug-ins\OLM
+for Mac: Applications\Adobe After Effects CS3\Plug-ins\OLM)
+Folder File Name Explanation
+Plugins\[32/64/Mac] \[Version] OLMSmoother.aex The plug-in files.
+OLMSmoother.plugin.zip
+doc OLMSmoother The user manual for OLM
+UserManual.pdf Smoother
+Table 1：Content of the zip archive
+2. Using OLM Smoother
+To apply the effect, use the menu: (Effects)→(OLM Plug-ins)→(OLM Smoother)
+3. OLM Smoother parameters
+OLM Smoother parameters are as follows (Figure 2)
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved.
+4
+
+
+--- page 5 ---
+OLM Open Tools OLM Smoother User Manual
+Figure 2 OLM Smoother parameters
+● Use Color Key－When “Use Color Key” parameter is on, you can choose a color to
+key before applying OLM Smoother. Pick up the color you want to key with the “Color
+Key” parameter.
+Figure 3 (Left) Use Color Key - Off, (Right) Use Color Key - On
+● Color Key － The color to key when “Use Color Key” is On.
+● Do Smooth Range－When the layer you want to apply OLM Smoother contains
+gradations, the lines does not get as smooth as you expect. By adding tuning the
+“Smooth Range”, you can get smoother lines in that case.
+Figure 4 (Left) Do Smooth Range=0 , (Right) Do Smooth Range=6
+4. Other
+If you find a bug, have a feature request, or for any kind of feedback feel free to contact us
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved.
+5
+
+
+--- page 6 ---
+OLM Open Tools OLM Smoother User Manual
+at the following mail address:
+opentools@olm.co.jp
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved.
+6

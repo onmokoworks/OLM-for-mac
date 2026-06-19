@@ -14,10 +14,12 @@ from pathlib import Path
 from smoke_ae_validation_result_verifier import base_result
 from smoke_import_and_check_win_reference import write_synthetic_result
 from smoke_olm_handoff_package_verifier import (
+    PIXEL_REQUESTS,
     make_handoff_package,
     make_mac_package,
     make_reference_package,
 )
+from smoke_runtime_trace_return import make_return_zip as make_runtime_trace_return_zip
 
 
 def extract_zip(source: Path, dest: Path) -> Path:
@@ -49,19 +51,48 @@ def make_ae_host_return(repo: Path, tmp_path: Path) -> tuple[Path, Path]:
         json.dumps(base_result(), indent=2),
         encoding="utf-8",
     )
-    for target_name, zip_name in (
-        ("olmblur", "olmblur_request.zip"),
-        ("olmcolorkey", "olmcolorkey_request.zip"),
-        ("olmtoondilate", "olmtoondilate_request.zip"),
-        ("olmdistancegradation", "olmdistancegradation_request.zip"),
-    ):
-        copy_expected_as_returned(mac_root / "AE_PIXEL_VALIDATION" / zip_name, result_root, target_name)
+    for _plugin_name, _target_name, request_id, zip_name in PIXEL_REQUESTS:
+        copy_expected_as_returned(mac_root / "AE_PIXEL_VALIDATION" / zip_name, result_root, request_id)
 
     result_zip = tmp_path / "ae_host_return.zip"
     with zipfile.ZipFile(result_zip, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         for path in result_root.rglob("*"):
             archive.write(path, path.relative_to(result_root))
     return handoff_zip, result_zip
+
+
+def zip_dir(source_dir: Path, output_zip: Path) -> None:
+    with zipfile.ZipFile(output_zip, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for path in source_dir.rglob("*"):
+            if path.is_file():
+                archive.write(path, path.relative_to(source_dir))
+
+
+def make_ae_pixel_validation_bundle_return(repo: Path, tmp_path: Path) -> Path:
+    build_root = tmp_path / "ae_pixel_bundle_build"
+    build_root.mkdir()
+    mac_zip = make_mac_package(repo, build_root)
+    mac_root = extract_zip(mac_zip, build_root / "mac_for_ae_pixel_bundle")
+    bundle_root = build_root / "ae_pixel_bundle"
+    requests_dir = bundle_root / "ae_pixel_validation"
+    returns_dir = bundle_root / "ae_pixel_validation_return" / "returns"
+    requests_dir.mkdir(parents=True)
+    returns_dir.mkdir(parents=True)
+    for _plugin_name, _target_name, request_id, zip_name in PIXEL_REQUESTS:
+        request_zip = mac_root / "AE_PIXEL_VALIDATION" / zip_name
+        shutil.copy2(request_zip, requests_dir / zip_name)
+        result_dir = build_root / f"returned_{request_id}"
+        copy_expected_as_returned(request_zip, result_dir.parent, result_dir.name)
+        zip_dir(result_dir, returns_dir / f"{request_id}_return.zip")
+    report_dir = bundle_root / "ae_pixel_validation_return" / "reports"
+    report_dir.mkdir()
+    report_dir.joinpath("AE_VALIDATION_EXACT_REPORT.json").write_text(
+        json.dumps({"kind": "olm_action_bundle_ae_validation_exact_report", "requests": []}, indent=2),
+        encoding="utf-8",
+    )
+    bundle_zip = tmp_path / "ae_pixel_validation_bundle_return.zip"
+    zip_dir(bundle_root, bundle_zip)
+    return bundle_zip
 
 
 def make_windows_ref_return(tmp_path: Path) -> tuple[Path, Path, Path]:
@@ -143,6 +174,26 @@ def main() -> int:
         if rc != 0:
             return rc
 
+        ae_pixel_bundle = make_ae_pixel_validation_bundle_return(repo, tmp_path)
+        ae_pixel_proc = run_capture(
+            [
+                sys.executable,
+                str(intake),
+                str(ae_pixel_bundle),
+                "--run-dir",
+                str(tmp_path / "ae_pixel_bundle_verify_run"),
+            ],
+            repo,
+        )
+        if ae_pixel_proc.returncode != 0:
+            return ae_pixel_proc.returncode
+        if "[INFO] detected return kind: ae-pixel-validation" not in ae_pixel_proc.stdout:
+            print("[FAIL] intake did not auto-detect AE pixel validation return", file=sys.stderr)
+            return 1
+        if "[OK] AE pixel validation return verified" not in ae_pixel_proc.stdout:
+            print("[FAIL] intake did not verify bundled AE pixel validation returns", file=sys.stderr)
+            return 1
+
         proc = run_capture(
             [
                 sys.executable,
@@ -175,6 +226,48 @@ def main() -> int:
         subagent_md = tmp_path / "intake_dispatch" / "covered" / "01_synthetic_intake_20260606" / "SUBAGENT.md"
         if not subagent_md.exists() or "synthetic_intake_20260606" not in subagent_md.read_text(encoding="utf-8"):
             print("[FAIL] intake did not write dispatch SUBAGENT.md", file=sys.stderr)
+            return 1
+
+        runtime_package = tmp_path / "runtime_request.zip"
+        package_proc = run_capture(
+            [
+                sys.executable,
+                "scripts/package_runtime_trace_requests.py",
+                "--output",
+                str(runtime_package),
+            ],
+            repo,
+        )
+        if package_proc.returncode != 0:
+            return package_proc.returncode
+        runtime_return_zip = tmp_path / "runtime_trace_return.zip"
+        make_runtime_trace_return_zip(runtime_return_zip, member="runtime_trace_return/runtime_trace_result.json")
+        runtime_summary = tmp_path / "runtime_intake_summary.json"
+        runtime_markdown = tmp_path / "runtime_intake_summary.md"
+        runtime_proc = run_capture(
+            [
+                sys.executable,
+                str(intake),
+                str(runtime_return_zip),
+                "--runtime-package",
+                str(runtime_package),
+                "--runtime-summary-json",
+                str(runtime_summary),
+                "--runtime-summary-md",
+                str(runtime_markdown),
+            ],
+            repo,
+        )
+        if runtime_proc.returncode != 0:
+            return runtime_proc.returncode
+        if "[INFO] detected return kind: runtime-trace" not in runtime_proc.stdout:
+            print("[FAIL] intake did not auto-detect runtime trace return", file=sys.stderr)
+            return 1
+        if not runtime_summary.exists():
+            print("[FAIL] intake did not write runtime trace summary", file=sys.stderr)
+            return 1
+        if not runtime_markdown.exists():
+            print("[FAIL] intake did not write runtime trace Markdown summary", file=sys.stderr)
             return 1
 
     print("[OK] OLM return intake smoke")

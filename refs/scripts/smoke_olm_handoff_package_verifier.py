@@ -23,6 +23,18 @@ PIXEL_REQUESTS = [
         "ae_pixel_olmdistancegradation_20260606",
         "olmdistancegradation_request.zip",
     ),
+    (
+        "OLMDistanceGradationExtended",
+        "olmdistancegradation_extended",
+        "ae_pixel_olmdistancegradation_extended_20260618",
+        "olmdistancegradation_extended_request.zip",
+    ),
+    (
+        "OLMDistanceGradationBlur",
+        "olmdistancegradation_blur",
+        "ae_pixel_olmdistancegradation_blur_20260618",
+        "olmdistancegradation_blur_request.zip",
+    ),
 ]
 
 
@@ -101,7 +113,8 @@ def make_reference_package(repo: Path, tmp_path: Path) -> Path:
         [
             sys.executable,
             str(repo / "refs" / "scripts" / "package_reference_requests.py"),
-            "--pending",
+            "--only",
+            "kirakira_single_ray_20260606",
             "--output",
             str(zip_path),
         ],
@@ -116,14 +129,43 @@ def make_reference_package(repo: Path, tmp_path: Path) -> Path:
     return zip_path
 
 
-def make_handoff_package(tmp_path: Path, mac_zip: Path, reference_zip: Path) -> Path:
+def make_runtime_trace_package(tmp_path: Path) -> Path:
+    zip_path = tmp_path / "synthetic_runtime_trace_requests.zip"
+    manifest = {
+        "kind": "olm_runtime_trace_request_package",
+        "schema": 1,
+        "packaged_at": "2026-06-06T00:00:00Z",
+        "repo_root_name": "OLM as",
+        "runtime_actions": [
+            {
+                "request_id": "radialblur_inner_runtime_trace_20260618",
+                "plugin_area": "OLMRadialBlur Inner runtime trace",
+                "mode": "external-trace",
+                "command": "trace radialblur",
+                "stop_condition": "runtime trace required",
+            }
+        ],
+        "entrypoint": "notes/WINDOWS_RUNTIME_TRACE_REQUESTS.md",
+    }
+    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr("README_RUNTIME_TRACE.md", "runtime trace request\n")
+        archive.writestr("runtime_trace_package_manifest.json", json.dumps(manifest, indent=2))
+        archive.writestr("next_reference_actions_snapshot.json", json.dumps({"covered_actions": []}))
+        archive.writestr("notes/WINDOWS_RUNTIME_TRACE_REQUESTS.md", "# runtime trace\n")
+    return zip_path
+
+
+def make_handoff_package(tmp_path: Path, mac_zip: Path, reference_zip: Path, runtime_trace_zip: Path | None = None) -> Path:
     root = tmp_path / "OLM_Port_Handoff"
     root.mkdir()
     (root / "README.md").write_text("handoff readme\n", encoding="utf-8")
     mac_target = root / "olm_mac_plugins_Debug_clean.zip"
     ref_target = root / "olm_reference_requests_pending.zip"
+    runtime_target = root / "olm_runtime_trace_requests.zip"
     mac_target.write_bytes(mac_zip.read_bytes())
     ref_target.write_bytes(reference_zip.read_bytes())
+    if runtime_trace_zip is not None:
+        runtime_target.write_bytes(runtime_trace_zip.read_bytes())
     next_actions = {
         "next_action": None,
         "covered_actions": [],
@@ -152,6 +194,8 @@ def make_handoff_package(tmp_path: Path, mac_zip: Path, reference_zip: Path) -> 
         "git_commit": "0" * 40,
         "git_dirty": False,
         "reference_requests_zip": ref_target.name,
+        "runtime_trace_requests_zip": runtime_target.name if runtime_trace_zip is not None else "",
+        "runtime_trace_requests_mode": "ready" if runtime_trace_zip is not None else "none",
         "mac_plugins_zip": mac_target.name,
         "next_reference_actions_json": "next_reference_actions.json",
         "mac_build_rebuilt": False,
@@ -172,7 +216,8 @@ def main() -> int:
         tmp_path = Path(tmp)
         mac_zip = make_mac_package(repo, tmp_path)
         reference_zip = make_reference_package(repo, tmp_path)
-        handoff_zip = make_handoff_package(tmp_path, mac_zip, reference_zip)
+        runtime_trace_zip = make_runtime_trace_package(tmp_path)
+        handoff_zip = make_handoff_package(tmp_path, mac_zip, reference_zip, runtime_trace_zip)
 
         proc = subprocess.run(
             [sys.executable, str(verifier), str(handoff_zip)],

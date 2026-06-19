@@ -74,6 +74,7 @@ struct Options {
     std::string box_anchor_mode = "opencv";
     std::string box_normalize = "true";
     std::string box_output_depth = "float";
+    std::string box_accum_mode = "double";
     std::string rotate_filter = "bilinear";
     std::string rotate_border = "constant";
     std::string warp_mode = "aex-two-temp";
@@ -83,6 +84,9 @@ struct Options {
     std::string crop_mode = "floor";
     std::string glow_normalize = "union";
     std::string aggregation_mode = "current";
+    bool diag_remap_bilinear_f32 = false;
+    bool diag_warpaffine_map_f32 = false;
+    bool diag_warpaffine_remap_f32 = false;
 };
 
 struct Json {
@@ -542,7 +546,8 @@ std::vector<float> direction_box_blur(
     const std::string &filter_border,
     const std::string &box_anchor_mode,
     const std::string &box_normalize,
-    const std::string &box_output_depth
+    const std::string &box_output_depth,
+    const std::string &box_accum_mode
 ) {
     if (length <= 1) return input;
     std::vector<float> src = input;
@@ -560,13 +565,25 @@ std::vector<float> direction_box_blur(
         std::fill(dst.begin(), dst.end(), 0.0f);
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < width; ++x) {
-                double sum = 0.0;
-                for (int k = -left; k <= right; ++k) {
-                    int sx = border_index(x + dx * k, width, filter_border);
-                    int sy = border_index(y + dy * k, height, filter_border);
-                    sum += src[static_cast<size_t>(sy) * width + sx];
+                double v = 0.0;
+                if (box_accum_mode == "float") {
+                    float sum = 0.0f;
+                    for (int k = -left; k <= right; ++k) {
+                        int sx = border_index(x + dx * k, width, filter_border);
+                        int sy = border_index(y + dy * k, height, filter_border);
+                        sum += src[static_cast<size_t>(sy) * width + sx];
+                    }
+                    v = box_normalize == "false" ? static_cast<double>(sum)
+                                                  : static_cast<double>(sum * (1.0f / static_cast<float>(length)));
+                } else {
+                    double sum = 0.0;
+                    for (int k = -left; k <= right; ++k) {
+                        int sx = border_index(x + dx * k, width, filter_border);
+                        int sy = border_index(y + dy * k, height, filter_border);
+                        sum += src[static_cast<size_t>(sy) * width + sx];
+                    }
+                    v = box_normalize == "false" ? sum : sum / static_cast<double>(length);
                 }
-                double v = box_normalize == "false" ? sum : sum / static_cast<double>(length);
                 if (box_output_depth == "u8-each") {
                     v = std::round(clamp01(static_cast<float>(v)) * 255.0) / 255.0;
                 } else if (box_output_depth == "u16-each") {
@@ -642,6 +659,338 @@ float sample_bilinear_constant_fixed5(const std::vector<float> &input, int width
     double a = v00 * (1.0 - tx) + v10 * tx;
     double b = v01 * (1.0 - tx) + v11 * tx;
     return static_cast<float>(a * (1.0 - ty) + b * ty);
+}
+
+float quantize_u16_float(float value) {
+    return static_cast<float>(std::round(clamp01(value) * 65535.0f) / 65535.0f);
+}
+
+float sample_bilinear_constant_fixed5_u16(const std::vector<float> &input, int width, int height, double x, double y) {
+    return quantize_u16_float(sample_bilinear_constant_fixed5(input, width, height, x, y));
+}
+
+int floor_div_1024(int value) {
+    if (value >= 0) return value / 1024;
+    return -(((-value) + 1023) / 1024);
+}
+
+float sample_bilinear_constant_fixed1024_floor5(const std::vector<float> &input, int width, int height, double x, double y) {
+    const int ix = static_cast<int>(std::llround(x * 1024.0));
+    const int iy = static_cast<int>(std::llround(y * 1024.0));
+    const int x0 = floor_div_1024(ix);
+    const int y0 = floor_div_1024(iy);
+    const int fx = (ix - x0 * 1024) >> 5;
+    const int fy = (iy - y0 * 1024) >> 5;
+    const int x1 = x0 + 1;
+    const int y1 = y0 + 1;
+    const double tx = static_cast<double>(fx) / 32.0;
+    const double ty = static_cast<double>(fy) / 32.0;
+    float v00 = sample_zero(input, width, height, x0, y0);
+    float v10 = sample_zero(input, width, height, x1, y0);
+    float v01 = sample_zero(input, width, height, x0, y1);
+    float v11 = sample_zero(input, width, height, x1, y1);
+    double a = v00 * (1.0 - tx) + v10 * tx;
+    double b = v01 * (1.0 - tx) + v11 * tx;
+    return static_cast<float>(a * (1.0 - ty) + b * ty);
+}
+
+float sample_bilinear_constant_fixed1024_round5(const std::vector<float> &input, int width, int height, double x, double y) {
+    const int ix = static_cast<int>(std::llround(x * 1024.0));
+    const int iy = static_cast<int>(std::llround(y * 1024.0));
+    int x0 = floor_div_1024(ix);
+    int y0 = floor_div_1024(iy);
+    int fx = ((ix - x0 * 1024) + 16) >> 5;
+    int fy = ((iy - y0 * 1024) + 16) >> 5;
+    if (fx >= 32) {
+        fx = 0;
+        ++x0;
+    }
+    if (fy >= 32) {
+        fy = 0;
+        ++y0;
+    }
+    const int x1 = x0 + 1;
+    const int y1 = y0 + 1;
+    const double tx = static_cast<double>(fx) / 32.0;
+    const double ty = static_cast<double>(fy) / 32.0;
+    float v00 = sample_zero(input, width, height, x0, y0);
+    float v10 = sample_zero(input, width, height, x1, y0);
+    float v01 = sample_zero(input, width, height, x0, y1);
+    float v11 = sample_zero(input, width, height, x1, y1);
+    double a = v00 * (1.0 - tx) + v10 * tx;
+    double b = v01 * (1.0 - tx) + v11 * tx;
+    return static_cast<float>(a * (1.0 - ty) + b * ty);
+}
+
+float sample_bilinear_constant_fixed1024_round5_u16(const std::vector<float> &input, int width, int height, double x, double y) {
+    return quantize_u16_float(sample_bilinear_constant_fixed1024_round5(input, width, height, x, y));
+}
+
+int sample_zero_u16(const std::vector<float> &input, int width, int height, int x, int y) {
+    if (x < 0 || y < 0 || x >= width || y >= height) return 0;
+    return static_cast<int>(std::round(clamp01(input[static_cast<size_t>(y) * width + x]) * 65535.0f));
+}
+
+float sample_nearest_fixed1024_u16_byteoffset(const std::vector<float> &input, int width, int height, double x, double y) {
+    const int byte_offset = static_cast<int>(std::llround(x * 1024.0));
+    int row = static_cast<int>(std::floor(y));
+    if (y < static_cast<double>(row)) --row;
+    if (row < 0) row = 0;
+    if (row >= height) row = height - 1;
+    if (byte_offset < 0 || byte_offset + 1 >= width * 2) return 0.0f;
+    const int pixel = byte_offset / 2;
+    const int byte_in_pixel = byte_offset & 1;
+    const int current = sample_zero_u16(input, width, height, pixel, row);
+    if (byte_in_pixel == 0) return static_cast<float>(current / 65535.0);
+    const int next = sample_zero_u16(input, width, height, pixel + 1, row);
+    const int value = ((current >> 8) & 0xff) | ((next & 0xff) << 8);
+    return static_cast<float>(value / 65535.0);
+}
+
+float sample_bilinear_constant_fixed1024_opencvtab(const std::vector<float> &input, int width, int height, double x, double y) {
+    const int ix = static_cast<int>(std::llround(x * 1024.0));
+    const int iy = static_cast<int>(std::llround(y * 1024.0));
+    const int x0 = floor_div_1024(ix);
+    const int y0 = floor_div_1024(iy);
+    const int fx = (ix - x0 * 1024) >> 5;
+    const int fy = (iy - y0 * 1024) >> 5;
+    const int w00 = (32 - fx) * (32 - fy);
+    const int w10 = fx * (32 - fy);
+    const int w01 = (32 - fx) * fy;
+    const int w11 = fx * fy;
+    const int v00 = sample_zero_u16(input, width, height, x0, y0);
+    const int v10 = sample_zero_u16(input, width, height, x0 + 1, y0);
+    const int v01 = sample_zero_u16(input, width, height, x0, y0 + 1);
+    const int v11 = sample_zero_u16(input, width, height, x0 + 1, y0 + 1);
+    const int accum = v00 * w00 + v10 * w10 + v01 * w01 + v11 * w11;
+    return static_cast<float>(((accum + 512) >> 10) / 65535.0);
+}
+
+std::vector<float> build_opencv_linear_coeff_table_f32() {
+    std::vector<float> table(1024 * 4);
+    for (int fy = 0; fy < 32; ++fy) {
+        for (int fx = 0; fx < 32; ++fx) {
+            const int idx = (fy << 5) | fx;
+            table[static_cast<size_t>(idx) * 4 + 0] = static_cast<float>((32 - fx) * (32 - fy)) * (1.0f / 1024.0f);
+            table[static_cast<size_t>(idx) * 4 + 1] = static_cast<float>(fx * (32 - fy)) * (1.0f / 1024.0f);
+            table[static_cast<size_t>(idx) * 4 + 2] = static_cast<float>((32 - fx) * fy) * (1.0f / 1024.0f);
+            table[static_cast<size_t>(idx) * 4 + 3] = static_cast<float>(fx * fy) * (1.0f / 1024.0f);
+        }
+    }
+    return table;
+}
+
+float remap_bilinear_f32_at(
+    const std::vector<float> &src,
+    int width,
+    int height,
+    short map_x,
+    short map_y,
+    unsigned short coeff_index,
+    const std::vector<float> &coeff_table,
+    float border_value
+) {
+    const float *w = coeff_table.data() + static_cast<size_t>(coeff_index) * 4;
+    auto read = [&](int x, int y) -> float {
+        if (x < 0 || y < 0 || x >= width || y >= height) return border_value;
+        return src[static_cast<size_t>(y) * width + x];
+    };
+    const int x = static_cast<int>(map_x);
+    const int y = static_cast<int>(map_y);
+    const float p00 = read(x, y);
+    const float p10 = read(x + 1, y);
+    const float p01 = read(x, y + 1);
+    const float p11 = read(x + 1, y + 1);
+    return p10 * w[1] + p00 * w[0] + p01 * w[2] + p11 * w[3];
+}
+
+int sar_i32(int value, int shift) {
+    if (shift <= 0) return value;
+    if (value >= 0) return value >> shift;
+    const long long magnitude = -static_cast<long long>(value);
+    return static_cast<int>(-((magnitude + ((1 << shift) - 1)) >> shift));
+}
+
+short saturate_i16(int value) {
+    if (value > 0x7fff) return static_cast<short>(0x7fff);
+    if (value < -0x8000) return static_cast<short>(-0x8000);
+    return static_cast<short>(value);
+}
+
+struct WarpAffineMapEntry {
+    short x;
+    short y;
+    unsigned short coeff;
+};
+
+WarpAffineMapEntry warpaffine_linear_map_entry_f32(int x_fixed, int y_fixed) {
+    const int x_frac = sar_i32(x_fixed, 5);
+    const int y_frac = sar_i32(y_fixed, 5);
+    return {
+        saturate_i16(sar_i32(x_frac, 5)),
+        saturate_i16(sar_i32(y_frac, 5)),
+        static_cast<unsigned short>(((y_frac & 0x1f) << 5) | (x_frac & 0x1f)),
+    };
+}
+
+int cv_round_diag(double value) {
+    return static_cast<int>(std::lrint(value));
+}
+
+WarpAffineMapEntry warpaffine_linear_map_entry_from_matrix_f32(
+    int dst_x,
+    int dst_y,
+    double m00,
+    double m01,
+    double m02,
+    double m10,
+    double m11,
+    double m12
+) {
+    const int base_x = cv_round_diag((m01 * static_cast<double>(dst_y) + m02) * 1024.0) + 16;
+    const int base_y = cv_round_diag((m11 * static_cast<double>(dst_y) + m12) * 1024.0) + 16;
+    const int x_tab0 = cv_round_diag(m00 * static_cast<double>(dst_x) * 1024.0);
+    const int x_tab1 = cv_round_diag(m10 * static_cast<double>(dst_x) * 1024.0);
+    return warpaffine_linear_map_entry_f32(base_x + x_tab0, base_y + x_tab1);
+}
+
+float sample_warpaffine_remap_f32(
+    const std::vector<float> &src,
+    int width,
+    int height,
+    int dst_x,
+    int dst_y,
+    double m00,
+    double m01,
+    double m02,
+    double m10,
+    double m11,
+    double m12,
+    const std::vector<float> &coeff_table,
+    float border_value
+) {
+    const WarpAffineMapEntry map = warpaffine_linear_map_entry_from_matrix_f32(
+        dst_x, dst_y, m00, m01, m02, m10, m11, m12);
+    return remap_bilinear_f32_at(src, width, height, map.x, map.y, map.coeff, coeff_table, border_value);
+}
+
+int run_diag_remap_bilinear_f32() {
+    const int width = 4;
+    const int height = 3;
+    const float border = -5.0f;
+    const std::vector<float> src = {
+        0.0f, 1.0f, 2.0f, 3.0f,
+        10.0f, 11.0f, 12.0f, 13.0f,
+        20.0f, 21.0f, 22.0f, 23.0f,
+    };
+    const std::vector<float> coeffs = build_opencv_linear_coeff_table_f32();
+    struct Case {
+        const char *name;
+        short x;
+        short y;
+        unsigned short coeff;
+        float expected;
+    };
+    const Case cases[] = {
+        {"integer", 1, 1, 0, 11.0f},
+        {"fractional", 1, 1, static_cast<unsigned short>((16 << 5) | 8), 16.25f},
+        {"right_bottom_constant", 3, 2, static_cast<unsigned short>((16 << 5) | 16), 2.0f},
+        {"negative_constant", -1, 0, 16, -2.5f},
+    };
+    bool ok = true;
+    for (const Case &c : cases) {
+        const float got = remap_bilinear_f32_at(src, width, height, c.x, c.y, c.coeff, coeffs, border);
+        const float diff = std::fabs(got - c.expected);
+        std::printf("diag_remap_bilinear_f32 %s got=%.9g expected=%.9g diff=%.9g\n",
+                    c.name, got, c.expected, diff);
+        if (diff > 1.0e-6f) ok = false;
+    }
+    std::printf("diag_remap_bilinear_f32 %s\n", ok ? "OK" : "FAIL");
+    return ok ? 0 : 1;
+}
+
+int run_diag_warpaffine_map_f32() {
+    struct Case {
+        const char *name;
+        int x_fixed;
+        int y_fixed;
+        short expected_x;
+        short expected_y;
+        unsigned short expected_coeff;
+    };
+    const Case cases[] = {
+        {"integer", 2 * 1024, 1 * 1024, 2, 1, 0},
+        {"fractional", 2 * 1024 + 8 * 32, 1 * 1024 + 16 * 32, 2, 1, static_cast<unsigned short>((16 << 5) | 8)},
+        {"carry_fraction", 2 * 1024 + 32 * 32, 1 * 1024, 3, 1, 0},
+        {"negative_fraction", -1 * 1024 + 24 * 32, -2 * 1024 + 4 * 32, -1, -2, static_cast<unsigned short>((4 << 5) | 24)},
+        {"positive_saturate", 40000 * 1024, 0, 0x7fff, 0, 0},
+        {"negative_saturate", -40000 * 1024, 0, static_cast<short>(-0x8000), 0, 0},
+    };
+    bool ok = true;
+    for (const Case &c : cases) {
+        const WarpAffineMapEntry got = warpaffine_linear_map_entry_f32(c.x_fixed, c.y_fixed);
+        const bool case_ok = got.x == c.expected_x && got.y == c.expected_y && got.coeff == c.expected_coeff;
+        std::printf("diag_warpaffine_map_f32 %s x=%d/%d y=%d/%d coeff=%u/%u %s\n",
+                    c.name,
+                    static_cast<int>(got.x), static_cast<int>(c.expected_x),
+                    static_cast<int>(got.y), static_cast<int>(c.expected_y),
+                    static_cast<unsigned>(got.coeff), static_cast<unsigned>(c.expected_coeff),
+                    case_ok ? "OK" : "FAIL");
+        if (!case_ok) ok = false;
+    }
+    std::printf("diag_warpaffine_map_f32 %s\n", ok ? "OK" : "FAIL");
+    return ok ? 0 : 1;
+}
+
+int run_diag_warpaffine_remap_f32() {
+    const int width = 4;
+    const int height = 3;
+    const float border = -5.0f;
+    const std::vector<float> src = {
+        0.0f, 1.0f, 2.0f, 3.0f,
+        10.0f, 11.0f, 12.0f, 13.0f,
+        20.0f, 21.0f, 22.0f, 23.0f,
+    };
+    const std::vector<float> coeffs = build_opencv_linear_coeff_table_f32();
+    struct Case {
+        const char *name;
+        int dst_x;
+        int dst_y;
+        double m00;
+        double m01;
+        double m02;
+        double m10;
+        double m11;
+        double m12;
+        short expected_x;
+        short expected_y;
+        unsigned short expected_coeff;
+        float expected_value;
+    };
+    const Case cases[] = {
+        {"identity_integer", 1, 1, 1.0, 0.0, -0.015625, 0.0, 1.0, -0.015625, 1, 1, 0, 11.0f},
+        {"fractional_translate", 1, 1, 1.0, 0.0, 0.234375, 0.0, 1.0, 0.484375, 1, 1, static_cast<unsigned short>((16 << 5) | 8), 16.25f},
+        {"right_bottom_constant", 3, 2, 1.0, 0.0, 0.484375, 0.0, 1.0, 0.484375, 3, 2, static_cast<unsigned short>((16 << 5) | 16), 2.0f},
+        {"negative_constant", 0, 0, 1.0, 0.0, -0.515625, 0.0, 1.0, -0.015625, -1, 0, 16, -2.5f},
+    };
+    bool ok = true;
+    for (const Case &c : cases) {
+        const WarpAffineMapEntry map = warpaffine_linear_map_entry_from_matrix_f32(
+            c.dst_x, c.dst_y, c.m00, c.m01, c.m02, c.m10, c.m11, c.m12);
+        const float got_value = remap_bilinear_f32_at(src, width, height, map.x, map.y, map.coeff, coeffs, border);
+        const bool map_ok = map.x == c.expected_x && map.y == c.expected_y && map.coeff == c.expected_coeff;
+        const float diff = std::fabs(got_value - c.expected_value);
+        const bool value_ok = diff <= 1.0e-6f;
+        std::printf("diag_warpaffine_remap_f32 %s map=(%d,%d,%u)/(%d,%d,%u) value=%.9g expected=%.9g diff=%.9g %s\n",
+                    c.name,
+                    static_cast<int>(map.x), static_cast<int>(map.y), static_cast<unsigned>(map.coeff),
+                    static_cast<int>(c.expected_x), static_cast<int>(c.expected_y), static_cast<unsigned>(c.expected_coeff),
+                    got_value, c.expected_value, diff,
+                    (map_ok && value_ok) ? "OK" : "FAIL");
+        if (!map_ok || !value_ok) ok = false;
+    }
+    std::printf("diag_warpaffine_remap_f32 %s\n", ok ? "OK" : "FAIL");
+    return ok ? 0 : 1;
 }
 
 double cubic_weight(double x) {
@@ -727,6 +1076,18 @@ std::vector<float> rotate_image(
                     output[static_cast<size_t>(y) * out_width + x] = sample_bicubic_zero(input, width, height, sx, sy);
                 } else if (rotate_filter == "bilinear-fixed5") {
                     output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed5(input, width, height, sx, sy);
+                } else if (rotate_filter == "bilinear-fixed5-u16") {
+                    output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed5_u16(input, width, height, sx, sy);
+                } else if (rotate_filter == "bilinear-fixed1024-floor5") {
+                    output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed1024_floor5(input, width, height, sx, sy);
+                } else if (rotate_filter == "bilinear-fixed1024-round5") {
+                    output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed1024_round5(input, width, height, sx, sy);
+                } else if (rotate_filter == "bilinear-fixed1024-round5-u16") {
+                    output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed1024_round5_u16(input, width, height, sx, sy);
+                } else if (rotate_filter == "nearest-fixed1024-u16-byteoffset") {
+                    output[static_cast<size_t>(y) * out_width + x] = sample_nearest_fixed1024_u16_byteoffset(input, width, height, sx, sy);
+                } else if (rotate_filter == "bilinear-fixed1024-opencvtab") {
+                    output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed1024_opencvtab(input, width, height, sx, sy);
                 } else if (rotate_border == "constant") {
                     output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant(input, width, height, sx, sy);
                 } else {
@@ -793,6 +1154,18 @@ std::vector<float> rotate_image(
                     output[static_cast<size_t>(y) * out_width + x] = sample_bicubic_zero(input, width, height, sx, sy);
                 } else if (rotate_filter == "bilinear-fixed5") {
                     output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed5(input, width, height, sx, sy);
+                } else if (rotate_filter == "bilinear-fixed5-u16") {
+                    output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed5_u16(input, width, height, sx, sy);
+                } else if (rotate_filter == "bilinear-fixed1024-floor5") {
+                    output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed1024_floor5(input, width, height, sx, sy);
+                } else if (rotate_filter == "bilinear-fixed1024-round5") {
+                    output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed1024_round5(input, width, height, sx, sy);
+                } else if (rotate_filter == "bilinear-fixed1024-round5-u16") {
+                    output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed1024_round5_u16(input, width, height, sx, sy);
+                } else if (rotate_filter == "nearest-fixed1024-u16-byteoffset") {
+                    output[static_cast<size_t>(y) * out_width + x] = sample_nearest_fixed1024_u16_byteoffset(input, width, height, sx, sy);
+                } else if (rotate_filter == "bilinear-fixed1024-opencvtab") {
+                    output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed1024_opencvtab(input, width, height, sx, sy);
                 } else if (rotate_border == "constant") {
                     output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant(input, width, height, sx, sy);
                 } else {
@@ -812,6 +1185,18 @@ std::vector<float> rotate_image(
                 output[static_cast<size_t>(y) * out_width + x] = sample_bicubic_zero(input, width, height, sx, sy);
             } else if (rotate_filter == "bilinear-fixed5") {
                 output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed5(input, width, height, sx, sy);
+            } else if (rotate_filter == "bilinear-fixed5-u16") {
+                output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed5_u16(input, width, height, sx, sy);
+            } else if (rotate_filter == "bilinear-fixed1024-floor5") {
+                output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed1024_floor5(input, width, height, sx, sy);
+            } else if (rotate_filter == "bilinear-fixed1024-round5") {
+                output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed1024_round5(input, width, height, sx, sy);
+            } else if (rotate_filter == "bilinear-fixed1024-round5-u16") {
+                output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed1024_round5_u16(input, width, height, sx, sy);
+            } else if (rotate_filter == "nearest-fixed1024-u16-byteoffset") {
+                output[static_cast<size_t>(y) * out_width + x] = sample_nearest_fixed1024_u16_byteoffset(input, width, height, sx, sy);
+            } else if (rotate_filter == "bilinear-fixed1024-opencvtab") {
+                output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant_fixed1024_opencvtab(input, width, height, sx, sy);
             } else if (rotate_border == "constant") {
                 output[static_cast<size_t>(y) * out_width + x] = sample_bilinear_constant(input, width, height, sx, sy);
             } else {
@@ -845,6 +1230,14 @@ std::vector<float> warp_getrot_direct(
     const double m11 = alpha;
     const double m12 = beta * center_x + (1.0 - alpha) * center_y;
     const double det = m00 * m11 - m01 * m10;
+    const double inv_m00 = m11 / det;
+    const double inv_m01 = -m01 / det;
+    const double inv_m02 = (m01 * m12 - m11 * m02) / det;
+    const double inv_m10 = -m10 / det;
+    const double inv_m11 = m00 / det;
+    const double inv_m12 = (m10 * m02 - m00 * m12) / det;
+    const bool use_warpaffine_remap = rotate_filter == "bilinear-warpaffine-remap-f32";
+    const std::vector<float> warpaffine_coeffs = use_warpaffine_remap ? build_opencv_linear_coeff_table_f32() : std::vector<float>();
     std::vector<float> output(static_cast<size_t>(dst_width) * dst_height);
     for (int y = 0; y < dst_height; ++y) {
         for (int x = 0; x < dst_width; ++x) {
@@ -852,10 +1245,27 @@ std::vector<float> warp_getrot_direct(
             const double dy = static_cast<double>(y) - m12;
             const double sx = (m11 * dx - m01 * dy) / det;
             const double sy = (-m10 * dx + m00 * dy) / det;
-            if (rotate_filter == "bicubic") {
+            if (use_warpaffine_remap) {
+                output[static_cast<size_t>(y) * dst_width + x] = sample_warpaffine_remap_f32(
+                    input, src_width, src_height, x, y,
+                    inv_m00, inv_m01, inv_m02, inv_m10, inv_m11, inv_m12,
+                    warpaffine_coeffs, 0.0f);
+            } else if (rotate_filter == "bicubic") {
                 output[static_cast<size_t>(y) * dst_width + x] = sample_bicubic_zero(input, src_width, src_height, sx, sy);
             } else if (rotate_filter == "bilinear-fixed5") {
                 output[static_cast<size_t>(y) * dst_width + x] = sample_bilinear_constant_fixed5(input, src_width, src_height, sx, sy);
+            } else if (rotate_filter == "bilinear-fixed5-u16") {
+                output[static_cast<size_t>(y) * dst_width + x] = sample_bilinear_constant_fixed5_u16(input, src_width, src_height, sx, sy);
+            } else if (rotate_filter == "bilinear-fixed1024-floor5") {
+                output[static_cast<size_t>(y) * dst_width + x] = sample_bilinear_constant_fixed1024_floor5(input, src_width, src_height, sx, sy);
+            } else if (rotate_filter == "bilinear-fixed1024-round5") {
+                output[static_cast<size_t>(y) * dst_width + x] = sample_bilinear_constant_fixed1024_round5(input, src_width, src_height, sx, sy);
+            } else if (rotate_filter == "bilinear-fixed1024-round5-u16") {
+                output[static_cast<size_t>(y) * dst_width + x] = sample_bilinear_constant_fixed1024_round5_u16(input, src_width, src_height, sx, sy);
+            } else if (rotate_filter == "nearest-fixed1024-u16-byteoffset") {
+                output[static_cast<size_t>(y) * dst_width + x] = sample_nearest_fixed1024_u16_byteoffset(input, src_width, src_height, sx, sy);
+            } else if (rotate_filter == "bilinear-fixed1024-opencvtab") {
+                output[static_cast<size_t>(y) * dst_width + x] = sample_bilinear_constant_fixed1024_opencvtab(input, src_width, src_height, sx, sy);
             } else if (rotate_border == "constant") {
                 output[static_cast<size_t>(y) * dst_width + x] = sample_bilinear_constant(input, src_width, src_height, sx, sy);
             } else {
@@ -957,6 +1367,7 @@ std::vector<float> rotated_axis_box_blur(
     const std::string &box_anchor_mode,
     const std::string &box_normalize,
     const std::string &box_output_depth,
+    const std::string &box_accum_mode,
     const std::string &rotate_filter,
     const std::string &rotate_border,
     const std::string &warp_mode,
@@ -966,8 +1377,8 @@ std::vector<float> rotated_axis_box_blur(
 ) {
     if (length <= 1) return input;
     if (axis_fast_path) {
-        if (angle_deg == 0.0) return direction_box_blur(input, width, height, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
-        if (angle_deg == 90.0) return direction_box_blur(input, width, height, length, 0, 1, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
+        if (angle_deg == 0.0) return direction_box_blur(input, width, height, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth, box_accum_mode);
+        if (angle_deg == 90.0) return direction_box_blur(input, width, height, length, 0, 1, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth, box_accum_mode);
     }
 
     if (warp_mode == "aex-roi-temp") {
@@ -982,7 +1393,7 @@ std::vector<float> rotated_axis_box_blur(
         std::vector<float> temp = copy_centered_roi(input, width, height, rw, rh);
         std::vector<float> rotated = warp_getrot_direct(temp, rw, rh, width, height, cx, cy, angle_deg, rotate_filter, rotate_border);
         std::vector<float> restored_temp = paste_centered_roi(rotated, width, height, rw, rh);
-        std::vector<float> blurred = direction_box_blur(restored_temp, rw, rh, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
+        std::vector<float> blurred = direction_box_blur(restored_temp, rw, rh, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth, box_accum_mode);
         std::vector<float> restored = warp_getrot_direct(blurred, rw, rh, width, height, cx, cy, -angle_deg, rotate_filter, rotate_border);
         return restored;
     }
@@ -1000,7 +1411,7 @@ std::vector<float> rotated_axis_box_blur(
         const double frame_cy = static_cast<double>(height) * 0.5;
         std::vector<float> temp = copy_centered_roi(input, width, height, rw, rh);
         temp = warp_getrot_direct(temp, rw, rh, rw, rh, temp_cx, temp_cy, angle_deg, rotate_filter, rotate_border);
-        std::vector<float> blurred = direction_box_blur(temp, rw, rh, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
+        std::vector<float> blurred = direction_box_blur(temp, rw, rh, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth, box_accum_mode);
         return warp_getrot_direct(blurred, rw, rh, width, height, frame_cx, frame_cy, -angle_deg, rotate_filter, rotate_border);
     }
 
@@ -1009,27 +1420,44 @@ std::vector<float> rotated_axis_box_blur(
         warp_mode == "aex-two-temp-final-xp" ||
         warp_mode == "aex-two-temp-final-ym" ||
         warp_mode == "aex-two-temp-final-yp" ||
+        warp_mode == "aex-two-temp-mapremap-f32" ||
         warp_mode == "aex-two-temp-direct-back" ||
-        warp_mode == "aex-two-temp-center-minus-half") {
+        warp_mode == "aex-two-temp-center-minus-half" ||
+        warp_mode == "aex-two-temp-center-minus-half-forward-only" ||
+        warp_mode == "aex-two-temp-center-minus-half-back-only") {
         const double pi = 3.14159265358979323846;
         const double rad = angle_deg * pi / 180.0;
         const double ac = std::abs(std::cos(rad));
         const double as = std::abs(std::sin(rad));
         const int rw = aex_rotated_extent(width, height, ac, as);
         const int rh = aex_rotated_extent(height, width, ac, as);
-        double temp_cx = static_cast<double>(rw) * 0.5;
-        double temp_cy = static_cast<double>(rh) * 0.5;
+        const double base_temp_cx = static_cast<double>(rw) * 0.5;
+        const double base_temp_cy = static_cast<double>(rh) * 0.5;
+        double forward_cx = base_temp_cx;
+        double forward_cy = base_temp_cy;
+        double back_cx = base_temp_cx;
+        double back_cy = base_temp_cy;
         if (warp_mode == "aex-two-temp-center-minus-half") {
-            temp_cx -= 0.5;
-            temp_cy -= 0.5;
+            forward_cx -= 0.5;
+            forward_cy -= 0.5;
+            back_cx -= 0.5;
+            back_cy -= 0.5;
+        } else if (warp_mode == "aex-two-temp-center-minus-half-forward-only") {
+            forward_cx -= 0.5;
+            forward_cy -= 0.5;
+        } else if (warp_mode == "aex-two-temp-center-minus-half-back-only") {
+            back_cx -= 0.5;
+            back_cy -= 0.5;
         }
+        const std::string effective_rotate_filter =
+            warp_mode == "aex-two-temp-mapremap-f32" ? "bilinear-warpaffine-remap-f32" : rotate_filter;
         std::vector<float> temp_a = copy_centered_roi(input, width, height, rw, rh);
-        temp_a = warp_getrot_direct(temp_a, rw, rh, rw, rh, temp_cx, temp_cy, angle_deg, rotate_filter, rotate_border);
-        std::vector<float> temp_b = direction_box_blur(temp_a, rw, rh, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
+        temp_a = warp_getrot_direct(temp_a, rw, rh, rw, rh, forward_cx, forward_cy, angle_deg, effective_rotate_filter, rotate_border);
+        std::vector<float> temp_b = direction_box_blur(temp_a, rw, rh, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth, box_accum_mode);
         if (warp_mode == "aex-two-temp-direct-back") {
-            return warp_getrot_direct(temp_b, rw, rh, width, height, temp_cx, temp_cy, -angle_deg, rotate_filter, rotate_border);
+            return warp_getrot_direct(temp_b, rw, rh, width, height, back_cx, back_cy, -angle_deg, rotate_filter, rotate_border);
         }
-        temp_b = warp_getrot_direct(temp_b, rw, rh, rw, rh, temp_cx, temp_cy, -angle_deg, rotate_filter, rotate_border);
+        temp_b = warp_getrot_direct(temp_b, rw, rh, rw, rh, back_cx, back_cy, -angle_deg, effective_rotate_filter, rotate_border);
         int shift_x = 0;
         int shift_y = 0;
         if (warp_mode == "aex-two-temp-final-xm") shift_x = -1;
@@ -1043,7 +1471,7 @@ std::vector<float> rotated_axis_box_blur(
         const double cx = static_cast<double>(width) * 0.5;
         const double cy = static_cast<double>(height) * 0.5;
         std::vector<float> rotated = warp_getrot_direct(input, width, height, width, height, cx, cy, angle_deg, rotate_filter, rotate_border);
-        std::vector<float> blurred = direction_box_blur(rotated, width, height, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
+        std::vector<float> blurred = direction_box_blur(rotated, width, height, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth, box_accum_mode);
         return warp_getrot_direct(blurred, width, height, width, height, cx, cy, -angle_deg, rotate_filter, rotate_border);
     }
 
@@ -1057,14 +1485,14 @@ std::vector<float> rotated_axis_box_blur(
         const double cx = static_cast<double>(rw) * 0.5;
         const double cy = static_cast<double>(rh) * 0.5;
         std::vector<float> rotated = warp_getrot_direct(input, width, height, rw, rh, cx, cy, angle_deg, rotate_filter, rotate_border);
-        std::vector<float> blurred = direction_box_blur(rotated, rw, rh, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
+        std::vector<float> blurred = direction_box_blur(rotated, rw, rh, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth, box_accum_mode);
         return warp_getrot_direct(blurred, rw, rh, width, height, cx, cy, -angle_deg, rotate_filter, rotate_border);
     }
 
     int rw = 0;
     int rh = 0;
     std::vector<float> rotated = rotate_image(input, width, height, angle_deg, rw, rh, rotate_filter, rotate_border, warp_mode, rotate_size_mode);
-    std::vector<float> blurred = direction_box_blur(rotated, rw, rh, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth);
+    std::vector<float> blurred = direction_box_blur(rotated, rw, rh, length, 1, 0, passes, filter_border, box_anchor_mode, box_normalize, box_output_depth, box_accum_mode);
     int bw = 0;
     int bh = 0;
     std::vector<float> restored = rotate_image(blurred, rw, rh, -angle_deg, bw, bh, rotate_filter, rotate_border, warp_mode, rotate_size_mode);
@@ -1181,7 +1609,7 @@ Image render_kirakira(const Image &input, const KiraKiraParams &params, const Op
     auto make_ray = [&](int raw_len, double angle) -> std::vector<float> {
         const int len = scaled_len(raw_len);
         if (raw_len <= 0 || len <= 0) return zero_ray;
-        return rotated_axis_box_blur(seed, w, h, len, angle, passes, options.filter_border, options.box_anchor_mode, options.box_normalize, options.box_output_depth, options.rotate_filter, options.rotate_border, options.warp_mode, options.rotate_size_mode, axis_fast_path, options.crop_mode);
+        return rotated_axis_box_blur(seed, w, h, len, angle, passes, options.filter_border, options.box_anchor_mode, options.box_normalize, options.box_output_depth, options.box_accum_mode, options.rotate_filter, options.rotate_border, options.warp_mode, options.rotate_size_mode, axis_fast_path, options.crop_mode);
     };
     std::vector<float> vertical = make_ray(params.vertical_length, 90.0 + glow_rotation);
     std::vector<float> horizontal = make_ray(params.horizontal_length, glow_rotation);
@@ -1335,11 +1763,23 @@ Options parse_args(int argc, char **argv) {
                 args.box_output_depth != "u16-each") {
                 throw std::runtime_error("--box-output-depth must be float, u8-each, or u16-each");
             }
+        } else if (key == "--box-accum-mode") {
+            args.box_accum_mode = need_value("--box-accum-mode");
+            if (args.box_accum_mode != "double" && args.box_accum_mode != "float") {
+                throw std::runtime_error("--box-accum-mode must be double or float");
+            }
         } else if (key == "--rotate-filter") {
             args.rotate_filter = need_value("--rotate-filter");
             if (args.rotate_filter != "bilinear" && args.rotate_filter != "bicubic" &&
-                args.rotate_filter != "bilinear-fixed5") {
-                throw std::runtime_error("--rotate-filter must be bilinear, bicubic, or bilinear-fixed5");
+                args.rotate_filter != "bilinear-fixed5" &&
+                args.rotate_filter != "bilinear-fixed5-u16" &&
+                args.rotate_filter != "bilinear-fixed1024-floor5" &&
+                args.rotate_filter != "bilinear-fixed1024-round5" &&
+                args.rotate_filter != "bilinear-fixed1024-round5-u16" &&
+                args.rotate_filter != "nearest-fixed1024-u16-byteoffset" &&
+                args.rotate_filter != "bilinear-fixed1024-opencvtab" &&
+                args.rotate_filter != "bilinear-warpaffine-remap-f32") {
+                throw std::runtime_error("--rotate-filter must be bilinear, bicubic, bilinear-fixed5, bilinear-fixed5-u16, bilinear-fixed1024-floor5, bilinear-fixed1024-round5, bilinear-fixed1024-round5-u16, nearest-fixed1024-u16-byteoffset, bilinear-fixed1024-opencvtab, or bilinear-warpaffine-remap-f32");
             }
         } else if (key == "--rotate-border") {
             args.rotate_border = need_value("--rotate-border");
@@ -1354,9 +1794,12 @@ Options parse_args(int argc, char **argv) {
                 args.warp_mode != "aex-inplace-temp" && args.warp_mode != "aex-two-temp" &&
                 args.warp_mode != "aex-two-temp-final-xm" && args.warp_mode != "aex-two-temp-final-xp" &&
                 args.warp_mode != "aex-two-temp-final-ym" && args.warp_mode != "aex-two-temp-final-yp" &&
+                args.warp_mode != "aex-two-temp-mapremap-f32" &&
                 args.warp_mode != "aex-two-temp-direct-back" &&
-                args.warp_mode != "aex-two-temp-center-minus-half") {
-                throw std::runtime_error("--warp-mode must be current, opencv-center, aex-getrot, aex-direct-back, aex-frame, aex-roi-temp, aex-inplace-temp, aex-two-temp, aex-two-temp-direct-back, aex-two-temp-final-{xm,xp,ym,yp}, or aex-two-temp-center-minus-half");
+                args.warp_mode != "aex-two-temp-center-minus-half" &&
+                args.warp_mode != "aex-two-temp-center-minus-half-forward-only" &&
+                args.warp_mode != "aex-two-temp-center-minus-half-back-only") {
+                throw std::runtime_error("--warp-mode must be current, opencv-center, aex-getrot, aex-direct-back, aex-frame, aex-roi-temp, aex-inplace-temp, aex-two-temp, aex-two-temp-mapremap-f32, aex-two-temp-direct-back, aex-two-temp-final-{xm,xp,ym,yp}, aex-two-temp-center-minus-half, aex-two-temp-center-minus-half-forward-only, or aex-two-temp-center-minus-half-back-only");
             }
         } else if (key == "--rotate-size-mode") {
             args.rotate_size_mode = need_value("--rotate-size-mode");
@@ -1400,16 +1843,23 @@ Options parse_args(int argc, char **argv) {
                 args.aggregation_mode != "fd90-exact") {
                 throw std::runtime_error("--aggregation-mode must be current, fd90-five, or fd90-exact");
             }
+        } else if (key == "--diag-remap-bilinear-f32") {
+            args.diag_remap_bilinear_f32 = true;
+        } else if (key == "--diag-warpaffine-map-f32") {
+            args.diag_warpaffine_map_f32 = true;
+        } else if (key == "--diag-warpaffine-remap-f32") {
+            args.diag_warpaffine_remap_f32 = true;
         } else if (key == "--filter-border" || key == "--ray-mode") {
             (void)need_value(key.c_str());
         } else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--rotate-filter bilinear|bicubic|bilinear-fixed5] [--rotate-border edge|constant] [--warp-mode current|opencv-center|aex-getrot|aex-direct-back|aex-frame|aex-roi-temp|aex-inplace-temp|aex-two-temp|aex-two-temp-direct-back|aex-two-temp-final-{xm,xp,ym,yp}|aex-two-temp-center-minus-half] [--rotate-size-mode round|floor|ceil|aex-min4] [--axis-fast-path true|false] [--axis-fast-path-mode true|false|strength-nonzero] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five|fd90-exact]\n");
+            std::printf("Usage: olmkk_cli --input in.png --params params.json --output out.png [--seed-mode aex|max] [--falloff box3] [--filter-border mirror|reflect] [--auto-length-scale] [--box-size-mode length|radius] [--box-anchor-mode opencv|floor-left|origin|end] [--box-normalize true|false] [--box-output-depth float|u8-each|u16-each] [--box-accum-mode double|float] [--rotate-filter bilinear|bicubic|bilinear-fixed5|bilinear-fixed5-u16|bilinear-fixed1024-floor5|bilinear-fixed1024-round5|bilinear-fixed1024-round5-u16|nearest-fixed1024-u16-byteoffset|bilinear-fixed1024-opencvtab|bilinear-warpaffine-remap-f32] [--rotate-border edge|constant] [--warp-mode current|opencv-center|aex-getrot|aex-direct-back|aex-frame|aex-inplace-temp|aex-two-temp|aex-two-temp-mapremap-f32|aex-two-temp-direct-back|aex-two-temp-final-{xm,xp,ym,yp}|aex-two-temp-center-minus-half|aex-two-temp-center-minus-half-forward-only|aex-two-temp-center-minus-half-back-only] [--rotate-size-mode round|floor|ceil|aex-min4] [--axis-fast-path true|false] [--axis-fast-path-mode true|false|strength-nonzero] [--crop-mode floor|ceil|round] [--glow-normalize union|sum] [--aggregation-mode current|fd90-five|fd90-exact] [--diag-remap-bilinear-f32] [--diag-warpaffine-map-f32] [--diag-warpaffine-remap-f32]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
         }
     }
-    if (args.input.empty() || args.params.empty() || args.output.empty()) {
+    if (!args.diag_remap_bilinear_f32 && !args.diag_warpaffine_map_f32 && !args.diag_warpaffine_remap_f32 &&
+        (args.input.empty() || args.params.empty() || args.output.empty())) {
         throw std::runtime_error("required arguments: --input, --params, --output");
     }
     return args;
@@ -1420,6 +1870,15 @@ Options parse_args(int argc, char **argv) {
 int main(int argc, char **argv) {
     try {
         Options args = parse_args(argc, argv);
+        if (args.diag_remap_bilinear_f32) {
+            return run_diag_remap_bilinear_f32();
+        }
+        if (args.diag_warpaffine_map_f32) {
+            return run_diag_warpaffine_map_f32();
+        }
+        if (args.diag_warpaffine_remap_f32) {
+            return run_diag_warpaffine_remap_f32();
+        }
         Image input = read_png(args.input);
         KiraKiraParams params = read_params(args.params);
         Image output = render_kirakira(input, params, args);

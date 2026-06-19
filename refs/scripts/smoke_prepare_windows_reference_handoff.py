@@ -37,14 +37,18 @@ def main() -> int:
         assert "Windows reference handoff is ready:" in proc.stdout
         assert str(request_zip) in proc.stdout
         assert str(handoff_zip) in proc.stdout
-        assert "send-windows-reference-package" in proc.stdout
+        assert (
+            "send-windows-reference-package" in proc.stdout
+            or "send-runtime-trace-package" in proc.stdout
+            or "send-windows-action-bundle" in proc.stdout
+            or "send-ae-host-validation-package" in proc.stdout
+        )
 
         run(
             [
                 "python3",
                 "refs/scripts/verify_reference_request_package.py",
                 str(request_zip),
-                "--expect-pending",
             ],
             root,
         )

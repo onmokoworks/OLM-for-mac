@@ -52,6 +52,11 @@ struct ColorKeyParams {
     std::vector<KeyColor> colors;
 };
 
+struct TracePixel {
+    int x = -1;
+    int y = -1;
+};
+
 struct Json {
     enum Type { Null, Bool, Number, String, Array, Object } type = Null;
     bool bool_value = false;
@@ -604,7 +609,6 @@ std::vector<float> matte_distance(const std::vector<unsigned char> &mask, int w,
 }
 
 std::vector<float> edge_blur_distance(const std::vector<unsigned char> &mask, int w, int h, int distance_type) {
-    if (distance_type == 1) return euclidean_distance_to(mask, w, h);
     return matte_distance(mask, w, h, distance_type);
 }
 
@@ -729,11 +733,32 @@ float edge_blur_weight(bool inside, float dist, float amount, int direction) {
     return inside ? 1.0f : 0.0f;
 }
 
+std::vector<TracePixel> parse_trace_pixels_env() {
+    std::vector<TracePixel> result;
+    const char *trace = std::getenv("OLMCOLORKEY_TRACE_PIXELS");
+    if (!trace) return result;
+    const char *p = trace;
+    while (*p) {
+        int x = -1;
+        int y = -1;
+        int consumed = 0;
+        if (std::sscanf(p, "%d,%d%n", &x, &y, &consumed) == 2 && consumed > 0) {
+            result.push_back({x, y});
+            p += consumed;
+            while (*p == ';' || *p == ' ' || *p == '\t' || *p == '\n') ++p;
+        } else {
+            break;
+        }
+    }
+    return result;
+}
+
 Image render_olmcolorkey(const Image &input, const ColorKeyParams &cfg) {
     Image out = input;
     const int w = input.width;
     const int h = input.height;
     const int n = w * h;
+    const std::vector<TracePixel> trace_pixels = parse_trace_pixels_env();
     std::vector<unsigned char> matched(n, 0);
     // Index (into cfg.colors) of the first key that matched each pixel, or -1.
     // The keyer (FUN_1800029d0) records the matched index to drive the Replace
@@ -861,15 +886,19 @@ Image render_olmcolorkey(const Image &input, const ColorKeyParams &cfg) {
         matched_idx[i] = hit_idx;
     }
 
+    std::vector<unsigned char> matched_before_edge_thin = matched;
+    std::vector<float> edge_thin_dist;
+    float edge_thin_limit = 0.0f;
     if (cfg.edge_thin_amount < 0.0f) {
         std::vector<unsigned char> nonmatch(n, 0);
         for (int i = 0; i < n; ++i) nonmatch[i] = matched[i] ? 0 : 1;
-        std::vector<float> dist = matte_distance(nonmatch, w, h, cfg.edge_thin_distance_type);
-        float limit = std::fabs(cfg.edge_thin_amount) + ((cfg.edge_thin_distance_type == 0 || cfg.edge_thin_distance_type == 2) ? 1.0f : 0.0f);
-        for (int i = 0; i < n; ++i) matched[i] = (matched[i] && dist[i] > limit) ? 1 : 0;
+        edge_thin_dist = matte_distance(nonmatch, w, h, cfg.edge_thin_distance_type);
+        edge_thin_limit = std::fabs(cfg.edge_thin_amount) + ((cfg.edge_thin_distance_type == 0 || cfg.edge_thin_distance_type == 2) ? 1.0f : 0.0f);
+        for (int i = 0; i < n; ++i) matched[i] = (matched[i] && edge_thin_dist[i] > edge_thin_limit) ? 1 : 0;
     } else if (cfg.edge_thin_amount > 0.0f) {
-        std::vector<float> dist = matte_distance(matched, w, h, cfg.edge_thin_distance_type);
-        for (int i = 0; i < n; ++i) matched[i] = (matched[i] || dist[i] <= cfg.edge_thin_amount) ? 1 : 0;
+        edge_thin_dist = matte_distance(matched, w, h, cfg.edge_thin_distance_type);
+        edge_thin_limit = cfg.edge_thin_amount;
+        for (int i = 0; i < n; ++i) matched[i] = (matched[i] || edge_thin_dist[i] <= cfg.edge_thin_amount) ? 1 : 0;
     }
 
     std::vector<unsigned char> keep_mask(n, 0);
@@ -918,6 +947,71 @@ Image render_olmcolorkey(const Image &input, const ColorKeyParams &cfg) {
             out.rgba[p + 1] = static_cast<unsigned char>(std::clamp(green, 0, 255));
             out.rgba[p + 2] = static_cast<unsigned char>(std::clamp(blue, 0, 255));
             out.rgba[p + 3] = static_cast<unsigned char>(std::clamp(alpha, 0, 255));
+        }
+        for (const TracePixel &pixel : trace_pixels) {
+            if (0 <= pixel.x && pixel.x < w && 0 <= pixel.y && pixel.y < h) {
+                const int i = pixel.y * w + pixel.x;
+                const size_t p = static_cast<size_t>(i) * 4;
+                const bool keep = keep_mask[i] != 0;
+                const float weight = edge_blur_weight(
+                    keep,
+                    dist[static_cast<size_t>(i)],
+                    cfg.edge_blur_amount,
+                    cfg.edge_blur_direction);
+                std::fprintf(
+                    stderr,
+                    "OLMCOLORKEY_TRACE x=%d y=%d matched0=%u matched1=%u keep=%u "
+                    "edge_thin_amount=%.9g edge_thin_limit=%.9g edge_thin_dist=%.9g "
+                    "edge_blur_amount=%.9g edge_blur_dir=%d edge_blur_dist_type=%d "
+                    "boundary=%u edge_blur_dist=%.9g edge_blur_weight=%.9g "
+                    "final_rgba=(%u,%u,%u,%u)\n",
+                    pixel.x,
+                    pixel.y,
+                    matched_before_edge_thin[i],
+                    matched[i],
+                    keep_mask[i],
+                    cfg.edge_thin_amount,
+                    edge_thin_limit,
+                    edge_thin_dist.empty() ? -1.0f : edge_thin_dist[static_cast<size_t>(i)],
+                    cfg.edge_blur_amount,
+                    cfg.edge_blur_direction,
+                    cfg.edge_blur_distance_type,
+                    boundary[i],
+                    dist[static_cast<size_t>(i)],
+                    weight,
+                    out.rgba[p + 0],
+                    out.rgba[p + 1],
+                    out.rgba[p + 2],
+                    out.rgba[p + 3]);
+            }
+        }
+    } else {
+        for (const TracePixel &pixel : trace_pixels) {
+            if (0 <= pixel.x && pixel.x < w && 0 <= pixel.y && pixel.y < h) {
+                const int i = pixel.y * w + pixel.x;
+                const size_t p = static_cast<size_t>(i) * 4;
+                std::fprintf(
+                    stderr,
+                    "OLMCOLORKEY_TRACE x=%d y=%d matched0=%u matched1=%u keep=%u "
+                    "edge_thin_amount=%.9g edge_thin_limit=%.9g edge_thin_dist=%.9g "
+                    "edge_blur_amount=%.9g edge_blur_dir=%d edge_blur_dist_type=%d "
+                    "final_rgba=(%u,%u,%u,%u)\n",
+                    pixel.x,
+                    pixel.y,
+                    matched_before_edge_thin[i],
+                    matched[i],
+                    keep_mask[i],
+                    cfg.edge_thin_amount,
+                    edge_thin_limit,
+                    edge_thin_dist.empty() ? -1.0f : edge_thin_dist[static_cast<size_t>(i)],
+                    cfg.edge_blur_amount,
+                    cfg.edge_blur_direction,
+                    cfg.edge_blur_distance_type,
+                    out.rgba[p + 0],
+                    out.rgba[p + 1],
+                    out.rgba[p + 2],
+                    out.rgba[p + 3]);
+            }
         }
     }
     return out;

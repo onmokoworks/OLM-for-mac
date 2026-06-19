@@ -6,9 +6,9 @@
 #include <cctype>
 #include <cstdio>
 #include <cstdlib>
-#include <deque>
 #include <filesystem>
 #include <fstream>
+#include <limits>
 #include <map>
 #include <stdexcept>
 #include <string>
@@ -384,56 +384,70 @@ Image render_olmtoondilate(const Image &input, const ToonDilateParams &params) {
     if (r_eff <= 0) return out;
 
     const int n = w * h;
-    std::vector<int> dist(n, -1);
-    std::vector<int> sx(n, -1);
-    std::vector<int> sy(n, -1);
-    std::deque<int> queue;
+    constexpr uint32_t INF = std::numeric_limits<uint32_t>::max();
+    std::vector<uint32_t> dist(n, INF);
 
     for (int y = 0; y < h; ++y) {
         for (int x = 0; x < w; ++x) {
             const int idx = y * w + x;
             if (input.rgba[static_cast<size_t>(idx) * 4 + 3] == 255) {
                 dist[idx] = 0;
-                sx[idx] = x;
-                sy[idx] = y;
-                queue.push_back(idx);
             }
         }
     }
-    if (queue.empty()) return out;
+    if (std::all_of(dist.begin(), dist.end(), [](uint32_t v) { return v == INF; })) return out;
 
-    constexpr int DX[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
-    constexpr int DY[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
-    while (!queue.empty()) {
-        int idx = queue.front();
-        queue.pop_front();
-        int d = dist[idx];
-        if (d >= r_eff) continue;
-        int x = idx % w;
-        int y = idx / w;
-        for (int k = 0; k < 8; ++k) {
-            int nx = x + DX[k];
-            int ny = y + DY[k];
+    auto try_relax = [&](int x, int y, const int coords[][2], int count) {
+        int idx = y * w + x;
+        if (dist[idx] == 0) return;
+        uint32_t best = INF;
+        int best_x = -1;
+        int best_y = -1;
+        for (int i = 0; i < count; ++i) {
+            int nx = coords[i][0];
+            int ny = coords[i][1];
             if (nx < 0 || nx >= w || ny < 0 || ny >= h) continue;
-            int nidx = ny * w + nx;
-            if (dist[nidx] >= 0) continue;
-            dist[nidx] = d + 1;
-            sx[nidx] = sx[idx];
-            sy[nidx] = sy[idx];
-            queue.push_back(nidx);
+            uint32_t d = dist[ny * w + nx];
+            if (d < best) {
+                best = d;
+                best_x = nx;
+                best_y = ny;
+            }
+        }
+        if (best == INF) return;
+        uint32_t candidate = best + 1;
+        if (candidate >= dist[idx]) return;
+        dist[idx] = candidate;
+        if (candidate <= static_cast<uint32_t>(r_eff)) {
+            const size_t dst = static_cast<size_t>(idx) * 4;
+            const size_t src = static_cast<size_t>(best_y * w + best_x) * 4;
+            out.rgba[dst + 0] = out.rgba[src + 0];
+            out.rgba[dst + 1] = out.rgba[src + 1];
+            out.rgba[dst + 2] = out.rgba[src + 2];
+            out.rgba[dst + 3] = out.rgba[src + 3];
+        }
+    };
+
+    for (int y = 0; y < h; ++y) {
+        for (int x = 0; x < w; ++x) {
+            const int coords[4][2] = {{x - 1, y}, {x - 1, y - 1}, {x, y - 1}, {x + 1, y - 1}};
+            try_relax(x, y, coords, 4);
         }
     }
-
+    for (int y = h - 1; y >= 0; --y) {
+        for (int x = w - 1; x >= 0; --x) {
+            const int coords[4][2] = {{x + 1, y}, {x + 1, y + 1}, {x, y + 1}, {x - 1, y + 1}};
+            try_relax(x, y, coords, 4);
+        }
+    }
     for (int idx = 0; idx < n; ++idx) {
-        if (dist[idx] <= 0 || dist[idx] > r_eff) continue;
-        const size_t dst = static_cast<size_t>(idx) * 4;
-        if (input.rgba[dst + 3] == 255) continue;
-        int source_idx = sy[idx] * w + sx[idx];
-        const size_t src = static_cast<size_t>(source_idx) * 4;
-        out.rgba[dst + 0] = input.rgba[src + 0];
-        out.rgba[dst + 1] = input.rgba[src + 1];
-        out.rgba[dst + 2] = input.rgba[src + 2];
-        out.rgba[dst + 3] = input.rgba[src + 3];
+        const size_t off = static_cast<size_t>(idx) * 4;
+        unsigned char a = out.rgba[off + 3];
+        if (a == 0 || a == 255) continue;
+        for (int c = 0; c < 3; ++c) {
+            int v = static_cast<int>(out.rgba[off + c]) * static_cast<int>(a);
+            out.rgba[off + c] = static_cast<unsigned char>((v + 127) / 255);
+        }
     }
     return out;
 }

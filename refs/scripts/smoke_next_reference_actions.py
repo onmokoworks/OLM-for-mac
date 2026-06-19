@@ -51,12 +51,12 @@ def main() -> int:
         )
         pending_doc = json.loads(pending.stdout)
         assert pending_doc["next_action"] is None
-        assert "smoother2_no_key_grid_20260606" in pending_doc["pending"]
         pending_actions = pending_doc["pending_actions"]
-        assert pending_actions[0]["request_id"] == "smoother2_no_key_grid_20260606"
+        assert "smoother2_no_key_grid_20260606" in pending_doc["pending"]
+        assert pending_actions[0]["request_id"] == "radialblur_inner_size_variation_20260606"
         assert pending_actions[0]["status"] == "pending"
         assert pending_actions[0]["write_scope"] == "none"
-        assert pending_actions[0]["unblock_request"] == "smoother2_no_key_grid_20260606"
+        assert pending_actions[0]["unblock_request"] == "radialblur_inner_size_variation_20260606"
         assert "notes/SUBAGENT_ASSIGNMENTS.md" in pending_actions[0]["prior_audit_refs"]
         assert "notes/PARALLEL_IR_AUDIT_20260606.md" in pending_actions[0]["agent_prompt"]
         assert "stop before PNG-only implementation tuning" in pending_actions[0]["stop_condition"]
@@ -89,10 +89,10 @@ def main() -> int:
             capture=True,
         )
         assert (dispatch_dir / "index.json").exists()
-        pending_md = dispatch_dir / "pending" / "01_smoother2_no_key_grid_20260606" / "SUBAGENT.md"
+        pending_md = dispatch_dir / "pending" / "01_radialblur_inner_size_variation_20260606" / "SUBAGENT.md"
         assert pending_md.exists()
-        assert "OLMSmoother2 no-key" in pending_md.read_text(encoding="utf-8")
-        assert (dispatch_dir / "pending" / "01_smoother2_no_key_grid_20260606" / "action.json").exists()
+        assert "OLMRadialBlur" in pending_md.read_text(encoding="utf-8")
+        assert (dispatch_dir / "pending" / "01_radialblur_inner_size_variation_20260606" / "action.json").exists()
 
         pending_human = run(
             [
@@ -107,9 +107,9 @@ def main() -> int:
             capture=True,
         )
         assert "next pending subagent" in pending_human.stdout
-        assert "- request: smoother2_no_key_grid_20260606" in pending_human.stdout
+        assert "- request: radialblur_inner_size_variation_20260606" in pending_human.stdout
         assert "stop before PNG-only implementation tuning" in pending_human.stdout
-        assert "smoke_olmsmoother2_no_key_grid_cli.py" in pending_human.stdout
+        assert "smoke_reference_request_cli_probe.py --request-id radialblur_inner_size_variation_20260606" in pending_human.stdout
 
         source = tmpdir / "returned"
         effect_dir = source / "OLMSmoother2"
@@ -185,7 +185,7 @@ def main() -> int:
         assert "First run or inspect:" in action["agent_prompt"]
         assert "Do not edit" in action["agent_prompt"]
         assert "copy_paste_prompt" in action
-        assert covered_doc["pending_actions"][0]["request_id"] == "olmcolorkey_replace_colorspace_20260606"
+        assert covered_doc["pending_actions"][0]["request_id"] == "radialblur_inner_size_variation_20260606"
 
     print("[OK] next reference actions smoke")
     return 0

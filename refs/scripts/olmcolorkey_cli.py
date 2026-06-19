@@ -22,7 +22,9 @@ Edge Blur is partially reconstructed from FUN_1800049a0..FUN_1800056f0 and
 FUN_1800085b0; it runs for cases 8/9 but is not yet reference-accurate. The
 current boundary seed ignores the comp edge as an outside-matte neighbor, which
 matches the Windows references better than treating the frame edge as a blur
-boundary.
+boundary. Edge Blur now uses the same Distance Type dispatch as Edge Thin:
+1=8-neighbor/chessboard, 2=L1, 3=Euclidean, matching the ctx+0x44 branch before
+FUN_1800085b0.
 """
 
 import argparse
@@ -158,8 +160,6 @@ def matte_distance(mask, distance_type):
 
 def edge_blur_distance(mask, distance_type):
     """Distance transform used by Edge Blur's feather weighting."""
-    if distance_type == 1:
-        return distance_transform_edt(~mask).astype(np.float32)
     return matte_distance(mask, distance_type)
 
 

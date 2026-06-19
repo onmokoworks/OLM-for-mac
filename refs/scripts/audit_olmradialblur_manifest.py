@@ -79,7 +79,7 @@ def main() -> int:
     if manifest.is_dir():
         manifest = manifest / "reference_manifest.json"
 
-    data = json.loads(manifest.read_text())
+    data = json.loads(manifest.read_text(encoding="utf-8-sig"))
     print(f"manifest={manifest}")
     print(f"cases={len(data.get('cases', []))}")
     print(

@@ -1,0 +1,84 @@
+# Source: OLMColorKeep/OLMColorKeep/doc/ColorKeepUserManualEN.pdf
+
+
+--- page 1 ---
+OLM Open Tools Color Keep User Manual
+OLM Open Tools
+Color Keep
+User Manual
+OLM Digital, Inc.
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 1
+
+
+--- page 2 ---
+OLM Open Tools Color Keep User Manual
+Table of Contents
+1. Introduction 4
+1.1. Supported Environment 4
+1.2. Install 4
+2. Using Color Keep 4
+3. Color Keep Parameters 4
+4. Other 5
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 2
+
+
+--- page 3 ---
+OLM Open Tools Color Keep User Manual
+Copyright, End User License Agreement
+OLM Open Tools are licensed under the Apache License, Version 2.0.
+Change Logs
+2011/08/01 First version
+2017/11/02 Change License terms
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 3
+
+
+--- page 4 ---
+OLM Open Tools Color Keep User Manual
+1. Introduction
+Color Keep is an effect plug-in for Adobe® After Effects® (AE). The Color Keep effect
+affects the alpha channel of a given image by keeping only the given color lists (the inverse
+of color key).
+Figure 1 (Left) Original Image, (Right) Example where cap color are used in Color
+Keep
+1.1. Supported Environment
+Please refer to OLM Open Tools website for a complete list of supported environment.
+1.2. Install
+The zip archive you can download from OLM OpenTools web site contains the files listed in
+Table 1. To install OLM Smoother copy the plug-in file (for windows: OLMSmoother.aex, for
+Mac: unzip OLMSmoother.plugin.zip) in A E plug-in directory
+(example:
+for windows: C:\Program Files\Adobe\Adobe After Effects 2022\Support Files\Plug-ins\OLM
+for Mac: Applications\Adobe After Effects CS3\Plug-ins\OLM)
+Folder File Name Explanation
+Plugins\[32/64/Mac] \[Version] ColorKeep.aex The plug-in files.
+ColorKeep.plugin.zip
+doc ColorKeepUserManual.pdf The user manual for Color
+Keep
+Table 1：Content of the zip archive
+2. Using Color Keep
+To apply the effect, use the menu: (Effects)→(OLM Plug-ins)→(Color Keep).
+When you apply Color Keep the layer becomes black.
+3. Color Keep Parameters
+Color Keep parameters are as follows (Figure 2)
+Figure 2 Color Keep parameters
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 4
+
+
+--- page 5 ---
+OLM Open Tools Color Keep User Manual
+● Enabled Color Num－Choose the number of color you want to choose. By increasing
+this parameter, the number of “Color” parameter increase. You can increase it up to
+100.
+● Color－Choose the color you want to “keep”. The default is RGB= (0, 0, 0). That’s why
+at first application of the effect you will have the impression that nothing is selected. To
+select a color, you will have to first disable the effect once, pick the color and re-enable
+the effect.
+You can see in Figure 4 an example of use of Color Keep on the image of Figure 3.
+Figure 3 Original Image
+Initial condition Result after selecting cap colors
+Figure 4 Result after applying Color Keep
+4. Other
+If you have problem using the plug-in in any environment, if you find a bug, have a feature
+request, or for any kind of feedback feel free to contact us at the following mail address:
+opentools@olm.co.jp
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 5

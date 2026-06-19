@@ -331,16 +331,21 @@ void load_input<PF_PixelFloat>(const PF_EffectWorld *src, float *rgb, u_char *al
 	}
 }
 
-static void store8(PF_EffectWorld *dst, const float *rgb)
+static inline float round_blur_value(float v, A_long legacy)
+{
+	return legacy ? floorf(v + 0.5f) : nearbyintf(v);
+}
+
+static void store8(PF_EffectWorld *dst, const float *rgb, A_long legacy)
 {
 	A_long w = dst->width, h = dst->height;
 	A_long rb = dst->rowbytes;
 	for (A_long y = 0; y < h; ++y) {
 		PF_Pixel8 *row = (PF_Pixel8*)((char*)dst->data + y * rb);
 		for (A_long x = 0; x < w; ++x) {
-			float r = floorf(rgb[(y*w + x)*3+0] + 0.5f);
-			float g = floorf(rgb[(y*w + x)*3+1] + 0.5f);
-			float b = floorf(rgb[(y*w + x)*3+2] + 0.5f);
+			float r = round_blur_value(rgb[(y*w + x)*3+0], legacy);
+			float g = round_blur_value(rgb[(y*w + x)*3+1], legacy);
+			float b = round_blur_value(rgb[(y*w + x)*3+2], legacy);
 			if (r < 0) r = 0; if (r > 255) r = 255;
 			if (g < 0) g = 0; if (g > 255) g = 255;
 			if (b < 0) b = 0; if (b > 255) b = 255;
@@ -351,16 +356,16 @@ static void store8(PF_EffectWorld *dst, const float *rgb)
 	}
 }
 
-static void store16(PF_EffectWorld *dst, const float *rgb)
+static void store16(PF_EffectWorld *dst, const float *rgb, A_long legacy)
 {
 	A_long w = dst->width, h = dst->height;
 	A_long rb = dst->rowbytes;
 	for (A_long y = 0; y < h; ++y) {
 		PF_Pixel16 *row = (PF_Pixel16*)((char*)dst->data + y * rb);
 		for (A_long x = 0; x < w; ++x) {
-			float r = floorf(rgb[(y*w + x)*3+0] + 0.5f);
-			float g = floorf(rgb[(y*w + x)*3+1] + 0.5f);
-			float b = floorf(rgb[(y*w + x)*3+2] + 0.5f);
+			float r = round_blur_value(rgb[(y*w + x)*3+0], legacy);
+			float g = round_blur_value(rgb[(y*w + x)*3+1], legacy);
+			float b = round_blur_value(rgb[(y*w + x)*3+2], legacy);
 			if (r < 0) r = 0; if (r > 32768) r = 32768;
 			if (g < 0) g = 0; if (g > 32768) g = 32768;
 			if (b < 0) b = 0; if (b > 32768) b = 32768;
@@ -450,10 +455,10 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 		if (bp->repeat > 1) decay = powf(3.0f / blur_amount, 1.0f / (float)(bp->repeat - 1));
 
 		for (A_long iter = 0; iter < bp->repeat; ++iter) {
-			float radius_f = blur_amount * powf(decay, (float)iter);
-			A_long radius = (A_long)radius_f;
+			double radius_d = (double)blur_amount * pow((double)decay, (double)iter);
+			A_long radius = (A_long)radius_d;
 			if (radius == 0) break;
-			float sigma = radius_f / 3.0f;
+			float sigma = (float)radius_d / 3.0f;
 			float denom = 2.0f * sigma * sigma;
 			for (A_long k = 0; k <= radius; ++k) {
 				weights[k] = expf(-(float)(k*k) / denom);
@@ -470,8 +475,8 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 	}
 	free(weights);
 
-	if (bpc == 8)       store8(output, buf1);
-	else if (bpc == 16) store16(output, buf1);
+	if (bpc == 8)       store8(output, buf1, bp->legacy);
+	else if (bpc == 16) store16(output, buf1, bp->legacy);
 	else                storeFloat(output, buf1);
 
 	free(buf1); free(buf2); free(alpha1); free(alpha2);

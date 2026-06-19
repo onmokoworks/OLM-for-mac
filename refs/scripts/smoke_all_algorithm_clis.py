@@ -19,22 +19,30 @@ from pathlib import Path
 class Smoke:
     name: str
     command: list[str]
-    expected: str = "green"  # green | red-measurement | optional-red-measurement
+    expected: str = "regression-gate"  # regression-gate | red-measurement | optional-red-measurement
 
 
-def run(root: Path, smoke: Smoke) -> tuple[bool, str]:
+def run(root: Path, smoke: Smoke, timeout: int) -> tuple[bool, str]:
     print(f"\n=== {smoke.name} ({smoke.expected}) ===", flush=True)
-    proc = subprocess.run(
-        smoke.command,
-        cwd=root,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-    )
+    try:
+        proc = subprocess.run(
+            smoke.command,
+            cwd=root,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            timeout=timeout,
+        )
+    except subprocess.TimeoutExpired as exc:
+        output = exc.stdout or ""
+        if isinstance(output, bytes):
+            output = output.decode("utf-8", errors="replace")
+        print(output, end="" if output.endswith("\n") else "\n")
+        return False, f"TIMEOUT after {timeout}s"
     output = proc.stdout or ""
     print(output, end="" if output.endswith("\n") else "\n")
 
-    if smoke.expected == "green":
+    if smoke.expected in ("green", "regression-gate"):
         if proc.returncode == 0:
             return True, "OK"
         return False, f"FAILED exit={proc.returncode}"
@@ -59,9 +67,19 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--profile",
-        choices=("quick", "full", "opencv"),
+        choices=("quick", "full", "opencv", "nonhard", "blur-kirakira"),
         default="full",
-        help="quick runs only green gates; full also runs expected-red diagnostics; opencv runs optional OpenCV probes",
+        help=(
+            "quick runs all regression gates; full also runs expected-red diagnostics; "
+            "opencv runs optional OpenCV probes; nonhard runs regression gates for the non-hard plug-in set; "
+            "blur-kirakira runs the focused OLMBlur/OLMKiraKira handoff gates"
+        ),
+    )
+    parser.add_argument(
+        "--timeout",
+        type=int,
+        default=300,
+        help="Per-smoke timeout in seconds for the aggregate runner.",
     )
     return parser.parse_args()
 
@@ -71,9 +89,9 @@ def main() -> int:
     root = Path(__file__).resolve().parents[2]
     py = sys.executable
     smokes = [
-        Smoke("Reference request package", [py, "refs/scripts/package_reference_requests.py", "--pending", "--output", "/tmp/olm_reference_requests_smoke.zip"]),
+        Smoke("Reference request package", [py, "refs/scripts/package_reference_requests.py", "--only", "kirakira_single_ray_20260606", "--output", "/tmp/olm_reference_requests_smoke.zip"]),
         Smoke("Reference request package handoff", [py, "refs/scripts/smoke_reference_request_package.py"]),
-        Smoke("Reference request package verifier", [py, "refs/scripts/verify_reference_request_package.py", "/tmp/olm_reference_requests_smoke.zip", "--expect-pending"]),
+        Smoke("Reference request package verifier", [py, "refs/scripts/verify_reference_request_package.py", "/tmp/olm_reference_requests_smoke.zip"]),
         Smoke("Reference request result verifier", [py, "refs/scripts/smoke_reference_request_result_verifier.py"]),
         Smoke("Reference request importer", [py, "refs/scripts/smoke_import_win_reference.py"]),
         Smoke("Reference import and check runner", [py, "refs/scripts/smoke_import_and_check_win_reference.py"]),
@@ -82,15 +100,25 @@ def main() -> int:
         Smoke("Reference requests after import", [py, "refs/scripts/smoke_reference_requests_after_import.py"]),
         Smoke("Reference request status", [py, "refs/scripts/check_reference_request_status.py"]),
         Smoke("Next reference actions", [py, "refs/scripts/smoke_next_reference_actions.py"]),
+        Smoke("Runtime trace package", [py, "refs/scripts/smoke_runtime_trace_package.py"]),
+        Smoke("Runtime trace return", [py, "refs/scripts/smoke_runtime_trace_return.py"]),
+        Smoke("Runtime trace comparison index", [py, "refs/scripts/smoke_compare_runtime_trace_summary.py"]),
+        Smoke("OLMBlur trace comparison", [py, "refs/scripts/smoke_compare_olmblur_trace.py"]),
+        Smoke("KiraKira stage trace comparison", [py, "refs/scripts/smoke_compare_kirakira_stage_trace.py"]),
+        Smoke("ColorKey Edge trace comparison", [py, "refs/scripts/smoke_compare_colorkey_edge_trace.py"]),
+        Smoke("OLMDistanceGradation trace comparison", [py, "refs/scripts/smoke_compare_distancegradation_trace.py"]),
+        Smoke("Port dashboard", [py, "refs/scripts/smoke_generate_port_dashboard.py"]),
         Smoke("Current handoff printer", [py, "refs/scripts/smoke_print_current_handoff.py"]),
         Smoke("Next OLM action printer", [py, "refs/scripts/smoke_print_next_olm_action.py"]),
         Smoke("Prepare Windows handoff", [py, "refs/scripts/smoke_prepare_windows_reference_handoff.py"]),
+        Smoke("Windows action bundle", [py, "refs/scripts/smoke_windows_action_bundle.py"]),
         Smoke("AE validation result verifier", [py, "refs/scripts/smoke_ae_validation_result_verifier.py"]),
         Smoke("AE pixel validation request", [py, "refs/scripts/smoke_ae_pixel_validation_request.py"]),
         Smoke("AE host return verifier", [py, "refs/scripts/smoke_ae_host_return_verifier.py"]),
         Smoke("OLM return intake", [py, "refs/scripts/smoke_olm_return_intake.py"]),
         Smoke("OLM return candidate lister", [py, "refs/scripts/smoke_list_olm_return_candidates.py"]),
         Smoke("Mac plugin package verifier", [py, "refs/scripts/smoke_mac_plugin_package_verifier.py"]),
+        Smoke("Mac plugin MediaCore installer", [py, "refs/scripts/smoke_mac_plugin_installer.py"]),
         Smoke("OLM handoff package verifier", [py, "refs/scripts/smoke_olm_handoff_package_verifier.py"]),
         Smoke("harness", [py, "refs/scripts/smoke_algorithm_harness.py"]),
         Smoke("ColorKeep synthetic", [py, "refs/scripts/smoke_colorkeep_cli.py"]),
@@ -129,6 +157,8 @@ def main() -> int:
         Smoke("OLMRadialBlur C++ Zoom", [py, "refs/scripts/smoke_olmradialblur_cpp_zoom_cli.py"]),
         Smoke("OLMRadialBlur Inner", [py, "refs/scripts/smoke_olmradialblur_inner_cli.py"], "red-measurement"),
         Smoke("OLMRadialBlur C++ Inner", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_cli.py"], "red-measurement"),
+        Smoke("OLMRadialBlur C++ Inner Scatter Stats", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_scatter_stats_cli.py"]),
+        Smoke("OLMRadialBlur C++ Inner Small Scatter Stats", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_small_scatter_stats_cli.py"]),
         Smoke("OLMRadialBlur C++ Inner Alpha Mode probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_alpha_mode_probe_cli.py"], "red-measurement"),
         Smoke("OLMRadialBlur C++ Inner Source Scatter Prepass probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_source_scatter_prepass_cli.py"], "red-measurement"),
         Smoke("OLMRadialBlur C++ Inner Prepass Mode probe", [py, "refs/scripts/smoke_olmradialblur_cpp_inner_prepass_mode_probe_cli.py"], "red-measurement"),
@@ -186,6 +216,10 @@ def main() -> int:
         Smoke("OLMDirectionalBlur C++ Rotated Map Preserve Alpha", [py, "refs/scripts/smoke_olmdirectionalblur_cpp_rotated_map_preserve_alpha_cli.py"], "red-measurement"),
         Smoke("OLMKiraKira", [py, "refs/scripts/smoke_olmkirakira_cli.py"], "red-measurement"),
         Smoke("OLMKiraKira C++", [py, "refs/scripts/smoke_olmkirakira_cpp_cli.py"], "red-measurement"),
+        Smoke("OLMKiraKira C++ remapBilinear f32 diagnostic", [py, "refs/scripts/smoke_olmkirakira_cpp_remap_bilinear_f32_diag.py"]),
+        Smoke("OLMKiraKira C++ WarpAffine map f32 diagnostic", [py, "refs/scripts/smoke_olmkirakira_cpp_warpaffine_map_f32_diag.py"]),
+        Smoke("OLMKiraKira C++ WarpAffine remap f32 diagnostic", [py, "refs/scripts/smoke_olmkirakira_cpp_warpaffine_remap_f32_diag.py"]),
+        Smoke("OLMKiraKira trace-json", [py, "refs/scripts/smoke_olmkirakira_trace_json.py"]),
         Smoke("OLMKiraKira OpenCV two-temp probe", [py, "refs/scripts/smoke_olmkirakira_opencv_two_temp_probe_cli.py"], "optional-red-measurement"),
         Smoke("OLMKiraKira OpenCV two-temp alias probe", [py, "refs/scripts/smoke_olmkirakira_opencv_two_temp_alias_probe_cli.py"], "optional-red-measurement"),
         Smoke("OLMKiraKira Brightness probe", [py, "refs/scripts/smoke_olmkirakira_brightness_probe_cli.py"], "red-measurement"),
@@ -208,14 +242,45 @@ def main() -> int:
         Smoke("OLMKiraKira C++ Box Size probe", [py, "refs/scripts/smoke_olmkirakira_cpp_box_size_probe_cli.py"], "red-measurement"),
     ]
     if args.profile == "quick":
-        smokes = [smoke for smoke in smokes if smoke.expected == "green"]
+        smokes = [smoke for smoke in smokes if smoke.expected in ("green", "regression-gate")]
+    elif args.profile == "nonhard":
+        nonhard_names = (
+            "ColorKeep",
+            "OLMBlur",
+            "OLMColorKey",
+            "OLMToonDilate",
+            "OLMDistanceGradation",
+            "OLMSmoother2",
+            "AE pixel validation request",
+        )
+        smokes = [
+            smoke
+            for smoke in smokes
+            if smoke.expected in ("green", "regression-gate") and any(name in smoke.name for name in nonhard_names)
+        ]
     elif args.profile == "opencv":
         smokes = [smoke for smoke in smokes if smoke.expected == "optional-red-measurement"]
+    elif args.profile == "blur-kirakira":
+        focus_names = {
+            "Runtime trace package",
+            "Runtime trace comparison index",
+            "OLMBlur trace comparison",
+            "KiraKira stage trace comparison",
+            "Next OLM action printer",
+            "Windows action bundle",
+            "OLMBlur build",
+            "OLMBlur",
+            "OLMKiraKira C++ remapBilinear f32 diagnostic",
+            "OLMKiraKira C++ WarpAffine map f32 diagnostic",
+            "OLMKiraKira C++ WarpAffine remap f32 diagnostic",
+            "OLMKiraKira trace-json",
+        }
+        smokes = [smoke for smoke in smokes if smoke.name in focus_names]
 
     results: list[tuple[str, bool, str]] = []
     print(f"running smoke profile: {args.profile} ({len(smokes)} checks)", flush=True)
     for smoke in smokes:
-        ok, status = run(root, smoke)
+        ok, status = run(root, smoke, args.timeout)
         results.append((smoke.name, ok, status))
 
     print("\n=== summary ===")

@@ -1,0 +1,91 @@
+# Source: OLMSmootherAE/OLMSmootherAE/doc/OLMSmootherUserManual.pdf
+
+
+--- page 1 ---
+OLM Open Tools OLM Smoother ユーザーマニュアル
+OLM Open Tools
+OLM Smoother
+ユーザーマニュアル
+オー・エル・エム・デジタル
+Ⓒ Copyright 2022 OLM Digital, Inc. All rights reserved.
+1
+
+
+--- page 2 ---
+OLM Open Tools OLM Smoother ユーザーマニュアル
+目次
+1. はじめに 4
+1.1. 対応している環境 4
+1.2. インストール方法 4
+2. OLM Smootherの適用方法 4
+3. OLM Smootherのパラメータ 4
+4. その他 5
+Ⓒ Copyright 2022 OLM Digital, Inc. All rights reserved.
+2
+
+
+--- page 3 ---
+OLM Open Tools OLM Smoother ユーザーマニュアル
+著作権・使用許諾について
+OLM Open Tools は Apache License Version 2.0 に基づいてライセンスされます。
+更新履歴
+2011/08/01 初版作成
+2017/11/02 ライセンス規約変更
+Ⓒ Copyright 2022 OLM Digital, Inc. All rights reserved.
+3
+
+
+--- page 4 ---
+OLM Open Tools OLM Smoother ユーザーマニュアル
+1. はじめに
+OLM SmootherはAdobe® After Effects®用のアニメ特有のスムージング処理を行うエフェクトプラグインです。
+図 1 (左)元画像 (右)OLM Smoother適用後の画像
+1.1. 対応している環境
+OLM Open Toolsのウェブサイトを参照ください。
+1.2. インストール方法
+OLM Open Toolsサイトよりダウンロードしたzipファイルには、表 1に示すファイルが収められています。OLM
+Smootherをインストールするには、プラグインファイル「OLMSmoother.aex」(Windowsの場合)か「
+OLMSmoother.plugin.zip」を展開後に(Macの場合)After Effectsのプラグインディレクトリにコピーしてください。
+(例：Winの場合 C:\Program Files\Adobe\Adobe After Effects 2022\Support Files\Plug-ins\OLM
+Macの場合、Applications￥Adobe After Effects CS3¥Plug-ins¥Olm）
+フォルダ名 ファイル名 説明
+Plugins\[32/64/Mac]\[バージョン] OLMSmoother.aex 各OS、AEバージョンに対応した
+OLMSmoother.plugin.zip プラグイン本体です。
+doc OLMSmootherUserManual.pdf OLM Smootherのユーザーマ
+ニュアルです。このファイルで
+す。
+表 1：zipファイル内に収められているファイル
+2. OLM Smootherの適用方法
+他のエフェクトと同じようにメニューバーの「エフェクト >> OLM Plug-ins >> OLM Smoother」と選択することで適
+用できます。
+3. OLM Smootherのパラメータ
+OLM Smootherには、以下に示すパラメータがあります。
+Ⓒ Copyright 2022 OLM Digital, Inc. All rights reserved.
+4
+
+
+--- page 5 ---
+OLM Open Tools OLM Smoother ユーザーマニュアル
+図 2 OLM Smootherエフェクトのパラメータ
+● Use Color Key－このパラメータをオンにすると取り除きたい色を指定できます。取り除かれた色は透明に
+なり、下のレイヤーが見えるようになります。
+図 3 （左）Use Color Keyオフ（右）Use Color Keyオン
+オンの時はチェッカー模様が見えています
+● Color Key － Use Color Key がオンの場合に有効なパラメータで、取り除きたい色を指定します。
+● Do Smooth Range－OLM Smootherを適用したい画像にグラデーションがある場合、単純にOLM
+Smootherを適用しただけではスムーズな線にならない場合があります。そういった場合には、もうひとつの
+パラメータ「Do Smooth Range」を調整するとスムーズな線になります。
+図 4 (左)Do Smooth Range＝0（右) Do Smooth Range＝6、(下段)はそれぞれの拡大図
+右画像のラインの方がスムーズなのが分かります
+Ⓒ Copyright 2022 OLM Digital, Inc. All rights reserved.
+5
+
+
+--- page 6 ---
+OLM Open Tools OLM Smoother ユーザーマニュアル
+4. その他
+正常に動作しない、バグを発見した、もしくは機能追加要望などがある場合は、下記のメールアドレス宛にご連絡
+ください。
+opentools@olm.co.jp
+Ⓒ Copyright 2022 OLM Digital, Inc. All rights reserved.
+6

@@ -1045,3 +1045,128 @@ binary/decomp fact to avoid PNG-fitting.
   DirectionalBlur risk is more likely exact host-scale/padded populate,
   alpha-weighted input rotate validity, or a still-missed `FUN_180001000`
   prepass detail than component connectivity.
+
+2026-06-17 returned context-scale smoke audit:
+
+- A read-only subagent re-ran `directionalblur_context_scale_20260606` with the
+  current `rotated-aex-exact-rowdriver` command. The collapsed unique metrics
+  were identical across fr24/fr30 and software/CUDA rows:
+
+| case | max | mean |
+| --- | ---: | ---: |
+| existing case 0001 | 210 | 37.3363 |
+| existing case 0005 | 178 | 17.6044 |
+| angle0 no tail/size | 215 | 26.4272 |
+| angle0 small strength | 205 | 17.1166 |
+| alpha fade hard edges | 254 | 27.3729 |
+| diagonal alpha ramp | 238 | 11.8807 |
+| size variation component | 255 | 21.0120 |
+| sharp tail component | 255 | 14.9299 |
+
+- The fr24/fr30 equality keeps frame-rate scaling contradicted; keep
+  `ctx+0x11c/0x120` mapped to `PF_InData.downsample_x.num/den`.
+- The non-opaque cases do not support promoting straight RGB, binary alpha,
+  rotate-back denominator alpha, or plain rotate sampling. Keep the current
+  facts: source RGB from A, continuous `alpha_or_valid` from `FUN_180001000`,
+  separate RGB denominator, max-tracked B alpha in `FUN_1800013e0`, then
+  alpha-weighted `FUN_180001ec0` rotate-back.
+- Next smallest parent action: perform a narrow Ghidra/objdump audit of the
+  remaining edge/populate path, specifically 8bpc host populate into padded A
+  and the first `FUN_180001ec0` non-opaque alpha/RGB validity behavior before
+  component-map and row-driver execution. Do not add another broad PNG toggle
+  unless that audit yields one concrete binary-backed difference.
+- No extra Windows references are needed yet. If this edge/populate audit
+  matches the current IR, the next unblocker should be new binary evidence, not
+  image-only fitting.
+
+2026-06-17 parent local edge/populate audit:
+
+- Local decomp/disasm of `FUN_180001ec0 @ 180001ec0` matches the live-Ghidra
+  rotate facts above. The helper uses `CVTTSS2SI` truncation, requires strict
+  interior samples (`0 < xi < width-1`, `0 < yi < height-1`), and only writes
+  destination RGBA inside the valid branch. Invalid samples therefore leave the
+  already-cleared destination unchanged rather than explicitly writing a color.
+- The current `rotated-aex-exact-rowdriver` path already mirrors that for the
+  first rotate: `rotated.rgba` is zero-initialized before sampling, the default
+  path does not preserve invalid input samples, and
+  `sample_bilinear_alpha_weighted` / `aex_rotate_sample_valid` use the same
+  strict interior validity. This makes first-rotate invalid handling unlikely
+  to be the leading residual.
+- 8bpc SmartRender uses `FUN_180006700` / PF Iterate8 at the first populate
+  call site (`180005259..18000528a`) with callback `LAB_180006980`; the wrapper
+  resolves `"PF Iterate8 Suite"` and invokes the suite function. Earlier 16bpc
+  paths use `FUN_180006610` / PF iterate16, so do not read the iterate16 wrapper
+  as the 8bpc populate behavior.
+- Next focus should move one step earlier: audit the `LAB_180006980` callback
+  itself and the exact padded A write offsets / channel scaling it applies
+  before `FUN_180001ec0(A, B, pad_w, pad_h, angle)`. Do not add another
+  first-rotate validity toggle unless `LAB_180006980` contradicts this mapping.
+- A read-only explorer independently reached the same conclusion: padded A
+  populate call order, first-rotate source/destination, alpha-weighted
+  `FUN_180001ec0`, copy-back, and component-validity generation are mirrored by
+  the current AEX-rowdriver CLI. Minor evidence caveat: the checked-in exported
+  disasm has the `LAB_180006980` call site but not a readable callback body, so
+  exact 8bpc channel-order/scaling still needs callback-body objdump/Ghidra
+  evidence before implementation changes.
+
+2026-06-17 direct objdump callback-body audit:
+
+- `/usr/bin/objdump` over `plugins_2025/OLMDirectionalBlur.aex` recovers the
+  callback bodies omitted from the exported Ghidra disasm. `0x180006980`
+  confirms the 8bpc populate mapping exactly: PF bytes `+1/+2/+3/+0` become
+  work floats `R/G/B/A`, each divided by `255.0f` at `0x18000b388`, and written
+  to `*(params+0x8078)` at:
+
+  ```text
+  ((*(int *)(params+0x8098) + y) * *(int *)(params+0x80a0)
+   + *(int *)(params+0x809c) + x) * 4
+  ```
+
+- `0x180006b30` confirms the 8bpc output callback: read
+  `*(params+0x8090)`, multiply RGB only by `BrightnessGain` at `params+0x28`,
+  clamp RGB to `1.0`, leave alpha ungained, multiply by `255.0f`, truncate via
+  `CVTTSS2SI`, and write PF bytes `A/R/G/B` to `+0/+1/+2/+3`.
+- This closes the callback-body evidence gap. The current CLI's padded
+  populate/output/truncation diagnostics already mirror these facts, so do not
+  add another host callback toggle. Remaining DirectionalBlur work should move
+  back to `FUN_180001000`, rowdriver scatter ownership, final normalization, or
+  another concrete objdump-backed difference.
+
+2026-06-17 parent rowdriver/final-normalization closeout:
+
+- Read-only rowdriver/final-normalization audit reconfirmed the current IR:
+  `FUN_180001000` seeds `denom`, `alpha_or_valid`, and `B` from the gathered
+  alpha; `FUN_1800013e0` scatters source RGB from A, contribution alpha from
+  `alpha_or_valid`, accumulates RGB/denom into B/denom, and max-tracks B alpha;
+  final normalization divides B.rgb by denom before alpha-weighted rotate-back
+  to A.
+- One small mismatch was real in the CLI: final normalization was guarded by
+  `denom > 1.0e-8f`, while `FUN_180004a20` uses a binary `denom > 0.0` branch.
+  `cli/OLMDirectionalBlur/main.cpp` now uses `denom > 0.0f`.
+- Re-running `directionalblur_context_scale_20260606` after that patch produced
+  the same collapsed metrics:
+
+| case | max | mean |
+| --- | ---: | ---: |
+| existing case 0001 | 210 | 37.3363 |
+| existing case 0005 | 178 | 17.6044 |
+| angle0 no tail/size | 215 | 26.4272 |
+| angle0 small strength | 205 | 17.1166 |
+| alpha fade hard edges | 254 | 27.3729 |
+| diagonal alpha ramp | 238 | 11.8807 |
+| size variation component | 255 | 21.0120 |
+| sharp tail component | 255 | 14.9299 |
+
+- Treat the `denom > 0.0f` patch as correctness cleanup, not a visible fix.
+  The main residual is now past the broad alpha/RGB/host-callback/rowdriver
+  toggles already tested. Prefer moving active Ghidra time to RadialBlur or
+  KiraKira unless a new DirectionalBlur binary fact appears.
+
+2026-06-18 consistency cleanup:
+
+- The primary `rotated-aex-exact-rowdriver` path already used the binary
+  `denom > 0.0f` final-normalization guard. A legacy/direct diagnostic path in
+  `cli/OLMDirectionalBlur/main.cpp` still used `denom > 1.0e-8f`; this was
+  changed to `denom > 0.0f` so all C++ diagnostic paths use the same
+  AEX-backed branch condition. This is not expected to move the current
+  rowdriver metrics; it removes a stale diagnostic mismatch.

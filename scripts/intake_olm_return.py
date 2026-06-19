@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -17,7 +18,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("source", type=Path, help="Returned zip/folder from AE host or Windows reference renderer.")
     parser.add_argument(
         "--kind",
-        choices=("auto", "ae-host", "win-reference"),
+        choices=("auto", "ae-host", "ae-pixel-validation", "win-reference", "runtime-trace"),
         default="auto",
         help="Artifact kind. auto detects from JSON contents.",
     )
@@ -41,6 +42,13 @@ def parse_args() -> argparse.Namespace:
         help="AE-host: require every packaged pixel request to have a returned PNG group.",
     )
     parser.add_argument("--run-dir", type=Path, default=None, help="AE-host pixel report directory.")
+    parser.add_argument(
+        "--ae-pixel-requests-dir",
+        action="append",
+        type=Path,
+        default=[],
+        help="AE pixel validation: directory containing request zips. May be repeated.",
+    )
     parser.add_argument("--set-id", default=None, help="Windows refs: destination set id.")
     parser.add_argument(
         "--dest-root",
@@ -85,6 +93,38 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Windows refs: write per-action sub-agent dispatch files after import.",
     )
+    parser.add_argument(
+        "--runtime-package",
+        type=Path,
+        default=None,
+        help="Runtime trace: request package zip. Defaults to newest refs/runtime_trace_packages/*.zip.",
+    )
+    parser.add_argument(
+        "--runtime-summary-json",
+        type=Path,
+        default=None,
+        help="Runtime trace: write normalized summary JSON.",
+    )
+    parser.add_argument(
+        "--runtime-summary-md",
+        type=Path,
+        default=None,
+        help="Runtime trace: write a human-readable Markdown summary.",
+    )
+    parser.add_argument(
+        "--runtime-comparison-dir",
+        type=Path,
+        default=None,
+        help=(
+            "Runtime trace: run known comparison routers after summary generation "
+            "and write their outputs to this directory."
+        ),
+    )
+    parser.add_argument(
+        "--no-runtime-comparisons",
+        action="store_true",
+        help="Runtime trace: skip automatic comparison routing after writing a summary.",
+    )
     return parser.parse_args()
 
 
@@ -104,7 +144,16 @@ def extract_if_zip(source: Path, dest: Path) -> Path:
     if not source.exists() or not zipfile.is_zipfile(source):
         raise ValueError(f"source is neither a directory nor zip: {source}")
     with zipfile.ZipFile(source) as archive:
-        archive.extractall(dest)
+        for member in archive.infolist():
+            normalized = member.filename.replace("\\", "/")
+            if not normalized or normalized.endswith("/"):
+                continue
+            if normalized.startswith("/") or ".." in Path(normalized).parts:
+                raise ValueError(f"unsafe zip member: {member.filename}")
+            target = dest / normalized
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with archive.open(member) as src, target.open("wb") as out:
+                shutil.copyfileobj(src, out)
     visible = [
         child
         for child in dest.iterdir()
@@ -116,7 +165,7 @@ def extract_if_zip(source: Path, dest: Path) -> Path:
 
 def load_json(path: Path) -> dict | None:
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
     except Exception:
         return None
     return data if isinstance(data, dict) else None
@@ -144,7 +193,7 @@ def package_kind(path: Path) -> str | None:
             ]
             top_manifests = [name for name in manifests if len(Path(name).parts) == 2]
             for name in top_manifests:
-                data = json.loads(archive.read(name).decode("utf-8"))
+                data = json.loads(archive.read(name).decode("utf-8-sig"))
                 if isinstance(data, dict):
                     kind = data.get("kind")
                     if kind in {"olm_port_handoff_package", "olm_mac_plugin_package"}:
@@ -190,6 +239,24 @@ def find_latest_ae_package(root: Path, search_dirs: list[Path]) -> Path | None:
 
 
 def detect_kind(root: Path) -> str | None:
+    for path in root.rglob("*.json"):
+        if "__MACOSX" in path.parts or path.name.startswith("._"):
+            continue
+        data = load_json(path)
+        if not data:
+            continue
+        if data.get("kind") in {"olm_runtime_trace_result", "olm_runtime_trace_return"}:
+            return "runtime-trace"
+        if isinstance(data.get("runtime_trace_results"), list):
+            return "runtime-trace"
+        if isinstance(data.get("results"), list):
+            return "runtime-trace"
+
+    if list(root.rglob("AE_VALIDATION_EXACT_REPORT.json")):
+        return "ae-pixel-validation"
+    if list(root.rglob("*_return.zip")) and any("ae_pixel_validation_return" in path.parts for path in root.rglob("*_return.zip")):
+        return "ae-pixel-validation"
+
     ae_jsons = [
         path
         for path in root.rglob("AE_VALIDATION_RESULT*.json")
@@ -240,6 +307,108 @@ def run_ae_host(args: argparse.Namespace, root: Path) -> int:
     return run(cmd, root)
 
 
+def request_id_from_zip(path: Path) -> str | None:
+    try:
+        with zipfile.ZipFile(path) as archive:
+            for name in archive.namelist():
+                normalized = name.replace("\\", "/")
+                if not normalized.endswith("request_manifest.json"):
+                    continue
+                data = json.loads(archive.read(name).decode("utf-8-sig"))
+                if isinstance(data, dict) and isinstance(data.get("request_id"), str):
+                    return data["request_id"]
+    except Exception:
+        return None
+    return None
+
+
+def find_ae_pixel_requests(root: Path, args: argparse.Namespace, materialized: Path) -> dict[str, Path]:
+    search_dirs = [path.resolve() for path in args.ae_pixel_requests_dir]
+    search_dirs.extend(
+        [
+            root / "refs" / "ae_pixel_validation_packages",
+            materialized / "ae_pixel_validation",
+        ]
+    )
+    requests: dict[str, Path] = {}
+    for search_dir in search_dirs:
+        if not search_dir.exists() or not search_dir.is_dir():
+            continue
+        for path in sorted(search_dir.glob("*.zip")):
+            request_id = request_id_from_zip(path)
+            if request_id and request_id not in requests:
+                requests[request_id] = path.resolve()
+    return requests
+
+
+def ae_pixel_return_id(path: Path) -> str | None:
+    name = path.name
+    if name.endswith("_return.zip"):
+        return name[: -len("_return.zip")]
+    if path.is_dir():
+        return name
+    return None
+
+
+def find_ae_pixel_returns(materialized: Path) -> list[Path]:
+    returns_dir = materialized / "ae_pixel_validation_return" / "returns"
+    if returns_dir.exists():
+        nested = sorted(path for path in returns_dir.glob("*_return.zip") if path.is_file())
+        if nested:
+            return nested
+    roots = [
+        path
+        for path in materialized.rglob("AE_VALIDATION_RESULT.json")
+        if "ae_pixel_validation_staging" not in path.parts
+    ]
+    return sorted(path.parent for path in roots)
+
+
+def run_ae_pixel_validation(args: argparse.Namespace, root: Path, materialized: Path | None = None) -> int:
+    with tempfile.TemporaryDirectory(prefix="olm_ae_pixel_intake_") as tmp:
+        tmp_path = Path(tmp)
+        materialized_root = materialized or extract_if_zip(args.source, tmp_path / "source")
+        request_zips = find_ae_pixel_requests(root, args, materialized_root)
+        return_paths = find_ae_pixel_returns(materialized_root)
+        if not return_paths:
+            return fail("no AE pixel validation return zips/folders found", 2)
+        if not request_zips:
+            return fail("no AE pixel validation request zips found; pass --ae-pixel-requests-dir", 2)
+
+        run_root = (
+            args.run_dir.resolve()
+            if args.run_dir
+            else root / "refs" / "reports" / "ae_pixel_validation_intake"
+        )
+        failures = 0
+        checks = 0
+        for result_path in return_paths:
+            request_id = ae_pixel_return_id(result_path)
+            if not request_id:
+                continue
+            request_zip = request_zips.get(request_id)
+            if request_zip is None:
+                print(f"[SKIP] {request_id}: no matching request zip")
+                continue
+            cmd = [
+                sys.executable,
+                "scripts/verify_ae_pixel_validation_result.py",
+                str(request_zip),
+                str(result_path),
+                "--run-dir",
+                str(run_root / request_id),
+            ]
+            failures += run(cmd, root) != 0
+            checks += 1
+        if checks == 0:
+            return fail("no AE pixel validation return matched a request zip", 2)
+        if failures:
+            return 1
+        print(f"[OK] AE pixel validation return verified with {checks} check(s)")
+        print(f"run_dir={run_root}")
+        return 0
+
+
 def run_win_reference(args: argparse.Namespace, root: Path) -> int:
     cmd = [
         sys.executable,
@@ -279,6 +448,39 @@ def run_win_reference(args: argparse.Namespace, root: Path) -> int:
     return run(next_cmd, root)
 
 
+def run_runtime_trace(args: argparse.Namespace, root: Path) -> int:
+    summary_json = args.runtime_summary_json
+    if summary_json is None and args.runtime_comparison_dir and not args.no_runtime_comparisons:
+        summary_json = args.runtime_comparison_dir / "runtime_trace_summary.json"
+    cmd = [
+        sys.executable,
+        "scripts/verify_runtime_trace_return.py",
+        str(args.source.resolve()),
+        "--require-all",
+    ]
+    if args.runtime_package:
+        cmd.extend(["--package", str(args.runtime_package)])
+    if summary_json:
+        cmd.extend(["--summary-json", str(summary_json)])
+    if args.runtime_summary_md:
+        cmd.extend(["--summary-md", str(args.runtime_summary_md)])
+    rc = run(cmd, root)
+    if rc != 0:
+        return rc
+    if args.no_runtime_comparisons or summary_json is None:
+        return 0
+    comparison_dir = args.runtime_comparison_dir or root / "refs" / "reports" / "runtime_trace_comparisons"
+    compare_cmd = [
+        sys.executable,
+        "scripts/compare_runtime_trace_summary.py",
+        "--runtime-summary-json",
+        str(summary_json),
+        "--output-dir",
+        str(comparison_dir),
+    ]
+    return run(compare_cmd, root)
+
+
 def main() -> int:
     args = parse_args()
     root = repo_root()
@@ -300,8 +502,12 @@ def main() -> int:
 
     if kind == "ae-host":
         return run_ae_host(args, root)
+    if kind == "ae-pixel-validation":
+        return run_ae_pixel_validation(args, root)
     if kind == "win-reference":
         return run_win_reference(args, root)
+    if kind == "runtime-trace":
+        return run_runtime_trace(args, root)
     return fail(f"unsupported kind: {kind}", 2)
 
 

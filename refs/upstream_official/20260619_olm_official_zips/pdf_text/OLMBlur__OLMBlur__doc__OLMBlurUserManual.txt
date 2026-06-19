@@ -1,0 +1,82 @@
+# Source: OLMBlur/OLMBlur/doc/OLMBlurUserManual.pdf
+
+
+--- page 1 ---
+OLM Open Tools
+OLM Blur
+ユーザーマニュアル
+オー・エル・エム・デジタル
+1
+
+
+--- page 2 ---
+OLM Open Tools OLM Blurユーザーマニュアル
+目次
+1. はじめに 4
+1.1. 対応している環境 4
+1.2. インストール方法 4
+2. OLM Blurの適用方法 5
+3. OLM Blurのパラメータ 5
+4. その他 6
+Ⓒ Copyright 2018-2023 OLM Digital, Inc. All rights reserved.
+2
+
+
+--- page 3 ---
+OLM Open Tools OLM Blurユーザーマニュアル
+著作権・使用許諾について
+OLM Open Tools は Apache License Version 2.0 に基づいてライセンスされます。
+更新履歴
+2017/10/05 初版作成
+2017/11/02 ライセンス規約変更
+Ⓒ Copyright 2018-2023 OLM Digital, Inc. All rights reserved.
+3
+
+
+--- page 4 ---
+OLM Open Tools OLM Blurユーザーマニュアル
+1. はじめに
+OLM Blurは、アルファチャンネルが０以外の値を持つピクセルにのみブラーを適用できるAdobe® After Effects®
+用のエフェクトプラグインです。OLM ColorKeyのカラーキープエフェクトと併用することで指定された色同士の境
+界のみをぼかすようなエフェクトを実現可能です。
+図 1 OLM Blurの適用結果とAdobe After Effectsのブラー（滑らか） との比較
+(左)元画像 (中央) Adobe After Effectsのブラー（滑らか）（右）OLM Blurの適用結果
+1.1. 対応している環境
+OLM Open Toolsのウェブサイトを参照ください。
+1.2. インストール方法
+OLM Open Toolsサイトよりダウンロードしたzipファイルには、表 1に示すファイルが収められています。OLM
+Blurをインストールするには、プラグインファイル「OLMBlur.aex」を展開後にAfter Effectsのプラグインディレクトリ
+にコピーしてください。
+(例： C:\Program Files\Adobe\Adobe After Effects 2023\Support Files\Plug-ins\OLM）
+フォルダ名 ファイル名 説明
+Plugins\64\[バージョン] OLMBlur.aex 各AEバージョンに対応したプラ
+グイン本体です。
+doc OLMBlurUserManual.pdf OLM Blurのユーザーマニュアル
+です。このファイルです。
+表 1：zipファイル内に収められているファイル
+Ⓒ Copyright 2018-2023 OLM Digital, Inc. All rights reserved.
+4
+
+
+--- page 5 ---
+OLM Open Tools OLM Blurユーザーマニュアル
+2. OLM Blurの適用方法
+他のエフェクトと同じようにメニューバーの「エフェクト >> OLM Plug-ins >> OLM Blur」と選択することで適用でき
+ます。
+3. OLM Blurのパラメータ
+OLM Blurには、以下に示すパラメータがあります。
+図 2 OLM Blurエフェクトのパラメータ
+● Blur Amount－ブラーの適用範囲です。単位はピクセル数で、設定可能な値の範囲は「1.0」から「100.0」ま
+でです。この値が大きいほど広範囲にブラーがかかります。
+● Blur Smoothness－ ブラーの滑らかさの度合いです。設定可能な値の範囲は「1.0」から「100.0」までで
+す。この値が大きいほどぼけが強くなります。
+● Number of Repeat－ブラーの繰り返し回数です。設定可能な回数の範囲は「１」から「１０」回までです。繰
+り返し回数が多いほど結果は滑らかになりますが、その分レンダリングが重くなります。
+● Bias Direction－ブラーが偏る方向を制御できます（図3を参照下さい。）
+図 3 Bias Directionの設定によるブラーの偏り方の違い(Vertical vs Horizontal)
+4. その他
+正常に動作しない、バグを発見した、もしくは機能追加要望などがある場合は、下記のメールアドレス宛にご連絡
+ください。
+opentools@olm.co.jp
+Ⓒ Copyright 2018-2023 OLM Digital, Inc. All rights reserved.
+5

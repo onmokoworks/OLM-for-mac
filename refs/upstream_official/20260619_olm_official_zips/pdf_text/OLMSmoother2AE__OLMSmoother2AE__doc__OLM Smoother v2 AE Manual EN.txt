@@ -1,0 +1,86 @@
+# Source: OLMSmoother2AE/OLMSmoother2AE/doc/OLM Smoother v2 AE Manual EN.pdf
+
+
+--- page 1 ---
+OLM Smoother v2 Manual
+Introduction
+OLM Smoother is an After Effects plug-in specialized in smoothing cel animation drawings.
+The v2 supports color space conversion and improves the smoothing of diagonal lines and so on.
+©IIS-P／" Ponnomichi " Production Committee
+Original, OLM Smoother v1, OLM Smoother v2
+Release Notes
+● v2
+○ Add Smoothness
+○ Add Extra Smooth
+○ Add Smoother Version
+○ Add Gamma Correction
+■ Add Gamma Value
+■ Add Number of Gamma
+■ Add Gamma Color
+○ ＭFR support
+○ 32 bit support
+Usage
+To apply the effect, use the menu: Effects → OLM Plug-ins → OLM Smoother.
+Apply it to a cel drawing to smooth the lines while using the color key parameters to get a transparent
+background. In case there are gradations in the colors you can use the Smooth Range parameter. You can use
+Gamma Correction to adjust line thickness.
+1
+OLM Digital, Inc. R&D
+
+
+--- page 2 ---
+OLM Smoother parameters
+Use Color Key
+When “Use Color Key” parameter is on, you can choose a color to key with the “Color Key” parameter before
+applying OLM Smoother.
+©IIS-P／" Ponnomichi " Production Committee
+Before/After applying color keying
+Smoothness and Extra Smooth
+Smoothness is the strength of the smoothing. When 0, nothing gets smoothed. Default is 100, maximum
+smoothing is applied. Extra Smooth parameter adds smoothing to get even smoother lines.
+2
+OLM Digital, Inc. R&D
+
+
+--- page 3 ---
+©IIS-P／" Ponnomichi " Production Committee
+Smootheness/Extra Smooth Comparison： 0/0、100/0、100/100
+Smoother Version
+You can choose a Smoother Version value: v1 or v2. This only affects how the Gamma Correction is applied.
+When using v1, we do not linearize the color prior to processing.
+Smooth Range
+When the layer you want to apply OLM Smoother contains gradations, the lines don't get as smooth as you
+expect. By tuning the “Smooth Range” parameter, you can get smoother lines in that case.
+©IIS-P／" Ponnomichi " Production Committee
+Input、Do Smooth Range=0、Do Smooth Range=6
+This parameter sets a range where we consider the color to be the same. The parameter range is [0,255]. When
+255 the output is identical to the input. Usually the valid range that results in smooth lines is between 0 and 20.
+Gamma Correction
+OLM Smoother processing is assuming the input is sRGB. So we start by converting sRGB to linear, smooth the
+image before converting back to sRGB. The Gamma Correction parameters allow adding a gamma conversion
+after the conversion to linear conversion, before and after the smoothing.
+The merit of sRGB conversion is to get a better blend quality of the colors and thinner the black lines. By default
+we use sRGB conversion because OLM artists like that result. We give a comparison of Gamma correction
+results below.
+3
+OLM Digital, Inc. R&D
+
+
+--- page 4 ---
+©B/T-CCTM
+Input、No Gamma Correction, Gamma correction=AllColors + Gamma Value=2.4
+You can see that in the middle image, the red and blue colors are mixing correctly, the lines are thinner than the
+lines on the right image. On the right image you can see some dark fringe around the red pupil.
+If you don't want to use sRGB to Linear conversion, set the Smoother Version parameter to v1.
+Gamma Correction may be set in All Colors mode where all colors have gamma correction applied. The bigger
+Gamma Value parameter is, the thicker lines and the more black fringe at extreme color blend like blue/red color
+blend.
+If you want to keep black line thickness while have nice color blend, you can use the Gamma Colors mode of the
+Gamma Correction parameter. By adding only the black lines in the Gamma Colors list, you can obtain the
+following results.
+©B/T-CCTM
+Smoother Version = v2
+Gamma Correction = Gamma Colors, black only
+Input, Gamma Value=1, Gamma Value = 2.4
+4
+OLM Digital, Inc. R&D

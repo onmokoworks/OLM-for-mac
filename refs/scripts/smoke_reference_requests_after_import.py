@@ -72,7 +72,7 @@ FOLLOW_UP_SMOKES = {
             "--build-script",
             "refs/scripts/build_olmradialblur_cli.sh",
             "--command",
-            '"cli/OLMRadialBlur/olmradialblur_cli" --input "{input}" --params "{params}" --output "{output}" --inner-source-scatter-prepass --ignore-size-variation',
+            '"cli/OLMRadialBlur/olmradialblur_cli" --input "{input}" --params "{params}" --output "{output}" --inner-source-scatter-prepass',
         ],
     ],
     "smoother2_no_key_grid_20260606": [

@@ -17,8 +17,9 @@ struct Rgb {
 #[derive(Clone, Debug)]
 struct KeyColor {
     rgb: Rgb,
-    threshold: f32,
     comp: [f32; 3],
+    use_replace: bool,
+    replace_rgb: Rgb,
 }
 
 #[derive(Clone, Debug)]
@@ -27,7 +28,6 @@ struct Params {
     threshold: f32,
     premultiplied: bool,
     color_space: i32,
-    per_color: bool,
     per_component: bool,
     enable_replace: bool,
     edge_thin_amount: f32,
@@ -112,7 +112,6 @@ fn read_params(path: &str) -> Result<Params, Box<dyn Error>> {
         threshold: number(get("Threshold"), 0.0),
         premultiplied: number(get("Premultiplied Color"), 0.0) != 0.0,
         color_space: number(get("Color Space"), 1.0).round() as i32,
-        per_color: number(get("Per Color"), 0.0) != 0.0,
         per_component: number(get("Per Component"), 0.0) != 0.0,
         enable_replace: number(get("Enable Replace"), 0.0) != 0.0,
         edge_thin_amount: 0.0,
@@ -142,19 +141,21 @@ fn read_params(path: &str) -> Result<Params, Box<dyn Error>> {
         }
         cfg.colors.push(KeyColor {
             rgb: rgb(get(&format!("Color {suffix}"))),
-            threshold: number(get(&format!("Threshold {suffix}")), 0.0),
             comp: [
                 number(get(&format!("Threshold(R,H,L,Y,Y) {suffix}")), 0.0),
                 number(get(&format!("Threshold(G,S,a,U,Cr) {suffix}")), 0.0),
                 number(get(&format!("Threshold(B,V,b,V,Cb) {suffix}")), 0.0),
             ],
+            use_replace: number(get(&format!("Use Replace Color {suffix}")), 0.0) != 0.0,
+            replace_rgb: rgb(get(&format!("Replace Color {suffix}"))),
         });
     }
     if cfg.colors.is_empty() {
         cfg.colors.push(KeyColor {
             rgb: rgb(get("Color 1")),
-            threshold: 0.0,
             comp: [0.0, 0.0, 0.0],
+            use_replace: number(get("Use Replace Color 1"), 0.0) != 0.0,
+            replace_rgb: rgb(get("Replace Color 1")),
         });
     }
     Ok(cfg)
@@ -320,10 +321,7 @@ fn matte_distance(mask: &[u8], w: usize, h: usize, distance_type: i32) -> Vec<f3
 }
 
 fn edge_blur_distance(mask: &[u8], w: usize, h: usize, distance_type: i32) -> Vec<f32> {
-    match distance_type {
-        1 => euclidean_distance(mask, w, h),
-        _ => matte_distance(mask, w, h, distance_type),
-    }
+    matte_distance(mask, w, h, distance_type)
 }
 
 fn boundary8(mask: &[u8], w: usize, h: usize) -> Vec<u8> {
@@ -375,6 +373,73 @@ fn rgb_to_plugin_lab76(c: [f32; 3]) -> [f32; 3] {
     [l, (lab_f(a_source) - fx) * 500.0, (fx - lab_f(b_source)) * 200.0]
 }
 
+fn rgb_to_plugin_hsv(c: [f32; 3]) -> [f32; 3] {
+    let r = c[0];
+    let g = c[1];
+    let b = c[2];
+    let mx = r.max(g).max(b);
+    let mn = r.min(g).min(b);
+    let delta = mx - mn;
+    let mut h = if delta == 0.0 {
+        0.0
+    } else if mx == r {
+        (g - b) * 60.0 / delta
+    } else if mx == g {
+        (b - r) * 60.0 / delta + 120.0
+    } else {
+        (r - g) * 60.0 / delta + 240.0
+    };
+    h %= 360.0;
+    if h < 0.0 {
+        h += 360.0;
+    }
+    [h / 360.0, if mx == 0.0 { 0.0 } else { delta / mx }, mx]
+}
+
+fn rgb_to_plugin_yuv(c: [f32; 3]) -> [f32; 3] {
+    let r = c[0];
+    let g = c[1];
+    let b = c[2];
+    [
+        g * 0.5870000123977661 + r * 0.29899999499320984 + b * 0.11400000005960464,
+        b * 0.4359999895095825 - (g * 0.2888599932193756 + r * 0.14712999761104584),
+        r * 0.6150000095367432 - g * 0.514989972114563 - b * 0.10001000016927719,
+    ]
+}
+
+fn rgb_to_plugin_ycrcb(c: [f32; 3]) -> [f32; 3] {
+    let r = c[0];
+    let g = c[1];
+    let b = c[2];
+    [
+        r * 0.298909991979599 + g * 0.5866100192070007 + b * 0.11448000371456146,
+        b * 0.5 - (r * 0.16874000430107117 + g * 0.33125999569892883),
+        r * 0.5 - g * 0.4186899960041046 - b * 0.08130999654531479,
+    ]
+}
+
+fn lab94_distance(a: [f32; 3], b: [f32; 3]) -> f32 {
+    let c1 = (a[1] * a[1] + a[2] * a[2]).sqrt();
+    let c2 = (b[1] * b[1] + b[2] * b[2]).sqrt();
+    let cmean = (c2 * c1).sqrt();
+    let hue = |aa: f32, bb: f32| {
+        let mut h = bb.atan2(aa) * 57.2957763671875 + 180.0;
+        if h != 0.0 {
+            if h < 0.0 {
+                h += 540.0;
+            }
+            h %= 360.0;
+        }
+        h
+    };
+    let h1 = hue(a[1], a[2]);
+    let h2 = hue(b[1], b[2]);
+    let dl = b[0] - a[0];
+    let dc = (c2 - c1) / (cmean * 0.04500000178813934 + 1.0);
+    let dh = (h2 - h1) / (cmean * 0.014999999664723873 + 1.0);
+    (dl * dl + dc * dc + dh * dh).sqrt()
+}
+
 fn edge_blur_weight(inside: bool, dist: f32, amount: f32, direction: i32) -> f32 {
     if amount <= 0.0 {
         return if inside { 1.0 } else { 0.0 };
@@ -418,10 +483,6 @@ fn edge_blur_weight(inside: bool, dist: f32, amount: f32, direction: i32) -> f32
 }
 
 fn render(input: &ImageBuffer<Rgba<u8>, Vec<u8>>, cfg: &Params) -> Result<ImageBuffer<Rgba<u8>, Vec<u8>>, Box<dyn Error>> {
-    if cfg.enable_replace {
-        return Err("replace color is not implemented".into());
-    }
-
     let (w_u32, h_u32) = input.dimensions();
     let w = w_u32 as usize;
     let h = h_u32 as usize;
@@ -429,6 +490,7 @@ fn render(input: &ImageBuffer<Rgba<u8>, Vec<u8>>, cfg: &Params) -> Result<ImageB
     let raw = input.as_raw();
     let mut out = raw.clone();
     let mut matched = vec![0_u8; n];
+    let mut matched_idx = vec![-1_i32; n];
     let eps8 = 0.5_f32 / 255.0;
 
     for i in 0..n {
@@ -444,28 +506,82 @@ fn render(input: &ImageBuffer<Rgba<u8>, Vec<u8>>, cfg: &Params) -> Result<ImageB
         } else {
             rgb
         };
-        if cfg.color_space == 3 {
+        if cfg.color_space == 3 || cfg.color_space == 4 {
             cmp = rgb_to_plugin_lab76(cmp);
+        } else if cfg.color_space == 2 {
+            cmp = rgb_to_plugin_hsv(cmp);
+        } else if cfg.color_space == 5 {
+            cmp = rgb_to_plugin_yuv(cmp);
+        } else if cfg.color_space == 6 {
+            cmp = rgb_to_plugin_ycrcb(cmp);
         }
         let mut hit_any = false;
-        for kc in &cfg.colors {
+        let mut hit_idx = -1_i32;
+        for (ci, kc) in cfg.colors.iter().enumerate() {
             let mut key = [kc.rgb.r, kc.rgb.g, kc.rgb.b];
             let mut comp_scale = [1.0_f32, 1.0, 1.0];
-            if cfg.color_space == 3 {
+            if cfg.color_space == 3 || cfg.color_space == 4 {
                 key = rgb_to_plugin_lab76(key);
                 comp_scale = [151.30099487304688, 264.36700439453125, 295.572998046875];
+            } else if cfg.color_space == 2 {
+                key = rgb_to_plugin_hsv(key);
+            } else if cfg.color_space == 5 {
+                key = rgb_to_plugin_yuv(key);
+            } else if cfg.color_space == 6 {
+                key = rgb_to_plugin_ycrcb(key);
             }
-            let hit = if cfg.per_component {
+            let hit = if cfg.color_space == 5 {
+                let t0 = if cfg.per_component { kc.comp[0] } else { cfg.threshold };
+                let t1 = if cfg.per_component { kc.comp[1] } else { cfg.threshold };
+                let un = |u: f32| (u as f64 * 1.146788990825688 + 0.5) as f32;
+                (cmp[0] - key[0]).abs() <= t0 + eps8
+                    && (un(cmp[1]) - un(key[1])).abs() <= t1 + eps8
+            } else if cfg.color_space == 6 {
+                let t0 = if cfg.per_component { kc.comp[0] } else { cfg.threshold };
+                let t1 = if cfg.per_component { kc.comp[1] } else { cfg.threshold };
+                (cmp[0] - key[0]).abs() <= t0 + eps8
+                    && (cmp[1] - key[1]).abs() <= t1 + eps8
+            } else if cfg.color_space == 4 {
+                if cfg.per_component {
+                    (cmp[0] - key[0]).abs() <= (eps8 + kc.comp[0]) * comp_scale[0]
+                        && (cmp[1] - key[1]).abs() <= (eps8 + kc.comp[1]) * comp_scale[1]
+                        && (cmp[2] - key[2]).abs() <= (eps8 + kc.comp[2]) * comp_scale[2]
+                } else {
+                    lab94_distance(key, cmp) <= ((eps8 + cfg.threshold) as f64 * 352.978) as f32
+                }
+            } else if cfg.color_space == 2 {
+                if cfg.per_component {
+                    let mut sh = cmp[0];
+                    if sh < key[0] {
+                        sh += 1.0;
+                    }
+                    (sh - key[0]) <= eps8 + kc.comp[0]
+                        && (cmp[1] - key[1]).abs() <= eps8 + kc.comp[1]
+                        && (cmp[2] - key[2]).abs() <= eps8 + kc.comp[2]
+                } else {
+                    let d0 = cmp[0] - key[0];
+                    let d1 = cmp[1] - key[1];
+                    let d2 = cmp[2] - key[2];
+                    (d0 * d0 + d1 * d1 + d2 * d2).sqrt() <= 3.0_f32.sqrt() * (eps8 + cfg.threshold)
+                }
+            } else if cfg.per_component {
                 (cmp[0] - key[0]).abs() <= eps8 + kc.comp[0] * comp_scale[0]
                     && (cmp[1] - key[1]).abs() <= eps8 + kc.comp[1] * comp_scale[1]
                     && (cmp[2] - key[2]).abs() <= eps8 + kc.comp[2] * comp_scale[2]
             } else {
-                ((cmp[0] - key[0]).abs() + (cmp[1] - key[1]).abs() + (cmp[2] - key[2]).abs()) / 3.0
-                    <= if cfg.per_color { kc.threshold } else { cfg.threshold }
+                ((cmp[0] - key[0]).abs() / comp_scale[0]
+                    + (cmp[1] - key[1]).abs() / comp_scale[1]
+                    + (cmp[2] - key[2]).abs() / comp_scale[2])
+                    / 3.0
+                    <= cfg.threshold
             };
+            if hit && hit_idx == -1 {
+                hit_idx = ci as i32;
+            }
             hit_any |= hit;
         }
         matched[i] = if hit_any { 1 } else { 0 };
+        matched_idx[i] = hit_idx;
     }
 
     if cfg.edge_thin_amount < 0.0 {
@@ -493,6 +609,14 @@ fn render(input: &ImageBuffer<Rgba<u8>, Vec<u8>>, cfg: &Params) -> Result<ImageB
             out[p + 1] = 0;
             out[p + 2] = 0;
             out[p + 3] = 0;
+        } else if cfg.color_keep && cfg.enable_replace && matched_idx[i] >= 0 {
+            let key = &cfg.colors[matched_idx[i] as usize];
+            if key.use_replace {
+                let p = i * 4;
+                out[p] = ((255.0 * key.replace_rgb.r) as i32).clamp(0, 255) as u8;
+                out[p + 1] = ((255.0 * key.replace_rgb.g) as i32).clamp(0, 255) as u8;
+                out[p + 2] = ((255.0 * key.replace_rgb.b) as i32).clamp(0, 255) as u8;
+            }
         }
     }
 

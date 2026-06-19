@@ -1,0 +1,82 @@
+# Source: OLMColorKeep/OLMColorKeep/doc/ColorKeepUserManual.pdf
+
+
+--- page 1 ---
+OLM Open Tools Color Keep ユーザーマニュアル
+OLM Open Tools
+Color Keep
+ユーザーマニュアル
+オー・エル・エム・デジタル
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 1
+
+
+--- page 2 ---
+OLM Open Tools Color Keep ユーザーマニュアル
+目次
+1. はじめに 4
+1.1. 対応している環境 4
+1.2. インストール方法 4
+2. Color Keepの適用方法 4
+3. Color Keepのパラメータ 4
+4. その他 5
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 2
+
+
+--- page 3 ---
+OLM Open Tools Color Keep ユーザーマニュアル
+著作権・使用許諾について
+OLM Open Tools は Apache License Version 2.0 に基づいてライセンスされます。
+更新履歴
+2011/08/01 初版作成
+2017/11/02 ライセンス規約変更
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 3
+
+
+--- page 4 ---
+OLM Open Tools Color Keep ユーザーマニュアル
+1. はじめに
+Color KeepはAdobe® After Effects® (以降、AEと略します) 用プラグインです。Color Keepは、レイヤーのアル
+ファチャンネルを変更し、指定した色のみが表示されるエフェクトです (カラーキーの逆です) 。
+図 1 (左)元画像 (右)Color Keepを適用し帽子のみ表示(黒部分は透明です)
+1.1. 対応している環境
+OLM Open Toolsのウェブサイトを参照ください。
+1.2. インストール方法
+OLM Open Toolsサイトよりダウンロードしたzipファイルには、表 1に示すファイルが収められています。Color
+Keepをインストールするには、プラグインファイル「ColorKeep.aex」(Windowsの場合)か「ColorKeep.plugin.zip」
+を展開後に(Macの場合)After Effectsのプラグインディレクトリにコピーしてください。
+(例：Winの場合 C:\Program Files\Adobe\Adobe After Effects 2022\Support Files\Plug-ins\OLM
+Macの場合、Applications￥Adobe After Effects CS3¥Plug-ins¥Olm）
+フォルダ名 ファイル名 説明
+Plugins\[32/64/Mac]\[バージョン] ColorKeep.aex 各OS、AEバージョンに対応したプラ
+ColorKeep.plugin.zip グイン本体です。
+doc ColorKeepUserManual.pdf Color Keepのユーザーマニュアルで
+す。このファイルです。
+表 1：zipファイル内に収められているファイル
+2. Color Keepの適用方法
+他のエフェクトと同じようにメニューバーの「エフェクト >> OLM Plug-ins >> Color Keep」と選択することで適用で
+きます。Color Keepを適用すると、最初は何も表示されていないような黒い画面になります (図 5の初期状態の図
+参照)。
+3. Color Keepのパラメータ
+Color Keepには、以下に記す2つのパラメータがあります。
+図 2 Color Keepエフェクトのパラメータ
+● Enabled Color Num－指定したいカラーの数を設定します。この数を増やすことで、Colorパラメータを追加
+することができます。指定可能な値は「0」から「100」までです。
+● Color－表示させたいカラーを指定します。デフォルトはRGB=(0, 0, 0)です。よって、エフェクトを適用した直
+後はRGB=(0, 0, 0)を表示させようとするため、何も表示されていないような状態になります。色を指定する
+際は、一旦エフェクトをオフにするなどしてから、色を選んでください。
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 4
+
+
+--- page 5 ---
+OLM Open Tools Color Keep ユーザーマニュアル
+以下、Color Keepの適用例を示します。図 4の画像にColor Keepを適用すると、図 5のような結果になります。元
+画像の背景の白い部分は透明ではなく、白で塗りつぶされている部分で、結果画像中の黒い部分は透明部分で
+す。
+図 3 エフェクト適用前の元画像
+パラメータ：初期状態 Colorパラメータを指定し帽子のみ表示
+図 4 Color Keep適用結果
+4. その他
+正常に動作しない、バグを発見した、もしくは機能追加要望などがある場合は、下記のメールアドレス宛にご連絡
+ください。
+opentools@olm.co.jp
+Ⓒ Copyright 2011-2022 OLM Digital, Inc. All rights reserved. 5
