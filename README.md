@@ -57,6 +57,23 @@ Mac plug-in project は 10 本あります。
 詳しい台帳は `notes/CONFORMANCE_LEDGER.md`、用語定義は
 `notes/AE_EXACT_CONFORMANCE.md` にあります。
 
+## 未解決点
+
+各 plug-in の主な未解決点です。
+
+| Plug-in | 未解決 | 理由 | 解決方法 |
+| --- | --- | --- | --- |
+| ColorKeep | 実参照が薄い | synthetic/helper 扱いが中心 | 必要なら Windows Software 実参照を作る |
+| OLMBlur | CLI に `max=1` 残差 | AE exact は出ているが、丸め・蓄積・Legacy border の説明が未完 | Blur runtime trace で writeback と border state を確定 |
+| OLMColorKey | Edge Blur `case_0009` | core は進んだが Edge Blur の seed/distance/weight/apply が未確定 | Edge runtime trace と Mac baseline を比較して Edge だけ詰める |
+| OLMToonDilate | 16/32bpc 未検証 | 8bpc packaged slice は通ったが bit depth 展開がまだ | 16bpc/32bpc Windows Software 参照を追加 |
+| OLMDistanceGradation | CLI 仕様説明が未完 | Mac AE exact はあるが field prep / OpenCV args の説明が不足 | field world、distanceTransform、blur 引数を runtime trace で確定 |
+| OLMSmoother v1 | 検証無効 | 返却画像サイズが参照と違った | v1 を再レンダーするか、v2 互換扱いへ明示的に寄せる |
+| OLMSmoother2 | Legacy key / gamma | no-key grid は exact、Legacy 系が大きくズレる | Smoother runtime trace と Ghidra で key/gamma/writeback を確定 |
+| OLMDirectionalBlur | blocked | PNG tuning だけで進めると誤実装になりやすい | asm/runtime evidence で sampling/group/scale を先に確定 |
+| OLMRadialBlur | Inner / Edge Fade / variation | 一部 span は確定したが sampler/prepass/writeback が未完 | runtime trace と IR で scatter/normalize を詰める |
+| OLMKiraKira | OpenCV helper 精度 | ray order 等は分離済みだが OpenCV 4.5.5 AVX2 stage が未確定 | KiraKira stage trace で warpAffine/boxFilter/compose の初回ズレ箇所を特定 |
+
 ## 方針
 
 作業は以下の流れで進めます。

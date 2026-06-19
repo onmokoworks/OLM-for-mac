@@ -10,7 +10,7 @@ then verify it against Windows output with pixel-level diffs.
 Target private repo:
 
 ```txt
-https://github.com/hakumeilab/OLM-for-mac.git
+https://github.com/onmokoworks/OLM-for-mac.git
 ```
 
 ## Work Location
@@ -139,7 +139,7 @@ refs/scripts/diff_all.sh
 
 ## Next Best Steps
 
-1. Initialize/push this staged repo to `hakumeilab/OLM-for-mac`.
+1. Push this repo to `onmokoworks/OLM-for-mac`.
 2. On Windows, render the 8-frame reference set from the original
    `OLMSmoother.aex`.
 3. On macOS, render the same `.aep` using the ported `.plugin`.
