@@ -11,18 +11,18 @@ See `notes/AE_EXACT_CONFORMANCE.md` for definitions.
 | --- | --- | --- | --- | --- | --- |
 | ColorKeep synthetic helper | guarded | untested | untested | Synthetic CLI smoke only. | Real Windows Software reference or keep as support utility. |
 | OLMBlur exact slices `case_0001..0005` | AE exact for packaged 8bpc slices | untested | untested | 2026-06-19 AE pixel return is exact for `case_0001..0005` with `max_diff=0`; local verification report: `refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmblur_exact_20260619/reports/ae_pixel_all_exact.json`. Non-legacy output writeback still uses a compatibility round-to-nearest-even shim while Legacy keeps `floor(x+0.5)`, so the implementation still needs binary-grounding even though the current AE cases pass. Current forecast IR: `notes/IR_OLMBlur.md`. | Binary-ground the true accumulation/writeback order behind the passing cases; then add 16/32bpc references. |
-| OLMBlur residual slices `case_0006..0007` | AE exact for packaged 8bpc slices | untested | untested | 2026-06-19 AE pixel return is exact for the formerly residual `case_0006..0007` with `max_diff=0`. 2026-06-20 CLI rerun keeps `case_0003/0006/0007` at `max=1`, so those pixels remain useful binary-grounding clues for repeat-10 accumulation and Legacy border handling. Current forecast IR: `notes/IR_OLMBlur.md`. | Keep the pending repeat/writeback runtime trace as optional binary-grounding evidence; do not change the passing AE behavior without trace evidence. Overnight package: `refs/runtime_trace_packages/olm_runtime_trace_olmblur_repeat_threshold_20260620_overnight.zip`. |
+| OLMBlur residual slices `case_0006..0007` | AE exact for packaged 8bpc slices | untested | untested | 2026-06-19 AE pixel return is exact for the formerly residual `case_0006..0007` with `max_diff=0`. 2026-06-20 runtime trace proves the remaining CLI residual is present before byte writeback: `case_0006` Windows pre-writeback red is `185.49998474121094` while Mac CLI is exactly `185.5`; `case_0007` uses the Legacy `OLMBlur+0x7FDF` writeback family. Current IR: `notes/IR_OLMBlur.md`. | Do not change the passing AE behavior from this trace alone. Only continue the CLI residual if a later proof isolates the helper accumulation/border state. |
 | OLMColorKey core RGB/color-space/Replace | AE exact for core packaged 8bpc slices | untested | untested | 2026-06-19 AE pixel return is exact for `case_0001..0008` except the Edge Blur stress case `case_0009`; local report: `refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmcolorkey_exact_20260619/reports/ae_pixel_all_exact.json`. Normalized CLI is exact for core `case_0001..0004` and `case_0007`. | Add 16/32bpc references for the core path after Edge Blur is isolated. |
 | OLMColorKey Edge Thin erode / Edge Blur | guarded residual / partly binary-grounded | untested | untested | 2026-06-19 AE pixel return has Edge Thin erode `case_0005/0006` exact and Edge Blur `case_0008` exact; `case_0009` still fails (`max=47 mean=0.069921`). AE-free CLI residuals remain: C++ `case_0008 max=15 mean=1.1104`, `case_0009 max=255 mean=1.2503`, Edge Thin `case_0005/0006 max=255 mean=0.3031`. Mac baseline trace logs are stored under `refs/reports/olmcolorkey_edge_trace_baseline_20260619_031239_mac/`; Edge Thin top-edge witnesses are exactly `edge_thin_dist=17` / `edge_thin_limit=17`. | Windows runtime trace for Edge Blur `case_0009` seed/distance/weight/apply values; compare against Mac baseline before changing semantics. |
 | OLMToonDilate cases `1..3` | AE exact for packaged 8bpc slices | untested | untested | 2026-06-19 AE pixel return is exact for `case_0001..0003` with `max_diff=0`; local report: `refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmtoondilate_exact_20260619/reports/ae_pixel_all_exact.json`. AEX-style two-pass chamfer propagation plus semi-alpha RGB premultiply also makes the normalized Windows AE Software refs exact in Python and C++ CLI. Current IR: `notes/IR_OLMToonDilate.md`. | Add 16/32bpc references and keep the IR tied to the two-pass/premultiply evidence. |
 | OLMDistanceGradation basic/extended/blur | AE exact for packaged 8bpc slices | untested | untested | 2026-06-19 AE pixel return is exact for all packaged basic/extended/blur cases (`12 + 16 + 1` cases, `max_diff=0`); local reports live under `refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmdistancegradation_*`. CLI residuals still indicate the AE plug-in path and AE-free harness are not yet described by a fully binary-grounded shared spec. Ghidra confirms 8bpc compose is an AE iterate callback over a prebuilt field world and reads the field green byte. Current forecast IR: `notes/IR_OLMDistanceGradation.md`. | Binary-ground field prep/OpenCV args enough to make the CLI harness explain the AE exact result; then add 16/32bpc references. |
-| OLMSmoother v1 via Smoother2 compatibility | blocked: invalid AE return shape | untested | untested | 2026-06-19 AE pixel return rendered `1920x1080` candidates for `960x540` references, so all three v1 checks are shape mismatches, not meaningful algorithm failures. `--force-version 1` remains close to v1 refs, not AE exact. | Re-run v1 AE pixel validation at the packaged reference resolution or explicitly decide that v1 migrates to Smoother2. |
+| OLMSmoother v1 via Smoother2 compatibility | AE exact for packaged 8bpc v1 slices | untested | untested | 2026-06-20 AE pixel rerun corrected the v1 comp to `960x540`; `case_0001..0003` are exact with `max_diff=0`. Local report: `refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmsmoother_v1_20260619/reports/ae_pixel_exact.json`. | Decide whether v1 remains an independent compatibility path or is formally mapped to Smoother2; add 16/32bpc refs if v1 remains supported. |
 | OLMSmoother2 no-key grid | AE exact for packaged 8bpc grid | untested | untested | 2026-06-19 AE pixel return is exact for all 12 no-key grid cases with `max_diff=0`; local report: `refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmsmoother2_no_key_grid_20260619/reports/ae_pixel_no_key_grid_exact.json`. This supersedes the earlier AE-free near-exact residual as an AE-host conformance fact, but binary-grounded IR still needs the runtime trace to explain why the AE plug-in path is exact. Current IR: `notes/IR_OLMSmoother2.md`. | Use the pending Smoother2 runtime trace for binary-grounding if it returns; do not tune the no-key grid from PNG-only. |
-| OLMSmoother2 legacy key/gamma/v1-ish slices | guarded residual | untested | untested | 2026-06-19 AE pixel return fails all 7 legacy cases (`max=101/254`, mean up to `0.728498`); local report: `refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmsmoother2_legacy_20260619/reports/ae_pixel_legacy_exact.json`. The broader `smoke_olmsmoother2_cli.py` remains expected-red for key/gamma paths. | Prioritize runtime trace/static proof for legacy key/gamma setup and writeback; these are now the Smoother blocker, not the no-key grid. |
+| OLMSmoother2 legacy key/gamma slices | guarded residual | untested | untested | 2026-06-20 AE pixel rerun still fails all 7 legacy cases (`max=101/254`, mean up to `0.728498`); local report: `refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmsmoother2_legacy_20260619/reports/ae_pixel_legacy_exact.json`. The broader `smoke_olmsmoother2_cli.py` remains expected-red for key/gamma paths. | Prioritize runtime trace/static proof for legacy key/gamma setup and writeback; these are now the Smoother blocker, not v1 or no-key grid. |
 | OLMDirectionalBlur | blocked | untested | untested | Broad PNG toggles rejected; binary facts partly documented. | New concrete asm/runtime evidence before more tuning. |
 | OLMRadialBlur Zoom / tiny Rotation | guarded | untested | untested | Latest C++ guards pass: Zoom `case_0009 max=1 mean=0.0046`; tiny Rotation `case_0010 max=255 mean=0.0104` under a mean guard. These are not exact gates. Current IR: `notes/IR_OLMRadialBlur.md`. | AE exact check for Zoom slices and binary-ground the tiny Rotation high-max residual before claiming compatibility. |
 | OLMRadialBlur Inner | binary-grounded / guarded | untested | untested | Runtime trace confirmed `rb_inner_only_strength_small` helper effective span resolves to `31`; C++ CLI default now mirrors the span-31 population and the span-stat guard passes. Old Inner remains expected-red: `case_0011 max=255 mean=23.0495`, `case_0012 max=255 mean=16.0039`, `case_0013 max=238 mean=18.0193`. Current IR: `notes/IR_OLMRadialBlur.md`. | Binary-ground remaining sampler/prepass/writeback residual, then Mac AE exact check. |
-| OLMKiraKira strength0 / single-ray slices | binary-grounded / guarded | untested | untested | Runtime trace confirmed first `boxFilter` FilterEngine branch is OpenCV 4.5.5 AVX2 `FUN_1812e39d0`. IR now lives at `notes/IR_OLMKiraKira.md`. 2026-06-20 OpenCV 4.5.5 rerun keeps the same shape: single-ray guarded residuals `max=13/23/66`, old three-case OpenCV two-temp `case_0003 max=26 mean=1.0477`, and alias ROI byte-equivalent to ordinary two-temp. Broad OpenCV version drift and ROI aliasing are still rejected. | Inspect/port AVX2 OpenCV helper behavior or runtime-trace `FUN_181150790` stage values before changing implementation. Overnight package: `refs/runtime_trace_packages/olm_runtime_trace_kirakira_stage_values_20260620_overnight.zip`. |
+| OLMKiraKira strength0 / single-ray slices | binary-grounded / guarded | untested | untested | Runtime trace confirmed first `boxFilter` FilterEngine branch is OpenCV 4.5.5 AVX2 `FUN_1812e39d0`. IR now lives at `notes/IR_OLMKiraKira.md`. 2026-06-20 OpenCV 4.5.5 rerun keeps the same shape: single-ray guarded residuals `max=13/23/66`, old three-case OpenCV two-temp `case_0003 max=26 mean=1.0477`, and alias ROI byte-equivalent to ordinary two-temp. 2026-06-20 wrapper trace confirmed two `warpAffine` hits, three `boxFilter` hits, dsize `1924x1924`, length `50`, and ksize `(50,1)`, but did not isolate matrices, ROI rectangles, stage floats, aggregation, or compose values. | Need a deeper storage/sample-site trace or an AVX2 helper microprobe before changing implementation. More broad PNGs are low-value for this path. |
 
 ## Imported Runtime Proofs
 
@@ -37,6 +37,21 @@ See `notes/AE_EXACT_CONFORMANCE.md` for definitions.
   - `kirakira_opencv455_primitive_fact_20260618`: selected first
     `boxFilter` branch is `FUN_1812e39d0` / `CV_CPU_AVX2`.
 
+- Imported `~/Downloads/olm_windows_action_bundle_20260620_overnight_blur_kirakira_return.zip`.
+- Stored copy:
+  `handoffs/windows_returns/20260620_1408_blur_kirakira/`.
+- Summary/comparison files:
+  - `refs/reports/runtime_trace_summary_olmblur_repeat_threshold_20260620.md`
+  - `refs/reports/runtime_trace_comparisons/olmblur_repeat_threshold_20260620/olmblur_repeat_threshold.md`
+  - `refs/reports/runtime_trace_summary_kirakira_stage_values_20260620.md`
+  - `refs/reports/runtime_trace_comparisons/kirakira_stage_values_20260620/olmkirakira_stage_values.md`
+- Runtime facts now answered:
+  - `olmblur_repeat_threshold_runtime_trace_20260619`: `case_0006`
+    residual is pre-writeback accumulation/helper drift, not only byte
+    rounding; `case_0007` uses the Legacy `+0x7FDF` writeback family.
+  - `kirakira_fun_181150790_stage_values_20260620`: wrapper choreography is
+    confirmed, but stage values are still `trace-too-sparse`.
+
 Re-import command:
 
 ```sh
@@ -45,21 +60,6 @@ python3 refs/scripts/smoke_runtime_trace_return.py
 ```
 
 ## Pending Runtime Trace Requests
-
-- Overnight Blur/KiraKira Windows action bundle:
-  `handoffs/windows_batch/olm_windows_action_bundle_20260620_overnight_blur_kirakira.zip`.
-  This is a focused two-package bundle for the current overnight pass while
-  Smoother waits for its already-sent trace return.
-- OLMKiraKira `FUN_181150790` stage-values package:
-  `refs/runtime_trace_packages/olm_runtime_trace_kirakira_stage_values_20260620_overnight.zip`.
-  This asks Windows to record `warpAffine` Mat headers/dsize/matrices, ROI copy
-  rectangles, three `boxFilter` stage values, final center-copy, aggregation,
-  and merge-mode-1 compose witnesses for
-  `kk_vertical_len50_brightness1_strength100`.
-- OLMBlur repeat/writeback overnight package:
-  `refs/runtime_trace_packages/olm_runtime_trace_olmblur_repeat_threshold_20260620_overnight.zip`.
-  This is a refreshed focused package for the same residual witnesses as the
-  earlier 20260619 Blur package.
 
 - OLMSmoother2 no-key grid scan/append/writeback package:
   `refs/runtime_trace_packages/olm_runtime_trace_olmsmoother2_no_key_grid_idx7_context_with_mac_baseline_20260619_041000.zip`
@@ -130,6 +130,21 @@ means the returned Mac AE render PNGs match the packaged Windows Software
 reference PNGs with `max_diff=0`.
 
 ## Imported AE-Host Exact Proofs
+
+- Imported `~/Downloads/olm_windows_action_bundle_20260619_041000_smoother_idx7_context_priority_progress_20260620_1425.zip`.
+- Stored copy:
+  `handoffs/windows_returns/20260620_1425_smoother_priority/olm_windows_action_bundle_20260619_041000_smoother_idx7_context_priority_progress_20260620_1425.zip`.
+- Local verification directory:
+  `refs/reports/ae_host_validation_20260620_1425/`.
+- Exact-only result: `62/70` cases exact.
+- New result relative to the previous return:
+  - `OLMSmoother v1`: corrected `960x540` rerun is `3/3` exact.
+- Still failing:
+  - `OLMColorKey`: Edge Blur `case_0009` remains `max=47 mean=0.069921`.
+  - `OLMSmoother2` legacy key/gamma slices remain `0/7` exact, with max diff
+    up to `254`.
+- No runtime trace result was included in this return; the runtime trace zips in
+  the bundle are request packages only.
 
 - Imported `~/Downloads/olm_windows_action_bundle_20260619_041000_smoother_idx7_context_priority_progress_20260619_2335.zip`.
 - Stored copy:

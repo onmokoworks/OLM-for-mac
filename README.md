@@ -49,7 +49,7 @@ Mac plug-in project は 10 本あります。
 | OLMDistanceGradation | basic / extended / blur の 8bpc packaged slice は Mac AE exact。CLI 側の説明はまだ詰め中 |
 | OLMColorKey | core はかなり進んでいる。Edge Blur `case_0009` が残差あり |
 | OLMSmoother2 | no-key grid は 8bpc Mac AE exact。legacy key / gamma 系が未解決 |
-| OLMSmoother v1 | 返却画像サイズ不一致で検証が無効。v2 互換扱いに寄せるか再検証が必要 |
+| OLMSmoother v1 | 960x540 再検証で 8bpc Mac AE exact。v2 互換扱いへ寄せる判断は別途 |
 | OLMDirectionalBlur | 参照は多いが、まだ blocked。PNG-only tuning は止めて asm/runtime evidence 待ち |
 | OLMRadialBlur | 一部 binary-grounded。Inner / Edge Fade などは未完 |
 | OLMKiraKira | ray order などはかなり分離済み。OpenCV 4.5.5 AVX2 / stage trace 待ち |
@@ -68,7 +68,7 @@ Mac plug-in project は 10 本あります。
 | OLMColorKey | Edge Blur `case_0009` | core は進んだが Edge Blur の seed/distance/weight/apply が未確定 | Edge runtime trace と Mac baseline を比較して Edge だけ詰める |
 | OLMToonDilate | 16/32bpc 未検証 | 8bpc packaged slice は通ったが bit depth 展開がまだ | 16bpc/32bpc Windows Software 参照を追加 |
 | OLMDistanceGradation | CLI 仕様説明が未完 | Mac AE exact はあるが field prep / OpenCV args の説明が不足 | field world、distanceTransform、blur 引数を runtime trace で確定 |
-| OLMSmoother v1 | 検証無効 | 返却画像サイズが参照と違った | v1 を再レンダーするか、v2 互換扱いへ明示的に寄せる |
+| OLMSmoother v1 | 8bpc AE exact | 960x540 再検証で `case_0001..0003` が exact | v2 互換扱いへ寄せるか、v1 独立維持かを明示する |
 | OLMSmoother2 | Legacy key / gamma | no-key grid は exact、Legacy 系が大きくズレる | Smoother runtime trace と Ghidra で key/gamma/writeback を確定 |
 | OLMDirectionalBlur | blocked | PNG tuning だけで進めると誤実装になりやすい | asm/runtime evidence で sampling/group/scale を先に確定 |
 | OLMRadialBlur | Inner / Edge Fade / variation | 一部 span は確定したが sampler/prepass/writeback が未完 | runtime trace と IR で scatter/normalize を詰める |

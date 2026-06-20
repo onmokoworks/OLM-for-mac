@@ -23,6 +23,7 @@
 | `boxFilter` args are `ksize=(length,1)`, `anchor=(-1,-1)`, `normalize=true`, `borderType=4` (`BORDER_REFLECT_101`), float output. | `FUN_181280bc0` call audit and negative probes. | binary-grounded |
 | First `boxFilter` pass dispatches to OpenCV 4.5.5 AVX2 branch `FUN_1812e39d0` on the traced Windows machine. | `refs/reports/runtime_trace_summary.md`, `kirakira_opencv455_primitive_fact_20260618`. | runtime-trace |
 | `warpAffine` calls pass `INTER_LINEAR`, no `WARP_INVERSE_MAP`, `BORDER_CONSTANT`, zero border value. | `FUN_181297ac0` wrapper call audit. | binary-grounded |
+| The 2026-06-20 wrapper trace confirmed two `warpAffine` wrapper hits, three `boxFilter` wrapper hits, dsize/temp `1924x1924`, length `50`, and `boxFilter` ksize `(50,1)`. | `refs/reports/runtime_trace_summary_kirakira_stage_values_20260620.md`. | runtime-trace |
 
 ## Parameters
 
@@ -102,6 +103,15 @@
 - OpenCV remap/warpAffine micro diagnostics in the C++ CLI pass:
   `diag_remap_bilinear_f32`, `diag_warpaffine_map_f32`, and
   `diag_warpaffine_remap_f32` all report `OK`.
+- 2026-06-20 Windows wrapper trace return is useful but too sparse for an
+  implementation change:
+  - `ray_length=50` and temp/dsize `1924x1924` match the local OpenCV baseline.
+  - `warpAffine` wrappers hit twice, `boxFilter` wrappers hit three times, and
+    each box pass reaches the AVX2 branch.
+  - Forward/back matrices, ROI/copy rectangles, per-stage witness floats,
+    aggregation, and merge-mode compose values were not isolated.
+  - The normalized comparison now reports `trace-too-sparse`, not
+    `warp-matrix-or-center`.
 
 ## Rejected / Low-Value Next Moves
 
@@ -120,19 +130,24 @@ The next useful evidence is not another broad PNG set. Use one of:
 
 - an exact AVX2 `FUN_1812e39d0` microprobe for the traced `boxFilter` branch
   if a local x86/Windows-capable environment is available; or
-- a Windows runtime trace of `FUN_181150790` on a single-ray case that records
-  both `warpAffine` calls' Mat headers, `dsize`, matrix values, ROI rectangles,
-  selected `boxFilter` function, and a few witness float values after each
-  helper stage.
+- a deeper Windows runtime trace of the same `FUN_181150790` single-ray case
+  that breaks at storage/sample sites and records forward/back matrix values,
+  ROI rectangles, and witness float values after center-copy, forward warp,
+  each box pass, rotate-back, final copy, aggregation, and merge compose.
 
 Only after that should the C++/Mac implementation change.
 
-Current Windows overnight request:
+2026-06-20 Windows overnight return:
 
 - Bundle: `handoffs/windows_batch/olm_windows_action_bundle_20260620_overnight_blur_kirakira.zip`
 - KiraKira trace package:
   `refs/runtime_trace_packages/olm_runtime_trace_kirakira_stage_values_20260620_overnight.zip`
 - Request id: `kirakira_fun_181150790_stage_values_20260620`
+- Imported comparison:
+  `refs/reports/runtime_trace_comparisons/kirakira_stage_values_20260620/olmkirakira_stage_values.md`
+- Conclusion: no local C++/Mac implementation change is justified from this
+  return alone. It confirms the wrapper choreography but does not reveal the
+  first numeric divergence.
 
 Local comparison helper:
 
@@ -147,14 +162,13 @@ Local comparison helper:
   Windows `FUN_181150790` stage values first, then this final record; that
   separates ray-helper mismatch from `FUN_18114fd90` aggregation or
   merge-mode-1 compose mismatch.
-- Use this JSON as the Mac/OpenCV-side baseline when the Windows
-  `FUN_181150790` trace returns; do not promote a PNG-only tweak if the stage
-  values point to a later aggregation/compose difference.
+- Use this JSON as the Mac/OpenCV-side baseline for the next deeper Windows
+  `FUN_181150790` trace; do not promote a PNG-only tweak unless the stage
+  values identify the first numeric divergence.
 - Current project-local baseline:
   `refs/reports/olmkirakira_trace_baseline_20260620_overnight_mac/trace.json`.
   Recreate it with
   `OLM_PROBE_PYTHON=/tmp/olm_cv455_probe_venv/bin/python python3 refs/scripts/write_olmkirakira_trace_baseline.py --out-dir refs/reports/olmkirakira_trace_baseline_20260620_overnight_mac`.
-- 2026-06-20 read-only audit conclusion: the overnight trace request is
-  sufficient to separate first divergence at forward `warpAffine`, box pass,
-  rotate-back/final copy, or `FUN_18114fd90` aggregation/merge compose. Do not
-  change local implementation before this trace returns.
+- 2026-06-20 read-only audit conclusion after return: the first wrapper pass
+  was too shallow to separate first divergence. The next trace should target
+  concrete storage/sample values rather than wrapper entry alone.

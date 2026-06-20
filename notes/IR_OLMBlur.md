@@ -26,6 +26,8 @@
 | Non-legacy radius path uses `pow(double,double)` then float sigma. | `notes/CONFORMANCE_LEDGER.md` and current CLI implementation. | binary-grounded / CLI-confirmed |
 | Legacy writeback currently uses `floor(x + 0.5)`. | Binary `.rdata` constant `0.5`, decomp/port notes. | binary-grounded |
 | Non-legacy writeback currently uses a compatibility `nearbyint` shim. | Current CLI/Mac implementation; exact for normalized `case_0001..0005`. | CLI-confirmed but not final binary explanation |
+| Non-legacy `case_0006` residual is already present before byte writeback. | 2026-06-20 Windows CDB return: `(498,940)` pre-writeback red is `185.49998474121094` while the Mac CLI baseline is exactly `185.5`; final Windows byte is `185`. | runtime-trace |
+| Legacy `case_0007` uses the later `OLMBlur+0x7FDF` writeback family. | 2026-06-20 Windows CDB return hit `(0,0)`, `(488,941)`, and `(488,942)` at the Legacy writeback family. | runtime-trace |
 
 ## Parameters
 
@@ -78,6 +80,9 @@ Current implementation:
 - Legacy path has a remaining border/all-same ambiguity. Current negative
   probes show that including border coordinate `0` worsens `case_0007`, so keep
   the current border exclusion unless runtime trace contradicts it.
+- 2026-06-20 runtime trace did not isolate the Legacy `all_same` state or direct
+  border inclusion rule. It did prove that the residual pixels differ before
+  byte output, so broad writeback-only fixes are not justified.
 - Alpha mask participates in the blur helper; exact per-pass alpha ownership is
   part of the remaining proof for residual cases.
 
@@ -97,24 +102,25 @@ Current implementation:
 | `case_0001/0002/0004` | 8bpc | `CLI exact` in current smoke | 2026-06-19 rerun: exact (`max=0`) | Mac AE exact validation and true binary-grounded writeback explanation |
 | `case_0003` | 8bpc | AE exact / guarded CLI residual | 2026-06-20 rerun: CLI `max=1 mean=0.0052`; 2026-06-19 AE pixel return `max=0` | Treat as host-path exact but keep runtime/writeback proof open |
 | `case_0005` | 8bpc | `CLI exact` in current residual smoke | 2026-06-19 rerun: exact (`max=0`) | Mac AE exact validation |
-| `case_0006` | 8bpc | AE exact / residual diagnostic | 2026-06-20 rerun: CLI `max=1`; 2026-06-19 AE pixel return `max=0`; Mac baseline pre-writeback red is exactly `185.5` (`0x1.73p+7`) at `(498,940)` | runtime trace package with Mac baseline logs |
-| `case_0007` | 8bpc | AE exact / residual diagnostic | 2026-06-20 rerun: CLI `max=1`; 2026-06-19 AE pixel return `max=0`; legacy border/tie residual remains | runtime trace of listed border/tie pixels |
+| `case_0006` | 8bpc | AE exact / residual diagnostic | 2026-06-20 Windows trace: AEX pre-writeback red at `(498,940)` is `185.49998474121094` (`0x1.72fffe0000000p+7`), Mac CLI baseline is exactly `185.5` (`0x1.73p+7`), and Windows final byte is `185`; 2026-06-19 AE pixel return `max=0` | Accumulation/helper order proof before changing the passing AE plug-in path |
+| `case_0007` | 8bpc | AE exact / residual diagnostic | 2026-06-20 Windows trace: Legacy writeback family `OLMBlur+0x7FDF`; `(0,0)` pre RGB `[0,0,~1.5528]`, final `[0,0,0,255]`; `(488,941/942)` pre red just above `250.5`, final `251`; Mac CLI stays just below/equal | Isolate Legacy helper state/border source if CLI residual is still worth closing |
 
 Mac baseline traces for the normalized Software residual witnesses are stored
 under `refs/reports/olmblur_trace_baseline_20260619_030633_mac/`. These logs
 should be compared with Windows AEX runtime values before changing writeback or
 Legacy border rules.
 
-Current Windows overnight request:
+2026-06-20 Windows overnight return:
 
 - Bundle: `handoffs/windows_batch/olm_windows_action_bundle_20260620_overnight_blur_kirakira.zip`
 - Blur trace package:
   `refs/runtime_trace_packages/olm_runtime_trace_olmblur_repeat_threshold_20260620_overnight.zip`
-- 2026-06-20 read-only audit conclusion: this request is sufficient for the
-  current `case_0006` tie/writeback witness and `case_0007` legacy
-  border/all-same witnesses. If a later pass tries to close every CLI `max=1`
-  residual, add the current `case_0003` residual coordinate after regenerating
-  its diff; do not delay the current bundle for that optional witness.
+- Imported comparison:
+  `refs/reports/runtime_trace_comparisons/olmblur_repeat_threshold_20260620/olmblur_repeat_threshold.md`
+- Conclusion: the return is enough to reject a pure output-rounding diagnosis
+  for `case_0006/0007`. It is not enough to rewrite Legacy border/all_same
+  behavior, and the packaged Mac AE slices are already exact, so no production
+  OLMBlur change should be made from this trace alone.
 
 ## Open Questions
 

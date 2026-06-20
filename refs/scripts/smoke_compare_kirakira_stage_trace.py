@@ -131,6 +131,65 @@ def main() -> int:
             if needle not in markdown:
                 print(f"[FAIL] comparison Markdown missing: {needle}")
                 return 1
+        sparse_summary = tmp_path / "runtime_summary_sparse.json"
+        sparse_output_json = tmp_path / "comparison_sparse.json"
+        sparse_summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": REQUEST_ID,
+                            "status": "answered",
+                            "summary": "function entry did not isolate stage values",
+                            "observations": {
+                                "case_id": "kk_vertical_len50_brightness1_strength100",
+                                "fun_181150790_entry": {
+                                    "ray_length": None,
+                                    "affine_forward_matrix": "not isolated",
+                                    "affine_back_matrix": "not isolated",
+                                    "forward_dsize": [1924, 1924],
+                                },
+                                "witness_pixels": ["not isolated"],
+                                "boxfilter_calls": [
+                                    {
+                                        "index": 1,
+                                        "selected_branch": "not fully decoded",
+                                        "sample_values": "not isolated",
+                                    }
+                                ],
+                                "aggregation_and_compose": {"sample_outputs": "not isolated"},
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        sparse_proc = subprocess.run(
+            [
+                py,
+                "scripts/compare_kirakira_stage_trace.py",
+                "--runtime-summary-json",
+                str(sparse_summary),
+                "--local-trace-json",
+                str(local_trace),
+                "--output-json",
+                str(sparse_output_json),
+            ],
+            cwd=repo,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        print(sparse_proc.stdout, end="" if sparse_proc.stdout.endswith("\n") else "\n")
+        if sparse_proc.returncode != 0:
+            return sparse_proc.returncode
+        sparse_comparison = json.loads(sparse_output_json.read_text(encoding="utf-8"))
+        if sparse_comparison.get("likely_next_focus") != "trace-too-sparse":
+            print("[FAIL] sparse placeholder trace was treated as concrete evidence")
+            return 1
     print("[OK] KiraKira stage trace comparison smoke")
     return 0
 

@@ -111,32 +111,39 @@ def runtime_trace_actions(
 
 
 def runtime_trace_summary(root: Path) -> dict[str, Any] | None:
-    summary_path = root / "refs" / "reports" / "runtime_trace_summary.json"
-    if not summary_path.exists():
+    report_dir = root / "refs" / "reports"
+    summary_paths = sorted(report_dir.glob("runtime_trace_summary*.json")) if report_dir.exists() else []
+    if not summary_paths:
         return None
-    try:
-        data = json.loads(summary_path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        return None
-    if not isinstance(data, dict) or data.get("kind") != "olm_runtime_trace_return_summary":
-        return None
-    required = data.get("required", [])
-    if not isinstance(required, list):
-        required = []
-    answered_ids = [
-        str(row.get("request_id"))
-        for row in required
-        if isinstance(row, dict) and row.get("request_id") and row.get("answered") is True
-    ]
+    summaries: list[tuple[Path, dict[str, Any]]] = []
+    answered_ids: list[str] = []
+    for summary_path in summary_paths:
+        try:
+            data = json.loads(summary_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if not isinstance(data, dict) or data.get("kind") != "olm_runtime_trace_return_summary":
+            continue
+        required = data.get("required", [])
+        if not isinstance(required, list):
+            required = []
+        for row in required:
+            if not isinstance(row, dict) or row.get("answered") is not True:
+                continue
+            request_id = row.get("request_id")
+            if isinstance(request_id, str):
+                answered_ids.append(request_id)
+        summaries.append((summary_path, data))
     if not answered_ids:
         return None
-    markdown_path = root / "refs" / "reports" / "runtime_trace_summary.md"
-    stat = summary_path.stat()
+    latest_path, _latest_data = max(summaries, key=lambda item: item[0].stat().st_mtime)
+    markdown_path = latest_path.with_suffix(".md")
+    stat = latest_path.stat()
     return {
-        "path": str(summary_path),
+        "path": str(latest_path),
         "markdown_path": str(markdown_path) if markdown_path.exists() else "",
         "mtime": stat.st_mtime,
-        "answered_request_ids": answered_ids,
+        "answered_request_ids": sorted(set(answered_ids)),
     }
 
 
@@ -291,6 +298,23 @@ def windows_action_bundle_manifest(path: Path) -> dict[str, Any] | None:
     except Exception:
         return None
     return None
+
+
+def action_bundle_contains_runtime_package(bundle_manifest: dict[str, Any] | None, runtime_package: dict[str, Any]) -> bool:
+    if not bundle_manifest:
+        return False
+    target_path = Path(str(runtime_package.get("path", "")))
+    target_names = {target_path.name, str(target_path)}
+    for item in bundle_manifest.get("runtime_trace_packages", []):
+        if not isinstance(item, dict):
+            continue
+        source = str(item.get("source", ""))
+        bundle_path = str(item.get("bundle_path", ""))
+        if source in target_names or Path(source).name in target_names:
+            return True
+        if bundle_path in target_names or Path(bundle_path).name in target_names:
+            return True
+    return False
 
 
 def project_runtime_trace_packages(
@@ -593,6 +617,10 @@ def decide(
     if project_runtime_packages:
         runtime_package = project_runtime_packages[0]
         action_bundle = latest_windows_action_bundle(root, rows)
+        bundle_manifest = windows_action_bundle_manifest(Path(str(action_bundle.get("path", "")))) if action_bundle else None
+        if not action_bundle_contains_runtime_package(bundle_manifest, runtime_package):
+            action_bundle = None
+            bundle_manifest = None
         ae_pixel_return = latest_ae_pixel_validation_return(root, rows)
         if (
             action_bundle
@@ -607,7 +635,6 @@ def decide(
                 "command": "wait for or import the Windows CDB/runtime trace return; if it was not started, send the runtime_trace package listed as target",
             }
         if action_bundle and float(action_bundle.get("mtime", 0)) >= float(runtime_package.get("mtime", 0)):
-            bundle_manifest = windows_action_bundle_manifest(Path(str(action_bundle.get("path", ""))))
             focus = str(bundle_manifest.get("priority", "")) if bundle_manifest else ""
             if focus == "blur-kirakira":
                 reason = (

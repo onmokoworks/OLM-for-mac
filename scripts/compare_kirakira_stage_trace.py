@@ -80,6 +80,81 @@ def first_non_none(*values: Any) -> Any:
     return None
 
 
+def is_placeholder(value: Any) -> bool:
+    if value is None:
+        return True
+    if isinstance(value, str):
+        text = value.lower()
+        return any(
+            marker in text
+            for marker in (
+                "not isolated",
+                "not fully decoded",
+                "not decoded",
+                "not captured",
+                "not breakpointed",
+                "not traced",
+                "missing",
+            )
+        )
+    if isinstance(value, list):
+        return not value or all(is_placeholder(item) for item in value)
+    if isinstance(value, dict):
+        return not value or all(is_placeholder(item) for item in value.values())
+    return False
+
+
+def has_concrete(value: Any) -> bool:
+    return not is_placeholder(value)
+
+
+def contains_number(value: Any) -> bool:
+    if isinstance(value, bool):
+        return False
+    if isinstance(value, (int, float)):
+        return True
+    if isinstance(value, list):
+        return any(contains_number(item) for item in value)
+    if isinstance(value, dict):
+        return any(contains_number(item) for item in value.values())
+    return False
+
+
+def has_concrete_stage_value(value: Any) -> bool:
+    if is_placeholder(value):
+        return False
+    if isinstance(value, list):
+        return any(has_concrete_stage_value(item) for item in value)
+    if isinstance(value, dict):
+        metadata_keys = {
+            "index",
+            "label",
+            "reason",
+            "status",
+            "selected_branch",
+            "register_pointer",
+            "raw_header_dump",
+            "decoded",
+            "xy",
+            "source_xy",
+            "ray_xy",
+            "tmp1_xy",
+            "tmp2_xy",
+        }
+        stage_markers = ("float", "rgba", "sample", "before", "after", "output", "input", "value", "values")
+        for key, item in value.items():
+            if key in metadata_keys:
+                continue
+            if is_placeholder(item):
+                continue
+            if any(marker in key.lower() for marker in stage_markers) and contains_number(item):
+                return True
+            if has_concrete_stage_value(item):
+                return True
+        return False
+    return False
+
+
 def get_path(value: Any, path: list[Any]) -> Any:
     current = value
     for part in path:
@@ -170,15 +245,16 @@ def build_comparison(summary: dict[str, Any], local_trace: dict[str, Any]) -> di
         local_ray = local.get("first_ray", {})
         win_length = entry.get("ray_length")
         win_forward = entry.get("forward_matrix")
+        win_witnesses = windows.get("witness_pixels")
         win_box = windows.get("boxfilter_calls")
         win_agg = windows.get("aggregation_and_compose")
-        if win_length is not None and win_length != local_ray.get("length"):
+        if has_concrete(win_length) and win_length != local_ray.get("length"):
             likely_next_focus = "ray-length-normalization"
-        elif win_forward and win_forward != local_ray.get("forward_matrix"):
+        elif has_concrete(win_forward) and win_forward != local_ray.get("forward_matrix"):
             likely_next_focus = "warp-matrix-or-center"
-        elif win_box:
+        elif has_concrete_stage_value(win_witnesses) or has_concrete_stage_value(win_box):
             likely_next_focus = "boxfilter-stage-values"
-        elif win_agg:
+        elif has_concrete_stage_value(win_agg):
             likely_next_focus = "aggregation-or-compose"
         else:
             likely_next_focus = "trace-too-sparse"

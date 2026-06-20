@@ -8,8 +8,10 @@
 - Bit depth: 8bpc documented here; 16/32bpc still need references
 - Reference set: `refs/win_references/20260605_extra/OLMSmoother2`
 - Current status: no-key grid has packaged 8bpc `AE exact` evidence from the
-  2026-06-19 AE pixel return; legacy key/gamma slices remain guarded residuals.
-  Smoother2 as a whole is not complete.
+  2026-06-19/2026-06-20 AE pixel returns. Standalone OLMSmoother v1
+  `case_0001..0003` is also 8bpc `AE exact` after the corrected 960x540 rerun.
+  Smoother2 legacy key/gamma slices remain guarded residuals, so Smoother2 as
+  a whole is not complete.
 
 ## Source Evidence
 
@@ -121,6 +123,12 @@ filter.
   legacy setup/key/gamma/writeback evidence, plus optional runtime trace to
   explain why the no-key AE path is exact while the CLI harness previously was
   only near-exact.
+- 2026-06-20 AE pixel rerun:
+  `refs/reports/ae_host_validation_20260620_1425/`.
+  This confirms the v1 reference-shape issue was a packaging/render setup
+  problem, not an algorithm result: `OLMSmoother v1 case_0001..0003` are exact
+  at `960x540`. The same rerun keeps Smoother2 legacy key/gamma red at `0/7`
+  exact, with the same `max=101/254` range.
 - No-key `case_0001` residual is dominated by pixels where candidate smoothed
   but reference looks like input. This points to class-plane / dispatch firing
   too often, not final PNG premultiply alone.
@@ -225,13 +233,13 @@ filter.
 
 | Case group | Bit depth | Expected status | Current result | Next evidence |
 | --- | --- | --- | --- | --- |
-| no-key grid | 8bpc | AE exact for packaged grid | 12/12 exact in 2026-06-19 AE pixel return | Optional runtime trace for binary-grounding; do not PNG-tune |
-| key paths | 8bpc | guarded | 0/7 exact in 2026-06-19 legacy AE pixel return | Runtime/static proof for legacy key/gamma setup and writeback |
-| v1 compatibility via v2 | 8bpc | guarded migration path | `--force-version 1` smoke close to v1 refs | AE-host validation of real v1 projects or acceptance of v2 migration |
+| no-key grid | 8bpc | AE exact for packaged grid | 12/12 exact in 2026-06-19 and 2026-06-20 AE pixel returns | Optional runtime trace for binary-grounding; do not PNG-tune |
+| key/gamma paths | 8bpc | guarded | 0/7 exact in 2026-06-20 legacy AE pixel rerun | Runtime/static proof for legacy key/gamma setup and writeback |
+| standalone v1 | 8bpc | AE exact for packaged v1 slices | 3/3 exact in corrected 960x540 2026-06-20 AE pixel rerun | Decide whether v1 stays independent or maps to v2 compatibility |
 
 ## Open Questions
 
 - Remaining scanner/leaf behavior around `idx=0x18`.
 - Whether class-plane byte value `1` vs `0xff` matters in any downstream path.
-- Exact AE-host Mac output against Windows Software refs.
+- Exact AE-host Mac output against Windows Software refs for legacy key/gamma.
 - 16bpc and 32bpc smoothing/writeback behavior.
