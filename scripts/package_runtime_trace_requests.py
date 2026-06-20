@@ -64,6 +64,7 @@ def parse_args() -> argparse.Namespace:
             "olmblur-repeat-threshold",
             "kirakira-stage-values",
             "smoother2-no-key-grid",
+            "smoother2-legacy-key-gamma",
             "distancegradation-field-prep",
         ],
         default="hard-paths",
@@ -201,6 +202,30 @@ def smoother2_no_key_grid_action() -> dict[str, Any]:
     }
 
 
+def smoother2_legacy_key_gamma_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmsmoother2_legacy_key_gamma_runtime_trace_20260620",
+        "plugin_area": "OLMSmoother2 legacy key/gamma runtime trace",
+        "mode": "external-trace",
+        "command": (
+            "Trace OLMSmoother2 legacy key/gamma AE-exact failures at the listed "
+            "top-edge witness pixels. Focus on case_0001, case_0002, case_0003, "
+            "and case_0010. Record parameter struct values, Color Key active/"
+            "invert decisions, gamma/sRGB decode/encode decisions, class-plane "
+            "bytes, pre/post FUN_1800036e0 writeback values, and final RGBA. "
+            "Compare against the AE-host failure report in "
+            "refs/reports/ae_host_validation_20260620_1425/"
+            "ae_pixel_olmsmoother2_legacy_20260619/reports/."
+        ),
+        "stop_condition": (
+            "Return enough values to decide whether the 0/7 legacy failures are "
+            "caused by Color Key mask polarity, premultiply/unpremultiply, gamma "
+            "setup, class-plane generation, or final writeback. Do not continue "
+            "no-key grid tuning from this package."
+        ),
+    }
+
+
 def distancegradation_field_prep_action() -> dict[str, Any]:
     return {
         "request_id": "olmdistancegradation_field_prep_runtime_trace_20260619",
@@ -233,6 +258,8 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [kirakira_stage_values_action()]
     if profile == "smoother2-no-key-grid":
         return [smoother2_no_key_grid_action()]
+    if profile == "smoother2-legacy-key-gamma":
+        return [smoother2_legacy_key_gamma_action()]
     if profile == "distancegradation-field-prep":
         return [distancegradation_field_prep_action()]
     return runtime_actions(snapshot)
@@ -720,6 +747,132 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 },
             }
             summary = "Fill with OLMSmoother2 no-key grid per-pixel polygon/composite/writeback trace facts."
+        elif request_id == "olmsmoother2_legacy_key_gamma_runtime_trace_20260620":
+            observations = {
+                "effect": "OLM Smoother v2",
+                "module_base": "0x...",
+                "reference_report_hint": (
+                    "refs/reports/ae_host_validation_20260620_1425/"
+                    "ae_pixel_olmsmoother2_legacy_20260619/reports/ae_pixel_legacy_exact.json"
+                ),
+                "cases": [
+                    {
+                        "case_id": "case_0001",
+                        "reason": (
+                            "Color Key disabled; alpha matches at witnesses but RGB is much lower "
+                            "in the Mac candidate, so writeback/premultiply/gamma ownership is suspect."
+                        ),
+                        "expected_params": {
+                            "enable_color_key": 0,
+                            "invert_color_key": 0,
+                            "smoothness": 100,
+                            "extra_smooth": 0,
+                            "smooth_range": 2,
+                            "smoother_version": 2,
+                        },
+                        "witness_pixels": [
+                            {"x": 15, "y": 0, "mac_candidate_rgba": [25, 25, 25, 75], "windows_reference_rgba": [75, 75, 75, 75]},
+                            {"x": 16, "y": 0, "mac_candidate_rgba": [44, 44, 44, 106], "windows_reference_rgba": [106, 106, 106, 106]},
+                            {"x": 438, "y": 0, "mac_candidate_rgba": [25, 25, 25, 75], "windows_reference_rgba": [75, 75, 75, 75]},
+                        ],
+                    },
+                    {
+                        "case_id": "case_0002",
+                        "reason": (
+                            "Color Key enabled + invert; Mac candidate zeros top-edge pixels where "
+                            "Windows keeps nonzero RGBA."
+                        ),
+                        "expected_params": {
+                            "enable_color_key": 1,
+                            "invert_color_key": 1,
+                            "smoothness": 100,
+                            "extra_smooth": 0,
+                            "smooth_range": 2,
+                            "smoother_version": 2,
+                        },
+                        "witness_pixels": [
+                            {"x": 15, "y": 0, "mac_candidate_rgba": [0, 0, 0, 0], "windows_reference_rgba": [75, 75, 75, 75]},
+                            {"x": 16, "y": 0, "mac_candidate_rgba": [0, 0, 0, 0], "windows_reference_rgba": [106, 106, 106, 106]},
+                            {"x": 438, "y": 0, "mac_candidate_rgba": [0, 0, 0, 0], "windows_reference_rgba": [75, 75, 75, 75]},
+                        ],
+                    },
+                    {
+                        "case_id": "case_0003",
+                        "reason": (
+                            "Color Key enabled without invert and Smoothness=0; Mac candidate keeps "
+                            "nonzero pixels where Windows writes transparent black."
+                        ),
+                        "expected_params": {
+                            "enable_color_key": 1,
+                            "invert_color_key": 0,
+                            "smoothness": 0,
+                            "extra_smooth": 0,
+                            "smooth_range": 2,
+                            "smoother_version": 2,
+                        },
+                        "witness_pixels": [
+                            {"x": 15, "y": 0, "mac_candidate_rgba": [75, 75, 75, 75], "windows_reference_rgba": [0, 0, 0, 0]},
+                            {"x": 16, "y": 0, "mac_candidate_rgba": [106, 106, 106, 106], "windows_reference_rgba": [0, 0, 0, 0]},
+                            {"x": 438, "y": 0, "mac_candidate_rgba": [75, 75, 75, 75], "windows_reference_rgba": [0, 0, 0, 0]},
+                        ],
+                    },
+                    {
+                        "case_id": "case_0010",
+                        "reason": (
+                            "Color Key + Extra Smooth/Gamma-range stress; Mac candidate keeps top-edge "
+                            "pixels where Windows writes transparent black."
+                        ),
+                        "expected_params": {
+                            "enable_color_key": 1,
+                            "invert_color_key": 0,
+                            "smoothness": 100,
+                            "extra_smooth": 40,
+                            "smooth_range": 22,
+                            "smoother_version": 2,
+                        },
+                        "witness_pixels": [
+                            {"x": 15, "y": 0, "mac_candidate_rgba": [75, 75, 75, 75], "windows_reference_rgba": [0, 0, 0, 0]},
+                            {"x": 16, "y": 0, "mac_candidate_rgba": [106, 106, 106, 106], "windows_reference_rgba": [0, 0, 0, 0]},
+                            {"x": 438, "y": 0, "mac_candidate_rgba": [75, 75, 75, 75], "windows_reference_rgba": [0, 0, 0, 0]},
+                        ],
+                    },
+                ],
+                "requested_for_each_case": {
+                    "parameter_struct": {
+                        "enable_color_key": None,
+                        "color_key_rgba_or_packed": None,
+                        "invert_color_key": None,
+                        "smoothness": None,
+                        "extra_smooth": None,
+                        "smooth_range": None,
+                        "smoother_version": None,
+                        "gamma_correction": None,
+                        "num_gamma_colors": None,
+                        "observed_flags_and_offsets": {},
+                    },
+                    "setup_and_keying": {
+                        "input_pixel_rgba_before_effect": [None, None, None, None],
+                        "after_any_unpremultiply_rgba": [None, None, None, None],
+                        "active_palette_filter_hit": None,
+                        "active_palette_filter_value": None,
+                        "scalar_key_filter_hit": None,
+                        "scalar_key_filter_value": None,
+                        "invert_branch_taken": None,
+                        "class_plane_byte_before_smoothing": None,
+                        "class_plane_neighbors": [],
+                    },
+                    "smoothing_and_writeback": {
+                        "fun_18000c280_switch_idx_if_hit": None,
+                        "append_count_if_hit": None,
+                        "before_FUN_1800036e0_rgba_float_hex": [None, None, None, None],
+                        "gamma_or_srgb_decode_encode_steps": [],
+                        "premultiply_or_unpremultiply_step": None,
+                        "final_writeback_operation": "floorf(value+0.5) | trunc | cvt | other",
+                        "final_rgba_8bit": [None, None, None, None],
+                    },
+                },
+            }
+            summary = "Fill with OLMSmoother2 legacy key/gamma setup, mask, gamma, and writeback trace facts."
         elif request_id == "olmdistancegradation_field_prep_runtime_trace_20260619":
             observations = {
                 "effect": "OLM Distance Gradation",
@@ -915,6 +1068,21 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("refs/reports/olmsmoother2_trace_baseline_20260619_025911_mac/mac_trace_215_145.log"),
             Path("refs/reports/olmsmoother2_trace_baseline_20260619_025911_mac/mac_trace_991_139.log"),
             Path("refs/reports/olmsmoother2_trace_baseline_20260619_025911_mac/mac_trace_995_145.log"),
+        ]
+    elif profile == "smoother2-legacy-key-gamma":
+        files = [
+            TRACE_NOTE,
+            Path("notes/OLMSmoother2_ASM_FACTS.md"),
+            Path("notes/IR_OLMSmoother2.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path(
+                "refs/reports/ae_host_validation_20260620_1425/"
+                "ae_pixel_olmsmoother2_legacy_20260619/reports/ae_pixel_legacy_exact.json"
+            ),
+            Path(
+                "refs/reports/ae_host_validation_20260620_1425/"
+                "ae_pixel_olmsmoother2_legacy_20260619/reports/ae_pixel_legacy_exact.csv"
+            ),
         ]
     elif profile == "distancegradation-field-prep":
         files = [

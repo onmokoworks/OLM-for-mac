@@ -20,6 +20,10 @@ from typing import Any
 RUNTIME_PACKAGES = [
     Path(
         "refs/runtime_trace_packages/"
+        "olm_runtime_trace_olmsmoother2_legacy_key_gamma_20260620_154802.zip"
+    ),
+    Path(
+        "refs/runtime_trace_packages/"
         "olm_runtime_trace_olmsmoother2_no_key_grid_idx7_context_with_mac_baseline_20260619_041000.zip"
     ),
     Path("refs/runtime_trace_packages/olm_runtime_trace_olmblur_repeat_threshold_with_mac_baseline_20260619_030743.zip"),

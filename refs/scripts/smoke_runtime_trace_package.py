@@ -169,6 +169,42 @@ def main() -> int:
         for witness in observations["witness_pixels"]:
             for key in ("xy", "source_xy", "tmp1_xy", "tmp2_xy", "ray_xy"):
                 assert key in witness, f"missing KiraKira witness coordinate field: {key}"
+
+        smoother_legacy_output = Path(tmp) / "runtime_trace_smoother_legacy.zip"
+        proc = run(
+            [
+                sys.executable,
+                str(script),
+                "--profile",
+                "smoother2-legacy-key-gamma",
+                "--output",
+                str(smoother_legacy_output),
+            ],
+            root,
+        )
+        assert "[OK] runtime trace package:" in proc.stdout
+        with zipfile.ZipFile(smoother_legacy_output) as archive:
+            names = set(archive.namelist())
+            required = {
+                "README_RUNTIME_TRACE.md",
+                "RETURN_RUNTIME_TRACE_TEMPLATE.json",
+                "runtime_trace_package_manifest.json",
+                "notes/WINDOWS_RUNTIME_TRACE_REQUESTS.md",
+                "notes/IR_OLMSmoother2.md",
+                "notes/CONFORMANCE_LEDGER.md",
+            }
+            missing = required - names
+            assert not missing, f"missing Smoother legacy package entries: {sorted(missing)}"
+            manifest = json.loads(archive.read("runtime_trace_package_manifest.json"))
+            template = json.loads(archive.read("RETURN_RUNTIME_TRACE_TEMPLATE.json"))
+        assert manifest["profile"] == "smoother2-legacy-key-gamma"
+        action_ids = [action["request_id"] for action in manifest["runtime_actions"]]
+        assert action_ids == ["olmsmoother2_legacy_key_gamma_runtime_trace_20260620"]
+        observations = template["results"][0]["observations"]
+        assert observations["cases"][0]["case_id"] == "case_0001"
+        assert observations["cases"][1]["expected_params"]["invert_color_key"] == 1
+        assert "setup_and_keying" in observations["requested_for_each_case"]
+        assert "smoothing_and_writeback" in observations["requested_for_each_case"]
     print("[OK] runtime trace package smoke")
     return 0
 

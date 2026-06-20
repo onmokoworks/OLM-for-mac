@@ -59,9 +59,10 @@ def main() -> int:
             assert manifest["priority"] == "smoother-priority"
             runtime_rows = manifest["runtime_trace_packages"]
             ae_rows = manifest["ae_pixel_validation_packages"]
-            assert len(runtime_rows) == 4
+            assert len(runtime_rows) == 5
             assert len(ae_rows) == 9
-            assert "olmsmoother2_no_key_grid" in runtime_rows[0]["source"]
+            assert "olmsmoother2_legacy_key_gamma" in runtime_rows[0]["source"]
+            assert "olmsmoother2_no_key_grid" in runtime_rows[1]["source"]
             for row in runtime_rows:
                 assert row["bundle_path"] in names
                 assert row["kind"] == "runtime-trace-request-package"
@@ -76,7 +77,7 @@ def main() -> int:
         run([sys.executable, str(script), "--runtime-only", "--output", str(runtime_only)], root)
         with zipfile.ZipFile(runtime_only) as archive:
             manifest = json.loads(archive.read("windows_action_bundle_manifest.json").decode("utf-8"))
-            assert len(manifest["runtime_trace_packages"]) == 4
+            assert len(manifest["runtime_trace_packages"]) == 5
             assert manifest["ae_pixel_validation_packages"] == []
 
         blur_kirakira = Path(tmp) / "blur_kirakira_bundle.zip"

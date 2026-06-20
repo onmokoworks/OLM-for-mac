@@ -5,9 +5,93 @@ PNG render set. Use these only when static Ghidra/objdump facts and existing
 Windows reference PNGs cannot distinguish a real port bug from an unmodeled
 runtime state.
 
-## OLMSmoother2 No-Key Grid Polygon Witness
+## OLMSmoother2 Legacy Key/Gamma Witness
 
 Status: pending external Windows debugger trace.
+
+Why this trace exists:
+
+- The 2026-06-20 AE pixel rerun made standalone `OLMSmoother` v1 exact and kept
+  the `OLMSmoother2` no-key grid exact, but legacy key/gamma slices still fail
+  `0/7`.
+- The failing legacy cases are not small edge residuals. They include full
+  keep/drop polarity differences (`max=254`) and a no-key-looking case where
+  alpha matches but RGB is too low in the Mac candidate.
+- The recurring witnesses are top-edge pixels such as `(15,0)`, `(16,0)`,
+  `(438,0)`, and `(439,0)`. That pattern points at legacy setup, mask polarity,
+  premultiply/unpremultiply, gamma setup, or final writeback rather than the
+  already exact no-key smoothing geometry.
+- PNG-only tuning is especially risky here because the observed cases can be
+  explained by several mutually incompatible rules. The trace must identify the
+  active runtime state before implementation changes.
+
+Reference report:
+
+- `refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmsmoother2_legacy_20260619/reports/ae_pixel_legacy_exact.json`
+
+Priority witness cases:
+
+| case | expected setup | witness | Mac candidate | Windows reference | why |
+| --- | --- | --- | --- | --- | --- |
+| `case_0001` | Color Key off, Smoothness 100, Range 2 | `(15,0)` | `[25,25,25,75]` | `[75,75,75,75]` | alpha matches, RGB ownership differs |
+| `case_0002` | Color Key on, Invert on, Smoothness 100, Range 2 | `(15,0)` | `[0,0,0,0]` | `[75,75,75,75]` | Mac drops a pixel Windows keeps |
+| `case_0003` | Color Key on, Invert off, Smoothness 0, Range 2 | `(15,0)` | `[75,75,75,75]` | `[0,0,0,0]` | Mac keeps a pixel Windows drops |
+| `case_0010` | Color Key on, Extra 40, Range 22 | `(15,0)` | `[75,75,75,75]` | `[0,0,0,0]` | gamma/extra/range stress keeps wrong pixels |
+
+Static addresses from image base `0x180000000`:
+
+- Render/writeback loop: `FUN_1800036e0`, VA `0x1800036e0`
+- Polygon builder: `FUN_18000c280`, VA `0x18000c280`
+- Post unpremul/gamma/clamp: `FUN_18000b120`, VA `0x18000b120`
+- Active-palette / scalar-key routines are documented in
+  `notes/OLMSmoother2_ASM_FACTS.md`; if the exact symbol offset differs in the
+  open Ghidra database, record the resolved address in the return.
+
+Trace target:
+
+1. Render `case_0001`, `case_0002`, `case_0003`, and `case_0010` with Windows
+   AE Software renderer.
+2. For each case, record the runtime parameter struct values:
+   - Enable Color Key;
+   - Color Key packed/decoded value;
+   - Invert Color Key;
+   - Smoothness;
+   - Extra Smooth;
+   - Smooth Range;
+   - Smoother Version;
+   - Gamma Correction / Num Gamma Colors;
+   - any observed flags/offsets controlling premultiply or gamma.
+3. For each witness pixel, record:
+   - input RGBA before the effect;
+   - RGBA after any unpremultiply step;
+   - active-palette filter hit/value if that path is used;
+   - scalar-key filter hit/value if that path is used;
+   - whether the invert branch flips the keep/drop decision;
+   - class-plane byte at the pixel and a small neighbor window;
+   - whether `FUN_18000c280` runs and the switch index if it does.
+4. Around final processing/writeback, record:
+   - RGBA float values before `FUN_1800036e0`;
+   - gamma or sRGB decode/encode steps hit for the case;
+   - premultiply/unpremultiply step, if hit;
+   - final byte conversion operation;
+   - final 8bpc RGBA written by the AEX.
+
+Interpretation:
+
+- If `case_0002` keep/drop is inverted before smoothing, patch Color Key
+  polarity or active-palette/scalar-key setup.
+- If `case_0001` matches alpha but not RGB until final processing, patch
+  premultiply/unpremultiply or gamma/writeback, not polygon geometry.
+- If `case_0003` and `case_0010` differ before any smoothing call, patch mask
+  classification before touching weights.
+- If class-plane bytes and final floats match but final bytes differ, patch only
+  final byte conversion.
+
+## OLMSmoother2 No-Key Grid Polygon Witness
+
+Status: optional external Windows debugger trace. The AE-host no-key grid is
+already exact; this request is now for binary-grounding only, not for active
+Smoother prioritization.
 
 Why this trace exists:
 

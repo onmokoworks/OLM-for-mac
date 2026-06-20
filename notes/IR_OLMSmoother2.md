@@ -129,6 +129,13 @@ filter.
   problem, not an algorithm result: `OLMSmoother v1 case_0001..0003` are exact
   at `960x540`. The same rerun keeps Smoother2 legacy key/gamma red at `0/7`
   exact, with the same `max=101/254` range.
+- Therefore the current Smoother priority is not the no-key grid. It is the
+  legacy key/gamma setup and writeback path. The project-local priority trace
+  package is:
+  `refs/runtime_trace_packages/olm_runtime_trace_olmsmoother2_legacy_key_gamma_20260620_154802.zip`.
+  It targets `case_0001`, `case_0002`, `case_0003`, and `case_0010` at
+  recurring top-edge witnesses so the remaining `0/7` failures can be
+  classified before implementation changes.
 - No-key `case_0001` residual is dominated by pixels where candidate smoothed
   but reference looks like input. This points to class-plane / dispatch firing
   too often, not final PNG premultiply alone.
@@ -205,13 +212,11 @@ filter.
   `refs/reports/olmsmoother2_trace_baseline_20260619_024716/mac_trace_211_139.log`.
   A fuller four-pixel baseline was later saved at
   `refs/reports/olmsmoother2_trace_baseline_20260619_025911_mac/`.
-  The current Windows request package is
+  The no-key binary-grounding request package is
   `refs/runtime_trace_packages/olm_runtime_trace_olmsmoother2_no_key_grid_scan_append_p1p5_with_mac_baseline_20260619_030034.zip`.
-- Next required evidence is a Windows runtime trace of the exact witness
-  pixels, not another PNG-only tuning pass. The trace should decide whether
-  Windows emits an additional duplicate sample, differs in the leaf span/weight
-  formula at runtime, or matches the polygon and diverges only during final
-  composite/writeback.
+- This no-key trace is now optional/historical because the AE-host no-key grid
+  is exact. If it returns, use it to tighten the binary-grounded IR, not as the
+  next active Smoother blocker.
 
 2026-06-19 Ghidra MCP recheck:
 
@@ -224,10 +229,9 @@ filter.
 - `FUN_1800036e0` composites through `FUN_18000cce0`, optionally applies
   sRGB/gamma conversion, optionally premultiplies by alpha, and writes float
   RGBA in output order `{A,R,G,B}`.
-- The trace request now asks for `FUN_180010550` p1/p2/p3 plus the surrounding
-  idx=7 context at the four scan helpers because an incorrect scanner
-  endpoint/context descriptor would explain the residual without changing
-  global weights.
+- The legacy key/gamma trace request now takes priority over this no-key scan
+  trace because the no-key AE-host path is exact while legacy key/gamma remains
+  `0/7`.
 
 ## Conformance Cases
 
