@@ -161,10 +161,11 @@ runtime trace の返却を取り込みます。
 
 ```sh
 python3 scripts/intake_olm_return.py path/to/returned_runtime_trace.zip \
-  --runtime-summary-json refs/reports/runtime_trace_summary.json \
-  --runtime-summary-md refs/reports/runtime_trace_summary.md \
-  --runtime-comparison-dir refs/reports/runtime_trace_comparisons
+  --kind runtime-trace \
+  --runtime-package refs/runtime_trace_packages/olm_runtime_trace_olmsmoother2_legacy_key_gamma_20260620_154802.zip
 ```
+
+summary / comparison index は `refs/reports/` に日付時刻付きで自動保存されます。
 
 AE-host / AE pixel validation の返却を取り込みます。
 
@@ -175,11 +176,11 @@ python3 scripts/intake_olm_return.py path/to/returned_ae_host_or_pixel.zip \
 
 ## 現在の次アクション
 
-次に Windows 側へ送る候補は、Blur / KiraKira に絞った runtime trace
-bundle です。
+次に Windows 側へ送る候補は、Smoother2 legacy key/gamma を先頭にした
+runtime trace / AE validation bundle です。
 
 ```txt
-handoffs/windows_batch/olm_windows_action_bundle_20260620_overnight_blur_kirakira.zip
+handoffs/windows_batch/olm_windows_action_bundle_20260620_154802_smoother_legacy_priority.zip
 ```
 
 これは git ignore されるローカル handoff artifact です。返却後は

@@ -270,6 +270,31 @@ def main() -> int:
             print("[FAIL] intake did not write runtime trace Markdown summary", file=sys.stderr)
             return 1
 
+        auto_report_dir = tmp_path / "runtime_auto_reports"
+        auto_runtime_proc = run_capture(
+            [
+                sys.executable,
+                str(intake),
+                str(runtime_return_zip),
+                "--runtime-package",
+                str(runtime_package),
+                "--runtime-report-dir",
+                str(auto_report_dir),
+            ],
+            repo,
+        )
+        if auto_runtime_proc.returncode != 0:
+            return auto_runtime_proc.returncode
+        auto_summaries = sorted(auto_report_dir.glob("runtime_trace_summary_*.json"))
+        auto_markdowns = sorted(auto_report_dir.glob("runtime_trace_summary_*.md"))
+        if not auto_summaries or not auto_markdowns:
+            print("[FAIL] intake did not write auto-named runtime reports", file=sys.stderr)
+            return 1
+        auto_comparison_indexes = sorted((auto_report_dir / "runtime_trace_comparisons").glob("*/index.json"))
+        if not auto_comparison_indexes:
+            print("[FAIL] intake did not write auto-named runtime comparison index", file=sys.stderr)
+            return 1
+
     print("[OK] OLM return intake smoke")
     return 0
 

@@ -62,6 +62,29 @@ def main() -> int:
                                 },
                             },
                         },
+                        {
+                            "request_id": "olmsmoother2_legacy_key_gamma_runtime_trace_20260620",
+                            "status": "answered",
+                            "summary": "synthetic Smoother2 legacy trace",
+                            "observations": {
+                                "cases": [{"case_id": "case_0001"}],
+                                "requested_for_each_case": {
+                                    "parameter_struct": {"enable_color_key": 0},
+                                    "setup_and_keying": {
+                                        "active_palette_filter_value": None,
+                                        "class_plane_byte_before_smoothing": None,
+                                    },
+                                    "smoothing_and_writeback": {
+                                        "before_FUN_1800036e0_rgba_float_hex": [
+                                            "0x1.0p+0",
+                                            "0x1.0p+0",
+                                            "0x1.0p+0",
+                                            "0x1.0p+0",
+                                        ]
+                                    },
+                                },
+                            },
+                        },
                     ],
                 },
                 indent=2,
@@ -90,6 +113,7 @@ def main() -> int:
         expected = {
             "olmblur_repeat_threshold": "nonlegacy-accumulation-or-writeback",
             "olmdistancegradation_field_prep": "constant-field-prep",
+            "olmsmoother2_legacy_key_gamma": "premultiply-gamma-or-writeback",
         }
         for slug, focus in expected.items():
             if comparisons.get(slug, {}).get("likely_next_focus") != focus:

@@ -77,6 +77,11 @@ def comparators(py: str) -> list[Comparator]:
             slug="olmdistancegradation_field_prep",
             command=[py, "scripts/compare_distancegradation_trace.py"],
         ),
+        Comparator(
+            request_id="olmsmoother2_legacy_key_gamma_runtime_trace_20260620",
+            slug="olmsmoother2_legacy_key_gamma",
+            command=[py, "scripts/compare_smoother2_legacy_trace.py"],
+        ),
     ]
 
 

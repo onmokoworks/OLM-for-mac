@@ -1,13 +1,15 @@
 # Windows Return Intake Playbook 2026-06-19
 
 This note is for returns from the current Windows helper bundles. The active
-overnight target is:
+target is:
 
-`handoffs/windows_batch/olm_windows_action_bundle_20260620_overnight_blur_kirakira.zip`
+`handoffs/windows_batch/olm_windows_action_bundle_20260620_154802_smoother_legacy_priority.zip`
 
-Older notes below still document the 2026-06-19 Smoother-first bundle:
+Older notes below still document previous bundles:
 
 `handoffs/windows_batch/olm_windows_action_bundle_20260619_041000_smoother_idx7_context_priority.zip`
+
+`handoffs/windows_batch/olm_windows_action_bundle_20260620_overnight_blur_kirakira.zip`
 
 The bundle is Smoother-first, but it also includes OLMBlur, OLMColorKey Edge,
 OLMDistanceGradation runtime traces and exact-threshold AE pixel validation
@@ -83,45 +85,65 @@ Interpretation:
 
 ## Priority Order
 
-1. OLMSmoother2 runtime trace
+1. OLMSmoother2 legacy key/gamma runtime trace
+   - Request package:
+     `refs/runtime_trace_packages/olm_runtime_trace_olmsmoother2_legacy_key_gamma_20260620_154802.zip`
+   - Reason: v1 and no-key grid are AE exact, but legacy key/gamma is still
+     `0/7`. The decisive question is whether the failure is Color Key mask
+     polarity, class-plane generation, premultiply/gamma, or final writeback.
+   - First values to compare:
+     parameter struct fields, Color Key active/invert decisions, class-plane
+     bytes, pre/post `FUN_1800036e0` RGBA floats, gamma/sRGB steps, and final
+     RGBA bytes at the top-edge witnesses.
+
+2. OLMSmoother2 no-key runtime trace
    - Request package:
      `refs/runtime_trace_packages/olm_runtime_trace_olmsmoother2_no_key_grid_idx7_context_with_mac_baseline_20260619_041000.zip`
-   - Reason: current no-key grid is near-exact but not exact. The decisive
-     question is whether Windows differs in scanner endpoint/context, appended
-     samples, composite/writeback, or only final AE-host output.
+   - Reason: no-key grid is now AE exact, so this is optional binary-grounding
+     only. Do not spend the next Windows trip tuning no-key from PNGs.
    - First values to compare:
      `FUN_180010550` p1/p2/p3 plus idx=7 context, `d520/dbd0/d230/d800`
      helper returns, `FUN_1800104d0` append sequence, `FUN_18000ab00`,
      `FUN_18000b120`, and `FUN_1800036e0` final values.
 
-2. OLMBlur runtime trace
+3. OLMBlur runtime trace
    - Request package:
      `refs/runtime_trace_packages/olm_runtime_trace_olmblur_repeat_threshold_with_mac_baseline_20260619_030743.zip`
    - Reason: `case_0006` has a single tie-like residual and `case_0007` has a
      legacy border/tie residual. Do not change `nearbyint` or legacy border
      exclusion without trace evidence.
 
-3. OLMColorKey Edge runtime trace
+4. OLMColorKey Edge runtime trace
    - Request package:
      `refs/runtime_trace_packages/olm_runtime_trace_colorkey_edge_erode_blur_with_mac_baseline_20260619_031350.zip`
    - Reason: Edge Thin erode is exact in AE-host return but not CLI; Edge Blur
      `case_0009` is the current final-risk ColorKey slice.
 
-4. OLMDistanceGradation runtime trace
+5. OLMDistanceGradation runtime trace
    - Request package:
      `refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_field_prep_opencv_args_20260619_030427.zip`
    - Reason: compose math is binary-grounded, but Constant field prep,
      `distanceTransform`, `GaussianBlur`, and field-world packing are not exact
      yet.
 
-5. AE pixel validation returns
+6. AE pixel validation returns
    - These are exact-threshold Mac AE gates for selected current refs. Passing
      them is stronger than CLI exact, but still only for the covered 8bpc
      cases. 16bpc and 32bpc remain separate work.
 
 ## Runtime Trace Intake
 
-Use the specific package when possible, not the newest package heuristic:
+Use the specific package when possible, not the newest package heuristic.
+For the current Smoother legacy return, this is enough; intake auto-writes
+date-stamped summary and comparison files under `refs/reports/`:
+
+```sh
+python3 scripts/intake_olm_return.py path/to/returned_runtime_trace.zip \
+  --kind runtime-trace \
+  --runtime-package refs/runtime_trace_packages/olm_runtime_trace_olmsmoother2_legacy_key_gamma_20260620_154802.zip
+```
+
+For old/manual report names, pass explicit output paths:
 
 ```sh
 python3 scripts/intake_olm_return.py path/to/returned_runtime_trace.zip \
@@ -162,6 +184,7 @@ This auto-runs the available routers for present request IDs:
 - `scripts/compare_kirakira_stage_trace.py`
 - `scripts/compare_colorkey_edge_trace.py`
 - `scripts/compare_distancegradation_trace.py`
+- `scripts/compare_smoother2_legacy_trace.py`
 
 The index files are:
 

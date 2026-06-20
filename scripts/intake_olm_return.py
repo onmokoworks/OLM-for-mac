@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import json
 import shutil
 import subprocess
@@ -119,6 +120,12 @@ def parse_args() -> argparse.Namespace:
             "Runtime trace: run known comparison routers after summary generation "
             "and write their outputs to this directory."
         ),
+    )
+    parser.add_argument(
+        "--runtime-report-dir",
+        type=Path,
+        default=None,
+        help="Runtime trace: default directory for auto-named summary JSON/Markdown.",
     )
     parser.add_argument(
         "--no-runtime-comparisons",
@@ -279,6 +286,48 @@ def detect_kind(root: Path) -> str | None:
 def run(cmd: list[str], root: Path) -> int:
     print("$ " + " ".join(cmd), flush=True)
     return subprocess.run(cmd, cwd=root).returncode
+
+
+def runtime_package_manifest(path: Path) -> dict | None:
+    try:
+        with zipfile.ZipFile(path) as archive:
+            data = json.loads(archive.read("runtime_trace_package_manifest.json").decode("utf-8-sig"))
+    except Exception:
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def runtime_report_slug(package: Path | None) -> str:
+    if package is None:
+        return "runtime_trace"
+    manifest = runtime_package_manifest(package)
+    if manifest:
+        profile = str(manifest.get("profile") or "").strip()
+        if profile:
+            return profile.replace("-", "_")
+        actions = manifest.get("runtime_actions", [])
+        if isinstance(actions, list):
+            ids = [
+                str(action.get("request_id"))
+                for action in actions
+                if isinstance(action, dict) and action.get("request_id")
+            ]
+            if len(ids) == 1:
+                return ids[0].replace("-", "_")
+    return package.stem.replace("-", "_")
+
+
+def default_runtime_report_paths(root: Path, package: Path | None, report_dir: Path | None) -> tuple[Path, Path, Path]:
+    stamp = dt.datetime.now().strftime("%Y%m%d_%H%M%S")
+    slug = runtime_report_slug(package)
+    if report_dir is None:
+        report_dir = root / "refs" / "reports"
+    elif not report_dir.is_absolute():
+        report_dir = root / report_dir
+    summary_json = report_dir / f"runtime_trace_summary_{slug}_{stamp}.json"
+    summary_md = report_dir / f"runtime_trace_summary_{slug}_{stamp}.md"
+    comparison_dir = report_dir / "runtime_trace_comparisons" / f"{slug}_{stamp}"
+    return summary_json, summary_md, comparison_dir
 
 
 def run_ae_host(args: argparse.Namespace, root: Path) -> int:
@@ -449,27 +498,46 @@ def run_win_reference(args: argparse.Namespace, root: Path) -> int:
 
 
 def run_runtime_trace(args: argparse.Namespace, root: Path) -> int:
+    package = args.runtime_package
+    if package is None:
+        package = root / "refs" / "runtime_trace_packages"
+        packages = sorted(package.glob("*.zip"), key=lambda path: path.stat().st_mtime) if package.exists() else []
+        package = packages[-1] if packages else None
+    elif not package.is_absolute():
+        package = root / package
+
     summary_json = args.runtime_summary_json
-    if summary_json is None and args.runtime_comparison_dir and not args.no_runtime_comparisons:
-        summary_json = args.runtime_comparison_dir / "runtime_trace_summary.json"
+    summary_md = args.runtime_summary_md
+    comparison_dir = args.runtime_comparison_dir
+    if summary_json is None:
+        summary_json, default_summary_md, default_comparison_dir = default_runtime_report_paths(
+            root,
+            package,
+            args.runtime_report_dir,
+        )
+        if summary_md is None:
+            summary_md = default_summary_md
+        if comparison_dir is None and not args.no_runtime_comparisons:
+            comparison_dir = default_comparison_dir
+    if comparison_dir is None and not args.no_runtime_comparisons:
+        comparison_dir = root / "refs" / "reports" / "runtime_trace_comparisons"
     cmd = [
         sys.executable,
         "scripts/verify_runtime_trace_return.py",
         str(args.source.resolve()),
         "--require-all",
     ]
-    if args.runtime_package:
-        cmd.extend(["--package", str(args.runtime_package)])
+    if package:
+        cmd.extend(["--package", str(package)])
     if summary_json:
         cmd.extend(["--summary-json", str(summary_json)])
-    if args.runtime_summary_md:
-        cmd.extend(["--summary-md", str(args.runtime_summary_md)])
+    if summary_md:
+        cmd.extend(["--summary-md", str(summary_md)])
     rc = run(cmd, root)
     if rc != 0:
         return rc
     if args.no_runtime_comparisons or summary_json is None:
         return 0
-    comparison_dir = args.runtime_comparison_dir or root / "refs" / "reports" / "runtime_trace_comparisons"
     compare_cmd = [
         sys.executable,
         "scripts/compare_runtime_trace_summary.py",
