@@ -3664,9 +3664,27 @@ static void win_FUN_18000cce0_orchestrate(FPix &out_pixel,
 	build_polygon(poly, plane_in, x, y, p);
 
 	FPix center = fplane_fetch(plane_in, x, y, w, h);
+	const bool trace_this_pixel =
+	    (x == g_olmsmoother2_trace_x && y == g_olmsmoother2_trace_y);
+	if (trace_this_pixel) {
+		std::fprintf(stderr,
+		             "trace cce0_entry x=%d y=%d center=%.8f,%.8f,%.8f,%.8f poly_count=%d\n",
+		             x, y, center.r, center.g, center.b, center.a, poly.count);
+		for (int i = 0; i < poly.count; ++i) {
+			const PolySample &s = poly.samples[i];
+			std::fprintf(stderr,
+			             "trace cce0_poly[%d]=%.8f,%.8f,%.8f,%.8f w=%.8f\n",
+			             i, s.r, s.g, s.b, s.a, s.w);
+		}
+	}
 
 	if (poly.count == 0) {
 		out_pixel = center;
+		if (trace_this_pixel) {
+			std::fprintf(stderr,
+			             "trace cce0_exit_passthrough out=%.8f,%.8f,%.8f,%.8f\n",
+			             out_pixel.r, out_pixel.g, out_pixel.b, out_pixel.a);
+		}
 		return;
 	}
 
@@ -3692,14 +3710,40 @@ static void win_FUN_18000cce0_orchestrate(FPix &out_pixel,
 
 	bool gamma_enable = bb10_apply && (adaptive_gamma > 0.0f);
 	FPix working = center;
+	if (trace_this_pixel) {
+		std::fprintf(stderr,
+		             "trace cce0_bb10 apply=%d gamma=%.8f curve=%d\n",
+		             bb10_apply ? 1 : 0, adaptive_gamma, curve_idx);
+	}
 	gamma_decode_premul(working, poly, gamma_enable, adaptive_gamma);
+	if (trace_this_pixel) {
+		std::fprintf(stderr,
+		             "trace cce0_after_c0d0 center=%.8f,%.8f,%.8f,%.8f\n",
+		             working.r, working.g, working.b, working.a);
+		for (int i = 0; i < poly.count; ++i) {
+			const PolySample &s = poly.samples[i];
+			std::fprintf(stderr,
+			             "trace cce0_after_c0d0_poly[%d]=%.8f,%.8f,%.8f,%.8f w=%.8f\n",
+			             i, s.r, s.g, s.b, s.a, s.w);
+		}
+	}
 
 	// Stage 4: composite.
 	FPix accum;
 	composite(accum, working, poly);
+	if (trace_this_pixel) {
+		std::fprintf(stderr,
+		             "trace cce0_after_ab00 accum=%.8f,%.8f,%.8f,%.8f\n",
+		             accum.r, accum.g, accum.b, accum.a);
+	}
 
 	// Stage 5: post unpremul + gamma encode + clamp.
 	post_unpremul_gamma(accum, gamma_enable, adaptive_gamma);
+	if (trace_this_pixel) {
+		std::fprintf(stderr,
+		             "trace cce0_after_b120 out=%.8f,%.8f,%.8f,%.8f\n",
+		             accum.r, accum.g, accum.b, accum.a);
+	}
 
 	out_pixel = accum;
 }

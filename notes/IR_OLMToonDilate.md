@@ -9,8 +9,10 @@
   - `refs/win_references/20260604_olm/OLMToonDilate`
   - normalized Software refs under
     `refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMToonDilate`
-- Current status: `CLI exact` against normalized Software refs for
-  `case_0001..0003`; Mac AE exact still untested.
+- Current status: packaged 8bpc `AE exact` for `case_0001..0003`.
+  Python/C++ CLI are also exact against normalized Software refs for the same
+  cases. 16/32bpc are still untested, so the plug-in as a whole is not
+  complete.
 
 ## Source Evidence
 
@@ -83,13 +85,12 @@ The current exact CLI kernel is:
 
 | Case | Bit depth | Expected status | Current result | Next evidence |
 | --- | --- | --- | --- | --- |
-| `case_0001` | 8bpc | `CLI exact` against normalized Software ref | exact in Python/C++ normalized checks | Mac AE exact validation |
-| `case_0002` | 8bpc | `CLI exact` against normalized Software ref | exact in Python/C++ normalized checks | Mac AE exact validation |
-| `case_0003` | 8bpc | `CLI exact` against normalized Software ref | exact in Python/C++ normalized checks | Mac AE exact validation |
+| `case_0001` | 8bpc | `AE exact` for packaged Software ref | `max_diff=0` in 2026-06-19 AE pixel return; exact in Python/C++ normalized checks | 16/32bpc references |
+| `case_0002` | 8bpc | `AE exact` for packaged Software ref | `max_diff=0` in 2026-06-19 AE pixel return; exact in Python/C++ normalized checks | 16/32bpc references |
+| `case_0003` | 8bpc | `AE exact` for packaged Software ref | `max_diff=0` in 2026-06-19 AE pixel return; exact in Python/C++ normalized checks | 16/32bpc references |
 
 ## Open Questions
 
-- Mac AE host exactness against normalized/current Windows Software references.
 - 16bpc and 32bpc propagation/writeback behavior.
 - Whether non-normalized older residuals were stale reference drift or hidden AE
   host/export differences; do not use them as algorithm guidance now.

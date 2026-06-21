@@ -1,0 +1,258 @@
+{
+  "request_id": "smoother2_legacy_full_current_aex_recapture_20260621",
+  "effect": {
+    "name": "OLM Smoother v2",
+    "match_name": "OLM Smoother v2"
+  },
+  "why": [
+    "The old 20260605_extra OLMSmoother2 legacy PNGs are no longer trusted as correctness targets.",
+    "A current Windows AE 2026 Software recapture of old legacy case_0001 produced [106,106,106,135] at witness pixel (712,406), matching the Windows runtime trace and Mac CLI direct-source output.",
+    "The old case_0001 PNG produced [207,207,207,207] at the same witness, so the remaining old legacy cases must be recaptured with the current AEX before more tuning."
+  ],
+  "render_sets": [
+    {
+      "id": "software",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "required": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "current_olm_cells",
+      "description": "Use the same source artwork as refs/win_references/20260605_extra/OLMSmoother2. The source input pixel at (712,406) should be [207,207,207,207] if possible."
+    }
+  ],
+  "cases": [
+    {
+      "id": "legacy_case_0001_current_aex",
+      "input": "current_olm_cells",
+      "reason": "Recapture old case_0001 with the current installed Windows AEX. This duplicates the 20260621 witness case intentionally so the full legacy set has one coherent provenance.",
+      "params": {
+        "Enable Color Key": 0,
+        "Color Key": [1, 1, 1, 1],
+        "Invert Color Key": 0,
+        "Smoothness": 100,
+        "Extra Smooth": 0,
+        "Smooth Range": 2,
+        "Smoother Version": 2,
+        "Gamma Correction": 1,
+        "Gamma Value": 2.40000009536743,
+        "Number of Gamma Colors": 1,
+        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
+      }
+    },
+    {
+      "id": "legacy_case_0002_current_aex",
+      "input": "current_olm_cells",
+      "reason": "Old case_0002 current-AEX recapture: Color Key enabled, inverted key.",
+      "params": {
+        "Enable Color Key": 1,
+        "Color Key": [1, 1, 1, 1],
+        "Invert Color Key": 1,
+        "Smoothness": 100,
+        "Extra Smooth": 0,
+        "Smooth Range": 2,
+        "Smoother Version": 2,
+        "Gamma Correction": 1,
+        "Gamma Value": 2.40000009536743,
+        "Number of Gamma Colors": 1,
+        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
+      }
+    },
+    {
+      "id": "legacy_case_0003_current_aex",
+      "input": "current_olm_cells",
+      "reason": "Old case_0003 current-AEX recapture: Color Key enabled, Smoothness 0 control.",
+      "params": {
+        "Enable Color Key": 1,
+        "Color Key": [1, 1, 1, 1],
+        "Invert Color Key": 0,
+        "Smoothness": 0,
+        "Extra Smooth": 0,
+        "Smooth Range": 2,
+        "Smoother Version": 2,
+        "Gamma Correction": 1,
+        "Gamma Value": 2.40000009536743,
+        "Number of Gamma Colors": 1,
+        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
+      }
+    },
+    {
+      "id": "legacy_case_0004_current_aex",
+      "input": "current_olm_cells",
+      "reason": "Old case_0004 current-AEX recapture: Extra Smooth 100.",
+      "params": {
+        "Enable Color Key": 1,
+        "Color Key": [1, 1, 1, 1],
+        "Invert Color Key": 0,
+        "Smoothness": 100,
+        "Extra Smooth": 100,
+        "Smooth Range": 2,
+        "Smoother Version": 2,
+        "Gamma Correction": 1,
+        "Gamma Value": 2.40000009536743,
+        "Number of Gamma Colors": 1,
+        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
+      }
+    },
+    {
+      "id": "legacy_case_0005_current_aex",
+      "input": "current_olm_cells",
+      "reason": "Old case_0005 current-AEX recapture: Extra Smooth 100, Smooth Range 100.",
+      "params": {
+        "Enable Color Key": 1,
+        "Color Key": [1, 1, 1, 1],
+        "Invert Color Key": 0,
+        "Smoothness": 100,
+        "Extra Smooth": 100,
+        "Smooth Range": 100,
+        "Smoother Version": 2,
+        "Gamma Correction": 1,
+        "Gamma Value": 2.40000009536743,
+        "Number of Gamma Colors": 1,
+        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
+      }
+    },
+    {
+      "id": "legacy_case_0006_current_aex",
+      "input": "current_olm_cells",
+      "reason": "Old case_0006 current-AEX recapture: Extra Smooth 100, Smooth Range 0.",
+      "params": {
+        "Enable Color Key": 1,
+        "Color Key": [1, 1, 1, 1],
+        "Invert Color Key": 0,
+        "Smoothness": 100,
+        "Extra Smooth": 100,
+        "Smooth Range": 0,
+        "Smoother Version": 2,
+        "Gamma Correction": 1,
+        "Gamma Value": 2.40000009536743,
+        "Number of Gamma Colors": 1,
+        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
+      }
+    },
+    {
+      "id": "legacy_case_0007_current_aex",
+      "input": "current_olm_cells",
+      "reason": "Old case_0007 current-AEX recapture: Extra Smooth 40, Smooth Range 26.",
+      "params": {
+        "Enable Color Key": 1,
+        "Color Key": [1, 1, 1, 1],
+        "Invert Color Key": 0,
+        "Smoothness": 100,
+        "Extra Smooth": 40,
+        "Smooth Range": 26,
+        "Smoother Version": 2,
+        "Gamma Correction": 1,
+        "Gamma Value": 2.40000009536743,
+        "Number of Gamma Colors": 1,
+        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
+      }
+    },
+    {
+      "id": "legacy_case_0008_current_aex",
+      "input": "current_olm_cells",
+      "reason": "Old case_0008 current-AEX recapture: Smoothness 29.",
+      "params": {
+        "Enable Color Key": 1,
+        "Color Key": [1, 1, 1, 1],
+        "Invert Color Key": 0,
+        "Smoothness": 29,
+        "Extra Smooth": 40,
+        "Smooth Range": 26,
+        "Smoother Version": 2,
+        "Gamma Correction": 1,
+        "Gamma Value": 2.40000009536743,
+        "Number of Gamma Colors": 1,
+        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
+      }
+    },
+    {
+      "id": "legacy_case_0009_v1mode_current_aex",
+      "input": "current_olm_cells",
+      "reason": "Old case_0009 current-AEX recapture: Smoother Version 1 compatibility mode.",
+      "params": {
+        "Enable Color Key": 1,
+        "Color Key": [1, 1, 1, 1],
+        "Invert Color Key": 0,
+        "Smoothness": 100,
+        "Extra Smooth": 40,
+        "Smooth Range": 26,
+        "Smoother Version": 1,
+        "Gamma Correction": 1,
+        "Gamma Value": 2.40000009536743,
+        "Number of Gamma Colors": 1,
+        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
+      }
+    },
+    {
+      "id": "legacy_case_0010_gamma3_current_aex",
+      "input": "current_olm_cells",
+      "reason": "Old case_0010 current-AEX recapture: Gamma Correction 2 with three gamma colors.",
+      "params": {
+        "Enable Color Key": 1,
+        "Color Key": [1, 1, 1, 1],
+        "Invert Color Key": 0,
+        "Smoothness": 100,
+        "Extra Smooth": 40,
+        "Smooth Range": 22,
+        "Smoother Version": 2,
+        "Gamma Correction": 2,
+        "Gamma Value": 1.36872430495274,
+        "Number of Gamma Colors": 3,
+        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
+      }
+    },
+    {
+      "id": "legacy_case_0011_gamma5_blue_current_aex",
+      "input": "current_olm_cells",
+      "reason": "Old case_0011 current-AEX recapture: Gamma Correction 2 with fifth gamma color blue.",
+      "params": {
+        "Enable Color Key": 1,
+        "Color Key": [1, 1, 1, 1],
+        "Invert Color Key": 0,
+        "Smoothness": 100,
+        "Extra Smooth": 40,
+        "Smooth Range": 22,
+        "Smoother Version": 2,
+        "Gamma Correction": 2,
+        "Gamma Value": 2.16954740477197,
+        "Number of Gamma Colors": 5,
+        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 1, 1]]
+      }
+    },
+    {
+      "id": "legacy_case_0012_gamma5_red_blue_current_aex",
+      "input": "current_olm_cells",
+      "reason": "Old case_0012 current-AEX recapture: Gamma Correction 2 with red/blue gamma colors and Smooth Range 88.",
+      "params": {
+        "Enable Color Key": 1,
+        "Color Key": [1, 1, 1, 1],
+        "Invert Color Key": 0,
+        "Smoothness": 100,
+        "Extra Smooth": 40,
+        "Smooth Range": 88,
+        "Smoother Version": 2,
+        "Gamma Correction": 2,
+        "Gamma Value": 2.16954740477197,
+        "Number of Gamma Colors": 5,
+        "Gamma Color": [[1, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 1, 1]]
+      }
+    }
+  ],
+  "manifest_requirements": [
+    "Record AE version, project_gpu_accel_type.current_name and raw value.",
+    "Record all OLM Smoother v2 property names, match_names, property_index, values, enabled/active state, and selected effect path.",
+    "Keep ADBE Force CPU GPU / GPU Rendering as reference-only metadata, not as the execution-path label.",
+    "Save both before_effects_frame and effect output PNG for every case.",
+    "Record sampled RGBA values at pixel (712,406) for before_effects_frame and output.",
+    "Include the original source input PNG in the return package; do not rely only on AE saveFrameToPng before_effects frames because they may be premultiplied.",
+    "Do not reuse old 20260605_extra rendered PNGs as outputs; this request is specifically for current installed AEX output provenance."
+  ],
+  "mac_follow_up": [
+    "Import with scripts/intake_olm_return.py.",
+    "Mark refs/win_references/20260605_extra/OLMSmoother2 legacy PNGs as stale/reference-only in docs and gates.",
+    "Compare the recaptured Software PNGs against the Mac Smoother2 CLI using the returned source input PNG, not the AE-saved before_effects frame.",
+    "Only after this recapture should Smoother2 legacy be classified as exact/residual under the current Windows AEX target."
+  ]
+}

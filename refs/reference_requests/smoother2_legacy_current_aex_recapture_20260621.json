@@ -1,0 +1,67 @@
+{
+  "request_id": "smoother2_legacy_current_aex_recapture_20260621",
+  "effect": {
+    "name": "OLM Smoother v2",
+    "match_name": "OLM Smoother v2"
+  },
+  "why": [
+    "The old legacy reference PNG for case_0001 has pixel (712,406) = [207,207,207,207], identical to the input.",
+    "Windows runtime trace of the current CPU AEX at the same pixel produced cce0 floats [0.57797289,0.57797289,0.57797289,0.52794117] and final store bytes [135,200,200,200], which premultiply to the Mac candidate [106,106,106,135].",
+    "Mac CLI now reproduces the same cce0 stage values for this witness, so the next proof is reference provenance: recapture current Windows Software PNGs before treating the old legacy PNG residual as a porting bug."
+  ],
+  "render_sets": [
+    {
+      "id": "software",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "required": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "current_olm_cells",
+      "description": "Use the same source artwork as refs/win_references/20260605_extra/OLMSmoother2 case_0001 if possible. The before-effects pixel at (712,406) should be [207,207,207,207]."
+    }
+  ],
+  "common_params": {
+    "Enable Color Key": 0,
+    "Color Key": [1, 1, 1, 1],
+    "Invert Color Key": 0,
+    "Smoothness": 100,
+    "Extra Smooth": 0,
+    "Smooth Range": 2,
+    "Smoother Version": 2,
+    "Gamma Correction": 1,
+    "Gamma Value": 2.4,
+    "Number of Gamma Colors": 1
+  },
+  "cases": [
+    {
+      "id": "legacy_case_0001_current_aex",
+      "input": "current_olm_cells",
+      "reason": "Exact recapture of old legacy case_0001 settings under current Windows Software render. Critical witness pixel: (712,406).",
+      "params": {}
+    },
+    {
+      "id": "legacy_case_0001_smoothness0_control",
+      "input": "current_olm_cells",
+      "reason": "Pass-through control. This should preserve the before-effects pixel [207,207,207,207] at (712,406).",
+      "params": {
+        "Smoothness": 0
+      }
+    }
+  ],
+  "manifest_requirements": [
+    "Record AE version, project_gpu_accel_type.current_name and raw value.",
+    "Record all OLM Smoother v2 property names, match_names, property_index, values, enabled/active state, and selected effect path.",
+    "Keep ADBE Force CPU GPU / GPU Rendering as reference-only metadata, not as the execution-path label.",
+    "Save both before_effects_frame and effect output PNG for every case.",
+    "Record sampled RGBA values at pixel (712,406) for before_effects_frame and output.",
+    "If the current_aex output at (712,406) is [106,106,106,135] or close, note that it matches the runtime-traced CPU AEX behavior and supersedes the old legacy case_0001 PNG as a CPU Software reference for this witness.",
+    "If the current_aex output remains [207,207,207,207], record any setting/project difference that could explain why runtime trace saw the low-alpha cce0 path."
+  ],
+  "mac_follow_up": [
+    "Import with scripts/intake_olm_return.py.",
+    "Compare the recaptured Software PNG against the locally reproduced current-AEX witness PNG and refs/win_references/20260605_extra/OLMSmoother2/case_0001.png.",
+    "If recapture matches [106,106,106,135] at the witness pixel, downgrade the old legacy reference residual to stale-reference/provenance-blocked instead of a Smoother2 algorithm bug."
+  ]
+}

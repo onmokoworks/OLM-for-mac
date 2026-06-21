@@ -334,6 +334,7 @@ def latest_runtime_trace_package() -> dict:
         "relative_path": rel(latest),
         "size_bytes": stat.st_size,
         "modified_at": datetime.fromtimestamp(stat.st_mtime, timezone.utc).astimezone().isoformat(timespec="seconds"),
+        "mtime": stat.st_mtime,
     }
 
 
@@ -389,6 +390,14 @@ def latest_ae_pixel_validation_return() -> dict:
 
 
 def choose_send_target(runtime_package: dict, windows_batch: dict, ae_pixel_return: dict) -> dict:
+    if (
+        runtime_package.get("status") == "ready"
+        and float(runtime_package.get("mtime", 0)) > float(windows_batch.get("mtime", 0))
+    ):
+        target = dict(runtime_package)
+        target["kind"] = "runtime-trace-package"
+        target["reason"] = "Newest handoff: a focused runtime trace package supersedes the older Windows action bundle."
+        return target
     if (
         runtime_package.get("status") == "ready"
         and windows_batch.get("status") == "ready"
@@ -858,6 +867,7 @@ def render_html(data: dict) -> str:
         <p><code>{escape(str(policy.get('completion_status', 'AE exact')))}</code></p>
         <p>Reference: {escape(str(policy.get('reference_path', 'Windows AE Software render')))}</p>
         <p>Ledger: <code>{escape(str(policy.get('ledger', '-')))}</code></p>
+        <p>IR index: <code>{escape(str(policy.get('ir_index', '-')))}</code></p>
       </div>
       <div>
         <h2>Next Send Target</h2>
@@ -931,6 +941,7 @@ def render_markdown(data: dict) -> str:
         f"- Completion status: {policy.get('completion_status', 'AE exact')}",
         f"- Reference path: {policy.get('reference_path', 'Windows AE Software render')}",
         f"- Conformance ledger: {policy.get('ledger', 'notes/CONFORMANCE_LEDGER.md')}",
+        f"- IR index: {policy.get('ir_index', 'notes/IR_INDEX_20260621.md')}",
         f"- Next send target: {send_target.get('relative_path') or send_target.get('status', '-')}",
         f"- Next send target kind: {send_target.get('kind', '-')}",
         f"- Runtime trace package: {runtime.get('relative_path') or runtime.get('status', '-')}",
@@ -1016,6 +1027,7 @@ def build_data(args: argparse.Namespace) -> dict:
             "bit_depth_order": ["8bpc", "16bpc", "32bpc"],
             "policy_note": rel(ROOT / "notes" / "AE_EXACT_CONFORMANCE.md"),
             "ledger": rel(ROOT / "notes" / "CONFORMANCE_LEDGER.md"),
+            "ir_index": rel(ROOT / "notes" / "IR_INDEX_20260621.md"),
             "ir_template": rel(ROOT / "notes" / "BINARY_GROUNDED_IR_TEMPLATE.md"),
             "bit_depth_strategy": rel(ROOT / "notes" / "BIT_DEPTH_REFERENCE_STRATEGY.md"),
         },

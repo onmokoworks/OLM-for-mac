@@ -60,11 +60,19 @@ def parse_args() -> argparse.Namespace:
         "--profile",
         choices=[
             "hard-paths",
+            "dense-all",
+            "dense-live-followup",
             "colorkey-edge",
             "olmblur-repeat-threshold",
             "kirakira-stage-values",
+            "kirakira-stage-values-deep",
             "smoother2-no-key-grid",
             "smoother2-legacy-key-gamma",
+            "smoother2-legacy-writeback-extract",
+            "smoother2-legacy-u8-writer-trace",
+            "smoother2-legacy-u8-pixel-trace",
+            "smoother2-legacy-cce0-pixel-trace",
+            "smoother2-legacy-cce0-internals-trace",
             "distancegradation-field-prep",
         ],
         default="hard-paths",
@@ -98,6 +106,23 @@ def next_actions_snapshot(root: Path) -> dict[str, Any]:
     if not isinstance(data, dict):
         raise ValueError("next_reference_actions.py did not return an object")
     return data
+
+
+def ensure_kirakira_deep_witness_plan(root: Path) -> None:
+    required = [
+        root / "refs/reports/olmkirakira_trace_baseline_20260621_deep_witness_plan/witness_plan.json",
+        root / "refs/reports/olmkirakira_trace_baseline_20260621_deep_witness_plan/witness_plan.md",
+    ]
+    if all(path.exists() for path in required):
+        return
+    subprocess.run(
+        [sys.executable, str(root / "refs" / "scripts" / "write_olmkirakira_deep_witness_plan.py")],
+        cwd=root,
+        check=True,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
 
 
 def runtime_actions(snapshot: dict[str, Any]) -> list[dict[str, Any]]:
@@ -176,6 +201,36 @@ def kirakira_stage_values_action() -> dict[str, Any]:
     }
 
 
+def kirakira_deep_stage_values_action() -> dict[str, Any]:
+    return {
+        "request_id": "kirakira_fun_181150790_deep_stage_values_20260621",
+        "plugin_area": "OLMKiraKira FUN_181150790 deep stage-value runtime trace",
+        "mode": "external-trace",
+        "command": (
+            "Trace OLMKiraKira single-ray Software case "
+            "kk_vertical_len50_brightness1_strength100 through FUN_181150790, "
+            "using the included witness plan at "
+            "refs/reports/olmkirakira_trace_baseline_20260621_deep_witness_plan/"
+            "witness_plan.md. Capture the same three witness pixels at source/"
+            "temp/ray coordinates: center (source 960,540 temp 962,962), "
+            "ray_length_up (source 960,490 temp 962,912), and ray_length_right "
+            "(source 1010,540 temp 1012,962). For each witness, record float "
+            "values after center-copy, after forward warp, after each of the "
+            "three boxFilter passes, after rotate-back, and after final "
+            "center-copy. Also record forward/back matrices, ROI/copy rects, "
+            "Mat headers/steps/data pointers, selected boxFilter branch for "
+            "each pass, FUN_18114fd90 aggregation values, and merge-mode-1 "
+            "compose values at the listed compose samples."
+        ),
+        "stop_condition": (
+            "Return concrete float/byte witness values or an exact failed "
+            "breakpoint/watchpoint reason. Wrapper hit counts, branch names, or "
+            "`not isolated` placeholders are not enough; those were already "
+            "captured and classified as trace-too-sparse."
+        ),
+    }
+
+
 def smoother2_no_key_grid_action() -> dict[str, Any]:
     return {
         "request_id": "olmsmoother2_no_key_grid_runtime_trace_20260619",
@@ -226,6 +281,182 @@ def smoother2_legacy_key_gamma_action() -> dict[str, Any]:
     }
 
 
+def smoother2_legacy_writeback_extract_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmsmoother2_legacy_writeback_extract_20260620",
+        "plugin_area": "OLMSmoother2 legacy writeback full-log extraction",
+        "mode": "external-trace",
+        "command": (
+            "Do not rerun the all-plugin dense trace first. Use the existing "
+            "Windows full CDB log from the live attempt if available: "
+            "C:\\Users\\optim\\Documents\\Codex\\2026-06-11\\files-mentioned-by-the-user-olm\\work\\"
+            "live_attempt_smoother2_legacy_20260620\\cdb_console.txt. Extract "
+            "the complete CDB output around both "
+            "HIT_FUN_1800036e0_writeback_candidate hits, including the marker, "
+            "register dump, stack dump, call stack, and at least 120 lines before "
+            "and after each hit. Also extract a compact window around the first "
+            "few adjacent HIT_FUN_180010550_candidate and "
+            "HIT_FUN_18000c280_switch_candidate hits in the same render. If the "
+            "full log is no longer available, rerun only "
+            "ae_pixel_olmsmoother2_legacy_20260619 case_0001 with breakpoints "
+            "that log full registers/stack for OLMSmoother2+0x36e0, but limit "
+            "the run to the first 20 writeback-candidate hits."
+        ),
+        "stop_condition": (
+            "Return the actual register/stack values for the two "
+            "OLMSmoother2+0x36e0 hits, or an exact statement that the full log "
+            "was unavailable and a rerun failed. The previous return only kept "
+            "the hit markers/counts; this request is successful only if the "
+            "writeback-hit values are present."
+        ),
+    }
+
+
+def smoother2_legacy_u8_writer_trace_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmsmoother2_legacy_u8_writer_trace_20260620",
+        "plugin_area": "OLMSmoother2 legacy 8bpc writer/runtime trace",
+        "mode": "external-trace",
+        "command": (
+            "Trace the 8bpc output writer for OLMSmoother2 legacy cases. The "
+            "previous +0x36e0 request failed because +0x36e0 is the float writer "
+            "FUN_1800036e0 and did not execute for the 8bpc AE pixel validation "
+            "run. For this 8bpc request, arm OLMSmoother2+0x3370 "
+            "(FUN_180003370) and the wrapper OLMSmoother2+0x3d00 "
+            "(FUN_180003d00). Run ae_pixel_olmsmoother2_legacy_20260619, "
+            "starting with case_0001. On the first 20 hits at +0x3370, log the "
+            "marker, registers, call stack, dq @rsp L24, dd/dq of the pointers "
+            "passed as param_5/param_6/param_7/param_8/param_9 where safe, and "
+            "if possible the current x/y loop locals, FUN_18000cce0 output "
+            "floats {a,r,g,b}, gamma branch, premultiply branch, and final "
+            "packed 8bpc bytes written by FUN_180003370."
+        ),
+        "stop_condition": (
+            "Return direct +0x3370 hit values that show the 8bpc legacy writer "
+            "input/output for at least case_0001, or an exact failed-breakpoint "
+            "reason. Do not reuse the failed +0x36e0 result as an answer."
+        ),
+    }
+
+
+def smoother2_legacy_u8_pixel_trace_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmsmoother2_legacy_u8_pixel_trace_20260620",
+        "plugin_area": "OLMSmoother2 legacy 8bpc per-pixel writer trace",
+        "mode": "external-trace",
+        "command": (
+            "Trace OLMSmoother2 legacy case_0001 at the known high-diff pixel "
+            "(x=712,y=406). The prior u8 writer trace proved that the active "
+            "8bpc writer is OLMSmoother2+0x3370 / FUN_180003370. Now set "
+            "conditional breakpoints inside that function, not at entry: "
+            "OLMSmoother2+0x3510 immediately after CALL FUN_18000cce0, "
+            "OLMSmoother2+0x35ad before final scaling/packing, and "
+            "OLMSmoother2+0x360e immediately before MOV dword ptr [RSI],EAX. "
+            "Use the local loop coordinates at [RSP+0x34] for x and [RSP+0x38] "
+            "for y, and only log when x==712 and y==406. At +0x3510 record "
+            "[RSP+0x48], [RSP+0x4c], [RSP+0x50], [RSP+0x54] as floats/hex "
+            "(FUN_18000cce0 output r,g,b,a), RBP/p8 parameter flags including "
+            "[RBP] and byte [RBP+0x19], RBX/p9 gamma context including "
+            "[RBX+0x10], and the call stack. At +0x35ad record XMM6/XMM7/XMM8/"
+            "XMM1 before multiply by 255/add 0.5. At +0x360e record EAX, RSI, "
+            "the destination dword before write, and the packed output bytes. "
+            "Expected/reference pixel is RGBA [207,207,207,207]; current Mac/"
+            "candidate pixel is RGBA [106,106,106,135]."
+        ),
+        "stop_condition": (
+            "Return direct values for case_0001 pixel (712,406) at +0x3510 and "
+            "+0x360e, or an exact failed conditional-breakpoint reason. This "
+            "request is successful only if the per-pixel float and packed byte "
+            "values are present."
+        ),
+    }
+
+
+def smoother2_legacy_cce0_pixel_trace_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmsmoother2_legacy_cce0_pixel_trace_20260621",
+        "plugin_area": "OLMSmoother2 legacy FUN_18000cce0 target-pixel composite trace",
+        "mode": "external-trace",
+        "command": (
+            "Trace OLMSmoother2 legacy case_0001 at high-diff pixel (x=712,y=406), "
+            "moving upstream from the proven 8bpc writer. The previous per-pixel "
+            "writer trace captured final packed store EAX=c8c8c887 at +0x3610, "
+            "which explains the failing candidate PNG [106,106,106,135] after "
+            "AE premultiplication. Now capture the composite output that feeds "
+            "that writer. Set a breakpoint at OLMSmoother2+0xcce0 "
+            "(FUN_18000cce0) and only log when dwo(@r9)==0x2c8 and "
+            "dwo(@r9+4)==0x196. At that target hit, log RCX/RDX/R8/R9, "
+            "dd @r9 L2, dq @rdx L8, dq @r8 L8, dq poi(@rsp+0x20) L16, and "
+            "dq poi(@rsp+0x28) L8 if safe. Then arm a one-shot breakpoint at "
+            "OLMSmoother2+0x3510 for the immediate return to the u8 writer, and "
+            "log [RSP+0x48], [RSP+0x4c], [RSP+0x50], [RSP+0x54] as float/hex, "
+            "plus RBP flags ([RBP], byte [RBP+0x19]) and RBX+0x10. If direct "
+            "conditional code breakpoints are too slow, use the successful "
+            "entry-command/data-watch approach from the previous return to first "
+            "restrict to the target output world, then capture the first matching "
+            "FUN_18000cce0 call on the same render."
+        ),
+        "stop_condition": (
+            "Return the target-pixel FUN_18000cce0 input pointers and the "
+            "+0x3510 returned floats for case_0001 (712,406), or an exact failed "
+            "breakpoint reason. Do not repeat only the final packed EAX value; "
+            "that is already known as c8c8c887."
+        ),
+    }
+
+
+def smoother2_legacy_cce0_internals_trace_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmsmoother2_legacy_cce0_internals_replay_from_writer_trace_20260621",
+        "plugin_area": "OLMSmoother2 legacy FUN_18000cce0 internal composite trace",
+        "mode": "external-trace",
+        "command": (
+            "Trace OLMSmoother2 legacy case_0001 at target pixel (x=712,y=406) "
+            "inside FUN_18000cce0. The previous return proved the final writer "
+            "is not the source of the residual: cce0 produced floats "
+            "[0.57797289, 0.57797289, 0.57797289, 0.52794117], the u8 writer "
+            "packed EAX=c8c8c887 (A/R/G/B [135,200,200,200]), and the PNG "
+            "candidate [106,106,106,135] follows from AE premultiplication. "
+            "Five internals attempts are now failed_partial. Positive facts are "
+            "strong: the fallback data-watch path repeatedly catches the target "
+            "write at OLMSmoother2+0x3610, with stack xy (0x2c8,0x196), cce0 "
+            "return floats [0.57797289,0.57797289,0.57797289,0.52794117], and "
+            "packed EAX=c8c8c887. Negative facts are also strong: +0x34b0 did "
+            "not match the computed target addresses, +0x350b @rsi==$t3 did "
+            "not hit, and +0x350b @rdi==0x2c8 && @r14==0x196 did not hit in "
+            "the retained run. Therefore do not spend another run only trying "
+            "to pre-break at +0x350b. Instead use the reliable target write at "
+            "+0x3610 as the anchor. When the target write/watchpoint hits, dump "
+            "the full writer frame: dq @rsp L80, dd @rsp L160, all nonvolatile "
+            "registers, xmm6/xmm7/xmm8/xmm1, [rsp+0x34..0x58], [rsp+0x60..0x98], "
+            "and pointer previews for RBX/RBP/R13/R15/RDX/RSI. Reconstruct the "
+            "FUN_18000cce0 call arguments from the same writer frame: for the "
+            "FUN_180003370 path these are RCX=&[rsp+0x48], RDX=&[rsp+0x80], "
+            "R8=&[rsp+0x60], R9=&[rsp+0x34], stack param5=RBX, stack param6=RBP. "
+            "If safe in CDB, call or simulate a second invocation of "
+            "OLMSmoother2+0xcce0 with those exact arguments into a scratch "
+            "output buffer and single-step/break through +0xcd5f,+0xcddb,"
+            "+0xcdfd,+0xce02,+0xce2e,+0xce4c,+0xce4f to capture c280/bb10/"
+            "c0d0/ab00/b120 stage values. If calling back into the plugin is "
+            "unsafe, do not force it; instead return the reconstructed argument "
+            "block and a clear reason why replay was skipped. Also record the "
+            "return address/callsite evidence from the stack so we can explain "
+            "why +0x350b did not behave as a stable pre-call breakpoint."
+        ),
+        "stop_condition": (
+            "Return target-pixel cce0 internals for case_0001 (712,406) captured "
+            "either by replaying FUN_18000cce0 from the reliable +0x3610 writer "
+            "frame or by returning a complete reconstructed cce0 argument block "
+            "with enough stack/register data to replay locally. A satisfactory "
+            "answer includes c280 polygon count/vertices or exact c280 failure "
+            "reason, before/after values for bb10/c0d0/ab00/b120, and final "
+            "cce0 floats. If replay is skipped as unsafe, return the reason and "
+            "the complete argument/stack dump; do not return only the known "
+            "EAX=c8c8c887 store."
+        ),
+    }
+
+
 def distancegradation_field_prep_action() -> dict[str, Any]:
     return {
         "request_id": "olmdistancegradation_field_prep_runtime_trace_20260619",
@@ -249,17 +480,128 @@ def distancegradation_field_prep_action() -> dict[str, Any]:
     }
 
 
+def radialblur_dense_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmradialblur_dense_sampler_trace_20260620",
+        "plugin_area": "OLMRadialBlur dense sampler/scatter/writeback trace",
+        "mode": "external-trace",
+        "command": (
+            "Trace OLMRadialBlur representative Zoom, Rotation, and Inner cases. "
+            "Record effective parameters, center/angle/radius normalization, "
+            "sampler coordinates, scatter span/count, weight accumulation, "
+            "normalization denominator, pre-writeback floats, and final bytes "
+            "at residual witness pixels. Include the already known Inner "
+            "span-31 fact as a sanity check, but focus on remaining sampler/"
+            "prepass/writeback residuals."
+        ),
+        "stop_condition": (
+            "Return enough per-pixel values to classify RadialBlur residuals as "
+            "sampler coordinate, scatter/span, normalization, border handling, "
+            "or writeback differences before further implementation tuning."
+        ),
+    }
+
+
+def directionalblur_dense_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdirectionalblur_dense_sampler_trace_20260620",
+        "plugin_area": "OLMDirectionalBlur dense sampler/writeback trace",
+        "mode": "external-trace",
+        "command": (
+            "Trace OLMDirectionalBlur representative Software cases through the "
+            "directional sampler kernel. Record parameter normalization, angle/"
+            "distance conversion, loop bounds, sample coordinates/order, border "
+            "mode, per-sample weights, accumulation denominator, pre-writeback "
+            "floats, and final bytes at high-diff witness pixels."
+        ),
+        "stop_condition": (
+            "Return enough values to decide whether the remaining gap is angle "
+            "normalization, sample count/range, border behavior, accumulation, "
+            "or byte writeback. Do not request broad PNG sweeps without these "
+            "kernel facts."
+        ),
+    }
+
+
+def toondilate_dense_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmtoondilate_dense_chamfer_trace_20260620",
+        "plugin_area": "OLMToonDilate light binary-grounding trace",
+        "mode": "external-trace",
+        "command": (
+            "Trace OLMToonDilate exact 8bpc Software cases lightly to confirm "
+            "the binary-grounded kernel: threshold/matte setup, two-pass chamfer "
+            "or distance propagation order, Chebyshev/chamfer neighborhood, "
+            "semi-alpha RGB premultiply behavior, clamp, and final writeback at "
+            "a few edge witness pixels."
+        ),
+        "stop_condition": (
+            "Return a compact proof that the current AE-exact ToonDilate model "
+            "matches Windows AEX constants, pass order, alpha/RGB handling, and "
+            "writeback. This is conformance evidence, not an active tuning task."
+        ),
+    }
+
+
+def dense_all_actions() -> list[dict[str, Any]]:
+    return [
+        smoother2_legacy_key_gamma_action(),
+        colorkey_edge_action(),
+        distancegradation_field_prep_action(),
+        olmblur_repeat_threshold_action(),
+        kirakira_stage_values_action(),
+        radialblur_dense_action(),
+        directionalblur_dense_action(),
+        toondilate_dense_action(),
+        smoother2_no_key_grid_action(),
+    ]
+
+
+def dense_live_followup_actions() -> list[dict[str, Any]]:
+    actions = dense_all_actions()
+    for action in actions:
+        action = action
+        action["command"] = (
+            "LIVE TRACE FOLLOW-UP ONLY. Do not satisfy this request by merging "
+            "old RETURN_RUNTIME_TRACE_TEMPLATE.json files or replacing nulls "
+            "with not-isolated strings. Capture new debugger/runtime evidence. "
+            + str(action.get("command", ""))
+        )
+        action["stop_condition"] = (
+            str(action.get("stop_condition", ""))
+            + " Return direct witness values or the exact failed breakpoint/watchpoint attempt; "
+            "do not mark the request complete from static notes alone."
+        )
+    return actions
+
+
 def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, Any]]:
+    if profile == "dense-all":
+        return dense_all_actions()
+    if profile == "dense-live-followup":
+        return dense_live_followup_actions()
     if profile == "colorkey-edge":
         return [colorkey_edge_action()]
     if profile == "olmblur-repeat-threshold":
         return [olmblur_repeat_threshold_action()]
     if profile == "kirakira-stage-values":
         return [kirakira_stage_values_action()]
+    if profile == "kirakira-stage-values-deep":
+        return [kirakira_deep_stage_values_action()]
     if profile == "smoother2-no-key-grid":
         return [smoother2_no_key_grid_action()]
     if profile == "smoother2-legacy-key-gamma":
         return [smoother2_legacy_key_gamma_action()]
+    if profile == "smoother2-legacy-writeback-extract":
+        return [smoother2_legacy_writeback_extract_action()]
+    if profile == "smoother2-legacy-u8-writer-trace":
+        return [smoother2_legacy_u8_writer_trace_action()]
+    if profile == "smoother2-legacy-u8-pixel-trace":
+        return [smoother2_legacy_u8_pixel_trace_action()]
+    if profile == "smoother2-legacy-cce0-pixel-trace":
+        return [smoother2_legacy_cce0_pixel_trace_action()]
+    if profile == "smoother2-legacy-cce0-internals-trace":
+        return [smoother2_legacy_cce0_internals_trace_action()]
     if profile == "distancegradation-field-prep":
         return [distancegradation_field_prep_action()]
     return runtime_actions(snapshot)
@@ -289,6 +631,7 @@ def package_manifest(root: Path, snapshot: dict[str, Any], profile: str) -> dict
 
 def build_readme(manifest: dict[str, Any]) -> str:
     actions = manifest["runtime_actions"]
+    live_followup = manifest.get("profile") == "dense-live-followup"
     lines = [
         "# OLM Runtime Trace Request Package",
         "",
@@ -300,6 +643,18 @@ def build_readme(manifest: dict[str, Any]) -> str:
         "Priority order:",
         "",
     ]
+    if live_followup:
+        lines.extend(
+            [
+                "Important: this is a live-trace follow-up package.",
+                "",
+                "- Do not answer by merging older trace return zips.",
+                "- Do not replace requested values with `not isolated` just to make JSON non-null.",
+                "- For each item, either capture direct CDB/WinDbg/runtime values or record the exact breakpoint/watchpoint attempt that failed.",
+                "- Fewer complete cases are better than many placeholder-filled cases.",
+                "",
+            ]
+        )
     for index, action in enumerate(actions, start=1):
         lines.extend(
             [
@@ -634,6 +989,120 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 },
             }
             summary = "Fill with KiraKira FUN_181150790 stage values and aggregation/compose witnesses."
+        elif request_id == "kirakira_fun_181150790_deep_stage_values_20260621":
+            observations = {
+                "effect": "OLM Kira Kira",
+                "module_base": "0x...",
+                "case_id": "kk_vertical_len50_brightness1_strength100",
+                "included_local_baseline": (
+                    "refs/reports/olmkirakira_trace_baseline_20260621_deep_witness_plan/"
+                    "witness_plan.json"
+                ),
+                "known_facts_to_keep": {
+                    "first_boxfilter_branch": "FUN_1812e39d0 / AVX2",
+                    "boxfilter_args": {
+                        "ksize": [50, 1],
+                        "anchor": [-1, -1],
+                        "normalize": True,
+                        "border_type": 4,
+                    },
+                    "warpaffine_flags": "INTER_LINEAR, no WARP_INVERSE_MAP, BORDER_CONSTANT zero",
+                    "temp_size": [1924, 1924],
+                    "copy_origin_expected": [2, 422],
+                    "center_expected": [962.0, 962.0],
+                    "forward_matrix_local": [
+                        6.123234262925839e-17,
+                        1.0,
+                        -1.1368683772161603e-13,
+                        -1.0,
+                        6.123234262925839e-17,
+                        1924.0,
+                    ],
+                    "back_matrix_local": [
+                        6.123234262925839e-17,
+                        -1.0,
+                        1924.0,
+                        1.0,
+                        6.123234262925839e-17,
+                        -1.1368683772161603e-13,
+                    ],
+                },
+                "windows_fun_181150790_entry": {
+                    "src_mat": {"rows": None, "cols": None, "type": None, "step": None, "data": "0x..."},
+                    "tmp1_mat": {"rows": None, "cols": None, "type": None, "step": None, "data": "0x..."},
+                    "tmp2_mat": {"rows": None, "cols": None, "type": None, "step": None, "data": "0x..."},
+                    "ray_length": None,
+                    "angle_degrees_or_radians": None,
+                    "affine_forward_matrix": [None, None, None, None, None, None],
+                    "affine_back_matrix": [None, None, None, None, None, None],
+                    "source_roi_rect": [None, None, None, None],
+                    "final_copy_rect": [None, None, None, None],
+                },
+                "stage_witnesses": [
+                    {
+                        "label": "center",
+                        "source_xy": [960, 540],
+                        "temp_xy": [962, 962],
+                        "local_expected": {
+                            "seed": 0.11764706671237946,
+                            "after_center_copy": 0.11764706671237946,
+                            "after_forward_warp": 0.11764706671237946,
+                            "after_box_1": 0.7871310114860535,
+                            "after_box_2": 0.7226850986480713,
+                            "after_box_3": 0.7102346420288086,
+                            "after_rotate_back": 0.7102346420288086,
+                            "after_final_center_copy": 0.7102346420288086,
+                        },
+                        "windows_observed": {},
+                    },
+                    {
+                        "label": "ray_length_up",
+                        "source_xy": [960, 490],
+                        "temp_xy": [962, 912],
+                        "local_expected": {
+                            "seed": 0.7799215912818909,
+                            "after_center_copy": 0.7799215912818909,
+                            "after_forward_warp": 0.11764706671237946,
+                            "after_box_1": 0.7714077830314636,
+                            "after_box_2": 0.6957992315292358,
+                            "after_box_3": 0.7070566415786743,
+                            "after_rotate_back": 0.7545762062072754,
+                            "after_final_center_copy": 0.7545762062072754,
+                        },
+                        "windows_observed": {},
+                    },
+                    {
+                        "label": "ray_length_right",
+                        "source_xy": [1010, 540],
+                        "temp_xy": [1012, 962],
+                        "local_expected": {
+                            "seed": 0.11764706671237946,
+                            "after_center_copy": 0.11764706671237946,
+                            "after_forward_warp": 0.11764706671237946,
+                            "after_box_1": 0.3080717623233795,
+                            "after_box_2": 0.39996397495269775,
+                            "after_box_3": 0.4451564848423004,
+                            "after_rotate_back": 0.7070566415786743,
+                            "after_final_center_copy": 0.7070566415786743,
+                        },
+                        "windows_observed": {},
+                    },
+                ],
+                "aggregation_and_compose": {
+                    "center_local_expected": {
+                        "source_rgba": [0.11764705926179886, 0.11764705926179886, 0.11764705926179886, 1.0],
+                        "glow_rgba": [1.0, 1.0, 1.0, 0.44034549593925476],
+                        "out_rgba_float": [0.5061872005462646, 0.5061872005462646, 0.5061872005462646, 1.0],
+                        "out_rgba_u8": [129, 129, 129, 255],
+                    },
+                    "windows_observed_samples": [],
+                },
+                "first_divergence_classification": (
+                    "center-copy | forward-warp | box-filter-pass-1 | box-filter-pass-2 | "
+                    "box-filter-pass-3 | rotate-back | final-copy | aggregation | compose | unknown"
+                ),
+            }
+            summary = "Fill with deep KiraKira per-stage witness values and first-divergence classification."
         elif request_id == "olmsmoother2_no_key_grid_runtime_trace_20260619":
             observations = {
                 "effect": "OLM Smoother v2",
@@ -1011,9 +1480,335 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 },
             }
             summary = "Fill with OLMDistanceGradation field-prep/Constant-mode runtime trace facts."
+        elif request_id == "olmsmoother2_legacy_writeback_extract_20260620":
+            observations = {
+                "existing_full_log_path_checked": (
+                    "C:\\Users\\optim\\Documents\\Codex\\2026-06-11\\files-mentioned-by-the-user-olm\\work\\"
+                    "live_attempt_smoother2_legacy_20260620\\cdb_console.txt"
+                ),
+                "full_log_available": None,
+                "source": "existing-full-log|rerun|failed",
+                "writeback_hits": [
+                    {
+                        "hit_index": 1,
+                        "marker": "HIT_FUN_1800036e0_writeback_candidate",
+                        "register_dump": None,
+                        "call_stack": None,
+                        "stack_dump_dq_rsp_l16": None,
+                        "nearby_lines": None,
+                        "decoded_notes": {
+                            "candidate_case_id": None,
+                            "candidate_pixel_xy": [None, None],
+                            "pre_writeback_rgba_float_or_hex": [None, None, None, None],
+                            "gamma_or_srgb_branch": None,
+                            "premultiply_branch": None,
+                            "final_rgba_or_argb": [None, None, None, None],
+                        },
+                    },
+                    {
+                        "hit_index": 2,
+                        "marker": "HIT_FUN_1800036e0_writeback_candidate",
+                        "register_dump": None,
+                        "call_stack": None,
+                        "stack_dump_dq_rsp_l16": None,
+                        "nearby_lines": None,
+                        "decoded_notes": {
+                            "candidate_case_id": None,
+                            "candidate_pixel_xy": [None, None],
+                            "pre_writeback_rgba_float_or_hex": [None, None, None, None],
+                            "gamma_or_srgb_branch": None,
+                            "premultiply_branch": None,
+                            "final_rgba_or_argb": [None, None, None, None],
+                        },
+                    },
+                ],
+                "adjacent_candidate_context": {
+                    "fun_180010550_hits_near_writeback": None,
+                    "fun_18000c280_hits_near_writeback": None,
+                },
+                "failure_if_any": None,
+            }
+            summary = "Extract the actual OLMSmoother2 legacy writeback-hit register/stack values from the full CDB log."
+        elif request_id == "olmsmoother2_legacy_u8_writer_trace_20260620":
+            observations = {
+                "target_addresses": {
+                    "u8_writer": "OLMSmoother2+0x3370 / FUN_180003370",
+                    "u8_writer_wrapper": "OLMSmoother2+0x3d00 / FUN_180003d00",
+                    "known_wrong_float_writer": "OLMSmoother2+0x36e0 / FUN_1800036e0",
+                },
+                "ae_request_id": "ae_pixel_olmsmoother2_legacy_20260619",
+                "cases_traced": [],
+                "u8_writer_hits": [
+                    {
+                        "hit_index": None,
+                        "case_id": None,
+                        "register_dump": None,
+                        "call_stack": None,
+                        "stack_dump_dq_rsp_l24": None,
+                        "decoded_loop": {
+                            "x": None,
+                            "y": None,
+                            "width": None,
+                            "height": None,
+                        },
+                        "fun_18000cce0_output_float_or_hex": {
+                            "alpha": None,
+                            "red": None,
+                            "green": None,
+                            "blue": None,
+                        },
+                        "gamma_or_srgb_branch": None,
+                        "premultiply_branch": None,
+                        "final_packed_8bpc_argb_or_rgba": [None, None, None, None],
+                    }
+                ],
+                "wrapper_hits": [],
+                "failure_if_any": None,
+            }
+            summary = "Fill with direct OLMSmoother2 +0x3370 8bpc writer runtime values."
+        elif request_id == "olmsmoother2_legacy_u8_pixel_trace_20260620":
+            observations = {
+                "target": {
+                    "case_id": "case_0001",
+                    "x": 712,
+                    "y": 406,
+                    "expected_rgba": [207, 207, 207, 207],
+                    "current_candidate_rgba": [106, 106, 106, 135],
+                },
+                "breakpoints": {
+                    "after_fun_18000cce0": "OLMSmoother2+0x3510",
+                    "pre_pack": "OLMSmoother2+0x35ad",
+                    "pre_store": "OLMSmoother2+0x360e",
+                    "coordinate_locals": {"x": "[RSP+0x34]", "y": "[RSP+0x38]"},
+                },
+                "after_fun_18000cce0": {
+                    "hit": None,
+                    "rsp_0x48_rgba_or_bgra_float_hex": [None, None, None, None],
+                    "rbp_param8_flags": None,
+                    "rbp_0x19_keep_premul_byte": None,
+                    "rbx_param9_gamma_ctx": None,
+                    "rbx_0x10_lut_ptr": None,
+                    "register_dump": None,
+                    "call_stack": None,
+                },
+                "pre_pack": {
+                    "hit": None,
+                    "xmm6": None,
+                    "xmm7": None,
+                    "xmm8": None,
+                    "xmm1_alpha": None,
+                    "register_dump": None,
+                },
+                "pre_store": {
+                    "hit": None,
+                    "eax_packed_dword": None,
+                    "rsi_dest": None,
+                    "dest_dword_before": None,
+                    "packed_output_bytes": [None, None, None, None],
+                    "register_dump": None,
+                },
+                "failure_if_any": None,
+            }
+            summary = "Fill with OLMSmoother2 case_0001 pixel (712,406) +0x3510/+0x360e writer values."
+        elif request_id == "olmsmoother2_legacy_cce0_pixel_trace_20260621":
+            observations = {
+                "target": {
+                    "case_id": "case_0001",
+                    "x": 712,
+                    "y": 406,
+                    "expected_rgba": [207, 207, 207, 207],
+                    "candidate_rgba": [106, 106, 106, 135],
+                    "known_final_store_eax": "c8c8c887",
+                    "known_final_store_argb": [135, 200, 200, 200],
+                },
+                "fun_18000cce0_entry": {
+                    "hit": None,
+                    "rcx_output_float_ptr": None,
+                    "rdx_polygon_or_input_ptr": None,
+                    "r8_plane_or_output_ptr": None,
+                    "r9_xy_ptr": None,
+                    "xy": [None, None],
+                    "rdx_dump": None,
+                    "r8_dump": None,
+                    "param8_dump": None,
+                    "param9_dump": None,
+                    "register_dump": None,
+                    "call_stack": None,
+                },
+                "u8_writer_after_cce0": {
+                    "hit": None,
+                    "rsp_0x48_to_0x54_float_hex": [None, None, None, None],
+                    "interpreted_output_rgba_or_argb_float": [None, None, None, None],
+                    "rbp_param8_flags": None,
+                    "rbp_0x19_keep_premul_byte": None,
+                    "rbx_0x10_lut_ptr": None,
+                    "register_dump": None,
+                },
+                "failure_if_any": None,
+            }
+            summary = "Fill with target-pixel FUN_18000cce0 input and +0x3510 output floats."
+        elif request_id in {
+            "olmsmoother2_legacy_cce0_internals_trace_20260621",
+            "olmsmoother2_legacy_cce0_internals_r9_callsite_trace_20260621",
+            "olmsmoother2_legacy_cce0_internals_targetaddr_trace_20260621",
+            "olmsmoother2_legacy_cce0_internals_multiaddr_probe_trace_20260621",
+            "olmsmoother2_legacy_cce0_internals_t3_rsi_callsite_trace_20260621",
+            "olmsmoother2_legacy_cce0_internals_replay_from_writer_trace_20260621",
+        }:
+            observations = {
+                "target": {
+                    "case_id": "case_0001",
+                    "x": 712,
+                    "y": 406,
+                    "expected_rgba": [207, 207, 207, 207],
+                    "candidate_rgba": [106, 106, 106, 135],
+                    "known_cce0_output_float": [0.57797289, 0.57797289, 0.57797289, 0.52794117],
+                    "known_writer_store_eax": "c8c8c887",
+                },
+                "trace_anchor": {
+                    "primary_breakpoint": "OLMSmoother2+0x3610",
+                    "primary_condition": "target output write/watchpoint for pixel (712,406), then reconstruct/replay cce0 args from the writer frame",
+                    "why": (
+                        "The multi-address probe proved $t3 receives the target final write "
+                        "at +0x3610, while +0x34b0 and +0x350b pre-call anchors did not "
+                        "catch the target in retained runs. Therefore this request starts "
+                        "from the reliable writer frame and asks for replay/reconstruction."
+                    ),
+                },
+                "previous_failed_partials": [
+                    {
+                        "request_id": "olmsmoother2_legacy_cce0_internals_trace_20260621",
+                        "status": "failed_partial",
+                        "useful_facts": [
+                            "+0xcd5f reachable",
+                            "RSI points to x/y dwords at +0xcd5f",
+                            "read [RBP+0x90] at +0xcd5f because MOV R14,[RBP+0x90] has not executed yet",
+                        ],
+                    },
+                    {
+                        "request_id": "olmsmoother2_legacy_cce0_internals_r9_callsite_trace_20260621",
+                        "status": "failed_partial",
+                        "useful_facts": [
+                            "+0x350b @r9 coordinate breakpoint was installed but did not hit",
+                            "previous datwatch still proves target final write and stack xy after cce0",
+                        ],
+                    },
+                    {
+                        "request_id": "olmsmoother2_legacy_cce0_internals_targetaddr_trace_20260621",
+                        "status": "failed_partial",
+                        "useful_facts": [
+                            "+0x3370 writer-entry target addresses were computed",
+                            "+0x34b0 @rsi == @$t3 did not hit",
+                        ],
+                    },
+                    {
+                        "request_id": "olmsmoother2_legacy_cce0_internals_multiaddr_probe_trace_20260621",
+                        "status": "failed_partial",
+                        "useful_facts": [
+                            "$t3 receives the target pixel write at OLMSmoother2+0x3610",
+                            "candidate loop condition at +0x34b0 did not hit for $t1/$t2/$t3",
+                            "latest $t3 was 00000272`2244a020",
+                        ],
+                    },
+                    {
+                        "request_id": "olmsmoother2_legacy_cce0_internals_t3_rsi_callsite_trace_20260621",
+                        "status": "failed_partial",
+                        "useful_facts": [
+                            "+0x350b @rsi == @$t3 did not produce a pre-call hit",
+                            "+0x350b @rdi==0x2c8 && @r14==0x196 also did not hit",
+                            "the reliable target anchor remains the later +0x3610 writer/data-watch stop",
+                        ],
+                    },
+                ],
+                "writer_entry_target_address": {
+                    "entry": "OLMSmoother2+0x3370",
+                    "loop_target": "OLMSmoother2+0x3610",
+                    "known_successful_final_write": "OLMSmoother2+0x3610",
+                    "candidate_addr_registers": ["$t3"],
+                    "hit_condition": "data watchpoint or exact writeback hit for target output address",
+                    "latest_candidate_addresses": {
+                        "$t1": "00000272`23535c20",
+                        "$t2": "00000272`24c0a020",
+                        "$t3": "00000272`2244a020",
+                    },
+                    "candidate_loop_hit": False,
+                    "candidate_write_watch_hit": "HIT_T3_WRITE_WATCH",
+                    "selected_output_world": "$t3",
+                },
+                "fun_18000cce0_entry": {
+                    "hit": None,
+                    "replay_from_writer_frame": None,
+                    "rcx_output_float_ptr": None,
+                    "rdx_source_descriptor": None,
+                    "r8_work_descriptor": None,
+                    "r9_xy_ptr": None,
+                    "param5_context_ptr": None,
+                    "param6_context": None,
+                },
+                "after_fun_18000c280": {
+                    "hit": None,
+                    "address": "OLMSmoother2+0xcd5f",
+                    "polygon_count_local_58_or_r14": None,
+                    "local_148_vertex_records": [],
+                    "class_plane_or_switch_index_evidence": None,
+                    "source_descriptor_local_168": None,
+                    "work_descriptor_local_188": None,
+                },
+                "stage_values": {
+                    "before_fun_18000bb10": None,
+                    "after_fun_18000bb10": None,
+                    "after_fun_18000c0d0": None,
+                    "after_fun_18000ab00": None,
+                    "after_fun_18000b120": None,
+                    "final_before_store_to_param1": None,
+                },
+                "interpretation": {
+                    "alpha_drop_source": None,
+                    "rgb_source": None,
+                    "candidate_fix": None,
+                },
+                "failure_if_any": None,
+            }
+            summary = "Fill with target-pixel FUN_18000cce0 polygon/stage internals."
         else:
-            observations = {}
-            summary = "Fill with the requested runtime trace fact."
+            observations = {
+                "effect": action.get("plugin_area"),
+                "module_base": "0x...",
+                "ae_context": {
+                    "ae_version": None,
+                    "project_renderer_name": None,
+                    "project_renderer_raw": None,
+                    "bit_depth": None,
+                    "color_management": None,
+                },
+                "cases": [
+                    {
+                        "case_id": None,
+                        "parameters_ui": {},
+                        "parameters_decoded_in_aex": {},
+                        "witness_pixels": [
+                            {
+                                "x": None,
+                                "y": None,
+                                "input_rgba": [None, None, None, None],
+                                "branch_or_dispatch": None,
+                                "loop_bounds_or_sample_count": None,
+                                "sample_order": [],
+                                "intermediate_values": {},
+                                "pre_writeback_rgba_float_hex": [None, None, None, None],
+                                "writeback_operation": None,
+                                "final_rgba": [None, None, None, None],
+                            }
+                        ],
+                    }
+                ],
+                "directly_observed_vs_inferred": {
+                    "directly_observed": [],
+                    "static_or_decomp_inferred": [],
+                    "not_isolated": [],
+                },
+            }
+            summary = "Fill with dense input-to-output runtime trace facts for this plugin area."
         result_templates.append(
             {
                 "request_id": request_id,
@@ -1030,7 +1825,33 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
 
 
 def checked_files(root: Path, profile: str) -> list[Path]:
-    if profile == "colorkey-edge":
+    if profile == "kirakira-stage-values-deep":
+        ensure_kirakira_deep_witness_plan(root)
+
+    if profile in {"dense-all", "dense-live-followup"}:
+        files = [
+            TRACE_NOTE,
+            Path("notes/WINDOWS_DENSE_TRACE_STRATEGY.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("notes/IR_OLMSmoother2.md"),
+            Path("notes/IR_OLMColorKey_Edge.md"),
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/IR_OLMBlur.md"),
+            Path("notes/IR_OLMKiraKira.md"),
+            Path("notes/IR_OLMRadialBlur.md"),
+            Path("notes/IR_OLMDirectionalBlur.md"),
+            Path("notes/IR_OLMToonDilate.md"),
+            Path("notes/OLMSmoother2_ASM_FACTS.md"),
+            Path("notes/OLMColorKey_ASM_FACTS.md"),
+            Path("notes/OLMKiraKira_ASM_FACTS.md"),
+            Path("notes/OLMRadialBlur_ASM_FACTS.md"),
+            Path("notes/OLMDirectionalBlur_ASM_FACTS.md"),
+            Path(
+                "refs/reports/ae_host_validation_20260620_1425/"
+                "ae_pixel_olmsmoother2_legacy_20260619/reports/ae_pixel_legacy_exact.json"
+            ),
+        ]
+    elif profile == "colorkey-edge":
         files = [
             TRACE_NOTE,
             *COLORKEY_SUPPORTING_NOTES,
@@ -1057,6 +1878,16 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("refs/reference_requests/kirakira_single_ray_20260606.json"),
             Path("refs/reference_requests/kirakira_strength0_brightness_20260614.json"),
         ]
+    elif profile == "kirakira-stage-values-deep":
+        files = [
+            TRACE_NOTE,
+            *KIRAKIRA_STAGE_SUPPORTING_NOTES,
+            Path("refs/reference_requests/kirakira_single_ray_20260606.json"),
+            Path("refs/reference_requests/kirakira_strength0_brightness_20260614.json"),
+            Path("refs/reports/olmkirakira_trace_baseline_20260620_overnight_mac/trace.json"),
+            Path("refs/reports/olmkirakira_trace_baseline_20260621_deep_witness_plan/witness_plan.json"),
+            Path("refs/reports/olmkirakira_trace_baseline_20260621_deep_witness_plan/witness_plan.md"),
+        ]
     elif profile == "smoother2-no-key-grid":
         files = [
             TRACE_NOTE,
@@ -1082,6 +1913,91 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path(
                 "refs/reports/ae_host_validation_20260620_1425/"
                 "ae_pixel_olmsmoother2_legacy_20260619/reports/ae_pixel_legacy_exact.csv"
+            ),
+        ]
+    elif profile == "smoother2-legacy-writeback-extract":
+        files = [
+            TRACE_NOTE,
+            Path("notes/OLMSmoother2_ASM_FACTS.md"),
+            Path("notes/IR_OLMSmoother2.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/reports/dense_live_followup_20260620/runtime_trace_summary_dense_live_followup_20260620_213031.md"),
+            Path("refs/reports/dense_live_followup_20260620/runtime_trace_summary_dense_live_followup_20260620_213031.json"),
+            Path(
+                "refs/reports/ae_host_validation_20260620_1425/"
+                "ae_pixel_olmsmoother2_legacy_20260619/reports/ae_pixel_legacy_exact.json"
+            ),
+        ]
+    elif profile == "smoother2-legacy-u8-writer-trace":
+        files = [
+            TRACE_NOTE,
+            Path("notes/OLMSmoother2_ASM_FACTS.md"),
+            Path("notes/IR_OLMSmoother2.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/reports/smoother2_legacy_writeback_extract_20260620/runtime_trace_summary_smoother2_legacy_writeback_extract_20260620_231855.md"),
+            Path(
+                "refs/reports/ae_host_validation_20260620_1425/"
+                "ae_pixel_olmsmoother2_legacy_20260619/reports/ae_pixel_legacy_exact.json"
+            ),
+        ]
+    elif profile == "smoother2-legacy-u8-pixel-trace":
+        files = [
+            TRACE_NOTE,
+            Path("notes/OLMSmoother2_ASM_FACTS.md"),
+            Path("notes/IR_OLMSmoother2.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/reports/smoother2_legacy_u8_writer_trace_20260620/runtime_trace_summary_smoother2_legacy_u8_writer_trace_20260620_233427.md"),
+            Path(
+                "refs/reports/ae_host_validation_20260620_1425/"
+                "ae_pixel_olmsmoother2_legacy_20260619/reports/ae_pixel_legacy_exact.json"
+            ),
+        ]
+    elif profile == "smoother2-legacy-cce0-pixel-trace":
+        files = [
+            TRACE_NOTE,
+            Path("notes/OLMSmoother2_ASM_FACTS.md"),
+            Path("notes/IR_OLMSmoother2.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/reports/smoother2_legacy_u8_pixel_trace_20260621/runtime_trace_summary_smoother2_legacy_u8_pixel_trace_20260621_0040.md"),
+            Path("refs/reports/smoother2_legacy_u8_pixel_trace_20260621/cdb_console_final_entrycmd_utf16.txt"),
+            Path(
+                "refs/reports/ae_host_validation_20260620_1425/"
+                "ae_pixel_olmsmoother2_legacy_20260619/reports/ae_pixel_legacy_exact.json"
+            ),
+        ]
+    elif profile == "smoother2-legacy-cce0-internals-trace":
+        files = [
+            TRACE_NOTE,
+            Path("notes/OLMSmoother2_ASM_FACTS.md"),
+            Path("notes/IR_OLMSmoother2.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/reports/smoother2_legacy_cce0_pixel_trace_20260621/runtime_trace_summary_smoother2_legacy_cce0_pixel_trace_20260621_0145.md"),
+            Path("refs/reports/smoother2_legacy_cce0_pixel_trace_20260621/runtime_trace_summary_smoother2_legacy_cce0_pixel_trace_20260621_0145.json"),
+            Path("refs/reports/smoother2_legacy_cce0_pixel_trace_20260621/cdb_console_final_datwatch_utf16.txt"),
+            Path("refs/reports/runtime_trace_summary.md"),
+            Path(
+                "refs/returns/windows/20260621_011845_smoother2_cce0_internals/"
+                "olm_runtime_trace_smoother2_legacy_cce0_internals_trace_20260621_011845_return_windows.zip"
+            ),
+            Path(
+                "refs/returns/windows/20260621_022708_smoother2_cce0_internals_r9_callsite/"
+                "olm_runtime_trace_smoother2_legacy_cce0_internals_r9_callsite_20260621_022708_return_windows.zip"
+            ),
+            Path(
+                "refs/returns/windows/20260621_025613_smoother2_cce0_internals_targetaddr/"
+                "olm_runtime_trace_smoother2_legacy_cce0_internals_targetaddr_20260621_025613_return_windows.zip"
+            ),
+            Path(
+                "refs/returns/windows/20260621_031230_smoother2_cce0_internals_multiaddr_probe/"
+                "olm_runtime_trace_smoother2_legacy_cce0_internals_multiaddr_probe_20260621_031230_return_windows.zip"
+            ),
+            Path(
+                "refs/returns/windows/20260621_032645_smoother2_cce0_internals_t3_rsi_callsite/"
+                "olm_runtime_trace_smoother2_legacy_cce0_internals_t3_rsi_callsite_20260621_032645_return_windows.zip"
+            ),
+            Path(
+                "refs/reports/ae_host_validation_20260620_1425/"
+                "ae_pixel_olmsmoother2_legacy_20260619/reports/ae_pixel_legacy_exact.json"
             ),
         ]
     elif profile == "distancegradation-field-prep":

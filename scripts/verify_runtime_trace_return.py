@@ -92,6 +92,8 @@ def is_trace_result(data: Any) -> bool:
         return False
     if data.get("kind") in {RUNTIME_KIND, RUNTIME_RETURN_KIND}:
         return True
+    if data.get("request_id") and data.get("status"):
+        return True
     return isinstance(data.get("runtime_trace_results"), list) or isinstance(data.get("results"), list)
 
 
@@ -134,6 +136,22 @@ def read_answer_summary(source_root: Path, manifest_path: str | None) -> str:
 
 
 def normalize_results(data: dict[str, Any], source_path: Path, source_root: Path) -> list[dict[str, Any]]:
+    if data.get("request_id") and data.get("status") and "results" not in data and "runtime_trace_results" not in data:
+        observations = {
+            key: value
+            for key, value in data.items()
+            if key not in {"request_id", "status", "summary", "answer", "notes"}
+        }
+        return [
+            {
+                "request_id": str(data["request_id"]),
+                "status": str(data.get("status", "answered")).lower(),
+                "summary": str(data.get("summary") or data.get("answer") or data.get("notes") or ""),
+                "observations": observations,
+                "source_file": str(source_path),
+            }
+        ]
+
     if data.get("kind") == RUNTIME_RETURN_KIND and isinstance(data.get("requests_answered"), list):
         normalized: list[dict[str, Any]] = []
         for index, row in enumerate(data["requests_answered"], start=1):

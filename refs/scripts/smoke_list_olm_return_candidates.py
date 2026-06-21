@@ -45,6 +45,7 @@ def main() -> int:
         wrapped_runtime_request_pkg = tmp_path / "wrapped_runtime_requests.zip"
         windows_action_bundle = tmp_path / "windows_action_bundle.zip"
         runtime_return = tmp_path / "runtime_return.zip"
+        runtime_return_with_source_request = tmp_path / "runtime_return_with_source_request.zip"
         bare_runtime_return = tmp_path / "bare_runtime_return.zip"
         ae_pixel_request = tmp_path / "ae_pixel_request.zip"
         unknown = tmp_path / "other.zip"
@@ -127,6 +128,30 @@ def main() -> int:
             },
         )
         write_zip(
+            runtime_return_with_source_request,
+            {
+                "source_request/runtime_trace_package_manifest.json": json.dumps(
+                    {
+                        "kind": "olm_runtime_trace_request_package",
+                        "runtime_actions": [
+                            {"request_id": "radialblur_inner_runtime_trace_20260618"}
+                        ],
+                    }
+                ),
+                "RETURN_RUNTIME_TRACE_RESULT.json": json.dumps(
+                    {
+                        "kind": "olm_runtime_trace_result",
+                        "results": [
+                            {
+                                "request_id": "radialblur_inner_runtime_trace_20260618",
+                                "status": "answered",
+                            }
+                        ],
+                    }
+                ),
+            },
+        )
+        write_zip(
             bare_runtime_return,
             {
                 "nested/result.json": json.dumps(
@@ -166,6 +191,7 @@ def main() -> int:
         assert kinds["wrapped_runtime_requests.zip"] == "runtime-trace-request-package"
         assert kinds["windows_action_bundle.zip"] == "windows-action-bundle"
         assert kinds["runtime_return.zip"] == "runtime-trace-return"
+        assert kinds["runtime_return_with_source_request.zip"] == "runtime-trace-return"
         assert kinds["bare_runtime_return.zip"] == "runtime-trace-return"
         assert kinds["ae_pixel_request.zip"] == "ae-pixel-validation-request"
         assert "other.zip" not in kinds
@@ -178,6 +204,7 @@ def main() -> int:
         assert "--runtime-summary-json" in commands["runtime_return.zip"]
         assert "--runtime-summary-md" in commands["runtime_return.zip"]
         assert "--runtime-comparison-dir" in commands["runtime_return.zip"]
+        assert "--runtime-summary-json" in commands["runtime_return_with_source_request.zip"]
         assert "--runtime-summary-json" in commands["bare_runtime_return.zip"]
         assert "--runtime-summary-md" in commands["bare_runtime_return.zip"]
         assert "--runtime-comparison-dir" in commands["bare_runtime_return.zip"]

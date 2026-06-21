@@ -85,7 +85,87 @@ Interpretation:
 
 ## Priority Order
 
-1. OLMSmoother2 legacy key/gamma runtime trace
+0. Smoother2 legacy `FUN_18000cce0` internal composite trace package
+   - Request package:
+     `refs/runtime_trace_packages/olm_runtime_trace_smoother2_legacy_cce0_internals_trace_*.zip`
+   - Reason: `olm_runtime_trace_smoother2_legacy_cce0_pixel_trace_20260621_005332_return_windows.zip`
+     captured the target-pixel `FUN_18000cce0` return for
+     `case_0001 (712,406)`: floats
+     `[0.57797289, 0.57797289, 0.57797289, 0.52794117]`. The writer then packs
+     `EAX=c8c8c887`, i.e. A/R/G/B `[135,200,200,200]`, and the PNG candidate
+     `[106,106,106,135]` follows from premultiplication. Final store,
+     writer-premultiply selection, and RGB pack/gamma are therefore not enough
+     to explain the residual; the source is now `FUN_18000cce0` internals or
+     its inputs.
+   - First action for Windows helper:
+     run only `ae_pixel_olmsmoother2_legacy_20260619 case_0001`, isolate the
+     same target pixel, and collect stage-level values inside `FUN_18000cce0`:
+     after `FUN_18000c280` (`+0xcd5f`, polygon count/vertices/class-plane
+     evidence), before/after `FUN_18000bb10`, after `FUN_18000c0d0`, after
+     `FUN_18000ab00`, after `FUN_18000b120`, and final output before
+     `MOVUPS [RBX]`.
+   - Stop rule: this succeeds only with cce0 internals for the target pixel or
+     an exact failed breakpoint/watchpoint reason. Do not repeat only the
+     already-known cce0 return floats or final `EAX=c8c8c887`.
+
+1. Historical Smoother2 legacy `FUN_18000cce0` target-pixel return trace
+   - Request package:
+     `refs/runtime_trace_packages/olm_runtime_trace_smoother2_legacy_cce0_pixel_trace_20260621_005332.zip`
+   - Result:
+     `refs/reports/smoother2_legacy_cce0_pixel_trace_20260621/runtime_trace_summary_smoother2_legacy_cce0_pixel_trace_20260621_0145.md`.
+   - Interpretation: successful boundary proof. It moves the active suspicion
+     inside cce0/polygon/class-plane setup.
+
+2. Historical Smoother2 legacy 8bpc per-pixel writer trace package
+   - Request package:
+     `refs/runtime_trace_packages/olm_runtime_trace_smoother2_legacy_u8_pixel_trace_20260620_233732.zip`.
+   - Result:
+     `refs/reports/smoother2_legacy_u8_pixel_trace_20260621/runtime_trace_summary_smoother2_legacy_u8_pixel_trace_20260621_0040.md`.
+   - Interpretation: partial but useful. It captured final store
+     `EAX=c8c8c887`; move upstream.
+
+3. Historical Smoother2 legacy 8bpc writer entry trace package
+   - Request package:
+     `refs/runtime_trace_packages/olm_runtime_trace_smoother2_legacy_u8_writer_trace_20260620_232223.zip`.
+   - Result:
+     `refs/reports/smoother2_legacy_u8_writer_trace_20260620/runtime_trace_summary_smoother2_legacy_u8_writer_trace_20260620_233427.md`.
+   - Interpretation: successful entry-level proof for `+0x3370`; do not resend
+     unless the per-pixel conditional trace fails due a bad address.
+
+4. Historical Smoother2 legacy float-writer extraction package
+   - Request package:
+     `refs/runtime_trace_packages/olm_runtime_trace_smoother2_legacy_writeback_extract_20260620_213629.zip`
+   - Result:
+     `refs/reports/smoother2_legacy_writeback_extract_20260620/runtime_trace_summary_smoother2_legacy_writeback_extract_20260620_231855.md`.
+   - Interpretation: `failed_no_writeback_hits_found` is accepted as useful
+     negative evidence; do not resend this package unless the bit depth changes
+     to float/32bpc.
+
+5. Dense all-plugin runtime trace package
+   - Request package:
+     `refs/runtime_trace_packages/olm_runtime_trace_dense_live_followup_20260620_184655.zip`
+   - Reason: reduce Mac/Windows round trips by asking Windows to collect dense
+     intermediate logs for all active plugin areas in one work queue. The
+     Windows helper should still start with Smoother2 legacy, but continue to
+     ColorKey, DistanceGradation, Blur, KiraKira, RadialBlur, DirectionalBlur,
+     ToonDilate, and optional Smoother2 no-key binary-grounding while Mac work
+     continues.
+   - Strategy:
+     `notes/WINDOWS_DENSE_TRACE_STRATEGY.md`
+   - Stop rule: a return with only final PNGs, branch names, old-template
+     merges, or `not isolated` replacements is `trace-too-sparse`; prefer fewer
+     cases with complete input-to-output logs.
+   - Context: `olm_runtime_trace_dense_all_20260620_164214_return_windows.zip`
+     was imported successfully, but its audit says no new live trace was
+     captured for Smoother2 legacy, RadialBlur, DirectionalBlur, or
+     ToonDilate. The follow-up package above exists to force direct CDB/WinDbg
+     witness values or explicit failed breakpoint/watchpoint attempts.
+   - Current result: `olm_runtime_trace_dense_live_followup_20260620_184655_return_windows_all_attempts.zip`
+     has now been imported. It attempted all 9 IDs with fresh CDB/AE evidence
+     or exact failed attempts. Do not resend this broad package unless a new
+     batch of concrete addresses/witnesses is added.
+
+6. OLMSmoother2 legacy key/gamma runtime trace
    - Request package:
      `refs/runtime_trace_packages/olm_runtime_trace_olmsmoother2_legacy_key_gamma_20260620_154802.zip`
    - Reason: v1 and no-key grid are AE exact, but legacy key/gamma is still
@@ -95,8 +175,14 @@ Interpretation:
      parameter struct fields, Color Key active/invert decisions, class-plane
      bytes, pre/post `FUN_1800036e0` RGBA floats, gamma/sRGB steps, and final
      RGBA bytes at the top-edge witnesses.
+   - Do not confuse this with
+     `olm_windows_action_bundle_20260619_smoother2_legacy_followup_addendum_20260620.zip`.
+     That addendum is useful AE pixel evidence, but it is not a CDB/runtime
+     trace. It confirmed the legacy residual is stable across adjustment-layer
+     rerender and selected UI variants, so the runtime/static proof is still
+     the active Smoother blocker.
 
-2. OLMSmoother2 no-key runtime trace
+7. OLMSmoother2 no-key runtime trace
    - Request package:
      `refs/runtime_trace_packages/olm_runtime_trace_olmsmoother2_no_key_grid_idx7_context_with_mac_baseline_20260619_041000.zip`
    - Reason: no-key grid is now AE exact, so this is optional binary-grounding
@@ -106,27 +192,27 @@ Interpretation:
      helper returns, `FUN_1800104d0` append sequence, `FUN_18000ab00`,
      `FUN_18000b120`, and `FUN_1800036e0` final values.
 
-3. OLMBlur runtime trace
+8. OLMBlur runtime trace
    - Request package:
      `refs/runtime_trace_packages/olm_runtime_trace_olmblur_repeat_threshold_with_mac_baseline_20260619_030743.zip`
    - Reason: `case_0006` has a single tie-like residual and `case_0007` has a
      legacy border/tie residual. Do not change `nearbyint` or legacy border
      exclusion without trace evidence.
 
-4. OLMColorKey Edge runtime trace
+9. OLMColorKey Edge runtime trace
    - Request package:
      `refs/runtime_trace_packages/olm_runtime_trace_colorkey_edge_erode_blur_with_mac_baseline_20260619_031350.zip`
    - Reason: Edge Thin erode is exact in AE-host return but not CLI; Edge Blur
      `case_0009` is the current final-risk ColorKey slice.
 
-5. OLMDistanceGradation runtime trace
+10. OLMDistanceGradation runtime trace
    - Request package:
      `refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_field_prep_opencv_args_20260619_030427.zip`
    - Reason: compose math is binary-grounded, but Constant field prep,
      `distanceTransform`, `GaussianBlur`, and field-world packing are not exact
      yet.
 
-6. AE pixel validation returns
+11. AE pixel validation returns
    - These are exact-threshold Mac AE gates for selected current refs. Passing
      them is stronger than CLI exact, but still only for the covered 8bpc
      cases. 16bpc and 32bpc remain separate work.
@@ -141,6 +227,16 @@ date-stamped summary and comparison files under `refs/reports/`:
 python3 scripts/intake_olm_return.py path/to/returned_runtime_trace.zip \
   --kind runtime-trace \
   --runtime-package refs/runtime_trace_packages/olm_runtime_trace_olmsmoother2_legacy_key_gamma_20260620_154802.zip
+```
+
+For the 2026-06-20 Smoother2 legacy follow-up addendum, use AE pixel intake
+instead. The exact verification is expected to fail; that failure is the
+evidence being recorded:
+
+```sh
+python3 scripts/intake_olm_return.py path/to/olm_windows_action_bundle_20260619_smoother2_legacy_followup_addendum_20260620.zip \
+  --kind ae-pixel-validation \
+  --run-dir refs/reports/ae_host_validation_20260620_smoother2_legacy_followup
 ```
 
 For old/manual report names, pass explicit output paths:

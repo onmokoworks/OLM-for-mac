@@ -1170,3 +1170,25 @@ binary/decomp fact to avoid PNG-fitting.
   changed to `denom > 0.0f` so all C++ diagnostic paths use the same
   AEX-backed branch condition. This is not expected to move the current
   rowdriver metrics; it removes a stale diagnostic mismatch.
+
+2026-06-21 local static callback recheck:
+
+- Ghidra MCP was reachable, but the currently selected/open program did not
+  match `plugins_2025/OLMDirectionalBlur.aex` at `0x180006980` / `0x180006b30`.
+  Treat the live MCP decompile from this date as a wrong-program view, not as
+  DirectionalBlur evidence.
+- Direct `/usr/bin/objdump --start-address` on
+  `plugins_2025/OLMDirectionalBlur.aex` reconfirms the 8bpc callback bodies:
+  - `0x180006980` populate reads PF pixel bytes in A/R/G/B layout and writes
+    work floats as R=`byte[1]/255`, G=`byte[2]/255`, B=`byte[3]/255`,
+    A=`byte[0]/255` into `params+0x8078` using the padded
+    `0x8098/0x809c/0x80a0` index.
+  - `0x180006b30` output reads `params+0x8090`, multiplies RGB by
+    `BrightnessGain` at `+0x28`, clamps RGB with `min(value, 1.0)`, leaves alpha
+    ungained, scales by 255, and truncates with `CVTTSS2SI`.
+  - `0x180006a90` and `0x180006bd0` have the same output shape for 16bpc and
+    32bpc respectively; 32bpc writes float alpha unchanged and RGB gained /
+    clamped.
+- This reconfirms that the remaining DirectionalBlur residual is unlikely to be
+  channel order, padded populate/output indexing, output alpha gain, or output
+  rounding. Do not add another PNG-only toggle for these hypotheses.

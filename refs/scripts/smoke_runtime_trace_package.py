@@ -170,6 +170,47 @@ def main() -> int:
             for key in ("xy", "source_xy", "tmp1_xy", "tmp2_xy", "ray_xy"):
                 assert key in witness, f"missing KiraKira witness coordinate field: {key}"
 
+        kirakira_deep_output = Path(tmp) / "runtime_trace_kirakira_stage_deep.zip"
+        proc = run(
+            [
+                sys.executable,
+                str(script),
+                "--profile",
+                "kirakira-stage-values-deep",
+                "--output",
+                str(kirakira_deep_output),
+            ],
+            root,
+        )
+        assert "[OK] runtime trace package:" in proc.stdout
+        with zipfile.ZipFile(kirakira_deep_output) as archive:
+            names = set(archive.namelist())
+            required = {
+                "README_RUNTIME_TRACE.md",
+                "RETURN_RUNTIME_TRACE_TEMPLATE.json",
+                "runtime_trace_package_manifest.json",
+                "notes/WINDOWS_RUNTIME_TRACE_REQUESTS.md",
+                "notes/IR_OLMKiraKira.md",
+                "refs/reports/olmkirakira_trace_baseline_20260621_deep_witness_plan/witness_plan.json",
+                "refs/reports/olmkirakira_trace_baseline_20260621_deep_witness_plan/witness_plan.md",
+            }
+            missing = required - names
+            assert not missing, f"missing KiraKira deep package entries: {sorted(missing)}"
+            manifest = json.loads(archive.read("runtime_trace_package_manifest.json"))
+            template = json.loads(archive.read("RETURN_RUNTIME_TRACE_TEMPLATE.json"))
+        assert manifest["profile"] == "kirakira-stage-values-deep"
+        action_ids = [action["request_id"] for action in manifest["runtime_actions"]]
+        assert action_ids == ["kirakira_fun_181150790_deep_stage_values_20260621"]
+        observations = template["results"][0]["observations"]
+        assert observations["stage_witnesses"][0]["temp_xy"] == [962, 962]
+        assert observations["stage_witnesses"][2]["source_xy"] == [1010, 540]
+        assert observations["aggregation_and_compose"]["center_local_expected"]["out_rgba_u8"] == [
+            129,
+            129,
+            129,
+            255,
+        ]
+
         smoother_legacy_output = Path(tmp) / "runtime_trace_smoother_legacy.zip"
         proc = run(
             [
@@ -205,6 +246,44 @@ def main() -> int:
         assert observations["cases"][1]["expected_params"]["invert_color_key"] == 1
         assert "setup_and_keying" in observations["requested_for_each_case"]
         assert "smoothing_and_writeback" in observations["requested_for_each_case"]
+
+        smoother_cce0_internals_output = Path(tmp) / "runtime_trace_smoother_cce0_internals.zip"
+        proc = run(
+            [
+                sys.executable,
+                str(script),
+                "--profile",
+                "smoother2-legacy-cce0-internals-trace",
+                "--output",
+                str(smoother_cce0_internals_output),
+            ],
+            root,
+        )
+        assert "[OK] runtime trace package:" in proc.stdout
+        with zipfile.ZipFile(smoother_cce0_internals_output) as archive:
+            names = set(archive.namelist())
+            required = {
+                "README_RUNTIME_TRACE.md",
+                "RETURN_RUNTIME_TRACE_TEMPLATE.json",
+                "runtime_trace_package_manifest.json",
+                "notes/WINDOWS_RUNTIME_TRACE_REQUESTS.md",
+                "notes/IR_OLMSmoother2.md",
+                "notes/CONFORMANCE_LEDGER.md",
+                "refs/reports/smoother2_legacy_cce0_pixel_trace_20260621/runtime_trace_summary_smoother2_legacy_cce0_pixel_trace_20260621_0145.md",
+            }
+            missing = required - names
+            assert not missing, f"missing Smoother cce0 internals package entries: {sorted(missing)}"
+            manifest = json.loads(archive.read("runtime_trace_package_manifest.json"))
+            template = json.loads(archive.read("RETURN_RUNTIME_TRACE_TEMPLATE.json"))
+        assert manifest["profile"] == "smoother2-legacy-cce0-internals-trace"
+        action_ids = [action["request_id"] for action in manifest["runtime_actions"]]
+        assert action_ids == ["olmsmoother2_legacy_cce0_internals_replay_from_writer_trace_20260621"]
+        observations = template["results"][0]["observations"]
+        assert observations["target"]["known_writer_store_eax"] == "c8c8c887"
+        assert observations["trace_anchor"]["primary_breakpoint"] == "OLMSmoother2+0x3610"
+        assert "$t3" in observations["writer_entry_target_address"]["candidate_addr_registers"]
+        assert observations["writer_entry_target_address"]["selected_output_world"] == "$t3"
+        assert observations["after_fun_18000c280"]["address"] == "OLMSmoother2+0xcd5f"
     print("[OK] runtime trace package smoke")
     return 0
 

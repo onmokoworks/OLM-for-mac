@@ -101,6 +101,7 @@ def runtime_trace_actions(
     if not isinstance(actions, list):
         return []
     answered = set(trace_summary.get("answered_request_ids", [])) if trace_summary else set()
+    answered.update(trace_summary.get("superseded_request_ids", []) if trace_summary else [])
     return [
         action
         for action in actions
@@ -112,8 +113,9 @@ def runtime_trace_actions(
 
 def runtime_trace_summary(root: Path) -> dict[str, Any] | None:
     report_dir = root / "refs" / "reports"
-    summary_paths = sorted(report_dir.glob("runtime_trace_summary*.json")) if report_dir.exists() else []
-    if not summary_paths:
+    summary_paths = sorted(report_dir.glob("**/runtime_trace_summary*.json")) if report_dir.exists() else []
+    superseded = runtime_trace_superseded(root)
+    if not summary_paths and not superseded:
         return None
     summaries: list[tuple[Path, dict[str, Any]]] = []
     answered_ids: list[str] = []
@@ -134,17 +136,44 @@ def runtime_trace_summary(root: Path) -> dict[str, Any] | None:
             if isinstance(request_id, str):
                 answered_ids.append(request_id)
         summaries.append((summary_path, data))
-    if not answered_ids:
+    if not answered_ids and not superseded:
         return None
-    latest_path, _latest_data = max(summaries, key=lambda item: item[0].stat().st_mtime)
-    markdown_path = latest_path.with_suffix(".md")
-    stat = latest_path.stat()
+    if summaries:
+        latest_path, _latest_data = max(summaries, key=lambda item: item[0].stat().st_mtime)
+        markdown_path = latest_path.with_suffix(".md")
+        stat = latest_path.stat()
+        latest_path_text = str(latest_path)
+        markdown_path_text = str(markdown_path) if markdown_path.exists() else ""
+        mtime = stat.st_mtime
+    else:
+        latest_path_text = str(root / "refs" / "reports" / "runtime_trace_superseded.json")
+        markdown_path_text = ""
+        mtime = (root / "refs" / "reports" / "runtime_trace_superseded.json").stat().st_mtime
     return {
-        "path": str(latest_path),
-        "markdown_path": str(markdown_path) if markdown_path.exists() else "",
-        "mtime": stat.st_mtime,
+        "path": latest_path_text,
+        "markdown_path": markdown_path_text,
+        "mtime": mtime,
         "answered_request_ids": sorted(set(answered_ids)),
+        "superseded_request_ids": sorted(superseded),
     }
+
+
+def runtime_trace_superseded(root: Path) -> set[str]:
+    path = root / "refs" / "reports" / "runtime_trace_superseded.json"
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return set()
+    if not isinstance(data, dict):
+        return set()
+    ids: set[str] = set()
+    for row in data.get("superseded", []):
+        if not isinstance(row, dict):
+            continue
+        request_id = row.get("request_id")
+        if isinstance(request_id, str) and request_id:
+            ids.add(request_id)
+    return ids
 
 
 def ae_host_exact_summary(root: Path) -> dict[str, Any] | None:
@@ -325,6 +354,7 @@ def project_runtime_trace_packages(
     if not package_dir.exists():
         return []
     answered = set(trace_summary.get("answered_request_ids", [])) if trace_summary else set()
+    answered.update(trace_summary.get("superseded_request_ids", []) if trace_summary else [])
     latest_by_profile: dict[str, dict[str, Any]] = {}
     for path in package_dir.glob("*.zip"):
         manifest = runtime_trace_package_manifest(path)
@@ -340,21 +370,28 @@ def project_runtime_trace_packages(
             for action in actions
             if isinstance(action.get("request_id"), str)
         ]
+        profile = str(manifest.get("profile", ""))
         if request_ids and all(request_id in answered for request_id in request_ids):
             continue
         row = list_olm_return_candidates.build_row(path)
-        row["profile"] = manifest.get("profile", "")
+        row["profile"] = profile
         row["request_ids"] = request_ids
         row["plugin_areas"] = [
             str(action.get("plugin_area", ""))
             for action in actions
             if action.get("plugin_area")
         ]
-        profile = str(row.get("profile") or path.stem)
-        previous = latest_by_profile.get(profile)
+        profile_key = str(row.get("profile") or path.stem)
+        previous = latest_by_profile.get(profile_key)
         if previous is None or float(row["mtime"]) > float(previous["mtime"]):
-            latest_by_profile[profile] = row
+            latest_by_profile[profile_key] = row
     priority = [
+        "smoother2-legacy-cce0-internals-trace",
+        "smoother2-legacy-cce0-pixel-trace",
+        "smoother2-legacy-u8-pixel-trace",
+        "smoother2-legacy-u8-writer-trace",
+        "smoother2-legacy-writeback-extract",
+        "dense-live-followup",
         "smoother2",
         "olmblur",
         "colorkey",

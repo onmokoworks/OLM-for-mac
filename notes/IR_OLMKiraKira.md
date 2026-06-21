@@ -21,7 +21,7 @@
 | Temp extents use truncation after `+4.0f`, then clamp to at least source size + 4. | `FUN_18114f4a0`, `.rdata DAT_18148b830 = 4.0f`. | binary-grounded |
 | Ray helper uses centered ROI/copy, forward `warpAffine`, three horizontal `boxFilter` passes, rotate-back, and final centered copy. | `FUN_181150790`, `FUN_181156cd0`, `FUN_18115cfb0`, `FUN_181297ac0`. | binary-grounded |
 | `boxFilter` args are `ksize=(length,1)`, `anchor=(-1,-1)`, `normalize=true`, `borderType=4` (`BORDER_REFLECT_101`), float output. | `FUN_181280bc0` call audit and negative probes. | binary-grounded |
-| First `boxFilter` pass dispatches to OpenCV 4.5.5 AVX2 branch `FUN_1812e39d0` on the traced Windows machine. | `refs/reports/runtime_trace_summary.md`, `kirakira_opencv455_primitive_fact_20260618`. | runtime-trace |
+| First `boxFilter` pass dispatches to OpenCV 4.5.5 AVX2 branch `FUN_1812e39d0` on the traced Windows machine; the feature gate is `0xb` / `CV_CPU_AVX2`. | `refs/reports/runtime_trace_summary_hardpaths_20260621_041022.md`, `kirakira_opencv455_primitive_fact_20260618`. | runtime-trace |
 | `warpAffine` calls pass `INTER_LINEAR`, no `WARP_INVERSE_MAP`, `BORDER_CONSTANT`, zero border value. | `FUN_181297ac0` wrapper call audit. | binary-grounded |
 | The 2026-06-20 wrapper trace confirmed two `warpAffine` wrapper hits, three `boxFilter` wrapper hits, dsize/temp `1924x1924`, length `50`, and `boxFilter` ksize `(50,1)`. | `refs/reports/runtime_trace_summary_kirakira_stage_values_20260620.md`. | runtime-trace |
 
@@ -172,3 +172,23 @@ Local comparison helper:
 - 2026-06-20 read-only audit conclusion after return: the first wrapper pass
   was too shallow to separate first divergence. The next trace should target
   concrete storage/sample values rather than wrapper entry alone.
+
+2026-06-21 deep witness plan:
+
+- Generated local OpenCV baseline witness plan:
+  `refs/reports/olmkirakira_trace_baseline_20260621_deep_witness_plan/witness_plan.md`
+  and
+  `refs/reports/olmkirakira_trace_baseline_20260621_deep_witness_plan/witness_plan.json`.
+- The plan fixes three ray-helper witness points for the vertical len=50 case:
+  center `(source 960,540 / temp 962,962)`, ray-length-up
+  `(source 960,490 / temp 962,912)`, and ray-length-right
+  `(source 1010,540 / temp 1012,962)`.
+- Required Windows evidence is now stage-by-stage values at those exact
+  coordinates after center-copy, forward warp, each of the three boxFilter
+  passes, rotate-back, final copy, and then aggregation/merge compose samples.
+- Prepared runtime trace profile:
+  `kirakira-stage-values-deep` / request id
+  `kirakira_fun_181150790_deep_stage_values_20260621`.
+- This should classify the first divergence as one of:
+  center-copy, forward-warp, box-filter-pass-1/2/3, rotate-back, final-copy,
+  aggregation, or compose. Wrapper hit counts alone remain insufficient.

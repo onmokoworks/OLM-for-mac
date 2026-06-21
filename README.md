@@ -54,7 +54,8 @@ Mac plug-in project は 10 本あります。
 | OLMRadialBlur | 一部 binary-grounded。Inner / Edge Fade などは未完 |
 | OLMKiraKira | ray order などはかなり分離済み。OpenCV 4.5.5 AVX2 / stage trace 待ち |
 
-詳しい台帳は `notes/CONFORMANCE_LEDGER.md`、用語定義は
+詳しい台帳は `notes/CONFORMANCE_LEDGER.md`、IR の入口は
+`notes/IR_INDEX_20260621.md`、用語定義は
 `notes/AE_EXACT_CONFORMANCE.md` にあります。
 
 ## 未解決点
@@ -162,7 +163,7 @@ runtime trace の返却を取り込みます。
 ```sh
 python3 scripts/intake_olm_return.py path/to/returned_runtime_trace.zip \
   --kind runtime-trace \
-  --runtime-package refs/runtime_trace_packages/olm_runtime_trace_olmsmoother2_legacy_key_gamma_20260620_154802.zip
+  --runtime-package refs/runtime_trace_packages/olm_runtime_trace_smoother2_legacy_cce0_internals_trace_20260621_011845.zip
 ```
 
 summary / comparison index は `refs/reports/` に日付時刻付きで自動保存されます。
@@ -176,21 +177,26 @@ python3 scripts/intake_olm_return.py path/to/returned_ae_host_or_pixel.zip \
 
 ## 現在の次アクション
 
-次に Windows 側へ送る候補は、Smoother2 legacy key/gamma を先頭にした
-runtime trace / AE validation bundle です。
+Smoother2 legacy の古い 20260605 参照 PNG は、現行 Windows AEX の
+Software 出力と一致しないため正解データから外します。次は同じ
+12 ケースを現行 AEX で取り直します。
 
 ```txt
-handoffs/windows_batch/olm_windows_action_bundle_20260620_154802_smoother_legacy_priority.zip
+refs/reference_request_packages/olm_reference_request_smoother2_legacy_full_current_aex_recapture_20260621_153910.zip
 ```
 
-これは git ignore されるローカル handoff artifact です。返却後は
-`scripts/intake_olm_return.py` で summary と comparison index を作ります。
+返却後は `scripts/intake_olm_return.py` で取り込み、Mac 側は返却zip内の
+source input PNGを使って比較します。AE が保存した before-effects PNG は
+premultiply 済みになることがあるため、CLI入力の正解には使いません。
+取り込み手順と優先順位は `notes/WINDOWS_RETURN_INTAKE_PLAYBOOK_20260619.md`
+にあります。
 
 ## 主要メモ
 
 ```txt
 notes/CONFORMANCE_LEDGER.md
 notes/AE_EXACT_CONFORMANCE.md
+notes/IR_INDEX_20260621.md
 notes/BINARY_GROUNDED_IR_TEMPLATE.md
 notes/BIT_DEPTH_REFERENCE_STRATEGY.md
 notes/PORTING_BOARD.md

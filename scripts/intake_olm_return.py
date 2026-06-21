@@ -258,6 +258,8 @@ def detect_kind(root: Path) -> str | None:
             return "runtime-trace"
         if isinstance(data.get("results"), list):
             return "runtime-trace"
+        if data.get("request_id") and data.get("status"):
+            return "runtime-trace"
 
     if list(root.rglob("AE_VALIDATION_EXACT_REPORT.json")):
         return "ae-pixel-validation"

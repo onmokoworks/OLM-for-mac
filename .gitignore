@@ -47,6 +47,7 @@ refs/mac_cli/
 refs/diff/
 refs/reports/
 refs/runs/
+refs/returns/
 refs/win_references/
 refs/runtime_trace_packages/
 handoff/

@@ -6,7 +6,10 @@
 - Feature/path: 8bpc alpha-mask distance gradation, interpolation, optional blur
 - Bit depth: 8bpc documented here; 16/32bpc still need references
 - Reference set: `refs/win_references/20260605_extra/OLMDistanceGradation`
-- Current status: `guarded residual`; not `CLI exact`, not `AE exact`
+- Current status: packaged 8bpc Mac AE validation is `AE exact` for the
+  basic/extended/blur request sets. The AE-free CLI still has guarded
+  residuals, so the shared binary-grounded field-prep/OpenCV spec is not yet
+  complete. 16/32bpc are still untested.
 
 ## Source Evidence
 
@@ -123,9 +126,12 @@ is `1 - X`.
 
 | Case group | Bit depth | Expected status | Current result | Next evidence |
 | --- | --- | --- | --- | --- |
-| basic 12-case smoke | 8bpc | guarded | 2026-06-19 rerun passes current guard: worst `case_0007/0009 max=7 mean=0.0909`; residual remains | binary-ground distance normalization and compare against normalized Software refs |
-| extended non-blur 16-case smoke | 8bpc | guarded | 2026-06-19 rerun passes current loose guard, but with large non-exact residuals: `case_0008 max=254`, `case_0011 max=254`, `case_0012 max=251`, `case_0020..0023 max=238` | binary-ground interpolation, Constant field-prep, and render-mode branch details before tuning |
-| blur `case_0029` | 8bpc | guarded | 2026-06-19 rerun: `max=23 mean=0.2827`; tiny non-grounded improvement from Constant+Blur binary-field handling | trace/OpenCV 4.5.5 `distanceTransform` / `GaussianBlur` behavior |
+| basic 12-case AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: 12/12 `max_diff=0` | 16/32bpc references; binary-ground field prep so CLI and AE-host paths share one explanation |
+| extended non-blur 16-case AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: 16/16 `max_diff=0` | 16/32bpc references; binary-ground Constant/render-mode branches |
+| blur `case_0029` AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: `max_diff=0` | trace/OpenCV 4.5.5 `distanceTransform` / `GaussianBlur` behavior |
+| AE-free basic 12-case smoke | 8bpc | guarded | 2026-06-19 rerun passes current guard: worst `case_0007/0009 max=7 mean=0.0909`; residual remains | binary-ground distance normalization and compare against normalized Software refs |
+| AE-free extended non-blur 16-case smoke | 8bpc | guarded | 2026-06-19 rerun passes current loose guard, but with large non-exact residuals: `case_0008 max=254`, `case_0011 max=254`, `case_0012 max=251`, `case_0020..0023 max=238` | binary-ground interpolation, Constant field-prep, and render-mode branch details before tuning |
+| AE-free blur `case_0029` | 8bpc | guarded | 2026-06-19 rerun: `max=23 mean=0.2827`; tiny non-grounded improvement from Constant+Blur binary-field handling | trace/OpenCV 4.5.5 `distanceTransform` / `GaussianBlur` behavior |
 | Constant field-prep witnesses `case_0020/0022/0029` | 8bpc | blocked on runtime proof | current Constant binarization is much closer than compose-pass-through, but not exact | Windows runtime trace package `distancegradation-field-prep` |
 
 ## Validation Packages
@@ -141,8 +147,10 @@ is `1 - X`.
 - Mac AE exact check, blur normalized Software refs:
   `refs/ae_pixel_validation_packages/olm_ae_pixel_validation_olmdistancegradation_blur_exact_20260619_032933.zip`.
 
-The AE exact packages intentionally use zero thresholds. They are not evidence
-of completion until returned Mac AE renders verify with `max_diff=0`.
+The AE exact packages intentionally use zero thresholds. The 2026-06-19 returns
+verified the packaged 8bpc slices with `max_diff=0`; this is completion for
+those slices only, not for the still-untested 16/32bpc paths or the AE-free CLI
+model.
 
 ## Open Questions
 

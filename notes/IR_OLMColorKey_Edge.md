@@ -5,7 +5,10 @@
 - Plug-in: OLM Color Key
 - Feature/path: 8bpc Edge Thin erode/dilate and Edge Blur after core keying
 - Bit depth: 8bpc documented here; 16/32bpc still need references
-- Current status: guarded residual / partly binary-grounded; not AE exact
+- Current status: packaged 8bpc AE-host return is exact for core RGB,
+  Edge Thin, and Edge Blur `case_0008`; Edge Blur stress `case_0009` remains
+  non-exact. AE-free CLI residuals remain useful diagnostics, but the active
+  compatibility risk is the Edge Blur `case_0009` seed/distance/apply path.
 
 ## Source Evidence
 

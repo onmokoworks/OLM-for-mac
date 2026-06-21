@@ -18,7 +18,7 @@ See `notes/AE_EXACT_CONFORMANCE.md` for definitions.
 | OLMDistanceGradation basic/extended/blur | AE exact for packaged 8bpc slices | untested | untested | 2026-06-19 AE pixel return is exact for all packaged basic/extended/blur cases (`12 + 16 + 1` cases, `max_diff=0`); local reports live under `refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmdistancegradation_*`. CLI residuals still indicate the AE plug-in path and AE-free harness are not yet described by a fully binary-grounded shared spec. Ghidra confirms 8bpc compose is an AE iterate callback over a prebuilt field world and reads the field green byte. Current forecast IR: `notes/IR_OLMDistanceGradation.md`. | Binary-ground field prep/OpenCV args enough to make the CLI harness explain the AE exact result; then add 16/32bpc references. |
 | OLMSmoother v1 via Smoother2 compatibility | AE exact for packaged 8bpc v1 slices | untested | untested | 2026-06-20 AE pixel rerun corrected the v1 comp to `960x540`; `case_0001..0003` are exact with `max_diff=0`. Local report: `refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmsmoother_v1_20260619/reports/ae_pixel_exact.json`. | Decide whether v1 remains an independent compatibility path or is formally mapped to Smoother2; add 16/32bpc refs if v1 remains supported. |
 | OLMSmoother2 no-key grid | AE exact for packaged 8bpc grid | untested | untested | 2026-06-19 and 2026-06-20 AE pixel returns are exact for all 12 no-key grid cases with `max_diff=0`; latest local report: `refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmsmoother2_no_key_grid_20260619/reports/ae_pixel_no_key_grid_exact.json`. This supersedes the earlier AE-free near-exact residual as an AE-host conformance fact. Current IR: `notes/IR_OLMSmoother2.md`. | Optional runtime trace only for binary-grounding if it returns; do not spend the next Windows trip on no-key tuning. |
-| OLMSmoother2 legacy key/gamma slices | guarded residual | untested | untested | 2026-06-20 AE pixel rerun still fails all 7 legacy cases (`max=101/254`, mean up to `0.728498`); local report: `refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmsmoother2_legacy_20260619/reports/ae_pixel_legacy_exact.json`. The broader `smoke_olmsmoother2_cli.py` remains expected-red for key/gamma paths. | Prioritize runtime trace/static proof for legacy key/gamma setup and writeback; these are now the Smoother blocker, not v1 or no-key grid. |
+| OLMSmoother2 legacy current-AEX witness / full recapture | current-reference pending | untested | untested | 2026-06-21 recapture confirms the current Windows AE 2026 Software AEX output for `case_0001 (712,406)` is `[106,106,106,135]`, matching runtime trace and Mac CLI with the included source input. The old `20260605_extra/OLMSmoother2/case_0001.png` has `[207,207,207,207]` and is retired as a correctness target. AE-saved before/control PNGs premultiply the source to `[168,168,168,207]`, so source-equivalence CLI checks must use the returned source input. Full 12-case current-AEX recapture request is `refs/reference_requests/smoother2_legacy_full_current_aex_recapture_20260621.json`. | Send/import the full current-AEX recapture package, then classify Smoother2 legacy against that current Software reference. |
 | OLMDirectionalBlur | blocked | untested | untested | Broad PNG toggles rejected; binary facts partly documented. | New concrete asm/runtime evidence before more tuning. |
 | OLMRadialBlur Zoom / tiny Rotation | guarded | untested | untested | Latest C++ guards pass: Zoom `case_0009 max=1 mean=0.0046`; tiny Rotation `case_0010 max=255 mean=0.0104` under a mean guard. These are not exact gates. Current IR: `notes/IR_OLMRadialBlur.md`. | AE exact check for Zoom slices and binary-ground the tiny Rotation high-max residual before claiming compatibility. |
 | OLMRadialBlur Inner | binary-grounded / guarded | untested | untested | Runtime trace confirmed `rb_inner_only_strength_small` helper effective span resolves to `31`; C++ CLI default now mirrors the span-31 population and the span-stat guard passes. Old Inner remains expected-red: `case_0011 max=255 mean=23.0495`, `case_0012 max=255 mean=16.0039`, `case_0013 max=238 mean=18.0193`. Current IR: `notes/IR_OLMRadialBlur.md`. | Binary-ground remaining sampler/prepass/writeback residual, then Mac AE exact check. |
@@ -51,6 +51,260 @@ See `notes/AE_EXACT_CONFORMANCE.md` for definitions.
     rounding; `case_0007` uses the Legacy `+0x7FDF` writeback family.
   - `kirakira_fun_181150790_stage_values_20260620`: wrapper choreography is
     confirmed, but stage values are still `trace-too-sparse`.
+
+- Imported `~/Downloads/olm_runtime_trace_dense_all_20260620_164214_return_windows.zip`.
+- Stored copy:
+  `handoffs/windows_returns/20260620_dense_all_runtime_trace/olm_runtime_trace_dense_all_20260620_164214_return_windows.zip`.
+- Summary/comparison files:
+  - `refs/reports/dense_runtime_trace_20260620/runtime_trace_summary_dense_all_20260620_184543.md`
+  - `refs/reports/dense_runtime_trace_20260620/runtime_trace_comparisons/dense_all_20260620_184543/index.md`
+- Audit result: the zip is machine-readable and non-blank, but it mostly merges
+  existing Windows trace evidence. The included
+  `DENSE_RUNTIME_TRACE_RETURN_AUDIT_20260620.md` says no new live debugger trace
+  was captured for `OLMSmoother2` legacy key/gamma, `OLMRadialBlur`,
+  `OLMDirectionalBlur`, or `OLMToonDilate`; those placeholders were converted
+  to explicit `not traced / not isolated` strings.
+- Useful classifier outputs from the merged evidence:
+  - `OLMBlur`: `legacy-border-or-all-same`.
+  - `OLMColorKey Edge`: `edge-thin-border-threshold`.
+  - `OLMDistanceGradation`: `constant-field-prep`.
+  - `OLMKiraKira`: still `trace-too-sparse`.
+  - `OLMSmoother2` legacy: still needs actual key/mask/class-plane/writeback
+    live values despite the formal `answered` status.
+- Follow-up package generated to make that boundary explicit:
+  `refs/runtime_trace_packages/olm_runtime_trace_dense_live_followup_20260620_184655.zip`.
+  This package forbids satisfying the request by merging old templates or
+  replacing requested values with `not isolated`.
+
+- Imported `~/Downloads/olm_runtime_trace_dense_live_followup_20260620_184655_return_windows_all_attempts.zip`.
+- Stored copy:
+  `handoffs/windows_returns/20260620_dense_live_followup_all_attempts/olm_runtime_trace_dense_live_followup_20260620_184655_return_windows_all_attempts.zip`.
+- Summary/comparison files:
+  - `refs/reports/dense_live_followup_20260620/runtime_trace_summary_dense_live_followup_20260620_213031.md`
+  - `refs/reports/dense_live_followup_20260620/runtime_trace_comparisons/dense_live_followup_20260620_213031/index.md`
+- Audit result: this return is materially better than the earlier dense-all
+  return. It attempted all 9 request IDs under Windows AE/CDB, did not merge
+  older return zips as answers, and did not use `not isolated` placeholders to
+  fill values.
+- Useful runtime facts:
+  - `OLMSmoother2` legacy: breakpoints at `+0x36e0`, `+0x10550`, and
+    `+0xc280` were armed. Hit counts are `2`, `6440`, and `44451`
+    respectively before the run was stopped for timeout/log growth. The
+    included excerpt preserves hit markers/counts but not the actual
+    register/stack dumps around the two `+0x36e0` writeback-candidate hits.
+  - `OLMBlur`: `case_0006` `(498,940)` watchpoint hit and recorded
+    `xmm0=[0,0,0,185]`, `xmm6=[0,0,0,0.5]`, output bytes `ff b9 00 00`;
+    `case_0007` rendered but the selected watchpoint timed out.
+  - `OLMRadialBlur`: Inner rerun hit `+0x26e5` and `+0x1d18`, with
+    `ctx+0x3a9ec=0x1f`, `r14d=0x1f`, `edx=1`, `r8d=0`, `r9d=0`, and
+    `eax=0xbb8`, reinforcing the span-31 fact.
+  - `OLMColorKey`: Edge rerun hit `+0x94b0` and `+0x8c90`; CDB logs contain
+    register/stack snapshots, but AE later exited with an OLMColorKey access
+    violation.
+  - `OLMKiraKira`: `warpAffine`, `boxFilter`, and AVX2 branch breakpoints hit;
+    the intended `FUN_181150790` entry did not hit before an OLMKiraKira access
+    violation.
+  - `OLMSmoother2` no-key: `FUN_180010550` D7CA entry/return hits were captured
+    for key `0x50000001`; this is optional binary-grounding because the AE grid
+    already passes.
+- Failed-but-useful attempts:
+  - `OLMDistanceGradation`: module loaded and breakpoints were armed, but no
+    requested breakpoint hit before AE exit/crash.
+  - `OLMDirectionalBlur`: AE hit a WINHTTP access violation before the module
+    resolved/loaded for the request.
+  - `OLMToonDilate`: module loaded and breakpoints were armed, but they did not
+    hit before an OLMToonDilate access violation.
+- Next runtime package generated from this result:
+  `refs/runtime_trace_packages/olm_runtime_trace_smoother2_legacy_writeback_extract_20260620_*.zip`.
+  This asks Windows to extract the actual register/stack windows around the two
+  `OLMSmoother2+0x36e0` hits from the existing 192 MB full log, instead of
+  rerunning the full all-plugin trace.
+
+- Imported `~/Downloads/olm_runtime_trace_smoother2_legacy_writeback_extract_20260620_213629_return_windows.zip`.
+- Stored copy:
+  `handoffs/windows_returns/20260620_smoother2_legacy_writeback_extract/olm_runtime_trace_smoother2_legacy_writeback_extract_20260620_213629_return_windows.zip`.
+- Summary file:
+  `refs/reports/smoother2_legacy_writeback_extract_20260620/runtime_trace_summary_smoother2_legacy_writeback_extract_20260620_231855.md`.
+- Result: `failed_no_writeback_hits_found`, but this is useful proof. The
+  existing full log was available, but its two `HIT_FUN_1800036e0_writeback_candidate`
+  matches were only breakpoint setup/listing lines, not actual hits. A scoped
+  rerun of `ae_pixel_olmsmoother2_legacy_20260619` completed the legacy cases,
+  but `OLMSmoother2+0x36e0` never fired.
+- Interpretation: `+0x36e0` / `FUN_1800036e0` is the float writer, not the
+  active 8bpc writer for this AE pixel validation path. The 8bpc writer target
+  is `+0x3370` / `FUN_180003370`, via wrapper `+0x3d00` / `FUN_180003d00`.
+- Next package generated from this failed trace:
+  `refs/runtime_trace_packages/olm_runtime_trace_smoother2_legacy_u8_writer_trace_20260620_*.zip`.
+  This asks Windows to trace the actual 8bpc writer instead of repeating the
+  failed float-writer breakpoint.
+
+- Imported `~/Downloads/olm_runtime_trace_smoother2_legacy_u8_writer_trace_20260620_232223_return_windows.zip`.
+- Stored copy:
+  `handoffs/windows_returns/20260620_smoother2_legacy_u8_writer_trace/olm_runtime_trace_smoother2_legacy_u8_writer_trace_20260620_232223_return_windows.zip`.
+- Summary/comparison files:
+  - `refs/reports/smoother2_legacy_u8_writer_trace_20260620/runtime_trace_summary_smoother2_legacy_u8_writer_trace_20260620_233427.md`
+  - `refs/reports/smoother2_legacy_u8_writer_trace_20260620/runtime_trace_comparisons/smoother2_legacy_u8_writer_trace_20260620_233427/index.md`
+- Runtime facts:
+  - `OLMSmoother2+0x3370` / `FUN_180003370` hit 26 times for
+    `ae_pixel_olmsmoother2_legacy_20260619 case_0001`; first 20 entry hits
+    were returned with register, stack, and p5-p9 memory dumps.
+  - `OLMSmoother2+0x3d00` / `FUN_180003d00` wrapper hit once.
+  - This confirms the active 8bpc writer path. It is still entry-level proof:
+    loop locals, `FUN_18000cce0` output floats, and packed store bytes were not
+    decoded from the entry breakpoints.
+- Local diff witness selected for the next conditional trace:
+  `case_0001` pixel `(712,406)`, expected RGBA `[207,207,207,207]`, current
+  candidate RGBA `[106,106,106,135]`, max diff `101`.
+- Next package generated:
+  `refs/runtime_trace_packages/olm_runtime_trace_smoother2_legacy_u8_pixel_trace_20260620_*.zip`.
+  This asks Windows to break inside `FUN_180003370` at `+0x3510` and `+0x360e`
+  only when local x/y equals `(712,406)`.
+
+- Imported `~/Downloads/olm_runtime_trace_smoother2_legacy_u8_pixel_trace_20260620_233732_return_windows.zip`.
+- Stored copy:
+  `handoffs/windows_returns/20260621_smoother2_legacy_u8_pixel_trace/olm_runtime_trace_smoother2_legacy_u8_pixel_trace_20260620_233732_return_windows.zip`.
+- Summary files:
+  - `refs/reports/smoother2_legacy_u8_pixel_trace_20260621/runtime_trace_summary_smoother2_legacy_u8_pixel_trace_20260621_0040.md`
+  - `refs/reports/smoother2_legacy_u8_pixel_trace_20260621/cdb_console_final_entrycmd_utf16.txt`
+- Runtime fact:
+  - The high-diff pixel trace partially answered the request. It did not
+    capture the earlier `+0x3510` float snapshot, but it captured the packed
+    writer value at `OLMSmoother2+0x3610`, immediately after the final
+    `MOV dword ptr [RSI],EAX` for the target output address.
+  - Observed packed value: `EAX=c8c8c887`, little-endian bytes
+    `87 c8 c8 c8`, interpreted as A/R/G/B `[135,200,200,200]`.
+  - AE PNG candidate at `(712,406)` is `[106,106,106,135]`, which matches
+    premultiplying the stored straight-ish RGB by alpha:
+    `round(200 * 135 / 255) = 106`.
+- Interpretation: the case_0001 max residual is not a byte rounding/store
+  problem. The writer is receiving alpha/RGB that already imply the failing
+  PNG value. The next proof should move upstream to `FUN_18000cce0` /
+  polygon/composite output for `(712,406)`, or to the class-plane/polygon
+  inputs that feed that composite.
+
+- Imported `~/Downloads/olm_runtime_trace_smoother2_legacy_cce0_pixel_trace_20260621_005332_return_windows.zip`.
+- Stored copy:
+  `handoffs/windows_returns/20260621_smoother2_legacy_cce0_pixel_trace/olm_runtime_trace_smoother2_legacy_cce0_pixel_trace_20260621_005332_return_windows.zip`.
+- Summary files:
+  - `refs/reports/smoother2_legacy_cce0_pixel_trace_20260621/runtime_trace_summary_smoother2_legacy_cce0_pixel_trace_20260621_0145.md`
+  - `refs/reports/smoother2_legacy_cce0_pixel_trace_20260621/cdb_console_final_datwatch_utf16.txt`
+- Runtime fact:
+  - The target-pixel trace answered the upstream composite question at the
+    `FUN_18000cce0` return boundary. For `case_0001 (712,406)`, cce0 returned
+    floats `[0.57797289, 0.57797289, 0.57797289, 0.52794117]`.
+  - The same writer frame packed `EAX=c8c8c887`, i.e. little-endian bytes
+    `87 c8 c8 c8` / A/R/G/B `[135,200,200,200]`.
+  - Writer flag byte `[RBP+0x19]` was `00`; no writer-side premultiply branch
+    explains the residual.
+  - The PNG candidate `[106,106,106,135]` follows from AE/export
+    premultiplication of the stored straight RGB (`round(200 * 135 / 255)`).
+- Interpretation: final u8 writeback, writer premultiply selection, and the
+  RGB gamma/OETF packing step are no longer the primary suspects for this
+  witness pixel. The remaining mismatch is inside `FUN_18000cce0` or earlier:
+  polygon construction (`FUN_18000c280`), class-plane/key setup, or the
+  bb10/c0d0/ab00/b120 composite stages.
+- Next package generated:
+  `refs/runtime_trace_packages/olm_runtime_trace_smoother2_legacy_cce0_internals_trace_*.zip`.
+  It asks Windows for the same target pixel but with stage-level cce0 internals:
+  after `FUN_18000c280`, before/after `FUN_18000bb10`, after
+  `FUN_18000c0d0`, after `FUN_18000ab00`, after `FUN_18000b120`, and final
+  cce0 output.
+
+- Imported `~/Downloads/olm_runtime_trace_smoother2_legacy_cce0_internals_trace_20260621_011845_return_windows.zip`.
+- Stored copy:
+  `refs/returns/windows/20260621_011845_smoother2_cce0_internals/olm_runtime_trace_smoother2_legacy_cce0_internals_trace_20260621_011845_return_windows.zip`.
+- Summary files:
+  - `refs/reports/runtime_trace_summary.json`
+  - `refs/reports/runtime_trace_summary.md`
+- Result: `failed_partial`, and intentionally not an answered internals trace.
+  The target-pixel `FUN_18000cce0` stage chain for `case_0001 (712,406)` was
+  not captured.
+- Useful facts:
+  - `OLMSmoother2+0xcd5f` is reachable; an unconditional probe hit 64 times.
+  - `RSI` at `+0xcd5f` points to x/y dwords, but the target qword
+    `00000196\`000002c8` was not seen by the attempted coordinate conditions.
+  - At `+0xcd5f`, `mov r14,[rbp+0x90]` has not executed yet; polygon count
+    should be read from `[rbp+0x90]` or after stepping the instruction.
+- Interpretation: the next trace should not repeat broad coordinate filters at
+  `+0xcd5f`. It should drive from the already successful writer/data-watch
+  target or a target output-address watchpoint back into `FUN_18000cce0` and
+  then collect the stage internals.
+- Next package supersedes the failed broad internals request with
+  `olmsmoother2_legacy_cce0_internals_r9_callsite_trace_20260621`: break at
+  `OLMSmoother2+0x350b` when `dwo(@r9)==0x2c8` and `dwo(@r9+4)==0x196`, then
+  collect one-shot `FUN_18000cce0` stage values.
+
+- Imported `~/Downloads/olm_runtime_trace_smoother2_legacy_cce0_internals_r9_callsite_20260621_022708_return_windows.zip`.
+- Stored copy:
+  `refs/returns/windows/20260621_022708_smoother2_cce0_internals_r9_callsite/olm_runtime_trace_smoother2_legacy_cce0_internals_r9_callsite_20260621_022708_return_windows.zip`.
+- Summary files:
+  - `refs/reports/runtime_trace_summary.json`
+  - `refs/reports/runtime_trace_summary.md`
+- Result: `failed_partial`. The `OLMSmoother2+0x350b` breakpoint with
+  `dwo(@r9)==0x2c8 && dwo(@r9+4)==0x196` was installed exactly as requested,
+  but the target callsite condition did not hit before AE completed and reached
+  the known shutdown AV.
+- Interpretation: coordinate-only filtering is still too fragile for this
+  target. The next request should reuse the successful writer-entry/data-watch
+  anchor: compute `$t3` at `OLMSmoother2+0x3370`, stop at `+0x34b0` when
+  `@rsi == @$t3`, then trace the same `FUN_18000cce0` internal stages before
+  the final `+0x3610` store.
+
+- Imported `~/Downloads/olm_runtime_trace_smoother2_legacy_cce0_internals_targetaddr_20260621_025613_return_windows.zip`.
+- Stored copy:
+  `refs/returns/windows/20260621_025613_smoother2_cce0_internals_targetaddr/olm_runtime_trace_smoother2_legacy_cce0_internals_targetaddr_20260621_025613_return_windows.zip`.
+- Summary files:
+  - `refs/reports/runtime_trace_summary.json`
+  - `refs/reports/runtime_trace_summary.md`
+- Result: `failed_partial`. Writer entry `+0x3370` did execute and computed
+  latest candidate addresses `$t1=000001cd\`22545c20`,
+  `$t2=000001cd\`23c1a020`, `$t3=000001cd\`2145a020`, but the requested
+  `+0x34b0 @rsi == @$t3` condition did not hit.
+- Interpretation: `$t3` must not be assumed as the sole output-world owner in
+  this run. The next request should arm write watchpoints for all `$t1/$t2/$t3`
+  and compare `+0x34b0` against all three candidates. If internals still do
+  not hit, the return must at least identify which candidate receives the
+  target final write.
+- Imported `~/Downloads/olm_runtime_trace_smoother2_legacy_cce0_internals_multiaddr_probe_20260621_031230_return_windows.zip`.
+- Stored copy:
+  `refs/returns/windows/20260621_031230_smoother2_cce0_internals_multiaddr_probe/olm_runtime_trace_smoother2_legacy_cce0_internals_multiaddr_probe_20260621_031230_return_windows.zip`.
+- Result: `failed_partial`, but with a useful new fact: `$t3=00000272\`2244a020`
+  receives the target pixel write at `OLMSmoother2+0x3610`; the store value is
+  still `EAX=00000000c8c8c887` and stack xy is `(712,406)`.
+- Interpretation: `+0x34b0` is the wrong/too-fragile anchor for this witness.
+  The next package uses the confirmed `$t3` output address at the actual
+  pre-call site: break at `OLMSmoother2+0x350b` when `@rsi == @$t3`, then arm
+  the `FUN_18000cce0` internal stage probes.
+- Imported `~/Downloads/olm_runtime_trace_smoother2_legacy_cce0_internals_t3_rsi_callsite_20260621_032645_return_windows.zip`.
+- Stored copy:
+  `refs/returns/windows/20260621_032645_smoother2_cce0_internals_t3_rsi_callsite/olm_runtime_trace_smoother2_legacy_cce0_internals_t3_rsi_callsite_20260621_032645_return_windows.zip`.
+- Result: `failed_partial`. The `+0x350b @rsi == @$t3` pre-call breakpoint did
+  not hit, and the independent `+0x350b @rdi==0x2c8 && @r14==0x196` check also
+  completed without a hit. This makes `+0x350b` unsuitable as the next anchor.
+- Interpretation: the next package anchors on the reliable `+0x3610` writer
+  stop and asks Windows to dump/replay the reconstructed `FUN_18000cce0`
+  arguments from that writer frame.
+- Imported `~/Downloads/olm_runtime_trace_smoother2_legacy_cce0_internals_replay_from_writer_20260621_132250_return_windows.zip`.
+- Stored copy:
+  `refs/returns/windows/20260621_132250_smoother2_cce0_internals_replay_from_writer/olm_runtime_trace_smoother2_legacy_cce0_internals_replay_from_writer_20260621_132250_return_windows.zip`.
+- Result: `failed_partial`, but useful. Windows skipped unsafe live replay and
+  returned the reconstructed `FUN_18000cce0` argument block plus returned floats.
+  Mac CLI stage trace now matches the Windows CPU AEX witness:
+  Windows `cce0=[0.57797289,0.57797289,0.57797289,0.52794117]`; Mac
+  `cce0_after_b120=[0.57797277,0.57797277,0.57797277,0.52794117]`.
+- Interpretation: the old `case_0001` legacy PNG residual is now a reference
+  provenance problem, not a proven algorithm bug. A new Windows reference
+  request was added:
+  `refs/reference_requests/smoother2_legacy_current_aex_recapture_20260621.json`.
+- Imported `~/Downloads/olm_reference_return_windows_smoother2_legacy_current_aex_recapture_20260621.zip`.
+- Stored copy:
+  `refs/returns/windows/20260621_smoother2_legacy_current_aex_recapture/olm_reference_return_windows_smoother2_legacy_current_aex_recapture_20260621.zip`.
+- Imported reference:
+  `refs/win_references/olm_reference_return_windows_smoother2_legacy_current_aex_recapture_20260621/OLMSmootherv2/reference_manifest.json`.
+- Result: current Windows AE 2026 Software AEX output at `(712,406)` is
+  `[106,106,106,135]`, matching Mac CLI direct-source output and the runtime
+  trace. The old legacy PNG `[207,207,207,207]` should not be used as a CPU
+  Software correctness target for this witness.
 
 Re-import command:
 
@@ -151,6 +405,24 @@ reference PNGs with `max_diff=0`.
     up to `254`.
 - No runtime trace result was included in this return; the runtime trace zips in
   the bundle are request packages only.
+
+- Imported `~/Downloads/olm_windows_action_bundle_20260619_smoother2_legacy_followup_addendum_20260620.zip`.
+- Stored copy:
+  `handoffs/windows_returns/20260620_smoother2_legacy_followup_addendum/olm_windows_action_bundle_20260619_smoother2_legacy_followup_addendum_20260620.zip`.
+- Local verification directory:
+  `refs/reports/ae_host_validation_20260620_smoother2_legacy_followup/`.
+- This addendum is AE pixel validation evidence, not a CDB/runtime trace.
+- Exact-only result: the adjustment-layer rerun keeps
+  `OLMSmoother2` legacy key/gamma at `0/7` exact (`case_0001 max=101`,
+  other cases up to `254`).
+- `case_0001` parameter sweep did not improve the original result:
+  `Gamma Correction=0` and `GPU Rendering=2` matched original metrics,
+  while `Smoother Version=1`, `Gamma Correction=2`, `Smooth Range=1`, and
+  `Smoother Version=1 + Gamma Correction=0` were worse.
+- Interpretation: the residual is stable and unlikely to be caused by direct
+  layer vs adjustment layer, transient AE rendering, or those gross UI toggles.
+  The priority remains runtime/static proof around legacy key/gamma setup and
+  final writeback.
 
 - Imported `~/Downloads/olm_windows_action_bundle_20260619_041000_smoother_idx7_context_priority_progress_20260619_2335.zip`.
 - Stored copy:
