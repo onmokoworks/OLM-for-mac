@@ -189,7 +189,13 @@ def normalize_results(data: dict[str, Any], source_path: Path, source_root: Path
             raise ValueError(f"{source_path}: result #{index} missing request_id")
         status = str(row.get("status", "answered")).lower()
         summary = row.get("summary") or row.get("answer") or row.get("notes") or ""
-        observations = row.get("observations", row.get("values", row.get("fact", {})))
+        observations = row.get("observations", row.get("values", row.get("fact")))
+        if observations is None:
+            observations = {
+                key: value
+                for key, value in row.items()
+                if key not in {"request_id", "status", "summary", "answer", "notes"}
+            }
         normalized.append(
             {
                 "request_id": str(request_id),

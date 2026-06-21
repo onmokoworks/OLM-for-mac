@@ -877,3 +877,16 @@ with `effective_span=32`; adding `--inner-scatter-span-minus-one` writes
 but objdump still shows `FUN_180001c90` looping from offset `1` while
 `offset < effective_span`, not a confirmed AEX `span-1` rule. Keep the flag as
 a diagnostic until caller distance or table-divisor ownership is proven.
+
+2026-06-21 Mac-side audit while Smoother2 is paused: the broad old Inner force
+`--inner-source-scatter-prepass` does not move `case_0011/0012/0013`
+(`mean=23.0495/16.0039/18.0193`). The `param10` plane probe also rejects the
+simple alpha-plane explanation after the Quality/5 fix. Old Inner with
+`param10=one` or `factor` is equivalent (`mean=26.1424/10.1548/13.2004`),
+while `polar-alpha` and `prepass-alpha` both worsen to
+`30.4408/12.3134/18.4576`. Edge Fade shows the same shape:
+`one/factor=5.7425/4.7327/2.2927`, `polar-alpha=6.5374/5.4341/2.7749`,
+`prepass-alpha=7.2433/5.7656/2.7270`. The next high-value proof remains
+`FUN_180001c90` effective-length ownership: caller span, helper loop bound,
+table divisor/reindexing, or caller distance, rather than another alpha-plane
+or source-scatter/prepass flag flip.

@@ -11,6 +11,7 @@ from pathlib import Path
 
 
 REQUEST_ID = "kirakira_fun_181150790_stage_values_20260620"
+DEEP_REQUEST_ID = "kirakira_fun_181150790_deep_stage_values_20260621"
 
 
 def main() -> int:
@@ -189,6 +190,69 @@ def main() -> int:
         sparse_comparison = json.loads(sparse_output_json.read_text(encoding="utf-8"))
         if sparse_comparison.get("likely_next_focus") != "trace-too-sparse":
             print("[FAIL] sparse placeholder trace was treated as concrete evidence")
+            return 1
+        deep_summary = tmp_path / "runtime_summary_deep.json"
+        deep_output_json = tmp_path / "comparison_deep.json"
+        deep_summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": DEEP_REQUEST_ID,
+                            "status": "answered_partial",
+                            "summary": "synthetic deep stage trace",
+                            "observations": {
+                                "case_id": "kk_vertical_len50_brightness1_strength100",
+                                "stage_values": {
+                                    "after_box_filter_pass_1_ret_1151174": {
+                                        "center_temp_962_962": {"float": 0.30, "hex": "0x1.333334p-2"},
+                                        "ray_length_up_temp_962_912": {"float": 0.20, "hex": "0x1.99999ap-3"},
+                                        "ray_length_right_temp_1012_962": {"float": 0.10, "hex": "0x1.99999ap-4"},
+                                    },
+                                    "after_box_filter_pass_2_ret_11511c7": {
+                                        "center_temp_962_962": {"float": 0.28, "hex": "0x1.1eb852p-2"},
+                                    },
+                                    "after_box_filter_pass_3_ret_115121a": {
+                                        "center_temp_962_962": {"float": 0.27, "hex": "0x1.147ae2p-2"},
+                                    },
+                                },
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        deep_proc = subprocess.run(
+            [
+                py,
+                "scripts/compare_kirakira_stage_trace.py",
+                "--runtime-summary-json",
+                str(deep_summary),
+                "--local-trace-json",
+                str(local_trace),
+                "--output-json",
+                str(deep_output_json),
+            ],
+            cwd=repo,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        print(deep_proc.stdout, end="" if deep_proc.stdout.endswith("\n") else "\n")
+        if deep_proc.returncode != 0:
+            return deep_proc.returncode
+        deep_comparison = json.loads(deep_output_json.read_text(encoding="utf-8"))
+        if deep_comparison.get("request_id") != DEEP_REQUEST_ID:
+            print("[FAIL] deep comparison request_id mismatch")
+            return 1
+        if deep_comparison.get("likely_next_focus") != "forward-warp-or-boxfilter-input":
+            print("[FAIL] deep stage trace did not choose expected next focus")
+            return 1
+        if not deep_comparison.get("deep_stage_deltas"):
+            print("[FAIL] deep stage trace did not compute deltas")
             return 1
     print("[OK] KiraKira stage trace comparison smoke")
     return 0

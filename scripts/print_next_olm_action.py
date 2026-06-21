@@ -270,7 +270,14 @@ def ae_host_failure_classification(root: Path, ae_summary: dict[str, Any] | None
     summary_path = Path(str(ae_summary.get("path", "")))
     if not summary_path:
         return None
-    report_dir = summary_path.parents[1] if len(summary_path.parents) > 1 else root / "refs" / "reports"
+    if summary_path.is_dir():
+        report_dir = summary_path
+    elif summary_path.name == "AE_HOST_EXACT_SUMMARY.md":
+        report_dir = summary_path.parent
+    elif summary_path.parent.name == "reports":
+        report_dir = summary_path.parents[1]
+    else:
+        report_dir = summary_path.parent if summary_path.parent.exists() else root / "refs" / "reports"
     matches = sorted(
         report_dir.glob("ae_host_exact_failure_classification_*.md"),
         key=lambda path: path.stat().st_mtime,
@@ -355,6 +362,15 @@ def project_runtime_trace_packages(
         return []
     answered = set(trace_summary.get("answered_request_ids", [])) if trace_summary else set()
     answered.update(trace_summary.get("superseded_request_ids", []) if trace_summary else [])
+    stale_request_ids = {
+        # Superseded by the 2026-06-21 current-AEX residual/writer-backtrack/
+        # step-over returns. Re-sending these repeats the same low-repro CDB
+        # breakpoint path unless the Windows helper can freeze scheduling.
+        "olmsmoother2_legacy_current_aex_polygon_trace_20260621",
+        "olmsmoother2_legacy_current_aex_polygon_backtrack_trace_20260621",
+        "olmsmoother2_legacy_current_aex_polygon_stepover_trace_20260621",
+        "olmsmoother2_legacy_current_aex_residuals_trace_20260621",
+    }
     latest_by_profile: dict[str, dict[str, Any]] = {}
     for path in package_dir.glob("*.zip"):
         manifest = runtime_trace_package_manifest(path)
@@ -370,6 +386,8 @@ def project_runtime_trace_packages(
             for action in actions
             if isinstance(action.get("request_id"), str)
         ]
+        if request_ids and all(request_id in stale_request_ids for request_id in request_ids):
+            continue
         profile = str(manifest.get("profile", ""))
         if request_ids and all(request_id in answered for request_id in request_ids):
             continue

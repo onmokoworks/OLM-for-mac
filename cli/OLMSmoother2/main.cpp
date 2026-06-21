@@ -176,6 +176,8 @@ int main(int argc, char **argv) {
 	std::string idx0_mode = "none";
 	std::string idx18_mode = "none";
 	std::string plane_split_mode = "none";
+	std::string cplane_read_mode = "normal";
+	std::string class_threshold_mode = "normal";
 	std::string index_hist_path;
 	std::string idx18_key_hist_path;
 	int skip_index = -1;
@@ -191,6 +193,8 @@ int main(int argc, char **argv) {
 		else if (a == "--idx0-mode") idx0_mode = next();
 		else if (a == "--idx18-mode") idx18_mode = next();
 		else if (a == "--plane-split-mode") plane_split_mode = next();
+		else if (a == "--cplane-read-mode") cplane_read_mode = next();
+		else if (a == "--class-threshold-mode") class_threshold_mode = next();
 		else if (a == "--index-hist") index_hist_path = next();
 		else if (a == "--idx18-key-hist") idx18_key_hist_path = next();
 		else if (a == "--skip-index") skip_index = std::stoi(next());
@@ -206,15 +210,16 @@ int main(int argc, char **argv) {
 		}
 	}
 	if (in_path.empty() || out_path.empty()) {
-		std::fprintf(stderr, "usage: olmsmoother2_cli --input in.png --params case.json --output out.png [--force-version 1|2] [--idx0-mode none|suppress|half|quarter] [--idx18-mode none|skip-cardinal3|skip-cardinal12] [--plane-split-mode none|sample-pre-setup|class-pre-setup|sample-pre-gamma|class-pre-gamma] [--index-hist out.csv] [--idx18-key-hist out.csv] [--skip-index 0..255] [--trace-pixel x,y]\n");
+		std::fprintf(stderr, "usage: olmsmoother2_cli --input in.png --params case.json --output out.png [--force-version 1|2] [--idx0-mode none|suppress|half|quarter|double] [--idx18-mode none|skip-cardinal3|skip-cardinal12] [--plane-split-mode none|sample-pre-setup|class-pre-setup|sample-pre-gamma|class-pre-gamma] [--cplane-read-mode normal|south2-se1|south0-se1] [--class-threshold-mode normal|smooth-range|zero|key-predicate] [--index-hist out.csv] [--idx18-key-hist out.csv] [--skip-index 0..255] [--trace-pixel x,y]\n");
 		return 2;
 	}
 	if (idx0_mode == "none") g_olmsmoother2_idx0_diag_mode = 0;
 	else if (idx0_mode == "suppress") g_olmsmoother2_idx0_diag_mode = 1;
 	else if (idx0_mode == "half") g_olmsmoother2_idx0_diag_mode = 2;
 	else if (idx0_mode == "quarter") g_olmsmoother2_idx0_diag_mode = 3;
+	else if (idx0_mode == "double") g_olmsmoother2_idx0_diag_mode = 4;
 	else {
-		std::fprintf(stderr, "--idx0-mode must be none, suppress, half, or quarter\n");
+		std::fprintf(stderr, "--idx0-mode must be none, suppress, half, quarter, or double\n");
 		return 2;
 	}
 	if (idx18_mode == "none") g_olmsmoother2_idx18_diag_mode = 0;
@@ -231,6 +236,21 @@ int main(int argc, char **argv) {
 	else if (plane_split_mode == "class-pre-gamma") g_olmsmoother2_plane_split_diag_mode = 4;
 	else {
 		std::fprintf(stderr, "--plane-split-mode must be none, sample-pre-setup, class-pre-setup, sample-pre-gamma, or class-pre-gamma\n");
+		return 2;
+	}
+	if (cplane_read_mode == "normal") g_olmsmoother2_cplane_read_diag_mode = 0;
+	else if (cplane_read_mode == "south2-se1") g_olmsmoother2_cplane_read_diag_mode = 1;
+	else if (cplane_read_mode == "south0-se1") g_olmsmoother2_cplane_read_diag_mode = 2;
+	else {
+		std::fprintf(stderr, "--cplane-read-mode must be normal, south2-se1, or south0-se1\n");
+		return 2;
+	}
+	if (class_threshold_mode == "normal") g_olmsmoother2_class_threshold_diag_mode = 0;
+	else if (class_threshold_mode == "smooth-range") g_olmsmoother2_class_threshold_diag_mode = 1;
+	else if (class_threshold_mode == "zero") g_olmsmoother2_class_threshold_diag_mode = 2;
+	else if (class_threshold_mode == "key-predicate") g_olmsmoother2_class_threshold_diag_mode = 3;
+	else {
+		std::fprintf(stderr, "--class-threshold-mode must be normal, smooth-range, zero, or key-predicate\n");
 		return 2;
 	}
 	if (skip_index < -1 || skip_index > 255) {

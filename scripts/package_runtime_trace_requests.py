@@ -66,6 +66,7 @@ def parse_args() -> argparse.Namespace:
             "olmblur-repeat-threshold",
             "kirakira-stage-values",
             "kirakira-stage-values-deep",
+            "kirakira-forward-warp-box-input",
             "smoother2-no-key-grid",
             "smoother2-legacy-key-gamma",
             "smoother2-legacy-writeback-extract",
@@ -73,6 +74,8 @@ def parse_args() -> argparse.Namespace:
             "smoother2-legacy-u8-pixel-trace",
             "smoother2-legacy-cce0-pixel-trace",
             "smoother2-legacy-cce0-internals-trace",
+            "smoother2-legacy-current-aex-residuals",
+            "smoother2-legacy-current-aex-polygon",
             "distancegradation-field-prep",
         ],
         default="hard-paths",
@@ -227,6 +230,34 @@ def kirakira_deep_stage_values_action() -> dict[str, Any]:
             "breakpoint/watchpoint reason. Wrapper hit counts, branch names, or "
             "`not isolated` placeholders are not enough; those were already "
             "captured and classified as trace-too-sparse."
+        ),
+    }
+
+
+def kirakira_forward_warp_box_input_action() -> dict[str, Any]:
+    return {
+        "request_id": "kirakira_forward_warp_box_input_20260621",
+        "plugin_area": "OLMKiraKira forward-warp / boxFilter input follow-up",
+        "mode": "external-trace",
+        "command": (
+            "Follow up the answered_partial deep KiraKira trace. Use the same "
+            "single-ray Software case kk_vertical_len50_brightness1_strength100 "
+            "and the same witness plan coordinates. Do not recapture broad PNGs. "
+            "Capture only the missing first-divergence inputs: values after "
+            "center-copy before forward warp, values immediately after the "
+            "forward warp call, and values immediately before and after the "
+            "first horizontal boxFilter pass for center/ray_length_up/"
+            "ray_length_right. Also record the forward warpAffine matrix, dsize, "
+            "source/destination Mat headers, ROI/copy rects, selected "
+            "boxFilter branch, ksize/anchor/normalize/borderType, and the "
+            "boxFilter source/destination Mat headers for pass 1."
+        ),
+        "stop_condition": (
+            "Return typed float values for the three witnesses or the exact "
+            "failed breakpoint/watchpoint reason. The goal is to classify the "
+            "first divergence as center-copy, forward-warp, boxFilter input, or "
+            "boxFilter pass-1 numeric behavior. Wrapper hit counts alone are "
+            "not sufficient."
         ),
     }
 
@@ -457,6 +488,86 @@ def smoother2_legacy_cce0_internals_trace_action() -> dict[str, Any]:
     }
 
 
+def smoother2_legacy_current_aex_residuals_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmsmoother2_legacy_current_aex_residuals_trace_20260621",
+        "plugin_area": "OLMSmoother2 legacy current-AEX residual trace",
+        "mode": "external-trace",
+        "command": (
+            "Trace the imported Windows AE 2026 Software current-AEX recapture "
+            "`smoother2_legacy_full_current_aex_recapture_20260621`. Do not use "
+            "the retired 20260605 legacy PNGs as expected output. First classify "
+            "input ownership by tracing one exact control and one residual case: "
+            "`legacy_case_0002_current_aex` (AE-saved before-frame CLI exact), "
+            "`legacy_case_0004_current_aex` (localized residual), and "
+            "`legacy_case_0012_gamma5_red_blue_current_aex` (gamma residual). "
+            "Primary witness pixels from the Mac diff are: 0004 `(501,1055)` "
+            "Windows `[159,95,95,255]` vs Mac `[65,65,65,255]`, and 0012 "
+            "`(500,877)` Windows `[9,9,9,255]` vs Mac `[176,112,112,255]`. "
+            "Use 0002 as an exact control; a harmless exact-control sample is "
+            "`(500,877)` or any nonzero source pixel that reaches the same path. "
+            "For each case, record the source pixel as loaded by AE/effect input, "
+            "the value after any unpremultiply stage, key-filter result, class "
+            "plane byte around a high-diff witness, FUN_18000cce0 output floats "
+            "if reached, gamma/sRGB branch state, and final 8bpc writer value. "
+            "Use the included IR and current-AEX manifest to pick concrete "
+            "witness pixels from the local diff reports; prefer pixels with "
+            "max residual, not broad wrapper hit counts."
+        ),
+        "stop_condition": (
+            "Return concrete per-case witness values that decide whether the "
+            "remaining residual is caused by AE input premultiply/unpremultiply "
+            "semantics, key-mask/class-plane differences, gamma path setup, or "
+            "final writeback. If a breakpoint cannot be isolated, return the "
+            "exact failed condition and the closest successful address/register "
+            "state."
+        ),
+    }
+
+
+def smoother2_legacy_current_aex_polygon_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmsmoother2_legacy_current_aex_polygon_stepover_trace_20260621",
+        "plugin_area": "OLMSmoother2 legacy current-AEX cce0 step-over/polygon trace",
+        "mode": "external-trace",
+        "command": (
+            "Follow up the writer-backtrack trace for "
+            "`smoother2_legacy_full_current_aex_recapture_20260621`. Do not "
+            "recapture broad PNGs. The previous return is internally useful "
+            "but its JSON summary under-reported one key fact: for "
+            "`legacy_case_0004_current_aex` at `(501,1055)`, the direct "
+            "`@rsp+0x34/@rsp+0x38` filter DID hit `OLMSmoother2+0x350b`. "
+            "At that hit, `r9=[rsp+0x34]`, `[rsp+0x34]=0x1f5`, "
+            "`[rsp+0x38]=0x41f`, `rcx=[rsp+0x48]`, `rdx=[rsp+0x80]`, "
+            "`r8=[rsp+0x60]`, and the pre-call result buffer at `rcx` held "
+            "`[0x3f483078,0x3ace85ef,0x3ace85ef,0x3f800000]` "
+            "(`0.78198957,0.0015756468,0.0015756468,1.0`). The script then "
+            "armed internal breakpoints but did not capture `+0x3510` or "
+            "c280 internals, apparently stopping again at the same callsite. "
+            "Run a focused 0004-only trace. When `+0x350b` hits for "
+            "`x=0x1f5,y=0x41f`, dump the same callsite args, then force the "
+            "call to execute: either use `p`/step-over to reach `+0x3510` and "
+            "dump `[rsp+0x48..0x54]` as hex/floats, or step into/continue with "
+            "working breakpoints at `+0xc280`, `+0xc50a`, `+0x104d0`, and "
+            "`+0xc7dd`. Do not quit immediately after arming breakpoints. "
+            "Return the actual cce0 output after the call and, if reached, "
+            "c280 switch index, polygon count, append source coordinates, "
+            "vertex RGBA floats, weights, and helper offsets. Treat `0012` as "
+            "secondary; the prior run did not reach its target before AE hit "
+            "an access violation at `OLMSmoother2+0x98f2`."
+        ),
+        "stop_condition": (
+            "A satisfactory answer for this round is 0004-focused: it must "
+            "include either (A) the `+0x3510` post-cce0 result floats for "
+            "`(501,1055)` plus any c280/polygon facts reached, or (B) a "
+            "concrete debugger reason why the already observed `+0x350b` hit "
+            "cannot be stepped over/into. Do not return only the existing "
+            "callsite dump; the missing proof is what happens after executing "
+            "that exact call."
+        ),
+    }
+
+
 def distancegradation_field_prep_action() -> dict[str, Any]:
     return {
         "request_id": "olmdistancegradation_field_prep_runtime_trace_20260619",
@@ -588,6 +699,8 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [kirakira_stage_values_action()]
     if profile == "kirakira-stage-values-deep":
         return [kirakira_deep_stage_values_action()]
+    if profile == "kirakira-forward-warp-box-input":
+        return [kirakira_forward_warp_box_input_action()]
     if profile == "smoother2-no-key-grid":
         return [smoother2_no_key_grid_action()]
     if profile == "smoother2-legacy-key-gamma":
@@ -602,6 +715,10 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [smoother2_legacy_cce0_pixel_trace_action()]
     if profile == "smoother2-legacy-cce0-internals-trace":
         return [smoother2_legacy_cce0_internals_trace_action()]
+    if profile == "smoother2-legacy-current-aex-residuals":
+        return [smoother2_legacy_current_aex_residuals_action()]
+    if profile == "smoother2-legacy-current-aex-polygon":
+        return [smoother2_legacy_current_aex_polygon_action()]
     if profile == "distancegradation-field-prep":
         return [distancegradation_field_prep_action()]
     return runtime_actions(snapshot)
@@ -1103,6 +1220,106 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 ),
             }
             summary = "Fill with deep KiraKira per-stage witness values and first-divergence classification."
+        elif request_id == "kirakira_forward_warp_box_input_20260621":
+            observations = {
+                "effect": "OLM Kira Kira",
+                "module_base": "0x...",
+                "case_id": "kk_vertical_len50_brightness1_strength100",
+                "supersedes_request": "kirakira_fun_181150790_deep_stage_values_20260621",
+                "previous_first_concrete_divergence": {
+                    "stage": "after_box_1",
+                    "point": "center",
+                    "windows_minus_local": 0.00765908,
+                },
+                "known_facts_to_keep": {
+                    "first_boxfilter_branch": "FUN_1812e39d0 / AVX2",
+                    "boxfilter_args": {
+                        "ksize": [50, 1],
+                        "anchor": [-1, -1],
+                        "normalize": True,
+                        "border_type": 4,
+                    },
+                    "warpaffine_flags": "INTER_LINEAR, no WARP_INVERSE_MAP, BORDER_CONSTANT zero",
+                    "temp_size": [1924, 1924],
+                    "copy_origin_expected": [2, 422],
+                    "center_expected": [962.0, 962.0],
+                },
+                "forward_warp": {
+                    "matrix": [None, None, None, None, None, None],
+                    "dsize": [None, None],
+                    "src_mat": {"rows": None, "cols": None, "type": None, "step": None, "data": "0x..."},
+                    "dst_mat": {"rows": None, "cols": None, "type": None, "step": None, "data": "0x..."},
+                    "source_roi_rect": [None, None, None, None],
+                    "copy_origin": [None, None],
+                },
+                "boxfilter_pass_1": {
+                    "selected_branch": "FUN_1812e39d0 | other",
+                    "ksize": [None, None],
+                    "anchor": [None, None],
+                    "normalize": None,
+                    "border_type": None,
+                    "src_mat": {"rows": None, "cols": None, "type": None, "step": None, "data": "0x..."},
+                    "dst_mat": {"rows": None, "cols": None, "type": None, "step": None, "data": "0x..."},
+                },
+                "witnesses": [
+                    {
+                        "label": "center",
+                        "source_xy": [960, 540],
+                        "temp_xy": [962, 962],
+                        "local_expected": {
+                            "after_center_copy": 0.11764706671237946,
+                            "after_forward_warp": 0.11764706671237946,
+                            "before_box_1": 0.11764706671237946,
+                            "after_box_1": 0.7871310114860535,
+                        },
+                        "windows_observed": {
+                            "after_center_copy": None,
+                            "after_forward_warp": None,
+                            "before_box_1": None,
+                            "after_box_1": None,
+                        },
+                    },
+                    {
+                        "label": "ray_length_up",
+                        "source_xy": [960, 490],
+                        "temp_xy": [962, 912],
+                        "local_expected": {
+                            "after_center_copy": 0.7799215912818909,
+                            "after_forward_warp": 0.11764706671237946,
+                            "before_box_1": 0.11764706671237946,
+                            "after_box_1": 0.7714077830314636,
+                        },
+                        "windows_observed": {
+                            "after_center_copy": None,
+                            "after_forward_warp": None,
+                            "before_box_1": None,
+                            "after_box_1": None,
+                        },
+                    },
+                    {
+                        "label": "ray_length_right",
+                        "source_xy": [1010, 540],
+                        "temp_xy": [1012, 962],
+                        "local_expected": {
+                            "after_center_copy": 0.11764706671237946,
+                            "after_forward_warp": 0.11764706671237946,
+                            "before_box_1": 0.11764706671237946,
+                            "after_box_1": 0.3080717623233795,
+                        },
+                        "windows_observed": {
+                            "after_center_copy": None,
+                            "after_forward_warp": None,
+                            "before_box_1": None,
+                            "after_box_1": None,
+                        },
+                    },
+                ],
+                "first_divergence_classification": (
+                    "center-copy | forward-warp | boxfilter-input | boxfilter-pass-1 | unknown"
+                ),
+                "failed_breakpoint_or_watchpoint_reason": None,
+            }
+            summary = "Fill with the missing KiraKira forward-warp / boxFilter pass-1 input witness values."
         elif request_id == "olmsmoother2_no_key_grid_runtime_trace_20260619":
             observations = {
                 "effect": "OLM Smoother v2",
@@ -1770,6 +1987,200 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 "failure_if_any": None,
             }
             summary = "Fill with target-pixel FUN_18000cce0 polygon/stage internals."
+        elif request_id == "olmsmoother2_legacy_current_aex_residuals_trace_20260621":
+            observations = {
+                "effect": "OLM Smoother v2",
+                "reference_request_id": "smoother2_legacy_full_current_aex_recapture_20260621",
+                "render_set": "software",
+                "cases": [
+                    {
+                        "case_id": "legacy_case_0002_current_aex",
+                        "why": "AE-saved before-frame CLI exact control for key-mask/input semantics.",
+                        "witness_pixels": [
+                            {
+                                "x": 500,
+                                "y": 877,
+                                "note": "Exact-control probe point; if this pixel does not hit the interesting path, choose a nearby nonzero source pixel and report the substitute.",
+                            }
+                        ],
+                    },
+                    {
+                        "case_id": "legacy_case_0004_current_aex",
+                        "why": "Localized current-AEX residual after AE-saved before-frame input.",
+                        "witness_pixels": [
+                            {
+                                "x": 501,
+                                "y": 1055,
+                                "windows_rgba": [159, 95, 95, 255],
+                                "mac_cli_rgba": [65, 65, 65, 255],
+                                "diff_rgba": [94, 30, 30, 0],
+                            }
+                        ],
+                    },
+                    {
+                        "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+                        "why": "Gamma/current-AEX residual after AE-saved before-frame input.",
+                        "witness_pixels": [
+                            {
+                                "x": 500,
+                                "y": 877,
+                                "windows_rgba": [9, 9, 9, 255],
+                                "mac_cli_rgba": [176, 112, 112, 255],
+                                "diff_rgba": [167, 103, 103, 0],
+                            }
+                        ],
+                    },
+                ],
+                "requested_for_each_witness": {
+                    "ae_input_pixel_rgba": [None, None, None, None],
+                    "after_unpremultiply_rgba_float_hex": [None, None, None, None],
+                    "key_filter": {
+                        "active_palette_filter_hit": None,
+                        "scalar_key_filter_hit": None,
+                        "invert_branch_taken": None,
+                        "key_match_or_distance": None,
+                        "alpha_after_key": None,
+                    },
+                    "class_plane": {
+                        "center_byte": None,
+                        "neighbor_bytes": [],
+                        "fun_18000c280_switch_idx_if_hit": None,
+                    },
+                    "composite": {
+                        "fun_18000cce0_hit": None,
+                        "fun_18000cce0_output_float_hex": [None, None, None, None],
+                    },
+                    "gamma_and_writeback": {
+                        "gamma_mode_or_srgb_branch": None,
+                        "pre_write_float_hex": [None, None, None, None],
+                        "final_u8_rgba": [None, None, None, None],
+                    },
+                },
+                "failure_if_any": None,
+            }
+            summary = "Fill with current-AEX OLMSmoother2 residual input/key/gamma/writeback trace facts."
+        elif request_id in {
+            "olmsmoother2_legacy_current_aex_polygon_trace_20260621",
+            "olmsmoother2_legacy_current_aex_polygon_backtrack_trace_20260621",
+            "olmsmoother2_legacy_current_aex_polygon_stepover_trace_20260621",
+        }:
+            observations = {
+                "effect": "OLM Smoother v2",
+                "reference_request_id": "smoother2_legacy_full_current_aex_recapture_20260621",
+                "render_set": "software",
+                "prior_writer_trace": {
+                    "status": "answered_partial",
+                    "conclusion": "input and final writer are captured; residual is upstream of 8bpc writer/PNG export",
+                },
+                "cases": [
+                    {
+                        "case_id": "legacy_case_0004_current_aex",
+                        "witness": {
+                            "x": 501,
+                            "y": 1055,
+                            "windows_final_rgba": [159, 95, 95, 255],
+                            "windows_result_float_rgba_like": [0.34566423, 0.11387402, 0.11387402, 1.0],
+                            "mac_final_rgba": [65, 65, 65, 255],
+                            "mac_trace": {
+                                "switch_idx": 192,
+                                "polygon_count": 1,
+                                "samples": [
+                                    {
+                                        "src_xy": [501, 1054],
+                                        "rgba": [0.55834043, 0.55834043, 0.55834043, 1.0],
+                                        "weight": 0.0875,
+                                    }
+                                ],
+                                "after_b120": [0.05220960, 0.05220960, 0.05220960, 1.0],
+                            },
+                        },
+                    },
+                    {
+                        "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+                        "witness": {
+                            "x": 500,
+                            "y": 877,
+                            "windows_final_rgba": [9, 9, 9, 255],
+                            "windows_result_float_rgba_like": [0.002731743, 0.002731743, 0.002731743, 1.0],
+                            "mac_final_rgba": [176, 112, 112, 255],
+                            "mac_trace": {
+                                "switch_idx": 22,
+                                "polygon_count": 3,
+                                "samples": [
+                                    {"src_xy": [499, 877], "rgba": [0.87136710, 0.0, 0.0, 1.0], "weight": 0.2},
+                                    {"src_xy": [499, 878], "rgba": [0.97344530, 0.00151745, 0.00151745, 1.0], "weight": 0.1},
+                                    {"src_xy": [500, 878], "rgba": [0.79910272, 0.79910272, 0.79910272, 1.0], "weight": 0.2},
+                                ],
+                                "after_b120": [0.43280423, 0.16133800, 0.16133800, 1.0],
+                            },
+                        },
+                    },
+                ],
+                "requested_for_each_case": {
+                    "class_plane_window": {
+                        "center_xy": [None, None],
+                        "window_radius": 2,
+                        "bytes_per_pixel_order": "expected [left, top, top-left, top-right]; correct if wrong",
+                        "values": [],
+                    },
+                    "c280_switch": {
+                        "switch_index": None,
+                        "raw_corner_bytes_or_bits": None,
+                        "helper_offsets_called": [],
+                    },
+                    "polygon": {
+                        "count": None,
+                        "vertices": [
+                            {
+                                "src_xy": [None, None],
+                                "rgba_float_hex": [None, None, None, None],
+                                "rgba_float": [None, None, None, None],
+                                "weight_float_hex": None,
+                                "weight_float": None,
+                                "append_helper_offset": None,
+                            }
+                        ],
+                    },
+                    "final_stage_check": {
+                        "after_c280_before_bb10_float_rgba": [None, None, None, None],
+                        "after_ab00_float_rgba": [None, None, None, None],
+                        "after_b120_float_rgba": [None, None, None, None],
+                    },
+                    "failure_if_any": None,
+                },
+            }
+            if request_id == "olmsmoother2_legacy_current_aex_polygon_stepover_trace_20260621":
+                observations["requested_for_case_0004_stepover"] = {
+                    "case_id": "legacy_case_0004_current_aex",
+                    "target_xy": [501, 1055],
+                    "known_hit": {
+                        "breakpoint": "OLMSmoother2+0x350b",
+                        "rsp_xy": ["0x1f5", "0x41f"],
+                        "pre_call_rcx_result_buffer_float_hex": [
+                            "0x3f483078",
+                            "0x3ace85ef",
+                            "0x3ace85ef",
+                            "0x3f800000",
+                        ],
+                        "pre_call_rcx_result_buffer_float": [
+                            0.78198957,
+                            0.0015756468,
+                            0.0015756468,
+                            1.0,
+                        ],
+                    },
+                    "required": {
+                        "post_cce0_rsp_0x48_float_hex": [None, None, None, None],
+                        "post_cce0_rsp_0x48_float": [None, None, None, None],
+                        "c280_switch_index_if_reached": None,
+                        "polygon_count_if_reached": None,
+                        "append_records_if_reached": [],
+                        "debugger_reason_if_stepover_failed": None,
+                    },
+                }
+                summary = "Fill with 0004 +0x350b step-over/post-cce0 and c280/polygon facts."
+            else:
+                summary = "Fill with current-AEX OLMSmoother2 class-plane/switch/polygon facts for 0004 and 0012."
         else:
             observations = {
                 "effect": action.get("plugin_area"),
@@ -1825,7 +2236,7 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
 
 
 def checked_files(root: Path, profile: str) -> list[Path]:
-    if profile == "kirakira-stage-values-deep":
+    if profile in {"kirakira-stage-values-deep", "kirakira-forward-warp-box-input"}:
         ensure_kirakira_deep_witness_plan(root)
 
     if profile in {"dense-all", "dense-live-followup"}:
@@ -1888,6 +2299,23 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("refs/reports/olmkirakira_trace_baseline_20260621_deep_witness_plan/witness_plan.json"),
             Path("refs/reports/olmkirakira_trace_baseline_20260621_deep_witness_plan/witness_plan.md"),
         ]
+    elif profile == "kirakira-forward-warp-box-input":
+        files = [
+            TRACE_NOTE,
+            *KIRAKIRA_STAGE_SUPPORTING_NOTES,
+            Path("refs/reference_requests/kirakira_single_ray_20260606.json"),
+            Path("refs/reports/olmkirakira_trace_baseline_20260620_overnight_mac/trace.json"),
+            Path("refs/reports/olmkirakira_trace_baseline_20260621_deep_witness_plan/witness_plan.json"),
+            Path("refs/reports/olmkirakira_trace_baseline_20260621_deep_witness_plan/witness_plan.md"),
+            Path(
+                "refs/reports/kirakira_deep_stage_values_20260621/"
+                "runtime_trace_comparisons/olmkirakira_deep_stage_values.md"
+            ),
+            Path(
+                "refs/reports/kirakira_deep_stage_values_20260621/"
+                "runtime_trace_comparisons/olmkirakira_deep_stage_values.json"
+            ),
+        ]
     elif profile == "smoother2-no-key-grid":
         files = [
             TRACE_NOTE,
@@ -1913,6 +2341,38 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path(
                 "refs/reports/ae_host_validation_20260620_1425/"
                 "ae_pixel_olmsmoother2_legacy_20260619/reports/ae_pixel_legacy_exact.csv"
+            ),
+        ]
+    elif profile == "smoother2-legacy-current-aex-residuals":
+        files = [
+            TRACE_NOTE,
+            Path("notes/OLMSmoother2_ASM_FACTS.md"),
+            Path("notes/IR_OLMSmoother2.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/reference_requests/smoother2_legacy_full_current_aex_recapture_20260621.json"),
+            Path(
+                "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/"
+                "OLMSmootherv2/reference_manifest.json"
+            ),
+            Path(
+                "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/"
+                "OLMSmootherv2/WINDOWS_RECAPTURE_SUMMARY.md"
+            ),
+        ]
+    elif profile == "smoother2-legacy-current-aex-polygon":
+        files = [
+            TRACE_NOTE,
+            Path("notes/OLMSmoother2_ASM_FACTS.md"),
+            Path("notes/IR_OLMSmoother2.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/reference_requests/smoother2_legacy_full_current_aex_recapture_20260621.json"),
+            Path(
+                "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/"
+                "OLMSmootherv2/reference_manifest.json"
+            ),
+            Path(
+                "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/"
+                "OLMSmootherv2/WINDOWS_RECAPTURE_SUMMARY.md"
             ),
         ]
     elif profile == "smoother2-legacy-writeback-extract":

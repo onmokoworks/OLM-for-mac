@@ -48,7 +48,7 @@ Mac plug-in project は 10 本あります。
 | OLMToonDilate | 8bpc packaged slice は Mac AE exact |
 | OLMDistanceGradation | basic / extended / blur の 8bpc packaged slice は Mac AE exact。CLI 側の説明はまだ詰め中 |
 | OLMColorKey | core はかなり進んでいる。Edge Blur `case_0009` が残差あり |
-| OLMSmoother2 | no-key grid は 8bpc Mac AE exact。legacy key / gamma 系が未解決 |
+| OLMSmoother2 | no-key grid は 8bpc Mac AE exact。legacy current-AEX recapture 済み。key/gamma は Smooth Range threshold 昇格で大幅改善、残る局所残差を調査中 |
 | OLMSmoother v1 | 960x540 再検証で 8bpc Mac AE exact。v2 互換扱いへ寄せる判断は別途 |
 | OLMDirectionalBlur | 参照は多いが、まだ blocked。PNG-only tuning は止めて asm/runtime evidence 待ち |
 | OLMRadialBlur | 一部 binary-grounded。Inner / Edge Fade などは未完 |
@@ -70,7 +70,7 @@ Mac plug-in project は 10 本あります。
 | OLMToonDilate | 16/32bpc 未検証 | 8bpc packaged slice は通ったが bit depth 展開がまだ | 16bpc/32bpc Windows Software 参照を追加 |
 | OLMDistanceGradation | CLI 仕様説明が未完 | Mac AE exact はあるが field prep / OpenCV args の説明が不足 | field world、distanceTransform、blur 引数を runtime trace で確定 |
 | OLMSmoother v1 | 8bpc AE exact | 960x540 再検証で `case_0001..0003` が exact | v2 互換扱いへ寄せるか、v1 独立維持かを明示する |
-| OLMSmoother2 | Legacy key / gamma | no-key grid は exact、Legacy 系が大きくズレる | Smoother runtime trace と Ghidra で key/gamma/writeback を確定 |
+| OLMSmoother2 | Legacy key / gamma | current-AEX recapture 12ケースを取り込み済み。case 0002/0003 はAE保存before入力でCLI exact。0004 は Smooth Range threshold で target final writer float と一致。0012 は `cardinal6 key=50 -> f270/e170/e3a0` まで局所化 | 0012 `(91,841)` の scanner/emit 中間値を binary/runtime evidence で確定 |
 | OLMDirectionalBlur | blocked | PNG tuning だけで進めると誤実装になりやすい | asm/runtime evidence で sampling/group/scale を先に確定 |
 | OLMRadialBlur | Inner / Edge Fade / variation | 一部 span は確定したが sampler/prepass/writeback が未完 | runtime trace と IR で scatter/normalize を詰める |
 | OLMKiraKira | OpenCV helper 精度 | ray order 等は分離済みだが OpenCV 4.5.5 AVX2 stage が未確定 | KiraKira stage trace で warpAffine/boxFilter/compose の初回ズレ箇所を特定 |
@@ -177,19 +177,33 @@ python3 scripts/intake_olm_return.py path/to/returned_ae_host_or_pixel.zip \
 
 ## 現在の次アクション
 
-Smoother2 legacy の古い 20260605 参照 PNG は、現行 Windows AEX の
-Software 出力と一致しないため正解データから外します。次は同じ
-12 ケースを現行 AEX で取り直します。
+Windows PNG参照待ちは現時点でありません。Smoother2 は
+`0004 (501,1055)` の final writer witness を基準にしたMac側監査で、
+key有効時も class-plane threshold は Smooth Range を使うほうが現行
+Windows Software参照に合うことが分かりました。これにより同targetの
+`cce0_after_b120` は Windows final writer float とほぼ一致し、legacy
+12ケース全体の平均残差も大きく下がっています。
+
+次は残る `0012` の `(91,841)` について、
+`d3b0/da50/e170/f270/e3a0` の scanner/emit 中間値を確定します。
+透明中心パススルー、`idx=105` 停止、`cardinal6 key=50` 停止は
+いずれも別ピクセルを壊すため採用しません。
+
+Windows側へ新しく送るzipは、スレッド固定や既ヒット箇所からの確実な
+single-stepができる場合だけ作ります。
+
+KiraKira を並行して追う場合は、次のruntime trace packageを使います。
 
 ```txt
-refs/reference_request_packages/olm_reference_request_smoother2_legacy_full_current_aex_recapture_20260621_153910.zip
+refs/runtime_trace_packages/olm_runtime_trace_kirakira_deep_stage_values_20260621_021018.zip
 ```
 
-返却後は `scripts/intake_olm_return.py` で取り込み、Mac 側は返却zip内の
-source input PNGを使って比較します。AE が保存した before-effects PNG は
-premultiply 済みになることがあるため、CLI入力の正解には使いません。
-取り込み手順と優先順位は `notes/WINDOWS_RETURN_INTAKE_PLAYBOOK_20260619.md`
-にあります。
+Smoother2 legacy full current-AEX recapture は取り込み済みです。古い
+20260605 legacy PNG は正解データから外し、以後は current-AEX Software
+参照を基準にします。2026-06-21 のwriter traceで、残差はPNG exportや
+8bpc packingではなく class-plane / switch-index / polygon emitter 側に
+あることが分かっています。取り込み手順と優先順位は
+`notes/WINDOWS_RETURN_INTAKE_PLAYBOOK_20260619.md` にあります。
 
 ## 主要メモ
 

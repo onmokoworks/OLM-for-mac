@@ -10,6 +10,10 @@
   basic/extended/blur request sets. The AE-free CLI still has guarded
   residuals, so the shared binary-grounded field-prep/OpenCV spec is not yet
   complete. 16/32bpc are still untested.
+- 2026-06-21 reference provenance audit confirms all 29 packaged AE-host
+  candidates match the 20260618 normalized Software references exactly. The
+  visible residuals against `refs/win_references/20260605_extra` are
+  reference-generation differences, not current AE-host failures.
 
 ## Source Evidence
 
@@ -121,6 +125,12 @@ is `1 - X`.
 - The compose functions are stronger evidence than the blur/distance helpers:
   they directly show `powf`, `sqrt`, invert, render-mode color selection, and
   output scaling.
+- 2026-06-20 dense/live runtime returns are not sufficient to settle field
+  prep. The dense summary carries placeholders such as `not isolated`,
+  `inferred`, `likely`, and `runtime arg still untraced`; the live follow-up
+  loaded the module and armed breakpoints, but no requested breakpoint hit
+  before AE exited/crashed. The comparison helper now treats those strings as
+  non-evidence, so both existing returns classify as `trace-too-sparse`.
 
 ## Conformance Cases
 
@@ -134,12 +144,42 @@ is `1 - X`.
 | AE-free blur `case_0029` | 8bpc | guarded | 2026-06-19 rerun: `max=23 mean=0.2827`; tiny non-grounded improvement from Constant+Blur binary-field handling | trace/OpenCV 4.5.5 `distanceTransform` / `GaussianBlur` behavior |
 | Constant field-prep witnesses `case_0020/0022/0029` | 8bpc | blocked on runtime proof | current Constant binarization is much closer than compose-pass-through, but not exact | Windows runtime trace package `distancegradation-field-prep` |
 
+## Reference Provenance
+
+`scripts/analyze_distancegradation_reference_provenance.py` compares the
+2026-06-19 AE-host candidates against both the older 20260605 extra reference
+set and the 20260618 normalized Software references.
+
+| Group | Cases | Nonzero vs 20260605 extra | Nonzero vs 20260618 normalized |
+| --- | ---: | ---: | ---: |
+| basic | 12 | 1 | 0 |
+| extended | 16 | 6 | 0 |
+| blur | 1 | 0 | 0 |
+
+Legacy-reference drift cases:
+
+- `basic/case_0017`: old-ref `max=2 mean=0.001613257`, normalized exact.
+- `extended/case_0012`: old-ref `max=251 mean=0.622667221`, normalized exact.
+- `extended/case_0013`: old-ref `max=62 mean=0.201817371`, normalized exact.
+- `extended/case_0014`: old-ref `max=63 mean=0.204961058`, normalized exact.
+- `extended/case_0016`: old-ref `max=64 mean=0.207432123`, normalized exact.
+- `extended/case_0027`: old-ref `max=6 mean=0.001718147`, normalized exact.
+- `extended/case_0028`: old-ref `max=142 mean=0.093512852`, normalized exact.
+
+Interpretation: use normalized Software refs as the current 8bpc AE-host
+evidence. Do not tune the Mac plug-in or CLI to the older 20260605 PNGs unless
+the reference-generation decision is explicitly reversed.
+
 ## Validation Packages
 
 - Runtime trace request:
   `refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_field_prep_opencv_args_20260619_030427.zip`.
-  This is the next implementation-proof artifact; use it before changing
-  Distance/Constant/Blur semantics.
+  The 2026-06-20 returns did not answer this request with concrete values.
+  A future trace must emit typed numeric Windows values for the target pixels:
+  pre/post Constant field, OpenCV `distanceTransform` / `GaussianBlur`
+  arguments, field-world rowbytes/dimensions, and `FUN_181170870` field green
+  byte / `X` / final RGBA. Use that before changing Distance/Constant/Blur
+  semantics.
 - Mac AE exact check, basic normalized Software refs:
   `refs/ae_pixel_validation_packages/olm_ae_pixel_validation_olmdistancegradation_basic_exact_20260619_032933.zip`.
 - Mac AE exact check, extended normalized Software refs:

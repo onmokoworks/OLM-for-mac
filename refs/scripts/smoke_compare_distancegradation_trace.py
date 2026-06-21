@@ -92,6 +92,64 @@ def main() -> int:
             if needle not in markdown:
                 print(f"[FAIL] comparison Markdown missing: {needle}")
                 return 1
+        summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": REQUEST_ID,
+                            "status": "answered_partial",
+                            "summary": "synthetic sparse DistanceGradation trace",
+                            "observations": {
+                                "requested_for_each_pixel": {
+                                    "distance_field_before_constant_rgba_or_mat_values": [
+                                        "not isolated; upstream pre-Constant field value still needs debugger trace"
+                                    ],
+                                    "distance_field_after_constant_rgba_or_mat_values": [
+                                        "not isolated; current best guard says Constant mode binarizes upstream"
+                                    ],
+                                    "distance_transform_call": {
+                                        "dist_type": "inferred OpenCV DIST_L2; Windows runtime arg still untraced",
+                                    },
+                                    "gaussian_blur_call_if_case_0029": {
+                                        "border_type": "likely BORDER_REFLECT_101; runtime arg still untraced",
+                                    },
+                                    "fun_181170870_field_pixel_bytes": [
+                                        "not isolated; decomp shows distance field is read from green byte"
+                                    ],
+                                }
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        proc = subprocess.run(
+            [
+                py,
+                "scripts/compare_distancegradation_trace.py",
+                "--runtime-summary-json",
+                str(summary),
+                "--output-json",
+                str(output_json),
+                "--output-md",
+                str(output_md),
+            ],
+            cwd=repo,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        print(proc.stdout, end="" if proc.stdout.endswith("\n") else "\n")
+        if proc.returncode != 0:
+            return proc.returncode
+        comparison = json.loads(output_json.read_text(encoding="utf-8"))
+        if comparison.get("likely_next_focus") != "trace-too-sparse":
+            print("[FAIL] placeholder observations should stay trace-too-sparse")
+            return 1
     print("[OK] DistanceGradation trace comparison smoke")
     return 0
 

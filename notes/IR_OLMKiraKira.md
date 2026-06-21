@@ -24,6 +24,7 @@
 | First `boxFilter` pass dispatches to OpenCV 4.5.5 AVX2 branch `FUN_1812e39d0` on the traced Windows machine; the feature gate is `0xb` / `CV_CPU_AVX2`. | `refs/reports/runtime_trace_summary_hardpaths_20260621_041022.md`, `kirakira_opencv455_primitive_fact_20260618`. | runtime-trace |
 | `warpAffine` calls pass `INTER_LINEAR`, no `WARP_INVERSE_MAP`, `BORDER_CONSTANT`, zero border value. | `FUN_181297ac0` wrapper call audit. | binary-grounded |
 | The 2026-06-20 wrapper trace confirmed two `warpAffine` wrapper hits, three `boxFilter` wrapper hits, dsize/temp `1924x1924`, length `50`, and `boxFilter` ksize `(50,1)`. | `refs/reports/runtime_trace_summary_kirakira_stage_values_20260620.md`. | runtime-trace |
+| 2026-06-21 deep trace captured concrete witness floats after each box pass, rotate-back, and final copy for the vertical len=50 Software case. Windows is already brighter than the local OpenCV baseline after box pass 1, so the next focus is forward-warp or boxFilter input, not final compose. | `refs/reports/kirakira_deep_stage_values_20260621/runtime_trace_comparisons/olmkirakira_deep_stage_values.md`. | runtime-trace partial |
 
 ## Parameters
 
@@ -112,6 +113,23 @@
     aggregation, and merge-mode compose values were not isolated.
   - The normalized comparison now reports `trace-too-sparse`, not
     `warp-matrix-or-center`.
+- 2026-06-21 deep trace return is `answered_partial` but useful:
+  - input and rendered PNGs are byte-identical to the existing
+    `kirakira_single_ray_20260606` Software reference;
+  - function-entry and forward-warp breakpoints did not fire, so matrices,
+    center-copy, and forward-warp witness values are still missing;
+  - concrete stage floats were captured after box pass 1/2/3, rotate-back, and
+    final copy. Against the local OpenCV 4.5.5 baseline, Windows is higher from
+    the first box pass:
+    `center +0.00765908`, `ray_length_up +0.00722814`,
+    `ray_length_right +0.00512678`;
+  - after pass 3 the deltas are still consistent:
+    `center +0.00867754`, `ray_length_up +0.00858700`,
+    `ray_length_right +0.00840882`;
+  - after rotate-back/final-copy, `ray_length_up` diverges further
+    (`+0.01375264`), but the first proven divergence is already before that.
+  - normalized comparison focus:
+    `forward-warp-or-boxfilter-input`.
 
 ## Rejected / Low-Value Next Moves
 
@@ -172,6 +190,22 @@ Local comparison helper:
 - 2026-06-20 read-only audit conclusion after return: the first wrapper pass
   was too shallow to separate first divergence. The next trace should target
   concrete storage/sample values rather than wrapper entry alone.
+- 2026-06-21 Mac-side recheck while Smoother2 is paused:
+  - `smoke_olmkirakira_cpp_cli.py` remains expected-red on the old three-case
+    scaffold: `case_0001 max=21 mean=0.8291`, `case_0002 max=24 mean=1.1609`,
+    `case_0003 max=233 mean=53.8132`.
+  - `OLM_PROBE_PYTHON=/tmp/olm_cv455_probe_venv/bin/python`
+    `smoke_olmkirakira_opencv_screenover_probe_cli.py` passes the guarded
+    single-ray set with `cv2 4.5.5`; representative residuals remain
+    `max=13/13/23/23/66`, and Strength=0 anchors remain `max=0..3`.
+  - The OpenCV two-temp and alias-ROI probes both remain expected-red but
+    sharply better than native C++ for old `case_0003`:
+    `case_0001 max=21 mean=0.8239`, `case_0002 max=24 mean=1.1568`,
+    `case_0003 max=26 mean=1.0477`. Alias-ROI remains byte-equivalent to
+    ordinary two-temp.
+  Interpretation: do not tune the native C++ scaffold from PNGs. The strongest
+  Mac-side evidence is still the OpenCV 4.5.5 trace baseline; the missing fact
+  is the first Windows-vs-Mac stage divergence inside `FUN_181150790`.
 
 2026-06-21 deep witness plan:
 
@@ -192,3 +226,33 @@ Local comparison helper:
 - This should classify the first divergence as one of:
   center-copy, forward-warp, box-filter-pass-1/2/3, rotate-back, final-copy,
   aggregation, or compose. Wrapper hit counts alone remain insufficient.
+
+2026-06-21 deep trace return:
+
+- Returned zip stored at
+  `refs/returns/windows/20260621_1929_kirakira_deep_stage_values/olm_runtime_trace_kirakira_deep_stage_values_20260621_021018_return_windows.zip`.
+- Imported partial summary:
+  `refs/reports/kirakira_deep_stage_values_20260621/runtime_trace_summary_kirakira_deep_stage_values_20260621.md`.
+- Comparison:
+  `refs/reports/kirakira_deep_stage_values_20260621/runtime_trace_comparisons/olmkirakira_deep_stage_values.md`.
+- Regression guard:
+  `refs/scripts/smoke_compare_kirakira_stage_trace.py` covers both the
+  original sparse stage request and this deep-stage request id, including
+  deep-stage delta computation and `forward-warp-or-boxfilter-input` focus
+  selection.
+- `scripts/compare_kirakira_stage_trace.py` now also emits a
+  `first_divergence` field and Markdown section. For the 2026-06-21 deep
+  return, the first concrete Windows-vs-local delta is
+  `after_box_1 / center`, Windows higher by `+0.00765908`.
+- The same request id is marked superseded in
+  `refs/reports/runtime_trace_superseded.json` because the useful partial has
+  already narrowed the next focus; re-sending the same package is low-value.
+- Next proof should capture the missing center-copy / forward-warp witness
+  values or microprobe the exact Windows AVX2 boxFilter input/first pass. Do not
+  change final aggregation or compose from this trace.
+- Focused follow-up package generated:
+  `refs/runtime_trace_packages/olm_runtime_trace_kirakira_forward_warp_box_input_20260621_212028.zip`.
+  Request id: `kirakira_forward_warp_box_input_20260621`. This supersedes
+  re-sending the broad deep-stage request by asking only for the missing
+  after-center-copy, after-forward-warp, before-box-pass-1, and after-box-pass-1
+  typed float values at the three fixed witnesses.

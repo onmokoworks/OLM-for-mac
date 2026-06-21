@@ -16,7 +16,11 @@ from pathlib import Path
 from typing import Any
 
 
-REQUEST_ID = "kirakira_fun_181150790_stage_values_20260620"
+REQUEST_IDS = {
+    "kirakira_fun_181150790_stage_values_20260620",
+    "kirakira_fun_181150790_deep_stage_values_20260621",
+}
+DEFAULT_REQUEST_ID = "kirakira_fun_181150790_stage_values_20260620"
 
 
 def repo_root() -> Path:
@@ -57,7 +61,7 @@ def fail(message: str) -> int:
 
 def find_result(summary: dict[str, Any]) -> dict[str, Any] | None:
     for row in summary.get("results", []):
-        if isinstance(row, dict) and row.get("request_id") == REQUEST_ID:
+        if isinstance(row, dict) and row.get("request_id") in REQUEST_IDS:
             return row
     return None
 
@@ -200,6 +204,78 @@ def summarize_local(local_trace: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+DEEP_STAGE_MAP = (
+    ("after_box_filter_pass_1_ret_1151174", "after_box_1"),
+    ("after_box_filter_pass_2_ret_11511c7", "after_box_2"),
+    ("after_box_filter_pass_3_ret_115121a", "after_box_3"),
+    ("after_rotate_back_ret_1150ffd", "after_rotate_back"),
+    ("after_final_center_copy_ret_115104e", "after_final_center_copy"),
+)
+
+DEEP_POINT_MAP = {
+    "center_temp_962_962": ("center", "center_source_960_540"),
+    "ray_length_up_temp_962_912": ("ray_length_up", "ray_length_up_source_960_490"),
+    "ray_length_right_temp_1012_962": ("ray_length_right", "ray_length_right_source_1010_540"),
+}
+
+
+def local_sample_values(local_trace: dict[str, Any]) -> dict[str, dict[str, float]]:
+    rays = local_ray_records(local_trace)
+    if not rays:
+        return {}
+    values: dict[str, dict[str, float]] = {}
+    for point in rays[0].get("sample_points", []):
+        if not isinstance(point, dict):
+            continue
+        label = point.get("label")
+        point_values = point.get("values")
+        if isinstance(label, str) and isinstance(point_values, dict):
+            values[label] = point_values
+    return values
+
+
+def deep_stage_deltas(observations: dict[str, Any], local_trace: dict[str, Any]) -> list[dict[str, Any]]:
+    stage_values = observations.get("stage_values")
+    if not isinstance(stage_values, dict):
+        return []
+    local_values = local_sample_values(local_trace)
+    rows: list[dict[str, Any]] = []
+    for windows_stage, local_stage in DEEP_STAGE_MAP:
+        stage = stage_values.get(windows_stage)
+        if not isinstance(stage, dict):
+            continue
+        for temp_key, (label, source_key) in DEEP_POINT_MAP.items():
+            windows_key = source_key if windows_stage == "after_final_center_copy_ret_115104e" else temp_key
+            item = stage.get(windows_key)
+            local_item = local_values.get(label, {}).get(local_stage)
+            if not isinstance(item, dict) or not isinstance(item.get("float"), (int, float)):
+                continue
+            if not isinstance(local_item, (int, float)):
+                continue
+            windows_float = float(item["float"])
+            local_float = float(local_item)
+            rows.append(
+                {
+                    "windows_stage": windows_stage,
+                    "local_stage": local_stage,
+                    "label": label,
+                    "windows_float": windows_float,
+                    "local_float": local_float,
+                    "delta": windows_float - local_float,
+                    "windows_hex": item.get("hex"),
+                }
+            )
+    return rows
+
+
+def first_divergence(rows: list[dict[str, Any]]) -> dict[str, Any] | None:
+    for row in rows:
+        delta = row.get("delta")
+        if isinstance(delta, (int, float)) and abs(float(delta)) > 1.0e-7:
+            return row
+    return None
+
+
 def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
     if row is None:
         return {"present": False}
@@ -209,12 +285,13 @@ def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
     entry = observations.get("fun_181150790_entry", {})
     witnesses = observations.get("witness_pixels", [])
     aggregation = observations.get("aggregation_and_compose", {})
+    case = observations.get("case", {})
     return {
         "present": True,
         "status": row.get("status"),
         "summary": row.get("summary"),
         "source_file": row.get("source_file"),
-        "case_id": observations.get("case_id"),
+        "case_id": observations.get("case_id") or (case.get("case_id") if isinstance(case, dict) else None),
         "known_facts": observations.get("known_facts_to_keep"),
         "entry": {
             "src_mat": entry.get("src_mat") if isinstance(entry, dict) else None,
@@ -232,6 +309,8 @@ def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
         "witness_pixels": witnesses if isinstance(witnesses, list) else [],
         "boxfilter_calls": observations.get("boxfilter_calls"),
         "aggregation_and_compose": aggregation if isinstance(aggregation, dict) else aggregation,
+        "stage_values": observations.get("stage_values"),
+        "not_captured": observations.get("not_captured"),
     }
 
 
@@ -239,6 +318,11 @@ def build_comparison(summary: dict[str, Any], local_trace: dict[str, Any]) -> di
     row = find_result(summary)
     windows = summarize_windows(row)
     local = summarize_local(local_trace)
+    observations = row.get("observations", {}) if isinstance(row, dict) else {}
+    if not isinstance(observations, dict):
+        observations = {}
+    deltas = deep_stage_deltas(observations, local_trace)
+    first_delta = first_divergence(deltas)
     likely_next_focus = "await-windows-trace"
     if windows.get("present"):
         entry = windows.get("entry", {})
@@ -248,10 +332,15 @@ def build_comparison(summary: dict[str, Any], local_trace: dict[str, Any]) -> di
         win_witnesses = windows.get("witness_pixels")
         win_box = windows.get("boxfilter_calls")
         win_agg = windows.get("aggregation_and_compose")
+        win_stage_values = windows.get("stage_values")
         if has_concrete(win_length) and win_length != local_ray.get("length"):
             likely_next_focus = "ray-length-normalization"
         elif has_concrete(win_forward) and win_forward != local_ray.get("forward_matrix"):
             likely_next_focus = "warp-matrix-or-center"
+        elif deltas and all(row.get("windows_stage", "").startswith("after_box_filter_pass") for row in deltas[:3]):
+            likely_next_focus = "forward-warp-or-boxfilter-input"
+        elif has_concrete_stage_value(win_stage_values):
+            likely_next_focus = "boxfilter-stage-values"
         elif has_concrete_stage_value(win_witnesses) or has_concrete_stage_value(win_box):
             likely_next_focus = "boxfilter-stage-values"
         elif has_concrete_stage_value(win_agg):
@@ -261,10 +350,12 @@ def build_comparison(summary: dict[str, Any], local_trace: dict[str, Any]) -> di
     return {
         "kind": "olmkirakira_stage_trace_comparison",
         "schema": 1,
-        "request_id": REQUEST_ID,
+        "request_id": row.get("request_id") if isinstance(row, dict) else DEFAULT_REQUEST_ID,
         "likely_next_focus": likely_next_focus,
         "windows": windows,
         "local": local,
+        "deep_stage_deltas": deltas,
+        "first_divergence": first_delta,
     }
 
 
@@ -314,6 +405,38 @@ def render_markdown(comparison: dict[str, Any]) -> str:
         f"- Aggregation/compose: {md_value(windows.get('aggregation_and_compose'))}",
         "",
     ]
+    deltas = comparison.get("deep_stage_deltas")
+    if isinstance(deltas, list) and deltas:
+        first_delta = comparison.get("first_divergence")
+        if isinstance(first_delta, dict):
+            lines.extend(
+                [
+                    "## First Divergence",
+                    "",
+                    f"- Stage: `{first_delta.get('local_stage')}`",
+                    f"- Point: `{first_delta.get('label')}`",
+                    f"- Windows - local: `{float(first_delta.get('delta')):+.8f}`",
+                    "",
+                ]
+            )
+        lines.extend(
+            [
+                "## Deep Stage Deltas",
+                "",
+                "| Stage | Point | Windows | Local | Delta | Hex |",
+                "| --- | --- | ---: | ---: | ---: | --- |",
+            ]
+        )
+        for row in deltas:
+            lines.append(
+                f"| `{row.get('local_stage')}` | `{row.get('label')}` | "
+                f"{float(row.get('windows_float')):.8f} | "
+                f"{float(row.get('local_float')):.8f} | "
+                f"{float(row.get('delta')):+.8f} | `{row.get('windows_hex')}` |"
+            )
+        lines.append("")
+    if windows.get("not_captured"):
+        lines.extend(["## Not Captured", "", md_value(windows.get("not_captured")), ""])
     return "\n".join(lines)
 
 

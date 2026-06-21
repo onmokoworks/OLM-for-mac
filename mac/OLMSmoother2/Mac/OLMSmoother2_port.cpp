@@ -69,7 +69,8 @@ constexpr double SRGB_OFFSET2 = 0.055;                  // DAT_1800226b8
 #define S_OFFSET2   k_olm::SRGB_OFFSET2
 
 // CLI-only diagnostic hook. Keep default 0 for the AE plug-in path.
-// 0=normal, 1=suppress idx=0 four-corner dispatch, 2=half weight, 3=quarter weight.
+// 0=normal, 1=suppress idx=0 four-corner dispatch, 2=half weight, 3=quarter weight,
+// 4=double weight.
 static int g_olmsmoother2_idx0_diag_mode = 0;
 // CLI-only source/class plane split diagnostic.
 // 0=post setup for both, 1=sample pre-setup, 2=class pre-setup,
@@ -77,6 +78,12 @@ static int g_olmsmoother2_idx0_diag_mode = 0;
 static int g_olmsmoother2_plane_split_diag_mode = 0;
 static int g_olmsmoother2_skip_index_diag = -1;
 static int g_olmsmoother2_idx18_diag_mode = 0;
+// CLI-only class-plane read diagnostic for the below-row c280 probes.
+// 0=asm-current, 1=South byte2 / SE byte1, 2=South byte0 / SE byte1.
+static int g_olmsmoother2_cplane_read_diag_mode = 0;
+// CLI-only class-plane threshold diagnostic.
+// 0=normal, 1=force Smooth Range, 2=force 0, 3=force key predicate 1.
+static int g_olmsmoother2_class_threshold_diag_mode = 0;
 static bool g_olmsmoother2_index_hist_enabled = false;
 static uint64_t g_olmsmoother2_index_hist[256] = {};
 static bool g_olmsmoother2_idx18_key_hist_enabled = false;
@@ -2376,10 +2383,26 @@ static bool win_FUN_1800125c0(SmootherPolygon &poly) {
 	scan_10d20(L, &g, in);
 	scan_10ad0(R, &g, in);
 	int span = cx + 1 + (R[0] - cx) - L[0];
+	const bool trace_this_pixel =
+	    (cx == g_olmsmoother2_trace_x && cy == g_olmsmoother2_trace_y);
+	if (trace_this_pixel) {
+		std::fprintf(stderr,
+		             "trace 0125c0 pre L=(%d,%d) R=(%d,%d) span=%d\n",
+		             L[0], L[1], R[0], R[1], span);
+	}
 	if (span < 4) return false;
 	// Win: iStackX_14 / iStackX_1c (= L_y, R_y, NO +1) for 12時 NW-end variant.
 	int clsL = endpoint_cls_left_P1(&g, L[0], L[1]);
 	int clsR = endpoint_cls_right_P1(&g, R[0], R[1]);
+	if (trace_this_pixel) {
+		float wp[2];
+		win_weight_pair(wp, span, R[0] - cx, clsR * 4 + clsL);
+		float fscale = poly.extra_n * K_W025 + poly.smoothness_n;
+		std::fprintf(stderr,
+		             "trace 0125c0 emit ex=%d ey=%d offset=%d clsL=%d clsR=%d key=%d raw=(%.8f,%.8f) scaled=(%.8f,%.8f)\n",
+		             cx, cy - 1, R[0] - cx, clsL, clsR, clsR * 4 + clsL,
+		             wp[0], wp[1], wp[0] * fscale, wp[1] * fscale);
+	}
 	// Win FUN_1800125c0 calls FUN_180012850(.., uVar11=clsR, uVar8=clsL),
 	// so the switch index = param_5 + param_4*4 = clsL + clsR*4 (NOT clsL*4+clsR).
 	// 12時: vertex weight = wp[0] (local_res8) per Ghidra @0x1800125c0.
@@ -3038,6 +3061,12 @@ static void win_cardinal_6(SmootherPolygon &poly) {
 	int s1[3]; scan_d3b0(s1, &g, center);
 	int s2[3]; scan_da50(s2, &g, center);
 	int desc[6] = { s1[0], s1[1], s1[2], s2[0], s2[1], s2[2] };
+	if (poly.cur_x == g_olmsmoother2_trace_x && poly.cur_y == g_olmsmoother2_trace_y) {
+		int k = (desc[2] - 1) + desc[5] * 10;
+		std::fprintf(stderr,
+		             "trace cardinal6 desc=(%d,%d,%d,%d,%d,%d) key=%d\n",
+		             desc[0], desc[1], desc[2], desc[3], desc[4], desc[5], k);
+	}
 	win_disp_fef0(poly, desc);
 }
 
@@ -3120,8 +3149,16 @@ static void build_polygon(SmootherPolygon &poly,
 	int uVar7 = 1;
 	if (y < h - 1) {
 		if (x > 0)     bSW = cb(x - 1, y + 1, 3) != 0;     // B-byte SW
-		bSE = cb(x, y + 1, 1) != 0;                         // R-byte South (NOT SE)
-		if (x < w - 1) uVar7 = (cb(x + 1, y + 1, 2) == 0) ? 1 : 0; // G-byte SE
+		if (g_olmsmoother2_cplane_read_diag_mode == 1) {
+			bSE = cb(x, y + 1, 2) != 0;
+			if (x < w - 1) uVar7 = (cb(x + 1, y + 1, 1) == 0) ? 1 : 0;
+		} else if (g_olmsmoother2_cplane_read_diag_mode == 2) {
+			bSE = cb(x, y + 1, 0) != 0;
+			if (x < w - 1) uVar7 = (cb(x + 1, y + 1, 1) == 0) ? 1 : 0;
+		} else {
+			bSE = cb(x, y + 1, 1) != 0;                         // R-byte South (NOT SE)
+			if (x < w - 1) uVar7 = (cb(x + 1, y + 1, 2) == 0) ? 1 : 0; // G-byte SE
+		}
 	}
 
 	int iVar3 = bSW ? 0 : 2;
@@ -3139,6 +3176,16 @@ static void build_polygon(SmootherPolygon &poly,
 		             "trace build_polygon x=%d y=%d idx=%d c=%02x%02x%02x%02x eR0=%d bSW=%d bSE=%d uVar7=%d bits=%d,%d,%d,%d,%d\n",
 		             x, y, idx, c_A, c_R, c_G, c_B, eR0, bSW ? 1 : 0, bSE ? 1 : 0, uVar7,
 		             iVar3, iVar4, iVar11, iVar10, iGbit);
+		for (int yy = y - 1; yy <= y + 1; ++yy) {
+			for (int xx = x - 1; xx <= x + 1; ++xx) {
+				if (xx < 0 || xx >= w || yy < 0 || yy >= h) continue;
+				const FPix px = fplane_fetch(plane_in, xx, yy, w, h);
+				std::fprintf(stderr,
+				             "trace neighborhood sample (%d,%d)=%.8f,%.8f,%.8f,%.8f class=%02x%02x%02x%02x\n",
+				             xx, yy, px.r, px.g, px.b, px.a,
+				             cb(xx, yy, 0), cb(xx, yy, 1), cb(xx, yy, 2), cb(xx, yy, 3));
+			}
+		}
 	}
 	if (g_olmsmoother2_index_hist_enabled && idx >= 0 && idx < 256) {
 		++g_olmsmoother2_index_hist[idx];
@@ -3156,6 +3203,7 @@ static void build_polygon(SmootherPolygon &poly,
 			float idx0_step = STEP;
 			if (g_olmsmoother2_idx0_diag_mode == 2) idx0_step *= 0.5f;
 			else if (g_olmsmoother2_idx0_diag_mode == 3) idx0_step *= 0.25f;
+			else if (g_olmsmoother2_idx0_diag_mode == 4) idx0_step *= 2.0f;
 			win_FUN_1800134c0_NW(poly, idx0_step);
 			win_FUN_180013570_NE(poly, idx0_step);
 			win_FUN_180012ce0_SE(poly, idx0_step);
@@ -3660,12 +3708,12 @@ static void win_FUN_18000cce0_orchestrate(FPix &out_pixel,
 	const int w = p.w;
 	const int h = p.h;
 
-	SmootherPolygon poly;
-	build_polygon(poly, plane_in, x, y, p);
-
 	FPix center = fplane_fetch(plane_in, x, y, w, h);
+	SmootherPolygon poly;
 	const bool trace_this_pixel =
 	    (x == g_olmsmoother2_trace_x && y == g_olmsmoother2_trace_y);
+	build_polygon(poly, plane_in, x, y, p);
+
 	if (trace_this_pixel) {
 		std::fprintf(stderr,
 		             "trace cce0_entry x=%d y=%d center=%.8f,%.8f,%.8f,%.8f poly_count=%d\n",
@@ -3926,12 +3974,32 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	// The no-key software grid (sm2_no_key_s*_r{1,2,3}) shows the reference
 	// smooths FEWER pixels as Smooth Range rises (r1>r2>r3), i.e. a rising
 	// threshold = SmoothRange/100 + 0.001.  The earlier "key predicate" reading
-	// was the source of the no-key over-firing residual.  Keep the key-enabled
-	// path on the predicate byte to preserve the covered key-path references.
+	// was the source of the no-key over-firing residual.  The 2026-06-21
+	// current-AEX legacy recapture shows the key-enabled path also follows this
+	// Smooth Range threshold; the older key-predicate reading is kept as a
+	// CLI-only diagnostic.
 	const int   smooth_range_field = p.smooth_range;
 	const int   key_pred_byte = (p.enable_key && !p.invert_key) ? 1 : 0;
-	const int   class_threshold_field = p.enable_key ? key_pred_byte : smooth_range_field;
+	int class_threshold_field = smooth_range_field;
+	if (g_olmsmoother2_class_threshold_diag_mode == 1) {
+		class_threshold_field = smooth_range_field;
+	} else if (g_olmsmoother2_class_threshold_diag_mode == 2) {
+		class_threshold_field = 0;
+	} else if (g_olmsmoother2_class_threshold_diag_mode == 3) {
+		class_threshold_field = 1;
+	}
 	const float threshold = (float)class_threshold_field / 100.0f + WIN_THRESH_BIAS;
+	if (g_olmsmoother2_trace_x >= 0 && g_olmsmoother2_trace_y >= 0) {
+		std::fprintf(stderr,
+		             "trace class_threshold mode=%d field=%d threshold=%.8f enable_key=%d invert_key=%d smooth_range=%d key_pred=%d\n",
+		             g_olmsmoother2_class_threshold_diag_mode,
+		             class_threshold_field,
+		             threshold,
+		             p.enable_key ? 1 : 0,
+		             p.invert_key ? 1 : 0,
+		             smooth_range_field,
+		             key_pred_byte);
+	}
 
 	std::vector<uint8_t> class_plane((size_t)w * (size_t)h * 4, 0);
 	auto fpix_at = [&](int xx, int yy) -> const FPix& {

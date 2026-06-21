@@ -9,6 +9,8 @@ keeps address-level evidence, and `PORTING_BOARD.md` keeps long-form history.
 Current verified reference slice:
 
 - Windows refs: `refs/win_references/20260604_olm/OLMDirectionalBlur`
+- Additional context-scale refs:
+  `refs/win_references/olm_reference_return_windows_20260611/OLMDirectionalBlur`
 - Active front-only/no-noise cases: `case_0001..case_0005`
 - Back/noise cases: `case_0006..case_0009`, measurement-only for now
 - Current Mac plugin: 8bpc front-only/no-noise direct slice; copies unsupported
@@ -468,6 +470,57 @@ refs confirmed the frame-rate proxy is wrong and support the
 `PF_InData.downsample_x.num / den` mapping. The next DirectionalBlur work should
 use the non-opaque alpha cases to verify source RGB ownership, `FUN_180001000`,
 and `alpha_or_valid`, not scalar PNG tuning.
+
+2026-06-21 Mac-side recheck while Smoother2 is paused:
+
+- `smoke_olmdirectionalblur_cpp_rotated_aex_full_choreo_cli.py` is still
+  expected-red on the opaque legacy pair:
+  `case_0001 max=164 mean=4.9570`,
+  `case_0005 max=251 mean=2.2971`.
+- `smoke_olmdirectionalblur_cpp_rotated_aex_exact_rowdriver_cli.py` keeps the
+  same shape. `rotated-aex-exact-scatter-helper` and
+  `rotated-aex-exact-rowdriver` both give
+  `case_0001 max=164 mean=4.9910`,
+  `case_0005 max=251 mean=2.2670`.
+- `smoke_olmdirectionalblur_cpp_rotated_rowdriver_prepass_cli.py` is worse on
+  the same pair:
+  `rotated-rowdriver-prepass case_0001 max=255 mean=5.2605`,
+  `case_0005 max=254 mean=2.4591`; the init variant is essentially identical.
+
+Interpretation: current rowdriver/prepass candidates remain diagnostic only.
+The useful next evidence is still exact runtime/asm proof of the sampler and
+final normalization/validity pass on the non-opaque alpha cases, not another
+PNG-only switch sweep.
+
+2026-06-21 runtime trace comparison guard:
+
+- `scripts/compare_directionalblur_trace.py` now classifies
+  `olmdirectionalblur_dense_sampler_trace_20260620` returns and treats
+  placeholder text (`not traced`, `not isolated`, `see included IR`, etc.) as
+  non-evidence.
+- The dense-all 2026-06-20 return classifies as
+  `trace-structure-present-values-missing`: it contains the requested case /
+  witness schema but no typed sampler, accumulation, pre-writeback, or final
+  byte values.
+- The dense-live follow-up classifies as `trace-failed-before-module-load`: AE
+  hit a WINHTTP access violation before the OLMDirectionalBlur module resolved.
+- Therefore these returns do not justify tuning sampler order, accumulation, or
+  writeback. Keep DirectionalBlur parked until a typed runtime witness or new
+  asm proof arrives.
+
+2026-06-21 reference-set audit:
+
+- `scripts/audit_directionalblur_reference_sets.py` classifies known
+  DirectionalBlur reference folders by filename prefix and SHA-256.
+- The 20260604 legacy set contains 9 DirectionalBlur PNGs.
+- The 20260611 context-scale return contains 30 DirectionalBlur PNGs.
+- The 20260619 bulk folder
+  `refs/win_references/olm_windows_bulk_png_refs_20260619_014632_all_existing_requests_windows_result_20260619_0210/OLMDirectionalBlur`
+  is mixed: 76 PNGs total, only 16 are DirectionalBlur. The remaining 60 are
+  KiraKira (13), ColorKey (17), RadialBlur (18), and Smoother2 (12).
+- No same-name hash conflicts were found among DirectionalBlur files, but the
+  bulk parent folder name is not reliable. Future scripts must classify by
+  request filename/manifest rather than parent directory.
 
 ## 2026-06-13 non-opaque alpha return audit
 

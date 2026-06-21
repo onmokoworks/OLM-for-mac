@@ -121,6 +121,62 @@ def main() -> int:
             if needle not in markdown:
                 print(f"[FAIL] comparison Markdown missing: {needle}")
                 return 1
+        summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": REQUEST_ID,
+                            "status": "answered_partial",
+                            "summary": "synthetic sparse ColorKey Edge trace",
+                            "observations": {
+                                "edge_thin_erode_cases": [
+                                    {
+                                        "case_id": "case_0005",
+                                        "distance_after_transform": "Mac baseline edge_thin_dist=17; Windows runtime needed",
+                                    }
+                                ],
+                                "edge_blur_samples": [
+                                    {
+                                        "case_id": "case_0009",
+                                        "boundary_seed_after_FUN_180008c90": "not isolated",
+                                        "edge_blur_apply_source_rgba": ["not isolated"],
+                                    }
+                                ],
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        proc = subprocess.run(
+            [
+                py,
+                "scripts/compare_colorkey_edge_trace.py",
+                "--runtime-summary-json",
+                str(summary),
+                "--local-baseline-dir",
+                str(baseline),
+                "--output-json",
+                str(output_json),
+                "--output-md",
+                str(output_md),
+            ],
+            cwd=repo,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        print(proc.stdout, end="" if proc.stdout.endswith("\n") else "\n")
+        if proc.returncode != 0:
+            return proc.returncode
+        comparison = json.loads(output_json.read_text(encoding="utf-8"))
+        if comparison.get("likely_next_focus") != "trace-too-sparse":
+            print("[FAIL] placeholder observations should stay trace-too-sparse")
+            return 1
     print("[OK] ColorKey Edge trace comparison smoke")
     return 0
 

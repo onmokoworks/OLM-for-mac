@@ -15,6 +15,10 @@
   - AE-free CLI keeps useful `max=1` residual witnesses for
     `case_0003/0006/0007`
   - not binary-complete for 16/32bpc or writeback proof
+  - 2026-06-21 provenance audit confirms the packaged AE-host candidates are
+    exact against the 20260618 normalized refs for all seven cases; the large
+    differences in `case_0001..0004` are only against the older 20260604
+    reference generation.
 
 ## Source Evidence
 
@@ -99,9 +103,9 @@ Current implementation:
 
 | Case | Bit depth | Expected status | Current result | Next evidence |
 | --- | --- | --- | --- | --- |
-| `case_0001/0002/0004` | 8bpc | `CLI exact` in current smoke | 2026-06-19 rerun: exact (`max=0`) | Mac AE exact validation and true binary-grounded writeback explanation |
-| `case_0003` | 8bpc | AE exact / guarded CLI residual | 2026-06-20 rerun: CLI `max=1 mean=0.0052`; 2026-06-19 AE pixel return `max=0` | Treat as host-path exact but keep runtime/writeback proof open |
-| `case_0005` | 8bpc | `CLI exact` in current residual smoke | 2026-06-19 rerun: exact (`max=0`) | Mac AE exact validation |
+| `case_0001/0002/0004` | 8bpc | `CLI exact` in current smoke | 2026-06-21 rerun: exact (`max=0`) | Mac AE exact validation and true binary-grounded writeback explanation |
+| `case_0003` | 8bpc | AE exact / guarded CLI residual | 2026-06-21 rerun: CLI `max=1 mean=0.0052`; 2026-06-19 AE pixel return `max=0` | Treat as host-path exact but keep runtime/writeback proof open |
+| `case_0005` | 8bpc | `CLI exact` in current residual smoke | 2026-06-21 rerun: exact (`max=0`) | Mac AE exact validation |
 | `case_0006` | 8bpc | AE exact / residual diagnostic | 2026-06-20 Windows trace: AEX pre-writeback red at `(498,940)` is `185.49998474121094` (`0x1.72fffe0000000p+7`), Mac CLI baseline is exactly `185.5` (`0x1.73p+7`), and Windows final byte is `185`; 2026-06-19 AE pixel return `max=0` | Accumulation/helper order proof before changing the passing AE plug-in path |
 | `case_0007` | 8bpc | AE exact / residual diagnostic | 2026-06-20 Windows trace: Legacy writeback family `OLMBlur+0x7FDF`; `(0,0)` pre RGB `[0,0,~1.5528]`, final `[0,0,0,255]`; `(488,941/942)` pre red just above `250.5`, final `251`; Mac CLI stays just below/equal | Isolate Legacy helper state/border source if CLI residual is still worth closing |
 
@@ -121,6 +125,41 @@ Legacy border rules.
   for `case_0006/0007`. It is not enough to rewrite Legacy border/all_same
   behavior, and the packaged Mac AE slices are already exact, so no production
   OLMBlur change should be made from this trace alone.
+- The trace comparison helper now treats placeholders such as `0x...`,
+  `not isolated`, `unknown`, and selector strings like
+  `floorf(value + 0.5) | cvt/trunc | other` as non-evidence. Real hex-float
+  values such as `0x1.72fffe0000000p+7`, numeric final bytes, and booleans
+  still count. This keeps sparse returns at
+  `trace-structure-present-values-missing` while preserving the existing
+  2026-06-20 runtime focus classifications.
+
+2026-06-21 Mac-side rerun:
+
+- `smoke_olmblur_cli.py` still passes: `case_0001/0002/0004` exact,
+  `case_0005` exact, residual witnesses `case_0003 max=1 mean=0.0052`,
+  `case_0006 max=1 mean=0.0000`, and `case_0007 max=1 mean=0.0000`.
+- `smoke_compare_olmblur_trace.py` still passes and classifies the next focus
+  as `nonlegacy-accumulation-or-writeback`.
+- No code change was made: the runtime trace already proves `case_0006` differs
+  before byte output, so changing a writeback rounding rule would be
+  under-grounded and could break the AE-exact packaged plug-in slice.
+
+2026-06-21 reference provenance audit:
+
+- `scripts/analyze_olmblur_reference_provenance.py` compares the 2026-06-19
+  AE-host candidates against the older 20260604 refs and the 20260618
+  normalized Software refs.
+- All seven candidates are exact against the normalized refs.
+- Old-reference drift is limited to non-legacy `case_0001..0004`:
+  - `case_0001`: old-ref `max=59 mean=1.287920525`
+  - `case_0002`: old-ref `max=59 mean=1.287920525`
+  - `case_0003`: old-ref `max=14 mean=1.727592593`
+  - `case_0004`: old-ref `max=58 mean=1.268115355`
+- `case_0005..0007` are exact against both old and normalized refs.
+- Interpretation: do not tune the plug-in toward the older non-legacy
+  `case_0001..0004` PNGs. The remaining `max=1` CLI witnesses are useful for
+  binary-grounding accumulation/writeback, but they are not current 8bpc AE
+  failures.
 
 ## Open Questions
 

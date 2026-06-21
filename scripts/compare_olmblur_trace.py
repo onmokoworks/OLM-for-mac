@@ -48,20 +48,49 @@ def find_result(summary: dict[str, Any]) -> dict[str, Any] | None:
     return None
 
 
-def nonempty(value: Any) -> bool:
+def concrete_trace_value(value: Any) -> bool:
+    """Return true only for values that look like measured Windows runtime facts."""
     if value is None:
         return False
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)):
+        return True
     if isinstance(value, list):
-        return any(nonempty(item) for item in value)
+        return any(concrete_trace_value(item) for item in value)
     if isinstance(value, dict):
-        return any(nonempty(item) for item in value.values())
+        return any(concrete_trace_value(item) for item in value.values())
     if isinstance(value, str):
-        return bool(value) and value not in {
+        text = value.strip().lower()
+        if not text or text in {
             "0x...",
             "floorf(value + 0.5) | cvt/trunc | other",
             "",
-        }
-    return True
+            "none",
+            "null",
+            "n/a",
+            "unknown",
+        }:
+            return False
+        if re.fullmatch(r"[-+]?0x[0-9a-f]+(?:\.[0-9a-f]*)?p[-+]?\d+", text):
+            return True
+        placeholder_needles = (
+            "not isolated",
+            "not reached",
+            "inferred",
+            "likely",
+            "expected",
+            "runtime",
+            "still needs",
+            "untraced",
+            "unknown",
+            "needs live",
+            "was not captured",
+        )
+        if any(needle in text for needle in placeholder_needles):
+            return False
+        return False
+    return False
 
 
 def read_local_baseline(path: Path) -> dict[str, Any]:
@@ -123,11 +152,13 @@ def has_prewriteback(case: dict[str, Any] | None) -> bool:
     for pixel in case.get("residual_pixels", []):
         if not isinstance(pixel, dict):
             continue
-        if nonempty(pixel.get("aex_pre_writeback_rgb_hex")):
+        if concrete_trace_value(pixel.get("aex_pre_writeback_rgb")):
             return True
-        if nonempty(pixel.get("aex_writeback_operation")):
+        if concrete_trace_value(pixel.get("aex_pre_writeback_rgb_hex")):
             return True
-        if nonempty(pixel.get("aex_final_rgba")):
+        if concrete_trace_value(pixel.get("aex_writeback_operation")):
+            return True
+        if concrete_trace_value(pixel.get("aex_final_rgba")):
             return True
     return False
 
@@ -138,13 +169,15 @@ def has_legacy_state(case: dict[str, Any] | None) -> bool:
     for pixel in case.get("residual_pixels", []):
         if not isinstance(pixel, dict):
             continue
-        if nonempty(pixel.get("legacy_all_same_state")):
+        if concrete_trace_value(pixel.get("legacy_all_same_state")):
             return True
-        if nonempty(pixel.get("legacy_border_sample_included")):
+        if concrete_trace_value(pixel.get("legacy_border_sample_included")):
             return True
-        if nonempty(pixel.get("aex_pre_writeback_rgb_hex")):
+        if concrete_trace_value(pixel.get("aex_pre_writeback_rgb")):
             return True
-        if nonempty(pixel.get("aex_final_rgba")):
+        if concrete_trace_value(pixel.get("aex_pre_writeback_rgb_hex")):
+            return True
+        if concrete_trace_value(pixel.get("aex_final_rgba")):
             return True
     return False
 
@@ -158,7 +191,7 @@ def classify_next_focus(windows: dict[str, Any]) -> str:
         return "nonlegacy-accumulation-or-writeback"
     if has_legacy_state(case_0007):
         return "legacy-border-or-all-same"
-    if nonempty(case_0006) or nonempty(case_0007):
+    if case_0006 or case_0007:
         return "trace-structure-present-values-missing"
     return "trace-too-sparse"
 

@@ -135,6 +135,39 @@ def windows_observations(row: dict[str, Any] | None) -> dict[str, Any]:
     }
 
 
+def is_concrete_trace_value(value: Any) -> bool:
+    """Return true only for values that look like measured Windows runtime facts."""
+    if value is None:
+        return False
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)):
+        return True
+    if isinstance(value, list):
+        return any(is_concrete_trace_value(item) for item in value)
+    if isinstance(value, dict):
+        return any(is_concrete_trace_value(item) for item in value.values())
+    if not isinstance(value, str):
+        return True
+    text = value.strip().lower()
+    if not text or text in {"none", "null", "-", "n/a", "unknown"}:
+        return False
+    placeholder_needles = (
+        "mac baseline",
+        "not isolated",
+        "static",
+        "runtime",
+        "needed",
+        "access violation",
+        "did not capture",
+        "not captured",
+        "not observed",
+    )
+    if any(needle in text for needle in placeholder_needles):
+        return False
+    return False
+
+
 def classify_next_focus(windows: dict[str, Any], local_cases: dict[str, list[dict[str, Any]]]) -> str:
     if not windows.get("present"):
         return "await-windows-trace"
@@ -142,15 +175,17 @@ def classify_next_focus(windows: dict[str, Any], local_cases: dict[str, list[dic
     thin_cases = windows.get("edge_thin_erode_cases") or []
     if thin_cases:
         for row in thin_cases:
-            if isinstance(row, dict) and row.get("distance_after_transform") is not None:
+            if isinstance(row, dict) and is_concrete_trace_value(row.get("distance_after_transform")):
                 return "edge-thin-border-threshold"
     if blur_samples:
         for row in blur_samples:
             if not isinstance(row, dict):
                 continue
-            if row.get("boundary_seed_after_FUN_180008c90") is not None:
+            if is_concrete_trace_value(row.get("boundary_seed_after_FUN_180008c90")):
                 return "edge-blur-seed-world"
-            if row.get("edge_blur_weight") is not None or row.get("edge_blur_apply_source_rgba") is not None:
+            if is_concrete_trace_value(row.get("edge_blur_weight")) or is_concrete_trace_value(
+                row.get("edge_blur_apply_source_rgba")
+            ):
                 return "edge-blur-apply-or-compose"
     if local_cases:
         return "trace-too-sparse"

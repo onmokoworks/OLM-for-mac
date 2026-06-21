@@ -68,6 +68,11 @@ def comparators(py: str) -> list[Comparator]:
             command=[py, "scripts/compare_kirakira_stage_trace.py"],
         ),
         Comparator(
+            request_id="kirakira_fun_181150790_deep_stage_values_20260621",
+            slug="olmkirakira_deep_stage_values",
+            command=[py, "scripts/compare_kirakira_stage_trace.py"],
+        ),
+        Comparator(
             request_id="colorkey_edge_runtime_trace_20260619",
             slug="olmcolorkey_edge",
             command=[py, "scripts/compare_colorkey_edge_trace.py"],
@@ -76,6 +81,16 @@ def comparators(py: str) -> list[Comparator]:
             request_id="olmdistancegradation_field_prep_runtime_trace_20260619",
             slug="olmdistancegradation_field_prep",
             command=[py, "scripts/compare_distancegradation_trace.py"],
+        ),
+        Comparator(
+            request_id="olmradialblur_dense_sampler_trace_20260620",
+            slug="olmradialblur_dense_sampler",
+            command=[py, "scripts/compare_radialblur_trace.py"],
+        ),
+        Comparator(
+            request_id="olmdirectionalblur_dense_sampler_trace_20260620",
+            slug="olmdirectionalblur_dense_sampler",
+            command=[py, "scripts/compare_directionalblur_trace.py"],
         ),
         Comparator(
             request_id="olmsmoother2_legacy_key_gamma_runtime_trace_20260620",

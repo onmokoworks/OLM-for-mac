@@ -37,6 +37,10 @@
 | Legacy `case_0001` target pixel `(712,406)` receives low alpha before final packing: `FUN_18000cce0` returns floats `[0.57797289, 0.57797289, 0.57797289, 0.52794117]`, then the 8bpc writer packs `EAX=c8c8c887` / A/R/G/B `[135,200,200,200]`. | `refs/reports/smoother2_legacy_cce0_pixel_trace_20260621/runtime_trace_summary_smoother2_legacy_cce0_pixel_trace_20260621_0145.md`. | runtime-trace |
 | Mac CLI now reproduces the runtime-traced Windows CPU AEX `cce0` value for legacy `case_0001` witness `(712,406)`: Mac `cce0_after_b120 = [0.57797277,0.57797277,0.57797277,0.52794117]`, matching Windows `[0.57797289,0.57797289,0.57797289,0.52794117]` within float print precision. The Mac output pixel `[106,106,106,135]` follows from the same final store, while the old Windows reference PNG has `[207,207,207,207]` identical to input. | Local scratch trace, `refs/returns/windows/20260621_132250_smoother2_cce0_internals_replay_from_writer/`. | binary-grounded / provenance-blocked |
 | Current Windows AE 2026 Software recapture confirms the runtime-traced CPU behavior: source input pixel `(712,406)` is `[207,207,207,207]`, current AEX output is `[106,106,106,135]`, and Mac CLI with the same source input also outputs `[106,106,106,135]`. AE `saveFrameToPng` before/control frames are premultiplied to `[168,168,168,207]`, so CLI tests must not use the AE-saved before frame for this recapture when proving source-equivalence. | `refs/win_references/olm_reference_return_windows_smoother2_legacy_current_aex_recapture_20260621/OLMSmootherv2/`, local direct-source rerun. | current-AEX witness exact / old-ref stale |
+| Full current-AEX recapture covers all 12 legacy cases. Using the returned source input gives a close `legacy_case_0001` measurement (`max=43 mean=0.0020`), but key/gamma cases are more consistent when the CLI uses AE-saved premultiplied before frames: `legacy_case_0002` and `legacy_case_0003` become exact, and the remaining residuals are localized (`max=94..224`, `mean=0.0183..0.3266`). | `refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/OLMSmootherv2/`, local CLI probes. | current-reference measured / residual-classified |
+| Current-AEX residual writer trace proves the remaining `0004`/`0012` residual is not PNG export or 8bpc packing. Windows writer receives final values for `0004 (501,1055)` as `[159,95,95,255]` with reconstructed result-area floats `[0.34566423,0.11387402,0.11387402,1.0]`; before the Smooth Range threshold fix Mac cce0 for the same witness produced neutral `[65,65,65,255]` from one gray sample. Windows writer receives `0012 (500,877)` as `[9,9,9,255]` with floats `[0.002731743,0.002731743,0.002731743,1.0]`, while Mac currently leaves a smaller localized residual. | `refs/returns/windows/20260621_smoother2_legacy_current_aex_residuals_trace/`, local `--trace-pixel` probes. | writer-grounded / polygon-classifier blocked |
+| The preserved `0004 +0x350b` pre-call `[rsp+0x48]` floats are not target input evidence. Decomp shows `rcx=[rsp+0x48]` is the `FUN_18000cce0` output buffer, and the saved red-heavy value `[0.78198957,0.0015756468,0.0015756468,1.0]` matches Mac `cce0_after_b120` for the neighboring previous pixel `(500,1055)`. Treat it as stale output-buffer content. The remaining hard witness for `(501,1055)` is the Windows final writer value `[0.34566423,0.11387402,0.11387402,1.0]` / `[159,95,95,255]`. | `refs/returns/windows/20260621_smoother2_legacy_current_aex_0004_cce0_stepover/`, local Mac `--trace-pixel` probes for `(500,1055)` and `(501,1055)`. | false-lead retired / writer-grounded |
+| Key-enabled current-AEX class-plane generation follows Smooth Range, not the earlier key-predicate threshold. With Smooth Range promoted to the default, `0004 (501,1055)` changes from `idx=192` / one gray sample / `[0.05220960,0.05220960,0.05220960,1.0]` to `idx=208` / three samples / `cce0_after_b120=[0.34566417,0.11387399,0.11387399,1.0]`, matching the Windows final writer floats within print precision. The 11 before-frame measured legacy cases improve from mean-sum `1.3008` to `0.0589`; `0002` and `0003` remain exact. | Local `--class-threshold-mode` sweep and `refs/scripts/smoke_olmsmoother2_legacy_current_aex_cli.py`. | implementation-improved / residual-classified |
 
 ## Parameters
 
@@ -47,7 +51,7 @@
 | `Color Key` | Scalar key color or one-entry active palette, depending on invert. | asm setter |
 | `Smoothness` | Strength of smoother interpolation. | manual + port |
 | `Extra Smooth` | Additional smoothing strength/path. | manual + port |
-| `Smooth Range` | No-key class-plane threshold; nearby colors can be treated as same-color. | asm/grid |
+| `Smooth Range` | Class-plane threshold for no-key and current-AEX key-enabled paths; nearby colors can be treated as same-color. | asm/grid/current-AEX |
 | `Smoother Version` | v1/v2 gamma/linearization behavior. | official manual + asm |
 | `Gamma Correction`, `Gamma Value`, `Gamma Colors` | Post-linearization gamma handling; gamma colors list is separate from active palette. | asm setter |
 
@@ -311,6 +315,194 @@ filter.
   Caveat: AE-saved `before_effects_frame` and the smoothness0 control are
   `[168,168,168,207]` at the witness due PNG/premultiply behavior, so use
   `input/current_olm_cells.png` for source-equivalence CLI checks.
+- 2026-06-21 Smoother2 legacy full current-AEX recapture return:
+  `smoother2_legacy_full_current_aex_recapture_20260621` imported cleanly with
+  12/12 requested Software cases covered. Two local CLI probes were run:
+  - returned source input for all cases:
+    `legacy_case_0001 max=43 mean=0.0020`; remaining key/gamma cases have
+    `max=254` and `mean=0.5235..0.7264`, with nonzero pixels under 1.43%.
+  - AE-saved premultiplied before frames:
+    `legacy_case_0002` and `legacy_case_0003` are exact; the remaining
+    residuals are localized (`0004 max=94 mean=0.0183`,
+    `0005 max=224 mean=0.3266`, `0006 max=130 mean=0.0289`,
+    `0007 max=176 mean=0.1610`, `0008 max=99 mean=0.0543`,
+    `0009 max=128 mean=0.1727`, `0010/0011 max=167 mean=0.1415/0.1453`,
+    `0012 max=167 mean=0.2522`).
+  Representative max-diff witnesses from the AE-saved before-frame probe:
+  - `0004`: `(501,1055)`, Windows `[159,95,95,255]`, Mac CLI
+    `[65,65,65,255]`, diff `[94,30,30,0]`.
+  - `0005`: `(679,674)`, Windows `[0,0,255,255]`, Mac CLI
+    `[0,0,31,255]`, diff `[0,0,224,0]`.
+  - `0006`: `(501,1056)`, Windows `[130,2,2,255]`, Mac CLI
+    `[0,0,0,255]`, diff `[130,2,2,0]`.
+  - `0007`: `(500,880)`, Windows `[0,0,0,255]`, Mac CLI
+    `[176,103,103,255]`, diff `[176,103,103,0]`.
+  - `0008`: `(500,880)`, Windows `[0,0,0,255]`, Mac CLI
+    `[99,56,56,255]`, diff `[99,56,56,0]`.
+  - `0009`: `(908,734)`, Windows `[0,0,0,0]`, Mac CLI
+    `[125,48,48,128]`, diff `[125,48,48,128]`.
+  - `0010`, `0011`, `0012`: `(500,877)`, Windows `[9,9,9,255]`,
+    Mac CLI `[176,112,112,255]`, diff `[167,103,103,0]`.
+  Interpretation: no more broad Windows PNG capture is needed for this slice.
+  The next Smoother2 work is narrow binary/runtime classification of input
+  premultiply semantics and the remaining key/gamma/writeback residuals.
+- 2026-06-21 Smoother2 legacy current-AEX residual writer trace return:
+  status is `answered_partial`, but the stable final writer evidence is useful.
+  - `0002 (500,877)` control: source/before `[9,9,9,255]`, Windows writer
+    raw `EAX=0000000009090900`, exported `[0,0,0,0]`. This matches the
+    Mac exact-control behavior and confirms alpha-zero output is intentional.
+  - `0004 (501,1055)`: source/before `[12,12,12,255]`, Windows writer
+    raw `EAX=000000005f5f9fff`, exported `[159,95,95,255]`. Reconstructed
+    result-area floats are `[0.34566423,0.11387402,0.11387402,1.0]`.
+    Mac trace for the same pixel currently has `idx=192`, one neutral sample
+    `(501,1054)` with weight `0.0875`, `cce0_after_b120=[0.05220960]*3,1`,
+    then output `[65,65,65,255]` after the final sRGB writer.
+  - `0012 (500,877)`: source/before `[9,9,9,255]`, Windows writer
+    raw `EAX=00000000090909ff`, exported `[9,9,9,255]`. Reconstructed
+    result-area floats are `[0.002731743,0.002731743,0.002731743,1.0]`.
+    Mac trace currently has `idx=22` and three samples, including red
+    neighbors; `cce0_after_b120=[0.43280423,0.16133800,0.16133800,1]`,
+    which becomes `[176,112,112,255]`.
+  Interpretation: final writer and input ownership are no longer the likely
+  source. The remaining mismatch is in class-plane / switch-index / polygon
+  emitter semantics. `0004` needs stronger/redder Windows polygon evidence;
+  `0012` needs proof that Windows polygon is empty or gated before composite.
+- 2026-06-21 Smoother2 legacy current-AEX polygon trace return:
+  `refs/returns/windows/20260621_smoother2_legacy_current_aex_polygon_trace/olm_runtime_trace_smoother2_legacy_current_aex_polygon_20260621_return_windows.zip`.
+  This returned `answered_partial`. It recaptured the final writer stores and
+  proved the `+0x350b` cce0 argument layout, but it did not isolate c280/polygon
+  facts for the exact residual witnesses.
+  - `+0x350b` probe: for cce0 calls, `@r9[0]` is x and `@r9[1]` is y. Example
+    hit in case `0012`: `rdi_x=500`, `r14_y=1004`, `@r9` dwords
+    `[0x1f4,0x3ec,0,0x3ec]`.
+  - For `0004 (501,1055)`, the final writer still hits `+0x3610` with
+    `EAX=0x5f5f9fff`; stack dwords near the writer are
+    `[0x418,0x1f5,0x41f,0,0x41f,0]`; result floats are
+    `[0.34566423,0.11387402,0.11387402,1.0]`.
+  - For `0012 (500,877)`, the final writer still hits `+0x3610` with
+    `EAX=0x090909ff`; stack dwords near the writer are
+    `[0x368,0x1f4,0x36d,0,0x36d,0]`; result floats are
+    `[0.002731743,0.002731743,0.002731743,1.0]`.
+  - The validated target-XY conditions at `+0x350b` did not hit for either
+    exact witness, so there are no `ENTER_C280_XY_TARGET`,
+    `APPEND_104D0_XY_TARGET`, or after-stage records for these pixels.
+  Interpretation: do not repeat a final-output-XY-only `+0x350b` filter. The
+  next trace must backtrack from the successful writer store/output address and
+  recover the actual upstream callsite/coordinate convention, or prove that
+  these witness pixels bypass the normal `+0x350b -> cce0/c280` path.
+- 2026-06-21 Smoother2 legacy current-AEX writer-backtrack return:
+  `refs/returns/windows/20260621_smoother2_legacy_current_aex_writer_backtrack/olm_runtime_trace_smoother2_legacy_current_aex_writer_backtrack_20260621_return_windows.zip`.
+  The machine-readable summary is conservative and says the upstream call was
+  not recovered, but direct CDB log inspection adds an important correction:
+  `legacy_case_0004_current_aex` did hit `OLMSmoother2+0x350b` with the exact
+  target coordinates.
+  - Writer-loop disassembly confirms the normal 8bpc path:
+    `+0x34b5` sets `r9=[rsp+0x34]`, `+0x34e0` writes x,
+    `+0x34f8` writes y, `+0x350b` calls `FUN_18000cce0`,
+    `+0x3510..+0x3530` reads result floats, and `+0x360e` stores the final
+    packed dword.
+  - For `0004 (501,1055)`, the `@rsp+0x34/@rsp+0x38` condition hit
+    `+0x350b`. The callsite dump has `x=0x1f5`, `y=0x41f`,
+    `rcx=[rsp+0x48]`, `rdx=[rsp+0x80]`, `r8=[rsp+0x60]`,
+    `r9=[rsp+0x34]`. The pre-call result buffer at `rcx` contained
+    `[0x3f483078,0x3ace85ef,0x3ace85ef,0x3f800000]`
+    = `[0.78198957,0.0015756468,0.0015756468,1.0]`.
+  - The script armed internal breakpoints at `+0xc280`, `+0xc50a`,
+    `+0x104d0`, `+0xc7dd`, and `+0x3510`, but the log did not capture the
+    post-call `+0x3510` state or c280 internals. The next request should step
+    over/into the already-observed `+0x350b` hit rather than trying to
+    rediscover the writer coordinates.
+  - For `0012 (500,877)`, the target condition did not hit before AE reported
+    an access violation at `OLMSmoother2+0x98f2`; keep it secondary until the
+    0004 call can be stepped through.
+  Interpretation: 0004 is now the best live witness. The immediate missing
+  fact is the `FUN_18000cce0` return at `+0x3510` and, if reachable, the
+  c280 switch/polygon records from that same call.
+- 2026-06-21 Smoother2 legacy current-AEX 0004 cce0 step-over return:
+  `refs/returns/windows/20260621_smoother2_legacy_current_aex_0004_cce0_stepover/olm_runtime_trace_smoother2_legacy_current_aex_0004_cce0_stepover_20260621_return_windows.zip`.
+  This also returned `answered_partial`. It preserves the prior exact
+  `+0x350b` pre-call hit but could not reproduce/step it in fresh reruns.
+  - Preserved exact hit: `0004 (501,1055)` stopped at `+0x350b` with
+    `x=0x1f5`, `y=0x41f`, `r9=[rsp+0x34]`, and pre-call `[rsp+0x48]`
+    values `[0x3f483078,0x3ace85ef,0x3ace85ef,0x3f800000]`
+    = `[0.78198957,0.0015756468,0.0015756468,1.0]`.
+  - Three focused reruns (`continue`, `p` step-over, and old-package retry)
+    rendered the same correct output PNG pixel `[159,95,95,255]`, but did not
+    reproduce the exact `x=0x1f5,y=0x41f` `+0x350b` hit before shutdown.
+  - An `x=0x1f5` sampling run observed 12 cce0 calls with y values
+    `0x329,0x383,0x3d2,0x39d,0x425,0x425,0x42d,0x41d,0x415,0x427,0x41e,0x417`;
+    target `0x41f` was absent. Near hits show pre-call buffers:
+    `y=0x41d -> [0.88968968,0.0068502375,0.0068502375,1.0]` and
+    `y=0x41e -> [0.80821502,0.06012414,0.06012414,0.97499996]`.
+  - The requested post-call `+0x3510` result, c280 switch index, polygon count,
+    vertices, weights, and append sequence remain not isolated.
+  Interpretation: the target cce0 call is not reproducible enough under the
+  current AE/OpenMP/CDB workflow. Do not keep burning Windows trips on the same
+  exact breakpoint unless the helper can freeze thread scheduling or single-step
+  immediately within the already-hit session. A later Mac audit retired the
+  preserved pre-call value as a target-input clue: `rcx=[rsp+0x48]` is the
+  cce0 output buffer, and the red-heavy value matches the Mac result for the
+  neighboring previous pixel `(500,1055)`. The useful Mac-side next move is to
+  audit the local cce0/classifier/polygon path against the final writer floats
+  `[0.34566423,0.11387402,0.11387402,1.0]`, while ignoring stale pre-call
+  output-buffer content.
+- 2026-06-21 Smoother2 Mac-side classifier diagnostics:
+  - Before the Smooth Range threshold promotion, `0004 (501,1055)` built
+    `idx=192` from one gray sample `(501,1054)` and reported
+    `cce0_after_b120=[0.05220960,0.05220960,0.05220960,1.0]`, producing
+    `[65,65,65,255]` after the final sRGB writer.
+  - Promoting the key-enabled class-plane threshold to Smooth Range changes
+    the same target to `idx=208`, `count=3`,
+    `cce0_after_b120=[0.34566417,0.11387399,0.11387399,1.0]`. This matches
+    the Windows final writer floats
+    `[0.34566423,0.11387402,0.11387402,1.0]` within trace print precision,
+    though the whole `0004` frame still has localized residual
+    (`max=113 mean=0.0045`).
+  - Neighbor probes show `(500,1055)` produces
+    `cce0_after_b120=[0.78198946,0.00157565,0.00157565,1.0]`, which explains
+    the preserved Windows pre-call buffer as stale previous-pixel output.
+  - Diagnostic class-plane timing / byte-read variants can force this target
+    into `idx=0` with a red/gray 12-vertex polygon. `--cplane-read-mode
+    south2-se1 --idx0-mode double` reaches local floats
+    `[0.37729287,0.14958720,0.14958720,1.0]`, closer to the Windows final
+    writer `[0.34566423,0.11387402,0.11387402,1.0]` at this single point.
+  - After the Smooth Range threshold promotion, the active `0012` max witness is
+    no longer `(500,877)`. The frame max is `(91,841)`: Windows reference
+    `[0,0,0,0]`, Mac `[90,90,90,91]`. Mac trace builds `idx=105`, center
+    `rgba=(1,1,1,0)`, and one north sample `(91,840)` through
+    `cardinal6 desc=(91,841,1,91,843,5) key=50`, which dispatches to
+    `win_leaf_f270 -> e170/e3a0`. `win_FUN_1800125c0` is not the emitter for
+    this witness (`span=1`, early false). Broad probes are rejected:
+    transparent-center passthrough fixes this pixel but worsens `0012`
+    (`max=155` at `(1197,449)`), `skip-index 105` worsens to `max=122`, and
+    suppressing only cardinal6 key=50 worsens to `max=108`. The next useful
+    proof is therefore the exact Windows `d3b0/da50/e170/f270/e3a0` state for
+    this post-threshold witness, not another global alpha guard.
+    However, the full 12-case legacy run worsens (`0004 max=188 mean=0.2888`
+    versus normal `max=94 mean=0.0183`, and other cases regress), so these are
+    diagnostic branches only, not production fixes.
+- 2026-06-21 automated current-AEX residual audit:
+  `scripts/analyze_smoother2_current_aex_residuals.py` runs the current-AEX
+  recapture, finds the max-diff witness, and reruns the CLI with
+  `--trace-pixel` for that coordinate. On the current tree it reports:
+  - `0004`: max witness `(1903,519)`, Windows `[103,103,103,113]`, Mac
+    `[0,0,0,0]`. Local trace builds `idx=208`, center alpha `0`, polygon
+    count `0`, then transparent passthrough. This is the opposite side of the
+    0012 problem: Windows appears to write a small neighbor-derived output
+    where Mac has no polygon contribution.
+  - `0012`: max witness `(91,841)`, Windows `[0,0,0,0]`, Mac `[90,90,90,91]`.
+    Local trace builds `idx=105`, transparent center, one north sample through
+    `cardinal6 desc=(91,841,1,91,843,5) key=50`, and
+    `cce0_after_b120=[0.99106723,0.99106723,0.99106723,0.35492450]`.
+  A full residual-case diagnostic sweep keeps `normal` as the best current
+  candidate: `mean_sum=0.058945, maxmax=113`. Existing global toggles are
+  rejected (`south2-se1 mean_sum=0.933151`, `south0-se1 mean_sum=1.273705`,
+  `idx0-double mean_sum=1.051111`, `south2-se1+idx0-double
+  mean_sum=1.443685`). Therefore the remaining mismatch is not a simple
+  class-plane byte read or idx0 weight mode. Treat the exact Windows
+  `d3b0/da50/e170/f270/e3a0` state for the 0012 witness, and a corresponding
+  0004 polygon/no-polygon proof, as the next high-value evidence if Windows
+  runtime tracing resumes.
 - No-key `case_0001` residual is dominated by pixels where candidate smoothed
   but reference looks like input. This points to class-plane / dispatch firing
   too often, not final PNG premultiply alone.
@@ -413,7 +605,7 @@ filter.
 | Case group | Bit depth | Expected status | Current result | Next evidence |
 | --- | --- | --- | --- | --- |
 | no-key grid | 8bpc | AE exact for packaged grid | 12/12 exact in 2026-06-19 and 2026-06-20 AE pixel returns | Optional runtime trace for binary-grounding; do not PNG-tune |
-| key/gamma paths | 8bpc | current-reference pending | Old legacy PNGs are retired as correctness targets; runtime-traced Windows CPU AEX and Mac CLI agree for high-diff witness `(712,406)` | Import `smoother2_legacy_full_current_aex_recapture_20260621`, then classify exact/residual against current-AEX Software output |
+| key/gamma paths | 8bpc | guarded / writer-grounded residual | Full current-AEX recapture imported. With AE-saved premultiplied before frames, `legacy_case_0002` and `0003` are exact. Smooth Range threshold promotion makes the `0004 (501,1055)` target cce0 value match the Windows final writer floats, and reduces the 11-case mean-sum from `1.3008` to `0.0589`. Remaining localized residuals include `0004 max=113 mean=0.0045` and `0012 max=91 mean=0.0151`; the `0012` max witness is now `(91,841)` and is isolated to `cardinal6 key=50 -> f270/e170/e3a0`. | Keep the Smooth Range threshold fix. Next proof should be binary/runtime evidence for `d3b0/da50/e170/f270/e3a0` on `(91,841)`; broad alpha/index suppression probes were worse |
 | standalone v1 | 8bpc | AE exact for packaged v1 slices | 3/3 exact in corrected 960x540 2026-06-20 AE pixel rerun | Decide whether v1 stays independent or maps to v2 compatibility |
 
 ## Open Questions

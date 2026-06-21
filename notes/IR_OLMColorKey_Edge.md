@@ -30,6 +30,20 @@
   - `case_0009` remained non-exact (`max=47 mean=0.069921`).
   This does not prove the Mac plug-in is final, but it does show the current
   final-risk slice is primarily Edge Blur `case_0009`.
+- 2026-06-21 provenance audit splits the `case_0009` AE-host residual into a
+  reference-generation issue:
+  - the returned AE-host candidate is an exact pixel match against
+    `refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMColorKey/case_0009.png`
+    and the C++ CLI `reference/case_0009.png`;
+  - the same candidate reproduces the reported `max=47 mean=0.069921` only
+    against the older `refs/win_references/20260604_olm/OLMColorKey/case_0009.png`;
+  - the old-reference residual is mostly alpha (`channel max RGBA =
+    [7, 7, 33, 47]`, max witness `(1678,722)` old ref alpha `136`, candidate
+    alpha `89`).
+  Therefore `case_0009` is no longer a clean algorithm witness until the
+  canonical Software reference generation is chosen. Use
+  `scripts/analyze_colorkey_edge_reference_provenance.py` before treating this
+  case as a porting failure.
 - Edge Thin erode, current legacy cases `case_0005` / `case_0006`:
   - C++ CLI guarded residual: `max=255 mean=0.3031`.
   - The Windows AE-host exact return had both cases exact, so the CLI residual
@@ -57,6 +71,13 @@
   `refs/reports/olmcolorkey_edge_trace_baseline_20260619_031239_mac/`.
   The sharp Edge Thin witness is `case_0005/0006` at the top edge:
   `edge_thin_dist=17` and `edge_thin_limit=17`.
+- 2026-06-20 dense/live trace returns are now classified as too sparse for a
+  semantic change. The dense summary mostly carries Mac-baseline placeholders
+  such as `Mac baseline edge_blur_dist=...` / `not isolated`, and the live
+  follow-up hit `+0x94b0` / `+0x8c90` before an OLMColorKey access violation
+  but did not capture concrete edge sample values. The comparison helper now
+  ignores explanatory strings for focus selection, so both existing returns
+  report `trace-too-sparse`.
 
 ## Current Port Rules
 
@@ -100,7 +121,7 @@ caller/world semantic is still missing.
 | RGB core `case_0001..0004` | 8bpc | CLI exact / AE-host exact for current refs | exact in Python/C++/Rust and AE-host return | Mac AE exact against final package |
 | Edge Thin dilate `case_0007` | 8bpc | CLI exact / AE-host exact for current refs | exact | Mac AE exact against final package |
 | Edge Thin erode `case_0005/0006` | 8bpc | AE-host exact return, CLI residual | Windows AE-host exact; C++ CLI `max=255 mean=0.3031` | Runtime trace of `FUN_180008320` at top-edge witness pixels before changing CLI/Mac semantics |
-| Edge Blur `case_0008/0009` | 8bpc | blocked on runtime proof | AE-host exact for `case_0008`; AE-host `case_0009 max=47`; C++ CLI residual for both | Runtime trace of `case_0009` seed, distance, weight, apply/blend, final RGBA |
+| Edge Blur `case_0008/0009` | 8bpc | blocked on reference generation + runtime proof | AE-host exact for `case_0008`; `case_0009` exact against 20260618 normalized ref but `max=47` against older 20260604 ref; C++ CLI residual for both | Fix canonical Software reference generation, then runtime trace seed, distance, weight, apply/blend, final RGBA only if residual remains |
 
 ## Validation Packages
 
@@ -110,3 +131,6 @@ caller/world semantic is still missing.
 - Runtime trace request:
   `refs/runtime_trace_packages/olm_runtime_trace_colorkey_edge_erode_blur_with_mac_baseline_20260619_031350.zip`
   includes Mac baseline trace logs for `case_0005/0006/0008/0009`.
+  Existing 2026-06-20 returns did not answer the core sample questions, so a
+  future request should be narrower and should emit typed numeric Windows
+  values for the target witnesses rather than carrying Mac baseline text.

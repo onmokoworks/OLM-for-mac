@@ -1535,3 +1535,29 @@ map-remap modes diagnostic and avoid more high-level PNG-only toggles.
   Next useful work is either reading/porting the selected AVX2 helper behavior
   or building an exact OpenCV 4.5.5-linked microprobe for the pinned helper
   choreography.
+
+2026-06-21 deep stage trace return:
+
+- Returned package:
+  `refs/returns/windows/20260621_1929_kirakira_deep_stage_values/olm_runtime_trace_kirakira_deep_stage_values_20260621_021018_return_windows.zip`.
+- The return is `answered_partial`: `OLMKiraKira+0x1150790` did not fire, and
+  the `warpAffine` wrapper only hit the rotate-back call. Therefore the
+  center-copy, forward-warp, matrices, ROI rectangles, aggregation, and compose
+  values are still not captured.
+- The same input and rendered PNGs are byte-identical to the existing
+  `kirakira_single_ray_20260606` Software reference, so this is not a reference
+  mismatch.
+- Useful captured witnesses:
+  - after box pass 1, Windows is already above the local OpenCV 4.5.5 baseline:
+    center `0.79479009` vs `0.78713101`, up `0.77863592` vs `0.77140778`,
+    right `0.31319854` vs `0.30807176`;
+  - after box pass 3: center `0.71891218` vs `0.71023464`,
+    up `0.71564364` vs `0.70705664`, right `0.45356530` vs `0.44515648`;
+  - after rotate-back/final-copy, the center and right deltas persist and the
+    up witness grows (`0.76832885` vs `0.75457621`).
+- Comparison report:
+  `refs/reports/kirakira_deep_stage_values_20260621/runtime_trace_comparisons/olmkirakira_deep_stage_values.md`.
+- Interpretation: the first proven divergence is no later than box pass 1, so
+  final aggregation/compose tweaks are not justified. The next useful proof is
+  either the missing center-copy/forward-warp witness values or a microprobe of
+  the exact Windows AVX2 boxFilter input / first-pass behavior.

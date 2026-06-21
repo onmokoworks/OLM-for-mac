@@ -54,16 +54,51 @@ def find_result(summary: dict[str, Any]) -> dict[str, Any] | None:
     return None
 
 
-def nonempty(value: Any) -> bool:
+def concrete_trace_value(value: Any) -> bool:
+    """Return true only for values that look like measured Windows runtime facts."""
     if value is None:
         return False
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)):
+        return True
     if isinstance(value, list):
-        return any(nonempty(item) for item in value)
+        return any(concrete_trace_value(item) for item in value)
     if isinstance(value, dict):
-        return any(nonempty(item) for item in value.values())
+        return any(concrete_trace_value(item) for item in value.values())
     if isinstance(value, str):
-        return bool(value) and value not in {"0x...", "ui-threshold|actual-max|other", "blur-size|scaled|constant-doubled|other"}
-    return True
+        text = value.strip().lower()
+        if not text or text in {
+            "0x...",
+            "ui-threshold|actual-max|other",
+            "blur-size|scaled|constant-doubled|other",
+            "none",
+            "null",
+            "n/a",
+            "unknown",
+        }:
+            return False
+        placeholder_needles = (
+            "not isolated",
+            "not reached",
+            "inferred",
+            "likely",
+            "expected",
+            "current implementation",
+            "current best",
+            "runtime",
+            "still needs",
+            "untraced",
+            "unknown",
+            "needs live",
+            "was not captured",
+            "see witness",
+            "exact in current ae return",
+        )
+        if any(needle in text for needle in placeholder_needles):
+            return False
+        return False
+    return False
 
 
 def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
@@ -117,19 +152,19 @@ def classify_next_focus(windows: dict[str, Any]) -> str:
     opencv_calls = windows.get("opencv_calls", {})
     threshold = windows.get("threshold_and_normalization")
     compose = windows.get("compose", {})
-    if nonempty(field_values.get("distance_field_before_constant_rgba_or_mat_values")) or nonempty(
+    if concrete_trace_value(field_values.get("distance_field_before_constant_rgba_or_mat_values")) or concrete_trace_value(
         field_values.get("distance_field_after_constant_rgba_or_mat_values")
     ):
         return "constant-field-prep"
-    if nonempty(threshold):
+    if concrete_trace_value(threshold):
         return "threshold-normalization"
-    if nonempty(opencv_calls.get("distance_transform_call")):
+    if concrete_trace_value(opencv_calls.get("distance_transform_call")):
         return "distance-transform-args"
-    if nonempty(opencv_calls.get("gaussian_blur_call_if_case_0029")) or nonempty(
+    if concrete_trace_value(opencv_calls.get("gaussian_blur_call_if_case_0029")) or concrete_trace_value(
         field_values.get("distance_field_after_blur_if_any")
     ):
         return "gaussian-blur-args"
-    if nonempty(compose):
+    if concrete_trace_value(compose):
         return "compose-field-byte"
     return "trace-too-sparse"
 
