@@ -5,6 +5,19 @@ PNG render set. Use these only when static Ghidra/objdump facts and existing
 Windows reference PNGs cannot distinguish a real port bug from an unmodeled
 runtime state.
 
+Current package status:
+
+```
+python3 scripts/analyze_pending_runtime_trace_packages.py
+```
+
+Report:
+`refs/reports/pending_runtime_trace_packages.md`.
+
+Use this report before sending another debugger package. It separates pending
+requests from answered/superseded packages and prints the comparator command to
+run after importing a return.
+
 ## OLMSmoother2 Legacy Key/Gamma Witness
 
 Status: pending external Windows debugger trace.
@@ -653,8 +666,9 @@ equivalent.
 Current Mac environment note:
 
 - default `python3` has no `cv2`
-- `/tmp/olm_cv_probe_venv` has OpenCV `4.13.0`, which is shape evidence only
-- stale `/tmp/olm-opencv455-venv` no longer imports `cv2`
+- The temporary local OpenCV probe venv has OpenCV `4.13.0`, which is shape
+  evidence only.
+- The stale OpenCV 4.5.5 probe venv no longer imports `cv2`.
 - no local `pkg-config opencv4` or Homebrew C++ OpenCV libraries were found
 
 Interpretation:
@@ -670,7 +684,7 @@ Interpretation:
 
 - The first `boxFilter` branch is already answered by runtime trace:
   `FUN_1812e39d0` / OpenCV 4.5.5 AVX2.
-- Recreated `/tmp/olm_cv455_probe_venv` and reran the OpenCV 4.5.5 probes.
+- Recreated the temporary OpenCV 4.5.5 probe venv and reran the probes.
   The single-ray guarded residual remains `max=13/23/66`, and old three-case
   OpenCV two-temp remains `case_0003 max=26 mean=1.0477`.
 - `opencv-two-temp-alias-roi` is byte-equivalent to ordinary two-temp for the

@@ -503,6 +503,27 @@ filter.
   `d3b0/da50/e170/f270/e3a0` state for the 0012 witness, and a corresponding
   0004 polygon/no-polygon proof, as the next high-value evidence if Windows
   runtime tracing resumes.
+- 2026-06-21 curve-index sweep:
+  `scripts/sweep_smoother2_current_aex_curve_idx.py` reruns the nine localized
+  current-AEX residual cases with CLI-only `--curve-idx-override 0..8`.
+  Every curve gives the same metrics (`maxmax=113`,
+  `mean_sum=0.058945`, `nonzero_sum=1.773003`, `exact_count=0`), so the
+  remaining legacy residual is not explained by the unverified `bb10`
+  curve-index source. Keep the override as a diagnostic only; do not promote
+  it into production behavior.
+- 2026-06-21 `f270/e170/e3a0` trace refinement:
+  The current `0012 (91,841)` max witness enters `cardinal6` with
+  `desc=(91,841,1,91,843,5)` and `key=50`. Local `e170` reads
+  `A(x,y-1)=1`, `R(x-1,y)=0`, `A(x,y)=0`, producing `c=2`; `f270` then emits
+  source `(91,840)` with `weight=0.35632184`, `rgba=(0.99106717,0.99106717,
+  0.99106717,0.99607843)`, leading to `cce0_after_b120=[0.99106723,
+  0.99106723,0.99106723,0.35492450]`. Suppressing all `f270` emits is rejected:
+  the nine residual cases worsen from normal `mean_sum=0.058945` to
+  `mean_sum=0.0831`-class behavior, and `0012` worsens from `max=91
+  mean=0.0151` to `max=122 mean=0.0184`. Therefore the remaining mismatch is
+  not solved by a global `f270` suppression; the next Windows proof must decide
+  whether this exact witness differs in `desc/key`, `e170` bits, or `e3a0`
+  trapezoid/append state.
 - No-key `case_0001` residual is dominated by pixels where candidate smoothed
   but reference looks like input. This points to class-plane / dispatch firing
   too often, not final PNG premultiply alone.
@@ -605,7 +626,7 @@ filter.
 | Case group | Bit depth | Expected status | Current result | Next evidence |
 | --- | --- | --- | --- | --- |
 | no-key grid | 8bpc | AE exact for packaged grid | 12/12 exact in 2026-06-19 and 2026-06-20 AE pixel returns | Optional runtime trace for binary-grounding; do not PNG-tune |
-| key/gamma paths | 8bpc | guarded / writer-grounded residual | Full current-AEX recapture imported. With AE-saved premultiplied before frames, `legacy_case_0002` and `0003` are exact. Smooth Range threshold promotion makes the `0004 (501,1055)` target cce0 value match the Windows final writer floats, and reduces the 11-case mean-sum from `1.3008` to `0.0589`. Remaining localized residuals include `0004 max=113 mean=0.0045` and `0012 max=91 mean=0.0151`; the `0012` max witness is now `(91,841)` and is isolated to `cardinal6 key=50 -> f270/e170/e3a0`. | Keep the Smooth Range threshold fix. Next proof should be binary/runtime evidence for `d3b0/da50/e170/f270/e3a0` on `(91,841)`; broad alpha/index suppression probes were worse |
+| key/gamma paths | 8bpc | guarded / writer-grounded residual | Full current-AEX recapture imported. With AE-saved premultiplied before frames, `legacy_case_0002` and `0003` are exact. Smooth Range threshold promotion makes the `0004 (501,1055)` target cce0 value match the Windows final writer floats, and reduces the 11-case mean-sum from `1.3008` to `0.0589`. Remaining localized residuals include `0004 max=113 mean=0.0045` and `0012 max=91 mean=0.0151`; the `0012` max witness is now `(91,841)` and is isolated to `cardinal6 key=50 -> f270/e170/e3a0`. A curve-index sweep for `bb10` rejects `curve_idx` as the cause because overrides `0..8` all produce identical metrics. Local `f270` suppression is also rejected because it worsens all nine residual cases and `0012` specifically. | Keep the Smooth Range threshold fix. Next proof should be binary/runtime evidence for `d3b0/da50/e170/f270/e3a0` on `(91,841)`; broad alpha/index/curve-index/f270-suppression probes were worse or inert |
 | standalone v1 | 8bpc | AE exact for packaged v1 slices | 3/3 exact in corrected 960x540 2026-06-20 AE pixel rerun | Decide whether v1 stays independent or maps to v2 compatibility |
 
 ## Open Questions

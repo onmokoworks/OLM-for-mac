@@ -16,6 +16,13 @@ def repo_root() -> Path:
     return Path(__file__).resolve().parents[1]
 
 
+def display_path(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(repo_root()))
+    except ValueError:
+        return str(path)
+
+
 def parse_args() -> argparse.Namespace:
     root = repo_root()
     parser = argparse.ArgumentParser(description=__doc__)
@@ -44,8 +51,8 @@ def compare(reference: Path, candidate: Path) -> dict[str, Any]:
     cand = load_rgba(candidate)
     if ref.shape != cand.shape:
         return {
-            "reference": str(reference),
-            "candidate": str(candidate),
+            "reference": display_path(reference),
+            "candidate": display_path(candidate),
             "status": "shape-mismatch",
             "reference_shape": list(ref.shape),
             "candidate_shape": list(cand.shape),
@@ -56,8 +63,8 @@ def compare(reference: Path, candidate: Path) -> dict[str, Any]:
     nonzero_px = int(np.any(diff != 0, axis=2).sum())
     total_px = int(diff.shape[0] * diff.shape[1])
     return {
-        "reference": str(reference),
-        "candidate": str(candidate),
+        "reference": display_path(reference),
+        "candidate": display_path(candidate),
         "status": "compared",
         "max_diff": int(diff.max()),
         "mean_diff": float(diff.mean()),
@@ -76,13 +83,50 @@ def compare(reference: Path, candidate: Path) -> dict[str, Any]:
     }
 
 
+def classify_cases(cases: list[dict[str, Any]]) -> dict[str, Any]:
+    legacy_nonzero = [row["id"] for row in cases if row["legacy"].get("max_diff", 0) != 0]
+    normalized_nonzero = [row["id"] for row in cases if row["normalized"].get("max_diff", 0) != 0]
+    if not normalized_nonzero and legacy_nonzero:
+        status = "normalized-software-exact-with-legacy-drift"
+        reason = (
+            "All AE-host candidates match the normalized 2026-06-18 Software references exactly, "
+            "while older 2026-06-04 PNGs still drift for a subset of cases."
+        )
+        recommended_action = (
+            "Prefer normalized Software references for OLMBlur; do not tune implementation behavior "
+            "toward the older drift cases. Keep the CLI max=1 witnesses as binary-grounding diagnostics."
+        )
+    elif not normalized_nonzero:
+        status = "normalized-software-exact"
+        reason = "All AE-host candidates match the normalized Software references exactly."
+        recommended_action = "Preserve current AE behavior and broaden validation to 16bpc/32bpc when references exist."
+    else:
+        status = "unresolved-normalized-residual"
+        reason = "At least one AE-host candidate differs from the normalized Software reference."
+        recommended_action = "Classify the normalized residual before changing OLMBlur behavior."
+    return {
+        "status": status,
+        "reason": reason,
+        "recommended_action": recommended_action,
+        "case_count": len(cases),
+        "legacy_nonzero_count": len(legacy_nonzero),
+        "normalized_nonzero_count": len(normalized_nonzero),
+        "legacy_nonzero_cases": legacy_nonzero,
+        "normalized_nonzero_cases": normalized_nonzero,
+    }
+
+
 def render_markdown(report: dict[str, Any]) -> str:
+    classification = report["classification"]
     lines = [
         "# OLMBlur Reference Provenance Audit",
         "",
         f"- Candidate dir: `{report['candidate_dir']}`",
         f"- Legacy ref dir: `{report['legacy_ref_dir']}`",
         f"- Normalized ref dir: `{report['normalized_ref_dir']}`",
+        f"- Classification: `{classification['status']}`",
+        f"- Reason: {classification['reason']}",
+        f"- Recommended action: {classification['recommended_action']}",
         "",
         "| Case | Legacy max/mean | Normalized max/mean | Legacy max witness |",
         "| --- | --- | --- | --- |",
@@ -127,23 +171,24 @@ def main() -> int:
         cases.append(
             {
                 "id": candidate.stem,
-                "candidate": str(candidate),
+                "candidate": display_path(candidate),
                 "legacy": compare(legacy_path, candidate)
                 if legacy_path.exists()
-                else {"status": "missing", "reference": str(legacy_path)},
+                else {"status": "missing", "reference": display_path(legacy_path)},
                 "normalized": compare(normalized_path, candidate)
                 if normalized_path.exists()
-                else {"status": "missing", "reference": str(normalized_path)},
+                else {"status": "missing", "reference": display_path(normalized_path)},
             }
         )
     report = {
         "kind": "olmblur_reference_provenance",
         "schema": 1,
-        "candidate_dir": str(args.candidate_dir),
-        "legacy_ref_dir": str(args.legacy_ref_dir),
-        "normalized_ref_dir": str(args.normalized_ref_dir),
+        "candidate_dir": display_path(args.candidate_dir),
+        "legacy_ref_dir": display_path(args.legacy_ref_dir),
+        "normalized_ref_dir": display_path(args.normalized_ref_dir),
         "legacy_nonzero_count": sum(1 for row in cases if row["legacy"].get("max_diff", 0) != 0),
         "normalized_nonzero_count": sum(1 for row in cases if row["normalized"].get("max_diff", 0) != 0),
+        "classification": classify_cases(cases),
         "cases": cases,
     }
     if args.output_json:

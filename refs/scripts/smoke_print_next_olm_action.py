@@ -116,6 +116,7 @@ def main() -> int:
         try:
             tmp_path = Path(tmp)
             ae_pixel_request = tmp_path / "ae_pixel_request.zip"
+            unrelated_zip = tmp_path / "video_export.zip"
             old_pending = tmp_path / "olm_reference_requests_pending_20260606.zip"
             fresh_pending = tmp_path / "olm_reference_requests_pending_20260612.zip"
             write_zip(
@@ -127,6 +128,17 @@ def main() -> int:
                     ),
                 },
             )
+            make_runtime_trace_return(unrelated_zip)
+            proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
+            data = json.loads(proc.stdout)
+            candidate_names = {Path(row["path"]).name for row in data["candidates"]}
+            assert "video_export.zip" not in candidate_names
+
+            proc = run([sys.executable, str(script), "--json", str(unrelated_zip)], repo)
+            data = json.loads(proc.stdout)
+            direct_kinds = {Path(row["path"]).name: row["kind"] for row in data["candidates"]}
+            assert direct_kinds["video_export.zip"] == "runtime-trace-return"
+
             pending_ids = pending_request_ids(repo)
             if pending_ids:
                 package_pending_requests(repo, old_pending)
@@ -171,7 +183,10 @@ def main() -> int:
                 elif first_action == "send-runtime-trace-package":
                     assert data["decision"]["target"]["kind"] == "runtime-trace-request-package"
                 else:
-                    assert data["decision"]["target"]["kind"] == "ae-host-exact-failure-classification"
+                    assert data["decision"]["target"]["kind"] in {
+                        "ae-host-exact-failure-classification",
+                        "binary-grounded-residual-report",
+                    }
                 kinds = {Path(row["path"]).name: row["kind"] for row in data["candidates"]}
                 assert kinds["ae_pixel_request.zip"] == "ae-pixel-validation-request"
 
@@ -234,7 +249,10 @@ def main() -> int:
                 elif data["decision"]["action"] == "dispatch-runtime-trace-followup":
                     assert data["decision"]["target"]["kind"] == "runtime-trace-summary"
                 else:
-                    assert data["decision"]["target"]["kind"] == "ae-host-exact-failure-classification"
+                    assert data["decision"]["target"]["kind"] in {
+                        "ae-host-exact-failure-classification",
+                        "binary-grounded-residual-report",
+                    }
 
                 new_time = summary_json.stat().st_mtime + 10
                 os.utime(runtime_return, (new_time, new_time))

@@ -60,6 +60,7 @@ def build_plan(trace_path: Path, trace: dict[str, Any]) -> dict[str, Any]:
                     "pass": item["pass"],
                     "ksize": item["ksize"],
                     "expected_branch": "FUN_1812e39d0 / AVX2",
+                    "samples": item.get("samples", []),
                 }
                 for item in ray["box_filters"]
             ],
@@ -123,6 +124,33 @@ def markdown(plan: dict[str, Any]) -> str:
                 final=values["after_final_center_copy"],
             )
         )
+    lines.extend(
+        [
+            "",
+            "## BoxFilter Input Windows",
+            "",
+            "Each window is the local OpenCV input row used for the matching output sample. Values are summarized here; full 50-sample arrays are in `witness_plan.json`.",
+            "",
+            "| Pass | Label | Temp xy | Anchor x | Unbordered x range | Window mean | Output |",
+            "| ---: | --- | --- | ---: | --- | ---: | ---: |",
+        ]
+    )
+    for box_filter in ray.get("box_filters", []):
+        sample_by_label = {sample["label"]: sample for sample in box_filter.get("samples", [])}
+        for point in ray["witness_pixels"]:
+            sample = sample_by_label.get(point["label"], {})
+            window = sample.get("input_window") or {}
+            lines.append(
+                "| {pass_index} | {label} | `{temp}` | {anchor} | `{xrange}` | {mean:.10f} | {output:.10f} |".format(
+                    pass_index=box_filter["pass"],
+                    label=point["label"],
+                    temp=point["temp_xy"],
+                    anchor=window.get("anchor_x", "-"),
+                    xrange=window.get("x_range_unbordered", "-"),
+                    mean=float(window.get("mean", 0.0)),
+                    output=float(sample.get("value", 0.0)),
+                )
+            )
     lines.extend(
         [
             "",

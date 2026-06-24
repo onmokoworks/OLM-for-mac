@@ -10,10 +10,15 @@
   basic/extended/blur request sets. The AE-free CLI still has guarded
   residuals, so the shared binary-grounded field-prep/OpenCV spec is not yet
   complete. 16/32bpc are still untested.
-- 2026-06-21 reference provenance audit confirms all 29 packaged AE-host
+- 2026-06-22 reference provenance audit confirms all 29 packaged AE-host
   candidates match the 20260618 normalized Software references exactly. The
   visible residuals against `refs/win_references/20260605_extra` are
   reference-generation differences, not current AE-host failures.
+- Cross-feature canonicalization audit:
+  `refs/reports/software_reference_canonicalization_8bpc.md` classifies all
+  three DistanceGradation groups as `normalized-software-exact`:
+  basic 12/12, extended 16/16, and blur 1/1. Legacy drift remains only in the
+  older 20260605 extra references.
 
 ## Source Evidence
 
@@ -131,6 +136,13 @@ is `1 - X`.
   loaded the module and armed breakpoints, but no requested breakpoint hit
   before AE exited/crashed. The comparison helper now treats those strings as
   non-evidence, so both existing returns classify as `trace-too-sparse`.
+- 2026-06-22 provenance follow-up
+  (`refs/reports/olmdistancegradation_reference_provenance_20260622_025045/audit.md`)
+  promotes the reference-generation split into a machine-readable
+  classification: `normalized-software-exact-with-legacy-drift`. All 29
+  audited AE-host candidates match the normalized Software refs exactly;
+  legacy-only drift remains 1 basic case and 6 extended cases. Do not tune
+  field/compose code from those legacy-only differences.
 
 ## Conformance Cases
 
@@ -149,6 +161,12 @@ is `1 - X`.
 `scripts/analyze_distancegradation_reference_provenance.py` compares the
 2026-06-19 AE-host candidates against both the older 20260605 extra reference
 set and the 20260618 normalized Software references.
+
+Latest report:
+`refs/reports/olmdistancegradation_reference_provenance_20260622_005446/audit.md`.
+
+Cross-feature summary:
+`refs/reports/software_reference_canonicalization_8bpc.md`.
 
 | Group | Cases | Nonzero vs 20260605 extra | Nonzero vs 20260618 normalized |
 | --- | ---: | ---: | ---: |

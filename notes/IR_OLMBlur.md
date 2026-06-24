@@ -15,10 +15,15 @@
   - AE-free CLI keeps useful `max=1` residual witnesses for
     `case_0003/0006/0007`
   - not binary-complete for 16/32bpc or writeback proof
-  - 2026-06-21 provenance audit confirms the packaged AE-host candidates are
-    exact against the 20260618 normalized refs for all seven cases; the large
-    differences in `case_0001..0004` are only against the older 20260604
-    reference generation.
+- 2026-06-22 provenance audit confirms the packaged AE-host candidates are
+  exact against the 20260618 normalized refs for all seven cases; the large
+  differences in `case_0001..0004` are only against the older 20260604
+  reference generation.
+- Cross-feature canonicalization audit:
+  `refs/reports/software_reference_canonicalization_8bpc.md` now verifies the
+  same normalized-reference decision alongside OLMColorKey and
+  OLMDistanceGradation. OLMBlur is `normalized-software-exact` for 7/7 cases;
+  only the older 20260604 generation drifts on `case_0001..0004`.
 
 ## Source Evidence
 
@@ -144,11 +149,18 @@ Legacy border rules.
   before byte output, so changing a writeback rounding rule would be
   under-grounded and could break the AE-exact packaged plug-in slice.
 
-2026-06-21 reference provenance audit:
+2026-06-22 reference provenance audit:
 
 - `scripts/analyze_olmblur_reference_provenance.py` compares the 2026-06-19
   AE-host candidates against the older 20260604 refs and the 20260618
   normalized Software refs.
+- `scripts/analyze_soft_reference_canonicalization.py` includes the same
+  OLMBlur check in the cross-feature 8bpc Software audit:
+  `refs/reports/software_reference_canonicalization_8bpc.md`.
+- Latest report:
+  `refs/reports/olmblur_reference_provenance_20260622_025614/audit.md`.
+- Machine classification:
+  `normalized-software-exact-with-legacy-drift`.
 - All seven candidates are exact against the normalized refs.
 - Old-reference drift is limited to non-legacy `case_0001..0004`:
   - `case_0001`: old-ref `max=59 mean=1.287920525`

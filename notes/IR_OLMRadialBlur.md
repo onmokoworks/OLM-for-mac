@@ -30,6 +30,7 @@
 | Sequence is `prepass(+0x38,+0x48,+0x50)`, then `scatter(+0x38,+0x48,+0x40)`, then polar normalization/writeback. | `notes/OLMRadialBlur_ASM_FACTS.md`, `FUN_180002780`, `FUN_1800024c0`, `FUN_180004640`. | binary-grounded |
 | `FUN_180001c90` resolves outer/inner scatter spans from strength/offset mode, clamps to `3000`, multiplies by `param10`, and samples direction-specific 30000-entry tables. | Ghidra/ASM facts in `notes/OLMRadialBlur_ASM_FACTS.md`. | binary-grounded |
 | Inner direction on angular underflow advances to the next radius row tail, not same-row modulo wrap. | `notes/OLMRadialBlur_ASM_FACTS.md`, Ghidra MCP re-read. | binary-grounded |
+| Static scatter audit rejects promoting `loop-minus-one` or `circular-wrap` as global rules: `R14D = trunc(resolved_distance * span_gate)`, table step is `30000 / R14D`, the inner tail loops while `offset < R14D`, and underflow advances to the next radius row. | `refs/reports/olmradialblur_scatter_static_facts.md`, `scripts/analyze_radialblur_scatter_static_facts.py`. | binary-grounded |
 | Runtime trace confirmed `rb_inner_only_strength_small` helper effective span resolves to `31`: callsite `OLMRadialBlur+0x26e5`, helper `+0x1c90`, `[RCX+0x3a9ec]=0x1f`, and `R14D=31` after `+0x1d18`. | `refs/reports/runtime_trace_summary_hardpaths_20260621_041022.md`. | runtime-trace |
 | Size Variation feeds source-space span/factor maps, not a final alpha multiply. | `notes/OLMRadialBlur_ASM_FACTS.md`, source map audit. | binary-grounded / reference-confirmed |
 | Inner `param10` alpha-plane substitutes are negative after the Quality/5 fix: `one` and `factor` are equivalent in the tested shape, while `polar-alpha` and `prepass-alpha` worsen old Inner and Edge Fade cases. | 2026-06-21 Mac probes: `smoke_olmradialblur_cpp_inner_param10_plane_probe_cli.py`. | probe-rejected |
@@ -78,11 +79,56 @@ Current binary-grounded sequence:
 - This is not completion: the remaining alpha/RGB one-step residual still
   needs AE exact validation and binary-grounded writeback/rounding proof.
 - Size Variation and Noise remain outside the exact Zoom claim.
+- 2026-06-22 residual cluster audits
+  (`refs/reports/olmradialblur_residual_clusters_20260622_011750/residual_clusters.md`,
+  rerun `refs/reports/olmradialblur_residual_clusters_20260622_030500/residual_clusters.md`)
+  now classifies the Zoom residual as `rgba-off-by-one`: `max=1`,
+  `mean=0.004614559`, `31124` nonzero pixels (`1.5010%`), largest connected
+  component only `9` pixels, RGB differences are limited to `-1..+1`, and
+  alpha has `30962` positive / `0` negative signed differences. This strongly
+  suggests a quantization/writeback or alpha-normalization one-step issue, not
+  a broad sampler geometry error.
+- The residual cluster audit now emits `recommended_next_evidence` in both JSON
+  and Markdown. For the Zoom witness it asks for pre-round/pre-clamp
+  normalization plus final u8 writeback values, so the next change can separate
+  alpha-normalization from final quantization instead of tuning to PNG symptoms.
+- Packaged focused Windows trace request:
+  `refs/runtime_trace_packages/olm_runtime_trace_radialblur_residual_witness_20260622_012712.zip`.
+  It asks for the `(6,0)` Zoom witness pre-writeback/normalization/final bytes
+  separately from the tiny Rotation sampler witness below.
+- 2026-06-24 focused runtime return classifies the Zoom witness as
+  `pre-output alpha-normalization / sampler-side residual; not a later
+  byte-writer mismatch`. Windows final bytes are `[20,3,3,254]`, and the
+  traced pre-writeback floats truncate to those exact bytes. Therefore the
+  remaining Zoom `alpha=255` local residual is upstream of final byte packing,
+  likely alpha normalization or sampler-side state.
 
 ## Rotation / Inner Status
 
 - Tiny Rotation `case_0010` passes only a loose mean guard:
   `max=255 mean=0.0104`. This is a useful regression guard, not exactness.
+- 2026-06-22 residual cluster audits show tiny Rotation is not a pure
+  off-by-one/rounding problem. The latest audit classifies it as
+  `high-rgb-border-sampler-or-validity`: `max=255`, `mean=0.010407142`,
+  `33796` nonzero pixels (`1.6298%`), largest component `40` pixels touching
+  the top border, and max witness `ref=[255,255,255,255]` /
+  `cand=[0,0,0,255]` at `(1614,6)`. Alpha still has only positive +1
+  differences, but RGB includes full negative drops (`R/G/B min=-255`). Treat
+  this as a localized inverse-sampling or validity/border miss until
+  binary/runtime evidence says otherwise.
+- The same focused Windows trace package asks for the `(1614,6)` tiny Rotation
+  inverse-sampler source/polar coordinates, validity/border decision,
+  normalization denominator, pre-writeback RGBA, and final stored bytes.
+- The residual cluster audit's `recommended_next_evidence` keeps this
+  distinction machine-readable: high RGB drops near the top border should be
+  answered by inverse-sampler coordinates, border validity branch, denominator,
+  and final RGBA values, not by a broad scatter-loop toggle.
+- 2026-06-24 focused runtime return captured final bytes for the tiny Rotation
+  witness, but the closest traced inverse-sampler value does not explain the
+  final white pixel. Treat this as `final-writeback-only` / unresolved
+  sampler-validity evidence: final byte conversion is not enough, and the next
+  proof needs the exact sampler/validity/pre-writeback path for the high-max
+  top-border witness.
 - 2026-06-21 Mac-side recheck while Smoother2 is paused:
   full Rotation remains expected-red in the current C++ CLI:
   `case_0001 max=255 mean=1.9034`,
@@ -120,6 +166,42 @@ Current binary-grounded sequence:
   `inner-span-31-registers-only`. This preserves the span-31 fact, but it does
   not answer sampler/scatter/writeback residuals and should not drive a broad
   implementation change.
+- 2026-06-22 Mac-side quick candidate matrix against the 20260617 full Inner
+  Software set (`refs/reports/olmradialblur_inner_candidate_matrix_20260622_001824/`)
+  narrows the next static target without changing implementation defaults:
+  - `loop-minus-one` has the lowest representative mean sum
+    (`33.853479` vs current `34.228107`) and improves Quality-heavy cases
+    (`quality_1`, `quality_50`) plus Edge Fade by a small amount, but worsens
+    small/large strength. This is localization evidence only.
+  - `circular-wrap` improves small and large strength (`0.2346 -> 0.2275`,
+    `0.1897 -> 0.1246`) but worsens Edge Fade and Quality cases. Do not
+    replace the binary-grounded `aex-next-row` underflow rule globally.
+  - `dynamic-offset-aex-row` is byte-identical to current default for the
+    representative cases, so the next Mac-side search should not spend time on
+    that dynamic-offset formula.
+  - `grid-aex-float` changes only tiny mean-level amounts, so polar grid float
+    precision is unlikely to explain the high-max residuals.
+  - `no-span-minus-one` and `table-span-minus-one` strongly worsen small-span
+    cases. The current default `span-minus-one` remains the least bad broad
+    setting, but the loop/table split is still not binary-grounded.
+- 2026-06-22 wide matrix (`refs/reports/olmradialblur_inner_candidate_matrix_20260622_002848/`)
+  reruns the same eight high-value diagnostics against all ten 20260617 full
+  Inner cases. It keeps `loop-minus-one` as the best total-mean candidate
+  (`63.793179` vs current `64.313564`) and improves 7/10 cases, especially
+  `existing_0011`, `existing_0012`, `quality_1`, and `quality_50`. It still
+  worsens `small`, `large`, and `offset_mode_3`, while `circular-wrap` is best
+  for exactly those low-span/offset families. `table-span-minus-one` is best
+  for Edge Fade families. This split is stronger evidence that the missing rule
+  is not a global span/loop/wrap toggle; the next proof needs a real
+  `FUN_180001c90` per-cell witness for one low-span cell and one Quality cell.
+- 2026-06-22 static scatter audit
+  (`refs/reports/olmradialblur_scatter_static_facts.md`) makes that caution
+  machine-checkable. The exported disassembly shows `CVTTSS2SI R14D,XMM0` for
+  effective span, `IDIV R14D` for the 30000-entry table step, inner tail
+  `CMP R10D,R14D` / `JL`, and underflow `LEA EDX,[R12 + 0x1]`. Therefore
+  `loop-minus-one`, `table-span-minus-one`, and `circular-wrap` remain
+  localization probes only; the next change needs a typed runtime witness for
+  the wrong plane/value, not a broad helper toggle.
 
 ## Conformance Cases
 
@@ -130,6 +212,38 @@ Current binary-grounded sequence:
 | old Inner `case_0011..0013` | 8bpc | expected-red | 2026-06-19 rerun: `max=255/255/238`, `mean=23.0495/16.0039/18.0193` | narrow asm/runtime proof for remaining sampler/prepass/scatter/writeback split |
 | Inner small-span witness | 8bpc | runtime-trace-informed guard | span fact resolved to 31, image still `max=255 mean=0.2346` in current smoke | compare more per-cell scatter/writeback witnesses before changing defaults |
 | Inner `param10` plane probes | 8bpc | rejected hypotheses | `one/factor` equivalent; `polar-alpha/prepass-alpha` worse on old Inner and Edge Fade | focus next proof on `FUN_180001c90` effective length, loop bound, table divisor, or caller distance |
+
+## Focused Runtime Return Classification
+
+`scripts/compare_radialblur_trace.py` now understands both the older dense
+request `olmradialblur_dense_sampler_trace_20260620` and the focused residual
+request `olmradialblur_zoom_tiny_rotation_residual_witness_20260622`.
+
+After importing the focused Windows return, run:
+
+```
+python3 scripts/compare_radialblur_trace.py \
+  --runtime-summary-json refs/reports/runtime_trace_summary.json \
+  --output-json refs/reports/runtime_trace_comparisons/olmradialblur_residual_witness.json \
+  --output-md refs/reports/runtime_trace_comparisons/olmradialblur_residual_witness.md
+```
+
+Expected useful classifications:
+
+- `zoom:alpha-normalization-or-writeback`: compare denominator and final byte
+  conversion before changing the Zoom path.
+- `tiny_rotation:sampler-or-validity`: inspect inverse sampler coordinates and
+  border/validity before changing normalization/writeback.
+- `trace-structure-present-values-missing`: repeat the Windows trace with typed
+  numeric witness values; do not tune from placeholders.
+- The comparison JSON/Markdown also emits `recommended_next_evidence`. Use it
+  as the stop/go note for the next Mac-side implementation step: Zoom needs
+  denominator/pre-writeback/writeback proof, while tiny Rotation needs
+  inverse-sampler/validity proof.
+- Latest focused comparison:
+  `refs/reports/runtime_trace_comparisons/olmradialblur_residual_witness_20260624.md`.
+  Use this over the older generic `olmradialblur_residual_witness.md` report
+  when deciding the next RadialBlur change.
 
 ## Reference Provenance
 
@@ -165,6 +279,9 @@ folders by SHA-256 rather than case number. Current result:
 - `FUN_180001c90` effective-length ownership: caller span, helper loop bound,
   table reindex divisor, and whether the span-31 runtime witness is a caller
   distance fact or a helper-local loop/population fact.
+- Whether `FUN_180001c90` uses a case-dependent underflow/loop policy: the
+  2026-06-22 quick matrix shows `loop-minus-one` and `circular-wrap` improve
+  different case families, which is inconsistent with a single global toggle.
 - Exact Zoom one-step writeback/rounding behavior.
 - Noise and Size Variation exactness outside currently guarded slices.
 - Mac AE exactness and 16/32bpc behavior.

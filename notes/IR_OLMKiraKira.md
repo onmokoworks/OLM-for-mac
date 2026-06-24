@@ -72,9 +72,9 @@
     Bicubic, nearest, and fixed-table variants do not explain the residual.
   - Local OpenCV Python screen-over probe could not run because the available
     Python interpreters do not currently have `cv2` installed.
-- 2026-06-19 local OpenCV probe refresh after creating
-  `/tmp/olm_cv455_probe_venv` with
-  `opencv-python-headless==4.5.5.64` and `numpy==1.26.4`
+- 2026-06-19 local OpenCV probe refresh after creating a temporary OpenCV
+  4.5.5 probe environment with `opencv-python-headless==4.5.5.64` and
+  `numpy==1.26.4`
   via `refs/scripts/setup_olmkirakira_opencv455_probe_env.sh`:
   - `smoke_olmkirakira_opencv_screenover_probe_cli.py` runs and keeps the
     single-ray Software set in the existing guarded residual band
@@ -90,7 +90,7 @@
   broad 4.5.5-vs-newer OpenCV version difference alone. It is more likely in
   exact Windows AVX2 branch behavior, `warpAffine` Mat/ROI placement, or
   final ray aggregation details.
-- 2026-06-20 overnight recheck recreated `/tmp/olm_cv455_probe_venv` and
+- 2026-06-20 overnight recheck recreated the temporary OpenCV 4.5.5 probe and
   reconfirmed the same shape:
   - `smoke_olmkirakira_opencv_screenover_probe_cli.py` passes its guarded
     bound with single-ray Software residuals `max=13/23/66` and Strength=0
@@ -130,6 +130,59 @@
     (`+0.01375264`), but the first proven divergence is already before that.
   - normalized comparison focus:
     `forward-warp-or-boxfilter-input`.
+- 2026-06-21 focused forward-warp / box-input trace return is `answered`:
+  - forward `warpAffine` is now concrete for the vertical len=50 Software case:
+    dsize/temp `1924x1924`, copy origin `[2,422]`, source ROI
+    `[2,422,1920,1080]`, matrix
+    `[~0, 1, ~0, -1, ~0, 1924]`;
+  - this matches the local OpenCV baseline's forward matrix and temp geometry
+    within floating print precision, so the broad forward-warp choreography is
+    no longer the leading suspect;
+  - first `boxFilter` pass arguments are concrete:
+    `ksize=[50,1]`, `anchor=[-1,-1]`, `normalize=true`, `border_type=4`,
+    branch `FUN_1812e39d0 / AVX2`;
+  - forward-warp output / pass-1 input witnesses match local at the traced
+    points (`before_box_1 == after_forward_warp == 0.11764707`);
+  - the remaining first concrete mismatch is split between one center-copy
+    witness and first box output: `ray_length_up after_center_copy`
+    Windows `0.79773343` vs local `0.77992159`, while center/right
+    center-copy match; after box pass 1 Windows remains higher
+    (`center +0.00765908`, `up +0.00722814`, `right +0.00512678`).
+  - normalized comparison focus is now `center-copy-or-boxfilter-input`, with
+    a stronger suspicion on exact OpenCV AVX2 `boxFilter` / Mat alias behavior
+    or the local witness baseline around the center-copy sample.
+- 2026-06-22 local OpenCV baseline now records the exact 50-sample horizontal
+  input window for each traced `boxFilter` witness and pass:
+  - baseline dir:
+    `refs/reports/olmkirakira_trace_baseline_20260622_box_windows_mac`;
+  - window plan:
+    `refs/reports/olmkirakira_boxfilter_window_plan_20260622/witness_plan.md`;
+  - smoke:
+    `refs/scripts/smoke_olmkirakira_trace_box_windows.py` checks that each
+    recorded window mean matches the local OpenCV `boxFilter` output sample.
+  For the vertical len=50 case, OpenCV default `anchor=(-1,-1)` resolves to
+  `anchor_x=25`; the three pass-1 witness windows are `x=937..986` for
+  `center` and `ray_length_up`, and `x=987..1036` for `ray_length_right`.
+  These windows should be the next Windows trace target before changing the
+  Mac/C++ implementation.
+- Packaged Windows request:
+  `refs/runtime_trace_packages/olm_runtime_trace_kirakira_boxfilter_pass1_microprobe_20260622_012255.zip`.
+  This package includes the 2026-06-22 local window plan and a return template
+  that asks for the resolved source x range, 50 contributing samples or an
+  equivalent sum/min/max/hash, raw normalized sum, stored pass-1 float, and
+  src/dst Mat headers.
+- 2026-06-24 combined runtime return answers that microprobe. Windows captured
+  the pass-1 source windows and after-pass outputs for the three witnesses.
+  The resolved x ranges match the local 50-sample plan, the same source and
+  destination Mats were used, and the source-window mean delta equals the
+  after-pass output delta for all witnesses. This rules out the pass-1
+  contributing-window selection, `BORDER_REFLECT_101` resolution, AVX2
+  accumulator/store, and wrong Mat stage for this trace. The remaining cause
+  is upstream source-buffer content that is already brighter before
+  `boxFilter`.
+- Current comparison:
+  `refs/reports/runtime_trace_comparisons/olmkirakira_boxfilter_pass1_microprobe_20260624.md`.
+  Classification: `boxfilter-pass1-upstream-source-buffer-content`.
 
 ## Rejected / Low-Value Next Moves
 
@@ -144,14 +197,20 @@
 
 ## Next Required Proof
 
-The next useful evidence is not another broad PNG set. Use one of:
+The next useful evidence is not another broad PNG set. The forward-warp
+geometry, first `boxFilter` arguments, pass-1 contributing windows, and pass-1
+store behavior are now known. The remaining target is earlier than
+`boxFilter`: trace or statically ground the source-buffer fill / center-copy
+stage that makes the pass-1 source window brighter on Windows.
 
-- an exact AVX2 `FUN_1812e39d0` microprobe for the traced `boxFilter` branch
-  if a local x86/Windows-capable environment is available; or
-- a deeper Windows runtime trace of the same `FUN_181150790` single-ray case
-  that breaks at storage/sample sites and records forward/back matrix values,
-  ROI rectangles, and witness float values after center-copy, forward warp,
-  each box pass, rotate-back, final copy, aggregation, and merge compose.
+Start with the narrow `ray_length_up after_center_copy` discrepancy and prove
+whether the Windows value comes from the same Mat/address stage as the local
+baseline. Do not tune `boxFilter` size, border, or accumulator rules from the
+current residual.
+
+The project-local 2026-06-22 window plan gives the exact local rows and
+50-sample arrays for that narrow trace:
+`refs/reports/olmkirakira_boxfilter_window_plan_20260622/witness_plan.json`.
 
 Only after that should the C++/Mac implementation change.
 
@@ -185,8 +244,9 @@ Local comparison helper:
   values identify the first numeric divergence.
 - Current project-local baseline:
   `refs/reports/olmkirakira_trace_baseline_20260620_overnight_mac/trace.json`.
-  Recreate it with
-  `OLM_PROBE_PYTHON=/tmp/olm_cv455_probe_venv/bin/python python3 refs/scripts/write_olmkirakira_trace_baseline.py --out-dir refs/reports/olmkirakira_trace_baseline_20260620_overnight_mac`.
+  Recreate it with `OLM_PROBE_PYTHON` pointing at an OpenCV 4.5.5 probe Python,
+  then run `python3 refs/scripts/write_olmkirakira_trace_baseline.py --out-dir
+  refs/reports/olmkirakira_trace_baseline_20260620_overnight_mac`.
 - 2026-06-20 read-only audit conclusion after return: the first wrapper pass
   was too shallow to separate first divergence. The next trace should target
   concrete storage/sample values rather than wrapper entry alone.
@@ -194,10 +254,10 @@ Local comparison helper:
   - `smoke_olmkirakira_cpp_cli.py` remains expected-red on the old three-case
     scaffold: `case_0001 max=21 mean=0.8291`, `case_0002 max=24 mean=1.1609`,
     `case_0003 max=233 mean=53.8132`.
-  - `OLM_PROBE_PYTHON=/tmp/olm_cv455_probe_venv/bin/python`
-    `smoke_olmkirakira_opencv_screenover_probe_cli.py` passes the guarded
-    single-ray set with `cv2 4.5.5`; representative residuals remain
-    `max=13/13/23/23/66`, and Strength=0 anchors remain `max=0..3`.
+  - The OpenCV 4.5.5 probe Python passes
+    `smoke_olmkirakira_opencv_screenover_probe_cli.py` on the guarded
+    single-ray set; representative residuals remain `max=13/13/23/23/66`,
+    and Strength=0 anchors remain `max=0..3`.
   - The OpenCV two-temp and alias-ROI probes both remain expected-red but
     sharply better than native C++ for old `case_0003`:
     `case_0001 max=21 mean=0.8239`, `case_0002 max=24 mean=1.1568`,
@@ -256,3 +316,39 @@ Local comparison helper:
   re-sending the broad deep-stage request by asking only for the missing
   after-center-copy, after-forward-warp, before-box-pass-1, and after-box-pass-1
   typed float values at the three fixed witnesses.
+
+2026-06-22 boxFilter pass-1 microprobe:
+
+- The forward-warp / box-input trace proved the wrapper-level geometry and
+  first pass arguments match locally, so the remaining question is inside or
+  immediately around OpenCV 4.5.5 AVX2 `FUN_1812e39d0`.
+- Local window plan:
+  `refs/reports/olmkirakira_boxfilter_window_plan_20260622/witness_plan.md`.
+- Packaged focused request:
+  `refs/runtime_trace_packages/olm_runtime_trace_kirakira_boxfilter_pass1_microprobe_20260622_012255.zip`.
+  Request id: `kirakira_boxfilter_pass1_microprobe_20260622`.
+- `scripts/compare_kirakira_stage_trace.py` now understands this request and
+  classifies focused returns as:
+  - `boxfilter-pass1-different-window-or-border-reflect`
+  - `boxfilter-pass1-accumulator-precision-or-store`
+  - `boxfilter-pass1-boxfilter-pass1-window-matches`
+  - `boxfilter-pass1-window-values-without-store`
+  - `boxfilter-pass1-store-values-without-window`
+  - `boxfilter-pass1-trace-structure-present-values-missing`
+- The same comparison JSON/Markdown now emits `recommended_next_evidence`.
+  Treat that as the stop/go note for the next Mac-side implementation step:
+  sparse returns must not drive tuning; concrete window/store/Mat evidence can.
+- After importing a Windows return, run:
+
+```
+python3 scripts/compare_kirakira_stage_trace.py \
+  --runtime-summary-json refs/reports/runtime_trace_summary.json \
+  --local-trace-json refs/reports/olmkirakira_trace_baseline_20260622_box_windows_mac/trace.json \
+  --output-json refs/reports/runtime_trace_comparisons/olmkirakira_boxfilter_pass1_microprobe.json \
+  --output-md refs/reports/runtime_trace_comparisons/olmkirakira_boxfilter_pass1_microprobe.md
+```
+
+Implementation stop line: do not change KiraKira aggregation, final compose, or
+ray geometry from this path. The next code change should follow the pass-1
+microprobe classification: contributing window/border rule, accumulator/store
+precision, or Mat/address stage.

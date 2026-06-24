@@ -93,6 +93,14 @@ def load_params(params_path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
     return grouped_params(payload), payload
 
 
+def display_path(path: str | Path) -> str:
+    value = Path(path)
+    try:
+        return str(value.resolve().relative_to(Path.cwd().resolve()))
+    except ValueError:
+        return str(path)
+
+
 def float_param(params: dict[str, Any], key: str, default: float) -> float:
     value = params.get(key)
     if value is None:
@@ -237,6 +245,35 @@ def sample_vector(arr: np.ndarray, x: int, y: int) -> list[float] | None:
     return [json_float(value) for value in np.ravel(arr[y, x])]
 
 
+def reflect101_index(index: int, length: int) -> int:
+    if length <= 1:
+        return 0
+    value = index
+    while value < 0 or value >= length:
+        if value < 0:
+            value = -value
+        if value >= length:
+            value = 2 * length - value - 2
+    return value
+
+
+def boxfilter_window_samples(arr: np.ndarray, x: int, y: int, width: int) -> dict[str, Any] | None:
+    if y < 0 or y >= arr.shape[0] or x < 0 or x >= arr.shape[1]:
+        return None
+    # OpenCV default anchor for anchor=(-1,-1) is ksize/2 with integer division.
+    anchor_x = width // 2
+    source_x = [reflect101_index(x + offset - anchor_x, arr.shape[1]) for offset in range(width)]
+    values = [json_float(arr[y, sx]) for sx in source_x]
+    return {
+        "anchor_x": int(anchor_x),
+        "x_range_unbordered": [int(x - anchor_x), int(x - anchor_x + width - 1)],
+        "source_x": [int(v) for v in source_x],
+        "sum": json_float(float(np.sum(values, dtype=np.float64))),
+        "mean": json_float(float(np.mean(values, dtype=np.float64))),
+        "values": values,
+    }
+
+
 def sample_stage(arr: np.ndarray, points: list[dict[str, Any]], key: str) -> None:
     for point in points:
         x, y = point[key]
@@ -373,7 +410,14 @@ def opencv_two_temp_axis_blur(
                 tx, ty = point["temp_xy"]
                 value = sample_float(temp_b, tx, ty)
                 point["values"][f"after_box_{pass_index + 1}"] = value
-                box_trace["samples"].append({"label": point["label"], "temp_xy": point["temp_xy"], "value": value})
+                box_trace["samples"].append(
+                    {
+                        "label": point["label"],
+                        "temp_xy": point["temp_xy"],
+                        "value": value,
+                        "input_window": boxfilter_window_samples(src, tx, ty, ksize[0]),
+                    }
+                )
             box_traces.append(box_trace)
     matrix = cv2.getRotationMatrix2D(center, -angle, 1.0)
     if trace is not None:
@@ -867,8 +911,8 @@ def main() -> int:
             json.dumps(
                 {
                     "kind": "olmkirakira_opencv_two_temp_stage_trace",
-                    "input": args.input,
-                    "params": args.params,
+                    "input": display_path(args.input),
+                    "params": display_path(args.params),
                     "ray_mode": args.ray_mode,
                     "opencv_center_mode": args.opencv_center_mode,
                     "rays": trace_records,

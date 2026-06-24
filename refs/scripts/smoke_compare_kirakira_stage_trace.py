@@ -12,6 +12,8 @@ from pathlib import Path
 
 REQUEST_ID = "kirakira_fun_181150790_stage_values_20260620"
 DEEP_REQUEST_ID = "kirakira_fun_181150790_deep_stage_values_20260621"
+FORWARD_REQUEST_ID = "kirakira_forward_warp_box_input_20260621"
+MICROPROBE_REQUEST_ID = "kirakira_boxfilter_pass1_microprobe_20260622"
 
 
 def main() -> int:
@@ -127,8 +129,16 @@ def main() -> int:
         if comparison.get("likely_next_focus") != "boxfilter-stage-values":
             print("[FAIL] comparison did not choose expected next focus")
             return 1
+        if "pass-by-pass boxFilter values" not in comparison.get("recommended_next_evidence", ""):
+            print("[FAIL] comparison missing useful next-evidence recommendation")
+            return 1
         markdown = output_md.read_text(encoding="utf-8")
-        for needle in ("OLMKiraKira Stage Trace Comparison", "Ray Helper", "BoxFilter calls"):
+        for needle in (
+            "OLMKiraKira Stage Trace Comparison",
+            "Ray Helper",
+            "BoxFilter calls",
+            "Recommended next evidence",
+        ):
             if needle not in markdown:
                 print(f"[FAIL] comparison Markdown missing: {needle}")
                 return 1
@@ -190,6 +200,9 @@ def main() -> int:
         sparse_comparison = json.loads(sparse_output_json.read_text(encoding="utf-8"))
         if sparse_comparison.get("likely_next_focus") != "trace-too-sparse":
             print("[FAIL] sparse placeholder trace was treated as concrete evidence")
+            return 1
+        if "Do not tune" not in sparse_comparison.get("recommended_next_evidence", ""):
+            print("[FAIL] sparse trace did not get a stop/tune warning")
             return 1
         deep_summary = tmp_path / "runtime_summary_deep.json"
         deep_output_json = tmp_path / "comparison_deep.json"
@@ -254,6 +267,244 @@ def main() -> int:
         if not deep_comparison.get("deep_stage_deltas"):
             print("[FAIL] deep stage trace did not compute deltas")
             return 1
+        forward_summary = tmp_path / "runtime_summary_forward.json"
+        forward_output_json = tmp_path / "comparison_forward.json"
+        forward_output_md = tmp_path / "comparison_forward.md"
+        forward_summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": FORWARD_REQUEST_ID,
+                            "status": "answered",
+                            "summary": "synthetic forward warp and box input trace",
+                            "observations": {
+                                "first_divergence_classification": "center-copy",
+                                "forward_warp": {
+                                    "copy_origin": [2, 422],
+                                    "source_roi_rect": [2, 422, 1920, 1080],
+                                    "dsize": [1924, 1924],
+                                    "matrix": [0.0, 1.0, 0.0, -1.0, 0.0, 1924.0],
+                                },
+                                "boxfilter_pass_1": {
+                                    "selected_branch": "FUN_1812e39d0 / AVX2",
+                                    "ksize": [50, 1],
+                                    "anchor": [-1, -1],
+                                    "normalize": True,
+                                    "border_type": 4,
+                                },
+                                "witnesses": [
+                                    {
+                                        "label": "ray_length_up",
+                                        "windows_observed": {
+                                            "after_center_copy": 0.79773343,
+                                            "after_forward_warp": 0.11764707,
+                                            "before_box_1": 0.11764707,
+                                            "after_box_1": 0.77863592,
+                                        },
+                                    }
+                                ],
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        forward_proc = subprocess.run(
+            [
+                py,
+                "scripts/compare_kirakira_stage_trace.py",
+                "--runtime-summary-json",
+                str(forward_summary),
+                "--local-trace-json",
+                str(local_trace),
+                "--output-json",
+                str(forward_output_json),
+                "--output-md",
+                str(forward_output_md),
+            ],
+            cwd=repo,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        print(forward_proc.stdout, end="" if forward_proc.stdout.endswith("\n") else "\n")
+        if forward_proc.returncode != 0:
+            return forward_proc.returncode
+        forward_comparison = json.loads(forward_output_json.read_text(encoding="utf-8"))
+        if forward_comparison.get("request_id") != FORWARD_REQUEST_ID:
+            print("[FAIL] forward comparison request_id mismatch")
+            return 1
+        if forward_comparison.get("likely_next_focus") != "center-copy-or-boxfilter-input":
+            print("[FAIL] forward trace did not choose expected next focus")
+            return 1
+        forward_markdown = forward_output_md.read_text(encoding="utf-8")
+        for needle in ("Forward warp", "BoxFilter pass 1", "Forward-warp witnesses"):
+            if needle not in forward_markdown:
+                print(f"[FAIL] forward comparison Markdown missing: {needle}")
+                return 1
+        microprobe_summary = tmp_path / "runtime_summary_microprobe.json"
+        microprobe_output_json = tmp_path / "comparison_microprobe.json"
+        microprobe_output_md = tmp_path / "comparison_microprobe.md"
+        microprobe_summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": MICROPROBE_REQUEST_ID,
+                            "status": "answered",
+                            "summary": "synthetic pass-1 boxFilter microprobe",
+                            "observations": {
+                                "case_id": "kk_vertical_len50_brightness1_strength100",
+                                "classification": "different-window | border-reflect101 | accumulator-precision | store-rounding | different-mat-stage | failed-to-isolate",
+                                "boxfilter_pass_1": {
+                                    "breakpoint_or_probe_site": "FUN_1812e39d0",
+                                    "selected_path_or_nearest_offset": "avx2-row-sum",
+                                    "accumulator_precision": "SIMD-lane",
+                                },
+                                "witnesses": [
+                                    {
+                                        "label": "center",
+                                        "temp_xy": [962, 962],
+                                        "local_after_box_1": 0.7871310114860535,
+                                        "local_input_window": {
+                                            "anchor_x": 25,
+                                            "x_range_unbordered": [937, 986],
+                                            "mean": 0.7871310114860535,
+                                        },
+                                        "resolved_source_x_range_after_border": [937, 986],
+                                        "sample_summary": {
+                                            "count": 50,
+                                            "sum": 39.356550574302675,
+                                            "min": 0.0,
+                                            "max": 1.0,
+                                            "hash": "synthetic",
+                                        },
+                                        "normalized_sum_before_store": 0.79479009,
+                                        "stored_float_after_pass_1": 0.79479009,
+                                    }
+                                ],
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        microprobe_proc = subprocess.run(
+            [
+                py,
+                "scripts/compare_kirakira_stage_trace.py",
+                "--runtime-summary-json",
+                str(microprobe_summary),
+                "--local-trace-json",
+                str(local_trace),
+                "--output-json",
+                str(microprobe_output_json),
+                "--output-md",
+                str(microprobe_output_md),
+            ],
+            cwd=repo,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        print(microprobe_proc.stdout, end="" if microprobe_proc.stdout.endswith("\n") else "\n")
+        if microprobe_proc.returncode != 0:
+            return microprobe_proc.returncode
+        microprobe_comparison = json.loads(microprobe_output_json.read_text(encoding="utf-8"))
+        if microprobe_comparison.get("request_id") != MICROPROBE_REQUEST_ID:
+            print("[FAIL] microprobe comparison request_id mismatch")
+            return 1
+        if microprobe_comparison.get("likely_next_focus") != "boxfilter-pass1-accumulator-precision-or-store":
+            print("[FAIL] microprobe trace did not choose expected next focus")
+            return 1
+        if "accumulator precision" not in microprobe_comparison.get("recommended_next_evidence", ""):
+            print("[FAIL] microprobe trace missing accumulator/store recommendation")
+            return 1
+        microprobe_markdown = microprobe_output_md.read_text(encoding="utf-8")
+        for needle in ("Microprobe witnesses", "Microprobe classification", "BoxFilter pass 1"):
+            if needle not in microprobe_markdown:
+                print(f"[FAIL] microprobe comparison Markdown missing: {needle}")
+                return 1
+        upstream_summary = tmp_path / "runtime_summary_microprobe_upstream.json"
+        upstream_output_json = tmp_path / "comparison_microprobe_upstream.json"
+        upstream_output_md = tmp_path / "comparison_microprobe_upstream.md"
+        upstream_summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": MICROPROBE_REQUEST_ID,
+                            "status": "answered",
+                            "summary": "synthetic pass-1 source window proves upstream difference",
+                            "observations": {
+                                "witness_decision": {
+                                    "different_contributing_window": False,
+                                    "different_border_reflection": False,
+                                    "different_accumulator_or_store": False,
+                                    "different_mat_or_address_stage": False,
+                                },
+                                "witness_proofs": [
+                                    {
+                                        "label": "center",
+                                        "temp_xy": [962, 962],
+                                        "x_range_unbordered": [937, 986],
+                                        "source_window_mean_delta_vs_local": 0.007659090063365903,
+                                        "after_pass_1_delta_vs_local": 0.007659078513946538,
+                                        "mean_delta_matches_output_delta": True,
+                                    }
+                                ],
+                                "upstream_signal": {
+                                    "recommended_next_trace": "Move earlier than boxFilter toward pre-pass fill."
+                                },
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        upstream_proc = subprocess.run(
+            [
+                py,
+                "scripts/compare_kirakira_stage_trace.py",
+                "--runtime-summary-json",
+                str(upstream_summary),
+                "--local-trace-json",
+                str(local_trace),
+                "--output-json",
+                str(upstream_output_json),
+                "--output-md",
+                str(upstream_output_md),
+            ],
+            cwd=repo,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        print(upstream_proc.stdout, end="" if upstream_proc.stdout.endswith("\n") else "\n")
+        if upstream_proc.returncode != 0:
+            return upstream_proc.returncode
+        upstream_comparison = json.loads(upstream_output_json.read_text(encoding="utf-8"))
+        if upstream_comparison.get("likely_next_focus") != "boxfilter-pass1-upstream-source-buffer-content":
+            print("[FAIL] upstream microprobe did not choose expected next focus")
+            return 1
+        if "pre-boxFilter source fill" not in upstream_comparison.get("recommended_next_evidence", ""):
+            print("[FAIL] upstream microprobe missing pre-boxFilter recommendation")
+            return 1
+        upstream_markdown = upstream_output_md.read_text(encoding="utf-8")
+        for needle in ("Witness decision", "Upstream signal"):
+            if needle not in upstream_markdown:
+                print(f"[FAIL] upstream microprobe Markdown missing: {needle}")
+                return 1
     print("[OK] KiraKira stage trace comparison smoke")
     return 0
 

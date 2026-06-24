@@ -46,13 +46,20 @@ def load_rgba(path: Path) -> np.ndarray:
     return np.asarray(Image.open(path).convert("RGBA"), dtype=np.int16)
 
 
+def display_path(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(repo_root()))
+    except ValueError:
+        return str(path)
+
+
 def compare(reference: Path, candidate: Path) -> dict[str, Any]:
     ref = load_rgba(reference)
     cand = load_rgba(candidate)
     if ref.shape != cand.shape:
         return {
-            "reference": str(reference),
-            "candidate": str(candidate),
+            "reference": display_path(reference),
+            "candidate": display_path(candidate),
             "status": "shape-mismatch",
             "reference_shape": list(ref.shape),
             "candidate_shape": list(cand.shape),
@@ -64,8 +71,8 @@ def compare(reference: Path, candidate: Path) -> dict[str, Any]:
     nonzero_px = int(np.any(diff != 0, axis=2).sum())
     total_px = int(diff.shape[0] * diff.shape[1])
     return {
-        "reference": str(reference),
-        "candidate": str(candidate),
+        "reference": display_path(reference),
+        "candidate": display_path(candidate),
         "status": "compared",
         "total_px": total_px,
         "nonzero_px": nonzero_px,
@@ -85,11 +92,54 @@ def compare(reference: Path, candidate: Path) -> dict[str, Any]:
     }
 
 
+def classify(comparisons: list[dict[str, Any]]) -> dict[str, Any]:
+    compared = [row for row in comparisons if row.get("status") == "compared"]
+    exact_rows = [row for row in compared if row.get("max_diff") == 0 and row.get("mean_diff") == 0.0]
+    legacy_rows = [
+        row
+        for row in compared
+        if str(row.get("reference", "")).endswith("refs/win_references/20260604_olm/OLMColorKey/case_0009.png")
+    ]
+    current_exact_rows = [
+        row
+        for row in exact_rows
+        if "ae_host_validation_20260618_232926" in str(row.get("reference", ""))
+        or "cli_checks/olmcolorkey_cpp_distance_type_fix" in str(row.get("reference", ""))
+    ]
+    if current_exact_rows and legacy_rows and int(legacy_rows[0].get("max_diff", 0)) > 0:
+        return {
+            "status": "reference-generation-split",
+            "reason": (
+                "candidate is exact against the normalized 20260618 Software generation "
+                "but differs from the older 20260604 PNG"
+            ),
+            "recommended_action": "prefer normalized 20260618 refs; do not tune Edge Blur from the 20260604 residual",
+            "legacy_max_diff": int(legacy_rows[0]["max_diff"]),
+            "current_exact_matches": [row["reference"] for row in current_exact_rows],
+        }
+    if exact_rows:
+        return {
+            "status": "has-exact-reference-match",
+            "reason": "candidate exactly matches at least one known reference generation",
+            "recommended_action": "inspect non-exact generations before treating residuals as algorithm evidence",
+            "current_exact_matches": [row["reference"] for row in exact_rows],
+        }
+    return {
+        "status": "unresolved-residual",
+        "reason": "candidate does not exactly match any compared reference generation",
+        "recommended_action": "treat as possible algorithm residual and request/inspect stronger evidence",
+    }
+
+
 def render_markdown(report: dict[str, Any]) -> str:
+    classification = report["classification"]
     lines = [
         "# OLMColorKey Edge Reference Provenance Audit",
         "",
         f"- Candidate: `{report['candidate']}`",
+        f"- Classification: `{classification['status']}`",
+        f"- Reason: {classification['reason']}",
+        f"- Recommended action: {classification['recommended_action']}",
         "",
         "| Reference | Max | Mean | Nonzero px % | Channel max RGBA | Max witness |",
         "| --- | ---: | ---: | ---: | --- | --- |",
@@ -120,15 +170,16 @@ def main() -> int:
     comparisons = []
     for reference in args.reference:
         if not reference.exists():
-            comparisons.append({"reference": str(reference), "status": "missing"})
+            comparisons.append({"reference": display_path(reference), "status": "missing"})
             continue
         comparisons.append(compare(reference, candidate))
     report = {
         "kind": "olmcolorkey_edge_reference_provenance",
         "schema": 1,
-        "candidate": str(candidate),
+        "candidate": display_path(candidate),
         "comparisons": comparisons,
     }
+    report["classification"] = classify(comparisons)
     if args.output_json:
         args.output_json.parent.mkdir(parents=True, exist_ok=True)
         args.output_json.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

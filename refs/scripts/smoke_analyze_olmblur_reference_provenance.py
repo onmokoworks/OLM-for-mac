@@ -33,12 +33,26 @@ def main() -> int:
         data = json.loads(out_json.read_text(encoding="utf-8"))
         if len(data.get("cases", [])) != 7:
             raise AssertionError("expected seven OLMBlur cases")
+        classification = data.get("classification", {})
+        if classification.get("status") != "normalized-software-exact-with-legacy-drift":
+            raise AssertionError("expected normalized exact with legacy drift classification")
+        if classification.get("case_count") != 7:
+            raise AssertionError("expected classification to cover seven OLMBlur cases")
+        if classification.get("normalized_nonzero_count") != 0:
+            raise AssertionError("expected classification normalized nonzero count to be zero")
+        if classification.get("legacy_nonzero_count") != 4:
+            raise AssertionError("expected classification legacy nonzero count to be four")
+        if classification.get("legacy_nonzero_cases") != ["case_0001", "case_0002", "case_0003", "case_0004"]:
+            raise AssertionError("unexpected OLMBlur old-reference drift cases")
         if data.get("normalized_nonzero_count") != 0:
             raise AssertionError("expected all AE-host candidates to match normalized refs exactly")
         if data.get("legacy_nonzero_count") != 4:
             raise AssertionError("expected four old-reference drift cases")
-        if "OLMBlur Reference Provenance Audit" not in out_md.read_text(encoding="utf-8"):
+        md = out_md.read_text(encoding="utf-8")
+        if "OLMBlur Reference Provenance Audit" not in md:
             raise AssertionError("markdown report missing title")
+        if "normalized-software-exact-with-legacy-drift" not in md:
+            raise AssertionError("markdown report missing classification")
     print("[OK] OLMBlur provenance audit smoke passed")
     return 0
 

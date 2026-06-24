@@ -32,8 +32,13 @@ def main() -> int:
         )
         data = json.loads(out_json.read_text(encoding="utf-8"))
         comparisons = data.get("comparisons", [])
+        classification = data.get("classification", {})
         if len(comparisons) < 3:
             raise AssertionError("expected at least three reference comparisons")
+        if classification.get("status") != "reference-generation-split":
+            raise AssertionError(f"expected reference-generation-split, got {classification}")
+        if "do not tune Edge Blur" not in classification.get("recommended_action", ""):
+            raise AssertionError("classification should warn against tuning from legacy residual")
         exact_rows = [row for row in comparisons if row.get("status") == "compared" and row.get("max_diff") == 0]
         legacy_rows = [
             row
@@ -45,8 +50,11 @@ def main() -> int:
             raise AssertionError("expected at least one exact reference-generation match")
         if not legacy_rows or legacy_rows[0].get("max_diff") != 47:
             raise AssertionError("expected legacy 20260604 reference to reproduce max_diff=47")
-        if "OLMColorKey Edge Reference Provenance Audit" not in out_md.read_text(encoding="utf-8"):
+        markdown = out_md.read_text(encoding="utf-8")
+        if "OLMColorKey Edge Reference Provenance Audit" not in markdown:
             raise AssertionError("markdown report missing title")
+        if "reference-generation-split" not in markdown:
+            raise AssertionError("markdown report missing classification")
     print("[OK] ColorKey Edge provenance audit smoke passed")
     return 0
 

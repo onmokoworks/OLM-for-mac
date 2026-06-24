@@ -15,6 +15,12 @@ Current verified reference slice:
 - Back/noise cases: `case_0006..case_0009`, measurement-only for now
 - Current Mac plugin: 8bpc front-only/no-noise direct slice; copies unsupported
   back/noise/16-32bpc paths instead of pretending they are ported.
+- 2026-06-24 focused residual return is `answered_partial`: it includes exact
+  Software reference renders and an earlier live-attempt log, but no successful
+  per-pixel rowdriver/rotate-path runtime values. The CDB attempt failed
+  before `OLMDirectionalBlur` resolved as a loaded module. Keep the current
+  implementation blocked on binary/runtime evidence rather than tuning from
+  the returned PNGs alone.
 
 ## Evidence Priority
 
@@ -341,6 +347,10 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 
 ## Current Probe Table
 
+The historical table below is useful for seeing which hypotheses were tried,
+but the current CLI should be read through the 2026-06-22 matrix immediately
+after it.
+
 | Probe | case_0001 mean | case_0005 mean | Interpretation |
 |---|---:|---:|---|
 | direct/front-strength | 4.0897 | 1.1931 | best angle-0 scaffold, not structurally faithful |
@@ -368,6 +378,36 @@ semantics than in the final direct-to-comp sampling shortcut alone.
 | rotated-aex-row-init-zero | 4.5240 | 1.4931 | cleared B+denom is strongly negative |
 | rotated-rowdriver-prepass | 4.7505 | 1.3802 | negative alpha-fade prepass |
 | rotated-rowdriver-prepass-init | 4.7724 | 1.3862 | negative copied-buffer/init hypothesis |
+
+2026-06-22 current CLI candidate matrix:
+
+- Script: `scripts/analyze_directionalblur_candidate_matrix.py`.
+- Quick report: `refs/reports/olmdirectionalblur_candidate_matrix_20260622_010324/candidate_matrix.md`.
+- Wide report: `refs/reports/olmdirectionalblur_candidate_matrix_20260622_010433/candidate_matrix.md`.
+- Wide profile covers front-only `case_0001..case_0005`.
+- `rotated-front-strength` is the best total-mean candidate
+  (`18.197798`, max `252`) and `direct` is second (`18.310725`, max `253`),
+  but both are measurement scaffolds and not the AEX-confirmed A/B structure.
+- AEX choreography variants cluster tightly around total mean `22.12`:
+  `rotated-aex-trunc-output` is the best AEX-shaped wide candidate
+  (`22.066680`, max `251`), then `rotated-aex-truncated-span`,
+  `rotated-aex-choreo`, `rotated-aex-full-choreo`,
+  `rotated-aex-pad-full-choreo`, and `rotated-aex-prepass-full-choreo`.
+- `case_0001..case_0004` are effectively identical within each candidate
+  family (`rotated-front-strength/direct` around mean `3.7669`; AEX
+  choreography around `4.9570`). `case_0005` is the only current front-only
+  case where the AEX choreography family clearly beats `direct`
+  (`~2.2971` vs `3.2430`).
+- `rotated-rowdriver-prepass` remains the worst wide candidate
+  (`23.501166`, max `255`), so do not promote the rowdriver prepass branch from
+  PNG metrics alone.
+
+Interpretation: the remaining front-only residual is not solved by a single
+global A/B choreography, padding, output truncation, span truncation, binary
+alpha, or prepass toggle. The next evidence should isolate the angle-0
+row-driver accumulation / valid-alpha side channel for `case_0001..0004` and
+the diagonal rotate path for `case_0005` separately, preferably with typed
+runtime witnesses rather than another broad PNG sweep.
 
 ## Implementation Rules
 
@@ -618,3 +658,86 @@ measured over-accumulation now points at the final two-stage RGB-denominator
 normalization / validity pass in `FUN_180004a20` (`param_6[0x1010]`,
 `FUN_180001ec0`, `param_6[0x1023]`), not the scatter taper. See the corrected
 mapping in `OLMDirectionalBlur_ASM_FACTS.md` 2026-06-14 param-struct entry.
+
+## 2026-06-22 Residual Cluster Witnesses for Focused Runtime Trace
+
+Script: `scripts/analyze_directionalblur_residual_clusters.py`.
+
+Report:
+`refs/reports/olmdirectionalblur_residual_clusters_20260622_022500/residual_clusters.md`.
+
+Candidate under test: `rotated-aex-full-choreo`.
+
+The broad candidate matrix is no longer a good tuning surface by itself: the
+best total-mean rows (`direct`, `rotated-front-strength`) are useful measuring
+scaffolds but not AEX-shaped, while the AEX choreography family stays clustered
+around the same residual band. The residual audit therefore narrows the next
+runtime request to two concrete, high-signal pixels:
+
+| Case | Witness | Windows ref | Local candidate | Local interpretation |
+| --- | --- | --- | --- | --- |
+| `case_0001` angle-0/front-only | `(494,169)` | `[164,0,0,255]` | `[0,0,0,255]` | `angle0-rgb-only-rowdriver-or-valid-alpha`; alpha matches exactly |
+| `case_0005` diagonal rotate-path | `(507,367)` | `[1,0,0,255]` | `[252,0,0,255]` | `diagonal-rgb-alpha-rotate-validity`; RGB inversion with smaller alpha residual |
+
+Cluster facts:
+
+- `case_0001`: classified as `angle0-rgb-only-rowdriver-or-valid-alpha`.
+  Max `164`, mean `4.956984954`, one dominant component of `147593` pixels
+  over bbox `[380,0,959,369]`; all diff pixels are RGB-only, alpha diff is
+  exactly zero, and signed R has both positive and negative regions
+  (`min=-164`, `max=102`). This is not byte writeback noise. It likely sits
+  before final writeback: rowdriver/group membership, validity/alpha
+  side-channel, or RGB normalization.
+- `case_0005`: classified as `diagonal-rgb-alpha-rotate-validity`. Max `251`,
+  mean `2.297067901`, many small components plus one broad border-touching
+  component; RGB differs on `79003` pixels, alpha differs on `11205` pixels,
+  signed R reaches `-250..+251`, and alpha has smaller `-55..+56` residuals.
+  This should be traced as a separate diagonal rotate sampler / validity /
+  group-size witness, not inferred from the angle-0 case.
+
+Packaged focused Windows request:
+`refs/runtime_trace_packages/olm_runtime_trace_directionalblur_residual_witness_20260622_022500.zip`.
+
+The request asks Windows to return parameter normalization, output-to-A/B buffer
+coordinates, rowdriver/group membership, rotate sampler source order, validity
+or alpha side-channel values, accumulation numerator/denominator, pre-writeback
+floats/hex, and final stored RGBA for the two witnesses above.
+
+Return intake/classification command:
+
+```
+python3 scripts/compare_directionalblur_trace.py \
+  --runtime-summary-json refs/reports/runtime_trace_summary.json \
+  --output-json refs/reports/runtime_trace_comparisons/olmdirectionalblur_residual_witness.json \
+  --output-md refs/reports/runtime_trace_comparisons/olmdirectionalblur_residual_witness.md
+```
+
+The comparator prefers the focused request
+`olmdirectionalblur_angle0_diagonal_residual_witness_20260622` when present and
+returns a paired focus string:
+
+- `angle0:rowdriver-or-group-membership`: update the rowdriver/group IR before
+  changing sampler math.
+- `angle0:valid-alpha-side-channel`: verify the hidden validity/alpha side
+  channel used by the final pass.
+- `angle0:normalization-or-accumulation`: inspect numerator/denominator and
+  final normalization before pixel fitting.
+- `diagonal:rotate-sampler`: update rotate source-coordinate order and border
+  behavior first.
+- `diagonal:border-or-validity`: ground the valid/out-of-frame branch before
+  touching weights.
+- `diagonal:group-size-or-opacity`: check group-size/opacity gating on the
+  diagonal path.
+- `writeback-or-prewriteback` on either side means the trace reached final
+  values but not the earlier cause; compare pre-writeback floats against local
+  logs before changing writeback.
+- `trace-structure-present-values-missing` means the returned shape is useful
+  only for request debugging, not implementation tuning.
+- The comparison JSON/Markdown also emits `recommended_next_evidence`. Use it
+  as the stop/go note for the next Mac-side implementation step: angle-0 needs
+  rowdriver/group or validity-side-channel proof, while diagonal needs rotate
+  sampler/border/validity proof.
+
+Stop line: do not promote another DirectionalBlur implementation toggle from
+PNG mean improvements until one of these witnesses is explained by asm/runtime
+values.

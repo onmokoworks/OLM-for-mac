@@ -19,6 +19,8 @@ from typing import Any
 REQUEST_IDS = {
     "kirakira_fun_181150790_stage_values_20260620",
     "kirakira_fun_181150790_deep_stage_values_20260621",
+    "kirakira_forward_warp_box_input_20260621",
+    "kirakira_boxfilter_pass1_microprobe_20260622",
 }
 DEFAULT_REQUEST_ID = "kirakira_fun_181150790_stage_values_20260620"
 
@@ -276,6 +278,132 @@ def first_divergence(rows: list[dict[str, Any]]) -> dict[str, Any] | None:
     return None
 
 
+def microprobe_witnesses(observations: dict[str, Any]) -> list[dict[str, Any]]:
+    rows = observations.get("witnesses")
+    if isinstance(rows, list):
+        return [row for row in rows if isinstance(row, dict)]
+    rows = observations.get("witness_proofs")
+    if isinstance(rows, list):
+        return [row for row in rows if isinstance(row, dict)]
+    return []
+
+
+def microprobe_classification(observations: dict[str, Any]) -> str:
+    explicit = observations.get("classification")
+    if isinstance(explicit, str):
+        lowered = explicit.strip().lower()
+        if lowered and "|" not in lowered and "failed" not in lowered and "unknown" not in lowered:
+            return lowered
+    decision = observations.get("witness_decision")
+    if isinstance(decision, dict):
+        if decision.get("different_contributing_window") is True or decision.get("different_border_reflection") is True:
+            return "different-window-or-border-reflect"
+        if decision.get("different_accumulator_or_store") is True:
+            return "accumulator-precision-or-store"
+        if (
+            decision.get("different_contributing_window") is False
+            and decision.get("different_border_reflection") is False
+            and decision.get("different_accumulator_or_store") is False
+            and decision.get("different_mat_or_address_stage") is False
+        ):
+            return "upstream-source-buffer-content"
+    witnesses = microprobe_witnesses(observations)
+    if not witnesses:
+        return "trace-too-sparse"
+    concrete_windows = 0
+    concrete_stores = 0
+    different_windows = 0
+    accumulator_or_store = 0
+    for witness in witnesses:
+        local_window = witness.get("local_input_window")
+        local_range = local_window.get("x_range_unbordered") if isinstance(local_window, dict) else None
+        resolved_range = witness.get("resolved_source_x_range_after_border")
+        if has_concrete(resolved_range):
+            concrete_windows += 1
+            if local_range and resolved_range != local_range:
+                different_windows += 1
+        summary = witness.get("sample_summary")
+        if isinstance(summary, dict) and has_concrete(summary.get("count")):
+            concrete_windows += 1
+            if summary.get("count") != 50:
+                different_windows += 1
+            local_after = witness.get("local_after_box_1")
+            total = summary.get("sum")
+            count = summary.get("count")
+            if isinstance(local_after, (int, float)) and isinstance(total, (int, float)) and isinstance(count, (int, float)) and count:
+                if abs((float(total) / float(count)) - float(local_after)) > 1.0e-6:
+                    different_windows += 1
+        stored = witness.get("stored_float_after_pass_1")
+        normalized = witness.get("normalized_sum_before_store")
+        windows_after = witness.get("windows_after_box_1")
+        source_delta = witness.get("source_window_mean_delta_vs_local")
+        output_delta = witness.get("after_pass_1_delta_vs_local")
+        if isinstance(source_delta, (int, float)) and isinstance(output_delta, (int, float)):
+            concrete_windows += 1
+            concrete_stores += 1
+            if abs(float(source_delta) - float(output_delta)) <= 1.0e-6:
+                continue
+            accumulator_or_store += 1
+        if has_concrete(stored) or has_concrete(normalized) or has_concrete(windows_after):
+            concrete_stores += 1
+            local_after = witness.get("local_after_box_1")
+            observed = first_non_none(stored, windows_after, normalized)
+            if isinstance(local_after, (int, float)) and isinstance(observed, (int, float)):
+                if abs(float(observed) - float(local_after)) > 1.0e-7:
+                    accumulator_or_store += 1
+    if different_windows:
+        return "different-window-or-border-reflect"
+    if accumulator_or_store:
+        return "accumulator-precision-or-store"
+    if concrete_windows and concrete_stores:
+        return "boxfilter-pass1-window-matches"
+    if concrete_windows:
+        return "window-values-without-store"
+    if concrete_stores:
+        return "store-values-without-window"
+    return "trace-structure-present-values-missing"
+
+
+def recommended_next_evidence(focus: str) -> str:
+    if focus == "await-windows-trace":
+        return "Import the focused Windows runtime trace return before changing KiraKira behavior."
+    if focus == "trace-too-sparse" or focus.endswith("trace-too-sparse"):
+        return "Do not tune from this return; rerun with concrete witness values or an exact breakpoint failure reason."
+    if focus == "ray-length-normalization":
+        return "Ground ray length normalization and parameter scaling against the helper entry values."
+    if focus == "warp-matrix-or-center":
+        return "Ground the affine matrix, temp center, and copy origin before touching blur/compose math."
+    if focus == "forward-warp-or-boxfilter-input":
+        return "Capture the pass-1 input window or same-Mat/address proof at the first divergent witness."
+    if focus == "center-copy-or-boxfilter-input":
+        return "Prove whether the divergent witness comes from center-copy/source ROI state or boxFilter input state."
+    if focus == "boxfilter-stage-values":
+        return "Capture pass-by-pass boxFilter values for the same witnesses, including pass-1 input and stored output."
+    if focus == "aggregation-or-compose":
+        return "Ground the final scale/screen-over compose inputs before changing ray generation."
+    if focus.endswith("different-window-or-border-reflect"):
+        return "Use the resolved source indices and sample list to update only the boxFilter border/window rule."
+    if focus.endswith("accumulator-precision-or-store"):
+        return "Ground accumulator precision and store rounding in the AVX2 helper before changing output values."
+    if focus.endswith("upstream-source-buffer-content"):
+        return "Treat pass-1 boxFilter window/border/store as grounded; trace the pre-boxFilter source fill or center-copy stage next."
+    if focus.endswith("boxfilter-pass1-window-matches"):
+        return "Treat pass-1 window selection as grounded; move downstream to later passes or compose witnesses."
+    if focus.endswith("window-values-without-store"):
+        return "Add stored pass-1 output or normalized sum before deciding whether the window alone explains the residual."
+    if focus.endswith("store-values-without-window"):
+        return "Add contributing-window values to distinguish accumulator/store behavior from a different input window."
+    if focus.endswith("trace-structure-present-values-missing"):
+        return "The trace hit the expected shape but lacks concrete values; request witness floats/sums before tuning."
+    return "Record the concrete witness that explains this focus before changing KiraKira implementation."
+
+
+def safe_source_file(value: Any) -> str | None:
+    if not value:
+        return None
+    return Path(str(value)).name
+
+
 def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
     if row is None:
         return {"present": False}
@@ -290,7 +418,7 @@ def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
         "present": True,
         "status": row.get("status"),
         "summary": row.get("summary"),
-        "source_file": row.get("source_file"),
+        "source_file": safe_source_file(row.get("source_file")),
         "case_id": observations.get("case_id") or (case.get("case_id") if isinstance(case, dict) else None),
         "known_facts": observations.get("known_facts_to_keep"),
         "entry": {
@@ -308,6 +436,15 @@ def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
         },
         "witness_pixels": witnesses if isinstance(witnesses, list) else [],
         "boxfilter_calls": observations.get("boxfilter_calls"),
+        "forward_warp": observations.get("forward_warp"),
+        "boxfilter_pass_1": observations.get("boxfilter_pass_1"),
+        "forward_warp_witnesses": observations.get("witnesses"),
+        "microprobe_witnesses": observations.get("witnesses") or observations.get("witness_proofs"),
+        "microprobe_classification": observations.get("classification"),
+        "witness_decision": observations.get("witness_decision"),
+        "upstream_signal": observations.get("upstream_signal"),
+        "first_divergence_classification": observations.get("first_divergence_classification"),
+        "previous_first_concrete_divergence": observations.get("previous_first_concrete_divergence"),
         "aggregation_and_compose": aggregation if isinstance(aggregation, dict) else aggregation,
         "stage_values": observations.get("stage_values"),
         "not_captured": observations.get("not_captured"),
@@ -331,14 +468,26 @@ def build_comparison(summary: dict[str, Any], local_trace: dict[str, Any]) -> di
         win_forward = entry.get("forward_matrix")
         win_witnesses = windows.get("witness_pixels")
         win_box = windows.get("boxfilter_calls")
+        win_forward_warp = windows.get("forward_warp")
+        win_boxfilter_pass_1 = windows.get("boxfilter_pass_1")
+        win_forward_warp_witnesses = windows.get("forward_warp_witnesses")
+        win_microprobe_witnesses = windows.get("microprobe_witnesses")
         win_agg = windows.get("aggregation_and_compose")
         win_stage_values = windows.get("stage_values")
         if has_concrete(win_length) and win_length != local_ray.get("length"):
             likely_next_focus = "ray-length-normalization"
+        elif row.get("request_id") == "kirakira_boxfilter_pass1_microprobe_20260622":
+            likely_next_focus = "boxfilter-pass1-" + microprobe_classification(observations)
         elif has_concrete(win_forward) and win_forward != local_ray.get("forward_matrix"):
             likely_next_focus = "warp-matrix-or-center"
         elif deltas and all(row.get("windows_stage", "").startswith("after_box_filter_pass") for row in deltas[:3]):
             likely_next_focus = "forward-warp-or-boxfilter-input"
+        elif has_concrete_stage_value(win_forward_warp_witnesses) or has_concrete_stage_value(win_forward_warp):
+            likely_next_focus = "center-copy-or-boxfilter-input"
+        elif has_concrete_stage_value(win_boxfilter_pass_1):
+            likely_next_focus = "boxfilter-stage-values"
+        elif has_concrete_stage_value(win_microprobe_witnesses):
+            likely_next_focus = "boxfilter-pass1-" + microprobe_classification(observations)
         elif has_concrete_stage_value(win_stage_values):
             likely_next_focus = "boxfilter-stage-values"
         elif has_concrete_stage_value(win_witnesses) or has_concrete_stage_value(win_box):
@@ -352,6 +501,7 @@ def build_comparison(summary: dict[str, Any], local_trace: dict[str, Any]) -> di
         "schema": 1,
         "request_id": row.get("request_id") if isinstance(row, dict) else DEFAULT_REQUEST_ID,
         "likely_next_focus": likely_next_focus,
+        "recommended_next_evidence": recommended_next_evidence(likely_next_focus),
         "windows": windows,
         "local": local,
         "deep_stage_deltas": deltas,
@@ -377,6 +527,7 @@ def render_markdown(comparison: dict[str, Any]) -> str:
         "",
         f"- Request: `{comparison['request_id']}`",
         f"- Likely next focus: `{comparison['likely_next_focus']}`",
+        f"- Recommended next evidence: {comparison['recommended_next_evidence']}",
         f"- Windows trace present: `{bool(windows.get('present'))}`",
         "",
         "## Ray Helper",
@@ -402,6 +553,15 @@ def render_markdown(comparison: dict[str, Any]) -> str:
         f"- Summary: {windows.get('summary') or '-'}",
         f"- Witness pixels: {md_value(windows.get('witness_pixels'))}",
         f"- BoxFilter calls: {md_value(windows.get('boxfilter_calls'))}",
+        f"- Forward warp: {md_value(windows.get('forward_warp'))}",
+        f"- BoxFilter pass 1: {md_value(windows.get('boxfilter_pass_1'))}",
+        f"- Forward-warp witnesses: {md_value(windows.get('forward_warp_witnesses'))}",
+        f"- Microprobe witnesses: {md_value(windows.get('microprobe_witnesses'))}",
+        f"- Microprobe classification: {md_value(windows.get('microprobe_classification'))}",
+        f"- Witness decision: {md_value(windows.get('witness_decision'))}",
+        f"- Upstream signal: {md_value(windows.get('upstream_signal'))}",
+        f"- First divergence classification: {md_value(windows.get('first_divergence_classification'))}",
+        f"- Previous concrete divergence: {md_value(windows.get('previous_first_concrete_divergence'))}",
         f"- Aggregation/compose: {md_value(windows.get('aggregation_and_compose'))}",
         "",
     ]

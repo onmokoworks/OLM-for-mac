@@ -87,7 +87,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--focus",
-        choices=["smoother-priority", "blur-kirakira"],
+        choices=["smoother-priority", "blur-kirakira", "pending-runtime"],
         default="smoother-priority",
         help="Select the package set to bundle.",
     )
@@ -139,7 +139,48 @@ def file_rows(root: Path, paths: list[Path], bundle_dir: str) -> list[dict[str, 
 def supporting_notes_for_focus(focus: str) -> list[Path]:
     if focus == "blur-kirakira":
         return BLUR_KIRAKIRA_SUPPORTING_NOTES
+    if focus == "pending-runtime":
+        return [
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("notes/WINDOWS_RUNTIME_TRACE_REQUESTS.md"),
+            Path("notes/IR_OLMRadialBlur.md"),
+            Path("notes/IR_OLMKiraKira.md"),
+            Path("notes/IR_OLMDirectionalBlur.md"),
+            Path("notes/IR_OLMSmoother2.md"),
+            Path("refs/win_references/20260604_olm/OLMRadialBlur/reference_manifest.json"),
+            Path("refs/win_references/20260604_olm/OLMRadialBlur/case_0009.png"),
+            Path("refs/win_references/20260604_olm/OLMRadialBlur/case_0009_before_effects.png"),
+            Path("refs/win_references/20260604_olm/OLMRadialBlur/case_0010.png"),
+            Path("refs/win_references/20260604_olm/OLMRadialBlur/case_0010_before_effects.png"),
+            Path("refs/reports/pending_runtime_trace_packages.md"),
+            Path("refs/reports/runtime_trace_summary.md"),
+        ]
     return SUPPORTING_NOTES
+
+
+def pending_runtime_paths(root: Path) -> list[Path]:
+    report_path = root / "refs" / "reports" / "pending_runtime_trace_packages.json"
+    if not report_path.exists():
+        return []
+    data = json.loads(report_path.read_text(encoding="utf-8"))
+    rows = data.get("requests", [])
+    if not isinstance(rows, list):
+        return []
+    paths: list[Path] = []
+    for row in rows:
+        if not isinstance(row, dict) or row.get("status") != "pending":
+            continue
+        package = row.get("package")
+        if not isinstance(package, str) or not package:
+            continue
+        path = Path(package)
+        if path.is_absolute():
+            try:
+                path = path.resolve().relative_to(root)
+            except ValueError:
+                continue
+        paths.append(path)
+    return paths
 
 
 def build_manifest(root: Path, runtime_paths: list[Path], ae_paths: list[Path], focus: str) -> dict[str, Any]:
@@ -189,8 +230,15 @@ def build_readme(manifest: dict[str, Any]) -> str:
 def main() -> int:
     args = parse_args()
     root = repo_root()
-    runtime_paths = BLUR_KIRAKIRA_RUNTIME_PACKAGES if args.focus == "blur-kirakira" else RUNTIME_PACKAGES
-    ae_paths = [] if args.runtime_only or args.focus == "blur-kirakira" else AE_PIXEL_PACKAGES
+    if args.focus == "pending-runtime":
+        runtime_paths = pending_runtime_paths(root)
+        if not runtime_paths:
+            return fail("no pending runtime trace packages found; run scripts/analyze_pending_runtime_trace_packages.py first")
+    elif args.focus == "blur-kirakira":
+        runtime_paths = BLUR_KIRAKIRA_RUNTIME_PACKAGES
+    else:
+        runtime_paths = RUNTIME_PACKAGES
+    ae_paths = [] if args.runtime_only or args.focus in {"blur-kirakira", "pending-runtime"} else AE_PIXEL_PACKAGES
     missing = [path for path in [*runtime_paths, *ae_paths] if not (root / path).exists()]
     if missing:
         return fail("missing bundle input(s): " + ", ".join(path.as_posix() for path in missing))

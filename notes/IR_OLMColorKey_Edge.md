@@ -6,9 +6,11 @@
 - Feature/path: 8bpc Edge Thin erode/dilate and Edge Blur after core keying
 - Bit depth: 8bpc documented here; 16/32bpc still need references
 - Current status: packaged 8bpc AE-host return is exact for core RGB,
-  Edge Thin, and Edge Blur `case_0008`; Edge Blur stress `case_0009` remains
-  non-exact. AE-free CLI residuals remain useful diagnostics, but the active
-  compatibility risk is the Edge Blur `case_0009` seed/distance/apply path.
+  Edge Thin, and Edge Blur against the 20260618 normalized Software reference
+  generation. The apparent Edge Blur stress `case_0009` residual is now a
+  reference-generation split against the older 20260604 PNG, not a clean
+  algorithm witness. AE-free CLI residuals remain useful diagnostics, but they
+  are not current proof that the Mac AE path is wrong.
 
 ## Source Evidence
 
@@ -44,6 +46,25 @@
   canonical Software reference generation is chosen. Use
   `scripts/analyze_colorkey_edge_reference_provenance.py` before treating this
   case as a porting failure.
+- 2026-06-22 rerun of the provenance audit writes
+  `refs/reports/olmcolorkey_edge_reference_provenance_20260622_005112/`.
+  It confirms the exact split with repo-relative paths: the 2026-06-19
+  candidate is exact against both the 20260618 normalized ref and the C++ CLI
+  reference, while the older 20260604 PNG alone reproduces
+  `max=47 mean=0.069921031`. Treat the normalized 20260618 generation as the
+  active 8bpc Software reference for this slice unless a future Windows
+  recapture contradicts it.
+- 2026-06-22 follow-up audit
+  `refs/reports/olmcolorkey_edge_reference_provenance_20260622_024907/audit.md`
+  promotes that conclusion into a machine-readable classification:
+  `reference-generation-split`. The generated JSON now records the reason and
+  recommended action: prefer normalized 20260618 refs and do not tune Edge Blur
+  from the older 20260604 residual.
+- `scripts/analyze_soft_reference_canonicalization.py` now folds all nine
+  ColorKey AE-host candidates into the cross-feature 8bpc Software audit:
+  `refs/reports/software_reference_canonicalization_8bpc.md`. That report
+  classifies ColorKey as `normalized-software-exact` for 9/9 cases, with only
+  the old `case_0009` reference drifting.
 - Edge Thin erode, current legacy cases `case_0005` / `case_0006`:
   - C++ CLI guarded residual: `max=255 mean=0.3031`.
   - The Windows AE-host exact return had both cases exact, so the CLI residual
@@ -121,7 +142,7 @@ caller/world semantic is still missing.
 | RGB core `case_0001..0004` | 8bpc | CLI exact / AE-host exact for current refs | exact in Python/C++/Rust and AE-host return | Mac AE exact against final package |
 | Edge Thin dilate `case_0007` | 8bpc | CLI exact / AE-host exact for current refs | exact | Mac AE exact against final package |
 | Edge Thin erode `case_0005/0006` | 8bpc | AE-host exact return, CLI residual | Windows AE-host exact; C++ CLI `max=255 mean=0.3031` | Runtime trace of `FUN_180008320` at top-edge witness pixels before changing CLI/Mac semantics |
-| Edge Blur `case_0008/0009` | 8bpc | blocked on reference generation + runtime proof | AE-host exact for `case_0008`; `case_0009` exact against 20260618 normalized ref but `max=47` against older 20260604 ref; C++ CLI residual for both | Fix canonical Software reference generation, then runtime trace seed, distance, weight, apply/blend, final RGBA only if residual remains |
+| Edge Blur `case_0008/0009` | 8bpc | AE-host exact against normalized current refs / AE-free CLI residual | AE-host exact for `case_0008`; `case_0009` exact against 20260618 normalized ref but `max=47` against older 20260604 ref; C++ CLI residual for both | Prefer normalized 20260618 reference generation; next proof is Mac AE exact against canonical refs and 16/32bpc coverage. Runtime trace only if a current Software ref residual reappears |
 
 ## Validation Packages
 

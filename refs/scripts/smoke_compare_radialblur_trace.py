@@ -10,7 +10,8 @@ import tempfile
 from pathlib import Path
 
 
-REQUEST_ID = "olmradialblur_dense_sampler_trace_20260620"
+DENSE_REQUEST_ID = "olmradialblur_dense_sampler_trace_20260620"
+RESIDUAL_REQUEST_ID = "olmradialblur_zoom_tiny_rotation_residual_witness_20260622"
 
 
 def run_compare(repo: Path, py: str, summary: Path, output_json: Path, output_md: Path) -> dict:
@@ -37,11 +38,14 @@ def run_compare(repo: Path, py: str, summary: Path, output_json: Path, output_md
 
 
 def assert_focus(comparison: dict, expected: str) -> None:
-    if comparison.get("request_id") != REQUEST_ID:
-        print("[FAIL] comparison request_id mismatch")
-        raise SystemExit(1)
     if comparison.get("likely_next_focus") != expected:
         print(f"[FAIL] expected focus {expected}, got {comparison.get('likely_next_focus')}")
+        raise SystemExit(1)
+
+
+def assert_request(comparison: dict, expected: str) -> None:
+    if comparison.get("request_id") != expected:
+        print(f"[FAIL] expected request_id {expected}, got {comparison.get('request_id')}")
         raise SystemExit(1)
 
 
@@ -60,7 +64,7 @@ def main() -> int:
                     "kind": "olm_runtime_trace_return_summary",
                     "results": [
                         {
-                            "request_id": REQUEST_ID,
+                            "request_id": DENSE_REQUEST_ID,
                             "status": "answered",
                             "summary": "synthetic RadialBlur dense trace",
                             "observations": {
@@ -92,9 +96,19 @@ def main() -> int:
             ),
             encoding="utf-8",
         )
-        assert_focus(run_compare(repo, py, summary, output_json, output_md), "sampler-scatter-or-writeback-values")
+        comparison = run_compare(repo, py, summary, output_json, output_md)
+        assert_request(comparison, DENSE_REQUEST_ID)
+        assert_focus(comparison, "sampler-scatter-or-writeback-values")
+        if "concrete sampler/scatter" not in comparison.get("recommended_next_evidence", ""):
+            print("[FAIL] dense trace missing sampler/scatter next-evidence recommendation")
+            return 1
         markdown = output_md.read_text(encoding="utf-8")
-        for needle in ("OLMRadialBlur Trace Comparison", "Windows Observations", "sampler-scatter-or-writeback"):
+        for needle in (
+            "OLMRadialBlur Trace Comparison",
+            "Windows Observations",
+            "sampler-scatter-or-writeback",
+            "Recommended next evidence",
+        ):
             if needle not in markdown:
                 print(f"[FAIL] comparison Markdown missing: {needle}")
                 return 1
@@ -105,7 +119,7 @@ def main() -> int:
                     "kind": "olm_runtime_trace_return_summary",
                     "results": [
                         {
-                            "request_id": REQUEST_ID,
+                            "request_id": DENSE_REQUEST_ID,
                             "status": "partial_live_trace_captured",
                             "summary": (
                                 "radialblur_inner_20260605 rb_inner_only_strength_small was rerun. "
@@ -120,7 +134,12 @@ def main() -> int:
             ),
             encoding="utf-8",
         )
-        assert_focus(run_compare(repo, py, summary, output_json, output_md), "inner-span-31-registers-only")
+        comparison = run_compare(repo, py, summary, output_json, output_md)
+        assert_request(comparison, DENSE_REQUEST_ID)
+        assert_focus(comparison, "inner-span-31-registers-only")
+        if "span-31 fact" not in comparison.get("recommended_next_evidence", ""):
+            print("[FAIL] inner span trace missing next-evidence warning")
+            return 1
 
         summary.write_text(
             json.dumps(
@@ -128,7 +147,7 @@ def main() -> int:
                     "kind": "olm_runtime_trace_return_summary",
                     "results": [
                         {
-                            "request_id": REQUEST_ID,
+                            "request_id": DENSE_REQUEST_ID,
                             "status": "answered",
                             "summary": "synthetic sparse RadialBlur trace",
                             "observations": {
@@ -157,7 +176,68 @@ def main() -> int:
             ),
             encoding="utf-8",
         )
-        assert_focus(run_compare(repo, py, summary, output_json, output_md), "trace-structure-present-values-missing")
+        comparison = run_compare(repo, py, summary, output_json, output_md)
+        assert_request(comparison, DENSE_REQUEST_ID)
+        assert_focus(comparison, "trace-structure-present-values-missing")
+        if "typed numeric witness values" not in comparison.get("recommended_next_evidence", ""):
+            print("[FAIL] sparse trace missing typed-value recommendation")
+            return 1
+
+        summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": RESIDUAL_REQUEST_ID,
+                            "status": "answered",
+                            "summary": "synthetic focused RadialBlur residual witness trace",
+                            "observations": {
+                                "cases": [
+                                    {
+                                        "case_id": "case_0009",
+                                        "aex_normalization_denominator": 0.99609375,
+                                        "aex_pre_writeback_rgba_float_or_hex": [
+                                            "0x1.4p+4",
+                                            "0x1.8p+1",
+                                            "0x1.8p+1",
+                                            "0x1.fcp+7",
+                                        ],
+                                        "aex_writeback_operation": "floor(x+0.5)",
+                                        "aex_final_rgba_u8": [20, 3, 3, 254],
+                                    },
+                                    {
+                                        "case_id": "case_0010",
+                                        "aex_polar_or_source_xy": [1613.5, 6.0],
+                                        "aex_validity_or_border_decision": "valid",
+                                        "aex_source_or_polar_rgba_float": [1.0, 1.0, 1.0, 1.0],
+                                        "aex_pre_writeback_rgba_float_or_hex": [
+                                            "0x1.fep+7",
+                                            "0x1.fep+7",
+                                            "0x1.fep+7",
+                                            "0x1.fep+7",
+                                        ],
+                                        "aex_final_rgba_u8": [255, 255, 255, 255],
+                                    },
+                                ]
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        comparison = run_compare(repo, py, summary, output_json, output_md)
+        assert_request(comparison, RESIDUAL_REQUEST_ID)
+        assert_focus(
+            comparison,
+            "zoom:alpha-normalization-or-writeback; tiny_rotation:sampler-or-validity",
+        )
+        recommendation = comparison.get("recommended_next_evidence", "")
+        if "case_0009" not in recommendation or "case_0010" not in recommendation:
+            print("[FAIL] focused residual trace missing case-specific recommendation")
+            return 1
     print("[OK] RadialBlur trace comparison smoke")
     return 0
 

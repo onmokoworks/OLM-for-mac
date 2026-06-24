@@ -83,8 +83,39 @@ def main() -> int:
         if len(trace_actions) < 2:
             print("[FAIL] expected RadialBlur and KiraKira runtime trace actions")
             return 1
+        guidance_by_plugin = {}
+        for plugin in data.get("plugins", []):
+            rows = []
+            for report in plugin.get("reports", []):
+                if report.get("recommended_next_evidence"):
+                    rows.append(report["recommended_next_evidence"])
+                rows.extend(
+                    case["recommended_next_evidence"]
+                    for case in report.get("cases", [])
+                    if case.get("recommended_next_evidence")
+                )
+            if rows:
+                guidance_by_plugin[plugin.get("name")] = rows
+        for plugin_name in (
+            "OLMBlur",
+            "OLMColorKey",
+            "OLMDistanceGradation",
+            "OLMRadialBlur",
+            "OLMKiraKira",
+            "OLMDirectionalBlur",
+        ):
+            if plugin_name not in guidance_by_plugin:
+                print(f"[FAIL] expected machine-readable report guidance for {plugin_name}")
+                return 1
         html = html_path.read_text(encoding="utf-8")
-        for needle in ("Completion Policy", "Next Send Target", "Runtime Trace Package", "MediaCore Audit", "Blocking External Trace Actions"):
+        for needle in (
+            "Completion Policy",
+            "Next Send Target",
+            "Runtime Trace Package",
+            "MediaCore Audit",
+            "Blocking External Trace Actions",
+            "Recent Report Guidance",
+        ):
             if needle not in html:
                 print(f"[FAIL] dashboard HTML missing section: {needle}")
                 return 1

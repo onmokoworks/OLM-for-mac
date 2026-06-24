@@ -48,6 +48,36 @@ def repo_root() -> Path:
     return Path(__file__).resolve().parents[1]
 
 
+OLM_SCAN_NAME_TOKENS = {
+    "olm",
+    "aex",
+    "aftereffects",
+    "ae_host",
+    "ae-host",
+    "ae_pixel",
+    "ae-pixel",
+    "colorkey",
+    "color_key",
+    "color-keep",
+    "colorkeep",
+    "distancegradation",
+    "directionalblur",
+    "kira",
+    "radialblur",
+    "smoother",
+    "toon",
+    "runtime_trace",
+    "windows_action_bundle",
+    "reference_return",
+    "reference_request",
+}
+
+
+def likely_olm_scan_candidate(path: Path) -> bool:
+    name = path.name.lower()
+    return any(token in name for token in OLM_SCAN_NAME_TOKENS)
+
+
 def request_status(root: Path) -> dict[str, Any]:
     script = root / "refs" / "scripts" / "check_reference_request_status.py"
     proc = subprocess.run(
@@ -134,6 +164,13 @@ def runtime_trace_summary(root: Path) -> dict[str, Any] | None:
                 continue
             request_id = row.get("request_id")
             if isinstance(request_id, str):
+                answered_ids.append(request_id)
+        for row in data.get("results", []):
+            if not isinstance(row, dict):
+                continue
+            request_id = row.get("request_id")
+            status = str(row.get("status") or "").lower()
+            if isinstance(request_id, str) and status.startswith("answered"):
                 answered_ids.append(request_id)
         summaries.append((summary_path, data))
     if not answered_ids and not superseded:
@@ -295,6 +332,23 @@ def ae_host_failure_classification(root: Path, ae_summary: dict[str, Any] | None
     }
 
 
+def binary_grounded_followup_report(root: Path) -> dict[str, Any] | None:
+    candidates = [
+        root / "refs" / "reports" / "olmsmoother2_current_aex_diff_clusters_latest" / "diff_clusters.md",
+        root / "refs" / "reports" / "olmsmoother2_current_aex_curve_idx_sweep_latest" / "curve_idx_sweep.md",
+        root / "notes" / "IR_OLMSmoother2.md",
+    ]
+    existing = [path for path in candidates if path.exists()]
+    if not existing:
+        return None
+    path = max(existing, key=lambda item: item.stat().st_mtime)
+    return {
+        "path": str(path),
+        "kind": "binary-grounded-residual-report",
+        "mtime": path.stat().st_mtime,
+    }
+
+
 def latest_runtime_trace_package(root: Path, rows: list[dict[str, Any]]) -> dict[str, Any] | None:
     matches = [row for row in rows if row.get("kind") == "runtime-trace-request-package"]
     package_dir = root / "refs" / "runtime_trace_packages"
@@ -404,19 +458,27 @@ def project_runtime_trace_packages(
         if previous is None or float(row["mtime"]) > float(previous["mtime"]):
             latest_by_profile[profile_key] = row
     priority = [
+        # Current non-Smoother hard-path queue. These packages are focused on
+        # concrete witness pixels or primitive facts, so they should be surfaced
+        # before older Smoother2 debugger packages when no Windows PNG requests
+        # are pending.
+        "radialblur-residual-witness",
+        "kirakira-boxfilter-pass1-microprobe",
+        "directionalblur-residual-witness",
+        "radialblur",
+        "kirakira",
+        "directionalblur",
+        "olmblur",
+        "colorkey",
+        "distancegradation",
+        "dense-live-followup",
+        "smoother2-current-aex-f270-witness",
         "smoother2-legacy-cce0-internals-trace",
         "smoother2-legacy-cce0-pixel-trace",
         "smoother2-legacy-u8-pixel-trace",
         "smoother2-legacy-u8-writer-trace",
         "smoother2-legacy-writeback-extract",
-        "dense-live-followup",
         "smoother2",
-        "olmblur",
-        "colorkey",
-        "distancegradation",
-        "radialblur",
-        "kirakira",
-        "directionalblur",
     ]
 
     def sort_key(row: dict[str, Any]) -> tuple[int, float]:
@@ -498,9 +560,23 @@ def handoff_summary(root: Path, handoff: Path | None) -> dict[str, Any]:
 
 
 def candidate_rows(paths: list[Path]) -> list[dict[str, Any]]:
+    roots = paths or [Path.home() / "Downloads", Path("/tmp")]
+    candidates: list[Path] = []
+    for root in roots:
+        root = root.expanduser()
+        if root.is_file():
+            candidates.append(root)
+            continue
+        if not root.is_dir():
+            continue
+        candidates.extend(
+            path
+            for path in list_olm_return_candidates.candidate_paths([root])
+            if likely_olm_scan_candidate(path)
+        )
     return [
         list_olm_return_candidates.build_row(path)
-        for path in list_olm_return_candidates.candidate_paths(paths)
+        for path in sorted(set(candidates), key=lambda path: path.stat().st_mtime, reverse=True)
     ]
 
 
@@ -620,6 +696,7 @@ def decide(
     trace_summary: dict[str, Any] | None,
     ae_exact_summary: dict[str, Any] | None,
     ae_failure_classification: dict[str, Any] | None,
+    binary_followup_report: dict[str, Any] | None,
 ) -> dict[str, Any]:
     runtime_return = newest(rows, "runtime-trace-return")
     if runtime_return:
@@ -696,6 +773,11 @@ def decide(
                     "No Windows PNG requests are pending; the current project-local Windows bundle "
                     "is focused on OLMBlur and OLMKiraKira runtime traces."
                 )
+            elif focus == "pending-runtime":
+                reason = (
+                    "No Windows PNG requests are pending; the current project-local Windows bundle "
+                    "wraps all pending runtime trace packages."
+                )
             else:
                 reason = (
                     "No Windows PNG requests are pending; the current project-local Windows bundle "
@@ -748,11 +830,21 @@ def decide(
 
     if ae_exact_summary and not ae_exact_summary.get("all_exact"):
         if ae_failure_classification and ae_failure_classification.get("is_current"):
+            target = ae_failure_classification
+            reason = "AE-host exact failures are already classified; continue from the classified residuals instead of re-reading the summary."
+            command = "read the classification report, then work the next binary-grounded residual or package a clean normalized AE-host request"
+            if (
+                binary_followup_report
+                and binary_followup_report.get("mtime", 0) >= ae_failure_classification.get("mtime", 0)
+            ):
+                target = binary_followup_report
+                reason = "AE-host exact failures are classified and newer binary-grounded residual reports exist; continue from the latest residual report."
+                command = "read the latest residual report/IR and work the next narrow binary-grounded proof"
             return {
                 "action": "continue-binary-grounded-followup",
-                "reason": "AE-host exact failures are already classified; continue from the classified residuals instead of re-reading the summary.",
-                "target": ae_failure_classification,
-                "command": "read the classification report, then work the next binary-grounded residual or package a clean normalized AE-host request",
+                "reason": reason,
+                "target": target,
+                "command": command,
             }
         return {
             "action": "analyze-ae-host-exact-failures",
@@ -792,6 +884,7 @@ def main() -> int:
     trace_summary = runtime_trace_summary(root)
     ae_exact_summary = ae_host_exact_summary(root)
     ae_failure_classification = ae_host_failure_classification(root, ae_exact_summary)
+    binary_followup = binary_grounded_followup_report(root)
     pending_request_defs = pending_requests(root, status["pending"])
     handoff_path = args.handoff
     if handoff_path is None:
@@ -809,6 +902,7 @@ def main() -> int:
         trace_summary,
         ae_exact_summary,
         ae_failure_classification,
+        binary_followup,
     )
 
     output = {
@@ -823,6 +917,7 @@ def main() -> int:
         "runtime_trace_summary": trace_summary,
         "ae_host_exact_summary": ae_exact_summary,
         "ae_host_failure_classification": ae_failure_classification,
+        "binary_grounded_followup_report": binary_followup,
         "handoff": handoff,
         "candidates": interesting[:12],
     }

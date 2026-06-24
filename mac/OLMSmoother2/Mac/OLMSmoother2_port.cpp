@@ -84,6 +84,10 @@ static int g_olmsmoother2_cplane_read_diag_mode = 0;
 // CLI-only class-plane threshold diagnostic.
 // 0=normal, 1=force Smooth Range, 2=force 0, 3=force key predicate 1.
 static int g_olmsmoother2_class_threshold_diag_mode = 0;
+// CLI-only gamma curve diagnostic. -1 keeps the current inferred source.
+static int g_olmsmoother2_curve_idx_override = -1;
+// CLI-only leaf diagnostic. 0=normal, 1=suppress f270.
+static int g_olmsmoother2_leaf_diag_mode = 0;
 static bool g_olmsmoother2_index_hist_enabled = false;
 static uint64_t g_olmsmoother2_index_hist[256] = {};
 static bool g_olmsmoother2_idx18_key_hist_enabled = false;
@@ -655,10 +659,16 @@ static void scan_d800(int out[3], const GridDesc *g, const int in[2]) {
 // Win:  trap((p2[4]-p2[1]+1)*scale_m*smoothness_n, cur_y-p2[1], scale_h*DAT_180022694)
 // where DAT_180022694 = 0.5f (verified from binary).
 static bool win_e3a0(SmootherPolygon &poly, const int *p2, float scale_m, float scale_h) {
-	float f = win_FUN_180013630_trapezoid(
-		(float)(p2[4] - p2[1] + 1) * scale_m * poly.smoothness_n,
-		poly.cur_y - p2[1],
-		scale_h * K_HALF);
+	float trap_width = (float)(p2[4] - p2[1] + 1) * scale_m * poly.smoothness_n;
+	int trap_pos = poly.cur_y - p2[1];
+	float trap_edge = scale_h * K_HALF;
+	float f = win_FUN_180013630_trapezoid(trap_width, trap_pos, trap_edge);
+	if (poly.cur_x == g_olmsmoother2_trace_x && poly.cur_y == g_olmsmoother2_trace_y) {
+		std::fprintf(stderr,
+		             "trace e3a0 p2=(%d,%d,%d,%d,%d,%d) scale_m=%.8g scale_h=%.8g trap=(%.8g,%d,%.8g) weight=%.8g\n",
+		             p2[0], p2[1], p2[2], p2[3], p2[4], p2[5],
+		             scale_m, scale_h, trap_width, trap_pos, trap_edge, f);
+	}
 	if (f == 0.0f) return false;
 	win_FUN_1800104d0_append(poly, p2[0], p2[1] - 1, f);
 	return true;
@@ -2535,7 +2545,14 @@ static int win_e170(const SmootherPolygon &poly, const int *p2) {
 	bool b1 = (y > 0) && base[(y - 1) * s + x * 4 + 0] != 0;     // A@(x, y-1)
 	bool b2 = base[y * s + (x - 1) * 4 + 1] != 0;                // R@(x-1, y)
 	bool b3 = base[y * s + x * 4 + 0] != 0;                      // A@(x, y)
-	return (b1 ? 2 : 0) | (b2 ? 4 : 0) | (b3 ? 1 : 0);
+	int c = (b1 ? 2 : 0) | (b2 ? 4 : 0) | (b3 ? 1 : 0);
+	if (poly.cur_x == g_olmsmoother2_trace_x && poly.cur_y == g_olmsmoother2_trace_y) {
+		std::fprintf(stderr,
+		             "trace e170 p2=(%d,%d,%d,%d,%d,%d) bits Axy-1=%d R x-1y=%d Axy=%d -> c=%d\n",
+		             p2[0], p2[1], p2[2], p2[3], p2[4], p2[5],
+		             b1 ? 1 : 0, b2 ? 1 : 0, b3 ? 1 : 0, c);
+	}
+	return c;
 }
 
 // FUN_18000df30 (γ2: uses p2[3]=x', p2[4]=y').
@@ -2717,8 +2734,25 @@ static bool win_leaf_f3b0(SmootherPolygon &poly, const int *p2) {
 }
 static bool win_leaf_f270(SmootherPolygon &poly, const int *p2, float p3) {
 	int c = win_e170(poly, p2);
+	if (poly.cur_x == g_olmsmoother2_trace_x && poly.cur_y == g_olmsmoother2_trace_y) {
+		std::fprintf(stderr,
+		             "trace f270 c=%d p3=%.8g extra_n=%.8g count_before=%d\n",
+		             c, p3, poly.extra_n, poly.count);
+	}
 	if (c == 4) return false;
-	return win_e3a0(poly, p2, poly.extra_n * K_DD8 + K_HALF, p3);
+	if (g_olmsmoother2_leaf_diag_mode == 1) {
+		if (poly.cur_x == g_olmsmoother2_trace_x && poly.cur_y == g_olmsmoother2_trace_y) {
+			std::fprintf(stderr, "trace f270 suppressed_by_diag=1 count_after=%d\n", poly.count);
+		}
+		return false;
+	}
+	bool emitted = win_e3a0(poly, p2, poly.extra_n * K_DD8 + K_HALF, p3);
+	if (poly.cur_x == g_olmsmoother2_trace_x && poly.cur_y == g_olmsmoother2_trace_y) {
+		std::fprintf(stderr,
+		             "trace f270 emitted=%d count_after=%d\n",
+		             emitted ? 1 : 0, poly.count);
+	}
+	return emitted;
 }
 static bool win_leaf_f130(SmootherPolygon &poly, const int *p2, float p3) {
 	int c = win_df30(poly, p2);
@@ -3064,10 +3098,13 @@ static void win_cardinal_6(SmootherPolygon &poly) {
 	if (poly.cur_x == g_olmsmoother2_trace_x && poly.cur_y == g_olmsmoother2_trace_y) {
 		int k = (desc[2] - 1) + desc[5] * 10;
 		std::fprintf(stderr,
-		             "trace cardinal6 desc=(%d,%d,%d,%d,%d,%d) key=%d\n",
-		             desc[0], desc[1], desc[2], desc[3], desc[4], desc[5], k);
+		             "trace cardinal6 desc=(%d,%d,%d,%d,%d,%d) key=%d count_before=%d\n",
+		             desc[0], desc[1], desc[2], desc[3], desc[4], desc[5], k, poly.count);
 	}
 	win_disp_fef0(poly, desc);
+	if (poly.cur_x == g_olmsmoother2_trace_x && poly.cur_y == g_olmsmoother2_trace_y) {
+		std::fprintf(stderr, "trace cardinal6 count_after=%d\n", poly.count);
+	}
 }
 
 // FUN_180010820 — 3時 cardinal entry: d520 + dbd0, dispatch via 1800101e0 (δ).
@@ -3752,6 +3789,9 @@ static void win_FUN_18000cce0_orchestrate(FPix &out_pixel,
 	// at param_5+0x2C.  Conservative mapping: smoothstep (5) when EXTRA_SMOOTH
 	// is unused (raw=0), otherwise EXTRA_SMOOTH_RAW % 6 + 1 to span all 6 curves.
 	int curve_idx = (p.extra_smooth_raw > 0) ? ((p.extra_smooth_raw % 6) + 1) : 5;
+	if (g_olmsmoother2_curve_idx_override >= 0) {
+		curve_idx = g_olmsmoother2_curve_idx_override;
+	}
 	bool bb10_apply = false;
 	float adaptive_gamma = win_FUN_18000bb10_adaptive_gamma(
 		center, poly, p, curve_idx, bb10_apply);

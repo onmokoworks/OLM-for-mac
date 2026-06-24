@@ -46,6 +46,17 @@ def resolve(root: Path, path: Path) -> Path:
     return path if path.is_absolute() else root / path
 
 
+def display_path(root: Path, path: Path) -> str:
+    try:
+        return path.resolve().relative_to(root.resolve()).as_posix()
+    except ValueError:
+        return path.as_posix()
+
+
+def display_text(root: Path, text: str) -> str:
+    return text.replace(str(root.resolve()), ".").replace(str(root), ".")
+
+
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8-sig"))
 
@@ -70,6 +81,11 @@ def comparators(py: str) -> list[Comparator]:
         Comparator(
             request_id="kirakira_fun_181150790_deep_stage_values_20260621",
             slug="olmkirakira_deep_stage_values",
+            command=[py, "scripts/compare_kirakira_stage_trace.py"],
+        ),
+        Comparator(
+            request_id="kirakira_forward_warp_box_input_20260621",
+            slug="olmkirakira_forward_warp_box_input",
             command=[py, "scripts/compare_kirakira_stage_trace.py"],
         ),
         Comparator(
@@ -124,11 +140,14 @@ def run_comparator(root: Path, summary_path: Path, output_dir: Path, comparator:
     row: dict[str, Any] = {
         "request_id": comparator.request_id,
         "slug": comparator.slug,
-        "command": cmd,
+        "command": [
+            display_path(root, Path(part)) if part.startswith(str(root)) else part
+            for part in cmd
+        ],
         "returncode": proc.returncode,
-        "stdout": proc.stdout,
-        "output_json": str(output_json),
-        "output_md": str(output_md),
+        "stdout": display_text(root, proc.stdout),
+        "output_json": display_path(root, output_json),
+        "output_md": display_path(root, output_md),
     }
     if proc.returncode == 0 and output_json.exists():
         data = load_json(output_json)
@@ -185,7 +204,7 @@ def main() -> int:
     index = {
         "kind": "olm_runtime_trace_comparison_index",
         "schema": 1,
-        "runtime_summary_json": str(summary_path),
+        "runtime_summary_json": display_path(root, summary_path),
         "present_request_ids": sorted(present_ids),
         "comparisons": rows,
     }

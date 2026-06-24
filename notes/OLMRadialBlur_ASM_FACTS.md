@@ -298,6 +298,30 @@ references), where the distance transform is non-uniform.
   other listed means unchanged within rounding). This confirms the live
   `FUN_1800024c0` distance formula is already represented by the current CLI
   modes and should not be the next tuning target.
+- 2026-06-22 Mac-side current-default matrix supersedes the older mixed
+  diagnostic table for prioritization, without changing binary facts. Wide
+  report:
+  `refs/reports/olmradialblur_inner_candidate_matrix_20260622_002848/`.
+  Against all ten 20260617 full-Inner Software cases, `loop-minus-one` is the
+  best total-mean candidate (`63.793179` vs current `64.313564`) and improves
+  7/10 cases, especially existing/Quality cases. It still worsens the low-span
+  family (`small`, `large`, `offset_mode_3`). `circular-wrap` is best for the
+  low-span family, and `table-span-minus-one` is best for Edge Fade families.
+  Because each family wants a different diagnostic, none of these can be
+  promoted as a global binary-grounded rule. The next useful proof is a direct
+  `FUN_180001c90` witness for one low-span cell and one Quality cell recording
+  caller span, `param10`, effective span, table step, loop limit, underflow
+  handling, and first/last write coordinates.
+- Static re-read of `disasm/OLMRadialBlur.aex.asm.txt` after the wide matrix
+  keeps `loop-minus-one` as a rejected binary rule: the outer unrolled loop
+  exits by comparing `R10D` with the saved effective span, and the inner
+  unrolled/tail paths also compare `R10D < R14D` through `1800023e0..248a`.
+  The inner underflow path at `180002138..2165` / `1800023e0..2409` advances
+  to `(row + 1, angular_count - 1)`, matching the `aex-next-row` model.
+  Therefore the fact that `loop-minus-one` and `circular-wrap` improve
+  different case families is best interpreted as evidence that the upstream
+  effective span, `param10`, or source/prepass plane value is still wrong for
+  those families, not that the helper globally subtracts one or circular-wraps.
 - `FUN_180002780` and `FUN_180001c90` ownership is now promoted into the C++
   CLI defaults for Inner: source-scatter/prepass is used whenever Inner is
   active, Quality/5 span scaling is on by default, inner underflow uses

@@ -31,15 +31,25 @@ def main() -> int:
             check=True,
         )
         data = json.loads(out_json.read_text(encoding="utf-8"))
+        classification = data.get("classification", {})
         groups = {group["group"]: group for group in data.get("groups", [])}
         if set(groups) != {"basic", "extended", "blur"}:
             raise AssertionError(f"unexpected groups: {sorted(groups)}")
+        if classification.get("status") != "normalized-software-exact-with-legacy-drift":
+            raise AssertionError(f"unexpected report classification: {classification}")
+        if classification.get("case_total") != 29:
+            raise AssertionError("expected 29 audited DistanceGradation cases")
         if any(group["normalized_nonzero_count"] != 0 for group in groups.values()):
             raise AssertionError("expected all AE-host candidates to match normalized refs exactly")
+        if groups["basic"]["classification"]["status"] != "reference-generation-split":
+            raise AssertionError("basic group should classify legacy-only drift")
         if groups["extended"]["legacy_nonzero_count"] < 1:
             raise AssertionError("expected extended cases to expose legacy reference-generation drift")
-        if "OLMDistanceGradation Reference Provenance Audit" not in out_md.read_text(encoding="utf-8"):
+        markdown = out_md.read_text(encoding="utf-8")
+        if "OLMDistanceGradation Reference Provenance Audit" not in markdown:
             raise AssertionError("markdown report missing title")
+        if "normalized-software-exact-with-legacy-drift" not in markdown:
+            raise AssertionError("markdown report missing classification")
     print("[OK] DistanceGradation provenance audit smoke passed")
     return 0
 

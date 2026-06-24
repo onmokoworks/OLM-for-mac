@@ -43,6 +43,20 @@ def repo_root() -> Path:
     return Path(__file__).resolve().parents[1]
 
 
+def display_path(root: Path, path: Path) -> str:
+    try:
+        return path.resolve().relative_to(root.resolve()).as_posix()
+    except ValueError:
+        return path.as_posix()
+
+
+def archive_relative_path(source_root: Path, path: Path) -> str:
+    try:
+        return path.relative_to(source_root).as_posix()
+    except ValueError:
+        return path.name
+
+
 def fail(message: str, code: int = 1) -> int:
     print(f"[FAIL] {message}", file=sys.stderr)
     return code
@@ -148,7 +162,7 @@ def normalize_results(data: dict[str, Any], source_path: Path, source_root: Path
                 "status": str(data.get("status", "answered")).lower(),
                 "summary": str(data.get("summary") or data.get("answer") or data.get("notes") or ""),
                 "observations": observations,
-                "source_file": str(source_path),
+                "source_file": archive_relative_path(source_root, source_path),
             }
         ]
 
@@ -172,7 +186,7 @@ def normalize_results(data: dict[str, Any], source_path: Path, source_root: Path
                         "answer_file": answer_file or "",
                         "evidence_files": evidence_files if isinstance(evidence_files, list) else [],
                     },
-                    "source_file": str(source_path),
+                    "source_file": archive_relative_path(source_root, source_path),
                 }
             )
         return normalized
@@ -202,13 +216,13 @@ def normalize_results(data: dict[str, Any], source_path: Path, source_root: Path
                 "status": status,
                 "summary": str(summary),
                 "observations": observations,
-                "source_file": str(source_path),
+                "source_file": archive_relative_path(source_root, source_path),
             }
         )
     return normalized
 
 
-def build_summary(source_root: Path, package: Path | None) -> dict[str, Any]:
+def build_summary(root: Path, source_root: Path, package: Path | None) -> dict[str, Any]:
     required_ids = runtime_action_ids(package)
     result_files = find_result_jsons(source_root)
     if not result_files:
@@ -240,8 +254,8 @@ def build_summary(source_root: Path, package: Path | None) -> dict[str, Any]:
     return {
         "kind": "olm_runtime_trace_return_summary",
         "schema": 1,
-        "source_root": str(source_root),
-        "package": str(package) if package else None,
+        "source_root": "runtime-trace-return",
+        "package": display_path(root, package) if package else None,
         "required": required,
         "extra_request_ids": extra_ids,
         "results": results,
@@ -319,7 +333,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="olm_runtime_trace_return_") as tmp:
         try:
             source_root = extract_if_zip(args.source, Path(tmp) / "source")
-            summary = build_summary(source_root, package)
+            summary = build_summary(root, source_root, package)
         except Exception as exc:  # noqa: BLE001
             return fail(str(exc), 2)
 

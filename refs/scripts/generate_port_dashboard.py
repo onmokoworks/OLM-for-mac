@@ -169,6 +169,27 @@ def case_status(row: dict) -> str:
     return "unknown"
 
 
+def classification_label(value) -> str | None:
+    if isinstance(value, dict):
+        return value.get("residual_kind") or value.get("status") or value.get("kind")
+    if value:
+        return str(value)
+    return None
+
+
+def guidance_pair(row: dict) -> tuple[str | None, str | None]:
+    classification = row.get("classification")
+    if row.get("recommended_next_evidence"):
+        return row.get("likely_next_focus") or classification_label(classification), row.get("recommended_next_evidence")
+    if row.get("recommended_action"):
+        return row.get("likely_next_focus") or classification_label(classification), row.get("recommended_action")
+    if isinstance(classification, dict):
+        guidance = classification.get("recommended_action") or classification.get("recommended_next_evidence")
+        if guidance:
+            return classification_label(classification), guidance
+    return row.get("likely_next_focus") or classification_label(classification), None
+
+
 def scan_reports(report_roots: list[Path]) -> tuple[dict, list[dict]]:
     by_plugin = defaultdict(list)
     reports = []
@@ -182,9 +203,16 @@ def scan_reports(report_roots: list[Path]) -> tuple[dict, list[dict]]:
                 continue
             seen.add(resolved)
             report = read_json(path)
-            if not isinstance(report, dict) or "cases" not in report:
+            if not isinstance(report, dict):
                 continue
-            cases = report.get("cases") or []
+            raw_cases = report.get("cases") or []
+            report_focus, report_guidance = guidance_pair(report)
+            has_guidance = bool(report_guidance or report_focus)
+            if not isinstance(raw_cases, list) and not has_guidance:
+                continue
+            cases = [row for row in raw_cases if isinstance(row, dict)] if isinstance(raw_cases, list) else []
+            if not cases and not has_guidance:
+                continue
             summary = report.get("summary") or {}
             plugin = infer_report_plugin(path, report)
             counts = defaultdict(int)
@@ -204,6 +232,8 @@ def scan_reports(report_roots: list[Path]) -> tuple[dict, list[dict]]:
                 "counts": dict(sorted(counts.items())),
                 "max_diff": max_diff,
                 "max_mean_diff": mean_diff,
+                "likely_next_focus": report_focus,
+                "recommended_next_evidence": report_guidance,
                 "cases": [
                     {
                         "id": row.get("id", ""),
@@ -212,6 +242,8 @@ def scan_reports(report_roots: list[Path]) -> tuple[dict, list[dict]]:
                         "max_diff": row.get("max_diff"),
                         "mean_diff": row.get("mean_diff"),
                         "nonzero_px_percent": row.get("nonzero_px_percent"),
+                        "classification": classification_label(row.get("classification")),
+                        "recommended_next_evidence": guidance_pair(row)[1],
                     }
                     for row in cases
                 ],
@@ -566,6 +598,35 @@ def evidence_label(plugin: dict) -> str:
     return statuses[0]
 
 
+def report_guidance_rows(plugin: dict) -> str:
+    rows = []
+    for report in sorted(plugin.get("reports", []), key=lambda item: item.get("path", ""), reverse=True):
+        guidance = report.get("recommended_next_evidence")
+        focus = report.get("likely_next_focus")
+        if not guidance:
+            case_guidance = [
+                case
+                for case in report.get("cases", [])
+                if case.get("recommended_next_evidence")
+            ]
+            if case_guidance:
+                first = case_guidance[0]
+                guidance = first.get("recommended_next_evidence")
+                focus = first.get("classification") or first.get("status")
+        if not guidance:
+            continue
+        label = focus or report.get("path", "-")
+        rows.append(
+            "<li>"
+            f"<span>{escape(str(label))}</span>"
+            f"<b>{escape(str(guidance))}</b>"
+            "</li>"
+        )
+        if len(rows) >= 4:
+            break
+    return "".join(rows) or "<li><span>No machine-readable report guidance</span><b>-</b></li>"
+
+
 def render_plugin_card(plugin: dict) -> str:
     measured = plugin.get("progress", {}).get("measured", [])[:8]
     measured_rows = "".join(
@@ -609,6 +670,7 @@ def render_plugin_card(plugin: dict) -> str:
     )
     if not manifest_html:
         manifest_html = "<li><span>No local reference manifest</span><b>-</b></li>"
+    guidance_html = report_guidance_rows(plugin)
     engine_bits = ", ".join(f"{k}: {v}" for k, v in plugin.get("engine_counts", {}).items()) or "-"
     report_bits = (
         f"{plugin['cli_exact_cases']}/{plugin['reported_cases']} reported exact"
@@ -648,6 +710,10 @@ def render_plugin_card(plugin: dict) -> str:
           <ul>{measured_rows}</ul>
           <ul>{actions_html}</ul>
         </div>
+      </details>
+      <details>
+        <summary>Recent Report Guidance</summary>
+        <ul>{guidance_html}</ul>
       </details>
       <details>
         <summary>Reference Manifests</summary>
