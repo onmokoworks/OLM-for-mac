@@ -14,6 +14,7 @@ REQUEST_ID = "kirakira_fun_181150790_stage_values_20260620"
 DEEP_REQUEST_ID = "kirakira_fun_181150790_deep_stage_values_20260621"
 FORWARD_REQUEST_ID = "kirakira_forward_warp_box_input_20260621"
 MICROPROBE_REQUEST_ID = "kirakira_boxfilter_pass1_microprobe_20260622"
+AGG_REQUEST_ID = "kirakira_aggregation_compose_bt709_20260624"
 
 
 def main() -> int:
@@ -267,6 +268,58 @@ def main() -> int:
         if not deep_comparison.get("deep_stage_deltas"):
             print("[FAIL] deep stage trace did not compute deltas")
             return 1
+        matched_deep_summary = tmp_path / "runtime_summary_deep_matched.json"
+        matched_deep_output_json = tmp_path / "comparison_deep_matched.json"
+        matched_deep_summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": DEEP_REQUEST_ID,
+                            "status": "answered_partial",
+                            "summary": "synthetic deep stage trace matched within float print precision",
+                            "observations": {
+                                "stage_values": {
+                                    "after_box_filter_pass_3_ret_115121a": {
+                                        "center_temp_962_962": {"float": 0.25000006, "hex": "3e800002"},
+                                        "ray_length_up_temp_962_912": {"float": 0.12500006, "hex": "3e000004"},
+                                    }
+                                }
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        matched_deep_proc = subprocess.run(
+            [
+                py,
+                "scripts/compare_kirakira_stage_trace.py",
+                "--runtime-summary-json",
+                str(matched_deep_summary),
+                "--local-trace-json",
+                str(local_trace),
+                "--output-json",
+                str(matched_deep_output_json),
+            ],
+            cwd=repo,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        print(matched_deep_proc.stdout, end="" if matched_deep_proc.stdout.endswith("\n") else "\n")
+        if matched_deep_proc.returncode != 0:
+            return matched_deep_proc.returncode
+        matched_deep_comparison = json.loads(matched_deep_output_json.read_text(encoding="utf-8"))
+        if matched_deep_comparison.get("likely_next_focus") != "ray-helper-stages-match-aggregation-or-compose":
+            print("[FAIL] matched deep stage trace did not move downstream")
+            return 1
+        if matched_deep_comparison.get("first_divergence") is not None:
+            print("[FAIL] matched deep stage trace reported a float-print divergence")
+            return 1
         forward_summary = tmp_path / "runtime_summary_forward.json"
         forward_output_json = tmp_path / "comparison_forward.json"
         forward_output_md = tmp_path / "comparison_forward.md"
@@ -504,6 +557,91 @@ def main() -> int:
         for needle in ("Witness decision", "Upstream signal"):
             if needle not in upstream_markdown:
                 print(f"[FAIL] upstream microprobe Markdown missing: {needle}")
+                return 1
+        agg_summary = tmp_path / "runtime_summary_aggregation.json"
+        agg_output_json = tmp_path / "comparison_aggregation.json"
+        agg_output_md = tmp_path / "comparison_aggregation.md"
+        agg_summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": AGG_REQUEST_ID,
+                            "status": "answered",
+                            "source_file": "return/request_package/RETURN_RUNTIME_TRACE_TEMPLATE.json",
+                            "summary": "template row that should not win",
+                            "observations": {"fun_18114fd90_aggregation": {"entry": {"brightness_or_param_10": None}}},
+                        },
+                        {
+                            "request_id": AGG_REQUEST_ID,
+                            "status": "answered_partial",
+                            "source_file": "return/RETURN_RUNTIME_TRACE_RESULT.json",
+                            "summary": "synthetic fd90 aggregation trace",
+                            "observations": {
+                                "case_id": "kk_vertical_len50_brightness1_strength100",
+                                "fun_18114fd90_aggregation": {
+                                    "entry": {"brightness_or_param_10": 1, "width": 1920, "height": 1080},
+                                    "sample_outputs": [
+                                        {
+                                            "label": "center",
+                                            "source_xy": [960, 540],
+                                            "ray_inputs": [0.71891218, 0, 0, 0, 0],
+                                            "post_normalize_glow_rgba": [1, 1, 1, 0.71891218],
+                                        }
+                                    ],
+                                },
+                                "merge_mode_1_compose": {
+                                    "internal_compose_float_status": "not isolated by this breakpoint set",
+                                    "sample_inputs_outputs": [
+                                        {
+                                            "label": "center",
+                                            "source_xy": [960, 540],
+                                            "source_rgba_u8": [30, 30, 30, 255],
+                                            "final_writeback_or_png_rgba": [124, 124, 124, 255],
+                                        }
+                                    ],
+                                },
+                            },
+                        },
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        agg_proc = subprocess.run(
+            [
+                py,
+                "scripts/compare_kirakira_stage_trace.py",
+                "--runtime-summary-json",
+                str(agg_summary),
+                "--local-trace-json",
+                str(local_trace),
+                "--output-json",
+                str(agg_output_json),
+                "--output-md",
+                str(agg_output_md),
+            ],
+            cwd=repo,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        print(agg_proc.stdout, end="" if agg_proc.stdout.endswith("\n") else "\n")
+        if agg_proc.returncode != 0:
+            return agg_proc.returncode
+        agg_comparison = json.loads(agg_output_json.read_text(encoding="utf-8"))
+        if agg_comparison.get("request_id") != AGG_REQUEST_ID:
+            print("[FAIL] aggregation comparison request_id mismatch")
+            return 1
+        if agg_comparison.get("likely_next_focus") != "fd90-aggregation-grounded-compose-scale":
+            print("[FAIL] aggregation comparison did not choose expected next focus")
+            return 1
+        agg_markdown = agg_output_md.read_text(encoding="utf-8")
+        for needle in ("FUN_18114fd90 aggregation", "Merge mode 1 compose", "0.71891218"):
+            if needle not in agg_markdown:
+                print(f"[FAIL] aggregation comparison Markdown missing: {needle}")
                 return 1
     print("[OK] KiraKira stage trace comparison smoke")
     return 0

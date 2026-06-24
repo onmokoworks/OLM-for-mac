@@ -42,6 +42,7 @@ def main() -> int:
             or "send-runtime-trace-package" in proc.stdout
             or "send-windows-action-bundle" in proc.stdout
             or "send-ae-host-validation-package" in proc.stdout
+            or "continue-binary-grounded-followup" in proc.stdout
         )
 
         run(

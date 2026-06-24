@@ -14,6 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUTPUT = ROOT / "refs" / "reports" / "dashboard"
+DEFAULT_MARKDOWN = ROOT / "refs" / "reports" / "PORT_DASHBOARD.md"
 
 PLUGIN_ORDER = [
     "ColorKeep",
@@ -226,6 +227,7 @@ def scan_reports(report_roots: list[Path]) -> tuple[dict, list[dict]]:
                     mean_diff = row["mean_diff"] if mean_diff is None else max(mean_diff, row["mean_diff"])
             item = {
                 "path": rel(path),
+                "mtime": path.stat().st_mtime,
                 "plugin": plugin,
                 "summary": summary,
                 "case_count": len(cases),
@@ -354,6 +356,25 @@ def load_next_actions() -> dict:
         return {"error": str(exc), "raw": proc.stdout[:1000]}
 
 
+def load_pending_runtime_trace_report() -> dict:
+    path = ROOT / "refs" / "reports" / "pending_runtime_trace_packages.json"
+    data = read_json(path)
+    if not isinstance(data, dict) or data.get("kind") != "pending_runtime_trace_packages":
+        return {"status": "missing", "path": rel(path), "requests": []}
+    rows = data.get("requests", [])
+    if not isinstance(rows, list):
+        rows = []
+    pending = [row for row in rows if isinstance(row, dict) and row.get("status") == "pending"]
+    return {
+        "status": "ready",
+        "path": rel(path),
+        "pending_count": len(pending),
+        "answered_count": len(rows) - len(pending),
+        "requests": rows,
+        "pending": pending,
+    }
+
+
 def latest_runtime_trace_package() -> dict:
     package_dir = ROOT / "refs" / "runtime_trace_packages"
     packages = sorted(package_dir.glob("*.zip"), key=lambda item: item.stat().st_mtime if item.exists() else 0)
@@ -421,7 +442,13 @@ def latest_ae_pixel_validation_return() -> dict:
     }
 
 
-def choose_send_target(runtime_package: dict, windows_batch: dict, ae_pixel_return: dict) -> dict:
+def choose_send_target(runtime_package: dict, windows_batch: dict, ae_pixel_return: dict, pending_runtime: dict) -> dict:
+    if pending_runtime.get("status") == "ready" and int(pending_runtime.get("pending_count") or 0) == 0:
+        return {
+            "status": "not-needed",
+            "kind": "none",
+            "reason": "No runtime trace packages are currently pending.",
+        }
     if (
         runtime_package.get("status") == "ready"
         and float(runtime_package.get("mtime", 0)) > float(windows_batch.get("mtime", 0))
@@ -600,7 +627,12 @@ def evidence_label(plugin: dict) -> str:
 
 def report_guidance_rows(plugin: dict) -> str:
     rows = []
-    for report in sorted(plugin.get("reports", []), key=lambda item: item.get("path", ""), reverse=True):
+    seen = set()
+    for report in sorted(
+        plugin.get("reports", []),
+        key=lambda item: (float(item.get("mtime") or 0), item.get("path", "")),
+        reverse=True,
+    ):
         guidance = report.get("recommended_next_evidence")
         focus = report.get("likely_next_focus")
         if not guidance:
@@ -616,6 +648,10 @@ def report_guidance_rows(plugin: dict) -> str:
         if not guidance:
             continue
         label = focus or report.get("path", "-")
+        key = (str(label), str(guidance))
+        if key in seen:
+            continue
+        seen.add(key)
         rows.append(
             "<li>"
             f"<span>{escape(str(label))}</span>"
@@ -762,19 +798,21 @@ def render_html(data: dict) -> str:
         if mediacore
         else "not checked"
     )
-    next_actions = data.get("next_actions", {}) if isinstance(data.get("next_actions"), dict) else {}
-    trace_actions = [
-        action
-        for action in next_actions.get("covered_actions", [])
-        if action.get("status") == "runtime-trace" or action.get("mode") == "external-trace"
+    pending_runtime = (
+        data.get("pending_runtime_trace_packages", {})
+        if isinstance(data.get("pending_runtime_trace_packages"), dict)
+        else {}
+    )
+    pending_traces = [
+        row for row in pending_runtime.get("pending", []) if isinstance(row, dict)
     ]
     trace_html = "".join(
         "<li>"
-        f"<span>{escape(str(action.get('request_id') or '-'))}</span>"
-        f"<b>{escape(str(action.get('plugin_area') or action.get('effect') or '-'))}</b>"
+        f"<span>{escape(str(row.get('request_id') or '-'))}</span>"
+        f"<b>{escape(str(row.get('plugin_area') or row.get('package') or '-'))}</b>"
         "</li>"
-        for action in trace_actions
-    ) or "<li><span>No runtime trace action</span><b>-</b></li>"
+        for row in pending_traces
+    ) or "<li><span>No pending runtime trace package</span><b>-</b></li>"
     return f"""<!doctype html>
 <html lang="ja">
 <head>
@@ -956,7 +994,7 @@ def render_html(data: dict) -> str:
         <p>{escape(mediacore_detail)}</p>
       </div>
       <div>
-        <h2>Blocking External Trace Actions</h2>
+        <h2>Pending Runtime Trace Packages</h2>
         <ul>{trace_html}</ul>
       </div>
     </section>
@@ -982,11 +1020,13 @@ def render_markdown(data: dict) -> str:
     send_target = data.get("send_target", {}) if isinstance(data.get("send_target"), dict) else {}
     policy = data.get("completion_policy", {}) if isinstance(data.get("completion_policy"), dict) else {}
     mediacore = data.get("mediacore_audit", {}) if isinstance(data.get("mediacore_audit"), dict) else {}
-    next_actions = data.get("next_actions", {}) if isinstance(data.get("next_actions"), dict) else {}
-    trace_actions = [
-        action
-        for action in next_actions.get("covered_actions", [])
-        if action.get("status") == "runtime-trace" or action.get("mode") == "external-trace"
+    pending_runtime = (
+        data.get("pending_runtime_trace_packages", {})
+        if isinstance(data.get("pending_runtime_trace_packages"), dict)
+        else {}
+    )
+    pending_traces = [
+        row for row in pending_runtime.get("pending", []) if isinstance(row, dict)
     ]
 
     lines = [
@@ -1021,14 +1061,14 @@ def render_markdown(data: dict) -> str:
             f"missing={mediacore.get('missing_count', 0)})"
         ),
         "",
-        "## Blocking External Trace Actions",
+        "## Pending Runtime Trace Packages",
         "",
     ]
-    if trace_actions:
-        for action in trace_actions:
-            request_id = action.get("request_id") or "-"
-            area = action.get("plugin_area") or action.get("effect") or "-"
-            reason = action.get("reason") or action.get("mode") or action.get("status") or "-"
+    if pending_traces:
+        for row in pending_traces:
+            request_id = row.get("request_id") or "-"
+            area = row.get("plugin_area") or row.get("package") or "-"
+            reason = row.get("stop_condition") or row.get("status") or "-"
             lines.append(f"- {request_id}: {area} - {reason}")
     else:
         lines.append("- None")
@@ -1079,6 +1119,7 @@ def build_data(args: argparse.Namespace) -> dict:
     progress = parse_progress_matrix(ROOT / "notes" / "PROGRESS_MATRIX.md")
     conformance = parse_conformance_ledger(ROOT / "notes" / "CONFORMANCE_LEDGER.md")
     next_actions = load_next_actions()
+    pending_runtime = load_pending_runtime_trace_report()
     plugins = summarize_plugins(manifests_by_plugin, reports_by_plugin, progress, conformance, next_actions)
     runtime_package = latest_runtime_trace_package()
     windows_batch = latest_windows_batch()
@@ -1102,7 +1143,8 @@ def build_data(args: argparse.Namespace) -> dict:
         "reports": reports,
         "unassigned_reports": reports_by_plugin.get("Unassigned", []),
         "next_actions": next_actions,
-        "send_target": choose_send_target(runtime_package, windows_batch, ae_pixel_return),
+        "pending_runtime_trace_packages": pending_runtime,
+        "send_target": choose_send_target(runtime_package, windows_batch, ae_pixel_return, pending_runtime),
         "runtime_trace_package": runtime_package,
         "windows_batch": windows_batch,
         "ae_pixel_validation_return": ae_pixel_return,
@@ -1117,7 +1159,10 @@ def main() -> int:
         "--markdown",
         type=Path,
         default=None,
-        help="Also write a Markdown summary for terminal/Finder handoff workflows.",
+        help=(
+            "Also write a Markdown summary for terminal/Finder handoff workflows. "
+            "When --output-dir is the default, this defaults to refs/reports/PORT_DASHBOARD.md."
+        ),
     )
     parser.add_argument(
         "--scan-tmp",
@@ -1127,11 +1172,14 @@ def main() -> int:
     args = parser.parse_args()
     out_dir = args.output_dir.resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
+    markdown_arg = args.markdown
+    if markdown_arg is None and out_dir == DEFAULT_OUTPUT.resolve():
+        markdown_arg = DEFAULT_MARKDOWN
     data = build_data(args)
     (out_dir / "data.json").write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
     (out_dir / "index.html").write_text(render_html(data), encoding="utf-8")
-    if args.markdown:
-        markdown_path = args.markdown.resolve()
+    if markdown_arg:
+        markdown_path = markdown_arg.resolve()
         markdown_path.parent.mkdir(parents=True, exist_ok=True)
         markdown_path.write_text(render_markdown(data), encoding="utf-8")
         print(f"dashboard_markdown={markdown_path}")

@@ -18,9 +18,19 @@ Use this report before sending another debugger package. It separates pending
 requests from answered/superseded packages and prints the comparator command to
 run after importing a return.
 
+Status note: sections below are retained as request specifications and evidence
+recipes. Do not decide what to send from an old section header alone; the
+authoritative send queue is `refs/reports/pending_runtime_trace_packages.md`.
+As of the 2026-06-24 KiraKira BT.709 aggregation/compose return, there is no
+project-local runtime trace package that should be resent blindly. The next
+Windows request, if any, should be generated from a new compose/prewriteback
+witness contract rather than from an old section below.
+
 ## OLMSmoother2 Legacy Key/Gamma Witness
 
-Status: pending external Windows debugger trace.
+Status: historical request spec. Later current-AEX returns made this no longer
+the active send target; check `refs/reports/pending_runtime_trace_packages.md`
+before resending.
 
 Why this trace exists:
 
@@ -208,7 +218,9 @@ Interpretation:
 
 ## OLMDistanceGradation Field Prep / Constant Mode Witness
 
-Status: pending external Windows debugger trace.
+Status: historical request spec. The latest pending-package audit does not ask
+for this trace now; keep this section as the field-prep witness recipe if the
+residual reopens.
 
 Why this trace exists:
 
@@ -314,7 +326,9 @@ Interpretation:
 
 ## OLMBlur Repeat Threshold Witness
 
-Status: pending external Windows debugger trace.
+Status: historical request spec. The repeat-threshold trace has returned enough
+evidence for the current AE-exact slices; keep this as the CLI residual witness
+recipe only.
 
 Why this trace exists:
 
@@ -404,7 +418,9 @@ Mac baseline values:
 
 ## OLMColorKey Edge Thin / Edge Blur Witness
 
-Status: pending external Windows debugger trace.
+Status: historical request spec. Current normalized Software references are
+AE-host exact; request this trace only if a current Software Edge residual
+reappears.
 
 Why this trace exists:
 
@@ -510,7 +526,8 @@ Mac baseline highlights:
 
 ## OLMRadialBlur Inner Span Witness
 
-Status: pending external Windows debugger trace.
+Status: answered. Runtime trace confirmed the Inner helper effective span; keep
+this section as the original span-witness recipe, not as an active send target.
 
 Why this trace exists:
 
@@ -605,7 +622,9 @@ where `EBP != 1`.
 
 ## OLMKiraKira OpenCV 4.5.5 Primitive Witness
 
-Status: first branch fact answered; next trace is `FUN_181150790` stage values.
+Status: OpenCV branch, BT.709 seed, ray-helper stages, and `FUN_18114fd90`
+center/up/right aggregation are answered. The internal merge-mode-1 compose
+float/writeback site is still not isolated.
 
 Why this exists:
 
@@ -721,3 +740,48 @@ Interpretation for this newer trace:
   AVX2 OpenCV helper behavior.
 - If the ray buffer matches but final output differs, focus on aggregation or
   merge-mode compose instead of the ray helper.
+
+2026-06-24 status update:
+
+- The apparent source-buffer mismatch at the single-ray witness was a luma
+  coefficient issue: Windows plateau `0.79773343` for RGB `[230,210,60]`
+  matches BT.709. The local AEX Channel 2 seed now uses BT.709.
+- The BT.709 local trace matches the Windows deep-stage ray-helper values
+  within `1e-5` through box pass 1/2/3, rotate-back, and final center-copy.
+- Do not retest broad ray order, first-pass boxFilter, warp geometry, or luma
+  unless a newer trace contradicts this.
+- Returned package:
+  `refs/runtime_trace_packages/olm_runtime_trace_kirakira_aggregation_compose_bt709_20260624.zip`.
+- Comparison:
+  `refs/reports/runtime_trace_comparisons/olmkirakira_aggregation_compose_bt709_20260624.md`.
+- Returned concrete facts:
+  `FUN_18114fd90` receives brightness/source/glow opacity `1`, one active ray
+  layer, and emits normalized white glow with alpha equal to the traced ray
+  input: center `0.71891218`, up `0.76832885`, right `0.71564364`.
+- The return also includes direct PNG-facing bytes for those points:
+  center `[124,124,124,255]`, up `[240,229,144,255]`, right
+  `[123,123,123,255]`.
+- Not isolated:
+  the internal merge-mode-1 compose float/writeback breakpoint and the later
+  residual hotspot. Do not send another broad ray-helper or boxFilter request
+  for this case unless a new implementation probe contradicts the current
+  fd90 facts.
+
+2026-06-25 status update:
+
+- The Mac-side compose model audit is complete:
+  `refs/reports/olmkirakira_compose_model_audit_20260625/compose_model_audit.md`.
+- Current `aex-screen-over` gain `0.62` remains the best audited global model
+  across the 9 BT.709 Software rows (`1/9` exact, max `66`, mean sum
+  `8.215029`).
+- Global alternatives are rejected as implementation changes without new
+  binary evidence:
+  - gain `0.60`: same max, worse total mean (`8.797406`);
+  - inverse-trace-inspired gains `0.5811` / `0.5436`: worse aggregate metrics;
+  - direct `scale_override=1.0`: breaks strength-0 anchors;
+  - premultiplied compose: worse aggregate metrics and no exact rows.
+- Therefore the next Windows request, if any, must target only the internal
+  merge-mode-1 compose/pre-writeback or final quantization site for a known
+  residual hotspot. Do not spend another Windows pass on broad PNGs, luma,
+  ray-helper choreography, first-pass `boxFilter`, fd90 aggregation, or global
+  gain tuning.

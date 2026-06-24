@@ -524,6 +524,73 @@ filter.
   not solved by a global `f270` suppression; the next Windows proof must decide
   whether this exact witness differs in `desc/key`, `e170` bits, or `e3a0`
   trapezoid/append state.
+- 2026-06-24 Ghidra MCP static recheck:
+  - `FUN_18000e170` reads exactly `A(x,y-1)`, `R(x-1,y)`, and `A(x,y)` and
+    returns the `2/4/1` bit sum. The current Mac `win_e170` matches this
+    decompile for the `0012 (91,841)` witness.
+  - `FUN_18000f270` only suppresses when `e170` returns `4`; otherwise it calls
+    `FUN_18000e3a0` with `scale_m = extra_n * DAT_180022dd8 + 0.5` and the
+    supplied scale parameter. The current Mac `win_leaf_f270` matches this
+    shape.
+  - `FUN_18000fef0` dispatches key `50` to `FUN_18000f270(..., 1.0)` and then
+    returns, matching the local `cardinal6 key=50 -> f270` trace.
+  - `FUN_180010760` still has the expected `d3b0` then `da50` then
+    `FUN_18000fef0` shape. Ghidra's stack-variable rendering is ambiguous for
+    the packed six-int descriptor, so keep the earlier full-cardinal reference
+    as the descriptor truth table.
+  Interpretation: do not promote a Mac-side `f270` or `e170` change from the
+  current evidence. The remaining `0012` proof still needs either exact Windows
+  live state for this witness or a lower-level descriptor/scan asm audit that
+  contradicts the current full-cardinal mapping.
+- 2026-06-24 Mac-side decision matrix:
+  `refs/reports/olmsmoother2_current_aex_decision_matrix_20260624/decision_matrix.md`
+  consolidates the latest current-AEX residual audit, curve-index sweep, and
+  `f270` suppression probe. It classifies global `bb10/curve_idx` tuning as
+  `rejected-inert` because overrides `0..8` all report identical metrics
+  (`mean_sum=0.058945071373`, `max=113`), and global `f270` suppression as
+  `rejected-worse` because it worsens the nine-case mean sum to
+  `0.083016854745` and max to `169`. The two active residual witnesses are now
+  explicitly tracked as opposite shapes: `0004 (1903,519)` needs a
+  transparent-center neighbor/polygon proof, while `0012 (91,841)` needs exact
+  `d3b0/da50/e170/f270/e3a0` state or equivalent asm proof.
+- 2026-06-24 witness contract:
+  `refs/reports/olmsmoother2_current_aex_witness_contract_20260624/witness_contract.md`
+  parses the local trace logs into a compact contract for the next narrow
+  proof. It keeps the Smooth Range threshold promotion, `e170` bit mapping,
+  `f270` suppress-only-`c==4` shape, `fef0 key=50 -> f270(...,1.0)`, and the
+  final 8bpc writer ruling. It also records why broad toggles stay rejected:
+  `curve_idx` is inert and global `f270` suppression is worse. Active local
+  paths:
+  - `0004 (1903,519)`: `idx=208`, transparent center, polygon count `0`,
+    passthrough `[1,1,1,0]`, but Windows writes `[103,103,103,113]`. The next
+    proof is whether Windows also has zero vertices or whether a helper appends
+    neighbor-derived samples before cce0.
+  - `0012 (91,841)`: `idx=105`, `cardinal6 desc=(91,841,1,91,843,5)`,
+    `key=50`, `e170 c=2`, `f270 -> e3a0`, appending source `(91,840)` with
+    weight `0.35632184`, then `cce0_after_b120=[0.99106723,0.99106723,
+    0.99106723,0.35492450]`, while Windows is transparent. The next proof is
+    the first Windows-vs-Mac divergence among c280 idx, cardinal6 desc/key,
+    e170 bits/code, f270/e3a0 emission, cce0 blend, or final writer.
+- 2026-06-24 witness neighborhood report:
+  `refs/reports/olmsmoother2_witness_neighborhood_20260624/neighborhood.md`
+  records the 5x5 Windows-reference-vs-Mac-candidate neighborhood around the
+  two active max-diff witnesses. This is a narrowing report, not an
+  implementation tuner.
+  - `0004 (1903,519)` is now classified as
+    `windows-adds-semitransparent-output-where-local-passthrough-is-transparent`:
+    center Windows `[103,103,103,113]`, Mac `[0,0,0,0]`, with 13 nonzero
+    cells in the 5x5 window. The useful next trace is only whether Windows
+    `c280` emits a polygon sample for this transparent-center cell, or whether
+    `cce0` receives a nonzero fallback before passthrough.
+  - `0012 (91,841)` is the opposite shape,
+    `local-adds-semitransparent-output-where-windows-stays-transparent`:
+    center Windows `[0,0,0,0]`, Mac `[90,90,90,91]`, with 4 nonzero cells in
+    the 5x5 window. The useful next trace is only whether Windows suppresses
+    the local `cardinal6/f270/e3a0` append, changes class bits, or zeroes the
+    sample before `cce0`.
+  This report makes another broad Smoother2 PNG request low-value. If Windows
+  tracing resumes, ask for center-pixel `c280/cce0` state and the listed
+  strongest neighboring deltas, not a full-image sweep.
 - No-key `case_0001` residual is dominated by pixels where candidate smoothed
   but reference looks like input. This points to class-plane / dispatch firing
   too often, not final PNG premultiply alone.
@@ -626,7 +693,7 @@ filter.
 | Case group | Bit depth | Expected status | Current result | Next evidence |
 | --- | --- | --- | --- | --- |
 | no-key grid | 8bpc | AE exact for packaged grid | 12/12 exact in 2026-06-19 and 2026-06-20 AE pixel returns | Optional runtime trace for binary-grounding; do not PNG-tune |
-| key/gamma paths | 8bpc | guarded / writer-grounded residual | Full current-AEX recapture imported. With AE-saved premultiplied before frames, `legacy_case_0002` and `0003` are exact. Smooth Range threshold promotion makes the `0004 (501,1055)` target cce0 value match the Windows final writer floats, and reduces the 11-case mean-sum from `1.3008` to `0.0589`. Remaining localized residuals include `0004 max=113 mean=0.0045` and `0012 max=91 mean=0.0151`; the `0012` max witness is now `(91,841)` and is isolated to `cardinal6 key=50 -> f270/e170/e3a0`. A curve-index sweep for `bb10` rejects `curve_idx` as the cause because overrides `0..8` all produce identical metrics. Local `f270` suppression is also rejected because it worsens all nine residual cases and `0012` specifically. | Keep the Smooth Range threshold fix. Next proof should be binary/runtime evidence for `d3b0/da50/e170/f270/e3a0` on `(91,841)`; broad alpha/index/curve-index/f270-suppression probes were worse or inert |
+| key/gamma paths | 8bpc | guarded / writer-grounded residual | Full current-AEX recapture imported. With AE-saved premultiplied before frames, `legacy_case_0002` and `0003` are exact. Smooth Range threshold promotion makes the `0004 (501,1055)` target cce0 value match the Windows final writer floats, and reduces the 11-case mean-sum from `1.3008` to `0.0589`. Remaining localized residuals include `0004 max=113 mean=0.0045` and `0012 max=91 mean=0.0151`; the `0012` max witness is now `(91,841)` and is isolated to `cardinal6 key=50 -> f270/e170/e3a0`. Decision matrix `refs/reports/olmsmoother2_current_aex_decision_matrix_20260624/decision_matrix.md` rejects `bb10/curve_idx` as inert and global `f270` suppression as worse. | Keep the Smooth Range threshold fix. Next proof should be binary/runtime evidence for `d3b0/da50/e170/f270/e3a0` on `(91,841)` and a polygon/no-polygon proof for `0004 (1903,519)`; broad alpha/index/curve-index/f270-suppression probes were worse or inert |
 | standalone v1 | 8bpc | AE exact for packaged v1 slices | 3/3 exact in corrected 960x540 2026-06-20 AE pixel rerun | Decide whether v1 stays independent or maps to v2 compatibility |
 
 ## Open Questions

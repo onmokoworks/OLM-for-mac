@@ -19,6 +19,13 @@
   three DistanceGradation groups as `normalized-software-exact`:
   basic 12/12, extended 16/16, and blur 1/1. Legacy drift remains only in the
   older 20260605 extra references.
+- 2026-06-24 decision matrix:
+  `refs/reports/olmdistancegradation_decision_matrix_20260624/decision_matrix.md`
+  consolidates provenance, canonicalization, and the latest trace comparison.
+  It classifies normalized 8bpc as `29/29 exact`, legacy drift as 7 old-ref
+  cases, and the current runtime trace as `not-actionable` (`await-windows-trace`).
+  Preserve normalized AE-exact behavior; do not tune DistanceGradation from
+  legacy-only drift or AE-free CLI residuals.
 
 ## Source Evidence
 
@@ -143,14 +150,18 @@ is `1 - X`.
   audited AE-host candidates match the normalized Software refs exactly;
   legacy-only drift remains 1 basic case and 6 extended cases. Do not tune
   field/compose code from those legacy-only differences.
+- 2026-06-24 decision matrix records the same stop/go rule in JSON/Markdown:
+  normalized 8bpc exactness is the active release evidence; field-prep/OpenCV
+  runtime proof is only needed if we choose to close AE-free CLI residuals or
+  a current normalized Software residual reappears.
 
 ## Conformance Cases
 
 | Case group | Bit depth | Expected status | Current result | Next evidence |
 | --- | --- | --- | --- | --- |
-| basic 12-case AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: 12/12 `max_diff=0` | 16/32bpc references; binary-ground field prep so CLI and AE-host paths share one explanation |
-| extended non-blur 16-case AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: 16/16 `max_diff=0` | 16/32bpc references; binary-ground Constant/render-mode branches |
-| blur `case_0029` AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: `max_diff=0` | trace/OpenCV 4.5.5 `distanceTransform` / `GaussianBlur` behavior |
+| basic 12-case AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: 12/12 `max_diff=0`; decision matrix preserves normalized exact behavior | 16/32bpc references; binary-ground field prep only if closing CLI residuals |
+| extended non-blur 16-case AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: 16/16 `max_diff=0`; decision matrix preserves normalized exact behavior | 16/32bpc references; binary-ground Constant/render-mode only if closing CLI residuals |
+| blur `case_0029` AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: `max_diff=0`; normalized and legacy refs both exact | 16/32bpc references; trace OpenCV blur only if closing CLI residuals |
 | AE-free basic 12-case smoke | 8bpc | guarded | 2026-06-19 rerun passes current guard: worst `case_0007/0009 max=7 mean=0.0909`; residual remains | binary-ground distance normalization and compare against normalized Software refs |
 | AE-free extended non-blur 16-case smoke | 8bpc | guarded | 2026-06-19 rerun passes current loose guard, but with large non-exact residuals: `case_0008 max=254`, `case_0011 max=254`, `case_0012 max=251`, `case_0020..0023 max=238` | binary-ground interpolation, Constant field-prep, and render-mode branch details before tuning |
 | AE-free blur `case_0029` | 8bpc | guarded | 2026-06-19 rerun: `max=23 mean=0.2827`; tiny non-grounded improvement from Constant+Blur binary-field handling | trace/OpenCV 4.5.5 `distanceTransform` / `GaussianBlur` behavior |

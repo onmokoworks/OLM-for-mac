@@ -21,8 +21,9 @@ REQUEST_IDS = {
     "kirakira_fun_181150790_deep_stage_values_20260621",
     "kirakira_forward_warp_box_input_20260621",
     "kirakira_boxfilter_pass1_microprobe_20260622",
+    "kirakira_aggregation_compose_bt709_20260624",
 }
-DEFAULT_REQUEST_ID = "kirakira_fun_181150790_stage_values_20260620"
+DEFAULT_REQUEST_ID = "kirakira_aggregation_compose_bt709_20260624"
 
 
 def repo_root() -> Path:
@@ -61,11 +62,26 @@ def fail(message: str) -> int:
     return 1
 
 
+def result_quality(row: dict[str, Any]) -> tuple[int, int, int]:
+    """Prefer real return rows over packaged templates with the same request id."""
+    observations = row.get("observations", {})
+    source_file = str(row.get("source_file") or "").replace("\\", "/").lower()
+    status = str(row.get("status") or "").lower()
+    template_penalty = -100 if "/request_package/" in source_file or source_file.endswith("return_runtime_trace_template.json") else 0
+    status_score = {"answered": 30, "answered_partial": 25}.get(status, 0)
+    concrete_score = 1 if isinstance(observations, dict) and contains_number(observations) else 0
+    return (template_penalty, status_score, concrete_score)
+
+
 def find_result(summary: dict[str, Any]) -> dict[str, Any] | None:
-    for row in summary.get("results", []):
-        if isinstance(row, dict) and row.get("request_id") in REQUEST_IDS:
-            return row
-    return None
+    candidates = [
+        row
+        for row in summary.get("results", [])
+        if isinstance(row, dict) and row.get("request_id") in REQUEST_IDS
+    ]
+    if not candidates:
+        return None
+    return max(candidates, key=result_quality)
 
 
 def local_ray_records(local_trace: dict[str, Any]) -> list[dict[str, Any]]:
@@ -270,12 +286,22 @@ def deep_stage_deltas(observations: dict[str, Any], local_trace: dict[str, Any])
     return rows
 
 
+DEEP_STAGE_MATCH_EPSILON = 1.0e-5
+
+
 def first_divergence(rows: list[dict[str, Any]]) -> dict[str, Any] | None:
     for row in rows:
         delta = row.get("delta")
-        if isinstance(delta, (int, float)) and abs(float(delta)) > 1.0e-7:
+        if isinstance(delta, (int, float)) and abs(float(delta)) > DEEP_STAGE_MATCH_EPSILON:
             return row
     return None
+
+
+def deep_stage_values_match(rows: list[dict[str, Any]]) -> bool:
+    return bool(rows) and all(
+        isinstance(row.get("delta"), (int, float)) and abs(float(row["delta"])) <= DEEP_STAGE_MATCH_EPSILON
+        for row in rows
+    )
 
 
 def microprobe_witnesses(observations: dict[str, Any]) -> list[dict[str, Any]]:
@@ -288,12 +314,30 @@ def microprobe_witnesses(observations: dict[str, Any]) -> list[dict[str, Any]]:
     return []
 
 
-def microprobe_classification(observations: dict[str, Any]) -> str:
+def microprobe_seed_reconciled(observations: dict[str, Any], local_trace: dict[str, Any]) -> bool:
+    upstream = observations.get("upstream_signal")
+    if not isinstance(upstream, dict):
+        return False
+    plateau = upstream.get("source_window_plateau_example")
+    if not isinstance(plateau, dict) or not isinstance(plateau.get("windows_observed"), (int, float)):
+        return False
+    windows_value = float(plateau["windows_observed"])
+    local_values = local_sample_values(local_trace)
+    candidates = [
+        local_values.get("ray_length_up", {}).get("seed"),
+        local_values.get("ray_length_up", {}).get("after_center_copy"),
+    ]
+    return any(isinstance(value, (int, float)) and abs(float(value) - windows_value) <= 1.0e-5 for value in candidates)
+
+
+def microprobe_classification(observations: dict[str, Any], local_trace: dict[str, Any] | None = None) -> str:
     explicit = observations.get("classification")
     if isinstance(explicit, str):
         lowered = explicit.strip().lower()
         if lowered and "|" not in lowered and "failed" not in lowered and "unknown" not in lowered:
             return lowered
+    if local_trace is not None and microprobe_seed_reconciled(observations, local_trace):
+        return "seed-luma-reconciled"
     decision = observations.get("witness_decision")
     if isinstance(decision, dict):
         if decision.get("different_contributing_window") is True or decision.get("different_border_reflection") is True:
@@ -381,12 +425,18 @@ def recommended_next_evidence(focus: str) -> str:
         return "Capture pass-by-pass boxFilter values for the same witnesses, including pass-1 input and stored output."
     if focus == "aggregation-or-compose":
         return "Ground the final scale/screen-over compose inputs before changing ray generation."
+    if focus == "fd90-aggregation-grounded-compose-scale":
+        return "FUN_18114fd90 aggregation is grounded; update the aggregation scale/alpha model, then remeasure before requesting more compose internals."
+    if focus == "ray-helper-stages-match-aggregation-or-compose":
+        return "Ray helper stages match within float print precision; ground aggregation, compose, or final quantization next."
     if focus.endswith("different-window-or-border-reflect"):
         return "Use the resolved source indices and sample list to update only the boxFilter border/window rule."
     if focus.endswith("accumulator-precision-or-store"):
         return "Ground accumulator precision and store rounding in the AVX2 helper before changing output values."
     if focus.endswith("upstream-source-buffer-content"):
         return "Treat pass-1 boxFilter window/border/store as grounded; trace the pre-boxFilter source fill or center-copy stage next."
+    if focus.endswith("seed-luma-reconciled"):
+        return "The pass-1 source-buffer delta is explained by the local BT.709 seed update; remeasure later stages before requesting more Windows data."
     if focus.endswith("boxfilter-pass1-window-matches"):
         return "Treat pass-1 window selection as grounded; move downstream to later passes or compose witnesses."
     if focus.endswith("window-values-without-store"):
@@ -413,6 +463,8 @@ def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
     entry = observations.get("fun_181150790_entry", {})
     witnesses = observations.get("witness_pixels", [])
     aggregation = observations.get("aggregation_and_compose", {})
+    fd90_aggregation = observations.get("fun_18114fd90_aggregation", {})
+    merge_mode_1_compose = observations.get("merge_mode_1_compose", {})
     case = observations.get("case", {})
     return {
         "present": True,
@@ -446,6 +498,9 @@ def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
         "first_divergence_classification": observations.get("first_divergence_classification"),
         "previous_first_concrete_divergence": observations.get("previous_first_concrete_divergence"),
         "aggregation_and_compose": aggregation if isinstance(aggregation, dict) else aggregation,
+        "fun_18114fd90_aggregation": fd90_aggregation if isinstance(fd90_aggregation, dict) else fd90_aggregation,
+        "merge_mode_1_compose": merge_mode_1_compose if isinstance(merge_mode_1_compose, dict) else merge_mode_1_compose,
+        "residual_hotspot": observations.get("residual_hotspots") or observations.get("residual_hotspot_optional"),
         "stage_values": observations.get("stage_values"),
         "not_captured": observations.get("not_captured"),
     }
@@ -473,13 +528,17 @@ def build_comparison(summary: dict[str, Any], local_trace: dict[str, Any]) -> di
         win_forward_warp_witnesses = windows.get("forward_warp_witnesses")
         win_microprobe_witnesses = windows.get("microprobe_witnesses")
         win_agg = windows.get("aggregation_and_compose")
+        win_fd90 = windows.get("fun_18114fd90_aggregation")
+        win_merge = windows.get("merge_mode_1_compose")
         win_stage_values = windows.get("stage_values")
         if has_concrete(win_length) and win_length != local_ray.get("length"):
             likely_next_focus = "ray-length-normalization"
         elif row.get("request_id") == "kirakira_boxfilter_pass1_microprobe_20260622":
-            likely_next_focus = "boxfilter-pass1-" + microprobe_classification(observations)
+            likely_next_focus = "boxfilter-pass1-" + microprobe_classification(observations, local_trace)
         elif has_concrete(win_forward) and win_forward != local_ray.get("forward_matrix"):
             likely_next_focus = "warp-matrix-or-center"
+        elif deep_stage_values_match(deltas):
+            likely_next_focus = "ray-helper-stages-match-aggregation-or-compose"
         elif deltas and all(row.get("windows_stage", "").startswith("after_box_filter_pass") for row in deltas[:3]):
             likely_next_focus = "forward-warp-or-boxfilter-input"
         elif has_concrete_stage_value(win_forward_warp_witnesses) or has_concrete_stage_value(win_forward_warp):
@@ -487,12 +546,14 @@ def build_comparison(summary: dict[str, Any], local_trace: dict[str, Any]) -> di
         elif has_concrete_stage_value(win_boxfilter_pass_1):
             likely_next_focus = "boxfilter-stage-values"
         elif has_concrete_stage_value(win_microprobe_witnesses):
-            likely_next_focus = "boxfilter-pass1-" + microprobe_classification(observations)
+            likely_next_focus = "boxfilter-pass1-" + microprobe_classification(observations, local_trace)
         elif has_concrete_stage_value(win_stage_values):
             likely_next_focus = "boxfilter-stage-values"
         elif has_concrete_stage_value(win_witnesses) or has_concrete_stage_value(win_box):
             likely_next_focus = "boxfilter-stage-values"
-        elif has_concrete_stage_value(win_agg):
+        elif row.get("request_id") == "kirakira_aggregation_compose_bt709_20260624" and has_concrete_stage_value(win_fd90):
+            likely_next_focus = "fd90-aggregation-grounded-compose-scale"
+        elif has_concrete_stage_value(win_agg) or has_concrete_stage_value(win_merge):
             likely_next_focus = "aggregation-or-compose"
         else:
             likely_next_focus = "trace-too-sparse"
@@ -563,6 +624,9 @@ def render_markdown(comparison: dict[str, Any]) -> str:
         f"- First divergence classification: {md_value(windows.get('first_divergence_classification'))}",
         f"- Previous concrete divergence: {md_value(windows.get('previous_first_concrete_divergence'))}",
         f"- Aggregation/compose: {md_value(windows.get('aggregation_and_compose'))}",
+        f"- FUN_18114fd90 aggregation: {md_value(windows.get('fun_18114fd90_aggregation'))}",
+        f"- Merge mode 1 compose: {md_value(windows.get('merge_mode_1_compose'))}",
+        f"- Residual hotspot: {md_value(windows.get('residual_hotspot'))}",
         "",
     ]
     deltas = comparison.get("deep_stage_deltas")

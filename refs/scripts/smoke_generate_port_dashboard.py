@@ -67,21 +67,17 @@ def main() -> int:
             print("[FAIL] runtime trace package not recorded as ready")
             return 1
         send_target = data.get("send_target") or {}
-        if send_target.get("status") != "ready" or not str(send_target.get("relative_path", "")).endswith(".zip"):
-            print("[FAIL] send target not recorded as ready")
+        if send_target.get("status") != "not-needed" or send_target.get("kind") != "none":
+            print("[FAIL] send target should be not-needed when no runtime package is pending")
             return 1
         audit = data.get("mediacore_audit") or {}
         if "status" not in audit or "duplicate_count" not in audit:
             print("[FAIL] MediaCore audit summary missing")
             return 1
-        actions = data.get("next_actions", {}).get("covered_actions", [])
-        trace_actions = [
-            action
-            for action in actions
-            if action.get("status") == "runtime-trace" or action.get("mode") == "external-trace"
-        ]
-        if len(trace_actions) < 2:
-            print("[FAIL] expected RadialBlur and KiraKira runtime trace actions")
+        pending_runtime = data.get("pending_runtime_trace_packages") or {}
+        pending_traces = pending_runtime.get("pending") or []
+        if pending_runtime.get("pending_count") != 0 or pending_traces:
+            print("[FAIL] expected no pending runtime trace packages")
             return 1
         guidance_by_plugin = {}
         for plugin in data.get("plugins", []):
@@ -113,14 +109,21 @@ def main() -> int:
             "Next Send Target",
             "Runtime Trace Package",
             "MediaCore Audit",
-            "Blocking External Trace Actions",
+            "Pending Runtime Trace Packages",
             "Recent Report Guidance",
         ):
             if needle not in html:
                 print(f"[FAIL] dashboard HTML missing section: {needle}")
                 return 1
         markdown = markdown_path.read_text(encoding="utf-8")
-        for needle in ("# OLM Port Dashboard", "Completion means AE exact", "Next send target", "Runtime trace package", "Blocking External Trace Actions"):
+        for needle in (
+            "# OLM Port Dashboard",
+            "Completion means AE exact",
+            "Next send target",
+            "Runtime trace package",
+            "Pending Runtime Trace Packages",
+            "- None",
+        ):
             if needle not in markdown:
                 print(f"[FAIL] dashboard Markdown missing section: {needle}")
                 return 1

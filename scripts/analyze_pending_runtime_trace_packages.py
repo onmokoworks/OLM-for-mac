@@ -15,6 +15,7 @@ PRIORITY_PROFILES = {
     "kirakira-boxfilter-pass1-microprobe": 20,
     "directionalblur-residual-witness": 30,
     "kirakira-forward-warp-box-input": 40,
+    "kirakira-aggregation-compose-bt709": 45,
     "kirakira-stage-values-deep": 50,
     "olmblur-repeat-threshold": 60,
     "colorkey-edge": 70,
@@ -22,6 +23,10 @@ PRIORITY_PROFILES = {
 }
 
 COMPARISON_COMMANDS = [
+    (
+        "kirakira_aggregation_compose_bt709_20260624",
+        "python3 scripts/compare_kirakira_stage_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --local-trace-json refs/reports/olmkirakira_trace_baseline_20260624_bt709_mac/trace.json --output-json refs/reports/runtime_trace_comparisons/olmkirakira_aggregation_compose_bt709_20260624.json --output-md refs/reports/runtime_trace_comparisons/olmkirakira_aggregation_compose_bt709_20260624.md",
+    ),
     (
         "olmradialblur_zoom_tiny_rotation_residual_witness_20260622",
         "python3 scripts/compare_radialblur_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmradialblur_residual_witness.json --output-md refs/reports/runtime_trace_comparisons/olmradialblur_residual_witness.md",
@@ -210,6 +215,9 @@ def render_markdown(report: dict[str, Any]) -> str:
     if pending:
         lines.extend(["", "## Send First", ""])
         first = pending[0]
+        commands = [first["intake_command"]]
+        if first["comparison_command"] != first["intake_command"]:
+            commands.append(first["comparison_command"])
         lines.extend(
             [
                 f"- Package: `{first['package']}`",
@@ -220,8 +228,7 @@ def render_markdown(report: dict[str, Any]) -> str:
                 "After the Windows return is imported:",
                 "",
                 "```bash",
-                first["intake_command"],
-                first["comparison_command"],
+                *commands,
                 "```",
             ]
         )

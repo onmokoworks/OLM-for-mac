@@ -125,7 +125,10 @@ def channel_seed(rgba: np.ndarray, channel: int, mode: str, brightness_gain: flo
             seed = np.power(alpha, max(1.0e-6, brightness_gain))
             return seed
         if channel == 2:
-            luma = rgb[..., 0] * 0.299 + rgb[..., 1] * 0.587 + rgb[..., 2] * 0.114
+            # Windows runtime trace for the vertical len=50 witness shows the
+            # pre-boxFilter source plateau for RGB [230,210,60] is 0.797733,
+            # which matches BT.709 luma rather than BT.601.
+            luma = rgb[..., 0] * 0.2126 + rgb[..., 1] * 0.7152 + rgb[..., 2] * 0.0722
             seed = np.power(luma, max(1.0e-6, brightness_gain))
             return seed * alpha
         if channel == 4:

@@ -10,6 +10,14 @@
   - `refs/win_references/olm_reference_return_windows_20260614/OLMKiraKira`
   - `refs/win_references/olm_reference_return_windows_recapture_20260615/OLMKiraKira`
 - Current status: `binary-grounded / guarded`, not `AE exact`
+- 2026-06-24 decision matrix:
+  `refs/reports/olmkirakira_decision_matrix_20260624/decision_matrix.md`
+  classifies the current blocker as `blocked-compose-or-final-quantization`.
+  Ray-helper stages match Windows within float print precision after the
+  BT.709 seed fix, and `FUN_18114fd90` aggregation is grounded at three
+  witnesses. The merge-mode-1 internal compose/writeback site is still
+  unisolated, so do not reopen luma, boxFilter, ray-helper choreography, or
+  global compose scale from PNG residuals.
 
 ## Source Evidence
 
@@ -17,6 +25,7 @@
 | --- | --- | --- |
 | Merge mode 1 composes with screen RGB and source-alpha passthrough. | Strength=0 single-ray refs; `notes/OLMKiraKira_ASM_FACTS.md`. | reference-confirmed / binary-aligned |
 | Zero-length rays are skipped entirely. | `FUN_18114f4a0` guards `length != 0`; single-ray refs. | binary-grounded |
+| Channel 2 seed uses BT.709 luma coefficients, not BT.601. | 2026-06-24 runtime-trace reconciliation: input RGB `[230,210,60]` gives old local `0.77992159` with BT.601 but Windows pre-boxFilter plateau `0.79773343`, matching BT.709 `0.7977333`. | runtime-trace reconciled |
 | Directional ray helper scalar is not used by merge-mode-1 aggregator output. | `FUN_18114f4a0` / `FUN_18114fd90` argument audit and single-ray refs. | binary-grounded |
 | Temp extents use truncation after `+4.0f`, then clamp to at least source size + 4. | `FUN_18114f4a0`, `.rdata DAT_18148b830 = 4.0f`. | binary-grounded |
 | Ray helper uses centered ROI/copy, forward `warpAffine`, three horizontal `boxFilter` passes, rotate-back, and final centered copy. | `FUN_181150790`, `FUN_181156cd0`, `FUN_18115cfb0`, `FUN_181297ac0`. | binary-grounded |
@@ -183,6 +192,19 @@
 - Current comparison:
   `refs/reports/runtime_trace_comparisons/olmkirakira_boxfilter_pass1_microprobe_20260624.md`.
   Classification: `boxfilter-pass1-upstream-source-buffer-content`.
+- 2026-06-24 Mac-side reconciliation found the upstream source-buffer
+  difference: the local CLI was using BT.601 luma for Channel 2 seed. The
+  Windows plateau `0.79773343` for RGB `[230,210,60]` equals BT.709 luma
+  (`0.2126R + 0.7152G + 0.0722B`), while the old local plateau
+  `0.77992159` equals BT.601. `refs/scripts/olmkirakira_cli.py` now uses
+  BT.709 in AEX seed mode for channel 2.
+- New BT.709 local trace:
+  `refs/reports/olmkirakira_trace_baseline_20260624_bt709_mac/trace.json`.
+  New witness plan:
+  `refs/reports/olmkirakira_boxfilter_window_plan_20260624_bt709/witness_plan.md`.
+  The first-pass witness deltas from the Windows return are explained by this
+  luma correction: center `+0.00765902`, ray-length-up `+0.00722808`, and
+  ray-length-right `+0.00512671`.
 
 ## Rejected / Low-Value Next Moves
 
@@ -199,14 +221,159 @@
 
 The next useful evidence is not another broad PNG set. The forward-warp
 geometry, first `boxFilter` arguments, pass-1 contributing windows, and pass-1
-store behavior are now known. The remaining target is earlier than
-`boxFilter`: trace or statically ground the source-buffer fill / center-copy
-stage that makes the pass-1 source window brighter on Windows.
+store behavior are now known. The specific 2026-06-24 upstream source-buffer
+delta is explained by BT.709 seed luma, so do not request another trace for
+that witness until the updated BT.709 CLI residual is remeasured.
 
-Start with the narrow `ray_length_up after_center_copy` discrepancy and prove
-whether the Windows value comes from the same Mat/address stage as the local
-baseline. Do not tune `boxFilter` size, border, or accumulator rules from the
-current residual.
+Next Mac-side step: rerun the KiraKira OpenCV/CLI comparisons against the
+Software references with the BT.709 seed. If residuals remain, compare from
+pass 2 / rotate-back / aggregation with the new BT.709 trace baseline rather
+than returning to `boxFilter` window or seed-luma hypotheses.
+
+2026-06-24 BT.709 remeasure completed this Mac-side step against
+`kirakira_single_ray_20260606` using the OpenCV 4.5.5 probe environment and
+the current `aex-screen-over` Python CLI. The report is stored at
+`refs/reports/olmkirakira_remeasure_20260624_bt709_software/reports/diff.json`
+and the Software rows are:
+
+| Case | max | mean | Classification |
+| --- | ---: | ---: | --- |
+| vertical len50 brightness1 strength100 | 14 | 1.6006 | residual remains |
+| horizontal len50 brightness1 strength100 | 11 | 1.6365 | residual remains |
+| diagonal len50 brightness1 strength100 | 23 | 1.5068 | residual remains |
+| diagonal2 len50 brightness1 strength100 | 23 | 1.5212 | residual remains |
+| vertical len50 brightness94 strength0 | 1 | 0.0215 | strength-0 near-match |
+| horizontal len50 brightness94 strength0 | 0 | 0.0000 | exact for this slice |
+| diagonal len50 brightness94 strength0 | 3 | 0.0238 | strength-0 near-match |
+| diagonal2 len50 brightness94 strength0 | 3 | 0.0238 | strength-0 near-match |
+| diagonal len50 rotation13 | 66 | 1.8809 | residual remains |
+
+Conclusion: BT.709 fixes the traced pass-1 source-window explanation but does
+not make the final PNGs exact. The remaining useful Mac-side work is
+stage-local: compare the BT.709 trace baseline from pass 2 through rotate-back
+and final aggregation. Do not reopen first-pass window selection, border mode,
+or luma coefficients unless a new trace contradicts this measurement.
+
+The same BT.709 trace was compared against the 2026-06-21 deep Windows stage
+trace in
+`refs/reports/runtime_trace_comparisons/olmkirakira_deep_stage_values_20260624_bt709.md`.
+All captured ray-helper stages now match within float print precision:
+box pass 1, pass 2, pass 3, rotate-back, and final center-copy are all within
+`1e-5` (`~3e-8..1.2e-7` observed deltas). This moves the remaining single-ray
+PNG residual out of ray generation for the captured vertical witness and into
+aggregation, screen-over compose, or final quantization/export behavior.
+The focused Windows follow-up package is
+`refs/runtime_trace_packages/olm_runtime_trace_kirakira_aggregation_compose_bt709_20260624.zip`
+(Finder/send copy:
+`handoffs/windows_batch/olm_runtime_trace_kirakira_aggregation_compose_bt709_20260624.zip`).
+
+Mac-side residual hotspot extraction from the same BT.709 Software remeasure
+now gives concrete trace targets:
+
+| Target | Case | XY | Windows RGBA | Local BT.709 RGBA | Candidate - Windows |
+| --- | --- | ---: | --- | --- | --- |
+| Primary | vertical len50 brightness1 strength100 | `(934,118)` | `[131,131,131,255]` | `[145,145,145,255]` | `[14,14,14,0]` |
+| Optional largest observed | diagonal len50 rotation13 | `(1098,202)` | `[112,112,112,255]` | `[46,46,46,255]` | `[-66,-66,-66,0]` |
+
+The active package asks Windows to trace aggregation, screen-over compose, and
+final byte/writeback values at the primary vertical hotspot first. The
+rotation13 hotspot is useful only if the debugger setup can cheaply switch to
+that case; it should not delay the primary vertical-case answer.
+
+2026-06-24 Windows return for
+`kirakira_aggregation_compose_bt709_20260624` is imported and compared in
+`refs/reports/runtime_trace_comparisons/olmkirakira_aggregation_compose_bt709_20260624.md`.
+It directly grounds `FUN_18114fd90` for the center/up/right witnesses:
+
+| Point | Ray input alpha | fd90 glow RGBA | PNG-facing output |
+| --- | ---: | --- | --- |
+| center `(960,540)` | `0.71891218` | `[1,1,1,0.71891218]` | `[124,124,124,255]` |
+| up `(960,490)` | `0.76832885` | `[1,1,1,0.76832885]` | `[240,229,144,255]` |
+| right `(1010,540)` | `0.71564364` | `[1,1,1,0.71564364]` | `[123,123,123,255]` |
+
+The internal merge-mode-1 compose float/writeback site was not isolated, so the
+current `aex-screen-over` compose remains a near-match model rather than a
+binary-grounded rule. The PNG-facing bytes nevertheless let us invert the
+screen equation for the traced points. Using
+`out = 1 - (1 - src) * (1 - effective_glow_alpha)`, the implied compose
+scale relative to the fd90 glow alpha is:
+
+| Point | fd90 alpha | implied effective alpha | implied scale |
+| --- | ---: | ---: | ---: |
+| center `(960,540)` | `0.71891218` | `0.41777778` | `0.58112491` |
+| up `(960,490)` | `0.76832885` | `~0.41766382` | `~0.54360033` (`0.52061041..0.56065737` by RGB channel) |
+| right `(1010,540)` | `0.71564364` | `0.41333333` | `0.57756865` |
+
+This points at a compose/writeback-side attenuation or color-dependent detail
+after fd90, not at luma, boxFilter, ray-helper choreography, or fd90 itself. A
+Mac-side gain probe rejected the tempting simple fix: `--gain-scale 0.60`
+improves some strength-100 max values but worsens total Software mean versus
+the current `0.62` (`8.7974` vs `8.2150` over the 9 Software single-ray rows),
+while direct `--scale-override 1.0` badly worsens all strength-0 anchors. Do
+not change the production/default KiraKira compose scale from this return
+alone.
+
+A C++ cross-check on the same 9 Software single-ray rows with
+`--warp-mode aex-two-temp-mapremap-f32` confirms that point-wise implied scale
+does not promote to a global gain change:
+
+| gain-scale | max diff | mean sum | exact |
+| ---: | ---: | ---: | ---: |
+| `0.58` | `67` | `9.802595` | `2/9` |
+| `0.60` | `66` | `8.041545` | `2/9` |
+| `0.62` | `66` | `7.081053` | `2/9` |
+
+This keeps `0.62` as the best measured global scale among those three C++
+probes and leaves the next target as compose/writeback structure, not scalar
+retuning.
+
+2026-06-24 decision matrix:
+
+- `scripts/analyze_kirakira_decision_matrix.py` combines the BT.709 remeasure,
+  deep stage comparison, pass-1 microprobe, and aggregation/compose return.
+- Latest report:
+  `refs/reports/olmkirakira_decision_matrix_20260624/decision_matrix.md`.
+- Machine decision: `blocked-compose-or-final-quantization`.
+- BT.709 Software set: 9 cases, 1 exact, max-diff max `66`, mean sum
+  `8.215029`.
+- Group split:
+  - `strength100_single_ray`: 4 cases, max `23`, mean sum `6.265140`.
+  - `strength0_anchor`: 4 cases, max `3`, mean sum `0.069035`, 1 exact.
+  - `rotation13`: 1 case, max `66`, mean `1.880854`.
+- New compose-scale inversion in the decision matrix shows the traced
+  center/right samples imply roughly `0.58x` fd90 alpha at final screen
+  compose, while the colored up sample is channel-dependent (`0.52..0.56x`).
+  Treat this as the next Mac-side compose model audit target, not as permission
+  to retune a global gain.
+- Ray helper: `grounded-within-float-print-precision`, max captured stage
+  delta about `1.23e-7`.
+- Aggregation: `fd90-grounded-compose-unisolated`. Center/up/right
+  `FUN_18114fd90` glow RGBA is grounded, but internal merge-mode-1
+  compose/writeback is still missing.
+- Action: do not retune luma coefficients, boxFilter windows, ray-helper
+  geometry, or global compose scale. Next Mac-side work should audit compose
+  models that improve strength-100 residuals without breaking strength-0
+  anchors. If Windows is needed later, request a compose-site/pre-writeback
+  witness at the BT.709 residual hotspot only.
+
+2026-06-25 compose model audit:
+
+- Report:
+  `refs/reports/olmkirakira_compose_model_audit_20260625/compose_model_audit.md`.
+- Machine decision: `preserve-current-compose-model`.
+- Six compose candidates were checked against the 9 BT.709 Software rows:
+  current gain `0.62`, gain `0.60`, inverse-trace-inspired gains
+  `0.5811` and `0.5436`, direct `scale_override=1.0`, and premultiplied
+  compose.
+- Current `aex-screen-over` gain `0.62` is best by total mean and best by max:
+  `1/9` exact, max `66`, mean sum `8.215029`.
+- `0.60` keeps the same max but worsens total mean to `8.797406`.
+  `0.5811` / `0.5436` worsen the aggregate and max. `scale_override=1.0`
+  breaks strength-0 anchors (`0/9`, max `113`). Premultiplied compose is also
+  rejected (`0/9`, mean sum `26.803340`).
+- Conclusion: do not change the default compose scale or promote premultiplied
+  compose from PNG residuals. The remaining proof target is still the internal
+  merge-mode-1 compose/pre-writeback or final quantization site.
 
 The project-local 2026-06-22 window plan gives the exact local rows and
 50-sample arrays for that narrow trace:

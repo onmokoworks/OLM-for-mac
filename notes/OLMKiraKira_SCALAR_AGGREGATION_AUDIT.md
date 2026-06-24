@@ -63,7 +63,17 @@ Scope: fact log for `FUN_18114fd90` / `FUN_18114ffd0`, per-ray scalar arrays, Br
   the broad scalar/ray-order gap is closed. Current refs separate ray order,
   angle mapping, helper scalar non-use in `FUN_18114fd90`, compose behavior,
   and strength0 brightness scale.
-- Remaining red residuals are localized to the `FUN_181150790` helper path
-  shape: OpenCV ROI/copy, `warpAffine`, `boxFilter` border/anchor behavior,
-  rotate-back, and final centered copy. Another Windows reference is only
-  justified after a specific helper primitive ambiguity remains.
+- 2026-06-24/25 update: later runtime traces supersede the older helper-path
+  suspicion for the BT.709 single-ray slice. The local BT.709 trace now matches
+  Windows through box pass 1/2/3, rotate-back, and final centered copy within
+  float print precision, and `FUN_18114fd90` aggregation is grounded at
+  center/up/right witnesses. The active residual is now after fd90:
+  merge-mode-1 compose, pre-writeback, or final quantization.
+- 2026-06-25 compose model audit:
+  `refs/reports/olmkirakira_compose_model_audit_20260625/compose_model_audit.md`
+  rejects global gain and premultiplied-compose shortcuts. Current
+  `aex-screen-over` gain `0.62` remains the best audited global model across
+  the 9 BT.709 Software rows.
+- Another broad Windows PNG reference is not justified from the current
+  evidence. If Windows is needed, request a compose-site/pre-writeback witness
+  at the residual hotspot, not another helper primitive or equal-ray sweep.

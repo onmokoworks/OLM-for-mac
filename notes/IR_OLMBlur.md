@@ -24,6 +24,14 @@
   same normalized-reference decision alongside OLMColorKey and
   OLMDistanceGradation. OLMBlur is `normalized-software-exact` for 7/7 cases;
   only the older 20260604 generation drifts on `case_0001..0004`.
+- 2026-06-24 decision matrix:
+  `refs/reports/olmblur_decision_matrix_20260624/decision_matrix.md`
+  consolidates the current rule as `preserve-normalized-ae-exact`: normalized
+  8bpc is 7/7 exact, old-reference drift is limited to 4 cases, and the
+  remaining AE-free CLI `max=1` witnesses are diagnostic. Do not change the
+  passing AE behavior from these residuals; only continue them as
+  binary-grounding work for accumulation/helper or Legacy border/all-same
+  state.
 
 ## Source Evidence
 
@@ -172,6 +180,25 @@ Legacy border rules.
   `case_0001..0004` PNGs. The remaining `max=1` CLI witnesses are useful for
   binary-grounding accumulation/writeback, but they are not current 8bpc AE
   failures.
+
+2026-06-24 decision matrix:
+
+- `scripts/analyze_olmblur_decision_matrix.py` combines the provenance audit,
+  cross-feature canonicalization, and repeat-threshold runtime trace.
+- Latest report:
+  `refs/reports/olmblur_decision_matrix_20260624/decision_matrix.md`.
+- Machine decision: `preserve-normalized-ae-exact`.
+- Normalized 8bpc: 7/7 exact.
+- Legacy drift: 4 old-reference cases (`case_0001..0004`).
+- CLI residuals: `diagnostic-max1`, with 4 nonzero pixels across
+  `case_0006/0007`.
+- Runtime classification: `prewriteback-or-helper-state`; `case_0006` differs
+  before byte output (`0x1.72fffe...` vs `0x1.73p+7`), and `case_0007` is in
+  the Legacy `OLMBlur+0x7FDF` writer family with border/all-same still
+  unisolated.
+- Action: preserve the passing normalized 8bpc AE behavior. Do not change
+  writeback rounding or Legacy borders from these witnesses unless a later
+  binary proof isolates the helper state and proves the AE path is wrong.
 
 ## Open Questions
 

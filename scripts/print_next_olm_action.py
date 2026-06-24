@@ -333,12 +333,19 @@ def ae_host_failure_classification(root: Path, ae_summary: dict[str, Any] | None
 
 
 def binary_grounded_followup_report(root: Path) -> dict[str, Any] | None:
-    candidates = [
+    report_candidates = [
+        root / "refs" / "reports" / "olmsmoother2_witness_neighborhood_20260624" / "neighborhood.md",
+        root / "refs" / "reports" / "olmsmoother2_current_aex_witness_contract_20260624" / "witness_contract.md",
+        root / "refs" / "reports" / "olmsmoother2_current_aex_decision_matrix_20260624" / "decision_matrix.md",
         root / "refs" / "reports" / "olmsmoother2_current_aex_diff_clusters_latest" / "diff_clusters.md",
         root / "refs" / "reports" / "olmsmoother2_current_aex_curve_idx_sweep_latest" / "curve_idx_sweep.md",
+    ]
+    fallback_candidates = [
         root / "notes" / "IR_OLMSmoother2.md",
     ]
-    existing = [path for path in candidates if path.exists()]
+    existing = [path for path in report_candidates if path.exists()]
+    if not existing:
+        existing = [path for path in fallback_candidates if path.exists()]
     if not existing:
         return None
     path = max(existing, key=lambda item: item.stat().st_mtime)

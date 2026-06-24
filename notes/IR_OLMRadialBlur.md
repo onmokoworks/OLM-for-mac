@@ -18,6 +18,11 @@
     `case_0001..0013` files differ between the 20260604 legacy set and the
     20260605 extra/img2 set, and one 20260619 bulk return stores RadialBlur
     PNGs under an `OLMDirectionalBlur` folder.
+  - 2026-06-24 decision matrix
+    `refs/reports/olmradialblur_decision_matrix_20260624/decision_matrix.md`
+    classifies RadialBlur as `blocked-needs-narrow-proof`: Zoom is a guarded
+    alpha-normalization/sampler residual, tiny Rotation is sampler/validity
+    unresolved, and Inner has no exact/global candidate to promote.
 
 ## Source Evidence
 
@@ -102,6 +107,27 @@ Current binary-grounded sequence:
   traced pre-writeback floats truncate to those exact bytes. Therefore the
   remaining Zoom `alpha=255` local residual is upstream of final byte packing,
   likely alpha normalization or sampler-side state.
+- Mac-side witness audit
+  `refs/reports/olmradialblur_zoom_witness_20260624/audit.md` recomputes the
+  same `(6,0)` path from the 20260604 manifest. Local RGB floats match the
+  Windows pre-writeback floats within about `1.3e-7`, while local alpha clips
+  to `1.0` and Windows alpha remains `0.9999999403953552`; local floor bytes
+  are `[20,3,3,255]` versus Windows `[20,3,3,254]`. Do not change final byte
+  conversion for this residual; the next proof belongs in Zoom polar
+  alpha/sample accumulation.
+- 2026-06-24 decision matrix
+  `refs/reports/olmradialblur_decision_matrix_20260624/decision_matrix.md`
+  keeps this slice at `guarded-alpha-normalization`: the only local floor-vs-
+  Windows byte delta at the witness is alpha `+1`, and final byte packing is
+  already ruled out.
+- 2026-06-24 witness contract:
+  `refs/reports/olmradialblur_witness_contract_20260624/witness_contract.md`
+  freezes the useful proof boundary for Zoom, tiny Rotation, and Inner. For
+  Zoom it explicitly keeps final byte packing unchanged because the Windows
+  pre-writeback float `[0.08224078,0.01413010,0.01413010,0.99999994]`
+  truncates to the Windows byte `[20,3,3,254]`; the remaining local alpha
+  `1.0` vs Windows `0.99999994` must be explained in polar alpha/sample
+  accumulation before sampler return.
 
 ## Rotation / Inner Status
 
@@ -202,15 +228,51 @@ Current binary-grounded sequence:
   `loop-minus-one`, `table-span-minus-one`, and `circular-wrap` remain
   localization probes only; the next change needs a typed runtime witness for
   the wrong plane/value, not a broad helper toggle.
+- 2026-06-24 decision matrix summarizes the split:
+  `loop-minus-one` is still best by mean sum in the 20260617 full Inner matrix,
+  but no candidate is exact and all top candidates keep `max=255`. Keep
+  `loop-minus-one`, `circular-wrap`, `table-span-minus-one`, and
+  `grid-aex-float` as localization probes, not implementation defaults.
+- The 2026-06-24 witness contract also freezes tiny Rotation and Inner proof
+  boundaries:
+  - Tiny Rotation `case_0010 (1614,6)` has a closest traced inverse-sampler
+    return `[-0.00408194,-0.00408194,-0.00408194,1.0]`, which floors to
+    `[0,0,0,255]`, while Windows final is `[255,255,255,255]`. Do not treat
+    that closest sampler return as the true final pre-writeback value; the
+    next proof must identify the exact validity/border branch or substitute
+    path.
+  - Inner remains `blocked-no-global-toggle`. Static facts stay:
+    `R14D = trunc(float(resolved_distance) * span_gate)`, table step
+    `int(30000 / R14D)`, tail loop `offset < R14D`, and underflow to the next
+    radius row tail. The next proof is typed `FUN_180001c90` per-cell values
+    for a low-span cell and a Quality/strong cell.
+- 2026-06-25 Inner witness-plan audit
+  (`refs/reports/olmradialblur_inner_witness_plan_20260625/witness_plan.md`)
+  turns that next proof into concrete representatives without changing the
+  implementation:
+  - Low-span representative: `rb_inner_only_strength_large`, where
+    `circular-wrap` is the best localization probe (`mean 0.189705 -> 0.124590`)
+    while `loop-minus-one` is nearly inert.
+  - Quality/strong representative: `rb_inner_quality_1`, where
+    `loop-minus-one` is the best localization probe (`mean 15.253006 -> 14.856614`)
+    but still leaves `max=240`.
+  - Edge/prepass fallback: `rb_inner_edgefade_only`, where
+    `table-span-minus-one` is the best localization probe (`mean 3.957052 -> 3.920890`).
+  The decision is `typed-inner-cell-witnesses-only`: do not promote
+  `loop-minus-one`, `circular-wrap`, or `table-span-minus-one` globally from
+  the matrix. The next useful evidence is typed per-cell `FUN_180001c90`
+  state for the low-span and Quality/strong representatives, with Edge Fade
+  prepass/denominator values only if those two do not explain the split.
 
 ## Conformance Cases
 
 | Case group | Bit depth | Expected status | Current result | Next evidence |
 | --- | --- | --- | --- | --- |
-| Zoom no-inner/no-noise `case_0009` | 8bpc | guarded near-exact | 2026-06-19 rerun: `max=1 mean=0.0046` | AE exact check and writeback/rounding proof |
+| Zoom no-inner/no-noise `case_0009` | 8bpc | guarded near-exact | 2026-06-19 rerun: `max=1 mean=0.0046`; 2026-06-24 witness audit shows RGB float match and alpha-only local `[20,3,3,255]` vs Windows `[20,3,3,254]` | AE exact check and Zoom polar alpha/sample accumulation proof |
 | tiny Rotation `case_0010` | 8bpc | guarded mean-only | 2026-06-19 rerun: `max=255 mean=0.0104` | binary-ground high-max residual before broad compatibility claim |
 | old Inner `case_0011..0013` | 8bpc | expected-red | 2026-06-19 rerun: `max=255/255/238`, `mean=23.0495/16.0039/18.0193` | narrow asm/runtime proof for remaining sampler/prepass/scatter/writeback split |
 | Inner small-span witness | 8bpc | runtime-trace-informed guard | span fact resolved to 31, image still `max=255 mean=0.2346` in current smoke | compare more per-cell scatter/writeback witnesses before changing defaults |
+| Inner typed witness representatives | 8bpc | blocked witness plan | 2026-06-25 plan selects `rb_inner_only_strength_large` for low-span and `rb_inner_quality_1` for Quality/strong; `rb_inner_edgefade_only` is fallback if Edge Fade prepass remains unexplained | capture typed `FUN_180001c90` per-cell resolved span/table/loop/source-row/accumulation values for those representatives |
 | Inner `param10` plane probes | 8bpc | rejected hypotheses | `one/factor` equivalent; `polar-alpha/prepass-alpha` worse on old Inner and Edge Fade | focus next proof on `FUN_180001c90` effective length, loop bound, table divisor, or caller distance |
 
 ## Focused Runtime Return Classification
@@ -231,7 +293,9 @@ python3 scripts/compare_radialblur_trace.py \
 Expected useful classifications:
 
 - `zoom:alpha-normalization-or-writeback`: compare denominator and final byte
-  conversion before changing the Zoom path.
+  conversion before changing the Zoom path. The 2026-06-24 witness audit now
+  rules out the final byte conversion for `case_0009 (6,0)`, so continue with
+  polar alpha/sample accumulation rather than writeback tuning.
 - `tiny_rotation:sampler-or-validity`: inspect inverse sampler coordinates and
   border/validity before changing normalization/writeback.
 - `trace-structure-present-values-missing`: repeat the Windows trace with typed

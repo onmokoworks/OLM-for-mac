@@ -59,6 +59,12 @@ def clean_zip_names(path: Path) -> list[str]:
         return []
 
 
+def is_clean_zip_name(name: str) -> bool:
+    normalized = name.replace("\\", "/")
+    parts = Path(normalized).parts
+    return "__MACOSX" not in parts and not any(part.startswith("._") for part in parts)
+
+
 def read_zip_json(path: Path, name: str) -> dict[str, Any] | None:
     try:
         with zipfile.ZipFile(path) as archive:
@@ -73,7 +79,34 @@ def read_zip_json(path: Path, name: str) -> dict[str, Any] | None:
 
 
 def classify_zip(path: Path) -> tuple[str, list[str]]:
-    names = clean_zip_names(path)
+    try:
+        archive = zipfile.ZipFile(path)
+    except Exception:
+        return ("unknown", [])
+    with archive:
+        raw_names = archive.namelist()
+        member_by_clean_name = {name.replace("\\", "/"): name for name in raw_names}
+        names = [
+            name.replace("\\", "/")
+            for name in raw_names
+            if is_clean_zip_name(name)
+        ]
+        json_cache: dict[str, dict[str, Any] | None] = {}
+
+        def read_json(name: str) -> dict[str, Any] | None:
+            if name not in json_cache:
+                try:
+                    member_name = member_by_clean_name.get(name, name)
+                    data = json.loads(archive.read(member_name).decode("utf-8"))
+                except Exception:
+                    data = None
+                json_cache[name] = data if isinstance(data, dict) else None
+            return json_cache[name]
+
+        return classify_zip_names(names, read_json)
+
+
+def classify_zip_names(names: list[str], read_json: Any) -> tuple[str, list[str]]:
     if not names:
         return ("unknown", [])
 
@@ -87,21 +120,14 @@ def classify_zip(path: Path) -> tuple[str, list[str]]:
     for name in names:
         if Path(name).name != "windows_action_bundle_manifest.json":
             continue
-        data = read_zip_json(path, name)
+        data = read_json(name)
         kind = data.get("kind") if data else None
         if kind == "olm_windows_action_bundle":
             return ("windows-action-bundle", [f"{name}: {kind}"])
     for name in names:
-        if Path(name).name != "runtime_trace_package_manifest.json":
-            continue
-        data = read_zip_json(path, name)
-        kind = data.get("kind") if data else None
-        if kind == "olm_runtime_trace_request_package":
-            return ("runtime-trace-request-package", [f"{name}: {kind}"])
-    for name in names:
         if not name.endswith(".json"):
             continue
-        data = read_zip_json(path, name)
+        data = read_json(name)
         kind = data.get("kind") if data else None
         if (
             kind == "olm_runtime_trace_result"
@@ -109,11 +135,18 @@ def classify_zip(path: Path) -> tuple[str, list[str]]:
             or (data and isinstance(data.get("results"), list) and Path(name).name.startswith("RETURN_RUNTIME_TRACE"))
         ):
             return ("runtime-trace-return", [f"{name}: {kind or 'runtime_trace_results'}"])
+    for name in names:
+        if Path(name).name != "runtime_trace_package_manifest.json":
+            continue
+        data = read_json(name)
+        kind = data.get("kind") if data else None
+        if kind == "olm_runtime_trace_request_package":
+            return ("runtime-trace-request-package", [f"{name}: {kind}"])
     if any(name.endswith("manifest.json") for name in names):
         for name in names:
             if not name.endswith("manifest.json"):
                 continue
-            data = read_zip_json(path, name)
+            data = read_json(name)
             kind = data.get("kind") if data else None
             if kind == "olm_port_handoff_package":
                 return ("olm-handoff-package", [f"{name}: {kind}"])
@@ -126,14 +159,14 @@ def classify_zip(path: Path) -> tuple[str, list[str]]:
     for name in names:
         if not (Path(name).name.startswith("AE_VALIDATION_RESULT") and name.endswith(".json")):
             continue
-        data = read_zip_json(path, name)
+        data = read_json(name)
         kind = data.get("kind") if data else None
         if kind == "olm_ae_host_validation_result":
             return ("ae-host-return", [f"{name}: {kind}"])
     for name in names:
         if not name.endswith(".json"):
             continue
-        data = read_zip_json(path, name)
+        data = read_json(name)
         kind = data.get("kind") if data else None
         if (
             kind == "olm_runtime_trace_result"

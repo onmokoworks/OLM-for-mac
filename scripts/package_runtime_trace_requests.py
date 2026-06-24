@@ -75,6 +75,7 @@ def parse_args() -> argparse.Namespace:
             "kirakira-stage-values-deep",
             "kirakira-forward-warp-box-input",
             "kirakira-boxfilter-pass1-microprobe",
+            "kirakira-aggregation-compose-bt709",
             "radialblur-residual-witness",
             "directionalblur-residual-witness",
             "smoother2-no-key-grid",
@@ -305,6 +306,36 @@ def kirakira_boxfilter_pass1_microprobe_action() -> dict[str, Any]:
             "reflection, different accumulator precision/store, or a different "
             "Mat/address stage. Do not return only wrapper args; those already "
             "match."
+        ),
+    }
+
+
+def kirakira_aggregation_compose_bt709_action() -> dict[str, Any]:
+    return {
+        "request_id": "kirakira_aggregation_compose_bt709_20260624",
+        "plugin_area": "OLMKiraKira aggregation / merge-mode compose after BT.709 ray-helper match",
+        "mode": "external-trace",
+        "command": (
+            "Trace OLMKiraKira single-ray Software case "
+            "kk_vertical_len50_brightness1_strength100 after the BT.709 seed "
+            "reconciliation. Do not re-trace boxFilter/window/warp unless needed "
+            "to reach the requested functions; the Mac BT.709 trace already "
+            "matches Windows through box pass 1/2/3, rotate-back, and final "
+            "center-copy within float print precision. Capture FUN_18114fd90 "
+            "aggregation inputs and outputs for center/source points, then capture "
+            "merge-mode-1 screen compose inputs/outputs and final byte/PNG-facing "
+            "values. Focus on center (960,540), ray_length_up (960,490), "
+            "ray_length_right (1010,540), and the vertical-case residual hotspot "
+            "(934,118), where Windows reference is [131,131,131,255] and the "
+            "local BT.709 candidate is [145,145,145,255]. If time permits, also "
+            "sample the overall largest BT.709 Software residual from the "
+            "rotation13 case at (1098,202), Windows [112,112,112,255] versus "
+            "local [46,46,46,255]."
+        ),
+        "stop_condition": (
+            "Return concrete float and byte witness values for aggregation and "
+            "compose, or the exact breakpoint/watchpoint failure reason. Do not "
+            "answer with wrapper hit counts or already-known ray-helper facts."
         ),
     }
 
@@ -640,14 +671,25 @@ def smoother2_current_aex_f270_witness_action() -> dict[str, Any]:
             "`(1903,519)`, where Mac has `idx=208`, transparent center, polygon "
             "count 0, output `[0,0,0,0]`, while Windows reference is "
             "`[103,103,103,113]`; capture c280 index and whether any helper "
-            "append occurs."
+            "append occurs. The 2026-06-24 neighborhood report shows these two "
+            "centers are opposite failures: case 0012 is a local false-positive "
+            "semi-transparent append where Windows stays transparent, while "
+            "case 0004 is a local false-negative transparent passthrough where "
+            "Windows emits semi-transparent output. Also record the strongest "
+            "neighboring deltas for context: 0012 has nearby deltas at "
+            "`(91,840)`, `(92,841)`, `(91,842)`; 0004 has nearby deltas at "
+            "`(1903,518)`, `(1904,518)`, `(1901,519)`, `(1901,520)`."
         ),
         "stop_condition": (
-            "A satisfactory answer must classify the 0012 mismatch as one of: "
-            "different c280 index, different cardinal6 desc/key, different e170 "
-            "bits/code, f270/e3a0 not emitted, same emit but different cce0/"
-            "writeback, or trace failure with exact failed breakpoint/address. "
-            "Do not return only final writer values; those are already known."
+            "A satisfactory answer must classify both center-pixel mismatches. "
+            "For 0012, choose one of: different c280 index, different cardinal6 "
+            "desc/key, different e170 bits/code, f270/e3a0 not emitted, same "
+            "emit but cce0/writeback suppresses it, or trace failure with exact "
+            "failed breakpoint/address. For 0004, choose one of: different c280 "
+            "index, helper append emitted where Mac emits none, cce0 nonzero "
+            "fallback before passthrough, same polygon but different blend, or "
+            "trace failure with exact failed breakpoint/address. Do not return "
+            "only final writer values; those are already known."
         ),
     }
 
@@ -854,6 +896,8 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [kirakira_forward_warp_box_input_action()]
     if profile == "kirakira-boxfilter-pass1-microprobe":
         return [kirakira_boxfilter_pass1_microprobe_action()]
+    if profile == "kirakira-aggregation-compose-bt709":
+        return [kirakira_aggregation_compose_bt709_action()]
     if profile == "radialblur-residual-witness":
         return [radialblur_residual_witness_action()]
     if profile == "directionalblur-residual-witness":
@@ -1379,6 +1423,120 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 ),
             }
             summary = "Fill with deep KiraKira per-stage witness values and first-divergence classification."
+        elif request_id == "kirakira_aggregation_compose_bt709_20260624":
+            observations = {
+                "effect": "OLM Kira Kira",
+                "module_base": "0x...",
+                "case_id": "kk_vertical_len50_brightness1_strength100",
+                "why_this_trace": (
+                    "BT.709 local trace matches Windows through box pass 1/2/3, "
+                    "rotate-back, and final center-copy within 1e-5. Remaining "
+                    "PNG residual should be isolated in aggregation, merge-mode "
+                    "compose, or final quantization/export."
+                ),
+                "known_facts_to_keep": {
+                    "channel_2_seed_luma": "BT.709",
+                    "ray_helper_status": "matches Windows within float print precision for captured vertical witness",
+                    "boxfilter_branch": "FUN_1812e39d0 / AVX2",
+                    "boxfilter_args": {
+                        "ksize": [50, 1],
+                        "anchor": [-1, -1],
+                        "normalize": True,
+                        "border_type": 4,
+                    },
+                    "merge_mode_1_model_under_test": "screen source RGB with glow RGB*glow_alpha; preserve source alpha",
+                },
+                "local_bt709_expected": {
+                    "center": {
+                        "source_xy": [960, 540],
+                        "ray_values": {
+                            "after_final_center_copy": 0.7189121246337891,
+                        },
+                        "aggregation_and_compose": {
+                            "source_rgba": [0.11764705926179886, 0.11764705926179886, 0.11764705926179886, 1.0],
+                            "glow_rgba": [1.0, 1.0, 1.0, 0.44572553038597107],
+                            "out_rgba_float": [0.5109343528747559, 0.5109343528747559, 0.5109343528747559, 1.0],
+                            "out_rgba_u8": [130, 130, 130, 255],
+                        },
+                    },
+                    "ray_length_up": {
+                        "source_xy": [960, 490],
+                        "ray_values": {
+                            "after_final_center_copy": 0.7683287858963013,
+                        },
+                    },
+                    "ray_length_right": {
+                        "source_xy": [1010, 540],
+                        "ray_values": {
+                            "after_final_center_copy": 0.715643584728241,
+                        },
+                    },
+                },
+                "fun_18114fd90_aggregation": {
+                    "entry": {
+                        "brightness_or_param_10": None,
+                        "glow_opacity": None,
+                        "source_opacity": None,
+                        "output_buffer": "0x...",
+                        "width": None,
+                        "height": None,
+                    },
+                    "sample_outputs": [
+                        {
+                            "label": "center",
+                            "source_xy": [960, 540],
+                            "ray_inputs": [None, None, None, None, None],
+                            "layer_alphas_after_clamp": [None, None, None, None, None],
+                            "pre_normalize_rgba": [None, None, None, None],
+                            "post_normalize_glow_rgba": [None, None, None, None],
+                        }
+                    ],
+                },
+                "merge_mode_1_compose": {
+                    "sample_inputs_outputs": [
+                        {
+                            "label": "center",
+                            "source_xy": [960, 540],
+                            "source_rgba_float": [None, None, None, None],
+                            "glow_rgba_float": [None, None, None, None],
+                            "glow_after_opacity_rgba_float": [None, None, None, None],
+                            "composed_rgba_float": [None, None, None, None],
+                            "pre_writeback_rgba_float": [None, None, None, None],
+                            "final_writeback_or_png_rgba": [None, None, None, None],
+                        }
+                    ],
+                },
+                "residual_hotspots": [
+                    {
+                        "label": "primary_vertical_case_hotspot",
+                        "case_id": "kk_vertical_len50_brightness1_strength100",
+                        "source_xy": [934, 118],
+                        "windows_reference_rgba": [131, 131, 131, 255],
+                        "mac_bt709_candidate_rgba": [145, 145, 145, 255],
+                        "delta_candidate_minus_windows": [14, 14, 14, 0],
+                        "aggregation_glow_rgba_float": [None, None, None, None],
+                        "compose_output_rgba_float": [None, None, None, None],
+                        "final_writeback_or_png_rgba": [None, None, None, None],
+                    },
+                    {
+                        "label": "optional_global_software_hotspot",
+                        "case_id": "kk_diagonal_len50_rotation13",
+                        "source_xy": [1098, 202],
+                        "windows_reference_rgba": [112, 112, 112, 255],
+                        "mac_bt709_candidate_rgba": [46, 46, 46, 255],
+                        "delta_candidate_minus_windows": [-66, -66, -66, 0],
+                        "aggregation_glow_rgba_float": [None, None, None, None],
+                        "compose_output_rgba_float": [None, None, None, None],
+                        "final_writeback_or_png_rgba": [None, None, None, None],
+                    },
+                ],
+                "directly_observed_vs_inferred": {
+                    "directly_observed": [],
+                    "static_or_decomp_inferred": [],
+                    "not_isolated": [],
+                },
+            }
+            summary = "Fill with KiraKira BT.709 aggregation/compose/final quantization witnesses."
         elif request_id == "kirakira_forward_warp_box_input_20260621":
             observations = {
                 "effect": "OLM Kira Kira",
@@ -2601,6 +2759,14 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                     "pixel": {"x": 91, "y": 841},
                     "windows_reference_rgba": [0, 0, 0, 0],
                     "mac_cli_rgba": [90, 90, 90, 91],
+                    "neighborhood_context": {
+                        "shape": "local-adds-semitransparent-output-where-windows-stays-transparent",
+                        "strong_neighbor_deltas": [
+                            {"xy": [91, 840], "windows_rgba": [172, 172, 172, 180], "mac_rgba": [203, 203, 203, 204]},
+                            {"xy": [92, 841], "windows_rgba": [233, 233, 233, 237], "mac_rgba": [249, 249, 249, 252]},
+                            {"xy": [91, 842], "windows_rgba": [0, 0, 0, 0], "mac_rgba": [20, 20, 20, 20]},
+                        ],
+                    },
                     "mac_current_path": {
                         "c280_idx": 105,
                         "cardinal6_desc": [91, 841, 1, 91, 843, 5],
@@ -2650,6 +2816,7 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                             "output_rgba_float": [None, None, None, None],
                         },
                         "writer_u8_rgba": [None, None, None, None],
+                        "classification": None,
                     },
                 },
                 "secondary_case": {
@@ -2657,12 +2824,22 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                     "pixel": {"x": 1903, "y": 519},
                     "windows_reference_rgba": [103, 103, 103, 113],
                     "mac_cli_rgba": [0, 0, 0, 0],
+                    "neighborhood_context": {
+                        "shape": "windows-adds-semitransparent-output-where-local-passthrough-is-transparent",
+                        "strong_neighbor_deltas": [
+                            {"xy": [1903, 518], "windows_rgba": [161, 161, 161, 178], "mac_rgba": [191, 191, 191, 215]},
+                            {"xy": [1904, 518], "windows_rgba": [221, 221, 221, 233], "mac_rgba": [212, 212, 212, 230]},
+                            {"xy": [1901, 519], "windows_rgba": [10, 10, 10, 33], "mac_rgba": [14, 14, 14, 46]},
+                            {"xy": [1901, 520], "windows_rgba": [9, 9, 9, 32], "mac_rgba": [13, 13, 13, 45]},
+                        ],
+                    },
                     "requested_windows_values": {
                         "c280_idx": None,
                         "polygon_count": None,
                         "append_events": [],
                         "cce0_output_rgba_float": [None, None, None, None],
                         "writer_u8_rgba": [None, None, None, None],
+                        "classification": None,
                     },
                 },
                 "classification": None,
@@ -2728,6 +2905,7 @@ def checked_files(root: Path, profile: str) -> list[Path]:
         "kirakira-stage-values-deep",
         "kirakira-forward-warp-box-input",
         "kirakira-boxfilter-pass1-microprobe",
+        "kirakira-aggregation-compose-bt709",
     }:
         ensure_kirakira_deep_witness_plan(root)
 
@@ -2828,6 +3006,32 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             ),
             Path("refs/reports/runtime_trace_comparisons/olmkirakira_forward_warp_box_input.md"),
             Path("refs/reports/runtime_trace_comparisons/olmkirakira_forward_warp_box_input.json"),
+        ]
+    elif profile == "kirakira-aggregation-compose-bt709":
+        files = [
+            TRACE_NOTE,
+            *KIRAKIRA_STAGE_SUPPORTING_NOTES,
+            Path("refs/reference_requests/kirakira_single_ray_20260606.json"),
+            Path("refs/reports/olmkirakira_trace_baseline_20260624_bt709_mac/trace.json"),
+            Path("refs/reports/olmkirakira_trace_baseline_20260624_bt709_mac/README.md"),
+            Path("refs/reports/olmkirakira_remeasure_20260624_bt709_software/reports/diff.json"),
+            Path("refs/reports/olmkirakira_remeasure_20260624_bt709_software/reports/diff.csv"),
+            Path(
+                "refs/reports/runtime_trace_comparisons/"
+                "olmkirakira_deep_stage_values_20260624_bt709.md"
+            ),
+            Path(
+                "refs/reports/runtime_trace_comparisons/"
+                "olmkirakira_deep_stage_values_20260624_bt709.json"
+            ),
+            Path(
+                "refs/reports/runtime_trace_comparisons/"
+                "olmkirakira_boxfilter_pass1_microprobe_20260624.md"
+            ),
+            Path(
+                "refs/reports/runtime_trace_comparisons/"
+                "olmkirakira_boxfilter_pass1_microprobe_20260624.json"
+            ),
         ]
     elif profile == "radialblur-residual-witness":
         files = [
@@ -2985,6 +3189,24 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path(
                 "refs/reports/ae_host_validation_20260620_1425/"
                 "ae_pixel_olmsmoother2_legacy_20260619/reports/ae_pixel_legacy_exact.json"
+            ),
+        ]
+    elif profile == "smoother2-current-aex-f270-witness":
+        files = [
+            TRACE_NOTE,
+            Path("notes/OLMSmoother2_ASM_FACTS.md"),
+            Path("notes/IR_OLMSmoother2.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/reports/olmsmoother2_witness_neighborhood_20260624/neighborhood.md"),
+            Path("refs/reports/olmsmoother2_witness_neighborhood_20260624/neighborhood.json"),
+            Path("refs/reports/olmsmoother2_current_aex_witness_contract_20260624/witness_contract.md"),
+            Path("refs/reports/olmsmoother2_current_aex_witness_contract_20260624/witness_contract.json"),
+            Path("refs/reports/olmsmoother2_current_aex_decision_matrix_20260624/decision_matrix.md"),
+            Path("refs/reports/olmsmoother2_current_aex_decision_matrix_20260624/decision_matrix.json"),
+            Path("refs/reference_requests/smoother2_legacy_full_current_aex_recapture_20260621.json"),
+            Path(
+                "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/"
+                "OLMSmootherv2/reference_manifest.json"
             ),
         ]
     elif profile == "distancegradation-field-prep":

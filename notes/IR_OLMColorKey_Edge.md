@@ -65,6 +65,14 @@
   `refs/reports/software_reference_canonicalization_8bpc.md`. That report
   classifies ColorKey as `normalized-software-exact` for 9/9 cases, with only
   the old `case_0009` reference drifting.
+- 2026-06-24 decision matrix
+  `refs/reports/olmcolorkey_edge_decision_matrix_20260624/decision_matrix.md`
+  consolidates the provenance and cross-feature canonicalization result:
+  normalized 8bpc is `9/9 exact`, the legacy `case_0009` drift is
+  `reference-generation-split` with max `47`, and the current runtime trace
+  comparison is `not-actionable` because no concrete Windows Edge values are
+  present. Preserve the normalized AE-exact behavior; do not tune Edge Blur
+  from the 20260604 residual.
 - Edge Thin erode, current legacy cases `case_0005` / `case_0006`:
   - C++ CLI guarded residual: `max=255 mean=0.3031`.
   - The Windows AE-host exact return had both cases exact, so the CLI residual
@@ -141,8 +149,8 @@ caller/world semantic is still missing.
 | --- | --- | --- | --- | --- |
 | RGB core `case_0001..0004` | 8bpc | CLI exact / AE-host exact for current refs | exact in Python/C++/Rust and AE-host return | Mac AE exact against final package |
 | Edge Thin dilate `case_0007` | 8bpc | CLI exact / AE-host exact for current refs | exact | Mac AE exact against final package |
-| Edge Thin erode `case_0005/0006` | 8bpc | AE-host exact return, CLI residual | Windows AE-host exact; C++ CLI `max=255 mean=0.3031` | Runtime trace of `FUN_180008320` at top-edge witness pixels before changing CLI/Mac semantics |
-| Edge Blur `case_0008/0009` | 8bpc | AE-host exact against normalized current refs / AE-free CLI residual | AE-host exact for `case_0008`; `case_0009` exact against 20260618 normalized ref but `max=47` against older 20260604 ref; C++ CLI residual for both | Prefer normalized 20260618 reference generation; next proof is Mac AE exact against canonical refs and 16/32bpc coverage. Runtime trace only if a current Software ref residual reappears |
+| Edge Thin erode `case_0005/0006` | 8bpc | AE-host exact return, CLI residual | Windows AE-host exact; C++ CLI `max=255 mean=0.3031`; decision matrix keeps this diagnostic-only for current refs | Mac AE exact against canonical refs and 16/32bpc coverage; runtime trace only if a current Software ref residual reappears |
+| Edge Blur `case_0008/0009` | 8bpc | AE-host exact against normalized current refs / AE-free CLI residual | AE-host exact for `case_0008`; `case_0009` exact against 20260618 normalized ref but `max=47` against older 20260604 ref; decision matrix says preserve normalized AE exact | Prefer normalized 20260618 reference generation; next proof is Mac AE exact against canonical refs and 16/32bpc coverage. Runtime trace only if a current Software ref residual reappears |
 
 ## Validation Packages
 

@@ -35,11 +35,10 @@ Mac plug-in project は 10 本あります。
 - `OLMSmoother`
 - `OLMSmoother2`
 
-現在の大まかな状態です。
-
-直近の packaged 8bpc AE-host validation では、意味のある比較対象
-70 ケース中 59 ケースが `max_diff=0` でした。これは現在の検証セット内の
-数字であり、全体完了率ではありません。
+現在の大まかな状態です。ここでの `AE exact` は、packaged 8bpc
+AE-host validation で Mac AE 出力が Windows AE Software 参照に
+`max_diff=0` で一致した、という意味です。全bit depth完了や全機能完了を
+意味しません。
 
 | 範囲 | 状態 |
 | --- | --- |
@@ -47,12 +46,12 @@ Mac plug-in project は 10 本あります。
 | OLMBlur | 8bpc packaged slice は Mac AE exact。残る CLI `max=1` は runtime trace で binary-grounding 中 |
 | OLMToonDilate | 8bpc packaged slice は Mac AE exact |
 | OLMDistanceGradation | basic / extended / blur の 8bpc packaged slice は Mac AE exact。CLI 側の説明はまだ詰め中 |
-| OLMColorKey | core はかなり進んでいる。Edge Blur `case_0009` が残差あり |
+| OLMColorKey | core / Edge Thin / Edge Blur の normalized 8bpc packaged slice は Mac AE exact。古い 20260604 Edge Blur 残差は reference-generation split として扱う |
 | OLMSmoother2 | no-key grid は 8bpc Mac AE exact。legacy current-AEX recapture 済み。key/gamma は Smooth Range threshold 昇格で大幅改善、残る局所残差を調査中 |
 | OLMSmoother v1 | 960x540 再検証で 8bpc Mac AE exact。v2 互換扱いへ寄せる判断は別途 |
 | OLMDirectionalBlur | 参照は多いが、まだ blocked。PNG-only tuning は止めて asm/runtime evidence 待ち |
-| OLMRadialBlur | 一部 binary-grounded。Inner / Edge Fade などは未完 |
-| OLMKiraKira | ray order などはかなり分離済み。OpenCV 4.5.5 AVX2 / stage trace 待ち |
+| OLMRadialBlur | Zoom は alpha normalization 残差、tiny Rotation は sampler/validity 残差。Inner は typed `FUN_180001c90` per-cell witness 待ち |
+| OLMKiraKira | BT.709 seed、OpenCV 4.5.5 AVX2、ray-helper、`FUN_18114fd90` aggregation まで grounding 済み。残りは merge-mode compose / final quantization |
 
 詳しい台帳は `notes/CONFORMANCE_LEDGER.md`、IR の入口は
 `notes/IR_INDEX_20260621.md`、用語定義は
@@ -66,14 +65,14 @@ Mac plug-in project は 10 本あります。
 | --- | --- | --- | --- |
 | ColorKeep | 実参照が薄い | synthetic/helper 扱いが中心 | 必要なら Windows Software 実参照を作る |
 | OLMBlur | CLI に `max=1` 残差 | AE exact は出ているが、丸め・蓄積・Legacy border の説明が未完 | Blur runtime trace で writeback と border state を確定 |
-| OLMColorKey | Edge Blur `case_0009` | core は進んだが Edge Blur の seed/distance/weight/apply が未確定 | Edge runtime trace と Mac baseline を比較して Edge だけ詰める |
+| OLMColorKey | 16/32bpc 未検証 | normalized 8bpc packaged slice は通ったが bit depth 展開がまだ | 16bpc/32bpc Windows Software 参照を追加 |
 | OLMToonDilate | 16/32bpc 未検証 | 8bpc packaged slice は通ったが bit depth 展開がまだ | 16bpc/32bpc Windows Software 参照を追加 |
 | OLMDistanceGradation | CLI 仕様説明が未完 | Mac AE exact はあるが field prep / OpenCV args の説明が不足 | field world、distanceTransform、blur 引数を runtime trace で確定 |
 | OLMSmoother v1 | 8bpc AE exact | 960x540 再検証で `case_0001..0003` が exact | v2 互換扱いへ寄せるか、v1 独立維持かを明示する |
-| OLMSmoother2 | Legacy key / gamma | current-AEX recapture 12ケースを取り込み済み。case 0002/0003 はAE保存before入力でCLI exact。0004 は Smooth Range threshold で target final writer float と一致。0012 は `cardinal6 key=50 -> f270/e170/e3a0` まで局所化 | 0012 `(91,841)` の scanner/emit 中間値を binary/runtime evidence で確定 |
+| OLMSmoother2 | Legacy key / gamma | current-AEX recapture 12ケースを取り込み済み。case 0002/0003 はAE保存before入力でCLI exact。0004 は Smooth Range threshold で target final writer float と一致。0012 は `cardinal6 key=50 -> f270/e170/e3a0` まで局所化 | 0012 `(91,841)` の scanner/emit 中間値と 0004 polygon/no-polygon path を binary/runtime evidence で確定 |
 | OLMDirectionalBlur | blocked | PNG tuning だけで進めると誤実装になりやすい | asm/runtime evidence で sampling/group/scale を先に確定 |
-| OLMRadialBlur | Inner / Edge Fade / variation | 一部 span は確定したが sampler/prepass/writeback が未完 | runtime trace と IR で scatter/normalize を詰める |
-| OLMKiraKira | OpenCV helper 精度 | ray order 等は分離済みだが OpenCV 4.5.5 AVX2 stage が未確定 | KiraKira stage trace で warpAffine/boxFilter/compose の初回ズレ箇所を特定 |
+| OLMRadialBlur | Zoom / Rotation / Inner | Zoom は final byte packing ではなく alpha/sample accumulation、tiny Rotation は sampler validity、Inner は global toggle 不採用まで局所化 | `rb_inner_only_strength_large` と `rb_inner_quality_1` の typed `FUN_180001c90` witness を取る |
+| OLMKiraKira | compose / final quantization | BT.709 seed、boxFilter、ray-helper、`FUN_18114fd90` はほぼ確定。global compose gain 変更は悪化 | merge-mode-1 compose float/writeback または residual hotspot の narrow trace を取る |
 
 ## 方針
 
@@ -155,7 +154,7 @@ python3 refs/scripts/smoke_all_algorithm_clis.py --profile blur-kirakira --timeo
 次に Windows 側へ送るものを確認します。
 
 ```sh
-python3 scripts/print_next_olm_action.py handoffs/windows_batch refs/runtime_trace_packages refs/ae_pixel_validation_packages
+python3 scripts/print_next_olm_action.py ~/Downloads /tmp
 ```
 
 runtime trace の返却を取り込みます。
@@ -177,32 +176,29 @@ python3 scripts/intake_olm_return.py path/to/returned_ae_host_or_pixel.zip \
 
 ## 現在の次アクション
 
-Windows PNG参照待ちは現時点でありません。Smoother2 は
-`0004 (501,1055)` の final writer witness を基準にしたMac側監査で、
-key有効時も class-plane threshold は Smooth Range を使うほうが現行
-Windows Software参照に合うことが分かりました。これにより同targetの
-`cce0_after_b120` は Windows final writer float とほぼ一致し、legacy
-12ケース全体の平均残差も大きく下がっています。
+Windows PNG参照待ちは現時点でありません。`scripts/print_next_olm_action.py`
+の判定は `continue-binary-grounded-followup` で、次の主対象は
+`refs/reports/olmsmoother2_witness_neighborhood_20260624/neighborhood.md`
+です。
 
-次は残る `0012` の `(91,841)` について、
-`d3b0/da50/e170/f270/e3a0` の scanner/emit 中間値を確定します。
-透明中心パススルー、`idx=105` 停止、`cardinal6 key=50` 停止は
-いずれも別ピクセルを壊すため採用しません。
+Smoother2 は `0004 (1903,519)` と `0012 (91,841)` が逆向きの局所残差に
+分かれています。`0004` は Windows が半透明出力を足し、Mac 側は透明
+passthrough になりやすい。`0012` は逆に Mac 側が半透明出力を足し、
+Windows は透明に寄ります。次は center pixel と strongest neighbor の
+`c280/cce0`、`d3b0/da50/e170/f270/e3a0` 周辺を狭く見る段階です。
 
-Windows側へ新しく送るzipは、スレッド固定や既ヒット箇所からの確実な
-single-stepができる場合だけ作ります。
+RadialBlur Inner は 2026-06-25 の witness plan で、次に見る代表ケースを
+`rb_inner_only_strength_large` と `rb_inner_quality_1` に固定しました。
+`rb_inner_edgefade_only` は Edge Fade prepass 用の fallback です。
+`loop-minus-one`、`circular-wrap`、`table-span-minus-one` は localization
+probe であり、global rule としては採用しません。
 
-KiraKira を並行して追う場合は、次のruntime trace packageを使います。
+KiraKira は 2026-06-24 の aggregation / compose trace を取り込み済みです。
+BT.709 seed、OpenCV boxFilter、ray-helper、`FUN_18114fd90` は説明できて
+います。次に欲しいのは広いPNGではなく、merge-mode-1 compose float /
+writeback か residual hotspot の narrow trace です。
 
-```txt
-refs/runtime_trace_packages/olm_runtime_trace_kirakira_deep_stage_values_20260621_021018.zip
-```
-
-Smoother2 legacy full current-AEX recapture は取り込み済みです。古い
-20260605 legacy PNG は正解データから外し、以後は current-AEX Software
-参照を基準にします。2026-06-21 のwriter traceで、残差はPNG exportや
-8bpc packingではなく class-plane / switch-index / polygon emitter 側に
-あることが分かっています。取り込み手順と優先順位は
+取り込み手順と優先順位は
 `notes/WINDOWS_RETURN_INTAKE_PLAYBOOK_20260619.md` にあります。
 
 ## 主要メモ

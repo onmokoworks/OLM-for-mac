@@ -89,6 +89,16 @@ def comparators(py: str) -> list[Comparator]:
             command=[py, "scripts/compare_kirakira_stage_trace.py"],
         ),
         Comparator(
+            request_id="kirakira_aggregation_compose_bt709_20260624",
+            slug="olmkirakira_aggregation_compose_bt709",
+            command=[
+                py,
+                "scripts/compare_kirakira_stage_trace.py",
+                "--local-trace-json",
+                "refs/reports/olmkirakira_trace_baseline_20260624_bt709_mac/trace.json",
+            ],
+        ),
+        Comparator(
             request_id="colorkey_edge_runtime_trace_20260619",
             slug="olmcolorkey_edge",
             command=[py, "scripts/compare_colorkey_edge_trace.py"],

@@ -21,6 +21,27 @@ Current verified reference slice:
   before `OLMDirectionalBlur` resolved as a loaded module. Keep the current
   implementation blocked on binary/runtime evidence rather than tuning from
   the returned PNGs alone.
+- 2026-06-24 decision matrix:
+  `refs/reports/olmdirectionalblur_decision_matrix_20260624/decision_matrix.md`
+  classifies the current state as `blocked-await-runtime-or-asm-proof`.
+  `rotated-front-strength` is the best numeric scaffold but not AEX-shaped;
+  the best AEX-shaped candidate still has high residuals. The residual split
+  is angle-0 RGB-only rowdriver/valid-alpha versus diagonal rotate/validity,
+  and the latest runtime return is not actionable.
+- 2026-06-24 witness contract:
+  `refs/reports/olmdirectionalblur_witness_contract_20260624/witness_contract.md`
+  freezes the next proof boundary. The 2026-06-24 runtime return remains
+  `answered_partial` and value-sparse (`has_per_pixel_values=False`), so do
+  not tune from it. Active witnesses are:
+  - `case_0001 (494,169)`: angle-0 RGB-only residual, reference
+    `[164,0,0,255]`, candidate `[0,0,0,255]`, alpha already matches. Required
+    proof is typed rowdriver accumulation or valid-alpha side-channel values.
+  - `case_0005 (507,367)`: diagonal rotate/validity residual, reference
+    `[1,0,0,255]`, candidate `[252,0,0,255]`. Required proof is typed diagonal
+    rotate/sampler/validity values. Do not use the angle-0 witness to tune this
+    path.
+  Keep `direct` / `rotated-front-strength` as measurement baselines only; they
+  are not implementation truth despite lower broad means.
 
 ## Evidence Priority
 
@@ -408,6 +429,27 @@ alpha, or prepass toggle. The next evidence should isolate the angle-0
 row-driver accumulation / valid-alpha side channel for `case_0001..0004` and
 the diagonal rotate path for `case_0005` separately, preferably with typed
 runtime witnesses rather than another broad PNG sweep.
+
+2026-06-24 decision matrix:
+
+- `scripts/analyze_directionalblur_decision_matrix.py` combines the wide
+  candidate matrix, residual cluster report, and focused 2026-06-24 runtime
+  return.
+- Latest report:
+  `refs/reports/olmdirectionalblur_decision_matrix_20260624/decision_matrix.md`.
+- Machine decision: `blocked-await-runtime-or-asm-proof`.
+- Best overall candidate is `rotated-front-strength` (`mean_sum=18.197798`,
+  `max=252`), but it is a measurement scaffold and not the confirmed A/B
+  structure.
+- Best AEX-shaped candidate is `rotated-aex-trunc-output`
+  (`mean_sum=22.066680`, `max=251`), still far from exact.
+- Residual split:
+  - `case_0001`: `angle0-rgb-only-rowdriver-or-valid-alpha`, witness
+    `(494,169)`, Windows `[164,0,0,255]` vs local `[0,0,0,255]`.
+  - `case_0005`: `diagonal-rgb-alpha-rotate-validity`, witness `(507,367)`.
+- Latest runtime trace remains `answered_partial` without typed per-pixel
+  rowdriver/rotate-path values. Do not change implementation from broad PNG
+  matrices until a narrow asm/runtime proof explains these two witness shapes.
 
 ## Implementation Rules
 

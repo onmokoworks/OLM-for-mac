@@ -211,6 +211,67 @@ def main() -> int:
             255,
         ]
 
+        kirakira_agg_output = Path(tmp) / "runtime_trace_kirakira_aggregation_compose_bt709.zip"
+        proc = run(
+            [
+                sys.executable,
+                str(script),
+                "--profile",
+                "kirakira-aggregation-compose-bt709",
+                "--output",
+                str(kirakira_agg_output),
+            ],
+            root,
+        )
+        assert "[OK] runtime trace package:" in proc.stdout
+        with zipfile.ZipFile(kirakira_agg_output) as archive:
+            names = set(archive.namelist())
+            required = {
+                "README_RUNTIME_TRACE.md",
+                "RETURN_RUNTIME_TRACE_TEMPLATE.json",
+                "runtime_trace_package_manifest.json",
+                "notes/WINDOWS_RUNTIME_TRACE_REQUESTS.md",
+                "notes/IR_OLMKiraKira.md",
+                "refs/reports/olmkirakira_trace_baseline_20260624_bt709_mac/trace.json",
+                "refs/reports/runtime_trace_comparisons/olmkirakira_deep_stage_values_20260624_bt709.md",
+            }
+            missing = required - names
+            assert not missing, f"missing KiraKira aggregation package entries: {sorted(missing)}"
+            manifest = json.loads(archive.read("runtime_trace_package_manifest.json"))
+            template = json.loads(archive.read("RETURN_RUNTIME_TRACE_TEMPLATE.json"))
+            readme = archive.read("README_RUNTIME_TRACE.md").decode("utf-8")
+            trace_note = archive.read("notes/WINDOWS_RUNTIME_TRACE_REQUESTS.md").decode("utf-8")
+        assert manifest["profile"] == "kirakira-aggregation-compose-bt709"
+        action_ids = [action["request_id"] for action in manifest["runtime_actions"]]
+        assert action_ids == ["kirakira_aggregation_compose_bt709_20260624"]
+        assert "after the BT.709 seed reconciliation" in readme
+        assert "(934,118)" in readme
+        assert "(1098,202)" in readme
+        assert (
+            "runtime trace package that should be resent blindly"
+            in trace_note
+        )
+        assert "compose/prewriteback" in trace_note
+        assert "KiraKira BT.709 aggregation/compose return" in trace_note
+        assert "Status: pending external Windows debugger trace." not in trace_note
+        observations = template["results"][0]["observations"]
+        assert observations["known_facts_to_keep"]["channel_2_seed_luma"] == "BT.709"
+        assert observations["local_bt709_expected"]["center"]["aggregation_and_compose"]["out_rgba_u8"] == [
+            130,
+            130,
+            130,
+            255,
+        ]
+        hotspots = observations["residual_hotspots"]
+        assert hotspots[0]["label"] == "primary_vertical_case_hotspot"
+        assert hotspots[0]["source_xy"] == [934, 118]
+        assert hotspots[0]["windows_reference_rgba"] == [131, 131, 131, 255]
+        assert hotspots[0]["mac_bt709_candidate_rgba"] == [145, 145, 145, 255]
+        assert hotspots[1]["label"] == "optional_global_software_hotspot"
+        assert hotspots[1]["source_xy"] == [1098, 202]
+        assert hotspots[1]["windows_reference_rgba"] == [112, 112, 112, 255]
+        assert hotspots[1]["mac_bt709_candidate_rgba"] == [46, 46, 46, 255]
+
         smoother_legacy_output = Path(tmp) / "runtime_trace_smoother_legacy.zip"
         proc = run(
             [
