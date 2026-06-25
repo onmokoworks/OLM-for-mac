@@ -27,8 +27,9 @@ SUITES = [
         "plugin": "OLMColorKey",
         "feature": "OLMColorKey packaged normalized slices",
         "report": "refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmcolorkey_exact_20260619/reports/ae_pixel_all_exact.json",
-        "result_on_diff": "AE residual",
-        "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is not an active AE failure.",
+        "result_on_diff": "reference-generation split",
+        "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is a reference-generation split, not an active AE failure.",
+        "evidence_status": "normalized AE exact with legacy reference split",
     },
     {
         "plugin": "OLMToonDilate",
@@ -235,16 +236,17 @@ def write_markdown(manifest: dict[str, Any], path: Path) -> None:
             "",
             "## By Plug-in",
             "",
-            "| Plug-in | Total | AE exact | known-red | off-by-1 candidate | AE residual | invalid |",
-            "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
+            "| Plug-in | Total | AE exact | reference-generation split | known-red | off-by-1 candidate | AE residual | invalid |",
+            "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
         ]
     )
     for plugin, counts in summary["by_plugin"].items():
         lines.append(
-            "| {plugin} | {total} | {ae} | {red} | {off} | {residual} | {invalid} |".format(
+            "| {plugin} | {total} | {ae} | {split} | {red} | {off} | {residual} | {invalid} |".format(
                 plugin=plugin,
                 total=counts.get("total", 0),
                 ae=counts.get("AE exact", 0),
+                split=counts.get("reference-generation split", 0),
                 red=counts.get("known-red", 0),
                 off=counts.get("off-by-1 candidate", 0),
                 residual=counts.get("AE residual", 0),
@@ -273,7 +275,8 @@ def write_markdown(manifest: dict[str, Any], path: Path) -> None:
             "",
             "1. Keep this M0 summary as the source of truth for packaged 8bpc counts.",
             "2. Treat OLMBlur as `AE exact but CLI unexplained` until the max=1 CLI residual is binary-grounded.",
-            "3. Do not promote Smoother2 legacy/key cases from `known-red` without new AE exact proof.",
+            "3. Treat OLMColorKey `case_0009` as a `reference-generation split`, not as an active AE residual.",
+            "4. Do not promote Smoother2 legacy/key cases from `known-red` without new AE exact proof.",
         ]
     )
     path.parent.mkdir(parents=True, exist_ok=True)

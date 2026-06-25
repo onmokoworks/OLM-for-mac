@@ -7,8 +7,8 @@
     "total_cases": 70,
     "counts": {
       "AE exact": 62,
-      "AE residual": 1,
-      "known-red": 7
+      "known-red": 7,
+      "reference-generation split": 1
     },
     "by_plugin": {
       "OLMBlur": {
@@ -17,7 +17,7 @@
       },
       "OLMColorKey": {
         "AE exact": 8,
-        "AE residual": 1,
+        "reference-generation split": 1,
         "total": 9
       },
       "OLMDistanceGradation": {
@@ -58,10 +58,10 @@
       "case_count": 9,
       "counts": {
         "AE exact": 8,
-        "AE residual": 1
+        "reference-generation split": 1
       },
-      "evidence_status": "packaged AE-host measured",
-      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is not an active AE failure."
+      "evidence_status": "normalized AE exact with legacy reference split",
+      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is a reference-generation split, not an active AE failure."
     },
     {
       "plugin": "OLMToonDilate",
@@ -308,7 +308,7 @@
       "nonzero_px_percent": 0.0,
       "params": {},
       "source_report": "refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmcolorkey_exact_20260619/reports/ae_pixel_all_exact.json",
-      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is not an active AE failure."
+      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is a reference-generation split, not an active AE failure."
     },
     {
       "plugin": "OLMColorKey",
@@ -329,7 +329,7 @@
       "nonzero_px_percent": 0.0,
       "params": {},
       "source_report": "refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmcolorkey_exact_20260619/reports/ae_pixel_all_exact.json",
-      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is not an active AE failure."
+      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is a reference-generation split, not an active AE failure."
     },
     {
       "plugin": "OLMColorKey",
@@ -350,7 +350,7 @@
       "nonzero_px_percent": 0.0,
       "params": {},
       "source_report": "refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmcolorkey_exact_20260619/reports/ae_pixel_all_exact.json",
-      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is not an active AE failure."
+      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is a reference-generation split, not an active AE failure."
     },
     {
       "plugin": "OLMColorKey",
@@ -371,7 +371,7 @@
       "nonzero_px_percent": 0.0,
       "params": {},
       "source_report": "refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmcolorkey_exact_20260619/reports/ae_pixel_all_exact.json",
-      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is not an active AE failure."
+      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is a reference-generation split, not an active AE failure."
     },
     {
       "plugin": "OLMColorKey",
@@ -392,7 +392,7 @@
       "nonzero_px_percent": 0.0,
       "params": {},
       "source_report": "refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmcolorkey_exact_20260619/reports/ae_pixel_all_exact.json",
-      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is not an active AE failure."
+      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is a reference-generation split, not an active AE failure."
     },
     {
       "plugin": "OLMColorKey",
@@ -413,7 +413,7 @@
       "nonzero_px_percent": 0.0,
       "params": {},
       "source_report": "refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmcolorkey_exact_20260619/reports/ae_pixel_all_exact.json",
-      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is not an active AE failure."
+      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is a reference-generation split, not an active AE failure."
     },
     {
       "plugin": "OLMColorKey",
@@ -434,7 +434,7 @@
       "nonzero_px_percent": 0.0,
       "params": {},
       "source_report": "refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmcolorkey_exact_20260619/reports/ae_pixel_all_exact.json",
-      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is not an active AE failure."
+      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is a reference-generation split, not an active AE failure."
     },
     {
       "plugin": "OLMColorKey",
@@ -455,7 +455,7 @@
       "nonzero_px_percent": 0.0,
       "params": {},
       "source_report": "refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmcolorkey_exact_20260619/reports/ae_pixel_all_exact.json",
-      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is not an active AE failure."
+      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is a reference-generation split, not an active AE failure."
     },
     {
       "plugin": "OLMColorKey",
@@ -464,7 +464,7 @@
       "bit_depth": "8bpc",
       "reference_kind": "Windows AE Software",
       "runner_kind": "Mac AE plugin",
-      "result_status": "AE residual",
+      "result_status": "reference-generation split",
       "input_path": null,
       "input_sha256": null,
       "reference_path": null,
@@ -476,7 +476,7 @@
       "nonzero_px_percent": 24.346161265432098,
       "params": {},
       "source_report": "refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmcolorkey_exact_20260619/reports/ae_pixel_all_exact.json",
-      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is not an active AE failure."
+      "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is a reference-generation split, not an active AE failure."
     },
     {
       "plugin": "OLMToonDilate",

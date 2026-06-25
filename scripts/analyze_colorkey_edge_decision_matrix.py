@@ -64,7 +64,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         decision = "preserve-normalized-ae-exact"
         action = (
             "Do not tune Edge Blur from the 20260604 case_0009 residual. "
-            "Use normalized 20260618 Software refs for 8bpc and move next to Mac AE exact / 16bpc / 32bpc coverage."
+            "Preserve normalized 20260618 Software exactness for 8bpc and move next to 16bpc / 32bpc coverage."
         )
     elif has_current_residual:
         decision = "current-residual-needs-proof"
@@ -102,7 +102,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "decision": decision,
         "recommended_action": action,
         "next_evidence": [
-            "Mac AE exact against canonical normalized 8bpc ColorKey refs.",
+            "Preserve Mac AE exact behavior against canonical normalized 8bpc ColorKey refs.",
             "16bpc and 32bpc Software reference coverage for core and Edge paths.",
             "Only request narrow Edge runtime trace if a current normalized Software residual reappears.",
         ],

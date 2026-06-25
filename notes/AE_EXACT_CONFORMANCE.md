@@ -22,6 +22,7 @@ Use these terms in progress notes, dashboards, and release communication:
 | `binary-grounded` | Ghidra/objdump/runtime trace proves the constants, branches, rounding, bounds, or sampling rule. | Required evidence for algorithm claims. |
 | `guarded` | A regression gate passes with nonzero tolerance or known residuals. | Not complete. |
 | `known-red` | A checked case is intentionally red and preserved as a regression/proof target. | Not complete. |
+| `reference-generation split` | A case differs against a superseded or legacy reference, but matches the canonical normalized/current reference. | Not a compatibility failure; keep the reference sets separated. |
 | `blocked` | PNG-only tuning is unsafe; needs asm/runtime trace/AE-host reference. | Do not tune blindly. |
 | `off-by-1 candidate` | `max_diff <= 1`, but not AE exact. | Not complete; investigate rounding/quantization. |
 | `synthetic probe` | A helper or synthetic fixture checks a local invariant rather than a Windows AE reference. | Not a compatibility claim. |

@@ -1,0 +1,57 @@
+{
+  "decision": "preserve-normalized-ae-exact",
+  "inputs": {
+    "canonicalization_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/software_reference_canonicalization_8bpc.json",
+    "provenance_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmcolorkey_edge_reference_provenance_20260622_024907/audit.json",
+    "trace_comparison_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/runtime_trace_comparisons/olmcolorkey_edge_trace_latest.json"
+  },
+  "kind": "olmcolorkey_edge_decision_matrix",
+  "legacy_split": {
+    "classification": "reference-generation-split",
+    "legacy_drift_cases": [
+      {
+        "id": "case_0009",
+        "max_at": {
+          "candidate": [
+            0,
+            0,
+            0,
+            89
+          ],
+          "channel": 3,
+          "reference": [
+            0,
+            0,
+            0,
+            136
+          ],
+          "x": 1678,
+          "y": 722
+        },
+        "max_diff": 47,
+        "mean_diff": 0.06992103105709876
+      }
+    ],
+    "legacy_max_diff": 47,
+    "recommended_action": "prefer normalized 20260618 refs; do not tune Edge Blur from the 20260604 residual"
+  },
+  "next_evidence": [
+    "Preserve Mac AE exact behavior against canonical normalized 8bpc ColorKey refs.",
+    "16bpc and 32bpc Software reference coverage for core and Edge paths.",
+    "Only request narrow Edge runtime trace if a current normalized Software residual reappears."
+  ],
+  "normalized_8bpc": {
+    "case_count": 9,
+    "classification": "exact",
+    "exact_count": 9,
+    "normalized_nonzero_count": 0,
+    "status": "normalized-software-exact"
+  },
+  "recommended_action": "Do not tune Edge Blur from the 20260604 case_0009 residual. Preserve normalized 20260618 Software exactness for 8bpc and move next to 16bpc / 32bpc coverage.",
+  "runtime_trace": {
+    "classification": "not-actionable",
+    "likely_next_focus": "await-windows-trace",
+    "present": false
+  },
+  "schema": 1
+}

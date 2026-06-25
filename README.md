@@ -65,6 +65,9 @@ summary は `python3 scripts/generate_conformance_summary.py` で
 `result_status` に分け、`AE exact` と known-red / residual を混ぜません。
 OLMBlur の 8bpc 判断は `refs/conformance/olmblur_8bpc_decision.md` に固定し、
 `preserve-normalized-ae-exact` として扱います。
+OLMColorKey Edge の 8bpc 判断は
+`refs/conformance/olmcolorkey_edge_8bpc_decision.md` に固定し、
+古い 20260604 Edge Blur 残差は `reference-generation split` として扱います。
 
 ## 未解決点
 
@@ -191,8 +194,19 @@ python3 scripts/intake_olm_return.py path/to/returned_ae_host_or_pixel.zip \
 
 ## 現在の次アクション
 
-Windows PNG参照待ちは現時点でありません。`scripts/print_next_olm_action.py`
-の判定は `continue-binary-grounded-followup` です。Smoother2 については
+`scripts/print_next_olm_action.py` の現在判定は
+`send-windows-reference-package` です。次に Windows AE 側へ渡す対象は
+16bpc の normalized exact グループです。
+
+```text
+handoffs/windows_batch/olm_windows_reference_request_20260625_16bpc_normalized_exact.zip
+```
+
+内容は OLMBlur 7件、OLMColorKey 9件、OLMDistanceGradation 29件です。
+8bpc で normalized AE exact になっている範囲だけを、次の bit depth に
+広げるための参照取得です。
+
+Smoother2 については
 `refs/reports/olmsmoother2_current_aex_proof_plan_20260625/proof_plan.md`
 で、次に必要な証拠を writer-anchor から順番に固定しました。
 
