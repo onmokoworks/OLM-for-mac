@@ -171,6 +171,7 @@ def main() -> int:
         Smoke("OLMSmoother2 current-AEX decision matrix", [py, "refs/scripts/smoke_analyze_smoother2_current_aex_decision_matrix.py"]),
         Smoke("OLMSmoother2 witness contract", [py, "refs/scripts/smoke_analyze_smoother2_witness_contract.py"]),
         Smoke("OLMSmoother2 witness neighborhood", [py, "refs/scripts/smoke_analyze_smoother2_witness_neighborhood.py"]),
+        Smoke("OLMSmoother2 proof plan", [py, "refs/scripts/smoke_analyze_smoother2_proof_plan.py"]),
         Smoke("OLMSmoother2 v1 compatibility", [py, "refs/scripts/smoke_olmsmoother2_v1_compat_cli.py"]),
         Smoke("OLMSmoother2 key paths", [py, "refs/scripts/smoke_olmsmoother2_keypaths_cli.py"]),
         Smoke("OLMSmoother2 Gamma Colors", [py, "refs/scripts/smoke_olmsmoother2_gamma_cli.py"]),

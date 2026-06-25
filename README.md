@@ -51,7 +51,7 @@ AE-host validation で Mac AE 出力が Windows AE Software 参照に
 | OLMSmoother v1 | 960x540 再検証で 8bpc Mac AE exact。v2 互換扱いへ寄せる判断は別途 |
 | OLMDirectionalBlur | 参照は多いが、まだ blocked。2026-06-25 witness plan で angle-0 と diagonal の2系統に分け、PNG-only tuning は止めて asm/runtime evidence 待ち |
 | OLMRadialBlur | Zoom は alpha normalization 残差、tiny Rotation は sampler/validity 残差。Inner は typed `FUN_180001c90` per-cell witness 待ち |
-| OLMKiraKira | BT.709 seed、OpenCV 4.5.5 AVX2、ray-helper、`FUN_18114fd90` aggregation まで grounding 済み。残りは merge-mode compose / final quantization |
+| OLMKiraKira | BT.709 seed、OpenCV 4.5.5 AVX2、ray-helper、`FUN_18114fd90` aggregation まで grounding 済み。2026-06-25 再取込でも fd90 は確認済み。残りは merge-mode compose / pre-writeback / final quantization |
 
 詳しい台帳は `notes/CONFORMANCE_LEDGER.md`、IR の入口は
 `notes/IR_INDEX_20260621.md`、用語定義は
@@ -72,7 +72,7 @@ AE-host validation で Mac AE 出力が Windows AE Software 参照に
 | OLMSmoother2 | Legacy key / gamma | current-AEX recapture 12ケースを取り込み済み。case 0002/0003 はAE保存before入力でCLI exact。0004 は Smooth Range threshold で target final writer float と一致。0012 は `cardinal6 key=50 -> f270/e170/e3a0` まで局所化 | 0012 `(91,841)` の scanner/emit 中間値と 0004 polygon/no-polygon path を binary/runtime evidence で確定 |
 | OLMDirectionalBlur | blocked | PNG tuning だけで進めると誤実装になりやすい。angle-0 と diagonal では見るべき証拠が違う | `case_0001 (465,169)` 系の rowdriver/valid-alpha と、`case_0005 (507,367)` 系の rotate/validity を別々に runtime/asm evidence で確定 |
 | OLMRadialBlur | Zoom / Rotation / Inner | Zoom は final byte packing ではなく alpha/sample accumulation、tiny Rotation は sampler validity、Inner は global toggle 不採用まで局所化 | `rb_inner_only_strength_large` と `rb_inner_quality_1` の typed `FUN_180001c90` witness を取る |
-| OLMKiraKira | compose / final quantization | BT.709 seed、boxFilter、ray-helper、`FUN_18114fd90` はほぼ確定。global compose gain 変更は悪化 | merge-mode-1 compose float/writeback または residual hotspot の narrow trace を取る |
+| OLMKiraKira | compose / pre-writeback / final quantization | BT.709 seed、boxFilter、ray-helper、`FUN_18114fd90` は確定寄り。global compose gain 変更は悪化。2026-06-25 取込では内部compose floatは未分離 | merge-mode-1 compose float/writeback または residual hotspot の narrow trace を取る |
 
 ## 方針
 
@@ -177,15 +177,17 @@ python3 scripts/intake_olm_return.py path/to/returned_ae_host_or_pixel.zip \
 ## 現在の次アクション
 
 Windows PNG参照待ちは現時点でありません。`scripts/print_next_olm_action.py`
-の判定は `continue-binary-grounded-followup` で、次の主対象は
-`refs/reports/olmsmoother2_witness_neighborhood_20260624/neighborhood.md`
-です。
+の判定は `continue-binary-grounded-followup` です。Smoother2 については
+`refs/reports/olmsmoother2_current_aex_proof_plan_20260625/proof_plan.md`
+で、次に必要な証拠を writer-anchor から順番に固定しました。
 
 Smoother2 は `0004 (1903,519)` と `0012 (91,841)` が逆向きの局所残差に
 分かれています。`0004` は Windows が半透明出力を足し、Mac 側は透明
 passthrough になりやすい。`0012` は逆に Mac 側が半透明出力を足し、
-Windows は透明に寄ります。次は center pixel と strongest neighbor の
-`c280/cce0`、`d3b0/da50/e170/f270/e3a0` 周辺を狭く見る段階です。
+Windows は透明に寄ります。次は broad PNG ではなく、`0004` の final
+writer / `cce0` / `c280` polygon と、`0012` の final transparent writer /
+cardinal6 / `d3b0/da50/e170/f270/e3a0` を狭く見る段階です。global
+transparent-center fallback と global `f270` suppression は採用しません。
 
 RadialBlur Inner は 2026-06-25 の witness plan で、次に見る代表ケースを
 `rb_inner_only_strength_large` と `rb_inner_quality_1` に固定しました。
@@ -193,10 +195,12 @@ RadialBlur Inner は 2026-06-25 の witness plan で、次に見る代表ケー�
 `loop-minus-one`、`circular-wrap`、`table-span-minus-one` は localization
 probe であり、global rule としては採用しません。
 
-KiraKira は 2026-06-24 の aggregation / compose trace を取り込み済みです。
-BT.709 seed、OpenCV boxFilter、ray-helper、`FUN_18114fd90` は説明できて
-います。次に欲しいのは広いPNGではなく、merge-mode-1 compose float /
-writeback か residual hotspot の narrow trace です。
+KiraKira は 2026-06-24 の aggregation / compose trace を 2026-06-25 に
+再取込済みです。`kirakira_aggregation_compose_bt709_20260624` は
+`answered` / `answered_partial` として検証でき、BT.709 seed、OpenCV
+boxFilter、ray-helper、`FUN_18114fd90` は説明できています。内部
+merge-mode-1 compose float / pre-writeback はまだ未分離なので、次に欲しい
+のは広いPNGではなく、その一点か residual hotspot の narrow trace です。
 
 DirectionalBlur は 2026-06-25 の witness plan で、次に取る証拠を
 2系統に分けました。angle-0 は `case_0001 (465,169)` と

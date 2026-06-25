@@ -591,6 +591,21 @@ filter.
   This report makes another broad Smoother2 PNG request low-value. If Windows
   tracing resumes, ask for center-pixel `c280/cce0` state and the listed
   strongest neighboring deltas, not a full-image sweep.
+- 2026-06-25 proof plan:
+  `refs/reports/olmsmoother2_current_aex_proof_plan_20260625/proof_plan.md`
+  turns the contract/neighborhood pair into an ordered proof checklist. The
+  decision is `runtime-or-asm-first-divergence-required`: keep the Smooth Range
+  threshold fix, and require a writer-anchored runtime trace or equivalent asm
+  proof before changing implementation again. For `0004 (1903,519)`, prove
+  final writer bytes, `cce0` return, and `c280` polygon/append state through
+  static dispatch `0xd0 -> FUN_180013140`; also check whether the missing
+  center value correlates with the strongest neighbors. For `0012 (91,841)`,
+  prove final transparent writer output, cardinal6 descriptor/key, the
+  `d3b0/da50/e170/f270/e3a0` emit chain, and whether `cce0/b120` zeroes a
+  same-sample append through static dispatch
+  `0x69 -> FUN_1800125c0 -> FUN_180010760 -> FUN_18000cc70`. Stop lines: do
+  not add a global transparent-center fallback, and do not globally suppress
+  `f270`.
 - No-key `case_0001` residual is dominated by pixels where candidate smoothed
   but reference looks like input. This points to class-plane / dispatch firing
   too often, not final PNG premultiply alone.

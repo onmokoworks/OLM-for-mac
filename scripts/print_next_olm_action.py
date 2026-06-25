@@ -334,6 +334,7 @@ def ae_host_failure_classification(root: Path, ae_summary: dict[str, Any] | None
 
 def binary_grounded_followup_report(root: Path) -> dict[str, Any] | None:
     report_candidates = [
+        root / "refs" / "reports" / "olmsmoother2_current_aex_proof_plan_20260625" / "proof_plan.md",
         root / "refs" / "reports" / "olmsmoother2_witness_neighborhood_20260624" / "neighborhood.md",
         root / "refs" / "reports" / "olmsmoother2_current_aex_witness_contract_20260624" / "witness_contract.md",
         root / "refs" / "reports" / "olmsmoother2_current_aex_decision_matrix_20260624" / "decision_matrix.md",

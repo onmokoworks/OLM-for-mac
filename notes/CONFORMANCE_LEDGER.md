@@ -26,6 +26,18 @@ See `notes/AE_EXACT_CONFORMANCE.md` for definitions.
 
 ## Recent Mac-Side Audits
 
+- 2026-06-25 `OLMSmoother2` current-AEX proof plan:
+  `refs/reports/olmsmoother2_current_aex_proof_plan_20260625/proof_plan.md`.
+  Decision is `runtime-or-asm-first-divergence-required`: the Smooth Range
+  threshold fix stays, but the next implementation change needs a
+  writer-anchored runtime trace or equivalent asm proof. `0004 (1903,519)`
+  must prove final writer bytes, `cce0` return, `c280` polygon/append state
+  through static dispatch `0xd0 -> FUN_180013140`, and neighbor correlation;
+  `0012 (91,841)` must prove final transparent writer output, cardinal6
+  descriptor/key, `d3b0/da50/e170/f270/e3a0` through static dispatch
+  `0x69 -> FUN_1800125c0 -> FUN_180010760 -> FUN_18000cc70`, and any
+  `cce0/b120` zeroing. Global transparent-center fallback and global `f270`
+  suppression remain rejected.
 - 2026-06-25 `OLMKiraKira` compose model audit:
   `refs/reports/olmkirakira_compose_model_audit_20260625/compose_model_audit.md`.
   Decision is `preserve-current-compose-model`: current `aex-screen-over`
