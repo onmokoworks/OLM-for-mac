@@ -21,11 +21,22 @@ Use these terms in progress notes, dashboards, and release communication:
 | `CLI exact` | AE-free CLI output matches the Windows reference with zero diff. | Strong intermediate proof; not final completion. |
 | `binary-grounded` | Ghidra/objdump/runtime trace proves the constants, branches, rounding, bounds, or sampling rule. | Required evidence for algorithm claims. |
 | `guarded` | A regression gate passes with nonzero tolerance or known residuals. | Not complete. |
+| `known-red` | A checked case is intentionally red and preserved as a regression/proof target. | Not complete. |
 | `blocked` | PNG-only tuning is unsafe; needs asm/runtime trace/AE-host reference. | Do not tune blindly. |
 | `off-by-1 candidate` | `max_diff <= 1`, but not AE exact. | Not complete; investigate rounding/quantization. |
+| `synthetic probe` | A helper or synthetic fixture checks a local invariant rather than a Windows AE reference. | Not a compatibility claim. |
 
 Do not use percent complete, `green`, or `complete-ish` as correctness claims.
 Passing a smoke only means the current regression gate behaved as expected.
+
+Keep the axes separate:
+
+- `reference_kind`: what is treated as the reference, such as Windows AE
+  Software, CLI output, or a synthetic fixture.
+- `runner_kind`: what produced the candidate output, such as Mac AE plug-in or
+  Mac CLI.
+- `result_status`: whether that exact pair is `AE exact`, `CLI exact`,
+  `known-red`, `blocked`, `invalid`, or another diagnostic state.
 
 ## Reference Path
 

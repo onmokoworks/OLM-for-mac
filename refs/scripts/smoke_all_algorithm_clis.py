@@ -108,6 +108,7 @@ def main() -> int:
         Smoke("OLMBlur provenance audit", [py, "refs/scripts/smoke_analyze_olmblur_reference_provenance.py"]),
         Smoke("OLMBlur decision matrix", [py, "refs/scripts/smoke_analyze_olmblur_decision_matrix.py"]),
         Smoke("Software reference canonicalization", [py, "refs/scripts/smoke_analyze_soft_reference_canonicalization.py"]),
+        Smoke("Packaged 8bpc conformance summary", [py, "refs/scripts/smoke_generate_conformance_summary.py"]),
         Smoke("Bit-depth expansion plan", [py, "refs/scripts/smoke_analyze_bit_depth_expansion_plan.py"]),
         Smoke("Bit-depth reference request generation", [py, "refs/scripts/smoke_generate_bitdepth_reference_request.py"]),
         Smoke("KiraKira stage trace comparison", [py, "refs/scripts/smoke_compare_kirakira_stage_trace.py"]),

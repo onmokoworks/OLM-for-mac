@@ -57,6 +57,13 @@ AE-host validation で Mac AE 出力が Windows AE Software 参照に
 `notes/IR_INDEX_20260621.md`、用語定義は
 `notes/AE_EXACT_CONFORMANCE.md` にあります。
 
+packaged 8bpc AE-host validation の最小M0集計は機械生成します。
+現在の manifest は `refs/conformance/packaged_8bpc_manifest.json` です。
+summary は `python3 scripts/generate_conformance_summary.py` で
+`refs/reports/conformance_summary_packaged_8bpc.md` にローカル生成します。
+この集計では 70 ケースを `reference_kind` / `runner_kind` /
+`result_status` に分け、`AE exact` と known-red / residual を混ぜません。
+
 ## 未解決点
 
 各 plug-in の主な未解決点です。
@@ -155,6 +162,12 @@ python3 refs/scripts/smoke_all_algorithm_clis.py --profile blur-kirakira --timeo
 
 ```sh
 python3 scripts/print_next_olm_action.py ~/Downloads /tmp
+```
+
+packaged 8bpc conformance summary を更新します。
+
+```sh
+python3 scripts/generate_conformance_summary.py
 ```
 
 runtime trace の返却を取り込みます。

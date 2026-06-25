@@ -5,6 +5,14 @@ status is `AE exact`; all other states are evidence or work states.
 
 See `notes/AE_EXACT_CONFORMANCE.md` for definitions.
 
+Machine-generated M0 summary:
+
+- Manifest: `refs/conformance/packaged_8bpc_manifest.json`
+- Local generated summary:
+  `refs/reports/conformance_summary_packaged_8bpc.md`
+- Scope: packaged 8bpc AE-host validation, 70 cases.
+- Current machine count: `AE exact=62`, `AE residual=1`, `known-red=7`.
+
 ## Current Feature Status
 
 | Plug-in / feature | 8bpc Software status | 16bpc status | 32bpc status | Evidence | Next required proof |
