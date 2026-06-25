@@ -203,8 +203,9 @@ python3 scripts/intake_olm_return.py path/to/returned_ae_host_or_pixel.zip \
 ## 現在の次アクション
 
 `scripts/print_next_olm_action.py` の現在判定は
-`send-windows-reference-package` です。次に Windows AE 側へ渡す対象は
-16bpc の normalized exact グループです。
+`continue-binary-grounded-followup` です。16bpc の normalized exact
+Windows Software 参照は返却・取込済みで、次は Mac AE 16bpc 比較か、
+Smoother2 の narrow binary-grounded proof へ進む段階です。
 
 ```text
 handoffs/windows_batch/olm_windows_reference_request_20260625_16bpc_normalized_exact.zip
@@ -252,7 +253,10 @@ OLMBlur 7件、OLMColorKey 9件、OLMDistanceGradation 29件の合計45件です
 ローカルレポート:
 `refs/reports/bit_depth_expansion_plan_20260625/bit_depth_plan.md`
 
-Windows へ次に送る project-local zip:
+16bpc 参照の受領記録:
+`refs/conformance/bitdepth_16bpc_reference_return_20260625.md`
+
+Windows へ送った project-local zip:
 `handoffs/windows_batch/olm_windows_reference_request_20260625_16bpc_normalized_exact.zip`
 
 取り込み手順と優先順位は

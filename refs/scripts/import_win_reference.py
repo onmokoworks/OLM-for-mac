@@ -37,6 +37,27 @@ def load_json(path: Path) -> dict[str, Any]:
     return data
 
 
+def safe_extract_zip_normalized(archive: zipfile.ZipFile, dest: Path) -> None:
+    """Extract zip entries while accepting Windows-style backslash separators."""
+    dest = dest.resolve()
+    for info in archive.infolist():
+        normalized_name = info.filename.replace("\\", "/")
+        parts = [part for part in normalized_name.split("/") if part]
+        if not parts:
+            continue
+        if any(part == ".." for part in parts):
+            raise ValueError(f"unsafe zip path: {info.filename}")
+        target = dest.joinpath(*parts).resolve()
+        if not target.is_relative_to(dest):
+            raise ValueError(f"unsafe zip path: {info.filename}")
+        if info.is_dir() or normalized_name.endswith("/"):
+            target.mkdir(parents=True, exist_ok=True)
+            continue
+        target.parent.mkdir(parents=True, exist_ok=True)
+        with archive.open(info) as source, target.open("wb") as out:
+            shutil.copyfileobj(source, out)
+
+
 def slug(value: str, fallback: str = "reference") -> str:
     value = value.strip().replace(" ", "")
     value = re.sub(r"[^A-Za-z0-9_.-]+", "_", value)
@@ -418,7 +439,7 @@ def main() -> int:
     if zipfile.is_zipfile(source):
         with tempfile.TemporaryDirectory(prefix="olm_win_ref_") as tmp:
             with zipfile.ZipFile(source) as archive:
-                archive.extractall(tmp)
+                safe_extract_zip_normalized(archive, Path(tmp))
             return run_on_root(Path(tmp))
 
     print(f"source is neither a directory nor a zip file: {source}", file=sys.stderr)

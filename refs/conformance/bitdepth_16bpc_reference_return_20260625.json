@@ -1,0 +1,28 @@
+{
+  "kind": "olm_bitdepth_reference_return_summary",
+  "schema": 1,
+  "request_id": "olm_bitdepth_16bpc_normalized_exact_20260625",
+  "reference_kind": "windows_ae_software",
+  "bit_depth": "16bpc",
+  "render_set_id": "software_16bpc",
+  "ae_version": "26.2x49",
+  "project_renderer": "SOFTWARE",
+  "status": "reference-covered-compare-pending",
+  "imported_manifest": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/reference_manifest.json",
+  "manifest_sha256": "c4378358c8b4db2b2d5d12d0bf0b4142f141963538ca5ec4d86a49eeb8b9e71e",
+  "case_count": 45,
+  "groups": {
+    "olmblur": 7,
+    "olmcolorkey": 9,
+    "olmdistancegradation_basic": 12,
+    "olmdistancegradation_extended": 16,
+    "olmdistancegradation_blur": 1
+  },
+  "evidence": [
+    "refs/scripts/import_win_reference.py accepted the returned Windows zip after normalizing Windows-style zip path separators.",
+    "refs/scripts/verify_reference_request_result.py verified 45 required request cases and 45 matching rendered cases for render_sets=software_16bpc.",
+    "file(1) reports the sampled OLMBlur PNG as 16-bit/color RGBA."
+  ],
+  "not_complete_reason": "Mac AE 16bpc output has not yet been compared against this Windows Software reference; AE exact is therefore not claimed.",
+  "next_required_proof": "Run Mac AE-host 16bpc validation for the same 45 cases and compare with a 16bpc-aware max_diff=0 comparator."
+}

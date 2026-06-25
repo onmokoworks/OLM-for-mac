@@ -33,7 +33,8 @@ should be expanded in phases so algorithm work stays grounded.
 
 - `refs/reports/bit_depth_expansion_plan_20260625/bit_depth_plan.md`
 
-The first 16bpc request has been generated from that plan:
+The first 16bpc request has been generated from that plan and returned from
+Windows AE:
 
 - Request JSON:
   `refs/reference_requests/olm_bitdepth_16bpc_normalized_exact_20260625.json`
@@ -42,7 +43,7 @@ The first 16bpc request has been generated from that plan:
 
 Current machine decision:
 
-- `request-16bpc-for-normalized-8bpc-exact-features`
+- `reference-covered-compare-pending`
 
 Included feature groups are only the ones with normalized 8bpc Software exact
 evidence in `refs/reports/software_reference_canonicalization_8bpc.json`:
@@ -67,6 +68,21 @@ Preflight verification for the project-local zip passed on 2026-06-25:
 
 The packaged request contains one `software_16bpc` / `SOFTWARE` render set and
 45 unique cases: OLMBlur 7, OLMColorKey 9, and OLMDistanceGradation 29.
+
+The Windows return was imported on 2026-06-25:
+
+- Imported manifest:
+  `refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/reference_manifest.json`
+- Tracked receipt:
+  `refs/conformance/bitdepth_16bpc_reference_return_20260625.md`
+- Verification:
+  `verify_reference_request_result.py` reports 45 required request cases and
+  45 matching rendered cases for `software_16bpc`.
+- PNG format spot check:
+  sampled output is `16-bit/color RGBA`.
+
+This is still not `AE exact`: Mac AE 16bpc output has not yet been compared
+against the Windows Software reference.
 
 Return intake is covered by `refs/scripts/smoke_verify_bitdepth_reference_result.py`,
 including a synthetic 45-case mixed-effect manifest and the

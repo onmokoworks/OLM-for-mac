@@ -8,6 +8,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import zipfile
 from pathlib import Path
 
 
@@ -61,6 +62,12 @@ def run(cmd: list[str]) -> subprocess.CompletedProcess[str]:
     return subprocess.run(cmd, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 
+def write_backslash_zip(source_dir: Path, dest_zip: Path) -> None:
+    with zipfile.ZipFile(dest_zip, "w", zipfile.ZIP_DEFLATED) as archive:
+        for path in sorted(source_dir.iterdir()):
+            archive.write(path, f"returned\\renders\\{path.name}")
+
+
 def main() -> int:
     request = json.loads(REQUEST.read_text(encoding="utf-8"))
     verifier = ROOT / "refs" / "scripts" / "verify_reference_request_result.py"
@@ -111,6 +118,35 @@ def main() -> int:
         )
         if not imported_manifest.exists():
             print("[FAIL] bit-depth intake did not import the synthetic reference manifest")
+            return 1
+
+        backslash_zip = tmp_path / "synthetic_16bpc_backslash_return.zip"
+        write_backslash_zip(good_manifest.parent, backslash_zip)
+        backslash_import = run(
+            [
+                sys.executable,
+                str(ROOT / "refs" / "scripts" / "import_win_reference.py"),
+                str(backslash_zip),
+                "--dest-root",
+                str(tmp_path / "win_references_backslash"),
+                "--request",
+                str(request_copy),
+                "--set-id",
+                "synthetic_16bpc_backslash_return",
+            ]
+        )
+        print(backslash_import.stdout, end="" if backslash_import.stdout.endswith("\n") else "\n")
+        if backslash_import.returncode != 0:
+            return backslash_import.returncode
+        backslash_manifest = (
+            tmp_path
+            / "win_references_backslash"
+            / "synthetic_16bpc_backslash_return"
+            / "OLMbit-depthconformancebatch"
+            / "reference_manifest.json"
+        )
+        if not backslash_manifest.exists():
+            print("[FAIL] backslash zip import did not normalize reference_manifest.json")
             return 1
     print("[OK] bit-depth reference result verifier smoke passed")
     return 0
