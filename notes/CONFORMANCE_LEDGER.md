@@ -26,6 +26,12 @@ See `notes/AE_EXACT_CONFORMANCE.md` for definitions.
 
 ## Recent Mac-Side Audits
 
+- 2026-06-25 bit-depth expansion plan:
+  `refs/reports/bit_depth_expansion_plan_20260625/bit_depth_plan.md`.
+  Decision is `request-16bpc-for-normalized-8bpc-exact-features`: the next
+  broad bit-depth request should start with the normalized 8bpc exact groups
+  only: OLMBlur 7 cases, OLMColorKey 9 cases, and OLMDistanceGradation 29
+  cases. 32bpc remains excluded until the float comparison policy is fixed.
 - 2026-06-25 `OLMSmoother2` current-AEX proof plan:
   `refs/reports/olmsmoother2_current_aex_proof_plan_20260625/proof_plan.md`.
   Decision is `runtime-or-asm-first-divergence-required`: the Smooth Range

@@ -26,6 +26,33 @@ should be expanded in phases so algorithm work stays grounded.
 3. `32bpc`: define the comparator before claiming completion. If an epsilon is
    needed for float output, record it as an exception profile, not `AE exact`.
 
+## 2026-06-25 Expansion Plan
+
+`scripts/analyze_bit_depth_expansion_plan.py` turns the current normalized
+8bpc Software exact audit into a request plan. The generated local report is:
+
+- `refs/reports/bit_depth_expansion_plan_20260625/bit_depth_plan.md`
+
+Current machine decision:
+
+- `request-16bpc-for-normalized-8bpc-exact-features`
+
+Included feature groups are only the ones with normalized 8bpc Software exact
+evidence in `refs/reports/software_reference_canonicalization_8bpc.json`:
+
+| Feature group | Cases | Next depth |
+| --- | ---: | --- |
+| `OLMBlur` | 7 | `16bpc` |
+| `OLMColorKey` | 9 | `16bpc` |
+| `OLMDistanceGradation basic` | 12 | `16bpc` |
+| `OLMDistanceGradation extended` | 16 | `16bpc` |
+| `OLMDistanceGradation blur` | 1 | `16bpc` |
+
+Total: 45 cases across 3 plug-ins. This plan deliberately excludes blocked
+or binary-unresolved features such as RadialBlur, KiraKira, DirectionalBlur,
+and Smoother2 legacy key/gamma. It also excludes 32bpc until the float compare
+policy is fixed.
+
 ## Request Shape
 
 Each future bit-depth request should keep the same logical case ID and add a
@@ -73,4 +100,3 @@ A feature can be called complete only for the bit-depth slices that have:
 2. Mac AE render for the same manifest.
 3. Zero-diff comparison for that bit depth.
 4. Binary-grounded IR for the algorithm path.
-
