@@ -886,6 +886,8 @@ def main() -> int:
     args = parse_args()
     root = repo_root()
     rows = candidate_rows(args.paths)
+    rows.extend(candidate_rows([root / "handoffs" / "windows_batch"]))
+    rows = list({str(Path(str(row.get("path", ""))).resolve()): row for row in rows if row.get("path")}.values())
     interesting = [row for row in rows if row.get("kind") != "unknown"]
     status = request_status(root)
     next_actions = next_reference_actions(root)

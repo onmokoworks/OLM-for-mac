@@ -210,10 +210,13 @@ rotate sampler / validity / denominator を確認します。片方だけの結�
 広いPNG平均から実装を決めない方針です。
 
 bit depth 展開については、2026-06-25 時点の normalized 8bpc exact
-グループから 16bpc 取得候補を自動生成できます。現在の対象は
+グループから 16bpc 参照 request を生成しました。現在の対象は
 OLMBlur 7件、OLMColorKey 9件、OLMDistanceGradation 29件の合計45件です。
 ローカルレポート:
 `refs/reports/bit_depth_expansion_plan_20260625/bit_depth_plan.md`
+
+Windows へ次に送る project-local zip:
+`handoffs/windows_batch/olm_windows_reference_request_20260625_16bpc_normalized_exact.zip`
 
 取り込み手順と優先順位は
 `notes/WINDOWS_RETURN_INTAKE_PLAYBOOK_20260619.md` にあります。

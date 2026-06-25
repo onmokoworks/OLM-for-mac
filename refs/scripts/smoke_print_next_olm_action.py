@@ -159,7 +159,9 @@ def main() -> int:
                 fresh_pending.unlink()
                 proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
                 data = json.loads(proc.stdout)
-                assert data["decision"]["action"] == "package-windows-reference-requests"
+                assert data["decision"]["action"] == "send-windows-reference-package"
+                target = Path(data["decision"]["target"]["path"])
+                assert target.parent == repo / "handoffs" / "windows_batch"
             else:
                 mac_zip = make_mac_package(repo, tmp_path)
                 reference_zip = make_reference_package(repo, tmp_path)

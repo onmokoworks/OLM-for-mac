@@ -1,0 +1,214 @@
+#!/usr/bin/env python3
+"""Generate a Windows reference request for next bit-depth conformance slices."""
+
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+from typing import Any
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--plan-json",
+        type=Path,
+        default=ROOT / "refs" / "reports" / "bit_depth_expansion_plan_20260625" / "bit_depth_plan.json",
+    )
+    parser.add_argument(
+        "--request-id",
+        default="olm_bitdepth_16bpc_normalized_exact_20260625",
+        help="request_id to write into the generated request JSON.",
+    )
+    parser.add_argument(
+        "--bit-depth",
+        choices=("16bpc",),
+        default="16bpc",
+        help="Currently only 16bpc is generated; 32bpc waits for float compare policy.",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=ROOT / "refs" / "reference_requests" / "olm_bitdepth_16bpc_normalized_exact_20260625.json",
+    )
+    return parser.parse_args()
+
+
+def read_json(path: Path) -> dict[str, Any]:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError(f"{path} must contain a JSON object")
+    return data
+
+
+def resolve(path: str | Path) -> Path:
+    path = Path(path)
+    return path if path.is_absolute() else ROOT / path
+
+
+def param_map(effect: dict[str, Any]) -> dict[str, Any]:
+    params = {}
+    for param in effect.get("params", []):
+        if not isinstance(param, dict):
+            continue
+        name = param.get("name")
+        if not isinstance(name, str) or not name:
+            continue
+        if param.get("property_value_type") == "NO_VALUE":
+            continue
+        params[name] = param.get("value")
+    return params
+
+
+def param_records(effect: dict[str, Any]) -> list[dict[str, Any]]:
+    records = []
+    for param in effect.get("params", []):
+        if not isinstance(param, dict):
+            continue
+        if param.get("property_value_type") == "NO_VALUE":
+            continue
+        records.append(
+            {
+                "name": param.get("name"),
+                "match_name": param.get("match_name"),
+                "property_index": param.get("property_index"),
+                "property_value_type": param.get("property_value_type"),
+                "value": param.get("value"),
+            }
+        )
+    return records
+
+
+def manifest_cases(feature: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    manifest = read_json(resolve(feature["normalized_ref_dir"]) / "reference_manifest.json")
+    cases = {}
+    for row in manifest.get("cases", []):
+        if isinstance(row, dict) and isinstance(row.get("id"), str):
+            cases[row["id"]] = row
+    return cases
+
+
+def effect_for_case(case: dict[str, Any]) -> dict[str, Any]:
+    effects = [row for row in case.get("effects", []) if isinstance(row, dict)]
+    if len(effects) != 1:
+        raise ValueError(f"expected exactly one effect for {case.get('id')}, got {len(effects)}")
+    return effects[0]
+
+
+def input_id_for(feature_name: str, case_id: str) -> str:
+    safe_feature = feature_name.lower().replace(" ", "_")
+    return f"{safe_feature}_{case_id}_source"
+
+
+def build_request(args: argparse.Namespace) -> dict[str, Any]:
+    plan = read_json(args.plan_json)
+    cases = []
+    inputs: dict[str, dict[str, Any]] = {}
+    effects: dict[str, dict[str, str]] = {}
+
+    for feature in plan.get("features", []):
+        if not isinstance(feature, dict):
+            continue
+        by_id = manifest_cases(feature)
+        for case_id in feature.get("case_ids", []):
+            if case_id not in by_id:
+                raise ValueError(f"{feature['name']} missing manifest case {case_id}")
+            source_case = by_id[case_id]
+            effect = effect_for_case(source_case)
+            effect_key = str(effect.get("name") or effect.get("match_name") or feature["plugin"])
+            effects.setdefault(
+                effect_key,
+                {
+                    "name": str(effect.get("name") or ""),
+                    "match_name": str(effect.get("match_name") or ""),
+                },
+            )
+            input_id = input_id_for(str(feature["name"]), case_id)
+            inputs[input_id] = {
+                "id": input_id,
+                "description": (
+                    f"Use the same source image as normalized 8bpc {feature['name']} {case_id}. "
+                    f"Recorded before_effects_frame: {source_case.get('before_effects_frame') or source_case.get('frame')}"
+                ),
+                "source_manifest": str(resolve(feature["normalized_ref_dir"]) / "reference_manifest.json"),
+                "source_case_id": case_id,
+                "before_effects_frame": source_case.get("before_effects_frame"),
+            }
+            cases.append(
+                {
+                    "id": f"{feature['name'].lower().replace(' ', '_')}__{case_id}",
+                    "feature": feature["name"],
+                    "plugin": feature["plugin"],
+                    "source_case_id": case_id,
+                    "input": input_id,
+                    "reason": (
+                        "16bpc expansion of a normalized 8bpc Software exact case. "
+                        "Do not use this to retune 8bpc legacy drift."
+                    ),
+                    "effect": effects[effect_key],
+                    "params": param_map(effect),
+                    "params_full": param_records(effect),
+                }
+            )
+
+    return {
+        "request_id": args.request_id,
+        "effect": {
+            "name": "OLM bit-depth conformance batch",
+            "match_name": "mixed",
+            "contains_mixed_effects": True,
+        },
+        "why": [
+            "The listed feature groups are normalized 8bpc Windows Software exact and need the next declared bit-depth proof.",
+            "This request deliberately starts with 16bpc only; 32bpc waits until the float comparison policy is fixed.",
+            "Legacy 8bpc drift and AE-free CLI residuals are not tuning targets for this request.",
+        ],
+        "render_sets": [
+            {
+                "id": "software_16bpc",
+                "project_gpu_accel_type.current_name": "SOFTWARE",
+                "bit_depth": "16bpc",
+                "bits_per_channel": 16,
+                "required": True,
+            }
+        ],
+        "inputs": list(inputs.values()),
+        "cases": cases,
+        "manifest_requirements": [
+            "AE version",
+            "project_gpu_accel_type.current_name and raw value",
+            "project bit depth / bits per channel",
+            "project color management settings",
+            "before_effects_frame PNG for every case",
+            "effect output image for every case, preserving 16bpc data if the runner can export it",
+            "all effect property names, match_names, indices, values, enabled/active state",
+        ],
+        "mac_follow_up": [
+            "Import with scripts/intake_olm_return.py path/to/returned_reference.zip --quick.",
+            "Do not claim 16bpc exact until a 16bpc-aware comparator verifies zero diff.",
+        ],
+        "stop_lines": [
+            "Do not render CUDA/GPU as the conformance target for this request.",
+            "Do not include 32bpc in this request.",
+            "Do not mix legacy 20260604/20260605 drift references into this bit-depth batch.",
+        ],
+    }
+
+
+def main() -> int:
+    args = parse_args()
+    request = build_request(args)
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps(request, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print(f"request_json={args.output}")
+    print(f"request_id={request['request_id']}")
+    print(f"cases={len(request['cases'])}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

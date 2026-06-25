@@ -33,6 +33,13 @@ should be expanded in phases so algorithm work stays grounded.
 
 - `refs/reports/bit_depth_expansion_plan_20260625/bit_depth_plan.md`
 
+The first 16bpc request has been generated from that plan:
+
+- Request JSON:
+  `refs/reference_requests/olm_bitdepth_16bpc_normalized_exact_20260625.json`
+- Project-local Windows zip:
+  `handoffs/windows_batch/olm_windows_reference_request_20260625_16bpc_normalized_exact.zip`
+
 Current machine decision:
 
 - `request-16bpc-for-normalized-8bpc-exact-features`
