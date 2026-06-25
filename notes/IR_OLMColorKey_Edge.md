@@ -147,10 +147,10 @@ caller/world semantic is still missing.
 
 | Case group | Bit depth | Expected status | Current result | Next evidence |
 | --- | --- | --- | --- | --- |
-| RGB core `case_0001..0004` | 8bpc | CLI exact / AE-host exact for current refs | exact in Python/C++/Rust and AE-host return | Mac AE exact against final package |
-| Edge Thin dilate `case_0007` | 8bpc | CLI exact / AE-host exact for current refs | exact | Mac AE exact against final package |
-| Edge Thin erode `case_0005/0006` | 8bpc | AE-host exact return, CLI residual | Windows AE-host exact; C++ CLI `max=255 mean=0.3031`; decision matrix keeps this diagnostic-only for current refs | Mac AE exact against canonical refs and 16/32bpc coverage; runtime trace only if a current Software ref residual reappears |
-| Edge Blur `case_0008/0009` | 8bpc | AE-host exact against normalized current refs / AE-free CLI residual | AE-host exact for `case_0008`; `case_0009` exact against 20260618 normalized ref but `max=47` against older 20260604 ref; decision matrix says preserve normalized AE exact | Prefer normalized 20260618 reference generation; next proof is Mac AE exact against canonical refs and 16/32bpc coverage. Runtime trace only if a current Software ref residual reappears |
+| RGB core `case_0001..0004` | 8bpc | CLI exact / AE-host exact for current refs | exact in Python/C++/Rust and AE-host return | Preserve normalized 8bpc behavior; add 16/32bpc coverage |
+| Edge Thin dilate `case_0007` | 8bpc | CLI exact / AE-host exact for current refs | exact | Preserve normalized 8bpc behavior; add 16/32bpc coverage |
+| Edge Thin erode `case_0005/0006` | 8bpc | AE-host exact return, CLI residual | Windows AE-host exact; C++ CLI `max=255 mean=0.3031`; decision matrix keeps this diagnostic-only for current refs | Preserve normalized 8bpc behavior; add 16/32bpc coverage; runtime trace only if a current Software ref residual reappears |
+| Edge Blur `case_0008/0009` | 8bpc | AE-host exact against normalized current refs / AE-free CLI residual | AE-host exact for `case_0008`; `case_0009` exact against 20260618 normalized ref but `max=47` against older 20260604 ref; decision matrix says preserve normalized AE exact | Prefer normalized 20260618 reference generation; next proof is 16/32bpc coverage. Runtime trace only if a current Software ref residual reappears |
 
 ## Validation Packages
 

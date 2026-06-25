@@ -116,9 +116,9 @@ Current implementation:
 
 | Case | Bit depth | Expected status | Current result | Next evidence |
 | --- | --- | --- | --- | --- |
-| `case_0001/0002/0004` | 8bpc | `CLI exact` in current smoke | 2026-06-21 rerun: exact (`max=0`) | Mac AE exact validation and true binary-grounded writeback explanation |
+| `case_0001/0002/0004` | 8bpc | `CLI exact` in current smoke | 2026-06-21 rerun: exact (`max=0`); packaged Mac AE validation is exact | Preserve AE behavior; only revisit true binary-grounded writeback if CLI residual closure becomes necessary |
 | `case_0003` | 8bpc | AE exact / guarded CLI residual | 2026-06-21 rerun: CLI `max=1 mean=0.0052`; 2026-06-19 AE pixel return `max=0` | Treat as host-path exact but keep runtime/writeback proof open |
-| `case_0005` | 8bpc | `CLI exact` in current residual smoke | 2026-06-21 rerun: exact (`max=0`) | Mac AE exact validation |
+| `case_0005` | 8bpc | `CLI exact` in current residual smoke | 2026-06-21 rerun: exact (`max=0`); packaged Mac AE validation is exact | Preserve AE behavior; add 16/32bpc references |
 | `case_0006` | 8bpc | AE exact / residual diagnostic | 2026-06-20 Windows trace: AEX pre-writeback red at `(498,940)` is `185.49998474121094` (`0x1.72fffe0000000p+7`), Mac CLI baseline is exactly `185.5` (`0x1.73p+7`), and Windows final byte is `185`; 2026-06-19 AE pixel return `max=0` | Accumulation/helper order proof before changing the passing AE plug-in path |
 | `case_0007` | 8bpc | AE exact / residual diagnostic | 2026-06-20 Windows trace: Legacy writeback family `OLMBlur+0x7FDF`; `(0,0)` pre RGB `[0,0,~1.5528]`, final `[0,0,0,255]`; `(488,941/942)` pre red just above `250.5`, final `251`; Mac CLI stays just below/equal | Isolate Legacy helper state/border source if CLI residual is still worth closing |
 
@@ -204,5 +204,6 @@ Legacy border rules.
 
 - True non-legacy final accumulation/writeback order.
 - Legacy border/all-same state for the remaining three pixels.
-- Mac AE exactness against normalized/current Windows Software refs.
-- 16bpc and 32bpc writeback/rounding behavior.
+- 16bpc and 32bpc Software reference behavior.
+- Whether closing the AE-free CLI max=1 diagnostic is worth another narrow
+  helper/border trace after 16bpc is checked.
