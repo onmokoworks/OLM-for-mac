@@ -618,6 +618,20 @@ def reference_request_package(rows: list[dict[str, Any]], pending: list[str]) ->
     return max(matches, key=lambda row: float(row.get("mtime", 0)))
 
 
+def win_reference_return_intake_command(pending: list[str]) -> str:
+    if len(pending) == 1:
+        request_id = pending[0]
+        request_path = Path("refs/reference_requests") / f"{request_id}.json"
+        return (
+            "python3 scripts/intake_olm_return.py path/to/returned_reference.zip "
+            f"--kind win-reference --request {request_path} --set-id {request_id} --quick"
+        )
+    return (
+        "python3 scripts/intake_olm_return.py path/to/returned_reference.zip "
+        "--kind win-reference --quick"
+    )
+
+
 def zip_contains_file(names: set[str], root: str, value: Any) -> bool:
     if not isinstance(value, str) or not value:
         return False
@@ -745,6 +759,7 @@ def decide(
                 "reason": "All difficult implementation paths are stopped at pending Windows references.",
                 "target": request_pkg,
                 "command": "send this package to the Windows AE renderer",
+                "return_intake_command": win_reference_return_intake_command(pending),
             }
         return {
             "action": "package-windows-reference-requests",
@@ -943,6 +958,8 @@ def main() -> int:
         print(f"- target: {target['path']}")
     if decision.get("command"):
         print(f"- run/do: {decision['command']}")
+    if decision.get("return_intake_command"):
+        print(f"- after return: {decision['return_intake_command']}")
     print(f"- pending Windows refs: {len(status['pending'])}")
     if status["pending"]:
         print("  " + ", ".join(status["pending"]))
