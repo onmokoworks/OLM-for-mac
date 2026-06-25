@@ -1,0 +1,198 @@
+{
+  "decision": "preserve-normalized-ae-exact",
+  "inputs": {
+    "canonicalization_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/software_reference_canonicalization_8bpc.json",
+    "provenance_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmdistancegradation_reference_provenance_20260622_025045/audit.json",
+    "trace_comparison_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/runtime_trace_comparisons/olmdistancegradation_field_prep_latest.json"
+  },
+  "kind": "olmdistancegradation_decision_matrix",
+  "legacy_drift": {
+    "cases": [
+      {
+        "feature": "OLMDistanceGradation basic",
+        "id": "case_0017",
+        "max_at": {
+          "candidate": [
+            2,
+            2,
+            2,
+            4
+          ],
+          "channel": 0,
+          "reference": [
+            4,
+            4,
+            4,
+            4
+          ],
+          "x": 1046,
+          "y": 102
+        },
+        "max_diff": 2,
+        "mean_diff": 0.001613257137345679
+      },
+      {
+        "feature": "OLMDistanceGradation extended",
+        "id": "case_0012",
+        "max_at": {
+          "candidate": [
+            2,
+            2,
+            2,
+            253
+          ],
+          "channel": 0,
+          "reference": [
+            253,
+            253,
+            253,
+            253
+          ],
+          "x": 1697,
+          "y": 12
+        },
+        "max_diff": 251,
+        "mean_diff": 0.622667221257716
+      },
+      {
+        "feature": "OLMDistanceGradation extended",
+        "id": "case_0013",
+        "max_at": {
+          "candidate": [
+            58,
+            58,
+            58,
+            120
+          ],
+          "channel": 0,
+          "reference": [
+            120,
+            120,
+            120,
+            120
+          ],
+          "x": 447,
+          "y": 0
+        },
+        "max_diff": 62,
+        "mean_diff": 0.20181737075617284
+      },
+      {
+        "feature": "OLMDistanceGradation extended",
+        "id": "case_0014",
+        "max_at": {
+          "candidate": [
+            59,
+            59,
+            59,
+            122
+          ],
+          "channel": 0,
+          "reference": [
+            122,
+            122,
+            122,
+            122
+          ],
+          "x": 447,
+          "y": 0
+        },
+        "max_diff": 63,
+        "mean_diff": 0.2049610580632716
+      },
+      {
+        "feature": "OLMDistanceGradation extended",
+        "id": "case_0016",
+        "max_at": {
+          "candidate": [
+            59,
+            59,
+            59,
+            123
+          ],
+          "channel": 0,
+          "reference": [
+            123,
+            123,
+            123,
+            123
+          ],
+          "x": 447,
+          "y": 0
+        },
+        "max_diff": 64,
+        "mean_diff": 0.20743212287808643
+      },
+      {
+        "feature": "OLMDistanceGradation extended",
+        "id": "case_0027",
+        "max_at": {
+          "candidate": [
+            249,
+            0,
+            0,
+            255
+          ],
+          "channel": 0,
+          "reference": [
+            255,
+            5,
+            5,
+            255
+          ],
+          "x": 397,
+          "y": 281
+        },
+        "max_diff": 6,
+        "mean_diff": 0.0017181471836419753
+      },
+      {
+        "feature": "OLMDistanceGradation extended",
+        "id": "case_0028",
+        "max_at": {
+          "candidate": [
+            113,
+            0,
+            0,
+            255
+          ],
+          "channel": 0,
+          "reference": [
+            255,
+            141,
+            141,
+            255
+          ],
+          "x": 397,
+          "y": 281
+        },
+        "max_diff": 142,
+        "mean_diff": 0.09351285204475308
+      }
+    ],
+    "classification": "normalized-software-exact-with-legacy-drift",
+    "legacy_nonzero_count": 7,
+    "recommended_action": "use normalized refs as the active 8bpc Software baseline; keep legacy drift as provenance evidence"
+  },
+  "next_evidence": [
+    "Preserve Mac AE exact behavior against canonical normalized 8bpc DistanceGradation refs.",
+    "16bpc and 32bpc Software reference coverage for basic, extended, and blur groups.",
+    "Only request field-prep/OpenCV runtime trace if we decide to close AE-free CLI residuals or a current normalized residual reappears."
+  ],
+  "normalized_8bpc": {
+    "case_count": 29,
+    "classification": "exact",
+    "exact_count": 29,
+    "normalized_nonzero_count": 0,
+    "statuses": [
+      "normalized-software-exact"
+    ]
+  },
+  "recommended_action": "Do not tune DistanceGradation from legacy-only drift or AE-free CLI residuals. Preserve normalized 8bpc AE exact behavior and use binary/runtime evidence only if closing the CLI harness gap.",
+  "runtime_trace": {
+    "classification": "not-actionable",
+    "likely_next_focus": "await-windows-trace",
+    "present": false
+  },
+  "schema": 1
+}

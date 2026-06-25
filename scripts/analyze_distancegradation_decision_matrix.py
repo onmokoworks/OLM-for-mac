@@ -86,7 +86,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         decision = "preserve-normalized-ae-exact"
         action = (
             "Do not tune DistanceGradation from legacy-only drift or AE-free CLI residuals. "
-            "Keep normalized 8bpc AE behavior and use binary/runtime evidence only if closing the CLI harness gap."
+            "Preserve normalized 8bpc AE exact behavior and use binary/runtime evidence only if closing the CLI harness gap."
         )
     elif canonical["classification"] == "residual":
         decision = "current-residual-needs-proof"
@@ -124,7 +124,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "decision": decision,
         "recommended_action": action,
         "next_evidence": [
-            "Mac AE exact against canonical normalized 8bpc DistanceGradation refs.",
+            "Preserve Mac AE exact behavior against canonical normalized 8bpc DistanceGradation refs.",
             "16bpc and 32bpc Software reference coverage for basic, extended, and blur groups.",
             "Only request field-prep/OpenCV runtime trace if we decide to close AE-free CLI residuals or a current normalized residual reappears.",
         ],

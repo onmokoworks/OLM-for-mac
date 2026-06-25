@@ -68,6 +68,9 @@ OLMBlur の 8bpc 判断は `refs/conformance/olmblur_8bpc_decision.md` に固定
 OLMColorKey Edge の 8bpc 判断は
 `refs/conformance/olmcolorkey_edge_8bpc_decision.md` に固定し、
 古い 20260604 Edge Blur 残差は `reference-generation split` として扱います。
+OLMDistanceGradation の 8bpc 判断は
+`refs/conformance/olmdistancegradation_8bpc_decision.md` に固定し、
+normalized 8bpc 29/29 exact と古い参照だけの drift を分けて扱います。
 
 ## 未解決点
 
