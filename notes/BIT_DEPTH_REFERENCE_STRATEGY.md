@@ -68,6 +68,19 @@ Preflight verification for the project-local zip passed on 2026-06-25:
 The packaged request contains one `software_16bpc` / `SOFTWARE` render set and
 45 unique cases: OLMBlur 7, OLMColorKey 9, and OLMDistanceGradation 29.
 
+Return intake is covered by `refs/scripts/smoke_verify_bitdepth_reference_result.py`,
+including a synthetic 45-case mixed-effect manifest and the
+`scripts/intake_olm_return.py --kind win-reference` path. Use this command when
+the Windows render return arrives:
+
+```sh
+python3 scripts/intake_olm_return.py path/to/returned_16bpc_reference.zip \
+  --kind win-reference \
+  --request refs/reference_requests/olm_bitdepth_16bpc_normalized_exact_20260625.json \
+  --set-id olm_bitdepth_16bpc_normalized_exact_20260625 \
+  --quick
+```
+
 ## Request Shape
 
 Each future bit-depth request should keep the same logical case ID and add a

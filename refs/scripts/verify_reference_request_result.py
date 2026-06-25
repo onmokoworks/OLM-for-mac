@@ -75,6 +75,19 @@ def effect_matches(request: dict[str, Any], manifest: dict[str, Any]) -> bool:
     if not isinstance(expected, dict):
         return True
     expected_names = {expected.get("name"), expected.get("match_name")} - {None, ""}
+    if expected.get("contains_mixed_effects"):
+        expected_names = set()
+        for case in request.get("cases", []):
+            if not isinstance(case, dict):
+                continue
+            effect = case.get("effect")
+            if not isinstance(effect, dict):
+                continue
+            expected_names.update(
+                value
+                for value in (effect.get("name"), effect.get("match_name"))
+                if isinstance(value, str) and value
+            )
     if not expected_names:
         return True
 

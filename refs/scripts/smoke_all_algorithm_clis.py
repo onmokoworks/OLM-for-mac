@@ -111,6 +111,7 @@ def main() -> int:
         Smoke("Packaged 8bpc conformance summary", [py, "refs/scripts/smoke_generate_conformance_summary.py"]),
         Smoke("Bit-depth expansion plan", [py, "refs/scripts/smoke_analyze_bit_depth_expansion_plan.py"]),
         Smoke("Bit-depth reference request generation", [py, "refs/scripts/smoke_generate_bitdepth_reference_request.py"]),
+        Smoke("Bit-depth reference result verifier", [py, "refs/scripts/smoke_verify_bitdepth_reference_result.py"]),
         Smoke("KiraKira stage trace comparison", [py, "refs/scripts/smoke_compare_kirakira_stage_trace.py"]),
         Smoke("KiraKira compose model audit", [py, "refs/scripts/smoke_analyze_kirakira_compose_model_audit.py"]),
         Smoke("KiraKira trace box windows", [py, "refs/scripts/smoke_olmkirakira_trace_box_windows.py"]),
