@@ -49,7 +49,7 @@ AE-host validation で Mac AE 出力が Windows AE Software 参照に
 | OLMColorKey | core / Edge Thin / Edge Blur の normalized 8bpc packaged slice は Mac AE exact。古い 20260604 Edge Blur 残差は reference-generation split として扱う |
 | OLMSmoother2 | no-key grid は 8bpc Mac AE exact。legacy current-AEX recapture 済み。key/gamma は Smooth Range threshold 昇格で大幅改善、残る局所残差を調査中 |
 | OLMSmoother v1 | 960x540 再検証で 8bpc Mac AE exact。v2 互換扱いへ寄せる判断は別途 |
-| OLMDirectionalBlur | 参照は多いが、まだ blocked。PNG-only tuning は止めて asm/runtime evidence 待ち |
+| OLMDirectionalBlur | 参照は多いが、まだ blocked。2026-06-25 witness plan で angle-0 と diagonal の2系統に分け、PNG-only tuning は止めて asm/runtime evidence 待ち |
 | OLMRadialBlur | Zoom は alpha normalization 残差、tiny Rotation は sampler/validity 残差。Inner は typed `FUN_180001c90` per-cell witness 待ち |
 | OLMKiraKira | BT.709 seed、OpenCV 4.5.5 AVX2、ray-helper、`FUN_18114fd90` aggregation まで grounding 済み。残りは merge-mode compose / final quantization |
 
@@ -70,7 +70,7 @@ AE-host validation で Mac AE 出力が Windows AE Software 参照に
 | OLMDistanceGradation | CLI 仕様説明が未完 | Mac AE exact はあるが field prep / OpenCV args の説明が不足 | field world、distanceTransform、blur 引数を runtime trace で確定 |
 | OLMSmoother v1 | 8bpc AE exact | 960x540 再検証で `case_0001..0003` が exact | v2 互換扱いへ寄せるか、v1 独立維持かを明示する |
 | OLMSmoother2 | Legacy key / gamma | current-AEX recapture 12ケースを取り込み済み。case 0002/0003 はAE保存before入力でCLI exact。0004 は Smooth Range threshold で target final writer float と一致。0012 は `cardinal6 key=50 -> f270/e170/e3a0` まで局所化 | 0012 `(91,841)` の scanner/emit 中間値と 0004 polygon/no-polygon path を binary/runtime evidence で確定 |
-| OLMDirectionalBlur | blocked | PNG tuning だけで進めると誤実装になりやすい | asm/runtime evidence で sampling/group/scale を先に確定 |
+| OLMDirectionalBlur | blocked | PNG tuning だけで進めると誤実装になりやすい。angle-0 と diagonal では見るべき証拠が違う | `case_0001 (465,169)` 系の rowdriver/valid-alpha と、`case_0005 (507,367)` 系の rotate/validity を別々に runtime/asm evidence で確定 |
 | OLMRadialBlur | Zoom / Rotation / Inner | Zoom は final byte packing ではなく alpha/sample accumulation、tiny Rotation は sampler validity、Inner は global toggle 不採用まで局所化 | `rb_inner_only_strength_large` と `rb_inner_quality_1` の typed `FUN_180001c90` witness を取る |
 | OLMKiraKira | compose / final quantization | BT.709 seed、boxFilter、ray-helper、`FUN_18114fd90` はほぼ確定。global compose gain 変更は悪化 | merge-mode-1 compose float/writeback または residual hotspot の narrow trace を取る |
 
@@ -197,6 +197,13 @@ KiraKira は 2026-06-24 の aggregation / compose trace を取り込み済みで
 BT.709 seed、OpenCV boxFilter、ray-helper、`FUN_18114fd90` は説明できて
 います。次に欲しいのは広いPNGではなく、merge-mode-1 compose float /
 writeback か residual hotspot の narrow trace です。
+
+DirectionalBlur は 2026-06-25 の witness plan で、次に取る証拠を
+2系統に分けました。angle-0 は `case_0001 (465,169)` と
+`(487..494,169)` の横一列で rowdriver / valid-alpha を確認します。
+diagonal は `case_0005 (507,367)` と反対方向の `(423,187)` で
+rotate sampler / validity / denominator を確認します。片方だけの結果や
+広いPNG平均から実装を決めない方針です。
 
 取り込み手順と優先順位は
 `notes/WINDOWS_RETURN_INTAKE_PLAYBOOK_20260619.md` にあります。

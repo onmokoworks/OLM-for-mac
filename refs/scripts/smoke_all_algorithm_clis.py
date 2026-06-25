@@ -132,6 +132,7 @@ def main() -> int:
         Smoke("OLMDirectionalBlur residual clusters", [py, "refs/scripts/smoke_analyze_directionalblur_residual_clusters.py"]),
         Smoke("OLMDirectionalBlur decision matrix", [py, "refs/scripts/smoke_analyze_directionalblur_decision_matrix.py"]),
         Smoke("OLMDirectionalBlur witness contract", [py, "refs/scripts/smoke_analyze_directionalblur_witness_contract.py"]),
+        Smoke("OLMDirectionalBlur witness plan", [py, "refs/scripts/smoke_analyze_directionalblur_witness_plan.py"]),
         Smoke("OLMDirectionalBlur residual witness package", [py, "refs/scripts/smoke_package_directionalblur_residual_witness.py"]),
         Smoke("Port dashboard", [py, "refs/scripts/smoke_generate_port_dashboard.py"]),
         Smoke("Diff gallery", [py, "refs/scripts/smoke_generate_diff_gallery.py"]),

@@ -43,6 +43,14 @@ See `notes/AE_EXACT_CONFORMANCE.md` for definitions.
   not an implementation change; it prevents promoting `loop-minus-one`,
   `circular-wrap`, or `table-span-minus-one` as global rules without typed
   `FUN_180001c90` per-cell proof.
+- 2026-06-25 `OLMDirectionalBlur` witness plan:
+  `refs/reports/olmdirectionalblur_witness_plan_20260625/witness_plan.md`.
+  Decision is `two-independent-witness-families`: angle-0 proof is anchored on
+  `case_0001 (465,169)` plus the `(487..494,169)` RGB-only strip, while
+  diagonal proof is anchored on `case_0005 (507,367)` plus opposite-signed
+  companion `(423,187)`. This keeps DirectionalBlur blocked until both
+  rowdriver/valid-alpha and rotate/validity families have typed runtime/asm
+  evidence, and prevents tuning from only one family or from broad PNG means.
 
 ## Imported Runtime Proofs
 

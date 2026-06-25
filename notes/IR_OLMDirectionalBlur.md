@@ -42,6 +42,24 @@ Current verified reference slice:
     path.
   Keep `direct` / `rotated-front-strength` as measurement baselines only; they
   are not implementation truth despite lower broad means.
+- 2026-06-25 witness plan:
+  `refs/reports/olmdirectionalblur_witness_plan_20260625/witness_plan.md`
+  narrows that boundary into two independent runtime/asm witness families:
+  - `angle0-rowdriver-valid-alpha`: primary `case_0001 (465,169)` with
+    `[164,0,0,255] -> [0,0,0,255]`; companion strip
+    `(487..494,169)` proves the miss is a long RGB-only row, not a one-pixel
+    writeback artifact. Required values are normalized parameters, A/B buffer
+    coordinates, rowdriver/group membership, valid-alpha side-channel,
+    accumulation numerator/denominator, pre-writeback RGBA, and final bytes.
+  - `diagonal-rotate-validity`: primary `case_0005 (507,367)` with
+    `[1,0,0,255] -> [252,0,0,255]`; companion `(423,187)` has the opposite
+    signed red direction `[254,0,0,255] -> [4,0,0,255]`. Required values are
+    rotate sampler coordinates/order, border/validity decision, group-size or
+    opacity gate, denominator, pre-writeback RGBA, and final bytes.
+  The decision is `two-independent-witness-families`: DirectionalBlur stays
+  blocked until both families have typed evidence. Do not tune diagonal
+  behavior from the angle-0 witness, and do not promote broad measurement
+  scaffolds (`direct`, `rotated-front-strength`) from PNG means alone.
 
 ## Evidence Priority
 
