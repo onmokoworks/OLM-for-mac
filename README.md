@@ -207,17 +207,19 @@ python3 scripts/intake_olm_return.py path/to/returned_ae_host_or_pixel.zip \
 Windows Software 参照は返却・取込済みで、次は Mac AE 16bpc 比較か、
 Smoother2 の narrow binary-grounded proof へ進む段階です。
 
-```text
-handoffs/windows_batch/olm_windows_reference_request_20260625_16bpc_normalized_exact.zip
-```
+送付済みzip:
+`handoffs/windows_batch/olm_windows_reference_request_20260625_16bpc_normalized_exact.zip`
 
 内容は OLMBlur 7件、OLMColorKey 9件、OLMDistanceGradation 29件です。
 8bpc で normalized AE exact になっている範囲だけを、次の bit depth に
 広げるための参照取得です。
 
 Smoother2 については
-`refs/reports/olmsmoother2_current_aex_proof_plan_20260625/proof_plan.md`
+`refs/conformance/olmsmoother2_current_aex_8bpc_decision.md`
 で、次に必要な証拠を writer-anchor から順番に固定しました。
+必要なら次に Windows へ渡す focused runtime trace package は
+`refs/runtime_trace_packages/olm_runtime_trace_smoother2_current_aex_neighborhood_witness_20260624_235610.zip`
+です。
 
 Smoother2 は `0004 (1903,519)` と `0012 (91,841)` が逆向きの局所残差に
 分かれています。`0004` は Windows が半透明出力を足し、Mac 側は透明

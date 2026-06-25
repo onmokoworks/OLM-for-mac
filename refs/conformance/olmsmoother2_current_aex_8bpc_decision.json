@@ -1,0 +1,58 @@
+{
+  "kind": "olmsmoother2_current_aex_8bpc_decision",
+  "schema": 1,
+  "plugin": "OLMSmoother2",
+  "feature": "legacy current-AEX key/gamma residuals",
+  "bit_depth": "8bpc",
+  "decision": "runtime-or-asm-first-divergence-required",
+  "status": "writer-grounded-residual-blocked",
+  "recommended_action": "Keep the Smooth Range threshold fix. Do not request broad PNGs and do not change implementation from PNG residuals alone; require writer-anchored runtime trace or equivalent asm proof for the two witness paths.",
+  "global_rejections": {
+    "curve_idx": "rejected-inert",
+    "f270_suppression": "rejected-worse",
+    "transparent_center_fallback": "rejected-without-local-cce0-c280-proof"
+  },
+  "tracked_inputs": [
+    "refs/reports/olmsmoother2_current_aex_proof_plan_20260625/proof_plan.md",
+    "refs/reports/olmsmoother2_current_aex_witness_contract_20260624/witness_contract.md",
+    "refs/reports/olmsmoother2_witness_neighborhood_20260624/neighborhood.md",
+    "refs/reports/runtime_trace_summary_smoother2_legacy_current_aex_polygon_20260621.md",
+    "refs/reports/runtime_trace_summary_smoother2_legacy_current_aex_0004_cce0_stepover_20260621.md"
+  ],
+  "next_windows_package": "refs/runtime_trace_packages/olm_runtime_trace_smoother2_current_aex_neighborhood_witness_20260624_235610.zip",
+  "witnesses": [
+    {
+      "case_id": "legacy_case_0004_current_aex",
+      "xy": [1903, 519],
+      "static_dispatch": "0xd0 -> FUN_180013140",
+      "shape": "windows-adds-semitransparent-output-where-local-passthrough-is-transparent",
+      "reference_rgba": [103, 103, 103, 113],
+      "candidate_rgba": [0, 0, 0, 0],
+      "required_proof": "Determine whether Windows idx=208 also produces zero polygon vertices, or whether FUN_180013140/cce0/c280 appends neighbor-derived samples before final writeback.",
+      "ordered_probes": [
+        "writer-anchor",
+        "cce0-return",
+        "c280-polygon",
+        "neighbor-correlation"
+      ],
+      "stop_line": "Do not add a global transparent-center fallback; this witness only justifies a 0004-local change if cce0/c280 proves a neighbor sample for the same call."
+    },
+    {
+      "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+      "xy": [91, 841],
+      "static_dispatch": "0x69 -> FUN_1800125c0 -> FUN_180010760 -> FUN_18000cc70",
+      "shape": "local-adds-semitransparent-output-where-windows-stays-transparent",
+      "reference_rgba": [0, 0, 0, 0],
+      "candidate_rgba": [90, 90, 90, 91],
+      "required_proof": "Determine whether the exact witness differs in c280 idx, cardinal6 descriptor/key, e170 bits/code, f270/e3a0 emission, cce0 blend, or final u8 writer.",
+      "ordered_probes": [
+        "writer-anchor",
+        "descriptor",
+        "emit-chain",
+        "blend"
+      ],
+      "stop_line": "Do not suppress f270 or transparent-center appends globally; prior probes show global f270 suppression worsens the case set."
+    }
+  ],
+  "next_required_proof": "Successful focused Windows runtime trace or equivalent asm proof for the two writer-anchored witnesses; no broad PNG request is useful for this decision."
+}
