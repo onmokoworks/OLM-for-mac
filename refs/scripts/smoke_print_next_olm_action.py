@@ -150,10 +150,12 @@ def main() -> int:
                 proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
                 data = json.loads(proc.stdout)
                 assert data["decision"]["action"] == "send-windows-reference-package"
-                assert (
-                    Path(data["decision"]["target"]["path"]).name
-                    == "olm_reference_requests_pending_20260612.zip"
-                )
+                target = Path(data["decision"]["target"]["path"])
+                project_batch = repo / "handoffs" / "windows_batch"
+                if target.parent == project_batch:
+                    assert target.name.startswith("olm_windows_reference_request_")
+                else:
+                    assert target.name == "olm_reference_requests_pending_20260612.zip"
 
                 old_pending.unlink()
                 fresh_pending.unlink()

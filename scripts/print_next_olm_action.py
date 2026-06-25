@@ -603,11 +603,21 @@ def package_matches_pending(row: dict[str, Any], pending: list[str]) -> bool:
     return ids == sorted(pending)
 
 
-def reference_request_package(rows: list[dict[str, Any]], pending: list[str]) -> dict[str, Any] | None:
+def reference_request_package(root: Path, rows: list[dict[str, Any]], pending: list[str]) -> dict[str, Any] | None:
     matches = [row for row in rows if row.get("kind") == "reference-request-package"]
     matches = [row for row in matches if package_matches_pending(row, pending)]
     if not matches:
         return None
+
+    project_batch = root / "handoffs" / "windows_batch"
+    project_matches = [
+        row
+        for row in matches
+        if Path(str(row.get("path", ""))).resolve().is_relative_to(project_batch)
+    ]
+    if project_matches:
+        return max(project_matches, key=lambda row: float(row.get("mtime", 0)))
+
     pending_named = [
         row
         for row in matches
@@ -752,7 +762,7 @@ def decide(
 
     pending = status["pending"]
     if pending:
-        request_pkg = reference_request_package(rows, pending)
+        request_pkg = reference_request_package(root, rows, pending)
         if request_pkg:
             return {
                 "action": "send-windows-reference-package",
