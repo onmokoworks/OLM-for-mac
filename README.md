@@ -71,6 +71,11 @@ OLMColorKey Edge の 8bpc 判断は
 OLMDistanceGradation の 8bpc 判断は
 `refs/conformance/olmdistancegradation_8bpc_decision.md` に固定し、
 normalized 8bpc 29/29 exact と古い参照だけの drift を分けて扱います。
+RadialBlur / KiraKira / DirectionalBlur の 8bpc 判断は、それぞれ
+`refs/conformance/olmradialblur_8bpc_decision.md`、
+`refs/conformance/olmkirakira_8bpc_decision.md`、
+`refs/conformance/olmdirectionalblur_8bpc_decision.md` に固定し、広い
+PNG tuning ではなく narrow proof 待ちとして扱います。
 
 ## 未解決点
 

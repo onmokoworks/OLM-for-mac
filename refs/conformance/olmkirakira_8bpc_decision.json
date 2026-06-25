@@ -1,0 +1,276 @@
+{
+  "aggregation": {
+    "compose_scale_samples": [
+      {
+        "fd90_glow_alpha": 0.71891218,
+        "final_rgb": [
+          0.486274509804,
+          0.486274509804,
+          0.486274509804
+        ],
+        "implied_scale_max": 0.5811249126111011,
+        "implied_scale_mean": 0.5811249126111011,
+        "implied_scale_min": 0.5811249126111011,
+        "implied_screen_alpha_max": 0.4177777777775562,
+        "implied_screen_alpha_mean": 0.4177777777775562,
+        "implied_screen_alpha_min": 0.4177777777775562,
+        "label": "center",
+        "source_rgb": [
+          0.117647058824,
+          0.117647058824,
+          0.117647058824
+        ],
+        "xy": [
+          960,
+          540
+        ]
+      },
+      {
+        "fd90_glow_alpha": 0.76832885,
+        "final_rgb": [
+          0.941176470588,
+          0.898039215686,
+          0.564705882353
+        ],
+        "implied_scale_max": 0.5606573679608041,
+        "implied_scale_mean": 0.5436003316309916,
+        "implied_scale_min": 0.5206104131010055,
+        "implied_screen_alpha_max": 0.4307692307693515,
+        "implied_screen_alpha_mean": 0.4176638176616585,
+        "implied_screen_alpha_min": 0.3999999999959205,
+        "label": "ray_length_up",
+        "source_rgb": [
+          0.901960784314,
+          0.823529411765,
+          0.235294117647
+        ],
+        "xy": [
+          960,
+          490
+        ]
+      },
+      {
+        "fd90_glow_alpha": 0.71564364,
+        "final_rgb": [
+          0.482352941176,
+          0.482352941176,
+          0.482352941176
+        ],
+        "implied_scale_max": 0.5775686532091409,
+        "implied_scale_mean": 0.5775686532091409,
+        "implied_scale_min": 0.5775686532091409,
+        "implied_screen_alpha_max": 0.41333333333248723,
+        "implied_screen_alpha_mean": 0.4133333333324873,
+        "implied_screen_alpha_min": 0.41333333333248723,
+        "label": "ray_length_right",
+        "source_rgb": [
+          0.117647058824,
+          0.117647058824,
+          0.117647058824
+        ],
+        "xy": [
+          1010,
+          540
+        ]
+      }
+    ],
+    "current_local_compose_scale": 0.62,
+    "decision": "fd90-grounded-compose-unisolated",
+    "likely_next_focus": "fd90-aggregation-grounded-compose-scale",
+    "rejected_probe": {
+      "gain_scale_0_60": "worsened total Software mean versus current 0.62 in prior Mac probe",
+      "scale_override_1_0": "breaks strength-0 anchors"
+    },
+    "samples": [
+      {
+        "label": "center",
+        "post_normalize_glow_rgba": [
+          1,
+          1,
+          1,
+          0.71891218
+        ],
+        "ray_inputs": [
+          0.71891218,
+          0,
+          0,
+          0,
+          0
+        ],
+        "xy": [
+          960,
+          540
+        ]
+      },
+      {
+        "label": "ray_length_up",
+        "post_normalize_glow_rgba": [
+          1,
+          1,
+          1,
+          0.76832885
+        ],
+        "ray_inputs": [
+          0.76832885,
+          0,
+          0,
+          0,
+          0
+        ],
+        "xy": [
+          960,
+          490
+        ]
+      },
+      {
+        "label": "ray_length_right",
+        "post_normalize_glow_rgba": [
+          1,
+          1,
+          1,
+          0.71564364
+        ],
+        "ray_inputs": [
+          0.71564364,
+          0,
+          0,
+          0,
+          0
+        ],
+        "xy": [
+          1010,
+          540
+        ]
+      }
+    ]
+  },
+  "bt709_remeasure": {
+    "case_count": 9,
+    "exact_count": 1,
+    "groups": {
+      "rotation13": {
+        "case_count": 1,
+        "cases": [
+          {
+            "id": "kk_diagonal_len50_rotation13",
+            "max_diff": 66,
+            "mean_diff": 1.8808537085262345,
+            "nonzero_px_percent": 93.38623649691358
+          }
+        ],
+        "exact_count": 0,
+        "max_diff_max": 66,
+        "mean_sum": 1.8808537085262345
+      },
+      "strength0_anchor": {
+        "case_count": 4,
+        "cases": [
+          {
+            "id": "kk_vertical_len50_brightness94_strength0",
+            "max_diff": 1,
+            "mean_diff": 0.021527777777777778,
+            "nonzero_px_percent": 2.8703703703703702
+          },
+          {
+            "id": "kk_horizontal_len50_brightness94_strength0",
+            "max_diff": 0,
+            "mean_diff": 0.0,
+            "nonzero_px_percent": 0.0
+          },
+          {
+            "id": "kk_diagonal_len50_brightness94_strength0",
+            "max_diff": 3,
+            "mean_diff": 0.023751808449074076,
+            "nonzero_px_percent": 3.1409143518518516
+          },
+          {
+            "id": "kk_diagonal2_len50_brightness94_strength0",
+            "max_diff": 3,
+            "mean_diff": 0.023755425347222223,
+            "nonzero_px_percent": 3.1413966049382718
+          }
+        ],
+        "exact_count": 1,
+        "max_diff_max": 3,
+        "mean_sum": 0.06903501157407407
+      },
+      "strength100_single_ray": {
+        "case_count": 4,
+        "cases": [
+          {
+            "id": "kk_vertical_len50_brightness1_strength100",
+            "max_diff": 14,
+            "mean_diff": 1.6006433256172838,
+            "nonzero_px_percent": 92.05748456790124
+          },
+          {
+            "id": "kk_horizontal_len50_brightness1_strength100",
+            "max_diff": 11,
+            "mean_diff": 1.636485339506173,
+            "nonzero_px_percent": 96.15007716049382
+          },
+          {
+            "id": "kk_diagonal_len50_brightness1_strength100",
+            "max_diff": 23,
+            "mean_diff": 1.5067748119212963,
+            "nonzero_px_percent": 93.62268518518519
+          },
+          {
+            "id": "kk_diagonal2_len50_brightness1_strength100",
+            "max_diff": 23,
+            "mean_diff": 1.521236617476852,
+            "nonzero_px_percent": 93.36578896604938
+          }
+        ],
+        "exact_count": 0,
+        "max_diff_max": 23,
+        "mean_sum": 6.265140094521605
+      }
+    },
+    "max_diff_max": 66,
+    "mean_sum": 8.215028814621913
+  },
+  "classification": "ray-helper-and-fd90-grounded",
+  "compose_model_audit": {
+    "best_by_max": "current_gain_0_62",
+    "best_by_mean": "current_gain_0_62",
+    "current_total": {
+      "case_count": 9,
+      "exact_count": 1,
+      "max_diff": 66,
+      "mean_sum": 8.215028814621913
+    },
+    "decision": "preserve-current-compose-model",
+    "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmkirakira_compose_model_audit_20260625/compose_model_audit.json",
+    "rejected_variants": [
+      "gain_0_60",
+      "gain_0_5811",
+      "gain_0_5436",
+      "scale_override_1_0",
+      "premul_gain_0_62"
+    ],
+    "status": "available"
+  },
+  "decision": "blocked-compose-or-final-quantization",
+  "inputs": {
+    "aggregation_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/runtime_trace_comparisons/olmkirakira_aggregation_compose_bt709_20260624.json",
+    "boxfilter_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/runtime_trace_comparisons/olmkirakira_boxfilter_pass1_microprobe_20260624_bt709.json",
+    "compose_audit_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmkirakira_compose_model_audit_20260625/compose_model_audit.json",
+    "deep_stage_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/runtime_trace_comparisons/olmkirakira_deep_stage_values_20260624_bt709.json",
+    "remeasure_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmkirakira_remeasure_20260624_bt709_software/reports/diff.json"
+  },
+  "kind": "olmkirakira_decision_matrix",
+  "next_evidence": [
+    "Do not change global gain/premul compose unless new binary evidence contradicts the 2026-06-25 compose audit.",
+    "If Windows is needed later, request a compose-site/pre-writeback witness at the BT.709 residual hotspot, not broad PNGs.",
+    "Add 16/32bpc refs only after 8bpc compose/writeback behavior is stable."
+  ],
+  "ray_helper": {
+    "boxfilter_focus": "boxfilter-pass1-upstream-source-buffer-content",
+    "decision": "grounded-within-float-print-precision",
+    "deep_stage_focus": "ray-helper-stages-match-aggregation-or-compose",
+    "max_stage_delta": 1.230990600564752e-07
+  },
+  "recommended_action": "Do not reopen luma, boxFilter window, ray-helper choreography, or global compose scale. The remaining KiraKira residual belongs to merge-mode-1 compose/writeback/final quantization or a narrower residual hotspot.",
+  "schema": 1
+}

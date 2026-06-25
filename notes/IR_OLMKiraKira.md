@@ -11,7 +11,7 @@
   - `refs/win_references/olm_reference_return_windows_recapture_20260615/OLMKiraKira`
 - Current status: `binary-grounded / guarded`, not `AE exact`
 - 2026-06-24 decision matrix:
-  `refs/reports/olmkirakira_decision_matrix_20260624/decision_matrix.md`
+  `refs/conformance/olmkirakira_8bpc_decision.md`
   classifies the current blocker as `blocked-compose-or-final-quantization`.
   Ray-helper stages match Windows within float print precision after the
   BT.709 seed fix, and `FUN_18114fd90` aggregation is grounded at three
@@ -332,7 +332,7 @@ retuning.
 - `scripts/analyze_kirakira_decision_matrix.py` combines the BT.709 remeasure,
   deep stage comparison, pass-1 microprobe, and aggregation/compose return.
 - Latest report:
-  `refs/reports/olmkirakira_decision_matrix_20260624/decision_matrix.md`.
+  `refs/conformance/olmkirakira_8bpc_decision.md`.
 - Machine decision: `blocked-compose-or-final-quantization`.
 - BT.709 Software set: 9 cases, 1 exact, max-diff max `66`, mean sum
   `8.215029`.

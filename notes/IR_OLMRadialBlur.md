@@ -19,7 +19,7 @@
     20260605 extra/img2 set, and one 20260619 bulk return stores RadialBlur
     PNGs under an `OLMDirectionalBlur` folder.
   - 2026-06-24 decision matrix
-    `refs/reports/olmradialblur_decision_matrix_20260624/decision_matrix.md`
+    `refs/conformance/olmradialblur_8bpc_decision.md`
     classifies RadialBlur as `blocked-needs-narrow-proof`: Zoom is a guarded
     alpha-normalization/sampler residual, tiny Rotation is sampler/validity
     unresolved, and Inner has no exact/global candidate to promote.
@@ -116,7 +116,7 @@ Current binary-grounded sequence:
   conversion for this residual; the next proof belongs in Zoom polar
   alpha/sample accumulation.
 - 2026-06-24 decision matrix
-  `refs/reports/olmradialblur_decision_matrix_20260624/decision_matrix.md`
+  `refs/conformance/olmradialblur_8bpc_decision.md`
   keeps this slice at `guarded-alpha-normalization`: the only local floor-vs-
   Windows byte delta at the witness is alpha `+1`, and final byte packing is
   already ruled out.

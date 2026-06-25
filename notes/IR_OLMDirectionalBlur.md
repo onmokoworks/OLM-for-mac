@@ -22,7 +22,7 @@ Current verified reference slice:
   implementation blocked on binary/runtime evidence rather than tuning from
   the returned PNGs alone.
 - 2026-06-24 decision matrix:
-  `refs/reports/olmdirectionalblur_decision_matrix_20260624/decision_matrix.md`
+  `refs/conformance/olmdirectionalblur_8bpc_decision.md`
   classifies the current state as `blocked-await-runtime-or-asm-proof`.
   `rotated-front-strength` is the best numeric scaffold but not AEX-shaped;
   the best AEX-shaped candidate still has high residuals. The residual split
@@ -454,7 +454,7 @@ runtime witnesses rather than another broad PNG sweep.
   candidate matrix, residual cluster report, and focused 2026-06-24 runtime
   return.
 - Latest report:
-  `refs/reports/olmdirectionalblur_decision_matrix_20260624/decision_matrix.md`.
+  `refs/conformance/olmdirectionalblur_8bpc_decision.md`.
 - Machine decision: `blocked-await-runtime-or-asm-proof`.
 - Best overall candidate is `rotated-front-strength` (`mean_sum=18.197798`,
   `max=252`), but it is a measurement scaffold and not the confirmed A/B

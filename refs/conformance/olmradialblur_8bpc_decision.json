@@ -1,0 +1,122 @@
+{
+  "decision": "blocked-needs-narrow-proof",
+  "inner": {
+    "all_exact_candidates": [],
+    "best_by_mean_sum": "loop-minus-one",
+    "case_count": 10,
+    "decision": "blocked-no-global-toggle",
+    "next_evidence": "Typed FUN_180001c90 per-cell witness for one low-span cell and one Quality/strong cell.",
+    "reference": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/win_references/olm_reference_return_windows_20260617_radialblur_inner_full_software/OLMRadialBlur",
+    "top_candidates": [
+      {
+        "candidate": "loop-minus-one",
+        "exact_count": 0,
+        "improved_cases": 7,
+        "max_max": 255,
+        "mean_sum": 63.793178891782404,
+        "worsened_cases": 3
+      },
+      {
+        "candidate": "circular-wrap",
+        "exact_count": 0,
+        "improved_cases": 4,
+        "max_max": 255,
+        "mean_sum": 64.22105975115741,
+        "worsened_cases": 6
+      },
+      {
+        "candidate": "grid-aex-float",
+        "exact_count": 0,
+        "improved_cases": 6,
+        "max_max": 255,
+        "mean_sum": 64.31323061342593,
+        "worsened_cases": 4
+      },
+      {
+        "candidate": "dynamic-offset-aex-row",
+        "exact_count": 0,
+        "improved_cases": 2,
+        "max_max": 255,
+        "mean_sum": 64.31340241608797,
+        "worsened_cases": 0
+      }
+    ]
+  },
+  "inputs": {
+    "inner_csv": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmradialblur_inner_candidate_matrix_20260622_002848/candidate_matrix.csv",
+    "inner_summary_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmradialblur_inner_candidate_matrix_20260622_002848/summary.json",
+    "trace_comparison_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/runtime_trace_comparisons/olmradialblur_residual_witness_20260624.json",
+    "zoom_witness_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmradialblur_zoom_witness_20260624/audit.json"
+  },
+  "kind": "olmradialblur_decision_matrix",
+  "recommended_action": "Do not promote broad RadialBlur toggles from PNG matrices. Zoom is alpha-normalization/sampler-side; tiny Rotation needs sampler/validity proof; Inner needs typed per-cell helper evidence.",
+  "schema": 1,
+  "tiny_rotation": {
+    "case_id": "case_0010",
+    "classification": "inverse-sampler / validity-side unresolved; not explained by a simple final byte conversion tie",
+    "closest_sampler_float": [
+      -0.004081939347088337,
+      -0.004081939347088337,
+      -0.004081939347088337,
+      1.0
+    ],
+    "decision": "blocked-sampler-validity",
+    "final_rgba_u8": [
+      255,
+      255,
+      255,
+      255
+    ],
+    "next_evidence": "Exact inverse-sampler validity/border and pre-writeback path for the high-max top-border witness.",
+    "xy": {
+      "mac_candidate_rgba": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "reference_rgba": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "signed_delta_candidate_minus_reference": [
+        -255,
+        -255,
+        -255,
+        0
+      ],
+      "x": 1614,
+      "y": 6
+    }
+  },
+  "zoom": {
+    "case_id": "case_0009",
+    "decision": "guarded-alpha-normalization",
+    "interpretation": "RGB floats are essentially matched at the Zoom witness, but local alpha is clipped to 1.0 while the Windows trace returns 0.99999994. The remaining max=1 alpha residual is upstream of final byte packing and should be treated as sampler/alpha-normalization state, not a writeback conversion rule.",
+    "local_float": [
+      0.08224090933799744,
+      0.014130176045000553,
+      0.014130176045000553,
+      1.0
+    ],
+    "local_floor_minus_windows_u8": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "next_evidence": "Zoom polar alpha/sample accumulation; not final byte packing.",
+    "windows_float": [
+      0.08224078267812729,
+      0.014130095019936562,
+      0.014130095019936562,
+      0.9999999403953552
+    ],
+    "xy": [
+      6,
+      0
+    ]
+  }
+}

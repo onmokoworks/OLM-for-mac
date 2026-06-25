@@ -1,0 +1,158 @@
+{
+  "candidate_matrix": {
+    "best_aex_shaped": {
+      "candidate": "rotated-aex-trunc-output",
+      "case_count": 5,
+      "max_diff": 251,
+      "mean_sum": 22.066680169753084
+    },
+    "best_overall": {
+      "candidate": "rotated-front-strength",
+      "case_count": 5,
+      "max_diff": 252,
+      "mean_sum": 18.19779755015432
+    },
+    "cases": [
+      "case_0001",
+      "case_0002",
+      "case_0003",
+      "case_0004",
+      "case_0005"
+    ],
+    "classification": "no-exact-candidate",
+    "exact_candidates": [],
+    "implementation_warning": "best overall candidates are measurement scaffolds; AEX-shaped candidates remain high residual",
+    "profile": "wide",
+    "top_candidates": [
+      {
+        "candidate": "rotated-front-strength",
+        "case_count": 5,
+        "max_diff": 252,
+        "mean_sum": 18.19779755015432
+      },
+      {
+        "candidate": "direct",
+        "case_count": 5,
+        "max_diff": 253,
+        "mean_sum": 18.31072482638889
+      },
+      {
+        "candidate": "rotated-aex-trunc-output",
+        "case_count": 5,
+        "max_diff": 251,
+        "mean_sum": 22.066680169753084
+      },
+      {
+        "candidate": "rotated-aex-truncated-span",
+        "case_count": 5,
+        "max_diff": 251,
+        "mean_sum": 22.124634452160496
+      },
+      {
+        "candidate": "rotated-aex-choreo",
+        "case_count": 5,
+        "max_diff": 251,
+        "mean_sum": 22.124937789351854
+      }
+    ]
+  },
+  "decision": "blocked-await-runtime-or-asm-proof",
+  "inputs": {
+    "candidate_summary_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmdirectionalblur_candidate_matrix_20260622_010433/summary.json",
+    "residual_clusters_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmdirectionalblur_residual_clusters_20260622_022500/residual_clusters.json",
+    "trace_comparison_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/runtime_trace_comparisons/olmdirectionalblur_residual_witness_20260624.json"
+  },
+  "kind": "olmdirectionalblur_decision_matrix",
+  "next_evidence": [
+    "Successful runtime/asm proof for angle-0 case_0001 rowdriver accumulation or valid-alpha side channel.",
+    "Successful runtime/asm proof for diagonal case_0005 rotate/sampler/validity path.",
+    "Keep direct/rotated-front-strength as measurement baselines only, not implementation truth."
+  ],
+  "recommended_action": "Do not tune DirectionalBlur from broad PNG matrices. Need a typed angle-0 rowdriver/valid-alpha witness and a separate diagonal rotate-path sampler/validity witness before changing implementation.",
+  "residuals": {
+    "cases": [
+      {
+        "alpha_max": 0,
+        "case_id": "case_0001",
+        "max_diff": 164,
+        "mean_diff": 4.956984953703704,
+        "name": "angle0_case_0001",
+        "residual_kind": "angle0-rgb-only-rowdriver-or-valid-alpha",
+        "rgb_max": 164,
+        "witness": {
+          "abs_delta_rgba": [
+            164,
+            0,
+            0,
+            0
+          ],
+          "candidate_rgba": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "reference_rgba": [
+            164,
+            0,
+            0,
+            255
+          ],
+          "signed_delta_candidate_minus_reference": [
+            -164,
+            0,
+            0,
+            0
+          ],
+          "x": 494,
+          "y": 169
+        }
+      },
+      {
+        "alpha_max": 56,
+        "case_id": "case_0005",
+        "max_diff": 251,
+        "mean_diff": 2.297067901234568,
+        "name": "diagonal_case_0005",
+        "residual_kind": "diagonal-rgb-alpha-rotate-validity",
+        "rgb_max": 251,
+        "witness": {
+          "abs_delta_rgba": [
+            251,
+            0,
+            0,
+            0
+          ],
+          "candidate_rgba": [
+            252,
+            0,
+            0,
+            255
+          ],
+          "reference_rgba": [
+            1,
+            0,
+            0,
+            255
+          ],
+          "signed_delta_candidate_minus_reference": [
+            251,
+            0,
+            0,
+            0
+          ],
+          "x": 507,
+          "y": 367
+        }
+      }
+    ],
+    "classification": "split-angle0-vs-diagonal"
+  },
+  "runtime_trace": {
+    "classification": "not-actionable",
+    "has_per_pixel_values": false,
+    "likely_next_focus": "angle0:await-windows-trace; diagonal:await-windows-trace",
+    "status": "answered_partial"
+  },
+  "schema": 1
+}
