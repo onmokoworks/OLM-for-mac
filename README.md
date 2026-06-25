@@ -217,9 +217,11 @@ Smoother2 の narrow binary-grounded proof へ進む段階です。
 Smoother2 については
 `refs/conformance/olmsmoother2_current_aex_8bpc_decision.md`
 で、次に必要な証拠を writer-anchor から順番に固定しました。
-必要なら次に Windows へ渡す focused runtime trace package は
+送付済み focused runtime trace package は
 `refs/runtime_trace_packages/olm_runtime_trace_smoother2_current_aex_neighborhood_witness_20260624_235610.zip`
-です。
+です。2026-06-25 の返却で final writer は両 witness とも確認できましたが、
+`OLMSmoother2+0x350b` exact-XY 内部 predicate は未ヒットなので、内部
+branch の分類はまだ未解決です。
 
 Smoother2 は `0004 (1903,519)` と `0012 (91,841)` が逆向きの局所残差に
 分かれています。`0004` は Windows が半透明出力を足し、Mac 側は透明

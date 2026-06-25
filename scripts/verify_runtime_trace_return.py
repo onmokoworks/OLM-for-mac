@@ -118,6 +118,9 @@ def find_result_jsons(root: Path) -> list[Path]:
     for path in sorted(root.rglob("*.json")):
         if "__MACOSX" in path.parts or path.name.startswith("._"):
             continue
+        rel = str(path.relative_to(root)).replace("\\", "/")
+        if rel.startswith("request_package/") or "/request_package/" in rel:
+            continue
         try:
             data = load_json(path)
         except Exception:
@@ -149,7 +152,12 @@ def read_answer_summary(source_root: Path, manifest_path: str | None) -> str:
         return f"answer file unreadable: {manifest_path}: {exc}"
 
 
-def normalize_results(data: dict[str, Any], source_path: Path, source_root: Path) -> list[dict[str, Any]]:
+def normalize_results(
+    data: dict[str, Any],
+    source_path: Path,
+    source_root: Path,
+    default_request_id: str | None = None,
+) -> list[dict[str, Any]]:
     if data.get("request_id") and data.get("status") and "results" not in data and "runtime_trace_results" not in data:
         observations = {
             key: value
@@ -198,10 +206,10 @@ def normalize_results(data: dict[str, Any], source_path: Path, source_root: Path
     for index, row in enumerate(raw_results, start=1):
         if not isinstance(row, dict):
             raise ValueError(f"{source_path}: result #{index} must be an object")
-        request_id = row.get("request_id")
+        request_id = row.get("request_id") or data.get("request_id") or default_request_id
         if not request_id:
             raise ValueError(f"{source_path}: result #{index} missing request_id")
-        status = str(row.get("status", "answered")).lower()
+        status = str(row.get("status", data.get("status", "answered"))).lower()
         summary = row.get("summary") or row.get("answer") or row.get("notes") or ""
         observations = row.get("observations", row.get("values", row.get("fact")))
         if observations is None:
@@ -224,6 +232,7 @@ def normalize_results(data: dict[str, Any], source_path: Path, source_root: Path
 
 def build_summary(root: Path, source_root: Path, package: Path | None) -> dict[str, Any]:
     required_ids = runtime_action_ids(package)
+    default_request_id = required_ids[0] if len(required_ids) == 1 else None
     result_files = find_result_jsons(source_root)
     if not result_files:
         raise ValueError("no runtime trace result JSON found")
@@ -232,7 +241,7 @@ def build_summary(root: Path, source_root: Path, package: Path | None) -> dict[s
         data = load_json(path)
         if not isinstance(data, dict):
             continue
-        results.extend(normalize_results(data, path, source_root))
+        results.extend(normalize_results(data, path, source_root, default_request_id))
 
     by_id: dict[str, list[dict[str, Any]]] = {}
     for row in results:
@@ -241,7 +250,12 @@ def build_summary(root: Path, source_root: Path, package: Path | None) -> dict[s
     required = []
     for request_id in required_ids:
         rows = by_id.get(request_id, [])
-        answered = [row for row in rows if row["status"] in {"answered", "ok", "done", "complete", "completed"}]
+        answered = [
+            row
+            for row in rows
+            if row["status"] in {"answered", "ok", "done", "complete", "completed"}
+            or row["status"].startswith("answered")
+        ]
         required.append(
             {
                 "request_id": request_id,
