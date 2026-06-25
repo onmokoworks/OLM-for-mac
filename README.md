@@ -63,6 +63,8 @@ summary は `python3 scripts/generate_conformance_summary.py` で
 `refs/reports/conformance_summary_packaged_8bpc.md` にローカル生成します。
 この集計では 70 ケースを `reference_kind` / `runner_kind` /
 `result_status` に分け、`AE exact` と known-red / residual を混ぜません。
+OLMBlur の 8bpc 判断は `refs/conformance/olmblur_8bpc_decision.md` に固定し、
+`preserve-normalized-ae-exact` として扱います。
 
 ## 未解決点
 

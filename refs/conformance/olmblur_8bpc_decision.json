@@ -1,0 +1,149 @@
+{
+  "cli_residuals": {
+    "case_0006_cli_prewriteback": [
+      "0x1.73p+7",
+      "0x1.44a3c6p-4",
+      "0x1.44a3c6p-4"
+    ],
+    "case_0006_prewriteback": [
+      "0x1.72fffe0000000p+7",
+      "0x1.44a3c20000000p-4",
+      "0x1.44a3c20000000p-4"
+    ],
+    "case_0007_writer_family": "OLMBlur+0x7FDF",
+    "case_ids": [
+      "case_0006",
+      "case_0007"
+    ],
+    "classification": "diagnostic-max1",
+    "diff_summary": {
+      "fail": 0,
+      "missing": 0,
+      "ok": 2,
+      "total": 2
+    },
+    "max_diff": 1,
+    "nonzero_px": 4
+  },
+  "decision": "preserve-normalized-ae-exact",
+  "inputs": {
+    "canonicalization_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/software_reference_canonicalization_8bpc.json",
+    "provenance_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmblur_reference_provenance_20260622_025614/audit.json",
+    "trace_comparison_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/runtime_trace_comparisons/olmblur_repeat_threshold_20260620/olmblur_repeat_threshold.json"
+  },
+  "kind": "olmblur_decision_matrix",
+  "legacy_drift": {
+    "cases": [
+      {
+        "id": "case_0001",
+        "max_at": {
+          "candidate": [
+            166,
+            0,
+            0,
+            255
+          ],
+          "channel": 0,
+          "reference": [
+            225,
+            0,
+            0,
+            255
+          ],
+          "x": 476,
+          "y": 197
+        },
+        "max_diff": 59,
+        "mean_diff": 1.287920524691358
+      },
+      {
+        "id": "case_0002",
+        "max_at": {
+          "candidate": [
+            166,
+            0,
+            0,
+            255
+          ],
+          "channel": 0,
+          "reference": [
+            225,
+            0,
+            0,
+            255
+          ],
+          "x": 476,
+          "y": 197
+        },
+        "max_diff": 59,
+        "mean_diff": 1.287920524691358
+      },
+      {
+        "id": "case_0003",
+        "max_at": {
+          "candidate": [
+            22,
+            0,
+            0,
+            255
+          ],
+          "channel": 0,
+          "reference": [
+            8,
+            0,
+            0,
+            255
+          ],
+          "x": 0,
+          "y": 0
+        },
+        "max_diff": 14,
+        "mean_diff": 1.7275925925925926
+      },
+      {
+        "id": "case_0004",
+        "max_at": {
+          "candidate": [
+            171,
+            0,
+            0,
+            255
+          ],
+          "channel": 0,
+          "reference": [
+            229,
+            0,
+            0,
+            255
+          ],
+          "x": 479,
+          "y": 200
+        },
+        "max_diff": 58,
+        "mean_diff": 1.2681153549382715
+      }
+    ],
+    "classification": "normalized-software-exact-with-legacy-drift",
+    "legacy_nonzero_count": 4,
+    "recommended_action": "Prefer normalized Software references for OLMBlur; do not tune implementation behavior toward the older drift cases. Keep the CLI max=1 witnesses as binary-grounding diagnostics."
+  },
+  "next_evidence": [
+    "Packaged Mac AE exact against canonical normalized 8bpc OLMBlur refs is already established; preserve it.",
+    "16bpc and 32bpc Software reference coverage.",
+    "Only continue CLI max=1 closure if binary-grounding the true accumulation/helper and Legacy border/all-same state becomes necessary."
+  ],
+  "normalized_8bpc": {
+    "case_count": 7,
+    "classification": "exact",
+    "exact_count": 7,
+    "normalized_nonzero_count": 0,
+    "status": "normalized-software-exact"
+  },
+  "recommended_action": "Do not tune OLMBlur from the old 20260604 drift or from AE-free CLI max=1 witnesses. The current trace points at accumulation/helper state before byte output, while packaged 8bpc AE slices are exact.",
+  "runtime_trace": {
+    "classification": "prewriteback-or-helper-state",
+    "likely_next_focus": "nonlegacy-accumulation-or-writeback",
+    "present": true
+  },
+  "schema": 1
+}

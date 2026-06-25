@@ -48,7 +48,8 @@
       "counts": {
         "AE exact": 7
       },
-      "notes": "7/7 packaged 8bpc Mac AE exact; CLI max=1 remains a separate diagnostic."
+      "evidence_status": "AE exact but CLI unexplained",
+      "notes": "7/7 packaged 8bpc Mac AE exact; feature-level evidence status is AE exact but CLI unexplained because CLI max=1 remains a separate diagnostic."
     },
     {
       "plugin": "OLMColorKey",
@@ -59,6 +60,7 @@
         "AE exact": 8,
         "AE residual": 1
       },
+      "evidence_status": "packaged AE-host measured",
       "notes": "ColorKey case_0009 is exact against normalized refs; old 20260604 Edge Blur drift is not an active AE failure."
     },
     {
@@ -69,6 +71,7 @@
       "counts": {
         "AE exact": 3
       },
+      "evidence_status": "packaged AE-host measured",
       "notes": "3/3 packaged 8bpc Mac AE exact."
     },
     {
@@ -79,6 +82,7 @@
       "counts": {
         "AE exact": 12
       },
+      "evidence_status": "packaged AE-host measured",
       "notes": "12/12 packaged 8bpc Mac AE exact."
     },
     {
@@ -89,6 +93,7 @@
       "counts": {
         "AE exact": 16
       },
+      "evidence_status": "packaged AE-host measured",
       "notes": "16/16 packaged 8bpc Mac AE exact."
     },
     {
@@ -99,6 +104,7 @@
       "counts": {
         "AE exact": 1
       },
+      "evidence_status": "packaged AE-host measured",
       "notes": "1/1 packaged 8bpc Mac AE exact."
     },
     {
@@ -109,6 +115,7 @@
       "counts": {
         "AE exact": 3
       },
+      "evidence_status": "packaged AE-host measured",
       "notes": "3/3 packaged 8bpc Mac AE exact; v2 compatibility policy remains separate."
     },
     {
@@ -119,6 +126,7 @@
       "counts": {
         "AE exact": 12
       },
+      "evidence_status": "packaged AE-host measured",
       "notes": "12/12 no-key grid packaged 8bpc Mac AE exact."
     },
     {
@@ -129,6 +137,7 @@
       "counts": {
         "known-red": 7
       },
+      "evidence_status": "packaged AE-host measured",
       "notes": "Known-red legacy/key/gamma follow-up. Do not count these failures as AE exact."
     }
   ],
@@ -152,7 +161,7 @@
       "nonzero_px_percent": 0.0,
       "params": {},
       "source_report": "refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmblur_exact_20260619/reports/ae_pixel_all_exact.json",
-      "notes": "7/7 packaged 8bpc Mac AE exact; CLI max=1 remains a separate diagnostic."
+      "notes": "7/7 packaged 8bpc Mac AE exact; feature-level evidence status is AE exact but CLI unexplained because CLI max=1 remains a separate diagnostic."
     },
     {
       "plugin": "OLMBlur",
@@ -173,7 +182,7 @@
       "nonzero_px_percent": 0.0,
       "params": {},
       "source_report": "refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmblur_exact_20260619/reports/ae_pixel_all_exact.json",
-      "notes": "7/7 packaged 8bpc Mac AE exact; CLI max=1 remains a separate diagnostic."
+      "notes": "7/7 packaged 8bpc Mac AE exact; feature-level evidence status is AE exact but CLI unexplained because CLI max=1 remains a separate diagnostic."
     },
     {
       "plugin": "OLMBlur",
@@ -194,7 +203,7 @@
       "nonzero_px_percent": 0.0,
       "params": {},
       "source_report": "refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmblur_exact_20260619/reports/ae_pixel_all_exact.json",
-      "notes": "7/7 packaged 8bpc Mac AE exact; CLI max=1 remains a separate diagnostic."
+      "notes": "7/7 packaged 8bpc Mac AE exact; feature-level evidence status is AE exact but CLI unexplained because CLI max=1 remains a separate diagnostic."
     },
     {
       "plugin": "OLMBlur",
@@ -215,7 +224,7 @@
       "nonzero_px_percent": 0.0,
       "params": {},
       "source_report": "refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmblur_exact_20260619/reports/ae_pixel_all_exact.json",
-      "notes": "7/7 packaged 8bpc Mac AE exact; CLI max=1 remains a separate diagnostic."
+      "notes": "7/7 packaged 8bpc Mac AE exact; feature-level evidence status is AE exact but CLI unexplained because CLI max=1 remains a separate diagnostic."
     },
     {
       "plugin": "OLMBlur",
@@ -236,7 +245,7 @@
       "nonzero_px_percent": 0.0,
       "params": {},
       "source_report": "refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmblur_exact_20260619/reports/ae_pixel_all_exact.json",
-      "notes": "7/7 packaged 8bpc Mac AE exact; CLI max=1 remains a separate diagnostic."
+      "notes": "7/7 packaged 8bpc Mac AE exact; feature-level evidence status is AE exact but CLI unexplained because CLI max=1 remains a separate diagnostic."
     },
     {
       "plugin": "OLMBlur",
@@ -257,7 +266,7 @@
       "nonzero_px_percent": 0.0,
       "params": {},
       "source_report": "refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmblur_exact_20260619/reports/ae_pixel_all_exact.json",
-      "notes": "7/7 packaged 8bpc Mac AE exact; CLI max=1 remains a separate diagnostic."
+      "notes": "7/7 packaged 8bpc Mac AE exact; feature-level evidence status is AE exact but CLI unexplained because CLI max=1 remains a separate diagnostic."
     },
     {
       "plugin": "OLMBlur",
@@ -278,7 +287,7 @@
       "nonzero_px_percent": 0.0,
       "params": {},
       "source_report": "refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmblur_exact_20260619/reports/ae_pixel_all_exact.json",
-      "notes": "7/7 packaged 8bpc Mac AE exact; CLI max=1 remains a separate diagnostic."
+      "notes": "7/7 packaged 8bpc Mac AE exact; feature-level evidence status is AE exact but CLI unexplained because CLI max=1 remains a separate diagnostic."
     },
     {
       "plugin": "OLMColorKey",

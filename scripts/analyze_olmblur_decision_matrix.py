@@ -148,7 +148,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "decision": decision,
         "recommended_action": action,
         "next_evidence": [
-            "Mac AE exact against canonical normalized 8bpc OLMBlur refs.",
+            "Packaged Mac AE exact against canonical normalized 8bpc OLMBlur refs is already established; preserve it.",
             "16bpc and 32bpc Software reference coverage.",
             "Only continue CLI max=1 closure if binary-grounding the true accumulation/helper and Legacy border/all-same state becomes necessary.",
         ],

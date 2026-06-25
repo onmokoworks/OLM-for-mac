@@ -20,7 +20,8 @@ SUITES = [
         "feature": "OLMBlur packaged normalized slices",
         "report": "refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmblur_exact_20260619/reports/ae_pixel_all_exact.json",
         "result_on_diff": "AE residual",
-        "notes": "7/7 packaged 8bpc Mac AE exact; CLI max=1 remains a separate diagnostic.",
+        "notes": "7/7 packaged 8bpc Mac AE exact; feature-level evidence status is AE exact but CLI unexplained because CLI max=1 remains a separate diagnostic.",
+        "evidence_status": "AE exact but CLI unexplained",
     },
     {
         "plugin": "OLMColorKey",
@@ -191,6 +192,7 @@ def build_manifest() -> dict[str, Any]:
                 "report": rel(report_path),
                 "case_count": len(rows),
                 "counts": dict(sorted(suite_counts.items())),
+                "evidence_status": suite.get("evidence_status", "packaged AE-host measured"),
                 "notes": suite["notes"],
             }
         )
@@ -254,14 +256,15 @@ def write_markdown(manifest: dict[str, Any], path: Path) -> None:
             "",
             "## Suites",
             "",
-            "| Feature | Cases | Counts | Source report |",
-            "| --- | ---: | --- | --- |",
+            "| Feature | Cases | Counts | Evidence status | Source report |",
+            "| --- | ---: | --- | --- | --- |",
         ]
     )
     for suite in manifest["suites"]:
         counts = ", ".join(f"{key}={value}" for key, value in suite["counts"].items())
         lines.append(
-            f"| {suite['feature']} | {suite['case_count']} | `{counts}` | `{suite['report']}` |"
+            f"| {suite['feature']} | {suite['case_count']} | `{counts}` | "
+            f"`{suite['evidence_status']}` | `{suite['report']}` |"
         )
     lines.extend(
         [

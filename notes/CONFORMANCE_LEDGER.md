@@ -12,6 +12,8 @@ Machine-generated M0 summary:
   `refs/reports/conformance_summary_packaged_8bpc.md`
 - Scope: packaged 8bpc AE-host validation, 70 cases.
 - Current machine count: `AE exact=62`, `AE residual=1`, `known-red=7`.
+- OLMBlur 8bpc decision:
+  `refs/conformance/olmblur_8bpc_decision.md`
 
 ## Current Feature Status
 

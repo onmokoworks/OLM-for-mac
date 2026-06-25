@@ -41,6 +41,8 @@ def main() -> int:
         assert summary["counts"]["AE residual"] == 1
         assert summary["counts"]["known-red"] == 7
         assert summary["by_plugin"]["OLMBlur"]["AE exact"] == 7
+        blur_suite = next(row for row in manifest["suites"] if row["plugin"] == "OLMBlur")
+        assert blur_suite["evidence_status"] == "AE exact but CLI unexplained"
         assert summary["by_plugin"]["OLMColorKey"]["AE exact"] == 8
         assert summary["by_plugin"]["OLMColorKey"]["AE residual"] == 1
         assert summary["by_plugin"]["OLMSmoother2"]["AE exact"] == 12
