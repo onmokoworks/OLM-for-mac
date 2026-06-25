@@ -60,6 +60,14 @@ or binary-unresolved features such as RadialBlur, KiraKira, DirectionalBlur,
 and Smoother2 legacy key/gamma. It also excludes 32bpc until the float compare
 policy is fixed.
 
+Preflight verification for the project-local zip passed on 2026-06-25:
+
+- `python3 refs/scripts/verify_reference_request_package.py handoffs/windows_batch/olm_windows_reference_request_20260625_16bpc_normalized_exact.zip`
+- `python3 refs/scripts/smoke_generate_bitdepth_reference_request.py`
+
+The packaged request contains one `software_16bpc` / `SOFTWARE` render set and
+45 unique cases: OLMBlur 7, OLMColorKey 9, and OLMDistanceGradation 29.
+
 ## Request Shape
 
 Each future bit-depth request should keep the same logical case ID and add a

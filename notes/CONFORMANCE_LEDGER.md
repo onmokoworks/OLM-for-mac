@@ -50,6 +50,10 @@ Machine-generated M0 summary:
   `refs/reference_requests/olm_bitdepth_16bpc_normalized_exact_20260625.json`.
   Project-local Windows package:
   `handoffs/windows_batch/olm_windows_reference_request_20260625_16bpc_normalized_exact.zip`.
+  Preflight passed with `verify_reference_request_package.py` and
+  `smoke_generate_bitdepth_reference_request.py`: the zip contains one request,
+  `software_16bpc` / `SOFTWARE`, with 45 unique cases split as OLMBlur 7,
+  OLMColorKey 9, and OLMDistanceGradation 29.
   32bpc remains excluded until the float comparison policy is fixed.
 - 2026-06-25 `OLMSmoother2` current-AEX proof plan:
   `refs/reports/olmsmoother2_current_aex_proof_plan_20260625/proof_plan.md`.
