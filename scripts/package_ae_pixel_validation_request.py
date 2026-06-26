@@ -103,6 +103,17 @@ OLMSMOOTHER2_NO_KEY_GRID_CASES = [
     "sm2_no_key_s050_r3",
     "sm2_no_key_s100_r3",
 ]
+BITDEPTH16_OLMBLUR_CASES = [f"olmblur__{case_id}" for case_id in OLMBLUR_ALL_CASES]
+BITDEPTH16_OLMCOLORKEY_CASES = [f"olmcolorkey__{case_id}" for case_id in OLMCOLORKEY_ALL_CASES]
+BITDEPTH16_OLMDISTANCEGRADATION_BASIC_CASES = [
+    f"olmdistancegradation_basic__{case_id}" for case_id in OLMDISTANCEGRADATION_BASIC_CASES
+]
+BITDEPTH16_OLMDISTANCEGRADATION_EXTENDED_CASES = [
+    f"olmdistancegradation_extended__{case_id}" for case_id in OLMDISTANCEGRADATION_EXTENDED_CASES
+]
+BITDEPTH16_OLMDISTANCEGRADATION_BLUR_CASES = [
+    f"olmdistancegradation_blur__{case_id}" for case_id in OLMDISTANCEGRADATION_BLUR_CASES
+]
 PRESETS = [
     "olmblur",
     "olmblur_exact",
@@ -119,6 +130,11 @@ PRESETS = [
     "olmsmoother",
     "olmsmoother2",
     "olmsmoother2_no_key_grid",
+    "bitdepth16_olmblur_exact",
+    "bitdepth16_olmcolorkey_exact",
+    "bitdepth16_olmdistancegradation_basic_exact",
+    "bitdepth16_olmdistancegradation_extended_exact",
+    "bitdepth16_olmdistancegradation_blur_exact",
 ]
 REFERENCE_PROFILES = ["legacy", "normalized-20260618"]
 
@@ -217,6 +233,13 @@ def profile_reference(root: Path, preset: str, profile: str) -> Path | None:
 
 
 def preset_config(root: Path, preset: str, reference: Path | None, reference_profile: str) -> dict:
+    bitdepth16_reference = (
+        root
+        / "refs"
+        / "win_references"
+        / "olm_bitdepth_16bpc_normalized_exact_20260625"
+        / "OLMbit-depthconformancebatch"
+    )
     configs = {
         "olmblur": {
             "request_id": "ae_pixel_olmblur_20260606",
@@ -471,6 +494,81 @@ def preset_config(root: Path, preset: str, reference: Path | None, reference_pro
                 {
                     "name": "no_key_grid_exact",
                     "case_ids": OLMSMOOTHER2_NO_KEY_GRID_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
+                },
+            ],
+        },
+        "bitdepth16_olmblur_exact": {
+            "request_id": "ae_pixel_bitdepth16_olmblur_exact_20260625",
+            "effect_name": "OLM Blur",
+            "effect_match_name": "OLM OLM Blur",
+            "reference": bitdepth16_reference,
+            "threshold_groups": [
+                {
+                    "name": "16bpc_all_exact",
+                    "case_ids": BITDEPTH16_OLMBLUR_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
+                },
+            ],
+        },
+        "bitdepth16_olmcolorkey_exact": {
+            "request_id": "ae_pixel_bitdepth16_olmcolorkey_exact_20260625",
+            "effect_name": "OLM Color Key",
+            "effect_match_name": "OLM Color Key",
+            "reference": bitdepth16_reference,
+            "threshold_groups": [
+                {
+                    "name": "16bpc_all_exact",
+                    "case_ids": BITDEPTH16_OLMCOLORKEY_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
+                },
+            ],
+        },
+        "bitdepth16_olmdistancegradation_basic_exact": {
+            "request_id": "ae_pixel_bitdepth16_olmdistancegradation_basic_exact_20260625",
+            "effect_name": "Distance Gradation",
+            "effect_match_name": "OLM Distance Gradation",
+            "reference": bitdepth16_reference,
+            "threshold_groups": [
+                {
+                    "name": "16bpc_basic_exact",
+                    "case_ids": BITDEPTH16_OLMDISTANCEGRADATION_BASIC_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
+                },
+            ],
+        },
+        "bitdepth16_olmdistancegradation_extended_exact": {
+            "request_id": "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625",
+            "effect_name": "Distance Gradation",
+            "effect_match_name": "OLM Distance Gradation",
+            "reference": bitdepth16_reference,
+            "threshold_groups": [
+                {
+                    "name": "16bpc_extended_exact",
+                    "case_ids": BITDEPTH16_OLMDISTANCEGRADATION_EXTENDED_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
+                },
+            ],
+        },
+        "bitdepth16_olmdistancegradation_blur_exact": {
+            "request_id": "ae_pixel_bitdepth16_olmdistancegradation_blur_exact_20260625",
+            "effect_name": "Distance Gradation",
+            "effect_match_name": "OLM Distance Gradation",
+            "reference": bitdepth16_reference,
+            "threshold_groups": [
+                {
+                    "name": "16bpc_blur_exact",
+                    "case_ids": BITDEPTH16_OLMDISTANCEGRADATION_BLUR_CASES,
                     "max_diff": 0,
                     "mean_diff": 0.0,
                     "nonzero_px_percent": 0.0,

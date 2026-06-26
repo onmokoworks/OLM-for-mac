@@ -95,6 +95,24 @@ def make_ae_pixel_validation_bundle_return(repo: Path, tmp_path: Path) -> Path:
     return bundle_zip
 
 
+def make_ae_pixel_batch_return(repo: Path, tmp_path: Path) -> tuple[Path, Path]:
+    build_root = tmp_path / "ae_pixel_batch_build"
+    build_root.mkdir()
+    mac_zip = make_mac_package(repo, build_root)
+    mac_root = extract_zip(mac_zip, build_root / "mac_for_ae_pixel_batch")
+    request_dir = build_root / "requests"
+    returns_dir = build_root / "returns"
+    request_dir.mkdir()
+    returns_dir.mkdir()
+    for _plugin_name, _target_name, _request_id, zip_name in PIXEL_REQUESTS[:2]:
+        request_zip = mac_root / "AE_PIXEL_VALIDATION" / zip_name
+        shutil.copy2(request_zip, request_dir / zip_name)
+        result_dir = build_root / f"returned_{Path(zip_name).stem}"
+        copy_expected_as_returned(request_zip, result_dir.parent, result_dir.name)
+        zip_dir(result_dir, returns_dir / f"returned_{Path(zip_name).stem}_mac_ae.zip")
+    return request_dir, returns_dir
+
+
 def make_windows_ref_return(tmp_path: Path) -> tuple[Path, Path, Path]:
     requests_dir = tmp_path / "requests"
     request_path = requests_dir / "synthetic_intake_20260606.json"
@@ -192,6 +210,27 @@ def main() -> int:
             return 1
         if "[OK] AE pixel validation return verified" not in ae_pixel_proc.stdout:
             print("[FAIL] intake did not verify bundled AE pixel validation returns", file=sys.stderr)
+            return 1
+
+        batch_request_dir, batch_returns_dir = make_ae_pixel_batch_return(repo, tmp_path)
+        ae_pixel_batch_proc = run_capture(
+            [
+                sys.executable,
+                str(intake),
+                str(batch_returns_dir),
+                "--kind",
+                "ae-pixel-validation",
+                "--ae-pixel-requests-dir",
+                str(batch_request_dir),
+                "--run-dir",
+                str(tmp_path / "ae_pixel_batch_verify_run"),
+            ],
+            repo,
+        )
+        if ae_pixel_batch_proc.returncode != 0:
+            return ae_pixel_batch_proc.returncode
+        if "[OK] AE pixel validation batch return verified" not in ae_pixel_batch_proc.stdout:
+            print("[FAIL] intake did not verify AE pixel validation batch returns", file=sys.stderr)
             return 1
 
         proc = run_capture(

@@ -77,6 +77,7 @@ def parse_args() -> argparse.Namespace:
             "kirakira-boxfilter-pass1-microprobe",
             "kirakira-aggregation-compose-bt709",
             "radialblur-residual-witness",
+            "radialblur-inner-cell-witness",
             "directionalblur-residual-witness",
             "smoother2-no-key-grid",
             "smoother2-legacy-key-gamma",
@@ -88,6 +89,7 @@ def parse_args() -> argparse.Namespace:
             "smoother2-legacy-current-aex-residuals",
             "smoother2-legacy-current-aex-polygon",
             "smoother2-current-aex-f270-witness",
+            "smoother2-current-aex-writer-frame-followup",
             "distancegradation-field-prep",
         ],
         default="hard-paths",
@@ -694,6 +696,61 @@ def smoother2_current_aex_f270_witness_action() -> dict[str, Any]:
     }
 
 
+def smoother2_current_aex_writer_frame_followup_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmsmoother2_current_aex_writer_frame_followup_trace_20260625",
+        "plugin_area": "OLMSmoother2 current-AEX writer-frame cce0 producer trace",
+        "mode": "external-trace",
+        "command": (
+            "Trace only the current-AEX Software recapture "
+            "`smoother2_legacy_full_current_aex_recapture_20260621` with the "
+            "current installed OLMSmoother2 AEX. This follows up the "
+            "2026-06-25 neighborhood return: final writer watchpoints hit for "
+            "`legacy_case_0012_gamma5_red_blue_current_aex` pixel `(91,841)` "
+            "and `legacy_case_0004_current_aex` pixel `(1903,519)`, but the "
+            "`OLMSmoother2+0x350b` `@r9 == target_xy` predicate did not hit. "
+            "Do not repeat that `@r9`-only coordinate predicate as the primary "
+            "proof. Use the reliable final writer watchpoint/output-address "
+            "anchor from `FUN_180003370` instead. At writer entry "
+            "`OLMSmoother2+0x3370`, compute all three candidate target output "
+            "addresses from the three output worlds exactly as in the previous "
+            "writer trace, arm write watchpoints on all three, and stop when "
+            "the watched address is written at `OLMSmoother2+0x3610`. For each "
+            "target writer stop, dump: module base, the watched address, "
+            "full registers, full stack around `@rsp-0xa0..@rsp+0x1e0`, "
+            "`@rsi-0x40..@rsi+0x80`, and `r12/r13/r15/rbp` pointee windows. "
+            "Then reconstruct the same `FUN_18000cce0` call frame from the "
+            "writer stack. In `FUN_180003370`, decomp shows the call as "
+            "`FUN_18000cce0(&local_f0,&local_b8,&local_d8,&local_104,param_8,"
+            "param_9)`; immediately after cce0 and before gamma/premultiply, "
+            "the stack contains `local_104=x`, `local_100=y`, and "
+            "`local_f0/local_ec/local_e8/local_e4` result floats. The previous "
+            "writer dumps show these local values still visible near the "
+            "writer stop, e.g. for 0012 stack dwords near the stop include "
+            "`x=0x5b`, `y=0x349`, floats `1,1,1,1`, and for 0004 include "
+            "`x=0x76f`, `y=0x207`, floats approximately "
+            "`0.80824906,0.80824906,0.80824906,0.44156867`. Confirm these "
+            "locations explicitly. If possible, set a one-shot breakpoint at "
+            "the return address of the exact cce0 call in the same writer "
+            "frame, rather than filtering `+0x350b` by `@r9`. If live "
+            "backtracking is too risky, return a complete reconstructed "
+            "argument block for local analysis and a concrete reason why the "
+            "exact cce0 callsite cannot be isolated."
+        ),
+        "stop_condition": (
+            "A satisfactory answer must classify both center-pixel mismatches "
+            "or provide exact failure evidence. For 0012, report whether cce0 "
+            "already returns `[1,1,1,1]` / transparent packed output from an "
+            "empty/suppressed polygon, or whether an upstream append exists "
+            "and is later suppressed. For 0004, report whether cce0 already "
+            "returns approximately `[0.808249,0.808249,0.808249,0.441569]` "
+            "and identify the producer: c280 switch index, helper append, "
+            "fallback, or alternate path. Do not return only final writer "
+            "bytes; those are already known."
+        ),
+    }
+
+
 def distancegradation_field_prep_action() -> dict[str, Any]:
     return {
         "request_id": "olmdistancegradation_field_prep_runtime_trace_20260619",
@@ -766,6 +823,35 @@ def radialblur_residual_witness_action() -> dict[str, Any]:
             "sampler coordinate, validity/border, normalization, or writeback. "
             "If a breakpoint fails, return the exact failed address/condition "
             "and the closest available pre-output/final writer values."
+        ),
+    }
+
+
+def radialblur_inner_cell_witness_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmradialblur_inner_cell_witness_trace_20260625",
+        "plugin_area": "OLMRadialBlur Inner FUN_180001c90 typed per-cell witness",
+        "mode": "external-trace",
+        "command": (
+            "Trace the OLMRadialBlur Inner cases selected in "
+            "`refs/reports/olmradialblur_inner_witness_plan_20260625/witness_plan.md`. "
+            "Do not return broad PNGs and do not tune from the global candidate "
+            "matrix. For `rb_inner_only_strength_large` and `rb_inner_quality_1`, "
+            "capture typed values at the FUN_180001c90 scatter/helper level for "
+            "one representative residual cell each: resolved span, span gate, "
+            "table index, table divisor, loop bound, source polar row/column, "
+            "destination polar row/column, border/underflow decision, gaussian "
+            "or table weight, accumulated RGBA numerator, denominator, and the "
+            "post-scatter value consumed by writeback. If those two witnesses do "
+            "not explain the split, also capture `rb_inner_edgefade_only` with "
+            "prepass alpha/factor plane values before FUN_180001c90."
+        ),
+        "stop_condition": (
+            "Return enough typed per-cell evidence to decide whether Inner needs "
+            "a family-specific circular wrap, loop-minus-one, table-span-minus-one, "
+            "or prepass correction. If a breakpoint/watchpoint fails, return the "
+            "exact function address, condition, case_id, pixel/cell, and closest "
+            "available local variables instead of marking the request complete."
         ),
     }
 
@@ -900,6 +986,8 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [kirakira_aggregation_compose_bt709_action()]
     if profile == "radialblur-residual-witness":
         return [radialblur_residual_witness_action()]
+    if profile == "radialblur-inner-cell-witness":
+        return [radialblur_inner_cell_witness_action()]
     if profile == "directionalblur-residual-witness":
         return [directionalblur_residual_witness_action()]
     if profile == "smoother2-no-key-grid":
@@ -922,6 +1010,8 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [smoother2_legacy_current_aex_polygon_action()]
     if profile == "smoother2-current-aex-f270-witness":
         return [smoother2_current_aex_f270_witness_action()]
+    if profile == "smoother2-current-aex-writer-frame-followup":
+        return [smoother2_current_aex_writer_frame_followup_action()]
     if profile == "distancegradation-field-prep":
         return [distancegradation_field_prep_action()]
     return runtime_actions(snapshot)
@@ -3042,6 +3132,20 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("refs/reports/olmradialblur_residual_clusters_20260622_011750/residual_clusters.md"),
             Path("refs/reports/olmradialblur_residual_clusters_20260622_011750/residual_clusters.json"),
         ]
+    elif profile == "radialblur-inner-cell-witness":
+        files = [
+            TRACE_NOTE,
+            Path("notes/IR_OLMRadialBlur.md"),
+            Path("notes/OLMRadialBlur_ASM_FACTS.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/conformance/olmradialblur_8bpc_decision.json"),
+            Path("refs/conformance/olmradialblur_8bpc_decision.md"),
+            Path("refs/reference_requests/radialblur_inner_20260605.json"),
+            Path("refs/reports/olmradialblur_inner_witness_plan_20260625/witness_plan.json"),
+            Path("refs/reports/olmradialblur_inner_witness_plan_20260625/witness_plan.md"),
+            Path("refs/reports/olmradialblur_inner_candidate_matrix_20260622_002848/summary.json"),
+            Path("refs/reports/olmradialblur_inner_candidate_matrix_20260622_002848/candidate_matrix.csv"),
+        ]
     elif profile == "directionalblur-residual-witness":
         files = [
             TRACE_NOTE,
@@ -3197,6 +3301,28 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("notes/OLMSmoother2_ASM_FACTS.md"),
             Path("notes/IR_OLMSmoother2.md"),
             Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/reports/olmsmoother2_witness_neighborhood_20260624/neighborhood.md"),
+            Path("refs/reports/olmsmoother2_witness_neighborhood_20260624/neighborhood.json"),
+            Path("refs/reports/olmsmoother2_current_aex_witness_contract_20260624/witness_contract.md"),
+            Path("refs/reports/olmsmoother2_current_aex_witness_contract_20260624/witness_contract.json"),
+            Path("refs/reports/olmsmoother2_current_aex_decision_matrix_20260624/decision_matrix.md"),
+            Path("refs/reports/olmsmoother2_current_aex_decision_matrix_20260624/decision_matrix.json"),
+            Path("refs/reference_requests/smoother2_legacy_full_current_aex_recapture_20260621.json"),
+            Path(
+                "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/"
+                "OLMSmootherv2/reference_manifest.json"
+            ),
+        ]
+    elif profile == "smoother2-current-aex-writer-frame-followup":
+        files = [
+            TRACE_NOTE,
+            Path("notes/OLMSmoother2_ASM_FACTS.md"),
+            Path("notes/IR_OLMSmoother2.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/conformance/olmsmoother2_current_aex_8bpc_decision.md"),
+            Path("refs/conformance/olmsmoother2_current_aex_8bpc_decision.json"),
+            Path("refs/reports/olmsmoother2_current_aex_proof_plan_20260625/proof_plan.md"),
+            Path("refs/reports/olmsmoother2_current_aex_proof_plan_20260625/proof_plan.json"),
             Path("refs/reports/olmsmoother2_witness_neighborhood_20260624/neighborhood.md"),
             Path("refs/reports/olmsmoother2_witness_neighborhood_20260624/neighborhood.json"),
             Path("refs/reports/olmsmoother2_current_aex_witness_contract_20260624/witness_contract.md"),

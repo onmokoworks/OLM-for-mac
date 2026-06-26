@@ -115,7 +115,10 @@ def render(input_rgba: np.ndarray, params: dict[str, object], ds_x: float, ds_y:
         ds = 1.0
 
     if in_out == IN_OUT_INSIDE:
-        x = dt_to_normalized(mask, inside_threshold, ds)
+        if not np.any(mask == 0):
+            x = np.full(mask.shape, 0.0 if invert else 1.0, dtype=np.float32)
+        else:
+            x = dt_to_normalized(mask, inside_threshold, ds)
     elif in_out == IN_OUT_OUTSIDE:
         x = dt_to_normalized(1 - mask, outside_threshold, ds)
     else:

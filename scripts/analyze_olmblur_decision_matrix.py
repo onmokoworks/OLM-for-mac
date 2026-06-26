@@ -34,6 +34,11 @@ def parse_args() -> argparse.Namespace:
         / "olmblur_repeat_threshold_20260620"
         / "olmblur_repeat_threshold.json",
     )
+    parser.add_argument(
+        "--bitdepth16-summary-json",
+        type=Path,
+        default=ROOT / "refs" / "conformance" / "bitdepth_16bpc_reference_return_20260625.json",
+    )
     parser.add_argument("--output-json", type=Path, default=None)
     parser.add_argument("--output-md", type=Path, default=None)
     return parser.parse_args()
@@ -51,6 +56,23 @@ def blur_feature(canonicalization: dict[str, Any]) -> dict[str, Any]:
         if isinstance(feature, dict) and feature.get("name") == "OLMBlur":
             return feature
     raise ValueError("OLMBlur feature not found in canonicalization report")
+
+
+def bitdepth16_reference(path: Path, group: str) -> dict[str, Any] | None:
+    if not path.exists():
+        return None
+    data = read_json(path)
+    groups = data.get("groups") or {}
+    count = int(groups.get(group, 0))
+    if count <= 0:
+        return None
+    return {
+        "bit_depth": data.get("bit_depth"),
+        "case_count": count,
+        "manifest": data.get("imported_manifest"),
+        "request_id": data.get("request_id"),
+        "status": data.get("status"),
+    }
 
 
 def residual_summary(trace: dict[str, Any]) -> dict[str, Any]:
@@ -88,6 +110,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     provenance = read_json(args.provenance_json)
     canonical = blur_feature(read_json(args.canonicalization_json))
     trace = read_json(args.trace_comparison_json)
+    ref16 = bitdepth16_reference(args.bitdepth16_summary_json, "olmblur")
     classification = provenance.get("classification", {})
     trace_focus = str(trace.get("likely_next_focus", "missing-trace-comparison"))
 
@@ -106,7 +129,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         decision = "preserve-normalized-ae-exact"
         action = (
             "Do not tune OLMBlur from the old 20260604 drift or from AE-free CLI max=1 witnesses. "
-            "The current trace points at accumulation/helper state before byte output, while packaged 8bpc AE slices are exact."
+            "The current trace points at accumulation/helper state before byte output, while packaged 8bpc AE slices are exact; "
+            "16bpc Windows references are covered and now need Mac AE comparison."
         )
     elif normalized_status != "normalized-software-exact" or normalized_nonzero != 0:
         decision = "current-residual-needs-proof"
@@ -122,6 +146,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "provenance_json": str(args.provenance_json),
             "canonicalization_json": str(args.canonicalization_json),
             "trace_comparison_json": str(args.trace_comparison_json),
+            "bitdepth16_summary_json": str(args.bitdepth16_summary_json),
         },
         "normalized_8bpc": {
             "status": normalized_status,
@@ -145,11 +170,13 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "present": bool((trace.get("windows") or {}).get("present")),
             "classification": "prewriteback-or-helper-state" if trace_focus == "nonlegacy-accumulation-or-writeback" else "review",
         },
+        "windows_16bpc_reference": ref16,
         "decision": decision,
         "recommended_action": action,
         "next_evidence": [
             "Packaged Mac AE exact against canonical normalized 8bpc OLMBlur refs is already established; preserve it.",
-            "16bpc and 32bpc Software reference coverage.",
+            "Run Mac AE-host 16bpc validation against the covered Windows Software reference cases.",
+            "32bpc Software reference coverage.",
             "Only continue CLI max=1 closure if binary-grounding the true accumulation/helper and Legacy border/all-same state becomes necessary.",
         ],
     }
@@ -166,6 +193,12 @@ def render_markdown(report: dict[str, Any]) -> str:
         "",
         f"- Normalized 8bpc: `{report['normalized_8bpc']['status']}` "
         f"({report['normalized_8bpc']['exact_count']}/{report['normalized_8bpc']['case_count']} exact)",
+        (
+            f"- Windows 16bpc reference: `{report['windows_16bpc_reference']['status']}` "
+            f"({report['windows_16bpc_reference']['case_count']} cases)"
+            if report.get("windows_16bpc_reference")
+            else "- Windows 16bpc reference: `missing`"
+        ),
         f"- Legacy drift: `{report['legacy_drift']['classification']}` "
         f"({report['legacy_drift']['legacy_nonzero_count']} cases)",
         f"- CLI residuals: `{report['cli_residuals']['classification']}` "

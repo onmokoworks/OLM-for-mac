@@ -81,8 +81,55 @@ The Windows return was imported on 2026-06-25:
 - PNG format spot check:
   sampled output is `16-bit/color RGBA`.
 
-This is still not `AE exact`: Mac AE 16bpc output has not yet been compared
-against the Windows Software reference.
+The Mac AE 16bpc comparison has now been run. It is not `AE exact`.
+
+Mac AE validation packages were generated on 2026-06-25:
+
+- `handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation/bitdepth16_olmblur_exact.zip`
+- `handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation/bitdepth16_olmcolorkey_exact.zip`
+- `handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation/bitdepth16_olmdistancegradation_basic_exact.zip`
+- `handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation/bitdepth16_olmdistancegradation_extended_exact.zip`
+- `handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation/bitdepth16_olmdistancegradation_blur_exact.zip`
+
+A single bundle containing those five request zips plus verification
+instructions was also generated:
+
+- `handoffs/ae_host_validation/20260625_222505_20260625_16bpc_mac_ae_validation_bundle/olm_ae_pixel_validation_20260625_16bpc_mac_ae_validation_20260625_222505.zip`
+
+Mac AE 2026 rendered all 45 cases locally. The first local run produced
+12/45 exact, but that result is superseded because the render JSX skipped
+manifest parameters that provided `path` / `match_name` but no `path_full`.
+After fixing `scripts/ae_pixel_validation_render.jsx`, native 16bit comparison
+against the Windows Software references produced 15/45 exact. Rerendering after
+the binary-grounded ColorKey `Force Lower Precision` epsilon fix and the
+DistanceGradation Inside/all-opaque no-source rule improved the current slice
+to 17/45 exact:
+
+- Result ledger:
+  `refs/conformance/bitdepth_16bpc_mac_ae_validation_20260626_distancegradation_inside_no_source.md`
+- Residual classifier:
+  `refs/conformance/bitdepth_16bpc_mac_ae_residual_classes_20260626_distancegradation_inside_no_source.md`
+
+The residual classes are:
+
+| Class | Count | Meaning |
+| --- | ---: | --- |
+| `full-scale-mismatch` | 18 | too large for rounding; inspect color management, 16bpc branch selection, or writeback path |
+| `large-structured-mismatch` | 10 | structured residual after params are applied; likely implementation/16bpc path, not broad harness failure |
+
+By plug-in slice:
+
+| Slice | Exact | Residual |
+| --- | ---: | ---: |
+| `OLMBlur` | 0/7 | 7 |
+| `OLMColorKey` | 8/9 | 1 |
+| `OLMDistanceGradation basic` | 8/12 | 4 |
+| `OLMDistanceGradation blur` | 0/1 | 1 |
+| `OLMDistanceGradation extended` | 1/16 | 15 |
+
+The next machine action is therefore Mac-side residual investigation, not
+another Windows reference request. `scripts/print_next_olm_action.py` should
+report `investigate-16bpc-mac-ae-residuals` while this result ledger exists.
 
 Return intake is covered by `refs/scripts/smoke_verify_bitdepth_reference_result.py`,
 including a synthetic 45-case mixed-effect manifest and the

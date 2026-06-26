@@ -1,6 +1,7 @@
 {
   "decision": "preserve-normalized-ae-exact",
   "inputs": {
+    "bitdepth16_summary_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/bitdepth_16bpc_reference_return_20260625.json",
     "canonicalization_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/software_reference_canonicalization_8bpc.json",
     "provenance_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmcolorkey_edge_reference_provenance_20260622_024907/audit.json",
     "trace_comparison_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/runtime_trace_comparisons/olmcolorkey_edge_trace_latest.json"
@@ -37,7 +38,8 @@
   },
   "next_evidence": [
     "Preserve Mac AE exact behavior against canonical normalized 8bpc ColorKey refs.",
-    "16bpc and 32bpc Software reference coverage for core and Edge paths.",
+    "Run Mac AE-host 16bpc validation against the covered Windows Software reference cases.",
+    "32bpc Software reference coverage for core and Edge paths.",
     "Only request narrow Edge runtime trace if a current normalized Software residual reappears."
   ],
   "normalized_8bpc": {
@@ -47,11 +49,18 @@
     "normalized_nonzero_count": 0,
     "status": "normalized-software-exact"
   },
-  "recommended_action": "Do not tune Edge Blur from the 20260604 case_0009 residual. Preserve normalized 20260618 Software exactness for 8bpc and move next to 16bpc / 32bpc coverage.",
+  "recommended_action": "Do not tune Edge Blur from the 20260604 case_0009 residual. Preserve normalized 20260618 Software exactness for 8bpc; 16bpc Windows references are covered and now need Mac AE comparison.",
   "runtime_trace": {
     "classification": "not-actionable",
     "likely_next_focus": "await-windows-trace",
     "present": false
   },
-  "schema": 1
+  "schema": 1,
+  "windows_16bpc_reference": {
+    "bit_depth": "16bpc",
+    "case_count": 9,
+    "manifest": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/reference_manifest.json",
+    "request_id": "olm_bitdepth_16bpc_normalized_exact_20260625",
+    "status": "reference-covered-compare-pending"
+  }
 }

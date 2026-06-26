@@ -210,6 +210,7 @@ CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], OLMColorKeyInfo *info)
 	info->threshold = params[OLMCOLORKEY_THRESHOLD]->u.fs_d.value;
 	info->premultiplied = params[OLMCOLORKEY_PREMULTIPLIED]->u.bd.value;
 	info->color_space = params[OLMCOLORKEY_COLOR_SPACE]->u.pd.value;
+	info->force_lower_precision = params[OLMCOLORKEY_FORCE_LOWER_PRECISION]->u.pd.value;
 	info->per_color = params[OLMCOLORKEY_PER_COLOR]->u.bd.value;
 	info->per_component = params[OLMCOLORKEY_PER_COMPONENT]->u.bd.value;
 	info->threshold_r = params[OLMCOLORKEY_THRESHOLD_R]->u.fs_d.value;
@@ -264,6 +265,7 @@ CheckoutSmartInfo(PF_InData *in_data, OLMColorKeyInfo *info)
 	ERR(checkout(OLMCOLORKEY_THRESHOLD, &p)); info->threshold = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMCOLORKEY_PREMULTIPLIED, &p)); info->premultiplied = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMCOLORKEY_COLOR_SPACE, &p)); info->color_space = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMCOLORKEY_FORCE_LOWER_PRECISION, &p)); info->force_lower_precision = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMCOLORKEY_PER_COLOR, &p)); info->per_color = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMCOLORKEY_PER_COMPONENT, &p)); info->per_component = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMCOLORKEY_THRESHOLD_R, &p)); info->threshold_r = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
@@ -578,6 +580,7 @@ struct OLMCKPixelTraits;
 template <>
 struct OLMCKPixelTraits<PF_Pixel8> {
 	static float max_chan() { return 255.0f; }
+	static float native_key_epsilon() { return 0.5f / 255.0f; }
 	static float r(const PF_Pixel8 &p) { return (float)p.red / 255.0f; }
 	static float g(const PF_Pixel8 &p) { return (float)p.green / 255.0f; }
 	static float b(const PF_Pixel8 &p) { return (float)p.blue / 255.0f; }
@@ -601,6 +604,7 @@ struct OLMCKPixelTraits<PF_Pixel8> {
 template <>
 struct OLMCKPixelTraits<PF_Pixel16> {
 	static float max_chan() { return (float)PF_MAX_CHAN16; }
+	static float native_key_epsilon() { return 1.0f / 65536.0f; }
 	static float r(const PF_Pixel16 &p) { return (float)p.red / max_chan(); }
 	static float g(const PF_Pixel16 &p) { return (float)p.green / max_chan(); }
 	static float b(const PF_Pixel16 &p) { return (float)p.blue / max_chan(); }
@@ -625,6 +629,7 @@ struct OLMCKPixelTraits<PF_Pixel16> {
 
 template <>
 struct OLMCKPixelTraits<PF_PixelFloat> {
+	static float native_key_epsilon() { return 1.0e-6f; }
 	static float r(const PF_PixelFloat &p) { return p.red; }
 	static float g(const PF_PixelFloat &p) { return p.green; }
 	static float b(const PF_PixelFloat &p) { return p.blue; }
@@ -664,7 +669,12 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	A_long h = output->height;
 	std::vector<u_char> matched((size_t)w * (size_t)h, 0);
 	std::vector<int> matched_index((size_t)w * (size_t)h, -1);
-	const float eps8 = 0.5f / 255.0f;
+	float key_epsilon = OLMCKPixelTraits<PixelT>::native_key_epsilon();
+	if (info.force_lower_precision == 3) {
+		key_epsilon = 0.5f / 255.0f;
+	} else if (info.force_lower_precision == 2 && key_epsilon < (1.0f / 65536.0f)) {
+		key_epsilon = 1.0f / 65536.0f;
+	}
 
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
@@ -734,8 +744,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					auto un = [](float u) {
 						return (float)((double)u * 1.146788990825688 + 0.5);
 					};
-					hit = std::fabs(cmp[0] - key[0]) <= t0 + eps8
-					    && std::fabs(un(cmp[1]) - un(key[1])) <= t1 + eps8;
+					hit = std::fabs(cmp[0] - key[0]) <= t0 + key_epsilon
+					    && std::fabs(un(cmp[1]) - un(key[1])) <= t1 + key_epsilon;
 				} else if (info.color_space == 6) {
 					PF_FpLong t0 = info.per_component ? info.threshold_r : info.threshold;
 					PF_FpLong t1 = info.per_component ? info.threshold_g : info.threshold;
@@ -743,19 +753,19 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						t0 = info.per_component ? info.thresholds_r[i] : info.thresholds[i];
 						t1 = info.per_component ? info.thresholds_g[i] : info.thresholds[i];
 					}
-					hit = std::fabs(cmp[0] - key[0]) <= t0 + eps8
-					    && std::fabs(cmp[1] - key[1]) <= t1 + eps8;
+					hit = std::fabs(cmp[0] - key[0]) <= t0 + key_epsilon
+					    && std::fabs(cmp[1] - key[1]) <= t1 + key_epsilon;
 				} else if (info.color_space == 4) {
 					if (info.per_component) {
 						PF_FpLong tr = info.per_color ? info.thresholds_r[i] : info.threshold_r;
 						PF_FpLong tg = info.per_color ? info.thresholds_g[i] : info.threshold_g;
 						PF_FpLong tb = info.per_color ? info.thresholds_b[i] : info.threshold_b;
-						hit = std::fabs(cmp[0] - key[0]) <= (eps8 + tr) * comp_scale[0]
-						    && std::fabs(cmp[1] - key[1]) <= (eps8 + tg) * comp_scale[1]
-						    && std::fabs(cmp[2] - key[2]) <= (eps8 + tb) * comp_scale[2];
+						hit = std::fabs(cmp[0] - key[0]) <= (key_epsilon + tr) * comp_scale[0]
+						    && std::fabs(cmp[1] - key[1]) <= (key_epsilon + tg) * comp_scale[1]
+						    && std::fabs(cmp[2] - key[2]) <= (key_epsilon + tb) * comp_scale[2];
 					} else {
 						PF_FpLong threshold = info.per_color ? info.thresholds[i] : info.threshold;
-						hit = Lab94Distance(key, cmp) <= (float)((double)(eps8 + threshold) * 352.978);
+						hit = Lab94Distance(key, cmp) <= (float)((double)(key_epsilon + threshold) * 352.978);
 					}
 				} else if (info.color_space == 2) {
 					if (info.per_component) {
@@ -764,24 +774,24 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						PF_FpLong tb = info.per_color ? info.thresholds_b[i] : info.threshold_b;
 						float sh = cmp[0];
 						if (sh < key[0]) sh += 1.0f;
-						hit = (sh - key[0]) <= eps8 + tr
-						    && std::fabs(cmp[1] - key[1]) <= eps8 + tg
-						    && std::fabs(cmp[2] - key[2]) <= eps8 + tb;
+						hit = (sh - key[0]) <= key_epsilon + tr
+						    && std::fabs(cmp[1] - key[1]) <= key_epsilon + tg
+						    && std::fabs(cmp[2] - key[2]) <= key_epsilon + tb;
 					} else {
 						PF_FpLong threshold = info.per_color ? info.thresholds[i] : info.threshold;
 						float d0 = cmp[0] - key[0];
 						float d1 = cmp[1] - key[1];
 						float d2 = cmp[2] - key[2];
 						float dist = std::sqrt(d0 * d0 + d1 * d1 + d2 * d2);
-						hit = dist <= std::sqrt(3.0f) * (eps8 + threshold);
+						hit = dist <= std::sqrt(3.0f) * (key_epsilon + threshold);
 					}
 				} else if (info.per_component) {
 					PF_FpLong tr = info.per_color ? info.thresholds_r[i] : info.threshold_r;
 					PF_FpLong tg = info.per_color ? info.thresholds_g[i] : info.threshold_g;
 					PF_FpLong tb = info.per_color ? info.thresholds_b[i] : info.threshold_b;
-					hit = std::fabs(cmp[0] - key[0]) <= eps8 + tr * comp_scale[0]
-					    && std::fabs(cmp[1] - key[1]) <= eps8 + tg * comp_scale[1]
-					    && std::fabs(cmp[2] - key[2]) <= eps8 + tb * comp_scale[2];
+					hit = std::fabs(cmp[0] - key[0]) <= key_epsilon + tr * comp_scale[0]
+					    && std::fabs(cmp[1] - key[1]) <= key_epsilon + tg * comp_scale[1]
+					    && std::fabs(cmp[2] - key[2]) <= key_epsilon + tb * comp_scale[2];
 				} else {
 					PF_FpLong threshold = info.per_color ? info.thresholds[i] : info.threshold;
 					float mean = (std::fabs(cmp[0] - key[0]) +

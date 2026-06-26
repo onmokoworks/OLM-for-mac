@@ -81,13 +81,14 @@
     }
 
     function waitForFreshFile(file, since, tries, sleepMs) {
+        var sinceMs = since.getTime() - 2000;
         for (var i = 0; i < tries; i++) {
-            if (file.exists && file.modified && file.modified.getTime() >= since.getTime()) {
+            if (file.exists && (!file.modified || file.modified.getTime() >= sinceMs)) {
                 return true;
             }
             $.sleep(sleepMs);
         }
-        return file.exists && file.modified && file.modified.getTime() >= since.getTime();
+        return file.exists && (!file.modified || file.modified.getTime() >= sinceMs);
     }
 
     function childByMatchOrName(group, matchName, name) {
@@ -135,15 +136,29 @@
             }
             var pathFull = param.path_full || [];
             var skip = false;
+            if (param.match_name === "ADBE Effect Mask Opacity" || param.match_name === "ADBE Force CPU GPU") {
+                skip = true;
+            }
             for (var p = 0; p < pathFull.length; p++) {
                 if (pathFull[p].match_name === "ADBE Effect Built In Params") {
                     skip = true;
                 }
             }
-            if (skip || pathFull.length < 2) {
+            if (skip) {
                 continue;
             }
-            var leaf = pathFull[pathFull.length - 1];
+            var leaf = null;
+            if (pathFull.length >= 2) {
+                leaf = pathFull[pathFull.length - 1];
+            } else if (param.match_name || param.name) {
+                leaf = {
+                    match_name: param.match_name,
+                    name: param.name
+                };
+            }
+            if (!leaf) {
+                continue;
+            }
             var prop = childByMatchOrName(effect, leaf.match_name, leaf.name || param.name);
             if (!prop) {
                 errors.push("missing property " + (leaf.match_name || param.name));
@@ -257,7 +272,7 @@
             summary.errors.push(caseSpec.id + ": render threw " + e.toString());
             return false;
         }
-        if (!waitForFreshFile(png, renderStarted, 40, 250)) {
+        if (!waitForFreshFile(png, renderStarted, 120, 250)) {
             summary.errors.push(caseSpec.id + ": PNG was not written");
             return false;
         }
@@ -272,6 +287,13 @@
     function renderRequest(requestRoot, outputBase, progressLog) {
         var requestManifest = parseJson(requestRoot.fsName + "/request_manifest.json");
         var referenceManifest = parseJson(requestRoot.fsName + "/" + requestManifest.reference_manifest);
+        if (referenceManifest.project && referenceManifest.project.bits_per_channel) {
+            try {
+                app.project.bitsPerChannel = Number(referenceManifest.project.bits_per_channel);
+            } catch (bitsError) {
+                appendText(progressLog, "bits_per_channel_warning " + bitsError.toString() + "\n");
+            }
+        }
         var alias = requestManifest.request_id.replace(/^ae_pixel_/, "").replace(/_20[0-9][0-9][0-9][0-9][0-9][0-9]$/, "");
         var resultRoot = ensureFolder(outputBase.fsName + "/" + alias);
         var summary = {

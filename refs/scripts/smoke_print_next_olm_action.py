@@ -179,6 +179,8 @@ def main() -> int:
                     "send-windows-action-bundle",
                     "send-runtime-trace-package",
                     "continue-binary-grounded-followup",
+                    "prepare-mac-ae-16bpc-validation",
+                    "investigate-16bpc-mac-ae-residuals",
                 }
                 if first_action == "await-runtime-trace-return":
                     assert data["decision"]["target"]["kind"] == "runtime-trace-request-package"
@@ -190,7 +192,15 @@ def main() -> int:
                     assert data["decision"]["target"]["kind"] in {
                         "ae-host-exact-failure-classification",
                         "binary-grounded-residual-report",
+                        "bitdepth-16bpc-reference-summary",
+                        "bitdepth-16bpc-mac-ae-validation",
                     }
+                    if data["decision"]["action"] == "prepare-mac-ae-16bpc-validation":
+                        target = data["decision"]["target"]
+                        assert target.get("package_dir")
+                        if target.get("bundle"):
+                            assert target["path"] == target["bundle"]
+                            assert target["bundle"].endswith(".zip")
                 kinds = {Path(row["path"]).name: row["kind"] for row in data["candidates"]}
                 assert kinds["ae_pixel_request.zip"] == "ae-pixel-validation-request"
 
@@ -243,6 +253,8 @@ def main() -> int:
                     "send-runtime-trace-package",
                     "dispatch-runtime-trace-followup",
                     "continue-binary-grounded-followup",
+                    "prepare-mac-ae-16bpc-validation",
+                    "investigate-16bpc-mac-ae-residuals",
                 }
                 if data["decision"]["action"] == "await-runtime-trace-return":
                     assert data["decision"]["target"]["kind"] == "runtime-trace-request-package"
@@ -256,7 +268,15 @@ def main() -> int:
                     assert data["decision"]["target"]["kind"] in {
                         "ae-host-exact-failure-classification",
                         "binary-grounded-residual-report",
+                        "bitdepth-16bpc-reference-summary",
+                        "bitdepth-16bpc-mac-ae-validation",
                     }
+                    if data["decision"]["action"] == "prepare-mac-ae-16bpc-validation":
+                        target = data["decision"]["target"]
+                        assert target.get("package_dir")
+                        if target.get("bundle"):
+                            assert target["path"] == target["bundle"]
+                            assert target["bundle"].endswith(".zip")
 
                 new_time = summary_json.stat().st_mtime + 10
                 os.utime(runtime_return, (new_time, new_time))

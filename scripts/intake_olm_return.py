@@ -392,6 +392,30 @@ def find_ae_pixel_requests(root: Path, args: argparse.Namespace, materialized: P
     return requests
 
 
+def ae_pixel_request_dirs(root: Path, args: argparse.Namespace, materialized: Path) -> list[Path]:
+    search_dirs = [path.resolve() for path in args.ae_pixel_requests_dir]
+    if not search_dirs:
+        search_dirs.extend(
+            [
+                root / "refs" / "ae_pixel_validation_packages",
+                materialized / "ae_pixel_validation",
+                materialized / "requests",
+            ]
+        )
+    dirs: list[Path] = []
+    seen: set[Path] = set()
+    for search_dir in search_dirs:
+        if not search_dir.exists() or not search_dir.is_dir():
+            continue
+        if not any(path.is_file() and zipfile.is_zipfile(path) for path in search_dir.glob("*.zip")):
+            continue
+        resolved = search_dir.resolve()
+        if resolved not in seen:
+            dirs.append(resolved)
+            seen.add(resolved)
+    return dirs
+
+
 def ae_pixel_return_id(path: Path) -> str | None:
     name = path.name
     if name.endswith("_return.zip"):
@@ -422,6 +446,30 @@ def run_ae_pixel_validation(args: argparse.Namespace, root: Path, materialized: 
         request_zips = find_ae_pixel_requests(root, args, materialized_root)
         return_paths = find_ae_pixel_returns(materialized_root)
         if not return_paths:
+            request_dirs = ae_pixel_request_dirs(root, args, materialized_root)
+            if request_dirs:
+                run_root = (
+                    args.run_dir.resolve()
+                    if args.run_dir
+                    else root / "refs" / "reports" / "ae_pixel_validation_intake"
+                )
+                failures = 0
+                for request_dir in request_dirs:
+                    label = request_dir.name or "requests"
+                    cmd = [
+                        sys.executable,
+                        "scripts/verify_ae_pixel_validation_batch.py",
+                        str(request_dir),
+                        str(materialized_root),
+                        "--run-dir",
+                        str(run_root / label),
+                    ]
+                    failures += run(cmd, root) != 0
+                if failures:
+                    return 1
+                print(f"[OK] AE pixel validation batch return verified with {len(request_dirs)} request dir(s)")
+                print(f"run_dir={run_root}")
+                return 0
             return fail("no AE pixel validation return zips/folders found", 2)
         if not request_zips:
             return fail("no AE pixel validation request zips found; pass --ae-pixel-requests-dir", 2)

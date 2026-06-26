@@ -27,6 +27,7 @@
   },
   "decision": "preserve-normalized-ae-exact",
   "inputs": {
+    "bitdepth16_summary_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/bitdepth_16bpc_reference_return_20260625.json",
     "canonicalization_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/software_reference_canonicalization_8bpc.json",
     "provenance_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmblur_reference_provenance_20260622_025614/audit.json",
     "trace_comparison_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/runtime_trace_comparisons/olmblur_repeat_threshold_20260620/olmblur_repeat_threshold.json"
@@ -129,7 +130,8 @@
   },
   "next_evidence": [
     "Packaged Mac AE exact against canonical normalized 8bpc OLMBlur refs is already established; preserve it.",
-    "16bpc and 32bpc Software reference coverage.",
+    "Run Mac AE-host 16bpc validation against the covered Windows Software reference cases.",
+    "32bpc Software reference coverage.",
     "Only continue CLI max=1 closure if binary-grounding the true accumulation/helper and Legacy border/all-same state becomes necessary."
   ],
   "normalized_8bpc": {
@@ -139,11 +141,18 @@
     "normalized_nonzero_count": 0,
     "status": "normalized-software-exact"
   },
-  "recommended_action": "Do not tune OLMBlur from the old 20260604 drift or from AE-free CLI max=1 witnesses. The current trace points at accumulation/helper state before byte output, while packaged 8bpc AE slices are exact.",
+  "recommended_action": "Do not tune OLMBlur from the old 20260604 drift or from AE-free CLI max=1 witnesses. The current trace points at accumulation/helper state before byte output, while packaged 8bpc AE slices are exact; 16bpc Windows references are covered and now need Mac AE comparison.",
   "runtime_trace": {
     "classification": "prewriteback-or-helper-state",
     "likely_next_focus": "nonlegacy-accumulation-or-writeback",
     "present": true
   },
-  "schema": 1
+  "schema": 1,
+  "windows_16bpc_reference": {
+    "bit_depth": "16bpc",
+    "case_count": 7,
+    "manifest": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/reference_manifest.json",
+    "request_id": "olm_bitdepth_16bpc_normalized_exact_20260625",
+    "status": "reference-covered-compare-pending"
+  }
 }

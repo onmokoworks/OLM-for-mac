@@ -36,8 +36,25 @@ def main() -> int:
         report = json.loads(output_json.read_text(encoding="utf-8"))
         if report.get("kind") != "olmsmoother2_current_aex_proof_plan":
             raise AssertionError(report.get("kind"))
-        if report.get("decision") != "runtime-or-asm-first-divergence-required":
+        if report.get("schema") != 2:
+            raise AssertionError(report.get("schema"))
+        if report.get("decision") != "producer-upstream-of-writer-frame-required":
             raise AssertionError(report.get("decision"))
+        satisfied = {(row["case_id"], row["probe"]) for row in report.get("satisfied_probes", [])}
+        if satisfied != {
+            ("legacy_case_0004_current_aex", "writer-anchor"),
+            ("legacy_case_0012_gamma5_red_blue_current_aex", "writer-anchor"),
+        }:
+            raise AssertionError(satisfied)
+        unresolved = {(row["case_id"], row["probe"]) for row in report.get("unresolved_probes", [])}
+        for expected in (
+            ("legacy_case_0004_current_aex", "cce0-return"),
+            ("legacy_case_0004_current_aex", "c280-polygon"),
+            ("legacy_case_0012_gamma5_red_blue_current_aex", "descriptor"),
+            ("legacy_case_0012_gamma5_red_blue_current_aex", "emit-chain"),
+        ):
+            if expected not in unresolved:
+                raise AssertionError(unresolved)
         plans = {row["case_id"]: row for row in report["plans"]}
         case_0004 = plans["legacy_case_0004_current_aex"]
         case_0012 = plans["legacy_case_0012_gamma5_red_blue_current_aex"]
@@ -61,18 +78,25 @@ def main() -> int:
             raise AssertionError(helper_0012)
         if case_0004["ordered_probes"][0]["name"] != "writer-anchor":
             raise AssertionError(case_0004["ordered_probes"])
+        if case_0004["ordered_probes"][0].get("status") != "satisfied":
+            raise AssertionError(case_0004["ordered_probes"][0])
         if case_0012["ordered_probes"][2]["name"] != "emit-chain":
             raise AssertionError(case_0012["ordered_probes"])
+        if case_0012["ordered_probes"][0].get("status") != "satisfied":
+            raise AssertionError(case_0012["ordered_probes"][0])
         md = output_md.read_text(encoding="utf-8")
         for needle in (
-            "runtime-or-asm-first-divergence-required",
+            "producer-upstream-of-writer-frame-required",
             "Do not add a global transparent-center fallback",
             "Do not suppress f270",
-            "writer-anchored runtime trace",
+            "final writer/raw packing is satisfied",
             "0xd0",
             "0x69",
             "side-channel byte",
             "win_cardinal_6 is the local FUN_180010760 model",
+            "Satisfied Probes",
+            "0xe8e8e871",
+            "0xffffff00",
         ):
             if needle not in md:
                 raise AssertionError(f"markdown missing {needle!r}")

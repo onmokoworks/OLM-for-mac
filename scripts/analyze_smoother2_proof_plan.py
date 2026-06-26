@@ -37,6 +37,15 @@ def parse_args() -> argparse.Namespace:
         / "olmsmoother2_witness_neighborhood_20260624"
         / "neighborhood.json",
     )
+    parser.add_argument(
+        "--writer-frame-analysis-json",
+        type=Path,
+        default=ROOT
+        / "refs"
+        / "reports"
+        / "smoother2_current_aex_writer_frame_followup_20260625"
+        / "writer_frame_analysis.json",
+    )
     parser.add_argument("--output-json", type=Path, default=None)
     parser.add_argument("--output-md", type=Path, default=None)
     return parser.parse_args()
@@ -58,10 +67,40 @@ def top_neighbor_xys(case: dict[str, Any]) -> list[list[int]]:
     return [row["xy"] for row in strongest[:3]]
 
 
-def plan_for_case(contract_case: dict[str, Any], neighborhood_case: dict[str, Any]) -> dict[str, Any]:
+def writer_evidence_for_case(writer_analysis: dict[str, Any], case_id: str) -> dict[str, Any] | None:
+    for row in writer_analysis.get("cases") or []:
+        if isinstance(row, dict) and str(row.get("case_id")) == case_id:
+            return row
+    return None
+
+
+def mark_probe_status(probes: list[dict[str, Any]], writer_evidence: dict[str, Any] | None) -> list[dict[str, Any]]:
+    updated = []
+    for probe in probes:
+        row = dict(probe)
+        if row.get("name") == "writer-anchor" and writer_evidence:
+            if writer_evidence.get("writer_explains_reference") is True:
+                derived = writer_evidence.get("raw_derived", {}).get("expected_png_rgba_after_premultiply")
+                row["status"] = "satisfied"
+                row["evidence"] = f"final raw {writer_evidence.get('writer_raw')} derives {derived} after AE premultiply"
+            else:
+                row["status"] = "unresolved"
+                row["evidence"] = "writer-frame analysis exists but does not explain the reference"
+        else:
+            row.setdefault("status", "unresolved")
+        updated.append(row)
+    return updated
+
+
+def plan_for_case(
+    contract_case: dict[str, Any],
+    neighborhood_case: dict[str, Any],
+    writer_analysis: dict[str, Any],
+) -> dict[str, Any]:
     case_id = str(contract_case["case_id"])
     local_path = str(contract_case["local_classification"])
     shape = neighborhood_case.get("classification", {}).get("kind")
+    writer_evidence = writer_evidence_for_case(writer_analysis, case_id)
 
     if case_id == "legacy_case_0004_current_aex":
         static_dispatch = {
@@ -170,7 +209,8 @@ def plan_for_case(contract_case: dict[str, Any], neighborhood_case: dict[str, An
         "neighborhood_shape": shape,
         "static_dispatch": static_dispatch,
         "required_proof": contract_case["required_proof"],
-        "ordered_probes": probes,
+        "writer_frame_evidence": writer_evidence,
+        "ordered_probes": mark_probe_status(probes, writer_evidence),
         "stop_line": stop_line,
     }
 
@@ -178,26 +218,43 @@ def plan_for_case(contract_case: dict[str, Any], neighborhood_case: dict[str, An
 def build_report(args: argparse.Namespace) -> dict[str, Any]:
     contract = read_json(args.contract_json)
     neighborhood = read_json(args.neighborhood_json)
+    writer_analysis = read_json(args.writer_frame_analysis_json) if args.writer_frame_analysis_json.exists() else {}
     neighborhoods = by_case(neighborhood.get("cases") or [])
     plans = [
-        plan_for_case(row, neighborhoods[str(row["case_id"])])
+        plan_for_case(row, neighborhoods[str(row["case_id"])], writer_analysis)
         for row in contract.get("witnesses", [])
         if str(row.get("case_id")) in neighborhoods
     ]
+    satisfied = [
+        {"case_id": plan["case_id"], "probe": probe["name"], "evidence": probe.get("evidence")}
+        for plan in plans
+        for probe in plan.get("ordered_probes", [])
+        if probe.get("status") == "satisfied"
+    ]
+    unresolved = [
+        {"case_id": plan["case_id"], "probe": probe["name"]}
+        for plan in plans
+        for probe in plan.get("ordered_probes", [])
+        if probe.get("status") != "satisfied"
+    ]
     return {
         "kind": "olmsmoother2_current_aex_proof_plan",
-        "schema": 1,
+        "schema": 2,
         "inputs": {
             "contract_json": str(args.contract_json),
             "neighborhood_json": str(args.neighborhood_json),
+            "writer_frame_analysis_json": str(args.writer_frame_analysis_json),
         },
-        "decision": "runtime-or-asm-first-divergence-required",
+        "decision": "producer-upstream-of-writer-frame-required",
         "recommended_action": (
             "Keep the Smooth Range threshold fix and do not request broad PNGs. "
-            "Only a writer-anchored runtime trace or equivalent asm proof for "
-            "these two witness paths can justify another implementation change."
+            "The final writer/raw packing is satisfied for both witnesses; only "
+            "producer-side c280/helper/alternate-path proof can justify another "
+            "implementation change."
         ),
         "global_rejections": contract.get("rejected_global_toggles", {}),
+        "satisfied_probes": satisfied,
+        "unresolved_probes": unresolved,
         "plans": plans,
     }
 
@@ -221,6 +278,14 @@ def render_markdown(report: dict[str, Any]) -> str:
             f"`{plan['neighborhood_shape']}` | "
             f"`{plan['local_path']}` | {plan['stop_line']} |"
         )
+    if report.get("satisfied_probes"):
+        lines.extend(["", "## Satisfied Probes", ""])
+        for row in report["satisfied_probes"]:
+            lines.append(f"- `{row['case_id']}` `{row['probe']}`: {row.get('evidence')}")
+    if report.get("unresolved_probes"):
+        lines.extend(["", "## Remaining Probes", ""])
+        for row in report["unresolved_probes"]:
+            lines.append(f"- `{row['case_id']}` `{row['probe']}`")
     lines.extend(["", "## Ordered Probes", ""])
     for plan in report["plans"]:
         lines.extend([f"### {plan['case_id']} `{plan['xy']}`", ""])
@@ -234,10 +299,23 @@ def render_markdown(report: dict[str, Any]) -> str:
         for fact in helper_shape:
             lines.append(f"- Helper fact: {fact}")
         lines.append(f"- Required proof: {plan['required_proof']}")
+        writer_evidence = plan.get("writer_frame_evidence") or {}
+        if writer_evidence:
+            derived = writer_evidence.get("raw_derived", {}).get("expected_png_rgba_after_premultiply")
+            lines.append(
+                f"- Writer-frame evidence: raw `{writer_evidence.get('writer_raw')}` derives "
+                f"`{derived}`; reference `{writer_evidence.get('reference_rgba')}`; "
+                f"candidate `{writer_evidence.get('candidate_rgba')}`."
+            )
         lines.append("")
         for index, probe in enumerate(plan["ordered_probes"], start=1):
             values = "; ".join(probe["values"])
-            lines.append(f"{index}. `{probe['name']}`: {probe['question']} Values: {values}.")
+            status = probe.get("status", "unresolved")
+            evidence = f" Evidence: {probe['evidence']}." if probe.get("evidence") else ""
+            lines.append(
+                f"{index}. `{probe['name']}` [{status}]: {probe['question']} "
+                f"Values: {values}.{evidence}"
+            )
         lines.append("")
     return "\n".join(lines)
 

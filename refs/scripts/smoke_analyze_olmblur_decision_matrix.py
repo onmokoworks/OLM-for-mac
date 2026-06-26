@@ -33,6 +33,8 @@ def main() -> int:
         assert report["kind"] == "olmblur_decision_matrix"
         assert report["decision"] == "preserve-normalized-ae-exact"
         assert report["normalized_8bpc"]["exact_count"] == 7
+        assert report["windows_16bpc_reference"]["case_count"] == 7
+        assert report["windows_16bpc_reference"]["status"] == "reference-covered-compare-pending"
         assert report["legacy_drift"]["classification"] == "normalized-software-exact-with-legacy-drift"
         assert report["legacy_drift"]["legacy_nonzero_count"] == 4
         assert report["cli_residuals"]["classification"] == "diagnostic-max1"
@@ -42,6 +44,7 @@ def main() -> int:
         assert "OLMBlur Decision Matrix" in md
         assert "preserve-normalized-ae-exact" in md
         assert "7/7 exact" in md
+        assert "Windows 16bpc reference" in md
         assert "case_0006" in md
         assert "185.49998474121094" in md or "0x1.72fffe0000000p+7" in md
     print("[OK] OLMBlur decision matrix smoke passed")

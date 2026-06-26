@@ -1,11 +1,12 @@
 # OLMDistanceGradation Decision Matrix
 
 - Decision: `preserve-normalized-ae-exact`
-- Recommended action: Do not tune DistanceGradation from legacy-only drift or AE-free CLI residuals. Preserve normalized 8bpc AE exact behavior and use binary/runtime evidence only if closing the CLI harness gap.
+- Recommended action: Do not tune DistanceGradation from legacy-only drift or AE-free CLI residuals. Preserve normalized 8bpc AE exact behavior; 16bpc Windows references are covered and now need Mac AE comparison.
 
 ## Evidence
 
 - Normalized 8bpc: `exact` (29/29 exact)
+- Windows 16bpc reference: `reference-covered-compare-pending` (29 cases: 12 basic, 16 extended, 1 blur)
 - Legacy drift: `normalized-software-exact-with-legacy-drift` (7 cases)
 - Runtime trace: `not-actionable` (focus `await-windows-trace`)
 
@@ -24,5 +25,6 @@
 ## Next Evidence
 
 - Preserve Mac AE exact behavior against canonical normalized 8bpc DistanceGradation refs.
-- 16bpc and 32bpc Software reference coverage for basic, extended, and blur groups.
+- Run Mac AE-host 16bpc validation against the covered Windows Software reference cases.
+- 32bpc Software reference coverage for basic, extended, and blur groups.
 - Only request field-prep/OpenCV runtime trace if we decide to close AE-free CLI residuals or a current normalized residual reappears.

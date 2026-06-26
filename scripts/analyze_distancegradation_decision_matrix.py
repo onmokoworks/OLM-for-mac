@@ -29,6 +29,11 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=ROOT / "refs" / "reports" / "runtime_trace_comparisons" / "olmdistancegradation_field_prep_latest.json",
     )
+    parser.add_argument(
+        "--bitdepth16-summary-json",
+        type=Path,
+        default=ROOT / "refs" / "conformance" / "bitdepth_16bpc_reference_return_20260625.json",
+    )
     parser.add_argument("--output-json", type=Path, default=None)
     parser.add_argument("--output-md", type=Path, default=None)
     return parser.parse_args()
@@ -50,6 +55,29 @@ def distance_features(canonicalization: dict[str, Any]) -> list[dict[str, Any]]:
     if not features:
         raise ValueError("OLMDistanceGradation features not found in canonicalization report")
     return features
+
+
+def bitdepth16_reference(path: Path) -> dict[str, Any] | None:
+    if not path.exists():
+        return None
+    data = read_json(path)
+    groups = data.get("groups") or {}
+    wanted = {
+        "basic": int(groups.get("olmdistancegradation_basic", 0)),
+        "extended": int(groups.get("olmdistancegradation_extended", 0)),
+        "blur": int(groups.get("olmdistancegradation_blur", 0)),
+    }
+    count = sum(wanted.values())
+    if count <= 0:
+        return None
+    return {
+        "bit_depth": data.get("bit_depth"),
+        "case_count": count,
+        "groups": wanted,
+        "manifest": data.get("imported_manifest"),
+        "request_id": data.get("request_id"),
+        "status": data.get("status"),
+    }
 
 
 def summarize_canonical(features: list[dict[str, Any]]) -> dict[str, Any]:
@@ -78,6 +106,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     provenance = read_json(args.provenance_json)
     canonical = summarize_canonical(distance_features(read_json(args.canonicalization_json)))
     trace = read_json(args.trace_comparison_json) if args.trace_comparison_json.exists() else {}
+    ref16 = bitdepth16_reference(args.bitdepth16_summary_json)
     classification = provenance.get("classification", {})
     trace_focus = trace.get("likely_next_focus", "missing-trace-comparison")
     trace_present = bool((trace.get("windows") or {}).get("present"))
@@ -86,7 +115,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         decision = "preserve-normalized-ae-exact"
         action = (
             "Do not tune DistanceGradation from legacy-only drift or AE-free CLI residuals. "
-            "Preserve normalized 8bpc AE exact behavior and use binary/runtime evidence only if closing the CLI harness gap."
+            "Preserve normalized 8bpc AE exact behavior; 16bpc Windows references are covered and now need Mac AE comparison."
         )
     elif canonical["classification"] == "residual":
         decision = "current-residual-needs-proof"
@@ -102,6 +131,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "provenance_json": str(args.provenance_json),
             "canonicalization_json": str(args.canonicalization_json),
             "trace_comparison_json": str(args.trace_comparison_json),
+            "bitdepth16_summary_json": str(args.bitdepth16_summary_json),
         },
         "normalized_8bpc": {
             "case_count": canonical["case_count"],
@@ -121,11 +151,13 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "present": trace_present,
             "classification": "not-actionable" if trace_focus in {"await-windows-trace", "trace-too-sparse"} else "review",
         },
+        "windows_16bpc_reference": ref16,
         "decision": decision,
         "recommended_action": action,
         "next_evidence": [
             "Preserve Mac AE exact behavior against canonical normalized 8bpc DistanceGradation refs.",
-            "16bpc and 32bpc Software reference coverage for basic, extended, and blur groups.",
+            "Run Mac AE-host 16bpc validation against the covered Windows Software reference cases.",
+            "32bpc Software reference coverage for basic, extended, and blur groups.",
             "Only request field-prep/OpenCV runtime trace if we decide to close AE-free CLI residuals or a current normalized residual reappears.",
         ],
     }
@@ -142,6 +174,15 @@ def render_markdown(report: dict[str, Any]) -> str:
         "",
         f"- Normalized 8bpc: `{report['normalized_8bpc']['classification']}` "
         f"({report['normalized_8bpc']['exact_count']}/{report['normalized_8bpc']['case_count']} exact)",
+        (
+            f"- Windows 16bpc reference: `{report['windows_16bpc_reference']['status']}` "
+            f"({report['windows_16bpc_reference']['case_count']} cases: "
+            f"{report['windows_16bpc_reference']['groups']['basic']} basic, "
+            f"{report['windows_16bpc_reference']['groups']['extended']} extended, "
+            f"{report['windows_16bpc_reference']['groups']['blur']} blur)"
+            if report.get("windows_16bpc_reference")
+            else "- Windows 16bpc reference: `missing`"
+        ),
         f"- Legacy drift: `{report['legacy_drift']['classification']}` "
         f"({report['legacy_drift']['legacy_nonzero_count']} cases)",
         f"- Runtime trace: `{report['runtime_trace']['classification']}` "

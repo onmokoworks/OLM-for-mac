@@ -214,6 +214,37 @@ Result: Rust returned exact(0) for all 24 checked software/CUDA frames covering
 RGB, HSV, Lab76, Lab94, YUV, YCrCb, Lab per-component, and RGB Replace. Mac
 build succeeded; host-rendered PNG parity still requires AE validation.
 
+## Force Lower Precision epsilon — IMPLEMENTED for Mac 16bpc (2026-06-26)
+
+Windows AEX `FUN_18000a3d0` reads `Force Lower Precision` from AE param index
+`0x20a` into the keyer ctx at `+0x3c`. The same setup function reads the input
+bit depth from `*(short *)(*param_3 + 0x2c)` into ctx `+0x20`, then stores the
+key comparison epsilon at ctx `+0x54`.
+
+The decision tree is:
+
+- `Force Lower Precision == 3`: use `DAT_18001f630`
+- `Force Lower Precision == 2` and input bit depth is not 8bpc: use
+  `DAT_18001f62c`
+- native 8bpc input: use `DAT_18001f630`
+- native 16bpc input: use `DAT_18001f62c`
+- otherwise: use `DAT_18001f628`
+
+Constants parsed from `aex/OLMColorKey/Plugins/64/2025/OLMColorKey.aex`:
+
+| symbol | hex | value | meaning |
+| --- | --- | ---: | --- |
+| `DAT_18001f628` | `0x358637bd` | `9.999999974752427e-07` | native 32bpc epsilon |
+| `DAT_18001f62c` | `0x37800000` | `1.52587890625e-05` | 16bpc epsilon, `1/65536` |
+| `DAT_18001f630` | `0x3b008081` | `0.0019607844296842813` | 8bpc half-step, `0.5/255` |
+
+The Mac plug-in now mirrors this rule in `mac/OLMColorKey`: native pixel traits
+provide the 8/16/32bpc epsilon, and `Force Lower Precision` can lower 32bpc to
+16bpc or 8bpc comparison precision. This fixed 16bpc Mac AE
+`olmcolorkey__case_0008`; the remaining 16bpc residual is
+`olmcolorkey__case_0009`, which points at Edge Thin / border behavior rather
+than broad color-space epsilon.
+
 Measured (software frames, max_diff):
 - ck_rgb_replace_red_with_blue ........ 0  exact
 - ck_rgb_keep_replace_red_with_blue ... 0  exact

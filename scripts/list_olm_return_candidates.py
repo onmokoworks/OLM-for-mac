@@ -118,6 +118,17 @@ def classify_zip_names(names: list[str], read_json: Any) -> tuple[str, list[str]
     if any(name.endswith("AE_PIXEL_VALIDATION_REQUEST.md") for name in names):
         return ("ae-pixel-validation-request", ["contains AE_PIXEL_VALIDATION_REQUEST.md"])
     for name in names:
+        if Path(name).name != "bundle_manifest.json":
+            continue
+        data = read_json(name)
+        kind = data.get("kind") if data else None
+        if kind == "olm_ae_pixel_validation_bundle":
+            request_count = data.get("request_count") if data else None
+            hint = f"{name}: {kind}"
+            if request_count is not None:
+                hint += f" ({request_count} requests)"
+            return ("ae-pixel-validation-bundle", [hint])
+    for name in names:
         if Path(name).name != "windows_action_bundle_manifest.json":
             continue
         data = read_json(name)
@@ -201,6 +212,8 @@ def suggested_command(kind: str, path: Path) -> str:
     if kind == "mac-plugin-package":
         return f"python3 scripts/verify_mac_plugin_package.py {path_text!r}"
     if kind == "ae-pixel-validation-request":
+        return f"send {path_text!r} to the AE host for pixel validation"
+    if kind == "ae-pixel-validation-bundle":
         return f"send {path_text!r} to the AE host for pixel validation"
     if kind == "windows-action-bundle":
         return f"send {path_text!r} to the Windows helper"

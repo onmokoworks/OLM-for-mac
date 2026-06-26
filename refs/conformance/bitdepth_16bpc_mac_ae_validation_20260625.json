@@ -1,0 +1,72 @@
+{
+  "ae_version": "26.3x87",
+  "basis": "Windows AE Software 16bpc PNG references vs Mac AE 2026 render",
+  "bit_depth": 16,
+  "case_exact": 12,
+  "case_fail": 33,
+  "case_total": 45,
+  "date": "2026-06-25",
+  "fail_requests": 5,
+  "kind": "olm_mac_ae_validation_result",
+  "notes": [
+    "scripts/ae_pixel_validation_render.jsx now sets app.project.bitsPerChannel from reference_manifest.project.bits_per_channel before rendering.",
+    "refs/scripts/verify_manifest.py now compares RGBA PNGs at native 8/16-bit depth instead of forcing Pillow RGBA 8-bit conversion.",
+    "This result is not a completion claim; max_diff=0 is required for AE exact."
+  ],
+  "pass_requests": 0,
+  "request_count": 5,
+  "requests": [
+    {
+      "fail": 7,
+      "max_diff_max": 59796,
+      "mean_diff_max": 2253.097193287037,
+      "missing": 0,
+      "ok": 0,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260625_2258_true16/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "request": "bitdepth16_olmblur_exact",
+      "total": 7
+    },
+    {
+      "fail": 6,
+      "max_diff_max": 65535,
+      "mean_diff_max": 18485.696013213736,
+      "missing": 0,
+      "ok": 3,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260625_2258_true16/bitdepth16_olmcolorkey_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "request": "bitdepth16_olmcolorkey_exact",
+      "total": 9
+    },
+    {
+      "fail": 4,
+      "max_diff_max": 65535,
+      "mean_diff_max": 31622.314976249036,
+      "missing": 0,
+      "ok": 8,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260625_2258_true16/bitdepth16_olmdistancegradation_basic_exact/reports/ae_pixel_16bpc_basic_exact.json",
+      "request": "bitdepth16_olmdistancegradation_basic_exact",
+      "total": 12
+    },
+    {
+      "fail": 1,
+      "max_diff_max": 65535,
+      "mean_diff_max": 32604.001787591627,
+      "missing": 0,
+      "ok": 0,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260625_2258_true16/bitdepth16_olmdistancegradation_blur_exact/reports/ae_pixel_16bpc_blur_exact.json",
+      "request": "bitdepth16_olmdistancegradation_blur_exact",
+      "total": 1
+    },
+    {
+      "fail": 15,
+      "max_diff_max": 65535,
+      "mean_diff_max": 32084.121549840856,
+      "missing": 0,
+      "ok": 1,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260625_2258_true16/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "request": "bitdepth16_olmdistancegradation_extended_exact",
+      "total": 16
+    }
+  ],
+  "run_dir": "refs/reports/ae_pixel_validation_16bpc_mac_20260625_2258_true16",
+  "status": "not-ae-exact"
+}

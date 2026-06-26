@@ -1,6 +1,7 @@
 {
   "decision": "preserve-normalized-ae-exact",
   "inputs": {
+    "bitdepth16_summary_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/bitdepth_16bpc_reference_return_20260625.json",
     "canonicalization_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/software_reference_canonicalization_8bpc.json",
     "provenance_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmdistancegradation_reference_provenance_20260622_025045/audit.json",
     "trace_comparison_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/runtime_trace_comparisons/olmdistancegradation_field_prep_latest.json"
@@ -176,7 +177,8 @@
   },
   "next_evidence": [
     "Preserve Mac AE exact behavior against canonical normalized 8bpc DistanceGradation refs.",
-    "16bpc and 32bpc Software reference coverage for basic, extended, and blur groups.",
+    "Run Mac AE-host 16bpc validation against the covered Windows Software reference cases.",
+    "32bpc Software reference coverage for basic, extended, and blur groups.",
     "Only request field-prep/OpenCV runtime trace if we decide to close AE-free CLI residuals or a current normalized residual reappears."
   ],
   "normalized_8bpc": {
@@ -188,11 +190,23 @@
       "normalized-software-exact"
     ]
   },
-  "recommended_action": "Do not tune DistanceGradation from legacy-only drift or AE-free CLI residuals. Preserve normalized 8bpc AE exact behavior and use binary/runtime evidence only if closing the CLI harness gap.",
+  "recommended_action": "Do not tune DistanceGradation from legacy-only drift or AE-free CLI residuals. Preserve normalized 8bpc AE exact behavior; 16bpc Windows references are covered and now need Mac AE comparison.",
   "runtime_trace": {
     "classification": "not-actionable",
     "likely_next_focus": "await-windows-trace",
     "present": false
   },
-  "schema": 1
+  "schema": 1,
+  "windows_16bpc_reference": {
+    "bit_depth": "16bpc",
+    "case_count": 29,
+    "groups": {
+      "basic": 12,
+      "blur": 1,
+      "extended": 16
+    },
+    "manifest": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/reference_manifest.json",
+    "request_id": "olm_bitdepth_16bpc_normalized_exact_20260625",
+    "status": "reference-covered-compare-pending"
+  }
 }

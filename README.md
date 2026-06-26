@@ -43,10 +43,10 @@ AE-host validation で Mac AE 出力が Windows AE Software 参照に
 | 範囲 | 状態 |
 | --- | --- |
 | Mac plug-in project | 10 本とも Debug universal bundle としてビルド可能 |
-| OLMBlur | 8bpc packaged slice は Mac AE exact。残る CLI `max=1` は runtime trace で binary-grounding 中 |
+| OLMBlur | 8bpc packaged slice は Mac AE exact。16bpc Mac AE は 0/7 exact で、現在は sparse high-amplitude residual を調査中。残る CLI `max=1` は runtime trace で binary-grounding 中 |
 | OLMToonDilate | 8bpc packaged slice は Mac AE exact |
-| OLMDistanceGradation | basic / extended / blur の 8bpc packaged slice は Mac AE exact。CLI 側の説明はまだ詰め中 |
-| OLMColorKey | core / Edge Thin / Edge Blur の normalized 8bpc packaged slice は Mac AE exact。古い 20260604 Edge Blur 残差は reference-generation split として扱う |
+| OLMDistanceGradation | basic / extended / blur の 8bpc packaged slice は Mac AE exact。16bpc Mac AE は Inside/all-opaque no-source 修正後 9/29 exact で、Render Mode / background / interpolation 系を調査中 |
+| OLMColorKey | core / Edge Thin / Edge Blur の normalized 8bpc packaged slice は Mac AE exact。16bpc Mac AE は Force Lower Precision epsilon 修正後 8/9 exact。残りは `case_0009` の Edge Thin / border path 寄り。古い 20260604 Edge Blur 残差は reference-generation split として扱う |
 | OLMSmoother2 | no-key grid は 8bpc Mac AE exact。legacy current-AEX recapture 済み。key/gamma は Smooth Range threshold 昇格で大幅改善、残る局所残差を調査中 |
 | OLMSmoother v1 | 960x540 再検証で 8bpc Mac AE exact。v2 互換扱いへ寄せる判断は別途 |
 | OLMDirectionalBlur | 参照は多いが、まだ blocked。2026-06-25 witness plan で angle-0 と diagonal の2系統に分け、PNG-only tuning は止めて asm/runtime evidence 待ち |
@@ -85,9 +85,9 @@ PNG tuning ではなく narrow proof 待ちとして扱います。
 | --- | --- | --- | --- |
 | ColorKeep | 実参照が薄い | synthetic/helper 扱いが中心 | 必要なら Windows Software 実参照を作る |
 | OLMBlur | CLI に `max=1` 残差 | AE exact は出ているが、丸め・蓄積・Legacy border の説明が未完 | Blur runtime trace で writeback と border state を確定 |
-| OLMColorKey | 16/32bpc 未検証 | normalized 8bpc packaged slice は通ったが bit depth 展開がまだ | 16bpc/32bpc Windows Software 参照を追加 |
+| OLMColorKey | 16bpc 未一致、32bpc 未検証 | normalized 8bpc packaged slice は通った。16bpc Mac AE は Force Lower Precision epsilon 修正後 8/9 exact | 残る `olmcolorkey__case_0009` の Edge Thin / border path を binary/runtime evidence で確認 |
 | OLMToonDilate | 16/32bpc 未検証 | 8bpc packaged slice は通ったが bit depth 展開がまだ | 16bpc/32bpc Windows Software 参照を追加 |
-| OLMDistanceGradation | CLI 仕様説明が未完 | Mac AE exact はあるが field prep / OpenCV args の説明が不足 | field world、distanceTransform、blur 引数を runtime trace で確定 |
+| OLMDistanceGradation | 16bpc 未一致、CLI 仕様説明が未完 | 8bpc Mac AE exact はあるが、16bpc では Render Mode=2、Use Background Color=1、In/Out=3 などの分岐で大きくズレる。field prep / OpenCV args の説明も不足 | まず Mac AE parameter replay / 16bpc color path を確認し、その後 field world、distanceTransform、blur 引数を runtime trace で確定 |
 | OLMSmoother v1 | 8bpc AE exact | 960x540 再検証で `case_0001..0003` が exact | v2 互換扱いへ寄せるか、v1 独立維持かを明示する |
 | OLMSmoother2 | Legacy key / gamma | current-AEX recapture 12ケースを取り込み済み。case 0002/0003 はAE保存before入力でCLI exact。0004 は Smooth Range threshold で target final writer float と一致。0012 は `cardinal6 key=50 -> f270/e170/e3a0` まで局所化 | 0012 `(91,841)` の scanner/emit 中間値と 0004 polygon/no-polygon path を binary/runtime evidence で確定 |
 | OLMDirectionalBlur | blocked | PNG tuning だけで進めると誤実装になりやすい。angle-0 と diagonal では見るべき証拠が違う | `case_0001 (465,169)` 系の rowdriver/valid-alpha と、`case_0005 (507,367)` 系の rotate/validity を別々に runtime/asm evidence で確定 |
@@ -203,9 +203,11 @@ python3 scripts/intake_olm_return.py path/to/returned_ae_host_or_pixel.zip \
 ## 現在の次アクション
 
 `scripts/print_next_olm_action.py` の現在判定は
-`continue-binary-grounded-followup` です。16bpc の normalized exact
-Windows Software 参照は返却・取込済みで、次は Mac AE 16bpc 比較か、
-Smoother2 の narrow binary-grounded proof へ進む段階です。
+`investigate-16bpc-mac-ae-residuals` です。16bpc の normalized exact
+Windows Software 参照は返却・取込済みで、Mac AE 2026 で45件を実行し、
+native 16bit 比較まで済んでいます。ColorKey Force Lower Precision と
+DistanceGradation Inside/all-opaque no-source 修正後の現在値は 17/45 exact なので、これは
+完了ではありません。
 
 送付済みzip:
 `handoffs/windows_batch/olm_windows_reference_request_20260625_16bpc_normalized_exact.zip`
@@ -213,6 +215,59 @@ Smoother2 の narrow binary-grounded proof へ進む段階です。
 内容は OLMBlur 7件、OLMColorKey 9件、OLMDistanceGradation 29件です。
 8bpc で normalized AE exact になっている範囲だけを、次の bit depth に
 広げるための参照取得です。
+
+Mac AE validation 用zip:
+`handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation/`
+
+内容は次の5本です。
+
+- `bitdepth16_olmblur_exact.zip`
+- `bitdepth16_olmcolorkey_exact.zip`
+- `bitdepth16_olmdistancegradation_basic_exact.zip`
+- `bitdepth16_olmdistancegradation_extended_exact.zip`
+- `bitdepth16_olmdistancegradation_blur_exact.zip`
+
+まとめて渡す場合のbundle:
+`handoffs/ae_host_validation/20260625_222505_20260625_16bpc_mac_ae_validation_bundle/olm_ae_pixel_validation_20260625_16bpc_mac_ae_validation_20260625_222505.zip`
+
+候補確認:
+
+```sh
+python3 scripts/list_olm_return_candidates.py \
+  handoffs/ae_host_validation/20260625_222505_20260625_16bpc_mac_ae_validation_bundle
+```
+
+Mac AE 実行結果は次に記録しています。
+
+- `refs/conformance/bitdepth_16bpc_mac_ae_validation_20260626_distancegradation_inside_no_source.md`
+- `refs/conformance/bitdepth_16bpc_mac_ae_residual_classes_20260626_distancegradation_inside_no_source.md`
+
+16bpc の現状は `AE exact` ではなく `not-ae-exact` です。
+失敗28件の分類は `full-scale-mismatch` 18件、
+`large-structured-mismatch` 10件です。古い 2026-06-25 結果は
+`path_full` 非対応でパラメータが再生されていなかったため、現在の残差
+baseline には使いません。ColorKey は AEX 由来の Force Lower Precision
+epsilon 規則を反映して `olmcolorkey__case_0008` が exact になり、残りは
+`olmcolorkey__case_0009` です。DistanceGradation は all-opaque input の
+Inside/no-source rule で `olmdistancegradation_basic__case_0002` が exact になりました。
+
+5本まとめて検証する場合は、次のコマンドで一括比較できます。
+
+```sh
+python3 scripts/verify_ae_pixel_validation_batch.py \
+  handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation \
+  path/to/mac_ae_16bpc_returns \
+  --run-dir /tmp/olm_ae_pixel_16bpc_batch
+```
+
+返却物の取り込みルーター経由でも同じ検証ができます。
+
+```sh
+python3 scripts/intake_olm_return.py path/to/mac_ae_16bpc_returns \
+  --kind ae-pixel-validation \
+  --ae-pixel-requests-dir handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation \
+  --run-dir /tmp/olm_ae_pixel_16bpc_batch
+```
 
 Smoother2 については
 `refs/conformance/olmsmoother2_current_aex_8bpc_decision.md`
@@ -259,6 +314,12 @@ OLMBlur 7件、OLMColorKey 9件、OLMDistanceGradation 29件の合計45件です
 
 16bpc 参照の受領記録:
 `refs/conformance/bitdepth_16bpc_reference_return_20260625.md`
+
+16bpc Mac AE 検証結果:
+`refs/conformance/bitdepth_16bpc_mac_ae_validation_20260626_distancegradation_inside_no_source.md`
+
+16bpc 残差分類:
+`refs/conformance/bitdepth_16bpc_mac_ae_residual_classes_20260626_distancegradation_inside_no_source.md`
 
 Windows へ送った project-local zip:
 `handoffs/windows_batch/olm_windows_reference_request_20260625_16bpc_normalized_exact.zip`

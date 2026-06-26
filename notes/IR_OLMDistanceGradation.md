@@ -42,7 +42,9 @@
 | 8bpc compose reads the distance field from the green byte of the field pixel and applies invert/interpolation in `FUN_181170870`. | `decomp/DistanceGradation.aex.c.txt` `FUN_181170870`: `_X = field_pixel[green] / 255`, then optional `1 - X`, Sphere/Power, and final RGBA byte cast. | binary-grounded |
 | 8bpc compose is an AE iterate callback over a prebuilt field world. | `FUN_181170380` requests `PF Iterate8 Suite` and passes callback `FUN_181170870` with user data `param_4 + 0x2c`; `FUN_181170870` then reads the field world through `param_1[1]`. | binary-grounded |
 | 16bpc and float compose use sibling iterate callbacks. | `FUN_181170280` requests `PF iterate16 Suite` and passes `FUN_181170480`; float path stores callback `FUN_181170c90`. | binary-grounded |
+| 16bpc compose scales by `32768.0`, reads pixels with `1/32768`, and appears to write via `CVTTSS2SI`. This is a binary fact, but it is not yet adopted as the Mac output rule. | `FUN_181170480` uses `DAT_181504a80 = 1/32768`, `DAT_181504ac4 = 32768`, then `CVTTSS2SI` before storing 16-bit ARGB words. A 2026-06-26 Mac AE experiment that globally switched the port to truncation kept the exact count flat and worsened several 16bpc residuals, so the current port keeps round-to-nearest while source/field packing is unresolved. | binary-grounded / implementation-rejected-for-now |
 | OpenCV border names including `BORDER_REFLECT_101` are present in the AEX. | `decomp/DistanceGradation.aex.c.txt` contains `cv::copyMakeBorder` and border-name table strings. | binary-grounded for availability, not final blur branch proof |
+| 16bpc Inside mode with an all-opaque input mask and no zero-distance source should compose to final `X=0` regardless of `Invert`. | 2026-06-26 Mac AE 16bpc validation: `olmdistancegradation_basic__case_0002` changed from full red/opaque to exact when the pre-invert field is forced to `0` for `Invert=ON` and `1` for `Invert=OFF`; previously exact all-opaque Inside cases stayed exact. | measured Windows-reference-backed / needs static trace |
 
 ## Parameters
 
@@ -68,6 +70,9 @@
 3. Compute `ds = (ds_x + ds_y) * 0.5`, with fallback `1.0`.
 4. Build normalized distance field `X`:
    - Inside: distance in mask.
+     - If the inside mask has no zero-distance source (all pixels are inside),
+       prepare a degenerate field that composes to final `X=0`: pre-invert
+       `X=1` when `Invert` is off, pre-invert `X=0` when `Invert` is on.
    - Outside: distance in inverted mask.
    - Both: max of inside and outside normalized fields.
 5. If Constant interpolation plus blur is active, convert `X` to
@@ -79,6 +84,10 @@
    - derive output alpha from In/Out mode;
    - choose RGB from Gradation Color or source layer;
    - write premultiplied-looking PNG output according to background mode.
+8. In the current Mac port, convert 16bpc float channels with round-to-nearest
+   after multiplying by `32768.0`. The Windows callback's apparent
+   `CVTTSS2SI` writeback remains a tracked binary fact, but a direct global
+   truncation change did not improve conformance and is not the active rule.
 
 ## Distance / Boundary
 
@@ -162,6 +171,7 @@ is `1 - X`.
 | basic 12-case AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: 12/12 `max_diff=0`; decision matrix preserves normalized exact behavior | 16/32bpc references; binary-ground field prep only if closing CLI residuals |
 | extended non-blur 16-case AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: 16/16 `max_diff=0`; decision matrix preserves normalized exact behavior | 16/32bpc references; binary-ground Constant/render-mode only if closing CLI residuals |
 | blur `case_0029` AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: `max_diff=0`; normalized and legacy refs both exact | 16/32bpc references; trace OpenCV blur only if closing CLI residuals |
+| basic all-opaque Inside `case_0001..0006` | 16bpc | partial AE exact | 2026-06-26 Mac AE: Inside/no-source rule keeps `case_0001/0003/0004/0005/0006` exact and promotes `case_0002` to exact. Basic slice is now 8/12; DistanceGradation total is 9/29 | Static/runtime proof for the no-source branch; continue with non-all-opaque 16bpc residuals |
 | AE-free basic 12-case smoke | 8bpc | guarded | 2026-06-19 rerun passes current guard: worst `case_0007/0009 max=7 mean=0.0909`; residual remains | binary-ground distance normalization and compare against normalized Software refs |
 | AE-free extended non-blur 16-case smoke | 8bpc | guarded | 2026-06-19 rerun passes current loose guard, but with large non-exact residuals: `case_0008 max=254`, `case_0011 max=254`, `case_0012 max=251`, `case_0020..0023 max=238` | binary-ground interpolation, Constant field-prep, and render-mode branch details before tuning |
 | AE-free blur `case_0029` | 8bpc | guarded | 2026-06-19 rerun: `max=23 mean=0.2827`; tiny non-grounded improvement from Constant+Blur binary-field handling | trace/OpenCV 4.5.5 `distanceTransform` / `GaussianBlur` behavior |

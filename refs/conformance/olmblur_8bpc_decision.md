@@ -1,11 +1,12 @@
 # OLMBlur Decision Matrix
 
 - Decision: `preserve-normalized-ae-exact`
-- Recommended action: Do not tune OLMBlur from the old 20260604 drift or from AE-free CLI max=1 witnesses. The current trace points at accumulation/helper state before byte output, while packaged 8bpc AE slices are exact.
+- Recommended action: Do not tune OLMBlur from the old 20260604 drift or from AE-free CLI max=1 witnesses. The current trace points at accumulation/helper state before byte output, while packaged 8bpc AE slices are exact; 16bpc Windows references are covered and now need Mac AE comparison.
 
 ## Evidence
 
 - Normalized 8bpc: `normalized-software-exact` (7/7 exact)
+- Windows 16bpc reference: `reference-covered-compare-pending` (7 cases)
 - Legacy drift: `normalized-software-exact-with-legacy-drift` (4 cases)
 - CLI residuals: `diagnostic-max1` (max `1`, nonzero px `4`)
 - Runtime trace: `prewriteback-or-helper-state` (focus `nonlegacy-accumulation-or-writeback`)
@@ -27,5 +28,6 @@
 ## Next Evidence
 
 - Packaged Mac AE exact against canonical normalized 8bpc OLMBlur refs is already established; preserve it.
-- 16bpc and 32bpc Software reference coverage.
+- Run Mac AE-host 16bpc validation against the covered Windows Software reference cases.
+- 32bpc Software reference coverage.
 - Only continue CLI max=1 closure if binary-grounding the true accumulation/helper and Legacy border/all-same state becomes necessary.

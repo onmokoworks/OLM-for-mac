@@ -38,11 +38,39 @@ def main() -> int:
         assert report["inner"]["decision"] == "blocked-no-global-toggle"
         assert report["inner"]["best_by_mean_sum"] == "loop-minus-one"
         assert report["inner"]["all_exact_candidates"] == []
+        witness_plan = report["inner"]["witness_plan"]
+        assert witness_plan["decision"] == "typed-inner-cell-witnesses-only"
+        representatives = {
+            row["family"]: row["case_id"]
+            for row in witness_plan["representatives"]
+        }
+        assert representatives == {
+            "low-span": "rb_inner_only_strength_large",
+            "quality-strong": "rb_inner_quality_1",
+            "edge-prepass": "rb_inner_edgefade_only",
+        }
+        cell_witness = report["inner"]["cell_witness"]
+        assert cell_witness["status"] == "answered_partial"
+        spans = {
+            row["case_id"]: row["effective_span_r14d"]
+            for row in cell_witness["cases"]
+        }
+        assert spans == {
+            "rb_inner_only_strength_large": 477,
+            "rb_inner_quality_1": 51,
+            "rb_inner_edgefade_only": 255,
+        }
+        assert cell_witness["failure_classification"] == "partial_trace_after_effective_span"
         md = report_md.read_text(encoding="utf-8")
         assert "OLMRadialBlur Decision Matrix" in md
         assert "guarded-alpha-normalization" in md
         assert "blocked-sampler-validity" in md
         assert "blocked-no-global-toggle" in md
+        assert "Inner Witness Plan" in md
+        assert "Inner Cell Witness Return" in md
+        assert "rb_inner_only_strength_large" in md
+        assert "rb_inner_quality_1" in md
+        assert "rb_inner_edgefade_only" in md
     print("[OK] RadialBlur decision matrix smoke passed")
     return 0
 

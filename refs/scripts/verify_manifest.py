@@ -4,14 +4,142 @@
 import argparse
 import csv
 import json
+import shutil
+import struct
+import subprocess
 import sys
+import zlib
 from pathlib import Path
 
 import numpy as np
 from PIL import Image
 
 
+def png_header(path):
+    data = Path(path).read_bytes()
+    if not data.startswith(b"\x89PNG\r\n\x1a\n"):
+        return None
+    pos = 8
+    while pos + 8 <= len(data):
+        length = struct.unpack(">I", data[pos : pos + 4])[0]
+        chunk_type = data[pos + 4 : pos + 8]
+        chunk_data = data[pos + 8 : pos + 8 + length]
+        pos += 12 + length
+        if chunk_type == b"IHDR":
+            width, height, bit_depth, color_type, compression, filter_method, interlace = struct.unpack(
+                ">IIBBBBB", chunk_data
+            )
+            return {
+                "width": width,
+                "height": height,
+                "bit_depth": bit_depth,
+                "color_type": color_type,
+                "compression": compression,
+                "filter_method": filter_method,
+                "interlace": interlace,
+            }
+    return None
+
+
+def magick_rgba16_array(path, header):
+    magick = shutil.which("magick")
+    if not magick:
+        return None
+    raw = subprocess.check_output([magick, str(path), "-depth", "16", "rgba:-"])
+    expected = header["width"] * header["height"] * 4 * 2
+    if len(raw) != expected:
+        raise ValueError(f"unexpected ImageMagick RGBA payload size in {path}: {len(raw)} != {expected}")
+    return np.frombuffer(raw, dtype=">u2").reshape((header["height"], header["width"], 4))
+
+
+def png_rgba_array(path):
+    header = png_header(path)
+    if header is None:
+        raise ValueError(f"not a PNG file: {path}")
+    if header["color_type"] != 6 or header["bit_depth"] != 16:
+        return None
+    magick_array = magick_rgba16_array(path, header)
+    if magick_array is not None:
+        return magick_array
+
+    data = Path(path).read_bytes()
+
+    pos = 8
+    width = height = bit_depth = color_type = None
+    idat = []
+    while pos + 8 <= len(data):
+        length = struct.unpack(">I", data[pos : pos + 4])[0]
+        chunk_type = data[pos + 4 : pos + 8]
+        chunk_data = data[pos + 8 : pos + 8 + length]
+        pos += 12 + length
+        if chunk_type == b"IHDR":
+            width, height, bit_depth, color_type, compression, filter_method, interlace = struct.unpack(
+                ">IIBBBBB", chunk_data
+            )
+            if compression != 0 or filter_method != 0 or interlace != 0:
+                raise ValueError(f"unsupported PNG encoding in {path}")
+        elif chunk_type == b"IDAT":
+            idat.append(chunk_data)
+        elif chunk_type == b"IEND":
+            break
+
+    if width is None or height is None or bit_depth is None or color_type is None:
+        raise ValueError(f"missing PNG IHDR in {path}")
+    if color_type != 6 or bit_depth != 16:
+        return None
+
+    channels = 4
+    bytes_per_sample = bit_depth // 8
+    bytes_per_pixel = channels * bytes_per_sample
+    row_bytes = width * bytes_per_pixel
+    raw = zlib.decompress(b"".join(idat))
+    expected = height * (1 + row_bytes)
+    if len(raw) != expected:
+        raise ValueError(f"unexpected PNG payload size in {path}: {len(raw)} != {expected}")
+
+    rows = np.empty((height, row_bytes), dtype=np.uint8)
+    prev = np.zeros(row_bytes, dtype=np.uint8)
+    offset = 0
+    for y in range(height):
+        filter_type = raw[offset]
+        offset += 1
+        current = np.frombuffer(raw, dtype=np.uint8, count=row_bytes, offset=offset).copy()
+        offset += row_bytes
+        recon = np.empty(row_bytes, dtype=np.uint8)
+        for x in range(row_bytes):
+            left = int(recon[x - bytes_per_pixel]) if x >= bytes_per_pixel else 0
+            up = int(prev[x])
+            up_left = int(prev[x - bytes_per_pixel]) if x >= bytes_per_pixel else 0
+            value = int(current[x])
+            if filter_type == 0:
+                recon[x] = value
+            elif filter_type == 1:
+                recon[x] = (value + left) & 0xFF
+            elif filter_type == 2:
+                recon[x] = (value + up) & 0xFF
+            elif filter_type == 3:
+                recon[x] = (value + ((left + up) // 2)) & 0xFF
+            elif filter_type == 4:
+                p = left + up - up_left
+                pa = abs(p - left)
+                pb = abs(p - up)
+                pc = abs(p - up_left)
+                predictor = left if pa <= pb and pa <= pc else (up if pb <= pc else up_left)
+                recon[x] = (value + predictor) & 0xFF
+            else:
+                raise ValueError(f"unsupported PNG filter {filter_type} in {path}")
+        rows[y] = recon
+        prev = recon
+
+    if bit_depth == 8:
+        return rows.reshape((height, width, channels))
+    return rows.reshape((height, width, channels, 2)).view(">u2").reshape((height, width, channels))
+
+
 def load_rgba(path):
+    rgba = png_rgba_array(path)
+    if rgba is not None:
+        return rgba
     return np.asarray(Image.open(path).convert("RGBA"))
 
 
@@ -25,7 +153,7 @@ def compare(reference_path, candidate_path, diff_path):
             "candidate_shape": list(candidate.shape),
         }
 
-    delta = np.abs(reference.astype(np.int32) - candidate.astype(np.int32))
+    delta = np.abs(reference.astype(np.int64) - candidate.astype(np.int64))
     mask = delta.any(axis=-1)
     nonzero_px = int(mask.sum())
     total_px = int(reference.shape[0] * reference.shape[1])
@@ -49,7 +177,8 @@ def compare(reference_path, candidate_path, diff_path):
             )
 
         diff_path.parent.mkdir(parents=True, exist_ok=True)
-        amplified = np.minimum(delta * 32, 255).astype(np.uint8)
+        scale = 32 if delta.max() <= 255 else 255.0 / float(delta.max())
+        amplified = np.minimum(delta * scale, 255).astype(np.uint8)
         amplified[..., 3] = 255
         Image.fromarray(amplified, "RGBA").save(diff_path)
 

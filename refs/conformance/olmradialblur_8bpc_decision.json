@@ -4,6 +4,56 @@
     "all_exact_candidates": [],
     "best_by_mean_sum": "loop-minus-one",
     "case_count": 10,
+    "cell_witness": {
+      "cases": [
+        {
+          "case_id": "rb_inner_only_strength_large",
+          "effective_span_r14d": 477,
+          "family": "low-span",
+          "fault_instruction": "mulss xmm2,dword ptr [r13+rcx*4+1D528h]",
+          "fault_site": "OLMRadialBlur+0x222d",
+          "inner_base_span_hex": "000001dd",
+          "span_gate_float": 1.0
+        },
+        {
+          "case_id": "rb_inner_quality_1",
+          "effective_span_r14d": 51,
+          "family": "quality-strong",
+          "fault_instruction": "addss xmm0,dword ptr [r8]",
+          "fault_site": "OLMRadialBlur+0x2194",
+          "inner_base_span_hex": "00000033",
+          "span_gate_float": 0.010600490495562553
+        },
+        {
+          "case_id": "rb_inner_edgefade_only",
+          "effective_span_r14d": 255,
+          "family": "edge-prepass",
+          "fault_instruction": "mulss xmm2,dword ptr [r13+rcx*4+1D528h]",
+          "fault_site": "OLMRadialBlur+0x222d",
+          "inner_base_span_hex": "000000ff",
+          "span_gate_float": 0.5019608736038208
+        }
+      ],
+      "directly_observed": [
+        "OLMRadialBlur module base for each run",
+        "inner callsite OLMRadialBlur+0x26e5 first hit",
+        "direction register EDX=1 and helper sanity EBP=1",
+        "caller stack slots [rsp+0x138], [rsp+0x48], [rsp+0x28]",
+        "ctx fields [rcx+0x2c], [rcx+0x30], [rcx+0x3a9ec]",
+        "post OLMRadialBlur+0x1d18 effective span register R14D",
+        "closest table-step/fault site registers after attempted OLMRadialBlur+0x1d43 continuation"
+      ],
+      "failure_classification": "partial_trace_after_effective_span",
+      "not_isolated": [
+        "specific representative residual cell chosen by output pixel",
+        "full loop bound through all scatter iterations",
+        "source/destination polar row/column for every scatter write",
+        "accumulated RGBA numerator and denominator",
+        "post-scatter value consumed by final writeback"
+      ],
+      "status": "answered_partial",
+      "summary": "Captured first-hit inner-helper callsite and post-effective-span state for the requested low-span, quality-strong, and edge-prepass representatives. The exact per-cell scatter body/table-step trace was interrupted by second-chance access violations after the effective span was recorded; therefore this return provides typed closest local values rather than a full accumulation/denominator/writeback witness."
+    },
     "decision": "blocked-no-global-toggle",
     "next_evidence": "Typed FUN_180001c90 per-cell witness for one low-span cell and one Quality/strong cell.",
     "reference": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/win_references/olm_reference_return_windows_20260617_radialblur_inner_full_software/OLMRadialBlur",
@@ -40,11 +90,70 @@
         "mean_sum": 64.31340241608797,
         "worsened_cases": 0
       }
-    ]
+    ],
+    "witness_plan": {
+      "decision": "typed-inner-cell-witnesses-only",
+      "recommended_action": "Do not promote global Inner toggles. If Windows is needed, trace one representative low-span cell and one Quality/strong cell; add Edge Fade prepass only if the first two do not explain the split.",
+      "representatives": [
+        {
+          "baseline": {
+            "max_diff": 255,
+            "mean_diff": 0.18970522280092592,
+            "nonzero_px_percent": 23.268180941358025
+          },
+          "best": {
+            "max_diff": 255,
+            "mean_diff": 0.12459008487654322,
+            "nonzero_px_percent": 15.624614197530864
+          },
+          "best_candidate": "circular-wrap",
+          "case_id": "rb_inner_only_strength_large",
+          "family": "low-span",
+          "required_proof": "Typed FUN_180001c90 values for one low-span cell: resolved span, table index, row/underflow target, source/destination polar cell, and accumulated RGBA/denom.",
+          "why": "Low-span/offset cases prefer circular-wrap-like behavior and regress under loop-minus-one."
+        },
+        {
+          "baseline": {
+            "max_diff": 240,
+            "mean_diff": 15.253005521797839,
+            "nonzero_px_percent": 41.211853780864196
+          },
+          "best": {
+            "max_diff": 240,
+            "mean_diff": 14.85661434220679,
+            "nonzero_px_percent": 41.286458333333336
+          },
+          "best_candidate": "loop-minus-one",
+          "case_id": "rb_inner_quality_1",
+          "family": "quality-strong",
+          "required_proof": "Typed FUN_180001c90 values for one Quality/strong cell: resolved span, loop bound, table divisor, gaussian weight, source row, and post-scatter accumulation.",
+          "why": "Strong/high-Quality cases prefer loop-minus-one-like behavior but still keep max residuals."
+        },
+        {
+          "baseline": {
+            "max_diff": 252,
+            "mean_diff": 3.9570518663194445,
+            "nonzero_px_percent": 98.53028549382717
+          },
+          "best": {
+            "max_diff": 252,
+            "mean_diff": 3.920889636381173,
+            "nonzero_px_percent": 98.55362654320987
+          },
+          "best_candidate": "table-span-minus-one",
+          "case_id": "rb_inner_edgefade_only",
+          "family": "edge-prepass",
+          "required_proof": "Prepass alpha/factor plane and scatter denominator values for one Edge Fade cell before changing table bounds.",
+          "why": "Edge Fade cases prefer table-span-minus-one-like behavior and exercise the prepass alpha tables."
+        }
+      ]
+    }
   },
   "inputs": {
+    "inner_cell_witness_summary_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/radialblur_inner_cell_witness_20260625/runtime_trace_summary_radialblur_inner_cell_witness_20260625_214017.json",
     "inner_csv": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmradialblur_inner_candidate_matrix_20260622_002848/candidate_matrix.csv",
     "inner_summary_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmradialblur_inner_candidate_matrix_20260622_002848/summary.json",
+    "inner_witness_plan_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmradialblur_inner_witness_plan_20260625/witness_plan.json",
     "trace_comparison_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/runtime_trace_comparisons/olmradialblur_residual_witness_20260624.json",
     "zoom_witness_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmradialblur_zoom_witness_20260624/audit.json"
   },

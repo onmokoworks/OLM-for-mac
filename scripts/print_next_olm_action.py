@@ -213,6 +213,99 @@ def runtime_trace_superseded(root: Path) -> set[str]:
     return ids
 
 
+def bitdepth16_compare_pending(root: Path) -> dict[str, Any] | None:
+    summary_path = root / "refs" / "conformance" / "bitdepth_16bpc_reference_return_20260625.json"
+    if not summary_path.exists():
+        return None
+    try:
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(summary, dict) or summary.get("status") != "reference-covered-compare-pending":
+        return None
+
+    decision_paths = [
+        root / "refs" / "conformance" / "olmcolorkey_edge_8bpc_decision.json",
+        root / "refs" / "conformance" / "olmdistancegradation_8bpc_decision.json",
+        root / "refs" / "conformance" / "olmblur_8bpc_decision.json",
+    ]
+    feature_rows = []
+    for path in decision_paths:
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return None
+        ref16 = data.get("windows_16bpc_reference") if isinstance(data, dict) else None
+        if not isinstance(ref16, dict) or ref16.get("status") != "reference-covered-compare-pending":
+            return None
+        feature_rows.append(
+            {
+                "path": str(path.relative_to(root)),
+                "case_count": ref16.get("case_count"),
+                "groups": ref16.get("groups"),
+            }
+        )
+
+    package_dirs = sorted(
+        (root / "handoffs" / "ae_host_validation").glob("*_16bpc_mac_ae_validation"),
+        key=lambda path: path.stat().st_mtime,
+        reverse=True,
+    )
+    package_dir = package_dirs[0] if package_dirs else None
+    packages = sorted(str(path) for path in package_dir.glob("*.zip")) if package_dir else []
+    bundle_paths = sorted(
+        (root / "handoffs" / "ae_host_validation").glob("*_16bpc_mac_ae_validation_bundle/*.zip"),
+        key=lambda path: path.stat().st_mtime,
+        reverse=True,
+    )
+    bundle_path = bundle_paths[0] if bundle_paths else None
+
+    return {
+        "path": str(bundle_path or package_dir or summary_path),
+        "kind": "bitdepth-16bpc-reference-summary",
+        "request_id": summary.get("request_id"),
+        "manifest": summary.get("imported_manifest"),
+        "case_count": summary.get("case_count"),
+        "not_complete_reason": summary.get("not_complete_reason"),
+        "reference_summary": str(summary_path),
+        "bundle": str(bundle_path) if bundle_path else "",
+        "package_dir": str(package_dir) if package_dir else "",
+        "packages": packages,
+        "features": feature_rows,
+    }
+
+
+def bitdepth16_mac_validation_result(root: Path) -> dict[str, Any] | None:
+    paths = sorted(
+        (root / "refs" / "conformance").glob("bitdepth_16bpc_mac_ae_validation_*.json"),
+        key=lambda candidate: candidate.stat().st_mtime,
+        reverse=True,
+    )
+    path = paths[0] if paths else None
+    if path is None or not path.exists():
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(data, dict):
+        return None
+    status = data.get("status")
+    if status not in {"not-ae-exact", "ae-exact"}:
+        return None
+    return {
+        "path": str(path),
+        "markdown_path": str(path.with_suffix(".md")) if path.with_suffix(".md").exists() else "",
+        "kind": "bitdepth-16bpc-mac-ae-validation",
+        "status": status,
+        "case_total": data.get("case_total"),
+        "case_exact": data.get("case_exact"),
+        "case_fail": data.get("case_fail"),
+        "run_dir": data.get("run_dir"),
+        "requests": data.get("requests", []),
+    }
+
+
 def ae_host_exact_summary(root: Path) -> dict[str, Any] | None:
     report_root = root / "refs" / "reports"
     summaries: list[dict[str, Any]] = []
@@ -729,6 +822,8 @@ def decide(
     ae_exact_summary: dict[str, Any] | None,
     ae_failure_classification: dict[str, Any] | None,
     binary_followup_report: dict[str, Any] | None,
+    bitdepth16_mac_result: dict[str, Any] | None = None,
+    bitdepth16_pending: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     runtime_return = newest(rows, "runtime-trace-return")
     if runtime_return:
@@ -861,6 +956,32 @@ def decide(
             "command": "python3 scripts/package_runtime_trace_requests.py",
         }
 
+    if bitdepth16_mac_result and bitdepth16_mac_result.get("status") == "not-ae-exact":
+        return {
+            "action": "investigate-16bpc-mac-ae-residuals",
+            "reason": (
+                "Mac AE 16bpc validation has been run and is not exact; do not rerun the same bundle "
+                "until the 16bpc residual classes are explained or implementation changes are made."
+            ),
+            "target": bitdepth16_mac_result,
+            "command": "read the target markdown_path and start with the largest 16bpc residual class",
+        }
+
+    if bitdepth16_pending:
+        return {
+            "action": "prepare-mac-ae-16bpc-validation",
+            "reason": (
+                "ColorKey Edge, DistanceGradation, and OLMBlur already have covered Windows "
+                "Software 16bpc references; the next proof is Mac AE 16bpc comparison, not "
+                "more Windows PNGs or Smoother2 producer tracing."
+            ),
+            "target": bitdepth16_pending,
+            "command": (
+                "run the bundled 16bpc AE-host validation requests on Mac AE and return rendered PNGs; "
+                "verify the return directory with scripts/verify_ae_pixel_validation_batch.py"
+            ),
+        }
+
     if ae_exact_summary and not ae_exact_summary.get("all_exact"):
         if ae_failure_classification and ae_failure_classification.get("is_current"):
             target = ae_failure_classification
@@ -920,6 +1041,8 @@ def main() -> int:
     ae_exact_summary = ae_host_exact_summary(root)
     ae_failure_classification = ae_host_failure_classification(root, ae_exact_summary)
     binary_followup = binary_grounded_followup_report(root)
+    bitdepth16_mac_result = bitdepth16_mac_validation_result(root)
+    bitdepth16_pending = bitdepth16_compare_pending(root)
     pending_request_defs = pending_requests(root, status["pending"])
     handoff_path = args.handoff
     if handoff_path is None:
@@ -938,6 +1061,8 @@ def main() -> int:
         ae_exact_summary,
         ae_failure_classification,
         binary_followup,
+        bitdepth16_mac_result,
+        bitdepth16_pending,
     )
 
     output = {
@@ -953,6 +1078,8 @@ def main() -> int:
         "ae_host_exact_summary": ae_exact_summary,
         "ae_host_failure_classification": ae_failure_classification,
         "binary_grounded_followup_report": binary_followup,
+        "bitdepth16_mac_validation_result": bitdepth16_mac_result,
+        "bitdepth16_compare_pending": bitdepth16_pending,
         "handoff": handoff,
         "candidates": interesting[:12],
     }

@@ -48,6 +48,7 @@ def main() -> int:
         runtime_return_with_source_request = tmp_path / "runtime_return_with_source_request.zip"
         bare_runtime_return = tmp_path / "bare_runtime_return.zip"
         ae_pixel_request = tmp_path / "ae_pixel_request.zip"
+        ae_pixel_bundle = tmp_path / "ae_pixel_bundle.zip"
         unknown = tmp_path / "other.zip"
 
         write_zip(
@@ -178,6 +179,20 @@ def main() -> int:
                 ),
             },
         )
+        write_zip(
+            ae_pixel_bundle,
+            {
+                "README.md": "bundle\n",
+                "bundle_manifest.json": json.dumps(
+                    {
+                        "kind": "olm_ae_pixel_validation_bundle",
+                        "request_count": 2,
+                        "requests": [],
+                    }
+                ),
+                "requests/bitdepth16_olmblur_exact.zip": "not a real nested zip for this smoke\n",
+            },
+        )
         write_zip(unknown, {"hello.txt": "not olm\n"})
 
         proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
@@ -194,6 +209,7 @@ def main() -> int:
         assert kinds["runtime_return_with_source_request.zip"] == "runtime-trace-return"
         assert kinds["bare_runtime_return.zip"] == "runtime-trace-return"
         assert kinds["ae_pixel_request.zip"] == "ae-pixel-validation-request"
+        assert kinds["ae_pixel_bundle.zip"] == "ae-pixel-validation-bundle"
         assert "other.zip" not in kinds
         commands = {Path(row["path"]).name: row["suggested_command"] for row in data["candidates"]}
         assert "--dispatch-dir /tmp/olm_reference_dispatch" in commands["returned_refs.zip"]
@@ -209,11 +225,13 @@ def main() -> int:
         assert "--runtime-summary-md" in commands["bare_runtime_return.zip"]
         assert "--runtime-comparison-dir" in commands["bare_runtime_return.zip"]
         assert "AE host" in commands["ae_pixel_request.zip"]
+        assert "AE host" in commands["ae_pixel_bundle.zip"]
 
         human = run([sys.executable, str(script), str(tmp_path)], repo)
         assert "win-reference-return" in human.stdout
         assert "runtime-trace-request-package" in human.stdout
         assert "runtime-trace-return" in human.stdout
+        assert "ae-pixel-validation-bundle" in human.stdout
         assert "send this package to the Windows AE renderer" in human.stdout
 
     print("[OK] OLM return candidate lister smoke")

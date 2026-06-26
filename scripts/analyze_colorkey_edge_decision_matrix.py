@@ -29,6 +29,11 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=ROOT / "refs" / "reports" / "runtime_trace_comparisons" / "olmcolorkey_edge_trace_latest.json",
     )
+    parser.add_argument(
+        "--bitdepth16-summary-json",
+        type=Path,
+        default=ROOT / "refs" / "conformance" / "bitdepth_16bpc_reference_return_20260625.json",
+    )
     parser.add_argument("--output-json", type=Path, default=None)
     parser.add_argument("--output-md", type=Path, default=None)
     return parser.parse_args()
@@ -48,10 +53,28 @@ def color_key_feature(canonicalization: dict[str, Any]) -> dict[str, Any]:
     raise ValueError("OLMColorKey feature not found in canonicalization report")
 
 
+def bitdepth16_reference(path: Path, group: str) -> dict[str, Any] | None:
+    if not path.exists():
+        return None
+    data = read_json(path)
+    groups = data.get("groups") or {}
+    count = int(groups.get(group, 0))
+    if count <= 0:
+        return None
+    return {
+        "bit_depth": data.get("bit_depth"),
+        "case_count": count,
+        "manifest": data.get("imported_manifest"),
+        "request_id": data.get("request_id"),
+        "status": data.get("status"),
+    }
+
+
 def build_report(args: argparse.Namespace) -> dict[str, Any]:
     provenance = read_json(args.provenance_json)
     canonical = color_key_feature(read_json(args.canonicalization_json))
     trace = read_json(args.trace_comparison_json) if args.trace_comparison_json.exists() else {}
+    ref16 = bitdepth16_reference(args.bitdepth16_summary_json, "olmcolorkey")
     classification = provenance.get("classification", {})
     normalized_status = canonical.get("canonical_8bpc_status")
     case_count = int(canonical.get("case_count", 0))
@@ -64,7 +87,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         decision = "preserve-normalized-ae-exact"
         action = (
             "Do not tune Edge Blur from the 20260604 case_0009 residual. "
-            "Preserve normalized 20260618 Software exactness for 8bpc and move next to 16bpc / 32bpc coverage."
+            "Preserve normalized 20260618 Software exactness for 8bpc; "
+            "16bpc Windows references are covered and now need Mac AE comparison."
         )
     elif has_current_residual:
         decision = "current-residual-needs-proof"
@@ -80,6 +104,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "provenance_json": str(args.provenance_json),
             "canonicalization_json": str(args.canonicalization_json),
             "trace_comparison_json": str(args.trace_comparison_json),
+            "bitdepth16_summary_json": str(args.bitdepth16_summary_json),
         },
         "normalized_8bpc": {
             "status": normalized_status,
@@ -99,11 +124,13 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "present": bool((trace.get("windows") or {}).get("present")),
             "classification": "not-actionable" if trace_focus in {"await-windows-trace", "trace-too-sparse"} else "review",
         },
+        "windows_16bpc_reference": ref16,
         "decision": decision,
         "recommended_action": action,
         "next_evidence": [
             "Preserve Mac AE exact behavior against canonical normalized 8bpc ColorKey refs.",
-            "16bpc and 32bpc Software reference coverage for core and Edge paths.",
+            "Run Mac AE-host 16bpc validation against the covered Windows Software reference cases.",
+            "32bpc Software reference coverage for core and Edge paths.",
             "Only request narrow Edge runtime trace if a current normalized Software residual reappears.",
         ],
     }
@@ -120,6 +147,12 @@ def render_markdown(report: dict[str, Any]) -> str:
         "",
         f"- Normalized 8bpc: `{report['normalized_8bpc']['status']}` "
         f"({report['normalized_8bpc']['exact_count']}/{report['normalized_8bpc']['case_count']} exact)",
+        (
+            f"- Windows 16bpc reference: `{report['windows_16bpc_reference']['status']}` "
+            f"({report['windows_16bpc_reference']['case_count']} cases)"
+            if report.get("windows_16bpc_reference")
+            else "- Windows 16bpc reference: `missing`"
+        ),
         f"- Legacy split: `{report['legacy_split']['classification']}` "
         f"(legacy max `{report['legacy_split']['legacy_max_diff']}`)",
         f"- Runtime trace: `{report['runtime_trace']['classification']}` "

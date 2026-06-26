@@ -386,7 +386,19 @@ static void build_distance_field(
 	if (ds <= 0.0f) ds = 1.0f;
 
 	if (p.in_out == IN_OUT_INSIDE) {
-		dt_to_normalized(mask.data(), df.x.data(), w, h, p.inside_threshold, ds);
+		bool has_source = false;
+		for (long i = 0; i < w * h; ++i) {
+			if (mask[i] == 0) {
+				has_source = true;
+				break;
+			}
+		}
+		if (!has_source) {
+			float no_edge_x = p.invert ? 0.0f : 1.0f;
+			for (long i = 0; i < w * h; ++i) df.x[i] = no_edge_x;
+		} else {
+			dt_to_normalized(mask.data(), df.x.data(), w, h, p.inside_threshold, ds);
+		}
 	} else if (p.in_out == IN_OUT_OUTSIDE) {
 		invert_mask(mask.data(), w, h);
 		dt_to_normalized(mask.data(), df.x.data(), w, h, p.outside_threshold, ds);

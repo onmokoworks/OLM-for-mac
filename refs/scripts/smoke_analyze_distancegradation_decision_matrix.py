@@ -61,6 +61,13 @@ def main() -> int:
             raise AssertionError("expected DistanceGradation to preserve normalized exact behavior")
         if report["normalized_8bpc"]["exact_count"] != 29:
             raise AssertionError("expected 29/29 normalized DistanceGradation cases to be exact")
+        ref16 = report.get("windows_16bpc_reference") or {}
+        if ref16.get("case_count") != 29:
+            raise AssertionError("expected 29 covered DistanceGradation 16bpc reference cases")
+        if ref16.get("status") != "reference-covered-compare-pending":
+            raise AssertionError("expected DistanceGradation 16bpc references to await Mac AE comparison")
+        if ref16.get("groups") != {"basic": 12, "blur": 1, "extended": 16}:
+            raise AssertionError("unexpected DistanceGradation 16bpc group coverage")
         if report["legacy_drift"]["classification"] != "normalized-software-exact-with-legacy-drift":
             raise AssertionError("expected normalized exact with legacy drift")
         if report["legacy_drift"]["legacy_nonzero_count"] != 7:
@@ -68,7 +75,13 @@ def main() -> int:
         if report["runtime_trace"]["classification"] != "not-actionable":
             raise AssertionError("expected current DistanceGradation trace to be non-actionable")
         markdown = out_md.read_text(encoding="utf-8")
-        for needle in ("Decision Matrix", "preserve-normalized-ae-exact", "29/29 exact", "case_0012"):
+        for needle in (
+            "Decision Matrix",
+            "preserve-normalized-ae-exact",
+            "29/29 exact",
+            "Windows 16bpc reference",
+            "case_0012",
+        ):
             if needle not in markdown:
                 raise AssertionError(f"Markdown missing {needle!r}")
     print("[OK] DistanceGradation decision matrix smoke passed")

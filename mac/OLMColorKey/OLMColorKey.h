@@ -108,6 +108,7 @@ typedef struct {
 	PF_FpLong threshold;
 	PF_Boolean premultiplied;
 	A_long color_space;
+	A_long force_lower_precision;
 	PF_Boolean per_color;
 	PF_Boolean per_component;
 	PF_FpLong threshold_r;

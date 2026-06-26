@@ -224,6 +224,87 @@ def main() -> int:
                     "sm2_no_key_s100_r3",
                 ),
             ),
+            (
+                "bitdepth16_olmblur_exact",
+                repo
+                / "refs"
+                / "win_references"
+                / "olm_bitdepth_16bpc_normalized_exact_20260625"
+                / "OLMbit-depthconformancebatch",
+                tuple(f"olmblur__case_{index:04d}" for index in range(1, 8)),
+            ),
+            (
+                "bitdepth16_olmcolorkey_exact",
+                repo
+                / "refs"
+                / "win_references"
+                / "olm_bitdepth_16bpc_normalized_exact_20260625"
+                / "OLMbit-depthconformancebatch",
+                tuple(f"olmcolorkey__case_{index:04d}" for index in range(1, 10)),
+            ),
+            (
+                "bitdepth16_olmdistancegradation_basic_exact",
+                repo
+                / "refs"
+                / "win_references"
+                / "olm_bitdepth_16bpc_normalized_exact_20260625"
+                / "OLMbit-depthconformancebatch",
+                tuple(
+                    f"olmdistancegradation_basic__{case_id}"
+                    for case_id in (
+                        "case_0001",
+                        "case_0002",
+                        "case_0003",
+                        "case_0004",
+                        "case_0005",
+                        "case_0006",
+                        "case_0007",
+                        "case_0009",
+                        "case_0015",
+                        "case_0017",
+                        "case_0018",
+                        "case_0019",
+                    )
+                ),
+            ),
+            (
+                "bitdepth16_olmdistancegradation_extended_exact",
+                repo
+                / "refs"
+                / "win_references"
+                / "olm_bitdepth_16bpc_normalized_exact_20260625"
+                / "OLMbit-depthconformancebatch",
+                tuple(
+                    f"olmdistancegradation_extended__{case_id}"
+                    for case_id in (
+                        "case_0008",
+                        "case_0010",
+                        "case_0011",
+                        "case_0012",
+                        "case_0013",
+                        "case_0014",
+                        "case_0016",
+                        "case_0020",
+                        "case_0021",
+                        "case_0022",
+                        "case_0023",
+                        "case_0024",
+                        "case_0025",
+                        "case_0026",
+                        "case_0027",
+                        "case_0028",
+                    )
+                ),
+            ),
+            (
+                "bitdepth16_olmdistancegradation_blur_exact",
+                repo
+                / "refs"
+                / "win_references"
+                / "olm_bitdepth_16bpc_normalized_exact_20260625"
+                / "OLMbit-depthconformancebatch",
+                ("olmdistancegradation_blur__case_0029",),
+            ),
         ]
         for preset, reference, case_ids in presets:
             request_zip = tmp_path / f"{preset}_request.zip"

@@ -61,6 +61,10 @@ def main() -> int:
             raise AssertionError("expected ColorKey Edge to preserve normalized exact behavior")
         if report["normalized_8bpc"]["exact_count"] != 9:
             raise AssertionError("expected 9/9 normalized ColorKey cases to be exact")
+        if (report.get("windows_16bpc_reference") or {}).get("case_count") != 9:
+            raise AssertionError("expected 9 covered ColorKey 16bpc reference cases")
+        if (report.get("windows_16bpc_reference") or {}).get("status") != "reference-covered-compare-pending":
+            raise AssertionError("expected ColorKey 16bpc references to await Mac AE comparison")
         if report["legacy_split"]["classification"] != "reference-generation-split":
             raise AssertionError("expected case_0009 to remain a reference-generation split")
         if report["legacy_split"]["legacy_max_diff"] != 47:
@@ -68,7 +72,13 @@ def main() -> int:
         if report["runtime_trace"]["classification"] != "not-actionable":
             raise AssertionError("expected current ColorKey Edge trace to be non-actionable")
         markdown = out_md.read_text(encoding="utf-8")
-        for needle in ("Decision Matrix", "preserve-normalized-ae-exact", "9/9 exact", "case_0009"):
+        for needle in (
+            "Decision Matrix",
+            "preserve-normalized-ae-exact",
+            "9/9 exact",
+            "Windows 16bpc reference",
+            "case_0009",
+        ):
             if needle not in markdown:
                 raise AssertionError(f"Markdown missing {needle!r}")
     print("[OK] ColorKey Edge decision matrix smoke passed")
