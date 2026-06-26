@@ -1,0 +1,510 @@
+{
+  "candidate_dir": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_extended_exact/candidate",
+  "cases": [
+    {
+      "bg_rgb_u16": [
+        65535,
+        0,
+        0
+      ],
+      "both_max_const_after_invert": 0,
+      "both_min_const_after_invert": 1,
+      "candidate_dist_to_bg_rgb_l1": 0,
+      "candidate_dist_to_grad_rgb_l1": 119505,
+      "candidate_matches_bg_rgb": true,
+      "candidate_matches_grad_rgb": false,
+      "candidate_rgba_f": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "candidate_rgba_u16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "candidate_x_estimate_from_red": -0.0,
+      "case_id": "olmdistancegradation_extended__case_0020",
+      "family": "constant-bg-binary",
+      "grad_rgb_u16": [
+        7196,
+        0,
+        61166
+      ],
+      "input_alpha_nonzero": true,
+      "input_rgba_u16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "inside_x_actual": 1.0,
+      "outside_x_actual": 0.0,
+      "params": {
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 1,
+        "Interpolation Mode": 1,
+        "Invert": 0,
+        "Power": 1,
+        "Render Mode": 1,
+        "Use Background Color": 1
+      },
+      "reference_dist_to_bg_rgb_l1": 119505,
+      "reference_dist_to_grad_rgb_l1": 512,
+      "reference_matches_bg_rgb": false,
+      "reference_matches_grad_rgb": false,
+      "reference_rgba_f": [
+        0.105898,
+        0.0,
+        0.929427,
+        1.0
+      ],
+      "reference_rgba_u16": [
+        6940,
+        0,
+        60910,
+        65535
+      ],
+      "reference_x_estimate_from_red": 1.004388145151614,
+      "witness": {
+        "x": 951,
+        "y": 417
+      }
+    },
+    {
+      "bg_rgb_u16": [
+        65535,
+        0,
+        0
+      ],
+      "both_max_const_after_invert": 0,
+      "both_min_const_after_invert": 1,
+      "candidate_dist_to_bg_rgb_l1": 0,
+      "candidate_dist_to_grad_rgb_l1": 119505,
+      "candidate_matches_bg_rgb": true,
+      "candidate_matches_grad_rgb": false,
+      "candidate_rgba_f": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "candidate_rgba_u16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "candidate_x_estimate_from_red": -0.0,
+      "case_id": "olmdistancegradation_extended__case_0021",
+      "family": "constant-bg-binary",
+      "grad_rgb_u16": [
+        7196,
+        0,
+        61166
+      ],
+      "input_alpha_nonzero": true,
+      "input_rgba_u16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "inside_x_actual": 1.0,
+      "outside_x_actual": 0.0,
+      "params": {
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 3,
+        "Interpolation Mode": 1,
+        "Invert": 0,
+        "Power": 1,
+        "Render Mode": 1,
+        "Use Background Color": 1
+      },
+      "reference_dist_to_bg_rgb_l1": 119505,
+      "reference_dist_to_grad_rgb_l1": 512,
+      "reference_matches_bg_rgb": false,
+      "reference_matches_grad_rgb": false,
+      "reference_rgba_f": [
+        0.105898,
+        0.0,
+        0.929427,
+        1.0
+      ],
+      "reference_rgba_u16": [
+        6940,
+        0,
+        60910,
+        65535
+      ],
+      "reference_x_estimate_from_red": 1.004388145151614,
+      "witness": {
+        "x": 951,
+        "y": 417
+      }
+    },
+    {
+      "bg_rgb_u16": [
+        65535,
+        0,
+        0
+      ],
+      "both_max_const_after_invert": 0,
+      "both_min_const_after_invert": 1,
+      "candidate_dist_to_bg_rgb_l1": 0,
+      "candidate_dist_to_grad_rgb_l1": 119505,
+      "candidate_matches_bg_rgb": true,
+      "candidate_matches_grad_rgb": false,
+      "candidate_rgba_f": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "candidate_rgba_u16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "candidate_x_estimate_from_red": -0.0,
+      "case_id": "olmdistancegradation_extended__case_0022",
+      "family": "constant-bg-binary",
+      "grad_rgb_u16": [
+        7196,
+        0,
+        61166
+      ],
+      "input_alpha_nonzero": false,
+      "input_rgba_u16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "inside_x_actual": 0.0,
+      "outside_x_actual": 1.0,
+      "params": {
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 3,
+        "Interpolation Mode": 1,
+        "Invert": 0,
+        "Power": 1,
+        "Render Mode": 1,
+        "Use Background Color": 1
+      },
+      "reference_dist_to_bg_rgb_l1": 119505,
+      "reference_dist_to_grad_rgb_l1": 512,
+      "reference_matches_bg_rgb": false,
+      "reference_matches_grad_rgb": false,
+      "reference_rgba_f": [
+        0.105898,
+        0.0,
+        0.929427,
+        1.0
+      ],
+      "reference_rgba_u16": [
+        6940,
+        0,
+        60910,
+        65535
+      ],
+      "reference_x_estimate_from_red": 1.004388145151614,
+      "witness": {
+        "x": 4,
+        "y": 0
+      }
+    },
+    {
+      "bg_rgb_u16": [
+        65535,
+        0,
+        0
+      ],
+      "both_max_const_after_invert": 1,
+      "both_min_const_after_invert": 1,
+      "candidate_dist_to_bg_rgb_l1": 119505,
+      "candidate_dist_to_grad_rgb_l1": 512,
+      "candidate_matches_bg_rgb": false,
+      "candidate_matches_grad_rgb": false,
+      "candidate_rgba_f": [
+        0.105898,
+        0.0,
+        0.929427,
+        1.0
+      ],
+      "candidate_rgba_u16": [
+        6940,
+        0,
+        60910,
+        65535
+      ],
+      "candidate_x_estimate_from_red": 1.004388145151614,
+      "case_id": "olmdistancegradation_extended__case_0023",
+      "family": "constant-bg-binary",
+      "grad_rgb_u16": [
+        7196,
+        0,
+        61166
+      ],
+      "input_alpha_nonzero": true,
+      "input_rgba_u16": [
+        0,
+        0,
+        0,
+        257
+      ],
+      "inside_x_actual": 0.027777777777777776,
+      "outside_x_actual": 0.0,
+      "params": {
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 3,
+        "Interpolation Mode": 1,
+        "Invert": 0,
+        "Power": 1,
+        "Render Mode": 1,
+        "Use Background Color": 1
+      },
+      "reference_dist_to_bg_rgb_l1": 0,
+      "reference_dist_to_grad_rgb_l1": 119505,
+      "reference_matches_bg_rgb": true,
+      "reference_matches_grad_rgb": false,
+      "reference_rgba_f": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "reference_rgba_u16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "reference_x_estimate_from_red": -0.0,
+      "witness": {
+        "x": 1699,
+        "y": 7
+      }
+    },
+    {
+      "bg_rgb_u16": [
+        65535,
+        0,
+        0
+      ],
+      "both_max_const_after_invert": 1,
+      "both_min_const_after_invert": 1,
+      "candidate_dist_to_bg_rgb_l1": 65535,
+      "candidate_dist_to_grad_rgb_l1": 68362,
+      "candidate_matches_bg_rgb": false,
+      "candidate_matches_grad_rgb": false,
+      "candidate_rgba_f": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "candidate_rgba_u16": [
+        0,
+        0,
+        0,
+        65535
+      ],
+      "candidate_x_estimate_from_red": 1.1233480176211454,
+      "case_id": "olmdistancegradation_extended__case_0027",
+      "family": "layer-bg-fractional",
+      "grad_rgb_u16": [
+        7196,
+        0,
+        61166
+      ],
+      "input_alpha_nonzero": false,
+      "input_rgba_u16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "inside_x_actual": 0.0,
+      "outside_x_actual": 0.9230769230769231,
+      "params": {
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 3,
+        "Interpolation Mode": 4,
+        "Invert": 1,
+        "Power": 2.59740734100342,
+        "Render Mode": 2,
+        "Use Background Color": 1
+      },
+      "reference_dist_to_bg_rgb_l1": 62159,
+      "reference_dist_to_grad_rgb_l1": 64986,
+      "reference_matches_bg_rgb": false,
+      "reference_matches_grad_rgb": false,
+      "reference_rgba_f": [
+        0.051514,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "reference_rgba_u16": [
+        3376,
+        0,
+        0,
+        65535
+      ],
+      "reference_x_estimate_from_red": 1.0654793534342377,
+      "witness": {
+        "x": 3,
+        "y": 0
+      }
+    },
+    {
+      "bg_rgb_u16": [
+        65535,
+        0,
+        0
+      ],
+      "both_max_const_after_invert": 1,
+      "both_min_const_after_invert": 1,
+      "candidate_dist_to_bg_rgb_l1": 65535,
+      "candidate_dist_to_grad_rgb_l1": 68362,
+      "candidate_matches_bg_rgb": false,
+      "candidate_matches_grad_rgb": false,
+      "candidate_rgba_f": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "candidate_rgba_u16": [
+        0,
+        0,
+        0,
+        65535
+      ],
+      "candidate_x_estimate_from_red": 1.1233480176211454,
+      "case_id": "olmdistancegradation_extended__case_0028",
+      "family": "layer-bg-fractional",
+      "grad_rgb_u16": [
+        7196,
+        0,
+        61166
+      ],
+      "input_alpha_nonzero": false,
+      "input_rgba_u16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "inside_x_actual": 0.0,
+      "outside_x_actual": 0.9230769230769231,
+      "params": {
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 3,
+        "Interpolation Mode": 4,
+        "Invert": 1,
+        "Power": 0.40016460418701,
+        "Render Mode": 2,
+        "Use Background Color": 1
+      },
+      "reference_dist_to_bg_rgb_l1": 61175,
+      "reference_dist_to_grad_rgb_l1": 64002,
+      "reference_matches_bg_rgb": false,
+      "reference_matches_grad_rgb": false,
+      "reference_rgba_f": [
+        0.066529,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "reference_rgba_u16": [
+        4360,
+        0,
+        0,
+        65535
+      ],
+      "reference_x_estimate_from_red": 1.048612420507722,
+      "witness": {
+        "x": 3,
+        "y": 0
+      }
+    }
+  ],
+  "conclusion": [
+    "cases 0020..0023 are not generic color errors; the witness pixels land exactly on BG or Gradation color, which points to a binary X / field-prep inversion family.",
+    "cases 0027/0028 do not collapse to BG color. Instead the Mac candidate pins RGB to the zero-valued source layer while the Windows reference keeps a fractional red contribution from background compositing, which points to X saturation or layer/background compose drift rather than a channel-order bug."
+  ],
+  "kind": "olmdistancegradation_16bpc_focus_cases",
+  "request_zip": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation/bitdepth16_olmdistancegradation_extended_exact.zip",
+  "status": "diagnostic"
+}

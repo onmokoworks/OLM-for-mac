@@ -114,15 +114,17 @@ The residual classes are:
 
 | Class | Count | Meaning |
 | --- | ---: | --- |
-| `full-scale-mismatch` | 18 | too large for rounding; inspect color management, 16bpc branch selection, or writeback path |
-| `large-structured-mismatch` | 10 | structured residual after params are applied; likely implementation/16bpc path, not broad harness failure |
+| `full-scale-mismatch` | 13 | too large for rounding; inspect color management, 16bpc branch selection, or writeback path |
+| `large-structured-mismatch` | 8 | structured residual after params are applied; likely implementation/16bpc path, not broad harness failure |
+| `olmblur-16bpc-writeback-quantization` | 6 | OLMBlur residuals whose nonzero deltas are within one 512-step after 16bit wraparound; inspect 16bpc writeback/PNG scaling before kernel tuning |
+| `olmblur-16bpc-legacy-border-plus-quantization` | 1 | OLMBlur legacy residual with the same 512-step behavior plus a small border/seed anomaly |
 
 By plug-in slice:
 
 | Slice | Exact | Residual |
 | --- | ---: | ---: |
-| `OLMBlur` | 0/7 | 7 |
-| `OLMColorKey` | 8/9 | 1 |
+| `OLMBlur` | 0/7 | 7, now classified as 6 writeback-quantization and 1 legacy-border-plus-quantization |
+| `OLMColorKey` | 8/9 | 1, now identified as `case_0009` on `Lab76 + Force Lower Precision=3 + Edge Thin Amount=25 (Distance Type=2)` with `Edge Blur Amount=0` |
 | `OLMDistanceGradation basic` | 8/12 | 4 |
 | `OLMDistanceGradation blur` | 0/1 | 1 |
 | `OLMDistanceGradation extended` | 1/16 | 15 |
@@ -130,6 +132,11 @@ By plug-in slice:
 The next machine action is therefore Mac-side residual investigation, not
 another Windows reference request. `scripts/print_next_olm_action.py` should
 report `investigate-16bpc-mac-ae-residuals` while this result ledger exists.
+
+For that remaining ColorKey case, sampled residual pixels are input-identical
+in the Mac candidate and transparent in the Windows reference. That makes the
+active question a positive Edge Thin dilate / seed-world difference, not an
+Edge Blur blend path.
 
 Return intake is covered by `refs/scripts/smoke_verify_bitdepth_reference_result.py`,
 including a synthetic 45-case mixed-effect manifest and the

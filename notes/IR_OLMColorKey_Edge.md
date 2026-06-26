@@ -4,13 +4,19 @@
 
 - Plug-in: OLM Color Key
 - Feature/path: 8bpc Edge Thin erode/dilate and Edge Blur after core keying
-- Bit depth: 8bpc documented here; 16/32bpc still need references
+- Bit depth: 8bpc normalized Software is documented here; 16bpc has one active
+  Mac AE residual after the Force Lower Precision fix; 32bpc still needs
+  references
 - Current status: packaged 8bpc AE-host return is exact for core RGB,
   Edge Thin, and Edge Blur against the 20260618 normalized Software reference
   generation. The apparent Edge Blur stress `case_0009` residual is now a
   reference-generation split against the older 20260604 PNG, not a clean
   algorithm witness. AE-free CLI residuals remain useful diagnostics, but they
   are not current proof that the Mac AE path is wrong.
+  For 16bpc, ColorKey is 8/9 exact after the binary-grounded `Force Lower
+  Precision` epsilon fix. The remaining case is not an Edge Blur blend path:
+  it is `case_0009` with Lab76, `Force Lower Precision=3`, `Edge Thin Amount=25`,
+  `Edge Thin Distance Type=2`, and `Edge Blur Amount=0`.
 
 ## Source Evidence
 
@@ -107,6 +113,35 @@
   but did not capture concrete edge sample values. The comparison helper now
   ignores explanatory strings for focus selection, so both existing returns
   report `trace-too-sparse`.
+- 2026-06-26 Mac AE 16bpc rerun after the Force Lower Precision fix:
+  - `olmcolorkey__case_0008` is exact.
+  - `olmcolorkey__case_0009` remains non-exact with `max=65535`,
+    `mean=100.9161`, and `0.6075%` nonzero pixels.
+  - Every sampled residual pixel has `candidate == before_effects` and
+    `reference alpha == 0`, which means the current Mac path is keeping pixels
+    that Windows removes.
+  - The case parameters are `Color Keep=0`, `Color Space=3`, `Per Color=1`,
+    `Per Component=1`, key color `[1, 0, 0.470588...]`,
+    component thresholds `[0.19, 0.98, 0.4]`, `Edge Thin Amount=25`,
+    `Edge Thin Distance Type=2`, and `Edge Blur Amount=0`.
+  - Therefore the active 16bpc gap is a positive Edge Thin dilate / seed-world
+    disagreement around the Lab76 key result, not an Edge Blur weight/blend
+    residual.
+  - Focused report:
+    `refs/conformance/olmcolorkey_16bpc_case_0009_analysis.md`.
+    It records that the real Mac AE candidate differs from Windows by
+    `12597px`, all in the `candidate-kept / Windows-removed` direction.
+    A naive `Lab76 hit + taxicab dilate amount=25` model is much worse
+    (`80592px` diff with `65535` input normalization), and forcing a
+    `32768/32767` denominator makes that naive model dramatically worse
+    (`189628px`). So the missing rule is narrower than a global 16bpc
+    denominator switch.
+  - The same focused report also sweeps obvious seed/dilate variants:
+    direct hit seeds, boundary seeds, clamp-vs-outside frame handling,
+    taxicab/chessboard/euclidean distance, and `<25` / `<=25` / `<26` /
+    `<=26` threshold choices. None beat the naive taxicab model; the best
+    family still bottoms out at `80592px`. So the remaining gap is not a
+    simple choice among those common morphology variants.
 
 ## Current Port Rules
 
@@ -127,12 +162,25 @@
 These rules are implementation-grounded, but the residuals show at least one
 caller/world semantic is still missing.
 
+For the current 16bpc residual, the missing semantic is more specific:
+Windows removes additional pixels that are still input-identical in the Mac AE
+candidate, so the mismatch must occur before final writeback. The two strongest
+suspects are:
+
+1. the Lab76 matched seed world feeding positive `Edge Thin Amount=25`; or
+2. the L1 distance/dilate ownership around that seed world.
+
 ## Open Questions
 
 - Does `FUN_180008320` treat image borders as outside/inside seeds differently
   from the current clamped-neighbor `Boundary8` / distance transform path?
 - For erode, is the effective threshold `abs(amount)`, `abs(amount)+1`, or a
   ctx-scaled value at runtime for the legacy `case_0005/0006` path?
+- For the 16bpc `case_0009` dilate path, does Windows build a larger matched
+  seed world than the current Mac port before `dist <= amount` is applied?
+- For the same case, is the positive dilate world keyed from post-Lab matched
+  pixels, a pre-thin temporary matte, or a runtime-quantized lower-precision
+  view of the source?
 - Which world does `FUN_1800049a0` and the Edge Blur apply helper consume:
   current keep mask, pre-thin matched matte, boundary seed world, or an
   inverted/drop-side matte?
@@ -149,6 +197,7 @@ caller/world semantic is still missing.
 | --- | --- | --- | --- | --- |
 | RGB core `case_0001..0004` | 8bpc | CLI exact / AE-host exact for current refs | exact in Python/C++/Rust and AE-host return | Preserve normalized 8bpc behavior; add 16/32bpc coverage |
 | Edge Thin dilate `case_0007` | 8bpc | CLI exact / AE-host exact for current refs | exact | Preserve normalized 8bpc behavior; add 16/32bpc coverage |
+| Edge Thin dilate `case_0009` | 16bpc | not exact / active Mac AE residual | 2026-06-26 Mac AE rerun: `max=65535 mean=100.9161`; residual pixels are input-identical in the candidate and transparent in the Windows ref | Isolate the 16bpc positive-dilate seed world before changing blur/blend code |
 | Edge Thin erode `case_0005/0006` | 8bpc | AE-host exact return, CLI residual | Windows AE-host exact; C++ CLI `max=255 mean=0.3031`; decision matrix keeps this diagnostic-only for current refs | Preserve normalized 8bpc behavior; add 16/32bpc coverage; runtime trace only if a current Software ref residual reappears |
 | Edge Blur `case_0008/0009` | 8bpc | AE-host exact against normalized current refs / AE-free CLI residual | AE-host exact for `case_0008`; `case_0009` exact against 20260618 normalized ref but `max=47` against older 20260604 ref; decision matrix says preserve normalized AE exact | Prefer normalized 20260618 reference generation; next proof is 16/32bpc coverage. Runtime trace only if a current Software ref residual reappears |
 

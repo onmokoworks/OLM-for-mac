@@ -1,0 +1,176 @@
+{
+  "conclusion": [
+    "A witness-level `Both=min(...)` intuition does not survive a whole-frame check.",
+    "For the focused 16bpc extended cases, the simple `min`, `inside`, `outside`, or `Outside Threshold=0` shortcut variants all stay incorrect, and some are dramatically worse than the current `Both=max(...)` baseline.",
+    "So the remaining 16bpc DistanceGradation mismatch is not solved by a one-line combine-rule swap; it still points to a narrower upstream field-prep / threshold-zero branch."
+  ],
+  "kind": "olmdistancegradation_16bpc_constant_variants",
+  "request_zip": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation/bitdepth16_olmdistancegradation_extended_exact.zip",
+  "results": [
+    {
+      "case_id": "olmdistancegradation_extended__case_0020",
+      "variant_results": [
+        {
+          "max_diff": 64514,
+          "mean_diff": 123.75366994598765,
+          "nonzero_px": 304210,
+          "variant": "current_max"
+        },
+        {
+          "max_diff": 64514,
+          "mean_diff": 123.75366994598765,
+          "nonzero_px": 304210,
+          "variant": "both_min"
+        },
+        {
+          "max_diff": 64514,
+          "mean_diff": 123.75366994598765,
+          "nonzero_px": 304210,
+          "variant": "both_inside"
+        },
+        {
+          "max_diff": 64514,
+          "mean_diff": 123.75366994598765,
+          "nonzero_px": 304210,
+          "variant": "both_outside"
+        },
+        {
+          "max_diff": 64514,
+          "mean_diff": 123.75366994598765,
+          "nonzero_px": 304210,
+          "variant": "outside_zero_inside_only"
+        },
+        {
+          "max_diff": 64514,
+          "mean_diff": 123.75366994598765,
+          "nonzero_px": 304210,
+          "variant": "outside_zero_force_zero"
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0021",
+      "variant_results": [
+        {
+          "max_diff": 60910,
+          "mean_diff": 101.21108711902006,
+          "nonzero_px": 1406979,
+          "variant": "both_inside"
+        },
+        {
+          "max_diff": 60910,
+          "mean_diff": 101.22543330439815,
+          "nonzero_px": 1406979,
+          "variant": "current_max"
+        },
+        {
+          "max_diff": 60910,
+          "mean_diff": 101.22543330439815,
+          "nonzero_px": 1406979,
+          "variant": "outside_zero_inside_only"
+        },
+        {
+          "max_diff": 60910,
+          "mean_diff": 101.22543330439815,
+          "nonzero_px": 1406979,
+          "variant": "outside_zero_force_zero"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 9691.468442925347,
+          "nonzero_px": 2073600,
+          "variant": "both_min"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 9691.482789110725,
+          "nonzero_px": 2073600,
+          "variant": "both_outside"
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0022",
+      "variant_results": [
+        {
+          "max_diff": 61166,
+          "mean_diff": 177.4689181857639,
+          "nonzero_px": 702677,
+          "variant": "current_max"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 177.4689181857639,
+          "nonzero_px": 702677,
+          "variant": "outside_zero_inside_only"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 177.4689181857639,
+          "nonzero_px": 702677,
+          "variant": "outside_zero_force_zero"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 8462.534758511767,
+          "nonzero_px": 1285562,
+          "variant": "both_inside"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 11512.472468894675,
+          "nonzero_px": 1490715,
+          "variant": "both_outside"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 19797.53830922068,
+          "nonzero_px": 2073600,
+          "variant": "both_min"
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0023",
+      "variant_results": [
+        {
+          "max_diff": 61166,
+          "mean_diff": 31.19602382330247,
+          "nonzero_px": 182793,
+          "variant": "current_max"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 11366.199574532215,
+          "nonzero_px": 970831,
+          "variant": "both_outside"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 15919.796687524113,
+          "nonzero_px": 1285562,
+          "variant": "both_inside"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 15919.796687524113,
+          "nonzero_px": 1285562,
+          "variant": "outside_zero_inside_only"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 27254.800238233023,
+          "nonzero_px": 2073600,
+          "variant": "both_min"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 27254.800238233023,
+          "nonzero_px": 2073600,
+          "variant": "outside_zero_force_zero"
+        }
+      ]
+    }
+  ],
+  "status": "diagnostic"
+}

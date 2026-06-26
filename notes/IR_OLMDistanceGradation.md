@@ -43,8 +43,12 @@
 | 8bpc compose is an AE iterate callback over a prebuilt field world. | `FUN_181170380` requests `PF Iterate8 Suite` and passes callback `FUN_181170870` with user data `param_4 + 0x2c`; `FUN_181170870` then reads the field world through `param_1[1]`. | binary-grounded |
 | 16bpc and float compose use sibling iterate callbacks. | `FUN_181170280` requests `PF iterate16 Suite` and passes `FUN_181170480`; float path stores callback `FUN_181170c90`. | binary-grounded |
 | 16bpc compose scales by `32768.0`, reads pixels with `1/32768`, and appears to write via `CVTTSS2SI`. This is a binary fact, but it is not yet adopted as the Mac output rule. | `FUN_181170480` uses `DAT_181504a80 = 1/32768`, `DAT_181504ac4 = 32768`, then `CVTTSS2SI` before storing 16-bit ARGB words. A 2026-06-26 Mac AE experiment that globally switched the port to truncation kept the exact count flat and worsened several 16bpc residuals, so the current port keeps round-to-nearest while source/field packing is unresolved. | binary-grounded / implementation-rejected-for-now |
+| 16bpc compose's color-selection shape matches the current Mac implementation: `render_mode==1` selects Gradation Color, `render_mode==2` selects source-layer RGB, and `use_bg!=0` mixes `BG*(1-X) + inner*X` while `use_bg==0` keeps `inner` RGB and uses `alpha = d_alpha * X`. | `FUN_181170480` around `181170720..1811707f4`. | binary-grounded |
 | OpenCV border names including `BORDER_REFLECT_101` are present in the AEX. | `decomp/DistanceGradation.aex.c.txt` contains `cv::copyMakeBorder` and border-name table strings. | binary-grounded for availability, not final blur branch proof |
 | 16bpc Inside mode with an all-opaque input mask and no zero-distance source should compose to final `X=0` regardless of `Invert`. | 2026-06-26 Mac AE 16bpc validation: `olmdistancegradation_basic__case_0002` changed from full red/opaque to exact when the pre-invert field is forced to `0` for `Invert=ON` and `1` for `Invert=OFF`; previously exact all-opaque Inside cases stayed exact. | measured Windows-reference-backed / needs static trace |
+| 2026-06-26 local Mac AE rerun reproduces three unresolved 16bpc residual families: threshold/ramp mismatch (`case_0010..0016`), BG-like vs Grad-like binary decisions under `Render Mode=1` + background color (`case_0020..0023`), and RGB-zeroed/alpha-preserved output (`case_0027/0028`). | `refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/...`, `refs/conformance/bitdepth_16bpc_mac_ae_rerun_20260626_204952.md`, and `refs/conformance/olmdistancegradation_16bpc_focus_cases_20260626.md`. | AE-validation diagnostic |
+| 2026-06-26 Mac AE host debug confirms the 16bpc packaged parameters for `olmdistancegradation_extended__case_0027` are applied exactly inside After Effects; the residual is not a bad request/JSX path. | `scripts/ae_debug_distancegradation_case.jsx` output `handoff/ae_pixel_validation_20260618/OLMDistanceGradation_case_debug.json`. | AE-host-grounded |
+| 2026-06-26 Mac AE probe on `case_0027` rules out request drift and provides an observable field witness: native 16-bit decoding of `layer_no_bg` shows the compose/background branches are active, but the observed `X` remains much closer to `1.0` than the current distance model predicts at key pixels. | `refs/conformance/olmdistancegradation_16bpc_case0027_mac_ae_probe_20260626.md`, `refs/conformance/olmdistancegradation_16bpc_case0027_probe_x_20260626.md`, and probe PNGs in `handoff/ae_pixel_validation_20260618/probes/distancegradation_case0027_variants/`. | AE-host-grounded |
 
 ## Parameters
 
@@ -146,6 +150,23 @@ is `1 - X`.
 - The compose functions are stronger evidence than the blur/distance helpers:
   they directly show `powf`, `sqrt`, invert, render-mode color selection, and
   output scaling.
+- Because the 16bpc compose body already matches the current Mac render-mode
+  and background-mix shape, the rerun families `case_0020..0023` and
+  `case_0027/0028` now point upstream to `_X` field prep / saturation rather
+  than to a simple channel-order or render-mode enum mismatch.
+- 2026-06-26 host debug tightened the diagnosis for `case_0027/0028`: After
+  Effects is definitely applying `Render Mode=2`, `Use Background Color=1`,
+  `Invert=1`, `Interpolation Mode=4`, and the expected colors/power.
+- A same-day four-variant Mac AE probe on `case_0027`, decoded as native
+  16-bit PNG, corrected the earlier 8-bit-read misinterpretation. The
+  background and no-background branches do differ materially; the problem is
+  not a missing compose branch.
+- The durable finding from that probe is upstream: `layer_no_bg` exposes the
+  observed field `X` through alpha, and those observed values stay much closer
+  to `1.0` than the current `max(inside,outside)` model predicts at the key
+  witness pixels. So `case_0027/0028` now point to field prep / normalization /
+  threshold ownership rather than to render-mode enum or background-branch
+  wiring.
 - 2026-06-20 dense/live runtime returns are not sufficient to settle field
   prep. The dense summary carries placeholders such as `not isolated`,
   `inferred`, `likely`, and `runtime arg still untraced`; the live follow-up
@@ -172,6 +193,9 @@ is `1 - X`.
 | extended non-blur 16-case AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: 16/16 `max_diff=0`; decision matrix preserves normalized exact behavior | 16/32bpc references; binary-ground Constant/render-mode only if closing CLI residuals |
 | blur `case_0029` AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: `max_diff=0`; normalized and legacy refs both exact | 16/32bpc references; trace OpenCV blur only if closing CLI residuals |
 | basic all-opaque Inside `case_0001..0006` | 16bpc | partial AE exact | 2026-06-26 Mac AE: Inside/no-source rule keeps `case_0001/0003/0004/0005/0006` exact and promotes `case_0002` to exact. Basic slice is now 8/12; DistanceGradation total is 9/29 | Static/runtime proof for the no-source branch; continue with non-all-opaque 16bpc residuals |
+| basic remaining `case_0015/0017/0018/0019` | 16bpc | not exact / compose-path diagnostic | 2026-06-26 local rerun reproduces the same four failures. `case_0015/0017` are `Render Mode=2` + `Use Background Color=0`; `case_0018/0019` are `Render Mode=1` + `Use Background Color=1` with colored ramps/backgrounds | Ground 16bpc render-mode/background compose path before changing distance field math |
+| extended BG-vs-Grad binary `case_0020..0023` | 16bpc | not exact / compose-path diagnostic | 2026-06-26 local rerun focus witnesses are BG-like on one side and Grad-like on the other while alpha remains exact. The witness audit shows `case_0021/0022` would flip at the sampled pixel if `Both` used `min(inside,outside)` instead of the current `max(...)`, while `case_0023` still needs a separate `Outside Threshold=0` upstream branch. But the whole-frame variant sweep shows that simple swaps like `Both=min`, `Both=inside`, or `Both=outside` do not safely fix the cases overall. See `refs/conformance/olmdistancegradation_16bpc_focus_cases_20260626.md` and `refs/conformance/olmdistancegradation_16bpc_constant_variants_20260626.md`. | Ground Constant/interpolation field-prep, `Both` combination, and threshold-zero special handling before changing color selection |
+| extended RGB-zeroed `case_0027/0028` | 16bpc | not exact / field-prep diagnostic | 2026-06-26 local rerun shows the current packaged case still fails against the Windows Software reference. Host debug rules out request drift, and the follow-up Mac AE probe plus observed-`X` reconstruction show the compose/background branches are active; the live mismatch is that the field driving them stays far closer to `1.0` than the current distance model predicts. See `refs/conformance/olmdistancegradation_16bpc_focus_cases_20260626.md`, `refs/conformance/olmdistancegradation_16bpc_case0027_mac_ae_probe_20260626.md`, and `refs/conformance/olmdistancegradation_16bpc_case0027_probe_x_20260626.md`. | Ground the 16bpc field-prep / normalization path in code/asm before changing compose logic |
 | AE-free basic 12-case smoke | 8bpc | guarded | 2026-06-19 rerun passes current guard: worst `case_0007/0009 max=7 mean=0.0909`; residual remains | binary-ground distance normalization and compare against normalized Software refs |
 | AE-free extended non-blur 16-case smoke | 8bpc | guarded | 2026-06-19 rerun passes current loose guard, but with large non-exact residuals: `case_0008 max=254`, `case_0011 max=254`, `case_0012 max=251`, `case_0020..0023 max=238` | binary-ground interpolation, Constant field-prep, and render-mode branch details before tuning |
 | AE-free blur `case_0029` | 8bpc | guarded | 2026-06-19 rerun: `max=23 mean=0.2827`; tiny non-grounded improvement from Constant+Blur binary-field handling | trace/OpenCV 4.5.5 `distanceTransform` / `GaussianBlur` behavior |
@@ -243,3 +267,7 @@ model.
 - Whether PNG export premultiplication is masking AE-world straight/premul
   differences.
 - 16bpc and 32bpc output rules.
+- Exact 16bpc render-mode/background-color source selection for the rerun
+  palette-swap family (`case_0020..0023`).
+- Why some 16bpc source-layer cases preserve alpha but zero RGB
+  (`case_0027/0028`).

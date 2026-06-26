@@ -243,13 +243,26 @@ Mac AE 実行結果は次に記録しています。
 - `refs/conformance/bitdepth_16bpc_mac_ae_residual_classes_20260626_distancegradation_inside_no_source.md`
 
 16bpc の現状は `AE exact` ではなく `not-ae-exact` です。
-失敗28件の分類は `full-scale-mismatch` 18件、
-`large-structured-mismatch` 10件です。古い 2026-06-25 結果は
+失敗28件の分類は `full-scale-mismatch` 13件、
+`large-structured-mismatch` 8件、OLMBlur の
+`16bpc-writeback-quantization` 6件、OLMBlur legacy の
+`border-plus-quantization` 1件です。古い 2026-06-25 結果は
 `path_full` 非対応でパラメータが再生されていなかったため、現在の残差
 baseline には使いません。ColorKey は AEX 由来の Force Lower Precision
 epsilon 規則を反映して `olmcolorkey__case_0008` が exact になり、残りは
-`olmcolorkey__case_0009` です。DistanceGradation は all-opaque input の
+`olmcolorkey__case_0009` です。このケースは `Edge Blur` ではなく
+`Lab76 + Force Lower Precision=3 + Edge Thin Amount=25 (Distance Type=2)` の
+残差で、Windows 参照は透明化する画素を Mac 側が input のまま保持しています。
+Focused diagnostic:
+`refs/conformance/olmcolorkey_16bpc_case_0009_analysis.md`
+には、単純な `Lab76 + dilate 25` 再現や `32768` 正規化では説明できないことを
+記録しています。さらに seed/border/distance の素朴な派生モデル総当たりでも
+最良 `80592px` 差にしかならず、実際の Mac AE 残差 `12597px` はそれよりずっと
+Windows に近いです。
+DistanceGradation は all-opaque input の
 Inside/no-source rule で `olmdistancegradation_basic__case_0002` が exact になりました。
+OLMBlur 16bpc は kernel tuning ではなく、まず 16bpc writeback / PNG scaling
+規則を確認する段階です。
 
 5本まとめて検証する場合は、次のコマンドで一括比較できます。
 

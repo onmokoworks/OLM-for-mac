@@ -105,7 +105,7 @@
       "mean_diff": 0.04345630787037037,
       "nonzero_px_percent": 0.009645061728395061,
       "reference_8bit_quantized_score": 0.8825263631687242,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
       "request_name": "bitdepth16_olmblur_exact",
       "selected_params": {
         "Bias Direction": 1,
@@ -149,7 +149,7 @@
       "mean_diff": 0.04370322145061729,
       "nonzero_px_percent": 0.009837962962962963,
       "reference_8bit_quantized_score": 0.8825263631687242,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
       "request_name": "bitdepth16_olmblur_exact",
       "selected_params": {
         "Bias Direction": 2,
@@ -193,7 +193,7 @@
       "mean_diff": 0.10222222222222223,
       "nonzero_px_percent": 0.0798611111111111,
       "reference_8bit_quantized_score": 0.6666666666666666,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
       "request_name": "bitdepth16_olmblur_exact",
       "selected_params": {
         "Bias Direction": 1,
@@ -237,7 +237,7 @@
       "mean_diff": 0.009382716049382716,
       "nonzero_px_percent": 0.0073302469135802465,
       "reference_8bit_quantized_score": 0.8747003600823046,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
       "request_name": "bitdepth16_olmblur_exact",
       "selected_params": {
         "Bias Direction": 1,
@@ -281,7 +281,7 @@
       "mean_diff": 0.030802107445987655,
       "nonzero_px_percent": 0.003472222222222222,
       "reference_8bit_quantized_score": 0.7815706983024692,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
       "request_name": "bitdepth16_olmblur_exact",
       "selected_params": {
         "Bias Direction": 1,
@@ -325,7 +325,7 @@
       "mean_diff": 0.07876507040895062,
       "nonzero_px_percent": 0.03544560185185185,
       "reference_8bit_quantized_score": 0.4384719007201646,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
       "request_name": "bitdepth16_olmblur_exact",
       "selected_params": {
         "Bias Direction": 1,
@@ -369,7 +369,7 @@
       "mean_diff": 0.042315055941358024,
       "nonzero_px_percent": 0.014660493827160493,
       "reference_8bit_quantized_score": 0.25686149691358023,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
       "request_name": "bitdepth16_olmblur_exact",
       "selected_params": {
         "Bias Direction": 1,
@@ -419,7 +419,7 @@
       "mean_diff": 100.9161375144676,
       "nonzero_px_percent": 0.6074942129629629,
       "reference_8bit_quantized_score": 0.9999749228395062,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmcolorkey_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmcolorkey_exact/reports/ae_pixel_16bpc_all_exact.json",
       "request_name": "bitdepth16_olmcolorkey_exact",
       "selected_params": {
         "Color Keep": 0,
@@ -472,7 +472,7 @@
       "mean_diff": 26.10040726273148,
       "nonzero_px_percent": 0.8609664351851852,
       "reference_8bit_quantized_score": 0.9288628472222222,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_basic_exact/reports/ae_pixel_16bpc_basic_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_basic_exact/reports/ae_pixel_16bpc_basic_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_basic_exact",
       "selected_params": {
         "BG Color": [
@@ -531,7 +531,7 @@
       "mean_diff": 121.00438018422068,
       "nonzero_px_percent": 0.8629436728395061,
       "reference_8bit_quantized_score": 0.9565613747427983,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_basic_exact/reports/ae_pixel_16bpc_basic_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_basic_exact/reports/ae_pixel_16bpc_basic_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_basic_exact",
       "selected_params": {
         "BG Color": [
@@ -590,7 +590,7 @@
       "mean_diff": 44.3193813898534,
       "nonzero_px_percent": 11.282455632716049,
       "reference_8bit_quantized_score": 0.9032068222736626,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_basic_exact/reports/ae_pixel_16bpc_basic_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_basic_exact/reports/ae_pixel_16bpc_basic_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_basic_exact",
       "selected_params": {
         "BG Color": [
@@ -649,7 +649,7 @@
       "mean_diff": 53.91302059220679,
       "nonzero_px_percent": 12.188030478395062,
       "reference_8bit_quantized_score": 0.903516428755144,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_basic_exact/reports/ae_pixel_16bpc_basic_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_basic_exact/reports/ae_pixel_16bpc_basic_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_basic_exact",
       "selected_params": {
         "BG Color": [
@@ -708,7 +708,7 @@
       "mean_diff": 2232.4321251687884,
       "nonzero_px_percent": 13.951437114197532,
       "reference_8bit_quantized_score": 0.9485458461934156,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_blur_exact/reports/ae_pixel_16bpc_blur_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_blur_exact/reports/ae_pixel_16bpc_blur_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_blur_exact",
       "selected_params": {
         "BG Color": [
@@ -767,7 +767,7 @@
       "mean_diff": 59.13512273341049,
       "nonzero_px_percent": 0.5414737654320988,
       "reference_8bit_quantized_score": 0.7867734053497942,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_extended_exact",
       "selected_params": {
         "BG Color": [
@@ -826,7 +826,7 @@
       "mean_diff": 10.600999951774691,
       "nonzero_px_percent": 0.20688657407407407,
       "reference_8bit_quantized_score": 0.8683101851851852,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_extended_exact",
       "selected_params": {
         "BG Color": [
@@ -885,7 +885,7 @@
       "mean_diff": 148.84288073881171,
       "nonzero_px_percent": 1.2259355709876543,
       "reference_8bit_quantized_score": 0.9451448366769547,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_extended_exact",
       "selected_params": {
         "BG Color": [
@@ -944,7 +944,7 @@
       "mean_diff": 113.26523039641204,
       "nonzero_px_percent": 0.8329957561728395,
       "reference_8bit_quantized_score": 0.9631856031378601,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_extended_exact",
       "selected_params": {
         "BG Color": [
@@ -1003,7 +1003,7 @@
       "mean_diff": 118.93126410590278,
       "nonzero_px_percent": 0.8813175154320988,
       "reference_8bit_quantized_score": 0.9279811278292182,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_extended_exact",
       "selected_params": {
         "BG Color": [
@@ -1062,7 +1062,7 @@
       "mean_diff": 108.27348222897376,
       "nonzero_px_percent": 0.6846064814814815,
       "reference_8bit_quantized_score": 0.9937297453703704,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_extended_exact",
       "selected_params": {
         "BG Color": [
@@ -1121,7 +1121,7 @@
       "mean_diff": 14.422321686921297,
       "nonzero_px_percent": 0.04827353395061729,
       "reference_8bit_quantized_score": 0.9953957690329218,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_extended_exact",
       "selected_params": {
         "BG Color": [
@@ -1180,7 +1180,7 @@
       "mean_diff": 14.436729600694445,
       "nonzero_px_percent": 0.04832175925925926,
       "reference_8bit_quantized_score": 1.0,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_extended_exact",
       "selected_params": {
         "BG Color": [
@@ -1239,7 +1239,7 @@
       "mean_diff": 134.67077003761574,
       "nonzero_px_percent": 0.4507619598765432,
       "reference_8bit_quantized_score": 1.0,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_extended_exact",
       "selected_params": {
         "BG Color": [
@@ -1298,7 +1298,7 @@
       "mean_diff": 19.99818431712963,
       "nonzero_px_percent": 0.06693672839506173,
       "reference_8bit_quantized_score": 1.0,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_extended_exact",
       "selected_params": {
         "BG Color": [
@@ -1357,7 +1357,7 @@
       "mean_diff": 151.6257295283565,
       "nonzero_px_percent": 50.83931327160494,
       "reference_8bit_quantized_score": 0.5849919624485597,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_extended_exact",
       "selected_params": {
         "BG Color": [
@@ -1416,7 +1416,7 @@
       "mean_diff": 208.59639250578704,
       "nonzero_px_percent": 41.577787422839506,
       "reference_8bit_quantized_score": 0.642985307355967,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_extended_exact",
       "selected_params": {
         "BG Color": [
@@ -1475,7 +1475,7 @@
       "mean_diff": 7794.719026451582,
       "nonzero_px_percent": 54.184751157407405,
       "reference_8bit_quantized_score": 0.647344553755144,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_extended_exact",
       "selected_params": {
         "BG Color": [
@@ -1534,7 +1534,7 @@
       "mean_diff": 3631.3330236062884,
       "nonzero_px_percent": 41.736111111111114,
       "reference_8bit_quantized_score": 0.856804430298354,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_extended_exact",
       "selected_params": {
         "BG Color": [
@@ -1593,7 +1593,7 @@
       "mean_diff": 3657.1955471161264,
       "nonzero_px_percent": 41.735725308641975,
       "reference_8bit_quantized_score": 0.8445185506687243,
-      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
       "request_name": "bitdepth16_olmdistancegradation_extended_exact",
       "selected_params": {
         "BG Color": [

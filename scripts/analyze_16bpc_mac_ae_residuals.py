@@ -143,6 +143,18 @@ def param_values(case: dict) -> dict[str, object]:
         if not isinstance(name, str) or not name:
             continue
         values[name.strip()] = param.get("value")
+        if canonical_effect_name(str(first.get("match_name") or first.get("name") or "")) == "OLM Color Key":
+            property_index = param.get("property_index")
+            if property_index == 14:
+                values["Edge Thin Amount"] = param.get("value")
+            elif property_index == 15:
+                values["Edge Thin Distance Type"] = param.get("value")
+            elif property_index == 18:
+                values["Edge Blur Amount"] = param.get("value")
+            elif property_index == 19:
+                values["Edge Blur Distance Type"] = param.get("value")
+            elif property_index == 20:
+                values["Edge Blur Direction"] = param.get("value")
     return values
 
 
@@ -161,9 +173,15 @@ SELECTED_PARAMS = {
         "Color Space",
         "Force Lower Precision",
         "Per Color",
+        "Per Component",
         "Key Color",
         "Edge Thin",
+        "Edge Thin Amount",
+        "Edge Thin Distance Type",
         "Edge Blur",
+        "Edge Blur Amount",
+        "Edge Blur Distance Type",
+        "Edge Blur Direction",
     ],
     "OLM Distance Gradation": [
         "Invert",
@@ -181,7 +199,16 @@ SELECTED_PARAMS = {
 }
 
 
+def canonical_effect_name(effect: str) -> str:
+    aliases = {
+        "OLM OLM Blur": "OLM Blur",
+        "Distance Gradation": "OLM Distance Gradation",
+    }
+    return aliases.get(effect, effect)
+
+
 def selected_param_summary(effect: str, values: dict[str, object]) -> dict[str, object]:
+    effect = canonical_effect_name(effect)
     keys = SELECTED_PARAMS.get(effect, [])
     return {key: values[key] for key in keys if key in values}
 
@@ -191,13 +218,26 @@ def plugin_from_case_id(case_id: str) -> str:
 
 
 def feature_flags(case_id: str, effect: str, values: dict[str, object]) -> list[str]:
+    effect = canonical_effect_name(effect)
     flags: list[str] = [plugin_from_case_id(case_id)]
     if effect == "OLM Blur":
-        for key in ("Horizontal Radius", "Vertical Radius", "Sampling", "Repeat Edge Pixels"):
+        for key in ("Blur Amount", "Blur Smoothness", "Number of Repeat", "Bias Direction", "Legacy"):
             if key in values:
                 flags.append(f"{key}={values[key]}")
     elif effect == "OLM Color Key":
-        for key in ("Color Keep", "Threshold", "Color Space", "Force Lower Precision", "Edge Thin", "Edge Blur"):
+        for key in (
+            "Color Keep",
+            "Threshold",
+            "Color Space",
+            "Force Lower Precision",
+            "Per Color",
+            "Per Component",
+            "Edge Thin Amount",
+            "Edge Thin Distance Type",
+            "Edge Blur Amount",
+            "Edge Blur Distance Type",
+            "Edge Blur Direction",
+        ):
             if key in values:
                 flags.append(f"{key}={values[key]}")
     elif effect == "OLM Distance Gradation":
@@ -218,6 +258,21 @@ def abs_delta_stats(a: np.ndarray, b: np.ndarray) -> dict:
     }
 
 
+def cyclic_u16_delta_stats(a: np.ndarray, b: np.ndarray) -> dict | None:
+    if a.dtype.itemsize < 2 or b.dtype.itemsize < 2 or a.shape != b.shape:
+        return None
+    delta = np.abs(a.astype(np.int64) - b.astype(np.int64))
+    cyclic = np.minimum(delta, 65535 - delta)
+    nonzero = delta > 0
+    if not np.any(nonzero):
+        return {"max": 0, "mean": 0.0, "nonzero_samples": 0}
+    return {
+        "max": int(cyclic[nonzero].max()),
+        "mean": float(cyclic[nonzero].mean()),
+        "nonzero_samples": int(nonzero.sum()),
+    }
+
+
 def quantized_8bit_score(image: np.ndarray) -> float:
     if image.dtype.itemsize < 2:
         return 1.0
@@ -235,6 +290,7 @@ def dominant_delta_channels(reference: np.ndarray, candidate: np.ndarray) -> lis
 
 def classify(row: dict, reference: np.ndarray, candidate: np.ndarray, before: np.ndarray | None) -> dict:
     ref_vs_candidate = abs_delta_stats(reference, candidate)
+    cyclic_stats = cyclic_u16_delta_stats(reference, candidate)
     candidate_quant = quantized_8bit_score(candidate)
     reference_quant = quantized_8bit_score(reference)
     input_similarity = None
@@ -243,7 +299,21 @@ def classify(row: dict, reference: np.ndarray, candidate: np.ndarray, before: np
 
     max_diff = int(ref_vs_candidate.get("max", row.get("max_diff") or 0))
     mean_diff = float(ref_vs_candidate.get("mean", row.get("mean_diff") or 0.0))
-    if max_diff <= 257 and mean_diff <= 16:
+    case_id = str(row.get("case_id") or "")
+    if (
+        plugin_from_case_id(case_id) == "olmblur"
+        and cyclic_stats is not None
+        and cyclic_stats["max"] <= 512
+    ):
+        label = "olmblur-16bpc-writeback-quantization"
+    elif (
+        plugin_from_case_id(case_id) == "olmblur"
+        and cyclic_stats is not None
+        and max_diff >= 65000
+        and cyclic_stats["max"] > 512
+    ):
+        label = "olmblur-16bpc-legacy-border-plus-quantization"
+    elif max_diff <= 257 and mean_diff <= 16:
         label = "rounding-or-low-amplitude"
     elif input_similarity and input_similarity.get("max", 999999) <= 257 and input_similarity.get("mean", 999999.0) <= 16:
         label = "candidate-close-to-input"
@@ -260,6 +330,7 @@ def classify(row: dict, reference: np.ndarray, candidate: np.ndarray, before: np
         "candidate_8bit_quantized_score": candidate_quant,
         "reference_8bit_quantized_score": reference_quant,
         "candidate_vs_input": input_similarity,
+        "cyclic_u16_delta": cyclic_stats,
         "channel_mean_abs_delta_rgba": dominant_delta_channels(reference, candidate),
     }
 
@@ -337,6 +408,8 @@ def write_outputs(summary_json: Path, summary_md: Path, results: list[dict]) -> 
     lines += [
         "",
         "Interpretation:",
+        "- `olmblur-16bpc-writeback-quantization` means every nonzero OLMBlur delta is within one 512-step after 16-bit wraparound; investigate 16bpc writeback/PNG scaling before kernel tuning.",
+        "- `olmblur-16bpc-legacy-border-plus-quantization` means the same 512-step behavior is present, plus a small legacy border/seed anomaly.",
         "- `full-scale-mismatch` is too large to treat as rounding; inspect parameter replay/color management/effect path before tuning kernels.",
         "- `candidate-close-to-input` suggests the effect path may not have applied or a controlling parameter was replayed incorrectly.",
         "- `candidate-looks-8bit-quantized` suggests a bit-depth/writeback path issue.",

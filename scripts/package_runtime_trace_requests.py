@@ -36,6 +36,15 @@ COLORKEY_SUPPORTING_NOTES = [
     Path("notes/IR_OLMColorKey_Edge.md"),
     Path("notes/CONFORMANCE_LEDGER.md"),
 ]
+COLORKEY_16BPC_CASE0009_SUPPORTING_FILES = [
+    Path("refs/conformance/olmcolorkey_16bpc_case_0009_analysis.md"),
+    Path("refs/conformance/olmcolorkey_16bpc_case_0009_analysis.json"),
+    Path(
+        "refs/reports/ae_pixel_validation_16bpc_mac_20260626_1247_distancegradation_clean_stable/"
+        "bitdepth16_olmcolorkey_exact/reports/ae_pixel_16bpc_all_exact.json"
+    ),
+    Path("refs/reference_requests/olm_bitdepth_16bpc_normalized_exact_20260625.json"),
+]
 OLMBLUR_SUPPORTING_NOTES = [
     Path("notes/IR_OLMBlur.md"),
     Path("notes/CONFORMANCE_LEDGER.md"),
@@ -70,6 +79,7 @@ def parse_args() -> argparse.Namespace:
             "dense-all",
             "dense-live-followup",
             "colorkey-edge",
+            "colorkey-16bpc-case0009",
             "olmblur-repeat-threshold",
             "kirakira-stage-values",
             "kirakira-stage-values-deep",
@@ -170,6 +180,28 @@ def colorkey_edge_action() -> dict[str, Any]:
             "Return ctx+0x28/+0x2c/+0x40/+0x44/+0x48 and sample values that "
             "distinguish manifest/ctx scaling, border seed ownership, <= vs < "
             "erode/dilate shell, and Edge Blur apply semantics."
+        ),
+    }
+
+
+def colorkey_16bpc_case0009_action() -> dict[str, Any]:
+    return {
+        "request_id": "colorkey_16bpc_case0009_runtime_trace_20260626",
+        "plugin_area": "OLMColorKey 16bpc case_0009 positive Edge Thin runtime trace",
+        "mode": "external-trace",
+        "command": (
+            "Trace OLMColorKey 16bpc normalized Software case_0009 at "
+            "FUN_1800094b0 and the positive Edge Thin helper/copy path. "
+            "Record ctx fields, seed/matte bytes, distance/limit values, copy "
+            "condition, edge ownership, and final RGBA for witness pixels "
+            "(1116,136), (1088,124), (1133,174), (1195,761), and (1699,7). "
+            "Use the narrow witness plan in notes/WINDOWS_RUNTIME_TRACE_REQUESTS.md "
+            "and compare against refs/conformance/olmcolorkey_16bpc_case_0009_analysis.md."
+        ),
+        "stop_condition": (
+            "Return concrete 16bpc case_0009 ctx/seed/dilate witness values, or "
+            "the exact failed breakpoint/watchpoint reason. Static branch names "
+            "or sparse wrapper hits are not enough."
         ),
     }
 
@@ -972,6 +1004,8 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return dense_live_followup_actions()
     if profile == "colorkey-edge":
         return [colorkey_edge_action()]
+    if profile == "colorkey-16bpc-case0009":
+        return [colorkey_16bpc_case0009_action()]
     if profile == "olmblur-repeat-threshold":
         return [olmblur_repeat_threshold_action()]
     if profile == "kirakira-stage-values":
@@ -1212,6 +1246,107 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 "edge_blur_apply_formula_summary": "",
             }
             summary = "Fill with ColorKey Edge Thin/Edge Blur ctx and sample trace values."
+        elif request_id == "colorkey_16bpc_case0009_runtime_trace_20260626":
+            observations = {
+                "effect": "OLM Color Key",
+                "request_id": "olm_bitdepth_16bpc_normalized_exact_20260625",
+                "case_id": "olmcolorkey__case_0009",
+                "module_base": "0x...",
+                "ctx_fields": {
+                    "bit_depth_or_source_format_field": None,
+                    "ctx_0x3c_force_lower_precision": None,
+                    "ctx_0x40_raw_float": "0x...",
+                    "ctx_0x44_distance_type": None,
+                    "ctx_0x48_raw_float": "0x...",
+                },
+                "witnesses": [
+                    {
+                        "x": 1116,
+                        "y": 136,
+                        "role": "primary residual witness",
+                        "core_lab76_matched_byte": None,
+                        "post_core_pre_dilate_temp_matte_byte": None,
+                        "positive_edge_thin_seed_byte_optional": None,
+                        "distance_value_consumed": None,
+                        "amount_or_limit_value_compared": None,
+                        "copy_condition_observed": "dist <= amount | dist < amount | adjusted-limit | other",
+                        "post_dilate_matte_byte": None,
+                        "frame_edge_neighbors_treated_as": "inside | outside | mixed | unknown",
+                        "final_output_rgba": [None, None, None, None],
+                    },
+                    {
+                        "x": 1088,
+                        "y": 124,
+                        "role": "largest residual component corner",
+                        "core_lab76_matched_byte": None,
+                        "post_core_pre_dilate_temp_matte_byte": None,
+                        "positive_edge_thin_seed_byte_optional": None,
+                        "distance_value_consumed": None,
+                        "amount_or_limit_value_compared": None,
+                        "copy_condition_observed": "dist <= amount | dist < amount | adjusted-limit | other",
+                        "post_dilate_matte_byte": None,
+                        "frame_edge_neighbors_treated_as": "inside | outside | mixed | unknown",
+                        "final_output_rgba": [None, None, None, None],
+                    },
+                    {
+                        "x": 1133,
+                        "y": 174,
+                        "role": "largest residual component edge",
+                        "core_lab76_matched_byte": None,
+                        "post_core_pre_dilate_temp_matte_byte": None,
+                        "positive_edge_thin_seed_byte_optional": None,
+                        "distance_value_consumed": None,
+                        "amount_or_limit_value_compared": None,
+                        "copy_condition_observed": "dist <= amount | dist < amount | adjusted-limit | other",
+                        "post_dilate_matte_byte": None,
+                        "frame_edge_neighbors_treated_as": "inside | outside | mixed | unknown",
+                        "final_output_rgba": [None, None, None, None],
+                    },
+                    {
+                        "x": 1195,
+                        "y": 761,
+                        "role": "second-largest residual component",
+                        "core_lab76_matched_byte": None,
+                        "post_core_pre_dilate_temp_matte_byte": None,
+                        "positive_edge_thin_seed_byte_optional": None,
+                        "distance_value_consumed": None,
+                        "amount_or_limit_value_compared": None,
+                        "copy_condition_observed": "dist <= amount | dist < amount | adjusted-limit | other",
+                        "post_dilate_matte_byte": None,
+                        "frame_edge_neighbors_treated_as": "inside | outside | mixed | unknown",
+                        "final_output_rgba": [None, None, None, None],
+                    },
+                    {
+                        "x": 1699,
+                        "y": 7,
+                        "role": "top-edge sanity witness",
+                        "core_lab76_matched_byte": None,
+                        "post_core_pre_dilate_temp_matte_byte": None,
+                        "positive_edge_thin_seed_byte_optional": None,
+                        "distance_value_consumed": None,
+                        "amount_or_limit_value_compared": None,
+                        "copy_condition_observed": "dist <= amount | dist < amount | adjusted-limit | other",
+                        "post_dilate_matte_byte": None,
+                        "frame_edge_neighbors_treated_as": "inside | outside | mixed | unknown",
+                        "final_output_rgba": [None, None, None, None],
+                    },
+                ],
+                "control_pixel_optional": {
+                    "x": None,
+                    "y": None,
+                    "role": "definitely-kept control pixel from the same frame",
+                    "core_lab76_matched_byte": None,
+                    "post_core_pre_dilate_temp_matte_byte": None,
+                    "positive_edge_thin_seed_byte_optional": None,
+                    "distance_value_consumed": None,
+                    "amount_or_limit_value_compared": None,
+                    "copy_condition_observed": "dist <= amount | dist < amount | adjusted-limit | other",
+                    "post_dilate_matte_byte": None,
+                    "frame_edge_neighbors_treated_as": "inside | outside | mixed | unknown",
+                    "final_output_rgba": [None, None, None, None],
+                },
+            }
+            summary = "Fill with narrow 16bpc ColorKey case_0009 ctx/seed/dilate witness values."
         elif request_id == "olmblur_repeat_threshold_runtime_trace_20260619":
             observations = {
                 "effect": "OLM Blur",
@@ -3032,6 +3167,12 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("refs/reports/olmcolorkey_edge_trace_baseline_20260619_031239_mac/case_0009_trace.log"),
             Path("refs/reports/olmcolorkey_edge_trace_baseline_20260619_031239_mac/diff.json"),
             Path("refs/reports/olmcolorkey_edge_trace_baseline_20260619_031239_mac/diff.csv"),
+        ]
+    elif profile == "colorkey-16bpc-case0009":
+        files = [
+            TRACE_NOTE,
+            *COLORKEY_SUPPORTING_NOTES,
+            *COLORKEY_16BPC_CASE0009_SUPPORTING_FILES,
         ]
     elif profile == "olmblur-repeat-threshold":
         files = [

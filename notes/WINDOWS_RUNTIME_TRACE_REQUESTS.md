@@ -422,6 +422,28 @@ Status: historical request spec. Current normalized Software references are
 AE-host exact; request this trace only if a current Software Edge residual
 reappears.
 
+2026-06-26 update:
+
+- A current residual did reappear, but it is narrower than this original
+  8bpc-oriented bundle. The remaining Mac AE mismatch is now the 16bpc
+  normalized `olmcolorkey__case_0009` only.
+- Current evidence:
+  - `Force Lower Precision` epsilon is already fixed in the Mac port.
+  - `Edge Blur Amount=0`, so this is not an Edge Blur blend-weight issue.
+  - Parameters are:
+    `Color Space=3 (Lab76)`, `Force Lower Precision=3`, `Per Color=1`,
+    `Per Component=1`, key color `[1, 0, 0.470588...]`,
+    thresholds `[0.19, 0.98, 0.4]`, `Edge Thin Amount=25`,
+    `Edge Thin Distance Type=2`.
+  - The real Mac AE candidate differs from Windows by `12597px`, all in the
+    `candidate kept / Windows removed` direction.
+  - Naive `Lab76 hit + L1 dilate 25` is much worse (`80592px`), and common
+    seed/distance variants do not improve on that. See
+    `refs/conformance/olmcolorkey_16bpc_case_0009_analysis.md`.
+- So the next useful Windows request is no longer a broad Edge Thin / Edge Blur
+  bundle. It should be a narrow 16bpc `case_0009` witness that answers the
+  local seed-world and positive-dilate ownership only.
+
 Why this trace exists:
 
 - Core RGB/color-space/Replace paths are exact in the returned Software
@@ -511,6 +533,56 @@ Interpretation:
   minimum RGB differently, patch Edge Blur application.
 - If the trace confirms current static facts and no missing runtime state, the
   remaining work is deeper decomp of `FUN_1800085b0`, not PNG fitting.
+
+### Narrow 16bpc follow-up for current `olmcolorkey__case_0009`
+
+Use this instead of the broader historical bundle when the target is the
+current Mac AE exact blocker.
+
+Render target:
+
+- Windows AE Software
+- request: `olm_bitdepth_16bpc_normalized_exact_20260625`
+- case: `olmcolorkey__case_0009`
+- bit depth: 16bpc
+
+Required witness coordinates:
+
+- primary: `(1116,136)`
+- local sanity:
+  `(1088,124)`, `(1133,174)`, `(1195,761)`, `(1699,7)`
+- one definitely-kept control pixel from the same frame, if convenient
+
+Required facts:
+
+1. At `FUN_1800094b0`, record the ctx values actually used for this render:
+   - bit depth field / source format field
+   - `ctx+0x3c` (`Force Lower Precision`)
+   - `ctx+0x40`
+   - `ctx+0x44`
+   - `ctx+0x48`
+2. Before positive `Edge Thin Amount=25` is applied, record for each witness:
+   - the Lab76/core matched byte at the seed input;
+   - the post-core pre-dilate temporary matte byte, if it is separate.
+3. At the positive Edge Thin helper / copy test:
+   - the distance value consumed for that pixel;
+   - the amount/limit value actually compared;
+   - whether the runtime copy condition is `dist <= amount`,
+     `dist < amount`, or some adjusted value;
+   - the output matte byte after the dilate step.
+4. If a separate seed-builder or temporary world feeds the positive dilate:
+   - record that seed byte for each witness;
+   - note whether frame-edge neighbors are treated as inside or outside for
+     those witnesses.
+5. Final output:
+   - final RGBA at the same witness pixels.
+
+Stop condition:
+
+- Return concrete numeric values for the fields above, or an exact failed
+  breakpoint/watchpoint reason.
+- Wrapper hits, branch names, or placeholders such as `not isolated` remain
+  `trace-too-sparse` and are not enough.
 
 Mac baseline highlights:
 
