@@ -1,0 +1,152 @@
+{
+  "request_id": "olm_fresh_instance_defaults_20260629",
+  "effect": {
+    "name": "OLM multi-effect default capture",
+    "match_name": "olm_fresh_instance_defaults_20260629"
+  },
+  "why": [
+    "We need one Windows-grounded record of what each original OLM AEX plug-in looks like immediately after it is added to a layer, before any parameter edits.",
+    "Mac ParamsSetup is the local source for current port defaults, but AE exact work benefits from a Windows witness for cold-start defaults, popup indices, hidden group state, built-in effect params, and property-order shape.",
+    "Capturing all fresh-instance defaults once prevents future ambiguity about whether a mismatch came from algorithm drift or simply starting from the wrong default state."
+  ],
+  "render_sets": [
+    {
+      "id": "software",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "required": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "opaque_grid_1920x1080",
+      "description": "Use a simple opaque 1920x1080 source layer. The pixels are not the main point here; the manifest/property tree is."
+    }
+  ],
+  "common_setup": {
+    "comp_width": 1920,
+    "comp_height": 1080,
+    "frame_rate": 24,
+    "bit_depth": 8,
+    "instructions": [
+      "For each case, create a fresh comp and a fresh source layer.",
+      "Add exactly one OLM effect to the selected layer.",
+      "Do not edit any OLM parameter after adding the effect.",
+      "Immediately record the full selected effect property tree, including hidden/group/no-value entries, built-in params, property_index, match_name, name, enabled/active state, and value where readable.",
+      "Save both before_effects_frame and the effect output PNG even though visual output is secondary for this request."
+    ]
+  },
+  "cases": [
+    {
+      "id": "fresh_default_olmblur",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Blur",
+        "match_name": "OLM OLM Blur"
+      },
+      "reason": "Capture cold-start defaults, especially Repeat/Bias/Legacy and the initial float/fixed slider values.",
+      "params": {},
+      "fresh_instance_defaults": true
+    },
+    {
+      "id": "fresh_default_olmcolorkey",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Color Key",
+        "match_name": "OLM Color Key"
+      },
+      "reason": "Capture the full default property tree for top-level controls, per-color blocks, replace-color controls, and grouped no-value entries.",
+      "params": {},
+      "fresh_instance_defaults": true
+    },
+    {
+      "id": "fresh_default_olmdirectionalblur",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM DirectionalBlur",
+        "match_name": "OLM Directional Blur"
+      },
+      "reason": "Capture default front/back/noise block values and group layout before any edits.",
+      "params": {},
+      "fresh_instance_defaults": true
+    },
+    {
+      "id": "fresh_default_olmdistancegradation",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation"
+      },
+      "reason": "Capture default thresholds, colors, render/interp/blur mode popup indices, and any built-in compositing params.",
+      "params": {},
+      "fresh_instance_defaults": true
+    },
+    {
+      "id": "fresh_default_olmkirakira",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Kira Kira",
+        "match_name": "OLM OLM Kira Kira"
+      },
+      "reason": "Capture all default ray lengths, merge/channel popups, color ramps, and the raw property ordering of the Windows AEX.",
+      "params": {},
+      "fresh_instance_defaults": true
+    },
+    {
+      "id": "fresh_default_olmradialblur",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM RadialBlur",
+        "match_name": "OLM RadialBlur"
+      },
+      "reason": "Capture outer/inner defaults, center point, repeat-border, ellipse block, and noise defaults on a fresh effect instance.",
+      "params": {},
+      "fresh_instance_defaults": true
+    },
+    {
+      "id": "fresh_default_olmsmoother_v1",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Smoother",
+        "match_name": "OLM Smoother"
+      },
+      "reason": "Capture v1 Use Key / Key Color / Tolerance defaults and the exact Windows-visible label path for the tolerance control.",
+      "params": {},
+      "fresh_instance_defaults": true
+    },
+    {
+      "id": "fresh_default_olmsmoother_v2",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Smoother v2",
+        "match_name": "OLM Smoother v2"
+      },
+      "reason": "Capture v2 key/gamma/version block defaults and popup indices immediately after effect creation.",
+      "params": {},
+      "fresh_instance_defaults": true
+    },
+    {
+      "id": "fresh_default_olmtoondilate",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Toon Dilate",
+        "match_name": "ADBE OLMToonDilate"
+      },
+      "reason": "Capture the simple single-slider default and any built-in AE effect params alongside it.",
+      "params": {},
+      "fresh_instance_defaults": true
+    }
+  ],
+  "manifest_requirements": [
+    "Record all selected effect property names, match_names, property_index, property_type, property_value_type, enabled/active state, and values where readable.",
+    "Record hidden/group/no-value properties too; do not omit them just because AE scripting cannot read a scalar value.",
+    "Record project_gpu_accel_type.current_name and raw value.",
+    "Keep ADBE Force CPU GPU / GPU Rendering as reference-only metadata, not as the execution-path label.",
+    "Save both before_effects_frame and effect output PNG for every case.",
+    "Treat this as a fresh-instance default capture: no manual edits after the effect is added."
+  ],
+  "mac_follow_up": [
+    "Import with scripts/intake_olm_return.py path/to/returned_reference.zip --quick.",
+    "Use the returned manifest as the Windows source of truth for fresh-instance defaults and property ordering.",
+    "Diff the Windows defaults against notes/PARAMETER_SOURCE_OF_TRUTH.md and the extracted Mac param schema before assuming any default mismatch is algorithmic."
+  ]
+}

@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 DENSE_REQUEST_ID = "olmradialblur_dense_sampler_trace_20260620"
-RESIDUAL_REQUEST_ID = "olmradialblur_zoom_tiny_rotation_residual_witness_20260622"
+RESIDUAL_REQUEST_ID = "olmradialblur_caller_collapse_witness_20260630"
 
 
 def run_compare(repo: Path, py: str, summary: Path, output_json: Path, output_md: Path) -> dict:
@@ -191,7 +191,7 @@ def main() -> int:
                         {
                             "request_id": RESIDUAL_REQUEST_ID,
                             "status": "answered",
-                            "summary": "synthetic focused RadialBlur residual witness trace",
+                            "summary": "synthetic focused RadialBlur caller-collapse witness trace",
                             "observations": {
                                 "cases": [
                                     {

@@ -1,0 +1,342 @@
+{
+  "cases": [
+    {
+      "id": "final_random10_distance_gradation_01",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": 0,
+        "__index_10": 0.0429,
+        "__index_11": 3,
+        "__index_12": 3773,
+        "__index_2": 2,
+        "__index_3": 769,
+        "__index_4": 573,
+        "__index_5": 2,
+        "__index_6": 0,
+        "__index_7": [
+          0.1017,
+          0.242,
+          0.1363,
+          1
+        ],
+        "__index_8": [
+          0.8295,
+          0.8503,
+          0.8345,
+          1
+        ],
+        "__index_9": 4
+      },
+      "random_seed": 20264630,
+      "reason": "Per-plugin final random reference case 1/10 generated from Windows range metadata seed 20264630."
+    },
+    {
+      "id": "final_random10_distance_gradation_02",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 1,
+        "__index_10": 2.639,
+        "__index_11": 2,
+        "__index_12": 2235,
+        "__index_2": 3,
+        "__index_3": 468,
+        "__index_4": 786,
+        "__index_5": 1,
+        "__index_6": 0,
+        "__index_7": [
+          0.5497,
+          0.7437,
+          0.26,
+          1
+        ],
+        "__index_8": [
+          0.1983,
+          0.5871,
+          0.6153,
+          1
+        ],
+        "__index_9": 3
+      },
+      "random_seed": 20264631,
+      "reason": "Per-plugin final random reference case 2/10 generated from Windows range metadata seed 20264631."
+    },
+    {
+      "id": "final_random10_distance_gradation_03",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": 0,
+        "__index_10": 0.2451,
+        "__index_11": 1,
+        "__index_12": 697,
+        "__index_2": 1,
+        "__index_3": 167,
+        "__index_4": 999,
+        "__index_5": 2,
+        "__index_6": 0,
+        "__index_7": [
+          0.9978,
+          0.2454,
+          0.3837,
+          1
+        ],
+        "__index_8": [
+          0.567,
+          0.3238,
+          0.396,
+          1
+        ],
+        "__index_9": 2
+      },
+      "random_seed": 20264632,
+      "reason": "Per-plugin final random reference case 3/10 generated from Windows range metadata seed 20264632."
+    },
+    {
+      "id": "final_random10_distance_gradation_04",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 1,
+        "__index_10": 2.8412,
+        "__index_11": 3,
+        "__index_12": 3255,
+        "__index_2": 2,
+        "__index_3": 866,
+        "__index_4": 213,
+        "__index_5": 1,
+        "__index_6": 1,
+        "__index_7": [
+          0.4458,
+          0.747,
+          0.5074,
+          1
+        ],
+        "__index_8": [
+          0.9358,
+          0.0605,
+          0.1767,
+          1
+        ],
+        "__index_9": 1
+      },
+      "random_seed": 20264633,
+      "reason": "Per-plugin final random reference case 4/10 generated from Windows range metadata seed 20264633."
+    },
+    {
+      "id": "final_random10_distance_gradation_05",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": 1,
+        "__index_10": 0.4472,
+        "__index_11": 2,
+        "__index_12": 1717,
+        "__index_2": 3,
+        "__index_3": 565,
+        "__index_4": 426,
+        "__index_5": 1,
+        "__index_6": 1,
+        "__index_7": [
+          0.8939,
+          0.2487,
+          0.6311,
+          1
+        ],
+        "__index_8": [
+          0.3045,
+          0.7973,
+          0.9574,
+          1
+        ],
+        "__index_9": 3
+      },
+      "random_seed": 20264634,
+      "reason": "Per-plugin final random reference case 5/10 generated from Windows range metadata seed 20264634."
+    },
+    {
+      "id": "final_random10_distance_gradation_06",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 0,
+        "__index_10": 3.0433,
+        "__index_11": 2,
+        "__index_12": 179,
+        "__index_2": 1,
+        "__index_3": 264,
+        "__index_4": 640,
+        "__index_5": 2,
+        "__index_6": 1,
+        "__index_7": [
+          0.342,
+          0.7504,
+          0.7548,
+          1
+        ],
+        "__index_8": [
+          0.6733,
+          0.534,
+          0.7381,
+          1
+        ],
+        "__index_9": 2
+      },
+      "random_seed": 20264635,
+      "reason": "Per-plugin final random reference case 6/10 generated from Windows range metadata seed 20264635."
+    },
+    {
+      "id": "final_random10_distance_gradation_07",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": 1,
+        "__index_10": 0.6494,
+        "__index_11": 1,
+        "__index_12": 2737,
+        "__index_2": 1,
+        "__index_3": 963,
+        "__index_4": 853,
+        "__index_5": 1,
+        "__index_6": 1,
+        "__index_7": [
+          0.79,
+          0.2521,
+          0.8786,
+          1
+        ],
+        "__index_8": [
+          0.042,
+          0.2707,
+          0.5188,
+          1
+        ],
+        "__index_9": 1
+      },
+      "random_seed": 20264636,
+      "reason": "Per-plugin final random reference case 7/10 generated from Windows range metadata seed 20264636."
+    },
+    {
+      "id": "final_random10_distance_gradation_08",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 0,
+        "__index_10": 3.2455,
+        "__index_11": 3,
+        "__index_12": 1199,
+        "__index_2": 2,
+        "__index_3": 662,
+        "__index_4": 67,
+        "__index_5": 2,
+        "__index_6": 0,
+        "__index_7": [
+          0.2381,
+          0.7538,
+          0.0023,
+          1
+        ],
+        "__index_8": [
+          0.4108,
+          0.0075,
+          0.2995,
+          1
+        ],
+        "__index_9": 4
+      },
+      "random_seed": 20264637,
+      "reason": "Per-plugin final random reference case 8/10 generated from Windows range metadata seed 20264637."
+    },
+    {
+      "id": "final_random10_distance_gradation_09",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": 1,
+        "__index_10": 0.8515,
+        "__index_11": 2,
+        "__index_12": 3757,
+        "__index_2": 3,
+        "__index_3": 361,
+        "__index_4": 280,
+        "__index_5": 1,
+        "__index_6": 0,
+        "__index_7": [
+          0.6861,
+          0.2555,
+          0.126,
+          1
+        ],
+        "__index_8": [
+          0.7795,
+          0.7442,
+          0.0803,
+          1
+        ],
+        "__index_9": 2
+      },
+      "random_seed": 20264638,
+      "reason": "Per-plugin final random reference case 9/10 generated from Windows range metadata seed 20264638."
+    },
+    {
+      "id": "final_random10_distance_gradation_10",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 0,
+        "__index_10": 3.4476,
+        "__index_11": 1,
+        "__index_12": 2219,
+        "__index_2": 1,
+        "__index_3": 60,
+        "__index_4": 494,
+        "__index_5": 2,
+        "__index_6": 0,
+        "__index_7": [
+          0.1342,
+          0.7572,
+          0.2497,
+          1
+        ],
+        "__index_8": [
+          0.1483,
+          0.4809,
+          0.861,
+          1
+        ],
+        "__index_9": 1
+      },
+      "random_seed": 20264639,
+      "reason": "Per-plugin final random reference case 10/10 generated from Windows range metadata seed 20264639."
+    }
+  ],
+  "common_setup": {
+    "bit_depth": 8,
+    "comp_height": 1080,
+    "comp_width": 1920,
+    "frame_rate": 24
+  },
+  "effect": {
+    "match_name": "OLM Distance Gradation",
+    "name": "Distance Gradation"
+  },
+  "inputs": [
+    {
+      "description": "Opaque deterministic stress image.",
+      "id": "random_final_grid_1920x1080",
+      "path": "inputs/random_final_grid_1920x1080.png"
+    },
+    {
+      "description": "RGBA deterministic stress image.",
+      "id": "random_final_alpha_1920x1080",
+      "path": "inputs/random_final_alpha_1920x1080.png"
+    }
+  ],
+  "manifest_requirements": [
+    "Record before/effect PNGs.",
+    "Record actual applied values and instrumentation notes.",
+    "Record project_gpu_accel_type.current_name/raw."
+  ],
+  "render_sets": [
+    {
+      "id": "software",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "required": true
+    }
+  ],
+  "request_id": "olm_final_random10_distance_gradation_20260629",
+  "why": [
+    "Windows AE final per-plugin randomized reference set. Values generated from fresh-instance Windows range metadata; actual applied values are recorded in returned manifest."
+  ]
+}

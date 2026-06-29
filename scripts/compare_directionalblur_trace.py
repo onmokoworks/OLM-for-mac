@@ -12,7 +12,8 @@ from typing import Any
 
 
 DENSE_REQUEST_ID = "olmdirectionalblur_dense_sampler_trace_20260620"
-RESIDUAL_WITNESS_REQUEST_ID = "olmdirectionalblur_angle0_diagonal_residual_witness_20260622"
+HELPER_COVERAGE_REQUEST_ID = "olmdirectionalblur_helper_coverage_witness_20260630"
+LEGACY_RESIDUAL_WITNESS_REQUEST_ID = "olmdirectionalblur_angle0_diagonal_residual_witness_20260622"
 
 
 def repo_root() -> Path:
@@ -45,6 +46,14 @@ def find_result(summary: dict[str, Any], request_id: str) -> dict[str, Any] | No
         if isinstance(row, dict) and row.get("request_id") == request_id:
             return row
     return None
+
+
+def find_first_result(summary: dict[str, Any], request_ids: list[str]) -> tuple[str, dict[str, Any] | None]:
+    for request_id in request_ids:
+        row = find_result(summary, request_id)
+        if row is not None:
+            return request_id, row
+    return request_ids[0], None
 
 
 def concrete_trace_value(value: Any) -> bool:
@@ -276,14 +285,17 @@ def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
 
 
 def build_comparison(summary: dict[str, Any]) -> dict[str, Any]:
-    residual_row = find_result(summary, RESIDUAL_WITNESS_REQUEST_ID)
+    residual_request_id, residual_row = find_first_result(
+        summary,
+        [HELPER_COVERAGE_REQUEST_ID, LEGACY_RESIDUAL_WITNESS_REQUEST_ID],
+    )
     if residual_row is not None:
         observations = observations_for(residual_row)
         focus = classify_residual(residual_row, observations)
         return {
             "kind": "olmdirectionalblur_trace_comparison",
             "schema": 2,
-            "request_id": RESIDUAL_WITNESS_REQUEST_ID,
+            "request_id": residual_request_id,
             "legacy_request_id": DENSE_REQUEST_ID,
             "likely_next_focus": focus,
             "recommended_next_evidence": recommended_next_evidence(focus),

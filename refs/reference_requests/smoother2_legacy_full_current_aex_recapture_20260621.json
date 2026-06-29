@@ -29,7 +29,12 @@
       "reason": "Recapture old case_0001 with the current installed Windows AEX. This duplicates the 20260621 witness case intentionally so the full legacy set has one coherent provenance.",
       "params": {
         "Enable Color Key": 0,
-        "Color Key": [1, 1, 1, 1],
+        "Color Key": [
+          1,
+          1,
+          1,
+          1
+        ],
         "Invert Color Key": 0,
         "Smoothness": 100,
         "Extra Smooth": 0,
@@ -38,8 +43,306 @@
         "Gamma Correction": 1,
         "Gamma Value": 2.40000009536743,
         "Number of Gamma Colors": 1,
-        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
-      }
+        "Gamma Color": [
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      "params_full": [
+        {
+          "name": "Enable Color Key",
+          "match_name": "OLM Smoother v2-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Color Key",
+          "match_name": "OLM Smoother v2-0002",
+          "property_index": 2,
+          "property_value_type": "COLOR",
+          "value": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "name": "Invert Color Key",
+          "match_name": "OLM Smoother v2-0015",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Smoothness",
+          "match_name": "OLM Smoother v2-0003",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Extra Smooth",
+          "match_name": "OLM Smoother v2-0004",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Smooth Range",
+          "match_name": "OLM Smoother v2-0005",
+          "property_index": 6,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Smoother Version",
+          "match_name": "OLM Smoother v2-0006",
+          "property_index": 7,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Gamma Correction",
+          "match_name": "OLM Smoother v2-0007",
+          "property_index": 8,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Value",
+          "match_name": "OLM Smoother v2-0008",
+          "property_index": 9,
+          "property_value_type": "OneD",
+          "value": 2.40000009536743
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "match_name": "OLM Smoother v2-0009",
+          "property_index": 10,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0010",
+          "property_index": 11,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0011",
+          "property_index": 12,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0012",
+          "property_index": 13,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0013",
+          "property_index": 14,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0014",
+          "property_index": 15,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        }
+      ]
     },
     {
       "id": "legacy_case_0002_current_aex",
@@ -47,7 +350,12 @@
       "reason": "Old case_0002 current-AEX recapture: Color Key enabled, inverted key.",
       "params": {
         "Enable Color Key": 1,
-        "Color Key": [1, 1, 1, 1],
+        "Color Key": [
+          1,
+          1,
+          1,
+          1
+        ],
         "Invert Color Key": 1,
         "Smoothness": 100,
         "Extra Smooth": 0,
@@ -56,8 +364,306 @@
         "Gamma Correction": 1,
         "Gamma Value": 2.40000009536743,
         "Number of Gamma Colors": 1,
-        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
-      }
+        "Gamma Color": [
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      "params_full": [
+        {
+          "name": "Enable Color Key",
+          "match_name": "OLM Smoother v2-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Color Key",
+          "match_name": "OLM Smoother v2-0002",
+          "property_index": 2,
+          "property_value_type": "COLOR",
+          "value": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "name": "Invert Color Key",
+          "match_name": "OLM Smoother v2-0015",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Smoothness",
+          "match_name": "OLM Smoother v2-0003",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Extra Smooth",
+          "match_name": "OLM Smoother v2-0004",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Smooth Range",
+          "match_name": "OLM Smoother v2-0005",
+          "property_index": 6,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Smoother Version",
+          "match_name": "OLM Smoother v2-0006",
+          "property_index": 7,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Gamma Correction",
+          "match_name": "OLM Smoother v2-0007",
+          "property_index": 8,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Value",
+          "match_name": "OLM Smoother v2-0008",
+          "property_index": 9,
+          "property_value_type": "OneD",
+          "value": 2.40000009536743
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "match_name": "OLM Smoother v2-0009",
+          "property_index": 10,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0010",
+          "property_index": 11,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0011",
+          "property_index": 12,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0012",
+          "property_index": 13,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0013",
+          "property_index": 14,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0014",
+          "property_index": 15,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        }
+      ]
     },
     {
       "id": "legacy_case_0003_current_aex",
@@ -65,7 +671,12 @@
       "reason": "Old case_0003 current-AEX recapture: Color Key enabled, Smoothness 0 control.",
       "params": {
         "Enable Color Key": 1,
-        "Color Key": [1, 1, 1, 1],
+        "Color Key": [
+          1,
+          1,
+          1,
+          1
+        ],
         "Invert Color Key": 0,
         "Smoothness": 0,
         "Extra Smooth": 0,
@@ -74,8 +685,306 @@
         "Gamma Correction": 1,
         "Gamma Value": 2.40000009536743,
         "Number of Gamma Colors": 1,
-        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
-      }
+        "Gamma Color": [
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      "params_full": [
+        {
+          "name": "Enable Color Key",
+          "match_name": "OLM Smoother v2-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Color Key",
+          "match_name": "OLM Smoother v2-0002",
+          "property_index": 2,
+          "property_value_type": "COLOR",
+          "value": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "name": "Invert Color Key",
+          "match_name": "OLM Smoother v2-0015",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Smoothness",
+          "match_name": "OLM Smoother v2-0003",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Extra Smooth",
+          "match_name": "OLM Smoother v2-0004",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Smooth Range",
+          "match_name": "OLM Smoother v2-0005",
+          "property_index": 6,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Smoother Version",
+          "match_name": "OLM Smoother v2-0006",
+          "property_index": 7,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Gamma Correction",
+          "match_name": "OLM Smoother v2-0007",
+          "property_index": 8,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Value",
+          "match_name": "OLM Smoother v2-0008",
+          "property_index": 9,
+          "property_value_type": "OneD",
+          "value": 2.40000009536743
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "match_name": "OLM Smoother v2-0009",
+          "property_index": 10,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0010",
+          "property_index": 11,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0011",
+          "property_index": 12,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0012",
+          "property_index": 13,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0013",
+          "property_index": 14,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0014",
+          "property_index": 15,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        }
+      ]
     },
     {
       "id": "legacy_case_0004_current_aex",
@@ -83,7 +992,12 @@
       "reason": "Old case_0004 current-AEX recapture: Extra Smooth 100.",
       "params": {
         "Enable Color Key": 1,
-        "Color Key": [1, 1, 1, 1],
+        "Color Key": [
+          1,
+          1,
+          1,
+          1
+        ],
         "Invert Color Key": 0,
         "Smoothness": 100,
         "Extra Smooth": 100,
@@ -92,8 +1006,306 @@
         "Gamma Correction": 1,
         "Gamma Value": 2.40000009536743,
         "Number of Gamma Colors": 1,
-        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
-      }
+        "Gamma Color": [
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      "params_full": [
+        {
+          "name": "Enable Color Key",
+          "match_name": "OLM Smoother v2-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Color Key",
+          "match_name": "OLM Smoother v2-0002",
+          "property_index": 2,
+          "property_value_type": "COLOR",
+          "value": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "name": "Invert Color Key",
+          "match_name": "OLM Smoother v2-0015",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Smoothness",
+          "match_name": "OLM Smoother v2-0003",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Extra Smooth",
+          "match_name": "OLM Smoother v2-0004",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Smooth Range",
+          "match_name": "OLM Smoother v2-0005",
+          "property_index": 6,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Smoother Version",
+          "match_name": "OLM Smoother v2-0006",
+          "property_index": 7,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Gamma Correction",
+          "match_name": "OLM Smoother v2-0007",
+          "property_index": 8,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Value",
+          "match_name": "OLM Smoother v2-0008",
+          "property_index": 9,
+          "property_value_type": "OneD",
+          "value": 2.40000009536743
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "match_name": "OLM Smoother v2-0009",
+          "property_index": 10,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0010",
+          "property_index": 11,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0011",
+          "property_index": 12,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0012",
+          "property_index": 13,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0013",
+          "property_index": 14,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0014",
+          "property_index": 15,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        }
+      ]
     },
     {
       "id": "legacy_case_0005_current_aex",
@@ -101,7 +1313,12 @@
       "reason": "Old case_0005 current-AEX recapture: Extra Smooth 100, Smooth Range 100.",
       "params": {
         "Enable Color Key": 1,
-        "Color Key": [1, 1, 1, 1],
+        "Color Key": [
+          1,
+          1,
+          1,
+          1
+        ],
         "Invert Color Key": 0,
         "Smoothness": 100,
         "Extra Smooth": 100,
@@ -110,8 +1327,306 @@
         "Gamma Correction": 1,
         "Gamma Value": 2.40000009536743,
         "Number of Gamma Colors": 1,
-        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
-      }
+        "Gamma Color": [
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      "params_full": [
+        {
+          "name": "Enable Color Key",
+          "match_name": "OLM Smoother v2-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Color Key",
+          "match_name": "OLM Smoother v2-0002",
+          "property_index": 2,
+          "property_value_type": "COLOR",
+          "value": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "name": "Invert Color Key",
+          "match_name": "OLM Smoother v2-0015",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Smoothness",
+          "match_name": "OLM Smoother v2-0003",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Extra Smooth",
+          "match_name": "OLM Smoother v2-0004",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Smooth Range",
+          "match_name": "OLM Smoother v2-0005",
+          "property_index": 6,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Smoother Version",
+          "match_name": "OLM Smoother v2-0006",
+          "property_index": 7,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Gamma Correction",
+          "match_name": "OLM Smoother v2-0007",
+          "property_index": 8,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Value",
+          "match_name": "OLM Smoother v2-0008",
+          "property_index": 9,
+          "property_value_type": "OneD",
+          "value": 2.40000009536743
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "match_name": "OLM Smoother v2-0009",
+          "property_index": 10,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0010",
+          "property_index": 11,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0011",
+          "property_index": 12,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0012",
+          "property_index": 13,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0013",
+          "property_index": 14,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0014",
+          "property_index": 15,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        }
+      ]
     },
     {
       "id": "legacy_case_0006_current_aex",
@@ -119,7 +1634,12 @@
       "reason": "Old case_0006 current-AEX recapture: Extra Smooth 100, Smooth Range 0.",
       "params": {
         "Enable Color Key": 1,
-        "Color Key": [1, 1, 1, 1],
+        "Color Key": [
+          1,
+          1,
+          1,
+          1
+        ],
         "Invert Color Key": 0,
         "Smoothness": 100,
         "Extra Smooth": 100,
@@ -128,8 +1648,306 @@
         "Gamma Correction": 1,
         "Gamma Value": 2.40000009536743,
         "Number of Gamma Colors": 1,
-        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
-      }
+        "Gamma Color": [
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      "params_full": [
+        {
+          "name": "Enable Color Key",
+          "match_name": "OLM Smoother v2-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Color Key",
+          "match_name": "OLM Smoother v2-0002",
+          "property_index": 2,
+          "property_value_type": "COLOR",
+          "value": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "name": "Invert Color Key",
+          "match_name": "OLM Smoother v2-0015",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Smoothness",
+          "match_name": "OLM Smoother v2-0003",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Extra Smooth",
+          "match_name": "OLM Smoother v2-0004",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Smooth Range",
+          "match_name": "OLM Smoother v2-0005",
+          "property_index": 6,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Smoother Version",
+          "match_name": "OLM Smoother v2-0006",
+          "property_index": 7,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Gamma Correction",
+          "match_name": "OLM Smoother v2-0007",
+          "property_index": 8,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Value",
+          "match_name": "OLM Smoother v2-0008",
+          "property_index": 9,
+          "property_value_type": "OneD",
+          "value": 2.40000009536743
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "match_name": "OLM Smoother v2-0009",
+          "property_index": 10,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0010",
+          "property_index": 11,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0011",
+          "property_index": 12,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0012",
+          "property_index": 13,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0013",
+          "property_index": 14,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0014",
+          "property_index": 15,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        }
+      ]
     },
     {
       "id": "legacy_case_0007_current_aex",
@@ -137,7 +1955,12 @@
       "reason": "Old case_0007 current-AEX recapture: Extra Smooth 40, Smooth Range 26.",
       "params": {
         "Enable Color Key": 1,
-        "Color Key": [1, 1, 1, 1],
+        "Color Key": [
+          1,
+          1,
+          1,
+          1
+        ],
         "Invert Color Key": 0,
         "Smoothness": 100,
         "Extra Smooth": 40,
@@ -146,8 +1969,306 @@
         "Gamma Correction": 1,
         "Gamma Value": 2.40000009536743,
         "Number of Gamma Colors": 1,
-        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
-      }
+        "Gamma Color": [
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      "params_full": [
+        {
+          "name": "Enable Color Key",
+          "match_name": "OLM Smoother v2-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Color Key",
+          "match_name": "OLM Smoother v2-0002",
+          "property_index": 2,
+          "property_value_type": "COLOR",
+          "value": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "name": "Invert Color Key",
+          "match_name": "OLM Smoother v2-0015",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Smoothness",
+          "match_name": "OLM Smoother v2-0003",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Extra Smooth",
+          "match_name": "OLM Smoother v2-0004",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 40
+        },
+        {
+          "name": "Smooth Range",
+          "match_name": "OLM Smoother v2-0005",
+          "property_index": 6,
+          "property_value_type": "OneD",
+          "value": 26
+        },
+        {
+          "name": "Smoother Version",
+          "match_name": "OLM Smoother v2-0006",
+          "property_index": 7,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Gamma Correction",
+          "match_name": "OLM Smoother v2-0007",
+          "property_index": 8,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Value",
+          "match_name": "OLM Smoother v2-0008",
+          "property_index": 9,
+          "property_value_type": "OneD",
+          "value": 2.40000009536743
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "match_name": "OLM Smoother v2-0009",
+          "property_index": 10,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0010",
+          "property_index": 11,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0011",
+          "property_index": 12,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0012",
+          "property_index": 13,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0013",
+          "property_index": 14,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0014",
+          "property_index": 15,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        }
+      ]
     },
     {
       "id": "legacy_case_0008_current_aex",
@@ -155,7 +2276,12 @@
       "reason": "Old case_0008 current-AEX recapture: Smoothness 29.",
       "params": {
         "Enable Color Key": 1,
-        "Color Key": [1, 1, 1, 1],
+        "Color Key": [
+          1,
+          1,
+          1,
+          1
+        ],
         "Invert Color Key": 0,
         "Smoothness": 29,
         "Extra Smooth": 40,
@@ -164,8 +2290,306 @@
         "Gamma Correction": 1,
         "Gamma Value": 2.40000009536743,
         "Number of Gamma Colors": 1,
-        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
-      }
+        "Gamma Color": [
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      "params_full": [
+        {
+          "name": "Enable Color Key",
+          "match_name": "OLM Smoother v2-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Color Key",
+          "match_name": "OLM Smoother v2-0002",
+          "property_index": 2,
+          "property_value_type": "COLOR",
+          "value": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "name": "Invert Color Key",
+          "match_name": "OLM Smoother v2-0015",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Smoothness",
+          "match_name": "OLM Smoother v2-0003",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 29
+        },
+        {
+          "name": "Extra Smooth",
+          "match_name": "OLM Smoother v2-0004",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 40
+        },
+        {
+          "name": "Smooth Range",
+          "match_name": "OLM Smoother v2-0005",
+          "property_index": 6,
+          "property_value_type": "OneD",
+          "value": 26
+        },
+        {
+          "name": "Smoother Version",
+          "match_name": "OLM Smoother v2-0006",
+          "property_index": 7,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Gamma Correction",
+          "match_name": "OLM Smoother v2-0007",
+          "property_index": 8,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Value",
+          "match_name": "OLM Smoother v2-0008",
+          "property_index": 9,
+          "property_value_type": "OneD",
+          "value": 2.40000009536743
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "match_name": "OLM Smoother v2-0009",
+          "property_index": 10,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0010",
+          "property_index": 11,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0011",
+          "property_index": 12,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0012",
+          "property_index": 13,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0013",
+          "property_index": 14,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0014",
+          "property_index": 15,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        }
+      ]
     },
     {
       "id": "legacy_case_0009_v1mode_current_aex",
@@ -173,7 +2597,12 @@
       "reason": "Old case_0009 current-AEX recapture: Smoother Version 1 compatibility mode.",
       "params": {
         "Enable Color Key": 1,
-        "Color Key": [1, 1, 1, 1],
+        "Color Key": [
+          1,
+          1,
+          1,
+          1
+        ],
         "Invert Color Key": 0,
         "Smoothness": 100,
         "Extra Smooth": 40,
@@ -182,8 +2611,306 @@
         "Gamma Correction": 1,
         "Gamma Value": 2.40000009536743,
         "Number of Gamma Colors": 1,
-        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
-      }
+        "Gamma Color": [
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      "params_full": [
+        {
+          "name": "Enable Color Key",
+          "match_name": "OLM Smoother v2-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Color Key",
+          "match_name": "OLM Smoother v2-0002",
+          "property_index": 2,
+          "property_value_type": "COLOR",
+          "value": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "name": "Invert Color Key",
+          "match_name": "OLM Smoother v2-0015",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Smoothness",
+          "match_name": "OLM Smoother v2-0003",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Extra Smooth",
+          "match_name": "OLM Smoother v2-0004",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 40
+        },
+        {
+          "name": "Smooth Range",
+          "match_name": "OLM Smoother v2-0005",
+          "property_index": 6,
+          "property_value_type": "OneD",
+          "value": 26
+        },
+        {
+          "name": "Smoother Version",
+          "match_name": "OLM Smoother v2-0006",
+          "property_index": 7,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Correction",
+          "match_name": "OLM Smoother v2-0007",
+          "property_index": 8,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Value",
+          "match_name": "OLM Smoother v2-0008",
+          "property_index": 9,
+          "property_value_type": "OneD",
+          "value": 2.40000009536743
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "match_name": "OLM Smoother v2-0009",
+          "property_index": 10,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0010",
+          "property_index": 11,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0011",
+          "property_index": 12,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0012",
+          "property_index": 13,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0013",
+          "property_index": 14,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0014",
+          "property_index": 15,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        }
+      ]
     },
     {
       "id": "legacy_case_0010_gamma3_current_aex",
@@ -191,7 +2918,12 @@
       "reason": "Old case_0010 current-AEX recapture: Gamma Correction 2 with three gamma colors.",
       "params": {
         "Enable Color Key": 1,
-        "Color Key": [1, 1, 1, 1],
+        "Color Key": [
+          1,
+          1,
+          1,
+          1
+        ],
         "Invert Color Key": 0,
         "Smoothness": 100,
         "Extra Smooth": 40,
@@ -200,8 +2932,306 @@
         "Gamma Correction": 2,
         "Gamma Value": 1.36872430495274,
         "Number of Gamma Colors": 3,
-        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1]]
-      }
+        "Gamma Color": [
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      "params_full": [
+        {
+          "name": "Enable Color Key",
+          "match_name": "OLM Smoother v2-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Color Key",
+          "match_name": "OLM Smoother v2-0002",
+          "property_index": 2,
+          "property_value_type": "COLOR",
+          "value": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "name": "Invert Color Key",
+          "match_name": "OLM Smoother v2-0015",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Smoothness",
+          "match_name": "OLM Smoother v2-0003",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Extra Smooth",
+          "match_name": "OLM Smoother v2-0004",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 40
+        },
+        {
+          "name": "Smooth Range",
+          "match_name": "OLM Smoother v2-0005",
+          "property_index": 6,
+          "property_value_type": "OneD",
+          "value": 22
+        },
+        {
+          "name": "Smoother Version",
+          "match_name": "OLM Smoother v2-0006",
+          "property_index": 7,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Gamma Correction",
+          "match_name": "OLM Smoother v2-0007",
+          "property_index": 8,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Gamma Value",
+          "match_name": "OLM Smoother v2-0008",
+          "property_index": 9,
+          "property_value_type": "OneD",
+          "value": 1.36872430495274
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "match_name": "OLM Smoother v2-0009",
+          "property_index": 10,
+          "property_value_type": "OneD",
+          "value": 3
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0010",
+          "property_index": 11,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0011",
+          "property_index": 12,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0012",
+          "property_index": 13,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0013",
+          "property_index": 14,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0014",
+          "property_index": 15,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        }
+      ]
     },
     {
       "id": "legacy_case_0011_gamma5_blue_current_aex",
@@ -209,7 +3239,12 @@
       "reason": "Old case_0011 current-AEX recapture: Gamma Correction 2 with fifth gamma color blue.",
       "params": {
         "Enable Color Key": 1,
-        "Color Key": [1, 1, 1, 1],
+        "Color Key": [
+          1,
+          1,
+          1,
+          1
+        ],
         "Invert Color Key": 0,
         "Smoothness": 100,
         "Extra Smooth": 40,
@@ -218,8 +3253,306 @@
         "Gamma Correction": 2,
         "Gamma Value": 2.16954740477197,
         "Number of Gamma Colors": 5,
-        "Gamma Color": [[0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 1, 1]]
-      }
+        "Gamma Color": [
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            1
+          ]
+        ]
+      },
+      "params_full": [
+        {
+          "name": "Enable Color Key",
+          "match_name": "OLM Smoother v2-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Color Key",
+          "match_name": "OLM Smoother v2-0002",
+          "property_index": 2,
+          "property_value_type": "COLOR",
+          "value": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "name": "Invert Color Key",
+          "match_name": "OLM Smoother v2-0015",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Smoothness",
+          "match_name": "OLM Smoother v2-0003",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Extra Smooth",
+          "match_name": "OLM Smoother v2-0004",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 40
+        },
+        {
+          "name": "Smooth Range",
+          "match_name": "OLM Smoother v2-0005",
+          "property_index": 6,
+          "property_value_type": "OneD",
+          "value": 22
+        },
+        {
+          "name": "Smoother Version",
+          "match_name": "OLM Smoother v2-0006",
+          "property_index": 7,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Gamma Correction",
+          "match_name": "OLM Smoother v2-0007",
+          "property_index": 8,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Gamma Value",
+          "match_name": "OLM Smoother v2-0008",
+          "property_index": 9,
+          "property_value_type": "OneD",
+          "value": 2.16954740477197
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "match_name": "OLM Smoother v2-0009",
+          "property_index": 10,
+          "property_value_type": "OneD",
+          "value": 5
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0010",
+          "property_index": 11,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0011",
+          "property_index": 12,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0012",
+          "property_index": 13,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0013",
+          "property_index": 14,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0014",
+          "property_index": 15,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              1,
+              1
+            ]
+          ]
+        }
+      ]
     },
     {
       "id": "legacy_case_0012_gamma5_red_blue_current_aex",
@@ -227,7 +3560,12 @@
       "reason": "Old case_0012 current-AEX recapture: Gamma Correction 2 with red/blue gamma colors and Smooth Range 88.",
       "params": {
         "Enable Color Key": 1,
-        "Color Key": [1, 1, 1, 1],
+        "Color Key": [
+          1,
+          1,
+          1,
+          1
+        ],
         "Invert Color Key": 0,
         "Smoothness": 100,
         "Extra Smooth": 40,
@@ -236,8 +3574,306 @@
         "Gamma Correction": 2,
         "Gamma Value": 2.16954740477197,
         "Number of Gamma Colors": 5,
-        "Gamma Color": [[1, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 1, 1]]
-      }
+        "Gamma Color": [
+          [
+            1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            1,
+            1
+          ]
+        ]
+      },
+      "params_full": [
+        {
+          "name": "Enable Color Key",
+          "match_name": "OLM Smoother v2-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Color Key",
+          "match_name": "OLM Smoother v2-0002",
+          "property_index": 2,
+          "property_value_type": "COLOR",
+          "value": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "name": "Invert Color Key",
+          "match_name": "OLM Smoother v2-0015",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Smoothness",
+          "match_name": "OLM Smoother v2-0003",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Extra Smooth",
+          "match_name": "OLM Smoother v2-0004",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 40
+        },
+        {
+          "name": "Smooth Range",
+          "match_name": "OLM Smoother v2-0005",
+          "property_index": 6,
+          "property_value_type": "OneD",
+          "value": 88
+        },
+        {
+          "name": "Smoother Version",
+          "match_name": "OLM Smoother v2-0006",
+          "property_index": 7,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Gamma Correction",
+          "match_name": "OLM Smoother v2-0007",
+          "property_index": 8,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Gamma Value",
+          "match_name": "OLM Smoother v2-0008",
+          "property_index": 9,
+          "property_value_type": "OneD",
+          "value": 2.16954740477197
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "match_name": "OLM Smoother v2-0009",
+          "property_index": 10,
+          "property_value_type": "OneD",
+          "value": 5
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0010",
+          "property_index": 11,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              1,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0011",
+          "property_index": 12,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              1,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0012",
+          "property_index": 13,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              1,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0013",
+          "property_index": 14,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              1,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "name": "Gamma Color",
+          "match_name": "OLM Smoother v2-0014",
+          "property_index": 15,
+          "property_value_type": "COLOR",
+          "value": [
+            [
+              1,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              1,
+              1
+            ]
+          ]
+        }
+      ]
     }
   ],
   "manifest_requirements": [

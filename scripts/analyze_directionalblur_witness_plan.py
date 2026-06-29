@@ -66,6 +66,15 @@ def first_negative_witness(case: dict[str, Any]) -> dict[str, Any] | None:
     return None
 
 
+def preferred_angle0_witness(case: dict[str, Any]) -> dict[str, Any]:
+    top = case.get("top_witnesses") or []
+    if isinstance(top, list) and top:
+        first = top[0]
+        if isinstance(first, dict) and "x" in first and "y" in first:
+            return first
+    return case["max_at"]
+
+
 def compact_witness(witness: dict[str, Any]) -> dict[str, Any]:
     return {
         "xy": [int(witness["x"]), int(witness["y"])],
@@ -91,12 +100,18 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         {
             "family": "angle0-rowdriver-valid-alpha",
             "case_id": "case_0001",
-            "primary_witness": compact_witness(angle0["max_at"]),
+            "primary_witness": compact_witness(preferred_angle0_witness(angle0)),
+            "scan_order_max_witness": compact_witness(angle0["max_at"]),
             "companion_witnesses": angle0_top,
             "why": (
                 "Angle-0/front-only residual has alpha exactly matching but red "
                 "missing across a long horizontal strip, so the first proof should "
                 "separate rowdriver/group membership from a validity/alpha side channel."
+            ),
+            "primary_reason": (
+                "Use the right-edge strip endpoint instead of the first scan-order max: "
+                "the endpoint is more useful for proving row coverage/boundary behavior, "
+                "while the interior max belongs to the same long strip."
             ),
             "required_values": [
                 "normalized front/back strength, angle, Size Variation, Edge Fade, Sharp Tail, Noise",
@@ -184,12 +199,22 @@ def render_markdown(report: dict[str, Any]) -> str:
                 f"## {plan['family']}",
                 "",
                 f"- Why: {plan['why']}",
+                f"- Primary witness reason: {plan.get('primary_reason', 'Use the primary max witness for this family.')}",
                 f"- Stop line: {plan['stop_line']}",
                 "",
                 "Required values:",
                 "",
             ]
         )
+        if plan.get("scan_order_max_witness"):
+            lines.extend(
+                [
+                    f"- Scan-order max witness kept for reference: `{plan['scan_order_max_witness']['xy']}` "
+                    f"`{plan['scan_order_max_witness']['reference_rgba']}` -> "
+                    f"`{plan['scan_order_max_witness']['candidate_rgba']}`",
+                    "",
+                ]
+            )
         lines.extend(f"- {value}" for value in plan["required_values"])
         lines.extend(
             [

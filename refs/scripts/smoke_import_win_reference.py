@@ -100,8 +100,10 @@ def run(cmd: list[str]) -> subprocess.CompletedProcess[str]:
 def main() -> int:
     repo = Path(__file__).resolve().parents[2]
     request = repo / "refs/reference_requests/kirakira_single_ray_20260606.json"
+    request2 = repo / "refs/reference_requests/radialblur_inner_20260605.json"
     importer = repo / "refs/scripts/import_win_reference.py"
     data = json.loads(request.read_text(encoding="utf-8"))
+    data2 = json.loads(request2.read_text(encoding="utf-8"))
 
     with tempfile.TemporaryDirectory(prefix="olm_ref_import_smoke_") as tmp:
         tmp_path = Path(tmp)
@@ -126,7 +128,7 @@ def main() -> int:
             print(f"[FAIL] imported manifest missing: {imported}")
             return 1
 
-        aggregate_zip = write_aggregate_result(tmp_path, [data])
+        aggregate_zip = write_aggregate_result(tmp_path, [data, data2])
         aggregate_dest_root = tmp_path / "win_references_aggregate"
         aggregate_cmd = [
             sys.executable,
@@ -145,6 +147,10 @@ def main() -> int:
         aggregate_imported = aggregate_dest_root / "synthetic_aggregate_return" / "OLMKiraKira" / "reference_manifest.json"
         if not aggregate_imported.exists():
             print(f"[FAIL] aggregate imported manifest missing: {aggregate_imported}")
+            return 1
+        aggregate_imported2 = aggregate_dest_root / "synthetic_aggregate_return" / "OLMRadialBlur" / "reference_manifest.json"
+        if not aggregate_imported2.exists():
+            print(f"[FAIL] aggregate imported manifest missing: {aggregate_imported2}")
             return 1
 
     print("[OK] import_win_reference smoke")

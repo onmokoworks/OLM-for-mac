@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test focused DirectionalBlur residual runtime trace package."""
+"""Smoke-test focused DirectionalBlur helper-coverage runtime trace package."""
 
 from __future__ import annotations
 
@@ -17,13 +17,13 @@ def repo_root() -> Path:
 def main() -> int:
     root = repo_root()
     with tempfile.TemporaryDirectory(prefix="directionalblur_residual_witness_pkg_") as tmp:
-        output = Path(tmp) / "directionalblur_residual_witness.zip"
+        output = Path(tmp) / "directionalblur_helper_coverage_witness.zip"
         subprocess.run(
             [
                 "python3",
                 str(root / "scripts/package_runtime_trace_requests.py"),
                 "--profile",
-                "directionalblur-residual-witness",
+                "directionalblur-helper-coverage-witness",
                 "--output",
                 str(output),
             ],
@@ -45,7 +45,7 @@ def main() -> int:
         if missing:
             raise AssertionError(f"missing package files: {missing}")
         actions = manifest.get("runtime_actions", [])
-        if len(actions) != 1 or actions[0].get("request_id") != "olmdirectionalblur_angle0_diagonal_residual_witness_20260622":
+        if len(actions) != 1 or actions[0].get("request_id") != "olmdirectionalblur_helper_coverage_witness_20260630":
             raise AssertionError(f"unexpected actions: {actions}")
         observations = template["results"][0]["observations"]
         cases = observations.get("cases", [])
@@ -53,7 +53,9 @@ def main() -> int:
             raise AssertionError(f"unexpected template cases: {cases}")
         if cases[0]["witness"]["x"] != 494 or cases[1]["witness"]["x"] != 507:
             raise AssertionError("unexpected witness coordinates")
-    print("[OK] DirectionalBlur residual witness package smoke passed")
+        if "refs/conformance/olmdirectionalblur_pending_witness_proof_20260629.md" not in names:
+            raise AssertionError("missing pending witness proof markdown")
+    print("[OK] DirectionalBlur helper-coverage witness package smoke passed")
     return 0
 
 

@@ -1,0 +1,164 @@
+{
+  "request_id": "olm_fresh_instance_ranges_20260629",
+  "effect": {
+    "name": "OLM multi-effect range capture",
+    "match_name": "olm_fresh_instance_ranges_20260629"
+  },
+  "why": [
+    "We already captured cold-start default values. The remaining parameter-schema gap is Windows-side range metadata: hard min/max, whether AE exposes bounds, and popup/count shape.",
+    "This request is for parameter-definition evidence rather than algorithm output. The main artifact is the manifest/property metadata, not the PNG.",
+    "Having Windows-grounded range metadata will let the Mac port stop guessing slider ranges or popup defaults when AE UI behavior matters."
+  ],
+  "render_sets": [
+    {
+      "id": "software",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "required": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "opaque_grid_1920x1080",
+      "description": "Use a simple opaque 1920x1080 source layer. Pixels are secondary; metadata is primary."
+    }
+  ],
+  "common_setup": {
+    "comp_width": 1920,
+    "comp_height": 1080,
+    "frame_rate": 24,
+    "bit_depth": 8,
+    "instructions": [
+      "For each case, create a fresh comp and a fresh source layer.",
+      "Add exactly one OLM effect to the selected layer.",
+      "Do not edit any OLM parameter after adding the effect.",
+      "Immediately record the full selected effect property tree.",
+      "For every readable property, also record range metadata where AE scripting exposes it: hasMin, hasMax, minValue, maxValue, unitsText, and any popup/enum count or choice labels if available.",
+      "If a given metadata field is not accessible from the Windows AE script API, write null or omit it and record a short limitation note rather than guessing.",
+      "Save before_effects_frame and effect output PNGs only as supporting artifacts; metadata is the priority."
+    ]
+  },
+  "cases": [
+    {
+      "id": "range_default_olmblur",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Blur",
+        "match_name": "OLM OLM Blur"
+      },
+      "reason": "Capture slider/popup range metadata for Blur Amount, Blur Smoothness, Repeat, Bias Direction, and Legacy.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ranges": true
+    },
+    {
+      "id": "range_default_olmcolorkey",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Color Key",
+        "match_name": "OLM Color Key"
+      },
+      "reason": "Capture range metadata for thresholds, edge controls, color count, popup fields, and grouped controls.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ranges": true
+    },
+    {
+      "id": "range_default_olmdirectionalblur",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM DirectionalBlur",
+        "match_name": "OLM Directional Blur"
+      },
+      "reason": "Capture range metadata for front/back strength, alpha fade, sharp tail, noise, thickness, and popups.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ranges": true
+    },
+    {
+      "id": "range_default_olmdistancegradation",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation"
+      },
+      "reason": "Capture threshold, power, blur size, and popup range metadata for the Windows AEX.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ranges": true
+    },
+    {
+      "id": "range_default_olmkirakira",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Kira Kira",
+        "match_name": "OLM OLM Kira Kira"
+      },
+      "reason": "Capture length, opacity, brightness, strength, and popup range metadata for all ray controls.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ranges": true
+    },
+    {
+      "id": "range_default_olmradialblur",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM RadialBlur",
+        "match_name": "OLM RadialBlur"
+      },
+      "reason": "Capture range metadata for outer/inner controls, ratio, angle, quality, brightness, noise, and layer selectors.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ranges": true
+    },
+    {
+      "id": "range_default_olmsmoother_v1",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Smoother",
+        "match_name": "OLM Smoother"
+      },
+      "reason": "Capture v1 tolerance and color-key range metadata.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ranges": true
+    },
+    {
+      "id": "range_default_olmsmoother_v2",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Smoother v2",
+        "match_name": "OLM Smoother v2"
+      },
+      "reason": "Capture v2 smoothness, extra smooth, range, gamma, and popup metadata.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ranges": true
+    },
+    {
+      "id": "range_default_olmtoondilate",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Toon Dilate",
+        "match_name": "ADBE OLMToonDilate"
+      },
+      "reason": "Capture search-radius range metadata and any built-in AE side properties.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ranges": true
+    }
+  ],
+  "manifest_requirements": [
+    "Record all selected effect property names, match_names, property_index, property_type, property_value_type, enabled/active state, and values where readable.",
+    "For each readable property, also record AE scripting range/bounds metadata where available: hasMin, hasMax, minValue, maxValue, unitsText, and popup choice information if available.",
+    "Record hidden/group/no-value properties too; if bounds are not readable for those, record the limitation rather than guessing.",
+    "Record project_gpu_accel_type.current_name and raw value.",
+    "Keep ADBE Force CPU GPU / GPU Rendering as reference-only metadata, not as the execution-path label.",
+    "Save both before_effects_frame and effect output PNG for every case.",
+    "Treat this as a fresh-instance range capture: no manual edits after the effect is added."
+  ],
+  "mac_follow_up": [
+    "Import with scripts/intake_olm_return.py path/to/returned_reference.zip --quick.",
+    "Use the returned manifest as the Windows source of truth for fresh-instance bounds/range metadata.",
+    "Diff the returned bounds against refs/reports/mac_plugin_param_schema_20260629.json before changing Mac UI ranges."
+  ]
+}

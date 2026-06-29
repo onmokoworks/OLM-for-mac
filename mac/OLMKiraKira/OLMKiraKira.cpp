@@ -402,7 +402,13 @@ static void ReadRenderInfo(PF_InData *in_data, PF_ParamDef *params[], OLMKiraKir
 	CopyColorParam(in_data, params[OLMKIRAKIRA_VERTICAL_COLOR], &info->vertical_color);
 	CopyColorParam(in_data, params[OLMKIRAKIRA_HORIZONTAL_COLOR], &info->horizontal_color);
 	CopyColorParam(in_data, params[OLMKIRAKIRA_DIAGONAL_COLOR], &info->diagonal_color);
+	CopyColorParam(in_data, params[OLMKIRAKIRA_HIGHLIGHT_COLOR], &info->highlight_color);
 	CopyColorParam(in_data, params[OLMKIRAKIRA_DIAGONAL2_COLOR], &info->diagonal2_color);
+	info->vertical_use_ramp = params[OLMKIRAKIRA_VERTICAL_USE_RAMP]->u.bd.value;
+	info->horizontal_use_ramp = params[OLMKIRAKIRA_HORIZONTAL_USE_RAMP]->u.bd.value;
+	info->diagonal_use_ramp = params[OLMKIRAKIRA_DIAGONAL_USE_RAMP]->u.bd.value;
+	info->highlight_use_ramp = params[OLMKIRAKIRA_HIGHLIGHT_USE_RAMP]->u.bd.value;
+	info->diagonal2_use_ramp = params[OLMKIRAKIRA_DIAGONAL2_USE_RAMP]->u.bd.value;
 	info->comp_width = params[OLMKIRAKIRA_INPUT]->u.ld.width;
 }
 
@@ -430,8 +436,14 @@ static PF_Err CheckoutSmartInfo(PF_InData *in_data, OLMKiraKiraInfo *info)
 	ERR(checkout(OLMKIRAKIRA_VERTICAL_COLOR, &p)); CopyColorParam(in_data, &p, &info->vertical_color); PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_HORIZONTAL_COLOR, &p)); CopyColorParam(in_data, &p, &info->horizontal_color); PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_DIAGONAL_COLOR, &p)); CopyColorParam(in_data, &p, &info->diagonal_color); PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMKIRAKIRA_HIGHLIGHT_COLOR, &p)); CopyColorParam(in_data, &p, &info->highlight_color); PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMKIRAKIRA_VERTICAL_USE_RAMP, &p)); info->vertical_use_ramp = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMKIRAKIRA_HORIZONTAL_USE_RAMP, &p)); info->horizontal_use_ramp = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMKIRAKIRA_DIAGONAL_USE_RAMP, &p)); info->diagonal_use_ramp = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMKIRAKIRA_HIGHLIGHT_USE_RAMP, &p)); info->highlight_use_ramp = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_DIAGONAL2_LENGTH, &p)); info->diagonal2_length = p.u.sd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_DIAGONAL2_COLOR, &p)); CopyColorParam(in_data, &p, &info->diagonal2_color); PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMKIRAKIRA_DIAGONAL2_USE_RAMP, &p)); info->diagonal2_use_ramp = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
 	return err;
 }
 
@@ -481,7 +493,7 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_GlowOpacity_Param_Name), 0, 100, 0, 100, 100, GLOW_OPACITY_DISK_ID);
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_POPUP(GetStringPtr(StrID_Channel_Param_Name), 4, 2, GetStringPtr(StrID_Channel_Choices), CHANNEL_DISK_ID);
+	PF_ADD_POPUP(GetStringPtr(StrID_Channel_Param_Name), 4, 1, GetStringPtr(StrID_Channel_Choices), CHANNEL_DISK_ID);
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_POPUP(GetStringPtr(StrID_BlurMode_Param_Name), 2, 2, GetStringPtr(StrID_BlurMode_Choices), BLUR_MODE_DISK_ID);
 	AEFX_CLR_STRUCT(def);
@@ -497,13 +509,25 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_COLOR(GetStringPtr(StrID_DiagonalColor_Param_Name), 255, 255, 255, DIAGONAL_COLOR_DISK_ID);
 	AEFX_CLR_STRUCT(def);
+	PF_ADD_COLOR(GetStringPtr(StrID_HighlightColor_Param_Name), 255, 255, 255, HIGHLIGHT_COLOR_DISK_ID);
+	AEFX_CLR_STRUCT(def);
 	PF_ADD_POPUP(GetStringPtr(StrID_MergeMode_Param_Name), 2, 1, GetStringPtr(StrID_MergeMode_Choices), MERGE_MODE_DISK_ID);
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0, VERTICAL_USE_RAMP_DISK_ID);
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0, HORIZONTAL_USE_RAMP_DISK_ID);
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0, DIAGONAL_USE_RAMP_DISK_ID);
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0, HIGHLIGHT_USE_RAMP_DISK_ID);
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_Diagonal2Length_Param_Name), 0, 1000, 0, 300, 50, DIAGONAL2_LENGTH_DISK_ID);
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_FadeOut_Param_Name), 0, 100, 0, 100, 0, FADE_OUT_DISK_ID);
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_COLOR(GetStringPtr(StrID_Diagonal2Color_Param_Name), 255, 255, 255, DIAGONAL2_COLOR_DISK_ID);
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0, DIAGONAL2_USE_RAMP_DISK_ID);
 
 	out_data->num_params = OLMKIRAKIRA_NUM_PARAMS;
 	return err;

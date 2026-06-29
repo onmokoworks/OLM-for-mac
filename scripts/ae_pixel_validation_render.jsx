@@ -8,8 +8,17 @@
     osascript -e 'tell application "Adobe After Effects 2026" to DoScriptFile POSIX file ".../scripts/ae_pixel_validation_render.jsx" with override'
 */
 (function () {
+    function getenv(name) {
+        try {
+            return $.getenv(name);
+        } catch (e) {
+            return "";
+        }
+    }
+
     var __repoRootForBoot = File($.fileName).parent.parent;
-    var __bootFolder = new Folder(__repoRootForBoot.fsName + "/handoff/ae_pixel_validation_20260618");
+    var __basePath = getenv("OLM_AE_BASE_DIR") || (__repoRootForBoot.fsName + "/handoff/ae_pixel_validation_20260618");
+    var __bootFolder = new Folder(__basePath);
     if (!__bootFolder.exists) {
         __bootFolder.create();
     }
@@ -32,8 +41,12 @@
 
     function parseJson(path) {
         var text = readText(path);
-        if (typeof JSON !== "undefined" && JSON.parse) {
-            return JSON.parse(text);
+        return eval("(" + text + ")");
+    }
+
+    function parseJsonText(text) {
+        if (!text) {
+            return null;
         }
         return eval("(" + text + ")");
     }
@@ -333,10 +346,11 @@
     }
 
     var repoRoot = File($.fileName).parent.parent;
-    var base = ensureFolder(repoRoot.fsName + "/handoff/ae_pixel_validation_20260618");
-    var requestsBase = ensureFolder(base.fsName + "/requests");
-    var resultsBase = ensureFolder(base.fsName + "/results");
-    var progressLog = base.fsName + "/AE_PIXEL_VALIDATION_PROGRESS.log";
+    var base = ensureFolder(__basePath);
+    var requestsBase = ensureFolder(getenv("OLM_AE_REQUESTS_BASE") || (base.fsName + "/requests"));
+    var resultsBase = ensureFolder(getenv("OLM_AE_RESULTS_BASE") || (base.fsName + "/results"));
+    var progressLog = getenv("OLM_AE_PROGRESS_LOG") || (base.fsName + "/AE_PIXEL_VALIDATION_PROGRESS.log");
+    var batchResultPath = getenv("OLM_AE_BATCH_RESULT_JSON") || (base.fsName + "/AE_PIXEL_VALIDATION_BATCH_RESULT.json");
     writeText(progressLog, "start " + (new Date()).toString() + "\n");
     var requestIds = [
         "ae_pixel_olmblur_20260606",
@@ -346,18 +360,26 @@
         "ae_pixel_olmdistancegradation_extended_20260618",
         "ae_pixel_olmdistancegradation_blur_20260618"
     ];
-    var requestListFile = new File(base.fsName + "/REQUEST_IDS.txt");
-    if (requestListFile.exists && requestListFile.open("r")) {
-        var lines = requestListFile.read().split(/[\r\n]+/);
-        requestListFile.close();
-        var selected = [];
-        for (var li = 0; li < lines.length; li++) {
-            if (lines[li]) {
-                selected.push(lines[li]);
-            }
+    var requestIdsJson = getenv("OLM_AE_REQUEST_IDS_JSON");
+    if (requestIdsJson) {
+        var parsedIds = parseJsonText(requestIdsJson);
+        if (parsedIds && parsedIds.length) {
+            requestIds = parsedIds;
         }
-        if (selected.length) {
-            requestIds = selected;
+    } else {
+        var requestListFile = new File(getenv("OLM_AE_REQUEST_IDS_FILE") || (base.fsName + "/REQUEST_IDS.txt"));
+        if (requestListFile.exists && requestListFile.open("r")) {
+            var lines = requestListFile.read().split(/[\r\n]+/);
+            requestListFile.close();
+            var selected = [];
+            for (var li = 0; li < lines.length; li++) {
+                if (lines[li]) {
+                    selected.push(lines[li]);
+                }
+            }
+            if (selected.length) {
+                requestIds = selected;
+            }
         }
     }
 
@@ -390,7 +412,7 @@
     }
     top += "  ]\n";
     top += "}\n";
-    writeText(base.fsName + "/AE_PIXEL_VALIDATION_BATCH_RESULT.json", top);
+    writeText(batchResultPath, top);
     try {
         app.project.close(CloseOptions.DO_NOT_SAVE_CHANGES);
     } catch (closeError) {

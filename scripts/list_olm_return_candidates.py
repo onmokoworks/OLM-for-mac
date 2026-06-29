@@ -112,6 +112,14 @@ def classify_zip_names(names: list[str], read_json: Any) -> tuple[str, list[str]
 
     hints: list[str] = []
     for name in names:
+        if Path(name).name != "windows_action_bundle_manifest.json":
+            continue
+        data = read_json(name)
+        kind = data.get("kind") if data else None
+        has_runtime_returns = any("/runtime_trace_returns/" in f"/{item}" and item.endswith(".zip") for item in names)
+        if kind == "olm_windows_action_bundle" and has_runtime_returns:
+            return ("windows-action-bundle-return", [f"{name}: {kind}"])
+    for name in names:
         if Path(name).name != "RETURN_RUNTIME_TRACE_RESULT.json":
             continue
         data = read_json(name)
@@ -241,6 +249,8 @@ def suggested_command(kind: str, path: Path) -> str:
         return f"send {path_text!r} to the AE host for pixel validation"
     if kind == "windows-action-bundle":
         return f"send {path_text!r} to the Windows helper"
+    if kind == "windows-action-bundle-return":
+        return "use intake_latest_windows_return_from_share.py to unpack and route the bundled runtime returns"
     if kind == "reference-request-package":
         return "send this package to the Windows AE renderer"
     if kind == "runtime-trace-request-package":

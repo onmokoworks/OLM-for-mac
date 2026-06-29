@@ -59,6 +59,15 @@
 | 2026-06-27 full-image remeasure shows the near-1LSB family is sign-mixed, not one-directional. | Local comparison of the normalized Windows 16bpc refs in `refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/` against `refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmblur_exact/candidate/`: global nonzero channel deltas are `-2:463`, `+2:1478`, and `+383:3` (Legacy only). | AE-validation diagnostic |
 | 2026-06-28 Mac AE rerun reproduces the same 16bpc family on the current plug-in. | `refs/conformance/olmblur_16bpc_mac_ae_rerun_20260628.md`: `case_0001..0006` are sign-mixed `max_diff=2`; `case_0007` is `max_diff=383` with the localized Legacy border/seed witness at `(0,0)`. `case_0003` was re-rendered as a single-case request because the full AE batch did not write it cleanly, but the single PNG compares to the same `max_diff=2` result. | AE-validation diagnostic |
 | 2026-06-28 word-delta audit narrows the 16bpc residual to one internal word for the non-Legacy family. | `refs/conformance/olmblur_16bpc_word_delta_audit_20260628.md`: all nonzero `case_0001..0006` exported channel deltas are `+/-2`, which infers `+/-1` in AE's 0..32768 PF_Pixel16 word domain. `case_0007` mostly shares that family but keeps a separate `(0,0)` `-383` exported / about `-192` word Legacy witness. | AE-validation diagnostic |
+| 2026-06-29 writer-contract audit proves the current Mac source does not literally match the Windows standard 16bpc writer contract. | `refs/conformance/olmblur_16bpc_writer_contract_audit_20260629.md`: Mac non-legacy `store16` uses `nearbyintf(v)` then clamp/cast, while Windows standard 16bpc asm is `+0.5 -> helper -> CVTTSS2SI -> word store`. But all six non-Legacy 16bpc cases are still sign-mixed one-word residuals, so this source-vs-asm mismatch is real but not yet sufficient to justify a blind global writer swap. | binary-grounded / source-vs-asm audit |
+| 2026-06-29 bounded Mac AE probe confirms the live installed non-Legacy plug-in is executing the `nearbyint`-family 16bpc writer at runtime. | `refs/reports/ae_single_case_olmblur_16bpc_witness_latest/probe_report.md` and `refs/reports/ae_single_case_olmblur_16bpc_witness_latest/olmblur__case_0006/blur_debug.txt`: `(314,14)` logs raw `1100.5` with `floor05=1101`, `nearby=1100`, and stored `1100`; `(29,71)` logs raw `363.5` with `floor05=364`, `nearby=364`, and stored `364`. This is the expected ties-to-even signature for `nearbyintf`. | Mac-AE runtime witness |
+| 2026-06-29 live-probe audit ties the internal `store16` witnesses directly to the exported 16bpc PNG deltas. | `refs/conformance/olmblur_16bpc_live_probe_audit_20260629.md`: positive exported values follow `2 * stored_word - 1`, so non-Legacy `+/-1` internal-word disagreements appear as exported `+/-2`, and Legacy `case_0007 (0,0)` stored `192` appears as exported `383`. | binary-grounded / host-runtime audit |
+| 2026-06-29 Legacy stage probe narrows the `case_0007 (0,0)` anomaly to the horizontal Legacy pass, not the writer or the vertical pass. The same-day CLI control also rejects a broad `truncated_window => passthrough` rule because it worsens Legacy `case_0007` to `max=90`, so any border exception must be narrower than generic sample-window truncation. | `refs/conformance/olmblur_legacy_stage_probe_20260629.md`: `(0,0)` stays `all_same=1` and `out=center` through vertical passes, but horizontal `iter=3` is the first place where `all_same` flips to `0` and output becomes nonzero. By final store, raw is already `191.976715`. | binary-grounded / host-runtime stage audit + local control rejection |
+| 2026-06-29 decomp-backed Legacy carry-prev rule materially improves the active residual. | `refs/conformance/olmblur_legacy_carry_prev_probe_20260629.md`: `FUN_1800014f0` / `FUN_180001ea0` keep the previous comparison RGB outside the inner pixel loop with sentinel `DAT_18000d27c = -1.0f`. Porting that rule removes the old `(0,0)` spill, preserves exact 8bpc cases, reduces old 8bpc `case_0007` from 3 residual pixels to 1, and reduces Mac AE 16bpc `case_0007` to `max=1` / one remaining pixel. | binary-grounded / implementation-improved |
+| 2026-06-29 last-pixel follow-up shows the remaining 8bpc and 16bpc Legacy witnesses are both half-step boundary cases, not renewed structural mismatches. | `refs/conformance/olmblur_last1px_family_probe_20260629.md`: old 8bpc `case_0007 (488,941)` is `250.499985` while neighbor `(488,942)` is `250.500015`; current Mac AE 16bpc `case_0007 (345,672)` is exactly `12544.5` on blue, producing Mac stored word `12545` / exported `98` while Windows exported `97` implies internal word `12544`. This favors a tiny pre-store float delta over a proven global writer-rule mismatch. | binary-grounded / runtime witness |
+| 2026-06-29 current-baseline audit freezes the active Mac-side witness bundle across all remaining OLMBlur proof lanes. Non-Legacy `case_0006` remains sign-mixed at the exact live witnesses (`314,14 => 2199 vs 2201`, `29,71 => 727 vs 725`) while the live probe confirms `nearbyint` storage from raw `.5` values. Legacy `case_0007` 16bpc keeps only the one-word blue half-step (`345,672 => 25089 vs 25087`), and the current workspace CLI rerun of old normalized 8bpc `case_0007` keeps only one red pixel low at `(488,941)` while `(488,942)` matches. This is the baseline to compare against the next Windows final-word runtime witness. | `refs/conformance/olmblur_current_word_baseline_20260629.md` and `scripts/analyze_olmblur_current_word_baseline.py`. | baseline freeze / current-workspace evidence |
+| 2026-06-30 writer-only hypothesis audit proves that a blind `nearbyint -> floor05` swap cannot explain all active OLMBlur witnesses. | `refs/conformance/olmblur_writer_only_hypothesis_20260630.md` and `scripts/analyze_olmblur_writer_only_hypothesis.py`: non-Legacy `(314,14)` prefers `floor05`, but `(29,71)` is writer-rule-irrelevant, Legacy 16bpc `(345,672)` prefers `nearby`, and old 8bpc `(488,941)` is still below the half-step under both local writer rules. This tightens the remaining ask to actual Windows pre-store/helper values rather than a source-only writer rewrite. | current-workspace audit / decision-boundary |
+| 2026-06-29 pending final-word proof contract is now tied to the latest bundled Windows runtime summary, so the remaining ask is explicitly "capture the pre-store/helper boundary at the two sign-mixed `case_0006` witnesses plus the surviving Legacy half-step witnesses" rather than "retune OLMBlur". | `refs/conformance/olmblur_pending_final_word_proof_20260629.md`, `refs/reports/runtime_trace_bundle/olm_windows_action_bundle_20260629_232710_priority4_runtime_return_windows/runtime_trace_summary_olmblur_repeat_threshold_20260629_235638.json`, and `scripts/analyze_olmblur_pending_final_word_proof.py`. | proof-contract / latest-bundle-grounded |
 | Non-legacy `case_0006` residual is already present before byte writeback. | 2026-06-20 Windows CDB return: `(498,940)` pre-writeback red is `185.49998474121094` while the Mac CLI baseline is exactly `185.5`; final Windows byte is `185`. | runtime-trace |
 | Legacy `case_0007` uses the later `OLMBlur+0x7FDF` writeback family. | 2026-06-20 Windows CDB return hit `(0,0)`, `(488,941)`, and `(488,942)` at the Legacy writeback family. | runtime-trace |
 
@@ -141,6 +150,78 @@ Current implementation:
   `-2` channel deltas in the exact same validation batch, including mixed-sign
   Legacy witnesses such as `case_0007` around `(1693,220)` and `(1450,227)`.
   So a one-line `round`/`trunc` replacement is not yet justified.
+- The 2026-06-29 writer-contract audit sharpens that rule. There is now a
+  concrete source-vs-asm mismatch for non-Legacy `store16`
+  (`nearbyintf(v)` in Mac source vs `+0.5 -> helper -> CVTTSS2SI` in Windows
+  asm), but because the observed 16bpc family is sign-mixed one-word across
+  all non-Legacy cases, that mismatch is still not enough to justify a blind
+  global `nearbyintf -> floorf(v + 0.5f)` swap without a pre-writeback/helper
+  proof.
+- The bounded Mac AE probe on 2026-06-29 removes one remaining uncertainty:
+  the installed Debug plug-in really is taking the `nearbyint` path at
+  runtime. On non-Legacy `case_0006`, half-way value `1100.5` stores as
+  `1100`, while `363.5` stores as `364`, exactly the ties-to-even pattern.
+  That rules out "stale installed binary" as the reason for the current
+  sign-mixed one-word 16bpc family. It still does not prove the residual is
+  writeback-only, because Windows already showed a pre-writeback float witness
+  for `case_0006`.
+- A 2026-06-29 Legacy retry adds the companion fact for `case_0007`: the
+  problematic `(0,0)` witness is not being created by `floorf(v + 0.5f)` vs
+  `nearbyintf(v)`. The live Mac AE plug-in already has raw/stored `~192` at
+  that coordinate before/through the writer, which matches the earlier
+  exported-PNG anomaly size and points the investigation back to Legacy
+  border/seed/all-same state rather than final quantization.
+- The 2026-06-29 live-probe audit closes the loop between internal AE words
+  and the exported PNGs. At positive witness points the exported 16bpc PNG
+  channel is `2 * stored_word - 1`, so the known non-Legacy one-word family
+  really does explain exported `+/-2`, while Legacy `(0,0)` stored word `192`
+  explains exported `383` exactly. This means the observed PNG sizes are now
+  evidence about internal state, not just symptoms.
+- The 2026-06-29 Legacy stage probe narrows `case_0007 (0,0)` further than
+  that. The value is introduced in the Legacy horizontal pass, first at
+  `iter=3` when `all_same` flips from `1` to `0` for the corner witness. The
+  vertical pass keeps reporting `all_same=1` and simply preserves the center
+  value. So the remaining Legacy target is horizontal border/all_same state,
+  not vertical accumulation or final writer behavior.
+- A same-day local CLI control helps fence off one tempting over-generalization:
+  forcing passthrough for every Legacy truncated sample window
+  (`sample_count < 2*radius+1`) leaves the exact cases intact but blows up
+  Legacy `case_0007` to `max=90`, `mean=0.0125`, `nonzero=8052/2073600`.
+  So the surviving border explanation cannot be "all truncated windows are
+  passthrough"; if Windows has a border special-case, it is narrower.
+- A later same-day decomp re-read found a stronger explanation: the Windows
+  Legacy helpers do not reset their previous-comparison RGB every pixel.
+  `FUN_1800014f0` and `FUN_180001ea0` seed from `DAT_18000d27c = -1.0f` and
+  carry the last consumed sample forward through the helper scan. Porting that
+  rule collapses the old `case_0007 (0,0)` anomaly and leaves only a narrow
+  one-pixel family.
+- A final 2026-06-29 follow-up narrows that one-pixel family further. Old
+  8bpc `case_0007` now differs only at `(488,941)` where the live CLI raw
+  value is `250.499985`; the adjacent `(488,942)` is already `250.500015` and
+  rounds up to the Windows value. Current Mac AE 16bpc `case_0007` differs
+  only at `(345,672)` blue, where the live raw value is exactly `12544.5`, so
+  Legacy `floor(x+0.5)` stores `12545` while the Windows exported PNG implies
+  internal word `12544`. This is now best understood as a tiny pre-store float
+  delta target, not as evidence for reopening the retired structural blocker or
+  blindly swapping the global Legacy writer rule.
+- The 2026-06-29 proof plan turns that into explicit next witnesses:
+  `refs/reports/olmblur_16bpc_proof_plan_20260629/proof_plan.md`.
+  Non-Legacy `case_0006` should stay the primary 16bpc target with a positive
+  one-word witness at `(314,14)` and a negative one-word witness at `(29,71)`;
+  the job is to prove whether those diverge before `store16` or only inside the
+  final helper/store path. Legacy `case_0007` should stay split into
+  `(0,0)` border/seed/all-same versus a smaller shared-family witness such as
+  `(951,7)`.
+- The refreshed 2026-06-29 pending-final-word contract tightens that even
+  further using the latest bundled Windows runtime summary. `case_0006` is now
+  anchored by Windows pre-writeback RGB hex
+  `0x1.72fffe0000000p+7 / 0x1.44a3c20000000p-4 / 0x1.44a3c20000000p-4`
+  versus current Mac CLI `0x1.73p+7 / 0x1.44a3c6p-4 / 0x1.44a3c6p-4`, while
+  `case_0007` is explicitly tied to the Legacy `OLMBlur+0x7FDF` writeback
+  family and the surviving half-step witnesses `(345,672)` and `(488,941)`.
+  That means the next useful Windows return is only the helper/pre-store
+  boundary at those points; broad kernel tuning is no longer an allowed
+  interpretation.
 - `case_0007` still needs Legacy-specific proof: it shares the same tiny
   rounding family in most pixels, but keeps a localized Legacy border/seed
   anomaly (`max_diff=383`) at a small witness set. Do not change the general
@@ -160,9 +241,9 @@ Current implementation:
 | `case_0003` | 8bpc | AE exact / guarded CLI residual | 2026-06-21 rerun: CLI `max=1 mean=0.0052`; 2026-06-19 AE pixel return `max=0` | Treat as host-path exact but keep runtime/writeback proof open |
 | `case_0005` | 8bpc | `CLI exact` in current residual smoke | 2026-06-21 rerun: exact (`max=0`); packaged Mac AE validation is exact | Preserve AE behavior; add 16/32bpc references |
 | `case_0006` | 8bpc | AE exact / residual diagnostic | 2026-06-20 Windows trace: AEX pre-writeback red at `(498,940)` is `185.49998474121094` (`0x1.72fffe0000000p+7`), Mac CLI baseline is exactly `185.5` (`0x1.73p+7`), and Windows final byte is `185`; 2026-06-19 AE pixel return `max=0` | Accumulation/helper order proof before changing the passing AE plug-in path |
-| `case_0007` | 8bpc | AE exact / residual diagnostic | 2026-06-20 Windows trace: Legacy writeback family `OLMBlur+0x7FDF`; `(0,0)` pre RGB `[0,0,~1.5528]`, final `[0,0,0,255]`; `(488,941/942)` pre red just above `250.5`, final `251`; Mac CLI stays just below/equal | Isolate Legacy helper state/border source if CLI residual is still worth closing |
-| `case_0001..0006` | 16bpc | not exact / one-word diagnostic | 2026-06-28 current Mac AE rerun: all six failing cases remain `max_diff=2`; word-delta audit infers only `+/-1` PF_Pixel16 word deltas, sign-mixed, so a global rounding-direction change is not justified | Inspect final pre-writeback float/helper/store order before changing blur math |
-| `case_0007` | 16bpc | not exact / Legacy diagnostic | 2026-06-28 current Mac AE rerun: near-1word family plus separate localized Legacy border/seed anomaly (`max_diff=383`) at `(0,0)` where candidate `[383,383,383,65535]` differs from reference `[0,0,0,65535]`; word-delta audit estimates that witness at about `-192` internal words | Isolate Legacy 16bpc border/seed/all-same state and alternate writer family |
+| `case_0007` | 8bpc | AE exact / residual diagnostic | 2026-06-20 Windows trace: Legacy writeback family `OLMBlur+0x7FDF`; `(0,0)` pre RGB `[0,0,~1.5528]`, final `[0,0,0,255]`; `(488,941/942)` pre red just above `250.5`, final `251`. After the 2026-06-29 carry-prev port, Mac CLI removes the old `(0,0)` spill and leaves only `(488,941)` one red-channel unit low. A same-day rerun shows `(488,941)=250.499985` while `(488,942)=250.500015`, so the remaining witness is now a pure half-step boundary case. | Close the final narrow Legacy witness with a Windows pre-store float witness before changing any global writer rule |
+| `case_0001..0006` | 16bpc | not exact / one-word diagnostic | 2026-06-28 current Mac AE rerun: all six failing cases remain `max_diff=2`; word-delta audit infers only `+/-1` PF_Pixel16 word deltas, sign-mixed, so a global rounding-direction change is not justified. 2026-06-29 bounded Mac AE probe on `case_0006` confirms the live installed plug-in stores `1100.5 -> 1100` and `363.5 -> 364` on the non-Legacy path, matching ties-to-even `nearbyint` behavior. | Inspect final pre-writeback float/helper/store order before changing blur math |
+| `case_0007` | 16bpc | narrow residual / Legacy diagnostic | 2026-06-28 current Mac AE rerun originally showed a localized Legacy border/seed anomaly (`max_diff=383`) at `(0,0)`. A 2026-06-29 bounded Mac AE retry captured the live Legacy writer witness `raw=191.976715 -> stored=192`, proving the anomaly was pre-store. The same-day stage probe localized it to the horizontal Legacy pass. A later same-day decomp-backed carry-prev port (`FUN_1800014f0` / `FUN_180001ea0`) then removes the old `(0,0)` anomaly entirely: live Mac AE probe now has `(0,0) raw=0 stored=0`, and the normalized Windows 16bpc comparison falls to `max=1` with only one remaining pixel at `(345,672)` blue `98` vs `97`. A final same-day bounded probe shows the surviving blue raw value is exactly `12544.5`, which Mac Legacy stores as `12545`; the Windows PNG implies internal word `12544`, so the remaining target is now a pre-store float witness, not a broad writer mismatch. | Close the last one-pixel Legacy family with a Windows pre-store float witness; old border/all-same blocker is retired |
 
 Mac baseline traces for the normalized Software residual witnesses are stored
 under `refs/reports/olmblur_trace_baseline_20260619_030633_mac/`. These logs
@@ -177,6 +258,10 @@ python3 scripts/analyze_olmblur_16bpc_word_delta.py
 python3 refs/scripts/smoke_analyze_olmblur_16bpc_word_delta.py
 python3 scripts/analyze_olmblur_16bpc_asm_writer.py
 python3 refs/scripts/smoke_analyze_olmblur_16bpc_asm_writer.py
+python3 scripts/analyze_olmblur_16bpc_writer_contract.py
+python3 refs/scripts/smoke_analyze_olmblur_16bpc_writer_contract.py
+python3 scripts/analyze_olmblur_pending_final_word_proof.py
+python3 refs/scripts/smoke_analyze_olmblur_pending_final_word_proof.py
 ```
 
 2026-06-20 Windows overnight return:

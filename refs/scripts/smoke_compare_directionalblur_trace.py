@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 DENSE_REQUEST_ID = "olmdirectionalblur_dense_sampler_trace_20260620"
-RESIDUAL_REQUEST_ID = "olmdirectionalblur_angle0_diagonal_residual_witness_20260622"
+RESIDUAL_REQUEST_ID = "olmdirectionalblur_helper_coverage_witness_20260630"
 
 
 def run_compare(repo: Path, py: str, summary: Path, output_json: Path, output_md: Path) -> dict:

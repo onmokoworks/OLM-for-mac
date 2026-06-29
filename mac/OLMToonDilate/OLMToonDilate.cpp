@@ -49,7 +49,7 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_SearchRadius_Param_Name),
-	                     0.0, 1000.0, 0.0, 100.0, 13.0,
+	                     0.0, 100.0, 0.0, 100.0, 2.0,
 	                     PF_Precision_TENTHS, 0, 0,
 	                     SEARCH_RADIUS_DISK_ID);
 

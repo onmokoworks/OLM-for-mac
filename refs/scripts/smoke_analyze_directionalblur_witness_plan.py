@@ -41,8 +41,10 @@ def main() -> int:
         plans = {row["family"]: row for row in report["plans"]}
         angle0 = plans["angle0-rowdriver-valid-alpha"]
         diagonal = plans["diagonal-rotate-validity"]
-        if angle0["primary_witness"]["xy"] != [465, 169]:
+        if angle0["primary_witness"]["xy"] != [494, 169]:
             raise AssertionError(angle0["primary_witness"])
+        if angle0["scan_order_max_witness"]["xy"] != [465, 169]:
+            raise AssertionError(angle0["scan_order_max_witness"])
         if diagonal["primary_witness"]["xy"] != [507, 367]:
             raise AssertionError(diagonal["primary_witness"])
         diagonal_companion_xys = [row["xy"] for row in diagonal["companion_witnesses"]]
@@ -54,6 +56,7 @@ def main() -> int:
             "rowdriver/group membership",
             "rotate sampler source coordinates",
             "Do not tune diagonal behavior from the angle-0 witness",
+            "right-edge strip endpoint",
         ]
         for needle in required:
             if needle not in md:

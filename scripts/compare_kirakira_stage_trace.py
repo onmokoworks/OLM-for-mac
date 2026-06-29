@@ -22,6 +22,7 @@ REQUEST_IDS = {
     "kirakira_forward_warp_box_input_20260621",
     "kirakira_boxfilter_pass1_microprobe_20260622",
     "kirakira_aggregation_compose_bt709_20260624",
+    "kirakira_compose_writeback_witness_20260630",
 }
 DEFAULT_REQUEST_ID = "kirakira_aggregation_compose_bt709_20260624"
 
@@ -551,7 +552,7 @@ def build_comparison(summary: dict[str, Any], local_trace: dict[str, Any]) -> di
             likely_next_focus = "boxfilter-stage-values"
         elif has_concrete_stage_value(win_witnesses) or has_concrete_stage_value(win_box):
             likely_next_focus = "boxfilter-stage-values"
-        elif row.get("request_id") == "kirakira_aggregation_compose_bt709_20260624" and has_concrete_stage_value(win_fd90):
+        elif row.get("request_id") in {"kirakira_aggregation_compose_bt709_20260624", "kirakira_compose_writeback_witness_20260630"} and has_concrete_stage_value(win_fd90):
             likely_next_focus = "fd90-aggregation-grounded-compose-scale"
         elif has_concrete_stage_value(win_agg) or has_concrete_stage_value(win_merge):
             likely_next_focus = "aggregation-or-compose"

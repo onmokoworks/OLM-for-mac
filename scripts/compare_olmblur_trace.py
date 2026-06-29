@@ -11,7 +11,11 @@ from pathlib import Path
 from typing import Any
 
 
-REQUEST_ID = "olmblur_repeat_threshold_runtime_trace_20260619"
+CANONICAL_REQUEST_ID = "olmblur_final_word_witness_20260630"
+LEGACY_REQUEST_IDS = {
+    "olmblur_last1px_runtime_trace_20260629",
+    "olmblur_repeat_threshold_runtime_trace_20260619",
+}
 DEFAULT_BASELINE_DIR = Path("refs/reports/olmblur_trace_baseline_20260619_030633_mac")
 
 
@@ -42,9 +46,10 @@ def load_json(path: Path) -> Any:
 
 
 def find_result(summary: dict[str, Any]) -> dict[str, Any] | None:
-    for row in summary.get("results", []):
-        if isinstance(row, dict) and row.get("request_id") == REQUEST_ID:
-            return row
+    for request_id in [CANONICAL_REQUEST_ID, *sorted(LEGACY_REQUEST_IDS)]:
+        for row in summary.get("results", []):
+            if isinstance(row, dict) and row.get("request_id") == request_id:
+                return row
     return None
 
 
@@ -197,11 +202,12 @@ def classify_next_focus(windows: dict[str, Any]) -> str:
 
 
 def build_comparison(summary: dict[str, Any], baseline_dir: Path) -> dict[str, Any]:
-    windows = summarize_windows(find_result(summary))
+    row = find_result(summary)
+    windows = summarize_windows(row)
     return {
         "kind": "olmblur_trace_comparison",
         "schema": 1,
-        "request_id": REQUEST_ID,
+        "request_id": (row or {}).get("request_id", CANONICAL_REQUEST_ID),
         "likely_next_focus": classify_next_focus(windows),
         "local_baseline": read_local_baseline(baseline_dir),
         "windows": windows,

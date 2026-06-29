@@ -362,6 +362,26 @@ def main() -> int:
             if proc.returncode != 0:
                 return proc.returncode
 
+            request_dir = tmp_path / f"materialized_{preset}"
+            with zipfile.ZipFile(request_zip) as archive:
+                archive.extractall(request_dir)
+            roots = [child for child in request_dir.iterdir() if child.is_dir()]
+            request_root = roots[0] if len(roots) == 1 else request_dir
+
+            proc = run(
+                [
+                    sys.executable,
+                    repo / "scripts" / "verify_ae_pixel_validation_result.py",
+                    request_root,
+                    result_zip,
+                    "--run-dir",
+                    tmp_path / f"verify_run_dir_{preset}",
+                ],
+                repo,
+            )
+            if proc.returncode != 0:
+                return proc.returncode
+
     print("[OK] AE pixel validation request smoke")
     return 0
 

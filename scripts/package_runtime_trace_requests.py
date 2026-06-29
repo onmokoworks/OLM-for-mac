@@ -81,14 +81,19 @@ def parse_args() -> argparse.Namespace:
             "colorkey-edge",
             "colorkey-16bpc-case0009",
             "olmblur-repeat-threshold",
+            "olmblur-last1px",
+            "olmblur-final-word-witness",
             "kirakira-stage-values",
             "kirakira-stage-values-deep",
             "kirakira-forward-warp-box-input",
             "kirakira-boxfilter-pass1-microprobe",
             "kirakira-aggregation-compose-bt709",
+            "kirakira-compose-writeback-witness",
             "radialblur-residual-witness",
+            "radialblur-caller-collapse-witness",
             "radialblur-inner-cell-witness",
             "directionalblur-residual-witness",
+            "directionalblur-helper-coverage-witness",
             "smoother2-no-key-grid",
             "smoother2-legacy-key-gamma",
             "smoother2-legacy-writeback-extract",
@@ -229,6 +234,40 @@ def olmblur_repeat_threshold_action() -> dict[str, Any]:
             "251 plus the top-left border at 0."
         ),
     }
+
+
+def olmblur_last1px_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmblur_last1px_runtime_trace_20260629",
+        "plugin_area": "OLMBlur final 1px witness family",
+        "mode": "external-trace",
+        "command": (
+            "Trace the remaining post-carry-prev OLMBlur Legacy witnesses only. "
+            "For old 8bpc Software case_0007, capture the pre-store float and final "
+            "writeback facts for residual pixel (488,941) and control neighbor "
+            "(488,942). For normalized 16bpc Software case_0007, capture the pre-store "
+            "float and final writeback facts for residual pixel (345,672), plus controls "
+            "(0,0) and (951,7). Record whether the relevant value reaching the Legacy "
+            "writer is below, equal to, or above the half-step boundary, and include the "
+            "exact float hex plus final byte/word write. Compare against "
+            "refs/conformance/olmblur_last1px_family_probe_20260629.md and the Mac AE "
+            "probe logs under refs/reports/ae_single_case_olmblur_case0007_final1px_probe_20260629/."
+        ),
+        "stop_condition": (
+            "Return direct Windows pre-store float witness values for old 8bpc "
+            "(488,941)/(488,942) and normalized 16bpc (345,672), or the exact failed "
+            "breakpoint/watchpoint reason. The goal is to decide whether Windows is "
+            "reaching a slightly smaller pre-store float or using a different final "
+            "writer/helper rule. Static branch names or final PNG bytes alone are not enough."
+        ),
+    }
+
+
+def olmblur_final_word_witness_action() -> dict[str, Any]:
+    action = olmblur_last1px_action()
+    action["request_id"] = "olmblur_final_word_witness_20260630"
+    action["plugin_area"] = "OLMBlur final-word witness family"
+    return action
 
 
 def kirakira_stage_values_action() -> dict[str, Any]:
@@ -376,6 +415,13 @@ def kirakira_aggregation_compose_bt709_action() -> dict[str, Any]:
             "answer with wrapper hit counts or already-known ray-helper facts."
         ),
     }
+
+
+def kirakira_compose_writeback_witness_action() -> dict[str, Any]:
+    action = kirakira_aggregation_compose_bt709_action()
+    action["request_id"] = "kirakira_compose_writeback_witness_20260630"
+    action["plugin_area"] = "OLMKiraKira compose / pre-writeback / final quantization witness"
+    return action
 
 
 def smoother2_no_key_grid_action() -> dict[str, Any]:
@@ -881,32 +927,44 @@ def radialblur_dense_action() -> dict[str, Any]:
 def radialblur_residual_witness_action() -> dict[str, Any]:
     return {
         "request_id": "olmradialblur_zoom_tiny_rotation_residual_witness_20260622",
-        "plugin_area": "OLMRadialBlur Zoom writeback and tiny Rotation validity witness",
+        "plugin_area": "OLMRadialBlur Zoom/tiny Rotation caller-collapse witness",
         "mode": "external-trace",
         "command": (
             "Trace only the two classified RadialBlur residuals from "
             "`refs/reports/olmradialblur_residual_clusters_20260622_011750/`. "
             "For Zoom `case_0009`, focus on the max=1 alpha/RGB one-step "
             "residual at `(6,0)` and nearby scattered +1 alpha pixels: record "
-            "the sampled polar/pre-output RGBA, normalization denominator, "
-            "pre-writeback float/hex, final byte conversion operation, and final "
-            "stored RGBA. For tiny Rotation `case_0010`, focus on the high-max "
-            "witness `(1614,6)` where Windows is white and the Mac candidate is "
-            "black while alpha stays 255: record inverse-sampler source/polar "
-            "coordinates, validity/border decision, source/polar RGBA, "
-            "normalization denominator, pre-writeback float/hex, and final "
-            "stored RGBA. Do not return broad PNGs; these two witnesses are "
-            "intended to separate writeback/alpha-normalization from sampler/"
-            "validity misses."
+            "the polar/sample accumulation alpha state before sampler return, "
+            "the normalization denominator or equivalent, sampler return RGBA, "
+            "preserved validity `+0xf252`, accumulated `+0xf250` RGBA, "
+            "normalized final polar `+0xe` RGBA, pre-writeback float/hex, final "
+            "byte conversion operation, and final stored RGBA. For tiny Rotation "
+            "`case_0010`, focus on the high-max witness `(1614,6)` where Windows "
+            "is white and the Mac candidate is black while alpha stays 255: "
+            "record inverse-sampler input/source-polar coordinates, the exact "
+            "validity/border decision or fallback/substitute path, source/polar "
+            "RGBA, preserved validity `+0xf252`, accumulated `+0xf250` RGBA, "
+            "normalized final polar `+0xe` RGBA, pre-writeback float/hex, and "
+            "final stored RGBA. Do not return broad PNGs; these two witnesses "
+            "are intended to separate caller-side validity collapse and "
+            "alpha-normalization from simple sampler/writeback misses."
         ),
         "stop_condition": (
-            "Return enough typed values to classify Zoom as writeback, "
-            "alpha-normalization, or sampler; and tiny Rotation as inverse "
-            "sampler coordinate, validity/border, normalization, or writeback. "
-            "If a breakpoint fails, return the exact failed address/condition "
-            "and the closest available pre-output/final writer values."
+            "Return enough typed values to classify Zoom at the caller-collapse "
+            "boundary from sampler return through `+0xf252/+0xf250/+0xe` into "
+            "the final stored byte; and tiny Rotation at the same boundary plus "
+            "the exact validity/border or substitute branch that yields the "
+            "white output. If a breakpoint fails, return the exact failed "
+            "address/condition and the closest available values in that chain."
         ),
     }
+
+
+def radialblur_caller_collapse_witness_action() -> dict[str, Any]:
+    action = radialblur_residual_witness_action()
+    action["request_id"] = "olmradialblur_caller_collapse_witness_20260630"
+    action["plugin_area"] = "OLMRadialBlur Zoom/tiny Rotation caller-collapse witness"
+    return action
 
 
 def radialblur_inner_cell_witness_action() -> dict[str, Any]:
@@ -970,13 +1028,21 @@ def directionalblur_residual_witness_action() -> dict[str, Any]:
             "Do not recapture broad PNGs and do not tune from the candidate matrix. "
             "Use the 8bpc Software reference cases that feed the local "
             "`rotated-aex-full-choreo` probe. For angle-0/front-only `case_0001`, "
-            "focus on `(494,169)` where Windows reference is `[164,0,0,255]` and "
-            "the local candidate is `[0,0,0,255]`. Record parameter normalization "
-            "(front/back strength, angle, Size Variation, Edge Fade, Sharp Tail, "
-            "Noise), A/B buffer coordinates for this output pixel, rowdriver/group "
-            "membership, validity/alpha side-channel values, accumulation numerator/"
-            "denominator, pre-writeback floats/hex, and final stored RGBA. For the "
-            "diagonal rotate-path `case_0005`, focus on `(507,367)` where Windows "
+            "focus on the long-strip witness row `y=169`, especially `(494,169)` "
+            "where Windows reference is `[164,0,0,255]` and the local candidate is "
+            "`[0,0,0,255]`, plus the strip right endpoint `(579,169)` and, if "
+            "convenient, the left endpoint `(380,169)`. Record parameter "
+            "normalization (front/back strength, angle, Size Variation, Edge Fade, "
+            "Sharp Tail, Noise), output-to-rotated-buffer coordinates for these "
+            "pixels, rowdriver/group membership, validity/alpha side-channel "
+            "values, and the helper-local destination coverage facts inside "
+            "`FUN_1800038d0` / `FUN_1800013e0`: source x/y for the contributing "
+            "helper call, `param_1`, `param_3`, `param_9` before scaling, "
+            "`param_11`, `int(param_9 * param_11)` after scaling, any left-edge "
+            "clip, the effective offset start/end, and the actual destination x "
+            "range touched on the witness row. Also record accumulation numerator/"
+            "denominator, pre-writeback floats/hex, and final stored RGBA for the "
+            "same strip witness. For the diagonal rotate-path `case_0005`, focus on `(507,367)` where Windows "
             "reference is `[1,0,0,255]` and the local candidate is `[252,0,0,255]`. "
             "Record the same facts plus rotate sampler source coordinates/order, "
             "border/validity decision, group-size or opacity gating, and any "
@@ -985,14 +1051,23 @@ def directionalblur_residual_witness_action() -> dict[str, Any]:
             "component and return the exact condition that failed."
         ),
         "stop_condition": (
-            "Return enough typed values to classify `case_0001` as rowdriver/group "
-            "membership, valid-alpha side-channel, normalization, or writeback; and "
+            "Return enough typed values to classify `case_0001` as helper-local "
+            "destination coverage, rowdriver/group membership, valid-alpha "
+            "side-channel, normalization, or writeback; and "
             "`case_0005` as rotate sampler coordinates, border/validity, group-size/"
             "opacity gating, normalization, or writeback. A satisfactory answer has "
-            "per-pixel stage values for both witnesses, or a precise failed "
+            "typed helper span/range evidence for the angle-0 strip plus per-pixel "
+            "stage values for both witnesses, or a precise failed "
             "breakpoint/watchpoint reason with the closest successful stage."
         ),
     }
+
+
+def directionalblur_helper_coverage_witness_action() -> dict[str, Any]:
+    action = directionalblur_residual_witness_action()
+    action["request_id"] = "olmdirectionalblur_helper_coverage_witness_20260630"
+    action["plugin_area"] = "OLMDirectionalBlur angle-0 helper-coverage and diagonal rotate-path witness"
+    return action
 
 
 def toondilate_dense_action() -> dict[str, Any]:
@@ -1058,6 +1133,10 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [colorkey_16bpc_case0009_action()]
     if profile == "olmblur-repeat-threshold":
         return [olmblur_repeat_threshold_action()]
+    if profile == "olmblur-last1px":
+        return [olmblur_last1px_action()]
+    if profile == "olmblur-final-word-witness":
+        return [olmblur_final_word_witness_action()]
     if profile == "kirakira-stage-values":
         return [kirakira_stage_values_action()]
     if profile == "kirakira-stage-values-deep":
@@ -1068,12 +1147,18 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [kirakira_boxfilter_pass1_microprobe_action()]
     if profile == "kirakira-aggregation-compose-bt709":
         return [kirakira_aggregation_compose_bt709_action()]
+    if profile == "kirakira-compose-writeback-witness":
+        return [kirakira_compose_writeback_witness_action()]
     if profile == "radialblur-residual-witness":
         return [radialblur_residual_witness_action()]
+    if profile == "radialblur-caller-collapse-witness":
+        return [radialblur_caller_collapse_witness_action()]
     if profile == "radialblur-inner-cell-witness":
         return [radialblur_inner_cell_witness_action()]
     if profile == "directionalblur-residual-witness":
         return [directionalblur_residual_witness_action()]
+    if profile == "directionalblur-helper-coverage-witness":
+        return [directionalblur_helper_coverage_witness_action()]
     if profile == "smoother2-no-key-grid":
         return [smoother2_no_key_grid_action()]
     if profile == "smoother2-legacy-key-gamma":
@@ -1488,6 +1573,85 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 ],
             }
             summary = "Fill with OLMBlur residual pre-writeback/writeback and Legacy border trace facts."
+        elif request_id in {
+            "olmblur_last1px_runtime_trace_20260629",
+            "olmblur_final_word_witness_20260630",
+        }:
+            observations = {
+                "effect": "OLM Blur",
+                "module_base": "0x...",
+                "cases": [
+                    {
+                        "case_id": "case_0007",
+                        "bit_depth": 8,
+                        "legacy": 1,
+                        "repeat": 10,
+                        "residual_pixels": [
+                            {
+                                "x": 488,
+                                "y": 941,
+                                "windows_reference_rgba": [251, 0, 0, 255],
+                                "mac_candidate_rgba": [250, 0, 0, 255],
+                                "mac_pre_store_rgb_hex": ["0x1.f4fffep+7", "0x1.a621b6p-10", "0x1.a621b6p-10"],
+                                "windows_pre_store_rgb_hex": [None, None, None],
+                                "windows_writer_rule": "floorf(value + 0.5) | helper+cvt/trunc | other",
+                                "windows_final_rgba": [None, None, None, None],
+                            },
+                            {
+                                "x": 488,
+                                "y": 942,
+                                "role": "control-neighbor rounds up on Mac",
+                                "windows_reference_rgba": [251, 0, 0, 255],
+                                "mac_candidate_rgba": [251, 0, 0, 255],
+                                "mac_pre_store_rgb_hex": ["0x1.f50002p+7", "0x1.aa44a8p-10", "0x1.aa44a8p-10"],
+                                "windows_pre_store_rgb_hex": [None, None, None],
+                                "windows_writer_rule": "floorf(value + 0.5) | helper+cvt/trunc | other",
+                                "windows_final_rgba": [None, None, None, None],
+                            },
+                        ],
+                    },
+                    {
+                        "case_id": "olmblur__case_0007",
+                        "bit_depth": 16,
+                        "legacy": 1,
+                        "repeat": 10,
+                        "residual_pixels": [
+                            {
+                                "x": 345,
+                                "y": 672,
+                                "windows_reference_rgba": [4, 0, 97, 255],
+                                "mac_candidate_rgba": [4, 0, 98, 255],
+                                "mac_pre_store_rgb_hex": ["0x1.3836fcp+9", "0x1.a758d6p-17", "0x1.8804p+13"],
+                                "mac_pre_store_note": "blue is exactly 12544.5 on Mac",
+                                "windows_pre_store_rgb_hex": [None, None, None],
+                                "windows_word_store": [None, None, None],
+                                "windows_final_rgba": [None, None, None, None],
+                            },
+                            {
+                                "x": 0,
+                                "y": 0,
+                                "role": "retired blocker control",
+                                "windows_reference_rgba": [0, 0, 0, 255],
+                                "mac_candidate_rgba": [0, 0, 0, 255],
+                                "windows_pre_store_rgb_hex": [None, None, None],
+                                "windows_word_store": [None, None, None],
+                                "windows_final_rgba": [None, None, None, None],
+                            },
+                            {
+                                "x": 951,
+                                "y": 7,
+                                "role": "half-step control",
+                                "windows_reference_rgba": [0, 0, 0, 255],
+                                "mac_candidate_rgba": [0, 0, 0, 255],
+                                "windows_pre_store_rgb_hex": [None, None, None],
+                                "windows_word_store": [None, None, None],
+                                "windows_final_rgba": [None, None, None, None],
+                            },
+                        ],
+                    },
+                ],
+            }
+            summary = "Fill with OLMBlur last-1px pre-store float witnesses for old 8bpc and normalized 16bpc case_0007."
         elif request_id == "kirakira_fun_181150790_stage_values_20260620":
             observations = {
                 "effect": "OLM Kira Kira",
@@ -1716,7 +1880,10 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 ),
             }
             summary = "Fill with deep KiraKira per-stage witness values and first-divergence classification."
-        elif request_id == "kirakira_aggregation_compose_bt709_20260624":
+        elif request_id in {
+            "kirakira_aggregation_compose_bt709_20260624",
+            "kirakira_compose_writeback_witness_20260630",
+        }:
             observations = {
                 "effect": "OLM Kira Kira",
                 "module_base": "0x...",
@@ -2056,7 +2223,10 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 "failure_if_any": None,
             }
             summary = "Fill with OLMKiraKira first boxFilter pass contributing-window microprobe facts."
-        elif request_id == "olmradialblur_zoom_tiny_rotation_residual_witness_20260622":
+        elif request_id in {
+            "olmradialblur_zoom_tiny_rotation_residual_witness_20260622",
+            "olmradialblur_caller_collapse_witness_20260630",
+        }:
             observations = {
                 "effect": "OLM RadialBlur",
                 "module_base": "0x...",
@@ -2077,6 +2247,10 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                         },
                         "aex_sampler_or_polar_xy": None,
                         "aex_validity_or_border_decision": None,
+                        "aex_sampler_return_rgba_float": [None, None, None, None],
+                        "aex_preserved_validity_f252": None,
+                        "aex_accumulated_f250_rgba_float": [None, None, None, None],
+                        "aex_normalized_final_e_rgba_float": [None, None, None, None],
                         "aex_source_or_polar_rgba_float": [None, None, None, None],
                         "aex_normalization_denominator": None,
                         "aex_pre_writeback_rgba_float_or_hex": [None, None, None, None],
@@ -2098,6 +2272,10 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                         "aex_inverse_sampler_input_xy": None,
                         "aex_polar_or_source_xy": None,
                         "aex_validity_or_border_decision": None,
+                        "aex_fallback_or_substitute_path": None,
+                        "aex_preserved_validity_f252": None,
+                        "aex_accumulated_f250_rgba_float": [None, None, None, None],
+                        "aex_normalized_final_e_rgba_float": [None, None, None, None],
                         "aex_source_or_polar_rgba_float": [None, None, None, None],
                         "aex_normalization_denominator": None,
                         "aex_pre_writeback_rgba_float_or_hex": [None, None, None, None],
@@ -2109,7 +2287,10 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 "failed_breakpoint_or_watchpoint_reason": None,
             }
             summary = "Fill with focused OLMRadialBlur Zoom/tiny Rotation residual witness facts."
-        elif request_id == "olmdirectionalblur_angle0_diagonal_residual_witness_20260622":
+        elif request_id in {
+            "olmdirectionalblur_angle0_diagonal_residual_witness_20260622",
+            "olmdirectionalblur_helper_coverage_witness_20260630",
+        }:
             observations = {
                 "effect": "OLM DirectionalBlur",
                 "module_base": "0x...",
@@ -2129,6 +2310,18 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                             "mac_candidate_rgba": [0, 0, 0, 255],
                             "signed_delta_candidate_minus_reference": [-164, 0, 0, 0],
                         },
+                        "companion_witnesses": [
+                            {
+                                "x": 579,
+                                "y": 169,
+                                "role": "strip-right-endpoint",
+                            },
+                            {
+                                "x": 380,
+                                "y": 169,
+                                "role": "strip-left-endpoint-optional",
+                            },
+                        ],
                         "aex_parameter_normalization": {
                             "angle": None,
                             "front_strength": None,
@@ -2141,11 +2334,23 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                         "aex_output_to_ab_buffer_xy": None,
                         "aex_rowdriver_or_group_membership": None,
                         "aex_validity_or_alpha_side_channel": None,
+                        "aex_helper_local_destination_coverage": {
+                            "source_xy": [None, None],
+                            "param_1": None,
+                            "param_3": None,
+                            "param_9_before_scale": None,
+                            "param_11": None,
+                            "param_9_after_scale_int": None,
+                            "left_edge_clip_applied": None,
+                            "effective_offset_start": None,
+                            "effective_offset_end_exclusive": None,
+                            "touched_destination_x_range_on_witness_row": [None, None],
+                        },
                         "aex_accumulation_numerator_rgba_float_or_hex": [None, None, None, None],
                         "aex_accumulation_denominator": None,
                         "aex_pre_writeback_rgba_float_or_hex": [None, None, None, None],
                         "aex_final_rgba_u8": [None, None, None, None],
-                        "classification": "rowdriver-group | valid-alpha-side-channel | normalization | writeback | unresolved",
+                        "classification": "helper-coverage | rowdriver-group | valid-alpha-side-channel | normalization | writeback | unresolved",
                     },
                     {
                         "case_id": "case_0005",
@@ -2180,7 +2385,7 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 ],
                 "failed_breakpoint_or_watchpoint_reason": None,
             }
-            summary = "Fill with focused OLMDirectionalBlur angle-0/diagonal residual witness facts."
+            summary = "Fill with focused OLMDirectionalBlur helper-coverage/diagonal residual witness facts."
         elif request_id == "olmsmoother2_no_key_grid_runtime_trace_20260619":
             observations = {
                 "effect": "OLM Smoother v2",
@@ -3380,6 +3585,7 @@ def checked_files(root: Path, profile: str) -> list[Path]:
         "kirakira-forward-warp-box-input",
         "kirakira-boxfilter-pass1-microprobe",
         "kirakira-aggregation-compose-bt709",
+        "kirakira-compose-writeback-witness",
     }:
         ensure_kirakira_deep_witness_plan(root)
 
@@ -3431,6 +3637,19 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("refs/reports/olmblur_trace_baseline_20260619_030633_mac/case_0007_trace.log"),
             Path("refs/reports/olmblur_trace_baseline_20260619_030633_mac/diff.json"),
             Path("refs/reports/olmblur_trace_baseline_20260619_030633_mac/diff.csv"),
+        ]
+    elif profile in {"olmblur-last1px", "olmblur-final-word-witness"}:
+        files = [
+            TRACE_NOTE,
+            *OLMBLUR_SUPPORTING_NOTES,
+            Path("refs/conformance/olmblur_pending_final_word_proof_20260629.md"),
+            Path("refs/conformance/olmblur_pending_final_word_proof_20260629.json"),
+            Path("refs/conformance/olmblur_legacy_carry_prev_probe_20260629.md"),
+            Path("refs/conformance/olmblur_last1px_family_probe_20260629.md"),
+            Path("refs/reports/ae_single_case_olmblur_case0007_final1px_probe_20260629/probe_report.json"),
+            Path("refs/reports/ae_single_case_olmblur_case0007_final1px_probe_20260629/probe_report.md"),
+            Path("refs/reports/ae_single_case_olmblur_case0007_final1px_probe_20260629/olmblur__case_0007/blur_debug.txt"),
+            Path("refs/reference_requests/olm_bitdepth_16bpc_normalized_exact_20260625.json"),
         ]
     elif profile == "kirakira-stage-values":
         files = [
@@ -3487,7 +3706,7 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("refs/reports/runtime_trace_comparisons/olmkirakira_forward_warp_box_input.md"),
             Path("refs/reports/runtime_trace_comparisons/olmkirakira_forward_warp_box_input.json"),
         ]
-    elif profile == "kirakira-aggregation-compose-bt709":
+    elif profile in {"kirakira-aggregation-compose-bt709", "kirakira-compose-writeback-witness"}:
         files = [
             TRACE_NOTE,
             *KIRAKIRA_STAGE_SUPPORTING_NOTES,
@@ -3496,6 +3715,8 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("refs/reports/olmkirakira_trace_baseline_20260624_bt709_mac/README.md"),
             Path("refs/reports/olmkirakira_remeasure_20260624_bt709_software/reports/diff.json"),
             Path("refs/reports/olmkirakira_remeasure_20260624_bt709_software/reports/diff.csv"),
+            Path("refs/conformance/olmkirakira_pending_compose_proof_20260629.md"),
+            Path("refs/conformance/olmkirakira_pending_compose_proof_20260629.json"),
             Path(
                 "refs/reports/runtime_trace_comparisons/"
                 "olmkirakira_deep_stage_values_20260624_bt709.md"
@@ -3513,12 +3734,14 @@ def checked_files(root: Path, profile: str) -> list[Path]:
                 "olmkirakira_boxfilter_pass1_microprobe_20260624.json"
             ),
         ]
-    elif profile == "radialblur-residual-witness":
+    elif profile in {"radialblur-residual-witness", "radialblur-caller-collapse-witness"}:
         files = [
             TRACE_NOTE,
             Path("notes/IR_OLMRadialBlur.md"),
             Path("notes/OLMRadialBlur_ASM_FACTS.md"),
             Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/conformance/olmradialblur_pending_narrow_proof_20260629.md"),
+            Path("refs/conformance/olmradialblur_pending_narrow_proof_20260629.json"),
             Path("refs/reports/olmradialblur_residual_clusters_20260622_011750/residual_clusters.md"),
             Path("refs/reports/olmradialblur_residual_clusters_20260622_011750/residual_clusters.json"),
         ]
@@ -3536,10 +3759,12 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("refs/reports/olmradialblur_inner_candidate_matrix_20260622_002848/summary.json"),
             Path("refs/reports/olmradialblur_inner_candidate_matrix_20260622_002848/candidate_matrix.csv"),
         ]
-    elif profile == "directionalblur-residual-witness":
+    elif profile in {"directionalblur-residual-witness", "directionalblur-helper-coverage-witness"}:
         files = [
             TRACE_NOTE,
             *DIRECTIONALBLUR_SUPPORTING_NOTES,
+            Path("refs/conformance/olmdirectionalblur_pending_witness_proof_20260629.md"),
+            Path("refs/conformance/olmdirectionalblur_pending_witness_proof_20260629.json"),
         ]
     elif profile == "smoother2-no-key-grid":
         files = [

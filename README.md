@@ -68,8 +68,8 @@ AE 実機を触る前の短い目安です。詳細な理由と次アクショ�
 | OLMDistanceGradation | `host-debuggable` | `binary-proof` | witness単位の16bpc確認と回帰確認だけ有益 |
 | OLMSmoother v1 | `host-stable` | `ae-validate` | v1/v2方針確認向き |
 | OLMSmoother2 legacy | `host-debuggable` | `binary-proof` | witness単位の確認だけ有益 |
-| OLMDirectionalBlur | `host-smoke` | `parked` | まだ見た目合わせしない |
-| OLMRadialBlur | `host-smoke` | `binary-proof` | host統合確認まで |
+| OLMDirectionalBlur | `host-debuggable` | `binary-proof` | witness単位の確認だけ有益 |
+| OLMRadialBlur | `host-debuggable` | `binary-proof` | witness単位の確認だけ有益 |
 | OLMKiraKira | `host-smoke` | `binary-proof` | host統合確認まで |
 
 つまり、`RadialBlur` や `KiraKira` を AE 上で見た目だけで詰める段階ではまだ
@@ -79,6 +79,40 @@ AE 実機を触る前の短い目安です。詳細な理由と次アクショ�
 詳しい台帳は `notes/CONFORMANCE_LEDGER.md`、IR の入口は
 `notes/IR_INDEX_20260621.md`、用語定義は
 `notes/AE_EXACT_CONFORMANCE.md` にあります。
+
+UI パラメータ定義の一次情報は別で固定しています。
+`PF_ADD_*` から機械抽出した source-backed report が
+`refs/reports/mac_plugin_param_schema_20260629.md` と
+`refs/reports/mac_plugin_param_schema_20260629.json` です。
+ここで確定するのは初期値・最小最大・UIレンジ・型・popup choices で、
+内部アルゴリズムの効き方そのものは確定しません。
+
+さらに、Windows 参照 manifest / request との名前・構成差分は
+`refs/reports/param_schema_windows_ref_audit_20260629.md` に分けています。
+2026-06-29 時点では特に `OLMKiraKira` で Windows 側 UI と現在の Mac
+source-visible UI にズレがあります。
+`OLMRadialBlur` は 2026-06-29 host-fix pass で grouped `Outer/Inner Blur`,
+per-section `Edge Fade`, separate inner offset controls, `Noise Type`,
+`Noise Layer`, `Seed`, `Thickness` を追加し、visible parameter set の差は
+かなり閉じました。したがって RadialBlur の残課題は主に UI 面ではなく
+sampler / prepass / writeback の binary-proof です。
+`OLMDirectionalBlur` も同日の host-fix pass で grouped Front/Back labels,
+`Noise Type`, `Noise Layer`, `Seed`, `Offset`, `Thickness` を追加し、残課題
+は主に angle-0 rowdriver/valid-alpha と diagonal rotate/validity の
+binary-proof に寄っています。
+
+さらに、「Mac source 上の現在の default」ではなく「元の Windows AEX を AE に
+追加した瞬間の cold-start default」を固定するための request も追加しました。
+Windows 実測の fresh-instance default は
+`refs/reference_requests/olm_fresh_instance_defaults_20260629.json` で取得し、
+source-backed schema との役割分担は
+`notes/PARAMETER_SOURCE_OF_TRUTH.md` に固定しています。
+
+linked replay request は `scripts/materialize_linked_request_params.py` で
+`params_full` を自動展開できます。`source_case_id` がある再現便は、参照
+manifest を土台に visible params を明示化してから Windows に渡す運用に
+固定していきます。`refs/scripts/package_reference_requests.py` も package 作成時に
+この materialize を一時コピーへ自動適用します。
 
 packaged 8bpc AE-host validation の最小M0集計は機械生成します。
 現在の manifest は `refs/conformance/packaged_8bpc_manifest.json` です。
@@ -134,6 +168,9 @@ summary は `python3 scripts/generate_conformance_summary.py` で
 | `refs/upstream_official/` | 公式 README / site / manual text の控え |
 | `notes/` | IR、逆解析メモ、進捗台帳、作業方針 |
 | `scripts/` | handoff、runtime trace、AE-host 検証、packaging |
+| `refs/reports/mac_plugin_param_schema_20260629.{md,json}` | Mac plug-in UI parameter schema の source-backed 抜き出し |
+| `refs/reports/param_schema_windows_ref_audit_20260629.{md,json}` | Windows manifest / request と Mac UI schema の差分監査 |
+| `notes/PARAMETER_SOURCE_OF_TRUTH.md` | default/range は source、ケース値は Windows manifest、fresh default は Windows cold-start capture とするルール |
 
 大きいローカル生成物は git に入れません。
 

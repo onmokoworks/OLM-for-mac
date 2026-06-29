@@ -278,12 +278,21 @@ def action_for(row: dict[str, Any], *, covered: bool = True) -> dict[str, Any]:
     )
     if not covered:
         prior_refs = ", ".join(PRIOR_AUDIT_REFS)
+        pinning = row.get("pinning") or {}
+        pinning_note = ""
+        if pinning:
+            pinning_note = (
+                f" Package-time pinning: current params_full "
+                f"{pinning.get('current_params_full_cases', 0)}/{pinning.get('total_cases', 0)}, "
+                f"packaged params_full {pinning.get('packaged_params_full_cases', 0)}/{pinning.get('total_cases', 0)}, "
+                f"linked cases {pinning.get('linked_cases', 0)}."
+            )
         agent_prompt = (
             f"Pending reference request: {request_id}. Do not edit and do not tune from current PNG residuals. "
             f"First read {prior_refs} to avoid restating old audits. "
             f"Then read the listed files, report only new stop-line deltas, audit whether the stop condition still holds, "
             f"and report the exact first action after this request is imported. "
-            f"Original post-import prompt: {agent_prompt}"
+            f"Original post-import prompt: {agent_prompt}{pinning_note}"
         )
     else:
         agent_prompt = f"First run or inspect: {command}. {agent_prompt}"
@@ -300,6 +309,7 @@ def action_for(row: dict[str, Any], *, covered: bool = True) -> dict[str, Any]:
         "status": row.get("status"),
         "effect": row.get("effect"),
         "manifest": (row.get("best") or {}).get("manifest"),
+        "pinning": row.get("pinning"),
         "plugin_area": follow_up.get("plugin_area", request_id),
         "mode": follow_up.get("mode", "explorer"),
         "read_files": read_files,
@@ -353,6 +363,22 @@ def runtime_actions_for(covered_ids: set[str]) -> list[dict[str, Any]]:
     return actions
 
 
+def build_reference_action_data(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    covered = sorted([row for row in rows if row.get("status") == "covered"], key=priority_key)
+    partial = sorted([row for row in rows if row.get("status") == "partial"], key=priority_key)
+    pending = sorted([row for row in rows if row.get("status") == "pending"], key=priority_key)
+    covered_ids = {str(row.get("request_id", "")) for row in covered}
+    actions = runtime_actions_for(covered_ids) + [action_for(row) for row in covered]
+    pending_actions = [action_for(row, covered=False) for row in pending]
+    return {
+        "next_action": actions[0] if actions else None,
+        "covered_actions": actions,
+        "pending_actions": pending_actions,
+        "partial": partial,
+        "pending": [row.get("request_id") for row in pending],
+    }
+
+
 def write_dispatch_dir(dispatch_dir: Path, data: dict[str, Any]) -> None:
     dispatch_dir.mkdir(parents=True, exist_ok=True)
     (dispatch_dir / "index.json").write_text(json.dumps(data, indent=2, sort_keys=True), encoding="utf-8")
@@ -378,19 +404,10 @@ def write_dispatch_dir(dispatch_dir: Path, data: dict[str, Any]) -> None:
 def main() -> int:
     args = parse_args()
     rows = load_status_rows(args.requests, args.references)
-    covered = sorted([row for row in rows if row.get("status") == "covered"], key=priority_key)
-    partial = sorted([row for row in rows if row.get("status") == "partial"], key=priority_key)
-    pending = sorted([row for row in rows if row.get("status") == "pending"], key=priority_key)
-    covered_ids = {str(row.get("request_id", "")) for row in covered}
-    actions = runtime_actions_for(covered_ids) + [action_for(row) for row in covered]
-    pending_actions = [action_for(row, covered=False) for row in pending]
-    data = {
-        "next_action": actions[0] if actions else None,
-        "covered_actions": actions,
-        "pending_actions": pending_actions,
-        "partial": partial,
-        "pending": [row.get("request_id") for row in pending],
-    }
+    data = build_reference_action_data(rows)
+    actions = data["covered_actions"]
+    partial = data["partial"]
+    pending = [row for row in rows if row.get("status") == "pending"]
 
     if args.dispatch_dir:
         write_dispatch_dir(args.dispatch_dir, data)
@@ -429,7 +446,7 @@ def main() -> int:
 
     if pending:
         print("\npending requests:")
-        pending_action_list = [action_for(row, covered=False) for row in pending]
+        pending_action_list = data["pending_actions"]
         for pending_action in pending_action_list:
             print(f"- {pending_action['request_id']}: {pending_action['plugin_area']} ({pending_action['mode']})")
         first_pending = pending_action_list[0]
@@ -438,6 +455,14 @@ def main() -> int:
         print(f"- plugin area: {first_pending['plugin_area']}")
         print(f"- unblock: {first_pending['unblock_request']}")
         print(f"- stop: {first_pending['stop_condition']}")
+        if first_pending.get("pinning"):
+            pinning = first_pending["pinning"]
+            print(
+                "- pinning: "
+                f"current {pinning.get('current_params_full_cases', 0)}/{pinning.get('total_cases', 0)}, "
+                f"packaged {pinning.get('packaged_params_full_cases', 0)}/{pinning.get('total_cases', 0)}, "
+                f"linked {pinning.get('linked_cases', 0)}"
+            )
         print(f"- smoke after import: {first_pending['smoke_command']}")
         print(f"- read files: {', '.join(first_pending['read_files'])}")
         print(f"- subagent prompt: {first_pending['agent_prompt']}")

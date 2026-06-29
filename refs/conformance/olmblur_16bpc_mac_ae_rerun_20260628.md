@@ -1,11 +1,20 @@
 # OLMBlur 16bpc Mac AE Rerun - 2026-06-28
 
+## Status
+
+- Historical rerun only. The authoritative current boundary is now
+  `refs/conformance/olmblur_current_word_baseline_20260629.md`.
+- The old Legacy `(0,0)` anomaly described below is retired. Current work is the
+  narrower sign-mixed / half-step witness family only.
+
 ## Summary
 
 - Current Mac AE rerun reproduces the existing 16bpc residual family: 0/7 exact with `max_diff=2` for `case_0001..0006` and `max_diff=383` for `case_0007`.
 - `case_0003` did not complete cleanly in the full batch progress log, so it was re-rendered as a single-case request. AppleEvent timed out after PNG creation, but `verify_manifest.py` comparison gives the same `max_diff=2` / `nz=414` result.
 - Signed deltas are mixed (`reference - candidate` has both `-2` and `+2`) in the near-1LSB family. A one-line global round/truncate swap is not justified.
-- `case_0007` keeps a separate localized Legacy border/seed anomaly at `(0,0)` where candidate is `[383,383,383,65535]` and reference is `[0,0,0,65535]`.
+- At the time of this rerun, `case_0007` still showed a localized Legacy
+  border/seed anomaly at `(0,0)`. That specific blocker does not survive in the
+  current 2026-06-29 baseline.
 
 ## Case Table
 

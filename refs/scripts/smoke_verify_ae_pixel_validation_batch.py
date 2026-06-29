@@ -34,8 +34,10 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="olm_ae_pixel_batch_smoke_") as tmp:
         tmp_path = Path(tmp)
         request_dir = tmp_path / "requests"
+        request_dirs = tmp_path / "request_dirs"
         result_dir = tmp_path / "returns"
         request_dir.mkdir()
+        request_dirs.mkdir()
         result_dir.mkdir()
 
         specs = [
@@ -73,6 +75,10 @@ def main() -> int:
             if proc.returncode != 0:
                 return proc.returncode
 
+            materialized = request_dirs / preset
+            with zipfile.ZipFile(request_zip) as archive:
+                archive.extractall(materialized)
+
             result_root = tmp_path / f"result_{preset}"
             candidate = result_root / "rendered"
             candidate.mkdir(parents=True)
@@ -93,6 +99,20 @@ def main() -> int:
                 result_dir,
                 "--run-dir",
                 tmp_path / "batch_run",
+            ],
+            repo,
+        )
+        if proc.returncode != 0:
+            return proc.returncode
+
+        proc = run(
+            [
+                sys.executable,
+                repo / "scripts" / "verify_ae_pixel_validation_batch.py",
+                request_dirs,
+                result_dir,
+                "--run-dir",
+                tmp_path / "batch_run_dirs",
             ],
             repo,
         )

@@ -269,6 +269,125 @@ def infer_effect_folder(manifest: dict[str, Any], matches: list[tuple[Path, dict
     return slug(sorted(names)[0], "reference")
 
 
+def case_effect_name(case: dict[str, Any]) -> str | None:
+    for source_key in ("effect", "selected_effect"):
+        source = case.get(source_key)
+        if isinstance(source, dict):
+            for key in ("match_name", "name"):
+                value = source.get(key)
+                if isinstance(value, str) and value:
+                    return value
+        elif isinstance(source, str) and source:
+            return source
+    for effect_item in case.get("effects", case.get("selected_layer_effects", [])) or []:
+        if isinstance(effect_item, dict):
+            for key in ("match_name", "name"):
+                value = effect_item.get(key)
+                if isinstance(value, str) and value:
+                    return value
+    return None
+
+
+def manifest_case_group_key(case: dict[str, Any]) -> str:
+    request_id = case.get("request_id")
+    if isinstance(request_id, str) and request_id:
+        return request_id
+    effect_name = case_effect_name(case)
+    if effect_name:
+        return effect_name
+    case_id = case.get("id")
+    if isinstance(case_id, str) and case_id:
+        return case_id
+    return "ungrouped"
+
+
+def split_manifest_if_aggregate(manifest: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
+    cases = manifest.get("cases", [])
+    if not isinstance(cases, list) or not cases:
+        return [("manifest", manifest)]
+
+    grouped: dict[str, list[dict[str, Any]]] = {}
+    order: list[str] = []
+    for case in cases:
+        if not isinstance(case, dict):
+            continue
+        key = manifest_case_group_key(case)
+        if key not in grouped:
+            grouped[key] = []
+            order.append(key)
+        grouped[key].append(case)
+
+    if len(order) <= 1:
+        return [("manifest", manifest)]
+
+    requests_index: dict[str, dict[str, Any]] = {}
+    for item in manifest.get("requests", []):
+        if isinstance(item, dict):
+            value = item.get("request_id")
+            if isinstance(value, str) and value:
+                requests_index[value] = item
+
+    parts: list[tuple[str, dict[str, Any]]] = []
+    for key in order:
+        part = dict(manifest)
+        part["cases"] = grouped[key]
+        first = grouped[key][0]
+        request_id = first.get("request_id")
+        if isinstance(request_id, str) and request_id:
+            part["request_id"] = request_id
+            if request_id in requests_index:
+                part["requests"] = [requests_index[request_id]]
+        else:
+            part.pop("request_id", None)
+            part.pop("requests", None)
+
+        effect_name = case_effect_name(first)
+        if effect_name:
+            effect = {
+                "name": effect_name,
+                "match_name": effect_name,
+            }
+            first_effects = first.get("effects", first.get("selected_layer_effects", [])) or []
+            if first_effects and isinstance(first_effects[0], dict):
+                effect["name"] = first_effects[0].get("name") or effect_name
+                effect["match_name"] = first_effects[0].get("match_name") or effect_name
+            part["effect"] = effect
+        parts.append((key, part))
+    return parts
+
+
+def copy_case_assets(source_manifest: Path, dest_dir: Path, manifest: dict[str, Any], replace: bool) -> None:
+    if dest_dir.exists():
+        if not replace:
+            raise FileExistsError(f"destination already exists: {dest_dir} (use --replace)")
+        shutil.rmtree(dest_dir)
+    dest_dir.mkdir(parents=True, exist_ok=True)
+
+    copied: set[str] = set()
+    for case in manifest.get("cases", []):
+        if not isinstance(case, dict):
+            continue
+        for key in ("frame", "before_effects_frame"):
+            rel = case.get(key)
+            if not isinstance(rel, str) or not rel or rel in copied:
+                continue
+            src = source_manifest.parent / rel
+            if src.exists():
+                (dest_dir / rel).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(src, dest_dir / rel)
+                copied.add(rel)
+
+    for extra_name in ("ae_runner_log.txt", "RUN_SUMMARY.md", "run_complete.json", "package_manifest.json"):
+        src = source_manifest.parent / extra_name
+        if src.exists():
+            shutil.copy2(src, dest_dir / extra_name)
+
+    (dest_dir / "reference_manifest.json").write_text(
+        json.dumps(manifest, indent=2, sort_keys=False),
+        encoding="utf-8",
+    )
+
+
 def copy_manifest_folder(source_manifest: Path, dest_dir: Path, replace: bool) -> None:
     if dest_dir.exists():
         if not replace:
@@ -312,49 +431,57 @@ def import_request_results(
 
     for manifest_path in manifests:
         manifest = load_json(manifest_path)
-        matches = matching_requests(manifest, requests)
-        effect_folder = infer_effect_folder(manifest, matches)
-        dest_dir = dest_root / set_id / effect_folder
-        try:
-            copy_manifest_folder(manifest_path, dest_dir, replace)
-        except Exception as exc:  # noqa: BLE001 - report destination-specific import errors.
-            print(f"[FAIL] {manifest_path}: {exc}", file=sys.stderr)
-            failures += 1
-            continue
+        manifest_parts = split_manifest_if_aggregate(manifest)
 
-        dest_manifest = dest_dir / "reference_manifest.json"
-        receipt = {
-            "schema": 1,
-            "kind": "olm_imported_request_reference",
-            "imported_at": datetime.now(timezone.utc).isoformat(),
-            "source_manifest": str(manifest_path),
-            "dest_manifest": str(dest_manifest),
-            "matched_requests": [display_request_path(path) for path, _request in matches],
-        }
-        (dest_dir / "reference_import.json").write_text(
-            json.dumps(receipt, indent=2, sort_keys=True),
-            encoding="utf-8",
-        )
-
-        if not matches:
-            print(f"[WARN] imported without matching request: {dest_manifest}")
-        else:
-            if len(matches) > 1:
-                names = ", ".join(path.name for path, _request in matches)
-                print(f"[INFO] imported aggregate manifest with matching requests ({names}): {dest_manifest}")
-            verified_ok = 0
-            verified_failed = 0
-            for request_path, _request in matches:
-                proc = run_verifier(request_path, dest_manifest, allow_missing_optional_render_sets)
-                print(proc.stdout, end="" if proc.stdout.endswith("\n") else "\n")
-                if proc.returncode != 0:
-                    verified_failed += 1
+        for _part_key, part_manifest in manifest_parts:
+            matches = matching_requests(part_manifest, requests)
+            effect_folder = infer_effect_folder(part_manifest, matches)
+            dest_dir = dest_root / set_id / effect_folder
+            try:
+                if len(manifest_parts) == 1:
+                    copy_manifest_folder(manifest_path, dest_dir, replace)
                 else:
-                    verified_ok += 1
-            if verified_failed and (len(matches) == 1 or verified_ok == 0):
-                failures += verified_failed
+                    copy_case_assets(manifest_path, dest_dir, part_manifest, replace)
+            except Exception as exc:  # noqa: BLE001 - report destination-specific import errors.
+                print(f"[FAIL] {manifest_path}: {exc}", file=sys.stderr)
+                failures += 1
+                continue
 
-        imported.append(dest_manifest)
+            dest_manifest = dest_dir / "reference_manifest.json"
+            receipt = {
+                "schema": 1,
+                "kind": "olm_imported_request_reference",
+                "imported_at": datetime.now(timezone.utc).isoformat(),
+                "source_manifest": str(manifest_path),
+                "dest_manifest": str(dest_manifest),
+                "matched_requests": [display_request_path(path) for path, _request in matches],
+                "split_from_aggregate": len(manifest_parts) > 1,
+                "split_case_count": len(part_manifest.get("cases", [])),
+            }
+            (dest_dir / "reference_import.json").write_text(
+                json.dumps(receipt, indent=2, sort_keys=True),
+                encoding="utf-8",
+            )
+
+            if not matches:
+                print(f"[WARN] imported without matching request: {dest_manifest}")
+            else:
+                if len(matches) > 1:
+                    names = ", ".join(path.name for path, _request in matches)
+                    print(f"[INFO] imported aggregate manifest with matching requests ({names}): {dest_manifest}")
+                verified_ok = 0
+                verified_failed = 0
+                for request_path, _request in matches:
+                    proc = run_verifier(request_path, dest_manifest, allow_missing_optional_render_sets)
+                    print(proc.stdout, end="" if proc.stdout.endswith("\n") else "\n")
+                    if proc.returncode != 0:
+                        verified_failed += 1
+                    else:
+                        verified_ok += 1
+                if verified_failed and (len(matches) == 1 or verified_ok == 0):
+                    failures += verified_failed
+
+            imported.append(dest_manifest)
 
     print(f"imported_manifests={len(imported)}")
     for path in imported:

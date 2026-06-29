@@ -44,6 +44,7 @@ def main() -> int:
         runtime_request_pkg = tmp_path / "runtime_requests.zip"
         wrapped_runtime_request_pkg = tmp_path / "wrapped_runtime_requests.zip"
         windows_action_bundle = tmp_path / "windows_action_bundle.zip"
+        windows_action_bundle_return = tmp_path / "windows_action_bundle_return.zip"
         runtime_return = tmp_path / "runtime_return.zip"
         runtime_return_with_source_request = tmp_path / "runtime_return_with_source_request.zip"
         bare_runtime_return = tmp_path / "bare_runtime_return.zip"
@@ -123,6 +124,16 @@ def main() -> int:
                 "windows_action_bundle_manifest.json": json.dumps(
                     {"kind": "olm_windows_action_bundle"}
                 ),
+            },
+        )
+        write_zip(
+            windows_action_bundle_return,
+            {
+                "olm_windows_action_bundle_return/windows_action_bundle_manifest.json": json.dumps(
+                    {"kind": "olm_windows_action_bundle"}
+                ),
+                "olm_windows_action_bundle_return/runtime_trace_returns/synthetic_return.zip": "nested runtime return placeholder\n",
+                "olm_windows_action_bundle_return/request_package/synthetic_request.zip": "nested runtime request placeholder\n",
             },
         )
         write_zip(
@@ -218,6 +229,7 @@ def main() -> int:
         assert kinds["runtime_requests.zip"] == "runtime-trace-request-package"
         assert kinds["wrapped_runtime_requests.zip"] == "runtime-trace-request-package"
         assert kinds["windows_action_bundle.zip"] == "windows-action-bundle"
+        assert kinds["windows_action_bundle_return.zip"] == "windows-action-bundle-return"
         assert kinds["runtime_return.zip"] == "runtime-trace-return"
         assert kinds["runtime_return_with_source_request.zip"] == "runtime-trace-return"
         assert kinds["bare_runtime_return.zip"] == "runtime-trace-return"
@@ -230,6 +242,7 @@ def main() -> int:
         assert "Windows debugger/helper" in commands["runtime_requests.zip"]
         assert "Windows debugger/helper" in commands["wrapped_runtime_requests.zip"]
         assert "Windows helper" in commands["windows_action_bundle.zip"]
+        assert "intake_latest_windows_return_from_share.py" in commands["windows_action_bundle_return.zip"]
         assert "--runtime-summary-json" in commands["runtime_return.zip"]
         assert "--runtime-summary-md" in commands["runtime_return.zip"]
         assert "--runtime-comparison-dir" in commands["runtime_return.zip"]
@@ -243,6 +256,7 @@ def main() -> int:
         human = run([sys.executable, str(script), str(tmp_path)], repo)
         assert "win-reference-return" in human.stdout
         assert "runtime-trace-request-package" in human.stdout
+        assert "windows-action-bundle-return" in human.stdout
         assert "runtime-trace-return" in human.stdout
         assert "ae-pixel-validation-bundle" in human.stdout
         assert "send this package to the Windows AE renderer" in human.stdout

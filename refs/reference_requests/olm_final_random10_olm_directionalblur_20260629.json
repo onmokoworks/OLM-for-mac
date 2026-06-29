@@ -1,0 +1,262 @@
+{
+  "cases": [
+    {
+      "id": "final_random10_olm_directionalblur_01",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": 179,
+        "__index_10": 180,
+        "__index_11": 56,
+        "__index_12": 42,
+        "__index_15": 8,
+        "__index_16": 1,
+        "__index_18": 121,
+        "__index_19": 27,
+        "__index_2": 1.1928,
+        "__index_20": 75,
+        "__index_3": 78,
+        "__index_5": 519,
+        "__index_6": 19,
+        "__index_7": 37
+      },
+      "random_seed": 20263630,
+      "reason": "Per-plugin final random reference case 1/10 generated from Windows range metadata seed 20263630."
+    },
+    {
+      "id": "final_random10_olm_directionalblur_02",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 7,
+        "__index_10": 1972,
+        "__index_11": 6,
+        "__index_12": 54,
+        "__index_15": 45,
+        "__index_16": 3,
+        "__index_18": 901,
+        "__index_19": 11,
+        "__index_2": 4.127,
+        "__index_20": 28,
+        "__index_3": 48,
+        "__index_5": 1372,
+        "__index_6": 64,
+        "__index_7": 25
+      },
+      "random_seed": 20263631,
+      "reason": "Per-plugin final random reference case 2/10 generated from Windows range metadata seed 20263631."
+    },
+    {
+      "id": "final_random10_olm_directionalblur_03",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": -166,
+        "__index_10": 3764,
+        "__index_11": 56,
+        "__index_12": 67,
+        "__index_15": 82,
+        "__index_16": 2,
+        "__index_18": 682,
+        "__index_19": 46,
+        "__index_2": 7.0612,
+        "__index_20": 79,
+        "__index_3": 18,
+        "__index_5": 2226,
+        "__index_6": 9,
+        "__index_7": 12
+      },
+      "random_seed": 20263632,
+      "reason": "Per-plugin final random reference case 3/10 generated from Windows range metadata seed 20263632."
+    },
+    {
+      "id": "final_random10_olm_directionalblur_04",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 23,
+        "__index_10": 1557,
+        "__index_11": 6,
+        "__index_12": 79,
+        "__index_15": 18,
+        "__index_16": 1,
+        "__index_18": 463,
+        "__index_19": 30,
+        "__index_2": 9.9954,
+        "__index_20": 32,
+        "__index_3": 88,
+        "__index_5": 3080,
+        "__index_6": 54,
+        "__index_7": 99
+      },
+      "random_seed": 20263633,
+      "reason": "Per-plugin final random reference case 4/10 generated from Windows range metadata seed 20263633."
+    },
+    {
+      "id": "final_random10_olm_directionalblur_05",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": -150,
+        "__index_10": 3349,
+        "__index_11": 56,
+        "__index_12": 91,
+        "__index_15": 55,
+        "__index_16": 1,
+        "__index_18": 244,
+        "__index_19": 14,
+        "__index_2": 2.9296,
+        "__index_20": 83,
+        "__index_3": 58,
+        "__index_5": 3934,
+        "__index_6": 99,
+        "__index_7": 87
+      },
+      "random_seed": 20263634,
+      "reason": "Per-plugin final random reference case 5/10 generated from Windows range metadata seed 20263634."
+    },
+    {
+      "id": "final_random10_olm_directionalblur_06",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 39,
+        "__index_10": 1141,
+        "__index_11": 7,
+        "__index_12": 4,
+        "__index_15": 92,
+        "__index_16": 3,
+        "__index_18": 25,
+        "__index_19": 49,
+        "__index_2": 5.8637,
+        "__index_20": 36,
+        "__index_3": 28,
+        "__index_5": 787,
+        "__index_6": 44,
+        "__index_7": 74
+      },
+      "random_seed": 20263635,
+      "reason": "Per-plugin final random reference case 6/10 generated from Windows range metadata seed 20263635."
+    },
+    {
+      "id": "final_random10_olm_directionalblur_07",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": -134,
+        "__index_10": 2933,
+        "__index_11": 57,
+        "__index_12": 16,
+        "__index_15": 29,
+        "__index_16": 2,
+        "__index_18": 805,
+        "__index_19": 33,
+        "__index_2": 8.7979,
+        "__index_20": 87,
+        "__index_3": 98,
+        "__index_5": 1641,
+        "__index_6": 90,
+        "__index_7": 61
+      },
+      "random_seed": 20263636,
+      "reason": "Per-plugin final random reference case 7/10 generated from Windows range metadata seed 20263636."
+    },
+    {
+      "id": "final_random10_olm_directionalblur_08",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 55,
+        "__index_10": 726,
+        "__index_11": 7,
+        "__index_12": 29,
+        "__index_15": 66,
+        "__index_16": 1,
+        "__index_18": 586,
+        "__index_19": 17,
+        "__index_2": 1.7321,
+        "__index_20": 40,
+        "__index_3": 67,
+        "__index_5": 2495,
+        "__index_6": 35,
+        "__index_7": 49
+      },
+      "random_seed": 20263637,
+      "reason": "Per-plugin final random reference case 8/10 generated from Windows range metadata seed 20263637."
+    },
+    {
+      "id": "final_random10_olm_directionalblur_09",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": -117,
+        "__index_10": 2518,
+        "__index_11": 57,
+        "__index_12": 41,
+        "__index_15": 3,
+        "__index_16": 1,
+        "__index_18": 366,
+        "__index_19": 1,
+        "__index_2": 4.6663,
+        "__index_20": 91,
+        "__index_3": 37,
+        "__index_5": 3349,
+        "__index_6": 80,
+        "__index_7": 36
+      },
+      "random_seed": 20263638,
+      "reason": "Per-plugin final random reference case 9/10 generated from Windows range metadata seed 20263638."
+    },
+    {
+      "id": "final_random10_olm_directionalblur_10",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 71,
+        "__index_10": 310,
+        "__index_11": 7,
+        "__index_12": 53,
+        "__index_15": 40,
+        "__index_16": 3,
+        "__index_18": 147,
+        "__index_19": 36,
+        "__index_2": 7.6005,
+        "__index_20": 44,
+        "__index_3": 7,
+        "__index_5": 203,
+        "__index_6": 25,
+        "__index_7": 24
+      },
+      "random_seed": 20263639,
+      "reason": "Per-plugin final random reference case 10/10 generated from Windows range metadata seed 20263639."
+    }
+  ],
+  "common_setup": {
+    "bit_depth": 8,
+    "comp_height": 1080,
+    "comp_width": 1920,
+    "frame_rate": 24
+  },
+  "effect": {
+    "match_name": "OLM Directional Blur",
+    "name": "OLM DirectionalBlur"
+  },
+  "inputs": [
+    {
+      "description": "Opaque deterministic stress image.",
+      "id": "random_final_grid_1920x1080",
+      "path": "inputs/random_final_grid_1920x1080.png"
+    },
+    {
+      "description": "RGBA deterministic stress image.",
+      "id": "random_final_alpha_1920x1080",
+      "path": "inputs/random_final_alpha_1920x1080.png"
+    }
+  ],
+  "manifest_requirements": [
+    "Record before/effect PNGs.",
+    "Record actual applied values and instrumentation notes.",
+    "Record project_gpu_accel_type.current_name/raw."
+  ],
+  "render_sets": [
+    {
+      "id": "software",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "required": true
+    }
+  ],
+  "request_id": "olm_final_random10_olm_directionalblur_20260629",
+  "why": [
+    "Windows AE final per-plugin randomized reference set. Values generated from fresh-instance Windows range metadata; actual applied values are recorded in returned manifest."
+  ]
+}

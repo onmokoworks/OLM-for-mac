@@ -106,6 +106,52 @@ def main() -> int:
                 assert row["bundle_path"] in names
                 assert nested_zip_kind(archive, row["bundle_path"]) == "runtime-trace-request-package"
 
+        priority4 = Path(tmp) / "priority4_bundle.zip"
+        run(
+            [
+                sys.executable,
+                str(script),
+                "--focus",
+                "priority4-runtime",
+                "--output",
+                str(priority4),
+            ],
+            root,
+        )
+        with zipfile.ZipFile(priority4) as archive:
+            names = set(archive.namelist())
+            manifest = json.loads(archive.read("windows_action_bundle_manifest.json").decode("utf-8"))
+            assert manifest["priority"] == "priority4-runtime"
+            runtime_rows = manifest["runtime_trace_packages"]
+            assert len(runtime_rows) == 4
+            assert manifest["ae_pixel_validation_packages"] == []
+            assert "distancegradation_layer_no_bg_source_ownership" in runtime_rows[0]["source"]
+            assert "smoother2_current_aex_writer_frame_followup" in runtime_rows[3]["source"]
+            assert "handoffs/windows_batch/olm_windows_priority4_runtime_trace_requests_20260629.md" in names
+
+        secondary = Path(tmp) / "secondary_bundle.zip"
+        run(
+            [
+                sys.executable,
+                str(script),
+                "--focus",
+                "secondary-runtime",
+                "--output",
+                str(secondary),
+            ],
+            root,
+        )
+        with zipfile.ZipFile(secondary) as archive:
+            names = set(archive.namelist())
+            manifest = json.loads(archive.read("windows_action_bundle_manifest.json").decode("utf-8"))
+            assert manifest["priority"] == "secondary-runtime"
+            runtime_rows = manifest["runtime_trace_packages"]
+            assert len(runtime_rows) == 3
+            assert manifest["ae_pixel_validation_packages"] == []
+            assert "directionalblur_residual_witness" in runtime_rows[0]["source"]
+            assert "radialblur_inner_cell_witness" in runtime_rows[2]["source"]
+            assert "handoffs/windows_batch/olm_windows_secondary_runtime_trace_requests_20260629.md" in names
+
     print("[OK] Windows action bundle smoke")
     return 0
 

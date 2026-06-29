@@ -750,17 +750,17 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_Smoothness_Param_Name),
-	              0, 1000, 0, 200, 100,
+	              0, 100, 0, 100, 100,
 	              SMOOTHNESS_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_ExtraSmooth_Param_Name),
-	              0, 1000, 0, 200, 0,
+	              0, 100, 0, 100, 0,
 	              EXTRA_SMOOTH_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_SmoothRange_Param_Name),
-	              1, 32, 1, 16, 2,
+	              0, 100, 0, 100, 2,
 	              SMOOTH_RANGE_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
@@ -777,7 +777,7 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_GammaValue_Param_Name),
-	                     0.1, 10.0, 0.1, 5.0, 2.2,
+	                     1.0, 2.4, 1.0, 2.4, 2.4,
 	                     PF_Precision_HUNDREDTHS, 0, 0,
 	                     GAMMA_VALUE_DISK_ID);
 

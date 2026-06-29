@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify returned macOS AE-host PNGs against a pixel validation request zip."""
+"""Verify returned macOS AE-host PNGs against a pixel validation request zip or directory."""
 
 from __future__ import annotations
 
@@ -15,7 +15,11 @@ from pathlib import Path
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("request_zip", type=Path, help="Zip from package_ae_pixel_validation_request.py")
+    parser.add_argument(
+        "request",
+        type=Path,
+        help="Request zip from package_ae_pixel_validation_request.py, or a materialized request directory.",
+    )
     parser.add_argument(
         "result",
         type=Path,
@@ -61,6 +65,15 @@ def materialize_source(source: Path, dest: Path) -> Path:
     if source.exists() and zipfile.is_zipfile(source):
         return extract_zip(source, dest)
     raise ValueError(f"result is neither a directory nor a zip: {source}")
+
+
+def materialize_request(source: Path, dest: Path) -> Path:
+    source = source.resolve()
+    if source.is_dir():
+        return find_request_root(source)
+    if source.exists() and zipfile.is_zipfile(source):
+        return find_request_root(extract_zip(source, dest))
+    raise ValueError(f"request is neither a directory nor a zip: {source}")
 
 
 def load_json(path: Path) -> dict:
@@ -137,17 +150,17 @@ def verify_group(
 def main() -> int:
     args = parse_args()
     repo = repo_root()
-    request_zip = args.request_zip.resolve()
+    request = args.request.resolve()
     result = args.result.resolve()
-    if not request_zip.exists():
-        return fail(f"request zip not found: {request_zip}")
+    if not request.exists():
+        return fail(f"request not found: {request}")
     if not result.exists():
         return fail(f"result not found: {result}")
 
     with tempfile.TemporaryDirectory(prefix="olm_ae_pixel_verify_") as tmp:
         tmp_path = Path(tmp)
-        request_root = find_request_root(extract_zip(request_zip, tmp_path / "request"))
         try:
+            request_root = materialize_request(request, tmp_path / "request")
             result_root = materialize_source(result, tmp_path / "result")
             request_manifest = load_json(request_root / "request_manifest.json")
         except Exception as exc:  # noqa: BLE001

@@ -134,6 +134,70 @@ def make_windows_ref_return(tmp_path: Path) -> tuple[Path, Path, Path]:
     return write_synthetic_result(tmp_path, request), requests_dir, request_path
 
 
+def make_fresh_defaults_return(tmp_path: Path) -> tuple[Path, Path, Path]:
+    requests_dir = tmp_path / "fresh_requests"
+    request_path = requests_dir / "olm_fresh_instance_defaults_20260629.json"
+    request = {
+        "request_id": "olm_fresh_instance_defaults_20260629",
+        "effect": {"name": "OLM Blur", "match_name": "OLM OLM Blur"},
+        "render_sets": [
+            {
+                "id": "software",
+                "required": True,
+                "project_gpu_accel_type.current_name": "SOFTWARE",
+            }
+        ],
+        "manifest_requirements": [],
+        "cases": [{"id": "fresh_default_olmblur"}],
+    }
+    requests_dir.mkdir()
+    request_path.write_text(json.dumps(request, indent=2), encoding="utf-8")
+
+    result_dir = tmp_path / "fresh_returned" / "OLMBlur"
+    result_dir.mkdir(parents=True)
+    frame = "software_fresh_default_olmblur.png"
+    before = "software_fresh_default_olmblur_before_effects.png"
+    (result_dir / frame).write_bytes(b"png")
+    (result_dir / before).write_bytes(b"png")
+    manifest = {
+        "kind": "ae_effect_reference_manifest",
+        "request_id": "olm_fresh_instance_defaults_20260629",
+        "effect": {"name": "OLM Blur", "match_name": "OLM OLM Blur"},
+        "project_gpu_accel_type": {"current_name": "SOFTWARE", "raw": 1816},
+        "cases": [
+            {
+                "id": "software_fresh_default_olmblur",
+                "request_id": "olm_fresh_instance_defaults_20260629",
+                "request_case_id": "fresh_default_olmblur",
+                "render_set": "software",
+                "project_gpu_accel_type": {"current_name": "SOFTWARE", "raw": 1816},
+                "frame": frame,
+                "before_effects_frame": before,
+                "effects": [
+                    {
+                        "name": "OLM Blur",
+                        "match_name": "OLM OLM Blur",
+                        "params": [
+                            {"path": ["OLM Blur", "Blur Amount"], "name": "Blur Amount", "property_index": 1, "value": 1.0},
+                            {"path": ["OLM Blur", "Blur Smoothness"], "name": "Blur Smoothness", "property_index": 2, "value": 1},
+                            {"path": ["OLM Blur", "Number of Repeat"], "name": "Number of Repeat", "property_index": 3, "value": 2},
+                            {"path": ["OLM Blur", "Bias Direction"], "name": "Bias Direction", "property_index": 4, "value": 1},
+                            {"path": ["OLM Blur", "Legacy Mode"], "name": "Legacy Mode", "property_index": 5, "value": 0},
+                        ],
+                    }
+                ],
+            }
+        ],
+    }
+    (result_dir / "reference_manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+
+    zip_path = tmp_path / "fresh_defaults_return.zip"
+    with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for path in result_dir.rglob("*"):
+            archive.write(path, path.relative_to(tmp_path / "fresh_returned"))
+    return zip_path, requests_dir, request_path
+
+
 def run(cmd: list[str], repo: Path) -> int:
     print("$ " + " ".join(cmd), flush=True)
     proc = subprocess.run(cmd, cwd=repo, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -266,6 +330,46 @@ def main() -> int:
         if not subagent_md.exists() or "synthetic_intake_20260606" not in subagent_md.read_text(encoding="utf-8"):
             print("[FAIL] intake did not write dispatch SUBAGENT.md", file=sys.stderr)
             return 1
+
+        fresh_return_zip, fresh_requests_dir, fresh_request_path = make_fresh_defaults_return(tmp_path)
+        reports_dir = repo / "refs" / "reports"
+        before_reports = set(reports_dir.glob("windows_fresh_defaults_audit_*.md")) | set(
+            reports_dir.glob("windows_fresh_defaults_audit_*.json")
+        )
+        fresh_proc = run_capture(
+            [
+                sys.executable,
+                str(intake),
+                str(fresh_return_zip),
+                "--dest-root",
+                str(tmp_path / "fresh_win_references"),
+                "--requests-dir",
+                str(fresh_requests_dir),
+                "--request",
+                str(fresh_request_path),
+                "--set-id",
+                "fresh_defaults_return",
+                "--no-next-actions",
+            ],
+            repo,
+        )
+        if fresh_proc.returncode != 0:
+            return fresh_proc.returncode
+        after_reports = set(reports_dir.glob("windows_fresh_defaults_audit_*.md")) | set(
+            reports_dir.glob("windows_fresh_defaults_audit_*.json")
+        )
+        created_reports = sorted(after_reports - before_reports)
+        if not created_reports:
+            print("[FAIL] intake did not generate fresh-default audit reports", file=sys.stderr)
+            return 1
+        try:
+            report_texts = [path.read_text(encoding="utf-8") for path in created_reports if path.suffix == ".md"]
+            if not any("Windows Fresh Defaults Audit" in text for text in report_texts):
+                print("[FAIL] fresh-default audit markdown was not generated", file=sys.stderr)
+                return 1
+        finally:
+            for path in created_reports:
+                path.unlink(missing_ok=True)
 
         runtime_package = tmp_path / "runtime_request.zip"
         package_proc = run_capture(

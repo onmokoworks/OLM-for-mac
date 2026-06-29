@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -142,6 +143,12 @@ def repo_root() -> Path:
 def fail(message: str, code: int = 1) -> int:
     print(f"[FAIL] {message}", file=sys.stderr)
     return code
+
+
+def slug(value: str, fallback: str = "reference") -> str:
+    value = value.strip().replace(" ", "")
+    value = re.sub(r"[^A-Za-z0-9_.-]+", "_", value)
+    return value or fallback
 
 
 def extract_if_zip(source: Path, dest: Path) -> Path:
@@ -288,6 +295,67 @@ def detect_kind(root: Path) -> str | None:
 def run(cmd: list[str], root: Path) -> int:
     print("$ " + " ".join(cmd), flush=True)
     return subprocess.run(cmd, cwd=root).returncode
+
+
+def manifest_request_ids(manifest_path: Path) -> set[str]:
+    data = load_json(manifest_path)
+    if not data:
+        return set()
+    ids: set[str] = set()
+    value = data.get("request_id")
+    if isinstance(value, str) and value:
+        ids.add(value)
+    for item in data.get("requests", []):
+        if isinstance(item, dict):
+            value = item.get("request_id")
+            if isinstance(value, str) and value:
+                ids.add(value)
+    for case in data.get("cases", []):
+        if isinstance(case, dict):
+            for key in ("request_id",):
+                value = case.get(key)
+                if isinstance(value, str) and value:
+                    ids.add(value)
+    return ids
+
+
+def imported_reference_set_dir(args: argparse.Namespace, root: Path) -> Path:
+    set_id = slug(args.set_id or args.source.stem, "returned_reference")
+    return (root / args.dest_root / set_id).resolve()
+
+
+def run_fresh_default_audits(args: argparse.Namespace, root: Path) -> int:
+    request_id = "olm_fresh_instance_defaults_20260629"
+    set_dir = imported_reference_set_dir(args, root)
+    if not set_dir.exists():
+        print(f"[INFO] no imported reference set dir for fresh-default audit: {set_dir}")
+        return 0
+
+    manifests = []
+    for path in sorted(set_dir.rglob("reference_manifest.json")):
+        if request_id in manifest_request_ids(path):
+            manifests.append(path)
+    if not manifests:
+        print("[INFO] no fresh-default manifest found in imported set")
+        return 0
+
+    stamp = dt.datetime.now().strftime("%Y%m%d_%H%M%S")
+    failures = 0
+    for manifest in manifests:
+        stem = slug(manifest.parent.name or "fresh_defaults", "fresh_defaults")
+        out_json = root / "refs" / "reports" / f"windows_fresh_defaults_audit_{stem}_{stamp}.json"
+        out_md = root / "refs" / "reports" / f"windows_fresh_defaults_audit_{stem}_{stamp}.md"
+        cmd = [
+            sys.executable,
+            "scripts/audit_windows_fresh_defaults.py",
+            str(manifest),
+            "--output-json",
+            str(out_json),
+            "--output-md",
+            str(out_md),
+        ]
+        failures += run(cmd, root) != 0
+    return 1 if failures else 0
 
 
 def runtime_package_manifest(path: Path) -> dict | None:
@@ -533,8 +601,14 @@ def run_win_reference(args: argparse.Namespace, root: Path) -> int:
     for request in args.request:
         cmd.extend(["--request", str(request)])
     rc = run(cmd, root)
-    if rc != 0 or args.no_next_actions:
+    if rc != 0:
         return rc
+
+    fresh_audit_rc = run_fresh_default_audits(args, root)
+    if fresh_audit_rc != 0:
+        return fresh_audit_rc
+    if args.no_next_actions:
+        return 0
 
     next_cmd = [
         sys.executable,

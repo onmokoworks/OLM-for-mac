@@ -9,9 +9,13 @@ JSON request specs, preserving paths under refs/reference_requests/.
 from __future__ import annotations
 
 import argparse
+import contextlib
 import datetime as dt
 import json
+import shutil
+import subprocess
 import sys
+import tempfile
 import zipfile
 from pathlib import Path
 
@@ -95,6 +99,31 @@ def validate_request(path: Path) -> dict:
     if not isinstance(data.get("manifest_requirements"), list):
         raise ValueError("missing manifest_requirements list")
     return data
+
+
+@contextlib.contextmanager
+def prepared_requests_for_package(root: Path, requests: list[Path]):
+    if not requests:
+        yield {}
+        return
+    with tempfile.TemporaryDirectory(prefix="olm_reference_request_stage_") as tmp_dir:
+        stage_dir = Path(tmp_dir)
+        staged: dict[Path, Path] = {}
+        for request in requests:
+            dst = stage_dir / request.name
+            shutil.copy2(request, dst)
+            staged[request] = dst
+        materializer = root / "scripts" / "materialize_linked_request_params.py"
+        if materializer.exists():
+            subprocess.run(
+                [sys.executable, str(materializer), "--write", *[str(path) for path in staged.values()]],
+                cwd=root,
+                check=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+            )
+        yield staged
 
 
 def request_summary(data: dict) -> str:
@@ -247,21 +276,24 @@ def main() -> int:
     output = output.resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
 
-    validated: list[tuple[Path, dict]] = []
-    for request in requests:
-        try:
-            validated.append((request, validate_request(request)))
-        except Exception as exc:  # noqa: BLE001 - show path-specific validation error.
-            print(f"invalid request {request}: {exc}", file=sys.stderr)
-            return 1
+    with prepared_requests_for_package(root, requests) as staged_requests:
+        validated: list[tuple[Path, dict]] = []
+        for request in requests:
+            request_for_validation = staged_requests.get(request, request)
+            try:
+                validated.append((request, validate_request(request_for_validation)))
+            except Exception as exc:  # noqa: BLE001 - show path-specific validation error.
+                print(f"invalid request {request}: {exc}", file=sys.stderr)
+                return 1
 
-    readme = request_dir / "README.md"
-    with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED) as zf:
-        if readme.exists():
-            zf.write(readme, readme.relative_to(root))
-        zf.writestr(HANDOFF_NAME, build_handoff(validated))
-        for request, _data in validated:
-            zf.write(request, request.relative_to(root))
+        readme = request_dir / "README.md"
+        with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+            if readme.exists():
+                zf.write(readme, readme.relative_to(root))
+            zf.writestr(HANDOFF_NAME, build_handoff(validated))
+            for request, _data in validated:
+                source = staged_requests.get(request, request)
+                zf.write(source, request.relative_to(root))
 
     print(f"wrote {output}")
     for request, data in validated:

@@ -1,0 +1,278 @@
+{
+  "kind": "olmblur_writer_only_hypothesis",
+  "date": "2026-06-30",
+  "baseline_json": "refs/conformance/olmblur_current_word_baseline_20260629.json",
+  "witnesses": [
+    {
+      "case_id": "olmblur__case_0006",
+      "bit_depth": "16bpc",
+      "xy": [
+        314,
+        14
+      ],
+      "reference": [
+        2201,
+        2201,
+        2201,
+        65535
+      ],
+      "candidate": [
+        2199,
+        2199,
+        2199,
+        65535
+      ],
+      "raw": [
+        1100.5,
+        1100.5,
+        1100.5
+      ],
+      "predicted_nearby": [
+        2199,
+        2199,
+        2199,
+        65535
+      ],
+      "predicted_floor05": [
+        2201,
+        2201,
+        2201,
+        65535
+      ],
+      "candidate_error_l1": 6,
+      "nearby_error_l1": 6,
+      "floor05_error_l1": 0,
+      "best_writer_only_rule": "floor05",
+      "writer_only_can_match_reference": true,
+      "writer_only_diagnosis": "floor05-only-match"
+    },
+    {
+      "case_id": "olmblur__case_0006",
+      "bit_depth": "16bpc",
+      "xy": [
+        29,
+        71
+      ],
+      "reference": [
+        725,
+        725,
+        725,
+        65535
+      ],
+      "candidate": [
+        727,
+        727,
+        727,
+        65535
+      ],
+      "raw": [
+        363.5,
+        363.5,
+        363.5
+      ],
+      "predicted_nearby": [
+        727,
+        727,
+        727,
+        65535
+      ],
+      "predicted_floor05": [
+        727,
+        727,
+        727,
+        65535
+      ],
+      "candidate_error_l1": 6,
+      "nearby_error_l1": 6,
+      "floor05_error_l1": 6,
+      "best_writer_only_rule": "tie",
+      "writer_only_can_match_reference": false,
+      "writer_only_diagnosis": "writer-rule-irrelevant-at-this-witness"
+    },
+    {
+      "case_id": "olmblur__case_0007",
+      "bit_depth": "16bpc",
+      "xy": [
+        345,
+        672
+      ],
+      "reference": [
+        1247,
+        0,
+        25087,
+        65535
+      ],
+      "candidate": [
+        1247,
+        0,
+        25089,
+        65535
+      ],
+      "raw": [
+        624.429565,
+        1.26167242e-05,
+        12544.5
+      ],
+      "predicted_nearby": [
+        1247,
+        0,
+        25087,
+        65535
+      ],
+      "predicted_floor05": [
+        1247,
+        0,
+        25089,
+        65535
+      ],
+      "candidate_error_l1": 2,
+      "nearby_error_l1": 0,
+      "floor05_error_l1": 2,
+      "best_writer_only_rule": "nearby",
+      "writer_only_can_match_reference": true,
+      "writer_only_diagnosis": "nearby-only-match"
+    },
+    {
+      "case_id": "olmblur__case_0007",
+      "bit_depth": "16bpc",
+      "xy": [
+        0,
+        0
+      ],
+      "reference": [
+        0,
+        0,
+        0,
+        65535
+      ],
+      "candidate": [
+        0,
+        0,
+        0,
+        65535
+      ],
+      "raw": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "predicted_nearby": [
+        0,
+        0,
+        0,
+        65535
+      ],
+      "predicted_floor05": [
+        0,
+        0,
+        0,
+        65535
+      ],
+      "candidate_error_l1": 0,
+      "nearby_error_l1": 0,
+      "floor05_error_l1": 0,
+      "best_writer_only_rule": "tie",
+      "writer_only_can_match_reference": true,
+      "writer_only_diagnosis": "both-writer-rules-match"
+    },
+    {
+      "case_id": "case_0007",
+      "bit_depth": "8bpc-old-normalized",
+      "xy": [
+        488,
+        941
+      ],
+      "reference": [
+        251,
+        0,
+        0,
+        255
+      ],
+      "candidate": [
+        250,
+        0,
+        0,
+        255
+      ],
+      "raw": [
+        250.499985,
+        0.00161030458,
+        0.00161030458
+      ],
+      "predicted_nearby": [
+        250,
+        0,
+        0,
+        255
+      ],
+      "predicted_floor05": [
+        250,
+        0,
+        0,
+        255
+      ],
+      "candidate_error_l1": 1,
+      "nearby_error_l1": 1,
+      "floor05_error_l1": 1,
+      "best_writer_only_rule": "tie",
+      "writer_only_can_match_reference": false,
+      "writer_only_diagnosis": "writer-rule-irrelevant-at-this-witness"
+    },
+    {
+      "case_id": "case_0007",
+      "bit_depth": "8bpc-old-normalized",
+      "xy": [
+        488,
+        942
+      ],
+      "reference": [
+        251,
+        0,
+        0,
+        255
+      ],
+      "candidate": [
+        251,
+        0,
+        0,
+        255
+      ],
+      "raw": [
+        250.500015,
+        0.00162608409,
+        0.00162608409
+      ],
+      "predicted_nearby": [
+        251,
+        0,
+        0,
+        255
+      ],
+      "predicted_floor05": [
+        251,
+        0,
+        0,
+        255
+      ],
+      "candidate_error_l1": 0,
+      "nearby_error_l1": 0,
+      "floor05_error_l1": 0,
+      "best_writer_only_rule": "tie",
+      "writer_only_can_match_reference": true,
+      "writer_only_diagnosis": "both-writer-rules-match"
+    }
+  ],
+  "diagnosis_counts": {
+    "floor05-only-match": 1,
+    "writer-rule-irrelevant-at-this-witness": 2,
+    "nearby-only-match": 1,
+    "both-writer-rules-match": 2
+  },
+  "decision": "writer-only-swap-cannot-explain-all-active-witnesses",
+  "conclusion": [
+    "A pure non-Legacy writer swap from nearbyint to floor05 would fix the 16bpc witness (314,14), but it leaves (29,71) unchanged and does not explain the sign-mixed family by itself.",
+    "The surviving 16bpc Legacy witness (345,672) actually prefers nearbyint at the exact Mac-side raw=12544.5 value, so its remaining mismatch is more consistent with a slight pre-store float delta on Windows than with a different local Legacy writer rule.",
+    "The surviving old 8bpc Legacy witness (488,941) is not solved by either local floor05 or nearbyint because the current raw value is already below 250.5; Windows must either reach a slightly larger pre-store float or differ earlier in state.",
+    "Therefore the pending Windows final-word witness is still required: we need the actual Windows pre-store/helper boundary, not a blind source-side writer rewrite."
+  ]
+}

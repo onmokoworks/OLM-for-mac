@@ -55,6 +55,8 @@ def main() -> int:
         assert "smoother2_no_key_grid_20260606" in pending_doc["pending"]
         assert pending_actions[0]["request_id"] == "radialblur_inner_size_variation_20260606"
         assert pending_actions[0]["status"] == "pending"
+        assert pending_actions[0]["pinning"]["current_params_full_cases"] == 0
+        assert pending_actions[0]["pinning"]["packaged_params_full_cases"] == 0
         assert pending_actions[0]["write_scope"] == "none"
         assert pending_actions[0]["unblock_request"] == "radialblur_inner_size_variation_20260606"
         assert "notes/SUBAGENT_ASSIGNMENTS.md" in pending_actions[0]["prior_audit_refs"]
@@ -108,6 +110,7 @@ def main() -> int:
         )
         assert "next pending subagent" in pending_human.stdout
         assert "- request: radialblur_inner_size_variation_20260606" in pending_human.stdout
+        assert "- pinning: current 0/8, packaged 0/8, linked 0" in pending_human.stdout
         assert "stop before PNG-only implementation tuning" in pending_human.stdout
         assert "smoke_reference_request_cli_probe.py --request-id radialblur_inner_size_variation_20260606" in pending_human.stdout
 

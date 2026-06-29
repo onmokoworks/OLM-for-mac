@@ -37,7 +37,10 @@
   ],
   "common_params": {
     "Blur Type": 2,
-    "Center": [960, 540],
+    "Center": [
+      960,
+      540
+    ],
     "Repeat Edge Pixels": 1,
     "Ratio": 1.0,
     "Angle": 0,
@@ -45,11 +48,15 @@
     "Size Variation": 0,
     "Noise Variation": 0,
     "Noise Type": 1,
-    "Seed": 1
+    "Noise Layer": 0,
+    "Seed": 1,
+    "Noise Offset": 0,
+    "Thickness": 10
   },
   "cases": [
     {
       "id": "rb_inner_existing_0011_software_pair",
+      "source_case_id": "case_0011",
       "input": "alpha_hard_edges",
       "reason": "Re-render current case_0011 shape under SOFTWARE to check render path drift.",
       "params": {
@@ -62,10 +69,170 @@
         "Inner Blur/Offset": 0,
         "Inner Blur/Edge Fade": 0,
         "Quality": 5
-      }
+      },
+      "params_full": [
+        {
+          "name": "Blur Type",
+          "match_name": "OLM RadialBlur-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Center",
+          "match_name": "OLM RadialBlur-0002",
+          "property_index": 2,
+          "property_value_type": "TwoD_SPATIAL",
+          "value": [
+            960,
+            540
+          ]
+        },
+        {
+          "name": "Strength",
+          "match_name": "OLM RadialBlur-0004",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 62
+        },
+        {
+          "name": "Offset Mode",
+          "match_name": "OLM RadialBlur-0028",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Offset",
+          "match_name": "OLM RadialBlur-0029",
+          "property_index": 6,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Edge Fade",
+          "match_name": "OLM RadialBlur-0005",
+          "property_index": 7,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Strength",
+          "match_name": "OLM RadialBlur-0008",
+          "property_index": 10,
+          "property_value_type": "OneD",
+          "value": 478
+        },
+        {
+          "name": "Offset Mode",
+          "match_name": "OLM RadialBlur-0030",
+          "property_index": 11,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Offset",
+          "match_name": "OLM RadialBlur-0031",
+          "property_index": 12,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Edge Fade",
+          "match_name": "OLM RadialBlur-0009",
+          "property_index": 13,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Repeat Border",
+          "match_name": "OLM RadialBlur-0026",
+          "property_index": 15,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Ratio",
+          "match_name": "OLM RadialBlur-0012",
+          "property_index": 17,
+          "property_value_type": "OneD",
+          "value": 1.0
+        },
+        {
+          "name": "Angle",
+          "match_name": "OLM RadialBlur-0013",
+          "property_index": 18,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Quality",
+          "match_name": "OLM RadialBlur-0015",
+          "property_index": 20,
+          "property_value_type": "OneD",
+          "value": 5
+        },
+        {
+          "name": "Brightness Gain",
+          "match_name": "OLM RadialBlur-0016",
+          "property_index": 21,
+          "property_value_type": "OneD",
+          "value": 1.0
+        },
+        {
+          "name": "Size Variation",
+          "match_name": "OLM RadialBlur-0017",
+          "property_index": 22,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Noise Variation",
+          "match_name": "OLM RadialBlur-0019",
+          "property_index": 24,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Noise Type",
+          "match_name": "OLM RadialBlur-0020",
+          "property_index": 25,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Noise Layer",
+          "match_name": "OLM RadialBlur-0021",
+          "property_index": 26,
+          "property_value_type": "LAYER_INDEX",
+          "value": 0
+        },
+        {
+          "name": "Seed",
+          "match_name": "OLM RadialBlur-0022",
+          "property_index": 27,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Offset",
+          "match_name": "OLM RadialBlur-0023",
+          "property_index": 28,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Thickness",
+          "match_name": "OLM RadialBlur-0024",
+          "property_index": 29,
+          "property_value_type": "OneD",
+          "value": 10
+        }
+      ]
     },
     {
       "id": "rb_inner_existing_0012_software_pair",
+      "source_case_id": "case_0012",
       "input": "alpha_hard_edges",
       "reason": "Re-render current case_0012 shape under SOFTWARE to isolate Offset Mode=2/3 drift.",
       "params": {
@@ -78,10 +245,170 @@
         "Inner Blur/Offset": 11,
         "Inner Blur/Edge Fade": 0,
         "Quality": 5
-      }
+      },
+      "params_full": [
+        {
+          "name": "Blur Type",
+          "match_name": "OLM RadialBlur-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Center",
+          "match_name": "OLM RadialBlur-0002",
+          "property_index": 2,
+          "property_value_type": "TwoD_SPATIAL",
+          "value": [
+            960,
+            540
+          ]
+        },
+        {
+          "name": "Strength",
+          "match_name": "OLM RadialBlur-0004",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Offset Mode",
+          "match_name": "OLM RadialBlur-0028",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Offset",
+          "match_name": "OLM RadialBlur-0029",
+          "property_index": 6,
+          "property_value_type": "OneD",
+          "value": 29
+        },
+        {
+          "name": "Edge Fade",
+          "match_name": "OLM RadialBlur-0005",
+          "property_index": 7,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Strength",
+          "match_name": "OLM RadialBlur-0008",
+          "property_index": 10,
+          "property_value_type": "OneD",
+          "value": 478
+        },
+        {
+          "name": "Offset Mode",
+          "match_name": "OLM RadialBlur-0030",
+          "property_index": 11,
+          "property_value_type": "OneD",
+          "value": 3
+        },
+        {
+          "name": "Offset",
+          "match_name": "OLM RadialBlur-0031",
+          "property_index": 12,
+          "property_value_type": "OneD",
+          "value": 11
+        },
+        {
+          "name": "Edge Fade",
+          "match_name": "OLM RadialBlur-0009",
+          "property_index": 13,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Repeat Border",
+          "match_name": "OLM RadialBlur-0026",
+          "property_index": 15,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Ratio",
+          "match_name": "OLM RadialBlur-0012",
+          "property_index": 17,
+          "property_value_type": "OneD",
+          "value": 1.0
+        },
+        {
+          "name": "Angle",
+          "match_name": "OLM RadialBlur-0013",
+          "property_index": 18,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Quality",
+          "match_name": "OLM RadialBlur-0015",
+          "property_index": 20,
+          "property_value_type": "OneD",
+          "value": 5
+        },
+        {
+          "name": "Brightness Gain",
+          "match_name": "OLM RadialBlur-0016",
+          "property_index": 21,
+          "property_value_type": "OneD",
+          "value": 1.0
+        },
+        {
+          "name": "Size Variation",
+          "match_name": "OLM RadialBlur-0017",
+          "property_index": 22,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Noise Variation",
+          "match_name": "OLM RadialBlur-0019",
+          "property_index": 24,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Noise Type",
+          "match_name": "OLM RadialBlur-0020",
+          "property_index": 25,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Noise Layer",
+          "match_name": "OLM RadialBlur-0021",
+          "property_index": 26,
+          "property_value_type": "LAYER_INDEX",
+          "value": 0
+        },
+        {
+          "name": "Seed",
+          "match_name": "OLM RadialBlur-0022",
+          "property_index": 27,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Offset",
+          "match_name": "OLM RadialBlur-0023",
+          "property_index": 28,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Thickness",
+          "match_name": "OLM RadialBlur-0024",
+          "property_index": 29,
+          "property_value_type": "OneD",
+          "value": 10
+        }
+      ]
     },
     {
       "id": "rb_inner_existing_0013_software_pair",
+      "source_case_id": "case_0013",
       "input": "alpha_hard_edges",
       "reason": "Re-render current case_0013 shape under SOFTWARE to isolate high-Quality behavior.",
       "params": {
@@ -94,7 +421,166 @@
         "Inner Blur/Offset": 0,
         "Inner Blur/Edge Fade": 0,
         "Quality": 50
-      }
+      },
+      "params_full": [
+        {
+          "name": "Blur Type",
+          "match_name": "OLM RadialBlur-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Center",
+          "match_name": "OLM RadialBlur-0002",
+          "property_index": 2,
+          "property_value_type": "TwoD_SPATIAL",
+          "value": [
+            960,
+            540
+          ]
+        },
+        {
+          "name": "Strength",
+          "match_name": "OLM RadialBlur-0004",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Offset Mode",
+          "match_name": "OLM RadialBlur-0028",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Offset",
+          "match_name": "OLM RadialBlur-0029",
+          "property_index": 6,
+          "property_value_type": "OneD",
+          "value": 29
+        },
+        {
+          "name": "Edge Fade",
+          "match_name": "OLM RadialBlur-0005",
+          "property_index": 7,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Strength",
+          "match_name": "OLM RadialBlur-0008",
+          "property_index": 10,
+          "property_value_type": "OneD",
+          "value": 18
+        },
+        {
+          "name": "Offset Mode",
+          "match_name": "OLM RadialBlur-0030",
+          "property_index": 11,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Offset",
+          "match_name": "OLM RadialBlur-0031",
+          "property_index": 12,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Edge Fade",
+          "match_name": "OLM RadialBlur-0009",
+          "property_index": 13,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Repeat Border",
+          "match_name": "OLM RadialBlur-0026",
+          "property_index": 15,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Ratio",
+          "match_name": "OLM RadialBlur-0012",
+          "property_index": 17,
+          "property_value_type": "OneD",
+          "value": 1.0
+        },
+        {
+          "name": "Angle",
+          "match_name": "OLM RadialBlur-0013",
+          "property_index": 18,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Quality",
+          "match_name": "OLM RadialBlur-0015",
+          "property_index": 20,
+          "property_value_type": "OneD",
+          "value": 50
+        },
+        {
+          "name": "Brightness Gain",
+          "match_name": "OLM RadialBlur-0016",
+          "property_index": 21,
+          "property_value_type": "OneD",
+          "value": 1.0
+        },
+        {
+          "name": "Size Variation",
+          "match_name": "OLM RadialBlur-0017",
+          "property_index": 22,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Noise Variation",
+          "match_name": "OLM RadialBlur-0019",
+          "property_index": 24,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Noise Type",
+          "match_name": "OLM RadialBlur-0020",
+          "property_index": 25,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Noise Layer",
+          "match_name": "OLM RadialBlur-0021",
+          "property_index": 26,
+          "property_value_type": "LAYER_INDEX",
+          "value": 0
+        },
+        {
+          "name": "Seed",
+          "match_name": "OLM RadialBlur-0022",
+          "property_index": 27,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Offset",
+          "match_name": "OLM RadialBlur-0023",
+          "property_index": 28,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Thickness",
+          "match_name": "OLM RadialBlur-0024",
+          "property_index": 29,
+          "property_value_type": "OneD",
+          "value": 10
+        }
+      ]
     },
     {
       "id": "rb_inner_only_strength_small",

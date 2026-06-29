@@ -129,6 +129,36 @@ For `32bpc`, define the comparator before claiming completion. Prefer exact
 float equivalence when the host/output format supports it; otherwise document
 the epsilon as a compatibility exception, not as `AE exact`.
 
+## Why Bit Depths Diverge
+
+Different bit depths are not just "the same algorithm with a larger number
+range". They often exercise different internal behavior:
+
+- `8bpc` can hide tiny float-state differences because everything is quantized
+  early into bytes.
+- `16bpc` often exposes half-step and writer-boundary differences because AE
+  stores `PF_Pixel16` words while many plug-ins still compute in float and only
+  quantize at the end.
+- `32bpc` can expose whether the plug-in really preserves float-domain behavior
+  such as premultiply/unpremultiply order, accumulator precision, clamp timing,
+  denormal handling, and whether the algorithm silently depends on integer
+  truncation that was invisible at lower bit depths.
+
+Common sources of bit-depth drift:
+
+- different writeback rules (`floor(x + 0.5)`, ties-to-even, truncate)
+- different clamp points
+- float vs integer intermediates
+- premultiply/unpremultiply at different stages
+- alpha-weight normalization differences
+- lookup tables or thresholds scaled differently per bit depth
+- host callback differences between 8/16/32bpc paths
+- old AEX codepaths that branch by pixel format
+
+So yes: expanding a plug-in across `8bpc -> 16bpc -> 32bpc` usually gives a
+truer picture of whether the Mac port matches the Windows AEX, not just whether
+the current PNG set happens to look right.
+
 ## Binary-Grounded IR Requirement
 
 Every algorithm feature that reaches release status should have an IR note that
@@ -148,6 +178,36 @@ records:
 
 PNG diffs can generate hypotheses. They do not, by themselves, define the
 algorithm.
+
+## UI Parameter Schema Boundary
+
+Visible AE parameter definitions should be grounded separately from algorithm
+behavior.
+
+- Defaults, hard min/max, UI min/max, control types, and popup choices should
+  come from the plug-in source `PF_ADD_*` definitions when available.
+- Current source-backed extraction report:
+  `refs/reports/mac_plugin_param_schema_20260629.md` and
+  `refs/reports/mac_plugin_param_schema_20260629.json`.
+- Windows cold-start defaults should be captured separately when possible.
+  Current all-plugin fresh-instance request:
+  `refs/reference_requests/olm_fresh_instance_defaults_20260629.json`.
+- The source-of-truth split between source-backed schema, Windows fresh default
+  capture, and per-case manifests is recorded in
+  `notes/PARAMETER_SOURCE_OF_TRUTH.md`.
+- This report is authoritative for "what values can the user set?" and "what
+  is the default UI state?".
+- It is not sufficient evidence for `AE exact`, because it does not prove the
+  internal response curve, hidden branches, float/int conversion behavior, or
+  final writeback path.
+
+When a mismatch is suspected, first separate:
+
+1. Was the same UI parameter state applied?
+2. Does the same parameter state produce the same internal/output behavior?
+
+Do not use PNG differences alone to answer question 1 when the source-backed
+schema is available.
 
 For work that happens before new Windows PNG/runtime returns arrive, use
 `notes/FORECAST_FIRST_PORTING_POLICY.md`. Forecast work can narrow and implement

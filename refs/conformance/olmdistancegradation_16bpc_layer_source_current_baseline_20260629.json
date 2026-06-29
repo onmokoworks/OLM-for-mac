@@ -1,0 +1,735 @@
+{
+  "kind": "olmdistancegradation_16bpc_layer_source_current_baseline",
+  "date": "2026-06-29",
+  "request_dir": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625",
+  "cases": [
+    {
+      "case_id": "olmdistancegradation_extended__case_0012",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+      "candidate_path": "refs/reports/ae_single_case_olmdistancegradation_case0012_layer_no_bg_source_fix_installed_20260629/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+      "family": "layer-no-bg-source-or-alpha-ownership",
+      "notes": [
+        "Primary Layer/no-bg ownership witness after the narrow straight-source-times-output-alpha patch.",
+        "Windows runtime trace for source ownership should be judged against this current Mac post-fix baseline, not against the reverted or rejected unpremultiply variants."
+      ],
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 122,
+        "Outside Threshold": 204,
+        "Render Mode": 2,
+        "Use Background Color": 0,
+        "Gradation Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "BG Color ": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "Interpolation Mode": 2,
+        "Power": 1,
+        "Blur Mode": 1,
+        "Blur Size": 0,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "max_diff": 16476,
+      "mean_abs_diff": 332.83683244116514,
+      "changed_pixel_count": 285406,
+      "changed_bbox": [
+        0,
+        0,
+        1919,
+        1079
+      ],
+      "max_witness": {
+        "x": 427,
+        "y": 572,
+        "channel": 0,
+        "reference": [
+          32859,
+          0,
+          0,
+          32859
+        ],
+        "candidate": [
+          16383,
+          0,
+          0,
+          32767
+        ],
+        "delta": [
+          -16476,
+          0,
+          0,
+          -92
+        ]
+      },
+      "samples": [
+        {
+          "x": 462,
+          "y": 7,
+          "input": [
+            16255,
+            16255,
+            16255,
+            32639
+          ],
+          "reference": [
+            32371,
+            32371,
+            32371,
+            64997
+          ],
+          "candidate": [
+            32105,
+            32105,
+            32105,
+            64997
+          ],
+          "delta": [
+            -266,
+            -266,
+            -266,
+            0
+          ]
+        },
+        {
+          "x": 72,
+          "y": 8,
+          "input": [
+            16255,
+            16255,
+            16255,
+            32639
+          ],
+          "reference": [
+            32371,
+            32371,
+            32371,
+            64997
+          ],
+          "candidate": [
+            32105,
+            32105,
+            32105,
+            64997
+          ],
+          "delta": [
+            -266,
+            -266,
+            -266,
+            0
+          ]
+        },
+        {
+          "x": 106,
+          "y": 19,
+          "input": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "reference": [
+            43329,
+            43329,
+            43329,
+            64997
+          ],
+          "candidate": [
+            42975,
+            42975,
+            42975,
+            64997
+          ],
+          "delta": [
+            -354,
+            -354,
+            -354,
+            0
+          ]
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "input": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            0,
+            0,
+            0,
+            43949
+          ],
+          "candidate": [
+            0,
+            0,
+            0,
+            43949
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0016",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0016.png",
+      "candidate_path": "refs/reports/ae_single_case_olmdistancegradation_probe_set_20260629/olmdistancegradation_extended__case_0016_rerun/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0016.png",
+      "family": "layer-no-bg-source-or-alpha-ownership",
+      "notes": [
+        "Secondary Layer/no-bg family under Invert=1.",
+        "Useful to confirm whether the same ownership rule explains both the primary and inverted residual family."
+      ],
+      "params": {
+        "Invert": 1,
+        "In/Out": 1,
+        "Inside Threshold": 0,
+        "Outside Threshold": 204,
+        "Render Mode": 2,
+        "Use Background Color": 0,
+        "Gradation Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "BG Color ": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "Interpolation Mode": 2,
+        "Power": 1,
+        "Blur Mode": 1,
+        "Blur Size": 0,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "max_diff": 9710,
+      "mean_abs_diff": 26.64569022472994,
+      "changed_pixel_count": 14196,
+      "changed_bbox": [
+        0,
+        0,
+        1919,
+        1079
+      ],
+      "max_witness": {
+        "x": 106,
+        "y": 19,
+        "channel": 0,
+        "reference": [
+          29125,
+          29125,
+          29125,
+          43689
+        ],
+        "candidate": [
+          19415,
+          19415,
+          19415,
+          43689
+        ],
+        "delta": [
+          -9710,
+          -9710,
+          -9710,
+          0
+        ]
+      },
+      "samples": [
+        {
+          "x": 15,
+          "y": 0,
+          "input": [
+            7451,
+            7451,
+            7451,
+            22101
+          ],
+          "reference": [
+            7451,
+            7451,
+            7451,
+            22101
+          ],
+          "candidate": [
+            2511,
+            2511,
+            2511,
+            22101
+          ],
+          "delta": [
+            -4940,
+            -4940,
+            -4940,
+            0
+          ]
+        },
+        {
+          "x": 106,
+          "y": 19,
+          "input": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "reference": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "candidate": [
+            19415,
+            19415,
+            19415,
+            43689
+          ],
+          "delta": [
+            -9710,
+            -9710,
+            -9710,
+            0
+          ]
+        },
+        {
+          "x": 447,
+          "y": 0,
+          "input": [
+            15247,
+            15247,
+            15247,
+            31611
+          ],
+          "reference": [
+            15247,
+            15247,
+            15247,
+            31611
+          ],
+          "candidate": [
+            7353,
+            7353,
+            7353,
+            31611
+          ],
+          "delta": [
+            -7894,
+            -7894,
+            -7894,
+            0
+          ]
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "input": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0020",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0020.png",
+      "candidate_path": "refs/reports/ae_single_case_olmdistancegradation_probe_set_20260629/olmdistancegradation_extended__case_0020/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0020.png",
+      "family": "constant-bg-binary-boundary",
+      "notes": [
+        "Control family after the Constant-specific THRESH_BINARY fix.",
+        "This is intentionally not the active runtime-trace target, but it is the best control that the Layer/no-bg patch did not regress the Constant boundary family."
+      ],
+      "params": {
+        "Invert": 0,
+        "In/Out": 1,
+        "Inside Threshold": 78,
+        "Outside Threshold": 204,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "BG Color ": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Interpolation Mode": 1,
+        "Power": 1,
+        "Blur Mode": 1,
+        "Blur Size": 0,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "max_diff": 61165,
+      "mean_abs_diff": 0.014407913773148148,
+      "changed_pixel_count": 1,
+      "changed_bbox": [
+        434,
+        676,
+        434,
+        676
+      ],
+      "max_witness": {
+        "x": 434,
+        "y": 676,
+        "channel": 2,
+        "reference": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "candidate": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "delta": [
+          58340,
+          0,
+          -61165,
+          0
+        ]
+      },
+      "samples": [
+        {
+          "x": 951,
+          "y": 417,
+          "input": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 950,
+          "y": 417,
+          "input": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 951,
+          "y": 416,
+          "input": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "input": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0022",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0022.png",
+      "candidate_path": "refs/reports/ae_single_case_olmdistancegradation_probe_set_20260629/olmdistancegradation_extended__case_0022/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0022.png",
+      "family": "constant-bg-binary-boundary",
+      "notes": [
+        "Boundary-localized Constant family after the Constant-specific THRESH_BINARY fix.",
+        "Useful to keep the Constant lane separated from the Layer/no-bg ownership lane while Windows runtime evidence is pending."
+      ],
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 36,
+        "Outside Threshold": 11,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "BG Color ": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Interpolation Mode": 1,
+        "Power": 1,
+        "Blur Mode": 1,
+        "Blur Size": 0,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "max_diff": 61165,
+      "mean_abs_diff": 2.7663194444444446,
+      "changed_pixel_count": 192,
+      "changed_bbox": [
+        70,
+        55,
+        1847,
+        891
+      ],
+      "max_witness": {
+        "x": 1101,
+        "y": 55,
+        "channel": 2,
+        "reference": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "candidate": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "delta": [
+          -58340,
+          0,
+          61165,
+          0
+        ]
+      },
+      "samples": [
+        {
+          "x": 4,
+          "y": 0,
+          "input": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 28,
+          "y": 0,
+          "input": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 27,
+          "y": 0,
+          "input": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "input": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}

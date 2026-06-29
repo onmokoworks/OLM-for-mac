@@ -150,6 +150,8 @@ def main() -> int:
                 proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
                 data = json.loads(proc.stdout)
                 assert data["decision"]["action"] == "send-windows-reference-package"
+                assert "pending_pinning" in data["decision"]
+                assert "pending_pinning" in data
                 target = Path(data["decision"]["target"]["path"])
                 project_batch = repo / "handoffs" / "windows_batch"
                 if target.parent == project_batch:
@@ -162,6 +164,7 @@ def main() -> int:
                 proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
                 data = json.loads(proc.stdout)
                 assert data["decision"]["action"] == "send-windows-reference-package"
+                assert "pending_pinning" in data["decision"]
                 target = Path(data["decision"]["target"]["path"])
                 assert target.parent == repo / "handoffs" / "windows_batch"
             else:

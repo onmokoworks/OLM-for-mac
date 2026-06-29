@@ -59,8 +59,11 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	             CENTER_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	PF_ADD_NULL(GetStringPtr(StrID_OuterBlur_Param_Name), OUTER_BLUR_LABEL_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_OuterStrength_Param_Name),
-	              0, 3000, 0, 3000, 212,
+	              0, 2000, 0, 2000, 0,
 	              OUTER_STRENGTH_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
@@ -70,21 +73,55 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_OuterOffset_Param_Name),
-	              0, 3000, 0, 3000, 153,
+	              0, 500, 0, 500, 153,
 	              OUTER_OFFSET_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_OuterEdgeFade_Param_Name),
+	                     0.0, 100.0, 0.0, 100.0, 0.0,
+	                     PF_Precision_TENTHS, 0, 0,
+	                     OUTER_EDGE_FADE_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_NULL(GetStringPtr(StrID_Blank_Param_Name), OUTER_BLANK_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_NULL(GetStringPtr(StrID_InnerBlur_Param_Name), INNER_BLUR_LABEL_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_InnerStrength_Param_Name),
-	              0, 3000, 0, 3000, 0,
+	              0, 2000, 0, 2000, 0,
 	              INNER_STRENGTH_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_POPUP(GetStringPtr(StrID_InnerOffsetMode_Param_Name),
+	             3, 1, GetStringPtr(StrID_OffsetMode_Choices),
+	             INNER_OFFSET_MODE_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_SLIDER(GetStringPtr(StrID_InnerOffset_Param_Name),
+	              0, 500, 0, 500, 0,
+	              INNER_OFFSET_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_InnerEdgeFade_Param_Name),
+	                     0.0, 100.0, 0.0, 100.0, 0.0,
+	                     PF_Precision_TENTHS, 0, 0,
+	                     INNER_EDGE_FADE_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_NULL(GetStringPtr(StrID_Blank_Param_Name), INNER_BLANK_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_CHECKBOX(GetStringPtr(StrID_RepeatBorder_Param_Name), "", TRUE, 0,
 	                REPEAT_BORDER_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	PF_ADD_NULL(GetStringPtr(StrID_Ellipse_Param_Name), ELLIPSE_LABEL_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_Ratio_Param_Name),
-	                     0.01, 10.0, 0.01, 10.0, 1.0,
+	                     1.0, 5.0, 1.0, 5.0, 1.0,
 	                     PF_Precision_HUNDREDTHS, 0, 0,
 	                     RATIO_DISK_ID);
 
@@ -95,8 +132,11 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	                     ANGLE_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	PF_ADD_NULL(GetStringPtr(StrID_Blank_Param_Name), ELLIPSE_BLANK_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_Quality_Param_Name),
-	                     1.0, 50.0, 1.0, 50.0, 1.0,
+	                     1.0, 50.0, 1.0, 50.0, 5.0,
 	                     PF_Precision_TENTHS, 0, 0,
 	                     QUALITY_DISK_ID);
 
@@ -113,10 +153,40 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	                     SIZE_VARIATION_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	PF_ADD_NULL(GetStringPtr(StrID_NoiseParams_Param_Name), NOISE_PARAMS_LABEL_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_NoiseVariation_Param_Name),
 	                     0.0, 100.0, 0.0, 100.0, 0.0,
 	                     PF_Precision_TENTHS, 0, 0,
 	                     NOISE_VARIATION_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_POPUP(GetStringPtr(StrID_NoiseType_Param_Name),
+	             3, 1, GetStringPtr(StrID_NoiseType_Choices),
+	             NOISE_TYPE_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_LAYER(GetStringPtr(StrID_NoiseLayer_Param_Name), PF_LayerDefault_MYSELF, NOISE_LAYER_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_SLIDER(GetStringPtr(StrID_Seed_Param_Name),
+	              1, 1000, 1, 1000, 1,
+	              SEED_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_SLIDER(GetStringPtr(StrID_NoiseOffset_Param_Name),
+	              -3000, 3000, -3000, 3000, 0,
+	              NOISE_OFFSET_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_Thickness_Param_Name),
+	                     1.0, 100.0, 1.0, 100.0, 10.0,
+	                     PF_Precision_TENTHS, 0, 0,
+	                     THICKNESS_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_NULL(GetStringPtr(StrID_Blank_Param_Name), NOISE_BLANK_DISK_ID);
 
 	out_data->num_params = OLMRADIALBLUR_NUM_PARAMS;
 	return err;
@@ -758,9 +828,13 @@ static OLMRadialBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong comp_wi
 	info.center_x = (PF_FpLong)params[OLMRADIALBLUR_CENTER]->u.td.x_value / 65536.0;
 	info.center_y = (PF_FpLong)params[OLMRADIALBLUR_CENTER]->u.td.y_value / 65536.0;
 	info.outer_strength = params[OLMRADIALBLUR_OUTER_STRENGTH]->u.sd.value;
+	info.outer_edge_fade = (A_long)params[OLMRADIALBLUR_OUTER_EDGE_FADE]->u.fs_d.value;
 	info.outer_offset_mode = params[OLMRADIALBLUR_OUTER_OFFSET_MODE]->u.pd.value;
 	info.outer_offset = params[OLMRADIALBLUR_OUTER_OFFSET]->u.sd.value;
 	info.inner_strength = params[OLMRADIALBLUR_INNER_STRENGTH]->u.sd.value;
+	info.inner_edge_fade = (A_long)params[OLMRADIALBLUR_INNER_EDGE_FADE]->u.fs_d.value;
+	info.inner_offset_mode = params[OLMRADIALBLUR_INNER_OFFSET_MODE]->u.pd.value;
+	info.inner_offset = params[OLMRADIALBLUR_INNER_OFFSET]->u.sd.value;
 	info.repeat_border = params[OLMRADIALBLUR_REPEAT_BORDER]->u.bd.value;
 	info.ratio = params[OLMRADIALBLUR_RATIO]->u.fs_d.value;
 	info.angle_deg = params[OLMRADIALBLUR_ANGLE]->u.fs_d.value;
@@ -768,6 +842,11 @@ static OLMRadialBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong comp_wi
 	info.brightness_gain = params[OLMRADIALBLUR_BRIGHTNESS_GAIN]->u.fs_d.value;
 	info.size_variation = params[OLMRADIALBLUR_SIZE_VARIATION]->u.fs_d.value;
 	info.noise_variation = params[OLMRADIALBLUR_NOISE_VARIATION]->u.fs_d.value;
+	info.noise_type = params[OLMRADIALBLUR_NOISE_TYPE]->u.pd.value;
+	info.noise_layer = params[OLMRADIALBLUR_NOISE_LAYER]->u.ld.dephault;
+	info.seed = params[OLMRADIALBLUR_SEED]->u.sd.value;
+	info.noise_offset = params[OLMRADIALBLUR_NOISE_OFFSET]->u.sd.value;
+	info.thickness = params[OLMRADIALBLUR_THICKNESS]->u.fs_d.value;
 	info.comp_width = comp_width;
 	info.comp_height = comp_height;
 	return info;

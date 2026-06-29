@@ -327,6 +327,18 @@ This keeps `0.62` as the best measured global scale among those three C++
 probes and leaves the next target as compose/writeback structure, not scalar
 retuning.
 
+The 2026-06-29 pending compose-proof contract now ties that conclusion to the
+latest bundled Windows runtime summary:
+`refs/conformance/olmkirakira_pending_compose_proof_20260629.md`.
+That contract explicitly freezes the primary residual-hotspot ask at
+`kk_vertical_len50_brightness1_strength100 (934,118)` with Windows
+`[131,131,131,255]` vs current Mac BT.709 `[145,145,145,255]`, plus the
+optional `rotation13 (1098,202)` hotspot. It also records that the latest
+bundle still leaves `merge_mode_1_compose.composed_rgba_float` and
+`pre_writeback_rgba_float` unisolated, so the next useful Windows return must
+capture that internal compose/quantization boundary instead of re-opening
+BT.709 luma, boxFilter pass-1, ray-helper choreography, or global gain.
+
 2026-06-24 decision matrix:
 
 - `scripts/analyze_kirakira_decision_matrix.py` combines the BT.709 remeasure,

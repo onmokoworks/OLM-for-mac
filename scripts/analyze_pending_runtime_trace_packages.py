@@ -12,7 +12,11 @@ from typing import Any
 
 PRIORITY_PROFILES = {
     "radialblur-residual-witness": 10,
+    "radialblur-caller-collapse-witness": 9,
+    "olmblur-final-word-witness": 19,
     "kirakira-boxfilter-pass1-microprobe": 20,
+    "kirakira-compose-writeback-witness": 44,
+    "directionalblur-helper-coverage-witness": 29,
     "directionalblur-residual-witness": 30,
     "kirakira-forward-warp-box-input": 40,
     "kirakira-aggregation-compose-bt709": 45,
@@ -24,8 +28,16 @@ PRIORITY_PROFILES = {
 
 COMPARISON_COMMANDS = [
     (
+        "kirakira_compose_writeback_witness_20260630",
+        "python3 scripts/compare_kirakira_stage_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --local-trace-json refs/reports/olmkirakira_trace_baseline_20260624_bt709_mac/trace.json --output-json refs/reports/runtime_trace_comparisons/olmkirakira_compose_writeback_witness.json --output-md refs/reports/runtime_trace_comparisons/olmkirakira_compose_writeback_witness.md",
+    ),
+    (
         "kirakira_aggregation_compose_bt709_20260624",
         "python3 scripts/compare_kirakira_stage_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --local-trace-json refs/reports/olmkirakira_trace_baseline_20260624_bt709_mac/trace.json --output-json refs/reports/runtime_trace_comparisons/olmkirakira_aggregation_compose_bt709_20260624.json --output-md refs/reports/runtime_trace_comparisons/olmkirakira_aggregation_compose_bt709_20260624.md",
+    ),
+    (
+        "olmradialblur_caller_collapse_witness_20260630",
+        "python3 scripts/compare_radialblur_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmradialblur_caller_collapse_witness.json --output-md refs/reports/runtime_trace_comparisons/olmradialblur_caller_collapse_witness.md",
     ),
     (
         "olmradialblur_zoom_tiny_rotation_residual_witness_20260622",
@@ -34,6 +46,10 @@ COMPARISON_COMMANDS = [
     (
         "kirakira_boxfilter_pass1_microprobe_20260622",
         "python3 scripts/compare_kirakira_stage_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --local-trace-json refs/reports/olmkirakira_trace_baseline_20260622_box_windows_mac/trace.json --output-json refs/reports/runtime_trace_comparisons/olmkirakira_boxfilter_pass1_microprobe.json --output-md refs/reports/runtime_trace_comparisons/olmkirakira_boxfilter_pass1_microprobe.md",
+    ),
+    (
+        "olmdirectionalblur_helper_coverage_witness_20260630",
+        "python3 scripts/compare_directionalblur_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmdirectionalblur_helper_coverage_witness.json --output-md refs/reports/runtime_trace_comparisons/olmdirectionalblur_helper_coverage_witness.md",
     ),
     (
         "olmdirectionalblur_angle0_diagonal_residual_witness_20260622",
@@ -46,6 +62,10 @@ COMPARISON_COMMANDS = [
     (
         "kirakira_fun_181150790",
         "python3 scripts/compare_kirakira_stage_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmkirakira_stage_values.json --output-md refs/reports/runtime_trace_comparisons/olmkirakira_stage_values.md",
+    ),
+    (
+        "olmblur_final_word_witness_20260630",
+        "python3 scripts/compare_olmblur_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmblur_final_word_witness.json --output-md refs/reports/runtime_trace_comparisons/olmblur_final_word_witness.md",
     ),
     (
         "olmblur_repeat_threshold",
@@ -119,6 +139,17 @@ def answered_request_ids(root: Path) -> set[str]:
             status = str(row.get("status") or "").lower()
             if status.startswith("answered") or status in {"ok", "complete"}:
                 ids.add(row["request_id"])
+    for path in sorted((root / "refs/reports/runtime_trace_comparisons").glob("*.json")):
+        data = read_json(path)
+        if not isinstance(data, dict) or not isinstance(data.get("request_id"), str):
+            continue
+        windows = data.get("windows")
+        if not isinstance(windows, dict):
+            continue
+        status = str(windows.get("status") or "").lower()
+        present = windows.get("present")
+        if status.startswith("answered") or status in {"ok", "complete"} or present is True:
+            ids.add(str(data["request_id"]))
     return ids
 
 

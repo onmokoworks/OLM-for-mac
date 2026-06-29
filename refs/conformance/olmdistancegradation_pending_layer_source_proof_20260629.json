@@ -1,0 +1,312 @@
+{
+  "active_request": "olmdistancegradation_16bpc_layer_no_bg_source_ownership_20260629",
+  "date": "2026-06-29",
+  "decision_boundary": "Determine whether Windows Layer/no-bg 16bpc compose derives RGB from straight source times output alpha, from already-premultiplied source, or from another ownership rule.",
+  "kind": "olmdistancegradation_layer_source_pending_proof",
+  "latest_runtime_summary": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/runtime_trace_bundle/olm_windows_action_bundle_20260629_232710_priority4_runtime_return_windows/runtime_trace_summary_distancegradation_layer_no_bg_source_ownership_20260629_235638.json",
+  "priority": 1,
+  "return_is_actionable_if": [
+    "It records the actual source-layer RGBA values consumed by the Windows Layer/no-bg compose path at case_0012/case_0016 witnesses.",
+    "It records any premultiply or unpremultiply step between source-layer read and the already supported straight-source-times-output-alpha branch.",
+    "It records the output floats before 16bpc writeback and the final RGBA16 words at the same pixels."
+  ],
+  "return_is_not_actionable_if": [
+    "It only returns final PNG or final RGBA16 values without the compose-path source ownership steps.",
+    "It records the wrong branch family (for example only case_0020 Constant/background behavior).",
+    "It confirms values after the point where RGB ownership has already been collapsed and cannot distinguish straight vs premultiplied source handling."
+  ],
+  "runtime_package": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/runtime_trace_packages/olm_runtime_trace_distancegradation_layer_no_bg_source_ownership_20260629.zip",
+  "why_png_is_not_enough": [
+    "The direct Layer/no-bg unpremultiply hypothesis is already rejected because it widened coverage from 25421 to 285406 changed pixels.",
+    "The current narrowed Mac fix matches the primary case_0012 witness alpha and nearly matches RGB, but the family is still not AE exact.",
+    "The remaining ambiguity is the exact source RGB ownership inside the Windows compose branch, not a generic threshold or writeback issue."
+  ],
+  "witness_cases": [
+    {
+      "case_id": "olmdistancegradation_extended__case_0012",
+      "changed_pixel_count": 25421,
+      "current_reverted_max_witness": {
+        "candidate": [
+          16121,
+          16121,
+          16121,
+          64997
+        ],
+        "channel": 0,
+        "delta": [
+          -16250,
+          -16250,
+          -16250,
+          0
+        ],
+        "ref": [
+          32371,
+          32371,
+          32371,
+          64997
+        ],
+        "x": 462,
+        "y": 7
+      },
+      "expected_use": "Primary Layer/no-bg source-ownership branch proof.",
+      "family": "layer-no-bg-source-or-alpha-ownership",
+      "latest_windows_runtime_note": {
+        "branch_decision": {
+          "failed_breakpoint_or_watchpoint_reason": "cdb launched AE 2026 and armed the startup trace, but the retry stalled during AE/plugin startup before DistanceGradation+0x1170480 callback hits were produced. See included cdb logs. Numeric ownership facts here are derived from the request's source/reference witness pixels.",
+          "uses_other_source_ownership_rule": false,
+          "uses_premultiplied_source_directly": false,
+          "uses_straight_source_times_output_alpha": true
+        },
+        "pixels": [
+          {
+            "derived_output_alpha_norm": 0.991790646,
+            "derived_premultiplied_source_times_output_alpha_rgb16": [
+              16122,
+              16122,
+              16122
+            ],
+            "derived_source_straight_rgb16": [
+              32633,
+              32633,
+              32633
+            ],
+            "derived_straight_times_output_alpha_rgb16": [
+              32365,
+              32365,
+              32365
+            ],
+            "interpretation": "Windows RGB is near straight_source_rgb * output_alpha. Mac candidate is near premultiplied_source_rgb * output_alpha.",
+            "mac_candidate_rgba16": [
+              16121,
+              16121,
+              16121,
+              64997
+            ],
+            "source_input_rgba16": [
+              16255,
+              16255,
+              16255,
+              32639
+            ],
+            "windows_reference_rgba16": [
+              32371,
+              32371,
+              32371,
+              64997
+            ],
+            "x": 462,
+            "y": 7
+          },
+          {
+            "derived_output_alpha_norm": 0.991790646,
+            "derived_premultiplied_source_times_output_alpha_rgb16": [
+              16122,
+              16122,
+              16122
+            ],
+            "derived_source_straight_rgb16": [
+              32633,
+              32633,
+              32633
+            ],
+            "derived_straight_times_output_alpha_rgb16": [
+              32365,
+              32365,
+              32365
+            ],
+            "interpretation": "Same ownership rule as the primary witness.",
+            "mac_candidate_rgba16": [
+              16121,
+              16121,
+              16121,
+              64997
+            ],
+            "source_input_rgba16": [
+              16255,
+              16255,
+              16255,
+              32639
+            ],
+            "windows_reference_rgba16": [
+              32371,
+              32371,
+              32371,
+              64997
+            ],
+            "x": 72,
+            "y": 8
+          }
+        ]
+      },
+      "primary_points": [
+        {
+          "candidate": [
+            16121,
+            16121,
+            16121,
+            64997
+          ],
+          "delta": [
+            -16250,
+            -16250,
+            -16250,
+            0
+          ],
+          "input": [
+            16255,
+            16255,
+            16255,
+            32639
+          ],
+          "reference": [
+            32371,
+            32371,
+            32371,
+            64997
+          ],
+          "x": 462,
+          "y": 7
+        },
+        {
+          "candidate": [
+            16121,
+            16121,
+            16121,
+            64997
+          ],
+          "delta": [
+            -16250,
+            -16250,
+            -16250,
+            0
+          ],
+          "input": [
+            16255,
+            16255,
+            16255,
+            32639
+          ],
+          "reference": [
+            32371,
+            32371,
+            32371,
+            64997
+          ],
+          "x": 72,
+          "y": 8
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0016",
+      "changed_pixel_count": null,
+      "expected_use": "Companion Layer/no-bg witness that cleanly separates straight-source-times-output-alpha from double-premultiplied ownership.",
+      "family": "layer-no-bg-companion-ownership-separator",
+      "primary_points": [
+        {
+          "derived_output_alpha_norm": 0.666651408,
+          "derived_premultiplied_source_times_output_alpha_rgb16": [
+            19415,
+            19415,
+            19415
+          ],
+          "derived_source_straight_rgb16": [
+            43688,
+            43688,
+            43688
+          ],
+          "derived_straight_times_output_alpha_rgb16": [
+            29125,
+            29125,
+            29125
+          ],
+          "interpretation": "The companion witness exactly separates the two ownership rules: Windows equals straight source premultiplied by output alpha, while Mac equals premultiplied source multiplied by output alpha again.",
+          "mac_candidate_rgba16": [
+            19415,
+            19415,
+            19415,
+            43689
+          ],
+          "source_input_rgba16": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "windows_reference_rgba16": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "x": 106,
+          "y": 19
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0020",
+      "changed_pixel_count": 1001,
+      "expected_use": "Secondary Constant/background control family; not the current runtime-trace target.",
+      "family": "constant-bg-binary-sparse-full-color",
+      "primary_points": [
+        {
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ],
+          "input": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "x": 951,
+          "y": 417
+        },
+        {
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "input": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "x": 950,
+          "y": 417
+        }
+      ]
+    }
+  ]
+}

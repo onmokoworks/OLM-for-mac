@@ -2,6 +2,8 @@
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <vector>
 
 static PF_Err
 About(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
@@ -33,13 +35,13 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_BlurAmount_Param_Name),
-	                     0.05, 1000.0, 5.0, 50.0, 1.0,
+	                     1.0, 1000.0, 1.0, 50.0, 5.0,
 	                     PF_Precision_TENTHS, 0, 0,
 	                     BLUR_AMOUNT_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FIXED(GetStringPtr(StrID_BlurSmoothness_Param_Name),
-	             1, 100, 1, 100, 1,
+	             1, 100, 1, 100, 100,
 	             1, 0, 0,
 	             BLUR_SMOOTHNESS_DISK_ID);
 
@@ -70,6 +72,28 @@ struct BlurParams {
 	A_long bias_dir;
 	A_long legacy;
 };
+
+struct BlurDebugConfig;
+static bool debug_has_point(const BlurDebugConfig *debug, A_long x, A_long y);
+static void debug_dump_legacy_stage(
+	const BlurDebugConfig *debug,
+	const char *stage,
+	A_long iter,
+	A_long radius,
+	A_long x,
+	A_long y,
+	bool all_same,
+	bool have_prev,
+	float sumW,
+	A_long first_coord,
+	A_long last_coord,
+	A_long sample_count,
+	float center_r,
+	float center_g,
+	float center_b,
+	float out_r,
+	float out_g,
+	float out_b);
 
 static void blur_1d_horizontal(
 	const float *srcRGB, const u_char *srcA,
@@ -175,8 +199,10 @@ static void blur_1d_vertical(
 static void legacy_blur_1d_horizontal(
 	const float *srcRGB, const u_char *srcA,
 	float *dstRGB, u_char *dstA,
-	A_long w, A_long h, A_long radius, const float *kernel)
+	A_long w, A_long h, A_long radius, const float *kernel,
+	const BlurDebugConfig *debug, A_long iter)
 {
+	float carryPrevR = -1.0f, carryPrevG = -1.0f, carryPrevB = -1.0f;
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
 			A_long idx = y * w + x;
@@ -189,13 +215,20 @@ static void legacy_blur_1d_horizontal(
 			}
 			float sumR = 0.0f, sumG = 0.0f, sumB = 0.0f, sumW = 0.0f;
 			bool all_same = true;
-			bool have_prev = false;
-			float prevR = 0.0f, prevG = 0.0f, prevB = 0.0f;
+			bool have_prev = true;
+			A_long first_coord = -1;
+			A_long last_coord = -1;
+			A_long sample_count = 0;
+			float prevR = carryPrevR, prevG = carryPrevG, prevB = carryPrevB;
+			bool saw_sample = false;
 			for (A_long off = -radius; off <= radius; ++off) {
 				A_long sx = x + off;
 				if (sx <= 0 || sx >= w) continue;
 				A_long si = y * w + sx;
 				if (!srcA[si]) break;
+				if (first_coord < 0) first_coord = sx;
+				last_coord = sx;
+				++sample_count;
 				float wr = kernel[radius + off];
 				sumW += wr;
 				sumR += wr * srcRGB[si*3+0];
@@ -211,6 +244,12 @@ static void legacy_blur_1d_horizontal(
 				prevG = curG;
 				prevB = curB;
 				have_prev = true;
+				saw_sample = true;
+			}
+			if (saw_sample) {
+				carryPrevR = prevR;
+				carryPrevG = prevG;
+				carryPrevB = prevB;
 			}
 			if (all_same || sumW == 0.0f) {
 				dstRGB[idx*3+0] = srcRGB[idx*3+0];
@@ -222,6 +261,12 @@ static void legacy_blur_1d_horizontal(
 				dstRGB[idx*3+1] = sumG * inv;
 				dstRGB[idx*3+2] = sumB * inv;
 			}
+			debug_dump_legacy_stage(
+				debug, "horizontal", iter, radius, x, y,
+				all_same, have_prev, sumW, first_coord, last_coord, sample_count,
+				srcRGB[idx*3+0], srcRGB[idx*3+1], srcRGB[idx*3+2],
+				dstRGB[idx*3+0], dstRGB[idx*3+1], dstRGB[idx*3+2]
+			);
 		}
 	}
 }
@@ -229,8 +274,10 @@ static void legacy_blur_1d_horizontal(
 static void legacy_blur_1d_vertical(
 	const float *srcRGB, const u_char *srcA,
 	float *dstRGB, u_char *dstA,
-	A_long w, A_long h, A_long radius, const float *kernel)
+	A_long w, A_long h, A_long radius, const float *kernel,
+	const BlurDebugConfig *debug, A_long iter)
 {
+	float carryPrevR = -1.0f, carryPrevG = -1.0f, carryPrevB = -1.0f;
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
 			A_long idx = y * w + x;
@@ -243,13 +290,20 @@ static void legacy_blur_1d_vertical(
 			}
 			float sumR = 0.0f, sumG = 0.0f, sumB = 0.0f, sumW = 0.0f;
 			bool all_same = true;
-			bool have_prev = false;
-			float prevR = 0.0f, prevG = 0.0f, prevB = 0.0f;
+			bool have_prev = true;
+			A_long first_coord = -1;
+			A_long last_coord = -1;
+			A_long sample_count = 0;
+			float prevR = carryPrevR, prevG = carryPrevG, prevB = carryPrevB;
+			bool saw_sample = false;
 			for (A_long off = -radius; off <= radius; ++off) {
 				A_long sy = y + off;
 				if (sy <= 0 || sy >= h) continue;
 				A_long si = sy * w + x;
 				if (!srcA[si]) break;
+				if (first_coord < 0) first_coord = sy;
+				last_coord = sy;
+				++sample_count;
 				float wr = kernel[radius + off];
 				sumW += wr;
 				sumR += wr * srcRGB[si*3+0];
@@ -265,6 +319,12 @@ static void legacy_blur_1d_vertical(
 				prevG = curG;
 				prevB = curB;
 				have_prev = true;
+				saw_sample = true;
+			}
+			if (saw_sample) {
+				carryPrevR = prevR;
+				carryPrevG = prevG;
+				carryPrevB = prevB;
 			}
 			if (all_same || sumW == 0.0f) {
 				dstRGB[idx*3+0] = srcRGB[idx*3+0];
@@ -276,6 +336,12 @@ static void legacy_blur_1d_vertical(
 				dstRGB[idx*3+1] = sumG * inv;
 				dstRGB[idx*3+2] = sumB * inv;
 			}
+			debug_dump_legacy_stage(
+				debug, "vertical", iter, radius, x, y,
+				all_same, have_prev, sumW, first_coord, last_coord, sample_count,
+				srcRGB[idx*3+0], srcRGB[idx*3+1], srcRGB[idx*3+2],
+				dstRGB[idx*3+0], dstRGB[idx*3+1], dstRGB[idx*3+2]
+			);
 		}
 	}
 }
@@ -336,6 +402,151 @@ static inline float round_blur_value(float v, A_long legacy)
 	return legacy ? floorf(v + 0.5f) : nearbyintf(v);
 }
 
+struct BlurDebugPoint {
+	A_long x;
+	A_long y;
+};
+
+struct BlurDebugConfig {
+	const char *dump_path;
+	std::vector<BlurDebugPoint> points;
+};
+
+static bool
+debug_has_point(const BlurDebugConfig *debug, A_long x, A_long y)
+{
+	if (!debug || !debug->dump_path || debug->points.empty()) return false;
+	for (size_t i = 0; i < debug->points.size(); ++i) {
+		if (debug->points[i].x == x && debug->points[i].y == y) return true;
+	}
+	return false;
+}
+
+static void
+debug_dump_legacy_stage(
+	const BlurDebugConfig *debug,
+	const char *stage,
+	A_long iter,
+	A_long radius,
+	A_long x,
+	A_long y,
+	bool all_same,
+	bool have_prev,
+	float sumW,
+	A_long first_coord,
+	A_long last_coord,
+	A_long sample_count,
+	float center_r,
+	float center_g,
+	float center_b,
+	float out_r,
+	float out_g,
+	float out_b)
+{
+	if (!debug_has_point(debug, x, y)) return;
+	FILE *fp = fopen(debug->dump_path, "a");
+	if (!fp) return;
+	fprintf(
+		fp,
+		"OLMBLUR_DEBUG_LEGACY stage=%s iter=%d radius=%d x=%d y=%d all_same=%d have_prev=%d sumW=%.9g sample_count=%d first_coord=%d last_coord=%d center=(%.9g,%.9g,%.9g) out=(%.9g,%.9g,%.9g)\n",
+		stage,
+		(int)iter,
+		(int)radius,
+		(int)x,
+		(int)y,
+		all_same ? 1 : 0,
+		have_prev ? 1 : 0,
+		sumW,
+		(int)sample_count,
+		(int)first_coord,
+		(int)last_coord,
+		center_r, center_g, center_b,
+		out_r, out_g, out_b
+	);
+	fclose(fp);
+}
+
+static std::vector<BlurDebugPoint>
+parse_blur_debug_points(const char *spec)
+{
+	std::vector<BlurDebugPoint> points;
+	if (!spec || !*spec) return points;
+	const char *p = spec;
+	while (*p) {
+		int x = -1, y = -1, consumed = 0;
+		if (sscanf(p, "%d,%d%n", &x, &y, &consumed) == 2 && consumed > 0) {
+			points.push_back({ (A_long)x, (A_long)y });
+			p += consumed;
+			while (*p == ';' || *p == ' ' || *p == '\t' || *p == '\n' || *p == '\r') ++p;
+		} else {
+			break;
+		}
+	}
+	return points;
+}
+
+static BlurDebugConfig
+load_blur_debug_config()
+{
+	BlurDebugConfig config;
+	config.dump_path = getenv("OLMBLUR_DEBUG_DUMP_PATH");
+	config.points = parse_blur_debug_points(getenv("OLMBLUR_DEBUG_POINTS"));
+	if (!config.dump_path || !*config.dump_path || config.points.empty()) {
+		config.dump_path = NULL;
+		config.points.clear();
+	}
+	return config;
+}
+
+static void
+debug_dump_store16(const BlurDebugConfig *debug, const float *rgb, A_long legacy, A_long w, A_long h)
+{
+	if (!debug || !debug->dump_path || debug->points.empty()) return;
+	FILE *fp = fopen(debug->dump_path, "a");
+	if (!fp) return;
+	fprintf(fp, "OLMBLUR_DEBUG_STORE16_BEGIN legacy=%d w=%d h=%d\n", (int)legacy, (int)w, (int)h);
+	for (size_t i = 0; i < debug->points.size(); ++i) {
+		A_long x = debug->points[i].x;
+		A_long y = debug->points[i].y;
+		if (x < 0 || y < 0 || x >= w || y >= h) {
+			fprintf(fp, "OLMBLUR_DEBUG_POINT x=%d y=%d status=out_of_bounds\n", (int)x, (int)y);
+			continue;
+		}
+		size_t idx = (size_t)(y * w + x) * 3;
+		float raw_r = rgb[idx + 0];
+		float raw_g = rgb[idx + 1];
+		float raw_b = rgb[idx + 2];
+		float floor_r = floorf(raw_r + 0.5f);
+		float floor_g = floorf(raw_g + 0.5f);
+		float floor_b = floorf(raw_b + 0.5f);
+		float nearby_r = nearbyintf(raw_r);
+		float nearby_g = nearbyintf(raw_g);
+		float nearby_b = nearbyintf(raw_b);
+		float round_r = round_blur_value(raw_r, legacy);
+		float round_g = round_blur_value(raw_g, legacy);
+		float round_b = round_blur_value(raw_b, legacy);
+		float clamp_r = round_r < 0.0f ? 0.0f : (round_r > 32768.0f ? 32768.0f : round_r);
+		float clamp_g = round_g < 0.0f ? 0.0f : (round_g > 32768.0f ? 32768.0f : round_g);
+		float clamp_b = round_b < 0.0f ? 0.0f : (round_b > 32768.0f ? 32768.0f : round_b);
+		fprintf(
+			fp,
+			"OLMBLUR_DEBUG_POINT x=%d y=%d raw=(%.9g,%.9g,%.9g) raw_hex=(%a,%a,%a) floor05=(%.9g,%.9g,%.9g) nearby=(%.9g,%.9g,%.9g) rounded=(%.9g,%.9g,%.9g) clamped=(%.9g,%.9g,%.9g) stored=(%u,%u,%u)\n",
+			(int)x, (int)y,
+			raw_r, raw_g, raw_b,
+			(double)raw_r, (double)raw_g, (double)raw_b,
+			floor_r, floor_g, floor_b,
+			nearby_r, nearby_g, nearby_b,
+			round_r, round_g, round_b,
+			clamp_r, clamp_g, clamp_b,
+			(unsigned int)(u_short)clamp_r,
+			(unsigned int)(u_short)clamp_g,
+			(unsigned int)(u_short)clamp_b
+		);
+	}
+	fprintf(fp, "OLMBLUR_DEBUG_STORE16_END\n");
+	fclose(fp);
+}
+
 static void store8(PF_EffectWorld *dst, const float *rgb, A_long legacy)
 {
 	A_long w = dst->width, h = dst->height;
@@ -356,10 +567,11 @@ static void store8(PF_EffectWorld *dst, const float *rgb, A_long legacy)
 	}
 }
 
-static void store16(PF_EffectWorld *dst, const float *rgb, A_long legacy)
+static void store16(PF_EffectWorld *dst, const float *rgb, A_long legacy, const BlurDebugConfig *debug)
 {
 	A_long w = dst->width, h = dst->height;
 	A_long rb = dst->rowbytes;
+	debug_dump_store16(debug, rgb, legacy, w, h);
 	for (A_long y = 0; y < h; ++y) {
 		PF_Pixel16 *row = (PF_Pixel16*)((char*)dst->data + y * rb);
 		for (A_long x = 0; x < w; ++x) {
@@ -426,6 +638,7 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 	}
 
 	if (bp->legacy) {
+		BlurDebugConfig debug = load_blur_debug_config();
 		A_long radius = (A_long)blur_amount;
 		if (radius > 0) {
 			float smoothness = bp->blur_smoothness;
@@ -442,14 +655,17 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 					weights[radius + k] = v;
 				}
 				if (bp->bias_dir == BIAS_DIR_VERTICAL) {
-					legacy_blur_1d_horizontal(buf1, alpha1, buf2, alpha2, w, h, radius, weights);
-					legacy_blur_1d_vertical  (buf2, alpha2, buf1, alpha1, w, h, radius, weights);
+					legacy_blur_1d_horizontal(buf1, alpha1, buf2, alpha2, w, h, radius, weights, &debug, iter);
+					legacy_blur_1d_vertical  (buf2, alpha2, buf1, alpha1, w, h, radius, weights, &debug, iter);
 				} else if (bp->bias_dir == BIAS_DIR_HORIZONTAL) {
-					legacy_blur_1d_vertical  (buf1, alpha1, buf2, alpha2, w, h, radius, weights);
-					legacy_blur_1d_horizontal(buf2, alpha2, buf1, alpha1, w, h, radius, weights);
+					legacy_blur_1d_vertical  (buf1, alpha1, buf2, alpha2, w, h, radius, weights, &debug, iter);
+					legacy_blur_1d_horizontal(buf2, alpha2, buf1, alpha1, w, h, radius, weights, &debug, iter);
 				}
 			}
 		}
+		if (bpc == 8)       store8(output, buf1, bp->legacy);
+		else if (bpc == 16) store16(output, buf1, bp->legacy, &debug);
+		else                storeFloat(output, buf1);
 	} else {
 		float decay = 1.0f;
 		if (bp->repeat > 1) decay = powf(3.0f / blur_amount, 1.0f / (float)(bp->repeat - 1));
@@ -474,10 +690,14 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 		}
 	}
 	free(weights);
-
-	if (bpc == 8)       store8(output, buf1, bp->legacy);
-	else if (bpc == 16) store16(output, buf1, bp->legacy);
-	else                storeFloat(output, buf1);
+	if (!bp->legacy) {
+		if (bpc == 8)       store8(output, buf1, bp->legacy);
+		else if (bpc == 16) {
+			BlurDebugConfig debug = load_blur_debug_config();
+			store16(output, buf1, bp->legacy, &debug);
+		}
+		else                storeFloat(output, buf1);
+	}
 
 	free(buf1); free(buf2); free(alpha1); free(alpha2);
 	return err;

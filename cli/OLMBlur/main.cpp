@@ -499,6 +499,7 @@ void blur_1d_vertical(const float *srcRGB, const unsigned char *srcA, float *dst
 
 void legacy_blur_1d_horizontal(const float *srcRGB, const unsigned char *srcA, float *dstRGB, unsigned char *dstA,
                                long w, long h, long radius, const float *kernel) {
+    float carryPrevR = -1.0f, carryPrevG = -1.0f, carryPrevB = -1.0f;
     for (long y = 0; y < h; ++y) {
         for (long x = 0; x < w; ++x) {
             long idx = y * w + x;
@@ -511,8 +512,11 @@ void legacy_blur_1d_horizontal(const float *srcRGB, const unsigned char *srcA, f
             }
             float sumR = 0.0f, sumG = 0.0f, sumB = 0.0f, sumW = 0.0f;
             bool all_same = true;
-            bool have_prev = false;
-            float prevR = 0.0f, prevG = 0.0f, prevB = 0.0f;
+            bool have_prev = true;
+            float prevR = carryPrevR;
+            float prevG = carryPrevG;
+            float prevB = carryPrevB;
+            bool saw_sample = false;
             for (long off = -radius; off <= radius; ++off) {
                 long sx = x + off;
                 if (sx <= 0 || sx >= w) continue;
@@ -533,6 +537,12 @@ void legacy_blur_1d_horizontal(const float *srcRGB, const unsigned char *srcA, f
                 prevG = curG;
                 prevB = curB;
                 have_prev = true;
+                saw_sample = true;
+            }
+            if (saw_sample) {
+                carryPrevR = prevR;
+                carryPrevG = prevG;
+                carryPrevB = prevB;
             }
             if (all_same || sumW == 0.0f) {
                 dstRGB[idx * 3 + 0] = srcRGB[idx * 3 + 0];
@@ -550,6 +560,7 @@ void legacy_blur_1d_horizontal(const float *srcRGB, const unsigned char *srcA, f
 
 void legacy_blur_1d_vertical(const float *srcRGB, const unsigned char *srcA, float *dstRGB, unsigned char *dstA,
                              long w, long h, long radius, const float *kernel) {
+    float carryPrevR = -1.0f, carryPrevG = -1.0f, carryPrevB = -1.0f;
     for (long y = 0; y < h; ++y) {
         for (long x = 0; x < w; ++x) {
             long idx = y * w + x;
@@ -562,8 +573,11 @@ void legacy_blur_1d_vertical(const float *srcRGB, const unsigned char *srcA, flo
             }
             float sumR = 0.0f, sumG = 0.0f, sumB = 0.0f, sumW = 0.0f;
             bool all_same = true;
-            bool have_prev = false;
-            float prevR = 0.0f, prevG = 0.0f, prevB = 0.0f;
+            bool have_prev = true;
+            float prevR = carryPrevR;
+            float prevG = carryPrevG;
+            float prevB = carryPrevB;
+            bool saw_sample = false;
             for (long off = -radius; off <= radius; ++off) {
                 long sy = y + off;
                 if (sy <= 0 || sy >= h) continue;
@@ -584,6 +598,12 @@ void legacy_blur_1d_vertical(const float *srcRGB, const unsigned char *srcA, flo
                 prevG = curG;
                 prevB = curB;
                 have_prev = true;
+                saw_sample = true;
+            }
+            if (saw_sample) {
+                carryPrevR = prevR;
+                carryPrevG = prevG;
+                carryPrevB = prevB;
             }
             if (all_same || sumW == 0.0f) {
                 dstRGB[idx * 3 + 0] = srcRGB[idx * 3 + 0];

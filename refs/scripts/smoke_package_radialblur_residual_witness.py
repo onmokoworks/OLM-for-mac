@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Smoke-test focused RadialBlur residual runtime trace package."""
+"""Smoke-test focused RadialBlur caller-collapse runtime trace package."""
 
 from __future__ import annotations
 
@@ -17,13 +17,13 @@ def repo_root() -> Path:
 def main() -> int:
     root = repo_root()
     with tempfile.TemporaryDirectory(prefix="radialblur_residual_witness_pkg_") as tmp:
-        output = Path(tmp) / "radialblur_residual_witness.zip"
+        output = Path(tmp) / "radialblur_caller_collapse_witness.zip"
         subprocess.run(
             [
                 "python3",
                 str(root / "scripts/package_runtime_trace_requests.py"),
                 "--profile",
-                "radialblur-residual-witness",
+                "radialblur-caller-collapse-witness",
                 "--output",
                 str(output),
             ],
@@ -44,7 +44,7 @@ def main() -> int:
         if missing:
             raise AssertionError(f"missing package files: {missing}")
         actions = manifest.get("runtime_actions", [])
-        if len(actions) != 1 or actions[0].get("request_id") != "olmradialblur_zoom_tiny_rotation_residual_witness_20260622":
+        if len(actions) != 1 or actions[0].get("request_id") != "olmradialblur_caller_collapse_witness_20260630":
             raise AssertionError(f"unexpected actions: {actions}")
         observations = template["results"][0]["observations"]
         cases = observations.get("cases", [])
@@ -52,7 +52,9 @@ def main() -> int:
             raise AssertionError(f"unexpected template cases: {cases}")
         if cases[0]["witness"]["x"] != 6 or cases[1]["witness"]["x"] != 1614:
             raise AssertionError("unexpected witness coordinates")
-    print("[OK] RadialBlur residual witness package smoke passed")
+        if "refs/conformance/olmradialblur_pending_narrow_proof_20260629.md" not in names:
+            raise AssertionError("missing pending narrow proof markdown")
+    print("[OK] RadialBlur caller-collapse witness package smoke passed")
     return 0
 
 

@@ -8,12 +8,12 @@ OLD_DIR="$SHARE_ROOT/old"
 
 usage() {
   cat <<EOF
-Usage: scripts/publish_windows_request_to_share.sh ZIP [ZIP...]
+Usage: scripts/publish_windows_request_to_share.sh FILE [FILE...]
 
-Publish one or more Windows handoff/request zips to the shared folder workflow:
+Publish one or more Windows handoff/request files to the shared folder workflow:
 
-- move existing zip files in \$SHARE_ROOT/new to \$SHARE_ROOT/old
-- copy the given zip(s) into \$SHARE_ROOT/new
+- move existing files in \$SHARE_ROOT/new to \$SHARE_ROOT/old
+- copy the given file(s) into \$SHARE_ROOT/new
 
 Defaults:
 - share root: /Volumes/onmk/olm_pr
@@ -43,18 +43,19 @@ mkdir -p "$NEW_DIR" "$OLD_DIR"
 
 timestamp="$(date +%Y%m%d_%H%M%S)"
 shopt -s nullglob
-for existing in "$NEW_DIR"/*.zip; do
+for existing in "$NEW_DIR"/*; do
+  [[ -f "$existing" ]] || continue
   base="$(basename "$existing")"
   target="$OLD_DIR/${timestamp}__${base}"
   mv "$existing" "$target"
-  echo "[INFO] archived old zip: $target"
+  echo "[INFO] archived old file: $target"
 done
 shopt -u nullglob
 
 for arg in "$@"; do
   src="$arg"
   if [[ ! -f "$src" ]]; then
-    echo "[FAIL] missing zip: $src" >&2
+    echo "[FAIL] missing file: $src" >&2
     exit 1
   fi
   dest="$NEW_DIR/$(basename "$src")"

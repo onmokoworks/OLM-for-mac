@@ -54,11 +54,94 @@ Windows-side reference requests live in `reference_requests/`. These are
 case lists that can be handed to the Windows AE/Codex environment when the Mac
 port needs stronger CUDA vs SOFTWARE or parameter-isolation references.
 
+Fresh-instance default capture for all OLM effects now lives in:
+
+- `reference_requests/olm_fresh_instance_defaults_20260629.json`
+
+Use that request when we need the original Windows AEX cold-start defaults and
+property-tree shape, rather than a tuned validation case.
+
+After importing that return, audit it with:
+
+```sh
+python3 scripts/audit_windows_fresh_defaults.py path/to/imported/reference_manifest.json
+```
+
 Imported Windows AE reference sets live in `win_references/`:
 
 - `win_references/20260604_olm/`: first broad OLM reference package.
 - `win_references/20260605_extra/`: Distance Gradation, RadialBlur img2, and
   Smoother v2 extra references from Windows AE 25.2x131.
+- `win_references/olm_final_random_per_plugin_10cases_20260629_windows_reference_return/`:
+  final randomized Windows Software holdout set, split into 9 per-plug-in
+  manifests with 10 random cases each.
+- `win_references/olm_final_random_smoke_20260629_windows_reference_return/`:
+  smaller randomized Windows Software smoke set. Some requested values were
+  rejected by AE scripting, so the returned manifest's effective values are the
+  source of truth for those cases.
+
+Summarize that final randomized holdout set with:
+
+```sh
+python3 scripts/summarize_combined_reference_manifest.py \
+  refs/win_references/olm_final_random_per_plugin_10cases_20260629_windows_reference_return \
+  --output-md refs/reports/olm_final_random_per_plugin_10cases_20260629_summary.md \
+  --output-json refs/reports/olm_final_random_per_plugin_10cases_20260629_summary.json
+```
+
+Treat that dataset as a final validation / holdout suite, not as the primary
+spec-discovery source. Use the narrower reference requests and runtime traces to
+establish the algorithm first, then spend the randomized set as a confidence
+check near the end.
+
+A short combined note for both randomized sets lives at:
+
+- `refs/reports/olm_final_random_reference_sets_20260629.md`
+
+If a returned zip embeds `reference_requests/*.json`, materialize those request
+files into the tracked repo so `check_reference_request_status.py` and
+`print_next_olm_action.py` can see them:
+
+```sh
+python3 scripts/materialize_embedded_reference_requests.py \
+  path/to/windows_return.zip \
+  --dest refs/reference_requests
+```
+
+To turn an imported Windows reference set into Mac AE batch-validation request
+directories under `handoff/ae_pixel_validation_20260618/requests/`, use:
+
+```sh
+python3 scripts/materialize_ae_pixel_validation_requests_from_refs.py \
+  refs/win_references/olm_final_random_per_plugin_10cases_20260629_windows_reference_return \
+  --replace
+```
+
+The 2026-06-29 final randomized holdout request id list is tracked at:
+
+- `refs/reports/final_random_holdout_request_ids_20260629.txt`
+
+You can preflight the AE wrapper generation without launching a render:
+
+```sh
+python3 scripts/run_ae_validation_batch.py \
+  --request-ids-file refs/reports/final_random_holdout_request_ids_20260629.txt \
+  --dump-js /tmp/ae_final_random_holdout_wrapper.jsx
+```
+
+After Mac AE renders are collected, verification can now use either packaged
+request zips or materialized request directories. For the final randomized
+holdout lane, the direct directory flow is:
+
+```sh
+python3 scripts/verify_ae_pixel_validation_batch.py \
+  handoff/ae_pixel_validation_20260618/requests \
+  path/to/final_random_holdout_results_dir \
+  --run-dir /tmp/olm_final_random_holdout_verify
+```
+
+The batch verifier matches result folders/zips against request ids and writes a
+`batch_summary.json` plus per-request diff reports under the chosen run dir.
 
 Smoke-test the whole AE-free harness:
 

@@ -18,6 +18,21 @@ Use this report before sending another debugger package. It separates pending
 requests from answered/superseded packages and prints the comparator command to
 run after importing a return.
 
+As of 2026-06-30, the active pending queue is:
+
+1. `olmradialblur_caller_collapse_witness_20260630`
+   - package: `refs/runtime_trace_packages/olm_runtime_trace_requests_20260630_003603.zip`
+   - published share copy: `/Volumes/onmk/olm_pr/new/olm_runtime_trace_requests_20260630_003603.zip`
+2. `olmblur_final_word_witness_20260630`
+   - package: `refs/runtime_trace_packages/olm_runtime_trace_requests_20260630_005317.zip`
+3. `olmdirectionalblur_helper_coverage_witness_20260630`
+   - package: `refs/runtime_trace_packages/olm_runtime_trace_requests_20260630_004241.zip`
+4. `kirakira_compose_writeback_witness_20260630`
+   - package: `refs/runtime_trace_packages/olm_runtime_trace_requests_20260630_004707.zip`
+
+If a new return arrives, import it first and regenerate the report before
+deciding whether the next package should be published.
+
 Status note: sections below are retained as request specifications and evidence
 recipes. Do not decide what to send from an old section header alone; the
 authoritative send queue is `refs/reports/pending_runtime_trace_packages.md`.
@@ -25,6 +40,44 @@ As of the 2026-06-24 KiraKira BT.709 aggregation/compose return, there is no
 project-local runtime trace package that should be resent blindly. The next
 Windows request, if any, should be generated from a new compose/prewriteback
 witness contract rather than from an old section below.
+
+2026-06-30 RadialBlur note:
+
+- The old focused residual wording for Zoom and tiny Rotation was still too
+  sampler-centric. It asked for source/polar/pre-output values, but it did not
+  force the caller-side collapse that now looks decisive.
+- Current static proof from `FUN_180004640` is stronger:
+  - sampler return is preserved separately into `+0xf252`
+  - accumulated polar RGBA lives in `+0xf250`
+  - caller normalization collapses those into final polar `+0xe`
+  - final inverse sampling then consumes normalized `+0xe`, not raw `+0xf252`
+- Therefore the useful next Windows witness is not "the closest sampler return"
+  and not another PNG. It is the whole chain:
+  sampler return -> preserved validity `+0xf252` -> accumulated `+0xf250` RGBA
+  -> normalized `+0xe` RGBA -> pre-writeback RGBA -> final bytes.
+- Any future resend of the focused RadialBlur residual package should demand
+  that whole chain for Zoom `case_0009` witness `(6,0)` and tiny Rotation
+  `case_0010` witness `(1614,6)`, plus the exact validity/border or fallback
+  branch for tiny Rotation.
+
+2026-06-29 DirectionalBlur note:
+
+- The old angle-0 witness wording was still too broad: it asked for rowdriver/
+  validity evidence at `(494,169)` but did not force a helper-local answer for
+  how the long strip on row `y=169` is actually covered.
+- Current static proof from `FUN_1800013e0` is stricter:
+  - front helper call uses `param_3 = 1`
+  - effective span is `int(param_9 * param_11)` with left-edge clipping
+  - writes start at `offset = 1`
+  - loop is `offset < param_9`
+- Therefore the useful next Windows witness is not "another PNG" and not a
+  generic scatter-ownership answer. It is the helper-local source-to-dst range
+  on the strip row, especially the right endpoint `(579,169)`, plus the
+  companion witness `(494,169)`.
+- Any future resend of the focused DirectionalBlur package should demand:
+  source xy, `param_1/param_3/param_9/param_11`, scaled/clipped span, actual
+  touched destination x range on witness row, rowdriver/group membership,
+  validity-side-channel, accumulation, pre-writeback, and final bytes.
 
 ## OLMSmoother2 Legacy Key/Gamma Witness
 
@@ -572,6 +625,58 @@ Mac baseline values:
 - `case_0007 (488,942)`: RGB
   `(250.499985, 0.00162608409, 0.00162608409)`,
   hex `(0x1.f4fffep+7, 0x1.aa44a8p-10, 0x1.aa44a8p-10)`.
+
+## OLMBlur Last 1px Witness
+
+Status: current narrow follow-up after the 2026-06-29 carry-prev fix.
+
+Why this trace exists:
+
+- The old `case_0007 (0,0)` Legacy structural blocker is retired.
+- Old 8bpc `case_0007` is now down to one pixel:
+  - residual `(488,941)` is `250` vs Windows `251`
+  - control `(488,942)` is already `251`
+- Current Mac AE 16bpc normalized `case_0007` is also down to one pixel:
+  - residual `(345,672)` blue is `98` vs Windows `97`
+- Mac-side probes now show both remaining witnesses are half-step boundary
+  cases, not renewed structural mismatches:
+  - 8bpc `(488,941)` is `250.499985`
+  - 8bpc `(488,942)` is `250.500015`
+  - 16bpc `(345,672)` blue is exactly `12544.5`
+- So the highest-value next proof is a Windows pre-store float witness for
+  those exact coordinates, to decide whether Windows reaches a slightly smaller
+  float or uses a different final writer/helper rule there.
+
+Reference notes:
+
+- `refs/conformance/olmblur_legacy_carry_prev_probe_20260629.md`
+- `refs/conformance/olmblur_last1px_family_probe_20260629.md`
+- `refs/reports/ae_single_case_olmblur_case0007_final1px_probe_20260629/`
+
+Trace target:
+
+1. Old 8bpc Software `case_0007`:
+   - residual `(488,941)`
+   - control `(488,942)`
+2. Normalized 16bpc Software `olmblur__case_0007`:
+   - residual `(345,672)`
+   - controls `(0,0)` and `(951,7)`
+
+Record:
+
+- pre-store float RGB as decoded values and `%a` hex
+- exact final writer/helper path used
+- final byte/word written
+- if a value is at the boundary, whether Windows sees it as below, equal to,
+  or above the half-step before writeback
+
+Interpretation:
+
+- If Windows is already below the half-step at the residual coordinates, the
+  remaining gap is a tiny pre-store float difference and should not trigger a
+  blind global writer swap.
+- If Windows reaches the same half-step value but stores differently, then the
+  writer/helper rule is still missing a concrete fact.
 
 ## OLMColorKey Edge Thin / Edge Blur Witness
 

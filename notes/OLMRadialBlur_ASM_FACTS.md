@@ -47,6 +47,29 @@ Scope: read-only sampler/writeback audit for Rotation polar buffers. Sources:
 Decompiler pointer-index aliases: `+0xe == +0x38`, `+0x10 == +0x40`,
 `+0x12 == +0x48`, and `+0x14 == +0x50`.
 
+- 2026-06-30 Ghidra caller recheck on `FUN_180004640` sharpens the role of
+  that separate sampler return plane. The RGBA sampler return (`uVar4`) is
+  written once per polar cell into the independent validity buffer
+  (`local_res20`, later stored at `param_1 + 0xf252`) before any prepass or
+  scatter work. The caller then passes this preserved side channel into
+  `FUN_180002780` and `RadialBlur_scatter_valid_polar_cells` independently of
+  the sampled RGBA alpha. Operationally, this means repeat-border
+  `FUN_180001520` can feed both:
+  - raw accumulated alpha inside sampled RGBA, and
+  - a distinct loose-window validity return
+  into later stages at the same time.
+  So any remaining Zoom / tiny-Rotation border split must respect two separate
+  caller-visible facts, not just one blended "sample alpha" concept.
+- The same caller recheck also shows where that side channel stops being
+  independent. Before the final inverse sample, `FUN_180004640` runs a polar
+  normalization loop that reads `param_1 + 0xf252` per cell. If that value is
+  zero it clears RGB in `+0xe`; otherwise it normalizes RGB from `+0xf250` and
+  then writes the preserved `0xf252` value into `+0xe.alpha`. The final
+  inverse sampler `FUN_180009d80` is then called on `param_1 + 0xe` only. So
+  the last output stage does not consume `0xf252` directly: by that point the
+  preserved validity/alpha side channel has already been collapsed into the
+  normalized polar RGBA alpha stored in `+0xe`.
+
 ## Size-Variation / Scatter-Span Source (2026-06-15, RESOLVED)
 
 The two scalar source-space layers feeding `+0x40` and `+0x50` are built before

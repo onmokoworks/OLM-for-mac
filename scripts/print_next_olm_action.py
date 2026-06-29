@@ -17,11 +17,13 @@ REFS_SCRIPT_DIR = Path(__file__).resolve().parents[1] / "refs" / "scripts"
 sys.path.insert(0, str(REFS_SCRIPT_DIR))
 
 from check_reference_request_status import (  # noqa: E402
+    load_status_rows,
     expected_required_sets,
     manifest_case_ids,
     manifest_render_sets,
     relevant_manifest_cases,
 )
+from next_reference_actions import build_reference_action_data  # noqa: E402
 from verify_reference_request_package import packaged_request_ids  # noqa: E402
 from verify_reference_request_result import effect_matches, load_json  # noqa: E402
 
@@ -79,17 +81,7 @@ def likely_olm_scan_candidate(path: Path) -> bool:
 
 
 def request_status(root: Path) -> dict[str, Any]:
-    script = root / "refs" / "scripts" / "check_reference_request_status.py"
-    proc = subprocess.run(
-        [sys.executable, str(script), "--json"],
-        cwd=root,
-        check=True,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-    )
-    data = json.loads(proc.stdout)
-    requests = data.get("requests", [])
+    requests = load_status_rows(root / "refs" / "reference_requests", root / "refs" / "win_references")
     if not isinstance(requests, list):
         requests = []
     pending = [
@@ -109,18 +101,60 @@ def request_status(root: Path) -> dict[str, Any]:
     }
 
 
+def pending_pinning_rows(status: dict[str, Any]) -> list[dict[str, Any]]:
+    pending_ids = set(status.get("pending", []))
+    rows = status.get("rows", [])
+    if not isinstance(rows, list):
+        return []
+    return [
+        row
+        for row in rows
+        if isinstance(row, dict) and isinstance(row.get("request_id"), str) and row["request_id"] in pending_ids
+    ]
+
+
+def pending_pinning_summary(status: dict[str, Any]) -> dict[str, Any] | None:
+    rows = pending_pinning_rows(status)
+    if not rows:
+        return None
+    total_requests = len(rows)
+    total_cases = 0
+    current_cases = 0
+    packaged_cases = 0
+    linked_cases = 0
+    improved_requests = 0
+    fully_packaged_requests = 0
+    request_summaries: list[str] = []
+    for row in rows:
+        pinning = row.get("pinning") or {}
+        total = int(pinning.get("total_cases", 0) or 0)
+        current = int(pinning.get("current_params_full_cases", 0) or 0)
+        packaged = int(pinning.get("packaged_params_full_cases", 0) or 0)
+        linked = int(pinning.get("linked_cases", 0) or 0)
+        total_cases += total
+        current_cases += current
+        packaged_cases += packaged
+        linked_cases += linked
+        if packaged > current:
+            improved_requests += 1
+        if packaged == total and total > 0:
+            fully_packaged_requests += 1
+        request_summaries.append(f"{row['request_id']} {current}/{total}->{packaged}/{total}")
+    return {
+        "request_count": total_requests,
+        "total_cases": total_cases,
+        "current_params_full_cases": current_cases,
+        "packaged_params_full_cases": packaged_cases,
+        "linked_cases": linked_cases,
+        "improved_requests": improved_requests,
+        "fully_packaged_requests": fully_packaged_requests,
+        "request_summaries": request_summaries[:6],
+    }
+
+
 def next_reference_actions(root: Path) -> dict[str, Any]:
-    script = root / "refs" / "scripts" / "next_reference_actions.py"
-    proc = subprocess.run(
-        [sys.executable, str(script), "--json"],
-        cwd=root,
-        check=True,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-    )
-    data = json.loads(proc.stdout)
-    return data if isinstance(data, dict) else {}
+    rows = load_status_rows(root / "refs" / "reference_requests", root / "refs" / "win_references")
+    return build_reference_action_data(rows)
 
 
 def runtime_trace_actions(
@@ -598,9 +632,13 @@ def project_runtime_trace_packages(
         # concrete witness pixels or primitive facts, so they should be surfaced
         # before older Smoother2 debugger packages when no Windows PNG requests
         # are pending.
+        "radialblur-caller-collapse-witness",
         "radialblur-residual-witness",
+        "olmblur-final-word-witness",
         "kirakira-boxfilter-pass1-microprobe",
+        "directionalblur-helper-coverage-witness",
         "directionalblur-residual-witness",
+        "kirakira-compose-writeback-witness",
         "radialblur",
         "kirakira",
         "directionalblur",
@@ -908,6 +946,7 @@ def decide(
 
     pending = status["pending"]
     if pending:
+        pinning = pending_pinning_summary(status)
         request_pkg = reference_request_package(root, rows, pending)
         if request_pkg:
             return {
@@ -916,12 +955,14 @@ def decide(
                 "target": request_pkg,
                 "command": "send this package to the Windows AE renderer",
                 "return_intake_command": win_reference_return_intake_command(pending),
+                "pending_pinning": pinning,
             }
         return {
             "action": "package-windows-reference-requests",
             "reason": "Pending Windows references exist, but no request package was found in the scanned paths.",
             "target": None,
             "command": "python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending.zip",
+            "pending_pinning": pinning,
         }
 
     project_runtime_packages = project_runtime_trace_packages(root, trace_summary)
@@ -1231,8 +1272,21 @@ def main() -> int:
     rows.extend(candidate_rows([root / "handoffs" / "windows_batch"]))
     rows = list({str(Path(str(row.get("path", ""))).resolve()): row for row in rows if row.get("path")}.values())
     interesting = [row for row in rows if row.get("kind") != "unknown"]
-    status = request_status(root)
-    next_actions = next_reference_actions(root)
+    status_rows = load_status_rows(root / "refs" / "reference_requests", root / "refs" / "win_references")
+    status = {
+        "pending": [
+            row.get("request_id")
+            for row in status_rows
+            if isinstance(row, dict) and row.get("status") != "covered" and isinstance(row.get("request_id"), str)
+        ],
+        "covered": [
+            row.get("request_id")
+            for row in status_rows
+            if isinstance(row, dict) and row.get("status") == "covered" and isinstance(row.get("request_id"), str)
+        ],
+        "rows": status_rows,
+    }
+    next_actions = build_reference_action_data(status_rows)
     trace_summary = runtime_trace_summary(root)
     ae_exact_summary = ae_host_exact_summary(root)
     ae_failure_classification = ae_host_failure_classification(root, ae_exact_summary)
@@ -1266,6 +1320,7 @@ def main() -> int:
     output = {
         "decision": decision,
         "pending_requests": status["pending"],
+        "pending_pinning": pending_pinning_summary(status),
         "covered_requests": status["covered"],
         "runtime_trace_actions": [
             action.get("request_id")
@@ -1299,6 +1354,17 @@ def main() -> int:
     print(f"- pending Windows refs: {len(status['pending'])}")
     if status["pending"]:
         print("  " + ", ".join(status["pending"]))
+    pinning = decision.get("pending_pinning") or output.get("pending_pinning")
+    if isinstance(pinning, dict):
+        print(
+            "- pending pinning: "
+            f"current {pinning.get('current_params_full_cases', 0)}/{pinning.get('total_cases', 0)} "
+            f"-> packaged {pinning.get('packaged_params_full_cases', 0)}/{pinning.get('total_cases', 0)} "
+            f"(linked {pinning.get('linked_cases', 0)}, improved requests {pinning.get('improved_requests', 0)})"
+        )
+        summaries = pinning.get("request_summaries") or []
+        if summaries:
+            print("  " + " | ".join(str(item) for item in summaries))
     if decision["action"] in {"send-ae-host-validation-package", "rebuild-handoff-package"}:
         if handoff.get("valid"):
             dirty = " dirty" if handoff.get("git_dirty") else ""

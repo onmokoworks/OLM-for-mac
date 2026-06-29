@@ -1,0 +1,42 @@
+{
+  "kind": "olmblur_16bpc_writer_contract_audit",
+  "date": "2026-06-29",
+  "mac_source_writer": {
+    "legacy_round_expr": "floorf(v + 0.5f)",
+    "nonlegacy_round_expr": "nearbyintf(v)",
+    "clamps_to_32768": true,
+    "casts_to_u_short": true,
+    "uses_round_blur_value_for_store16": true
+  },
+  "windows_standard_writer": {
+    "classification": "round-add-helper-truncate-word-store",
+    "loads_rounding_constant_0_5": 1,
+    "adds_rounding_constant": 3,
+    "calls_clamp_helper_18000ccb4": 3,
+    "cvttss2si_from_xmm0": 3,
+    "word_stores": 3
+  },
+  "windows_alternate_writer": {
+    "classification": "direct-memory-truncate-word-store",
+    "cvttss2si_from_memory": 6,
+    "word_stores": 6
+  },
+  "mac_vs_windows_standard": {
+    "nonlegacy_rounding_expression_matches_standard_16bpc": false,
+    "legacy_rounding_expression_matches_windows_add_half_family": true,
+    "nonlegacy_source_is_nearbyintf": true,
+    "windows_standard_is_add_half_then_truncate": true
+  },
+  "residual_context": {
+    "nonlegacy_sign_mixed_one_word_cases": 6,
+    "nonlegacy_total_cases": 6,
+    "legacy_case_0007_classification": "legacy-border-plus-one-word"
+  },
+  "decision": "source-writer-mismatch-real-but-not-yet-sufficient-for-global-swap",
+  "conclusion": [
+    "The current Mac source uses `nearbyintf(v)` for non-legacy 16bpc store16, while Windows standard 16bpc asm is `+0.5 -> helper -> CVTTSS2SI -> word store`.",
+    "This is a real source-vs-asm contract mismatch at the writer boundary.",
+    "But the current 16bpc residual family is sign-mixed one-word across all non-legacy cases, so the evidence still does not support a blind global `nearbyintf -> floorf(v + 0.5f)` swap without proving pre-writeback/helper state.",
+    "Legacy already matches the add-half family in source, so `case_0007` remains a separate border/seed/all-same investigation rather than proof for the non-legacy store path."
+  ]
+}

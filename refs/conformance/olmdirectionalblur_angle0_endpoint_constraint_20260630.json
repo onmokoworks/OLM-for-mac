@@ -1,0 +1,41 @@
+{
+  "kind": "olmdirectionalblur_angle0_endpoint_constraint",
+  "date": "2026-06-30",
+  "case_id": "case_0001",
+  "witness_row_y": 169,
+  "primary_witness_xy": [
+    494,
+    169
+  ],
+  "full_segments": [
+    [
+      380,
+      579
+    ]
+  ],
+  "scatter_segments": [
+    [
+      380,
+      579
+    ]
+  ],
+  "identical_mask": true,
+  "static_facts": {
+    "write_direction_rule": "front helper writes strictly left of the source x; back helper writes strictly right",
+    "front_boundary_rule": "front call clips span to x and starts at destination x-1",
+    "tail_rule": "helper returns when effective span <= 1, so no zero-length or center write is emitted"
+  },
+  "endpoint_reasoning": {
+    "rightmost_visible_strip_x": 579,
+    "required_min_source_x_for_same_row_front_helper": 580,
+    "same_row_segment_contains_that_source_x": false,
+    "implication": "If the angle-0 endpoint pixel is produced by the documented front helper on the same row, the contributing source x must be strictly greater than the endpoint destination x because front writes only to the left. The current local strip row ends at x=579, so a same-row source inside that visible strip cannot explain the endpoint by itself."
+  },
+  "decision": "angle0-endpoint-needs-source-range-or-alternate-path-proof",
+  "conclusion": [
+    "The local full/scatter masks are identical on row y=169 across x=380..579, so source-driven scatter ownership toggles do not change the existence of the strip itself.",
+    "Static helper facts say the front helper writes strictly left of the source x and does not emit a center write.",
+    "Therefore the right strip endpoint at x=579 is a high-value witness: a useful Windows trace must reveal either a contributing source x > 579, a rotated-buffer/group-membership explanation, or another validity/alpha side-channel or alternate path.",
+    "This makes endpoint (579,169) complementary to interior witness (494,169): the endpoint tests row coverage/boundary logic, while the interior pixel tests accumulation/value logic inside the same strip family."
+  ]
+}

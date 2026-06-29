@@ -31,6 +31,9 @@
 | Parameter reader stores Blur Type, center, strengths, offsets, edge fades, Repeat Border, Ratio, Angle, Quality, variation, noise, seed, and thickness into render struct offsets. | `notes/OLMRadialBlur_RE.md`, `FUN_180008690`. | binary-grounded |
 | Rotation builds an angle-major polar grid, runs a prepass, then scatters outer and inner contributions before inverse sampling. | `notes/OLMRadialBlur_RE.md`, `notes/OLMRadialBlur_ASM_FACTS.md`, `FUN_180004640`. | binary-grounded |
 | Repeat-border and non-repeat polar samplers alpha-normalize RGB and use loose `-2 < int(coord) < extent` validity windows. | `notes/OLMRadialBlur_ASM_FACTS.md`, sampler helper audit. | binary-grounded |
+| The two RGBA polar samplers do not treat alpha identically: non-repeat `FUN_180001270` divides RGB by accumulated alpha and then rewrites `alpha = accumulated_alpha / in_bounds_weight_sum`, while repeat-border `FUN_180001520` divides RGB by accumulated alpha but keeps alpha as the raw accumulated edge-clamped sum and returns a separate loose-window validity flag. | 2026-06-30 Ghidra decompile pass on `0x180001270` and `0x180001520`. In `FUN_180001270`, `param_2[3] = fVar10 / fVar9` after RGB normalization; in `FUN_180001520`, RGB is normalized only when `param_2[3] != 0`, and the function returns `uVar7` for loose `-2 < int(coord) < extent` validity instead of rewriting alpha by a coverage denominator. | binary-grounded / 2026-06-30 ghidra |
+| `FUN_180004640` preserves the RGBA sampler return as a caller-visible side channel independent of sampled RGBA alpha. | 2026-06-30 Ghidra recheck on `FUN_180004640`: sampler return `uVar4` is stored per polar cell into a separate validity buffer (`param_1 + 0xf252`) before prepass/scatter, and that buffer is then passed into `FUN_180002780` and `RadialBlur_scatter_valid_polar_cells`. | binary-grounded / 2026-06-30 ghidra |
+| The final inverse sampler does not read the preserved validity side channel directly; `FUN_180004640` first collapses `+0xf252` into `+0xe.alpha` during polar normalization. | 2026-06-30 Ghidra recheck on `FUN_180004640`: if `*(float *)(... + 0xf252) == 0` it clears `+0xe.rgb`; otherwise it normalizes RGB from `+0xf250` and writes that same `0xf252` value into `+0xe.alpha` before the final `FUN_180009d80(param_1 + 0xe, ...)` call. | binary-grounded / 2026-06-30 ghidra |
 | Rotation caller plane ownership is `+0x38` polar RGBA, `+0x40` scatter span/gate, `+0x48` prepass alpha, and `+0x50` prepass factor. | `notes/OLMRadialBlur_ASM_FACTS.md`, `FUN_180004640` call sites. | binary-grounded |
 | Sequence is `prepass(+0x38,+0x48,+0x50)`, then `scatter(+0x38,+0x48,+0x40)`, then polar normalization/writeback. | `notes/OLMRadialBlur_ASM_FACTS.md`, `FUN_180002780`, `FUN_1800024c0`, `FUN_180004640`. | binary-grounded |
 | `FUN_180001c90` resolves outer/inner scatter spans from strength/offset mode, clamps to `3000`, multiplies by `param10`, and samples direction-specific 30000-entry tables. | Ghidra/ASM facts in `notes/OLMRadialBlur_ASM_FACTS.md`. | binary-grounded |
@@ -39,6 +42,26 @@
 | Runtime trace confirmed `rb_inner_only_strength_small` helper effective span resolves to `31`: callsite `OLMRadialBlur+0x26e5`, helper `+0x1c90`, `[RCX+0x3a9ec]=0x1f`, and `R14D=31` after `+0x1d18`. | `refs/reports/runtime_trace_summary_hardpaths_20260621_041022.md`. | runtime-trace |
 | Size Variation feeds source-space span/factor maps, not a final alpha multiply. | `notes/OLMRadialBlur_ASM_FACTS.md`, source map audit. | binary-grounded / reference-confirmed |
 | Inner `param10` alpha-plane substitutes are negative after the Quality/5 fix: `one` and `factor` are equivalent in the tested shape, while `polar-alpha` and `prepass-alpha` worsen old Inner and Edge Fade cases. | 2026-06-21 Mac probes: `smoke_olmradialblur_cpp_inner_param10_plane_probe_cli.py`. | probe-rejected |
+
+## Ghidra Anchors
+
+When only one CodeBrowser window is practical, keep these functions handy in the
+current RadialBlur program:
+
+- `RadialBlur_rotation_render` (`0x180004640`): top-level Rotation path,
+  including sampler selection, preserved-validity storage at `+0xf252`,
+  accumulation at `+0xf250`, collapse into final polar RGBA at `+0xe`, and the
+  final inverse sampler call.
+- `RadialBlur_scatter_tail_by_direction` (`0x180001c90`): outer/inner scatter
+  span resolution, table stepping, and the inner "next radius row tail" wrap.
+- `RadialBlur_sample_rgba_nonrepeat_loose` (`0x180001270`): non-repeat RGBA
+  sampler with alpha rewrite as `alpha_sum / in_bounds_weight_sum`.
+- `RadialBlur_sample_rgba_repeat_loose` (`0x180001520`): repeat-border RGBA
+  sampler with clamped taps and a separate loose-window validity return.
+
+If we only get one readable Ghidra target from this session, `RadialBlur` is
+the right one to keep open because the highest-value pending Windows witness is
+`olmradialblur_caller_collapse_witness_20260630`.
 
 ## Parameters
 
@@ -107,6 +130,25 @@ Current binary-grounded sequence:
   traced pre-writeback floats truncate to those exact bytes. Therefore the
   remaining Zoom `alpha=255` local residual is upstream of final byte packing,
   likely alpha normalization or sampler-side state.
+- A 2026-06-30 Ghidra pass sharpens that further at the helper boundary:
+  non-repeat sampler `FUN_180001270` explicitly rewrites output alpha as
+  `accumulated_alpha / in_bounds_weight_sum`, while repeat-border sampler
+  `FUN_180001520` keeps raw accumulated alpha and returns a separate loose
+  validity flag. So the remaining Zoom `(6,0)` alpha split can now be framed
+  more narrowly as "which sampler helper path is active here, and what
+  in-bounds coverage denominator or caller-side normalization survives to
+  pre-writeback", rather than a generic writeback mystery.
+- The same caller recheck shows that this is not just a helper-local quirk:
+  `FUN_180004640` preserves the RGBA sampler return in an independent validity
+  plane before prepass/scatter. So if Zoom `(6,0)` is on the repeat-border
+  path, the later alpha/output split can legally depend on both the sampled
+  RGBA alpha and the separate validity side channel.
+- The caller recheck also pins the boundary of that dependence. The final
+  inverse sampler does not consume `0xf252` directly; by then caller-side
+  normalization has already copied preserved validity into `+0xe.alpha`. So
+  the remaining Zoom question is specifically about the pre-inverse-sample
+  normalization/collapse into `+0xe`, not about a hidden second validity read
+  inside `FUN_180009d80`.
 - Mac-side witness audit
   `refs/reports/olmradialblur_zoom_witness_20260624/audit.md` recomputes the
   same `(6,0)` path from the 20260604 manifest. Local RGB floats match the
@@ -155,6 +197,30 @@ Current binary-grounded sequence:
   sampler-validity evidence: final byte conversion is not enough, and the next
   proof needs the exact sampler/validity/pre-writeback path for the high-max
   top-border witness.
+- The same 2026-06-30 Ghidra pass gives a tighter static fork for that
+  witness. Repeat-border sampler `FUN_180001520` carries a separate loose
+  `-2 < int(coord) < extent` validity return even while clamping taps to edge
+  pixels, whereas non-repeat `FUN_180001270` encodes coverage through the
+  normalized alpha itself. That makes the tiny Rotation `(1614,6)` blocker
+  more specifically a "which validity-return / substitute-path did the caller
+  honor after inverse sampling" question, not just a vague border mismatch.
+- `FUN_180004640` now grounds the caller half of that question too: the RGBA
+  sampler return is preserved as a distinct per-cell side channel before
+  prepass/scatter. So the next useful tiny-Rotation witness should not only
+  ask "what RGBA did the inverse sampler see?" but also "what preserved
+  validity value from the sampler return was still live for that polar cell?"
+- And we can narrow that one step further: by the time `FUN_180009d80` runs,
+  the caller has already collapsed preserved validity into `+0xe.alpha` and
+  zeroed RGB outright when that value is zero. So the next tiny-Rotation proof
+  should focus on the normalization step that produces `+0xe` for the witness
+  cell: what `0xf252` value survived, whether RGB was zeroed there, and what
+  exact `+0xe RGBA` reached the final inverse sampler.
+- This also clarifies what is no longer worth asking Windows for on this lane:
+  a trace that only reports final `FUN_180009d80` output without the preceding
+  `+0xf252` / `+0xf250` / `+0xe` state is now too late to distinguish
+  substitute-path / validity-collapse behavior from ordinary bilinear sampling.
+  The next actionable tiny-Rotation witness should explicitly include
+  `0xf252`, `0xf250 RGBA`, normalized `+0xe RGBA`, and then final output.
 - 2026-06-21 Mac-side recheck while Smoother2 is paused:
   full Rotation remains expected-red in the current C++ CLI:
   `case_0001 max=255 mean=1.9034`,
@@ -236,11 +302,11 @@ Current binary-grounded sequence:
 - The 2026-06-24 witness contract also freezes tiny Rotation and Inner proof
   boundaries:
   - Tiny Rotation `case_0010 (1614,6)` has a closest traced inverse-sampler
-    return `[-0.00408194,-0.00408194,-0.00408194,1.0]`, which floors to
-    `[0,0,0,255]`, while Windows final is `[255,255,255,255]`. Do not treat
-    that closest sampler return as the true final pre-writeback value; the
-    next proof must identify the exact validity/border branch or substitute
-    path.
+  return `[-0.00408194,-0.00408194,-0.00408194,1.0]`, which floors to
+  `[0,0,0,255]`, while Windows final is `[255,255,255,255]`. Do not treat
+  that closest sampler return as the true final pre-writeback value; the
+  next proof must identify the exact validity/border branch or substitute
+  path.
   - Inner remains `blocked-no-global-toggle`. Static facts stay:
     `R14D = trunc(float(resolved_distance) * span_gate)`, table step
     `int(30000 / R14D)`, tail loop `offset < R14D`, and underflow to the next
@@ -258,6 +324,22 @@ Current binary-grounded sequence:
     but still leaves `max=240`.
   - Edge/prepass fallback: `rb_inner_edgefade_only`, where
     `table-span-minus-one` is the best localization probe (`mean 3.957052 -> 3.920890`).
+- 2026-06-29 pending narrow-proof contract:
+  `refs/conformance/olmradialblur_pending_narrow_proof_20260629.md`.
+  This converts the remaining blocker into three explicit witness lanes that
+  should stay separate in future work:
+  - Zoom `case_0009 (6,0)` is frozen as a polar alpha/sample accumulation
+    question because Windows pre-writeback floats already truncate to the exact
+    Windows bytes.
+  - tiny Rotation `case_0010 (1614,6)` is frozen as an inverse-sampler
+    validity/border or substitute late-path question because the closest traced
+    sampler return still truncates to black.
+  - Inner is frozen as a helper-to-output continuity question past
+    `effective_span`, with representative low-span / quality-strong /
+    edge-prepass typed spans already recorded.
+  Operationally, this means broad loop/wrap/final-byte retuning should remain
+  forbidden until one of those three lanes is closed with a typed witness that
+  survives to accumulation/denominator/writeback.
   The decision is `typed-inner-cell-witnesses-only`: do not promote
   `loop-minus-one`, `circular-wrap`, or `table-span-minus-one` globally from
   the matrix. The next useful evidence is typed per-cell `FUN_180001c90`
@@ -279,7 +361,8 @@ Current binary-grounded sequence:
 
 `scripts/compare_radialblur_trace.py` now understands both the older dense
 request `olmradialblur_dense_sampler_trace_20260620` and the focused residual
-request `olmradialblur_zoom_tiny_rotation_residual_witness_20260622`.
+request `olmradialblur_caller_collapse_witness_20260630`
+(`olmradialblur_zoom_tiny_rotation_residual_witness_20260622` legacy).
 
 After importing the focused Windows return, run:
 

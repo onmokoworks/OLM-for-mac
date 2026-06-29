@@ -36,6 +36,13 @@ BLUR_KIRAKIRA_RUNTIME_PACKAGES = [
     Path("refs/runtime_trace_packages/olm_runtime_trace_kirakira_stage_values_20260620_overnight.zip"),
 ]
 
+PRIORITY4_RUNTIME_PACKAGES = [
+    Path("refs/runtime_trace_packages/olm_runtime_trace_distancegradation_layer_no_bg_source_ownership_20260629.zip"),
+    Path("refs/runtime_trace_packages/olm_runtime_trace_olmblur_repeat_threshold_20260620_overnight.zip"),
+    Path("refs/runtime_trace_packages/olm_runtime_trace_kirakira_aggregation_compose_bt709_20260624.zip"),
+    Path("refs/runtime_trace_packages/olm_runtime_trace_smoother2_current_aex_writer_frame_followup_20260625_2100.zip"),
+]
+
 AE_PIXEL_PACKAGES = [
     Path("refs/ae_pixel_validation_packages/olm_ae_pixel_validation_olmsmoother_v1_20260619_031933.zip"),
     Path("refs/ae_pixel_validation_packages/olm_ae_pixel_validation_olmsmoother2_legacy_20260619_031933.zip"),
@@ -67,6 +74,38 @@ BLUR_KIRAKIRA_SUPPORTING_NOTES = [
     Path("refs/reports/runtime_trace_summary.md"),
 ]
 
+PRIORITY4_SUPPORTING_NOTES = [
+    Path("handoffs/windows_batch/olm_windows_priority4_runtime_trace_requests_20260629.md"),
+    Path("notes/CONFORMANCE_LEDGER.md"),
+    Path("notes/WINDOWS_RUNTIME_TRACE_REQUESTS.md"),
+    Path("notes/IR_OLMBlur.md"),
+    Path("notes/IR_OLMDistanceGradation.md"),
+    Path("notes/IR_OLMKiraKira.md"),
+    Path("notes/IR_OLMSmoother2.md"),
+    Path("refs/conformance/olmblur_pending_final_word_proof_20260629.md"),
+    Path("refs/conformance/olmblur_current_word_baseline_20260629.md"),
+    Path("refs/conformance/olmdistancegradation_pending_layer_source_proof_20260629.md"),
+    Path("refs/conformance/olmdistancegradation_16bpc_layer_source_current_baseline_20260629.md"),
+    Path("refs/conformance/olmkirakira_pending_compose_proof_20260629.md"),
+    Path("refs/reports/olmsmoother2_current_aex_proof_plan_20260625/proof_plan.md"),
+    Path("refs/reports/smoother2_current_aex_writer_frame_followup_20260625/writer_frame_analysis.md"),
+]
+
+SECONDARY_RUNTIME_PACKAGES = [
+    Path("refs/runtime_trace_packages/olm_runtime_trace_directionalblur_residual_witness_20260629_helpercoverage.zip"),
+    Path("refs/runtime_trace_packages/olm_runtime_trace_radialblur_residual_witness_20260622_012712.zip"),
+    Path("refs/runtime_trace_packages/olm_runtime_trace_radialblur_inner_cell_witness_20260625_2130.zip"),
+]
+
+SECONDARY_SUPPORTING_NOTES = [
+    Path("handoffs/windows_batch/olm_windows_secondary_runtime_trace_requests_20260629.md"),
+    Path("notes/CONFORMANCE_LEDGER.md"),
+    Path("notes/IR_OLMDirectionalBlur.md"),
+    Path("notes/IR_OLMRadialBlur.md"),
+    Path("refs/conformance/olmdirectionalblur_pending_witness_proof_20260629.md"),
+    Path("refs/conformance/olmradialblur_pending_narrow_proof_20260629.md"),
+]
+
 
 def repo_root() -> Path:
     return Path(__file__).resolve().parents[1]
@@ -87,7 +126,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--focus",
-        choices=["smoother-priority", "blur-kirakira", "pending-runtime"],
+        choices=["smoother-priority", "blur-kirakira", "pending-runtime", "priority4-runtime", "secondary-runtime"],
         default="smoother-priority",
         help="Select the package set to bundle.",
     )
@@ -137,6 +176,10 @@ def file_rows(root: Path, paths: list[Path], bundle_dir: str) -> list[dict[str, 
 
 
 def supporting_notes_for_focus(focus: str) -> list[Path]:
+    if focus == "secondary-runtime":
+        return SECONDARY_SUPPORTING_NOTES
+    if focus == "priority4-runtime":
+        return PRIORITY4_SUPPORTING_NOTES
     if focus == "blur-kirakira":
         return BLUR_KIRAKIRA_SUPPORTING_NOTES
     if focus == "pending-runtime":
@@ -234,11 +277,15 @@ def main() -> int:
         runtime_paths = pending_runtime_paths(root)
         if not runtime_paths:
             return fail("no pending runtime trace packages found; run scripts/analyze_pending_runtime_trace_packages.py first")
+    elif args.focus == "priority4-runtime":
+        runtime_paths = PRIORITY4_RUNTIME_PACKAGES
+    elif args.focus == "secondary-runtime":
+        runtime_paths = SECONDARY_RUNTIME_PACKAGES
     elif args.focus == "blur-kirakira":
         runtime_paths = BLUR_KIRAKIRA_RUNTIME_PACKAGES
     else:
         runtime_paths = RUNTIME_PACKAGES
-    ae_paths = [] if args.runtime_only or args.focus in {"blur-kirakira", "pending-runtime"} else AE_PIXEL_PACKAGES
+    ae_paths = [] if args.runtime_only or args.focus in {"blur-kirakira", "pending-runtime", "priority4-runtime", "secondary-runtime"} else AE_PIXEL_PACKAGES
     missing = [path for path in [*runtime_paths, *ae_paths] if not (root / path).exists()]
     if missing:
         return fail("missing bundle input(s): " + ", ".join(path.as_posix() for path in missing))

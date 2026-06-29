@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify a directory of AE pixel validation returns against request zips."""
+"""Verify a directory of AE pixel validation returns against request zips or request directories."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ from pathlib import Path
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("request_dir", type=Path, help="Directory containing request zip files.")
+    parser.add_argument("request_dir", type=Path, help="Directory containing request zip files and/or request directories.")
     parser.add_argument("result_dir", type=Path, help="Directory containing returned result zips or directories.")
     parser.add_argument(
         "--run-dir",
@@ -39,14 +39,20 @@ def fail(message: str) -> int:
     return 1
 
 
-def load_request_manifest(request_zip: Path) -> dict:
-    with zipfile.ZipFile(request_zip) as archive:
-        matches = [name for name in archive.namelist() if name.endswith("request_manifest.json")]
+def load_request_manifest(request_path: Path) -> dict:
+    if request_path.is_dir():
+        matches = list(request_path.rglob("request_manifest.json"))
         if len(matches) != 1:
-            raise ValueError(f"{request_zip} expected one request_manifest.json, found {len(matches)}")
-        data = json.loads(archive.read(matches[0]))
+            raise ValueError(f"{request_path} expected one request_manifest.json, found {len(matches)}")
+        data = json.loads(matches[0].read_text(encoding="utf-8-sig"))
+    else:
+        with zipfile.ZipFile(request_path) as archive:
+            matches = [name for name in archive.namelist() if name.endswith("request_manifest.json")]
+            if len(matches) != 1:
+                raise ValueError(f"{request_path} expected one request_manifest.json, found {len(matches)}")
+            data = json.loads(archive.read(matches[0]))
     if not isinstance(data, dict):
-        raise ValueError(f"{request_zip} request_manifest.json top-level JSON must be an object")
+        raise ValueError(f"{request_path} request_manifest.json top-level JSON must be an object")
     return data
 
 
@@ -60,9 +66,9 @@ def normalize_name(value: str) -> str:
     return "".join(keep).strip("_")
 
 
-def aliases_for(request_zip: Path, manifest: dict) -> set[str]:
+def aliases_for(request_path: Path, manifest: dict) -> set[str]:
     request_id = normalize_name(str(manifest.get("request_id", "")))
-    stem = normalize_name(request_zip.stem)
+    stem = normalize_name(request_path.stem if request_path.is_file() else request_path.name)
     aliases = {stem}
     if request_id:
         aliases.add(request_id)
@@ -106,9 +112,15 @@ def main() -> int:
     if not result_dir.is_dir():
         return fail(f"result dir not found: {result_dir}")
 
-    requests = sorted(path for path in request_dir.glob("*.zip") if zipfile.is_zipfile(path))
+    requests = sorted(
+        [
+            path
+            for path in request_dir.iterdir()
+            if not path.name.startswith(".") and ((path.is_file() and zipfile.is_zipfile(path)) or path.is_dir())
+        ]
+    )
     if not requests:
-        return fail(f"no request zips found in {request_dir}")
+        return fail(f"no request zips/directories found in {request_dir}")
     candidates = result_candidates(result_dir)
     if not candidates:
         return fail(f"no result zips/directories found in {result_dir}")
@@ -120,12 +132,12 @@ def main() -> int:
     rows: list[dict] = []
     used: set[Path] = set()
     rc = 0
-    for request_zip in requests:
+    for request_path in requests:
         try:
-            manifest = load_request_manifest(request_zip)
-            aliases = aliases_for(request_zip, manifest)
+            manifest = load_request_manifest(request_path)
+            aliases = aliases_for(request_path, manifest)
         except Exception as exc:  # noqa: BLE001
-            rows.append({"request": str(request_zip), "status": "invalid-request", "error": str(exc)})
+            rows.append({"request": str(request_path), "status": "invalid-request", "error": str(exc)})
             rc = 1
             continue
 
@@ -133,7 +145,7 @@ def main() -> int:
         if result is None:
             rows.append(
                 {
-                    "request": str(request_zip),
+                    "request": str(request_path),
                     "request_id": manifest.get("request_id"),
                     "status": "missing-result",
                     "aliases": sorted(aliases),
@@ -144,12 +156,12 @@ def main() -> int:
             continue
 
         used.add(result)
-        request_run_dir = run_dir / request_zip.stem
+        request_run_dir = run_dir / (request_path.stem if request_path.is_file() else request_path.name)
         proc = subprocess.run(
             [
                 sys.executable,
                 str(repo / "scripts" / "verify_ae_pixel_validation_result.py"),
-                str(request_zip),
+                str(request_path),
                 str(result),
                 "--run-dir",
                 str(request_run_dir),
@@ -160,7 +172,7 @@ def main() -> int:
         status = "pass" if proc.returncode == 0 else "fail"
         rows.append(
             {
-                "request": str(request_zip),
+                "request": str(request_path),
                 "request_id": manifest.get("request_id"),
                 "result": str(result),
                 "run_dir": str(request_run_dir),

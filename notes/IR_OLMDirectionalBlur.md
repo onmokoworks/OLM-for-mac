@@ -45,12 +45,16 @@ Current verified reference slice:
 - 2026-06-25 witness plan:
   `refs/reports/olmdirectionalblur_witness_plan_20260625/witness_plan.md`
   narrows that boundary into two independent runtime/asm witness families:
-  - `angle0-rowdriver-valid-alpha`: primary `case_0001 (465,169)` with
+  - `angle0-rowdriver-valid-alpha`: primary `case_0001 (494,169)` with
     `[164,0,0,255] -> [0,0,0,255]`; companion strip
     `(487..494,169)` proves the miss is a long RGB-only row, not a one-pixel
-    writeback artifact. Required values are normalized parameters, A/B buffer
-    coordinates, rowdriver/group membership, valid-alpha side-channel,
-    accumulation numerator/denominator, pre-writeback RGBA, and final bytes.
+    writeback artifact. Use the right-edge strip endpoint as the primary
+    witness rather than the first scan-order max `(465,169)`: the endpoint is
+    more useful for proving row coverage and boundary behavior, while the
+    interior max belongs to the same long strip. Required values are
+    normalized parameters, A/B buffer coordinates, rowdriver/group membership,
+    valid-alpha side-channel, accumulation numerator/denominator,
+    pre-writeback RGBA, and final bytes.
   - `diagonal-rotate-validity`: primary `case_0005 (507,367)` with
     `[1,0,0,255] -> [252,0,0,255]`; companion `(423,187)` has the opposite
     signed red direction `[254,0,0,255] -> [4,0,0,255]`. Required values are
@@ -60,6 +64,16 @@ Current verified reference slice:
   blocked until both families have typed evidence. Do not tune diagonal
   behavior from the angle-0 witness, and do not promote broad measurement
   scaffolds (`direct`, `rotated-front-strength`) from PNG means alone.
+- 2026-06-30 angle-0 endpoint constraint:
+  `refs/conformance/olmdirectionalblur_angle0_endpoint_constraint_20260630.md`
+  makes the endpoint witness logic more explicit. On the current local strip
+  row `y=169`, the visible full/scatter segment is exactly `x=380..579`, while
+  static helper facts still say the front helper writes strictly left of the
+  source x and emits no center write. So endpoint `(579,169)` cannot be
+  explained by a simple same-row front-helper write from within that visible
+  strip; a useful Windows trace must expose either source-range evidence beyond
+  that strip, a rotated-buffer/group-membership explanation, or another
+  validity/alternate path.
 
 ## Evidence Priority
 
@@ -599,7 +613,117 @@ PNG-only switch sweep.
   placeholder text (`not traced`, `not isolated`, `see included IR`, etc.) as
   non-evidence.
 - The dense-all 2026-06-20 return classifies as
-  `trace-structure-present-values-missing`: it contains the requested case /
+ `trace-structure-present-values-missing`: it contains the requested case /
+
+2026-06-29 preset decode refresh:
+
+- `refs/reports/olmdirectionalblur_algorithm_presets_20260629.md` now decodes
+  the positional `render_rotated(...)` calls directly from
+  `cli/OLMDirectionalBlur/main.cpp`, so candidate differences no longer depend
+  on memory.
+- Important result:
+  - `rotated-aex-full-choreo` -> `rotated-aex-prepass-full-choreo` changes only
+    `use_alpha_fade_gather` and `rowdriver_prepass`.
+  - `rotated-aex-full-choreo` -> `rotated-aex-exact-scatter-helper` changes only
+    `source_driven_scatter`.
+  - `rotated-aex-exact-scatter-helper` -> `rotated-aex-exact-rowdriver` changes
+    only `use_alpha_fade_gather` and `rowdriver_prepass`.
+- This mechanically confirms the existing empirical read:
+  on the opaque legacy pair, the current `exact-rowdriver` residual matching
+  `exact-scatter-helper` means the `FUN_180001000`-shaped prepass toggles are
+  not the dominant missing behavior there. The remaining useful distinction is
+  between destination-driven `full-choreo` and source-driven scatter-helper
+  ownership, plus the still-unproven rowdriver/group-membership or hidden
+  validity side channel.
+
+2026-06-29 live resmoke against the current worktree:
+
+- `refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_full_choreo_cli.py`
+  still gives:
+  - `case_0001 max=164 mean=4.9570 nz=147615/518400`
+  - `case_0005 max=251 mean=2.2971 nz=88845/518400`
+- `refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_exact_rowdriver_cli.py`
+  still gives:
+  - `rotated-aex-exact-scatter-helper`:
+    `case_0001 max=164 mean=4.9910 nz=147613/518400`,
+    `case_0005 max=251 mean=2.2670 nz=87986/518400`
+  - `rotated-aex-exact-rowdriver`:
+    `case_0001 max=164 mean=4.9910 nz=147613/518400`,
+    `case_0005 max=251 mean=2.2670 nz=87986/518400`
+
+Interpretation:
+
+- The source-driven scatter toggle is still a real behavioral fork:
+  relative to `full-choreo`, it nudges `case_0005` in the better direction but
+  nudges `case_0001` slightly worse. So scatter ownership is not a dead branch,
+  but it is not a broad win by itself.
+- The `exact-rowdriver` preset remains numerically identical to
+  `exact-scatter-helper`, so the current `use_alpha_fade_gather +
+  rowdriver_prepass` path still does not change the opaque legacy pair after
+  source-driven scatter is enabled.
+- Therefore the next useful DirectionalBlur proof target is not another
+  prepass/image-only sweep. It is helper-local evidence inside
+  `FUN_1800013e0` / `FUN_1800038d0`: rowdriver/group membership, hidden
+  validity side-channel, or exact destination coverage in the long
+  `case_0001` strip.
+
+2026-06-29 scatter-ownership footprint audit:
+
+- Report:
+  `refs/reports/olmdirectionalblur_scatter_ownership_20260629.md`
+- This compares current local `rotated-aex-full-choreo` against
+  `rotated-aex-exact-scatter-helper` directly, rather than through the Windows
+  reference alone.
+- `case_0001` primary witness row `y=169` is unchanged:
+  - full-choreo nonzero count `200`
+  - scatter-helper nonzero count `200`
+  - identical mask `True`
+  - identical segment coverage `x=380..579`
+- The candidate-vs-candidate delta for `case_0001` lives outside that primary
+  strip (`bbox [391,170]-[959,369]`) and is weak (`max abs RGBA [4,0,0,0]`).
+- `case_0005` does respond more broadly (`bbox [0,12]-[580,539]`,
+  candidate-vs-candidate max abs `[5,0,0,1]`), which matches the earlier
+  mean-only observation that source-driven scatter slightly changes the
+  diagonal family.
+
+Interpretation:
+
+- For the angle-0 long-strip witness, scatter ownership is no longer the
+  leading local differentiator: source-driven scatter does not change the
+  dominant destination coverage at all.
+- That pushes the next useful proof boundary for `case_0001` further toward
+  rowdriver/group-membership, hidden validity-side-channel, or exact helper
+  destination coverage rules inside `FUN_1800038d0` / `FUN_1800013e0`, rather
+  than the broad choice of source-driven vs destination-driven candidate.
+
+2026-06-29 helper-local coverage readback:
+
+- Decomp/asm for `FUN_1800013e0` confirms the front helper-local rule:
+  - front call passes `param_3 = 1`
+  - `param_9 = int(param_9 * param_11)`
+  - if `param_1 - param_9 < 0`, clamp to `param_9 = param_1`
+  - helper starts at `offset = 1`
+  - helper continues while `offset < param_9`
+- So the front helper writes only to destination columns strictly to the left
+  of the current source x. It never writes `offset = 0`, and near the left
+  edge its effective span is clipped by the current source x.
+- This is now a pinned helper-local fact, not a PNG inference.
+- The same helper-local boundary facts are now exported in machine-readable
+  form by `scripts/analyze_directionalblur_scatter_static_facts.py`; report:
+  `refs/reports/olmdirectionalblur_scatter_static_facts.md`.
+
+Implication for the angle-0 strip witness:
+
+- The dominant `case_0001` strip covers `x=380..579` on witness row `y=169`.
+- Because the front helper is leftward and exclusive, the right endpoint at
+  `x=579` must come from source columns to its right inside the rotated work
+  buffer; it cannot be produced by a helper invocation centered on `x=579`
+  itself.
+- Local readback of `case_0001_before_effects.png` shows row `y=169` is fully
+  opaque black across `x=0..959`, so this strip is not explained by a simple
+  visible source-row edge in the host input. The useful next witness therefore
+  remains rotated-buffer membership / helper call coverage, not host-input row
+  inspection.
   witness schema but no typed sampler, accumulation, pre-writeback, or final
   byte values.
 - The dense-live follow-up classifies as `trace-failed-before-module-load`: AE
@@ -763,6 +887,30 @@ coordinates, rowdriver/group membership, rotate sampler source order, validity
 or alpha side-channel values, accumulation numerator/denominator, pre-writeback
 floats/hex, and final stored RGBA for the two witnesses above.
 
+As of 2026-06-29, the next resend should be narrower on the angle-0 family:
+
+- ask for helper-local destination coverage, not just generic rowdriver state
+- include strip endpoint `(579,169)` alongside primary `(494,169)`
+- capture contributing helper source xy, `param_1`, `param_3`, `param_9`
+  before scale, `param_11`, scaled/clipped span, effective offset start/end,
+  and the actual destination x range touched on row `y=169`
+- keep the diagonal witness independent; do not let the angle-0 proof substitute
+  for `case_0005`
+
+That resend boundary is now also frozen in the pending-proof contract:
+`refs/conformance/olmdirectionalblur_pending_witness_proof_20260629.md`.
+It keeps the unresolved work split into two independent lanes:
+
+- angle-0/front-only `case_0001`: helper-local source-to-destination coverage,
+  especially the strip endpoint `(579,169)` and companion witness `(494,169)`,
+  plus rowdriver/group-membership or hidden validity-side-channel values
+- diagonal `case_0005`: typed rotate/sampler/validity/pre-writeback values at
+  the high-red witnesses such as `(507,367)`
+
+In other words, Direct / `rotated-front-strength` remain measurement
+scaffolds only, and the next useful return must answer one of those two typed
+lanes rather than re-opening broad PNG tuning.
+
 Return intake/classification command:
 
 ```
@@ -773,7 +921,8 @@ python3 scripts/compare_directionalblur_trace.py \
 ```
 
 The comparator prefers the focused request
-`olmdirectionalblur_angle0_diagonal_residual_witness_20260622` when present and
+`olmdirectionalblur_helper_coverage_witness_20260630`
+(`olmdirectionalblur_angle0_diagonal_residual_witness_20260622` legacy) when present and
 returns a paired focus string:
 
 - `angle0:rowdriver-or-group-membership`: update the rowdriver/group IR before

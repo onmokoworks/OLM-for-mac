@@ -6,6 +6,7 @@ from __future__ import annotations
 import subprocess
 import sys
 import tempfile
+import json
 import zipfile
 from pathlib import Path
 
@@ -46,6 +47,33 @@ def main() -> int:
     assert "Import with refs/scripts/import_win_reference.py" not in handoff
     assert "python3 refs/scripts/next_reference_actions.py" in readme
     assert "python3 scripts/intake_olm_return.py path/to/packed_reference.zip --quick" in readme
+
+    linked_output = Path(tempfile.gettempdir()) / "olm_reference_requests_linked_smoke.zip"
+    proc = subprocess.run(
+        [
+            sys.executable,
+            "refs/scripts/package_reference_requests.py",
+            "--only",
+            "directionalblur_context_scale_20260606",
+            "--output",
+            str(linked_output),
+        ],
+        cwd=repo,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
+    print(proc.stdout, end="")
+    if proc.returncode != 0:
+        return proc.returncode
+    with zipfile.ZipFile(linked_output) as archive:
+        data = json.loads(
+            archive.read("refs/reference_requests/directionalblur_context_scale_20260606.json").decode("utf-8-sig")
+        )
+    linked_cases = {case["id"]: case for case in data["cases"]}
+    assert isinstance(linked_cases["db_existing_case_0001_software_pair"].get("params_full"), list)
+    assert len(linked_cases["db_existing_case_0001_software_pair"]["params_full"]) == 15
+    assert linked_cases["db_angle0_no_tail_no_size"].get("params_full") in (None, [])
 
     verify = subprocess.run(
         [

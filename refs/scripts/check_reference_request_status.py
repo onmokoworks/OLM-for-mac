@@ -5,6 +5,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
 from pathlib import Path
 from typing import Any
 
@@ -58,6 +63,68 @@ def expected_required_sets(request: dict[str, Any]) -> list[set[str]]:
     return expected
 
 
+def derive_source_case_id(case: dict[str, Any]) -> str | None:
+    source_case_id = case.get("source_case_id")
+    if isinstance(source_case_id, str) and source_case_id:
+        return source_case_id
+    case_id = case.get("id")
+    if not isinstance(case_id, str):
+        return None
+    match = re.search(r"(?:case_|existing_)(\d{4})", case_id)
+    if not match:
+        return None
+    return f"case_{match.group(1)}"
+
+
+def count_params_full_cases(request: dict[str, Any]) -> int:
+    return sum(
+        1
+        for case in request.get("cases", [])
+        if isinstance(case, dict) and isinstance(case.get("params_full"), list) and len(case["params_full"]) > 0
+    )
+
+
+def count_linked_cases(request: dict[str, Any]) -> int:
+    return sum(
+        1
+        for case in request.get("cases", [])
+        if isinstance(case, dict) and derive_source_case_id(case)
+    )
+
+
+def package_time_pinning_summary(request_path: Path) -> dict[str, Any]:
+    request = load_json(request_path)
+    total_cases = len([case for case in request.get("cases", []) if isinstance(case, dict)])
+    linked_cases = count_linked_cases(request)
+    current_full = count_params_full_cases(request)
+    packaged_full = current_full
+
+    materializer = request_path.parents[2] / "scripts" / "materialize_linked_request_params.py"
+    if materializer.exists():
+        with tempfile.TemporaryDirectory(prefix="olm_request_pincheck_") as tmp_dir:
+            staged = Path(tmp_dir) / request_path.name
+            shutil.copy2(request_path, staged)
+            subprocess.run(
+                [sys.executable, str(materializer), "--write", str(staged)],
+                cwd=request_path.parents[2],
+                check=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+            )
+            packaged = load_json(staged)
+            packaged_full = count_params_full_cases(packaged)
+
+    return {
+        "total_cases": total_cases,
+        "linked_cases": linked_cases,
+        "current_params_full_cases": current_full,
+        "packaged_params_full_cases": packaged_full,
+        "current_fully_pinned": current_full == total_cases and total_cases > 0,
+        "packaged_fully_pinned": packaged_full == total_cases and total_cases > 0,
+    }
+
+
 def relevant_manifest_cases(request: dict[str, Any], manifest: dict[str, Any]) -> list[dict[str, Any]]:
     req_cases = set(required_case_ids(request))
     return [
@@ -105,7 +172,12 @@ def manifest_files_ok(
     return True
 
 
-def score_request(request: dict[str, Any], manifests: list[tuple[Path, dict[str, Any]]]) -> dict[str, Any]:
+def score_request(
+    request: dict[str, Any],
+    manifests: list[tuple[Path, dict[str, Any]]],
+    *,
+    request_path: Path | None = None,
+) -> dict[str, Any]:
     req_cases = set(required_case_ids(request))
     req_sets = expected_required_sets(request)
     candidates = []
@@ -149,20 +221,24 @@ def score_request(request: dict[str, Any], manifests: list[tuple[Path, dict[str,
         status = "pending"
         best = None
 
-    return {
+    row = {
         "request_id": request["request_id"],
         "effect": request.get("effect", {}).get("name", ""),
         "required_cases": len(req_cases),
         "status": status,
         "best": best,
     }
+    if request_path is not None:
+        row["request_file"] = str(request_path)
+        row["pinning"] = package_time_pinning_summary(request_path)
+    return row
 
 
 def load_status_rows(request_dir: Path, reference_dir: Path) -> list[dict[str, Any]]:
     request_paths = sorted(request_dir.glob("*.json"))
     manifest_paths = sorted(reference_dir.glob("**/reference_manifest.json"))
     manifests = [(path, load_json(path)) for path in manifest_paths]
-    return [score_request(load_json(path), manifests) for path in request_paths]
+    return [score_request(load_json(path), manifests, request_path=path) for path in request_paths]
 
 
 def main() -> int:
@@ -183,6 +259,12 @@ def main() -> int:
             detail = (
                 f" -> {best.get('matched_cases', 0)}/{row['required_cases']} cases, "
                 f"missing render sets={best.get('missing_render_sets', [])}"
+            )
+        pinning = row.get("pinning") or {}
+        if pinning:
+            detail += (
+                f" | pinning current={pinning.get('current_params_full_cases', 0)}/{pinning.get('total_cases', 0)} "
+                f"packaged={pinning.get('packaged_params_full_cases', 0)}/{pinning.get('total_cases', 0)}"
             )
         print(
             f"- {row['request_id']}: {row['status']} "

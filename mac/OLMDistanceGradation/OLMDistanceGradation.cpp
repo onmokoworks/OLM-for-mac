@@ -47,12 +47,12 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_InsideThreshold_Param_Name),
-	              0, 4096, 0, 512, 128,
+	              0, 1000, 0, 1000, 128,
 	              INSIDE_THRESHOLD_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_OutsideThreshold_Param_Name),
-	              0, 4096, 0, 512, 128,
+	              0, 1000, 0, 1000, 128,
 	              OUTSIDE_THRESHOLD_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
@@ -66,12 +66,9 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	                "", FALSE, 0, USE_BG_COLOR_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	{
-		PF_Pixel dft = { 0xFF, 0xFF, 0x00, 0xFF };  // default magenta-ish per disasm
-		PF_ADD_COLOR(GetStringPtr(StrID_GradColor_Param_Name),
-		             dft.red, dft.green, dft.blue,
-		             GRAD_COLOR_DISK_ID);
-	}
+	PF_ADD_COLOR(GetStringPtr(StrID_GradColor_Param_Name),
+	             0xFF, 0x00, 0x00,
+	             GRAD_COLOR_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	{
@@ -88,7 +85,7 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_Power_Param_Name),
-	                     0.01, 5.0, 0.01, 5.0, 5.0,
+	                     0.01, 5.0, 0.01, 5.0, 1.0,
 	                     PF_Precision_HUNDREDTHS, 0, 0,
 	                     POWER_DISK_ID);
 
@@ -100,7 +97,7 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_BlurSize_Param_Name),
-	              0, 4096, 0, 4096, 500,
+	              0, 4096, 0, 4096, 0,
 	              BLUR_SIZE_DISK_ID);
 
 	out_data->num_params = DG_NUM_PARAMS;
@@ -565,10 +562,25 @@ static inline void compose_pixel(
 		out_b = oneX * p.bg_color.blue  + X * ib;
 		out_a = d_alpha;            // use_bg: alpha = d_alpha (full)
 	} else {
-		out_r = ir;
-		out_g = ig;
-		out_b = ib;
 		out_a = d_alpha * X;        // no bg: alpha = d_alpha * X
+		if (p.render_mode == RENDER_MODE_LAYER && src_a > 0.0f) {
+			// Windows 16bpc Layer/no-bg witnesses are consistent with using
+			// straight source RGB and then premultiplying by the final alpha.
+			float inv_a = 1.0f / src_a;
+			float straight_r = src_r * inv_a;
+			float straight_g = src_g * inv_a;
+			float straight_b = src_b * inv_a;
+			if (straight_r < 0.0f) straight_r = 0.0f; else if (straight_r > 1.0f) straight_r = 1.0f;
+			if (straight_g < 0.0f) straight_g = 0.0f; else if (straight_g > 1.0f) straight_g = 1.0f;
+			if (straight_b < 0.0f) straight_b = 0.0f; else if (straight_b > 1.0f) straight_b = 1.0f;
+			out_r = straight_r * out_a;
+			out_g = straight_g * out_a;
+			out_b = straight_b * out_a;
+		} else {
+			out_r = ir;
+			out_g = ig;
+			out_b = ib;
+		}
 	}
 }
 
