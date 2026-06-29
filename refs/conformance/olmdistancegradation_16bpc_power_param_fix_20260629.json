@@ -1,0 +1,36 @@
+{
+  "kind": "olm_distancegradation_16bpc_power_param_fix",
+  "generated_at": "2026-06-29T14:24:00+09:00",
+  "status": "not-ae-exact",
+  "fix": {
+    "file": "mac/OLMDistanceGradation/OLMDistanceGradation.cpp",
+    "old": "p->power = (float)FIX_2_FLOAT(params[DG_POWER]->u.fs_d.value);",
+    "new": "p->power = (float)params[DG_POWER]->u.fs_d.value;",
+    "reason": "PF_ADD_FLOAT_SLIDERX already stores the floating value in fs_d.value; applying FIX_2_FLOAT divided Power by 65536."
+  },
+  "evidence": {
+    "debug_dump_before_fix": "refs/reports/ae_single_case_olmdistancegradation_case0026_debugdump_20260629_1420/field_debug.txt",
+    "debug_dump_after_fix": "refs/reports/ae_single_case_olmdistancegradation_case0026_powerfix_20260629_1422/field_debug.txt",
+    "extended_powerfix_report": "refs/reports/ae_pixel_validation_16bpc_distancegradation_extended_powerfix_20260629_1424/reports/ae_pixel_16bpc_extended_powerfix.json"
+  },
+  "case0026_before_fix": {
+    "power_read_by_plugin": 0.0000396332907,
+    "max_diff": 61155,
+    "mean_diff": 11755.145866247107,
+    "classification": "Power was nearly zero, so pow(field_x, power) saturated most pixels to the Gradation Color endpoint."
+  },
+  "case0026_after_fix": {
+    "power_read_by_plugin": 2.59740734,
+    "max_diff": 11480,
+    "mean_diff": 2.9253721788194444,
+    "nonzero_px": 902747,
+    "row0_witness": "Windows ramp is recovered within 0..4 channel units at x=0..14."
+  },
+  "extended_16bpc_after_fix": {
+    "exact": 1,
+    "fail": 15,
+    "missing": 0,
+    "total": 16
+  },
+  "next_required_proof": "Remaining residuals are no longer the Power value collapse. Classify the high-delta pixels by field quantization, threshold/source ownership, and compose/writeback per case family."
+}

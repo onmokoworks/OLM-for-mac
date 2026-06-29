@@ -39,6 +39,70 @@ Keep the axes separate:
 - `result_status`: whether that exact pair is `AE exact`, `CLI exact`,
   `known-red`, `blocked`, `invalid`, or another diagnostic state.
 
+Keep the three planning axes separate:
+
+- `correctness_status`: whether the algorithm output is correct against the
+  Windows AE Software reference for a declared slice.
+- `host_status`: whether the Mac AE plug-in is usable enough to make hands-on
+  AE testing meaningful.
+- `work_lane`: the next kind of work that is allowed for the slice.
+
+`AE exact`, CLI parity, AE manual testing, and runtime trace waits must not be
+merged into a single progress word.
+
+Use these `correctness_status` labels:
+
+| correctness_status | Meaning |
+| --- | --- |
+| `AE exact` | Mac AE render matches Windows AE Software reference with zero diff for the declared bit depth and case set. |
+| `CLI exact` | AE-free CLI output matches the Windows reference with zero diff. |
+| `binary-grounded` | Ghidra/objdump/runtime trace proves the relevant rule, but the declared slice is not necessarily exact yet. |
+| `guarded` | A nonzero residual or tolerance is intentionally preserved as a regression/proof target. |
+| `known-red` | A checked case is expected to fail and is kept to prevent accidental reclassification. |
+| `blocked` | PNG-only tuning is unsafe; more binary/runtime/AE-host proof is required. |
+
+Keep host usability separate from correctness:
+
+- `host_status`: whether the Mac AE plug-in currently loads, exposes usable UI,
+  accepts manual parameter changes, and finishes a render without host errors.
+- A feature can be `AE exact` for a packaged case set and still be poor in
+  manual host usability.
+- A feature can be host-usable enough to debug while still being far from
+  `AE exact`.
+
+Use these host-side labels when discussing whether AE hands-on testing is worth
+doing yet:
+
+| Host status | Meaning | When AE manual testing is useful |
+| --- | --- | --- |
+| `host-blocked` | Plug-in fails to load, add, set basic params, or render a frame reliably. | Only for host integration debugging. Not for visual tuning. |
+| `host-smoke` | Plug-in loads and can render a minimal frame, but output is not yet trusted. | Only for parameter wiring and crash checks. |
+| `host-debuggable` | Plug-in can be manipulated in AE without obvious host failure, but algorithm output is still not trusted. | For bounded witness checks, not freeform look-matching. |
+| `host-visual-tuning-ready` | Binary/CLI evidence is strong enough that AE visual comparison can safely refine residuals. | Yes, for narrow residual tuning. |
+| `host-stable` | Manual use is stable across the currently supported feature slice. | Safe for broader hands-on validation. |
+
+Use these `work_lane` labels to choose the next action:
+
+| work_lane | Meaning | Allowed work |
+| --- | --- | --- |
+| `host-fix` | AE load/add/parameter/render behavior is broken or untrusted. | Fix host integration before visual or exactness tuning. |
+| `binary-proof` | The next useful evidence must come from asm, objdump, Ghidra, or runtime trace. | Narrow witness design, static analysis, trace intake, and proof-backed implementation. |
+| `cli-port` | The algorithm is constrained enough to implement and test outside AE. | CLI implementation and reference comparison. |
+| `ae-validate` | The implementation is ready for Mac AE output comparison. | AE-host render, exact comparison, and narrow residual classification. |
+| `bitdepth-expand` | A lower bit-depth slice is exact and should be expanded to 16/32bpc. | Generate/ingest bit-depth references and compare by bit-depth policy. |
+| `parked` | Current work would mostly become PNG-only guessing. | Wait for a sharper witness, proof, or user priority change. |
+
+Default next-action priority:
+
+1. If any active target is `host-blocked`, prefer `host-fix`.
+2. Preserve existing `AE exact` slices; route them to `bitdepth-expand` instead
+   of broad rewrites.
+3. Do not visually tune `blocked` or `host-smoke` hard paths from broad PNGs.
+4. When runtime trace is needed, define a narrow witness before packaging work.
+5. Treat `CLI exact` as intermediate evidence, not Mac AE completion.
+6. Manual AE checks are useful only at `host-debuggable` or better, and should
+   be tied to a witness unless the slice is `host-stable`.
+
 ## Reference Path
 
 - The canonical reference path is Windows AE Software render.

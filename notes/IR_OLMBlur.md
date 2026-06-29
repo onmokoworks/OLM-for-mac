@@ -15,11 +15,12 @@
   - AE-free CLI remains exact for normalized Software `case_0001/0002/0004/0005`
   - AE-free CLI keeps useful `max=1` residual witnesses for
     `case_0003/0006/0007`
-  - 16bpc Mac AE validation is 0/7 exact, but 6/7 residuals are now classified
-    as one 512-step 16-bit writeback/PNG-scaling quantization after wraparound,
-    not broad blur-kernel failure
-  - `case_0007` has the same 16bpc quantization signature plus a remaining
-    Legacy border/seed anomaly
+  - 16bpc Mac AE validation is 0/7 exact, but a 2026-06-26 endian-fix
+    reverify proved that 6/7 residuals are only near 1 LSB in AE 16bpc output
+    terms, appearing as `max_diff=2` in exported PNG space rather than the
+    previously reported 512-step family
+  - `case_0007` keeps the same near-1LSB family plus a remaining
+    Legacy border/seed anomaly (`max_diff=383` at the localized witness)
   - not binary-complete for 16bpc writeback scaling, Legacy border seed, or
     32bpc behavior
 - 2026-06-22 provenance audit confirms the packaged AE-host candidates are
@@ -52,8 +53,12 @@
 | Non-legacy writeback currently uses a compatibility `nearbyint` shim. | Current CLI/Mac implementation; exact for normalized `case_0001..0005`. | CLI-confirmed but not final binary explanation |
 | 16bpc standard writer adds `0.5`, passes through the clamp/helper, truncates with `CVTTSS2SI`, then stores 16-bit channel words. | `disasm/OLMBlur.aex.asm.txt` around `180002fad..18000302e`: `MOVSS` loads `0.5`, `ADDSS`, helper call, `CVTTSS2SI`, `MOV word ptr [RBX+...]`. | binary-grounded |
 | Legacy/alternate 16bpc writer uses a later direct `CVTTSS2SI` word-store family. | `disasm/OLMBlur.aex.asm.txt` around `1800031f9..`; matches the earlier runtime-trace location family for Legacy `case_0007`. | binary-grounded / runtime-trace |
-| Current Mac AE 16bpc OLMBlur residuals are mostly a 512-step writeback/PNG scaling signature. | `refs/conformance/bitdepth_16bpc_mac_ae_residual_classes_20260626_distancegradation_inside_no_source.md`: six cases labeled `olmblur-16bpc-writeback-quantization`; all nonzero cyclic deltas are `<=512`. | AE-validation diagnostic |
-| 2026-06-26 local Mac AE rerun reproduces the same pattern with tighter delta families: non-Legacy cases use only `-513/-512/+512/+513` on failing channels, while Legacy `case_0007` adds a separate `32513` cyclic border/seed anomaly. | `refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json` and `refs/conformance/bitdepth_16bpc_mac_ae_residual_classes_20260626_204952_rerun.md`. | AE-validation diagnostic |
+| 2026-06-29 ASM writer audit makes the 16bpc writer split reproducible: standard word writer is `round-add-helper-truncate-word-store`, alternate word writer is `direct-memory-truncate-word-store`, and the known `+0x7fdf` family is an 8bpc byte-store analogue. | `scripts/analyze_olmblur_16bpc_asm_writer.py`, `refs/conformance/olmblur_16bpc_asm_writer_audit_20260629.md`, and smoke `python3 refs/scripts/smoke_analyze_olmblur_16bpc_asm_writer.py`. | binary-grounded / reproducible-audit |
+| `refs/scripts/verify_manifest.py` previously misread ImageMagick 16-bit RGBA output with the wrong endianness. | 2026-06-26 local audit: direct `magick txt:-` witness at `(466,173)` is `28869`, while the old verifier path decoded it as `50544`; forcing `-endian MSB` or reading little-endian raw fixes the discrepancy. | binary-grounded tooling fact |
+| After the endian fix, current Mac AE 16bpc OLMBlur residuals are mostly near 1 LSB in AE 16bpc output terms, not broad 512-step quantization. | `refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json` and `refs/conformance/bitdepth_16bpc_mac_ae_residual_classes_20260626_2335_endian_fix.md`: non-Legacy cases are `max_diff=2`, while Legacy `case_0007` is `max_diff=383`. | AE-validation diagnostic |
+| 2026-06-27 full-image remeasure shows the near-1LSB family is sign-mixed, not one-directional. | Local comparison of the normalized Windows 16bpc refs in `refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/` against `refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmblur_exact/candidate/`: global nonzero channel deltas are `-2:463`, `+2:1478`, and `+383:3` (Legacy only). | AE-validation diagnostic |
+| 2026-06-28 Mac AE rerun reproduces the same 16bpc family on the current plug-in. | `refs/conformance/olmblur_16bpc_mac_ae_rerun_20260628.md`: `case_0001..0006` are sign-mixed `max_diff=2`; `case_0007` is `max_diff=383` with the localized Legacy border/seed witness at `(0,0)`. `case_0003` was re-rendered as a single-case request because the full AE batch did not write it cleanly, but the single PNG compares to the same `max_diff=2` result. | AE-validation diagnostic |
+| 2026-06-28 word-delta audit narrows the 16bpc residual to one internal word for the non-Legacy family. | `refs/conformance/olmblur_16bpc_word_delta_audit_20260628.md`: all nonzero `case_0001..0006` exported channel deltas are `+/-2`, which infers `+/-1` in AE's 0..32768 PF_Pixel16 word domain. `case_0007` mostly shares that family but keeps a separate `(0,0)` `-383` exported / about `-192` word Legacy witness. | AE-validation diagnostic |
 | Non-legacy `case_0006` residual is already present before byte writeback. | 2026-06-20 Windows CDB return: `(498,940)` pre-writeback red is `185.49998474121094` while the Mac CLI baseline is exactly `185.5`; final Windows byte is `185`. | runtime-trace |
 | Legacy `case_0007` uses the later `OLMBlur+0x7FDF` writeback family. | 2026-06-20 Windows CDB return hit `(0,0)`, `(488,941)`, and `(488,942)` at the Legacy writeback family. | runtime-trace |
 
@@ -122,18 +127,30 @@ Current implementation:
 - The non-legacy `nearbyint` rule is not final binary-grounded truth because
   the Windows AEX writeback constant is still known to be `0.5`; the remaining
   mismatch likely belongs in accumulation/order before writeback.
-- 16bpc validation should not be treated as a kernel-tuning signal yet. The
-  Mac AE residuals for `case_0001..0006` collapse to a one-step 512 cyclic
-  delta in 16-bit PNG space, including wraparound examples such as reference
-  values near `65535` versus candidates near `0`. Next proof belongs in the
-  16bpc AE writeback/PNG scaling path.
-- The 2026-06-26 local rerun makes that more specific: the non-Legacy failing
-  channels only show `-513/-512/+512/+513`, and `case_0003/0004` collapse
-  further to pure `+/-512`. That is strong evidence for an export/writeback
-  quantization family rather than a blur-kernel or radius-order failure.
-- 16bpc `case_0007` still needs Legacy-specific proof: it has the same
-  quantization signature, plus a larger cyclic delta at a small border/seed
-  set. Do not change the general blur kernel from this case alone.
+- 16bpc validation should not be treated as a kernel-tuning signal yet. After
+  fixing the verifier endianness, the Mac AE residuals for `case_0001..0006`
+  shrink to `max_diff=2`, which is consistent with about one AE 16bpc output
+  unit once exported to PNG. Next proof belongs in final rounding/writeback,
+  not blur-kernel radius/order.
+- The 2026-06-28 word-delta audit makes that more concrete: every nonzero
+  `case_0001..0006` exported channel delta is `+2` or `-2`, and all affected
+  exported values are odd on both sides. Inferred internal PF_Pixel16 word
+  deltas are therefore only `+1` or `-1`.
+- The same 2026-06-27 remeasure rules out a trivial global writeback swap as a
+  complete explanation: the surviving near-1LSB family contains both `+2` and
+  `-2` channel deltas in the exact same validation batch, including mixed-sign
+  Legacy witnesses such as `case_0007` around `(1693,220)` and `(1450,227)`.
+  So a one-line `round`/`trunc` replacement is not yet justified.
+- `case_0007` still needs Legacy-specific proof: it shares the same tiny
+  rounding family in most pixels, but keeps a localized Legacy border/seed
+  anomaly (`max_diff=383`) at a small witness set. Do not change the general
+  blur kernel from this case alone.
+- The localized `case_0007 (0,0)` anomaly is consistent across bit depths.
+  Exported 16bpc PNG `max_diff=383` corresponds to about `191` AE 16bpc units,
+  which is the same order as the earlier 8bpc Legacy witness where Windows
+  pre-writeback blue was about `1.5528` before truncating to final `0`. Treat
+  this as the same Legacy border/seed issue scaled by bit depth, not as a new
+  16bpc-only kernel branch.
 
 ## Conformance Cases
 
@@ -144,13 +161,23 @@ Current implementation:
 | `case_0005` | 8bpc | `CLI exact` in current residual smoke | 2026-06-21 rerun: exact (`max=0`); packaged Mac AE validation is exact | Preserve AE behavior; add 16/32bpc references |
 | `case_0006` | 8bpc | AE exact / residual diagnostic | 2026-06-20 Windows trace: AEX pre-writeback red at `(498,940)` is `185.49998474121094` (`0x1.72fffe0000000p+7`), Mac CLI baseline is exactly `185.5` (`0x1.73p+7`), and Windows final byte is `185`; 2026-06-19 AE pixel return `max=0` | Accumulation/helper order proof before changing the passing AE plug-in path |
 | `case_0007` | 8bpc | AE exact / residual diagnostic | 2026-06-20 Windows trace: Legacy writeback family `OLMBlur+0x7FDF`; `(0,0)` pre RGB `[0,0,~1.5528]`, final `[0,0,0,255]`; `(488,941/942)` pre red just above `250.5`, final `251`; Mac CLI stays just below/equal | Isolate Legacy helper state/border source if CLI residual is still worth closing |
-| `case_0001..0006` | 16bpc | not exact / writeback diagnostic | 2026-06-26 Mac AE validation and local rerun: all six failing cases are limited to `-513/-512/+512/+513` cyclic deltas, with `case_0003/0004` using only `+/-512`; the large `max=65023` rows are wraparound one-step differences rather than broad kernel mismatch | Inspect 16bpc writeback scaling and AE PNG export normalization before changing blur math |
-| `case_0007` | 16bpc | not exact / Legacy diagnostic | 2026-06-26 Mac AE validation and local rerun: one 512-step quantization signature plus a separate `32513` cyclic Legacy border/seed anomaly (`olmblur-16bpc-legacy-border-plus-quantization`) | Isolate Legacy 16bpc border/seed and alternate writer family |
+| `case_0001..0006` | 16bpc | not exact / one-word diagnostic | 2026-06-28 current Mac AE rerun: all six failing cases remain `max_diff=2`; word-delta audit infers only `+/-1` PF_Pixel16 word deltas, sign-mixed, so a global rounding-direction change is not justified | Inspect final pre-writeback float/helper/store order before changing blur math |
+| `case_0007` | 16bpc | not exact / Legacy diagnostic | 2026-06-28 current Mac AE rerun: near-1word family plus separate localized Legacy border/seed anomaly (`max_diff=383`) at `(0,0)` where candidate `[383,383,383,65535]` differs from reference `[0,0,0,65535]`; word-delta audit estimates that witness at about `-192` internal words | Isolate Legacy 16bpc border/seed/all-same state and alternate writer family |
 
 Mac baseline traces for the normalized Software residual witnesses are stored
 under `refs/reports/olmblur_trace_baseline_20260619_030633_mac/`. These logs
 should be compared with Windows AEX runtime values before changing writeback or
 Legacy border rules.
+
+The 16bpc word-delta audit is reproducible and should not remain a hand-edited
+note:
+
+```bash
+python3 scripts/analyze_olmblur_16bpc_word_delta.py
+python3 refs/scripts/smoke_analyze_olmblur_16bpc_word_delta.py
+python3 scripts/analyze_olmblur_16bpc_asm_writer.py
+python3 refs/scripts/smoke_analyze_olmblur_16bpc_asm_writer.py
+```
 
 2026-06-20 Windows overnight return:
 
@@ -229,8 +256,8 @@ Legacy border rules.
 
 - True non-legacy final accumulation/writeback order.
 - Legacy border/all-same state for the remaining three pixels.
-- 16bpc writeback/PNG scaling rule, including why most residuals differ by a
-  single 512 step in PNG space.
+- 16bpc final rounding/writeback rule, including why most residuals differ by
+  only about one AE output unit while exported PNGs show `max_diff=2`.
 - Legacy 16bpc border/seed state for `case_0007`.
 - 32bpc Software reference behavior.
 - Whether closing the AE-free CLI max=1 diagnostic is worth another narrow

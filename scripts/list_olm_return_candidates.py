@@ -72,7 +72,7 @@ def read_zip_json(path: Path, name: str) -> dict[str, Any] | None:
                 (member for member in archive.namelist() if member.replace("\\", "/") == name),
                 name,
             )
-            data = json.loads(archive.read(member_name).decode("utf-8"))
+            data = json.loads(archive.read(member_name).decode("utf-8-sig"))
     except Exception:
         return None
     return data if isinstance(data, dict) else None
@@ -97,7 +97,7 @@ def classify_zip(path: Path) -> tuple[str, list[str]]:
             if name not in json_cache:
                 try:
                     member_name = member_by_clean_name.get(name, name)
-                    data = json.loads(archive.read(member_name).decode("utf-8"))
+                    data = json.loads(archive.read(member_name).decode("utf-8-sig"))
                 except Exception:
                     data = None
                 json_cache[name] = data if isinstance(data, dict) else None
@@ -111,6 +111,26 @@ def classify_zip_names(names: list[str], read_json: Any) -> tuple[str, list[str]
         return ("unknown", [])
 
     hints: list[str] = []
+    for name in names:
+        if Path(name).name != "RETURN_RUNTIME_TRACE_RESULT.json":
+            continue
+        data = read_json(name)
+        kind = data.get("kind") if data else None
+        if (
+            kind == "olm_runtime_trace_result"
+            or (data and isinstance(data.get("runtime_trace_results"), list))
+            or (data and isinstance(data.get("results"), list))
+        ):
+            return ("runtime-trace-return", [f"{name}: {kind or 'runtime_trace_results'}"])
+    for name in names:
+        if Path(name).name != "runtime_trace_package_manifest.json":
+            continue
+        data = read_json(name)
+        kind = data.get("kind") if data else None
+        if kind == "olm_runtime_trace_request_package":
+            has_result = any(Path(item).name == "RETURN_RUNTIME_TRACE_RESULT.json" for item in names)
+            if not has_result:
+                return ("runtime-trace-request-package", [f"{name}: {kind}"])
     if any(name.endswith("AE_VALIDATION_EXACT_REPORT.json") for name in names):
         return ("ae-pixel-validation-return", ["contains AE_VALIDATION_EXACT_REPORT.json"])
     if any("/ae_pixel_validation_return/returns/" in f"/{name}" and name.endswith("_return.zip") for name in names):
@@ -137,6 +157,8 @@ def classify_zip_names(names: list[str], read_json: Any) -> tuple[str, list[str]
             return ("windows-action-bundle", [f"{name}: {kind}"])
     for name in names:
         if not name.endswith(".json"):
+            continue
+        if Path(name).name == "RETURN_RUNTIME_TRACE_TEMPLATE.json":
             continue
         data = read_json(name)
         kind = data.get("kind") if data else None
@@ -176,6 +198,8 @@ def classify_zip_names(names: list[str], read_json: Any) -> tuple[str, list[str]
             return ("ae-host-return", [f"{name}: {kind}"])
     for name in names:
         if not name.endswith(".json"):
+            continue
+        if Path(name).name == "RETURN_RUNTIME_TRACE_TEMPLATE.json":
             continue
         data = read_json(name)
         kind = data.get("kind") if data else None

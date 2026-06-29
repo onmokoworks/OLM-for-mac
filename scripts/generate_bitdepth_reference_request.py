@@ -21,21 +21,33 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--request-id",
-        default="olm_bitdepth_16bpc_normalized_exact_20260625",
+        default=None,
         help="request_id to write into the generated request JSON.",
     )
     parser.add_argument(
         "--bit-depth",
-        choices=("16bpc",),
+        choices=("16bpc", "32bpc"),
         default="16bpc",
-        help="Currently only 16bpc is generated; 32bpc waits for float compare policy.",
+        help="Generate a 16bpc conformance request or a 32bpc float-output probe request.",
     )
     parser.add_argument(
         "--output",
         type=Path,
-        default=ROOT / "refs" / "reference_requests" / "olm_bitdepth_16bpc_normalized_exact_20260625.json",
+        default=None,
     )
     return parser.parse_args()
+
+
+def default_request_id(bit_depth: str) -> str:
+    if bit_depth == "32bpc":
+        return "olm_bitdepth_32bpc_float_output_probe_YYYYMMDD"
+    return "olm_bitdepth_16bpc_normalized_exact_20260625"
+
+
+def default_output(bit_depth: str, request_id: str) -> Path:
+    if bit_depth == "32bpc":
+        return ROOT / "refs" / "reference_requests" / f"{request_id}.json"
+    return ROOT / "refs" / "reference_requests" / "olm_bitdepth_16bpc_normalized_exact_20260625.json"
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -106,6 +118,66 @@ def input_id_for(feature_name: str, case_id: str) -> str:
 
 def build_request(args: argparse.Namespace) -> dict[str, Any]:
     plan = read_json(args.plan_json)
+    request_id = args.request_id or default_request_id(args.bit_depth)
+    bits_per_channel = 32 if args.bit_depth == "32bpc" else 16
+    render_set_id = f"software_{args.bit_depth}"
+    if args.bit_depth == "32bpc":
+        case_reason = (
+            "32bpc float-output probe for a normalized 8bpc Software exact case. "
+            "This is not AE exact evidence unless the return includes float-preserving output."
+        )
+        why = [
+            "The listed feature groups are normalized 8bpc Windows Software exact and need 32bpc output-format probing before 32bpc exactness can be claimed.",
+            "This request asks the Windows helper to render a 32bpc project and return float-preserving output if available, preferably EXR or raw float samples.",
+            "PNG output from this request is only a smoke/probe artifact and must not be used as 32bpc completion evidence.",
+        ]
+        manifest_requirements = [
+            "AE version",
+            "project_gpu_accel_type.current_name and raw value",
+            "project bit depth / bits per channel",
+            "project color management settings",
+            "before_effects_frame PNG or float-preserving input snapshot for every case",
+            "effect output in a float-preserving format when possible, such as EXR or raw float RGBA samples",
+            "if only PNG output is possible, record output_format=png and float_preserving=false",
+            "all effect property names, match_names, indices, values, enabled/active state",
+        ]
+        mac_follow_up = [
+            "Import with scripts/intake_olm_return.py path/to/returned_reference.zip --quick.",
+            "Do not claim 32bpc exact unless the return preserves float samples and a 32bpc comparator verifies exact float equality or a documented exception profile.",
+        ]
+        stop_lines = [
+            "Do not render CUDA/GPU as the conformance target for this request.",
+            "Do not use PNG-only 32bpc returns as AE exact evidence.",
+            "Do not mix legacy 20260604/20260605 drift references into this bit-depth batch.",
+        ]
+    else:
+        case_reason = (
+            "16bpc expansion of a normalized 8bpc Software exact case. "
+            "Do not use this to retune 8bpc legacy drift."
+        )
+        why = [
+            "The listed feature groups are normalized 8bpc Windows Software exact and need the next declared bit-depth proof.",
+            "This request deliberately starts with 16bpc only; 32bpc waits until the float comparison policy is fixed.",
+            "Legacy 8bpc drift and AE-free CLI residuals are not tuning targets for this request.",
+        ]
+        manifest_requirements = [
+            "AE version",
+            "project_gpu_accel_type.current_name and raw value",
+            "project bit depth / bits per channel",
+            "project color management settings",
+            "before_effects_frame PNG for every case",
+            "effect output image for every case, preserving 16bpc data if the runner can export it",
+            "all effect property names, match_names, indices, values, enabled/active state",
+        ]
+        mac_follow_up = [
+            "Import with scripts/intake_olm_return.py path/to/returned_reference.zip --quick.",
+            "Do not claim 16bpc exact until a 16bpc-aware comparator verifies zero diff.",
+        ]
+        stop_lines = [
+            "Do not render CUDA/GPU as the conformance target for this request.",
+            "Do not include 32bpc in this request.",
+            "Do not mix legacy 20260604/20260605 drift references into this bit-depth batch.",
+        ]
     cases = []
     inputs: dict[str, dict[str, Any]] = {}
     effects: dict[str, dict[str, str]] = {}
@@ -145,10 +217,7 @@ def build_request(args: argparse.Namespace) -> dict[str, Any]:
                     "plugin": feature["plugin"],
                     "source_case_id": case_id,
                     "input": input_id,
-                    "reason": (
-                        "16bpc expansion of a normalized 8bpc Software exact case. "
-                        "Do not use this to retune 8bpc legacy drift."
-                    ),
+                    "reason": case_reason,
                     "effect": effects[effect_key],
                     "params": param_map(effect),
                     "params_full": param_records(effect),
@@ -156,51 +225,36 @@ def build_request(args: argparse.Namespace) -> dict[str, Any]:
             )
 
     return {
-        "request_id": args.request_id,
+        "request_id": request_id,
         "effect": {
             "name": "OLM bit-depth conformance batch",
             "match_name": "mixed",
             "contains_mixed_effects": True,
         },
-        "why": [
-            "The listed feature groups are normalized 8bpc Windows Software exact and need the next declared bit-depth proof.",
-            "This request deliberately starts with 16bpc only; 32bpc waits until the float comparison policy is fixed.",
-            "Legacy 8bpc drift and AE-free CLI residuals are not tuning targets for this request.",
-        ],
+        "why": why,
         "render_sets": [
             {
-                "id": "software_16bpc",
+                "id": render_set_id,
                 "project_gpu_accel_type.current_name": "SOFTWARE",
-                "bit_depth": "16bpc",
-                "bits_per_channel": 16,
+                "bit_depth": args.bit_depth,
+                "bits_per_channel": bits_per_channel,
                 "required": True,
             }
         ],
         "inputs": list(inputs.values()),
         "cases": cases,
-        "manifest_requirements": [
-            "AE version",
-            "project_gpu_accel_type.current_name and raw value",
-            "project bit depth / bits per channel",
-            "project color management settings",
-            "before_effects_frame PNG for every case",
-            "effect output image for every case, preserving 16bpc data if the runner can export it",
-            "all effect property names, match_names, indices, values, enabled/active state",
-        ],
-        "mac_follow_up": [
-            "Import with scripts/intake_olm_return.py path/to/returned_reference.zip --quick.",
-            "Do not claim 16bpc exact until a 16bpc-aware comparator verifies zero diff.",
-        ],
-        "stop_lines": [
-            "Do not render CUDA/GPU as the conformance target for this request.",
-            "Do not include 32bpc in this request.",
-            "Do not mix legacy 20260604/20260605 drift references into this bit-depth batch.",
-        ],
+        "manifest_requirements": manifest_requirements,
+        "mac_follow_up": mac_follow_up,
+        "stop_lines": stop_lines,
     }
 
 
 def main() -> int:
     args = parse_args()
+    if args.request_id is None:
+        args.request_id = default_request_id(args.bit_depth)
+    if args.output is None:
+        args.output = default_output(args.bit_depth, args.request_id)
     request = build_request(args)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(request, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

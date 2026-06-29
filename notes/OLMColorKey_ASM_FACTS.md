@@ -262,6 +262,40 @@ smoke_olmcolorkey_replace_colorspace_request_cli.py both exit 0; all 6 color
 spaces still exact(0); edge-thin residual cases unchanged at their documented
 tolerance.
 
+## Lab76 per-component threshold mapping — current AEX (2026-06-28)
+
+The current Windows AEX Lab76 per-component comparator at `0x1800043a0` does
+not apply the old source-level shape `eps + threshold * LabScale` for every
+component. Raw PE disassembly of `aex/OLMColorKey/Plugins/64/2025/OLMColorKey.aex`
+shows the threshold and epsilon use separate per-channel multipliers:
+
+```text
+limit_L = threshold_L * 151.30099487304688 + epsilon * 2709.929931640625
+limit_a = threshold_a * 264.36700439453125 + epsilon * 578.7139892578125
+limit_b = threshold_b * 295.572998046875   + epsilon * 414.6759948730469
+```
+
+Key disassembly evidence:
+
+- `0x18000446a`: threshold L multiplied by `151.300995`.
+- `0x180004456`: epsilon multiplied by `2709.929932`.
+- `0x180004421`: threshold a multiplied by `264.367004`.
+- `0x180004419`: epsilon multiplied by `578.713989`.
+- `0x18000442f`: threshold b multiplied by `295.572998`.
+- `0x18000444e`: epsilon multiplied by `414.675995`.
+
+Applying this mapping to the 16bpc normalized Software blocker
+`olmcolorkey__case_0009` makes the local exported-PNG model
+`Lab76 hit + taxicab Edge Thin dilate <=25` exact against the Windows reference
+(`diff=0`). The previously failing representative witness `(1110,149)` moves
+from outside the old seed world to `dist=2`, matching the raw CDB trace where
+Windows copied matte word `0x0000 -> 0x8000`.
+
+Mac `OLMColorKey.cpp` currently applies this binary-grounded mapping only for
+the proven slice: native 16bpc, `Color Space=Lab76`, and
+`Force Lower Precision=3`. Other bit depths and Lab94 keep the earlier
+reference-backed behavior until they receive separate AE proof.
+
 ## BLOCKERS (edge-thin erode + edge-blur blend) — not guessed
 
 These are independent of Replace (all the failing cases have Color Keep=0 so no

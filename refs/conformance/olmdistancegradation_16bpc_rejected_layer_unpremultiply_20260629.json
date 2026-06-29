@@ -1,0 +1,114 @@
+{
+  "kind": "olmdistancegradation_16bpc_rejected_layer_unpremultiply",
+  "date": "2026-06-29",
+  "case_id": "olmdistancegradation_extended__case_0012",
+  "request_dir": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625",
+  "installed_sha_after_revert": "ab5f48244d33ab0d7a9078442ea25ff20ad218aca649bd36d1456e1e5f77b6a4",
+  "conclusion": "Rejected: direct Layer/no-bg unpremultiply/premultiply increased changed-pixel coverage. Reverting and restarting AE restores the prior Constant-binary state. Layer/no-bg residual remains and needs binary/runtime proof instead of broad PNG tuning.",
+  "rows": [
+    {
+      "variant": "rejected_layer_unpremultiply_cached_before_restart",
+      "path": "refs/reports/ae_single_case_olmdistancegradation_case0012_layer_unpremul_20260629_1510/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+      "max_diff": 16476,
+      "mean_abs_diff": 332.83683244116514,
+      "nonzero_px": 285406,
+      "max_witness": {
+        "x": 427,
+        "y": 572,
+        "channel": 0,
+        "ref": [
+          32859,
+          0,
+          0,
+          32859
+        ],
+        "candidate": [
+          16383,
+          0,
+          0,
+          32767
+        ],
+        "delta": [
+          -16476,
+          0,
+          0,
+          -92
+        ]
+      },
+      "first_witness": {
+        "x": 15,
+        "y": 0,
+        "ref": [
+          21919,
+          21919,
+          21919,
+          64997
+        ],
+        "candidate": [
+          21735,
+          21735,
+          21735,
+          64997
+        ],
+        "delta": [
+          -184,
+          -184,
+          -184,
+          0
+        ]
+      }
+    },
+    {
+      "variant": "reverted_after_ae_restart",
+      "path": "refs/reports/ae_single_case_olmdistancegradation_case0012_reverted_after_ae_restart_20260629_1515/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+      "max_diff": 16250,
+      "mean_abs_diff": 53.451001519097225,
+      "nonzero_px": 25421,
+      "max_witness": {
+        "x": 462,
+        "y": 7,
+        "channel": 0,
+        "ref": [
+          32371,
+          32371,
+          32371,
+          64997
+        ],
+        "candidate": [
+          16121,
+          16121,
+          16121,
+          64997
+        ],
+        "delta": [
+          -16250,
+          -16250,
+          -16250,
+          0
+        ]
+      },
+      "first_witness": {
+        "x": 15,
+        "y": 0,
+        "ref": [
+          21919,
+          21919,
+          21919,
+          64997
+        ],
+        "candidate": [
+          7389,
+          7389,
+          7389,
+          64997
+        ],
+        "delta": [
+          -14530,
+          -14530,
+          -14530,
+          0
+        ]
+      }
+    }
+  ]
+}

@@ -1,8 +1,12 @@
 # OLM Official Site Snapshot - 2026-06-19
 
-This folder contains local HTML snapshots of the official OLM OpenTools pages.
-The pages are Wix-rendered HTML and are not pleasant source material, but they
-preserve the public product wording that complements the bundled PDF manuals.
+This folder keeps a compact repo-friendly record of the official OLM OpenTools
+site wording that we used for product-intent context.
+
+The original Wix HTML snapshots were intentionally removed from git after
+capture because they were large, noisy, and skewed the repository toward HTML.
+If raw pages are needed again, re-download them from the URLs below into a
+local ignored path.
 
 ## Captured Pages
 
@@ -26,3 +30,5 @@ preserve the public product wording that complements the bundled PDF manuals.
   PDF text, and hashes.
 - Do not use site wording as exactness proof. Exactness must still be grounded
   in Windows AEX decomp/asm/runtime traces and Windows AE Software references.
+- Raw HTML is considered disposable local capture material, not a canonical
+  checked-in artifact.

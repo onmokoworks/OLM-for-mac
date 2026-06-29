@@ -303,16 +303,15 @@ def classify(row: dict, reference: np.ndarray, candidate: np.ndarray, before: np
     if (
         plugin_from_case_id(case_id) == "olmblur"
         and cyclic_stats is not None
-        and cyclic_stats["max"] <= 512
+        and cyclic_stats["max"] <= 2
     ):
-        label = "olmblur-16bpc-writeback-quantization"
+        label = "olmblur-16bpc-near-1lsb"
     elif (
         plugin_from_case_id(case_id) == "olmblur"
         and cyclic_stats is not None
-        and max_diff >= 65000
-        and cyclic_stats["max"] > 512
+        and cyclic_stats["max"] <= 512
     ):
-        label = "olmblur-16bpc-legacy-border-plus-quantization"
+        label = "olmblur-16bpc-legacy-border-plus-near-1lsb"
     elif max_diff <= 257 and mean_diff <= 16:
         label = "rounding-or-low-amplitude"
     elif input_similarity and input_similarity.get("max", 999999) <= 257 and input_similarity.get("mean", 999999.0) <= 16:
@@ -359,11 +358,11 @@ def write_outputs(summary_json: Path, summary_md: Path, results: list[dict]) -> 
     summary_json.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     lines = [
-        "# 16bpc Mac AE Residual Classes - 2026-06-26 DistanceGradation Inside No-Source",
+        "# 16bpc Mac AE Residual Classes - 2026-06-26 Endian-Fix Reverify",
         "",
         "Status: classified, not AE exact.",
         "",
-        "This classification uses the Mac AE batch after the ColorKey Force Lower Precision fix and the DistanceGradation Inside/all-opaque no-source distance-field fix.",
+        "This classification uses the Mac AE batch reverified after fixing 16-bit PNG ImageMagick endian decoding in `refs/scripts/verify_manifest.py`.",
         "",
         "| Label | Count |",
         "| --- | ---: |",
@@ -408,8 +407,8 @@ def write_outputs(summary_json: Path, summary_md: Path, results: list[dict]) -> 
     lines += [
         "",
         "Interpretation:",
-        "- `olmblur-16bpc-writeback-quantization` means every nonzero OLMBlur delta is within one 512-step after 16-bit wraparound; investigate 16bpc writeback/PNG scaling before kernel tuning.",
-        "- `olmblur-16bpc-legacy-border-plus-quantization` means the same 512-step behavior is present, plus a small legacy border/seed anomaly.",
+        "- `olmblur-16bpc-near-1lsb` means every nonzero OLMBlur delta is within about one AE 16bpc output unit, which appears as `max_diff=2` in exported PNG space; investigate final rounding/writeback before kernel tuning.",
+        "- `olmblur-16bpc-legacy-border-plus-near-1lsb` means the same near-1LSB family is present, plus a small Legacy-only border/seed anomaly.",
         "- `full-scale-mismatch` is too large to treat as rounding; inspect parameter replay/color management/effect path before tuning kernels.",
         "- `candidate-close-to-input` suggests the effect path may not have applied or a controlling parameter was replayed incorrectly.",
         "- `candidate-looks-8bit-quantized` suggests a bit-depth/writeback path issue.",

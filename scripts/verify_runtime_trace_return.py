@@ -121,6 +121,8 @@ def find_result_jsons(root: Path) -> list[Path]:
         rel = str(path.relative_to(root)).replace("\\", "/")
         if rel.startswith("request_package/") or "/request_package/" in rel:
             continue
+        if path.name == "RETURN_RUNTIME_TRACE_TEMPLATE.json":
+            continue
         try:
             data = load_json(path)
         except Exception:

@@ -104,6 +104,11 @@ def comparators(py: str) -> list[Comparator]:
             command=[py, "scripts/compare_colorkey_edge_trace.py"],
         ),
         Comparator(
+            request_id="colorkey_16bpc_case0009_runtime_trace_20260626",
+            slug="olmcolorkey_16bpc_case0009",
+            command=[py, "scripts/compare_colorkey_16bpc_case0009_trace.py"],
+        ),
+        Comparator(
             request_id="olmdistancegradation_field_prep_runtime_trace_20260619",
             slug="olmdistancegradation_field_prep",
             command=[py, "scripts/compare_distancegradation_trace.py"],

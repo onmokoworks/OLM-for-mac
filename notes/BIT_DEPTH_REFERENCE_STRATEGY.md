@@ -110,33 +110,84 @@ to 17/45 exact:
 - Residual classifier:
   `refs/conformance/bitdepth_16bpc_mac_ae_residual_classes_20260626_distancegradation_inside_no_source.md`
 
-The residual classes are:
+The residual classes were then reverified on 2026-06-26 after fixing
+16-bit ImageMagick endian decoding in `refs/scripts/verify_manifest.py`.
+This did not change the exact count, but it materially corrected the 16bpc
+residual amplitudes, especially for OLMBlur:
+
+- Reverify batch:
+  `refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/`
+- Reverify residual classifier:
+  `refs/conformance/bitdepth_16bpc_mac_ae_residual_classes_20260626_2335_endian_fix.md`
+
+The current residual classes are:
 
 | Class | Count | Meaning |
 | --- | ---: | --- |
-| `full-scale-mismatch` | 13 | too large for rounding; inspect color management, 16bpc branch selection, or writeback path |
-| `large-structured-mismatch` | 8 | structured residual after params are applied; likely implementation/16bpc path, not broad harness failure |
-| `olmblur-16bpc-writeback-quantization` | 6 | OLMBlur residuals whose nonzero deltas are within one 512-step after 16bit wraparound; inspect 16bpc writeback/PNG scaling before kernel tuning |
-| `olmblur-16bpc-legacy-border-plus-quantization` | 1 | OLMBlur legacy residual with the same 512-step behavior plus a small border/seed anomaly |
+| `full-scale-mismatch` | 3 | too large to treat as rounding; inspect color management, branch selection, or effect-path mismatch |
+| `large-structured-mismatch` | 17 | structured residual after params are applied; likely implementation-path mismatch, not broad harness failure |
+| `candidate-looks-8bit-quantized` | 1 | candidate output looks quantized compared with the Windows 16bpc reference |
+| `olmblur-16bpc-near-1lsb` | 6 | OLMBlur residuals are only about one AE 16bpc output unit, appearing as `max_diff=2` in exported PNG space |
+| `olmblur-16bpc-legacy-border-plus-near-1lsb` | 1 | same near-1LSB OLMBlur family plus a small Legacy-only border/seed anomaly |
 
 By plug-in slice:
 
 | Slice | Exact | Residual |
 | --- | ---: | ---: |
-| `OLMBlur` | 0/7 | 7, now classified as 6 writeback-quantization and 1 legacy-border-plus-quantization |
+| `OLMBlur` | 0/7 | 7, now classified as 6 near-1LSB and 1 legacy-border-plus-near-1LSB |
 | `OLMColorKey` | 8/9 | 1, now identified as `case_0009` on `Lab76 + Force Lower Precision=3 + Edge Thin Amount=25 (Distance Type=2)` with `Edge Blur Amount=0` |
 | `OLMDistanceGradation basic` | 8/12 | 4 |
 | `OLMDistanceGradation blur` | 0/1 | 1 |
 | `OLMDistanceGradation extended` | 1/16 | 15 |
 
-The next machine action is therefore Mac-side residual investigation, not
-another Windows reference request. `scripts/print_next_olm_action.py` should
-report `investigate-16bpc-mac-ae-residuals` while this result ledger exists.
+2026-06-28 OLMBlur follow-up audit:
+`refs/conformance/olmblur_16bpc_word_delta_audit_20260628.md` re-read the
+same PNGs with the fixed 16bpc path and inferred the OLMBlur near-1LSB family
+more concretely as sign-mixed `+/-1` PF_Pixel16 word deltas. The only larger
+OLMBlur 16bpc witness remains Legacy `case_0007 (0,0)`, which is separated as a
+border/seed/all-same issue rather than a general blur-kernel problem.
+
+The remaining 16bpc investigation is now narrowed to binary/runtime proof, not
+another Windows PNG reference request. `scripts/print_next_olm_action.py`
+currently reports the project-local runtime trace package
+`olm_runtime_trace_olmdistancegradation_16bpc_case0026_x_witness_20260628.zip`
+as the highest-value next action.
+
+## 2026-06-28 32bpc Probe Preview
+
+The request generator can now produce a `32bpc` probe request, but the generated
+request is deliberately kept out of `refs/reference_requests/` so it does not
+preempt the active 16bpc binary-proof wait.
+
+- Preview:
+  `refs/reports/bit_depth_32bpc_probe_plan_20260628/request_preview.json`
+- Notes:
+  `refs/reports/bit_depth_32bpc_probe_plan_20260628/README.md`
+
+This preview is not completion evidence. It is a way to ask the Windows helper
+whether a float-preserving output path is available for the 45 normalized
+8bpc-exact cases. Move it into `refs/reference_requests/` only when 32bpc
+probing is intentionally scheduled.
 
 For that remaining ColorKey case, sampled residual pixels are input-identical
 in the Mac candidate and transparent in the Windows reference. That makes the
 active question a positive Edge Thin dilate / seed-world difference, not an
 Edge Blur blend path.
+The 2026-06-26 witness extraction sharpens this further: `12436 / 12597`
+residual pixels are opaque black `[0,0,0,65535]`, and representative witness
+islands sit `8..43` taxicab pixels away from the naive Lab76 hit set while
+still being removed by Windows. So this is no longer consistent with a small
+`65535 vs 32768` normalization tweak or a simple `hit + 25px` dilate model.
+2026-06-27 local re-analysis narrows it further: using the exported 16bpc
+before-effects PNG, `Lab76 hit + taxicab <= 25` is only `370px` closer to the
+Windows reference than the real Mac AE candidate (`12227px` vs `12597px`).
+More importantly, the current Mac candidate matches a local epsilon sweep built
+with `epsilon=0` or `1/65536`, while the intended source-level
+`Force Lower Precision=3` rule (`0.5/255`, UI string `8bit`) overshoots by
+exactly those `370px`. So the next ColorKey question is narrower than a broad
+seed-world rewrite: either the live 16bpc AE path is not taking the intended
+Force Lower Precision branch, or exported before-effects PNG reconstruction is
+still a slightly imperfect stand-in for the live AE input world.
 
 Return intake is covered by `refs/scripts/smoke_verify_bitdepth_reference_result.py`,
 including a synthetic 45-case mixed-effect manifest and the
@@ -187,8 +238,11 @@ bit-depth profile suffix only where file naming requires it. Example:
 - `8bpc`: byte exact, `max_diff=0`.
 - `16bpc`: integer sample exact, zero diff in the exported 16bpc comparison
   representation.
-- `32bpc`: exact float comparison if the return format preserves floats;
-  otherwise define an explicit epsilon profile before using the result.
+- `32bpc`: exact float comparison only when the return format preserves
+  floating-point samples, such as EXR or a raw float dump. A PNG exported from a
+  32bpc project is a smoke/probe artifact, not completion evidence. If the
+  Windows runner cannot return float-preserving output, record that as
+  `32bpc-probe-only` and do not claim `AE exact`.
 
 ## Promotion Rule
 

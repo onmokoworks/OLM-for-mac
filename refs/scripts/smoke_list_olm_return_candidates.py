@@ -80,6 +80,19 @@ def main() -> int:
             runtime_request_pkg,
             {
                 "README_RUNTIME_TRACE.md": "trace these\n",
+                "RETURN_RUNTIME_TRACE_TEMPLATE.json": json.dumps(
+                    {
+                        "kind": "olm_runtime_trace_result",
+                        "schema": 1,
+                        "results": [
+                            {
+                                "request_id": "radialblur_inner_runtime_trace_20260618",
+                                "status": "answered",
+                                "summary": "Template placeholder only; not a real return.",
+                            }
+                        ],
+                    }
+                ),
                 "runtime_trace_package_manifest.json": json.dumps(
                     {
                         "kind": "olm_runtime_trace_request_package",

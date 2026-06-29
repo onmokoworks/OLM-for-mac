@@ -1,0 +1,37 @@
+{
+  "kind": "olm_ae_host_automation_blocker",
+  "generated_at": "2026-06-29T13:35:50+09:00",
+  "status": "resolved",
+  "scope": "Mac AE automation",
+  "summary": "After Effects 2026 no longer shows the initial disk-cache warning, but the AppleEvent/DoScript route still times out before bounded OLM validation can complete.",
+  "observations": [
+    {
+      "command": "DoScriptFile minimal.jsx with override",
+      "result": "host-blocked-modal-dialog",
+      "evidence": "/tmp/olm_ae_diag_minimal_doscriptfile_20260629_133455/ae_host_diagnostic.md"
+    },
+    {
+      "command": "After Effects -r minimal.jsx",
+      "result": "AE exited without writing the marker file",
+      "evidence": "/tmp/olm_ae_minimal_dash_r_20260629_133516"
+    },
+    {
+      "command": "Normal launch of Adobe After Effects 2026, then clear visible disk-cache warning",
+      "result": "diagnostic advanced from host-blocked-modal-dialog to ae-running-no-accessible-window",
+      "evidence": "refs/reports/ae_host_diagnostic_20260629_140000/ae_host_diagnostic.md"
+    },
+    {
+      "command": "run_ae_single_case.py for OLMDistanceGradation case_0026 with Use Background Color=0",
+      "result": "AppleEvent timeout -1712 after JSX log reached load request manifests",
+      "evidence": "refs/reports/ae_single_case_timeout_20260629_1403/"
+    },
+    {
+      "command": "run_ae_single_case.py after switching scripts/ae_render_single_case.jsx manifest parsing from JSON.parse to eval",
+      "result": "single-case runner completed and wrote the no-background probe PNG",
+      "evidence": "refs/reports/ae_single_case_olmdistancegradation_case0026_no_bg_20260629_1408/"
+    }
+  ],
+  "resolution": "AE automation was recovered by clearing the visible disk-cache warning and avoiding AE 26.3 JSON.parse on the generated large reference manifest. DoScriptFile now completes for the bounded single-case runner.",
+  "next_allowed_action": "Continue with OLMDistanceGradation case_0026 Mac field-prep / installed-binary inspection.",
+  "forbidden_action": "Do not classify DistanceGradation 16bpc output or retune algorithms from this failed automation attempt."
+}

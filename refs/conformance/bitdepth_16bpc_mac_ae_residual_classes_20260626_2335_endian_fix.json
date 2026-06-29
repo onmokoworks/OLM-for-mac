@@ -1,0 +1,1625 @@
+{
+  "case_count": 28,
+  "feature_flag_counts": {
+    "Bias Direction=1": 6,
+    "Bias Direction=2": 1,
+    "Blur Amount=125.599998474121": 1,
+    "Blur Amount=129.399993896484": 2,
+    "Blur Amount=248.600006103516": 1,
+    "Blur Amount=5": 3,
+    "Blur Smoothness=100": 7,
+    "Color Keep=0": 1,
+    "Color Space=3": 1,
+    "Edge Blur Amount=0": 1,
+    "Edge Blur Direction=3": 1,
+    "Edge Blur Distance Type=1": 1,
+    "Edge Thin Amount=25": 1,
+    "Edge Thin Distance Type=2": 1,
+    "Force Lower Precision=3": 1,
+    "In/Out=1": 9,
+    "In/Out=3": 11,
+    "Interpolation Mode=1": 5,
+    "Interpolation Mode=2": 10,
+    "Interpolation Mode=3": 2,
+    "Interpolation Mode=4": 3,
+    "Legacy=0": 5,
+    "Legacy=1": 2,
+    "Number of Repeat=10": 3,
+    "Number of Repeat=2": 3,
+    "Number of Repeat=4": 1,
+    "Per Color=1": 1,
+    "Per Component=1": 1,
+    "Power=0.00999999977648": 1,
+    "Power=0.40016460418701": 1,
+    "Power=1": 16,
+    "Power=2.59740734100342": 2,
+    "Render Mode=1": 12,
+    "Render Mode=2": 8,
+    "Threshold=0": 1,
+    "Use Background Color=0": 9,
+    "Use Background Color=1": 11,
+    "olmblur": 7,
+    "olmcolorkey": 1,
+    "olmdistancegradation_basic": 4,
+    "olmdistancegradation_blur": 1,
+    "olmdistancegradation_extended": 15
+  },
+  "kind": "olm_16bpc_mac_ae_residual_classes",
+  "label_counts": {
+    "candidate-looks-8bit-quantized": 1,
+    "full-scale-mismatch": 3,
+    "large-structured-mismatch": 17,
+    "olmblur-16bpc-legacy-border-plus-near-1lsb": 1,
+    "olmblur-16bpc-near-1lsb": 6
+  },
+  "plugin_label_counts": {
+    "olmblur": {
+      "olmblur-16bpc-legacy-border-plus-near-1lsb": 1,
+      "olmblur-16bpc-near-1lsb": 6
+    },
+    "olmcolorkey": {
+      "full-scale-mismatch": 1
+    },
+    "olmdistancegradation_basic": {
+      "large-structured-mismatch": 4
+    },
+    "olmdistancegradation_blur": {
+      "large-structured-mismatch": 1
+    },
+    "olmdistancegradation_extended": {
+      "candidate-looks-8bit-quantized": 1,
+      "full-scale-mismatch": 2,
+      "large-structured-mismatch": 12
+    }
+  },
+  "results": [
+    {
+      "candidate_8bit_quantized_score": 0.8825257201646091,
+      "candidate_vs_input": {
+        "max": 38480,
+        "mean": 666.1099228395062,
+        "nonzero_px_percent": 36.7337962962963
+      },
+      "case_id": "olmblur__case_0001",
+      "channel_mean_abs_delta_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 2,
+        "mean": 2.0,
+        "nonzero_samples": 50
+      },
+      "effect": "OLM OLM Blur",
+      "feature_flags": [
+        "olmblur",
+        "Blur Amount=129.399993896484",
+        "Blur Smoothness=100",
+        "Number of Repeat=2",
+        "Bias Direction=1",
+        "Legacy=0"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0001.png",
+      "label": "olmblur-16bpc-near-1lsb",
+      "max_diff": 2,
+      "mean_diff": 4.8225308641975306e-05,
+      "nonzero_px_percent": 0.009645061728395061,
+      "reference_8bit_quantized_score": 0.8825263631687242,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "request_name": "bitdepth16_olmblur_exact",
+      "selected_params": {
+        "Bias Direction": 1,
+        "Blur Amount": 129.399993896484,
+        "Blur Smoothness": 100,
+        "Legacy": 0,
+        "Number of Repeat": 2
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.8825257201646091,
+      "candidate_vs_input": {
+        "max": 38480,
+        "mean": 666.1099247685186,
+        "nonzero_px_percent": 36.7337962962963
+      },
+      "case_id": "olmblur__case_0002",
+      "channel_mean_abs_delta_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 2,
+        "mean": 2.0,
+        "nonzero_samples": 51
+      },
+      "effect": "OLM OLM Blur",
+      "feature_flags": [
+        "olmblur",
+        "Blur Amount=129.399993896484",
+        "Blur Smoothness=100",
+        "Number of Repeat=2",
+        "Bias Direction=2",
+        "Legacy=0"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0002.png",
+      "label": "olmblur-16bpc-near-1lsb",
+      "max_diff": 2,
+      "mean_diff": 4.9189814814814815e-05,
+      "nonzero_px_percent": 0.009837962962962963,
+      "reference_8bit_quantized_score": 0.8825263631687242,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "request_name": "bitdepth16_olmblur_exact",
+      "selected_params": {
+        "Bias Direction": 2,
+        "Blur Amount": 129.399993896484,
+        "Blur Smoothness": 100,
+        "Legacy": 0,
+        "Number of Repeat": 2
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.6666666666666666,
+      "candidate_vs_input": {
+        "max": 59796,
+        "mean": 2259.4263638117286,
+        "nonzero_px_percent": 100.0
+      },
+      "case_id": "olmblur__case_0003",
+      "channel_mean_abs_delta_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 2,
+        "mean": 2.0,
+        "nonzero_samples": 414
+      },
+      "effect": "OLM OLM Blur",
+      "feature_flags": [
+        "olmblur",
+        "Blur Amount=248.600006103516",
+        "Blur Smoothness=100",
+        "Number of Repeat=10",
+        "Bias Direction=1",
+        "Legacy=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0003.png",
+      "label": "olmblur-16bpc-near-1lsb",
+      "max_diff": 2,
+      "mean_diff": 0.0003993055555555556,
+      "nonzero_px_percent": 0.0798611111111111,
+      "reference_8bit_quantized_score": 0.6666666666666666,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "request_name": "bitdepth16_olmblur_exact",
+      "selected_params": {
+        "Bias Direction": 1,
+        "Blur Amount": 248.600006103516,
+        "Blur Smoothness": 100,
+        "Legacy": 1,
+        "Number of Repeat": 10
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.8747003600823046,
+      "candidate_vs_input": {
+        "max": 38558,
+        "mean": 674.0144415509259,
+        "nonzero_px_percent": 39.96913580246913
+      },
+      "case_id": "olmblur__case_0004",
+      "channel_mean_abs_delta_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 2,
+        "mean": 2.0,
+        "nonzero_samples": 38
+      },
+      "effect": "OLM OLM Blur",
+      "feature_flags": [
+        "olmblur",
+        "Blur Amount=125.599998474121",
+        "Blur Smoothness=100",
+        "Number of Repeat=4",
+        "Bias Direction=1",
+        "Legacy=0"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0004.png",
+      "label": "olmblur-16bpc-near-1lsb",
+      "max_diff": 2,
+      "mean_diff": 3.6651234567901234e-05,
+      "nonzero_px_percent": 0.0073302469135802465,
+      "reference_8bit_quantized_score": 0.8747003600823046,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "request_name": "bitdepth16_olmblur_exact",
+      "selected_params": {
+        "Bias Direction": 1,
+        "Blur Amount": 125.599998474121,
+        "Blur Smoothness": 100,
+        "Legacy": 0,
+        "Number of Repeat": 4
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.7815706983024692,
+      "candidate_vs_input": {
+        "max": 58066,
+        "mean": 460.36782069830247,
+        "nonzero_px_percent": 25.94405864197531
+      },
+      "case_id": "olmblur__case_0005",
+      "channel_mean_abs_delta_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 2,
+        "mean": 2.0,
+        "nonzero_samples": 121
+      },
+      "effect": "OLM OLM Blur",
+      "feature_flags": [
+        "olmblur",
+        "Blur Amount=5",
+        "Blur Smoothness=100",
+        "Number of Repeat=2",
+        "Bias Direction=1",
+        "Legacy=0"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0005.png",
+      "label": "olmblur-16bpc-near-1lsb",
+      "max_diff": 2,
+      "mean_diff": 2.917631172839506e-05,
+      "nonzero_px_percent": 0.003472222222222222,
+      "reference_8bit_quantized_score": 0.7815706983024692,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "request_name": "bitdepth16_olmblur_exact",
+      "selected_params": {
+        "Bias Direction": 1,
+        "Blur Amount": 5,
+        "Blur Smoothness": 100,
+        "Legacy": 0,
+        "Number of Repeat": 2
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.4384739904835391,
+      "candidate_vs_input": {
+        "max": 63526,
+        "mean": 707.2390897472994,
+        "nonzero_px_percent": 64.18518518518519
+      },
+      "case_id": "olmblur__case_0006",
+      "channel_mean_abs_delta_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 2,
+        "mean": 2.0,
+        "nonzero_samples": 898
+      },
+      "effect": "OLM OLM Blur",
+      "feature_flags": [
+        "olmblur",
+        "Blur Amount=5",
+        "Blur Smoothness=100",
+        "Number of Repeat=10",
+        "Bias Direction=1",
+        "Legacy=0"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+      "label": "olmblur-16bpc-near-1lsb",
+      "max_diff": 2,
+      "mean_diff": 0.00021653163580246914,
+      "nonzero_px_percent": 0.03544560185185185,
+      "reference_8bit_quantized_score": 0.4384719007201646,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "request_name": "bitdepth16_olmblur_exact",
+      "selected_params": {
+        "Bias Direction": 1,
+        "Blur Amount": 5,
+        "Blur Smoothness": 100,
+        "Legacy": 0,
+        "Number of Repeat": 10
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.256870016718107,
+      "candidate_vs_input": {
+        "max": 64996,
+        "mean": 826.1945815248843,
+        "nonzero_px_percent": 81.57716049382717
+      },
+      "case_id": "olmblur__case_0007",
+      "channel_mean_abs_delta_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 383,
+        "mean": 5.07258064516129,
+        "nonzero_samples": 372
+      },
+      "effect": "OLM OLM Blur",
+      "feature_flags": [
+        "olmblur",
+        "Blur Amount=5",
+        "Blur Smoothness=100",
+        "Number of Repeat=10",
+        "Bias Direction=1",
+        "Legacy=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0007.png",
+      "label": "olmblur-16bpc-legacy-border-plus-near-1lsb",
+      "max_diff": 383,
+      "mean_diff": 0.0002275028935185185,
+      "nonzero_px_percent": 0.014660493827160493,
+      "reference_8bit_quantized_score": 0.25686149691358023,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmblur_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "request_name": "bitdepth16_olmblur_exact",
+      "selected_params": {
+        "Bias Direction": 1,
+        "Blur Amount": 5,
+        "Blur Smoothness": 100,
+        "Legacy": 1,
+        "Number of Repeat": 10
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.9999623842592592,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 12661.926489076968,
+        "nonzero_px_percent": 73.77888695987654
+      },
+      "case_id": "olmcolorkey__case_0009",
+      "channel_mean_abs_delta_rgba": [
+        2,
+        0,
+        3,
+        398
+      ],
+      "cyclic_u16_delta": {
+        "max": 31852,
+        "mean": 137.49071183265687,
+        "nonzero_samples": 12812
+      },
+      "effect": "OLM Color Key",
+      "feature_flags": [
+        "olmcolorkey",
+        "Color Keep=0",
+        "Threshold=0",
+        "Color Space=3",
+        "Force Lower Precision=3",
+        "Per Color=1",
+        "Per Component=1",
+        "Edge Thin Amount=25",
+        "Edge Thin Distance Type=2",
+        "Edge Blur Amount=0",
+        "Edge Blur Distance Type=1",
+        "Edge Blur Direction=3"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmcolorkey__case_0009.png",
+      "label": "full-scale-mismatch",
+      "max_diff": 65535,
+      "mean_diff": 100.9505396412037,
+      "nonzero_px_percent": 0.6074942129629629,
+      "reference_8bit_quantized_score": 0.9999749228395062,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmcolorkey_exact/reports/ae_pixel_16bpc_all_exact.json",
+      "request_name": "bitdepth16_olmcolorkey_exact",
+      "selected_params": {
+        "Color Keep": 0,
+        "Color Space": 3,
+        "Edge Blur": null,
+        "Edge Blur Amount": 0,
+        "Edge Blur Direction": 3,
+        "Edge Blur Distance Type": 1,
+        "Edge Thin": null,
+        "Edge Thin Amount": 25,
+        "Edge Thin Distance Type": 2,
+        "Force Lower Precision": 3,
+        "Per Color": 1,
+        "Per Component": 1,
+        "Premultiplied Color": 0,
+        "Threshold": 0
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.9341820987654321,
+      "candidate_vs_input": {
+        "max": 65382,
+        "mean": 6983.78427734375,
+        "nonzero_px_percent": 44.769241898148145
+      },
+      "case_id": "olmdistancegradation_basic__case_0015",
+      "channel_mean_abs_delta_rgba": [
+        12,
+        1,
+        1,
+        41
+      ],
+      "cyclic_u16_delta": {
+        "max": 423,
+        "mean": 139.1521116408568,
+        "nonzero_samples": 821778
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_basic",
+        "In/Out=1",
+        "Render Mode=2",
+        "Use Background Color=0",
+        "Interpolation Mode=2",
+        "Power=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_basic__case_0015.png",
+      "label": "large-structured-mismatch",
+      "max_diff": 423,
+      "mean_diff": 13.786668595679012,
+      "nonzero_px_percent": 28.038242669753085,
+      "reference_8bit_quantized_score": 0.9288628472222222,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_basic_exact/reports/ae_pixel_16bpc_basic_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_basic_exact",
+      "selected_params": {
+        "BG Color": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "In/Out": 1,
+        "Inside Threshold": 424,
+        "Interpolation Mode": 2,
+        "Invert": 1,
+        "Outside Threshold": 204,
+        "Power": 1,
+        "Render Mode": 2,
+        "Use Background Color": 0
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.9623924575617284,
+      "candidate_vs_input": {
+        "max": 65021,
+        "mean": 2492.1942752941745,
+        "nonzero_px_percent": 14.676890432098766
+      },
+      "case_id": "olmdistancegradation_basic__case_0017",
+      "channel_mean_abs_delta_rgba": [
+        34,
+        4,
+        6,
+        51
+      ],
+      "cyclic_u16_delta": {
+        "max": 2311,
+        "mean": 719.758449665984,
+        "nonzero_samples": 271993
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_basic",
+        "In/Out=1",
+        "Render Mode=2",
+        "Use Background Color=0",
+        "Interpolation Mode=2",
+        "Power=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_basic__case_0017.png",
+      "label": "large-structured-mismatch",
+      "max_diff": 2311,
+      "mean_diff": 23.602582465277777,
+      "nonzero_px_percent": 6.689670138888889,
+      "reference_8bit_quantized_score": 0.9565613747427983,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_basic_exact/reports/ae_pixel_16bpc_basic_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_basic_exact",
+      "selected_params": {
+        "BG Color": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "In/Out": 1,
+        "Inside Threshold": 78,
+        "Interpolation Mode": 2,
+        "Invert": 1,
+        "Outside Threshold": 204,
+        "Power": 1,
+        "Render Mode": 2,
+        "Use Background Color": 0
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.9035075874485596,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 4068.695600043403,
+        "nonzero_px_percent": 22.69116512345679
+      },
+      "case_id": "olmdistancegradation_basic__case_0018",
+      "channel_mean_abs_delta_rgba": [
+        6,
+        0,
+        48,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 2156,
+        "mean": 249.86833995320012,
+        "nonzero_samples": 444873
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_basic",
+        "In/Out=1",
+        "Render Mode=1",
+        "Use Background Color=1",
+        "Interpolation Mode=2",
+        "Power=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_basic__case_0018.png",
+      "label": "large-structured-mismatch",
+      "max_diff": 2156,
+      "mean_diff": 13.401774450231482,
+      "nonzero_px_percent": 12.807484567901234,
+      "reference_8bit_quantized_score": 0.9032068222736626,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_basic_exact/reports/ae_pixel_16bpc_basic_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_basic_exact",
+      "selected_params": {
+        "BG Color": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 1,
+        "Inside Threshold": 78,
+        "Interpolation Mode": 2,
+        "Invert": 0,
+        "Outside Threshold": 204,
+        "Power": 1,
+        "Render Mode": 1,
+        "Use Background Color": 1
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.9036752507716049,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 6622.527327353395,
+        "nonzero_px_percent": 39.16772762345679
+      },
+      "case_id": "olmdistancegradation_basic__case_0019",
+      "channel_mean_abs_delta_rgba": [
+        46,
+        0,
+        48,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 2156,
+        "mean": 434.49101559869825,
+        "nonzero_samples": 445550
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_basic",
+        "In/Out=1",
+        "Render Mode=1",
+        "Use Background Color=1",
+        "Interpolation Mode=2",
+        "Power=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_basic__case_0019.png",
+      "label": "large-structured-mismatch",
+      "max_diff": 2156,
+      "mean_diff": 23.339538966049382,
+      "nonzero_px_percent": 13.342640817901234,
+      "reference_8bit_quantized_score": 0.903516428755144,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_basic_exact/reports/ae_pixel_16bpc_basic_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_basic_exact",
+      "selected_params": {
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 1,
+        "Inside Threshold": 78,
+        "Interpolation Mode": 2,
+        "Invert": 0,
+        "Outside Threshold": 204,
+        "Power": 1,
+        "Render Mode": 1,
+        "Use Background Color": 1
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.9114808384773663,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 10741.143514057678,
+        "nonzero_px_percent": 46.81862461419753
+      },
+      "case_id": "olmdistancegradation_blur__case_0029",
+      "channel_mean_abs_delta_rgba": [
+        16,
+        0,
+        136,
+        146
+      ],
+      "cyclic_u16_delta": {
+        "max": 5892,
+        "mean": 728.587034414289,
+        "nonzero_samples": 850112
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_blur",
+        "In/Out=1",
+        "Render Mode=1",
+        "Use Background Color=0",
+        "Interpolation Mode=1",
+        "Power=0.00999999977648"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_blur__case_0029.png",
+      "label": "large-structured-mismatch",
+      "max_diff": 5892,
+      "mean_diff": 74.67454921392746,
+      "nonzero_px_percent": 13.959731867283951,
+      "reference_8bit_quantized_score": 0.9485458461934156,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_blur_exact/reports/ae_pixel_16bpc_blur_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_blur_exact",
+      "selected_params": {
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 1,
+        "Inside Threshold": 158,
+        "Interpolation Mode": 1,
+        "Invert": 1,
+        "Outside Threshold": 13,
+        "Power": 0.00999999977648,
+        "Render Mode": 1,
+        "Use Background Color": 0
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.7834027777777778,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 22166.956410108025,
+        "nonzero_px_percent": 99.99995177469135
+      },
+      "case_id": "olmdistancegradation_extended__case_0010",
+      "channel_mean_abs_delta_rgba": [
+        4388,
+        0,
+        0,
+        4388
+      ],
+      "cyclic_u16_delta": {
+        "max": 32767,
+        "mean": 7357.016699222584,
+        "nonzero_samples": 2445024
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_extended",
+        "In/Out=3",
+        "Render Mode=1",
+        "Use Background Color=0",
+        "Interpolation Mode=2",
+        "Power=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0010.png",
+      "label": "large-structured-mismatch",
+      "max_diff": 55536,
+      "mean_diff": 2193.7995336612653,
+      "nonzero_px_percent": 58.95601851851852,
+      "reference_8bit_quantized_score": 0.7867734053497942,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_extended_exact",
+      "selected_params": {
+        "BG Color": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "In/Out": 3,
+        "Inside Threshold": 63,
+        "Interpolation Mode": 2,
+        "Invert": 0,
+        "Outside Threshold": 82,
+        "Power": 1,
+        "Render Mode": 1,
+        "Use Background Color": 0
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.8704465663580246,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 7025.466773967978,
+        "nonzero_px_percent": 46.81862461419753
+      },
+      "case_id": "olmdistancegradation_extended__case_0011",
+      "channel_mean_abs_delta_rgba": [
+        497,
+        0,
+        0,
+        497
+      ],
+      "cyclic_u16_delta": {
+        "max": 596,
+        "mean": 179.34309249622564,
+        "nonzero_samples": 996192
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_extended",
+        "In/Out=3",
+        "Render Mode=1",
+        "Use Background Color=0",
+        "Interpolation Mode=2",
+        "Power=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0011.png",
+      "label": "full-scale-mismatch",
+      "max_diff": 65347,
+      "mean_diff": 248.63602816358025,
+      "nonzero_px_percent": 24.020833333333332,
+      "reference_8bit_quantized_score": 0.8683101851851852,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_extended_exact",
+      "selected_params": {
+        "BG Color": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "In/Out": 3,
+        "Inside Threshold": 348,
+        "Interpolation Mode": 2,
+        "Invert": 0,
+        "Outside Threshold": 0,
+        "Power": 1,
+        "Render Mode": 1,
+        "Use Background Color": 0
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.9451372813786009,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 13725.995832007138,
+        "nonzero_px_percent": 99.99995177469135
+      },
+      "case_id": "olmdistancegradation_extended__case_0012",
+      "channel_mean_abs_delta_rgba": [
+        117,
+        85,
+        86,
+        4383
+      ],
+      "cyclic_u16_delta": {
+        "max": 32767,
+        "mean": 6525.385858218436,
+        "nonzero_samples": 1468047
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_extended",
+        "In/Out=3",
+        "Render Mode=2",
+        "Use Background Color=0",
+        "Interpolation Mode=2",
+        "Power=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+      "label": "large-structured-mismatch",
+      "max_diff": 55896,
+      "mean_diff": 1167.961601080247,
+      "nonzero_px_percent": 62.650607638888886,
+      "reference_8bit_quantized_score": 0.9451448366769547,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_extended_exact",
+      "selected_params": {
+        "BG Color": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "In/Out": 3,
+        "Inside Threshold": 122,
+        "Interpolation Mode": 2,
+        "Invert": 0,
+        "Outside Threshold": 204,
+        "Power": 1,
+        "Render Mode": 2,
+        "Use Background Color": 0
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.9632103587962964,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 8839.875494309414,
+        "nonzero_px_percent": 46.79726080246913
+      },
+      "case_id": "olmdistancegradation_extended__case_0013",
+      "channel_mean_abs_delta_rgba": [
+        71,
+        34,
+        36,
+        57
+      ],
+      "cyclic_u16_delta": {
+        "max": 9170,
+        "mean": 1875.6378983705404,
+        "nonzero_samples": 219582
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_extended",
+        "In/Out=1",
+        "Render Mode=2",
+        "Use Background Color=0",
+        "Interpolation Mode=2",
+        "Power=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0013.png",
+      "label": "large-structured-mismatch",
+      "max_diff": 9170,
+      "mean_diff": 49.65474549093364,
+      "nonzero_px_percent": 5.075231481481482,
+      "reference_8bit_quantized_score": 0.9631856031378601,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_extended_exact",
+      "selected_params": {
+        "BG Color": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "In/Out": 1,
+        "Inside Threshold": 53,
+        "Interpolation Mode": 2,
+        "Invert": 0,
+        "Outside Threshold": 204,
+        "Power": 1,
+        "Render Mode": 2,
+        "Use Background Color": 0
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.9281521669238683,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 3780.523944468557,
+        "nonzero_px_percent": 46.79726080246913
+      },
+      "case_id": "olmdistancegradation_extended__case_0014",
+      "channel_mean_abs_delta_rgba": [
+        48,
+        35,
+        35,
+        41
+      ],
+      "cyclic_u16_delta": {
+        "max": 9640,
+        "mean": 399.9937944871618,
+        "nonzero_samples": 826362
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_extended",
+        "In/Out=1",
+        "Render Mode=2",
+        "Use Background Color=0",
+        "Interpolation Mode=2",
+        "Power=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0014.png",
+      "label": "large-structured-mismatch",
+      "max_diff": 9640,
+      "mean_diff": 39.85094425154321,
+      "nonzero_px_percent": 28.045814043209877,
+      "reference_8bit_quantized_score": 0.9279811278292182,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_extended_exact",
+      "selected_params": {
+        "BG Color": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "In/Out": 1,
+        "Inside Threshold": 424,
+        "Interpolation Mode": 2,
+        "Invert": 0,
+        "Outside Threshold": 204,
+        "Power": 1,
+        "Render Mode": 2,
+        "Use Background Color": 0
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.9999784593621399,
+      "candidate_vs_input": {
+        "max": 65021,
+        "mean": 160.380779923804,
+        "nonzero_px_percent": 0.7028356481481481
+      },
+      "case_id": "olmdistancegradation_extended__case_0016",
+      "channel_mean_abs_delta_rgba": [
+        146,
+        134,
+        134,
+        229
+      ],
+      "cyclic_u16_delta": {
+        "max": 32651,
+        "mean": 13970.801902732883,
+        "nonzero_samples": 54448
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_extended",
+        "In/Out=1",
+        "Render Mode=2",
+        "Use Background Color=0",
+        "Interpolation Mode=2",
+        "Power=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0016.png",
+      "label": "candidate-looks-8bit-quantized",
+      "max_diff": 65021,
+      "mean_diff": 160.37876591435185,
+      "nonzero_px_percent": 0.6997010030864198,
+      "reference_8bit_quantized_score": 0.9937297453703704,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_extended_exact",
+      "selected_params": {
+        "BG Color": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "In/Out": 1,
+        "Inside Threshold": 0,
+        "Interpolation Mode": 2,
+        "Invert": 1,
+        "Outside Threshold": 204,
+        "Power": 1,
+        "Render Mode": 2,
+        "Use Background Color": 0
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.9953957690329218,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 7580.928637876157,
+        "nonzero_px_percent": 39.16772762345679
+      },
+      "case_id": "olmdistancegradation_extended__case_0020",
+      "channel_mean_abs_delta_rgba": [
+        21,
+        0,
+        22,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 7195,
+        "mean": 5782.5,
+        "nonzero_samples": 1484
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_extended",
+        "In/Out=1",
+        "Render Mode=1",
+        "Use Background Color=1",
+        "Interpolation Mode=1",
+        "Power=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0020.png",
+      "label": "large-structured-mismatch",
+      "max_diff": 61165,
+      "mean_diff": 10.690672019675926,
+      "nonzero_px_percent": 0.03578317901234568,
+      "reference_8bit_quantized_score": 0.9953957690329218,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_extended_exact",
+      "selected_params": {
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 1,
+        "Inside Threshold": 78,
+        "Interpolation Mode": 1,
+        "Invert": 0,
+        "Outside Threshold": 204,
+        "Power": 1,
+        "Render Mode": 1,
+        "Use Background Color": 1
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 1.0,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 25493.25301070602,
+        "nonzero_px_percent": 92.34910300925925
+      },
+      "case_id": "olmdistancegradation_extended__case_0021",
+      "channel_mean_abs_delta_rgba": [
+        21,
+        0,
+        22,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 7195,
+        "mean": 5782.5,
+        "nonzero_samples": 1486
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_extended",
+        "In/Out=3",
+        "Render Mode=1",
+        "Use Background Color=1",
+        "Interpolation Mode=1",
+        "Power=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0021.png",
+      "label": "large-structured-mismatch",
+      "max_diff": 61165,
+      "mean_diff": 10.705079933449074,
+      "nonzero_px_percent": 0.03583140432098766,
+      "reference_8bit_quantized_score": 1.0,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_extended_exact",
+      "selected_params": {
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 3,
+        "Inside Threshold": 78,
+        "Interpolation Mode": 1,
+        "Invert": 0,
+        "Outside Threshold": 402,
+        "Power": 1,
+        "Render Mode": 1,
+        "Use Background Color": 1
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 1.0,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 24183.27641034915,
+        "nonzero_px_percent": 88.80242091049382
+      },
+      "case_id": "olmdistancegradation_extended__case_0022",
+      "channel_mean_abs_delta_rgba": [
+        8934,
+        0,
+        9366,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 7195,
+        "mean": 5782.5,
+        "nonzero_samples": 635068
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_extended",
+        "In/Out=3",
+        "Render Mode=1",
+        "Use Background Color=1",
+        "Interpolation Mode=1",
+        "Power=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0022.png",
+      "label": "large-structured-mismatch",
+      "max_diff": 61165,
+      "mean_diff": 4575.002492042824,
+      "nonzero_px_percent": 15.313175154320987,
+      "reference_8bit_quantized_score": 1.0,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_extended_exact",
+      "selected_params": {
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 3,
+        "Inside Threshold": 36,
+        "Interpolation Mode": 1,
+        "Invert": 0,
+        "Outside Threshold": 11,
+        "Power": 1,
+        "Render Mode": 1,
+        "Use Background Color": 1
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 1.0,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 24116.101830994405,
+        "nonzero_px_percent": 88.80242091049382
+      },
+      "case_id": "olmdistancegradation_extended__case_0023",
+      "channel_mean_abs_delta_rgba": [
+        441,
+        0,
+        462,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 7195,
+        "mean": 5782.5,
+        "nonzero_samples": 31358
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_extended",
+        "In/Out=3",
+        "Render Mode=1",
+        "Use Background Color=1",
+        "Interpolation Mode=1",
+        "Power=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+      "label": "large-structured-mismatch",
+      "max_diff": 61165,
+      "mean_diff": 225.90168004918982,
+      "nonzero_px_percent": 0.7561246141975309,
+      "reference_8bit_quantized_score": 1.0,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_extended_exact",
+      "selected_params": {
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 3,
+        "Inside Threshold": 36,
+        "Interpolation Mode": 1,
+        "Invert": 0,
+        "Outside Threshold": 0,
+        "Power": 1,
+        "Render Mode": 1,
+        "Use Background Color": 1
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.7183971514917695,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 26155.77124927662,
+        "nonzero_px_percent": 97.53737461419753
+      },
+      "case_id": "olmdistancegradation_extended__case_0024",
+      "channel_mean_abs_delta_rgba": [
+        9869,
+        0,
+        10347,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 32764,
+        "mean": 8568.251287332647,
+        "nonzero_samples": 2369240
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_extended",
+        "In/Out=3",
+        "Render Mode=1",
+        "Use Background Color=1",
+        "Interpolation Mode=3",
+        "Power=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0024.png",
+      "label": "large-structured-mismatch",
+      "max_diff": 61163,
+      "mean_diff": 5054.063430748457,
+      "nonzero_px_percent": 61.13136574074074,
+      "reference_8bit_quantized_score": 0.5849919624485597,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_extended_exact",
+      "selected_params": {
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 3,
+        "Inside Threshold": 158,
+        "Interpolation Mode": 3,
+        "Invert": 0,
+        "Outside Threshold": 17,
+        "Power": 1,
+        "Render Mode": 1,
+        "Use Background Color": 1
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.7571598508230453,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 27023.707451292437,
+        "nonzero_px_percent": 100.0
+      },
+      "case_id": "olmdistancegradation_extended__case_0025",
+      "channel_mean_abs_delta_rgba": [
+        1988,
+        0,
+        2084,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 32728,
+        "mean": 3990.5651489871534,
+        "nonzero_samples": 1985641
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_extended",
+        "In/Out=3",
+        "Render Mode=1",
+        "Use Background Color=1",
+        "Interpolation Mode=3",
+        "Power=1"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0025.png",
+      "label": "large-structured-mismatch",
+      "max_diff": 54302,
+      "mean_diff": 1018.0898403742284,
+      "nonzero_px_percent": 52.022328317901234,
+      "reference_8bit_quantized_score": 0.642985307355967,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_extended_exact",
+      "selected_params": {
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 3,
+        "Inside Threshold": 158,
+        "Interpolation Mode": 3,
+        "Invert": 1,
+        "Outside Threshold": 13,
+        "Power": 1,
+        "Render Mode": 1,
+        "Use Background Color": 1
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.9037212255658437,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 27943.961176215278,
+        "nonzero_px_percent": 100.0
+      },
+      "case_id": "olmdistancegradation_extended__case_0026",
+      "channel_mean_abs_delta_rgba": [
+        22953,
+        0,
+        24066,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 32766,
+        "mean": 14753.53076652649,
+        "nonzero_samples": 2247150
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_extended",
+        "In/Out=3",
+        "Render Mode=1",
+        "Use Background Color=1",
+        "Interpolation Mode=4",
+        "Power=2.59740734100342"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0026.png",
+      "label": "large-structured-mismatch",
+      "max_diff": 61165,
+      "mean_diff": 11754.576950352044,
+      "nonzero_px_percent": 54.184751157407405,
+      "reference_8bit_quantized_score": 0.647344553755144,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_extended_exact",
+      "selected_params": {
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 3,
+        "Inside Threshold": 158,
+        "Interpolation Mode": 4,
+        "Invert": 1,
+        "Outside Threshold": 13,
+        "Power": 2.59740734100342,
+        "Render Mode": 1,
+        "Use Background Color": 1
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.9596357381687243,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 8770.856850887345,
+        "nonzero_px_percent": 61.99093364197531
+      },
+      "case_id": "olmdistancegradation_extended__case_0027",
+      "channel_mean_abs_delta_rgba": [
+        19152,
+        1212,
+        835,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 32766,
+        "mean": 11583.55368068327,
+        "nonzero_samples": 971681
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_extended",
+        "In/Out=3",
+        "Render Mode=2",
+        "Use Background Color=1",
+        "Interpolation Mode=4",
+        "Power=2.59740734100342"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0027.png",
+      "label": "full-scale-mismatch",
+      "max_diff": 65530,
+      "mean_diff": 5299.638404947917,
+      "nonzero_px_percent": 41.736111111111114,
+      "reference_8bit_quantized_score": 0.856804430298354,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_extended_exact",
+      "selected_params": {
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 3,
+        "Inside Threshold": 158,
+        "Interpolation Mode": 4,
+        "Invert": 1,
+        "Outside Threshold": 13,
+        "Power": 2.59740734100342,
+        "Render Mode": 2,
+        "Use Background Color": 1
+      }
+    },
+    {
+      "candidate_8bit_quantized_score": 0.9896455439814815,
+      "candidate_vs_input": {
+        "max": 65535,
+        "mean": 8770.711755280672,
+        "nonzero_px_percent": 55.678530092592595
+      },
+      "case_id": "olmdistancegradation_extended__case_0028",
+      "channel_mean_abs_delta_rgba": [
+        7282,
+        800,
+        536,
+        0
+      ],
+      "cyclic_u16_delta": {
+        "max": 32759,
+        "mean": 15003.738213699533,
+        "nonzero_samples": 971785
+      },
+      "effect": "OLM Distance Gradation",
+      "feature_flags": [
+        "olmdistancegradation_extended",
+        "In/Out=3",
+        "Render Mode=2",
+        "Use Background Color=1",
+        "Interpolation Mode=4",
+        "Power=0.40016460418701"
+      ],
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0028.png",
+      "label": "large-structured-mismatch",
+      "max_diff": 57184,
+      "mean_diff": 2154.4739513406635,
+      "nonzero_px_percent": 41.735725308641975,
+      "reference_8bit_quantized_score": 0.8445185506687243,
+      "report": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json",
+      "request_name": "bitdepth16_olmdistancegradation_extended_exact",
+      "selected_params": {
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "In/Out": 3,
+        "Inside Threshold": 158,
+        "Interpolation Mode": 4,
+        "Invert": 1,
+        "Outside Threshold": 13,
+        "Power": 0.40016460418701,
+        "Render Mode": 2,
+        "Use Background Color": 1
+      }
+    }
+  ],
+  "status": "classified-not-exact"
+}

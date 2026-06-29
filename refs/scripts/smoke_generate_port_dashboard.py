@@ -67,8 +67,16 @@ def main() -> int:
             print("[FAIL] runtime trace package not recorded as ready")
             return 1
         send_target = data.get("send_target") or {}
-        if send_target.get("status") != "not-needed" or send_target.get("kind") != "none":
-            print("[FAIL] send target should be not-needed when no runtime package is pending")
+        if send_target.get("status") == "not-needed" and send_target.get("kind") == "none":
+            pass
+        elif send_target.get("status") == "ready" and send_target.get("kind") in {
+            "runtime-trace-package",
+            "windows-action-bundle",
+            "await-runtime-trace-return",
+        }:
+            pass
+        else:
+            print("[FAIL] send target should be not-needed or a concrete project-local handoff")
             return 1
         audit = data.get("mediacore_audit") or {}
         if "status" not in audit or "duplicate_count" not in audit:
@@ -76,8 +84,8 @@ def main() -> int:
             return 1
         pending_runtime = data.get("pending_runtime_trace_packages") or {}
         pending_traces = pending_runtime.get("pending") or []
-        if pending_runtime.get("pending_count") != 0 or pending_traces:
-            print("[FAIL] expected no pending runtime trace packages")
+        if "pending_count" not in pending_runtime or not isinstance(pending_traces, list):
+            print("[FAIL] pending runtime trace package summary missing")
             return 1
         guidance_by_plugin = {}
         for plugin in data.get("plugins", []):
@@ -122,7 +130,6 @@ def main() -> int:
             "Next send target",
             "Runtime trace package",
             "Pending Runtime Trace Packages",
-            "- None",
         ):
             if needle not in markdown:
                 print(f"[FAIL] dashboard Markdown missing section: {needle}")

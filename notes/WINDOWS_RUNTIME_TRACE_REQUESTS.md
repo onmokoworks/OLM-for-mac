@@ -324,6 +324,163 @@ Interpretation:
 - If `case_0029` confirms the current binary-before-blur shape, keep the blur
   residual focused on GaussianBlur kernel/radius/border, not Constant logic.
 
+## OLMDistanceGradation 16bpc case_0026 X Witness
+
+Status: active request. The current package is
+`refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_16bpc_case0026_x_witness_20260628.zip`,
+also placed in `/Volumes/onmk/olm_pr/new/` for the Windows helper.
+
+Why this trace exists:
+
+- Mac AE 16bpc validation is not exact for DistanceGradation.
+- The largest current 16bpc residual is
+  `olmdistancegradation_extended__case_0026`.
+- Mac-side analysis classifies it as
+  `candidate_x_saturated_to_gradation_color_while_reference_ramps`.
+- On changed pixels, the Mac candidate has inferred compose `X≈1.0`, while
+  Windows Software spans `X≈0.0..1.0`.
+- Row `y=0,x=3..14` is a compact witness: Windows ramps from `X≈0.812` to
+  `0.001`, while Mac stays at `X=1.0`.
+- This is not a small 16bpc writer/rounding residual. It must be proved at the
+  16bpc field-prep / invert / Power interpolation boundary.
+
+Reference report:
+
+- `refs/conformance/olmdistancegradation_16bpc_case0026_analysis_20260628.md`
+
+Witness case:
+
+- Request/case: `olmdistancegradation_extended__case_0026`
+- Bit depth: 16bpc
+- Project renderer: Windows AE Software
+- Key params:
+  - `Invert=1`
+  - `In/Out=3`
+  - `Inside Threshold=158`
+  - `Outside Threshold=13`
+  - `Render Mode=1`
+  - `Use Background Color=1`
+  - `Gradation Color RGBA16=[7195,0,61165,65535]`
+  - `BG Color RGBA16=[65535,0,0,65535]`
+  - `Interpolation Mode=4`
+  - `Power=2.59740734100342`
+  - `Blur Mode=1`
+  - `Blur Size=0`
+
+Trace pixels:
+
+| pixel | Windows reference RGBA16 | Mac candidate RGBA16 | inferred Windows X |
+| --- | --- | --- | --- |
+| `(0,0)` | `[7195,0,61165,65535]` | `[7195,0,61165,65535]` | `1.0` |
+| `(1,0)` | `[7195,0,61165,65535]` | `[7195,0,61165,65535]` | `1.0` |
+| `(2,0)` | `[7195,0,61165,65535]` | `[7195,0,61165,65535]` | `1.0` |
+| `(3,0)` | `[18147,0,49681,65535]` | `[7195,0,61165,65535]` | `0.812259` |
+| `(4,0)` | `[27731,0,39633,65535]` | `[7195,0,61165,65535]` | `0.647982` |
+| `(5,0)` | `[36021,0,30941,65535]` | `[7195,0,61165,65535]` | `0.505879` |
+| `(6,0)` | `[43085,0,23533,65535]` | `[7195,0,61165,65535]` | `0.384780` |
+| `(7,0)` | `[49003,0,17331,65535]` | `[7195,0,61165,65535]` | `0.283361` |
+| `(8,0)` | `[53849,0,12249,65535]` | `[7195,0,61165,65535]` | `0.200285` |
+| `(9,0)` | `[57703,0,8209,65535]` | `[7195,0,61165,65535]` | `0.134229` |
+| `(10,0)` | `[60657,0,5111,65535]` | `[7195,0,61165,65535]` | `0.083587` |
+| `(11,0)` | `[62803,0,2861,65535]` | `[7195,0,61165,65535]` | `0.046802` |
+| `(12,0)` | `[64241,0,1355,65535]` | `[7195,0,61165,65535]` | `0.022167` |
+| `(13,0)` | `[65083,0,471,65535]` | `[7195,0,61165,65535]` | `0.007724` |
+| `(14,0)` | `[65459,0,77,65535]` | `[7195,0,61165,65535]` | `0.001281` |
+
+Trace target:
+
+1. Render the case with the current Windows OLM AEX and Windows AE Software.
+2. Break at or around `FUN_181170480`, the 16bpc compose callback.
+3. For row `y=0,x=0..14`, record:
+   - source input RGBA16;
+   - field world pointer, rowbytes, width, and height;
+   - field pixel raw RGBA16 or Mat channels consumed before compose;
+   - `X` before invert;
+   - `X` after `Invert=1`;
+   - `X` after Power interpolation;
+   - background and gradation colors as seen by the callback;
+   - output RGBA float before conversion;
+   - final RGBA16.
+4. Record the field/normalization producer if the field already ramps before
+   compose.
+5. If the field is saturated but compose creates the ramp, record the exact
+   branch/constant path inside `FUN_181170480`.
+
+Interpretation:
+
+- If Windows field values already ramp before `FUN_181170480`, fix Mac 16bpc
+  field prep / normalization ownership.
+- If Windows field values are saturated but `FUN_181170480` creates the ramp,
+  fix invert / Power interpolation / compose parameter ownership.
+- If colors or params differ in the callback, fix AE parameter/color branch
+  ownership before math changes.
+- Final PNG bytes alone are not enough; this request needs intermediate field
+  and `X` witnesses.
+
+## OLMDistanceGradation 16bpc Layer/No-BG Source Ownership Witness
+
+Status: pending follow-up recipe. Use this if we choose the `case_0012`
+family instead of the Constant-boundary family.
+
+Why this trace exists:
+
+- After the 2026-06-29 Power fix and Constant-specific `THRESH_BINARY` fix,
+  `case_0012` and `case_0016` remain in the
+  `layer-no-bg-source-or-alpha-ownership` family.
+- At the representative `case_0012` witness, Windows and Mac already share the
+  output alpha (`64997`), but Windows RGB is much higher:
+  - input `[16255,16255,16255,32639]`
+  - Windows `[32371,32371,32371,64997]`
+  - Mac `[16121,16121,16121,64997]`
+- A direct Mac-side Layer/no-bg unpremultiply experiment was rejected because
+  it made the case much worse (`nonzero_px 25421 -> 285406`).
+- Therefore the next useful proof is whether the AEX Layer/no-bg branch uses
+  straight source color times output alpha, already-premultiplied source, or
+  another ownership rule inside `FUN_181170480`.
+
+Witness cases:
+
+- `olmdistancegradation_extended__case_0012`
+  - `Invert=0`, `In/Out=3`, `Inside Threshold=122`, `Outside Threshold=204`
+  - `Render Mode=2`, `Use Background Color=0`
+  - `Interpolation Mode=2`, `Power=1`, `Blur Mode=1`, `Blur Size=0`
+- `olmdistancegradation_extended__case_0016`
+  - sanity companion in the same family
+  - `Invert=1`, `In/Out=1`, `Inside Threshold=0`, `Outside Threshold=204`
+  - `Render Mode=2`, `Use Background Color=0`
+  - `Interpolation Mode=2`, `Power=1`, `Blur Mode=1`, `Blur Size=0`
+
+Trace pixels:
+
+| case | pixel | input | Windows reference | current Mac candidate | why |
+| --- | --- | --- | --- | --- | --- |
+| `case_0012` | `(462,7)` | `[16255,16255,16255,32639]` | `[32371,32371,32371,64997]` | `[16121,16121,16121,64997]` | max witness; alpha matches, RGB low on Mac |
+| `case_0012` | `(72,8)` | `[16255,16255,16255,32639]` | `[32371,32371,32371,64997]` | `[16121,16121,16121,64997]` | nearby sanity |
+| `case_0016` | `(106,19)` | `[29125,29125,29125,43689]` | `[29125,29125,29125,43689]` | `[19415,19415,19415,43689]` | same family under `Invert=1` |
+
+Trace target:
+
+1. Render the listed 16bpc extended cases with Windows AE Software.
+2. At `FUN_181170480`, record for each witness pixel:
+   - source/input RGBA16 actually consumed by the callback;
+   - field pixel raw values before compose;
+   - `X` before invert, after invert, and after interpolation;
+   - alpha base used by the Layer/no-bg path;
+   - source RGBA before any unpremultiply step;
+   - source RGBA after any unpremultiply step, if it exists;
+   - output RGBA floats before final 16bpc conversion;
+   - final RGBA16.
+3. If possible, identify which branch/helper proves one of these:
+   - straight source color times output alpha;
+   - already-premultiplied source copied/scaled directly;
+   - another source-ownership rule.
+
+Stop condition:
+
+- Return enough values to decide the Layer/no-bg source ownership rule in the
+  16bpc AEX compose path.
+- Final PNG values alone are not enough.
+
 ## OLMBlur Repeat Threshold Witness
 
 Status: historical request spec. The repeat-threshold trace has returned enough
@@ -437,12 +594,13 @@ reappears.
     `Edge Thin Distance Type=2`.
   - The real Mac AE candidate differs from Windows by `12597px`, all in the
     `candidate kept / Windows removed` direction.
-  - Naive `Lab76 hit + L1 dilate 25` is much worse (`80592px`), and common
-    seed/distance variants do not improve on that. See
+  - The 2026-06-28 PE/capstone audit found the current-AEX Lab76
+    per-component threshold mapping. With that mapping, `Lab76 hit + L1 dilate
+    25` is exact against the Windows reference (`diff=0`). See
     `refs/conformance/olmcolorkey_16bpc_case_0009_analysis.md`.
-- So the next useful Windows request is no longer a broad Edge Thin / Edge Blur
-  bundle. It should be a narrow 16bpc `case_0009` witness that answers the
-  local seed-world and positive-dilate ownership only.
+- So there is no active Windows request for this ColorKey case right now. The
+  next useful proof is Mac AE re-render after the comparator fix. Reopen this
+  section only if that render still differs.
 
 Why this trace exists:
 
@@ -536,8 +694,38 @@ Interpretation:
 
 ### Narrow 16bpc follow-up for current `olmcolorkey__case_0009`
 
+Status: superseded on 2026-06-28 by the Lab76 per-component comparator audit.
+Keep this as a historical trace contract only. Do not send it unless the Mac AE
+re-render after the comparator fix still differs.
+
 Use this instead of the broader historical bundle when the target is the
 current Mac AE exact blocker.
+
+2026-06-27 current-AEX update:
+
+- Windows Debugging Tools are now confirmed working.
+- The live current MediaCore AEX does not answer this case at the old
+  `+0x94b0/+0x8c90/+0x8320/+0x5d60` path. The active positive Edge Thin
+  orchestration is now known to run through `OLMColorKey+0x9000`, with
+  compare/copy around `+0x9237/+0x9247/+0x924c/+0x92b7`.
+- Live ctx facts already captured:
+  - `r14+0x20 = 0x10`
+  - `r14+0x28 = 25`
+  - `r14+0x2c = 2`
+  - `r14+0x3c = 3` (`Force Lower Precision=3`)
+  - copy test at `+0x9247` is `dist <= amount`
+- Top-edge sanity `(1699,7)` hits this loop with `dist=2`, then becomes
+  transparent. Definitely-kept control `(225,30)` hits the compare with
+  `dist=30`, skips copy, and stays opaque.
+- 2026-06-28 follow-up raw CDB logging proves that primary residual witness
+  `(1110,149)` also hits the current-AEX positive Edge Thin path: it consumes
+  `dist=2.0`, takes the copy path, and changes matte word0 from `0x0000` to
+  `0x8000`. The returned JSON summary for that package is stale; trust the raw
+  CDB evidence and the Mac audit report instead.
+- The later 2026-06-28 PE/capstone comparator audit supersedes the seed-world
+  hypothesis: with the current-AEX Lab76 per-component threshold mapping,
+  `(1110,149)` is at taxicab distance `2` and the whole exported-PNG model is
+  exact against the Windows reference.
 
 Render target:
 
@@ -548,14 +736,16 @@ Render target:
 
 Required witness coordinates:
 
-- primary: `(1116,136)`
-- local sanity:
-  `(1088,124)`, `(1133,174)`, `(1195,761)`, `(1699,7)`
+- primary representative residual witnesses from the current Mac AE analysis:
+  `(1110,149)`, `(1213,785)`, `(369,95)`, `(1503,57)`, `(668,945)`
+- optional top-edge sanity witness:
+  `(1699,7)`
 - one definitely-kept control pixel from the same frame, if convenient
 
 Required facts:
 
-1. At `FUN_1800094b0`, record the ctx values actually used for this render:
+1. At the current AEX orchestrator rooted at `OLMColorKey+0x9000`, record the
+   ctx values actually used for this render:
    - bit depth field / source format field
    - `ctx+0x3c` (`Force Lower Precision`)
    - `ctx+0x40`
@@ -564,14 +754,22 @@ Required facts:
 2. Before positive `Edge Thin Amount=25` is applied, record for each witness:
    - the Lab76/core matched byte at the seed input;
    - the post-core pre-dilate temporary matte byte, if it is separate.
-3. At the positive Edge Thin helper / copy test:
+   These witnesses were chosen because the current Mac AE candidate keeps them
+   as opaque black pixels, Windows removes them, and several sit far outside
+   the current `Lab76 hit + 25px` interpretation.
+3. At the current positive Edge Thin compare/copy test around
+   `OLMColorKey+0x9237/+0x9247/+0x924c/+0x92b7`:
    - the distance value consumed for that pixel;
    - the amount/limit value actually compared;
    - whether the runtime copy condition is `dist <= amount`,
      `dist < amount`, or some adjusted value;
    - the output matte byte after the dilate step.
-4. If a separate seed-builder or temporary world feeds the positive dilate:
+4. Move one stage earlier and prove the upstream seed or temporary matte world
+   that makes `(1110,149)` consume `dist=2.0` even though the exported-PNG
+   Lab76 model gives distance `43`:
    - record that seed byte for each witness;
+   - note whether the witness is already marked for drop before the positive
+     copy loop;
    - note whether frame-edge neighbors are treated as inside or outside for
      those witnesses.
 5. Final output:
@@ -595,6 +793,13 @@ Mac baseline highlights:
   `(114,0,0,114)`.
 - Edge Blur `case_0009 (1116,136)` has `keep=1`, `boundary=0`,
   `edge_blur_dist=25`, `edge_blur_weight=1`, final `(0,0,0,255)`.
+- Current 16bpc focused analysis:
+  - `12436 / 12597` residual pixels are opaque black `[0,0,0,65535]`.
+  - All residual pixels lie within taxicab `25` of some nonblack source pixel,
+    but only `8361 / 12597` lie within taxicab `25` of the current `Lab76 hit`
+    set.
+  - Simple `65535 vs 32768` normalization and pre-compare 8-bit RGB
+    quantization hypotheses are already rejected locally.
 
 ## OLMRadialBlur Inner Span Witness
 

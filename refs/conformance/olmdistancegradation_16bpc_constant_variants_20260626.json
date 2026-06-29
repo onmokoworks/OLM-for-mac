@@ -11,38 +11,38 @@
       "case_id": "olmdistancegradation_extended__case_0020",
       "variant_results": [
         {
-          "max_diff": 64514,
-          "mean_diff": 123.75366994598765,
+          "max_diff": 61165,
+          "mean_diff": 14.498019627700618,
           "nonzero_px": 304210,
           "variant": "current_max"
         },
         {
-          "max_diff": 64514,
-          "mean_diff": 123.75366994598765,
+          "max_diff": 61165,
+          "mean_diff": 14.498019627700618,
           "nonzero_px": 304210,
           "variant": "both_min"
         },
         {
-          "max_diff": 64514,
-          "mean_diff": 123.75366994598765,
+          "max_diff": 61165,
+          "mean_diff": 14.498019627700618,
           "nonzero_px": 304210,
           "variant": "both_inside"
         },
         {
-          "max_diff": 64514,
-          "mean_diff": 123.75366994598765,
+          "max_diff": 61165,
+          "mean_diff": 14.498019627700618,
           "nonzero_px": 304210,
           "variant": "both_outside"
         },
         {
-          "max_diff": 64514,
-          "mean_diff": 123.75366994598765,
+          "max_diff": 61165,
+          "mean_diff": 14.498019627700618,
           "nonzero_px": 304210,
           "variant": "outside_zero_inside_only"
         },
         {
-          "max_diff": 64514,
-          "mean_diff": 123.75366994598765,
+          "max_diff": 61165,
+          "mean_diff": 14.498019627700618,
           "nonzero_px": 304210,
           "variant": "outside_zero_force_zero"
         }
@@ -52,38 +52,38 @@
       "case_id": "olmdistancegradation_extended__case_0021",
       "variant_results": [
         {
-          "max_diff": 60910,
-          "mean_diff": 101.21108711902006,
+          "max_diff": 61165,
+          "mean_diff": 14.761340301890431,
           "nonzero_px": 1406979,
           "variant": "both_inside"
         },
         {
-          "max_diff": 60910,
-          "mean_diff": 101.22543330439815,
+          "max_diff": 61165,
+          "mean_diff": 14.775747974537037,
           "nonzero_px": 1406979,
           "variant": "current_max"
         },
         {
-          "max_diff": 60910,
-          "mean_diff": 101.22543330439815,
+          "max_diff": 61165,
+          "mean_diff": 14.775747974537037,
           "nonzero_px": 1406979,
           "variant": "outside_zero_inside_only"
         },
         {
-          "max_diff": 60910,
-          "mean_diff": 101.22543330439815,
+          "max_diff": 61165,
+          "mean_diff": 14.775747974537037,
           "nonzero_px": 1406979,
           "variant": "outside_zero_force_zero"
         },
         {
           "max_diff": 61166,
-          "mean_diff": 9691.468442925347,
+          "mean_diff": 9604.95714735243,
           "nonzero_px": 2073600,
           "variant": "both_min"
         },
         {
           "max_diff": 61166,
-          "mean_diff": 9691.482789110725,
+          "mean_diff": 9604.971555025077,
           "nonzero_px": 2073600,
           "variant": "both_outside"
         }
@@ -94,37 +94,37 @@
       "variant_results": [
         {
           "max_diff": 61166,
-          "mean_diff": 177.4689181857639,
+          "mean_diff": 134.83795030381944,
           "nonzero_px": 702677,
           "variant": "current_max"
         },
         {
           "max_diff": 61166,
-          "mean_diff": 177.4689181857639,
+          "mean_diff": 134.83795030381944,
           "nonzero_px": 702677,
           "variant": "outside_zero_inside_only"
         },
         {
           "max_diff": 61166,
-          "mean_diff": 177.4689181857639,
+          "mean_diff": 134.83795030381944,
           "nonzero_px": 702677,
           "variant": "outside_zero_force_zero"
         },
         {
           "max_diff": 61166,
-          "mean_diff": 8462.534758511767,
+          "mean_diff": 8419.419086492091,
           "nonzero_px": 1285562,
           "variant": "both_inside"
         },
         {
           "max_diff": 61166,
-          "mean_diff": 11512.472468894675,
+          "mean_diff": 11469.760153356481,
           "nonzero_px": 1490715,
           "variant": "both_outside"
         },
         {
           "max_diff": 61166,
-          "mean_diff": 19797.53830922068,
+          "mean_diff": 19754.341289544755,
           "nonzero_px": 2073600,
           "variant": "both_min"
         }
@@ -135,37 +135,37 @@
       "variant_results": [
         {
           "max_diff": 61166,
-          "mean_diff": 31.19602382330247,
+          "mean_diff": 20.041925877700617,
           "nonzero_px": 182793,
           "variant": "current_max"
         },
         {
           "max_diff": 61166,
-          "mean_diff": 11366.199574532215,
+          "mean_diff": 11354.964128930362,
           "nonzero_px": 970831,
           "variant": "both_outside"
         },
         {
           "max_diff": 61166,
-          "mean_diff": 15919.796687524113,
+          "mean_diff": 15908.64258957851,
           "nonzero_px": 1285562,
           "variant": "both_inside"
         },
         {
           "max_diff": 61166,
-          "mean_diff": 15919.796687524113,
+          "mean_diff": 15908.64258957851,
           "nonzero_px": 1285562,
           "variant": "outside_zero_inside_only"
         },
         {
           "max_diff": 61166,
-          "mean_diff": 27254.800238233023,
+          "mean_diff": 27243.564792631172,
           "nonzero_px": 2073600,
           "variant": "both_min"
         },
         {
           "max_diff": 61166,
-          "mean_diff": 27254.800238233023,
+          "mean_diff": 27243.564792631172,
           "nonzero_px": 2073600,
           "variant": "outside_zero_force_zero"
         }

@@ -101,5 +101,15 @@ python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_r
 python3 refs/scripts/package_reference_requests.py --only kirakira_single_ray_20260606
 ```
 
+共有フォルダ運用を使う場合:
+
+```sh
+scripts/publish_windows_request_to_share.sh path/to/request_or_handoff.zip
+```
+
+デフォルトでは `/Volumes/onmk/olm_pr/new` に最新 zip を置き、既存の zip は
+`/Volumes/onmk/olm_pr/old` へ退避します。共有が未マウントなら失敗して止まるので、
+その場合はプロジェクト内の zip をそのまま手動コピーしてください。
+
 生成zipにはこのREADME、選択されたrequest JSON、Win側Codexへそのまま渡すための
 `WIN_CODEX_HANDOFF.md` が入ります。

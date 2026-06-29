@@ -55,6 +55,8 @@ handoffs/
 refs/upstream_official/**/zips/
 refs/upstream_official/**/listings/
 refs/upstream_official/**/extracted/
+refs/upstream_official/**/*snapshot*.html
+refs/upstream_official/**/*.html
 
 # External local tools
 tools/GhidraMCP/

@@ -1,0 +1,2087 @@
+{
+  "kind": "olmdistancegradation_16bpc_powerfix_residual_families",
+  "source_report": "refs/reports/ae_pixel_validation_16bpc_distancegradation_extended_powerfix_20260629_1424/reports/ae_pixel_16bpc_extended_powerfix.json",
+  "exact": 1,
+  "fail": 15,
+  "total": 16,
+  "family_counts": {
+    "ae-exact": 1,
+    "sparse-boundary-quantization": 1,
+    "both-no-bg-zero-threshold-edge-case": 1,
+    "layer-no-bg-source-or-alpha-ownership": 4,
+    "constant-bg-binary-sparse-full-color": 4,
+    "sphere-bg-boundary-quantization": 2,
+    "power-rgb-bg-boundary-quantization": 1,
+    "power-layer-bg-source-or-premultiply": 2
+  },
+  "cases": [
+    {
+      "case_id": "olmdistancegradation_extended__case_0008",
+      "pass": true,
+      "max_diff": 0,
+      "mean_diff": 0.0,
+      "nonzero_px": 0,
+      "params": {
+        "Invert": 0,
+        "In/Out": 2,
+        "Inside Threshold": 369,
+        "Outside Threshold": 0,
+        "Render Mode": 1,
+        "Use Background Color": 0,
+        "Interpolation Mode": 2,
+        "Power": 1
+      },
+      "family": "ae-exact",
+      "max_witnesses": [
+        {
+          "x": 0,
+          "y": 0,
+          "channel": 0,
+          "reference": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "channel": 1,
+          "reference": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "channel": 2,
+          "reference": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "channel": 3,
+          "reference": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "channel": 0,
+          "reference": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0010",
+      "pass": false,
+      "max_diff": 1440,
+      "mean_diff": 1.213882137345679,
+      "nonzero_px": 11228,
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 63,
+        "Outside Threshold": 82,
+        "Render Mode": 1,
+        "Use Background Color": 0,
+        "Interpolation Mode": 2,
+        "Power": 1
+      },
+      "family": "sparse-boundary-quantization",
+      "max_witnesses": [
+        {
+          "x": 987,
+          "y": 26,
+          "channel": 0,
+          "reference": [
+            61217,
+            0,
+            0,
+            61217
+          ],
+          "candidate": [
+            62657,
+            0,
+            0,
+            62657
+          ],
+          "delta": [
+            1440,
+            0,
+            0,
+            1440
+          ]
+        },
+        {
+          "x": 987,
+          "y": 26,
+          "channel": 3,
+          "reference": [
+            61217,
+            0,
+            0,
+            61217
+          ],
+          "candidate": [
+            62657,
+            0,
+            0,
+            62657
+          ],
+          "delta": [
+            1440,
+            0,
+            0,
+            1440
+          ]
+        },
+        {
+          "x": 989,
+          "y": 26,
+          "channel": 0,
+          "reference": [
+            58339,
+            0,
+            0,
+            58339
+          ],
+          "candidate": [
+            59779,
+            0,
+            0,
+            59779
+          ],
+          "delta": [
+            1440,
+            0,
+            0,
+            1440
+          ]
+        },
+        {
+          "x": 989,
+          "y": 26,
+          "channel": 3,
+          "reference": [
+            58339,
+            0,
+            0,
+            58339
+          ],
+          "candidate": [
+            59779,
+            0,
+            0,
+            59779
+          ],
+          "delta": [
+            1440,
+            0,
+            0,
+            1440
+          ]
+        },
+        {
+          "x": 991,
+          "y": 26,
+          "channel": 0,
+          "reference": [
+            55461,
+            0,
+            0,
+            55461
+          ],
+          "candidate": [
+            56901,
+            0,
+            0,
+            56901
+          ],
+          "delta": [
+            1440,
+            0,
+            0,
+            1440
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0011",
+      "pass": false,
+      "max_diff": 65347,
+      "mean_diff": 1.0476169463734568,
+      "nonzero_px": 4290,
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 348,
+        "Outside Threshold": 0,
+        "Render Mode": 1,
+        "Use Background Color": 0,
+        "Interpolation Mode": 2,
+        "Power": 1
+      },
+      "family": "both-no-bg-zero-threshold-edge-case",
+      "max_witnesses": [
+        {
+          "x": 1699,
+          "y": 7,
+          "channel": 0,
+          "reference": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            65347,
+            0,
+            0,
+            65347
+          ],
+          "delta": [
+            65347,
+            0,
+            0,
+            65347
+          ]
+        },
+        {
+          "x": 1699,
+          "y": 7,
+          "channel": 3,
+          "reference": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            65347,
+            0,
+            0,
+            65347
+          ],
+          "delta": [
+            65347,
+            0,
+            0,
+            65347
+          ]
+        },
+        {
+          "x": 985,
+          "y": 26,
+          "channel": 0,
+          "reference": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            65347,
+            0,
+            0,
+            65347
+          ],
+          "delta": [
+            65347,
+            0,
+            0,
+            65347
+          ]
+        },
+        {
+          "x": 985,
+          "y": 26,
+          "channel": 3,
+          "reference": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            65347,
+            0,
+            0,
+            65347
+          ],
+          "delta": [
+            65347,
+            0,
+            0,
+            65347
+          ]
+        },
+        {
+          "x": 1090,
+          "y": 41,
+          "channel": 0,
+          "reference": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            65347,
+            0,
+            0,
+            65347
+          ],
+          "delta": [
+            65347,
+            0,
+            0,
+            65347
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0012",
+      "pass": false,
+      "max_diff": 16250,
+      "mean_diff": 53.451001519097225,
+      "nonzero_px": 25421,
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 122,
+        "Outside Threshold": 204,
+        "Render Mode": 2,
+        "Use Background Color": 0,
+        "Interpolation Mode": 2,
+        "Power": 1
+      },
+      "family": "layer-no-bg-source-or-alpha-ownership",
+      "max_witnesses": [
+        {
+          "x": 462,
+          "y": 7,
+          "channel": 0,
+          "reference": [
+            32371,
+            32371,
+            32371,
+            64997
+          ],
+          "candidate": [
+            16121,
+            16121,
+            16121,
+            64997
+          ],
+          "delta": [
+            -16250,
+            -16250,
+            -16250,
+            0
+          ]
+        },
+        {
+          "x": 462,
+          "y": 7,
+          "channel": 1,
+          "reference": [
+            32371,
+            32371,
+            32371,
+            64997
+          ],
+          "candidate": [
+            16121,
+            16121,
+            16121,
+            64997
+          ],
+          "delta": [
+            -16250,
+            -16250,
+            -16250,
+            0
+          ]
+        },
+        {
+          "x": 462,
+          "y": 7,
+          "channel": 2,
+          "reference": [
+            32371,
+            32371,
+            32371,
+            64997
+          ],
+          "candidate": [
+            16121,
+            16121,
+            16121,
+            64997
+          ],
+          "delta": [
+            -16250,
+            -16250,
+            -16250,
+            0
+          ]
+        },
+        {
+          "x": 72,
+          "y": 8,
+          "channel": 0,
+          "reference": [
+            32371,
+            32371,
+            32371,
+            64997
+          ],
+          "candidate": [
+            16121,
+            16121,
+            16121,
+            64997
+          ],
+          "delta": [
+            -16250,
+            -16250,
+            -16250,
+            0
+          ]
+        },
+        {
+          "x": 72,
+          "y": 8,
+          "channel": 1,
+          "reference": [
+            32371,
+            32371,
+            32371,
+            64997
+          ],
+          "candidate": [
+            16121,
+            16121,
+            16121,
+            64997
+          ],
+          "delta": [
+            -16250,
+            -16250,
+            -16250,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0013",
+      "pass": false,
+      "max_diff": 9658,
+      "mean_diff": 26.236816767939814,
+      "nonzero_px": 17273,
+      "params": {
+        "Invert": 0,
+        "In/Out": 1,
+        "Inside Threshold": 53,
+        "Outside Threshold": 204,
+        "Render Mode": 2,
+        "Use Background Color": 0,
+        "Interpolation Mode": 2,
+        "Power": 1
+      },
+      "family": "layer-no-bg-source-or-alpha-ownership",
+      "max_witnesses": [
+        {
+          "x": 101,
+          "y": 347,
+          "channel": 0,
+          "reference": [
+            30627,
+            30627,
+            30627,
+            44377
+          ],
+          "candidate": [
+            20969,
+            20969,
+            20969,
+            44025
+          ],
+          "delta": [
+            -9658,
+            -9658,
+            -9658,
+            -352
+          ]
+        },
+        {
+          "x": 101,
+          "y": 347,
+          "channel": 1,
+          "reference": [
+            30627,
+            30627,
+            30627,
+            44377
+          ],
+          "candidate": [
+            20969,
+            20969,
+            20969,
+            44025
+          ],
+          "delta": [
+            -9658,
+            -9658,
+            -9658,
+            -352
+          ]
+        },
+        {
+          "x": 101,
+          "y": 347,
+          "channel": 2,
+          "reference": [
+            30627,
+            30627,
+            30627,
+            44377
+          ],
+          "candidate": [
+            20969,
+            20969,
+            20969,
+            44025
+          ],
+          "delta": [
+            -9658,
+            -9658,
+            -9658,
+            -352
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0014",
+      "pass": false,
+      "max_diff": 9686,
+      "mean_diff": 26.594607445987656,
+      "nonzero_px": 18275,
+      "params": {
+        "Invert": 0,
+        "In/Out": 1,
+        "Inside Threshold": 424,
+        "Outside Threshold": 204,
+        "Render Mode": 2,
+        "Use Background Color": 0,
+        "Interpolation Mode": 2,
+        "Power": 1
+      },
+      "family": "layer-no-bg-source-or-alpha-ownership",
+      "max_witnesses": [
+        {
+          "x": 1652,
+          "y": 2,
+          "channel": 0,
+          "reference": [
+            29399,
+            29399,
+            29399,
+            43843
+          ],
+          "candidate": [
+            19713,
+            19713,
+            19713,
+            43843
+          ],
+          "delta": [
+            -9686,
+            -9686,
+            -9686,
+            0
+          ]
+        },
+        {
+          "x": 1652,
+          "y": 2,
+          "channel": 1,
+          "reference": [
+            29399,
+            29399,
+            29399,
+            43843
+          ],
+          "candidate": [
+            19713,
+            19713,
+            19713,
+            43843
+          ],
+          "delta": [
+            -9686,
+            -9686,
+            -9686,
+            0
+          ]
+        },
+        {
+          "x": 1652,
+          "y": 2,
+          "channel": 2,
+          "reference": [
+            29399,
+            29399,
+            29399,
+            43843
+          ],
+          "candidate": [
+            19713,
+            19713,
+            19713,
+            43843
+          ],
+          "delta": [
+            -9686,
+            -9686,
+            -9686,
+            0
+          ]
+        },
+        {
+          "x": 461,
+          "y": 6,
+          "channel": 0,
+          "reference": [
+            29399,
+            29399,
+            29399,
+            43843
+          ],
+          "candidate": [
+            19713,
+            19713,
+            19713,
+            43843
+          ],
+          "delta": [
+            -9686,
+            -9686,
+            -9686,
+            0
+          ]
+        },
+        {
+          "x": 461,
+          "y": 6,
+          "channel": 1,
+          "reference": [
+            29399,
+            29399,
+            29399,
+            43843
+          ],
+          "candidate": [
+            19713,
+            19713,
+            19713,
+            43843
+          ],
+          "delta": [
+            -9686,
+            -9686,
+            -9686,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0016",
+      "pass": false,
+      "max_diff": 9710,
+      "mean_diff": 26.64569022472994,
+      "nonzero_px": 14196,
+      "params": {
+        "Invert": 1,
+        "In/Out": 1,
+        "Inside Threshold": 0,
+        "Outside Threshold": 204,
+        "Render Mode": 2,
+        "Use Background Color": 0,
+        "Interpolation Mode": 2,
+        "Power": 1
+      },
+      "family": "layer-no-bg-source-or-alpha-ownership",
+      "max_witnesses": [
+        {
+          "x": 106,
+          "y": 19,
+          "channel": 0,
+          "reference": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "candidate": [
+            19415,
+            19415,
+            19415,
+            43689
+          ],
+          "delta": [
+            -9710,
+            -9710,
+            -9710,
+            0
+          ]
+        },
+        {
+          "x": 106,
+          "y": 19,
+          "channel": 1,
+          "reference": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "candidate": [
+            19415,
+            19415,
+            19415,
+            43689
+          ],
+          "delta": [
+            -9710,
+            -9710,
+            -9710,
+            0
+          ]
+        },
+        {
+          "x": 106,
+          "y": 19,
+          "channel": 2,
+          "reference": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "candidate": [
+            19415,
+            19415,
+            19415,
+            43689
+          ],
+          "delta": [
+            -9710,
+            -9710,
+            -9710,
+            0
+          ]
+        },
+        {
+          "x": 1559,
+          "y": 22,
+          "channel": 0,
+          "reference": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "candidate": [
+            19415,
+            19415,
+            19415,
+            43689
+          ],
+          "delta": [
+            -9710,
+            -9710,
+            -9710,
+            0
+          ]
+        },
+        {
+          "x": 1559,
+          "y": 22,
+          "channel": 1,
+          "reference": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "candidate": [
+            19415,
+            19415,
+            19415,
+            43689
+          ],
+          "delta": [
+            -9710,
+            -9710,
+            -9710,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0020",
+      "pass": false,
+      "max_diff": 61165,
+      "mean_diff": 14.422321686921297,
+      "nonzero_px": 1001,
+      "params": {
+        "Invert": 0,
+        "In/Out": 1,
+        "Inside Threshold": 78,
+        "Outside Threshold": 204,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Interpolation Mode": 1,
+        "Power": 1
+      },
+      "family": "constant-bg-binary-sparse-full-color",
+      "max_witnesses": [
+        {
+          "x": 951,
+          "y": 417,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ]
+        },
+        {
+          "x": 952,
+          "y": 417,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ]
+        },
+        {
+          "x": 953,
+          "y": 417,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ]
+        },
+        {
+          "x": 954,
+          "y": 417,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ]
+        },
+        {
+          "x": 955,
+          "y": 417,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0021",
+      "pass": false,
+      "max_diff": 61165,
+      "mean_diff": 14.436729600694445,
+      "nonzero_px": 1002,
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 78,
+        "Outside Threshold": 402,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Interpolation Mode": 1,
+        "Power": 1
+      },
+      "family": "constant-bg-binary-sparse-full-color",
+      "max_witnesses": [
+        {
+          "x": 1919,
+          "y": 388,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ]
+        },
+        {
+          "x": 951,
+          "y": 417,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ]
+        },
+        {
+          "x": 952,
+          "y": 417,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ]
+        },
+        {
+          "x": 953,
+          "y": 417,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ]
+        },
+        {
+          "x": 954,
+          "y": 417,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0022",
+      "pass": false,
+      "max_diff": 61165,
+      "mean_diff": 134.67077003761574,
+      "nonzero_px": 9347,
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 36,
+        "Outside Threshold": 11,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Interpolation Mode": 1,
+        "Power": 1
+      },
+      "family": "constant-bg-binary-sparse-full-color",
+      "max_witnesses": [
+        {
+          "x": 4,
+          "y": 0,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ]
+        },
+        {
+          "x": 28,
+          "y": 0,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ]
+        },
+        {
+          "x": 427,
+          "y": 0,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ]
+        },
+        {
+          "x": 645,
+          "y": 0,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ]
+        },
+        {
+          "x": 669,
+          "y": 0,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0023",
+      "pass": false,
+      "max_diff": 61165,
+      "mean_diff": 19.99818431712963,
+      "nonzero_px": 1388,
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 36,
+        "Outside Threshold": 0,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Interpolation Mode": 1,
+        "Power": 1
+      },
+      "family": "constant-bg-binary-sparse-full-color",
+      "max_witnesses": [
+        {
+          "x": 1699,
+          "y": 7,
+          "channel": 2,
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ]
+        },
+        {
+          "x": 985,
+          "y": 26,
+          "channel": 2,
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ]
+        },
+        {
+          "x": 1090,
+          "y": 41,
+          "channel": 2,
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ]
+        },
+        {
+          "x": 1097,
+          "y": 45,
+          "channel": 2,
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ]
+        },
+        {
+          "x": 1408,
+          "y": 73,
+          "channel": 2,
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0024",
+      "pass": false,
+      "max_diff": 20669,
+      "mean_diff": 2.4805602575231482,
+      "nonzero_px": 1054204,
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 158,
+        "Outside Threshold": 17,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Interpolation Mode": 3,
+        "Power": 1
+      },
+      "family": "sphere-bg-boundary-quantization",
+      "max_witnesses": [
+        {
+          "x": 320,
+          "y": 183,
+          "channel": 2,
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            45821,
+            0,
+            20669,
+            65535
+          ],
+          "delta": [
+            -19714,
+            0,
+            20669,
+            0
+          ]
+        },
+        {
+          "x": 1317,
+          "y": 195,
+          "channel": 2,
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            45821,
+            0,
+            20669,
+            65535
+          ],
+          "delta": [
+            -19714,
+            0,
+            20669,
+            0
+          ]
+        },
+        {
+          "x": 294,
+          "y": 809,
+          "channel": 2,
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            45821,
+            0,
+            20669,
+            65535
+          ],
+          "delta": [
+            -19714,
+            0,
+            20669,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0025",
+      "pass": false,
+      "max_diff": 16656,
+      "mean_diff": 1.9855242091049383,
+      "nonzero_px": 862157,
+      "params": {
+        "Invert": 1,
+        "In/Out": 3,
+        "Inside Threshold": 158,
+        "Outside Threshold": 13,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Interpolation Mode": 3,
+        "Power": 1
+      },
+      "family": "sphere-bg-boundary-quantization",
+      "max_witnesses": [
+        {
+          "x": 1699,
+          "y": 7,
+          "channel": 2,
+          "reference": [
+            43093,
+            0,
+            23525,
+            65535
+          ],
+          "candidate": [
+            58981,
+            0,
+            6869,
+            65535
+          ],
+          "delta": [
+            15888,
+            0,
+            -16656,
+            0
+          ]
+        },
+        {
+          "x": 985,
+          "y": 26,
+          "channel": 2,
+          "reference": [
+            43093,
+            0,
+            23525,
+            65535
+          ],
+          "candidate": [
+            58981,
+            0,
+            6869,
+            65535
+          ],
+          "delta": [
+            15888,
+            0,
+            -16656,
+            0
+          ]
+        },
+        {
+          "x": 1090,
+          "y": 41,
+          "channel": 2,
+          "reference": [
+            43093,
+            0,
+            23525,
+            65535
+          ],
+          "candidate": [
+            58981,
+            0,
+            6869,
+            65535
+          ],
+          "delta": [
+            15888,
+            0,
+            -16656,
+            0
+          ]
+        },
+        {
+          "x": 1097,
+          "y": 45,
+          "channel": 2,
+          "reference": [
+            43093,
+            0,
+            23525,
+            65535
+          ],
+          "candidate": [
+            58981,
+            0,
+            6869,
+            65535
+          ],
+          "delta": [
+            15888,
+            0,
+            -16656,
+            0
+          ]
+        },
+        {
+          "x": 1408,
+          "y": 73,
+          "channel": 2,
+          "reference": [
+            43093,
+            0,
+            23525,
+            65535
+          ],
+          "candidate": [
+            58981,
+            0,
+            6869,
+            65535
+          ],
+          "delta": [
+            15888,
+            0,
+            -16656,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0026",
+      "pass": false,
+      "max_diff": 11480,
+      "mean_diff": 2.9253721788194444,
+      "nonzero_px": 902747,
+      "params": {
+        "Invert": 1,
+        "In/Out": 3,
+        "Inside Threshold": 158,
+        "Outside Threshold": 13,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Interpolation Mode": 4,
+        "Power": 2.59740734100342
+      },
+      "family": "power-rgb-bg-boundary-quantization",
+      "max_witnesses": [
+        {
+          "x": 876,
+          "y": 130,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            18147,
+            0,
+            49685,
+            65535
+          ],
+          "delta": [
+            10952,
+            0,
+            -11480,
+            0
+          ]
+        },
+        {
+          "x": 320,
+          "y": 179,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            18147,
+            0,
+            49685,
+            65535
+          ],
+          "delta": [
+            10952,
+            0,
+            -11480,
+            0
+          ]
+        },
+        {
+          "x": 1317,
+          "y": 191,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            18147,
+            0,
+            49685,
+            65535
+          ],
+          "delta": [
+            10952,
+            0,
+            -11480,
+            0
+          ]
+        },
+        {
+          "x": 1203,
+          "y": 261,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            18147,
+            0,
+            49685,
+            65535
+          ],
+          "delta": [
+            10952,
+            0,
+            -11480,
+            0
+          ]
+        },
+        {
+          "x": 1542,
+          "y": 392,
+          "channel": 2,
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            18147,
+            0,
+            49685,
+            65535
+          ],
+          "delta": [
+            10952,
+            0,
+            -11480,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0027",
+      "pass": false,
+      "max_diff": 12301,
+      "mean_diff": 1.5705589313271604,
+      "nonzero_px": 454039,
+      "params": {
+        "Invert": 1,
+        "In/Out": 3,
+        "Inside Threshold": 158,
+        "Outside Threshold": 13,
+        "Render Mode": 2,
+        "Use Background Color": 1,
+        "Interpolation Mode": 4,
+        "Power": 2.59740734100342
+      },
+      "family": "power-layer-bg-source-or-premultiply",
+      "max_witnesses": [
+        {
+          "x": 876,
+          "y": 130,
+          "channel": 0,
+          "reference": [
+            0,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            12301,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            12301,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 320,
+          "y": 179,
+          "channel": 0,
+          "reference": [
+            0,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            12301,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            12301,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 1317,
+          "y": 191,
+          "channel": 0,
+          "reference": [
+            0,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            12301,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            12301,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 1203,
+          "y": 261,
+          "channel": 0,
+          "reference": [
+            0,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            12301,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            12301,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 1542,
+          "y": 392,
+          "channel": 0,
+          "reference": [
+            0,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            12301,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            12301,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0028",
+      "pass": false,
+      "max_diff": 14750,
+      "mean_diff": 8.190497685185186,
+      "nonzero_px": 459649,
+      "params": {
+        "Invert": 1,
+        "In/Out": 3,
+        "Inside Threshold": 158,
+        "Outside Threshold": 13,
+        "Render Mode": 2,
+        "Use Background Color": 1,
+        "Interpolation Mode": 4,
+        "Power": 0.40016460418701
+      },
+      "family": "power-layer-bg-source-or-premultiply",
+      "max_witnesses": [
+        {
+          "x": 1699,
+          "y": 7,
+          "channel": 0,
+          "reference": [
+            42143,
+            91,
+            91,
+            65535
+          ],
+          "candidate": [
+            56893,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            14750,
+            -91,
+            -91,
+            0
+          ]
+        },
+        {
+          "x": 985,
+          "y": 26,
+          "channel": 0,
+          "reference": [
+            42143,
+            91,
+            91,
+            65535
+          ],
+          "candidate": [
+            56893,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            14750,
+            -91,
+            -91,
+            0
+          ]
+        },
+        {
+          "x": 1090,
+          "y": 41,
+          "channel": 0,
+          "reference": [
+            42143,
+            91,
+            91,
+            65535
+          ],
+          "candidate": [
+            56893,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            14750,
+            -91,
+            -91,
+            0
+          ]
+        },
+        {
+          "x": 1097,
+          "y": 45,
+          "channel": 0,
+          "reference": [
+            42143,
+            91,
+            91,
+            65535
+          ],
+          "candidate": [
+            56893,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            14750,
+            -91,
+            -91,
+            0
+          ]
+        },
+        {
+          "x": 1408,
+          "y": 73,
+          "channel": 0,
+          "reference": [
+            42143,
+            91,
+            91,
+            65535
+          ],
+          "candidate": [
+            56893,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            14750,
+            -91,
+            -91,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}

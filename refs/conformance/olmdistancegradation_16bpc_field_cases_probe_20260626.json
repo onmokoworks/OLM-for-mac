@@ -1,0 +1,293 @@
+{
+  "kind": "olmdistancegradation_16bpc_field_cases_probe",
+  "cases": [
+    {
+      "case_id": "olmdistancegradation_extended__case_0020",
+      "witness": [
+        951,
+        417
+      ],
+      "params": {
+        "Invert": 0,
+        "In/Out": 1,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Interpolation Mode": 1,
+        "Power": 1,
+        "Inside Threshold": 78,
+        "Outside Threshold": 204
+      },
+      "source_rgba_u16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "probe_no_bg_rgba_u16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate_rgba_u16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "reference_rgba_u16": [
+        6940,
+        0,
+        60910,
+        65535
+      ],
+      "observed_x_from_probe": 0.0,
+      "model_x_current_max": 0.0,
+      "model_x_binary_add": 0.0,
+      "inside_x": 1.0,
+      "outside_x": 0.0,
+      "candidate_x_est_from_red": -0.0,
+      "reference_x_est_from_red": 1.004388145151614
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0021",
+      "witness": [
+        951,
+        417
+      ],
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Interpolation Mode": 1,
+        "Power": 1,
+        "Inside Threshold": 78,
+        "Outside Threshold": 402
+      },
+      "source_rgba_u16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "probe_no_bg_rgba_u16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate_rgba_u16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "reference_rgba_u16": [
+        6940,
+        0,
+        60910,
+        65535
+      ],
+      "observed_x_from_probe": 0.0,
+      "model_x_current_max": 0.0,
+      "model_x_binary_add": 0.0,
+      "inside_x": 1.0,
+      "outside_x": 0.0,
+      "candidate_x_est_from_red": -0.0,
+      "reference_x_est_from_red": 1.004388145151614
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0022",
+      "witness": [
+        4,
+        0
+      ],
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Interpolation Mode": 1,
+        "Power": 1,
+        "Inside Threshold": 36,
+        "Outside Threshold": 11
+      },
+      "source_rgba_u16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "probe_no_bg_rgba_u16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate_rgba_u16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "reference_rgba_u16": [
+        6940,
+        0,
+        60910,
+        65535
+      ],
+      "observed_x_from_probe": 0.0,
+      "model_x_current_max": 0.0,
+      "model_x_binary_add": 0.0,
+      "inside_x": 0.0,
+      "outside_x": 1.0,
+      "candidate_x_est_from_red": -0.0,
+      "reference_x_est_from_red": 1.004388145151614
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0023",
+      "witness": [
+        1699,
+        7
+      ],
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Interpolation Mode": 1,
+        "Power": 1,
+        "Inside Threshold": 36,
+        "Outside Threshold": 0
+      },
+      "source_rgba_u16": [
+        0,
+        0,
+        0,
+        257
+      ],
+      "probe_no_bg_rgba_u16": [
+        6940,
+        0,
+        60910,
+        65535
+      ],
+      "candidate_rgba_u16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "reference_rgba_u16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "observed_x_from_probe": 1.0,
+      "model_x_current_max": 1.0,
+      "model_x_binary_add": 1.0,
+      "inside_x": 0.027777777777777776,
+      "outside_x": 0.0,
+      "candidate_x_est_from_red": -0.0,
+      "reference_x_est_from_red": -0.0
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0027",
+      "witness": [
+        3,
+        0
+      ],
+      "params": {
+        "Invert": 1,
+        "In/Out": 3,
+        "Render Mode": 2,
+        "Use Background Color": 1,
+        "Interpolation Mode": 4,
+        "Power": 2.59740734100342,
+        "Inside Threshold": 158,
+        "Outside Threshold": 13
+      },
+      "source_rgba_u16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "probe_no_bg_rgba_u16": [
+        0,
+        0,
+        0,
+        65535
+      ],
+      "candidate_rgba_u16": [
+        0,
+        0,
+        0,
+        65535
+      ],
+      "reference_rgba_u16": [
+        3376,
+        0,
+        0,
+        65535
+      ],
+      "observed_x_from_probe": 1.0,
+      "model_x_current_max": 0.8122854050660424,
+      "model_x_binary_add": 0.8122854050660424,
+      "inside_x": 0.0,
+      "outside_x": 0.9230769230769231,
+      "candidate_x_est_from_red": 1.1233480176211454,
+      "reference_x_est_from_red": 1.0654793534342377
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0028",
+      "witness": [
+        3,
+        0
+      ],
+      "params": {
+        "Invert": 1,
+        "In/Out": 3,
+        "Render Mode": 2,
+        "Use Background Color": 1,
+        "Interpolation Mode": 4,
+        "Power": 0.40016460418701,
+        "Inside Threshold": 158,
+        "Outside Threshold": 13
+      },
+      "source_rgba_u16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "probe_no_bg_rgba_u16": [
+        0,
+        0,
+        0,
+        65535
+      ],
+      "candidate_rgba_u16": [
+        0,
+        0,
+        0,
+        65535
+      ],
+      "reference_rgba_u16": [
+        4360,
+        0,
+        0,
+        65535
+      ],
+      "observed_x_from_probe": 1.0,
+      "model_x_current_max": 0.9684772770298401,
+      "model_x_binary_add": 0.9684772770298401,
+      "inside_x": 0.0,
+      "outside_x": 0.9230769230769231,
+      "candidate_x_est_from_red": 1.1233480176211454,
+      "reference_x_est_from_red": 1.048612420507722
+    }
+  ]
+}

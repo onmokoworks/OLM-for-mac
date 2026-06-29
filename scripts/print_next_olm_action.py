@@ -297,12 +297,39 @@ def bitdepth16_mac_validation_result(root: Path) -> dict[str, Any] | None:
         "path": str(path),
         "markdown_path": str(path.with_suffix(".md")) if path.with_suffix(".md").exists() else "",
         "kind": "bitdepth-16bpc-mac-ae-validation",
+        "mtime": path.stat().st_mtime,
         "status": status,
         "case_total": data.get("case_total"),
         "case_exact": data.get("case_exact"),
         "case_fail": data.get("case_fail"),
         "run_dir": data.get("run_dir"),
         "requests": data.get("requests", []),
+    }
+
+
+def ae_host_automation_blocker(root: Path) -> dict[str, Any] | None:
+    paths = sorted(
+        (root / "refs" / "conformance").glob("ae_host_automation_blocker_*.json"),
+        key=lambda candidate: candidate.stat().st_mtime,
+        reverse=True,
+    )
+    if not paths:
+        return None
+    path = paths[0]
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(data, dict) or data.get("status") != "host-blocked":
+        return None
+    return {
+        "path": str(path.with_suffix(".md")) if path.with_suffix(".md").exists() else str(path),
+        "json_path": str(path),
+        "kind": "ae-host-automation-blocker",
+        "mtime": path.stat().st_mtime,
+        "status": data.get("status"),
+        "summary": data.get("summary"),
+        "next_allowed_action": data.get("next_allowed_action"),
     }
 
 
@@ -427,6 +454,7 @@ def ae_host_failure_classification(root: Path, ae_summary: dict[str, Any] | None
 
 def binary_grounded_followup_report(root: Path) -> dict[str, Any] | None:
     report_candidates = [
+        root / "refs" / "conformance" / "olmdistancegradation_16bpc_case0026_analysis_20260628.md",
         root / "refs" / "reports" / "olmsmoother2_current_aex_proof_plan_20260625" / "proof_plan.md",
         root / "refs" / "reports" / "olmsmoother2_witness_neighborhood_20260624" / "neighborhood.md",
         root / "refs" / "reports" / "olmsmoother2_current_aex_witness_contract_20260624" / "witness_contract.md",
@@ -454,12 +482,17 @@ def latest_runtime_trace_package(root: Path, rows: list[dict[str, Any]]) -> dict
     matches = [row for row in rows if row.get("kind") == "runtime-trace-request-package"]
     package_dir = root / "refs" / "runtime_trace_packages"
     if package_dir.exists():
-        matches.extend(
-            list_olm_return_candidates.build_row(path)
-            for path in package_dir.glob("*.zip")
-            if path.is_file()
-        )
-        matches = [row for row in matches if row.get("kind") == "runtime-trace-request-package"]
+        for path in package_dir.glob("*.zip"):
+            if not path.is_file():
+                continue
+            manifest = runtime_trace_package_manifest(path)
+            if not manifest or manifest.get("kind") != "olm_runtime_trace_request_package":
+                continue
+            row = list_olm_return_candidates.build_row(path)
+            row["kind"] = "runtime-trace-request-package"
+            row["suggested_command"] = "send this package to the Windows debugger/helper"
+            matches.append(row)
+    matches = [row for row in matches if row.get("kind") == "runtime-trace-request-package"]
     if not matches:
         return None
     return max(matches, key=lambda row: float(row.get("mtime", 0)))
@@ -547,6 +580,8 @@ def project_runtime_trace_packages(
         if request_ids and all(request_id in answered for request_id in request_ids):
             continue
         row = list_olm_return_candidates.build_row(path)
+        row["kind"] = "runtime-trace-request-package"
+        row["suggested_command"] = "send this package to the Windows debugger/helper"
         row["profile"] = profile
         row["request_ids"] = request_ids
         row["plugin_areas"] = [
@@ -824,6 +859,7 @@ def decide(
     binary_followup_report: dict[str, Any] | None,
     bitdepth16_mac_result: dict[str, Any] | None = None,
     bitdepth16_pending: dict[str, Any] | None = None,
+    ae_automation_blocker: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     runtime_return = newest(rows, "runtime-trace-return")
     if runtime_return:
@@ -853,6 +889,21 @@ def decide(
             "reason": "A returned AE-host validation set can prove packaged plug-in behavior.",
             "target": ae_return,
             "command": ae_return.get("suggested_command", ""),
+        }
+
+    if ae_automation_blocker:
+        blocker_command = ae_automation_blocker.get("next_allowed_action") or (
+            "start After Effects normally, clear any hidden startup/script dialog, run "
+            "python3 scripts/diagnose_ae_host_block.py, then retry the bounded single-case probe"
+        )
+        return {
+            "action": "clear-mac-ae-automation-blocker",
+            "reason": (
+                ae_automation_blocker.get("summary")
+                or "Mac AE automation is blocked before reliable OLM-specific validation can run."
+            ),
+            "target": ae_automation_blocker,
+            "command": blocker_command,
         }
 
     pending = status["pending"]
@@ -957,6 +1008,151 @@ def decide(
         }
 
     if bitdepth16_mac_result and bitdepth16_mac_result.get("status") == "not-ae-exact":
+        trace_ids: set[str] = set()
+        if trace_summary:
+            trace_ids.update(trace_summary.get("answered_request_ids", []))
+            trace_ids.update(trace_summary.get("superseded_request_ids", []))
+        if "olmdistancegradation_16bpc_case0026_x_witness_20260628" in trace_ids:
+            target_path = root / "notes" / "IR_OLMDistanceGradation.md"
+            power_fix = root / "refs" / "conformance" / "olmdistancegradation_16bpc_power_param_fix_20260629.md"
+            residual_families = (
+                root
+                / "refs"
+                / "conformance"
+                / "olmdistancegradation_16bpc_powerfix_residual_families_20260629.md"
+            )
+            if residual_families.exists():
+                case0020_field = (
+                    root
+                    / "refs"
+                    / "conformance"
+                    / "olmdistancegradation_16bpc_case0020_field_witness_20260629.md"
+                )
+                constant_binary_fix = (
+                    root
+                    / "refs"
+                    / "conformance"
+                    / "olmdistancegradation_16bpc_constant_binary_fix_20260629.md"
+                )
+                constant_boundary = (
+                    root
+                    / "refs"
+                    / "conformance"
+                    / "olmdistancegradation_16bpc_constant_remaining_boundary_20260629.md"
+                )
+                target_for_distancegradation = (
+                    constant_boundary
+                    if constant_boundary.exists()
+                    else constant_binary_fix
+                    if constant_binary_fix.exists()
+                    else case0020_field
+                    if case0020_field.exists()
+                    else residual_families
+                )
+                target_kind = "residual-family-report"
+                if constant_boundary.exists():
+                    target_kind = "boundary-localization-report"
+                elif constant_binary_fix.exists():
+                    target_kind = "implementation-fix-report"
+                elif case0020_field.exists():
+                    target_kind = "field-witness-report"
+                return {
+                    "action": "prove-distancegradation-16bpc-residual-family",
+                    "reason": (
+                        "The 16bpc DistanceGradation Power-value bug is fixed and the remaining "
+                        "extended failures are split into residual families. Constant mode now uses "
+                        "the binary threshold path grounded in FUN_181174760. The remaining Constant "
+                        "pixels are localized to 1px threshold-boundary decisions, and direct "
+                        "Layer/no-bg unpremultiply was tested and rejected. The remaining work is "
+                        "narrow binary/runtime proof, not broad PNG tuning."
+                    ),
+                    "target": {
+                        "path": str(target_for_distancegradation),
+                        "kind": target_kind,
+                        "request_id": "olmdistancegradation_16bpc_case0026_x_witness_20260628",
+                    },
+                    "command": (
+                        "obtain a narrow Constant distanceTransform boundary witness or binary/runtime "
+                        "proof for case_0012 Layer/no-bg source ownership; preserve the Power and "
+                        "Constant binary-threshold fixes"
+                    ),
+                }
+            if power_fix.exists():
+                return {
+                    "action": "classify-distancegradation-16bpc-powerfix-residuals",
+                    "reason": (
+                        "The case_0026 field-prep and Power-value collapse are now explained: "
+                        "the port was applying FIX_2_FLOAT to an already-floating Power param. "
+                        "After the fix, extended 16bpc is still not AE exact, so the next work "
+                        "is residual-family classification rather than another Windows trip."
+                    ),
+                    "target": {
+                        "path": str(power_fix),
+                        "kind": "ae-host-grounded-implementation-fix",
+                        "request_id": "olmdistancegradation_16bpc_case0026_x_witness_20260628",
+                    },
+                    "command": (
+                        "classify refs/reports/ae_pixel_validation_16bpc_distancegradation_extended_powerfix_20260629_1424 "
+                        "by Constant/background, Power/source, and compose/writeback residual families"
+                    ),
+                }
+            current_mac_rerun = (
+                root
+                / "refs"
+                / "conformance"
+                / "olmdistancegradation_16bpc_case0026_current_mac_ae_rerun_20260629.md"
+            )
+            if current_mac_rerun.exists():
+                return {
+                    "action": "inspect-mac-distancegradation-case0026-field-prep",
+                    "reason": (
+                        "The Windows trace proves case_0026 ramps before compose, and the "
+                        "current Mac AE rerender still saturates to the Gradation Color endpoint. "
+                        "The active mismatch is now Mac field-prep or installed-binary behavior, "
+                        "not a stale PNG or Windows compose branch."
+                    ),
+                    "target": {
+                        "path": str(target_path),
+                        "kind": "binary-grounded-ir",
+                        "request_id": "olmdistancegradation_16bpc_case0026_x_witness_20260628",
+                    },
+                    "command": (
+                        "inspect mac/OLMDistanceGradation field-prep for 16bpc case_0026 and "
+                        "verify the installed plug-in binary/source path before changing compose"
+                    ),
+                }
+            return {
+                "action": "recover-mac-ae-distancegradation-case0026-render",
+                "reason": (
+                    "The Windows case_0026 field/X witness has returned: the ramp exists before "
+                    "16bpc compose. The remaining proof is a current Mac AE rerender, currently "
+                    "blocked by the AE host dialog/automation issue."
+                ),
+                "target": {
+                    "path": str(target_path),
+                    "kind": "binary-grounded-ir",
+                    "request_id": "olmdistancegradation_16bpc_case0026_x_witness_20260628",
+                },
+                "command": (
+                    "launch/clear Mac AE, run python3 scripts/diagnose_ae_host_block.py, "
+                    "then rerender only olmdistancegradation_extended__case_0026 with the "
+                    "current installed plug-in"
+                ),
+            }
+        if (
+            binary_followup_report
+            and binary_followup_report.get("mtime", 0) >= bitdepth16_mac_result.get("mtime", 0)
+        ):
+            return {
+                "action": "continue-binary-grounded-followup",
+                "reason": (
+                    "Mac AE 16bpc validation is not exact, and a newer residual report has "
+                    "already classified the largest current residual; continue from that proof "
+                    "instead of re-reading the broad validation summary."
+                ),
+                "target": binary_followup_report,
+                "command": "read the residual report and capture/prove the named field/X witness",
+            }
         return {
             "action": "investigate-16bpc-mac-ae-residuals",
             "reason": (
@@ -1043,6 +1239,7 @@ def main() -> int:
     binary_followup = binary_grounded_followup_report(root)
     bitdepth16_mac_result = bitdepth16_mac_validation_result(root)
     bitdepth16_pending = bitdepth16_compare_pending(root)
+    ae_automation_blocker = ae_host_automation_blocker(root)
     pending_request_defs = pending_requests(root, status["pending"])
     handoff_path = args.handoff
     if handoff_path is None:
@@ -1063,6 +1260,7 @@ def main() -> int:
         binary_followup,
         bitdepth16_mac_result,
         bitdepth16_pending,
+        ae_automation_blocker,
     )
 
     output = {
@@ -1078,6 +1276,7 @@ def main() -> int:
         "ae_host_exact_summary": ae_exact_summary,
         "ae_host_failure_classification": ae_failure_classification,
         "binary_grounded_followup_report": binary_followup,
+        "ae_host_automation_blocker": ae_automation_blocker,
         "bitdepth16_mac_validation_result": bitdepth16_mac_result,
         "bitdepth16_compare_pending": bitdepth16_pending,
         "handoff": handoff,

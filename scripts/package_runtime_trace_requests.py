@@ -101,6 +101,8 @@ def parse_args() -> argparse.Namespace:
             "smoother2-current-aex-f270-witness",
             "smoother2-current-aex-writer-frame-followup",
             "distancegradation-field-prep",
+            "distancegradation-layer-no-bg-source-ownership",
+            "distancegradation-16bpc-case0026-x-witness",
         ],
         default="hard-paths",
         help="Trace request set to package.",
@@ -190,11 +192,13 @@ def colorkey_16bpc_case0009_action() -> dict[str, Any]:
         "plugin_area": "OLMColorKey 16bpc case_0009 positive Edge Thin runtime trace",
         "mode": "external-trace",
         "command": (
-            "Trace OLMColorKey 16bpc normalized Software case_0009 at "
-            "FUN_1800094b0 and the positive Edge Thin helper/copy path. "
+            "Trace OLMColorKey 16bpc normalized Software case_0009 on the "
+            "current MediaCore AEX path rooted at OLMColorKey+0x9000 and its "
+            "positive Edge Thin compare/copy path around +0x9237/+0x9247/+0x924c. "
             "Record ctx fields, seed/matte bytes, distance/limit values, copy "
             "condition, edge ownership, and final RGBA for witness pixels "
-            "(1116,136), (1088,124), (1133,174), (1195,761), and (1699,7). "
+            "(1110,149), (1213,785), (369,95), (1503,57), (668,945), and "
+            "optional top-edge sanity (1699,7). "
             "Use the narrow witness plan in notes/WINDOWS_RUNTIME_TRACE_REQUESTS.md "
             "and compare against refs/conformance/olmcolorkey_16bpc_case_0009_analysis.md."
         ),
@@ -806,6 +810,52 @@ def distancegradation_field_prep_action() -> dict[str, Any]:
     }
 
 
+def distancegradation_16bpc_case0026_x_witness_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_16bpc_case0026_x_witness_20260628",
+        "plugin_area": "OLMDistanceGradation 16bpc Power/background ramp field/X witness",
+        "mode": "external-trace",
+        "command": (
+            "Trace OLMDistanceGradation normalized Software 16bpc "
+            "olmdistancegradation_extended__case_0026. Focus on row y=0, "
+            "x=0..14, especially x=3..14. Record the 16bpc field-world pixel "
+            "or Mat value consumed by FUN_181170480 before invert/interpolation, "
+            "then the X values after Invert=1 and Power interpolation, plus the "
+            "final RGBA16 write. Compare against "
+            "refs/conformance/olmdistancegradation_16bpc_case0026_analysis_20260628.md."
+        ),
+        "stop_condition": (
+            "Return enough values to decide whether Windows ramps before "
+            "FUN_181170480 compose (field-prep/normalization ownership) or only "
+            "inside FUN_181170480 after invert/power interpolation. Placeholder "
+            "wrapper hits or final PNG values alone are not enough."
+        ),
+    }
+
+
+def distancegradation_layer_no_bg_source_ownership_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_16bpc_layer_no_bg_source_ownership_20260629",
+        "plugin_area": "OLMDistanceGradation 16bpc Layer/no-bg source ownership witness",
+        "mode": "external-trace",
+        "command": (
+            "Trace OLMDistanceGradation normalized Software 16bpc "
+            "olmdistancegradation_extended__case_0012 and case_0016. Focus on the "
+            "Layer render path with Use Background Color=0 where Windows and Mac "
+            "share output alpha but disagree on RGB magnitude. Record the source/input "
+            "pixel actually consumed by FUN_181170480, the field/X values, alpha base, "
+            "the source-layer RGB/alpha values used by the compose branch, any "
+            "premultiply or unpremultiply step, the output floats before 16bpc writeback, "
+            "and the final RGBA16 at the listed witness pixels."
+        ),
+        "stop_condition": (
+            "Return enough values to decide whether Windows derives Layer/no-bg RGB from "
+            "straight source color times output alpha, from already-premultiplied source, "
+            "or from another ownership rule. Final PNG values alone are not enough."
+        ),
+    }
+
+
 def radialblur_dense_action() -> dict[str, Any]:
     return {
         "request_id": "olmradialblur_dense_sampler_trace_20260620",
@@ -1048,6 +1098,10 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [smoother2_current_aex_writer_frame_followup_action()]
     if profile == "distancegradation-field-prep":
         return [distancegradation_field_prep_action()]
+    if profile == "distancegradation-layer-no-bg-source-ownership":
+        return [distancegradation_layer_no_bg_source_ownership_action()]
+    if profile == "distancegradation-16bpc-case0026-x-witness":
+        return [distancegradation_16bpc_case0026_x_witness_action()]
     return runtime_actions(snapshot)
 
 
@@ -1261,9 +1315,9 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 },
                 "witnesses": [
                     {
-                        "x": 1116,
-                        "y": 136,
-                        "role": "primary residual witness",
+                        "x": 1110,
+                        "y": 149,
+                        "role": "largest residual component representative; opaque black kept by Mac, removed by Windows",
                         "core_lab76_matched_byte": None,
                         "post_core_pre_dilate_temp_matte_byte": None,
                         "positive_edge_thin_seed_byte_optional": None,
@@ -1275,9 +1329,9 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                         "final_output_rgba": [None, None, None, None],
                     },
                     {
-                        "x": 1088,
-                        "y": 124,
-                        "role": "largest residual component corner",
+                        "x": 1213,
+                        "y": 785,
+                        "role": "second-largest representative; current Mac witness sits only 8px from nearest naive hit",
                         "core_lab76_matched_byte": None,
                         "post_core_pre_dilate_temp_matte_byte": None,
                         "positive_edge_thin_seed_byte_optional": None,
@@ -1289,9 +1343,9 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                         "final_output_rgba": [None, None, None, None],
                     },
                     {
-                        "x": 1133,
-                        "y": 174,
-                        "role": "largest residual component edge",
+                        "x": 369,
+                        "y": 95,
+                        "role": "third-largest representative; far-from-hit opaque black witness",
                         "core_lab76_matched_byte": None,
                         "post_core_pre_dilate_temp_matte_byte": None,
                         "positive_edge_thin_seed_byte_optional": None,
@@ -1303,9 +1357,23 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                         "final_output_rgba": [None, None, None, None],
                     },
                     {
-                        "x": 1195,
-                        "y": 761,
-                        "role": "second-largest residual component",
+                        "x": 1503,
+                        "y": 57,
+                        "role": "fourth-largest representative near top region",
+                        "core_lab76_matched_byte": None,
+                        "post_core_pre_dilate_temp_matte_byte": None,
+                        "positive_edge_thin_seed_byte_optional": None,
+                        "distance_value_consumed": None,
+                        "amount_or_limit_value_compared": None,
+                        "copy_condition_observed": "dist <= amount | dist < amount | adjusted-limit | other",
+                        "post_dilate_matte_byte": None,
+                        "frame_edge_neighbors_treated_as": "inside | outside | mixed | unknown",
+                        "final_output_rgba": [None, None, None, None],
+                    },
+                    {
+                        "x": 668,
+                        "y": 945,
+                        "role": "fifth-largest representative; far-from-hit opaque black witness",
                         "core_lab76_matched_byte": None,
                         "post_core_pre_dilate_temp_matte_byte": None,
                         "positive_edge_thin_seed_byte_optional": None,
@@ -1319,7 +1387,7 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                     {
                         "x": 1699,
                         "y": 7,
-                        "role": "top-edge sanity witness",
+                        "role": "optional top-edge sanity witness",
                         "core_lab76_matched_byte": None,
                         "post_core_pre_dilate_temp_matte_byte": None,
                         "positive_edge_thin_seed_byte_optional": None,
@@ -2490,6 +2558,187 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 },
             }
             summary = "Fill with OLMDistanceGradation field-prep/Constant-mode runtime trace facts."
+        elif request_id == "olmdistancegradation_16bpc_case0026_x_witness_20260628":
+            observations = {
+                "effect": "OLM Distance Gradation",
+                "case_id": "olmdistancegradation_extended__case_0026",
+                "module_base": "0x...",
+                "function_focus": {
+                    "compose16_callback": "FUN_181170480",
+                    "known_binary_facts": [
+                        "field scale uses 1/32768 and 32768 constants",
+                        "Render Mode=1 selects Gradation Color",
+                        "Use Background Color=1 mixes BG*(1-X)+Grad*X",
+                    ],
+                },
+                "params": {
+                    "invert": 1,
+                    "in_out": 3,
+                    "inside_threshold": 158,
+                    "outside_threshold": 13,
+                    "render_mode": 1,
+                    "use_background_color": 1,
+                    "gradation_color_rgba16": [7195, 0, 61165, 65535],
+                    "background_color_rgba16": [65535, 0, 0, 65535],
+                    "interpolation_mode": 4,
+                    "power": 2.59740734100342,
+                    "blur_mode": 1,
+                    "blur_size": 0,
+                },
+                "witness_pixels": [
+                    {
+                        "x": x,
+                        "y": 0,
+                        "windows_reference_rgba16": reference,
+                        "mac_candidate_rgba16": [7195, 0, 61165, 65535],
+                        "inferred_windows_x": inferred_x,
+                    }
+                    for x, reference, inferred_x in [
+                        (0, [7195, 0, 61165, 65535], 1.0),
+                        (1, [7195, 0, 61165, 65535], 1.0),
+                        (2, [7195, 0, 61165, 65535], 1.0),
+                        (3, [18147, 0, 49681, 65535], 0.812259),
+                        (4, [27731, 0, 39633, 65535], 0.647982),
+                        (5, [36021, 0, 30941, 65535], 0.505879),
+                        (6, [43085, 0, 23533, 65535], 0.38478),
+                        (7, [49003, 0, 17331, 65535], 0.283361),
+                        (8, [53849, 0, 12249, 65535], 0.200285),
+                        (9, [57703, 0, 8209, 65535], 0.134229),
+                        (10, [60657, 0, 5111, 65535], 0.083587),
+                        (11, [62803, 0, 2861, 65535], 0.046802),
+                        (12, [64241, 0, 1355, 65535], 0.022167),
+                        (13, [65083, 0, 471, 65535], 0.007724),
+                        (14, [65459, 0, 77, 65535], 0.001281),
+                    ]
+                ],
+                "requested_for_each_pixel": {
+                    "source_input_rgba16": [None, None, None, None],
+                    "field_world_pointer_rowbytes_dimensions": {
+                        "pointer": None,
+                        "rowbytes": None,
+                        "width": None,
+                        "height": None,
+                    },
+                    "field_pixel_raw_rgba16_or_mat_channels_before_compose": [None, None, None, None],
+                    "fun_181170480_X_before_invert": None,
+                    "fun_181170480_X_after_invert": None,
+                    "fun_181170480_X_after_power_interp": None,
+                    "fun_181170480_background_rgba_float_or_16": [None, None, None, None],
+                    "fun_181170480_gradation_rgba_float_or_16": [None, None, None, None],
+                    "output_rgba_float_before_cvt": [None, None, None, None],
+                    "final_rgba16": [None, None, None, None],
+                },
+                "branch_decision": {
+                    "field_already_ramps_before_compose": None,
+                    "compose_interpolation_creates_ramp_from_saturated_field": None,
+                    "parameter_or_color_branch_mismatch": None,
+                    "failed_breakpoint_or_watchpoint_reason": None,
+                },
+            }
+            summary = "Fill with OLMDistanceGradation 16bpc case_0026 field/X witness facts."
+        elif request_id == "olmdistancegradation_16bpc_layer_no_bg_source_ownership_20260629":
+            observations = {
+                "effect": "OLM Distance Gradation",
+                "module_base": "0x...",
+                "function_focus": {
+                    "compose16_callback": "FUN_181170480",
+                    "known_binary_facts": [
+                        "Render Mode=2 selects source-layer RGB path",
+                        "Use Background Color=0 keeps alpha = d_alpha * X in the current port",
+                        "Current Mac candidate matches Windows alpha at the witness but RGB stays lower",
+                    ],
+                },
+                "cases": [
+                    {
+                        "case_id": "olmdistancegradation_extended__case_0012",
+                        "reason": (
+                            "Layer/no-bg source ownership residual: alpha matches at the max witness "
+                            "while Windows RGB is roughly doubled."
+                        ),
+                        "params": {
+                            "invert": 0,
+                            "in_out": 3,
+                            "inside_threshold": 122,
+                            "outside_threshold": 204,
+                            "render_mode": 2,
+                            "use_background_color": 0,
+                            "interpolation_mode": 2,
+                            "power": 1,
+                            "blur_mode": 1,
+                            "blur_size": 0,
+                        },
+                        "pixels": [
+                            {
+                                "x": 462,
+                                "y": 7,
+                                "source_input_rgba16": [16255, 16255, 16255, 32639],
+                                "windows_reference_rgba16": [32371, 32371, 32371, 64997],
+                                "mac_candidate_rgba16": [16121, 16121, 16121, 64997],
+                            },
+                            {
+                                "x": 72,
+                                "y": 8,
+                                "source_input_rgba16": [16255, 16255, 16255, 32639],
+                                "windows_reference_rgba16": [32371, 32371, 32371, 64997],
+                                "mac_candidate_rgba16": [16121, 16121, 16121, 64997],
+                            },
+                        ],
+                    },
+                    {
+                        "case_id": "olmdistancegradation_extended__case_0016",
+                        "reason": (
+                            "Sanity companion for the same residual family under Invert=1 / Inside; "
+                            "Windows alpha again matches while RGB is higher."
+                        ),
+                        "params": {
+                            "invert": 1,
+                            "in_out": 1,
+                            "inside_threshold": 0,
+                            "outside_threshold": 204,
+                            "render_mode": 2,
+                            "use_background_color": 0,
+                            "interpolation_mode": 2,
+                            "power": 1,
+                            "blur_mode": 1,
+                            "blur_size": 0,
+                        },
+                        "pixels": [
+                            {
+                                "x": 106,
+                                "y": 19,
+                                "source_input_rgba16": [29125, 29125, 29125, 43689],
+                                "windows_reference_rgba16": [29125, 29125, 29125, 43689],
+                                "mac_candidate_rgba16": [19415, 19415, 19415, 43689],
+                            }
+                        ],
+                    },
+                ],
+                "requested_for_each_pixel": {
+                    "source_input_rgba16": [None, None, None, None],
+                    "field_world_pointer_rowbytes_dimensions": {
+                        "pointer": None,
+                        "rowbytes": None,
+                        "width": None,
+                        "height": None,
+                    },
+                    "field_pixel_raw_rgba16_or_mat_channels_before_compose": [None, None, None, None],
+                    "fun_181170480_X_before_invert": None,
+                    "fun_181170480_X_after_invert": None,
+                    "fun_181170480_X_after_interp": None,
+                    "fun_181170480_alpha_base": None,
+                    "fun_181170480_source_rgba_float_or_16_before_any_unpremultiply": [None, None, None, None],
+                    "fun_181170480_source_rgba_after_any_unpremultiply": [None, None, None, None],
+                    "fun_181170480_output_rgba_float_before_cvt": [None, None, None, None],
+                    "final_rgba16": [None, None, None, None],
+                },
+                "branch_decision": {
+                    "uses_straight_source_times_output_alpha": None,
+                    "uses_premultiplied_source_directly": None,
+                    "uses_other_source_ownership_rule": None,
+                    "failed_breakpoint_or_watchpoint_reason": None,
+                },
+            }
+            summary = "Fill with OLMDistanceGradation 16bpc Layer/no-bg source ownership witness facts."
         elif request_id == "olmsmoother2_legacy_writeback_extract_20260620":
             observations = {
                 "existing_full_log_path_checked": (
@@ -3482,6 +3731,36 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("notes/IR_OLMDistanceGradation.md"),
             Path("notes/CONFORMANCE_LEDGER.md"),
             Path("notes/PORTING_BOARD.md"),
+        ]
+    elif profile == "distancegradation-layer-no-bg-source-ownership":
+        files = [
+            TRACE_NOTE,
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/conformance/olmdistancegradation_16bpc_representative_witnesses_20260629.md"),
+            Path("refs/conformance/olmdistancegradation_16bpc_representative_witnesses_20260629.json"),
+            Path("refs/conformance/olmdistancegradation_16bpc_rejected_layer_unpremultiply_20260629.md"),
+            Path("refs/conformance/olmdistancegradation_16bpc_rejected_layer_unpremultiply_20260629.json"),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
+            ),
+        ]
+    elif profile == "distancegradation-16bpc-case0026-x-witness":
+        files = [
+            TRACE_NOTE,
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/conformance/olmdistancegradation_16bpc_case0026_analysis_20260628.md"),
+            Path("refs/conformance/olmdistancegradation_16bpc_case0026_analysis_20260628.json"),
+            Path(
+                "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/"
+                "bitdepth16_olmdistancegradation_extended_exact/reports/ae_pixel_16bpc_extended_exact.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
+            ),
         ]
     else:
         files = [TRACE_NOTE, *DEFAULT_REQUESTS, *SUPPORTING_NOTES]

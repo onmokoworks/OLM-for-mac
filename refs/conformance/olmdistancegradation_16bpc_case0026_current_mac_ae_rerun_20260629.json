@@ -1,0 +1,244 @@
+{
+  "cases": [
+    {
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0026.png",
+      "id": "olmdistancegradation_extended__case_0026",
+      "max_diff": 61157,
+      "mean_diff": 11754.422780309607,
+      "nonzero_px": 1123575,
+      "nonzero_px_percent": 54.184751157407405,
+      "normalized_frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0026.png",
+      "pass": false,
+      "samples": [
+        {
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            10952,
+            0,
+            11484,
+            0
+          ],
+          "reference": [
+            18147,
+            0,
+            49681,
+            65535
+          ],
+          "x": 3,
+          "y": 0
+        },
+        {
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            20536,
+            0,
+            21532,
+            0
+          ],
+          "reference": [
+            27731,
+            0,
+            39633,
+            65535
+          ],
+          "x": 4,
+          "y": 0
+        },
+        {
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            28826,
+            0,
+            30224,
+            0
+          ],
+          "reference": [
+            36021,
+            0,
+            30941,
+            65535
+          ],
+          "x": 5,
+          "y": 0
+        },
+        {
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            35890,
+            0,
+            37632,
+            0
+          ],
+          "reference": [
+            43085,
+            0,
+            23533,
+            65535
+          ],
+          "x": 6,
+          "y": 0
+        },
+        {
+          "candidate": [
+            7197,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            41806,
+            0,
+            43834,
+            0
+          ],
+          "reference": [
+            49003,
+            0,
+            17331,
+            65535
+          ],
+          "x": 7,
+          "y": 0
+        },
+        {
+          "candidate": [
+            7197,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            46652,
+            0,
+            48916,
+            0
+          ],
+          "reference": [
+            53849,
+            0,
+            12249,
+            65535
+          ],
+          "x": 8,
+          "y": 0
+        },
+        {
+          "candidate": [
+            7197,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            50506,
+            0,
+            52956,
+            0
+          ],
+          "reference": [
+            57703,
+            0,
+            8209,
+            65535
+          ],
+          "x": 9,
+          "y": 0
+        },
+        {
+          "candidate": [
+            7197,
+            0,
+            61163,
+            65535
+          ],
+          "delta": [
+            53460,
+            0,
+            56052,
+            0
+          ],
+          "reference": [
+            60657,
+            0,
+            5111,
+            65535
+          ],
+          "x": 10,
+          "y": 0
+        },
+        {
+          "candidate": [
+            7197,
+            0,
+            61163,
+            65535
+          ],
+          "delta": [
+            55606,
+            0,
+            58302,
+            0
+          ],
+          "reference": [
+            62803,
+            0,
+            2861,
+            65535
+          ],
+          "x": 11,
+          "y": 0
+        },
+        {
+          "candidate": [
+            7199,
+            0,
+            61163,
+            65535
+          ],
+          "delta": [
+            57042,
+            0,
+            59808,
+            0
+          ],
+          "reference": [
+            64241,
+            0,
+            1355,
+            65535
+          ],
+          "x": 12,
+          "y": 0
+        }
+      ],
+      "status": "compared",
+      "total_px": 2073600
+    }
+  ],
+  "summary": {
+    "fail": 1,
+    "missing": 0,
+    "ok": 0,
+    "total": 1
+  }
+}

@@ -11,6 +11,8 @@ from typing import Any
 
 
 REQUEST_ID = "olmdistancegradation_field_prep_runtime_trace_20260619"
+CASE0026_REQUEST_ID = "olmdistancegradation_16bpc_case0026_x_witness_20260628"
+REQUEST_IDS = {REQUEST_ID, CASE0026_REQUEST_ID}
 
 LOCAL_ASSUMPTIONS = {
     "distance_transform": "scipy/OpenCV-like Euclidean distance_transform_edt for current CLI; Windows AEX embeds OpenCV 4.5.5",
@@ -49,7 +51,7 @@ def fail(message: str) -> int:
 
 def find_result(summary: dict[str, Any]) -> dict[str, Any] | None:
     for row in summary.get("results", []):
-        if isinstance(row, dict) and row.get("request_id") == REQUEST_ID:
+        if isinstance(row, dict) and row.get("request_id") in REQUEST_IDS:
             return row
     return None
 
@@ -110,6 +112,36 @@ def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
     requested = observations.get("requested_for_each_pixel", {})
     if not isinstance(requested, dict):
         requested = {}
+    if row.get("request_id") == CASE0026_REQUEST_ID:
+        return {
+            "present": True,
+            "status": row.get("status"),
+            "summary": row.get("summary"),
+            "source_file": row.get("source_file"),
+            "case_id": observations.get("case_id"),
+            "witness_pixels": observations.get("witness_pixels", []),
+            "field_values": {
+                key: requested.get(key)
+                for key in (
+                    "source_input_rgba16",
+                    "field_world_pointer_rowbytes_dimensions",
+                    "field_pixel_raw_rgba16_or_mat_channels_before_compose",
+                )
+            },
+            "compose": {
+                key: requested.get(key)
+                for key in (
+                    "fun_181170480_X_before_invert",
+                    "fun_181170480_X_after_invert",
+                    "fun_181170480_X_after_power_interp",
+                    "fun_181170480_background_rgba_float_or_16",
+                    "fun_181170480_gradation_rgba_float_or_16",
+                    "output_rgba_float_before_cvt",
+                    "final_rgba16",
+                )
+            },
+            "branch_decision": observations.get("branch_decision", {}),
+        }
     return {
         "present": True,
         "status": row.get("status"),
@@ -149,6 +181,17 @@ def classify_next_focus(windows: dict[str, Any]) -> str:
     if not windows.get("present"):
         return "await-windows-trace"
     field_values = windows.get("field_values", {})
+    branch_decision = windows.get("branch_decision")
+    if isinstance(branch_decision, dict) and concrete_trace_value(branch_decision):
+        if branch_decision.get("field_already_ramps_before_compose") is True:
+            return "case0026-field-prep-normalization"
+        if branch_decision.get("compose_interpolation_creates_ramp_from_saturated_field") is True:
+            return "case0026-invert-power-compose"
+        if branch_decision.get("parameter_or_color_branch_mismatch") is True:
+            return "case0026-parameter-color-branch"
+        return "case0026-branch-decision"
+    if concrete_trace_value(field_values.get("field_pixel_raw_rgba16_or_mat_channels_before_compose")):
+        return "case0026-field-prep-normalization"
     opencv_calls = windows.get("opencv_calls", {})
     threshold = windows.get("threshold_and_normalization")
     compose = windows.get("compose", {})
@@ -170,11 +213,13 @@ def classify_next_focus(windows: dict[str, Any]) -> str:
 
 
 def build_comparison(summary: dict[str, Any]) -> dict[str, Any]:
-    windows = summarize_windows(find_result(summary))
+    result = find_result(summary)
+    request_id = result.get("request_id") if isinstance(result, dict) else REQUEST_ID
+    windows = summarize_windows(result)
     return {
         "kind": "olmdistancegradation_trace_comparison",
         "schema": 1,
-        "request_id": REQUEST_ID,
+        "request_id": request_id,
         "likely_next_focus": classify_next_focus(windows),
         "local_assumptions": LOCAL_ASSUMPTIONS,
         "windows": windows,
@@ -211,10 +256,12 @@ def render_markdown(comparison: dict[str, Any]) -> str:
             f"- Status: {md_value(windows.get('status'))}",
             f"- Summary: {windows.get('summary') or '-'}",
             f"- Cases: {md_value(windows.get('cases'))}",
+            f"- Witness pixels: {md_value(windows.get('witness_pixels'))}",
             f"- Field values: {md_value(windows.get('field_values'))}",
             f"- OpenCV calls: {md_value(windows.get('opencv_calls'))}",
             f"- Threshold/normalization: {md_value(windows.get('threshold_and_normalization'))}",
             f"- Compose: {md_value(windows.get('compose'))}",
+            f"- Branch decision: {md_value(windows.get('branch_decision'))}",
             "",
             "## Interpretation",
             "",
@@ -223,6 +270,9 @@ def render_markdown(comparison: dict[str, Any]) -> str:
             "- `distance-transform-args`: update OpenCV/helper primitive assumptions first.",
             "- `gaussian-blur-args`: focus `case_0029` blur radius/kernel/border.",
             "- `compose-field-byte`: focus `FUN_181170870` green-byte/invert/interp/writeback.",
+            "- `case0026-field-prep-normalization`: Windows already has a ramp before 16bpc compose; fix field prep/normalization.",
+            "- `case0026-invert-power-compose`: Windows creates the ramp in `FUN_181170480`; fix invert/power/compose ownership.",
+            "- `case0026-parameter-color-branch`: fix AE parameter/color branch ownership before math changes.",
             "- `trace-too-sparse`: request missing field/OpenCV/compose values instead of PNG tuning.",
             "",
         ]

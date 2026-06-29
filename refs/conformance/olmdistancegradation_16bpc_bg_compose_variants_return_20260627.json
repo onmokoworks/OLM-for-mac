@@ -1,0 +1,239 @@
+{
+  "kind": "olmdistancegradation_16bpc_bg_compose_variants_return",
+  "cases": [
+    {
+      "case_id": "0020",
+      "witness": [
+        951,
+        417
+      ],
+      "params": {
+        "Invert": 0,
+        "In/Out": 1,
+        "Inside Threshold": 78,
+        "Outside Threshold": 204,
+        "Render Mode": 1,
+        "Interpolation Mode": 1,
+        "Use Background Color (on)": 1,
+        "Use Background Color (off)": 0,
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ]
+      },
+      "windows_bg_on_witness_rgba_u16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "windows_bg_off_witness_rgba_u16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_no_bg_probe_witness_rgba_u16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "windows_bg_on_vs_off": {
+        "max_diff": 65535,
+        "mean_diff": 10534.097037760417,
+        "nonzero_px": 666621
+      },
+      "windows_bg_off_vs_mac_probe": {
+        "max_diff": 65535,
+        "mean_diff": 16.158962070794754,
+        "nonzero_px": 1001
+      }
+    },
+    {
+      "case_id": "0021",
+      "witness": [
+        951,
+        417
+      ],
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 78,
+        "Outside Threshold": 402,
+        "Render Mode": 1,
+        "Interpolation Mode": 1,
+        "Use Background Color (on)": 1,
+        "Use Background Color (off)": 0,
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ]
+      },
+      "windows_bg_on_witness_rgba_u16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "windows_bg_off_witness_rgba_u16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_no_bg_probe_witness_rgba_u16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "windows_bg_on_vs_off": {
+        "max_diff": 65535,
+        "mean_diff": 10534.097037760417,
+        "nonzero_px": 666621
+      },
+      "windows_bg_off_vs_mac_probe": {
+        "max_diff": 65535,
+        "mean_diff": 16.175104890046295,
+        "nonzero_px": 1002
+      }
+    },
+    {
+      "case_id": "0022",
+      "witness": [
+        4,
+        0
+      ],
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 36,
+        "Outside Threshold": 11,
+        "Render Mode": 1,
+        "Interpolation Mode": 1,
+        "Use Background Color (on)": 1,
+        "Use Background Color (off)": 0,
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ]
+      },
+      "windows_bg_on_witness_rgba_u16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "windows_bg_off_witness_rgba_u16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_no_bg_probe_witness_rgba_u16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "windows_bg_on_vs_off": {
+        "max_diff": 65535,
+        "mean_diff": 21665.865943287037,
+        "nonzero_px": 1371064
+      },
+      "windows_bg_off_vs_mac_probe": {
+        "max_diff": 65535,
+        "mean_diff": 150.8869315441744,
+        "nonzero_px": 9347
+      }
+    },
+    {
+      "case_id": "0023",
+      "witness": [
+        1699,
+        7
+      ],
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 36,
+        "Outside Threshold": 0,
+        "Render Mode": 1,
+        "Interpolation Mode": 1,
+        "Use Background Color (on)": 1,
+        "Use Background Color (off)": 0,
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "BG Color": [
+          1,
+          0,
+          0,
+          1
+        ]
+      },
+      "windows_bg_on_witness_rgba_u16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "windows_bg_off_witness_rgba_u16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mac_no_bg_probe_witness_rgba_u16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "windows_bg_on_vs_off": {
+        "max_diff": 65535,
+        "mean_diff": 29879.990480324075,
+        "nonzero_px": 1890872
+      },
+      "windows_bg_off_vs_mac_probe": {
+        "max_diff": 65535,
+        "mean_diff": 22.406233121141977,
+        "nonzero_px": 1388
+      }
+    }
+  ],
+  "conclusion": [
+    "The Windows bg_off variants do not validate the earlier Mac no_bg field-probe assumption.",
+    "For case_0020..0022, the Windows bg_off witness is still the gradation-color opaque output at the sampled pixel, not the transparent Mac no_bg probe value.",
+    "Only case_0023 flips to transparent at the sampled witness when Use Background Color is disabled.",
+    "So the remaining 16bpc case_0020..0023 gap is not confined to the bg-on compose branch; the Windows bg_off path itself now disagrees with the current Mac no_bg probe on all four focused cases."
+  ]
+}

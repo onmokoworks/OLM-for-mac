@@ -38,10 +38,13 @@ def model_fields(alpha: np.ndarray) -> dict[str, np.ndarray]:
     inside /= max(float(inside.max()), 1.0)
     outside /= max(float(outside.max()), 1.0)
     both = np.maximum(inside, outside)
+    both_add = inside + outside
     power = 2.59740734100342
     return {
         "current_max_nopow": both,
         "current_max_pow": np.power(both, power),
+        "binary_grounded_add_nopow": both_add,
+        "binary_grounded_add_pow": np.power(both_add, power),
         "outside_nopow": outside,
         "outside_pow": np.power(outside, power),
         "inside_nopow": inside,
@@ -119,17 +122,22 @@ def main() -> int:
             "",
             "## Witnesses",
             "",
-            "| Point | Observed X | current_max_nopow | current_max_pow | outside_nopow | outside_pow | Reading |",
-            "| --- | ---: | ---: | ---: | ---: | ---: | --- |",
+            "| Point | Observed X | current_max_pow | binary_add_pow | outside_pow | Reading |",
+            "| --- | ---: | ---: | ---: | ---: | --- |",
         ]
     )
     for row in witnesses:
         m = row["models"]
-        reading = "observed field stays much closer to 1 than the current model" if row["observed_x"] > m["current_max_pow"] + 0.1 else "closer to current model"
+        if row["observed_x"] > m["binary_grounded_add_pow"] + 0.1:
+            reading = "observed field stays much closer to 1 than both max and add models"
+        elif row["observed_x"] > m["current_max_pow"] + 0.1:
+            reading = "observed field is above the old max model but closer to add"
+        else:
+            reading = "closer to current/binary-grounded model"
         lines.append(
             f"| `({row['x']},{row['y']})` | {row['observed_x']:.6f} | "
-            f"{m['current_max_nopow']:.6f} | {m['current_max_pow']:.6f} | "
-            f"{m['outside_nopow']:.6f} | {m['outside_pow']:.6f} | {reading} |"
+            f"{m['current_max_pow']:.6f} | {m['binary_grounded_add_pow']:.6f} | "
+            f"{m['outside_pow']:.6f} | {reading} |"
         )
     lines.extend(
         [
@@ -138,8 +146,8 @@ def main() -> int:
             "",
             "- The Mac AE probe does not support the earlier `compose/background-branch is dead` hypothesis.",
             "- `layer_bg` and `layer_no_bg` differ materially when read as true 16-bit PNGs, and `grad_bg` / `grad_no_bg` also differ in alpha and RGB once decoded natively.",
-            "- The active mismatch for `case_0027` is upstream: the observed field `X` extracted from `layer_no_bg` alpha stays much closer to `1.0` than the current distance model predicts at key witness pixels.",
-            "- So the next correction target is field prep / normalization / threshold ownership, not the final RGB compose branch.",
+            "- The active mismatch for `case_0027` is upstream: the observed field `X` extracted from `layer_no_bg` alpha stays much closer to `1.0` than either the old `max(inside, outside)` shorthand or the binary-grounded `inside + outside` Both model predicts at key witness pixels.",
+            "- So the next correction target is still field prep / normalization / threshold ownership, not the final RGB compose branch.",
         ]
     )
     OUT_MD.write_text("\n".join(lines) + "\n", encoding="utf-8")

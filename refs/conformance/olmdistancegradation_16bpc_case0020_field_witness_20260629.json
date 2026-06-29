@@ -1,0 +1,64 @@
+{
+  "kind": "olmdistancegradation_16bpc_case0020_field_witness",
+  "date": "2026-06-29",
+  "case_id": "olmdistancegradation_extended__case_0020",
+  "family": "constant-bg-binary-sparse-full-color",
+  "mac_ae_run": "refs/reports/ae_single_case_olmdistancegradation_case0020_pointdebug_20260629_1445",
+  "installed_plugin_sha256": "b08073b744f29d22b477461d47e46525b8145cfb80cac067bad6ff728340a430",
+  "params": {
+    "invert": 0,
+    "in_out": 1,
+    "inside_threshold": 78,
+    "outside_threshold": 204,
+    "render_mode": 1,
+    "use_bg": 1,
+    "interp": 1,
+    "power": 1,
+    "blur_mode": 1,
+    "blur_size": 0
+  },
+  "points": [
+    {
+      "x": 951,
+      "y": 417,
+      "mac_field_x": 1.0,
+      "windows_reference": [7195, 0, 61165, 65535],
+      "mac_candidate": [65535, 0, 0, 65535],
+      "delta": [58340, 0, -61165, 0]
+    },
+    {
+      "x": 950,
+      "y": 417,
+      "mac_field_x": 0.999095619,
+      "windows_reference": [7195, 0, 61165, 65535],
+      "mac_candidate": [7195, 0, 61165, 65535],
+      "delta": [0, 0, 0, 0]
+    },
+    {
+      "x": 951,
+      "y": 416,
+      "mac_field_x": 0.987179458,
+      "windows_reference": [7195, 0, 61165, 65535],
+      "mac_candidate": [7195, 0, 61165, 65535],
+      "delta": [0, 0, 0, 0]
+    },
+    {
+      "x": 951,
+      "y": 418,
+      "mac_field_x": 1.0,
+      "windows_reference": [65535, 0, 0, 65535],
+      "mac_candidate": [65535, 0, 0, 65535],
+      "delta": [0, 0, 0, 0]
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "mac_field_x": 0.0,
+      "windows_reference": [0, 0, 0, 0],
+      "mac_candidate": [0, 0, 0, 0],
+      "delta": [0, 0, 0, 0]
+    }
+  ],
+  "classification": "field-normalization-or-full-distance-plateau",
+  "reading": "The case_0020 residual is decided before compose/writeback. Continue with field normalization / exact distance maximum ownership around the local field_x==1 plateau."
+}

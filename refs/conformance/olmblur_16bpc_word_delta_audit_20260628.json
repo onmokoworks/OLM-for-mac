@@ -1,0 +1,1784 @@
+{
+  "kind": "olmblur_16bpc_word_delta_audit",
+  "date": "2026-06-28",
+  "reference_dir": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch",
+  "candidate_dir": "/Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/results/bitdepth16_olmblur_exact",
+  "cases": [
+    {
+      "case_id": "case_0001",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0001.png",
+      "classification": "sign-mixed-one-word",
+      "max_exported_delta": 2,
+      "nonzero_px": 66,
+      "total_px": 518400,
+      "bbox_xyxy": [
+        357,
+        169,
+        585,
+        396
+      ],
+      "exported_channel_delta_counts": {
+        "-2": 14,
+        "2": 52
+      },
+      "reference_export_parity_counts": {
+        "1": 66
+      },
+      "candidate_export_parity_counts": {
+        "1": 66
+      },
+      "estimated_ae_word_delta_counts": {
+        "-1": 14,
+        "1": 52
+      },
+      "samples": [
+        {
+          "xy": [
+            422,
+            169
+          ],
+          "reference_rgba16_export": [
+            18957,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            18955,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            466,
+            173
+          ],
+          "reference_rgba16_export": [
+            28869,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            28867,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            417,
+            174
+          ],
+          "reference_rgba16_export": [
+            19793,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            19795,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1
+          ]
+        },
+        {
+          "xy": [
+            417,
+            176
+          ],
+          "reference_rgba16_export": [
+            20653,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            20651,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            393,
+            184
+          ],
+          "reference_rgba16_export": [
+            16153,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            16155,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1
+          ]
+        },
+        {
+          "xy": [
+            534,
+            186
+          ],
+          "reference_rgba16_export": [
+            27613,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            27611,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            500,
+            187
+          ],
+          "reference_rgba16_export": [
+            35989,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            35987,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            451,
+            190
+          ],
+          "reference_rgba16_export": [
+            36313,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            36311,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case_0002",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0002.png",
+      "classification": "sign-mixed-one-word",
+      "max_exported_delta": 2,
+      "nonzero_px": 67,
+      "total_px": 518400,
+      "bbox_xyxy": [
+        379,
+        121,
+        606,
+        375
+      ],
+      "exported_channel_delta_counts": {
+        "-2": 14,
+        "2": 53
+      },
+      "reference_export_parity_counts": {
+        "1": 67
+      },
+      "candidate_export_parity_counts": {
+        "1": 67
+      },
+      "estimated_ae_word_delta_counts": {
+        "-1": 14,
+        "1": 53
+      },
+      "samples": [
+        {
+          "xy": [
+            449,
+            121
+          ],
+          "reference_rgba16_export": [
+            5651,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            5649,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            606,
+            147
+          ],
+          "reference_rgba16_export": [
+            1799,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            1797,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            542,
+            176
+          ],
+          "reference_rgba16_export": [
+            20653,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            20651,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            434,
+            178
+          ],
+          "reference_rgba16_export": [
+            26211,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            26209,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            485,
+            182
+          ],
+          "reference_rgba16_export": [
+            34461,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            34463,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1
+          ]
+        },
+        {
+          "xy": [
+            394,
+            183
+          ],
+          "reference_rgba16_export": [
+            16153,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            16155,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1
+          ]
+        },
+        {
+          "xy": [
+            500,
+            187
+          ],
+          "reference_rgba16_export": [
+            35989,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            35987,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            508,
+            190
+          ],
+          "reference_rgba16_export": [
+            36313,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            36311,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case_0003",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0003.png",
+      "classification": "sign-mixed-one-word",
+      "max_exported_delta": 2,
+      "nonzero_px": 414,
+      "total_px": 518400,
+      "bbox_xyxy": [
+        4,
+        0,
+        953,
+        539
+      ],
+      "exported_channel_delta_counts": {
+        "-2": 189,
+        "2": 225
+      },
+      "reference_export_parity_counts": {
+        "1": 414
+      },
+      "candidate_export_parity_counts": {
+        "1": 414
+      },
+      "estimated_ae_word_delta_counts": {
+        "-1": 189,
+        "1": 225
+      },
+      "samples": [
+        {
+          "xy": [
+            110,
+            0
+          ],
+          "reference_rgba16_export": [
+            5711,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            5709,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            739,
+            0
+          ],
+          "reference_rgba16_export": [
+            5715,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            5713,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            110,
+            1
+          ],
+          "reference_rgba16_export": [
+            5711,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            5709,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            739,
+            1
+          ],
+          "reference_rgba16_export": [
+            5715,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            5713,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            936,
+            1
+          ],
+          "reference_rgba16_export": [
+            5689,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            5691,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1
+          ]
+        },
+        {
+          "xy": [
+            110,
+            2
+          ],
+          "reference_rgba16_export": [
+            5711,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            5709,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            110,
+            3
+          ],
+          "reference_rgba16_export": [
+            5711,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            5709,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            739,
+            3
+          ],
+          "reference_rgba16_export": [
+            5715,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            5713,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case_0004",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0004.png",
+      "classification": "sign-mixed-one-word",
+      "max_exported_delta": 2,
+      "nonzero_px": 55,
+      "total_px": 518400,
+      "bbox_xyxy": [
+        348,
+        114,
+        611,
+        425
+      ],
+      "exported_channel_delta_counts": {
+        "-2": 9,
+        "2": 46
+      },
+      "reference_export_parity_counts": {
+        "1": 55
+      },
+      "candidate_export_parity_counts": {
+        "1": 55
+      },
+      "estimated_ae_word_delta_counts": {
+        "-1": 9,
+        "1": 46
+      },
+      "samples": [
+        {
+          "xy": [
+            372,
+            114
+          ],
+          "reference_rgba16_export": [
+            917,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            915,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            587,
+            114
+          ],
+          "reference_rgba16_export": [
+            917,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            915,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            541,
+            139
+          ],
+          "reference_rgba16_export": [
+            7717,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            7715,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            572,
+            178
+          ],
+          "reference_rgba16_export": [
+            12589,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            12591,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1
+          ]
+        },
+        {
+          "xy": [
+            611,
+            193
+          ],
+          "reference_rgba16_export": [
+            5675,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            5677,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1
+          ]
+        },
+        {
+          "xy": [
+            381,
+            217
+          ],
+          "reference_rgba16_export": [
+            21093,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            21091,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        },
+        {
+          "xy": [
+            581,
+            219
+          ],
+          "reference_rgba16_export": [
+            20193,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            20195,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1
+          ]
+        },
+        {
+          "xy": [
+            444,
+            223
+          ],
+          "reference_rgba16_export": [
+            49177,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            49175,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case_0005",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0005.png",
+      "classification": "sign-mixed-one-word",
+      "max_exported_delta": 2,
+      "nonzero_px": 106,
+      "total_px": 2073600,
+      "bbox_xyxy": [
+        129,
+        8,
+        1903,
+        1062
+      ],
+      "exported_channel_delta_counts": {
+        "-2": 54,
+        "2": 112
+      },
+      "reference_export_parity_counts": {
+        "1": 166
+      },
+      "candidate_export_parity_counts": {
+        "1": 166
+      },
+      "estimated_ae_word_delta_counts": {
+        "-1": 54,
+        "1": 112
+      },
+      "samples": [
+        {
+          "xy": [
+            167,
+            8
+          ],
+          "reference_rgba16_export": [
+            2341,
+            2341,
+            2341,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            2339,
+            2339,
+            2339,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            2,
+            2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "xy": [
+            895,
+            26
+          ],
+          "reference_rgba16_export": [
+            705,
+            705,
+            705,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            703,
+            703,
+            703,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            2,
+            2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "xy": [
+            979,
+            34
+          ],
+          "reference_rgba16_export": [
+            21469,
+            21469,
+            21469,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            21467,
+            21467,
+            21467,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            2,
+            2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "xy": [
+            1250,
+            40
+          ],
+          "reference_rgba16_export": [
+            169,
+            169,
+            169,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            171,
+            171,
+            171,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            -2,
+            -2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        {
+          "xy": [
+            1194,
+            148
+          ],
+          "reference_rgba16_export": [
+            8309,
+            8309,
+            8309,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            8307,
+            8307,
+            8307,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            2,
+            2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "xy": [
+            282,
+            208
+          ],
+          "reference_rgba16_export": [
+            9741,
+            9741,
+            9741,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            9743,
+            9743,
+            9743,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            -2,
+            -2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        {
+          "xy": [
+            826,
+            222
+          ],
+          "reference_rgba16_export": [
+            12161,
+            12161,
+            12161,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            12163,
+            12163,
+            12163,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            -2,
+            -2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        {
+          "xy": [
+            420,
+            240
+          ],
+          "reference_rgba16_export": [
+            20469,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            20467,
+            0,
+            0,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case_0006",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+      "classification": "sign-mixed-one-word",
+      "max_exported_delta": 2,
+      "nonzero_px": 283,
+      "total_px": 2073600,
+      "bbox_xyxy": [
+        29,
+        14,
+        1889,
+        1079
+      ],
+      "exported_channel_delta_counts": {
+        "-2": 113,
+        "2": 233
+      },
+      "reference_export_parity_counts": {
+        "1": 346
+      },
+      "candidate_export_parity_counts": {
+        "1": 346
+      },
+      "estimated_ae_word_delta_counts": {
+        "-1": 113,
+        "1": 233
+      },
+      "samples": [
+        {
+          "xy": [
+            314,
+            14
+          ],
+          "reference_rgba16_export": [
+            2201,
+            2201,
+            2201,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            2199,
+            2199,
+            2199,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            2,
+            2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "xy": [
+            29,
+            71
+          ],
+          "reference_rgba16_export": [
+            725,
+            725,
+            725,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            727,
+            727,
+            727,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            -2,
+            -2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        {
+          "xy": [
+            694,
+            137
+          ],
+          "reference_rgba16_export": [
+            2361,
+            2361,
+            2361,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            2363,
+            2363,
+            2363,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            -2,
+            -2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        {
+          "xy": [
+            295,
+            159
+          ],
+          "reference_rgba16_export": [
+            7765,
+            7765,
+            7765,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            7763,
+            7763,
+            7763,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            2,
+            2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "xy": [
+            1201,
+            160
+          ],
+          "reference_rgba16_export": [
+            17097,
+            17097,
+            17097,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            17095,
+            17095,
+            17095,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            2,
+            2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "xy": [
+            1159,
+            176
+          ],
+          "reference_rgba16_export": [
+            1193,
+            1193,
+            1193,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            1195,
+            1195,
+            1195,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            -2,
+            -2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        {
+          "xy": [
+            765,
+            205
+          ],
+          "reference_rgba16_export": [
+            3513,
+            3513,
+            3513,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            3511,
+            3511,
+            3511,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            2,
+            2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "xy": [
+            1649,
+            236
+          ],
+          "reference_rgba16_export": [
+            517,
+            517,
+            517,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            515,
+            515,
+            515,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            2,
+            2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "case_0007",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0007.png",
+      "classification": "legacy-border-plus-one-word",
+      "max_exported_delta": 383,
+      "nonzero_px": 304,
+      "total_px": 2073600,
+      "bbox_xyxy": [
+        0,
+        0,
+        1859,
+        1060
+      ],
+      "exported_channel_delta_counts": {
+        "-383": 3,
+        "-2": 268,
+        "2": 101
+      },
+      "reference_export_parity_counts": {
+        "0": 3,
+        "1": 369
+      },
+      "candidate_export_parity_counts": {
+        "1": 372
+      },
+      "estimated_ae_word_delta_counts": {
+        "-192": 3,
+        "-1": 268,
+        "1": 101
+      },
+      "samples": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "reference_rgba16_export": [
+            0,
+            0,
+            0,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            383,
+            383,
+            383,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -383,
+            -383,
+            -383,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -192,
+            -192,
+            -192
+          ]
+        },
+        {
+          "xy": [
+            951,
+            7
+          ],
+          "reference_rgba16_export": [
+            101,
+            101,
+            101,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            103,
+            103,
+            103,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            -2,
+            -2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        {
+          "xy": [
+            1149,
+            16
+          ],
+          "reference_rgba16_export": [
+            5785,
+            5785,
+            5785,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            5787,
+            5787,
+            5787,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            -2,
+            -2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        {
+          "xy": [
+            1278,
+            27
+          ],
+          "reference_rgba16_export": [
+            1507,
+            1507,
+            1507,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            1509,
+            1509,
+            1509,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            -2,
+            -2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        {
+          "xy": [
+            1824,
+            110
+          ],
+          "reference_rgba16_export": [
+            575,
+            575,
+            575,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            577,
+            577,
+            577,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            -2,
+            -2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        {
+          "xy": [
+            301,
+            214
+          ],
+          "reference_rgba16_export": [
+            163,
+            163,
+            163,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            165,
+            165,
+            165,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            -2,
+            -2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        {
+          "xy": [
+            480,
+            218
+          ],
+          "reference_rgba16_export": [
+            237,
+            237,
+            237,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            239,
+            239,
+            239,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            -2,
+            -2,
+            -2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            -1,
+            -1,
+            -1
+          ]
+        },
+        {
+          "xy": [
+            1693,
+            220
+          ],
+          "reference_rgba16_export": [
+            5427,
+            5427,
+            5427,
+            65535
+          ],
+          "candidate_rgba16_export": [
+            5425,
+            5425,
+            5425,
+            65535
+          ],
+          "delta_reference_minus_candidate": [
+            2,
+            2,
+            2,
+            0
+          ],
+          "estimated_word_delta_nonzero_channels": [
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusion": [
+    "Non-Legacy 16bpc residuals are sign-mixed one-word PF_Pixel16 deltas.",
+    "Legacy case_0007 contains the same one-word family plus a separate localized border/seed/all-same witness.",
+    "Do not tune the blur kernel from this evidence; next proof belongs at final float/helper/store order."
+  ]
+}

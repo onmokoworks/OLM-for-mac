@@ -124,24 +124,72 @@
     `Per Component=1`, key color `[1, 0, 0.470588...]`,
     component thresholds `[0.19, 0.98, 0.4]`, `Edge Thin Amount=25`,
     `Edge Thin Distance Type=2`, and `Edge Blur Amount=0`.
-  - Therefore the active 16bpc gap is a positive Edge Thin dilate / seed-world
-    disagreement around the Lab76 key result, not an Edge Blur weight/blend
-    residual.
+  - Therefore the active 16bpc gap was a positive Edge Thin dilate / Lab76
+    seed-world disagreement, not an Edge Blur weight/blend residual.
   - Focused report:
     `refs/conformance/olmcolorkey_16bpc_case_0009_analysis.md`.
     It records that the real Mac AE candidate differs from Windows by
     `12597px`, all in the `candidate-kept / Windows-removed` direction.
-    A naive `Lab76 hit + taxicab dilate amount=25` model is much worse
-    (`80592px` diff with `65535` input normalization), and forcing a
-    `32768/32767` denominator makes that naive model dramatically worse
-    (`189628px`). So the missing rule is narrower than a global 16bpc
-    denominator switch.
-  - The same focused report also sweeps obvious seed/dilate variants:
-    direct hit seeds, boundary seeds, clamp-vs-outside frame handling,
-    taxicab/chessboard/euclidean distance, and `<25` / `<=25` / `<26` /
-    `<=26` threshold choices. None beat the naive taxicab model; the best
-    family still bottoms out at `80592px`. So the remaining gap is not a
-    simple choice among those common morphology variants.
+    After the 2026-06-28 Lab76 comparator audit, the exported-PNG
+    `Lab76 hit + taxicab dilate amount=25` model is exact against Windows
+    (`diff=0`). The broad `32768/32767` denominator hypothesis is still
+    rejected because those variants explode to `111065px`.
+  - The same focused report now records the old Mac candidate split:
+    the installed candidate matches the old Lab76 threshold mapping, while the
+    current-AEX Lab76 per-component mapping expands the seed enough to remove
+    all `12597px` candidate-kept / Windows-removed residual pixels.
+  - 2026-06-27 Windows runtime tracing answers part of that fork:
+    - current MediaCore `OLMColorKey.aex` does execute the 16bpc path with
+      `Force Lower Precision=3` live (`r14+0x3c = 3`);
+    - positive Edge Thin is not the old `+0x94b0/+0x8c90/+0x8320/+0x5d60`
+      family on the current AEX, but a current orchestrator rooted at
+      `OLMColorKey+0x9000`;
+    - the positive-copy compare is `OLMColorKey+0x9247 comiss xmm6,[distance]`
+      followed by `jb skip`, so the copy condition is concretely
+      `dist <= amount`;
+    - the runtime amount field is `r14+0x28 = 25`, distance type field is
+      `r14+0x2c = 2`, and the temporary matte world is laid out as RGBA16-like
+      8 bytes per pixel.
+    - For the optional top-edge sanity witness `(1699,7)`, Windows consumed
+      `dist = 2`, `amount = 25`, took the copy path, and ended with matte word
+      `0x8000`, yielding final transparent output. For the definitely-kept
+      control `(225,30)`, Windows consumed `dist = 30`, skipped copy, and kept
+      the opaque grayscale pixel unchanged.
+    - 2026-06-28 follow-up raw CDB logging corrects the stale returned JSON
+      summary for one primary witness: `(1110,149)` does hit
+      `+0x9237/+0x9247/+0x924c/+0x92b7`, consumes `dist = 2.0`, takes the copy
+      path, and changes matte word0 from `0x0000` to `0x8000`.
+    - After the 2026-06-28 comparator audit, the local exported-PNG Lab76
+      reconstruction also places `(1110,149)` at taxicab distance `2`.
+    This removes both earlier explanations: the live AE path does take
+    `Force Lower Precision=3`, and the positive Edge Thin distance transform
+    is compatible with the Windows output once the current-AEX Lab76
+    per-component epsilon mapping is used.
+  - 2026-06-26 witness extraction now adds representative extra pixels from
+    the real Mac AE candidate:
+    - `12436 / 12597` residual pixels are exactly opaque black
+      `[0,0,0,65535]` in the input, preserved unchanged by the candidate, and
+      fully transparent in the Windows Software reference.
+    - Representative witness islands at `(1110,149)`, `(369,95)`, and
+      `(668,945)` are not in the naive Lab76 hit set and sit `35..43` taxicab
+      pixels away from it; smaller islands such as `(1213,785)` and
+      `(1503,57)` are still `8` pixels away.
+    - Those witnesses are outside the first Lab threshold by a large margin
+      (`delta L ~= 88.9` vs allowed `29.0`), so the residual is not explained
+      by a tiny normalization tweak around the threshold boundary.
+    - Follow-up proximity stats show every real extra pixel is within taxicab
+      `25` of some nonblack source pixel, but only `8361 / 12597` are within
+      taxicab `25` of the current `Lab76 hit` set. Extra pixels are also almost
+      entirely opaque black themselves (`12436 / 12597`), not red-dominant
+      source pixels.
+    - Quantizing the input RGB to 8-bit before the naive Lab76 reconstruction
+      does not help (`diff 80592 -> 81221`), so `Force Lower Precision=3` is
+      not explained by a simple pre-compare 8-bit RGB quantization pass in the
+      current model.
+    These negative probes remain useful provenance, but the 2026-06-28
+    comparator audit supersedes the seed-world hypothesis for this case.
+    The next proof is a Mac AE re-render after the comparator fix; no further
+    Windows trace is needed unless that re-render still differs.
 
 ## Current Port Rules
 
@@ -162,13 +210,15 @@
 These rules are implementation-grounded, but the residuals show at least one
 caller/world semantic is still missing.
 
-For the current 16bpc residual, the missing semantic is more specific:
-Windows removes additional pixels that are still input-identical in the Mac AE
-candidate, so the mismatch must occur before final writeback. The two strongest
-suspects are:
+For the current 16bpc residual, the missing semantic is now narrowed to the
+Lab76 per-component comparator in the Mac port. Windows removes additional
+pixels that are still input-identical in the old Mac AE candidate, and the
+binary-grounded comparator mapping reproduces those removals exactly in the
+exported-PNG model. So the next proof is host validation of the Mac plug-in
+change, not another Windows trace.
 
-1. the Lab76 matched seed world feeding positive `Edge Thin Amount=25`; or
-2. the L1 distance/dilate ownership around that seed world.
+The older seed-world / caller-stage hypotheses are kept above as provenance,
+but they are superseded for this case unless the Mac AE re-render still differs.
 
 ## Open Questions
 
@@ -176,11 +226,9 @@ suspects are:
   from the current clamped-neighbor `Boundary8` / distance transform path?
 - For erode, is the effective threshold `abs(amount)`, `abs(amount)+1`, or a
   ctx-scaled value at runtime for the legacy `case_0005/0006` path?
-- For the 16bpc `case_0009` dilate path, does Windows build a larger matched
-  seed world than the current Mac port before `dist <= amount` is applied?
-- For the same case, is the positive dilate world keyed from post-Lab matched
-  pixels, a pre-thin temporary matte, or a runtime-quantized lower-precision
-  view of the source?
+- Does the 2026-06-28 Lab76 per-component comparator fix make the Mac AE
+  16bpc `case_0009` render exact, or is there a second host-only difference
+  after the now-exact exported-PNG model?
 - Which world does `FUN_1800049a0` and the Edge Blur apply helper consume:
   current keep mask, pre-thin matched matte, boundary seed world, or an
   inverted/drop-side matte?
@@ -197,7 +245,7 @@ suspects are:
 | --- | --- | --- | --- | --- |
 | RGB core `case_0001..0004` | 8bpc | CLI exact / AE-host exact for current refs | exact in Python/C++/Rust and AE-host return | Preserve normalized 8bpc behavior; add 16/32bpc coverage |
 | Edge Thin dilate `case_0007` | 8bpc | CLI exact / AE-host exact for current refs | exact | Preserve normalized 8bpc behavior; add 16/32bpc coverage |
-| Edge Thin dilate `case_0009` | 16bpc | not exact / active Mac AE residual | 2026-06-26 Mac AE rerun: `max=65535 mean=100.9161`; residual pixels are input-identical in the candidate and transparent in the Windows ref | Isolate the 16bpc positive-dilate seed world before changing blur/blend code |
+| Edge Thin dilate `case_0009` | 16bpc | not exact / active Mac AE residual | 2026-06-26 Mac AE rerun: `max=65535 mean=100.9161`; residual pixels are input-identical in the candidate and transparent in the Windows ref. 2026-06-27/28 Windows runtime tracing proves live `Force Lower Precision=3`, `amount=25`, `distance_type=2`, and `dist <= amount` on the current-AEX `+0x9000` path. 2026-06-28 PE/capstone audit proves the Lab76 per-component comparator uses separate epsilon multipliers; applying them makes the exported-PNG model exact (`diff=0`) and puts `(1110,149)` at `dist=2`, matching raw CDB. | Mac AE re-render after the comparator fix; request more Windows trace only if it still differs |
 | Edge Thin erode `case_0005/0006` | 8bpc | AE-host exact return, CLI residual | Windows AE-host exact; C++ CLI `max=255 mean=0.3031`; decision matrix keeps this diagnostic-only for current refs | Preserve normalized 8bpc behavior; add 16/32bpc coverage; runtime trace only if a current Software ref residual reappears |
 | Edge Blur `case_0008/0009` | 8bpc | AE-host exact against normalized current refs / AE-free CLI residual | AE-host exact for `case_0008`; `case_0009` exact against 20260618 normalized ref but `max=47` against older 20260604 ref; decision matrix says preserve normalized AE exact | Prefer normalized 20260618 reference generation; next proof is 16/32bpc coverage. Runtime trace only if a current Software ref residual reappears |
 

@@ -4,12 +4,13 @@
 
 - Plug-in: Distance Gradation
 - Feature/path: 8bpc alpha-mask distance gradation, interpolation, optional blur
-- Bit depth: 8bpc documented here; 16/32bpc still need references
+- Bit depth: 8bpc documented here; 16bpc is under active AE validation;
+  32bpc still needs references
 - Reference set: `refs/win_references/20260605_extra/OLMDistanceGradation`
 - Current status: packaged 8bpc Mac AE validation is `AE exact` for the
   basic/extended/blur request sets. The AE-free CLI still has guarded
   residuals, so the shared binary-grounded field-prep/OpenCV spec is not yet
-  complete. 16/32bpc are still untested.
+  complete. 16bpc is not AE exact yet; 32bpc remains untested.
 - 2026-06-22 reference provenance audit confirms all 29 packaged AE-host
   candidates match the 20260618 normalized Software references exactly. The
   visible residuals against `refs/win_references/20260605_extra` are
@@ -26,6 +27,12 @@
   cases, and the current runtime trace as `not-actionable` (`await-windows-trace`).
   Preserve normalized AE-exact behavior; do not tune DistanceGradation from
   legacy-only drift or AE-free CLI residuals.
+- 2026-06-29 `case_0026` runtime return answered the main branch question:
+  Windows 16bpc Software already has the row-0 scalar ramp in the field before
+  `FUN_181170480` compose. The compose callback is not creating the ramp from a
+  saturated field. The next useful Mac-side check is rerendering this case with
+  the current installed Mac plug-in, because the older 2026-06-26 candidate may
+  be stale relative to the current source/model.
 
 ## Source Evidence
 
@@ -49,6 +56,18 @@
 | 2026-06-26 local Mac AE rerun reproduces three unresolved 16bpc residual families: threshold/ramp mismatch (`case_0010..0016`), BG-like vs Grad-like binary decisions under `Render Mode=1` + background color (`case_0020..0023`), and RGB-zeroed/alpha-preserved output (`case_0027/0028`). | `refs/reports/ae_pixel_validation_16bpc_mac_20260626_204952_rerun/...`, `refs/conformance/bitdepth_16bpc_mac_ae_rerun_20260626_204952.md`, and `refs/conformance/olmdistancegradation_16bpc_focus_cases_20260626.md`. | AE-validation diagnostic |
 | 2026-06-26 Mac AE host debug confirms the 16bpc packaged parameters for `olmdistancegradation_extended__case_0027` are applied exactly inside After Effects; the residual is not a bad request/JSX path. | `scripts/ae_debug_distancegradation_case.jsx` output `handoff/ae_pixel_validation_20260618/OLMDistanceGradation_case_debug.json`. | AE-host-grounded |
 | 2026-06-26 Mac AE probe on `case_0027` rules out request drift and provides an observable field witness: native 16-bit decoding of `layer_no_bg` shows the compose/background branches are active, but the observed `X` remains much closer to `1.0` than the current distance model predicts at key pixels. | `refs/conformance/olmdistancegradation_16bpc_case0027_mac_ae_probe_20260626.md`, `refs/conformance/olmdistancegradation_16bpc_case0027_probe_x_20260626.md`, and probe PNGs in `handoff/ae_pixel_validation_20260618/probes/distancegradation_case0027_variants/`. | AE-host-grounded |
+| 2026-06-26 field probes suggested `case_0020..0023` might only diverge once `Use Background Color=1` participates, but a 2026-06-27 Windows bg-compose return invalidates that simplification: Windows `bg_off` still keeps the grad-color opaque witness for `case_0020..0022`, and `case_0023 bg_off` still does not match the prior Mac `no_bg` probe over the full frame. `case_0027/0028` remain active Mac-side field mismatches even in the `no_bg` probe. | `refs/conformance/olmdistancegradation_16bpc_field_cases_probe_20260626.md`, `refs/conformance/olmdistancegradation_16bpc_bg_compose_variants_return_20260627.md`, and probe PNGs in `handoff/ae_pixel_validation_20260618/probes/distancegradation_field_cases/`. | AE-host-grounded + Windows-reference-grounded |
+| 2026-06-28 Mac-side analysis of the largest current 16bpc residual (`extended case_0026`) classifies it as `candidate_x_saturated_to_gradation_color_while_reference_ramps`: on changed pixels the Mac candidate has inferred compose `X≈1.0`, while Windows Software spans `X≈0.0..1.0`; row `y=0,x=3..14` shows Windows ramping from `X≈0.812` to `0.001` while Mac stays at `1.0`. | `refs/conformance/olmdistancegradation_16bpc_case0026_analysis_20260628.md` and latest candidate/report under `refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/`. | AE-validation diagnostic |
+| 2026-06-29 Windows runtime trace for `extended case_0026` shows the row-0 scalar ramp already exists before the 16bpc compose callback. Observed field green words at `x=0..14` are `8000,8000,8000,7627,6c4f,6276,589e,4ec5,44ec,3b14,313b,2762,1d8a,13b1,09d9`, which correspond to pre-compose `X` values `1,1,1,0.923065,0.846161,0.769226,0.692322,0.615387,0.538452,0.461548,0.384613,0.307678,0.230774,0.153839,0.076935`. `compose_interpolation_creates_ramp_from_saturated_field=false`; `field_already_ramps_before_compose=true`. | `refs/reports/runtime_trace_comparisons/olmdistancegradation_16bpc_case0026_x_witness_20260629.md` and `refs/reports/runtime_trace_summary.md`. | runtime-trace-grounded / answered-partial |
+| 2026-06-29 Mac-side source-model check reproduces the same compact row0 field for `case_0026` from the current DistanceGradation source model, but the current Mac AE rerender still saturates to the Gradation Color endpoint where Windows ramps (`max_diff=61157`, `mean_diff=11754.422780309607`). The first AE automation attempts exposed two separate host facts: `scripts/diagnose_ae_host_block.py` can classify modal/accessibility blockers, and `scripts/run_ae_single_case.py` can set JSX env vars reliably before calling the single-case renderer. | `refs/conformance/olmdistancegradation_16bpc_case0026_current_mac_ae_rerun_20260629.md`, `refs/conformance/olmdistancegradation_16bpc_case0026_current_mac_ae_rerun_20260629.json`, and smoke `python3 refs/scripts/smoke_diagnose_ae_host_block.py`. | AE-host-grounded / implementation mismatch |
+| 2026-06-29 Mac AE no-background probe for `case_0026` now completes after switching the single-case JSX parser away from AE 26.3 `JSON.parse`. Disabling `Use Background Color` does not recover the Windows ramp: the probe still stays at or near the Gradation Color endpoint on the row-0 witness, with `max_diff=61155` against the Windows bg-on Software reference. | `refs/conformance/olmdistancegradation_16bpc_case0026_no_bg_probe_20260629.md` and `refs/reports/ae_single_case_olmdistancegradation_case0026_no_bg_20260629_1408/`. | AE-host-grounded / field-prep mismatch |
+| 2026-06-29 gated Mac plug-in debug dump proves `case_0026` field prep itself already has the Windows row-0 ramp, but `Power` was read as `3.96332907e-05` instead of `2.59740734` because the port applied `FIX_2_FLOAT` to a `PF_ADD_FLOAT_SLIDERX` value. Removing that conversion recovers the row-0 ramp within `0..4` channel units and reduces `case_0026` from full saturation to `max_diff=11480`, `mean_diff=2.925372`. | `refs/conformance/olmdistancegradation_16bpc_power_param_fix_20260629.md`, `refs/reports/ae_single_case_olmdistancegradation_case0026_debugdump_20260629_1420/field_debug.txt`, and `refs/reports/ae_single_case_olmdistancegradation_case0026_powerfix_20260629_1422/field_debug.txt`. | AE-host-grounded / implementation fix |
+| 2026-06-29 post-Power-fix 16bpc extended failures are classified into residual families rather than one mixed failure bucket: 4 Constant/background sparse full-color, 4 Layer/no-bg source-or-alpha ownership, 2 Power/layer source-or-premultiply, 2 Sphere boundary quantization, 1 Power/RGB boundary quantization, 1 sparse boundary quantization, and 1 Both/no-bg zero-threshold edge case. | `refs/conformance/olmdistancegradation_16bpc_powerfix_residual_families_20260629.md` and `scripts/analyze_distancegradation_powerfix_residuals.py`. | AE-host-grounded / residual triage |
+| 2026-06-29 representative witness audit makes `case_0020` the smallest next proof: all changed pixels are opaque, the first bad point differs only by endpoint selection (`Windows [7195,0,61165,65535]`, Mac `[65535,0,0,65535]`), and a one-pixel neighbor already matches. `case_0012` remains useful for Layer/no-bg source ownership because alpha matches at the max witness while RGB stays source-low on Mac. | `refs/conformance/olmdistancegradation_16bpc_representative_witnesses_20260629.md` and `scripts/analyze_distancegradation_representative_witnesses.py`. | AE-host-grounded / next-proof narrowing |
+| 2026-06-29 `case_0020` point dump proves the representative Constant/background residual is decided before final 16bpc writeback: at `(951,417)` Mac field prep outputs `field_x=1` and the Mac candidate chooses the red endpoint, while `(950,417)` has `field_x=0.999095619` and already matches the Windows blue endpoint. The next suspect is field normalization / local full-distance plateau ownership, not color writeback. | `refs/conformance/olmdistancegradation_16bpc_case0020_field_witness_20260629.md` and `refs/reports/ae_single_case_olmdistancegradation_case0020_pointdebug_20260629_1445/field_debug.txt`. | AE-host-grounded / field witness |
+| 2026-06-29 implementing the Constant-specific `THRESH_BINARY` path from `FUN_181174760` fixes the plateau-class error without moving non-Constant families: `case_0020` changes from `1001` pixels to `1`, `case_0021` from `1002` to `1`, `case_0022` from `9347` to `192`, and `case_0023` from `1388` to `73`. The extended 16bpc batch remains `1/16` exact, so this is a grounded improvement, not completion. | `refs/conformance/olmdistancegradation_16bpc_constant_binary_fix_20260629.md` and `refs/reports/ae_pixel_validation_16bpc_distancegradation_extended_constant_binary_20260629_1454/reports/ae_pixel_16bpc_extended_constant_binary.json`. | binary-grounded / AE-host-validated implementation fix |
+| 2026-06-29 post-fix Constant residuals are all boundary-class: every remaining changed pixel in `case_0020..0023` lies within 1px of the active inside/outside threshold in the source alpha EDT (`case_0020=1/1`, `case_0021=1/1`, `case_0022=192/192`, `case_0023=73/73`). Treat these as OpenCV/AEX distanceTransform threshold ownership, not compose/writeback drift. | `refs/conformance/olmdistancegradation_16bpc_constant_remaining_boundary_20260629.md` and `scripts/analyze_distancegradation_constant_remaining_boundary.py`. | AE-host-grounded / boundary-localized |
+| 2026-06-29 direct Layer/no-bg source unpremultiply was tested and rejected. On `case_0012`, it increased coverage from the restored Constant-binary state (`max=16250`, `mean=53.4510`, `nonzero_px=25421`) to a broader failure (`max=16476`, `mean=332.8368`, `nonzero_px=285406`). AE also kept the previously loaded plug-in image until restart, so reinstall validation must restart AE before trusting a revert. | `refs/conformance/olmdistancegradation_16bpc_rejected_layer_unpremultiply_20260629.md`, `refs/reports/ae_single_case_olmdistancegradation_case0012_layer_unpremul_20260629_1510/`, and `refs/reports/ae_single_case_olmdistancegradation_case0012_reverted_after_ae_restart_20260629_1515/`. | implementation-rejected / AE-host-grounded |
 
 ## Parameters
 
@@ -167,6 +186,26 @@ is `1 - X`.
   witness pixels. So `case_0027/0028` now point to field prep / normalization /
   threshold ownership rather than to render-mode enum or background-branch
   wiring.
+- A follow-up six-case `no_bg` field probe initially suggested a split:
+  - `case_0020..0023`: the local Mac `no_bg` witness matched the current
+    constant model at the focused pixels.
+  - `case_0027/0028`: observed `X` from the `no_bg` alpha still stayed higher
+    than the current model (`1.0` vs `0.812/0.968` at the lead witness).
+- 2026-06-27 Windows bg-compose variants then tightened that result: the prior
+  `case_0020..0023` simplification was too optimistic. Windows `bg_off`
+  witnesses for `case_0020..0022` stay grad-color opaque (`[7195,0,61165,65535]`)
+  rather than matching the Mac `no_bg` probe, and `case_0023 bg_off` flips
+  transparent at the witness but still differs from the earlier Mac `no_bg`
+  frame over 1388 pixels. So `case_0020..0023` are again upstream of just the
+  background-compose branch and should not be tuned as a pure `use_bg=1`
+  problem.
+- 2026-06-26 experimental 16bpc mask-threshold patch (`alpha > 254/255`
+  instead of `alpha > 0`) is rejected. It improved the `case_0023` witness and
+  made the `no_bg` probe line up with that local flip, but the full-frame
+  result still worsened (`mean ≈ 225.9` on a focused rerender) and it did not
+  resolve `case_0020/0021/0022/0027/0028`. The working tree and installed
+  MediaCore plug-in were restored to the pre-experiment build after measuring
+  this.
 - 2026-06-20 dense/live runtime returns are not sufficient to settle field
   prep. The dense summary carries placeholders such as `not isolated`,
   `inferred`, `likely`, and `runtime arg still untraced`; the live follow-up
@@ -184,6 +223,68 @@ is `1 - X`.
   normalized 8bpc exactness is the active release evidence; field-prep/OpenCV
   runtime proof is only needed if we choose to close AE-free CLI residuals or
   a current normalized Software residual reappears.
+- 2026-06-26 we prepared a narrow Windows AE follow-up request for the
+  unresolved 16bpc Constant/background family:
+  `refs/reference_requests/olmdistancegradation_16bpc_bg_compose_variants_20260626.json`
+  plus packaged handoff zip
+  `refs/reference_request_packages/olmdistancegradation_16bpc_bg_compose_variants_20260626.zip`.
+  It asks only for `case_0020..0023` original bg-on controls and matching
+  `Use Background Color=0` variants so we can decide whether Windows differs in
+  field prep or only in the bg-on compose branch.
+- 2026-06-26 static decomp audit tightened the plugin-specific field-prep IR:
+  `FUN_1811749a0` is not a soft-alpha path. It does `cvSplit` of the first
+  channel (AE `PF_Pixel*` channel 0, i.e. alpha), converts by a depth-specific
+  scale constant, then calls OpenCV `threshold(..., thresh=0, maxval=1,
+  THRESH_BINARY)`. So the live AEX mask really is binary `alpha > 0`, and the
+  rejected `alpha > 254/255` experiment was not secretly matching the binary.
+- The same audit shows `FUN_181174760` is the plugin-specific
+  `distanceTransform -> threshold -> normalize` helper. For non-Constant
+  interpolation it uses `THRESH_TRUNC`; for Constant interpolation it switches
+  to `THRESH_BINARY` before normalization. The helper also receives explicit
+  render-context scaled dimensions from the caller: the hidden register args at
+  the callsite carry scaled height `local_70c`, scaled width `local_708`, and
+  pixel depth `local_714`. So any remaining
+  `case_0027/0028` gap is more likely to live in this exact OpenCV prep path
+  (or its temp-size handling) than in the later compose callback.
+- 2026-06-26 follow-up decomp audit identifies the `Both`-mode outside seed
+  prep more concretely than the older shorthand. `FUN_181174ad0` does not build
+  a distance field; it copies the current 8-bit binary mask, converts it to the
+  working depth, and then runs `cvSub(const_one, copied_mask, dst)`. In other
+  words, the outside branch fed into the second `FUN_181174760` call is the
+  strict binary complement `1 - mask`, not a soft-alpha variant and not a
+  post-distance transform artifact.
+- This same audit also weakens one old assumption in the local port comments:
+  `FUN_181174760` itself receives the raw threshold integer plus the scaled temp
+  size; it does not visibly multiply the threshold by an averaged `ds` inside
+  the helper body. That does not yet prove the Mac `threshold * ds` rule is
+  wrong, because the threshold could be pre-scaled earlier in the caller path,
+  but it does mean the scaling rule is still implementation-grounded rather
+  than binary-grounded and should not be promoted as settled fact.
+- `FUN_181182b20` is `cvAdd`, so the AEX `In/Out=Both` path combines inside and
+  outside fields by addition after separate prep, not by `max(...)`. For the
+  current `case_0027` witness set this does not by itself explain the
+  high-`X` residual because the sampled inside/outside supports are disjoint
+  there, but it is the binary-grounded rule we should carry forward instead of
+  the old `max(inside, outside)` shorthand.
+  Do not patch the Mac plug-in to `inside + outside` blindly yet; first rerun
+  the existing exact/guarded cases against a local prototype because several
+  Constant witnesses that are already explained by the no-bg probe may be
+  relying on the current shorthand in degenerate regions.
+- 2026-06-26 follow-up analysis on the stored Mac AE probes confirms that this
+  new `cvAdd` fact does not immediately unblock `case_0027/0028`. At the lead
+  witnesses, the binary-grounded add model and the old max shorthand produce
+  the same values because the inside/outside supports are still disjoint there,
+  while the observed `no_bg` alpha remains much closer to `1.0`. See
+  `refs/conformance/olmdistancegradation_16bpc_case0027_probe_x_20260626.md`
+  and `refs/conformance/olmdistancegradation_16bpc_field_cases_probe_20260626.md`.
+- 2026-06-27 local variant check further narrows `case_0027/0028`: at the lead
+  witnesses, switching between actual-max vs threshold-denominator normalization,
+  scaled vs raw thresholds, and `max` vs `add` Both-combine leaves the modeled
+  `X` unchanged (`case_0027: 0.812285`, `case_0028: 0.968477`) while the
+  observed `no_bg` probe still reports `1.0`. So these two cases are not
+  explained by the current `threshold * ds` ownership question alone; the next
+  plausible culprit remains a narrower upstream field-prep/temp-size/OpenCV
+  branch in or around `FUN_181174760`.
 
 ## Conformance Cases
 
@@ -194,8 +295,9 @@ is `1 - X`.
 | blur `case_0029` AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: `max_diff=0`; normalized and legacy refs both exact | 16/32bpc references; trace OpenCV blur only if closing CLI residuals |
 | basic all-opaque Inside `case_0001..0006` | 16bpc | partial AE exact | 2026-06-26 Mac AE: Inside/no-source rule keeps `case_0001/0003/0004/0005/0006` exact and promotes `case_0002` to exact. Basic slice is now 8/12; DistanceGradation total is 9/29 | Static/runtime proof for the no-source branch; continue with non-all-opaque 16bpc residuals |
 | basic remaining `case_0015/0017/0018/0019` | 16bpc | not exact / compose-path diagnostic | 2026-06-26 local rerun reproduces the same four failures. `case_0015/0017` are `Render Mode=2` + `Use Background Color=0`; `case_0018/0019` are `Render Mode=1` + `Use Background Color=1` with colored ramps/backgrounds | Ground 16bpc render-mode/background compose path before changing distance field math |
-| extended BG-vs-Grad binary `case_0020..0023` | 16bpc | not exact / compose-path diagnostic | 2026-06-26 local rerun focus witnesses are BG-like on one side and Grad-like on the other while alpha remains exact. The witness audit shows `case_0021/0022` would flip at the sampled pixel if `Both` used `min(inside,outside)` instead of the current `max(...)`, while `case_0023` still needs a separate `Outside Threshold=0` upstream branch. But the whole-frame variant sweep shows that simple swaps like `Both=min`, `Both=inside`, or `Both=outside` do not safely fix the cases overall. See `refs/conformance/olmdistancegradation_16bpc_focus_cases_20260626.md` and `refs/conformance/olmdistancegradation_16bpc_constant_variants_20260626.md`. | Ground Constant/interpolation field-prep, `Both` combination, and threshold-zero special handling before changing color selection |
-| extended RGB-zeroed `case_0027/0028` | 16bpc | not exact / field-prep diagnostic | 2026-06-26 local rerun shows the current packaged case still fails against the Windows Software reference. Host debug rules out request drift, and the follow-up Mac AE probe plus observed-`X` reconstruction show the compose/background branches are active; the live mismatch is that the field driving them stays far closer to `1.0` than the current distance model predicts. See `refs/conformance/olmdistancegradation_16bpc_focus_cases_20260626.md`, `refs/conformance/olmdistancegradation_16bpc_case0027_mac_ae_probe_20260626.md`, and `refs/conformance/olmdistancegradation_16bpc_case0027_probe_x_20260626.md`. | Ground the 16bpc field-prep / normalization path in code/asm before changing compose logic |
+| extended BG-vs-Grad binary `case_0020..0023` | 16bpc | not exact / field-prep-plus-compose diagnostic | 2026-06-26 local rerun focus witnesses are BG-like on one side and Grad-like on the other while alpha remains exact. A same-day Mac `no_bg` probe looked consistent with the local Constant model at the witness pixels, but the 2026-06-27 Windows bg-on/bg-off return invalidates the narrower “only `Use Background Color=1`” reading: Windows `bg_off` for `case_0020..0022` still stays grad-color opaque at the witness, and `case_0023 bg_off` still differs from the prior Mac `no_bg` probe over the whole frame. See `refs/conformance/olmdistancegradation_16bpc_focus_cases_20260626.md`, `refs/conformance/olmdistancegradation_16bpc_constant_variants_20260626.md`, `refs/conformance/olmdistancegradation_16bpc_field_cases_probe_20260626.md`, and `refs/conformance/olmdistancegradation_16bpc_bg_compose_variants_return_20260627.md`. | Re-ground 16bpc Constant field prep and compose together; do not treat these as a pure bg-compose tweak |
+| extended Power/background ramp `case_0026` | 16bpc | not exact / Power param bug fixed, residual remains | 2026-06-29 Windows runtime trace proves the row-0 ramp exists before `FUN_181170480`; the compact witness is not a compose-created ramp. Mac debug dump then proved the port's field also ramps, but `Power` was collapsed by an erroneous `FIX_2_FLOAT` conversion. After fixing `Power`, row0 matches within `0..4`, while the full case remains `max_diff=11480` with sparse boundary/source residuals. | Classify remaining high-delta pixels by field quantization/source ownership and compose/writeback; do not revert the Power fix. |
+| extended RGB-zeroed `case_0027/0028` | 16bpc | not exact / field-prep diagnostic | 2026-06-26 local rerun shows the current packaged case still fails against the Windows Software reference. Host debug rules out request drift, and the follow-up Mac AE probes show the compose/background branches are active; the live mismatch is that the `no_bg` probe still exposes an observed field much closer to `1.0` than the current model predicts. See `refs/conformance/olmdistancegradation_16bpc_focus_cases_20260626.md`, `refs/conformance/olmdistancegradation_16bpc_case0027_mac_ae_probe_20260626.md`, `refs/conformance/olmdistancegradation_16bpc_case0027_probe_x_20260626.md`, and `refs/conformance/olmdistancegradation_16bpc_field_cases_probe_20260626.md`. | Ground the 16bpc field-prep / normalization path in code/asm before changing compose logic |
 | AE-free basic 12-case smoke | 8bpc | guarded | 2026-06-19 rerun passes current guard: worst `case_0007/0009 max=7 mean=0.0909`; residual remains | binary-ground distance normalization and compare against normalized Software refs |
 | AE-free extended non-blur 16-case smoke | 8bpc | guarded | 2026-06-19 rerun passes current loose guard, but with large non-exact residuals: `case_0008 max=254`, `case_0011 max=254`, `case_0012 max=251`, `case_0020..0023 max=238` | binary-ground interpolation, Constant field-prep, and render-mode branch details before tuning |
 | AE-free blur `case_0029` | 8bpc | guarded | 2026-06-19 rerun: `max=23 mean=0.2827`; tiny non-grounded improvement from Constant+Blur binary-field handling | trace/OpenCV 4.5.5 `distanceTransform` / `GaussianBlur` behavior |

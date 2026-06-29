@@ -1,0 +1,833 @@
+{
+  "kind": "olmblur_16bpc_mac_ae_rerun",
+  "date": "2026-06-28",
+  "request_zip": "handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation/bitdepth16_olmblur_exact.zip",
+  "candidate_dir": "handoff/ae_pixel_validation_20260618/results/bitdepth16_olmblur_exact",
+  "case_0003_candidate_dir": "handoff/ae_pixel_validation_20260618/results/bitdepth16_olmblur_case0003",
+  "cases": [
+    {
+      "case_id": "olmblur__case_0001",
+      "max_diff": 2,
+      "nonzero_px": 66,
+      "total_px": 518400,
+      "signed_delta_counts": {
+        "-2": 14,
+        "2": 52
+      },
+      "classification": "sign-mixed-near-1lsb",
+      "params": {
+        "Blur Amount": 129.399993896484,
+        "Blur Smoothness": 100,
+        "Number of Repeat": 2,
+        "Bias Direction": 1,
+        "Legacy": 0
+      },
+      "samples": [
+        {
+          "x": 422,
+          "y": 169,
+          "reference": [
+            18957,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            18955,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 466,
+          "y": 173,
+          "reference": [
+            28869,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            28867,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 417,
+          "y": 174,
+          "reference": [
+            19793,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            19795,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            -2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 417,
+          "y": 176,
+          "reference": [
+            20653,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            20651,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 393,
+          "y": 184,
+          "reference": [
+            16153,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            16155,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            -2,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmblur__case_0002",
+      "max_diff": 2,
+      "nonzero_px": 67,
+      "total_px": 518400,
+      "signed_delta_counts": {
+        "-2": 14,
+        "2": 53
+      },
+      "classification": "sign-mixed-near-1lsb",
+      "params": {
+        "Blur Amount": 129.399993896484,
+        "Blur Smoothness": 100,
+        "Number of Repeat": 2,
+        "Bias Direction": 2,
+        "Legacy": 0
+      },
+      "samples": [
+        {
+          "x": 449,
+          "y": 121,
+          "reference": [
+            5651,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            5649,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 606,
+          "y": 147,
+          "reference": [
+            1799,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            1797,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 542,
+          "y": 176,
+          "reference": [
+            20653,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            20651,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 434,
+          "y": 178,
+          "reference": [
+            26211,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            26209,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 485,
+          "y": 182,
+          "reference": [
+            34461,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            34463,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            -2,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmblur__case_0003",
+      "max_diff": 2,
+      "nonzero_px": 414,
+      "total_px": 518400,
+      "signed_delta_counts": {
+        "-2": 189,
+        "2": 225
+      },
+      "classification": "legacy-sign-mixed-near-1lsb",
+      "params": {
+        "Blur Amount": 248.600006103516,
+        "Blur Smoothness": 100,
+        "Number of Repeat": 10,
+        "Bias Direction": 1,
+        "Legacy": 1
+      },
+      "samples": [
+        {
+          "x": 110,
+          "y": 0,
+          "reference": [
+            5711,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            5709,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 739,
+          "y": 0,
+          "reference": [
+            5715,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            5713,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 110,
+          "y": 1,
+          "reference": [
+            5711,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            5709,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 739,
+          "y": 1,
+          "reference": [
+            5715,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            5713,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 936,
+          "y": 1,
+          "reference": [
+            5689,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            5691,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            -2,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmblur__case_0004",
+      "max_diff": 2,
+      "nonzero_px": 55,
+      "total_px": 518400,
+      "signed_delta_counts": {
+        "-2": 9,
+        "2": 46
+      },
+      "classification": "sign-mixed-near-1lsb",
+      "params": {
+        "Blur Amount": 125.599998474121,
+        "Blur Smoothness": 100,
+        "Number of Repeat": 4,
+        "Bias Direction": 1,
+        "Legacy": 0
+      },
+      "samples": [
+        {
+          "x": 372,
+          "y": 114,
+          "reference": [
+            917,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            915,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 587,
+          "y": 114,
+          "reference": [
+            917,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            915,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 541,
+          "y": 139,
+          "reference": [
+            7717,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7715,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 572,
+          "y": 178,
+          "reference": [
+            12589,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            12591,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            -2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 611,
+          "y": 193,
+          "reference": [
+            5675,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            5677,
+            0,
+            0,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            -2,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmblur__case_0005",
+      "max_diff": 2,
+      "nonzero_px": 106,
+      "total_px": 2073600,
+      "signed_delta_counts": {
+        "-2": 54,
+        "2": 112
+      },
+      "classification": "sign-mixed-near-1lsb",
+      "params": {
+        "Blur Amount": 5,
+        "Blur Smoothness": 100,
+        "Number of Repeat": 2,
+        "Bias Direction": 1,
+        "Legacy": 0
+      },
+      "samples": [
+        {
+          "x": 167,
+          "y": 8,
+          "reference": [
+            2341,
+            2341,
+            2341,
+            65535
+          ],
+          "candidate": [
+            2339,
+            2339,
+            2339,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            2,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 895,
+          "y": 26,
+          "reference": [
+            705,
+            705,
+            705,
+            65535
+          ],
+          "candidate": [
+            703,
+            703,
+            703,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            2,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 979,
+          "y": 34,
+          "reference": [
+            21469,
+            21469,
+            21469,
+            65535
+          ],
+          "candidate": [
+            21467,
+            21467,
+            21467,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            2,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 1250,
+          "y": 40,
+          "reference": [
+            169,
+            169,
+            169,
+            65535
+          ],
+          "candidate": [
+            171,
+            171,
+            171,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 1194,
+          "y": 148,
+          "reference": [
+            8309,
+            8309,
+            8309,
+            65535
+          ],
+          "candidate": [
+            8307,
+            8307,
+            8307,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            2,
+            2,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmblur__case_0006",
+      "max_diff": 2,
+      "nonzero_px": 283,
+      "total_px": 2073600,
+      "signed_delta_counts": {
+        "-2": 113,
+        "2": 233
+      },
+      "classification": "sign-mixed-near-1lsb",
+      "params": {
+        "Blur Amount": 5,
+        "Blur Smoothness": 100,
+        "Number of Repeat": 10,
+        "Bias Direction": 1,
+        "Legacy": 0
+      },
+      "samples": [
+        {
+          "x": 314,
+          "y": 14,
+          "reference": [
+            2201,
+            2201,
+            2201,
+            65535
+          ],
+          "candidate": [
+            2199,
+            2199,
+            2199,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            2,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 29,
+          "y": 71,
+          "reference": [
+            725,
+            725,
+            725,
+            65535
+          ],
+          "candidate": [
+            727,
+            727,
+            727,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 694,
+          "y": 137,
+          "reference": [
+            2361,
+            2361,
+            2361,
+            65535
+          ],
+          "candidate": [
+            2363,
+            2363,
+            2363,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 295,
+          "y": 159,
+          "reference": [
+            7765,
+            7765,
+            7765,
+            65535
+          ],
+          "candidate": [
+            7763,
+            7763,
+            7763,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            2,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 1201,
+          "y": 160,
+          "reference": [
+            17097,
+            17097,
+            17097,
+            65535
+          ],
+          "candidate": [
+            17095,
+            17095,
+            17095,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            2,
+            2,
+            2,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmblur__case_0007",
+      "max_diff": 383,
+      "nonzero_px": 304,
+      "total_px": 2073600,
+      "signed_delta_counts": {
+        "-383": 3,
+        "-2": 268,
+        "2": 101
+      },
+      "classification": "legacy-border-plus-near-1lsb",
+      "params": {
+        "Blur Amount": 5,
+        "Blur Smoothness": 100,
+        "Number of Repeat": 10,
+        "Bias Direction": 1,
+        "Legacy": 1
+      },
+      "samples": [
+        {
+          "x": 0,
+          "y": 0,
+          "reference": [
+            0,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            383,
+            383,
+            383,
+            65535
+          ],
+          "signed_delta_reference_minus_candidate": [
+            -383,
+            -383,
+            -383,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusion": "Do not change global rounding/writeback from this evidence: near-1LSB residuals are sign-mixed, and case_0007 has a separate Legacy border/seed anomaly."
+}

@@ -181,6 +181,11 @@ def main() -> int:
                     "continue-binary-grounded-followup",
                     "prepare-mac-ae-16bpc-validation",
                     "investigate-16bpc-mac-ae-residuals",
+                    "recover-mac-ae-distancegradation-case0026-render",
+                    "inspect-mac-distancegradation-case0026-field-prep",
+                    "classify-distancegradation-16bpc-powerfix-residuals",
+                    "prove-distancegradation-16bpc-residual-family",
+                    "clear-mac-ae-automation-blocker",
                 }
                 if first_action == "await-runtime-trace-return":
                     assert data["decision"]["target"]["kind"] == "runtime-trace-request-package"
@@ -192,8 +197,15 @@ def main() -> int:
                     assert data["decision"]["target"]["kind"] in {
                         "ae-host-exact-failure-classification",
                         "binary-grounded-residual-report",
+                        "binary-grounded-ir",
                         "bitdepth-16bpc-reference-summary",
                         "bitdepth-16bpc-mac-ae-validation",
+                        "ae-host-automation-blocker",
+                        "ae-host-grounded-implementation-fix",
+                        "residual-family-report",
+                        "field-witness-report",
+                        "implementation-fix-report",
+                        "boundary-localization-report",
                     }
                     if data["decision"]["action"] == "prepare-mac-ae-16bpc-validation":
                         target = data["decision"]["target"]
@@ -255,6 +267,11 @@ def main() -> int:
                     "continue-binary-grounded-followup",
                     "prepare-mac-ae-16bpc-validation",
                     "investigate-16bpc-mac-ae-residuals",
+                    "recover-mac-ae-distancegradation-case0026-render",
+                    "inspect-mac-distancegradation-case0026-field-prep",
+                    "classify-distancegradation-16bpc-powerfix-residuals",
+                    "prove-distancegradation-16bpc-residual-family",
+                    "clear-mac-ae-automation-blocker",
                 }
                 if data["decision"]["action"] == "await-runtime-trace-return":
                     assert data["decision"]["target"]["kind"] == "runtime-trace-request-package"
@@ -268,8 +285,15 @@ def main() -> int:
                     assert data["decision"]["target"]["kind"] in {
                         "ae-host-exact-failure-classification",
                         "binary-grounded-residual-report",
+                        "binary-grounded-ir",
                         "bitdepth-16bpc-reference-summary",
                         "bitdepth-16bpc-mac-ae-validation",
+                        "ae-host-automation-blocker",
+                        "ae-host-grounded-implementation-fix",
+                        "residual-family-report",
+                        "field-witness-report",
+                        "implementation-fix-report",
+                        "boundary-localization-report",
                     }
                     if data["decision"]["action"] == "prepare-mac-ae-16bpc-validation":
                         target = data["decision"]["target"]

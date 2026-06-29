@@ -1,0 +1,217 @@
+{
+  "request_id": "olmdistancegradation_16bpc_bg_compose_variants_20260626",
+  "effect": {
+    "name": "OLM Distance Gradation",
+    "match_name": "Distance Gradation"
+  },
+  "why": [
+    "Mac AE 16bpc no-bg probes now show cases 0020..0023 match the current Constant field model at the witness pixels.",
+    "The remaining disagreement with the Windows Software references appears only once Use Background Color=1 participates.",
+    "This request asks for the smallest decisive recapture: the original bg-on cases plus matched bg-off variants on the same inputs and parameters."
+  ],
+  "render_sets": [
+    {
+      "id": "software_16bpc",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "bit_depth": "16bpc",
+      "bits_per_channel": 16,
+      "required": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "extended_case_0020_source",
+      "description": "Use the same source image as normalized 16bpc OLMDistanceGradation extended case_0020.",
+      "source_manifest": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json",
+      "source_case_id": "olmdistancegradation_extended__case_0020",
+      "before_effects_frame": "case_0020_before_effects.png"
+    },
+    {
+      "id": "extended_case_0021_source",
+      "description": "Use the same source image as normalized 16bpc OLMDistanceGradation extended case_0021.",
+      "source_manifest": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json",
+      "source_case_id": "olmdistancegradation_extended__case_0021",
+      "before_effects_frame": "case_0021_before_effects.png"
+    },
+    {
+      "id": "extended_case_0022_source",
+      "description": "Use the same source image as normalized 16bpc OLMDistanceGradation extended case_0022.",
+      "source_manifest": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json",
+      "source_case_id": "olmdistancegradation_extended__case_0022",
+      "before_effects_frame": "case_0022_before_effects.png"
+    },
+    {
+      "id": "extended_case_0023_source",
+      "description": "Use the same source image as normalized 16bpc OLMDistanceGradation extended case_0023.",
+      "source_manifest": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json",
+      "source_case_id": "olmdistancegradation_extended__case_0023",
+      "before_effects_frame": "case_0023_before_effects.png"
+    }
+  ],
+  "cases": [
+    {
+      "id": "olmdistancegradation_case_0020_bg_on_control",
+      "input": "extended_case_0020_source",
+      "reason": "Current Windows Software exact control for case_0020 under the same 16bpc request family.",
+      "params": {
+        "Invert": 0,
+        "In/Out": 1,
+        "Inside Threshold": 78,
+        "Outside Threshold": 204,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Gradation Color": [0.1098041459918, 0.0, 0.93333333730698, 1.0],
+        "BG Color": [1.0, 0.0, 0.0, 1.0],
+        "Interpolation Mode": 1,
+        "Power": 1.0,
+        "Blur Mode": 1,
+        "Blur Size": 0
+      }
+    },
+    {
+      "id": "olmdistancegradation_case_0020_bg_off_variant",
+      "input": "extended_case_0020_source",
+      "reason": "Same as case_0020 but force Use Background Color=0 to isolate whether the Windows disagreement lives in field prep or bg-on compose.",
+      "params": {
+        "Invert": 0,
+        "In/Out": 1,
+        "Inside Threshold": 78,
+        "Outside Threshold": 204,
+        "Render Mode": 1,
+        "Use Background Color": 0,
+        "Gradation Color": [0.1098041459918, 0.0, 0.93333333730698, 1.0],
+        "BG Color": [1.0, 0.0, 0.0, 1.0],
+        "Interpolation Mode": 1,
+        "Power": 1.0,
+        "Blur Mode": 1,
+        "Blur Size": 0
+      }
+    },
+    {
+      "id": "olmdistancegradation_case_0021_bg_on_control",
+      "input": "extended_case_0021_source",
+      "reason": "Current Windows Software exact control for case_0021 under the same 16bpc request family.",
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 78,
+        "Outside Threshold": 402,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Gradation Color": [0.1098041459918, 0.0, 0.93333333730698, 1.0],
+        "BG Color": [1.0, 0.0, 0.0, 1.0],
+        "Interpolation Mode": 1,
+        "Power": 1.0,
+        "Blur Mode": 1,
+        "Blur Size": 0
+      }
+    },
+    {
+      "id": "olmdistancegradation_case_0021_bg_off_variant",
+      "input": "extended_case_0021_source",
+      "reason": "Same as case_0021 but force Use Background Color=0 to isolate bg-on compose.",
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 78,
+        "Outside Threshold": 402,
+        "Render Mode": 1,
+        "Use Background Color": 0,
+        "Gradation Color": [0.1098041459918, 0.0, 0.93333333730698, 1.0],
+        "BG Color": [1.0, 0.0, 0.0, 1.0],
+        "Interpolation Mode": 1,
+        "Power": 1.0,
+        "Blur Mode": 1,
+        "Blur Size": 0
+      }
+    },
+    {
+      "id": "olmdistancegradation_case_0022_bg_on_control",
+      "input": "extended_case_0022_source",
+      "reason": "Current Windows Software exact control for case_0022 under the same 16bpc request family.",
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 36,
+        "Outside Threshold": 11,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Gradation Color": [0.1098041459918, 0.0, 0.93333333730698, 1.0],
+        "BG Color": [1.0, 0.0, 0.0, 1.0],
+        "Interpolation Mode": 1,
+        "Power": 1.0,
+        "Blur Mode": 1,
+        "Blur Size": 0
+      }
+    },
+    {
+      "id": "olmdistancegradation_case_0022_bg_off_variant",
+      "input": "extended_case_0022_source",
+      "reason": "Same as case_0022 but force Use Background Color=0 to isolate bg-on compose.",
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 36,
+        "Outside Threshold": 11,
+        "Render Mode": 1,
+        "Use Background Color": 0,
+        "Gradation Color": [0.1098041459918, 0.0, 0.93333333730698, 1.0],
+        "BG Color": [1.0, 0.0, 0.0, 1.0],
+        "Interpolation Mode": 1,
+        "Power": 1.0,
+        "Blur Mode": 1,
+        "Blur Size": 0
+      }
+    },
+    {
+      "id": "olmdistancegradation_case_0023_bg_on_control",
+      "input": "extended_case_0023_source",
+      "reason": "Current Windows Software exact control for case_0023 under the same 16bpc request family.",
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 36,
+        "Outside Threshold": 0,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Gradation Color": [0.1098041459918, 0.0, 0.93333333730698, 1.0],
+        "BG Color": [1.0, 0.0, 0.0, 1.0],
+        "Interpolation Mode": 1,
+        "Power": 1.0,
+        "Blur Mode": 1,
+        "Blur Size": 0
+      }
+    },
+    {
+      "id": "olmdistancegradation_case_0023_bg_off_variant",
+      "input": "extended_case_0023_source",
+      "reason": "Same as case_0023 but force Use Background Color=0 to isolate bg-on compose.",
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 36,
+        "Outside Threshold": 0,
+        "Render Mode": 1,
+        "Use Background Color": 0,
+        "Gradation Color": [0.1098041459918, 0.0, 0.93333333730698, 1.0],
+        "BG Color": [1.0, 0.0, 0.0, 1.0],
+        "Interpolation Mode": 1,
+        "Power": 1.0,
+        "Blur Mode": 1,
+        "Blur Size": 0
+      }
+    }
+  ],
+  "manifest_requirements": [
+    "Render only Windows AE Software 16bpc for this request.",
+    "Record AE version, project renderer, project_gpu_accel_type.current_name, project_gpu_accel_type.raw_value, and bit depth.",
+    "Save before_effects_frame and final output PNG for every case.",
+    "Record all OLM Distance Gradation property names, match_names, property_index, values, and enabled/active state.",
+    "Keep ADBE Force CPU GPU / GPU Rendering as reference-only metadata; do not use it as the execution-path label.",
+    "Do not silently normalize Use Background Color variants back to the original request; the bg-off variants are the whole point of this request."
+  ],
+  "mac_follow_up": [
+    "Import with python3 scripts/intake_olm_return.py path/to/returned_reference.zip --quick.",
+    "Then compare the Windows bg-off variants against handoff/ae_pixel_validation_20260618/probes/distancegradation_field_cases/ to decide whether case_0020..0023 diverge in field prep or only in bg-on compose."
+  ]
+}

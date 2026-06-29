@@ -6,6 +6,8 @@ import json
 import re
 import subprocess
 import sys
+import tempfile
+import zipfile
 from collections import defaultdict
 from datetime import datetime, timezone
 from html import escape
@@ -13,8 +15,9 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_OUTPUT = ROOT / "refs" / "reports" / "dashboard"
-DEFAULT_MARKDOWN = ROOT / "refs" / "reports" / "PORT_DASHBOARD.md"
+DEFAULT_REPORT_ROOT = Path(tempfile.gettempdir()) / "olm_reports"
+DEFAULT_OUTPUT = DEFAULT_REPORT_ROOT / "dashboard"
+DEFAULT_MARKDOWN = DEFAULT_REPORT_ROOT / "PORT_DASHBOARD.md"
 
 PLUGIN_ORDER = [
     "ColorKeep",
@@ -45,6 +48,21 @@ PLUGIN_ALIASES = [
     ("olmsmoother", "OLMSmoother"),
 ]
 
+SUPERSEDED_REPORT_PATTERNS = [
+    (
+        "20260626_1247_distancegradation_clean_stable",
+        "Superseded by the 2026-06-26 23:35 endian-fix 16bpc reverify.",
+    ),
+    (
+        "bitdepth_16bpc_mac_ae_validation_20260626_distancegradation_inside_no_source",
+        "Superseded by the 2026-06-26 23:35 endian-fix 16bpc reverify.",
+    ),
+    (
+        "bitdepth_16bpc_mac_ae_residual_classes_20260626_distancegradation_inside_no_source",
+        "Superseded by the 2026-06-26 23:35 endian-fix 16bpc residual classifier.",
+    ),
+]
+
 
 def rel(path: Path) -> str:
     try:
@@ -63,6 +81,19 @@ def normalize_plugin(value: str | None) -> str:
         if key in compact:
             return plugin
     return "Unassigned"
+
+
+def superseded_report_reason(path: Path) -> str | None:
+    normalized = rel(path).replace("\\", "/")
+    if (
+        "ae_pixel_validation_16bpc_mac_20260625" in normalized
+        or "ae_pixel_validation_16bpc_mac_20260626_" in normalized
+    ) and "2335_endian_fix" not in normalized:
+        return "Superseded by the 2026-06-26 23:35 endian-fix 16bpc reverify."
+    for pattern, reason in SUPERSEDED_REPORT_PATTERNS:
+        if pattern in normalized:
+            return reason
+    return None
 
 
 def read_json(path: Path):
@@ -216,21 +247,28 @@ def scan_reports(report_roots: list[Path]) -> tuple[dict, list[dict]]:
                 continue
             summary = report.get("summary") or {}
             plugin = infer_report_plugin(path, report)
+            superseded_reason = superseded_report_reason(path)
             counts = defaultdict(int)
             max_diff = None
             mean_diff = None
-            for row in cases:
-                counts[case_status(row)] += 1
-                if isinstance(row.get("max_diff"), (int, float)):
-                    max_diff = row["max_diff"] if max_diff is None else max(max_diff, row["max_diff"])
-                if isinstance(row.get("mean_diff"), (int, float)):
-                    mean_diff = row["mean_diff"] if mean_diff is None else max(mean_diff, row["mean_diff"])
+            if superseded_reason is None:
+                for row in cases:
+                    counts[case_status(row)] += 1
+                    max_value = row.get("max_diff")
+                    if max_value is None:
+                        max_value = row.get("max_exported_delta")
+                    if isinstance(max_value, (int, float)):
+                        max_diff = max_value if max_diff is None else max(max_diff, max_value)
+                    if isinstance(row.get("mean_diff"), (int, float)):
+                        mean_diff = row["mean_diff"] if mean_diff is None else max(mean_diff, row["mean_diff"])
             item = {
                 "path": rel(path),
                 "mtime": path.stat().st_mtime,
                 "plugin": plugin,
+                "superseded": superseded_reason is not None,
+                "superseded_reason": superseded_reason,
                 "summary": summary,
-                "case_count": len(cases),
+                "case_count": 0 if superseded_reason else len(cases),
                 "counts": dict(sorted(counts.items())),
                 "max_diff": max_diff,
                 "max_mean_diff": mean_diff,
@@ -241,7 +279,7 @@ def scan_reports(report_roots: list[Path]) -> tuple[dict, list[dict]]:
                         "id": row.get("id", ""),
                         "frame": row.get("frame", ""),
                         "status": case_status(row),
-                        "max_diff": row.get("max_diff"),
+                        "max_diff": row.get("max_diff", row.get("max_exported_delta")),
                         "mean_diff": row.get("mean_diff"),
                         "nonzero_px_percent": row.get("nonzero_px_percent"),
                         "classification": classification_label(row.get("classification")),
@@ -382,12 +420,61 @@ def latest_runtime_trace_package() -> dict:
         return {"status": "missing", "dir": rel(package_dir)}
     latest = packages[-1]
     stat = latest.stat()
-    return {
+    result = {
         "status": "ready",
         "relative_path": rel(latest),
         "size_bytes": stat.st_size,
         "modified_at": datetime.fromtimestamp(stat.st_mtime, timezone.utc).astimezone().isoformat(timespec="seconds"),
         "mtime": stat.st_mtime,
+    }
+    try:
+        with zipfile.ZipFile(latest) as archive:
+            for name in archive.namelist():
+                if name.endswith("runtime_trace_package_manifest.json"):
+                    manifest = json.loads(archive.read(name).decode("utf-8"))
+                    if isinstance(manifest, dict):
+                        actions = manifest.get("runtime_actions") or []
+                        result["profile"] = manifest.get("profile")
+                        result["request_ids"] = [
+                            row.get("request_id")
+                            for row in actions
+                            if isinstance(row, dict) and row.get("request_id")
+                        ]
+                        result["plugin_areas"] = [
+                            row.get("plugin_area")
+                            for row in actions
+                            if isinstance(row, dict) and row.get("plugin_area")
+                        ]
+                    break
+    except (OSError, zipfile.BadZipFile, json.JSONDecodeError, UnicodeDecodeError):
+        pass
+    return result
+
+
+def load_32bpc_probe_preview() -> dict:
+    preview = ROOT / "refs" / "reports" / "bit_depth_32bpc_probe_plan_20260628" / "request_preview.json"
+    if not preview.exists():
+        return {"status": "missing", "path": rel(preview)}
+    data = read_json(preview)
+    if not isinstance(data, dict):
+        return {"status": "invalid", "path": rel(preview)}
+    cases = data.get("cases")
+    render_sets = data.get("render_sets")
+    bit_depth = data.get("bit_depth")
+    if not bit_depth and isinstance(render_sets, list):
+        for row in render_sets:
+            if isinstance(row, dict) and row.get("bit_depth"):
+                bit_depth = row.get("bit_depth")
+                break
+    return {
+        "status": "preview-only",
+        "path": rel(preview),
+        "readme": rel(preview.with_name("README.md")),
+        "request_id": data.get("request_id"),
+        "bit_depth": bit_depth,
+        "case_count": len(cases) if isinstance(cases, list) else 0,
+        "render_set_count": len(render_sets) if isinstance(render_sets, list) else 0,
+        "note": "Not an active Windows request and not AE exact evidence until intentionally scheduled with float-preserving output.",
     }
 
 
@@ -443,12 +530,6 @@ def latest_ae_pixel_validation_return() -> dict:
 
 
 def choose_send_target(runtime_package: dict, windows_batch: dict, ae_pixel_return: dict, pending_runtime: dict) -> dict:
-    if pending_runtime.get("status") == "ready" and int(pending_runtime.get("pending_count") or 0) == 0:
-        return {
-            "status": "not-needed",
-            "kind": "none",
-            "reason": "No runtime trace packages are currently pending.",
-        }
     if (
         runtime_package.get("status") == "ready"
         and float(runtime_package.get("mtime", 0)) > float(windows_batch.get("mtime", 0))
@@ -472,6 +553,12 @@ def choose_send_target(runtime_package: dict, windows_batch: dict, ae_pixel_retu
         target["kind"] = "windows-action-bundle"
         target["reason"] = "Preferred handoff: wraps the Smoother-first runtime trace plus AE-host validation requests."
         return target
+    if pending_runtime.get("status") == "ready" and int(pending_runtime.get("pending_count") or 0) == 0:
+        return {
+            "status": "not-needed",
+            "kind": "none",
+            "reason": "No older runtime trace packages are pending; no newer project-local package was found.",
+        }
     if runtime_package.get("status") == "ready":
         target = dict(runtime_package)
         target["kind"] = "runtime-trace-package"
@@ -773,6 +860,7 @@ def render_html(data: dict) -> str:
     windows_batch = data.get("windows_batch", {}) if isinstance(data.get("windows_batch"), dict) else {}
     send_target = data.get("send_target", {}) if isinstance(data.get("send_target"), dict) else {}
     policy = data.get("completion_policy", {}) if isinstance(data.get("completion_policy"), dict) else {}
+    probe32 = data.get("bitdepth_32bpc_probe_preview", {}) if isinstance(data.get("bitdepth_32bpc_probe_preview"), dict) else {}
     send_label = send_target.get("relative_path") or send_target.get("status", "-")
     send_detail = (
         f"{send_target.get('kind', '-')} · {send_target.get('size_bytes', 0)} bytes · {send_target.get('modified_at', '-')}"
@@ -790,6 +878,10 @@ def render_html(data: dict) -> str:
         f"{windows_batch.get('size_bytes', 0)} bytes · {windows_batch.get('modified_at', '-')}"
         if windows_batch.get("status") == "ready"
         else "not packaged"
+    )
+    probe32_label = probe32.get("path") or probe32.get("status", "-")
+    probe32_detail = (
+        f"{probe32.get('status', '-')} · {probe32.get('case_count', 0)} cases · {probe32.get('note', '-')}"
     )
     mediacore = data.get("mediacore_audit", {})
     mediacore_label = mediacore.get("status", "-")
@@ -984,6 +1076,11 @@ def render_html(data: dict) -> str:
         <p>{escape(str(batch_detail))}</p>
       </div>
       <div>
+        <h2>32bpc Probe Preview</h2>
+        <p><code>{escape(str(probe32_label))}</code></p>
+        <p>{escape(str(probe32_detail))}</p>
+      </div>
+      <div>
         <h2>Runtime Trace Package</h2>
         <p><code>{escape(runtime_label)}</code></p>
         <p>{escape(runtime_detail)}</p>
@@ -1020,6 +1117,7 @@ def render_markdown(data: dict) -> str:
     send_target = data.get("send_target", {}) if isinstance(data.get("send_target"), dict) else {}
     policy = data.get("completion_policy", {}) if isinstance(data.get("completion_policy"), dict) else {}
     mediacore = data.get("mediacore_audit", {}) if isinstance(data.get("mediacore_audit"), dict) else {}
+    probe32 = data.get("bitdepth_32bpc_probe_preview", {}) if isinstance(data.get("bitdepth_32bpc_probe_preview"), dict) else {}
     pending_runtime = (
         data.get("pending_runtime_trace_packages", {})
         if isinstance(data.get("pending_runtime_trace_packages"), dict)
@@ -1053,6 +1151,11 @@ def render_markdown(data: dict) -> str:
         f"- Runtime trace package: {runtime.get('relative_path') or runtime.get('status', '-')}",
         f"- Runtime trace status: {runtime.get('status', '-')}",
         f"- Windows batch handoff: {windows_batch.get('relative_path') or windows_batch.get('status', '-')}",
+        (
+            "- 32bpc probe preview: "
+            f"{probe32.get('path') or probe32.get('status', '-')} "
+            f"({probe32.get('case_count', 0)} cases; {probe32.get('status', '-')})"
+        ),
         (
             "- MediaCore audit: "
             f"{mediacore.get('status', '-')} "
@@ -1111,7 +1214,7 @@ def render_markdown(data: dict) -> str:
 
 def build_data(args: argparse.Namespace) -> dict:
     reference_root = ROOT / "refs" / "win_references"
-    report_roots = [ROOT / "refs" / "reports", ROOT / "refs" / "runs"]
+    report_roots = [ROOT / "refs" / "reports", ROOT / "refs" / "runs", ROOT / "refs" / "conformance"]
     if args.scan_tmp:
         report_roots.extend(Path("/tmp").glob("**/reports"))
     manifests_by_plugin, manifests = scan_manifests(reference_root)
@@ -1124,6 +1227,7 @@ def build_data(args: argparse.Namespace) -> dict:
     runtime_package = latest_runtime_trace_package()
     windows_batch = latest_windows_batch()
     ae_pixel_return = latest_ae_pixel_validation_return()
+    bitdepth_32bpc_probe_preview = load_32bpc_probe_preview()
     return {
         "generated_at": datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds"),
         "root": ROOT.name,
@@ -1146,6 +1250,7 @@ def build_data(args: argparse.Namespace) -> dict:
         "pending_runtime_trace_packages": pending_runtime,
         "send_target": choose_send_target(runtime_package, windows_batch, ae_pixel_return, pending_runtime),
         "runtime_trace_package": runtime_package,
+        "bitdepth_32bpc_probe_preview": bitdepth_32bpc_probe_preview,
         "windows_batch": windows_batch,
         "ae_pixel_validation_return": ae_pixel_return,
         "mediacore_audit": audit_mediacore(),
@@ -1161,7 +1266,7 @@ def main() -> int:
         default=None,
         help=(
             "Also write a Markdown summary for terminal/Finder handoff workflows. "
-            "When --output-dir is the default, this defaults to refs/reports/PORT_DASHBOARD.md."
+            "When --output-dir is the default, this defaults outside the repo under the local temp report root."
         ),
     )
     parser.add_argument(

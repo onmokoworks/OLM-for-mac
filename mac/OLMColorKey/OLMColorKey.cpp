@@ -552,6 +552,16 @@ static float Lab94Distance(const float a[3], const float b[3])
 	return std::sqrt(dL * dL + dC * dC + dH * dH);
 }
 
+static bool LabPerComponentHit(const float cmp[3], const float key[3], PF_FpLong tr, PF_FpLong tg, PF_FpLong tb, float epsilon)
+{
+	const float limit_l = (float)tr * 151.30099487304688f + epsilon * 2709.929931640625f;
+	const float limit_a = (float)tg * 264.36700439453125f + epsilon * 578.7139892578125f;
+	const float limit_b = (float)tb * 295.572998046875f + epsilon * 414.6759948730469f;
+	return std::fabs(cmp[0] - key[0]) <= limit_l
+	    && std::fabs(cmp[1] - key[1]) <= limit_a
+	    && std::fabs(cmp[2] - key[2]) <= limit_b;
+}
+
 static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direction)
 {
 	const float pi = 3.14159265358979323846f;
@@ -581,6 +591,7 @@ template <>
 struct OLMCKPixelTraits<PF_Pixel8> {
 	static float max_chan() { return 255.0f; }
 	static float native_key_epsilon() { return 0.5f / 255.0f; }
+	static bool is_16bpc() { return false; }
 	static float r(const PF_Pixel8 &p) { return (float)p.red / 255.0f; }
 	static float g(const PF_Pixel8 &p) { return (float)p.green / 255.0f; }
 	static float b(const PF_Pixel8 &p) { return (float)p.blue / 255.0f; }
@@ -605,6 +616,7 @@ template <>
 struct OLMCKPixelTraits<PF_Pixel16> {
 	static float max_chan() { return (float)PF_MAX_CHAN16; }
 	static float native_key_epsilon() { return 1.0f / 65536.0f; }
+	static bool is_16bpc() { return true; }
 	static float r(const PF_Pixel16 &p) { return (float)p.red / max_chan(); }
 	static float g(const PF_Pixel16 &p) { return (float)p.green / max_chan(); }
 	static float b(const PF_Pixel16 &p) { return (float)p.blue / max_chan(); }
@@ -630,6 +642,7 @@ struct OLMCKPixelTraits<PF_Pixel16> {
 template <>
 struct OLMCKPixelTraits<PF_PixelFloat> {
 	static float native_key_epsilon() { return 1.0e-6f; }
+	static bool is_16bpc() { return false; }
 	static float r(const PF_PixelFloat &p) { return p.red; }
 	static float g(const PF_PixelFloat &p) { return p.green; }
 	static float b(const PF_PixelFloat &p) { return p.blue; }
@@ -675,6 +688,10 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	} else if (info.force_lower_precision == 2 && key_epsilon < (1.0f / 65536.0f)) {
 		key_epsilon = 1.0f / 65536.0f;
 	}
+	const bool use_binary_lab76_limits =
+	    OLMCKPixelTraits<PixelT>::is_16bpc() &&
+	    info.color_space == 3 &&
+	    info.force_lower_precision == 3;
 
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
@@ -789,9 +806,13 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					PF_FpLong tr = info.per_color ? info.thresholds_r[i] : info.threshold_r;
 					PF_FpLong tg = info.per_color ? info.thresholds_g[i] : info.threshold_g;
 					PF_FpLong tb = info.per_color ? info.thresholds_b[i] : info.threshold_b;
-					hit = std::fabs(cmp[0] - key[0]) <= key_epsilon + tr * comp_scale[0]
-					    && std::fabs(cmp[1] - key[1]) <= key_epsilon + tg * comp_scale[1]
-					    && std::fabs(cmp[2] - key[2]) <= key_epsilon + tb * comp_scale[2];
+					if (use_binary_lab76_limits) {
+						hit = LabPerComponentHit(cmp, key, tr, tg, tb, key_epsilon);
+					} else {
+						hit = std::fabs(cmp[0] - key[0]) <= key_epsilon + tr * comp_scale[0]
+						    && std::fabs(cmp[1] - key[1]) <= key_epsilon + tg * comp_scale[1]
+						    && std::fabs(cmp[2] - key[2]) <= key_epsilon + tb * comp_scale[2];
+					}
 				} else {
 					PF_FpLong threshold = info.per_color ? info.thresholds[i] : info.threshold;
 					float mean = (std::fabs(cmp[0] - key[0]) +

@@ -15,6 +15,10 @@ import numpy as np
 from PIL import Image
 
 
+def normalized_relpath(value):
+    return value.replace("\\", "/")
+
+
 def png_header(path):
     data = Path(path).read_bytes()
     if not data.startswith(b"\x89PNG\r\n\x1a\n"):
@@ -45,7 +49,7 @@ def magick_rgba16_array(path, header):
     magick = shutil.which("magick")
     if not magick:
         return None
-    raw = subprocess.check_output([magick, str(path), "-depth", "16", "rgba:-"])
+    raw = subprocess.check_output([magick, str(path), "-depth", "16", "-endian", "MSB", "rgba:-"])
     expected = header["width"] * header["height"] * 4 * 2
     if len(raw) != expected:
         raise ValueError(f"unexpected ImageMagick RGBA payload size in {path}: {len(raw)} != {expected}")
@@ -276,10 +280,11 @@ def main():
             print(f"[SKIP] {case_id:20s} missing effect {args.expected_effect}")
             continue
         frame = case.get("frame") or f"{case_id}.png"
-        reference_path = reference_dir / frame
-        candidate_path = candidate_dir / frame
-        diff_path = diff_dir / f"{Path(frame).stem}_{case_id}_diff.png"
-        row = {"id": case_id, "frame": frame}
+        normalized_frame = normalized_relpath(frame)
+        reference_path = reference_dir / normalized_frame
+        candidate_path = candidate_dir / normalized_frame
+        diff_path = diff_dir / f"{Path(normalized_frame).stem}_{case_id}_diff.png"
+        row = {"id": case_id, "frame": frame, "normalized_frame": normalized_frame}
 
         if not reference_path.exists() or not candidate_path.exists():
             row.update(

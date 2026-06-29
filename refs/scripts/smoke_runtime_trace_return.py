@@ -169,6 +169,52 @@ def main() -> int:
         if not bare_intake_markdown.exists():
             print("[FAIL] intake did not write bare runtime Markdown summary")
             return 1
+
+        template_only = tmp_path / "template_only_runtime_request.zip"
+        with zipfile.ZipFile(template_only, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+            archive.writestr(
+                "runtime_trace_package_manifest.json",
+                json.dumps(
+                    {
+                        "kind": "olm_runtime_trace_request_package",
+                        "runtime_actions": [
+                            {"request_id": "radialblur_inner_runtime_trace_20260618"}
+                        ],
+                    },
+                    indent=2,
+                ),
+            )
+            archive.writestr(
+                "RETURN_RUNTIME_TRACE_TEMPLATE.json",
+                json.dumps(
+                    {
+                        "kind": "olm_runtime_trace_result",
+                        "schema": 1,
+                        "results": [
+                            {
+                                "request_id": "radialblur_inner_runtime_trace_20260618",
+                                "status": "answered",
+                                "summary": "Template placeholder only; not a real return.",
+                            }
+                        ],
+                    },
+                    indent=2,
+                ),
+            )
+        template_proc = run(
+            [
+                py,
+                "scripts/verify_runtime_trace_return.py",
+                str(template_only),
+                "--package",
+                str(package),
+                "--require-all",
+            ],
+            repo,
+        )
+        if template_proc.returncode == 0:
+            print("[FAIL] template-only runtime request package was accepted as a return")
+            return 1
     print("[OK] runtime trace return smoke")
     return 0
 

@@ -7,6 +7,7 @@ import argparse
 import json
 import re
 import shutil
+import tempfile
 from collections import defaultdict
 from datetime import datetime
 from html import escape
@@ -18,7 +19,7 @@ from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_OUTPUT = ROOT / "refs" / "reports" / "diff_gallery"
+DEFAULT_OUTPUT = Path(tempfile.gettempdir()) / "olm_reports" / "diff_gallery"
 
 PLUGIN_ORDER = [
     "ColorKeep",

@@ -43,6 +43,7 @@ def main() -> int:
             or "send-windows-action-bundle" in proc.stdout
             or "send-ae-host-validation-package" in proc.stdout
             or "continue-binary-grounded-followup" in proc.stdout
+            or "clear-mac-ae-automation-blocker" in proc.stdout
         )
 
         run(

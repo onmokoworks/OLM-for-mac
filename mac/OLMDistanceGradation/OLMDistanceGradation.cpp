@@ -2,6 +2,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <vector>
 #include <algorithm>
 #include <limits>
@@ -142,7 +143,7 @@ FetchParams(PF_InData *in_data, PF_ParamDef *params[], DGParams *p)
 	p->render_mode       = params[DG_RENDER_MODE]->u.pd.value;
 	p->use_bg            = params[DG_USE_BG_COLOR]->u.bd.value != 0;
 	p->interp_mode       = params[DG_INTERP_MODE]->u.pd.value;
-	p->power             = (float)FIX_2_FLOAT(params[DG_POWER]->u.fs_d.value);
+	p->power             = (float)params[DG_POWER]->u.fs_d.value;
 	p->blur_mode         = params[DG_BLUR_MODE]->u.pd.value;
 	p->blur_size         = params[DG_BLUR_SIZE]->u.sd.value;
 
@@ -336,6 +337,59 @@ struct DistanceField {
 	long w, h;
 };
 
+static float debug_raw_distance_at(const u_char *mask, long w, long h, long x, long y);
+
+static void debug_dump_distance_field(const char *path, const float *alpha, const DistanceField &df,
+                                      const DGParams &p, long w, long h, size_t pixel_size)
+{
+	if (!path || !path[0] || !alpha || df.x.empty()) return;
+	FILE *f = fopen(path, "a");
+	if (!f) return;
+	fprintf(f,
+	        "OLMDistanceGradation debug dump\n"
+	        "w=%ld h=%ld pixel_size=%zu invert=%d in_out=%ld inside=%ld outside=%ld render_mode=%ld use_bg=%d interp=%ld power=%.9g blur_mode=%ld blur_size=%ld ds_x=%.9g ds_y=%.9g\n",
+	        w, h, pixel_size, p.invert ? 1 : 0, (long)p.in_out, (long)p.inside_threshold,
+	        (long)p.outside_threshold, (long)p.render_mode, p.use_bg ? 1 : 0,
+	        (long)p.interp_mode, p.power, (long)p.blur_mode, (long)p.blur_size, p.ds_x, p.ds_y);
+	long limit = (w < 15) ? w : 15;
+	for (long x = 0; x < limit; ++x) {
+		size_t idx = (size_t)x;
+		fprintf(f, "row0 x=%ld alpha=%.9g d_alpha=%.9g field_x=%.9g\n",
+		        x, alpha[idx], df.d_alpha[idx], df.x[idx]);
+	}
+	const char *points = getenv("OLM_DG_DEBUG_POINTS");
+	if (points && points[0]) {
+		std::vector<u_char> inside_mask((size_t)w * h);
+		std::vector<u_char> outside_mask((size_t)w * h);
+		for (long i = 0; i < w * h; ++i) {
+			inside_mask[i] = (alpha[i] > 0.0f) ? 1 : 0;
+			outside_mask[i] = inside_mask[i] ? 0 : 1;
+		}
+		const char *cursor = points;
+		while (*cursor) {
+			char *end = nullptr;
+			long x = strtol(cursor, &end, 10);
+			if (end == cursor || *end != ',') break;
+			cursor = end + 1;
+			long y = strtol(cursor, &end, 10);
+			if (end == cursor) break;
+			if (x >= 0 && x < w && y >= 0 && y < h) {
+				size_t idx = (size_t)y * w + x;
+				float raw_inside = debug_raw_distance_at(inside_mask.data(), w, h, x, y);
+				float raw_outside = debug_raw_distance_at(outside_mask.data(), w, h, x, y);
+				fprintf(f,
+				        "point x=%ld y=%ld alpha=%.9g d_alpha=%.9g field_x=%.9g raw_inside=%.9g raw_outside=%.9g\n",
+				        x, y, alpha[idx], df.d_alpha[idx], df.x[idx], raw_inside, raw_outside);
+			} else {
+				fprintf(f, "point x=%ld y=%ld out_of_bounds=1\n", x, y);
+			}
+			cursor = end;
+			while (*cursor == ';' || *cursor == ' ' || *cursor == '\t') ++cursor;
+		}
+	}
+	fclose(f);
+}
+
 static void build_mask_from_alpha(const float *alpha, u_char *mask, long w, long h)
 {
 	for (long i = 0; i < w * h; ++i) mask[i] = (alpha[i] > 0.0f) ? 1 : 0;
@@ -345,17 +399,30 @@ static void invert_mask(u_char *mask, long w, long h)
 	for (long i = 0; i < w * h; ++i) mask[i] = mask[i] ? 0 : 1;
 }
 
-// Distance transform with threshold+normalize. Mirrors Win disasm:
-//   distanceTransform → threshold(TRUNC, thresh) → normalize(NORM_MINMAX to [0,1])
+// Distance transform with threshold+normalize. The helper shape is
+// binary-grounded from FUN_181174760:
+//   distanceTransform -> threshold(TRUNC or BINARY) -> normalize(NORM_MINMAX to [0,1]).
 // The MINMAX step divides by actual_max = min(raw_max, thresh), NOT by thresh.
 // This matters when the mask is small enough that no distance reaches thresh:
 // the gradient is stretched to fill [0,1] anyway, so inverted X reaches 0 at the
 // deepest interior pixel instead of leaving a residual.
-static void dt_to_normalized(const u_char *mask, float *out, long w, long h, long threshold, float ds_scale)
+//
+// One detail is still only implementation-grounded: this port scales the raw UI
+// threshold by averaged downsample `ds_scale` before the helper work. The AEX
+// helper body visibly receives scaled temp dimensions from the caller, but the
+// exact threshold-scaling ownership in the caller path is not fully proven yet.
+static void dt_to_normalized(
+	const u_char *mask, float *out, long w, long h, long threshold, float ds_scale, bool constant_interp)
 {
 	meijster_edt(mask, out, w, h);
-	float t = (threshold == 0) ? 1.0f : (float)threshold * ds_scale;
-	if (t < 1.0f) t = 1.0f;
+	float t = (float)threshold * ds_scale;
+	if (!constant_interp && t < 1.0f) t = 1.0f;
+	if (constant_interp) {
+		for (long i = 0; i < w * h; ++i) {
+			out[i] = (out[i] > t) ? 1.0f : 0.0f;
+		}
+		return;
+	}
 	float raw_max = 0.0f;
 	for (long i = 0; i < w * h; ++i) {
 		float v = out[i];
@@ -367,6 +434,14 @@ static void dt_to_normalized(const u_char *mask, float *out, long w, long h, lon
 	for (long i = 0; i < w * h; ++i) {
 		out[i] /= denom;
 	}
+}
+
+static float debug_raw_distance_at(const u_char *mask, long w, long h, long x, long y)
+{
+	if (!mask || x < 0 || y < 0 || x >= w || y >= h) return -1.0f;
+	std::vector<float> raw((size_t)w * h);
+	meijster_edt(mask, raw.data(), w, h);
+	return raw[(size_t)y * w + x];
 }
 
 static void build_distance_field(
@@ -397,17 +472,21 @@ static void build_distance_field(
 			float no_edge_x = p.invert ? 0.0f : 1.0f;
 			for (long i = 0; i < w * h; ++i) df.x[i] = no_edge_x;
 		} else {
-			dt_to_normalized(mask.data(), df.x.data(), w, h, p.inside_threshold, ds);
+			dt_to_normalized(mask.data(), df.x.data(), w, h, p.inside_threshold, ds,
+			                 p.interp_mode == INTERP_CONSTANT);
 		}
 	} else if (p.in_out == IN_OUT_OUTSIDE) {
 		invert_mask(mask.data(), w, h);
-		dt_to_normalized(mask.data(), df.x.data(), w, h, p.outside_threshold, ds);
+		dt_to_normalized(mask.data(), df.x.data(), w, h, p.outside_threshold, ds,
+		                 p.interp_mode == INTERP_CONSTANT);
 	} else { // BOTH
 		std::vector<float> inside((size_t)w * h), outside((size_t)w * h);
-		dt_to_normalized(mask.data(), inside.data(), w, h, p.inside_threshold, ds);
+		dt_to_normalized(mask.data(), inside.data(), w, h, p.inside_threshold, ds,
+		                 p.interp_mode == INTERP_CONSTANT);
 		std::vector<u_char> m2 = mask; // copy
 		invert_mask(m2.data(), w, h);
-		dt_to_normalized(m2.data(), outside.data(), w, h, p.outside_threshold, ds);
+		dt_to_normalized(m2.data(), outside.data(), w, h, p.outside_threshold, ds,
+		                 p.interp_mode == INTERP_CONSTANT);
 		for (long i = 0; i < w * h; ++i) df.x[i] = std::max(inside[i], outside[i]);
 	}
 
@@ -587,6 +666,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 
 	DistanceField df;
 	build_distance_field(alpha.data(), df, p, w, h);
+	debug_dump_distance_field(getenv("OLM_DG_DEBUG_DUMP_PATH"), alpha.data(), df, p, w, h, sizeof(P));
 
 	// Shade
 	for (long y = 0; y < h; ++y) {

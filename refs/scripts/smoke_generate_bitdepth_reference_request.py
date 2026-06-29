@@ -18,6 +18,7 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix=".bitdepth_request_smoke_", dir=scratch_root) as tmp:
         tmp_path = Path(tmp)
         request_json = tmp_path / "olm_bitdepth_16bpc_normalized_exact_20260625.json"
+        request_32_json = tmp_path / "olm_bitdepth_32bpc_float_output_probe_20260628.json"
         package_zip = tmp_path / "bitdepth_request.zip"
         subprocess.run(
             [
@@ -39,6 +40,27 @@ def main() -> int:
         assert any(row["plugin"] == "OLMColorKey" for row in request["cases"])
         assert sum(1 for row in request["cases"] if row["plugin"] == "OLMDistanceGradation") == 29
         assert all("params_full" in row for row in request["cases"])
+        subprocess.run(
+            [
+                sys.executable,
+                "scripts/generate_bitdepth_reference_request.py",
+                "--bit-depth",
+                "32bpc",
+                "--request-id",
+                "olm_bitdepth_32bpc_float_output_probe_20260628",
+                "--output",
+                str(request_32_json),
+            ],
+            cwd=ROOT,
+            check=True,
+        )
+        request_32 = json.loads(request_32_json.read_text(encoding="utf-8"))
+        assert request_32["request_id"] == "olm_bitdepth_32bpc_float_output_probe_20260628"
+        assert request_32["render_sets"][0]["bit_depth"] == "32bpc"
+        assert request_32["render_sets"][0]["bits_per_channel"] == 32
+        assert len(request_32["cases"]) == 45
+        assert any("float-preserving" in item for item in request_32["manifest_requirements"])
+        assert any("PNG-only 32bpc" in item for item in request_32["stop_lines"])
         subprocess.run(
             [
                 sys.executable,

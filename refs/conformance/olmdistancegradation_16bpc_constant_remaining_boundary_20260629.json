@@ -1,0 +1,809 @@
+{
+  "kind": "olmdistancegradation_16bpc_constant_remaining_boundary",
+  "date": "2026-06-29",
+  "request_dir": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625",
+  "candidate_dir": "refs/reports/ae_pixel_validation_16bpc_distancegradation_extended_constant_binary_20260629_1454/candidate",
+  "conclusion": "The remaining Constant-mode residuals after the binary-threshold fix are sparse and sit on distance-threshold boundary decisions. Treat them as OpenCV/AEX distanceTransform threshold ownership work, not compose/writeback tuning.",
+  "rows": [
+    {
+      "case_id": "olmdistancegradation_extended__case_0020",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0020.png",
+      "params": {
+        "Invert": 0,
+        "In/Out": 1,
+        "Inside Threshold": 78,
+        "Outside Threshold": 204,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "BG Color ": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Interpolation Mode": 1,
+        "Power": 1,
+        "Blur Mode": 1,
+        "Blur Size": 0,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "nonzero_px": 1,
+      "max_diff": 61165,
+      "mean_abs_diff": 0.014407913773148148,
+      "active_side": "inside",
+      "inside_distance_stats": {
+        "count": 1,
+        "min": 78.00640999302557,
+        "max": 78.00640999302557,
+        "nearest_threshold_delta": 0.0064099930255707704,
+        "within_0_25": 1,
+        "within_0_5": 1,
+        "within_1_0": 1
+      },
+      "outside_distance_stats": {
+        "count": 1,
+        "min": 0.0,
+        "max": 0.0,
+        "nearest_threshold_delta": 204.0,
+        "within_0_25": 0,
+        "within_0_5": 0,
+        "within_1_0": 0
+      },
+      "active_nearest_threshold_delta": 0.0064099930255707704,
+      "active_within_1_0": 1,
+      "examples": [
+        {
+          "x": 434,
+          "y": 676,
+          "source": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ],
+          "inside_distance": 78.00640999302557,
+          "outside_distance": 0.0,
+          "inside_threshold_delta": 0.0064099930255707704,
+          "outside_threshold_delta": -204.0
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0021",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0021.png",
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 78,
+        "Outside Threshold": 402,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "BG Color ": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Interpolation Mode": 1,
+        "Power": 1,
+        "Blur Mode": 1,
+        "Blur Size": 0,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "nonzero_px": 1,
+      "max_diff": 61165,
+      "mean_abs_diff": 0.014407913773148148,
+      "active_side": "both-nearest",
+      "inside_distance_stats": {
+        "count": 1,
+        "min": 78.00640999302557,
+        "max": 78.00640999302557,
+        "nearest_threshold_delta": 0.0064099930255707704,
+        "within_0_25": 1,
+        "within_0_5": 1,
+        "within_1_0": 1
+      },
+      "outside_distance_stats": {
+        "count": 1,
+        "min": 0.0,
+        "max": 0.0,
+        "nearest_threshold_delta": 402.0,
+        "within_0_25": 0,
+        "within_0_5": 0,
+        "within_1_0": 0
+      },
+      "active_nearest_threshold_delta": 0.0064099930255707704,
+      "active_within_1_0": 1,
+      "examples": [
+        {
+          "x": 434,
+          "y": 676,
+          "source": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "reference": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            58340,
+            0,
+            -61165,
+            0
+          ],
+          "inside_distance": 78.00640999302557,
+          "outside_distance": 0.0,
+          "inside_threshold_delta": 0.0064099930255707704,
+          "outside_threshold_delta": -402.0
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0022",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0022.png",
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 36,
+        "Outside Threshold": 11,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "BG Color ": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Interpolation Mode": 1,
+        "Power": 1,
+        "Blur Mode": 1,
+        "Blur Size": 0,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "nonzero_px": 192,
+      "max_diff": 61165,
+      "mean_abs_diff": 2.7663194444444446,
+      "active_side": "both-nearest",
+      "inside_distance_stats": {
+        "count": 192,
+        "min": 0.0,
+        "max": 36.013886210738214,
+        "nearest_threshold_delta": 0.013886210738213833,
+        "within_0_25": 8,
+        "within_0_5": 8,
+        "within_1_0": 8
+      },
+      "outside_distance_stats": {
+        "count": 192,
+        "min": 0.0,
+        "max": 11.0,
+        "nearest_threshold_delta": 0.0,
+        "within_0_25": 128,
+        "within_0_5": 145,
+        "within_1_0": 184
+      },
+      "active_nearest_threshold_delta": 0.0,
+      "active_within_1_0": 192,
+      "examples": [
+        {
+          "x": 1101,
+          "y": 55,
+          "source": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ],
+          "inside_distance": 0.0,
+          "outside_distance": 10.770329614269007,
+          "inside_threshold_delta": -36.0,
+          "outside_threshold_delta": -0.22967038573099252
+        },
+        {
+          "x": 1097,
+          "y": 56,
+          "source": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ],
+          "inside_distance": 0.0,
+          "outside_distance": 11.0,
+          "inside_threshold_delta": -36.0,
+          "outside_threshold_delta": 0.0
+        },
+        {
+          "x": 1408,
+          "y": 62,
+          "source": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ],
+          "inside_distance": 0.0,
+          "outside_distance": 11.0,
+          "inside_threshold_delta": -36.0,
+          "outside_threshold_delta": 0.0
+        },
+        {
+          "x": 1404,
+          "y": 63,
+          "source": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ],
+          "inside_distance": 0.0,
+          "outside_distance": 10.770329614269007,
+          "inside_threshold_delta": -36.0,
+          "outside_threshold_delta": -0.22967038573099252
+        },
+        {
+          "x": 1402,
+          "y": 64,
+          "source": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ],
+          "inside_distance": 0.0,
+          "outside_distance": 10.816653826391969,
+          "inside_threshold_delta": -36.0,
+          "outside_threshold_delta": -0.1833461736080313
+        },
+        {
+          "x": 1401,
+          "y": 65,
+          "source": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ],
+          "inside_distance": 0.0,
+          "outside_distance": 10.63014581273465,
+          "inside_threshold_delta": -36.0,
+          "outside_threshold_delta": -0.36985418726535
+        },
+        {
+          "x": 1400,
+          "y": 66,
+          "source": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ],
+          "inside_distance": 0.0,
+          "outside_distance": 10.63014581273465,
+          "inside_threshold_delta": -36.0,
+          "outside_threshold_delta": -0.36985418726535
+        },
+        {
+          "x": 1399,
+          "y": 67,
+          "source": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ],
+          "inside_distance": 0.0,
+          "outside_distance": 10.816653826391969,
+          "inside_threshold_delta": -36.0,
+          "outside_threshold_delta": -0.1833461736080313
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0023",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 36,
+        "Outside Threshold": 0,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "BG Color ": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Interpolation Mode": 1,
+        "Power": 1,
+        "Blur Mode": 1,
+        "Blur Size": 0,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "nonzero_px": 73,
+      "max_diff": 61165,
+      "mean_abs_diff": 1.0517777054398147,
+      "active_side": "both-nearest",
+      "inside_distance_stats": {
+        "count": 73,
+        "min": 1.0,
+        "max": 36.013886210738214,
+        "nearest_threshold_delta": 0.013886210738213833,
+        "within_0_25": 8,
+        "within_0_5": 8,
+        "within_1_0": 8
+      },
+      "outside_distance_stats": {
+        "count": 73,
+        "min": 0.0,
+        "max": 0.0,
+        "nearest_threshold_delta": 0.0,
+        "within_0_25": 73,
+        "within_0_5": 73,
+        "within_1_0": 73
+      },
+      "active_nearest_threshold_delta": 0.0,
+      "active_within_1_0": 73,
+      "examples": [
+        {
+          "x": 1699,
+          "y": 7,
+          "source": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ],
+          "inside_distance": 1.0,
+          "outside_distance": 0.0,
+          "inside_threshold_delta": -35.0,
+          "outside_threshold_delta": 0.0
+        },
+        {
+          "x": 985,
+          "y": 26,
+          "source": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ],
+          "inside_distance": 1.0,
+          "outside_distance": 0.0,
+          "inside_threshold_delta": -35.0,
+          "outside_threshold_delta": 0.0
+        },
+        {
+          "x": 1090,
+          "y": 41,
+          "source": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ],
+          "inside_distance": 1.0,
+          "outside_distance": 0.0,
+          "inside_threshold_delta": -35.0,
+          "outside_threshold_delta": 0.0
+        },
+        {
+          "x": 1097,
+          "y": 45,
+          "source": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ],
+          "inside_distance": 1.0,
+          "outside_distance": 0.0,
+          "inside_threshold_delta": -35.0,
+          "outside_threshold_delta": 0.0
+        },
+        {
+          "x": 1408,
+          "y": 73,
+          "source": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ],
+          "inside_distance": 1.0,
+          "outside_distance": 0.0,
+          "inside_threshold_delta": -35.0,
+          "outside_threshold_delta": 0.0
+        },
+        {
+          "x": 61,
+          "y": 112,
+          "source": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ],
+          "inside_distance": 1.0,
+          "outside_distance": 0.0,
+          "inside_threshold_delta": -35.0,
+          "outside_threshold_delta": 0.0
+        },
+        {
+          "x": 1853,
+          "y": 114,
+          "source": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ],
+          "inside_distance": 1.0,
+          "outside_distance": 0.0,
+          "inside_threshold_delta": -35.0,
+          "outside_threshold_delta": 0.0
+        },
+        {
+          "x": 1518,
+          "y": 129,
+          "source": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "reference": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "delta": [
+            -58340,
+            0,
+            61165,
+            0
+          ],
+          "inside_distance": 1.0,
+          "outside_distance": 0.0,
+          "inside_threshold_delta": -35.0,
+          "outside_threshold_delta": 0.0
+        }
+      ]
+    }
+  ]
+}

@@ -2,6 +2,14 @@
 
 Local Mac AE rerun of the 16bpc validation bundle.
 
+Superseded note: the residual magnitudes in this write-up were computed before
+fixing 16-bit ImageMagick endian decoding in `refs/scripts/verify_manifest.py`.
+The exact-count summary remains valid, but OLMBlur 16bpc residual amplitudes
+should now be read from:
+
+- `refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/`
+- `refs/conformance/bitdepth_16bpc_mac_ae_residual_classes_20260626_2335_endian_fix.md`
+
 - After Effects: local Mac AE 2026
 - Requests:
   `handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation/`

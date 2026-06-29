@@ -1,0 +1,893 @@
+{
+  "case_id": "olmdistancegradation_extended__case_0026",
+  "classification": "candidate_x_saturated_to_gradation_color_while_reference_ramps",
+  "colors": {
+    "background_rgba16": [
+      65535,
+      0,
+      0,
+      65535
+    ],
+    "gradation_rgba16": [
+      7195,
+      0,
+      61165,
+      65535
+    ]
+  },
+  "inferred_x_stats_changed_pixels": {
+    "candidate_hist": [
+      {
+        "count": 0,
+        "range": "-0.001..0.001"
+      },
+      {
+        "count": 0,
+        "range": "0.001..0.01"
+      },
+      {
+        "count": 0,
+        "range": "0.01..0.05"
+      },
+      {
+        "count": 0,
+        "range": "0.05..0.1"
+      },
+      {
+        "count": 0,
+        "range": "0.1..0.25"
+      },
+      {
+        "count": 0,
+        "range": "0.25..0.5"
+      },
+      {
+        "count": 0,
+        "range": "0.5..0.75"
+      },
+      {
+        "count": 0,
+        "range": "0.75..0.9"
+      },
+      {
+        "count": 0,
+        "range": "0.9..0.99"
+      },
+      {
+        "count": 1123575,
+        "range": "0.99..1"
+      },
+      {
+        "count": 0,
+        "range": "1..10"
+      }
+    ],
+    "candidate_max": 1.0,
+    "candidate_mean": 0.9999760612000025,
+    "candidate_min": 0.9997990592949529,
+    "reference_hist": [
+      {
+        "count": 69845,
+        "range": "-0.001..0.001"
+      },
+      {
+        "count": 120502,
+        "range": "0.001..0.01"
+      },
+      {
+        "count": 158496,
+        "range": "0.01..0.05"
+      },
+      {
+        "count": 108532,
+        "range": "0.05..0.1"
+      },
+      {
+        "count": 200030,
+        "range": "0.1..0.25"
+      },
+      {
+        "count": 201993,
+        "range": "0.25..0.5"
+      },
+      {
+        "count": 153986,
+        "range": "0.5..0.75"
+      },
+      {
+        "count": 76456,
+        "range": "0.75..0.9"
+      },
+      {
+        "count": 32854,
+        "range": "0.9..0.99"
+      },
+      {
+        "count": 881,
+        "range": "0.99..1"
+      },
+      {
+        "count": 0,
+        "range": "1..10"
+      }
+    ],
+    "reference_max": 0.9998496903106439,
+    "reference_mean": 0.2738642634708544,
+    "reference_min": 1.7140898183064794e-05
+  },
+  "max_diff": 61165,
+  "mean_diff": 11754.576950352044,
+  "nonzero_px": 1123575,
+  "nonzero_px_percent": 54.184751157407405,
+  "paths": {
+    "before_effects": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0026_before_effects.png",
+    "candidate": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmdistancegradation_extended_exact/candidate/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0026.png",
+    "reference": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0026.png"
+  },
+  "pixel_classes": {
+    "candidate_bg_ref_not_bg": 0,
+    "candidate_bg_total": 0,
+    "candidate_grad_ref_not_grad": 880796,
+    "candidate_grad_total": 1830821,
+    "reference_bg_total": 29358,
+    "reference_grad_total": 950025
+  },
+  "row0_samples_x0_24": [
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "reference": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "reference_x": 1.0,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "reference": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "reference_x": 1.0,
+      "x": 1,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "reference": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "reference_x": 1.0,
+      "x": 2,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        10952,
+        0,
+        11484,
+        0
+      ],
+      "reference": [
+        18147,
+        0,
+        49681,
+        65535
+      ],
+      "reference_x": 0.812259,
+      "x": 3,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        20536,
+        0,
+        21532,
+        0
+      ],
+      "reference": [
+        27731,
+        0,
+        39633,
+        65535
+      ],
+      "reference_x": 0.647982,
+      "x": 4,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        28826,
+        0,
+        30224,
+        0
+      ],
+      "reference": [
+        36021,
+        0,
+        30941,
+        65535
+      ],
+      "reference_x": 0.505879,
+      "x": 5,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        35890,
+        0,
+        37632,
+        0
+      ],
+      "reference": [
+        43085,
+        0,
+        23533,
+        65535
+      ],
+      "reference_x": 0.38478,
+      "x": 6,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        41808,
+        0,
+        43834,
+        0
+      ],
+      "reference": [
+        49003,
+        0,
+        17331,
+        65535
+      ],
+      "reference_x": 0.283361,
+      "x": 7,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        46654,
+        0,
+        48916,
+        0
+      ],
+      "reference": [
+        53849,
+        0,
+        12249,
+        65535
+      ],
+      "reference_x": 0.200285,
+      "x": 8,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        50508,
+        0,
+        52956,
+        0
+      ],
+      "reference": [
+        57703,
+        0,
+        8209,
+        65535
+      ],
+      "reference_x": 0.134229,
+      "x": 9,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        53462,
+        0,
+        56054,
+        0
+      ],
+      "reference": [
+        60657,
+        0,
+        5111,
+        65535
+      ],
+      "reference_x": 0.083587,
+      "x": 10,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        55608,
+        0,
+        58304,
+        0
+      ],
+      "reference": [
+        62803,
+        0,
+        2861,
+        65535
+      ],
+      "reference_x": 0.046802,
+      "x": 11,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        57046,
+        0,
+        59810,
+        0
+      ],
+      "reference": [
+        64241,
+        0,
+        1355,
+        65535
+      ],
+      "reference_x": 0.022167,
+      "x": 12,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        57888,
+        0,
+        60694,
+        0
+      ],
+      "reference": [
+        65083,
+        0,
+        471,
+        65535
+      ],
+      "reference_x": 0.007724,
+      "x": 13,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        58264,
+        0,
+        61088,
+        0
+      ],
+      "reference": [
+        65459,
+        0,
+        77,
+        65535
+      ],
+      "reference_x": 0.001281,
+      "x": 14,
+      "y": 0
+    },
+    {
+      "before": [
+        7451,
+        7451,
+        7451,
+        22101
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        58338,
+        0,
+        61165,
+        0
+      ],
+      "reference": [
+        65533,
+        0,
+        0,
+        65535
+      ],
+      "reference_x": 1.7e-05,
+      "x": 15,
+      "y": 0
+    },
+    {
+      "before": [
+        11321,
+        11321,
+        11321,
+        27241
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        58338,
+        0,
+        61165,
+        0
+      ],
+      "reference": [
+        65533,
+        0,
+        0,
+        65535
+      ],
+      "reference_x": 1.7e-05,
+      "x": 16,
+      "y": 0
+    },
+    {
+      "before": [
+        3273,
+        3273,
+        3273,
+        14649
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        58338,
+        0,
+        61165,
+        0
+      ],
+      "reference": [
+        65533,
+        0,
+        0,
+        65535
+      ],
+      "reference_x": 1.7e-05,
+      "x": 17,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        58264,
+        0,
+        61088,
+        0
+      ],
+      "reference": [
+        65459,
+        0,
+        77,
+        65535
+      ],
+      "reference_x": 0.001281,
+      "x": 18,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        57888,
+        0,
+        60694,
+        0
+      ],
+      "reference": [
+        65083,
+        0,
+        471,
+        65535
+      ],
+      "reference_x": 0.007724,
+      "x": 19,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        57046,
+        0,
+        59810,
+        0
+      ],
+      "reference": [
+        64241,
+        0,
+        1355,
+        65535
+      ],
+      "reference_x": 0.022167,
+      "x": 20,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        55608,
+        0,
+        58304,
+        0
+      ],
+      "reference": [
+        62803,
+        0,
+        2861,
+        65535
+      ],
+      "reference_x": 0.046802,
+      "x": 21,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        53462,
+        0,
+        56054,
+        0
+      ],
+      "reference": [
+        60657,
+        0,
+        5111,
+        65535
+      ],
+      "reference_x": 0.083587,
+      "x": 22,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        50508,
+        0,
+        52956,
+        0
+      ],
+      "reference": [
+        57703,
+        0,
+        8209,
+        65535
+      ],
+      "reference_x": 0.134229,
+      "x": 23,
+      "y": 0
+    },
+    {
+      "before": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "candidate_x": 1.0,
+      "delta": [
+        46654,
+        0,
+        48916,
+        0
+      ],
+      "reference": [
+        53849,
+        0,
+        12249,
+        65535
+      ],
+      "reference_x": 0.200285,
+      "x": 24,
+      "y": 0
+    }
+  ],
+  "shape": [
+    1080,
+    1920,
+    4
+  ],
+  "total_px": 2073600
+}
