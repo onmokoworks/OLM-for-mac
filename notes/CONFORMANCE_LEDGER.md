@@ -39,7 +39,7 @@ there unless new evidence changes the row.
 | OLMSmoother2 legacy/key/gamma | `guarded` / writer-grounded residual | `host-debuggable` | `binary-proof` | Trace the 0004/0012 witness paths and keep the Smooth Range threshold fix. | Global fallback, alpha, index, curve-index, or `f270` changes without proof. |
 | OLMDirectionalBlur | `blocked` | `host-debuggable` | `binary-proof` | Capture angle-0 rowdriver/valid-alpha and diagonal rotate/validity witnesses. | PNG-only exploration or broad AE look matching. |
 | OLMRadialBlur | `guarded` / `blocked` | `host-debuggable` | `binary-proof` | Treat the remaining lanes separately: Zoom needs caller-collapse proof on `sampler -> +0xf252 -> +0xf250 -> +0xe -> final byte`, while tiny Rotation now points to upstream polar RGB / substitute-path population rather than validity-only alpha collapse. The current Mac source still lacks an explicit preserved-validity plane, and a 2026-07-01 propagated-validity probe showed that simply blurring the validity bits with the same kernel does not move either focused witness. | AE visual matching, blind alpha tuning, treating tiny Rotation as a validity-alpha issue, promoting propagated-validity-alpha as a fix, or global span/wrap toggles. |
-| OLMKiraKira | `binary-grounded` / `blocked` | `host-smoke` | `parked` | Defer until the endgame unless a returned Windows witness makes the compose/writeback blocker cheap to close. Also keep in mind that the current Mac source still leaves several UI controls nonfunctional (`Merge Mode`, `Approximated Input`, `Fade Out`, `Highlight Radius`, ramps, and non-BlurMode-2 dispatch). | Pull it forward ahead of wider 16/32bpc expansion on stronger plug-ins, or re-tune luma/boxFilter/ray-helper/gain from broad PNGs. |
+| OLMKiraKira | `binary-grounded` / `blocked` | `host-smoke` | `parked` | Defer until the endgame unless a returned Windows witness makes the compose/writeback blocker cheap to close. Also keep in mind that the current Mac source still leaves several UI controls nonfunctional (`Merge Mode`, `Approximated Input`, `Brightness Gain`, `Highlight Radius`, ramps, and non-BlurMode-2 dispatch). | Pull it forward ahead of wider 16/32bpc expansion on stronger plug-ins, or re-tune luma/boxFilter/ray-helper/gain from broad PNGs. |
 
 Current priority order:
 
@@ -448,9 +448,10 @@ Practical rule:
 ## Imported Runtime Proofs
 
 Current runtime/debugger packages are summarized in
-`refs/reports/pending_runtime_trace_packages.md`. As of the latest 2026-06-24
-audit, there are no pending Windows runtime packages. Some returns are only
-partial proofs, so "answered" does not mean the feature is exact.
+`refs/reports/pending_runtime_trace_packages.md`. The live pending queue
+changes over time; check that report rather than assuming this historical
+section reflects the current queue. Some returns are only partial proofs, so
+"answered" does not mean the feature is exact.
 
 - Imported `~/Downloads/olm_runtime_trace_return_windows_20260618.zip`
   with `refs/runtime_trace_packages/olm_runtime_trace_requests_20260618_075454.zip`.

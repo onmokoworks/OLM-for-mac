@@ -55,7 +55,7 @@ AE-host validation で Mac AE 出力が Windows AE Software 参照に
 | OLMSmoother v1 | 960x540 再検証で 8bpc Mac AE exact。v2 互換扱いへ寄せる判断は別途 |
 | OLMDirectionalBlur | 参照は多いが、まだ blocked。2026-06-25 witness plan で angle-0 と diagonal の2系統に分け、PNG-only tuning は止めて asm/runtime evidence 待ち |
 | OLMRadialBlur | Zoom は caller-collapse alpha 残差、tiny Rotation は polar RGB / substitute-path 残差。2026-07-01 の propagated-validity probe で「validity plane を同カーネルで伝播させるだけ」では動かないことも確認。Inner は typed `FUN_180001c90` per-cell witness 待ち |
-| OLMKiraKira | BT.709 seed、OpenCV 4.5.5 AVX2、ray-helper、`FUN_18114fd90` aggregation まで grounding 済み。2026-07-01 の hotspot runtime return 取り込み後も、残差は broad compose/gain ではなく hotspot `(934,118)` 専用の追加 attenuate/branch before writeback まで狭い。加えて current Mac source は `Merge Mode`, `Approximated Input`, `Fade Out`, `Highlight Radius`, ramp 系など未消化 control が残る |
+| OLMKiraKira | BT.709 seed、OpenCV 4.5.5 AVX2、ray-helper、`FUN_18114fd90` aggregation まで grounding 済み。2026-07-01 の hotspot runtime return 取り込み後も、残差は broad compose/gain ではなく hotspot `(934,118)` 専用の追加 attenuate/branch before writeback まで狭い。current Mac source はなお `Merge Mode`, `Approximated Input`, `Brightness Gain`, `Highlight Radius`, ramp 系、non-BlurMode-2 dispatch などの endgame control gap を残す |
 
 AE 実機を触る前の短い目安です。詳細な理由と次アクションは
 `notes/CONFORMANCE_LEDGER.md` の Current Decision Matrix を見ます。
@@ -66,11 +66,12 @@ AE 実機を触る前の短い目安です。詳細な理由と次アクショ�
 | OLMBlur | `host-visual-tuning-ready` | `binary-proof` | 16bpc残差は分類済み。`case_0006` は writer/helper より reference/export provenance 側の確認が先。`case_0007` は Legacy境界証拠を維持 |
 | OLMToonDilate | `host-stable` | `bitdepth-expand` | 回帰確認とbit depth展開向き |
 | OLMDistanceGradation | `host-debuggable` | `binary-proof` | witness単位の16bpc確認と回帰確認だけ有益 |
-| OLMSmoother v1 | `host-stable` | `ae-validate` | v1/v2方針確認向き |
-| OLMSmoother2 legacy | `host-debuggable` | `binary-proof` | witness単位の確認だけ有益 |
+| OLMSmoother v1 | `host-stable` | `parked` | いまは endgame 扱い。v1/v2方針を明示するときだけ触る |
+| OLMSmoother2 no-key | `host-debuggable` | `ae-validate` | no-key exact の回帰確認だけ有益 |
+| OLMSmoother2 legacy | `host-debuggable` | `binary-proof` | legacy/key/gamma の witness単位確認だけ有益 |
 | OLMDirectionalBlur | `host-debuggable` | `binary-proof` | witness単位の確認だけ有益 |
 | OLMRadialBlur | `host-debuggable` | `binary-proof` | witness単位の確認だけ有益。いまは Zoom の caller-collapse と tiny Rotation の polar RGB 分岐を別々に追う段階 |
-| OLMKiraKira | `host-smoke` | `binary-proof` | host統合確認まで |
+| OLMKiraKira | `host-smoke` | `parked` | load/UI/render smoke まで。見た目合わせはまだ薄い |
 
 つまり、`RadialBlur` や `KiraKira` を AE 上で見た目だけで詰める段階ではまだ
 ありません。先に asm / runtime trace / CLI で、どの出力を信用してよいかを
@@ -91,8 +92,8 @@ UI パラメータ定義の一次情報は別で固定しています。
 `refs/reports/param_schema_windows_ref_audit_20260629.md` に分けています。
 2026-06-30 時点では `OLMKiraKira` の Windows 側 UI との差はかなり縮み、
 `Channel`, `Blur Mode`, `Strength Multiplier`, `Glow Opacity` は fresh
-capture 基準で揃いました。残りは `Brightness Gain`, `Fade Out`,
-`Highlight Radius`, および ramp 系の host drift です。
+capture 基準で揃いました。残りは `Brightness Gain`,
+`Highlight Radius`, ramp 系、および non-BlurMode-2 dispatch の host drift です。
 `OLMRadialBlur` は 2026-06-29 host-fix pass で grouped `Outer/Inner Blur`,
 per-section `Edge Fade`, separate inner offset controls, `Noise Type`,
 `Noise Layer`, `Seed`, `Thickness` を追加し、visible parameter set の差は
@@ -274,7 +275,8 @@ priority は `notes/CONFORMANCE_LEDGER.md` を正にしますが、ざっくり�
 3. `OLMDirectionalBlur` angle-0 / diagonal witness
 4. 強い plug-in の bit depth expansion
 5. `OLMDistanceGradation` / `OLMSmoother2 legacy`
-6. `OLMKiraKira`
+6. `OLMKiraKira` は parked のまま、安い witness が返った時だけ再開
+7. `OLMSmoother v1` は true endgame
 
 ## 共有フォルダ運用
 
@@ -319,6 +321,7 @@ pending runtime queue の正本:
 plug-in ごとの narrow witness に分解して進めています。
 
 - `OLMColorKey`: covered 16bpc slice 9/9 exact
+- `OLMToonDilate`: 8bpc exact を維持したまま 16/32bpc 展開候補
 - `OLMBlur`: `case_0006/0007` を narrow witness に分離済み
 - `OLMDistanceGradation`: Power / Constant fixes 後も family-level residual が残り、
   `case_0023` OutsideThreshold=0 witness が active
