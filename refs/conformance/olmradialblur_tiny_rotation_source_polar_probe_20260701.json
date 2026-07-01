@@ -1,0 +1,199 @@
+{
+  "kind": "olmradialblur_tiny_rotation_source_polar_probe",
+  "case_id": "case_0010",
+  "witness_xy": [
+    1614,
+    6
+  ],
+  "run_dir": "/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmradialblur_source_polar_9ppx0o4h/tiny_rotation_source_probe",
+  "sample_indices": [
+    1603,
+    1604,
+    844,
+    845
+  ],
+  "source_probe_origin": [
+    1598,
+    838
+  ],
+  "source_probe_size": [
+    11,
+    13
+  ],
+  "strongest_positive": [
+    {
+      "xy": [
+        1608,
+        838
+      ],
+      "rgba": [
+        0.452643,
+        0.452643,
+        0.452643,
+        1
+      ],
+      "luma": 0.45264299999999996
+    },
+    {
+      "xy": [
+        1601,
+        843
+      ],
+      "rgba": [
+        0.168253,
+        0.168253,
+        0.168253,
+        1
+      ],
+      "luma": 0.168253
+    },
+    {
+      "xy": [
+        1602,
+        843
+      ],
+      "rgba": [
+        0.0893472,
+        0.0893472,
+        0.0893472,
+        1
+      ],
+      "luma": 0.0893472
+    },
+    {
+      "xy": [
+        1608,
+        839
+      ],
+      "rgba": [
+        0.0355792,
+        0.0355792,
+        0.0355792,
+        1
+      ],
+      "luma": 0.0355792
+    }
+  ],
+  "dominant_local_positive_cluster": [
+    {
+      "xy": [
+        1601,
+        843
+      ],
+      "rgba": [
+        0.168253,
+        0.168253,
+        0.168253,
+        1
+      ],
+      "luma": 0.168253
+    },
+    {
+      "xy": [
+        1602,
+        843
+      ],
+      "rgba": [
+        0.0893472,
+        0.0893472,
+        0.0893472,
+        1
+      ],
+      "luma": 0.0893472
+    }
+  ],
+  "strongest_negative": [
+    {
+      "xy": [
+        1601,
+        845
+      ],
+      "rgba": [
+        -0.624861,
+        -0.624861,
+        -0.624861,
+        1
+      ],
+      "luma": -0.624861
+    },
+    {
+      "xy": [
+        1601,
+        844
+      ],
+      "rgba": [
+        -0.189342,
+        -0.189342,
+        -0.189342,
+        1
+      ],
+      "luma": -0.189342
+    }
+  ],
+  "direct_source_cells": [
+    {
+      "xy": [
+        1603,
+        844
+      ],
+      "rgba": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "xy": [
+        1604,
+        844
+      ],
+      "rgba": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "xy": [
+        1603,
+        845
+      ],
+      "rgba": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "xy": [
+        1604,
+        845
+      ],
+      "rgba": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "witness_sample_rgba": [
+    -0.00408606,
+    -0.00408606,
+    -0.00408606,
+    1
+  ],
+  "witness_sample_u8": [
+    0,
+    0,
+    0,
+    255
+  ],
+  "conclusion": {
+    "summary": "The dominant local positive source-polar family sits above the witness rows, centered at row 843 / angles 1601..1602, while the four direct source cells for rows 844/845 are all black. There is one farther bright outlier at (1608,838), but it is spatially separated from the local cluster that can plausibly feed the witness.",
+    "implication": "The current same-row support can sample negative or zero cells at the witness, but it has no mechanism to carry the row-843 bright family into the rows that dominate the final bilinear mix."
+  }
+}

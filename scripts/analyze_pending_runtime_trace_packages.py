@@ -32,6 +32,7 @@ PRIORITY_PROFILES = {
 
 PARTIAL_STILL_PENDING_REQUEST_IDS = {
     "olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630",
+    "olmradialblur_caller_collapse_followup_20260701",
 }
 
 COMPARISON_COMMANDS = [

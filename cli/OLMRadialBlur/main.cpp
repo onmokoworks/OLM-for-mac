@@ -140,6 +140,11 @@ struct WitnessDump {
     int neighborhood_origin_y = 0;
     float neighborhood_rgba[9][4] = {};
     float neighborhood_valid[9] = {};
+    int source_probe_origin_x = 0;
+    int source_probe_origin_y = 0;
+    int source_probe_width = 11;
+    int source_probe_height = 13;
+    float source_probe_rgba[143][4] = {};
     std::string rgba_sampler_alpha_mode;
     std::string outer_caller_collapse_mode;
     int row_probe_half_span = 4;
@@ -199,6 +204,23 @@ void maybe_write_witness_dump(const RadialBlurParams &params, const WitnessDump 
             << witness.neighborhood_rgba[i][2] << ", " << witness.neighborhood_rgba[i][3] << "], "
             << "\"valid\": " << witness.neighborhood_valid[i] << "}";
         out << (i == 8 ? "\n" : ",\n");
+    }
+    out << "  ],\n";
+    out << "  \"source_probe_origin\": [" << witness.source_probe_origin_x << ", "
+        << witness.source_probe_origin_y << "],\n";
+    out << "  \"source_probe_size\": [" << witness.source_probe_width << ", "
+        << witness.source_probe_height << "],\n";
+    out << "  \"source_probe\": [\n";
+    const int source_probe_count = witness.source_probe_width * witness.source_probe_height;
+    for (int i = 0; i < source_probe_count; ++i) {
+        const int nx = witness.source_probe_origin_x + (i % witness.source_probe_width);
+        const int ny = witness.source_probe_origin_y + (i / witness.source_probe_width);
+        out << "    {\"xy\": [" << nx << ", " << ny << "], "
+            << "\"rgba\": [" << witness.source_probe_rgba[i][0] << ", "
+            << witness.source_probe_rgba[i][1] << ", "
+            << witness.source_probe_rgba[i][2] << ", "
+            << witness.source_probe_rgba[i][3] << "]}";
+        out << (i + 1 == source_probe_count ? "\n" : ",\n");
     }
     out << "  ],\n";
     out << "  \"rgba_sampler_alpha_mode\": \"" << witness.rgba_sampler_alpha_mode << "\",\n";
@@ -2218,6 +2240,17 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
                         const int py = std::max(0, std::min(radius_count - 1, witness.neighborhood_origin_y + oy));
                         for (int c = 0; c < 4; ++c) witness.neighborhood_rgba[ni][c] = sample(px, py, c);
                         witness.neighborhood_valid[ni] = collapsed_valid(px, py);
+                    }
+                }
+                witness.source_probe_origin_x = positive_mod(x0 - 5, angular_count);
+                witness.source_probe_origin_y = std::max(0, y0 - 6);
+                int spi = 0;
+                for (int oy = 0; oy < witness.source_probe_height; ++oy) {
+                    for (int ox = 0; ox < witness.source_probe_width; ++ox, ++spi) {
+                        const int px = positive_mod(witness.source_probe_origin_x + ox, angular_count);
+                        const int py = std::max(0, std::min(radius_count - 1, witness.source_probe_origin_y + oy));
+                        const size_t src_idx = (static_cast<size_t>(py) * angular_count + px) * 4;
+                        for (int c = 0; c < 4; ++c) witness.source_probe_rgba[spi][c] = polar.rgba[src_idx + c];
                     }
                 }
             }

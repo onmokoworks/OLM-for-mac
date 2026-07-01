@@ -1,0 +1,213 @@
+{
+  "kind": "olmradialblur_tiny_rotation_row_coupling_probe",
+  "case_id": "case_0010",
+  "witness_xy": [
+    1614,
+    6
+  ],
+  "window_radius": 12,
+  "bright_threshold_r": 200,
+  "reference": {
+    "bright_count": 17,
+    "center_of_mass": [
+      1611.7058823529412,
+      2.7058823529411766
+    ],
+    "witness_rgba": [
+      255,
+      255,
+      255,
+      255
+    ],
+    "patch_r": [
+      [
+        251,
+        247,
+        253
+      ],
+      [
+        4,
+        253,
+        251
+      ],
+      [
+        5,
+        1,
+        255
+      ]
+    ],
+    "top_pixels": [
+      [
+        255,
+        1614,
+        6
+      ],
+      [
+        254,
+        1612,
+        1
+      ],
+      [
+        253,
+        1614,
+        4
+      ],
+      [
+        253,
+        1613,
+        5
+      ],
+      [
+        251,
+        1614,
+        5
+      ],
+      [
+        251,
+        1612,
+        4
+      ],
+      [
+        247,
+        1613,
+        4
+      ],
+      [
+        247,
+        1611,
+        3
+      ],
+      [
+        247,
+        1610,
+        2
+      ],
+      [
+        246,
+        1608,
+        0
+      ],
+      [
+        245,
+        1613,
+        3
+      ],
+      [
+        244,
+        1609,
+        1
+      ]
+    ]
+  },
+  "variants": [
+    {
+      "name": "baseline",
+      "label": "baseline",
+      "diff": {
+        "max_diff": 255,
+        "mean_diff": 0.01032033661265432,
+        "nonzero_px": 33740,
+        "nonzero_px_percent": 1.6271219135802468
+      },
+      "bright_count": 0,
+      "center_of_mass": null,
+      "witness_rgba": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "patch_r": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          0,
+          0
+        ],
+        [
+          5,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "prev2-k2-positive",
+      "label": "prev2-k2-positive scale=0.0025",
+      "diff": {
+        "max_diff": 255,
+        "mean_diff": 0.010719039351851851,
+        "nonzero_px": 35974,
+        "nonzero_px_percent": 1.7348572530864197
+      },
+      "bright_count": 0,
+      "center_of_mass": null,
+      "witness_rgba": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "patch_r": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          0,
+          0
+        ],
+        [
+          5,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "prev2-row-tail-positive",
+      "label": "prev2-row-tail-positive scale=0.005",
+      "diff": {
+        "max_diff": 255,
+        "mean_diff": 0.012562572337962962,
+        "nonzero_px": 42503,
+        "nonzero_px_percent": 2.0497202932098766
+      },
+      "bright_count": 0,
+      "center_of_mass": null,
+      "witness_rgba": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "patch_r": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          0,
+          0
+        ],
+        [
+          5,
+          1,
+          0
+        ]
+      ]
+    }
+  ],
+  "conclusion": {
+    "summary": "The tested row-coupled diagnostics still do not recreate the missing bright lobe near the tiny Rotation witness. They can move global mean_diff, but the local 25x25 bright-pixel count remains zero and the witness stays black.",
+    "implication": "The useful clue remains structural and diagnostic only: a sparse cross-row positive family may exist upstream, but these current row-coupled surrogates are not close enough to promote into the port."
+  }
+}

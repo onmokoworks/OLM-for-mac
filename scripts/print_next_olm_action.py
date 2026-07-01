@@ -164,6 +164,16 @@ def runtime_trace_actions(
     actions = next_actions.get("covered_actions", [])
     if not isinstance(actions, list):
         return []
+    pending_report_ids = pending_runtime_trace_request_ids(repo_root())
+    if pending_report_ids:
+        return [
+            action
+            for action in actions
+            if isinstance(action, dict)
+            and (action.get("status") == "runtime-trace" or action.get("mode") == "external-trace")
+            and isinstance(action.get("request_id"), str)
+            and action.get("request_id") in pending_report_ids
+        ]
     answered = set(trace_summary.get("answered_request_ids", [])) if trace_summary else set()
     answered.update(trace_summary.get("superseded_request_ids", []) if trace_summary else [])
     return [
@@ -172,6 +182,42 @@ def runtime_trace_actions(
         if isinstance(action, dict)
         and (action.get("status") == "runtime-trace" or action.get("mode") == "external-trace")
         and action.get("request_id") not in answered
+    ]
+
+
+def pending_runtime_trace_request_ids(root: Path) -> set[str]:
+    rows = pending_runtime_trace_rows(root)
+    return {row["request_id"] for row in rows if isinstance(row.get("request_id"), str)}
+
+
+def pending_runtime_trace_priorities(root: Path) -> dict[str, int]:
+    priorities: dict[str, int] = {}
+    for row in pending_runtime_trace_rows(root):
+        request_id = row.get("request_id")
+        if not isinstance(request_id, str) or not request_id:
+            continue
+        try:
+            priorities[request_id] = int(row.get("priority") or 999999)
+        except (TypeError, ValueError):
+            priorities[request_id] = 999999
+    return priorities
+
+
+def pending_runtime_trace_rows(root: Path) -> list[dict[str, Any]]:
+    path = root / "refs" / "reports" / "pending_runtime_trace_packages.json"
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return []
+    if not isinstance(data, dict):
+        return []
+    rows = data.get("requests")
+    if not isinstance(rows, list):
+        return []
+    return [
+        row
+        for row in rows
+        if isinstance(row, dict) and row.get("status") == "pending"
     ]
 
 
@@ -582,6 +628,7 @@ def project_runtime_trace_packages(
     package_dir = root / "refs" / "runtime_trace_packages"
     if not package_dir.exists():
         return []
+    pending_priorities = pending_runtime_trace_priorities(root)
     answered = set(trace_summary.get("answered_request_ids", [])) if trace_summary else set()
     answered.update(trace_summary.get("superseded_request_ids", []) if trace_summary else [])
     stale_request_ids = {
@@ -611,7 +658,12 @@ def project_runtime_trace_packages(
         if request_ids and all(request_id in stale_request_ids for request_id in request_ids):
             continue
         profile = str(manifest.get("profile", ""))
-        if request_ids and all(request_id in answered for request_id in request_ids):
+        if request_ids and all(
+            request_id in answered and request_id not in pending_priorities
+            for request_id in request_ids
+        ):
+            continue
+        if pending_priorities and request_ids and not any(request_id in pending_priorities for request_id in request_ids):
             continue
         row = list_olm_return_candidates.build_row(path)
         row["kind"] = "runtime-trace-request-package"
@@ -656,6 +708,14 @@ def project_runtime_trace_packages(
     ]
 
     def sort_key(row: dict[str, Any]) -> tuple[int, float]:
+        if pending_priorities:
+            request_priorities = [
+                pending_priorities[request_id]
+                for request_id in row.get("request_ids", [])
+                if request_id in pending_priorities
+            ]
+            if request_priorities:
+                return (min(request_priorities), -float(row.get("mtime", 0)))
         haystack = " ".join(
             [
                 str(row.get("profile", "")),

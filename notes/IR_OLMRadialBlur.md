@@ -393,6 +393,13 @@ Current binary-grounded sequence:
   Rotation must couple neighboring radius rows or otherwise repopulate later
   rows before final inverse sampling; a pure same-row support model cannot
   generate the white lobe at `(1614,6)`.
+- 2026-07-01 turns that source-polar scan into a reproducible artifact.
+  `refs/conformance/olmradialblur_tiny_rotation_source_polar_probe_20260701.md`
+  re-runs the baseline C++ slice with a source-polar witness dump and keeps the
+  same split explicit: there is one farther bright outlier at `(1608,838)`, but
+  the dominant local positive cluster that can plausibly feed the witness still
+  sits at `row 843 / ai 1601..1602`, while the direct source cells for
+  `(1603..1604,844..845)` are all black.
 - A first bounded row-coupling probe gives directional evidence for that read.
   A temporary CLI diagnostic
   `--outer-row-coupled-mode prev-row-add --outer-row-coupled-scale S` injects
@@ -503,6 +510,16 @@ Current binary-grounded sequence:
   nearby lobe; the bright contribution family is absent or numerically
   suppressed upstream of final inverse sampling. See
   `refs/conformance/olmradialblur_tiny_rotation_bright_lobe_search_20260630.md`.
+- 2026-07-01 reran the two best row-coupled diagnostics against that same
+  bright-lobe metric and tightened the conclusion further. Neither
+  `prev2-k2-positive scale=0.0025` nor `prev2-row-tail-positive scale=0.005`
+  restores any nearby `R >= 200` pixels in the `25x25` witness window; both
+  leave the local witness patch black at `(1614,6)`, and `prev2-k2-positive`
+  keeps the exact same local `[[0,0,0],[4,0,0],[5,1,0]]` patch as baseline.
+  So those probes remain useful only as a qualitative clue that some sparse
+  cross-row positive family may exist upstream; they are not a close numeric
+  stand-in for the AEX bright-lobe path. See
+  `refs/conformance/olmradialblur_tiny_rotation_row_coupling_probe_20260701.md`.
 - 2026-06-21 Mac-side recheck while Smoother2 is paused:
   full Rotation remains expected-red in the current C++ CLI:
   `case_0001 max=255 mean=1.9034`,
