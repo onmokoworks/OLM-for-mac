@@ -48,6 +48,25 @@ def make_return_zip(path: Path, *, member: str = "runtime_trace_result.json", ba
         archive.writestr(member, json.dumps(result, indent=2))
 
 
+def make_partial_return_zip(path: Path, request_id: str, *, member: str = "runtime_trace_result.json") -> None:
+    result = {
+        "kind": "olm_runtime_trace_result",
+        "schema": 1,
+        "results": [
+            {
+                "request_id": request_id,
+                "status": "failed_breakpoint_watchpoint",
+                "summary": "Synthetic smoke: watchpoint did not fire after module load.",
+                "observations": {
+                    "failed_breakpoint_or_watchpoint_reason": "synthetic smoke failure mode",
+                },
+            }
+        ],
+    }
+    with zipfile.ZipFile(path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr(member, json.dumps(result, indent=2))
+
+
 def main() -> int:
     repo = Path(__file__).resolve().parents[2]
     py = sys.executable
@@ -214,6 +233,53 @@ def main() -> int:
         )
         if template_proc.returncode == 0:
             print("[FAIL] template-only runtime request package was accepted as a return")
+            return 1
+
+        partial_package = tmp_path / "runtime_request_olmblur_case0006.zip"
+        partial_package_proc = run(
+            [
+                py,
+                "scripts/package_runtime_trace_requests.py",
+                "--profile",
+                "olmblur-case0006-helper-prestore",
+                "--output",
+                str(partial_package),
+            ],
+            repo,
+        )
+        if partial_package_proc.returncode != 0:
+            return partial_package_proc.returncode
+
+        partial_returned = tmp_path / "runtime_trace_partial_return.zip"
+        make_partial_return_zip(partial_returned, "olmblur_case0006_helper_prestore_witness_20260630")
+        partial_summary = tmp_path / "partial_runtime_summary.json"
+        partial_markdown = tmp_path / "partial_runtime_summary.md"
+        partial_comparisons = tmp_path / "partial_runtime_comparisons"
+        partial_intake = run(
+            [
+                py,
+                "scripts/intake_olm_return.py",
+                str(partial_returned),
+                "--runtime-summary-json",
+                str(partial_summary),
+                "--runtime-summary-md",
+                str(partial_markdown),
+                "--runtime-comparison-dir",
+                str(partial_comparisons),
+            ],
+            repo,
+        )
+        if partial_intake.returncode == 0:
+            print("[FAIL] partial runtime intake unexpectedly succeeded")
+            return 1
+        if not partial_summary.exists() or not partial_markdown.exists():
+            print("[FAIL] partial runtime intake did not write summary artifacts")
+            return 1
+        if not (partial_comparisons / "index.json").exists():
+            print("[FAIL] partial runtime intake did not write comparison index")
+            return 1
+        if not (partial_comparisons / "olmblur_case0006_helper_prestore_witness.md").exists():
+            print("[FAIL] partial runtime intake did not write OLMBlur comparison markdown")
             return 1
     print("[OK] runtime trace return smoke")
     return 0

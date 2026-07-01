@@ -10,9 +10,11 @@ from pathlib import Path
 from typing import Any
 
 
-REQUEST_ID = "olmdistancegradation_field_prep_runtime_trace_20260619"
+REQUEST_ID = "olmdistancegradation_16bpc_constant_boundary_witness_20260630"
+CASE0023_REQUEST_ID = "olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630"
+FIELD_PREP_REQUEST_ID = "olmdistancegradation_field_prep_runtime_trace_20260619"
 CASE0026_REQUEST_ID = "olmdistancegradation_16bpc_case0026_x_witness_20260628"
-REQUEST_IDS = {REQUEST_ID, CASE0026_REQUEST_ID}
+REQUEST_IDS = {REQUEST_ID, CASE0023_REQUEST_ID, FIELD_PREP_REQUEST_ID, CASE0026_REQUEST_ID}
 
 LOCAL_ASSUMPTIONS = {
     "distance_transform": "scipy/OpenCV-like Euclidean distance_transform_edt for current CLI; Windows AEX embeds OpenCV 4.5.5",
@@ -50,9 +52,11 @@ def fail(message: str) -> int:
 
 
 def find_result(summary: dict[str, Any]) -> dict[str, Any] | None:
-    for row in summary.get("results", []):
-        if isinstance(row, dict) and row.get("request_id") in REQUEST_IDS:
-            return row
+    ordered_ids = [CASE0023_REQUEST_ID, REQUEST_ID, CASE0026_REQUEST_ID, FIELD_PREP_REQUEST_ID]
+    for request_id in ordered_ids:
+        for row in summary.get("results", []):
+            if isinstance(row, dict) and row.get("request_id") == request_id:
+                return row
     return None
 
 
@@ -112,6 +116,78 @@ def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
     requested = observations.get("requested_for_each_pixel", {})
     if not isinstance(requested, dict):
         requested = {}
+    if row.get("request_id") in {REQUEST_ID, CASE0023_REQUEST_ID}:
+        if row.get("request_id") == CASE0023_REQUEST_ID:
+            case_meta = observations.get("case", {})
+            if not isinstance(case_meta, dict):
+                case_meta = {}
+            return {
+                "present": True,
+                "status": row.get("status"),
+                "summary": row.get("summary"),
+                "source_file": row.get("source_file"),
+                "cases": [case_meta] if case_meta else [],
+                "field_values": {
+                    "source_input_rgba16": requested.get("source_input_rgba16"),
+                    "binary_mask_before_distance_transform": requested.get("binary_mask_value_before_distance_transform"),
+                    "inside_or_outside_distance_before_threshold": {
+                        "inside": requested.get("inside_distance_before_threshold"),
+                        "outside": requested.get("outside_distance_before_threshold"),
+                    },
+                    "field_value_before_compose_or_color_pick": requested.get(
+                        "field_value_after_constant_threshold_before_compose"
+                    ) or requested.get("field_value_finally_consumed_by_FUN_181170480"),
+                },
+                "threshold_and_normalization": {
+                    "threshold_values_ui_and_internal": requested.get("threshold_values"),
+                    "comparison_rule": requested.get("comparison_rule"),
+                    "selected_side_inside_outside_or_both": requested.get("selected_side_for_both_mode"),
+                    "outside_threshold_zero_special_case": requested.get("outside_threshold_zero_special_case"),
+                },
+                "compose": {
+                    "output_rgba_float_before_cvt": requested.get("fun_181170480_output_rgba_before_word_store"),
+                    "final_rgba16": requested.get("final_rgba16"),
+                },
+                "branch_decision": {
+                    "focus": observations.get("focus"),
+                    "known_binary_facts_to_preserve": observations.get("known_binary_facts_to_preserve"),
+                    "failed_breakpoint_or_watchpoint_reason": observations.get("failed_breakpoint_or_watchpoint_reason"),
+                },
+            }
+        return {
+            "present": True,
+            "status": row.get("status"),
+            "summary": row.get("summary"),
+            "source_file": row.get("source_file"),
+            "cases": observations.get("cases", []),
+            "field_values": {
+                key: requested.get(key)
+                for key in (
+                    "source_input_rgba16",
+                    "binary_mask_before_distance_transform",
+                    "inside_or_outside_distance_before_threshold",
+                    "field_value_before_compose_or_color_pick",
+                    "fun_181170480_X_before_invert",
+                    "fun_181170480_X_after_invert",
+                )
+            },
+            "threshold_and_normalization": {
+                key: requested.get(key)
+                for key in (
+                    "threshold_values_ui_and_internal",
+                    "comparison_rule",
+                    "selected_side_inside_outside_or_both",
+                )
+            },
+            "compose": {
+                key: requested.get(key)
+                for key in (
+                    "output_rgba_float_before_cvt",
+                    "final_rgba16",
+                )
+            },
+            "branch_decision": observations.get("case_level_contract", {}),
+        }
     if row.get("request_id") == CASE0026_REQUEST_ID:
         return {
             "present": True,
@@ -192,6 +268,10 @@ def classify_next_focus(windows: dict[str, Any]) -> str:
         return "case0026-branch-decision"
     if concrete_trace_value(field_values.get("field_pixel_raw_rgba16_or_mat_channels_before_compose")):
         return "case0026-field-prep-normalization"
+    if concrete_trace_value(field_values.get("inside_or_outside_distance_before_threshold")) or concrete_trace_value(
+        field_values.get("binary_mask_before_distance_transform")
+    ):
+        return "constant-boundary-threshold-ownership"
     opencv_calls = windows.get("opencv_calls", {})
     threshold = windows.get("threshold_and_normalization")
     compose = windows.get("compose", {})
@@ -273,6 +353,7 @@ def render_markdown(comparison: dict[str, Any]) -> str:
             "- `case0026-field-prep-normalization`: Windows already has a ramp before 16bpc compose; fix field prep/normalization.",
             "- `case0026-invert-power-compose`: Windows creates the ramp in `FUN_181170480`; fix invert/power/compose ownership.",
             "- `case0026-parameter-color-branch`: fix AE parameter/color branch ownership before math changes.",
+            "- `constant-boundary-threshold-ownership`: Constant-mode boundary values were captured; decide `<` vs `<=`, side ownership, and plateau handling before touching compose.",
             "- `trace-too-sparse`: request missing field/OpenCV/compose values instead of PNG tuning.",
             "",
         ]

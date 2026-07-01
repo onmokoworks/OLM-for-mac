@@ -2,6 +2,8 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstdio>
+#include <cstdlib>
 #include <vector>
 
 namespace {
@@ -13,6 +15,16 @@ struct FloatRGBA {
 	float g = 0.0f;
 	float b = 0.0f;
 	float a = 0.0f;
+};
+
+struct KiraKiraDebugPoint {
+	A_long x = 0;
+	A_long y = 0;
+};
+
+struct KiraKiraDebugConfig {
+	const char *dump_path = nullptr;
+	std::vector<KiraKiraDebugPoint> points;
 };
 
 static void UnionLRect(const PF_LRect *src, PF_LRect *dst)
@@ -30,6 +42,94 @@ static void UnionLRect(const PF_LRect *src, PF_LRect *dst)
 static float Clamp01(float v)
 {
 	return std::min(1.0f, std::max(0.0f, v));
+}
+
+static std::vector<KiraKiraDebugPoint> ParseKiraKiraDebugPoints(const char *spec)
+{
+	std::vector<KiraKiraDebugPoint> points;
+	if (!spec || !*spec) return points;
+	const char *p = spec;
+	while (*p) {
+		int x = -1;
+		int y = -1;
+		int consumed = 0;
+		if (std::sscanf(p, "%d,%d%n", &x, &y, &consumed) == 2 && consumed > 0) {
+			points.push_back({ (A_long)x, (A_long)y });
+			p += consumed;
+			while (*p == ';' || *p == ' ' || *p == '\t' || *p == '\n' || *p == '\r') ++p;
+		} else {
+			break;
+		}
+	}
+	return points;
+}
+
+static KiraKiraDebugConfig LoadKiraKiraDebugConfig()
+{
+	KiraKiraDebugConfig config;
+	config.dump_path = std::getenv("OLMKIRAKIRA_DEBUG_DUMP_PATH");
+	config.points = ParseKiraKiraDebugPoints(std::getenv("OLMKIRAKIRA_DEBUG_POINTS"));
+	if (!config.dump_path || !*config.dump_path || config.points.empty()) {
+		config.dump_path = nullptr;
+		config.points.clear();
+	}
+	return config;
+}
+
+static bool KiraKiraDebugHasPoint(const KiraKiraDebugConfig &debug, A_long x, A_long y)
+{
+	for (const KiraKiraDebugPoint &point : debug.points) {
+		if (point.x == x && point.y == y) return true;
+	}
+	return false;
+}
+
+static void KiraKiraDebugDumpPoint(
+	const KiraKiraDebugConfig &debug,
+	short bitdepth,
+	A_long width,
+	A_long height,
+	A_long x,
+	A_long y,
+	const FloatRGBA &src,
+	const FloatRGBA &glow_normalized,
+	float glow_alpha_after_opacity,
+	const FloatRGBA &out_prequantized)
+{
+	if (!debug.dump_path || !KiraKiraDebugHasPoint(debug, x, y)) return;
+	FILE *fp = std::fopen(debug.dump_path, "a");
+	if (!fp) return;
+	const A_u_char out8r = static_cast<A_u_char>(std::lround(Clamp01(out_prequantized.r) * 255.0f));
+	const A_u_char out8g = static_cast<A_u_char>(std::lround(Clamp01(out_prequantized.g) * 255.0f));
+	const A_u_char out8b = static_cast<A_u_char>(std::lround(Clamp01(out_prequantized.b) * 255.0f));
+	const A_u_char out8a = static_cast<A_u_char>(std::lround(Clamp01(out_prequantized.a) * 255.0f));
+	std::fprintf(
+		fp,
+		"OLMKIRAKIRA_DEBUG_POINT bitdepth=%d w=%d h=%d x=%d y=%d "
+		"src=(%.9g,%.9g,%.9g,%.9g) src_hex=(%a,%a,%a,%a) "
+		"glow_norm=(%.9g,%.9g,%.9g,%.9g) glow_norm_hex=(%a,%a,%a,%a) "
+		"glow_alpha_after_opacity=%.9g glow_alpha_after_opacity_hex=%a "
+		"out_prequantized=(%.9g,%.9g,%.9g,%.9g) out_prequantized_hex=(%a,%a,%a,%a) "
+		"out_u8=(%u,%u,%u,%u)\n",
+		(int)bitdepth,
+		(int)width,
+		(int)height,
+		(int)x,
+		(int)y,
+		src.r, src.g, src.b, src.a,
+		(double)src.r, (double)src.g, (double)src.b, (double)src.a,
+		glow_normalized.r, glow_normalized.g, glow_normalized.b, glow_normalized.a,
+		(double)glow_normalized.r, (double)glow_normalized.g, (double)glow_normalized.b, (double)glow_normalized.a,
+		glow_alpha_after_opacity,
+		(double)glow_alpha_after_opacity,
+		out_prequantized.r, out_prequantized.g, out_prequantized.b, out_prequantized.a,
+		(double)out_prequantized.r, (double)out_prequantized.g, (double)out_prequantized.b, (double)out_prequantized.a,
+		(unsigned int)out8r,
+		(unsigned int)out8g,
+		(unsigned int)out8b,
+		(unsigned int)out8a
+	);
+	std::fclose(fp);
 }
 
 static int Reflect101Index(int i, int n)
@@ -299,11 +399,12 @@ static std::vector<float> MakeSeed(PF_EffectWorld *input, const OLMKiraKiraInfo 
 }
 
 template <typename PixelT>
-static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMKiraKiraInfo &info)
+static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMKiraKiraInfo &info, short bitdepth)
 {
 	const A_long w = output->width;
 	const A_long h = output->height;
 	if (w <= 0 || h <= 0 || input->width != w || input->height != h) return PF_Err_BAD_CALLBACK_PARAM;
+	const KiraKiraDebugConfig debug = LoadKiraKiraDebugConfig();
 
 	const PF_FpLong comp_width = info.comp_width > 0.0 ? info.comp_width : (PF_FpLong)w;
 	const double length_scale = comp_width > 0.0 ? (double)w / comp_width : 1.0;
@@ -350,11 +451,13 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			FloatRGBA src = PixelTraits<PixelT>::Read(*PixelAtConst<PixelT>(input, x, y));
 			float src_a = src.a * (float)info.source_opacity;
 			float glow_a = Clamp01(glow[idx].a * (float)info.glow_opacity);
+			const FloatRGBA glow_normalized = glow[idx];
 			FloatRGBA out;
 			out.r = 1.0f - (1.0f - src.r) * (1.0f - Clamp01(glow[idx].r * glow_a));
 			out.g = 1.0f - (1.0f - src.g) * (1.0f - Clamp01(glow[idx].g * glow_a));
 			out.b = 1.0f - (1.0f - src.b) * (1.0f - Clamp01(glow[idx].b * glow_a));
 			out.a = src_a;
+			KiraKiraDebugDumpPoint(debug, bitdepth, w, h, x, y, src, glow_normalized, glow_a, out);
 			*PixelAt<PixelT>(output, x, y) = PixelTraits<PixelT>::Write(out);
 		}
 	}
@@ -363,9 +466,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 
 static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output, const OLMKiraKiraInfo &info, short bitdepth)
 {
-	if (bitdepth == 8) return RenderTyped<PF_Pixel8>(input, output, info);
-	if (bitdepth == 16) return RenderTyped<PF_Pixel16>(input, output, info);
-	if (bitdepth == 32) return RenderTyped<PF_PixelFloat>(input, output, info);
+	if (bitdepth == 8) return RenderTyped<PF_Pixel8>(input, output, info, bitdepth);
+	if (bitdepth == 16) return RenderTyped<PF_Pixel16>(input, output, info, bitdepth);
+	if (bitdepth == 32) return RenderTyped<PF_PixelFloat>(input, output, info, bitdepth);
 	return PF_Err_BAD_CALLBACK_PARAM;
 }
 
@@ -491,15 +594,15 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_HighlightRadius_Param_Name), 0, 1000, 0, 300, 0, HIGHLIGHT_RADIUS_DISK_ID);
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(GetStringPtr(StrID_GlowOpacity_Param_Name), 0, 100, 0, 100, 100, GLOW_OPACITY_DISK_ID);
+	PF_ADD_SLIDER(GetStringPtr(StrID_GlowOpacity_Param_Name), 0, 10000, 0, 100, 100, GLOW_OPACITY_DISK_ID);
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_POPUP(GetStringPtr(StrID_Channel_Param_Name), 4, 1, GetStringPtr(StrID_Channel_Choices), CHANNEL_DISK_ID);
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_POPUP(GetStringPtr(StrID_BlurMode_Param_Name), 2, 2, GetStringPtr(StrID_BlurMode_Choices), BLUR_MODE_DISK_ID);
+	PF_ADD_POPUP(GetStringPtr(StrID_BlurMode_Param_Name), 4, 2, GetStringPtr(StrID_BlurMode_Choices), BLUR_MODE_DISK_ID);
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_CHECKBOX(GetStringPtr(StrID_ApproximatedInput_Param_Name), "", FALSE, 0, APPROX_INPUT_DISK_ID);
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(GetStringPtr(StrID_StrengthMultiplier_Param_Name), 0, 500, 0, 200, 100, STRENGTH_MULTIPLIER_DISK_ID);
+	PF_ADD_SLIDER(GetStringPtr(StrID_StrengthMultiplier_Param_Name), 0, 1000, 0, 200, 100, STRENGTH_MULTIPLIER_DISK_ID);
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_SourceOpacity_Param_Name), 0, 100, 0, 100, 100, SOURCE_OPACITY_DISK_ID);
 	AEFX_CLR_STRUCT(def);
@@ -523,7 +626,7 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_Diagonal2Length_Param_Name), 0, 1000, 0, 300, 50, DIAGONAL2_LENGTH_DISK_ID);
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(GetStringPtr(StrID_FadeOut_Param_Name), 0, 100, 0, 100, 0, FADE_OUT_DISK_ID);
+	PF_ADD_SLIDER(GetStringPtr(StrID_FadeOut_Param_Name), 0, 1, 0, 1, 0, FADE_OUT_DISK_ID);
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_COLOR(GetStringPtr(StrID_Diagonal2Color_Param_Name), 255, 255, 255, DIAGONAL2_COLOR_DISK_ID);
 	AEFX_CLR_STRUCT(def);

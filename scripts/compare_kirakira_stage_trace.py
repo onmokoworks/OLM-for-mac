@@ -23,6 +23,7 @@ REQUEST_IDS = {
     "kirakira_boxfilter_pass1_microprobe_20260622",
     "kirakira_aggregation_compose_bt709_20260624",
     "kirakira_compose_writeback_witness_20260630",
+    "kirakira_hotspot_compose_writeback_witness_20260701",
 }
 DEFAULT_REQUEST_ID = "kirakira_aggregation_compose_bt709_20260624"
 
@@ -426,6 +427,8 @@ def recommended_next_evidence(focus: str) -> str:
         return "Capture pass-by-pass boxFilter values for the same witnesses, including pass-1 input and stored output."
     if focus == "aggregation-or-compose":
         return "Ground the final scale/screen-over compose inputs before changing ray generation."
+    if focus == "hotspot-local-compose-writeback":
+        return "Keep the ask hotspot-local: compare post-FUN_18114fd90 glow, merge-mode-1 composed RGBA, and final quantization/writeback only at the residual hotspot."
     if focus == "fd90-aggregation-grounded-compose-scale":
         return "FUN_18114fd90 aggregation is grounded; update the aggregation scale/alpha model, then remeasure before requesting more compose internals."
     if focus == "ray-helper-stages-match-aggregation-or-compose":
@@ -552,6 +555,10 @@ def build_comparison(summary: dict[str, Any], local_trace: dict[str, Any]) -> di
             likely_next_focus = "boxfilter-stage-values"
         elif has_concrete_stage_value(win_witnesses) or has_concrete_stage_value(win_box):
             likely_next_focus = "boxfilter-stage-values"
+        elif row.get("request_id") == "kirakira_hotspot_compose_writeback_witness_20260701" and (
+            has_concrete_stage_value(win_merge) or has_concrete_stage_value(win_fd90)
+        ):
+            likely_next_focus = "hotspot-local-compose-writeback"
         elif row.get("request_id") in {"kirakira_aggregation_compose_bt709_20260624", "kirakira_compose_writeback_witness_20260630"} and has_concrete_stage_value(win_fd90):
             likely_next_focus = "fd90-aggregation-grounded-compose-scale"
         elif has_concrete_stage_value(win_agg) or has_concrete_stage_value(win_merge):

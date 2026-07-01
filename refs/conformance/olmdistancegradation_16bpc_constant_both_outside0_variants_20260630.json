@@ -1,0 +1,79 @@
+{
+  "kind": "olmdistancegradation_16bpc_constant_both_outside0_variants",
+  "request_zip": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation/bitdepth16_olmdistancegradation_extended_exact.zip",
+  "results": [
+    {
+      "case_id": "olmdistancegradation_extended__case_0022",
+      "outside_threshold": 11,
+      "variant_results": [
+        {
+          "max_diff": 61166,
+          "mean_diff": 2.9357175925925927,
+          "nonzero_px": 702720,
+          "variant": "current_constant"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 2.9357175925925927,
+          "nonzero_px": 702720,
+          "variant": "trunc_plateau_binary"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 2.9357175925925927,
+          "nonzero_px": 702720,
+          "variant": "trunc_second_dt_binary_lt1"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 2.9357175925925927,
+          "nonzero_px": 702720,
+          "variant": "trunc_second_dt_norm"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 2.9357175925925927,
+          "nonzero_px": 702720,
+          "variant": "trunc_second_dt_invnorm"
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0023",
+      "outside_threshold": 0,
+      "variant_results": [
+        {
+          "max_diff": 61166,
+          "mean_diff": 1.0958363474151234,
+          "nonzero_px": 182793,
+          "variant": "trunc_plateau_binary"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 1.0958363474151234,
+          "nonzero_px": 182793,
+          "variant": "trunc_second_dt_binary_lt1"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 1.0958363474151234,
+          "nonzero_px": 182793,
+          "variant": "trunc_second_dt_invnorm"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 295.30543559510033,
+          "nonzero_px": 203213,
+          "variant": "current_constant"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 15889.696500048225,
+          "nonzero_px": 1285562,
+          "variant": "trunc_second_dt_norm"
+        }
+      ]
+    }
+  ],
+  "status": "diagnostic"
+}

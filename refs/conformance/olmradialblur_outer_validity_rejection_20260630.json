@@ -1,0 +1,418 @@
+{
+  "kind": "olmradialblur_outer_validity_rejection",
+  "status": "diagnostic",
+  "tiny_rotation_case_0010": {
+    "binary_validity_bilinear_alpha": 0.9999997,
+    "local_witness": {
+      "a00": 0.109556,
+      "a01": 0.0509667,
+      "a10": 0.572939,
+      "a11": 0.266538,
+      "alpha": 1,
+      "angle_index": 1603.84,
+      "cell00_rgba": [
+        -0.014711,
+        -0.014711,
+        -0.014711,
+        1
+      ],
+      "cell00_valid": 1,
+      "cell01_rgba": [
+        -0.048549,
+        -0.048549,
+        -0.048549,
+        1
+      ],
+      "cell01_valid": 1,
+      "cell10_rgba": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "cell10_valid": 1,
+      "cell11_rgba": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "cell11_valid": 1,
+      "fx": 0.839478,
+      "fy": 0.317505,
+      "neighborhood": [
+        {
+          "rgba": [
+            0.109881,
+            0.109881,
+            0.109881,
+            1
+          ],
+          "valid": 1,
+          "xy": [
+            1602,
+            843
+          ]
+        },
+        {
+          "rgba": [
+            0.0441839,
+            0.0441839,
+            0.0441839,
+            1
+          ],
+          "valid": 1,
+          "xy": [
+            1603,
+            843
+          ]
+        },
+        {
+          "rgba": [
+            0.00694188,
+            0.00694188,
+            0.00694188,
+            1
+          ],
+          "valid": 1,
+          "xy": [
+            1604,
+            843
+          ]
+        },
+        {
+          "rgba": [
+            -0.0659303,
+            -0.0659303,
+            -0.0659303,
+            1
+          ],
+          "valid": 1,
+          "xy": [
+            1602,
+            844
+          ]
+        },
+        {
+          "rgba": [
+            -0.014711,
+            -0.014711,
+            -0.014711,
+            1
+          ],
+          "valid": 1,
+          "xy": [
+            1603,
+            844
+          ]
+        },
+        {
+          "rgba": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "valid": 1,
+          "xy": [
+            1604,
+            844
+          ]
+        },
+        {
+          "rgba": [
+            -0.217581,
+            -0.217581,
+            -0.217581,
+            1
+          ],
+          "valid": 1,
+          "xy": [
+            1602,
+            845
+          ]
+        },
+        {
+          "rgba": [
+            -0.048549,
+            -0.048549,
+            -0.048549,
+            1
+          ],
+          "valid": 1,
+          "xy": [
+            1603,
+            845
+          ]
+        },
+        {
+          "rgba": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "valid": 1,
+          "xy": [
+            1604,
+            845
+          ]
+        }
+      ],
+      "neighborhood_origin": [
+        1602,
+        843
+      ],
+      "outer_caller_collapse_mode": "none",
+      "path_kind": "rotation",
+      "radius_index": 844.318,
+      "rgba_sampler_alpha_mode": "shared-normalized",
+      "sample_rgb_numerator": [
+        -0.00408606,
+        -0.00408606,
+        -0.00408606
+      ],
+      "sample_rgba": [
+        -0.00408606,
+        -0.00408606,
+        -0.00408606,
+        1
+      ],
+      "sample_u8": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "sample_x0": 1603,
+      "sample_x1": 1604,
+      "sample_y0": 844,
+      "sample_y1": 845,
+      "validity_alpha": 1,
+      "w00": 0.109556,
+      "w01": 0.0509667,
+      "w10": 0.572939,
+      "w11": 0.266538,
+      "xy": [
+        1614,
+        6
+      ]
+    },
+    "reading": "validity-only substitution is not enough for tiny Rotation because all four local cells are already valid while RGB still stays near-black locally",
+    "windows_final_rgba_u8": [
+      255,
+      255,
+      255,
+      255
+    ],
+    "windows_traced_inverse_sampler_rgba": [
+      -0.004081939347088337,
+      -0.004081939347088337,
+      -0.004081939347088337,
+      1.0
+    ]
+  },
+  "zoom_case_0009": {
+    "binary_validity_bilinear_alpha": 0.44250500000000004,
+    "binary_validity_bilinear_alpha_u8_floor": 112,
+    "local_sample_alpha": 1.0,
+    "local_witness": {
+      "a00": 0.341602,
+      "a01": 0.430371,
+      "a10": 0.100903,
+      "a11": 0.127124,
+      "alpha": 1,
+      "angle_index": 1047.56,
+      "cell00_rgba": [
+        0.0824175,
+        0.0118616,
+        0.0118616,
+        1
+      ],
+      "cell00_valid": 1,
+      "cell01_rgba": [
+        0.082198,
+        0.0159394,
+        0.0159394,
+        1
+      ],
+      "cell01_valid": 0,
+      "cell10_rgba": [
+        0.0821793,
+        0.0118454,
+        0.0118454,
+        1
+      ],
+      "cell10_valid": 1,
+      "cell11_rgba": [
+        0.0819587,
+        0.0159147,
+        0.0159147,
+        1
+      ],
+      "cell11_valid": 0,
+      "fx": 0.228027,
+      "fy": 0.557495,
+      "neighborhood": [
+        {
+          "rgba": [
+            0.0879894,
+            0.00630643,
+            0.00630643,
+            1
+          ],
+          "valid": 1,
+          "xy": [
+            1095,
+            1046
+          ]
+        },
+        {
+          "rgba": [
+            0.087741,
+            0.00629918,
+            0.00629918,
+            1
+          ],
+          "valid": 1,
+          "xy": [
+            1096,
+            1046
+          ]
+        },
+        {
+          "rgba": [
+            0.0874931,
+            0.00629193,
+            0.00629193,
+            1
+          ],
+          "valid": 1,
+          "xy": [
+            1097,
+            1046
+          ]
+        },
+        {
+          "rgba": [
+            0.0826563,
+            0.0118777,
+            0.0118777,
+            1
+          ],
+          "valid": 1,
+          "xy": [
+            1095,
+            1047
+          ]
+        },
+        {
+          "rgba": [
+            0.0824175,
+            0.0118616,
+            0.0118616,
+            1
+          ],
+          "valid": 1,
+          "xy": [
+            1096,
+            1047
+          ]
+        },
+        {
+          "rgba": [
+            0.0821793,
+            0.0118454,
+            0.0118454,
+            1
+          ],
+          "valid": 1,
+          "xy": [
+            1097,
+            1047
+          ]
+        },
+        {
+          "rgba": [
+            0.0824379,
+            0.0159642,
+            0.0159642,
+            1
+          ],
+          "valid": 0,
+          "xy": [
+            1095,
+            1048
+          ]
+        },
+        {
+          "rgba": [
+            0.082198,
+            0.0159394,
+            0.0159394,
+            1
+          ],
+          "valid": 0,
+          "xy": [
+            1096,
+            1048
+          ]
+        },
+        {
+          "rgba": [
+            0.0819587,
+            0.0159147,
+            0.0159147,
+            1
+          ],
+          "valid": 0,
+          "xy": [
+            1097,
+            1048
+          ]
+        }
+      ],
+      "neighborhood_origin": [
+        1095,
+        1046
+      ],
+      "outer_caller_collapse_mode": "none",
+      "path_kind": "zoom",
+      "radius_index": 1096.23,
+      "rgba_sampler_alpha_mode": "shared-normalized",
+      "sample_rgb_numerator": [
+        0.0822407,
+        0.0141302,
+        0.0141302
+      ],
+      "sample_rgba": [
+        0.0822407,
+        0.0141302,
+        0.0141302,
+        1
+      ],
+      "sample_u8": [
+        20,
+        3,
+        3,
+        255
+      ],
+      "sample_x0": 1096,
+      "sample_x1": 1097,
+      "sample_y0": 1047,
+      "sample_y1": 1048,
+      "validity_alpha": 0.442505,
+      "w00": 0.341602,
+      "w01": 0.430371,
+      "w10": 0.100903,
+      "w11": 0.127124,
+      "xy": [
+        6,
+        0
+      ]
+    },
+    "reading": "current local binary preserved-validity proxy cannot be the direct caller-collapse source for Zoom case_0009",
+    "windows_final_alpha_u8": 254,
+    "windows_trace_alpha": 0.9999999403953552
+  }
+}

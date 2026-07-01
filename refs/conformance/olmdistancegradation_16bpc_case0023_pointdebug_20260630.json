@@ -1,0 +1,104 @@
+{
+  "kind": "olmdistancegradation_16bpc_case0023_pointdebug",
+  "status": "diagnostic",
+  "source_dump": "/tmp/olmdg_case0023_pointdebug_20260630_multi/field_debug.txt",
+  "bucket_a_inside_1_points": [
+    {
+      "x": 1699,
+      "y": 7,
+      "alpha": 0.00393676758,
+      "d_alpha": 1.0,
+      "field_x": 0.0,
+      "raw_inside": 1.0,
+      "raw_outside": 0.0
+    },
+    {
+      "x": 1698,
+      "y": 7,
+      "alpha": 0.0274658203,
+      "d_alpha": 1.0,
+      "field_x": 0.0,
+      "raw_inside": 1.0,
+      "raw_outside": 0.0
+    },
+    {
+      "x": 1700,
+      "y": 7,
+      "alpha": 0.0,
+      "d_alpha": 0.0,
+      "field_x": 1.0,
+      "raw_inside": 0.0,
+      "raw_outside": 1.0
+    },
+    {
+      "x": 1699,
+      "y": 6,
+      "alpha": 0.0,
+      "d_alpha": 0.0,
+      "field_x": 1.0,
+      "raw_inside": 0.0,
+      "raw_outside": 1.0
+    },
+    {
+      "x": 1699,
+      "y": 8,
+      "alpha": 0.756866455,
+      "d_alpha": 1.0,
+      "field_x": 0.0,
+      "raw_inside": 1.41421354,
+      "raw_outside": 0.0
+    }
+  ],
+  "bucket_b_inside_36_points": [
+    {
+      "x": 415,
+      "y": 393,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 1.0,
+      "raw_inside": 36.0138855,
+      "raw_outside": 0.0
+    },
+    {
+      "x": 414,
+      "y": 393,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 0.0,
+      "raw_inside": 35.0142822,
+      "raw_outside": 0.0
+    },
+    {
+      "x": 416,
+      "y": 393,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 1.0,
+      "raw_inside": 37.0135117,
+      "raw_outside": 0.0
+    },
+    {
+      "x": 415,
+      "y": 392,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 0.0,
+      "raw_inside": 35.9026451,
+      "raw_outside": 0.0
+    },
+    {
+      "x": 415,
+      "y": 394,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 1.0,
+      "raw_inside": 36.0555115,
+      "raw_outside": 0.0
+    }
+  ],
+  "reading": [
+    "The inside-EDT-1.0 witness family is already split in field prep before final writeback.",
+    "The inside-EDT-36.013885 witness family is a threshold-ownership split around Inside Threshold=36.",
+    "The remaining case_0023 lane stays upstream in Constant helper staging / threshold ownership."
+  ]
+}

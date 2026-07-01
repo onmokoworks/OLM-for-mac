@@ -47,15 +47,15 @@ AE-host validation で Mac AE 出力が Windows AE Software 参照に
 | 範囲 | 状態 |
 | --- | --- |
 | Mac plug-in project | 10 本とも Debug universal bundle としてビルド可能 |
-| OLMBlur | 8bpc packaged slice は Mac AE exact。16bpc Mac AE は 0/7 exact だが、2026-06-28再検証で `case_0001..0006` は sign-mixed near-1LSB、`case_0007` は Legacy境界/seed異常に分離済み |
+| OLMBlur | 8bpc packaged slice は Mac AE exact。16bpc Mac AE はまだ未exactだが、`case_0006` は 2026-07-01 の current-AEX witness で Windows/Mac の pre-store float と内部 word 一致まで到達し、主疑点は writer/helper から reference/export provenance へ移動。`case_0007` は Legacy境界/seed異常に分離済み |
 | OLMToonDilate | 8bpc packaged slice は Mac AE exact |
 | OLMDistanceGradation | basic / extended / blur の 8bpc packaged slice は Mac AE exact。16bpc は未exact。AE自動実行は復旧済み。`case_0026` の Power param 誤読と Constant 専用 binary threshold を修正し、Constant/background系は大幅改善 |
 | OLMColorKey | core / Edge Thin / Edge Blur の normalized 8bpc packaged slice は Mac AE exact。16bpc covered slice も full batch 9/9 exact。次は32bpc方針と参照展開 |
 | OLMSmoother2 | no-key grid は 8bpc Mac AE exact。legacy current-AEX recapture 済み。key/gamma は Smooth Range threshold 昇格で大幅改善、残る局所残差を調査中 |
 | OLMSmoother v1 | 960x540 再検証で 8bpc Mac AE exact。v2 互換扱いへ寄せる判断は別途 |
 | OLMDirectionalBlur | 参照は多いが、まだ blocked。2026-06-25 witness plan で angle-0 と diagonal の2系統に分け、PNG-only tuning は止めて asm/runtime evidence 待ち |
-| OLMRadialBlur | Zoom は alpha normalization 残差、tiny Rotation は sampler/validity 残差。Inner は typed `FUN_180001c90` per-cell witness 待ち |
-| OLMKiraKira | BT.709 seed、OpenCV 4.5.5 AVX2、ray-helper、`FUN_18114fd90` aggregation まで grounding 済み。2026-06-25 再取込でも fd90 は確認済み。残りは merge-mode compose / pre-writeback / final quantization |
+| OLMRadialBlur | Zoom は caller-collapse alpha 残差、tiny Rotation は polar RGB / substitute-path 残差。2026-07-01 の propagated-validity probe で「validity plane を同カーネルで伝播させるだけ」では動かないことも確認。Inner は typed `FUN_180001c90` per-cell witness 待ち |
+| OLMKiraKira | BT.709 seed、OpenCV 4.5.5 AVX2、ray-helper、`FUN_18114fd90` aggregation まで grounding 済み。2026-07-01 の hotspot-local compose 診断で、残差は broad compose/gain ではなく hotspot `(934,118)` 専用の追加 attenuate/branch before writeback まで狭まった。加えて current Mac source は `Merge Mode`, `Approximated Input`, `Fade Out`, `Highlight Radius`, ramp 系など未消化 control が残る |
 
 AE 実機を触る前の短い目安です。詳細な理由と次アクションは
 `notes/CONFORMANCE_LEDGER.md` の Current Decision Matrix を見ます。
@@ -63,13 +63,13 @@ AE 実機を触る前の短い目安です。詳細な理由と次アクショ�
 | Plug-in | host status | work_lane | いま AE で手で触る意味 |
 | --- | --- | --- | --- |
 | OLMColorKey | `host-stable` | `bitdepth-expand` | 回帰確認と32bpc展開向き |
-| OLMBlur | `host-visual-tuning-ready` | `binary-proof` | 16bpc残差は分類済み。次は見た目合わせではなく writer/helper/Legacy境界の証拠取り |
+| OLMBlur | `host-visual-tuning-ready` | `binary-proof` | 16bpc残差は分類済み。`case_0006` は writer/helper より reference/export provenance 側の確認が先。`case_0007` は Legacy境界証拠を維持 |
 | OLMToonDilate | `host-stable` | `bitdepth-expand` | 回帰確認とbit depth展開向き |
 | OLMDistanceGradation | `host-debuggable` | `binary-proof` | witness単位の16bpc確認と回帰確認だけ有益 |
 | OLMSmoother v1 | `host-stable` | `ae-validate` | v1/v2方針確認向き |
 | OLMSmoother2 legacy | `host-debuggable` | `binary-proof` | witness単位の確認だけ有益 |
 | OLMDirectionalBlur | `host-debuggable` | `binary-proof` | witness単位の確認だけ有益 |
-| OLMRadialBlur | `host-debuggable` | `binary-proof` | witness単位の確認だけ有益 |
+| OLMRadialBlur | `host-debuggable` | `binary-proof` | witness単位の確認だけ有益。いまは Zoom の caller-collapse と tiny Rotation の polar RGB 分岐を別々に追う段階 |
 | OLMKiraKira | `host-smoke` | `binary-proof` | host統合確認まで |
 
 つまり、`RadialBlur` や `KiraKira` を AE 上で見た目だけで詰める段階ではまだ
@@ -89,8 +89,10 @@ UI パラメータ定義の一次情報は別で固定しています。
 
 さらに、Windows 参照 manifest / request との名前・構成差分は
 `refs/reports/param_schema_windows_ref_audit_20260629.md` に分けています。
-2026-06-29 時点では特に `OLMKiraKira` で Windows 側 UI と現在の Mac
-source-visible UI にズレがあります。
+2026-06-30 時点では `OLMKiraKira` の Windows 側 UI との差はかなり縮み、
+`Channel`, `Blur Mode`, `Strength Multiplier`, `Glow Opacity` は fresh
+capture 基準で揃いました。残りは `Brightness Gain`, `Fade Out`,
+`Highlight Radius`, および ramp 系の host drift です。
 `OLMRadialBlur` は 2026-06-29 host-fix pass で grouped `Outer/Inner Blur`,
 per-section `Edge Fade`, separate inner offset controls, `Noise Type`,
 `Noise Layer`, `Seed`, `Thickness` を追加し、visible parameter set の差は
@@ -127,15 +129,15 @@ summary は `python3 scripts/generate_conformance_summary.py` で
 | Plug-in | 未解決 | 理由 | 解決方法 |
 | --- | --- | --- | --- |
 | ColorKeep | 実参照が薄い | synthetic/helper 扱いが中心 | 必要なら Windows Software 実参照を作る |
-| OLMBlur | 16bpc Mac AE が未exact | 8bpc AE exact は維持。16bpcは単純な丸め方向ではなく、sign-mixed near-1LSB と Legacy境界/seedに分かれる | writer/helper順序と Legacy border/all-same state を binary/runtime evidence で確定 |
+| OLMBlur | 16bpc Mac AE が未exact | 8bpc AE exact は維持。`case_0006` は 2026-07-01 imported current-AEX witness で Windows/Mac の pre-store float と internal word 一致が確認され、残る差分は reference/export provenance 疑いへ移動。`case_0007` は Legacy境界/seed family のまま | `case_0006` は current-AEX exported PNG と canonical 16bpc reference の provenance を確認し、`case_0007` は Legacy border/all-same state を binary/runtime evidence で確定 |
 | OLMColorKey | 32bpc 未検証 | normalized 8bpc packaged slice と16bpc covered slice は通った。16bpc full batch は9/9 `max=0` | 32bpc比較ポリシーと参照取得を決める |
 | OLMToonDilate | 16/32bpc 未検証 | 8bpc packaged slice は通ったが bit depth 展開がまだ | 16bpc/32bpc Windows Software 参照を追加 |
 | OLMDistanceGradation | 16bpc 未一致 | 2026-06-29 Windows trace とMac plug-in debug dumpで `case_0026` のfield rampは一致。`PF_ADD_FLOAT_SLIDERX` の Power に `FIX_2_FLOAT` をかけていた誤読を修正。さらに `FUN_181174760` の Constant 専用 `THRESH_BINARY` を反映し、`case_0020 1001->1`、`case_0021 1002->1`、`case_0022 9347->192`、`case_0023 1388->73` changed pixels まで改善。残るConstant差分は全てしきい値1px以内。direct Layer/no-bg unpremultiply は悪化したので棄却。extended 16bpc はまだ 1/16 exact | Power / Constant fixes を維持し、Constant境界witness、Layer/no-bg source ownership、Sphere/Power boundary quantization を binary/runtime evidence でfamily別に詰める |
 | OLMSmoother v1 | 8bpc AE exact | 960x540 再検証で `case_0001..0003` が exact | v2 互換扱いへ寄せるか、v1 独立維持かを明示する |
 | OLMSmoother2 | Legacy key / gamma | current-AEX recapture 12ケースを取り込み済み。case 0002/0003 はAE保存before入力でCLI exact。0004 は Smooth Range threshold で target final writer float と一致。0012 は `cardinal6 key=50 -> f270/e170/e3a0` まで局所化 | 0012 `(91,841)` の scanner/emit 中間値と 0004 polygon/no-polygon path を binary/runtime evidence で確定 |
 | OLMDirectionalBlur | blocked | PNG tuning だけで進めると誤実装になりやすい。angle-0 と diagonal では見るべき証拠が違う | `case_0001 (465,169)` 系の rowdriver/valid-alpha と、`case_0005 (507,367)` 系の rotate/validity を別々に runtime/asm evidence で確定 |
-| OLMRadialBlur | Zoom / Rotation / Inner | Zoom は final byte packing ではなく alpha/sample accumulation、tiny Rotation は sampler validity、Inner は global toggle 不採用まで局所化 | `rb_inner_only_strength_large` と `rb_inner_quality_1` の typed `FUN_180001c90` witness を取る |
-| OLMKiraKira | compose / pre-writeback / final quantization | BT.709 seed、boxFilter、ray-helper、`FUN_18114fd90` は確定寄り。global compose gain 変更は悪化。2026-06-25 取込では内部compose floatは未分離 | merge-mode-1 compose float/writeback または residual hotspot の narrow trace を取る |
+| OLMRadialBlur | Zoom / Rotation / Inner | Zoom は final byte packing ではなく caller-collapse alpha/sample accumulation、tiny Rotation は validity alpha ではなく polar RGB / substitute path、Inner は global toggle 不採用まで局所化 | Zoom は `+0xf252 -> +0xf250 -> +0xe` の caller-collapse chain、tiny Rotation は bright-lobe を落としている upstream RGB population、Inner は `rb_inner_only_strength_large` / `rb_inner_quality_1` の typed `FUN_180001c90` witness を詰める |
+| OLMKiraKira | compose / pre-writeback / final quantization | BT.709 seed、boxFilter、ray-helper、`FUN_18114fd90` は確定寄り。global compose gain 変更は悪化。2026-07-01 hotspot-local 診断で、残る差分は hotspot `(934,118)` の追加 attenuate/branch before writeback にさらに狭まった | merge-mode-1 compose float/writeback または residual hotspot の narrow trace を取る |
 
 ## 方針
 
@@ -254,143 +256,76 @@ python3 scripts/intake_olm_return.py path/to/returned_ae_host_or_pixel.zip \
 
 ## 現在の次アクション
 
-`scripts/print_next_olm_action.py` の現在判定は
-`investigate-16bpc-mac-ae-residuals` です。16bpc の normalized exact
-Windows Software 参照は返却・取込済みで、Mac AE 2026 で45件を実行し、
-native 16bit 比較まで済んでいます。ColorKey Force Lower Precision と
-DistanceGradation Inside/all-opaque no-source 修正後の現在値は 17/45 exact なので、これは
-完了ではありません。
+README 上の current summary は次の通りです。
 
-送付済みzip:
-`handoffs/windows_batch/olm_windows_reference_request_20260625_16bpc_normalized_exact.zip`
+- packaged 8bpc machine summary は `AE exact=62`, `reference-generation split=1`,
+  `known-red=7`
+- 16bpc は `OLMColorKey` が covered slice 9/9 exact、`OLMBlur` /
+  `OLMDistanceGradation` が witness-led binary-proof 継続中
+- いま Windows runtime queue に残っている pending は 3 件だけです
+  - `OLMRadialBlur` caller-collapse follow-up
+  - `OLMDistanceGradation` 16bpc Constant `case_0023` witness
+  - `OLMKiraKira` hotspot compose/writeback witness
 
-内容は OLMBlur 7件、OLMColorKey 9件、OLMDistanceGradation 29件です。
-8bpc で normalized AE exact になっている範囲だけを、次の bit depth に
-広げるための参照取得です。
+priority は `notes/CONFORMANCE_LEDGER.md` を正にしますが、ざっくり言うと
+次の順です。
 
-Mac AE validation 用zip:
-`handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation/`
+1. `OLMBlur` 16bpc narrow proof
+2. `OLMRadialBlur` Zoom / tiny Rotation narrow proof
+3. `OLMDirectionalBlur` angle-0 / diagonal witness
+4. 強い plug-in の bit depth expansion
+5. `OLMDistanceGradation` / `OLMSmoother2 legacy`
+6. `OLMKiraKira`
 
-内容は次の5本です。
+## 共有フォルダ運用
 
-- `bitdepth16_olmblur_exact.zip`
-- `bitdepth16_olmcolorkey_exact.zip`
-- `bitdepth16_olmdistancegradation_basic_exact.zip`
-- `bitdepth16_olmdistancegradation_extended_exact.zip`
-- `bitdepth16_olmdistancegradation_blur_exact.zip`
+Windows 実機との往復は共有フォルダ `/Volumes/onmk/olm_pr/` を使います。
 
-まとめて渡す場合のbundle:
-`handoffs/ae_host_validation/20260625_222505_20260625_16bpc_mac_ae_validation_bundle/olm_ae_pixel_validation_20260625_16bpc_mac_ae_validation_20260625_222505.zip`
+- `new/`
+  - Mac 側が最新 request zip を置く
+  - Windows 側が実行後の `*_return_windows.zip` を置く
+- `old/`
+  - 処理済み zip の退避先
 
 候補確認:
 
 ```sh
-python3 scripts/list_olm_return_candidates.py \
-  handoffs/ae_host_validation/20260625_222505_20260625_16bpc_mac_ae_validation_bundle
+python3 scripts/list_olm_return_candidates.py /Volumes/onmk/olm_pr/new /Volumes/onmk/olm_pr/old
 ```
 
-Mac AE 実行結果は次に記録しています。
-
-- `refs/conformance/bitdepth_16bpc_mac_ae_validation_20260626_distancegradation_inside_no_source.md`
-- `refs/conformance/bitdepth_16bpc_mac_ae_residual_classes_20260626_distancegradation_inside_no_source.md`
-
-16bpc の現状は `AE exact` ではなく `not-ae-exact` です。
-失敗28件の分類は `full-scale-mismatch` 13件、
-`large-structured-mismatch` 8件、OLMBlur の
-`16bpc-writeback-quantization` 6件、OLMBlur legacy の
-`border-plus-quantization` 1件です。古い 2026-06-25 結果は
-`path_full` 非対応でパラメータが再生されていなかったため、現在の残差
-baseline には使いません。ColorKey は AEX 由来の Force Lower Precision
-epsilon 規則を反映して `olmcolorkey__case_0008` が exact になり、残りは
-`olmcolorkey__case_0009` です。このケースは `Edge Blur` ではなく
-`Lab76 + Force Lower Precision=3 + Edge Thin Amount=25 (Distance Type=2)` の
-残差で、Windows 参照は透明化する画素を Mac 側が input のまま保持しています。
-Focused diagnostic:
-`refs/conformance/olmcolorkey_16bpc_case_0009_analysis.md`
-には、単純な `Lab76 + dilate 25` 再現や `32768` 正規化では説明できないことを
-記録しています。さらに seed/border/distance の素朴な派生モデル総当たりでも
-最良 `80592px` 差にしかならず、実際の Mac AE 残差 `12597px` はそれよりずっと
-Windows に近いです。
-DistanceGradation は all-opaque input の
-Inside/no-source rule で `olmdistancegradation_basic__case_0002` が exact になりました。
-OLMBlur 16bpc は kernel tuning ではなく、まず 16bpc writeback / PNG scaling
-規則を確認する段階です。
-
-5本まとめて検証する場合は、次のコマンドで一括比較できます。
+最新返却の自動取込:
 
 ```sh
-python3 scripts/verify_ae_pixel_validation_batch.py \
-  handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation \
-  path/to/mac_ae_16bpc_returns \
-  --run-dir /tmp/olm_ae_pixel_16bpc_batch
+python3 scripts/intake_latest_windows_return_from_share.py --share-root /Volumes/onmk/olm_pr
 ```
 
-返却物の取り込みルーター経由でも同じ検証ができます。
+必要なら個別取込:
 
 ```sh
-python3 scripts/intake_olm_return.py path/to/mac_ae_16bpc_returns \
-  --kind ae-pixel-validation \
-  --ae-pixel-requests-dir handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation \
-  --run-dir /tmp/olm_ae_pixel_16bpc_batch
+python3 scripts/intake_olm_return.py path/to/returned_runtime_trace.zip \
+  --kind runtime-trace \
+  --runtime-package refs/runtime_trace_packages/some_request.zip \
+  --runtime-summary-json refs/reports/runtime_trace_summary.json \
+  --runtime-summary-md refs/reports/runtime_trace_summary.md \
+  --runtime-comparison-dir refs/reports/runtime_trace_comparisons
 ```
 
-Smoother2 については
-`refs/conformance/olmsmoother2_current_aex_8bpc_decision.md`
-で、次に必要な証拠を writer-anchor から順番に固定しました。
-送付済み focused runtime trace package は
-`refs/runtime_trace_packages/olm_runtime_trace_smoother2_current_aex_neighborhood_witness_20260624_235610.zip`
-です。2026-06-25 の返却で final writer は両 witness とも確認できましたが、
-`OLMSmoother2+0x350b` exact-XY 内部 predicate は未ヒットなので、内部
-branch の分類はまだ未解決です。
+pending runtime queue の正本:
+`refs/reports/pending_runtime_trace_packages.md`
 
-Smoother2 は `0004 (1903,519)` と `0012 (91,841)` が逆向きの局所残差に
-分かれています。`0004` は Windows が半透明出力を足し、Mac 側は透明
-passthrough になりやすい。`0012` は逆に Mac 側が半透明出力を足し、
-Windows は透明に寄ります。次は broad PNG ではなく、`0004` の final
-writer / `cce0` / `c280` polygon と、`0012` の final transparent writer /
-cardinal6 / `d3b0/da50/e170/f270/e3a0` を狭く見る段階です。global
-transparent-center fallback と global `f270` suppression は採用しません。
+## bit depth 拡張の現状
 
-RadialBlur Inner は 2026-06-25 の witness plan で、次に見る代表ケースを
-`rb_inner_only_strength_large` と `rb_inner_quality_1` に固定しました。
-`rb_inner_edgefade_only` は Edge Fade prepass 用の fallback です。
-`loop-minus-one`、`circular-wrap`、`table-span-minus-one` は localization
-probe であり、global rule としては採用しません。
+16bpc normalized exact request の Windows 参照返却と Mac AE validation は
+すでに一巡しています。45 cases の current lane は、広い見た目合わせではなく
+plug-in ごとの narrow witness に分解して進めています。
 
-KiraKira は 2026-06-24 の aggregation / compose trace を 2026-06-25 に
-再取込済みです。`kirakira_aggregation_compose_bt709_20260624` は
-`answered` / `answered_partial` として検証でき、BT.709 seed、OpenCV
-boxFilter、ray-helper、`FUN_18114fd90` は説明できています。内部
-merge-mode-1 compose float / pre-writeback はまだ未分離なので、次に欲しい
-のは広いPNGではなく、その一点か residual hotspot の narrow trace です。
+- `OLMColorKey`: covered 16bpc slice 9/9 exact
+- `OLMBlur`: `case_0006/0007` を narrow witness に分離済み
+- `OLMDistanceGradation`: Power / Constant fixes 後も family-level residual が残り、
+  `case_0023` OutsideThreshold=0 witness が active
 
-DirectionalBlur は 2026-06-25 の witness plan で、次に取る証拠を
-2系統に分けました。angle-0 は `case_0001 (465,169)` と
-`(487..494,169)` の横一列で rowdriver / valid-alpha を確認します。
-diagonal は `case_0005 (507,367)` と反対方向の `(423,187)` で
-rotate sampler / validity / denominator を確認します。片方だけの結果や
-広いPNG平均から実装を決めない方針です。
-
-bit depth 展開については、2026-06-25 時点の normalized 8bpc exact
-グループから 16bpc 参照 request を生成しました。現在の対象は
-OLMBlur 7件、OLMColorKey 9件、OLMDistanceGradation 29件の合計45件です。
-ローカルレポート:
-`refs/reports/bit_depth_expansion_plan_20260625/bit_depth_plan.md`
-
-16bpc 参照の受領記録:
-`refs/conformance/bitdepth_16bpc_reference_return_20260625.md`
-
-16bpc Mac AE 検証結果:
-`refs/conformance/bitdepth_16bpc_mac_ae_validation_20260626_distancegradation_inside_no_source.md`
-
-16bpc 残差分類:
-`refs/conformance/bitdepth_16bpc_mac_ae_residual_classes_20260626_distancegradation_inside_no_source.md`
-
-Windows へ送った project-local zip:
-`handoffs/windows_batch/olm_windows_reference_request_20260625_16bpc_normalized_exact.zip`
-
-取り込み手順と優先順位は
-`notes/WINDOWS_RETURN_INTAKE_PLAYBOOK_20260619.md` にあります。
+古い一括 16bpc rerun の説明より、現在は個別 witness-led notes を優先します。
+詳細は `notes/CONFORMANCE_LEDGER.md` と各 `refs/conformance/*.md` を見ます。
 
 ## 主要メモ
 

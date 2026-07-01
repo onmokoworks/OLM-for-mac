@@ -258,7 +258,7 @@
     "If the full package is resent, force the angle-0 answer to include the right strip endpoint (579,169) in addition to (494,169), so row coverage and leftward-exclusive helper behavior can be checked directly.",
     "If the diagonal witness cannot be traced at the exact pixel first, return the nearest high-residual hit only if it still includes typed rotate/validity/pre-writeback values."
   ],
-  "runtime_package": "refs/runtime_trace_packages/olm_runtime_trace_directionalblur_residual_witness_20260629_helpercoverage.zip",
+  "runtime_package": "refs/runtime_trace_packages/olm_runtime_trace_requests_20260630_004241.zip",
   "why_global_tuning_is_forbidden_now": [
     "The best numeric candidates are still measurement scaffolds, not AEX-shaped implementations.",
     "The current runtime return is answered_partial but not actionable because it never captured typed per-pixel values after the module actually loaded.",

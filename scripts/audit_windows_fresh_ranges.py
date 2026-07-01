@@ -118,6 +118,14 @@ def normalize_manifest_param(plugin: str, path_parts: list[str], leaf: str, prop
         }
         if (parent, leaf) in aliases:
             return aliases[(parent, leaf)], "alias-grouped-ui"
+        if leaf == "Sharp Tail" and property_index in {7, 12}:
+            direct_tail = {
+                7: "Front Sharp Tail",
+                12: "Back Sharp Tail",
+            }
+            return direct_tail[property_index], "alias-ordinal-ui"
+        if leaf == "Sharp Tail" and property_index in {8, 13}:
+            return None, "ignored-ui-scaffold"
         if property_index in {5, 6, 7}:
             direct_front = {5: "Front Blur Strength", 6: "Front Alpha Fade", 7: "Front Sharp Tail"}
             return direct_front[property_index], "alias-ordinal-ui"
@@ -144,6 +152,44 @@ def schema_index() -> dict[str, dict[str, dict]]:
     for plugin in schema["plugins"]:
         out[plugin["plugin"]] = {param["label"]: param for param in plugin["params"]}
     return out
+
+
+def schema_rows_by_plugin() -> dict[str, list[dict]]:
+    schema = load_json(SCHEMA_PATH)
+    out: dict[str, list[dict]] = {}
+    for plugin in schema["plugins"]:
+        out[plugin["plugin"]] = list(plugin["params"])
+    return out
+
+
+def resolve_source_param(
+    plugin: str,
+    normalized: str,
+    property_index: int | None,
+    params_by_label: dict[str, dict],
+    params_in_order: list[dict],
+) -> dict | None:
+    if plugin == "OLMRadialBlur" and normalized in {"Offset", "Offset Mode"} and property_index is not None:
+        radial_ordinals = {
+            ("Offset Mode", 5): 4,
+            ("Offset", 6): 5,
+            ("Offset Mode", 11): 10,
+            ("Offset", 12): 11,
+            ("Offset", 28): 27,
+        }
+        source_idx = radial_ordinals.get((normalized, property_index))
+        if source_idx is not None and source_idx < len(params_in_order):
+            return params_in_order[source_idx]
+    if plugin == "OLMDirectionalBlur" and normalized in {"Front Sharp Tail", "Back Sharp Tail"} and property_index is not None:
+        directional_ordinals = {
+            ("Front Sharp Tail", 7): 6,
+            ("Back Sharp Tail", 12): 11,
+            ("Offset", 19): 18,
+        }
+        source_idx = directional_ordinals.get((normalized, property_index))
+        if source_idx is not None and source_idx < len(params_in_order):
+            return params_in_order[source_idx]
+    return params_by_label.get(normalized)
 
 
 def parse_source_number(value: str | None) -> float | None:
@@ -180,6 +226,7 @@ def classify_range(window_min: float | None, window_max: float | None, source_mi
 
 def audit(manifest_path: Path) -> dict:
     schema = schema_index()
+    schema_rows = schema_rows_by_plugin()
     manifest = load_json(manifest_path)
     plugins: list[dict] = []
     for case in manifest.get("cases", []):
@@ -188,6 +235,7 @@ def audit(manifest_path: Path) -> dict:
         if plugin not in schema:
             continue
         params_by_label = schema[plugin]
+        params_in_order = schema_rows[plugin]
         counts = Counter()
         mismatches: list[dict] = []
         for param in effect.get("params", []):
@@ -195,7 +243,7 @@ def audit(manifest_path: Path) -> dict:
             if normalized is None:
                 counts["ignored-or-unmapped"] += 1
                 continue
-            source = params_by_label.get(normalized)
+            source = resolve_source_param(plugin, normalized, param.get("property_index"), params_by_label, params_in_order)
             if source is None:
                 counts["windows-only-or-unknown"] += 1
                 mismatches.append(

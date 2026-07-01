@@ -1,0 +1,59 @@
+{
+  "kind": "olmdistancegradation_16bpc_constant_case_correlations",
+  "reading": [
+    "The only focused case where a plausible two-stage Constant variant improves both nonzero count and mean is case_0023.",
+    "Among case_0020..0023, case_0023 is also the only one with `In/Out=Both` and `Outside Threshold=0`.",
+    "case_0022 shares `In/Out=Both` and a low outside threshold, but its two-stage win is partial: nonzero count drops slightly while mean worsens sharply.",
+    "This does not prove the real AEX rule, but it makes `Both + Outside Threshold=0` the cleanest local correlate for the helper-staging signal."
+  ],
+  "rows": [
+    {
+      "best_mean_diff": 0.09034698109567901,
+      "best_mean_variant": "current_constant",
+      "best_nonzero_px": 304210,
+      "best_nonzero_variant": "current_constant",
+      "case_id": "case_0020",
+      "current_mean_diff": 0.09034698109567901,
+      "current_nonzero_px": 304210,
+      "in_out": 1,
+      "inside_threshold": 78,
+      "outside_threshold": 204
+    },
+    {
+      "best_mean_diff": 0.3536676552854938,
+      "best_mean_variant": "current_constant",
+      "best_nonzero_px": 1406979,
+      "best_nonzero_variant": "current_constant",
+      "case_id": "case_0021",
+      "current_mean_diff": 0.3536676552854938,
+      "current_nonzero_px": 1406979,
+      "in_out": 3,
+      "inside_threshold": 78,
+      "outside_threshold": 402
+    },
+    {
+      "best_mean_diff": 2.9357175925925927,
+      "best_mean_variant": "current_constant",
+      "best_nonzero_px": 702677,
+      "best_nonzero_variant": "trunc_plateau_binary",
+      "case_id": "case_0022",
+      "current_mean_diff": 2.9357175925925927,
+      "current_nonzero_px": 702720,
+      "in_out": 3,
+      "inside_threshold": 36,
+      "outside_threshold": 11
+    },
+    {
+      "best_mean_diff": 20.041925877700617,
+      "best_mean_variant": "trunc_plateau_binary",
+      "best_nonzero_px": 182793,
+      "best_nonzero_variant": "trunc_plateau_binary",
+      "case_id": "case_0023",
+      "current_mean_diff": 295.30543559510033,
+      "current_nonzero_px": 203213,
+      "in_out": 3,
+      "inside_threshold": 36,
+      "outside_threshold": 0
+    }
+  ]
+}

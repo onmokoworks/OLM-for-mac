@@ -2,12 +2,145 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstdlib>
 #include <complex>
 #include <cstdio>
 #include <map>
 #include <vector>
 
 static constexpr PF_FpLong kPi = 3.141592653589793238462643383279502884;
+
+struct RadialBlurDebugPoint {
+	A_long x = 0;
+	A_long y = 0;
+};
+
+struct RadialBlurDebugConfig {
+	const char *dump_path = nullptr;
+	std::vector<RadialBlurDebugPoint> points;
+};
+
+static std::vector<RadialBlurDebugPoint> ParseRadialBlurDebugPoints(const char *spec)
+{
+	std::vector<RadialBlurDebugPoint> points;
+	if (!spec || !*spec) return points;
+	const char *p = spec;
+	while (*p) {
+		int x = -1;
+		int y = -1;
+		int consumed = 0;
+		if (std::sscanf(p, "%d,%d%n", &x, &y, &consumed) == 2 && consumed > 0) {
+			points.push_back({(A_long)x, (A_long)y});
+			p += consumed;
+			while (*p == ';' || *p == ' ' || *p == '\t' || *p == '\n' || *p == '\r') ++p;
+		} else {
+			break;
+		}
+	}
+	return points;
+}
+
+static RadialBlurDebugConfig LoadRadialBlurDebugConfig()
+{
+	RadialBlurDebugConfig config;
+	config.dump_path = std::getenv("OLMRADIALBLUR_DEBUG_DUMP_PATH");
+	config.points = ParseRadialBlurDebugPoints(std::getenv("OLMRADIALBLUR_DEBUG_POINTS"));
+	if (!config.dump_path || !*config.dump_path || config.points.empty()) {
+		config.dump_path = nullptr;
+		config.points.clear();
+	}
+	return config;
+}
+
+static bool RadialBlurDebugHasPoint(const RadialBlurDebugConfig &debug, A_long x, A_long y)
+{
+	for (const RadialBlurDebugPoint &point : debug.points) {
+		if (point.x == x && point.y == y) return true;
+	}
+	return false;
+}
+
+static bool PolarValidSample(float x, float y, A_long width, A_long height, bool repeat_border)
+{
+	if (repeat_border) {
+		const A_long ix = (A_long)x;
+		const A_long iy = (A_long)y;
+		return -2 < ix && ix < width && -2 < iy && iy < height;
+	}
+	return x >= 0.0f && x <= (float)(width - 1) && y >= 0.0f && y <= (float)(height - 1);
+}
+
+static void DumpRadialBlurDebugPoint(
+	const RadialBlurDebugConfig &debug,
+	const char *kind,
+	A_long width,
+	A_long height,
+	A_long x,
+	A_long y,
+	float radius_index,
+	float angle_index,
+	float fx,
+	float fy,
+	A_long sample_x0,
+	A_long sample_x1,
+	A_long sample_y0,
+	A_long sample_y1,
+	const float sample_rgba[4],
+	const A_u_char sample_u8[4],
+	float alpha,
+	float validity_alpha,
+	const float cell_valid[4],
+	const float cell_alpha[4],
+	const float cell_rgb[4][3],
+	const float src_cell_rgba[4][4])
+{
+	if (!debug.dump_path || !RadialBlurDebugHasPoint(debug, x, y)) return;
+	FILE *fp = std::fopen(debug.dump_path, "a");
+	if (!fp) return;
+	std::fprintf(
+		fp,
+		"OLMRADIALBLUR_DEBUG_POINT kind=%s w=%d h=%d x=%d y=%d "
+		"radius_index=%.9g angle_index=%.9g fx=%.9g fy=%.9g "
+		"indices=(%d,%d,%d,%d) "
+		"sample_rgba=(%.9g,%.9g,%.9g,%.9g) sample_rgba_hex=(%a,%a,%a,%a) "
+		"sample_u8=(%u,%u,%u,%u) "
+		"alpha=%.9g alpha_hex=%a validity_alpha=%.9g validity_alpha_hex=%a "
+		"cell_valid=(%.9g,%.9g,%.9g,%.9g) "
+		"cell_alpha=(%.9g,%.9g,%.9g,%.9g) "
+		"cell_rgb=((%.9g,%.9g,%.9g),(%.9g,%.9g,%.9g),(%.9g,%.9g,%.9g),(%.9g,%.9g,%.9g)) "
+		"src_cell_rgba=((%.9g,%.9g,%.9g,%.9g),(%.9g,%.9g,%.9g,%.9g),(%.9g,%.9g,%.9g,%.9g),(%.9g,%.9g,%.9g,%.9g))\n",
+		kind,
+		(int)width,
+		(int)height,
+		(int)x,
+		(int)y,
+		radius_index,
+		angle_index,
+		fx,
+		fy,
+		(int)sample_x0,
+		(int)sample_x1,
+		(int)sample_y0,
+		(int)sample_y1,
+		sample_rgba[0], sample_rgba[1], sample_rgba[2], sample_rgba[3],
+		(double)sample_rgba[0], (double)sample_rgba[1], (double)sample_rgba[2], (double)sample_rgba[3],
+		(unsigned int)sample_u8[0], (unsigned int)sample_u8[1], (unsigned int)sample_u8[2], (unsigned int)sample_u8[3],
+		alpha,
+		(double)alpha,
+		validity_alpha,
+		(double)validity_alpha,
+		cell_valid[0], cell_valid[1], cell_valid[2], cell_valid[3],
+		cell_alpha[0], cell_alpha[1], cell_alpha[2], cell_alpha[3],
+		cell_rgb[0][0], cell_rgb[0][1], cell_rgb[0][2],
+		cell_rgb[1][0], cell_rgb[1][1], cell_rgb[1][2],
+		cell_rgb[2][0], cell_rgb[2][1], cell_rgb[2][2],
+		cell_rgb[3][0], cell_rgb[3][1], cell_rgb[3][2],
+		src_cell_rgba[0][0], src_cell_rgba[0][1], src_cell_rgba[0][2], src_cell_rgba[0][3],
+		src_cell_rgba[1][0], src_cell_rgba[1][1], src_cell_rgba[1][2], src_cell_rgba[1][3],
+		src_cell_rgba[2][0], src_cell_rgba[2][1], src_cell_rgba[2][2], src_cell_rgba[2][3],
+		src_cell_rgba[3][0], src_cell_rgba[3][1], src_cell_rgba[3][2], src_cell_rgba[3][3]);
+	std::fclose(fp);
+}
 
 static void UnionLRect(const PF_LRect *src, PF_LRect *dst)
 {
@@ -73,7 +206,7 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_OuterOffset_Param_Name),
-	              0, 500, 0, 500, 153,
+	              0, 500, 0, 500, 0,
 	              OUTER_OFFSET_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
@@ -354,6 +487,51 @@ static float SampleChannel(const FloatImage &image, float x, float y, int channe
 	return top * (1.0f - fy) + bottom * fy;
 }
 
+static void SampleRGBAAEXAlpha(const FloatImage &image, float x, float y, bool repeat, float out[4])
+{
+	const A_long w = image.width;
+	const A_long h = image.height;
+	for (int c = 0; c < 4; ++c) out[c] = 0.0f;
+	const A_long xi = (A_long)x;
+	const A_long yi = (A_long)y;
+	if (!repeat && !(-2 < xi && xi < w && -2 < yi && yi < h)) return;
+
+	float fx = x - (float)xi;
+	float fy = y - (float)yi;
+	A_long x0 = xi;
+	A_long x1 = xi + 1;
+	A_long y0 = yi;
+	A_long y1 = yi + 1;
+	if (repeat) {
+		x0 = std::max<A_long>(0, std::min<A_long>(x0, w - 1));
+		x1 = std::max<A_long>(0, std::min<A_long>(x1, w - 1));
+		y0 = std::max<A_long>(0, std::min<A_long>(y0, h - 1));
+		y1 = std::max<A_long>(0, std::min<A_long>(y1, h - 1));
+	}
+
+	double rgb_sum[3] = {0.0, 0.0, 0.0};
+	double alpha_sum = 0.0;
+	double weight_sum = 0.0;
+	auto tap = [&](A_long px, A_long py, double weight) {
+		if (weight == 0.0) return;
+		if (px < 0 || px >= w || py < 0 || py >= h) return;
+		const size_t idx = ((size_t)py * w + px) * 4;
+		const double alpha_weight = (double)image.rgba[idx + 3] * weight;
+		alpha_sum += alpha_weight;
+		weight_sum += weight;
+		for (int c = 0; c < 3; ++c) rgb_sum[c] += (double)image.rgba[idx + c] * alpha_weight;
+	};
+
+	tap(x0, y0, (1.0f - fx) * (1.0f - fy));
+	tap(x1, y0, fx * (1.0f - fy));
+	tap(x0, y1, (1.0f - fx) * fy);
+	tap(x1, y1, fx * fy);
+	if (alpha_sum > 1.0e-12) {
+		for (int c = 0; c < 3; ++c) out[c] = (float)(rgb_sum[c] / alpha_sum);
+		out[3] = (float)(alpha_sum / std::max(1.0e-12, weight_sum));
+	}
+}
+
 static std::vector<float> ZoomGaussianWeights(A_long length)
 {
 	if (length <= 1) return std::vector<float>{1.0f};
@@ -414,6 +592,7 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 
 	const A_long w = output->width;
 	const A_long h = output->height;
+	const RadialBlurDebugConfig debug = LoadRadialBlurDebugConfig();
 	FloatImage src;
 	src.width = w;
 	src.height = h;
@@ -452,6 +631,7 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	polar.width = radius_count;
 	polar.height = angular_count;
 	polar.rgba.resize((size_t)angular_count * radius_count * 4);
+	std::vector<float> polar_valid((size_t)angular_count * radius_count, 0.0f);
 	const double cos_a = std::cos(base_angle);
 	const double sin_a = std::sin(base_angle);
 	for (A_long ai = 0; ai < angular_count; ++ai) {
@@ -465,7 +645,10 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			const float sx = (float)(cx + cos_a * sx0 - sin_a * sy0);
 			const float sy = (float)(cy + sin_a * sx0 + cos_a * sy0);
 			const size_t dst = ((size_t)ai * radius_count + ri) * 4;
-			for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = SampleChannel(src, sx, sy, c, info.repeat_border != FALSE);
+			float sampled[4];
+			SampleRGBAAEXAlpha(src, sx, sy, info.repeat_border != FALSE, sampled);
+			for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = sampled[c];
+			polar_valid[(size_t)ai * radius_count + ri] = PolarValidSample(sx, sy, w, h, info.repeat_border != FALSE) ? 1.0f : 0.0f;
 		}
 	}
 
@@ -555,6 +738,9 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			auto sample = [&](A_long px, A_long py, int c) -> float {
 				return blurred.rgba[((size_t)py * radius_count + px) * 4 + c];
 			};
+			auto sample_valid = [&](A_long px, A_long py) -> float {
+				return polar_valid[(size_t)py * radius_count + px];
+			};
 			const double w00 = (1.0 - fx) * (1.0 - fy);
 			const double w10 = fx * (1.0 - fy);
 			const double w01 = (1.0 - fx) * fy;
@@ -564,6 +750,9 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			const double a01 = sample(xi, y1, 3) * w01;
 			const double a11 = sample(x1, y1, 3) * w11;
 			const double alpha = a00 + a10 + a01 + a11;
+			const double validity_alpha =
+				sample_valid(xi, y0) * w00 + sample_valid(x1, y0) * w10 +
+				sample_valid(xi, y1) * w01 + sample_valid(x1, y1) * w11;
 			PF_Pixel8 *out = PixelAt<PF_Pixel8>(output, x, y);
 			double rgb[3] = {0.0, 0.0, 0.0};
 			if (alpha > 1.0e-8) {
@@ -577,6 +766,39 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			out->green = (A_u_char)ClampFloat((float)std::floor(rgb[1] * 255.0 + rgb_quantize_epsilon), 0.0f, 255.0f);
 			out->blue  = (A_u_char)ClampFloat((float)std::floor(rgb[2] * 255.0 + rgb_quantize_epsilon), 0.0f, 255.0f);
 			out->alpha = (A_u_char)ClampFloat((float)std::floor(alpha * 255.0 + alpha_quantize_epsilon), 0.0f, 255.0f);
+			if (debug.dump_path && RadialBlurDebugHasPoint(debug, x, y)) {
+				auto sample_source = [&](A_long px, A_long py, int c) -> float {
+					return polar.rgba[((size_t)py * radius_count + px) * 4 + c];
+				};
+				const float sample_rgba[4] = {(float)rgb[0], (float)rgb[1], (float)rgb[2], (float)alpha};
+				const A_u_char sample_u8[4] = {out->red, out->green, out->blue, out->alpha};
+				const float cell_valid[4] = {
+					sample_valid(xi, y0), sample_valid(x1, y0),
+					sample_valid(xi, y1), sample_valid(x1, y1)
+				};
+				const float cell_alpha[4] = {
+					sample(xi, y0, 3), sample(x1, y0, 3),
+					sample(xi, y1, 3), sample(x1, y1, 3)
+				};
+				const float cell_rgb[4][3] = {
+					{sample(xi, y0, 0), sample(xi, y0, 1), sample(xi, y0, 2)},
+					{sample(x1, y0, 0), sample(x1, y0, 1), sample(x1, y0, 2)},
+					{sample(xi, y1, 0), sample(xi, y1, 1), sample(xi, y1, 2)},
+					{sample(x1, y1, 0), sample(x1, y1, 1), sample(x1, y1, 2)}
+				};
+				const float src_cell_rgba[4][4] = {
+					{sample_source(xi, y0, 0), sample_source(xi, y0, 1), sample_source(xi, y0, 2), sample_source(xi, y0, 3)},
+					{sample_source(x1, y0, 0), sample_source(x1, y0, 1), sample_source(x1, y0, 2), sample_source(x1, y0, 3)},
+					{sample_source(xi, y1, 0), sample_source(xi, y1, 1), sample_source(xi, y1, 2), sample_source(xi, y1, 3)},
+					{sample_source(x1, y1, 0), sample_source(x1, y1, 1), sample_source(x1, y1, 2), sample_source(x1, y1, 3)}
+				};
+				DumpRadialBlurDebugPoint(
+					debug, "zoom", w, h, x, y,
+					radius_index, angle_index, fx, fy,
+					xi, x1, y0, y1,
+					sample_rgba, sample_u8, (float)alpha, (float)validity_alpha,
+					cell_valid, cell_alpha, cell_rgb, src_cell_rgba);
+			}
 		}
 	}
 	return PF_Err_NONE;
@@ -592,6 +814,7 @@ static PF_Err RenderRotation8(PF_EffectWorld *input, PF_EffectWorld *output, con
 
 	const A_long w = output->width;
 	const A_long h = output->height;
+	const RadialBlurDebugConfig debug = LoadRadialBlurDebugConfig();
 	FloatImage src;
 	src.width = w;
 	src.height = h;
@@ -632,6 +855,7 @@ static PF_Err RenderRotation8(PF_EffectWorld *input, PF_EffectWorld *output, con
 	polar.width = angular_count;
 	polar.height = radius_count;
 	polar.rgba.resize((size_t)radius_count * angular_count * 4);
+	std::vector<float> polar_valid((size_t)radius_count * angular_count, 0.0f);
 	const double cos_a = std::cos(base_angle);
 	const double sin_a = std::sin(base_angle);
 	for (A_long ri = 0; ri < radius_count; ++ri) {
@@ -643,7 +867,10 @@ static PF_Err RenderRotation8(PF_EffectWorld *input, PF_EffectWorld *output, con
 			const float sx = (float)(cx + cos_a * sx0 - sin_a * sy0);
 			const float sy = (float)(cy + sin_a * sx0 + cos_a * sy0);
 			const size_t dst = ((size_t)ri * angular_count + ai) * 4;
-			for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = SampleChannel(src, sx, sy, c, info.repeat_border != FALSE);
+			float sampled[4];
+			SampleRGBAAEXAlpha(src, sx, sy, info.repeat_border != FALSE, sampled);
+			for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = sampled[c];
+			polar_valid[(size_t)ri * angular_count + ai] = PolarValidSample(sx, sy, w, h, info.repeat_border != FALSE) ? 1.0f : 0.0f;
 		}
 	}
 
@@ -777,6 +1004,9 @@ static PF_Err RenderRotation8(PF_EffectWorld *input, PF_EffectWorld *output, con
 			auto sample = [&](A_long px, A_long py, int c) -> float {
 				return blurred.rgba[((size_t)py * angular_count + px) * 4 + c];
 			};
+			auto sample_valid = [&](A_long px, A_long py) -> float {
+				return polar_valid[(size_t)py * angular_count + px];
+			};
 			const double w00 = (1.0 - fx) * (1.0 - fy);
 			const double w10 = fx * (1.0 - fy);
 			const double w01 = (1.0 - fx) * fy;
@@ -786,6 +1016,9 @@ static PF_Err RenderRotation8(PF_EffectWorld *input, PF_EffectWorld *output, con
 			const double a01 = sample(x0, y1, 3) * w01;
 			const double a11 = sample(x1, y1, 3) * w11;
 			const double alpha = a00 + a10 + a01 + a11;
+			const double validity_alpha =
+				sample_valid(x0, y0) * w00 + sample_valid(x1, y0) * w10 +
+				sample_valid(x0, y1) * w01 + sample_valid(x1, y1) * w11;
 			PF_Pixel8 *out = PixelAt<PF_Pixel8>(output, x, y);
 			double rgb[3] = {0.0, 0.0, 0.0};
 			if (alpha > 1.0e-8) {
@@ -799,6 +1032,39 @@ static PF_Err RenderRotation8(PF_EffectWorld *input, PF_EffectWorld *output, con
 			out->green = (A_u_char)ClampFloat((float)std::floor(rgb[1] * 255.0), 0.0f, 255.0f);
 			out->blue = (A_u_char)ClampFloat((float)std::floor(rgb[2] * 255.0), 0.0f, 255.0f);
 			out->alpha = (A_u_char)ClampFloat((float)std::floor(alpha * 255.0 + alpha_quantize_epsilon), 0.0f, 255.0f);
+			if (debug.dump_path && RadialBlurDebugHasPoint(debug, x, y)) {
+				auto sample_source = [&](A_long px, A_long py, int c) -> float {
+					return polar.rgba[((size_t)py * angular_count + px) * 4 + c];
+				};
+				const float sample_rgba[4] = {(float)rgb[0], (float)rgb[1], (float)rgb[2], (float)alpha};
+				const A_u_char sample_u8[4] = {out->red, out->green, out->blue, out->alpha};
+				const float cell_valid[4] = {
+					sample_valid(x0, y0), sample_valid(x1, y0),
+					sample_valid(x0, y1), sample_valid(x1, y1)
+				};
+				const float cell_alpha[4] = {
+					sample(x0, y0, 3), sample(x1, y0, 3),
+					sample(x0, y1, 3), sample(x1, y1, 3)
+				};
+				const float cell_rgb[4][3] = {
+					{sample(x0, y0, 0), sample(x0, y0, 1), sample(x0, y0, 2)},
+					{sample(x1, y0, 0), sample(x1, y0, 1), sample(x1, y0, 2)},
+					{sample(x0, y1, 0), sample(x0, y1, 1), sample(x0, y1, 2)},
+					{sample(x1, y1, 0), sample(x1, y1, 1), sample(x1, y1, 2)}
+				};
+				const float src_cell_rgba[4][4] = {
+					{sample_source(x0, y0, 0), sample_source(x0, y0, 1), sample_source(x0, y0, 2), sample_source(x0, y0, 3)},
+					{sample_source(x1, y0, 0), sample_source(x1, y0, 1), sample_source(x1, y0, 2), sample_source(x1, y0, 3)},
+					{sample_source(x0, y1, 0), sample_source(x0, y1, 1), sample_source(x0, y1, 2), sample_source(x0, y1, 3)},
+					{sample_source(x1, y1, 0), sample_source(x1, y1, 1), sample_source(x1, y1, 2), sample_source(x1, y1, 3)}
+				};
+				DumpRadialBlurDebugPoint(
+					debug, "rotation", w, h, x, y,
+					radius_index, angle_index, fx, fy,
+					x0, x1, y0, y1,
+					sample_rgba, sample_u8, (float)alpha, (float)validity_alpha,
+					cell_valid, cell_alpha, cell_rgb, src_cell_rgba);
+			}
 		}
 	}
 	return PF_Err_NONE;

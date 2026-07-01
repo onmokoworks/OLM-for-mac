@@ -1,0 +1,991 @@
+{
+  "date": "2026-07-01",
+  "kind": "olmradialblur_caller_collapse_plane_diag",
+  "reading": {
+    "extrema": {
+      "rotation_max_alpha_validity_gap": {
+        "gap": 0,
+        "x": 1610
+      },
+      "zoom_max_alpha_validity_gap": {
+        "gap": 208,
+        "x": 8
+      }
+    },
+    "tiny_rotation": "Across the bounded tiny Rotation probe, validity alpha stays fully live, so the remaining failure is not an alpha-plane collapse. The surviving gap stays in the polar RGB / substitute-path population that feeds the final inverse sample.",
+    "zoom": "Across the bounded top-row probe, final inverse-sampled alpha stays near-opaque while the current preserved-validity proxy collapses much earlier. That makes the live Zoom caller-collapse lane narrower than direct sampling of the current validity plane."
+  },
+  "status": "diagnostic",
+  "tiny_rotation_case_0010": {
+    "case_id": "case_0010",
+    "path_kind": "rotation",
+    "row_probe": {
+      "max_alpha_validity_gap": {
+        "gap": 0,
+        "x": 1610
+      },
+      "max_rgb_reference_gap": {
+        "delta": [
+          -255,
+          -255,
+          -255
+        ],
+        "mag": 255,
+        "x": 1614
+      },
+      "row": [
+        {
+          "alpha_minus_validity_alpha_u8": 0,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "reference_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "sample_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "sample_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "validity_alpha_u8": 255,
+          "x": 1610,
+          "y": 6
+        },
+        {
+          "alpha_minus_validity_alpha_u8": 0,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "reference_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "sample_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "sample_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "validity_alpha_u8": 255,
+          "x": 1611,
+          "y": 6
+        },
+        {
+          "alpha_minus_validity_alpha_u8": 0,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate_u8": [
+            5,
+            5,
+            5,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "reference_u8": [
+            5,
+            5,
+            5,
+            255
+          ],
+          "sample_rgba": [
+            0.0222584,
+            0.0222584,
+            0.0222584,
+            1.0
+          ],
+          "sample_u8": [
+            5,
+            5,
+            5,
+            255
+          ],
+          "validity_alpha_u8": 255,
+          "x": 1612,
+          "y": 6
+        },
+        {
+          "alpha_minus_validity_alpha_u8": 0,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate_u8": [
+            1,
+            1,
+            1,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "reference_u8": [
+            1,
+            1,
+            1,
+            255
+          ],
+          "sample_rgba": [
+            0.00655855,
+            0.00655855,
+            0.00655855,
+            1.0
+          ],
+          "sample_u8": [
+            1,
+            1,
+            1,
+            255
+          ],
+          "validity_alpha_u8": 255,
+          "x": 1613,
+          "y": 6
+        },
+        {
+          "alpha_minus_validity_alpha_u8": 0,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            -255,
+            -255,
+            -255,
+            0
+          ],
+          "candidate_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "reference_u8": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "sample_rgba": [
+            -0.00408606,
+            -0.00408606,
+            -0.00408606,
+            1.0
+          ],
+          "sample_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "validity_alpha_u8": 255,
+          "x": 1614,
+          "y": 6
+        },
+        {
+          "alpha_minus_validity_alpha_u8": 0,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "reference_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "sample_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "sample_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "validity_alpha_u8": 255,
+          "x": 1615,
+          "y": 6
+        },
+        {
+          "alpha_minus_validity_alpha_u8": 0,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "reference_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "sample_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "sample_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "validity_alpha_u8": 255,
+          "x": 1616,
+          "y": 6
+        },
+        {
+          "alpha_minus_validity_alpha_u8": 0,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "reference_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "sample_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "sample_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "validity_alpha_u8": 255,
+          "x": 1617,
+          "y": 6
+        },
+        {
+          "alpha_minus_validity_alpha_u8": 0,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "reference_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "sample_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "sample_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "validity_alpha_u8": 255,
+          "x": 1618,
+          "y": 6
+        }
+      ],
+      "row_y": 6,
+      "x_range": [
+        1610,
+        1618
+      ]
+    },
+    "row_probe_half_span": 4,
+    "witness_alpha_u8": 255,
+    "witness_cell_valid": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "witness_sample_u8": [
+      0,
+      0,
+      0,
+      255
+    ],
+    "witness_validity_alpha_u8": 255,
+    "witness_xy": [
+      1614,
+      6
+    ]
+  },
+  "zoom_case_0009": {
+    "case_id": "case_0009",
+    "path_kind": "zoom",
+    "row_probe": {
+      "max_alpha_validity_gap": {
+        "gap": 208,
+        "x": 8
+      },
+      "max_rgb_reference_gap": {
+        "delta": [
+          0,
+          0,
+          0
+        ],
+        "mag": 0,
+        "x": 2
+      },
+      "row": [
+        {
+          "alpha_minus_validity_alpha_u8": 12,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "reference_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_rgba": [
+            0.0815266,
+            0.0119805,
+            0.0119805,
+            1.0
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha_u8": 243,
+          "x": 2,
+          "y": 0
+        },
+        {
+          "alpha_minus_validity_alpha_u8": 44,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "reference_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_rgba": [
+            0.0817042,
+            0.0125139,
+            0.0125139,
+            1.0
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha_u8": 211,
+          "x": 3,
+          "y": 0
+        },
+        {
+          "alpha_minus_validity_alpha_u8": 77,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "reference_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_rgba": [
+            0.0818824,
+            0.0130498,
+            0.0130498,
+            1.0
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha_u8": 178,
+          "x": 4,
+          "y": 0
+        },
+        {
+          "alpha_minus_validity_alpha_u8": 110,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "reference_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_rgba": [
+            0.0820613,
+            0.0135885,
+            0.0135885,
+            1.0
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha_u8": 145,
+          "x": 5,
+          "y": 0
+        },
+        {
+          "alpha_minus_validity_alpha_u8": 143,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "candidate_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "reference_u8": [
+            20,
+            3,
+            3,
+            254
+          ],
+          "sample_rgba": [
+            0.0822407,
+            0.0141302,
+            0.0141302,
+            1.0
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha_u8": 112,
+          "x": 6,
+          "y": 0
+        },
+        {
+          "alpha_minus_validity_alpha_u8": 176,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "candidate_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "reference_u8": [
+            21,
+            3,
+            3,
+            254
+          ],
+          "sample_rgba": [
+            0.0824207,
+            0.0146743,
+            0.0146743,
+            1.0
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha_u8": 79,
+          "x": 7,
+          "y": 0
+        },
+        {
+          "alpha_minus_validity_alpha_u8": 208,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "reference_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_rgba": [
+            0.0826013,
+            0.0152213,
+            0.0152213,
+            1.0
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha_u8": 47,
+          "x": 8,
+          "y": 0
+        },
+        {
+          "alpha_minus_validity_alpha_u8": 149,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            1.0,
+            0.0
+          ],
+          "reference_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_rgba": [
+            0.0827824,
+            0.0157712,
+            0.0157712,
+            1.0
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha_u8": 106,
+          "x": 9,
+          "y": 0
+        },
+        {
+          "alpha_minus_validity_alpha_u8": 19,
+          "alpha_u8": 255,
+          "candidate_minus_reference_u8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "candidate_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "cell_valid": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "reference_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_rgba": [
+            0.083057,
+            0.0161045,
+            0.0161045,
+            1.0
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha_u8": 236,
+          "x": 10,
+          "y": 0
+        }
+      ],
+      "row_y": 0,
+      "x_range": [
+        2,
+        10
+      ]
+    },
+    "row_probe_half_span": 4,
+    "witness_alpha_u8": 255,
+    "witness_cell_valid": [
+      1.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    "witness_sample_u8": [
+      20,
+      3,
+      3,
+      255
+    ],
+    "witness_validity_alpha_u8": 113,
+    "witness_xy": [
+      6,
+      0
+    ]
+  }
+}

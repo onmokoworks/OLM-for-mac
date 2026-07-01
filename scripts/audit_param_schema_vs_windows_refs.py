@@ -113,6 +113,14 @@ def normalize_manifest_param(plugin: str, path_parts: list[str], leaf: str, prop
         }
         if (parent, leaf) in aliases:
             return aliases[(parent, leaf)], "alias-grouped-ui"
+        if leaf == "Sharp Tail" and property_index in {7, 12}:
+            direct_tail = {
+                7: "Front Sharp Tail",
+                12: "Back Sharp Tail",
+            }
+            return direct_tail[property_index], "alias-ordinal-ui"
+        if leaf == "Sharp Tail" and property_index in {8, 13}:
+            return None, "ignored-ui-scaffold"
         if property_index in {5, 6, 7}:
             direct_front = {
                 5: "Front Blur Strength",

@@ -441,6 +441,63 @@ def request_id_from_zip(path: Path) -> str | None:
     return None
 
 
+def runtime_trace_request_ids_from_json(data: dict) -> list[str]:
+    ids: list[str] = []
+    direct = data.get("request_id")
+    if isinstance(direct, str):
+        ids.append(direct)
+    for key in ("results", "runtime_trace_results", "requests_answered"):
+        rows = data.get(key)
+        if not isinstance(rows, list):
+            continue
+        for row in rows:
+            if isinstance(row, dict) and isinstance(row.get("request_id"), str):
+                ids.append(str(row["request_id"]))
+    seen: set[str] = set()
+    unique: list[str] = []
+    for request_id in ids:
+        if request_id in seen:
+            continue
+        seen.add(request_id)
+        unique.append(request_id)
+    return unique
+
+
+def find_matching_runtime_package(root: Path, source: Path) -> Path | None:
+    package_dir = root / "refs" / "runtime_trace_packages"
+    if not package_dir.is_dir():
+        return None
+    with tempfile.TemporaryDirectory(prefix="olm_runtime_package_match_") as tmp:
+        try:
+            materialized = extract_if_zip(source, Path(tmp) / "source")
+        except Exception:
+            return None
+        request_ids: list[str] = []
+        for path in sorted(materialized.rglob("*.json")) if materialized.is_dir() else [materialized]:
+            if "__MACOSX" in path.parts or path.name.startswith("._"):
+                continue
+            data = load_json(path)
+            if not isinstance(data, dict):
+                continue
+            request_ids.extend(runtime_trace_request_ids_from_json(data))
+        request_ids = sorted(set(request_ids))
+    if len(request_ids) != 1:
+        return None
+    request_id = request_ids[0]
+    candidates = sorted(package_dir.glob("*.zip"), key=lambda path: (path.stat().st_mtime, path.name), reverse=True)
+    for package in candidates:
+        try:
+            with zipfile.ZipFile(package) as archive:
+                data = json.loads(archive.read("runtime_trace_package_manifest.json").decode("utf-8"))
+        except Exception:
+            continue
+        actions = data.get("runtime_actions", [])
+        for action in actions:
+            if isinstance(action, dict) and action.get("request_id") == request_id:
+                return package
+    return None
+
+
 def find_ae_pixel_requests(root: Path, args: argparse.Namespace, materialized: Path) -> dict[str, Path]:
     search_dirs = [path.resolve() for path in args.ae_pixel_requests_dir]
     search_dirs.extend(
@@ -624,9 +681,11 @@ def run_win_reference(args: argparse.Namespace, root: Path) -> int:
 def run_runtime_trace(args: argparse.Namespace, root: Path) -> int:
     package = args.runtime_package
     if package is None:
-        package = root / "refs" / "runtime_trace_packages"
-        packages = sorted(package.glob("*.zip"), key=lambda path: path.stat().st_mtime) if package.exists() else []
-        package = packages[-1] if packages else None
+        package = find_matching_runtime_package(root, args.source.resolve())
+        if package is None:
+            package_dir = root / "refs" / "runtime_trace_packages"
+            packages = sorted(package_dir.glob("*.zip"), key=lambda path: path.stat().st_mtime) if package_dir.exists() else []
+            package = packages[-1] if packages else None
     elif not package.is_absolute():
         package = root / package
 
@@ -658,10 +717,8 @@ def run_runtime_trace(args: argparse.Namespace, root: Path) -> int:
     if summary_md:
         cmd.extend(["--summary-md", str(summary_md)])
     rc = run(cmd, root)
-    if rc != 0:
-        return rc
     if args.no_runtime_comparisons or summary_json is None:
-        return 0
+        return rc
     compare_cmd = [
         sys.executable,
         "scripts/compare_runtime_trace_summary.py",
@@ -670,7 +727,10 @@ def run_runtime_trace(args: argparse.Namespace, root: Path) -> int:
         "--output-dir",
         str(comparison_dir),
     ]
-    return run(compare_cmd, root)
+    compare_rc = run(compare_cmd, root)
+    if rc != 0:
+        return rc
+    return compare_rc
 
 
 def main() -> int:

@@ -21,6 +21,11 @@ Keep OLMRadialBlur blocked on narrow binary proof only: Zoom still needs upstrea
 - Windows final RGBA u8: `[20, 3, 3, 254]`
 - Caller collapse boundary: `{'sampler_helpers': {'nonrepeat_rgba': 'FUN_180001270', 'repeat_rgba': 'FUN_180001520'}, 'preserved_validity_plane': '+0xf252', 'normalized_accum_rgba_plane': '+0xf250', 'final_polar_rgba_plane': '+0xe'}`
 - Required next proof: Polar alpha/sample accumulation before sampler return, including the denominator or substitute alpha state that explains Windows alpha 0.99999994 versus local 1.0, plus the caller-side collapse from preserved validity/+0xf252 into final +0xe alpha.
+- 2026-07-01 local row-probe strengthening: across witness row `x=2..10`, final
+  inverse-sampled alpha stays near-opaque while the current local
+  preserved-validity proxy collapses rapidly (`max alpha_u8 - validity_alpha_u8
+  gap = 208` at `x=8`). Therefore the next proof is narrower than direct
+  bilinear sampling of the current validity plane.
 
 ### tiny_rotation
 
@@ -31,6 +36,11 @@ Keep OLMRadialBlur blocked on narrow binary proof only: Zoom still needs upstrea
 - Windows final RGBA u8: `[255, 255, 255, 255]`
 - Caller collapse boundary: `{'preserved_validity_plane': '+0xf252', 'normalized_accum_rgba_plane': '+0xf250', 'final_polar_rgba_plane': '+0xe', 'final_inverse_sampler': 'FUN_180009d80'}`
 - Required next proof: Exact inverse-sampler validity/border or substitute late path for the top-border high-max witness, plus the caller-side collapse values: preserved validity/+0xf252, accumulated +0xf250 RGBA, normalized +0xe RGBA, and then the final output if the sampler sample is bypassed.
+- 2026-07-01 local row-probe strengthening: across witness row `x=1610..1618`,
+  validity alpha is already fully live everywhere (`gap = 0` at all sampled
+  points), while the center witness alone drops from white to black. So the
+  remaining tiny Rotation proof should now focus on upstream polar RGB /
+  substitute-path population rather than a validity-only alpha collapse.
 
 ### inner
 

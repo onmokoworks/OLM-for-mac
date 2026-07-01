@@ -83,14 +83,17 @@ def parse_args() -> argparse.Namespace:
             "olmblur-repeat-threshold",
             "olmblur-last1px",
             "olmblur-final-word-witness",
+            "olmblur-case0006-helper-prestore",
             "kirakira-stage-values",
             "kirakira-stage-values-deep",
             "kirakira-forward-warp-box-input",
             "kirakira-boxfilter-pass1-microprobe",
             "kirakira-aggregation-compose-bt709",
             "kirakira-compose-writeback-witness",
+            "kirakira-hotspot-compose-writeback-witness",
             "radialblur-residual-witness",
             "radialblur-caller-collapse-witness",
+            "radialblur-caller-collapse-followup",
             "radialblur-inner-cell-witness",
             "directionalblur-residual-witness",
             "directionalblur-helper-coverage-witness",
@@ -107,6 +110,8 @@ def parse_args() -> argparse.Namespace:
             "smoother2-current-aex-writer-frame-followup",
             "distancegradation-field-prep",
             "distancegradation-layer-no-bg-source-ownership",
+            "distancegradation-constant-boundary-witness",
+            "distancegradation-constant-case0023-witness",
             "distancegradation-16bpc-case0026-x-witness",
         ],
         default="hard-paths",
@@ -270,6 +275,46 @@ def olmblur_final_word_witness_action() -> dict[str, Any]:
     return action
 
 
+def olmblur_case0006_helper_prestore_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmblur_case0006_helper_prestore_witness_20260630",
+        "plugin_area": "OLMBlur case_0006 non-Legacy helper/pre-store witness",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMBlur normalized 16bpc Software `olmblur__case_0006` at the "
+            "two sign-mixed one-word witnesses `(314,14)` and `(29,71)`. Do not "
+            "recapture broad PNGs and do not spend time on the surviving Legacy "
+            "`case_0007` half-step family; that lane is already narrowed. For each "
+            "witness, capture the exact pre-store RGB float/hex immediately before the "
+            "final 16bpc store, the helper-local value or last upstream value that feeds "
+            "that pre-store float, the final stored internal word(s), and the exact "
+            "writeback helper/conversion instruction family if visible. Also record any "
+            "case-local branch or helper fact that can explain why `(314,14)` should land "
+            "one word higher while `(29,71)` lands one word lower under the same global "
+            "writer contract. Compare against the Mac live witnesses and current baseline "
+            "frozen in refs/conformance/olmblur_current_word_baseline_20260629.md, "
+            "refs/conformance/olmblur_pending_final_word_proof_20260629.md, and "
+            "refs/conformance/olmblur_writer_only_hypothesis_20260630.md. The last retry "
+            "failed operationally, not analytically: AE startup/Crash Repair modals "
+            "interrupted early `sxe ld:OLMBlur.aex`, and a later unresolved "
+            "`bu OLMBlur+0x2fad` did not bind before `ModLoad`. Clear the startup modal "
+            "first, then once `OLMBlur.aex` is actually loaded bind the target from the "
+            "real module base/address (not only the unresolved symbolic form) before "
+            "arming the final watchpoint/databreak."
+        ),
+        "stop_condition": (
+            "Return concrete Windows pre-store/helper/store values for both case_0006 "
+            "witnesses `(314,14)` and `(29,71)`, or the exact failed "
+            "breakpoint/watchpoint reason. The goal is to decide whether the remaining "
+            "sign-mixed family comes from upstream helper state before the writer, not "
+            "from a blind global rounding swap. Final PNG bytes or a generic writer name "
+            "alone are not enough. If it fails again, explicitly say whether the blocker "
+            "was pre-load modal interference, unresolved symbol bind timing, or a "
+            "post-bind watchpoint that never fired."
+        ),
+    }
+
+
 def kirakira_stage_values_action() -> dict[str, Any]:
     return {
         "request_id": "kirakira_fun_181150790_stage_values_20260620",
@@ -422,6 +467,30 @@ def kirakira_compose_writeback_witness_action() -> dict[str, Any]:
     action["request_id"] = "kirakira_compose_writeback_witness_20260630"
     action["plugin_area"] = "OLMKiraKira compose / pre-writeback / final quantization witness"
     return action
+
+
+def kirakira_hotspot_compose_writeback_witness_action() -> dict[str, Any]:
+    return {
+        "request_id": "kirakira_hotspot_compose_writeback_witness_20260701",
+        "plugin_area": "OLMKiraKira hotspot-local compose / pre-writeback / final quantization witness",
+        "mode": "external-trace",
+        "command": (
+            "Trace only the current unresolved OLMKiraKira hotspot on the current "
+            "Software AEX path: `kk_vertical_len50_brightness1_strength100` at witness "
+            "pixel `(934,118)`. Do not return broad PNGs and do not restate already-grounded "
+            "boxFilter/window/warp/BT.709 facts. Record, at that same pixel only, source RGBA float, "
+            "the post-`FUN_18114fd90` glow RGBA float after any opacity multiply, the merge-mode-1 "
+            "composed RGBA float, the last pre-writeback RGBA float if distinct, the final written "
+            "RGBA8, and the exact quantization/clamp helper identity only if pre-writeback float and "
+            "final u8 differ. The goal is to isolate the remaining hotspot-only attenuation/branch "
+            "between post-fd90 glow and final writeback."
+        ),
+        "stop_condition": (
+            "Return enough typed values to decide whether the remaining hotspot residual is in "
+            "merge-mode-1 compose, a hotspot-local attenuation branch, or final quantization. "
+            "Broader stage logs or final PNG bytes alone are not enough."
+        ),
+    }
 
 
 def smoother2_no_key_grid_action() -> dict[str, Any]:
@@ -902,6 +971,66 @@ def distancegradation_layer_no_bg_source_ownership_action() -> dict[str, Any]:
     }
 
 
+def distancegradation_constant_boundary_witness_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_16bpc_constant_boundary_witness_20260630",
+        "plugin_area": "OLMDistanceGradation 16bpc Constant boundary threshold ownership witness",
+        "mode": "external-trace",
+        "command": (
+            "Trace OLMDistanceGradation normalized Software 16bpc Constant-mode cases "
+            "olmdistancegradation_extended__case_0020, case_0022, and case_0023. Focus only "
+            "on the sparse remaining boundary pixels after the Constant-specific THRESH_BINARY "
+            "fix. For each listed witness pixel, record the binary mask/source alpha state, "
+            "inside and outside distance values before thresholding, the exact threshold "
+            "comparison/ownership decision used by FUN_181174760 or its immediate caller, the "
+            "field value finally consumed by FUN_181170480, and the final RGBA16 write. "
+            "Include at least the case_0020 boundary pair (951,417) and (950,417), plus "
+            "representative case_0022/0023 pixels where the Mac candidate still flips endpoint color."
+        ),
+        "stop_condition": (
+            "Return enough typed values to decide whether the remaining Constant residuals are "
+            "caused by distanceTransform threshold ownership / plateau membership / <= vs < "
+            "boundary behavior, rather than compose/writeback drift. Final PNG values alone are not enough."
+        ),
+    }
+
+
+def distancegradation_constant_case0023_witness_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630",
+        "plugin_area": "OLMDistanceGradation 16bpc Constant case_0023 OutsideThreshold=0 witness",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMDistanceGradation normalized Software 16bpc "
+            "olmdistancegradation_extended__case_0023. Focus on the remaining "
+            "Constant-mode sparse boundary family where In/Out=Both and "
+            "Outside Threshold=0. For witness pixels (1699,7) and (985,26), "
+            "record the binary mask/source alpha state, inside and outside "
+            "distance values before thresholding, the exact threshold/ownership "
+            "decision used by FUN_181174760 or its immediate caller, any "
+            "special handling for Outside Threshold=0 or equality/plateau "
+            "membership, the field value finally consumed by FUN_181170480, "
+            "the compose callback output RGBA before word store, and the final "
+            "RGBA16 write. Prefer a typed witness over broad PNG rerenders. The "
+            "last narrowed return already preserved the boundary facts "
+            "(inside_distance=1.0 / outside_distance=0.0 and red endpoint at the "
+            "tracked representatives) but did not isolate a fresh "
+            "`FUN_181170480`-stage typed witness, so this retry should aim "
+            "specifically at the missing per-call ownership/compose values rather "
+            "than restating the same final-pixel classification."
+        ),
+        "stop_condition": (
+            "Return enough typed values to decide whether case_0023 is controlled "
+            "by an OutsideThreshold=0 helper-staging/equality rule or another "
+            "upstream Constant threshold-ownership branch. Final PNG values alone "
+            "are not enough. If the exact typed witness still cannot be isolated, "
+            "explicitly say whether the blocker is the hook/breakpoint point, "
+            "the chosen callsite, or a value that is only observable one stage "
+            "earlier/later."
+        ),
+    }
+
+
 def radialblur_dense_action() -> dict[str, Any]:
     return {
         "request_id": "olmradialblur_dense_sampler_trace_20260620",
@@ -965,6 +1094,34 @@ def radialblur_caller_collapse_witness_action() -> dict[str, Any]:
     action["request_id"] = "olmradialblur_caller_collapse_witness_20260630"
     action["plugin_area"] = "OLMRadialBlur Zoom/tiny Rotation caller-collapse witness"
     return action
+
+
+def radialblur_caller_collapse_followup_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmradialblur_caller_collapse_followup_20260701",
+        "plugin_area": "OLMRadialBlur Zoom/tiny Rotation narrowed caller-collapse follow-up",
+        "mode": "external-trace",
+        "command": (
+            "Trace only the two surviving OLMRadialBlur outer witnesses on the current Software "
+            "AEX path, using the tightened 2026-07-01 proof boundary. For Zoom `case_0009` at `(6,0)`, "
+            "capture the caller-collapse chain from sampler return through preserved validity `+0xf252`, "
+            "accumulated or normalized `+0xf250`, final polar `+0xe.alpha`, pre-writeback RGBA float, "
+            "and final stored RGBA8. Include the alpha/coverage denominator or equivalent state that explains "
+            "why Windows keeps `0.99999994` instead of local `1.0`. Do not spend effort on direct binary-validity "
+            "or propagated-validity substitutes; those are already rejected locally. For tiny Rotation "
+            "`case_0010` at `(1614,6)`, capture the exact upstream branch that creates the missing bright lobe: "
+            "inverse-sampler input/source-polar coordinates, validity/border branch decision, any fallback or "
+            "substitute path, preserved validity `+0xf252`, accumulated `+0xf250` RGBA, normalized final polar "
+            "`+0xe` RGBA, pre-writeback RGBA float, and final stored RGBA8. Focus on why the exact Windows output "
+            "is white while the local candidate stays black with alpha already fully live."
+        ),
+        "stop_condition": (
+            "Return enough typed values to classify Zoom as a caller-collapse/denominator issue at "
+            "`+0xf252/+0xf250/+0xe`, and tiny Rotation as a concrete RGB/substitute-path issue rather than a "
+            "validity-alpha issue. If the exact breakpoint cannot be held, return the precise failed "
+            "address/condition and the closest captured values in this chain."
+        ),
+    }
 
 
 def radialblur_inner_cell_witness_action() -> dict[str, Any]:
@@ -1137,6 +1294,8 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [olmblur_last1px_action()]
     if profile == "olmblur-final-word-witness":
         return [olmblur_final_word_witness_action()]
+    if profile == "olmblur-case0006-helper-prestore":
+        return [olmblur_case0006_helper_prestore_action()]
     if profile == "kirakira-stage-values":
         return [kirakira_stage_values_action()]
     if profile == "kirakira-stage-values-deep":
@@ -1149,10 +1308,14 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [kirakira_aggregation_compose_bt709_action()]
     if profile == "kirakira-compose-writeback-witness":
         return [kirakira_compose_writeback_witness_action()]
+    if profile == "kirakira-hotspot-compose-writeback-witness":
+        return [kirakira_hotspot_compose_writeback_witness_action()]
     if profile == "radialblur-residual-witness":
         return [radialblur_residual_witness_action()]
     if profile == "radialblur-caller-collapse-witness":
         return [radialblur_caller_collapse_witness_action()]
+    if profile == "radialblur-caller-collapse-followup":
+        return [radialblur_caller_collapse_followup_action()]
     if profile == "radialblur-inner-cell-witness":
         return [radialblur_inner_cell_witness_action()]
     if profile == "directionalblur-residual-witness":
@@ -1185,6 +1348,10 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [distancegradation_field_prep_action()]
     if profile == "distancegradation-layer-no-bg-source-ownership":
         return [distancegradation_layer_no_bg_source_ownership_action()]
+    if profile == "distancegradation-constant-boundary-witness":
+        return [distancegradation_constant_boundary_witness_action()]
+    if profile == "distancegradation-constant-case0023-witness":
+        return [distancegradation_constant_case0023_witness_action()]
     if profile == "distancegradation-16bpc-case0026-x-witness":
         return [distancegradation_16bpc_case0026_x_witness_action()]
     return runtime_actions(snapshot)
@@ -1652,6 +1819,66 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 ],
             }
             summary = "Fill with OLMBlur last-1px pre-store float witnesses for old 8bpc and normalized 16bpc case_0007."
+        elif request_id == "olmblur_case0006_helper_prestore_witness_20260630":
+            observations = {
+                "effect": "OLM Blur",
+                "module_base": "0x...",
+                "case_id": "olmblur__case_0006",
+                "bit_depth": 16,
+                "legacy": 0,
+                "repeat": 10,
+                "writer_contract_already_grounded": (
+                    "do not re-answer with only nearbyint vs floor05; that lane is already "
+                    "bounded by the 2026-06-30 writer-only audit"
+                ),
+                "witnesses": [
+                    {
+                        "x": 314,
+                        "y": 14,
+                        "windows_reference_rgba": [2201, 2201, 2201, 65535],
+                        "mac_candidate_rgba": [2199, 2199, 2199, 65535],
+                        "mac_live_raw_rgb_hex": ["0x1.132p+10", "0x1.132p+10", "0x1.132p+10"],
+                        "mac_live_raw_rgb_float": [1100.5, 1100.5, 1100.5],
+                        "mac_live_store_rule": "nearbyint / ties-to-even -> 1100",
+                        "windows_helper_or_last_upstream_rgb_hex": [None, None, None],
+                        "windows_pre_store_rgb_hex": [None, None, None],
+                        "windows_pre_store_rgb_float": [None, None, None],
+                        "windows_writer_or_store_contract": "helper + cvt/trunc | floor05 helper | other",
+                        "windows_internal_word_store": [None, None, None],
+                        "windows_final_rgba": [None, None, None, None],
+                        "why_this_point_matters": "positive signed residual; should land one word higher than Mac",
+                    },
+                    {
+                        "x": 29,
+                        "y": 71,
+                        "windows_reference_rgba": [725, 725, 725, 65535],
+                        "mac_candidate_rgba": [727, 727, 727, 65535],
+                        "mac_live_raw_rgb_hex": ["0x1.6b8p+8", "0x1.6b8p+8", "0x1.6b8p+8"],
+                        "mac_live_raw_rgb_float": [363.5, 363.5, 363.5],
+                        "mac_live_store_rule": "nearbyint / ties-to-even -> 364",
+                        "windows_helper_or_last_upstream_rgb_hex": [None, None, None],
+                        "windows_pre_store_rgb_hex": [None, None, None],
+                        "windows_pre_store_rgb_float": [None, None, None],
+                        "windows_writer_or_store_contract": "helper + cvt/trunc | floor05 helper | other",
+                        "windows_internal_word_store": [None, None, None],
+                        "windows_final_rgba": [None, None, None, None],
+                        "why_this_point_matters": "negative signed residual; should land one word lower than Mac",
+                    },
+                ],
+                "case_level_contract": {
+                    "must_explain": [
+                        "why the family is sign-mixed under one global writer contract",
+                        "whether the divergence is already present before the final writer",
+                        "the last helper/upstream state feeding the final 16bpc store",
+                    ],
+                    "not_enough": [
+                        "generic writer family names without witness values",
+                        "final PNG bytes alone",
+                        "another Legacy case_0007 half-step recap",
+                    ],
+                },
+            }
+            summary = "Fill with OLMBlur case_0006 non-Legacy helper/pre-store Windows witness values."
         elif request_id == "kirakira_fun_181150790_stage_values_20260620":
             observations = {
                 "effect": "OLM Kira Kira",
@@ -1883,6 +2110,7 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
         elif request_id in {
             "kirakira_aggregation_compose_bt709_20260624",
             "kirakira_compose_writeback_witness_20260630",
+            "kirakira_hotspot_compose_writeback_witness_20260701",
         }:
             observations = {
                 "effect": "OLM Kira Kira",
@@ -2226,6 +2454,7 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
         elif request_id in {
             "olmradialblur_zoom_tiny_rotation_residual_witness_20260622",
             "olmradialblur_caller_collapse_witness_20260630",
+            "olmradialblur_caller_collapse_followup_20260701",
         }:
             observations = {
                 "effect": "OLM RadialBlur",
@@ -2944,6 +3173,199 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 },
             }
             summary = "Fill with OLMDistanceGradation 16bpc Layer/no-bg source ownership witness facts."
+        elif request_id == "olmdistancegradation_16bpc_constant_boundary_witness_20260630":
+            observations = {
+                "effect": "OLM Distance Gradation",
+                "module_base": "0x...",
+                "focus": (
+                    "Constant interpolation residuals after the FUN_181174760 THRESH_BINARY fix. "
+                    "Need threshold-boundary ownership, not another broad PNG."
+                ),
+                "known_binary_facts_to_preserve": [
+                    "Constant interpolation switches the field helper to THRESH_BINARY before normalization.",
+                    "Current Mac AE residuals are sparse and boundary-localized after the Constant fix.",
+                    "The remaining cases are not expected to be explained by final 16bpc writeback alone.",
+                ],
+                "cases": [
+                    {
+                        "case_id": "olmdistancegradation_extended__case_0020",
+                        "params": {
+                            "in_out": 1,
+                            "inside_threshold": 78,
+                            "outside_threshold": 204,
+                            "render_mode": 1,
+                            "use_background_color": 1,
+                            "interpolation_mode": 1,
+                            "invert": 0,
+                        },
+                        "boundary_pair": [
+                            {
+                                "x": 951,
+                                "y": 417,
+                                "source_input_rgba16": [65535, 0, 0, 65535],
+                                "windows_reference_rgba16": [7195, 0, 61165, 65535],
+                                "mac_candidate_rgba16": [65535, 0, 0, 65535],
+                                "inside_distance": 78.0,
+                                "outside_distance": 0.0,
+                            },
+                            {
+                                "x": 950,
+                                "y": 417,
+                                "source_input_rgba16": [65535, 0, 0, 65535],
+                                "windows_reference_rgba16": [7195, 0, 61165, 65535],
+                                "mac_candidate_rgba16": [7195, 0, 61165, 65535],
+                                "inside_distance": 77.99359,
+                                "outside_distance": 0.0,
+                            },
+                        ],
+                    },
+                    {
+                        "case_id": "olmdistancegradation_extended__case_0022",
+                        "params": {
+                            "in_out": 3,
+                            "inside_threshold": 36,
+                            "outside_threshold": 11,
+                            "render_mode": 1,
+                            "use_background_color": 1,
+                            "interpolation_mode": 1,
+                            "invert": 0,
+                        },
+                        "representative_pixels": [
+                            {
+                                "x": 1101,
+                                "y": 55,
+                                "windows_reference_rgba16": [65535, 0, 0, 65535],
+                                "mac_candidate_rgba16": [7195, 0, 61165, 65535],
+                                "inside_distance": 0.0,
+                                "outside_distance": 10.77033,
+                            },
+                            {
+                                "x": 1097,
+                                "y": 56,
+                                "windows_reference_rgba16": [65535, 0, 0, 65535],
+                                "mac_candidate_rgba16": [7195, 0, 61165, 65535],
+                                "inside_distance": 0.0,
+                                "outside_distance": 11.0,
+                            },
+                        ],
+                    },
+                    {
+                        "case_id": "olmdistancegradation_extended__case_0023",
+                        "params": {
+                            "in_out": 3,
+                            "inside_threshold": 36,
+                            "outside_threshold": 0,
+                            "render_mode": 1,
+                            "use_background_color": 1,
+                            "interpolation_mode": 1,
+                            "invert": 0,
+                        },
+                        "representative_pixels": [
+                            {
+                                "x": 1699,
+                                "y": 7,
+                                "windows_reference_rgba16": [65535, 0, 0, 65535],
+                                "mac_candidate_rgba16": [7195, 0, 61165, 65535],
+                                "inside_distance": 1.0,
+                                "outside_distance": 0.0,
+                            },
+                            {
+                                "x": 985,
+                                "y": 26,
+                                "windows_reference_rgba16": [65535, 0, 0, 65535],
+                                "mac_candidate_rgba16": [7195, 0, 61165, 65535],
+                                "inside_distance": 1.0,
+                                "outside_distance": 0.0,
+                            },
+                        ],
+                    },
+                ],
+                "requested_for_each_pixel": {
+                    "source_input_rgba16": [None, None, None, None],
+                    "binary_mask_value_before_distance_transform": None,
+                    "inside_distance_before_threshold": None,
+                    "outside_distance_before_threshold": None,
+                    "threshold_values": {
+                        "inside_threshold": None,
+                        "outside_threshold": None,
+                    },
+                    "comparison_rule": "< | <= | THRESH_BINARY OpenCV result | other",
+                    "selected_side_for_both_mode": "inside | outside | unresolved",
+                    "field_value_after_constant_threshold_before_compose": None,
+                    "fun_181170480_X_before_invert": None,
+                    "fun_181170480_X_after_invert": None,
+                    "fun_181170480_output_rgba_before_word_store": [None, None, None, None],
+                    "final_rgba16": [None, None, None, None],
+                },
+            }
+            summary = "Fill with OLMDistanceGradation Constant boundary threshold-ownership witness facts."
+        elif request_id == "olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630":
+            observations = {
+                "effect": "OLM Distance Gradation",
+                "module_base": "0x...",
+                "focus": (
+                    "Narrow follow-up to the answered-partial Constant boundary return. "
+                    "Need the Outside Threshold=0 / Both-mode ownership rule for case_0023, "
+                    "not another broad Constant family rerun."
+                ),
+                "known_binary_facts_to_preserve": [
+                    "case_0023 is the only focused Constant boundary case with In/Out=Both and Outside Threshold=0.",
+                    "After the Constant-specific THRESH_BINARY fix, the remaining case_0023 residuals are sparse and boundary-localized.",
+                    "The previous 2026-06-30 return did not newly isolate the FUN_181170480 consumed value for case_0023.",
+                ],
+                "case": {
+                    "case_id": "olmdistancegradation_extended__case_0023",
+                    "params": {
+                        "in_out": 3,
+                        "inside_threshold": 36,
+                        "outside_threshold": 0,
+                        "render_mode": 1,
+                        "use_background_color": 1,
+                        "interpolation_mode": 1,
+                        "invert": 0,
+                    },
+                    "representative_pixels": [
+                        {
+                            "x": 1699,
+                            "y": 7,
+                            "source_input_rgba16": [0, 0, 0, 257],
+                            "windows_reference_rgba16": [65535, 0, 0, 65535],
+                            "mac_candidate_rgba16": [7195, 0, 61165, 65535],
+                            "inside_distance": 1.0,
+                            "outside_distance": 0.0,
+                        },
+                        {
+                            "x": 985,
+                            "y": 26,
+                            "source_input_rgba16": [0, 0, 0, 257],
+                            "windows_reference_rgba16": [65535, 0, 0, 65535],
+                            "mac_candidate_rgba16": [7195, 0, 61165, 65535],
+                            "inside_distance": 1.0,
+                            "outside_distance": 0.0,
+                        },
+                    ],
+                },
+                "requested_for_each_pixel": {
+                    "source_input_rgba16": [None, None, None, None],
+                    "binary_mask_value_before_distance_transform": None,
+                    "inside_distance_before_threshold": None,
+                    "outside_distance_before_threshold": None,
+                    "threshold_values": {
+                        "inside_threshold": None,
+                        "outside_threshold": None,
+                    },
+                    "comparison_rule": "< | <= | THRESH_BINARY OpenCV result | other",
+                    "selected_side_for_both_mode": "inside | outside | unresolved",
+                    "outside_threshold_zero_special_case": "yes | no | unresolved",
+                    "field_value_after_constant_threshold_before_compose": None,
+                    "field_value_finally_consumed_by_FUN_181170480": None,
+                    "fun_181170480_X_before_invert": None,
+                    "fun_181170480_X_after_invert": None,
+                    "fun_181170480_output_rgba_before_word_store": [None, None, None, None],
+                    "final_rgba16": [None, None, None, None],
+                },
+            }
+            summary = "Fill with OLMDistanceGradation case_0023 OutsideThreshold=0 threshold-ownership witness facts."
         elif request_id == "olmsmoother2_legacy_writeback_extract_20260620":
             observations = {
                 "existing_full_log_path_checked": (
@@ -3638,7 +4060,7 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("refs/reports/olmblur_trace_baseline_20260619_030633_mac/diff.json"),
             Path("refs/reports/olmblur_trace_baseline_20260619_030633_mac/diff.csv"),
         ]
-    elif profile in {"olmblur-last1px", "olmblur-final-word-witness"}:
+    elif profile in {"olmblur-last1px", "olmblur-final-word-witness", "olmblur-case0006-helper-prestore"}:
         files = [
             TRACE_NOTE,
             *OLMBLUR_SUPPORTING_NOTES,
@@ -3646,9 +4068,15 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("refs/conformance/olmblur_pending_final_word_proof_20260629.json"),
             Path("refs/conformance/olmblur_legacy_carry_prev_probe_20260629.md"),
             Path("refs/conformance/olmblur_last1px_family_probe_20260629.md"),
+            Path("refs/conformance/olmblur_current_word_baseline_20260629.md"),
+            Path("refs/conformance/olmblur_writer_only_hypothesis_20260630.md"),
+            Path("refs/conformance/olmblur_writer_only_hypothesis_20260630.json"),
             Path("refs/reports/ae_single_case_olmblur_case0007_final1px_probe_20260629/probe_report.json"),
             Path("refs/reports/ae_single_case_olmblur_case0007_final1px_probe_20260629/probe_report.md"),
             Path("refs/reports/ae_single_case_olmblur_case0007_final1px_probe_20260629/olmblur__case_0007/blur_debug.txt"),
+            Path("refs/reports/ae_single_case_olmblur_16bpc_witness_latest/probe_report.json"),
+            Path("refs/reports/ae_single_case_olmblur_16bpc_witness_latest/probe_report.md"),
+            Path("refs/reports/ae_single_case_olmblur_16bpc_witness_latest/olmblur__case_0006/blur_debug.txt"),
             Path("refs/reference_requests/olm_bitdepth_16bpc_normalized_exact_20260625.json"),
         ]
     elif profile == "kirakira-stage-values":
@@ -3734,7 +4162,7 @@ def checked_files(root: Path, profile: str) -> list[Path]:
                 "olmkirakira_boxfilter_pass1_microprobe_20260624.json"
             ),
         ]
-    elif profile in {"radialblur-residual-witness", "radialblur-caller-collapse-witness"}:
+    elif profile in {"radialblur-residual-witness", "radialblur-caller-collapse-witness", "radialblur-caller-collapse-followup"}:
         files = [
             TRACE_NOTE,
             Path("notes/IR_OLMRadialBlur.md"),
@@ -3742,8 +4170,24 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("notes/CONFORMANCE_LEDGER.md"),
             Path("refs/conformance/olmradialblur_pending_narrow_proof_20260629.md"),
             Path("refs/conformance/olmradialblur_pending_narrow_proof_20260629.json"),
+            Path("refs/conformance/olmradialblur_caller_collapse_plane_diag_20260701.md"),
+            Path("refs/conformance/olmradialblur_caller_collapse_plane_diag_20260701.json"),
+            Path("refs/conformance/olmradialblur_outer_propagated_validity_probe_20260701.md"),
+            Path("refs/conformance/olmradialblur_outer_propagated_validity_probe_20260701.json"),
             Path("refs/reports/olmradialblur_residual_clusters_20260622_011750/residual_clusters.md"),
             Path("refs/reports/olmradialblur_residual_clusters_20260622_011750/residual_clusters.json"),
+        ]
+    elif profile in {"kirakira-hotspot-compose-writeback-witness"}:
+        files = [
+            TRACE_NOTE,
+            Path("notes/IR_OLMKiraKira.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/conformance/olmkirakira_pending_compose_proof_20260629.md"),
+            Path("refs/conformance/olmkirakira_pending_compose_proof_20260629.json"),
+            Path("refs/conformance/olmkirakira_hotspot_local_compose_diagnostic_20260701.md"),
+            Path("refs/conformance/olmkirakira_hotspot_local_compose_diagnostic_20260701.json"),
+            Path("refs/conformance/olmkirakira_compose_boundary_mac_witness_20260630.md"),
+            Path("refs/conformance/olmkirakira_compose_boundary_mac_witness_20260630.json"),
         ]
     elif profile == "radialblur-inner-cell-witness":
         files = [
@@ -3966,6 +4410,37 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("refs/conformance/olmdistancegradation_16bpc_representative_witnesses_20260629.json"),
             Path("refs/conformance/olmdistancegradation_16bpc_rejected_layer_unpremultiply_20260629.md"),
             Path("refs/conformance/olmdistancegradation_16bpc_rejected_layer_unpremultiply_20260629.json"),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
+            ),
+        ]
+    elif profile == "distancegradation-constant-boundary-witness":
+        files = [
+            TRACE_NOTE,
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/conformance/olmdistancegradation_16bpc_constant_remaining_boundary_20260629.md"),
+            Path("refs/conformance/olmdistancegradation_16bpc_constant_remaining_boundary_20260629.json"),
+            Path("refs/conformance/olmdistancegradation_16bpc_case0020_field_witness_20260629.md"),
+            Path("refs/conformance/olmdistancegradation_16bpc_case0020_field_witness_20260629.json"),
+            Path("refs/conformance/olmdistancegradation_16bpc_constant_binary_fix_20260629.md"),
+            Path("refs/conformance/olmdistancegradation_16bpc_constant_binary_fix_20260629.json"),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
+            ),
+        ]
+    elif profile == "distancegradation-constant-case0023-witness":
+        files = [
+            TRACE_NOTE,
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/reports/runtime_trace_comparisons/olmdistancegradation_constant_boundary_witness_20260630.md"),
+            Path("refs/reports/runtime_trace_comparisons/olmdistancegradation_constant_boundary_witness_20260630.json"),
+            Path("refs/conformance/olmdistancegradation_16bpc_constant_both_outside0_variants_20260630.md"),
+            Path("refs/conformance/olmdistancegradation_16bpc_constant_both_outside0_variants_20260630.json"),
+            Path("refs/conformance/olmdistancegradation_16bpc_rejected_outside_threshold_eq_probe_20260630.md"),
             Path(
                 "handoff/ae_pixel_validation_20260618/requests/"
                 "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"

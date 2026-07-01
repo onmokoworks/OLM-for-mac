@@ -13,6 +13,10 @@ from typing import Any
 PRIORITY_PROFILES = {
     "radialblur-residual-witness": 10,
     "radialblur-caller-collapse-witness": 9,
+    "radialblur-caller-collapse-followup": 8,
+    "kirakira-hotspot-compose-writeback-witness": 43,
+    "olmblur-case0006-helper-prestore": 18,
+    "distancegradation-constant-case0023-witness": 22,
     "olmblur-final-word-witness": 19,
     "kirakira-boxfilter-pass1-microprobe": 20,
     "kirakira-compose-writeback-witness": 44,
@@ -26,7 +30,15 @@ PRIORITY_PROFILES = {
     "distancegradation-field-prep": 80,
 }
 
+PARTIAL_STILL_PENDING_REQUEST_IDS = {
+    "olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630",
+}
+
 COMPARISON_COMMANDS = [
+    (
+        "kirakira_hotspot_compose_writeback_witness_20260701",
+        "python3 scripts/compare_kirakira_stage_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --local-trace-json refs/reports/olmkirakira_trace_baseline_20260624_bt709_mac/trace.json --output-json refs/reports/runtime_trace_comparisons/olmkirakira_hotspot_compose_writeback_witness_20260701.json --output-md refs/reports/runtime_trace_comparisons/olmkirakira_hotspot_compose_writeback_witness_20260701.md",
+    ),
     (
         "kirakira_compose_writeback_witness_20260630",
         "python3 scripts/compare_kirakira_stage_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --local-trace-json refs/reports/olmkirakira_trace_baseline_20260624_bt709_mac/trace.json --output-json refs/reports/runtime_trace_comparisons/olmkirakira_compose_writeback_witness.json --output-md refs/reports/runtime_trace_comparisons/olmkirakira_compose_writeback_witness.md",
@@ -34,6 +46,10 @@ COMPARISON_COMMANDS = [
     (
         "kirakira_aggregation_compose_bt709_20260624",
         "python3 scripts/compare_kirakira_stage_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --local-trace-json refs/reports/olmkirakira_trace_baseline_20260624_bt709_mac/trace.json --output-json refs/reports/runtime_trace_comparisons/olmkirakira_aggregation_compose_bt709_20260624.json --output-md refs/reports/runtime_trace_comparisons/olmkirakira_aggregation_compose_bt709_20260624.md",
+    ),
+    (
+        "olmradialblur_caller_collapse_followup_20260701",
+        "python3 scripts/compare_radialblur_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmradialblur_caller_collapse_followup_20260701.json --output-md refs/reports/runtime_trace_comparisons/olmradialblur_caller_collapse_followup_20260701.md",
     ),
     (
         "olmradialblur_caller_collapse_witness_20260630",
@@ -64,6 +80,10 @@ COMPARISON_COMMANDS = [
         "python3 scripts/compare_kirakira_stage_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmkirakira_stage_values.json --output-md refs/reports/runtime_trace_comparisons/olmkirakira_stage_values.md",
     ),
     (
+        "olmblur_case0006_helper_prestore_witness_20260630",
+        "python3 scripts/compare_olmblur_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmblur_case0006_helper_prestore_witness.json --output-md refs/reports/runtime_trace_comparisons/olmblur_case0006_helper_prestore_witness.md",
+    ),
+    (
         "olmblur_final_word_witness_20260630",
         "python3 scripts/compare_olmblur_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmblur_final_word_witness.json --output-md refs/reports/runtime_trace_comparisons/olmblur_final_word_witness.md",
     ),
@@ -74,6 +94,14 @@ COMPARISON_COMMANDS = [
     (
         "colorkey_edge",
         "python3 scripts/compare_colorkey_edge_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmcolorkey_edge.json --output-md refs/reports/runtime_trace_comparisons/olmcolorkey_edge.md",
+    ),
+    (
+        "olmdistancegradation_16bpc_constant_boundary_witness_20260630",
+        "python3 scripts/compare_distancegradation_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmdistancegradation_constant_boundary_witness.json --output-md refs/reports/runtime_trace_comparisons/olmdistancegradation_constant_boundary_witness.md",
+    ),
+    (
+        "olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630",
+        "python3 scripts/compare_distancegradation_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmdistancegradation_constant_case0023_outside0_witness.json --output-md refs/reports/runtime_trace_comparisons/olmdistancegradation_constant_case0023_outside0_witness.md",
     ),
     (
         "olmdistancegradation",
@@ -130,15 +158,16 @@ def answered_request_ids(root: Path) -> set[str]:
         data = read_json(path)
         if not isinstance(data, dict) or data.get("kind") != "olm_runtime_trace_return_summary":
             continue
-        for row in data.get("required", []):
-            if isinstance(row, dict) and row.get("answered") is True and isinstance(row.get("request_id"), str):
-                ids.add(row["request_id"])
         for row in data.get("results", []):
             if not isinstance(row, dict) or not isinstance(row.get("request_id"), str):
                 continue
+            request_id = row["request_id"]
             status = str(row.get("status") or "").lower()
-            if status.startswith("answered") or status in {"ok", "complete"}:
-                ids.add(row["request_id"])
+            if status.startswith("answered_partial") and request_id not in PARTIAL_STILL_PENDING_REQUEST_IDS:
+                ids.add(request_id)
+                continue
+            if status in {"answered", "ok", "complete"}:
+                ids.add(request_id)
     for path in sorted((root / "refs/reports/runtime_trace_comparisons").glob("*.json")):
         data = read_json(path)
         if not isinstance(data, dict) or not isinstance(data.get("request_id"), str):
@@ -146,11 +175,45 @@ def answered_request_ids(root: Path) -> set[str]:
         windows = data.get("windows")
         if not isinstance(windows, dict):
             continue
+        request_id = str(data["request_id"])
         status = str(windows.get("status") or "").lower()
-        present = windows.get("present")
-        if status.startswith("answered") or status in {"ok", "complete"} or present is True:
-            ids.add(str(data["request_id"]))
+        if status.startswith("answered_partial") and request_id not in PARTIAL_STILL_PENDING_REQUEST_IDS:
+            ids.add(request_id)
+            continue
+        if status in {"answered", "ok", "complete"}:
+            ids.add(request_id)
     return ids
+
+
+def latest_result_rows(root: Path) -> dict[str, dict[str, Any]]:
+    latest: dict[str, tuple[float, dict[str, Any]]] = {}
+    reports_root = root / "refs/reports"
+    candidates = sorted(reports_root.glob("**/runtime_trace_summary*.json"))
+    candidates.extend(
+        path
+        for path in sorted(reports_root.glob("**/summary.json"))
+        if "runtime_trace_returns" in path.parts
+    )
+    seen: set[Path] = set()
+    for path in candidates:
+        if path in seen:
+            continue
+        seen.add(path)
+        data = read_json(path)
+        if not isinstance(data, dict) or data.get("kind") != "olm_runtime_trace_return_summary":
+            continue
+        try:
+            mtime = path.stat().st_mtime
+        except OSError:
+            mtime = 0.0
+        for row in data.get("results", []):
+            if not isinstance(row, dict) or not isinstance(row.get("request_id"), str):
+                continue
+            request_id = str(row["request_id"])
+            current = latest.get(request_id)
+            if current is None or mtime >= current[0]:
+                latest[request_id] = (mtime, row)
+    return {request_id: row for request_id, (_, row) in latest.items()}
 
 
 def superseded_request_ids(root: Path) -> set[str]:
@@ -182,6 +245,7 @@ def row_status(request_id: str, answered: set[str], superseded: set[str]) -> str
 def collect(root: Path, package_dir: Path) -> list[dict[str, Any]]:
     answered = answered_request_ids(root)
     superseded = superseded_request_ids(root)
+    latest_rows = latest_result_rows(root)
     rows: list[dict[str, Any]] = []
     for package in sorted(package_dir.glob("*.zip")):
         manifest = package_manifest(package)
@@ -207,6 +271,8 @@ def collect(root: Path, package_dir: Path) -> list[dict[str, Any]]:
                     "stop_condition": action.get("stop_condition") or "",
                     "intake_command": "python3 scripts/intake_olm_return.py path/to/return.zip --runtime-summary-json refs/reports/runtime_trace_summary.json --runtime-summary-md refs/reports/runtime_trace_summary.md --runtime-comparison-dir refs/reports/runtime_trace_comparisons",
                     "comparison_command": comparison_command(request_id),
+                    "latest_known_result_status": str((latest_rows.get(request_id) or {}).get("status") or ""),
+                    "latest_known_result_summary": str((latest_rows.get(request_id) or {}).get("summary") or ""),
                 }
             )
     newest_by_request: dict[str, dict[str, Any]] = {}
@@ -235,13 +301,16 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- Pending: `{len(pending)}`",
         f"- Answered/superseded: `{len(rows) - len(pending)}`",
         "",
-        "| Status | Priority | Request | Package | Why needed |",
-        "| --- | ---: | --- | --- | --- |",
+        "| Status | Priority | Request | Package | Why needed | Latest known result |",
+        "| --- | ---: | --- | --- | --- | --- |",
     ]
     for row in rows:
+        latest = row.get("latest_known_result_status") or "-"
+        if row.get("latest_known_result_summary"):
+            latest = f"{latest}: {row['latest_known_result_summary']}"
         lines.append(
             f"| `{row['status']}` | {row['priority']} | `{row['request_id']}` | "
-            f"`{row['package']}` | {short(row['plugin_area'] or row['command'])} |"
+            f"`{row['package']}` | {short(row['plugin_area'] or row['command'])} | {short(latest, 120)} |"
         )
     if pending:
         lines.extend(["", "## Send First", ""])

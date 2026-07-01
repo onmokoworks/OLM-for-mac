@@ -1,0 +1,61 @@
+{
+  "date": "2026-07-01",
+  "kind": "olmradialblur_outer_propagated_validity_probe",
+  "reading": {
+    "tiny_rotation": "The propagated-validity probe leaves tiny Rotation effectively unchanged (`max=255 mean=0.0103`). This supports the existing conclusion that the remaining blocker is RGB/substitute-path population, not a simple validity-plane collapse.",
+    "zoom": "Replacing outer alpha with a same-kernel propagated validity plane leaves the current Zoom residual unchanged (`max=1 mean=0.0046`). This does not supply the missing 254/255 split by itself."
+  },
+  "status": "diagnostic",
+  "tiny_rotation_case_0010": {
+    "case_id": "case_0010",
+    "mode": "propagated-validity-alpha",
+    "sample_rgba": [
+      -0.00408606,
+      -0.00408606,
+      -0.00408606,
+      1
+    ],
+    "sample_u8": [
+      0,
+      0,
+      0,
+      255
+    ],
+    "stats": {
+      "max_diff": 255,
+      "mean_diff": 0.01032033661265432,
+      "nonzero_px": 33740,
+      "verify_stdout": "=== verify reference_manifest.json ===\n[DIFF]    case_0010            max=255 mean=0.0103 nz=33740/2073600\n---\nok=0 fail=1 missing=0 total=1\nreport_json=/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/manifest_diff.json\nreport_csv=/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/manifest_diff.csv\n"
+    },
+    "witness_xy": [
+      1614,
+      6
+    ]
+  },
+  "zoom_case_0009": {
+    "case_id": "case_0009",
+    "mode": "propagated-validity-alpha",
+    "sample_rgba": [
+      0.0822407,
+      0.0141302,
+      0.0141302,
+      1
+    ],
+    "sample_u8": [
+      20,
+      3,
+      3,
+      255
+    ],
+    "stats": {
+      "max_diff": 1,
+      "mean_diff": 0.004613474151234568,
+      "nonzero_px": 31119,
+      "verify_stdout": "=== verify reference_manifest.json ===\n[DIFF]    case_0009            max=1 mean=0.0046 nz=31119/2073600\n---\nok=0 fail=1 missing=0 total=1\nreport_json=/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/manifest_diff.json\nreport_csv=/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/manifest_diff.csv\n"
+    },
+    "witness_xy": [
+      6,
+      0
+    ]
+  }
+}

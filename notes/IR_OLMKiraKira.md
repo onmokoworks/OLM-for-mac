@@ -46,6 +46,41 @@
 | Blur Mode 2 | Three-pass horizontal `boxFilter` helper path. | `FUN_181150790` |
 | Channel | Seed function; current traced `Channel=2` vtable normalize byte returns `1`. | vtable / refs |
 
+## Current Mac Source Gap Audit
+
+This section is about the current Apple Silicon port source, not the grounded
+Windows behavior.
+
+- `Brightness Gain`
+  - current Mac source reads `params[OLMKIRAKIRA_BRIGHTNESS_GAIN]->u.fs_d.value`
+    as a float, which matches returned witness manifests that include real
+    values like `9.39999961853027`
+  - however, the Windows fresh range capture reports metadata `1..100`, so the
+    host-control unit mapping is still unresolved
+- `Fade Out`
+  - current Mac host range now matches the Windows fresh capture `0..1`
+  - but the render path still does not consume a Fade Out value at all
+- `Highlight Radius`
+  - current Mac source registers the parameter, but the render path does not
+    consume it
+  - Windows fresh range says `0..500`, while the official manual/source shape
+    still suggests `0..1000`
+- `Approximated Input`
+  - exposed in the Windows UI and current Mac UI, but not consumed in the
+    current Mac render path
+- `Merge Mode`
+  - current Mac source always composes with the merge-mode-1 screen-over path;
+    it does not branch on the UI Merge Mode control yet
+- `Blur Mode`
+  - current Mac source now exposes the Windows four-choice host surface, but
+    the render path still hardwires the Blur Mode 2 three-box-filter path and
+    does not dispatch on `info->blur_mode`
+- `Highlight Color` and the five `Use Ramp` toggles
+  - current Mac source reads them into `OLMKiraKiraInfo`, but the render path
+    does not consume them yet
+- `Ramp` / color-ramp custom controls
+  - still absent from the current Mac UI surface
+
 ## Algorithm IR
 
 1. Build seed from input according to Channel and Strength.
@@ -338,6 +373,33 @@ bundle still leaves `merge_mode_1_compose.composed_rgba_float` and
 `pre_writeback_rgba_float` unisolated, so the next useful Windows return must
 capture that internal compose/quantization boundary instead of re-opening
 BT.709 luma, boxFilter pass-1, ray-helper choreography, or global gain.
+
+2026-06-30 live Mac AE compose-boundary witness:
+
+- A new env-gated Mac plug-in dump now captures source RGBA, normalized glow
+  RGBA, post-opacity glow alpha, pre-writeback composed RGBA, and final plugin
+  `u8` at selected pixels.
+- Running the real AE plug-in on
+  `kk_vertical_len50_brightness1_strength100` shows the primary residual
+  hotspot `(934,118)` already diverges at the compose boundary:
+  Mac `out_u8=(144,144,144,255)` exactly matches the saved PNG candidate, while
+  the Windows reference stays `[131,131,131,255]`.
+- The same holds for the control witnesses `(960,540)`, `(960,490)`, and
+  `(1010,540)`: the Mac compose-boundary bytes agree with the Mac saved PNGs.
+- This does not yet distinguish "Windows fd90 glow differs at the hotspot"
+  from "Windows merge-mode compose attenuates differently", but it does reject
+  a pure final-export explanation for the Mac side. See
+  `refs/conformance/olmkirakira_compose_boundary_mac_witness_20260630.md`.
+- The same witness also sharpens the next Windows decision boundary
+  numerically. At hotspot `(934,118)`, source gray is `30/255`; Windows final
+  `[131,131,131]` implies effective screen alpha `0.44888888...`, while the
+  current Mac plug-in logs `glow_alpha_after_opacity=0.507505655` and
+  `out_u8=[144,144,144]` at the compose boundary. So the unresolved lane is
+  now: "Windows hotspot alpha path is about `0.0586` lower than the current
+  Mac direct-use compose path." The next useful Windows witness must say
+  whether that drop already exists at fd90/post-opacity glow alpha, inside
+  merge-mode-1 compose, or only in the last pre-writeback float/writeback
+  helper.
 
 2026-06-24 decision matrix:
 

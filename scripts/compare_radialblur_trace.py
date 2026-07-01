@@ -13,6 +13,7 @@ from typing import Any
 
 DENSE_REQUEST_ID = "olmradialblur_dense_sampler_trace_20260620"
 CALLER_COLLAPSE_REQUEST_ID = "olmradialblur_caller_collapse_witness_20260630"
+FOLLOWUP_CALLER_COLLAPSE_REQUEST_ID = "olmradialblur_caller_collapse_followup_20260701"
 LEGACY_RESIDUAL_WITNESS_REQUEST_ID = "olmradialblur_zoom_tiny_rotation_residual_witness_20260622"
 
 
@@ -281,7 +282,7 @@ def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
 def build_comparison(summary: dict[str, Any]) -> dict[str, Any]:
     residual_request_id, residual_row = find_first_result(
         summary,
-        [CALLER_COLLAPSE_REQUEST_ID, LEGACY_RESIDUAL_WITNESS_REQUEST_ID],
+        [FOLLOWUP_CALLER_COLLAPSE_REQUEST_ID, CALLER_COLLAPSE_REQUEST_ID, LEGACY_RESIDUAL_WITNESS_REQUEST_ID],
     )
     if residual_row is not None:
         observations = observations_for(residual_row)

@@ -1,0 +1,32 @@
+{
+  "kind": "olmblur_standalone_witness_intake",
+  "source_zip": "/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_share_intake_smoke_j40gk3st/olm_pr_witness/new/olmblur_case0007_16bpc_345_672_b_witness_windows_20260630.zip",
+  "plugin": "OLMBlur",
+  "case_id": "olmblur__case_0007",
+  "bit_depth": "16bpc",
+  "target": {
+    "x": 345,
+    "y": 672,
+    "channel": "B"
+  },
+  "runtime_path": "FUN_180005f20",
+  "registers_at_write": {
+    "rcx": "0x0"
+  },
+  "source_float_triplet_raw_words": [
+    "0x46440000",
+    "0x00003100",
+    "0x00000000"
+  ],
+  "source_float_triplet_big_endian_decode": {
+    "b": 12544.498046875
+  },
+  "target_channel_pre_store_float": 12544.498046875,
+  "final_word": {
+    "decimal": 12544,
+    "hex": "0x3100"
+  },
+  "interpretation": "Synthetic standalone witness.",
+  "readme_excerpt": "synthetic standalone witness\n",
+  "summary": "olmblur__case_0007 16bpc witness at (345,672) channel B shows pre-store 12544.498046875 -> final word 12544."
+}

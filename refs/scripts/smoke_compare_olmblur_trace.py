@@ -178,6 +178,93 @@ def main() -> int:
         if comparison.get("likely_next_focus") != "trace-structure-present-values-missing":
             print("[FAIL] placeholder observations should not select a concrete focus")
             return 1
+        summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": "olmblur_case0006_helper_prestore_witness_20260630",
+                            "status": "answered",
+                            "summary": "synthetic narrow OLMBlur case_0006 witness",
+                            "source_file": "synthetic_case0006.zip",
+                            "observations": {
+                                "effect": "OLM Blur",
+                                "case_id": "olmblur__case_0006",
+                                "witnesses": [
+                                    {
+                                        "x": 314,
+                                        "y": 14,
+                                        "windows_helper_or_last_upstream_rgb_hex": [
+                                            "0x1.1330020000000p+10",
+                                            "0x1.1330020000000p+10",
+                                            "0x1.1330020000000p+10",
+                                        ],
+                                        "windows_pre_store_rgb_hex": [
+                                            "0x1.1330020000000p+10",
+                                            "0x1.1330020000000p+10",
+                                            "0x1.1330020000000p+10",
+                                        ],
+                                        "windows_internal_word_store": [1101, 1101, 1101],
+                                        "windows_final_rgba": [2201, 2201, 2201, 65535],
+                                    },
+                                    {
+                                        "x": 29,
+                                        "y": 71,
+                                        "windows_pre_store_rgb_float": [362.99997, 362.99997, 362.99997],
+                                        "windows_internal_word_store": [363, 363, 363],
+                                        "windows_final_rgba": [725, 725, 725, 65535],
+                                    },
+                                ],
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        proc = subprocess.run(
+            [
+                py,
+                "scripts/compare_olmblur_trace.py",
+                "--runtime-summary-json",
+                str(summary),
+                "--local-baseline-dir",
+                str(baseline),
+                "--output-json",
+                str(output_json),
+                "--output-md",
+                str(output_md),
+            ],
+            cwd=repo,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        print(proc.stdout, end="" if proc.stdout.endswith("\n") else "\n")
+        if proc.returncode != 0:
+            return proc.returncode
+        comparison = json.loads(output_json.read_text(encoding="utf-8"))
+        if comparison.get("likely_next_focus") != "case0006-helper-or-prestore":
+            print("[FAIL] narrow case_0006 witness should classify as helper/pre-store")
+            return 1
+        narrow = comparison.get("case0006_narrow_analysis") or {}
+        results = narrow.get("results") or []
+        if len(results) != 2:
+            print("[FAIL] expected two narrow case_0006 witness analyses")
+            return 1
+        verdicts = {tuple(row.get("xy", [])): row.get("verdict") for row in results if isinstance(row, dict)}
+        if verdicts.get((314, 14)) != "windows-prestore-higher-than-mac":
+            print("[FAIL] expected (314,14) to classify as windows-prestore-higher-than-mac")
+            return 1
+        if verdicts.get((29, 71)) != "windows-prestore-lower-than-mac":
+            print("[FAIL] expected (29,71) to classify as windows-prestore-lower-than-mac")
+            return 1
+        markdown = output_md.read_text(encoding="utf-8")
+        if "Case 0006 Narrow Analysis" not in markdown:
+            print("[FAIL] narrow analysis section missing from Markdown")
+            return 1
     print("[OK] OLMBlur trace comparison smoke")
     return 0
 

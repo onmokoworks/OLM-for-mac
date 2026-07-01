@@ -111,6 +111,36 @@ def classify_zip_names(names: list[str], read_json: Any) -> tuple[str, list[str]
         return ("unknown", [])
 
     hints: list[str] = []
+    runtime_result_names = [name for name in names if Path(name).name == "RETURN_RUNTIME_TRACE_RESULT.json"]
+    runtime_manifest_names = [
+        name
+        for name in names
+        if Path(name).name == "runtime_trace_package_manifest.json"
+    ]
+    if len(runtime_result_names) > 1 and runtime_manifest_names:
+        hint = (
+            f"contains {len(runtime_result_names)} RETURN_RUNTIME_TRACE_RESULT.json files "
+            f"and {len(runtime_manifest_names)} runtime_trace_package_manifest.json files"
+        )
+        return ("windows-action-bundle-return", [hint])
+    for name in names:
+        base = Path(name).name
+        if base not in {"WITNESS_RESULT.json", "README_WITNESS.md"}:
+            continue
+        witness_json_name = next((item for item in names if Path(item).name == "WITNESS_RESULT.json"), None)
+        if witness_json_name is None:
+            continue
+        data = read_json(witness_json_name)
+        plugin = data.get("plugin") if data else None
+        case_id = data.get("case") if data else None
+        bit_depth = data.get("bit_depth") if data else None
+        if plugin == "OLMBlur":
+            hint = f"{witness_json_name}: standalone witness"
+            if case_id:
+                hint += f" case={case_id}"
+            if bit_depth:
+                hint += f" bit_depth={bit_depth}"
+            return ("olmblur-standalone-witness", [hint])
     for name in names:
         if Path(name).name != "windows_action_bundle_manifest.json":
             continue
@@ -230,6 +260,8 @@ def classify_zip_names(names: list[str], read_json: Any) -> tuple[str, list[str]
 
 def suggested_command(kind: str, path: Path) -> str:
     path_text = str(path)
+    if kind == "olmblur-standalone-witness":
+        return f"python3 scripts/intake_olmblur_standalone_witness_zip.py {path_text!r}"
     if kind == "win-reference-return":
         return (
             f"python3 scripts/intake_olm_return.py {path_text!r} "

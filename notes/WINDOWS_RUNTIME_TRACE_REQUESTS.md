@@ -18,24 +18,155 @@ Use this report before sending another debugger package. It separates pending
 requests from answered/superseded packages and prints the comparator command to
 run after importing a return.
 
-As of 2026-06-30, the active pending queue is:
+As of 2026-07-01 after publishing the narrowed RadialBlur and KiraKira
+follow-ups alongside the still-live DistanceGradation `case_0023` package,
+the live queue is:
 
-1. `olmradialblur_caller_collapse_witness_20260630`
-   - package: `refs/runtime_trace_packages/olm_runtime_trace_requests_20260630_003603.zip`
-   - published share copy: `/Volumes/onmk/olm_pr/new/olm_runtime_trace_requests_20260630_003603.zip`
-2. `olmblur_final_word_witness_20260630`
-   - package: `refs/runtime_trace_packages/olm_runtime_trace_requests_20260630_005317.zip`
-3. `olmdirectionalblur_helper_coverage_witness_20260630`
-   - package: `refs/runtime_trace_packages/olm_runtime_trace_requests_20260630_004241.zip`
-4. `kirakira_compose_writeback_witness_20260630`
-   - package: `refs/runtime_trace_packages/olm_runtime_trace_requests_20260630_004707.zip`
+1. `olmradialblur_caller_collapse_followup_20260701`
+   - package:
+     `refs/runtime_trace_packages/olm_runtime_trace_radialblur_caller_collapse_followup_20260701.zip`
+   - current share copy:
+     `/Volumes/onmk/olm_pr/new/olm_runtime_trace_radialblur_caller_collapse_followup_20260701.zip`
+   - why this one exists:
+     the older caller-collapse request proved that naive validity-based
+     substitutes are wrong, and the 2026-07-01 local diagnostics now split the
+     remaining outer lane cleanly: Zoom still needs the exact
+     `sampler -> +0xf252 -> +0xf250 -> +0xe.alpha` caller-collapse chain,
+     while tiny Rotation needs the upstream RGB/substitute-path branch that
+     creates the missing bright lobe at `(1614,6)`.
+2. `olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630`
+   - package:
+     `refs/runtime_trace_packages/olm_runtime_trace_requests_20260630_182750.zip`
+   - current share copy:
+     `/Volumes/onmk/olm_pr/new/olm_runtime_trace_requests_20260630_182750.zip`
+   - why this one exists:
+     the broader 2026-06-30 Constant boundary return already proved the
+     general lane (`case_0020` plateau edge and family-level `answered_partial`
+     for `case_0022/0023`), and the narrowed `case_0023` return preserved that
+     same ownership diagnosis but still did not isolate a fresh
+     `FUN_181170480` per-call witness. So the package stays live until Windows
+     returns typed `case_0023` values that decide the exact
+     `Outside Threshold=0` ownership rule.
+
+3. `kirakira_hotspot_compose_writeback_witness_20260701`
+   - package:
+     `refs/runtime_trace_packages/olm_runtime_trace_kirakira_hotspot_compose_writeback_witness_20260701.zip`
+   - current share copy:
+     `/Volumes/onmk/olm_pr/new/olm_runtime_trace_kirakira_hotspot_compose_writeback_witness_20260701.zip`
+   - why this one exists:
+     broad compose/gain retuning is already rejected. The 2026-07-01 hotspot
+     diagnostic narrows the remaining lane to one pixel `(934,118)` on
+     `kk_vertical_len50_brightness1_strength100`, between post-`FUN_18114fd90`
+     glow and final writeback.
 
 If a new return arrives, import it first and regenerate the report before
 deciding whether the next package should be published.
 
+2026-06-30 focused OLMBlur retry note:
+
+- Share return:
+  `/Volumes/onmk/olm_pr/old/20260630_175942__olmblur_case0006_helper_prestore_witness_20260630_return_windows.zip`
+- Outcome summary:
+  - `OLMBlur`: not answered yet. The Software render path completed, but the
+    requested `TARGET_OLMBLUR_CASE0006_*` debugger witness was not captured.
+  - Recorded blockers are operational, not algorithmic:
+    - AE Crash Repair / startup modal waits blocked the early
+      `sxe ld:OLMBlur.aex` attempts.
+    - A later `bu OLMBlur+0x2fad` retry did not bind before `ModLoad`, so no
+      helper/pre-store databreak fired for `(314,14)` or `(29,71)`.
+  - Practical consequence:
+    - Treat this return as a failure-mode witness.
+    - Keep the same package live in the queue until the Windows side can rerun
+      it cleanly or harden the stop condition around module load / startup
+      modals.
+  - Smallest credible rerun hardening:
+    - clear AE Crash Repair / startup dialogs before the debugger-dependent
+      stop sequence
+    - after `OLMBlur.aex` is visibly loaded, bind the `+0x2fad` breakpoint
+      from the actual loaded module base rather than depending only on the
+      unresolved symbolic form
+    - return the same two requested witnesses `(314,14)` and `(29,71)`, or the
+      exact bind failure if it still does not attach
+
+2026-06-30 narrowed DistanceGradation follow-up note:
+
+- Share return:
+  `/Volumes/onmk/olm_pr/new/olm_runtime_trace_requests_20260630_182750_return_windows.zip`
+- Outcome summary:
+  - `OLMDistanceGradation`: still useful, but still `answered_partial`.
+  - The return preserves the boundary-localized fact pattern for `case_0023`:
+    `inside_distance=1.0`, `outside_distance=0.0`, and the final Windows
+    endpoint is red/opaque at the tracked representatives.
+  - What is still missing is the exact fresh typed value at the narrowed
+    `FUN_181170480` compose/watchpoint stage, so this remains a
+    threshold-ownership proof lane rather than a resolved compose/writeback
+    witness.
+- Practical consequence:
+  - Keep Mac-side changes bounded to Constant-mode threshold ownership / local
+    plateau membership.
+  - Do not re-open generic 16bpc writeback or color-mix experimentation based
+    on this return alone.
+
+2026-06-30 DistanceGradation boundary return note:
+
+- Share return:
+  `/Volumes/onmk/olm_pr/old/olm_runtime_trace_distancegradation_constant_boundary_witness_20260630_return_windows.zip`
+- Outcome summary:
+  - `OLMDistanceGradation`: materially advanced. The Constant/background 16bpc
+    lane is now narrowed to threshold ownership / plateau membership before
+    compose-writeback, not a generic 16bpc writer or color-mix bug.
+  - `case_0020` is the cleanest witness: the `951/950` boundary pair flips at
+    the local `field_x == 1` plateau edge, and the matching neighbor already
+    proves the wrong endpoint is chosen before final packing.
+  - `case_0022` / `case_0023` remain `answered_partial`: the return preserved
+    boundary-class facts but did not re-isolate fresh `FUN_181170480`
+    pre-writeback values for those representatives.
+- Practical consequence:
+  - The broad Constant-boundary request itself is done, but the new narrowed
+    follow-up now targets only `case_0023` / `Outside Threshold=0`.
+  - Mac-side work should stay bounded to Constant threshold ownership
+    (`<` vs `<=`, side ownership, local plateau handling), not broad PNG tuning
+    and not final writeback experiments.
+
+2026-06-30 4pack return note:
+
+- Share return:
+  `/Volumes/onmk/olm_pr/old/20260630_160322__olm_runtime_trace_requests_20260630_4pack_windows_return.zip`
+- Outcome summary:
+  - `OLMBlur`: materially advanced. Legacy 16bpc witness `(345,672)` is now a
+    direct Windows pre-store proof (`12544.498046875 -> cvttss2si 12544`), so
+    that point is no longer a generic writer-rule uncertainty.
+  - `OLMRadialBlur`: no typed caller-collapse chain captured yet; still blocked
+    on sampler/polar accumulation/normalized `+0xe` witness family.
+  - `OLMDirectionalBlur`: no helper-coverage witness captured; still blocked on
+    angle-0 rowdriver coverage and diagonal rotate/validity proof.
+  - `OLMKiraKira`: no compose/pre-writeback hotspot float captured; still
+    blocked on merge-mode compose / final quantization witness.
+- In other words, the package specs remain useful, but only `OLMBlur` produced
+  a directly actionable new witness in this return.
+- The practical follow-up is no longer the old broad `olmblur_final_word`
+  package. The next OLMBlur debugger ask is narrowed to non-Legacy 16bpc
+  `case_0006` at `(314,14)` and `(29,71)` so Windows can answer whether the
+  surviving sign-mixed family is already divergent before the final writer.
+- Operationally, this 4pack is now "proof context", not "live queue". The
+  current live send list is only the single `OLMBlur case_0006` helper/prestore
+  package shown at the top of this file and in
+  `refs/reports/pending_runtime_trace_packages.md`.
+
 Status note: sections below are retained as request specifications and evidence
 recipes. Do not decide what to send from an old section header alone; the
 authoritative send queue is `refs/reports/pending_runtime_trace_packages.md`.
+
+If you want to publish every currently pending runtime-trace package to the
+shared folder in one shot, use:
+
+```sh
+python3 scripts/publish_pending_runtime_trace_packages_to_share.py
+```
+
+This archives the previous `share/new` contents into `share/old`, copies the
+pending package zips in priority order, and adds a queue README so the Windows
+side can work through them without re-checking the repo.
 As of the 2026-06-24 KiraKira BT.709 aggregation/compose return, there is no
 project-local runtime trace package that should be resent blindly. The next
 Windows request, if any, should be generated from a new compose/prewriteback
@@ -51,6 +182,11 @@ witness contract rather than from an old section below.
   - accumulated polar RGBA lives in `+0xf250`
   - caller normalization collapses those into final polar `+0xe`
   - final inverse sampling then consumes normalized `+0xe`, not raw `+0xf252`
+- A 2026-06-30 Mac source audit adds an important local constraint:
+  `mac/OLMRadialBlur/OLMRadialBlur.cpp` still does not model that side channel.
+  The current Zoom/Rotation code builds a single blurred alpha plane and then
+  inverse-samples that plane directly, so further Mac-side alpha tuning without
+  a typed `+0xf252 -> +0xe` witness is very likely to be PNG-only fitting.
 - Therefore the useful next Windows witness is not "the closest sampler return"
   and not another PNG. It is the whole chain:
   sampler return -> preserved validity `+0xf252` -> accumulated `+0xf250` RGBA

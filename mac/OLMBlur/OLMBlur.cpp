@@ -75,6 +75,7 @@ struct BlurParams {
 
 struct BlurDebugConfig;
 static bool debug_has_point(const BlurDebugConfig *debug, A_long x, A_long y);
+static bool debug_dump_nonlegacy_helpers(const BlurDebugConfig *debug);
 static void debug_dump_legacy_stage(
 	const BlurDebugConfig *debug,
 	const char *stage,
@@ -94,11 +95,26 @@ static void debug_dump_legacy_stage(
 	float out_r,
 	float out_g,
 	float out_b);
+static void debug_dump_nonlegacy_stage(
+	const BlurDebugConfig *debug,
+	const char *stage,
+	A_long iter,
+	A_long radius,
+	A_long x,
+	A_long y,
+	A_long first_coord,
+	A_long last_coord,
+	A_long sample_count,
+	float sumW,
+	float out_r,
+	float out_g,
+	float out_b);
 
 static void blur_1d_horizontal(
 	const float *srcRGB, const u_char *srcA,
 	float *dstRGB, u_char *dstA,
-	A_long w, A_long h, A_long radius, const float *weights)
+	A_long w, A_long h, A_long radius, const float *weights,
+	const BlurDebugConfig *debug, A_long iter)
 {
 	for (A_long y = 0; y < h; ++y) {
 		const float *srow = srcRGB + y * w * 3;
@@ -114,10 +130,16 @@ static void blur_1d_horizontal(
 				continue;
 			}
 			float sumR = 0, sumG = 0, sumB = 0, sumW = 0;
+			A_long first_coord = x;
+			A_long last_coord = x;
+			A_long sample_count = 0;
 			A_long left = (x < radius) ? x : radius;
 			for (A_long k = 0; k <= left; ++k) {
 				A_long xi = x - k;
 				if (!sa[xi]) break;
+				if (sample_count == 0 || xi < first_coord) first_coord = xi;
+				if (sample_count == 0 || xi > last_coord) last_coord = xi;
+				++sample_count;
 				float w_ = weights[k];
 				sumW += w_;
 				sumR += w_ * srow[xi*3+0];
@@ -128,6 +150,9 @@ static void blur_1d_horizontal(
 			for (A_long k = 1; k <= right; ++k) {
 				A_long xi = x + k;
 				if (!sa[xi]) break;
+				if (sample_count == 0 || xi < first_coord) first_coord = xi;
+				if (sample_count == 0 || xi > last_coord) last_coord = xi;
+				++sample_count;
 				float w_ = weights[k];
 				sumW += w_;
 				sumR += w_ * srow[xi*3+0];
@@ -142,6 +167,13 @@ static void blur_1d_horizontal(
 				drow[x*3+1] = sumG * inv;
 				drow[x*3+2] = sumB * inv;
 			}
+			debug_dump_nonlegacy_stage(
+				debug, "horizontal", iter, radius, x, y,
+				first_coord, last_coord, sample_count, sumW,
+				drow[x*3+0] / 32768.0f,
+				drow[x*3+1] / 32768.0f,
+				drow[x*3+2] / 32768.0f
+			);
 		}
 	}
 }
@@ -149,7 +181,8 @@ static void blur_1d_horizontal(
 static void blur_1d_vertical(
 	const float *srcRGB, const u_char *srcA,
 	float *dstRGB, u_char *dstA,
-	A_long w, A_long h, A_long radius, const float *weights)
+	A_long w, A_long h, A_long radius, const float *weights,
+	const BlurDebugConfig *debug, A_long iter)
 {
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
@@ -162,11 +195,17 @@ static void blur_1d_vertical(
 				continue;
 			}
 			float sumR = 0, sumG = 0, sumB = 0, sumW = 0;
+			A_long first_coord = y;
+			A_long last_coord = y;
+			A_long sample_count = 0;
 			A_long up = (y < radius) ? y : radius;
 			for (A_long k = 0; k <= up; ++k) {
 				A_long yi = y - k;
 				A_long i = yi * w + x;
 				if (!srcA[i]) break;
+				if (sample_count == 0 || yi < first_coord) first_coord = yi;
+				if (sample_count == 0 || yi > last_coord) last_coord = yi;
+				++sample_count;
 				float w_ = weights[k];
 				sumW += w_;
 				sumR += w_ * srcRGB[i*3+0];
@@ -178,6 +217,9 @@ static void blur_1d_vertical(
 				A_long yi = y + k;
 				A_long i = yi * w + x;
 				if (!srcA[i]) break;
+				if (sample_count == 0 || yi < first_coord) first_coord = yi;
+				if (sample_count == 0 || yi > last_coord) last_coord = yi;
+				++sample_count;
 				float w_ = weights[k];
 				sumW += w_;
 				sumR += w_ * srcRGB[i*3+0];
@@ -192,6 +234,13 @@ static void blur_1d_vertical(
 				dstRGB[idx*3+1] = sumG * inv;
 				dstRGB[idx*3+2] = sumB * inv;
 			}
+			debug_dump_nonlegacy_stage(
+				debug, "vertical", iter, radius, x, y,
+				first_coord, last_coord, sample_count, sumW,
+				dstRGB[idx*3+0] / 32768.0f,
+				dstRGB[idx*3+1] / 32768.0f,
+				dstRGB[idx*3+2] / 32768.0f
+			);
 		}
 	}
 }
@@ -410,6 +459,7 @@ struct BlurDebugPoint {
 struct BlurDebugConfig {
 	const char *dump_path;
 	std::vector<BlurDebugPoint> points;
+	bool dump_nonlegacy_helpers;
 };
 
 static bool
@@ -420,6 +470,12 @@ debug_has_point(const BlurDebugConfig *debug, A_long x, A_long y)
 		if (debug->points[i].x == x && debug->points[i].y == y) return true;
 	}
 	return false;
+}
+
+static bool
+debug_dump_nonlegacy_helpers(const BlurDebugConfig *debug)
+{
+	return debug && debug->dump_path && !debug->points.empty() && debug->dump_nonlegacy_helpers;
 }
 
 static void
@@ -466,6 +522,43 @@ debug_dump_legacy_stage(
 	fclose(fp);
 }
 
+static void
+debug_dump_nonlegacy_stage(
+	const BlurDebugConfig *debug,
+	const char *stage,
+	A_long iter,
+	A_long radius,
+	A_long x,
+	A_long y,
+	A_long first_coord,
+	A_long last_coord,
+	A_long sample_count,
+	float sumW,
+	float out_r,
+	float out_g,
+	float out_b)
+{
+	if (!debug_dump_nonlegacy_helpers(debug) || !debug_has_point(debug, x, y)) return;
+	FILE *fp = fopen(debug->dump_path, "a");
+	if (!fp) return;
+	fprintf(
+		fp,
+		"OLMBLUR_DEBUG_NONLEGACY stage=%s iter=%d radius=%d x=%d y=%d span=%d sample_count=%d first_coord=%d last_coord=%d sumW=%.9g out_norm=(%.9g,%.9g,%.9g)\n",
+		stage,
+		(int)iter,
+		(int)radius,
+		(int)x,
+		(int)y,
+		(sample_count > 0 && first_coord >= 0 && last_coord >= first_coord) ? (int)(last_coord - first_coord + 1) : 0,
+		(int)sample_count,
+		(int)first_coord,
+		(int)last_coord,
+		sumW,
+		out_r, out_g, out_b
+	);
+	fclose(fp);
+}
+
 static std::vector<BlurDebugPoint>
 parse_blur_debug_points(const char *spec)
 {
@@ -491,9 +584,15 @@ load_blur_debug_config()
 	BlurDebugConfig config;
 	config.dump_path = getenv("OLMBLUR_DEBUG_DUMP_PATH");
 	config.points = parse_blur_debug_points(getenv("OLMBLUR_DEBUG_POINTS"));
+	config.dump_nonlegacy_helpers = false;
+	const char *nonlegacy_helpers = getenv("OLMBLUR_DEBUG_NONLEGACY_HELPERS");
+	if (nonlegacy_helpers && *nonlegacy_helpers && strcmp(nonlegacy_helpers, "0") != 0) {
+		config.dump_nonlegacy_helpers = true;
+	}
 	if (!config.dump_path || !*config.dump_path || config.points.empty()) {
 		config.dump_path = NULL;
 		config.points.clear();
+		config.dump_nonlegacy_helpers = false;
 	}
 	return config;
 }
@@ -667,6 +766,7 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 		else if (bpc == 16) store16(output, buf1, bp->legacy, &debug);
 		else                storeFloat(output, buf1);
 	} else {
+		BlurDebugConfig debug = load_blur_debug_config();
 		float decay = 1.0f;
 		if (bp->repeat > 1) decay = powf(3.0f / blur_amount, 1.0f / (float)(bp->repeat - 1));
 
@@ -681,11 +781,11 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 			}
 
 			if (bp->bias_dir == BIAS_DIR_VERTICAL) {
-				blur_1d_horizontal(buf1, alpha1, buf2, alpha2, w, h, radius, weights);
-				blur_1d_vertical  (buf2, alpha2, buf1, alpha1, w, h, radius, weights);
+				blur_1d_horizontal(buf1, alpha1, buf2, alpha2, w, h, radius, weights, &debug, iter + 1);
+				blur_1d_vertical  (buf2, alpha2, buf1, alpha1, w, h, radius, weights, &debug, iter + 1);
 			} else if (bp->bias_dir == BIAS_DIR_HORIZONTAL) {
-				blur_1d_vertical  (buf1, alpha1, buf2, alpha2, w, h, radius, weights);
-				blur_1d_horizontal(buf2, alpha2, buf1, alpha1, w, h, radius, weights);
+				blur_1d_vertical  (buf1, alpha1, buf2, alpha2, w, h, radius, weights, &debug, iter + 1);
+				blur_1d_horizontal(buf2, alpha2, buf1, alpha1, w, h, radius, weights, &debug, iter + 1);
 			}
 		}
 	}

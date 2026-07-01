@@ -11,6 +11,7 @@ from pathlib import Path
 
 
 REQUEST_ID = "olmdistancegradation_field_prep_runtime_trace_20260619"
+CONSTANT_REQUEST_ID = "olmdistancegradation_16bpc_constant_boundary_witness_20260630"
 
 
 def main() -> int:
@@ -149,6 +150,72 @@ def main() -> int:
         comparison = json.loads(output_json.read_text(encoding="utf-8"))
         if comparison.get("likely_next_focus") != "trace-too-sparse":
             print("[FAIL] placeholder observations should stay trace-too-sparse")
+            return 1
+        summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": CONSTANT_REQUEST_ID,
+                            "status": "answered",
+                            "summary": "synthetic constant-boundary witness",
+                            "observations": {
+                                "cases": [
+                                    {"case_id": "olmdistancegradation_extended__case_0020"},
+                                    {"case_id": "olmdistancegradation_extended__case_0022"},
+                                ],
+                                "requested_for_each_pixel": {
+                                    "binary_mask_before_distance_transform": [
+                                        {"case_id": "olmdistancegradation_extended__case_0020", "x": 434, "y": 676, "mask": 1}
+                                    ],
+                                    "inside_or_outside_distance_before_threshold": [
+                                        {"case_id": "olmdistancegradation_extended__case_0020", "x": 434, "y": 676, "inside": 78.00641, "outside": 0.0}
+                                    ],
+                                    "comparison_rule": "<= inside threshold for In mode",
+                                    "selected_side_inside_outside_or_both": "inside",
+                                    "final_rgba16": [
+                                        {"case_id": "olmdistancegradation_extended__case_0020", "x": 434, "y": 676, "rgba": [7195, 0, 61165, 65535]}
+                                    ],
+                                },
+                                "case_level_contract": {
+                                    "must_explain": [
+                                        "threshold ownership at the boundary"
+                                    ]
+                                },
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        proc = subprocess.run(
+            [
+                py,
+                "scripts/compare_distancegradation_trace.py",
+                "--runtime-summary-json",
+                str(summary),
+                "--output-json",
+                str(output_json),
+                "--output-md",
+                str(output_md),
+            ],
+            cwd=repo,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        print(proc.stdout, end="" if proc.stdout.endswith("\n") else "\n")
+        if proc.returncode != 0:
+            return proc.returncode
+        comparison = json.loads(output_json.read_text(encoding="utf-8"))
+        if comparison.get("request_id") != CONSTANT_REQUEST_ID:
+            print("[FAIL] constant-boundary comparison request_id mismatch")
+            return 1
+        if comparison.get("likely_next_focus") != "constant-boundary-threshold-ownership":
+            print("[FAIL] constant-boundary witness should classify as threshold ownership")
             return 1
     print("[OK] DistanceGradation trace comparison smoke")
     return 0

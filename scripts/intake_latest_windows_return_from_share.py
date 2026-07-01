@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import shlex
 import shutil
@@ -20,6 +21,7 @@ RETURN_KINDS = {
     "ae-host-return",
     "ae-pixel-validation-return",
     "windows-action-bundle-return",
+    "olmblur-standalone-witness",
 }
 
 
@@ -37,7 +39,15 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--kind",
-        choices=("auto", "runtime-trace-return", "win-reference-return", "ae-host-return", "ae-pixel-validation-return", "windows-action-bundle-return"),
+        choices=(
+            "auto",
+            "runtime-trace-return",
+            "win-reference-return",
+            "ae-host-return",
+            "ae-pixel-validation-return",
+            "windows-action-bundle-return",
+            "olmblur-standalone-witness",
+        ),
         default="auto",
         help="Optional kind filter. Defaults to auto (any recognized return kind).",
     )
@@ -95,7 +105,7 @@ def extract_flag_value(cmd: list[str], flag: str) -> str | None:
     return found
 
 
-def archive_new_dir(new_dir: Path, old_dir: Path) -> list[Path]:
+def archive_paths(paths: list[Path], old_dir: Path) -> list[Path]:
     timestamp = subprocess.run(
         ["date", "+%Y%m%d_%H%M%S"],
         check=True,
@@ -103,13 +113,44 @@ def archive_new_dir(new_dir: Path, old_dir: Path) -> list[Path]:
         stdout=subprocess.PIPE,
     ).stdout.strip()
     archived: list[Path] = []
-    for path in sorted(new_dir.iterdir()):
+    for path in sorted({path.resolve() for path in paths}):
         if not path.is_file():
             continue
         target = old_dir / f"{timestamp}__{path.name}"
         shutil.move(str(path), str(target))
         archived.append(target)
     return archived
+
+
+def archive_targets_for_chosen(new_dir: Path, chosen_path: Path) -> list[Path]:
+    targets = [chosen_path]
+    stem_prefix = chosen_path.stem + "__"
+    name_prefix = chosen_path.name + "__"
+    for path in sorted(new_dir.iterdir()):
+        if not path.is_file() or path.resolve() == chosen_path.resolve():
+            continue
+        if path.name.startswith(stem_prefix) or path.name.startswith(name_prefix):
+            targets.append(path)
+    return targets
+
+
+def package_manifest(path: Path) -> dict | None:
+    try:
+        with zipfile.ZipFile(path) as archive:
+            name = next(
+                (
+                    member
+                    for member in archive.namelist()
+                    if member.replace("\\", "/").endswith("runtime_trace_package_manifest.json")
+                ),
+                None,
+            )
+            if name is None:
+                return None
+            data = json.loads(archive.read(name).decode("utf-8-sig"))
+    except Exception:
+        return None
+    return data if isinstance(data, dict) and data.get("kind") == "olm_runtime_trace_request_package" else None
 
 
 def extract_if_zip(source: Path, dest: Path) -> Path:
@@ -154,24 +195,93 @@ def default_report_paths(root: Path, kind: str, chosen_path: Path) -> tuple[Path
 def bundle_return_pairs(bundle_root: Path) -> list[tuple[Path, Path]]:
     package_dir = next((path for path in bundle_root.rglob("runtime_trace") if path.is_dir()), None)
     returns_dir = next((path for path in bundle_root.rglob("runtime_trace_returns") if path.is_dir()), None)
-    if package_dir is None or returns_dir is None:
-        raise ValueError("bundle return is missing runtime_trace or runtime_trace_returns directories")
+    if package_dir is not None and returns_dir is not None:
+        package_by_stem = {path.stem: path for path in sorted(package_dir.glob("*.zip"))}
+        pairs: list[tuple[Path, Path]] = []
+        for returned in sorted(returns_dir.glob("*.zip")):
+            stem = returned.stem
+            request_stem = stem
+            if request_stem.endswith("_return_windows"):
+                request_stem = request_stem[: -len("_return_windows")]
+            if request_stem.endswith("_windows_partial_return"):
+                request_stem = request_stem[: -len("_windows_partial_return")]
+            package = package_by_stem.get(request_stem)
+            if package is None:
+                raise ValueError(f"no matching runtime trace package for bundled return: {returned.name}")
+            pairs.append((returned, package))
+        if not pairs:
+            raise ValueError("bundle return did not include any runtime_trace_returns/*.zip")
+        return pairs
 
-    package_by_stem = {path.stem: path for path in sorted(package_dir.glob("*.zip"))}
+    raise ValueError("bundle return is missing runtime_trace or runtime_trace_returns directories")
+
+
+def load_request_id_from_manifest(path: Path) -> str | None:
+    try:
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
+    except Exception:
+        return None
+    if not isinstance(data, dict):
+        return None
+    actions = data.get("runtime_actions")
+    if not isinstance(actions, list):
+        return None
+    for action in actions:
+        if isinstance(action, dict) and isinstance(action.get("request_id"), str):
+            return str(action["request_id"])
+    return None
+
+
+def load_request_id_from_return(path: Path) -> str | None:
+    try:
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
+    except Exception:
+        return None
+    if not isinstance(data, dict):
+        return None
+    for key in ("results", "runtime_trace_results"):
+        rows = data.get(key)
+        if not isinstance(rows, list):
+            continue
+        for row in rows:
+            if isinstance(row, dict) and isinstance(row.get("request_id"), str):
+                return str(row["request_id"])
+    return None
+
+
+def find_repo_runtime_package(root: Path, request_id: str) -> Path | None:
+    package_dir = root / "refs" / "runtime_trace_packages"
+    candidates = sorted(
+        package_dir.glob("*.zip"),
+        key=lambda path: (path.stat().st_mtime, path.name),
+        reverse=True,
+    )
+    for package in candidates:
+        manifest = package_manifest(package)
+        if not isinstance(manifest, dict):
+            continue
+        for action in manifest.get("runtime_actions", []):
+            if isinstance(action, dict) and action.get("request_id") == request_id:
+                return package
+    return None
+
+
+def nested_folder_bundle_return_pairs(root: Path, bundle_root: Path) -> list[tuple[Path, Path]]:
     pairs: list[tuple[Path, Path]] = []
-    for returned in sorted(returns_dir.glob("*.zip")):
-        stem = returned.stem
-        request_stem = stem
-        if request_stem.endswith("_return_windows"):
-            request_stem = request_stem[: -len("_return_windows")]
-        if request_stem.endswith("_windows_partial_return"):
-            request_stem = request_stem[: -len("_windows_partial_return")]
-        package = package_by_stem.get(request_stem)
+    for child in sorted(bundle_root.iterdir()):
+        if not child.is_dir():
+            continue
+        result_json = child / "RETURN_RUNTIME_TRACE_RESULT.json"
+        manifest_json = child / "request_package" / "runtime_trace_package_manifest.json"
+        if not result_json.is_file() or not manifest_json.is_file():
+            continue
+        request_id = load_request_id_from_manifest(manifest_json) or load_request_id_from_return(result_json)
+        if not request_id:
+            raise ValueError(f"could not determine request_id for bundled return folder: {child}")
+        package = find_repo_runtime_package(root, request_id)
         if package is None:
-            raise ValueError(f"no matching runtime trace package for bundled return: {returned.name}")
-        pairs.append((returned, package))
-    if not pairs:
-        raise ValueError("bundle return did not include any runtime_trace_returns/*.zip")
+            raise ValueError(f"no matching repo runtime trace package for bundled return folder: {child.name} ({request_id})")
+        pairs.append((child, package))
     return pairs
 
 
@@ -181,7 +291,13 @@ def intake_windows_action_bundle_return(root: Path, source: Path, env: dict[str,
         bundle_stem = source.stem if source.suffix else source.name
         report_dir = root / "refs" / "reports" / "runtime_trace_bundle" / bundle_stem
         report_dir.mkdir(parents=True, exist_ok=True)
-        for returned, package in bundle_return_pairs(bundle_root):
+        try:
+            pairs = bundle_return_pairs(bundle_root)
+        except ValueError:
+            pairs = nested_folder_bundle_return_pairs(root, bundle_root)
+        if not pairs:
+            raise ValueError("bundle return did not include any recognized runtime return/package pairs")
+        for returned, package in pairs:
             before_summaries = set(report_dir.glob("runtime_trace_summary_*.json"))
             cmd = [
                 sys.executable,
@@ -258,7 +374,7 @@ def main() -> int:
         if rc != 0:
             return rc
         if not args.no_archive:
-            archived = archive_new_dir(new_dir, old_dir)
+            archived = archive_paths(archive_targets_for_chosen(new_dir, Path(str(chosen["path"]))), old_dir)
             for path in archived:
                 print(f"[INFO] archived after intake: {path}")
         return 0
@@ -359,7 +475,7 @@ def main() -> int:
             return summary_proc.returncode
 
     if not args.no_archive:
-        archived = archive_new_dir(new_dir, old_dir)
+        archived = archive_paths(archive_targets_for_chosen(new_dir, Path(str(chosen["path"]))), old_dir)
         for path in archived:
             print(f"[INFO] archived after intake: {path}")
     return 0

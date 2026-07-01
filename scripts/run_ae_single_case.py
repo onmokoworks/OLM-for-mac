@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
+import fcntl
 import json
 import subprocess
 import sys
@@ -32,6 +34,12 @@ def parse_args() -> argparse.Namespace:
         metavar="NAME=VALUE",
         help="Set an ExtendScript environment variable before running the case.",
     )
+    parser.add_argument(
+        "--lock-path",
+        type=Path,
+        default=Path("/tmp/olm_ae_single_case.lock"),
+        help="Serialize AE host runs that use shared $.setenv state.",
+    )
     parser.add_argument("--dump-js", type=Path, default=None, help="Write the generated ExtendScript wrapper and exit.")
     return parser.parse_args()
 
@@ -52,6 +60,17 @@ def js_escape_expr(value: str) -> str:
         .replace("\r", "\\r")
         .replace("\n", "\\n")
     )
+
+
+@contextlib.contextmanager
+def ae_lock(path: Path):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a+") as lock_file:
+        fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
+        try:
+            yield
+        finally:
+            fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
 
 
 def main() -> int:
@@ -136,14 +155,15 @@ def main() -> int:
         f"tell application {js_string(args.app_name)} to DoScriptFile POSIX file {js_string(str(wrapper_jsx))} with override\n"
         "end timeout\n"
     )
-    proc = subprocess.run(
-        ["osascript"],
-        input=apple_script,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        timeout=args.timeout + 30,
-    )
+    with ae_lock(args.lock_path.resolve()):
+        proc = subprocess.run(
+            ["osascript"],
+            input=apple_script,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=args.timeout + 30,
+        )
     if proc.stdout:
         print(proc.stdout, end="" if proc.stdout.endswith("\n") else "\n")
     if proc.stderr:

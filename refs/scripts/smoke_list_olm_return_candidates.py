@@ -45,11 +45,13 @@ def main() -> int:
         wrapped_runtime_request_pkg = tmp_path / "wrapped_runtime_requests.zip"
         windows_action_bundle = tmp_path / "windows_action_bundle.zip"
         windows_action_bundle_return = tmp_path / "windows_action_bundle_return.zip"
+        windows_action_bundle_return_multi = tmp_path / "windows_action_bundle_return_multi.zip"
         runtime_return = tmp_path / "runtime_return.zip"
         runtime_return_with_source_request = tmp_path / "runtime_return_with_source_request.zip"
         bare_runtime_return = tmp_path / "bare_runtime_return.zip"
         ae_pixel_request = tmp_path / "ae_pixel_request.zip"
         ae_pixel_bundle = tmp_path / "ae_pixel_bundle.zip"
+        olmblur_standalone_witness = tmp_path / "olmblur_standalone_witness.zip"
         unknown = tmp_path / "other.zip"
 
         write_zip(
@@ -137,6 +139,52 @@ def main() -> int:
             },
         )
         write_zip(
+            windows_action_bundle_return_multi,
+            {
+                "olm_runtime_trace_requests_20260630_4pack_windows_return/QUEUE_README.txt": "queued bundle return\n",
+                "olm_runtime_trace_requests_20260630_4pack_windows_return/olmblur_final_word_witness_20260630/RETURN_RUNTIME_TRACE_RESULT.json": json.dumps(
+                    {
+                        "kind": "olm_runtime_trace_result",
+                        "results": [
+                            {"request_id": "olmblur_final_word_witness_20260630", "status": "answered"}
+                        ],
+                    }
+                ),
+                "olm_runtime_trace_requests_20260630_4pack_windows_return/olmblur_final_word_witness_20260630/request_package/runtime_trace_package_manifest.json": json.dumps(
+                    {
+                        "kind": "olm_runtime_trace_request_package",
+                        "runtime_actions": [
+                            {"request_id": "olmblur_final_word_witness_20260630"}
+                        ],
+                    }
+                ),
+                "olm_runtime_trace_requests_20260630_4pack_windows_return/olmradialblur_caller_collapse_witness_20260630/RETURN_RUNTIME_TRACE_RESULT.json": json.dumps(
+                    {
+                        "kind": "olm_runtime_trace_result",
+                        "results": [
+                            {"request_id": "olmradialblur_caller_collapse_witness_20260630", "status": "answered_partial"}
+                        ],
+                    }
+                ),
+                "olm_runtime_trace_requests_20260630_4pack_windows_return/olmradialblur_caller_collapse_witness_20260630/request_package/runtime_trace_package_manifest.json": json.dumps(
+                    {
+                        "kind": "olm_runtime_trace_request_package",
+                        "runtime_actions": [
+                            {"request_id": "olmradialblur_caller_collapse_witness_20260630"}
+                        ],
+                    }
+                ),
+                "olm_runtime_trace_requests_20260630_4pack_windows_return/olmblur_final_word_witness_20260630/evidence/olmblur_case0007_16bpc_345_672_b_databreak_probe/WITNESS_RESULT.json": json.dumps(
+                    {
+                        "plugin": "OLMBlur",
+                        "case": "olmblur__case_0007",
+                        "bit_depth": "16bpc",
+                        "target": {"x": 345, "y": 672, "channel": "B"},
+                    }
+                ),
+            },
+        )
+        write_zip(
             runtime_return,
             {
                 "results/runtime_trace_result.json": json.dumps(
@@ -217,6 +265,20 @@ def main() -> int:
                 "requests/bitdepth16_olmblur_exact.zip": "not a real nested zip for this smoke\n",
             },
         )
+        write_zip(
+            olmblur_standalone_witness,
+            {
+                "databreak_probe/WITNESS_RESULT.json": json.dumps(
+                    {
+                        "plugin": "OLMBlur",
+                        "case": "olmblur__case_0007",
+                        "bit_depth": "16bpc",
+                        "target": {"x": 345, "y": 672, "channel": "B"},
+                    }
+                ),
+                "databreak_probe/README_WITNESS.md": "single witness\n",
+            },
+        )
         write_zip(unknown, {"hello.txt": "not olm\n"})
 
         proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
@@ -230,11 +292,13 @@ def main() -> int:
         assert kinds["wrapped_runtime_requests.zip"] == "runtime-trace-request-package"
         assert kinds["windows_action_bundle.zip"] == "windows-action-bundle"
         assert kinds["windows_action_bundle_return.zip"] == "windows-action-bundle-return"
+        assert kinds["windows_action_bundle_return_multi.zip"] == "windows-action-bundle-return"
         assert kinds["runtime_return.zip"] == "runtime-trace-return"
         assert kinds["runtime_return_with_source_request.zip"] == "runtime-trace-return"
         assert kinds["bare_runtime_return.zip"] == "runtime-trace-return"
         assert kinds["ae_pixel_request.zip"] == "ae-pixel-validation-request"
         assert kinds["ae_pixel_bundle.zip"] == "ae-pixel-validation-bundle"
+        assert kinds["olmblur_standalone_witness.zip"] == "olmblur-standalone-witness"
         assert "other.zip" not in kinds
         commands = {Path(row["path"]).name: row["suggested_command"] for row in data["candidates"]}
         assert "--dispatch-dir /tmp/olm_reference_dispatch" in commands["returned_refs.zip"]
@@ -243,6 +307,7 @@ def main() -> int:
         assert "Windows debugger/helper" in commands["wrapped_runtime_requests.zip"]
         assert "Windows helper" in commands["windows_action_bundle.zip"]
         assert "intake_latest_windows_return_from_share.py" in commands["windows_action_bundle_return.zip"]
+        assert "intake_latest_windows_return_from_share.py" in commands["windows_action_bundle_return_multi.zip"]
         assert "--runtime-summary-json" in commands["runtime_return.zip"]
         assert "--runtime-summary-md" in commands["runtime_return.zip"]
         assert "--runtime-comparison-dir" in commands["runtime_return.zip"]
@@ -252,12 +317,14 @@ def main() -> int:
         assert "--runtime-comparison-dir" in commands["bare_runtime_return.zip"]
         assert "AE host" in commands["ae_pixel_request.zip"]
         assert "AE host" in commands["ae_pixel_bundle.zip"]
+        assert "intake_olmblur_standalone_witness_zip.py" in commands["olmblur_standalone_witness.zip"]
 
         human = run([sys.executable, str(script), str(tmp_path)], repo)
         assert "win-reference-return" in human.stdout
         assert "runtime-trace-request-package" in human.stdout
         assert "windows-action-bundle-return" in human.stdout
         assert "runtime-trace-return" in human.stdout
+        assert "olmblur-standalone-witness" in human.stdout
         assert "ae-pixel-validation-bundle" in human.stdout
         assert "send this package to the Windows AE renderer" in human.stdout
 

@@ -52,11 +52,12 @@ evidence in `refs/reports/software_reference_canonicalization_8bpc.json`:
 | --- | ---: | --- |
 | `OLMBlur` | 7 | `16bpc` |
 | `OLMColorKey` | 9 | `16bpc` |
+| `OLMToonDilate` | 3 | `16bpc` |
 | `OLMDistanceGradation basic` | 12 | `16bpc` |
 | `OLMDistanceGradation extended` | 16 | `16bpc` |
 | `OLMDistanceGradation blur` | 1 | `16bpc` |
 
-Total: 45 cases across 3 plug-ins. This plan deliberately excludes blocked
+Total: 48 cases across 4 plug-ins. This plan deliberately excludes blocked
 or binary-unresolved features such as RadialBlur, KiraKira, DirectionalBlur,
 and Smoother2 legacy key/gamma. It also excludes 32bpc until the float compare
 policy is fixed.
@@ -67,7 +68,8 @@ Preflight verification for the project-local zip passed on 2026-06-25:
 - `python3 refs/scripts/smoke_generate_bitdepth_reference_request.py`
 
 The packaged request contains one `software_16bpc` / `SOFTWARE` render set and
-45 unique cases: OLMBlur 7, OLMColorKey 9, and OLMDistanceGradation 29.
+48 unique cases: OLMBlur 7, OLMColorKey 9, OLMToonDilate 3, and
+OLMDistanceGradation 29.
 
 The Windows return was imported on 2026-06-25:
 
@@ -168,6 +170,63 @@ This preview is not completion evidence. It is a way to ask the Windows helper
 whether a float-preserving output path is available for the 45 normalized
 8bpc-exact cases. Move it into `refs/reference_requests/` only when 32bpc
 probing is intentionally scheduled.
+
+A focused variant now also exists for the already-strong ColorKey slice:
+
+- Preview:
+  `refs/reports/bit_depth_32bpc_colorkey_probe_plan_20260630/request_preview.json`
+- Notes:
+  `refs/reports/bit_depth_32bpc_colorkey_probe_plan_20260630/README.md`
+
+This uses the same generator with `--plugin OLMColorKey` and reduces the probe
+to the 9 normalized `OLMColorKey` cases when a smaller Windows turn is more
+useful than the mixed 48-case batch.
+
+A second focused preview now exists for the already-exact ToonDilate slice:
+
+- Preview:
+  `refs/reports/bit_depth_32bpc_toondilate_probe_plan_20260630/request_preview.json`
+
+This is the same style of probe but reduced to the 3 normalized
+`OLMToonDilate` cases. It is useful when we want a tiny float-output turn
+instead of resending the full mixed batch.
+
+## 2026-07-01 OLMColorKey 32bpc Next Step
+
+The next clean 32bpc move stays plugin-scoped and probe-only: regenerate the
+focused `OLMColorKey` float-output request as a self-contained preview bundle,
+then send that smaller Windows turn instead of reopening the mixed 48-case
+batch.
+
+- Preview:
+  `refs/reports/bit_depth_32bpc_colorkey_probe_plan_20260701/request_preview.json`
+- Notes:
+  `refs/reports/bit_depth_32bpc_colorkey_probe_plan_20260701/README.md`
+
+Generate or refresh that bundle from the repo root with:
+
+```sh
+python3 scripts/generate_bitdepth_reference_request.py \
+  --bit-depth 32bpc \
+  --plugin OLMColorKey \
+  --request-id olm_bitdepth_32bpc_colorkey_probe_20260701 \
+  --preview-dir refs/reports/bit_depth_32bpc_colorkey_probe_plan_20260701
+```
+
+The generator now writes both `request_preview.json` and a companion
+`README.md` into the preview directory. Keep this request out of
+`refs/reference_requests/` until the Windows helper is intentionally scheduled
+for a 32bpc float-output turn.
+
+Operational note on 2026-06-30:
+
+- `OLMToonDilate` had been marked `bitdepth-expand` in the ledger for a while,
+  but it was absent from the bit-depth plan only because
+  `scripts/analyze_soft_reference_canonicalization.py` still used a fixed
+  feature list that omitted ToonDilate.
+- This was a planning/input gap, not negative evidence against ToonDilate.
+- After the canonicalization input is regenerated, ToonDilate should travel in
+  the same low-risk expansion lane as other normalized 8bpc exact slices.
 
 For that remaining ColorKey case, sampled residual pixels are input-identical
 in the Mac candidate and transparent in the Windows reference. That makes the

@@ -1,0 +1,195 @@
+{
+  "kind": "olmdistancegradation_16bpc_constant_threshold_bias",
+  "request_zip": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation/bitdepth16_olmdistancegradation_extended_exact.zip",
+  "results": [
+    {
+      "case_id": "olmdistancegradation_extended__case_0020",
+      "variant_results": [
+        {
+          "max_diff": 61165,
+          "mean_diff": 0.09034698109567901,
+          "nonzero_px": 304210,
+          "threshold_bias": 0.0,
+          "variant": "bias_0.0_current"
+        },
+        {
+          "max_diff": 61165,
+          "mean_diff": 0.09034698109567901,
+          "nonzero_px": 304210,
+          "threshold_bias": 0.001,
+          "variant": "bias_0.001"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 0.8251508246527778,
+          "nonzero_px": 304262,
+          "threshold_bias": 0.01,
+          "variant": "bias_0.01"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 2.611732132523148,
+          "nonzero_px": 304386,
+          "threshold_bias": 0.1,
+          "variant": "bias_0.1"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 12.337073929398148,
+          "nonzero_px": 305061,
+          "threshold_bias": 0.5,
+          "variant": "bias_0.5"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 35.67789424189815,
+          "nonzero_px": 306681,
+          "threshold_bias": 1.0,
+          "variant": "bias_1.0"
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0021",
+      "variant_results": [
+        {
+          "max_diff": 61165,
+          "mean_diff": 0.3536676552854938,
+          "nonzero_px": 1406979,
+          "threshold_bias": 0.0,
+          "variant": "bias_0.0_current"
+        },
+        {
+          "max_diff": 61165,
+          "mean_diff": 0.3536676552854938,
+          "nonzero_px": 1406979,
+          "threshold_bias": 0.001,
+          "variant": "bias_0.001"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 1.0884714988425925,
+          "nonzero_px": 1407031,
+          "threshold_bias": 0.01,
+          "variant": "bias_0.01"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 2.875052806712963,
+          "nonzero_px": 1407155,
+          "threshold_bias": 0.1,
+          "variant": "bias_0.1"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 12.600394603587963,
+          "nonzero_px": 1407830,
+          "threshold_bias": 0.5,
+          "variant": "bias_0.5"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 35.941214916087965,
+          "nonzero_px": 1409450,
+          "threshold_bias": 1.0,
+          "variant": "bias_1.0"
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0022",
+      "variant_results": [
+        {
+          "max_diff": 61166,
+          "mean_diff": 2.9357175925925927,
+          "nonzero_px": 702720,
+          "threshold_bias": 0.0,
+          "variant": "bias_0.0_current"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 2.9357175925925927,
+          "nonzero_px": 702720,
+          "threshold_bias": 0.001,
+          "variant": "bias_0.001"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 2.9357175925925927,
+          "nonzero_px": 702720,
+          "threshold_bias": 0.01,
+          "variant": "bias_0.01"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 96.12610580632716,
+          "nonzero_px": 709196,
+          "threshold_bias": 0.1,
+          "variant": "bias_0.1"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 513.9988289689429,
+          "nonzero_px": 738199,
+          "threshold_bias": 0.5,
+          "variant": "bias_0.5"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 815.6429117235725,
+          "nonzero_px": 759135,
+          "threshold_bias": 1.0,
+          "variant": "bias_1.0"
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0023",
+      "variant_results": [
+        {
+          "max_diff": 61166,
+          "mean_diff": 295.30543559510033,
+          "nonzero_px": 203213,
+          "threshold_bias": 0.0,
+          "variant": "bias_0.0_current"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 295.30543559510033,
+          "nonzero_px": 203213,
+          "threshold_bias": 0.001,
+          "variant": "bias_0.001"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 295.30543559510033,
+          "nonzero_px": 203213,
+          "threshold_bias": 0.01,
+          "variant": "bias_0.01"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 301.1550505160108,
+          "nonzero_px": 203627,
+          "threshold_bias": 0.1,
+          "variant": "bias_0.1"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 452.7839350646219,
+          "nonzero_px": 214151,
+          "threshold_bias": 0.5,
+          "variant": "bias_0.5"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 712.2272383777006,
+          "nonzero_px": 232158,
+          "threshold_bias": 1.0,
+          "variant": "bias_1.0"
+        }
+      ]
+    }
+  ],
+  "status": "diagnostic"
+}

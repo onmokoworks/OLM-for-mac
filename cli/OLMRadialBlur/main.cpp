@@ -47,6 +47,7 @@ struct RadialBlurParams {
     bool ignore_size_variation = false;
     std::string inner_alpha_mode = "max";
     bool inner_source_scatter_prepass = false;
+    bool outer_source_scatter_prepass = false;
     std::string inner_prepass_mode = "tail-gather";
     std::string inner_prepass_span_mode = "edge-fade";
     std::string inner_prepass_weight_mode = "aex-alpha";
@@ -64,16 +65,168 @@ struct RadialBlurParams {
     std::string dynamic_offset_mode = "current";
     std::string polar_valid_mode = "strict";
     std::string polar_sample_mode = "plain";
+    std::string rgba_sampler_alpha_mode = "shared-normalized";
     bool aex_quality_span_scale = true;
     bool inner_scatter_span_minus_one = true;
     bool inner_scatter_loop_minus_one = false;
     bool inner_scatter_table_span_minus_one = false;
     std::string rotation_gaussian_mode = "double";
     std::string rotation_grid_mode = "double";
+    double rotation_grid_angle_offset_steps = 0.0;
+    double rotation_grid_radius_offset = 0.0;
+    std::string outer_row_coupled_mode = "none";
+    double outer_row_coupled_scale = 1.0;
+    std::string outer_caller_collapse_mode = "none";
+    std::string final_polar_rgb_mode = "none";
     std::string inner_scatter_stats_path;
+    std::string witness_dump_path;
+    int witness_x = -1;
+    int witness_y = -1;
 };
 
 std::string g_rotation_gaussian_mode = "double";
+
+struct WitnessDump {
+    struct PlaneProbePoint {
+        int x = -1;
+        int y = -1;
+        float radius_index = 0.0f;
+        float angle_index = 0.0f;
+        double alpha = 0.0;
+        double validity_alpha = 0.0;
+        int alpha_u8 = 0;
+        int validity_alpha_u8 = 0;
+        float sample_rgba[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+        int sample_u8[4] = {0, 0, 0, 0};
+        float cell_valid[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+        float cell_alpha[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+    };
+
+    bool enabled = false;
+    bool captured = false;
+    std::string path_kind;
+    int x = -1;
+    int y = -1;
+    float radius_index = 0.0f;
+    float angle_index = 0.0f;
+    int sample_x0 = 0;
+    int sample_x1 = 0;
+    int sample_y0 = 0;
+    int sample_y1 = 0;
+    float fx = 0.0f;
+    float fy = 0.0f;
+    double w00 = 0.0;
+    double w10 = 0.0;
+    double w01 = 0.0;
+    double w11 = 0.0;
+    double a00 = 0.0;
+    double a10 = 0.0;
+    double a01 = 0.0;
+    double a11 = 0.0;
+    double alpha = 0.0;
+    double validity_alpha = 0.0;
+    float sample_rgba[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+    int sample_u8[4] = {0, 0, 0, 0};
+    double sample_rgb_numerator[3] = {0.0, 0.0, 0.0};
+    float cell00_rgba[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+    float cell10_rgba[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+    float cell01_rgba[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+    float cell11_rgba[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+    float cell00_valid = 0.0f;
+    float cell10_valid = 0.0f;
+    float cell01_valid = 0.0f;
+    float cell11_valid = 0.0f;
+    int neighborhood_origin_x = 0;
+    int neighborhood_origin_y = 0;
+    float neighborhood_rgba[9][4] = {};
+    float neighborhood_valid[9] = {};
+    std::string rgba_sampler_alpha_mode;
+    std::string outer_caller_collapse_mode;
+    int row_probe_half_span = 4;
+    std::vector<PlaneProbePoint> row_probe;
+};
+
+void maybe_write_witness_dump(const RadialBlurParams &params, const WitnessDump &witness) {
+    if (params.witness_dump_path.empty() || !witness.enabled || !witness.captured) return;
+    std::ofstream out(params.witness_dump_path);
+    if (!out) throw std::runtime_error("failed to open witness dump path: " + params.witness_dump_path);
+    out << "{\n";
+    out << "  \"path_kind\": \"" << witness.path_kind << "\",\n";
+    out << "  \"xy\": [" << witness.x << ", " << witness.y << "],\n";
+    out << "  \"radius_index\": " << witness.radius_index << ",\n";
+    out << "  \"angle_index\": " << witness.angle_index << ",\n";
+    out << "  \"sample_x0\": " << witness.sample_x0 << ",\n";
+    out << "  \"sample_x1\": " << witness.sample_x1 << ",\n";
+    out << "  \"sample_y0\": " << witness.sample_y0 << ",\n";
+    out << "  \"sample_y1\": " << witness.sample_y1 << ",\n";
+    out << "  \"fx\": " << witness.fx << ",\n";
+    out << "  \"fy\": " << witness.fy << ",\n";
+    out << "  \"w00\": " << witness.w00 << ",\n";
+    out << "  \"w10\": " << witness.w10 << ",\n";
+    out << "  \"w01\": " << witness.w01 << ",\n";
+    out << "  \"w11\": " << witness.w11 << ",\n";
+    out << "  \"a00\": " << witness.a00 << ",\n";
+    out << "  \"a10\": " << witness.a10 << ",\n";
+    out << "  \"a01\": " << witness.a01 << ",\n";
+    out << "  \"a11\": " << witness.a11 << ",\n";
+    out << "  \"alpha\": " << witness.alpha << ",\n";
+    out << "  \"validity_alpha\": " << witness.validity_alpha << ",\n";
+    out << "  \"sample_rgba\": [" << witness.sample_rgba[0] << ", " << witness.sample_rgba[1] << ", "
+        << witness.sample_rgba[2] << ", " << witness.sample_rgba[3] << "],\n";
+    out << "  \"sample_u8\": [" << witness.sample_u8[0] << ", " << witness.sample_u8[1] << ", "
+        << witness.sample_u8[2] << ", " << witness.sample_u8[3] << "],\n";
+    out << "  \"sample_rgb_numerator\": [" << witness.sample_rgb_numerator[0] << ", "
+        << witness.sample_rgb_numerator[1] << ", " << witness.sample_rgb_numerator[2] << "],\n";
+    out << "  \"cell00_rgba\": [" << witness.cell00_rgba[0] << ", " << witness.cell00_rgba[1] << ", "
+        << witness.cell00_rgba[2] << ", " << witness.cell00_rgba[3] << "],\n";
+    out << "  \"cell10_rgba\": [" << witness.cell10_rgba[0] << ", " << witness.cell10_rgba[1] << ", "
+        << witness.cell10_rgba[2] << ", " << witness.cell10_rgba[3] << "],\n";
+    out << "  \"cell01_rgba\": [" << witness.cell01_rgba[0] << ", " << witness.cell01_rgba[1] << ", "
+        << witness.cell01_rgba[2] << ", " << witness.cell01_rgba[3] << "],\n";
+    out << "  \"cell11_rgba\": [" << witness.cell11_rgba[0] << ", " << witness.cell11_rgba[1] << ", "
+        << witness.cell11_rgba[2] << ", " << witness.cell11_rgba[3] << "],\n";
+    out << "  \"cell00_valid\": " << witness.cell00_valid << ",\n";
+    out << "  \"cell10_valid\": " << witness.cell10_valid << ",\n";
+    out << "  \"cell01_valid\": " << witness.cell01_valid << ",\n";
+    out << "  \"cell11_valid\": " << witness.cell11_valid << ",\n";
+    out << "  \"neighborhood_origin\": [" << witness.neighborhood_origin_x << ", " << witness.neighborhood_origin_y << "],\n";
+    out << "  \"neighborhood\": [\n";
+    for (int i = 0; i < 9; ++i) {
+        const int nx = witness.neighborhood_origin_x + (i % 3);
+        const int ny = witness.neighborhood_origin_y + (i / 3);
+        out << "    {\"xy\": [" << nx << ", " << ny << "], "
+            << "\"rgba\": [" << witness.neighborhood_rgba[i][0] << ", " << witness.neighborhood_rgba[i][1] << ", "
+            << witness.neighborhood_rgba[i][2] << ", " << witness.neighborhood_rgba[i][3] << "], "
+            << "\"valid\": " << witness.neighborhood_valid[i] << "}";
+        out << (i == 8 ? "\n" : ",\n");
+    }
+    out << "  ],\n";
+    out << "  \"rgba_sampler_alpha_mode\": \"" << witness.rgba_sampler_alpha_mode << "\",\n";
+    out << "  \"outer_caller_collapse_mode\": \"" << witness.outer_caller_collapse_mode << "\",\n";
+    out << "  \"row_probe_half_span\": " << witness.row_probe_half_span << ",\n";
+    out << "  \"row_probe\": [\n";
+    for (size_t i = 0; i < witness.row_probe.size(); ++i) {
+        const auto &point = witness.row_probe[i];
+        out << "    {\"xy\": [" << point.x << ", " << point.y << "], "
+            << "\"radius_index\": " << point.radius_index << ", "
+            << "\"angle_index\": " << point.angle_index << ", "
+            << "\"alpha\": " << point.alpha << ", "
+            << "\"validity_alpha\": " << point.validity_alpha << ", "
+            << "\"alpha_u8\": " << point.alpha_u8 << ", "
+            << "\"validity_alpha_u8\": " << point.validity_alpha_u8 << ", "
+            << "\"sample_rgba\": [" << point.sample_rgba[0] << ", " << point.sample_rgba[1] << ", "
+            << point.sample_rgba[2] << ", " << point.sample_rgba[3] << "], "
+            << "\"sample_u8\": [" << point.sample_u8[0] << ", " << point.sample_u8[1] << ", "
+            << point.sample_u8[2] << ", " << point.sample_u8[3] << "], "
+            << "\"cell_valid\": [" << point.cell_valid[0] << ", " << point.cell_valid[1] << ", "
+            << point.cell_valid[2] << ", " << point.cell_valid[3] << "], "
+            << "\"cell_alpha\": [" << point.cell_alpha[0] << ", " << point.cell_alpha[1] << ", "
+            << point.cell_alpha[2] << ", " << point.cell_alpha[3] << "]}";
+        out << (i + 1 == witness.row_probe.size() ? "\n" : ",\n");
+    }
+    out << "  ]\n";
+    out << "}\n";
+}
 
 struct Json {
     enum Type { Null, Bool, Number, String, Array, Object } type = Null;
@@ -702,7 +855,12 @@ std::vector<float> build_size_factor_plane(const FloatImage &src, double size_va
     return factor;
 }
 
-void sample_rgba_aex_alpha(const FloatImage &image, float x, float y, bool repeat, float out[4]) {
+void sample_rgba_aex_alpha(const FloatImage &image,
+                           float x,
+                           float y,
+                           bool repeat,
+                           const std::string &alpha_mode,
+                           float out[4]) {
     const int w = image.width;
     const int h = image.height;
     for (int c = 0; c < 4; ++c) out[c] = 0.0f;
@@ -744,7 +902,11 @@ void sample_rgba_aex_alpha(const FloatImage &image, float x, float y, bool repea
     tap(x1, y1, fx * fy);
     if (alpha_sum > 1.0e-12) {
         for (int c = 0; c < 3; ++c) out[c] = static_cast<float>(rgb_sum[c] / alpha_sum);
-        out[3] = static_cast<float>(alpha_sum / std::max(1.0e-12, weight_sum));
+        if (repeat && alpha_mode == "repeat-raw") {
+            out[3] = static_cast<float>(alpha_sum);
+        } else {
+            out[3] = static_cast<float>(alpha_sum / std::max(1.0e-12, weight_sum));
+        }
     }
 }
 
@@ -980,6 +1142,7 @@ Image render_olmradialblur_zoom(const Image &input, const RadialBlurParams &para
     polar.width = radius_count;
     polar.height = angular_count;
     polar.rgba.resize(static_cast<size_t>(angular_count) * radius_count * 4);
+    std::vector<float> polar_valid(static_cast<size_t>(angular_count) * radius_count, 0.0f);
     const double cos_a = std::cos(base_angle);
     const double sin_a = std::sin(base_angle);
     for (int ai = 0; ai < angular_count; ++ai) {
@@ -993,22 +1156,33 @@ Image render_olmradialblur_zoom(const Image &input, const RadialBlurParams &para
             const float sx = static_cast<float>(cx + cos_a * sx0 - sin_a * sy0);
             const float sy = static_cast<float>(cy + sin_a * sx0 + cos_a * sy0);
             const size_t dst = (static_cast<size_t>(ai) * radius_count + ri) * 4;
-            for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = sample_channel(src, sx, sy, c, params.repeat_border);
+            float sampled[4];
+            sample_rgba_aex_alpha(src, sx, sy, params.repeat_border, params.rgba_sampler_alpha_mode, sampled);
+            for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = sampled[c];
+            polar_valid[static_cast<size_t>(ai) * radius_count + ri] =
+                polar_valid_sample(sx, sy, w, h, params.repeat_border, params.polar_valid_mode) ? 1.0f : 0.0f;
         }
     }
 
     const std::vector<float> weights = zoom_gaussian_weights(zoom_effective_length(params));
     const bool use_fft_convolution = weights.size() > 512;
+    const bool use_propagated_validity_alpha =
+        params.outer_caller_collapse_mode == "propagated-validity-alpha";
     FloatImage blurred;
     blurred.width = radius_count;
     blurred.height = angular_count;
     blurred.rgba.assign(static_cast<size_t>(angular_count) * radius_count * 4, 0.0f);
+    std::vector<float> outer_collapse_plane;
+    if (use_propagated_validity_alpha) {
+        outer_collapse_plane.assign(static_cast<size_t>(angular_count) * radius_count, 0.0f);
+    }
     if (!use_fft_convolution) {
         for (int ai = 0; ai < angular_count; ++ai) {
             for (int ri = 0; ri < radius_count; ++ri) {
                 double weighted_rgb[3] = {0.0, 0.0, 0.0};
                 double weighted_alpha = 0.0;
                 double accum_alpha = 0.0;
+                double validity_sum = 0.0;
                 const int limit = std::min<int>(static_cast<int>(weights.size()), ri + 1);
                 for (int k = 0; k < limit; ++k) {
                     const size_t src_idx = (static_cast<size_t>(ai) * radius_count + (ri - k)) * 4;
@@ -1017,12 +1191,17 @@ Image render_olmradialblur_zoom(const Image &input, const RadialBlurParams &para
                     for (int c = 0; c < 3; ++c) weighted_rgb[c] += polar.rgba[src_idx + c] * alpha * weight;
                     weighted_alpha += alpha * weight;
                     accum_alpha += alpha * weight;
+                    validity_sum += polar_valid[static_cast<size_t>(ai) * radius_count + (ri - k)] * weight;
                 }
                 const size_t dst = (static_cast<size_t>(ai) * radius_count + ri) * 4;
                 if (weighted_alpha > 1.0e-8) {
                     for (int c = 0; c < 3; ++c) blurred.rgba[dst + c] = static_cast<float>(weighted_rgb[c] / weighted_alpha);
                 }
                 blurred.rgba[dst + 3] = clamp_float(static_cast<float>(accum_alpha), 0.0f, 1.0f);
+                if (use_propagated_validity_alpha) {
+                    outer_collapse_plane[static_cast<size_t>(ai) * radius_count + ri] =
+                        clamp_float(static_cast<float>(validity_sum), 0.0f, 1.0f);
+                }
             }
         }
     } else {
@@ -1030,12 +1209,19 @@ Image render_olmradialblur_zoom(const Image &input, const RadialBlurParams &para
         std::vector<double> values(static_cast<size_t>(radius_count));
         std::vector<double> alpha_conv;
         std::vector<double> rgb_conv[3];
+        std::vector<double> validity_conv;
         for (int ai = 0; ai < angular_count; ++ai) {
             for (int ri = 0; ri < radius_count; ++ri) {
                 const size_t src_idx = (static_cast<size_t>(ai) * radius_count + ri) * 4;
                 values[static_cast<size_t>(ri)] = polar.rgba[src_idx + 3];
             }
             convolver.convolve(values, alpha_conv);
+            if (use_propagated_validity_alpha) {
+                for (int ri = 0; ri < radius_count; ++ri) {
+                    values[static_cast<size_t>(ri)] = polar_valid[static_cast<size_t>(ai) * radius_count + ri];
+                }
+                convolver.convolve(values, validity_conv);
+            }
 
             for (int c = 0; c < 3; ++c) {
                 for (int ri = 0; ri < radius_count; ++ri) {
@@ -1055,6 +1241,10 @@ Image render_olmradialblur_zoom(const Image &input, const RadialBlurParams &para
                     }
                 }
                 blurred.rgba[dst + 3] = clamp_float(static_cast<float>(weighted_alpha), 0.0f, 1.0f);
+                if (use_propagated_validity_alpha) {
+                    outer_collapse_plane[static_cast<size_t>(ai) * radius_count + ri] =
+                        clamp_float(static_cast<float>(validity_conv[static_cast<size_t>(ri)]), 0.0f, 1.0f);
+                }
             }
         }
     }
@@ -1063,6 +1253,10 @@ Image render_olmradialblur_zoom(const Image &input, const RadialBlurParams &para
     out.width = w;
     out.height = h;
     out.rgba.resize(static_cast<size_t>(w) * h * 4);
+    WitnessDump witness;
+    witness.enabled = !params.witness_dump_path.empty() && params.witness_x >= 0 && params.witness_y >= 0;
+    witness.rgba_sampler_alpha_mode = params.rgba_sampler_alpha_mode;
+    witness.outer_caller_collapse_mode = params.outer_caller_collapse_mode;
     const double rgb_quantize_epsilon = use_fft_convolution ? 0.0 : 1.0e-4;
     const double alpha_quantize_epsilon = 1.0e-4;
     for (int y = 0; y < h; ++y) {
@@ -1085,8 +1279,26 @@ Image render_olmradialblur_zoom(const Image &input, const RadialBlurParams &para
             int x1 = std::max(0, std::min(xi_raw + 1, radius_count - 1));
             int y0 = ((yi % angular_count) + angular_count) % angular_count;
             int y1 = (y0 + 1) % angular_count;
+            auto collapsed_valid = [&](int px, int py) -> float {
+                return polar_valid[static_cast<size_t>(py) * radius_count + px];
+            };
             auto sample = [&](int px, int py, int c) -> float {
-                return blurred.rgba[(static_cast<size_t>(py) * radius_count + px) * 4 + c];
+                const size_t cell = static_cast<size_t>(py) * radius_count + px;
+                if (params.outer_caller_collapse_mode == "binary-validity") {
+                    if (c == 3) return collapsed_valid(px, py);
+                    return collapsed_valid(px, py) > 0.0f ? blurred.rgba[cell * 4 + c] : 0.0f;
+                }
+                if (params.outer_caller_collapse_mode == "zero-rgb-on-invalid") {
+                    if (c == 3) return blurred.rgba[cell * 4 + c];
+                    return collapsed_valid(px, py) > 0.0f ? blurred.rgba[cell * 4 + c] : 0.0f;
+                }
+                if (params.outer_caller_collapse_mode == "propagated-validity-alpha") {
+                    if (c == 3) return outer_collapse_plane[cell];
+                    return outer_collapse_plane[cell] > 0.0f ? blurred.rgba[cell * 4 + c] : 0.0f;
+                }
+                float value = blurred.rgba[cell * 4 + c];
+                if (c < 3 && params.final_polar_rgb_mode == "clamp-nonnegative") value = std::max(0.0f, value);
+                return value;
             };
             const double w00 = (1.0 - fx) * (1.0 - fy);
             const double w10 = fx * (1.0 - fy);
@@ -1097,19 +1309,110 @@ Image render_olmradialblur_zoom(const Image &input, const RadialBlurParams &para
             const double a01 = sample(xi, y1, 3) * w01;
             const double a11 = sample(x1, y1, 3) * w11;
             const double alpha = a00 + a10 + a01 + a11;
+            const double validity_alpha = collapsed_valid(xi, y0) * w00 + collapsed_valid(x1, y0) * w10 +
+                                          collapsed_valid(xi, y1) * w01 + collapsed_valid(x1, y1) * w11;
             const size_t dst = (static_cast<size_t>(y) * w + x) * 4;
+            const bool capture_row_probe = witness.enabled && y == params.witness_y &&
+                                           std::abs(x - params.witness_x) <= witness.row_probe_half_span;
+            WitnessDump::PlaneProbePoint row_probe_point;
+            if (capture_row_probe) {
+                row_probe_point.x = x;
+                row_probe_point.y = y;
+                row_probe_point.radius_index = radius_index;
+                row_probe_point.angle_index = angle_index;
+                row_probe_point.alpha = alpha;
+                row_probe_point.validity_alpha = validity_alpha;
+                row_probe_point.validity_alpha_u8 = static_cast<int>(
+                    clamp_float(static_cast<float>(std::floor(validity_alpha * 255.0 + alpha_quantize_epsilon)), 0.0f, 255.0f));
+                row_probe_point.cell_valid[0] = collapsed_valid(xi, y0);
+                row_probe_point.cell_valid[1] = collapsed_valid(x1, y0);
+                row_probe_point.cell_valid[2] = collapsed_valid(xi, y1);
+                row_probe_point.cell_valid[3] = collapsed_valid(x1, y1);
+                row_probe_point.cell_alpha[0] = sample(xi, y0, 3);
+                row_probe_point.cell_alpha[1] = sample(x1, y0, 3);
+                row_probe_point.cell_alpha[2] = sample(xi, y1, 3);
+                row_probe_point.cell_alpha[3] = sample(x1, y1, 3);
+            }
+            if (witness.enabled && x == params.witness_x && y == params.witness_y) {
+                witness.captured = true;
+                witness.path_kind = "zoom";
+                witness.x = x;
+                witness.y = y;
+                witness.radius_index = radius_index;
+                witness.angle_index = angle_index;
+                witness.sample_x0 = xi;
+                witness.sample_x1 = x1;
+                witness.sample_y0 = y0;
+                witness.sample_y1 = y1;
+                witness.fx = fx;
+                witness.fy = fy;
+                witness.w00 = w00;
+                witness.w10 = w10;
+                witness.w01 = w01;
+                witness.w11 = w11;
+                witness.a00 = a00;
+                witness.a10 = a10;
+                witness.a01 = a01;
+                witness.a11 = a11;
+                witness.alpha = alpha;
+                witness.validity_alpha = validity_alpha;
+                for (int c = 0; c < 4; ++c) {
+                    witness.cell00_rgba[c] = sample(xi, y0, c);
+                    witness.cell10_rgba[c] = sample(x1, y0, c);
+                    witness.cell01_rgba[c] = sample(xi, y1, c);
+                    witness.cell11_rgba[c] = sample(x1, y1, c);
+                }
+                witness.cell00_valid = collapsed_valid(xi, y0);
+                witness.cell10_valid = collapsed_valid(x1, y0);
+                witness.cell01_valid = collapsed_valid(xi, y1);
+                witness.cell11_valid = collapsed_valid(x1, y1);
+                witness.neighborhood_origin_x = xi > 0 ? xi - 1 : xi;
+                witness.neighborhood_origin_y = y0 > 0 ? y0 - 1 : y0;
+                int ni = 0;
+                for (int oy = 0; oy < 3; ++oy) {
+                    for (int ox = 0; ox < 3; ++ox, ++ni) {
+                        const int px = std::max(0, std::min(radius_count - 1, witness.neighborhood_origin_x + ox));
+                        const int py = positive_mod(witness.neighborhood_origin_y + oy, angular_count);
+                        for (int c = 0; c < 4; ++c) witness.neighborhood_rgba[ni][c] = sample(px, py, c);
+                        witness.neighborhood_valid[ni] = collapsed_valid(px, py);
+                    }
+                }
+            }
             for (int c = 0; c < 3; ++c) {
+                const double rgb_numerator = sample(xi, y0, c) * a00 + sample(x1, y0, c) * a10 +
+                                             sample(xi, y1, c) * a01 + sample(x1, y1, c) * a11;
                 double rgb = 0.0;
                 if (alpha > 1.0e-8) {
-                    rgb = (sample(xi, y0, c) * a00 + sample(x1, y0, c) * a10 +
-                           sample(xi, y1, c) * a01 + sample(x1, y1, c) * a11) / alpha;
+                    rgb = rgb_numerator / alpha;
                 }
                 rgb *= params.brightness_gain;
-                out.rgba[dst + c] = static_cast<unsigned char>(clamp_float(static_cast<float>(std::floor(rgb * 255.0 + rgb_quantize_epsilon)), 0.0f, 255.0f));
+                const int q = static_cast<int>(clamp_float(static_cast<float>(std::floor(rgb * 255.0 + rgb_quantize_epsilon)), 0.0f, 255.0f));
+                out.rgba[dst + c] = static_cast<unsigned char>(q);
+                if (witness.enabled && x == params.witness_x && y == params.witness_y) {
+                    witness.sample_rgb_numerator[c] = rgb_numerator;
+                    witness.sample_rgba[c] = static_cast<float>(rgb);
+                    witness.sample_u8[c] = q;
+                }
+                if (capture_row_probe) {
+                    row_probe_point.sample_rgba[c] = static_cast<float>(rgb);
+                    row_probe_point.sample_u8[c] = q;
+                }
             }
-            out.rgba[dst + 3] = static_cast<unsigned char>(clamp_float(static_cast<float>(std::floor(alpha * 255.0 + alpha_quantize_epsilon)), 0.0f, 255.0f));
+            const int aq = static_cast<int>(clamp_float(static_cast<float>(std::floor(alpha * 255.0 + alpha_quantize_epsilon)), 0.0f, 255.0f));
+            out.rgba[dst + 3] = static_cast<unsigned char>(aq);
+            if (witness.enabled && x == params.witness_x && y == params.witness_y) {
+                witness.sample_rgba[3] = static_cast<float>(alpha);
+                witness.sample_u8[3] = aq;
+            }
+            if (capture_row_probe) {
+                row_probe_point.sample_rgba[3] = static_cast<float>(alpha);
+                row_probe_point.sample_u8[3] = aq;
+                row_probe_point.alpha_u8 = aq;
+                witness.row_probe.push_back(row_probe_point);
+            }
         }
     }
+    maybe_write_witness_dump(params, witness);
     return out;
 }
 
@@ -1166,20 +1469,22 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
     const float cyf = static_cast<float>(cy);
     const float ratiof = static_cast<float>(ratio);
     const float step_radf = static_cast<float>(step_rad);
+    const double angle_offset_steps = params.rotation_grid_angle_offset_steps;
+    const double radius_offset = params.rotation_grid_radius_offset;
     for (int ri = 0; ri < radius_count; ++ri) {
-        const double r = static_cast<double>(min_r + ri);
+        const double r = static_cast<double>(min_r + ri) + radius_offset;
         for (int ai = 0; ai < angular_count; ++ai) {
             float sx = 0.0f;
             float sy = 0.0f;
             if (params.rotation_grid_mode == "aex-float") {
-                const float rf = static_cast<float>(min_r + ri);
-                const float theta = static_cast<float>(ai) * step_radf;
+                const float rf = static_cast<float>(static_cast<double>(min_r + ri) + radius_offset);
+                const float theta = static_cast<float>(static_cast<double>(ai) + angle_offset_steps) * step_radf;
                 const float sx0 = std::cos(theta) * rf;
                 const float sy0 = std::sin(theta) * rf * ratiof;
                 sx = cxf + cos_af * sx0 - sin_af * sy0;
                 sy = cyf + sin_af * sx0 + cos_af * sy0;
             } else {
-                const double theta = static_cast<double>(ai) * step_rad;
+                const double theta = (static_cast<double>(ai) + angle_offset_steps) * step_rad;
                 const double sx0 = std::cos(theta) * r;
                 const double sy0 = std::sin(theta) * r * ratio;
                 sx = static_cast<float>(cx + cos_a * sx0 - sin_a * sy0);
@@ -1188,13 +1493,14 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
             const size_t dst = (static_cast<size_t>(ri) * angular_count + ai) * 4;
             const bool use_aex_alpha_sample =
                 params.polar_sample_mode == "aex-alpha" ||
+                params.repeat_border ||
                 (params.polar_sample_mode == "conditional-inner" &&
                  params.outer_edge_fade == 0 &&
                  params.inner_edge_fade == 0 &&
                  params.inner_offset_mode != 3);
             if (use_aex_alpha_sample) {
                 float sampled[4];
-                sample_rgba_aex_alpha(src, sx, sy, params.repeat_border, sampled);
+                sample_rgba_aex_alpha(src, sx, sy, params.repeat_border, params.rgba_sampler_alpha_mode, sampled);
                 for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = sampled[c];
             } else {
                 for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = sample_channel(src, sx, sy, c, params.repeat_border);
@@ -1335,7 +1641,11 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
         }
     };
 
-    if ((params.inner_source_scatter_prepass || force_inner_source_scatter_prepass) && has_inner) {
+    const bool use_source_scatter_prepass =
+        params.outer_source_scatter_prepass ||
+        ((params.inner_source_scatter_prepass || force_inner_source_scatter_prepass) && has_inner);
+
+    if (use_source_scatter_prepass) {
         InnerScatterStats scatter_stats;
         FloatImage accum;
         accum.width = angular_count;
@@ -1659,6 +1969,45 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
                     for (int c = 0; c < 3; ++c) weighted_rgb[c] += polar.rgba[src_idx + c] * contribution;
                     weighted_alpha += contribution;
                     accum_alpha = std::max(accum_alpha, contribution);
+                    if (!has_inner && params.outer_row_coupled_scale > 0.0) {
+                        auto add_row_coupled = [&](int row_delta, bool tail_only, bool positive_only) {
+                            if (ri < row_delta) return;
+                            if (tail_only && k == 0) return;
+                            const size_t row_idx =
+                                (static_cast<size_t>(ri - row_delta) * angular_count + src_ai) * 4;
+                            const double row_alpha = polar.rgba[row_idx + 3];
+                            double row_contribution = row_alpha * weights[k] * params.outer_row_coupled_scale;
+                            if (positive_only) {
+                                const double row_luma =
+                                    (static_cast<double>(polar.rgba[row_idx + 0]) +
+                                     static_cast<double>(polar.rgba[row_idx + 1]) +
+                                     static_cast<double>(polar.rgba[row_idx + 2])) / 3.0;
+                                if (row_luma <= 0.0) row_contribution = 0.0;
+                            }
+                            if (row_contribution <= 0.0) return;
+                            for (int c = 0; c < 3; ++c) weighted_rgb[c] += polar.rgba[row_idx + c] * row_contribution;
+                            weighted_alpha += row_contribution;
+                            accum_alpha = std::max(accum_alpha, row_contribution);
+                        };
+
+                        if (params.outer_row_coupled_mode == "prev-row-add") {
+                            add_row_coupled(1, false, false);
+                        } else if (params.outer_row_coupled_mode == "prev-row-tail-add") {
+                            add_row_coupled(1, true, false);
+                        } else if (params.outer_row_coupled_mode == "prev-row-tail-positive") {
+                            add_row_coupled(1, true, true);
+                        } else if (params.outer_row_coupled_mode == "prev2-row-tail-positive") {
+                            add_row_coupled(2, true, true);
+                        } else if (params.outer_row_coupled_mode == "prev-ladder-tail-positive") {
+                            add_row_coupled(1, true, true);
+                            add_row_coupled(2, true, true);
+                        } else if (params.outer_row_coupled_mode == "prev2-k2-positive") {
+                            if (k == 2) add_row_coupled(2, true, true);
+                        } else if (params.outer_row_coupled_mode == "prev-hybrid-k12-positive") {
+                            if (k == 1) add_row_coupled(1, true, true);
+                            if (k == 2) add_row_coupled(2, true, true);
+                        }
+                    }
                 }
                 if (has_inner && inner_weights.size() > 1) {
                     const double outer_accum_alpha = accum_alpha;
@@ -1738,6 +2087,10 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
     out.width = w;
     out.height = h;
     out.rgba.resize(static_cast<size_t>(w) * h * 4);
+    WitnessDump witness;
+    witness.enabled = !params.witness_dump_path.empty() && params.witness_x >= 0 && params.witness_y >= 0;
+    witness.rgba_sampler_alpha_mode = params.rgba_sampler_alpha_mode;
+    witness.outer_caller_collapse_mode = params.outer_caller_collapse_mode;
     const double alpha_quantize_epsilon = 1.0e-4;
     for (int y = 0; y < h; ++y) {
         for (int x = 0; x < w; ++x) {
@@ -1773,8 +2126,22 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
             int x1 = (x0 + 1) % angular_count;
             int y0 = std::max(0, std::min(yi_raw, radius_count - 1));
             int y1 = std::max(0, std::min(yi_raw + 1, radius_count - 1));
+            auto collapsed_valid = [&](int px, int py) -> float {
+                return polar_valid[static_cast<size_t>(py) * angular_count + px] ? 1.0f : 0.0f;
+            };
             auto sample = [&](int px, int py, int c) -> float {
-                return blurred.rgba[(static_cast<size_t>(py) * angular_count + px) * 4 + c];
+                const size_t cell = static_cast<size_t>(py) * angular_count + px;
+                if (params.outer_caller_collapse_mode == "binary-validity") {
+                    if (c == 3) return collapsed_valid(px, py);
+                    return collapsed_valid(px, py) > 0.0f ? blurred.rgba[cell * 4 + c] : 0.0f;
+                }
+                if (params.outer_caller_collapse_mode == "zero-rgb-on-invalid") {
+                    if (c == 3) return blurred.rgba[cell * 4 + c];
+                    return collapsed_valid(px, py) > 0.0f ? blurred.rgba[cell * 4 + c] : 0.0f;
+                }
+                float value = blurred.rgba[cell * 4 + c];
+                if (c < 3 && params.final_polar_rgb_mode == "clamp-nonnegative") value = std::max(0.0f, value);
+                return value;
             };
             const double w00 = (1.0 - fx) * (1.0 - fy);
             const double w10 = fx * (1.0 - fy);
@@ -1785,19 +2152,110 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
             const double a01 = sample(x0, y1, 3) * w01;
             const double a11 = sample(x1, y1, 3) * w11;
             const double alpha = a00 + a10 + a01 + a11;
+            const double validity_alpha = collapsed_valid(x0, y0) * w00 + collapsed_valid(x1, y0) * w10 +
+                                          collapsed_valid(x0, y1) * w01 + collapsed_valid(x1, y1) * w11;
             const size_t dst = (static_cast<size_t>(y) * w + x) * 4;
+            const bool capture_row_probe = witness.enabled && y == params.witness_y &&
+                                           std::abs(x - params.witness_x) <= witness.row_probe_half_span;
+            WitnessDump::PlaneProbePoint row_probe_point;
+            if (capture_row_probe) {
+                row_probe_point.x = x;
+                row_probe_point.y = y;
+                row_probe_point.radius_index = radius_index;
+                row_probe_point.angle_index = angle_index;
+                row_probe_point.alpha = alpha;
+                row_probe_point.validity_alpha = validity_alpha;
+                row_probe_point.validity_alpha_u8 = static_cast<int>(
+                    clamp_float(static_cast<float>(std::floor(validity_alpha * 255.0 + alpha_quantize_epsilon)), 0.0f, 255.0f));
+                row_probe_point.cell_valid[0] = collapsed_valid(x0, y0);
+                row_probe_point.cell_valid[1] = collapsed_valid(x1, y0);
+                row_probe_point.cell_valid[2] = collapsed_valid(x0, y1);
+                row_probe_point.cell_valid[3] = collapsed_valid(x1, y1);
+                row_probe_point.cell_alpha[0] = sample(x0, y0, 3);
+                row_probe_point.cell_alpha[1] = sample(x1, y0, 3);
+                row_probe_point.cell_alpha[2] = sample(x0, y1, 3);
+                row_probe_point.cell_alpha[3] = sample(x1, y1, 3);
+            }
+            if (witness.enabled && x == params.witness_x && y == params.witness_y) {
+                witness.captured = true;
+                witness.path_kind = "rotation";
+                witness.x = x;
+                witness.y = y;
+                witness.radius_index = radius_index;
+                witness.angle_index = angle_index;
+                witness.sample_x0 = x0;
+                witness.sample_x1 = x1;
+                witness.sample_y0 = y0;
+                witness.sample_y1 = y1;
+                witness.fx = fx;
+                witness.fy = fy;
+                witness.w00 = w00;
+                witness.w10 = w10;
+                witness.w01 = w01;
+                witness.w11 = w11;
+                witness.a00 = a00;
+                witness.a10 = a10;
+                witness.a01 = a01;
+                witness.a11 = a11;
+                witness.alpha = alpha;
+                witness.validity_alpha = validity_alpha;
+                for (int c = 0; c < 4; ++c) {
+                    witness.cell00_rgba[c] = sample(x0, y0, c);
+                    witness.cell10_rgba[c] = sample(x1, y0, c);
+                    witness.cell01_rgba[c] = sample(x0, y1, c);
+                    witness.cell11_rgba[c] = sample(x1, y1, c);
+                }
+                witness.cell00_valid = collapsed_valid(x0, y0);
+                witness.cell10_valid = collapsed_valid(x1, y0);
+                witness.cell01_valid = collapsed_valid(x0, y1);
+                witness.cell11_valid = collapsed_valid(x1, y1);
+                witness.neighborhood_origin_x = positive_mod(x0 - 1, angular_count);
+                witness.neighborhood_origin_y = y0 > 0 ? y0 - 1 : y0;
+                int ni = 0;
+                for (int oy = 0; oy < 3; ++oy) {
+                    for (int ox = 0; ox < 3; ++ox, ++ni) {
+                        const int px = positive_mod(witness.neighborhood_origin_x + ox, angular_count);
+                        const int py = std::max(0, std::min(radius_count - 1, witness.neighborhood_origin_y + oy));
+                        for (int c = 0; c < 4; ++c) witness.neighborhood_rgba[ni][c] = sample(px, py, c);
+                        witness.neighborhood_valid[ni] = collapsed_valid(px, py);
+                    }
+                }
+            }
             for (int c = 0; c < 3; ++c) {
+                const double rgb_numerator = sample(x0, y0, c) * a00 + sample(x1, y0, c) * a10 +
+                                             sample(x0, y1, c) * a01 + sample(x1, y1, c) * a11;
                 double rgb = 0.0;
                 if (alpha > 1.0e-8) {
-                    rgb = (sample(x0, y0, c) * a00 + sample(x1, y0, c) * a10 +
-                           sample(x0, y1, c) * a01 + sample(x1, y1, c) * a11) / alpha;
+                    rgb = rgb_numerator / alpha;
                 }
                 rgb *= params.brightness_gain;
-                out.rgba[dst + c] = static_cast<unsigned char>(clamp_float(static_cast<float>(std::floor(rgb * 255.0)), 0.0f, 255.0f));
+                const int q = static_cast<int>(clamp_float(static_cast<float>(std::floor(rgb * 255.0)), 0.0f, 255.0f));
+                out.rgba[dst + c] = static_cast<unsigned char>(q);
+                if (witness.enabled && x == params.witness_x && y == params.witness_y) {
+                    witness.sample_rgb_numerator[c] = rgb_numerator;
+                    witness.sample_rgba[c] = static_cast<float>(rgb);
+                    witness.sample_u8[c] = q;
+                }
+                if (capture_row_probe) {
+                    row_probe_point.sample_rgba[c] = static_cast<float>(rgb);
+                    row_probe_point.sample_u8[c] = q;
+                }
             }
-            out.rgba[dst + 3] = static_cast<unsigned char>(clamp_float(static_cast<float>(std::floor(alpha * 255.0 + alpha_quantize_epsilon)), 0.0f, 255.0f));
+            const int aq = static_cast<int>(clamp_float(static_cast<float>(std::floor(alpha * 255.0 + alpha_quantize_epsilon)), 0.0f, 255.0f));
+            out.rgba[dst + 3] = static_cast<unsigned char>(aq);
+            if (witness.enabled && x == params.witness_x && y == params.witness_y) {
+                witness.sample_rgba[3] = static_cast<float>(alpha);
+                witness.sample_u8[3] = aq;
+            }
+            if (capture_row_probe) {
+                row_probe_point.sample_rgba[3] = static_cast<float>(alpha);
+                row_probe_point.sample_u8[3] = aq;
+                row_probe_point.alpha_u8 = aq;
+                witness.row_probe.push_back(row_probe_point);
+            }
         }
     }
+    maybe_write_witness_dump(params, witness);
     return out;
 }
 
@@ -1808,6 +2266,7 @@ struct Args {
     bool ignore_size_variation = false;
     std::string inner_alpha_mode = "max";
     bool inner_source_scatter_prepass = false;
+    bool outer_source_scatter_prepass = false;
     std::string inner_prepass_mode = "tail-gather";
     std::string inner_prepass_span_mode = "edge-fade";
     std::string inner_prepass_weight_mode = "aex-alpha";
@@ -1825,13 +2284,23 @@ struct Args {
     std::string dynamic_offset_mode = "current";
     std::string polar_valid_mode = "strict";
     std::string polar_sample_mode = "plain";
+    std::string rgba_sampler_alpha_mode = "shared-normalized";
     bool aex_quality_span_scale = true;
     bool inner_scatter_span_minus_one = true;
     bool inner_scatter_loop_minus_one = false;
     bool inner_scatter_table_span_minus_one = false;
     std::string rotation_gaussian_mode = "double";
     std::string rotation_grid_mode = "double";
+    double rotation_grid_angle_offset_steps = 0.0;
+    double rotation_grid_radius_offset = 0.0;
+    std::string outer_row_coupled_mode = "none";
+    double outer_row_coupled_scale = 1.0;
+    std::string outer_caller_collapse_mode = "none";
+    std::string final_polar_rgb_mode = "none";
     std::string inner_scatter_stats_path;
+    std::string witness_dump_path;
+    int witness_x = -1;
+    int witness_y = -1;
 };
 
 Args parse_args(int argc, char **argv) {
@@ -1852,6 +2321,8 @@ Args parse_args(int argc, char **argv) {
             args.ignore_size_variation = true;
         } else if (key == "--inner-source-scatter-prepass") {
             args.inner_source_scatter_prepass = true;
+        } else if (key == "--outer-source-scatter-prepass") {
+            args.outer_source_scatter_prepass = true;
         } else if (key == "--inner-prepass-mode") {
             args.inner_prepass_mode = need_value("--inner-prepass-mode");
             if (args.inner_prepass_mode != "simple" && args.inner_prepass_mode != "tail-gather") {
@@ -1946,6 +2417,12 @@ Args parse_args(int argc, char **argv) {
                 args.polar_sample_mode != "conditional-inner") {
                 throw std::runtime_error("--polar-sample-mode must be plain, aex-alpha, or conditional-inner");
             }
+        } else if (key == "--rgba-sampler-alpha-mode") {
+            args.rgba_sampler_alpha_mode = need_value("--rgba-sampler-alpha-mode");
+            if (args.rgba_sampler_alpha_mode != "shared-normalized" &&
+                args.rgba_sampler_alpha_mode != "repeat-raw") {
+                throw std::runtime_error("--rgba-sampler-alpha-mode must be shared-normalized or repeat-raw");
+            }
         } else if (key == "--aex-quality-span-scale") {
             args.aex_quality_span_scale = true;
         } else if (key == "--inner-scatter-span-minus-one") {
@@ -1966,8 +2443,46 @@ Args parse_args(int argc, char **argv) {
             if (args.rotation_grid_mode != "double" && args.rotation_grid_mode != "aex-float") {
                 throw std::runtime_error("--rotation-grid-mode must be double or aex-float");
             }
+        } else if (key == "--rotation-grid-angle-offset-steps") {
+            args.rotation_grid_angle_offset_steps = std::stod(need_value("--rotation-grid-angle-offset-steps"));
+        } else if (key == "--rotation-grid-radius-offset") {
+            args.rotation_grid_radius_offset = std::stod(need_value("--rotation-grid-radius-offset"));
+        } else if (key == "--outer-row-coupled-mode") {
+            args.outer_row_coupled_mode = need_value("--outer-row-coupled-mode");
+            if (args.outer_row_coupled_mode != "none" &&
+                args.outer_row_coupled_mode != "prev-row-add" &&
+                args.outer_row_coupled_mode != "prev-row-tail-add" &&
+                args.outer_row_coupled_mode != "prev-row-tail-positive" &&
+                args.outer_row_coupled_mode != "prev2-row-tail-positive" &&
+                args.outer_row_coupled_mode != "prev-ladder-tail-positive" &&
+                args.outer_row_coupled_mode != "prev2-k2-positive" &&
+                args.outer_row_coupled_mode != "prev-hybrid-k12-positive") {
+                throw std::runtime_error("--outer-row-coupled-mode must be none, prev-row-add, prev-row-tail-add, prev-row-tail-positive, prev2-row-tail-positive, prev-ladder-tail-positive, prev2-k2-positive, or prev-hybrid-k12-positive");
+            }
+        } else if (key == "--outer-row-coupled-scale") {
+            args.outer_row_coupled_scale = std::stod(need_value("--outer-row-coupled-scale"));
+        } else if (key == "--outer-caller-collapse-mode") {
+            args.outer_caller_collapse_mode = need_value("--outer-caller-collapse-mode");
+            if (args.outer_caller_collapse_mode != "none" &&
+                args.outer_caller_collapse_mode != "binary-validity" &&
+                args.outer_caller_collapse_mode != "zero-rgb-on-invalid" &&
+                args.outer_caller_collapse_mode != "propagated-validity-alpha") {
+                throw std::runtime_error("--outer-caller-collapse-mode must be none, binary-validity, zero-rgb-on-invalid, or propagated-validity-alpha");
+            }
+        } else if (key == "--final-polar-rgb-mode") {
+            args.final_polar_rgb_mode = need_value("--final-polar-rgb-mode");
+            if (args.final_polar_rgb_mode != "none" &&
+                args.final_polar_rgb_mode != "clamp-nonnegative") {
+                throw std::runtime_error("--final-polar-rgb-mode must be none or clamp-nonnegative");
+            }
         } else if (key == "--inner-scatter-stats") {
             args.inner_scatter_stats_path = need_value("--inner-scatter-stats");
+        } else if (key == "--witness-dump") {
+            args.witness_dump_path = need_value("--witness-dump");
+        } else if (key == "--witness-x") {
+            args.witness_x = std::stoi(need_value("--witness-x"));
+        } else if (key == "--witness-y") {
+            args.witness_y = std::stoi(need_value("--witness-y"));
         } else if (key == "--inner-alpha-mode") {
             args.inner_alpha_mode = need_value("--inner-alpha-mode");
             if (args.inner_alpha_mode != "max" && args.inner_alpha_mode != "sum" &&
@@ -1976,7 +2491,7 @@ Args parse_args(int argc, char **argv) {
                 throw std::runtime_error("--inner-alpha-mode must be max, sum, outer, inner, or input");
             }
         } else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmradialblur_cli --input in.png --params params.json --output out.png [--ignore-size-variation] [--inner-alpha-mode max|sum|outer|inner|input] [--inner-source-scatter-prepass] [--inner-prepass-mode simple|tail-gather] [--inner-prepass-span-mode strength|offset|edge-fade] [--inner-prepass-weight-mode row-span|aex-alpha] [--inner-prepass-factor-mode alpha|one|valid] [--inner-prepass-overwrite-seed] [--inner-scatter-rgb-mode straight|prepass-premul] [--inner-scatter-seed-mode source|none|edgefade-none] [--inner-seed-alpha-mode input|prepass] [--inner-final-alpha-mode max|denom|source] [--inner-rgb-denominator-mode accum|max] [--inner-scatter-span-scale-mode one|source-alpha|input-alpha] [--inner-scatter-param10-plane one|polar-alpha|prepass-alpha|factor] [--inner-wrap-mode circular|aex-next-row] [--inner-source-scale-mode one|alpha|inv-alpha] [--dynamic-offset-mode current|aex-row|min-radius] [--polar-valid-mode strict|aex-repeat] [--polar-sample-mode plain|aex-alpha|conditional-inner] [--rotation-gaussian-mode double|aex-float] [--rotation-grid-mode double|aex-float] [--aex-quality-span-scale] [--inner-scatter-span-minus-one|--no-inner-scatter-span-minus-one] [--inner-scatter-loop-minus-one] [--inner-scatter-table-span-minus-one] [--inner-scatter-stats path.json]\n");
+            std::printf("Usage: olmradialblur_cli --input in.png --params params.json --output out.png [--ignore-size-variation] [--inner-alpha-mode max|sum|outer|inner|input] [--inner-source-scatter-prepass] [--outer-source-scatter-prepass] [--inner-prepass-mode simple|tail-gather] [--inner-prepass-span-mode strength|offset|edge-fade] [--inner-prepass-weight-mode row-span|aex-alpha] [--inner-prepass-factor-mode alpha|one|valid] [--inner-prepass-overwrite-seed] [--inner-scatter-rgb-mode straight|prepass-premul] [--inner-scatter-seed-mode source|none|edgefade-none] [--inner-seed-alpha-mode input|prepass] [--inner-final-alpha-mode max|denom|source] [--inner-rgb-denominator-mode accum|max] [--inner-scatter-span-scale-mode one|source-alpha|input-alpha] [--inner-scatter-param10-plane one|polar-alpha|prepass-alpha|factor] [--inner-wrap-mode circular|aex-next-row] [--inner-source-scale-mode one|alpha|inv-alpha] [--dynamic-offset-mode current|aex-row|min-radius] [--polar-valid-mode strict|aex-repeat] [--polar-sample-mode plain|aex-alpha|conditional-inner] [--rgba-sampler-alpha-mode shared-normalized|repeat-raw] [--rotation-gaussian-mode double|aex-float] [--rotation-grid-mode double|aex-float] [--rotation-grid-angle-offset-steps S] [--rotation-grid-radius-offset R] [--outer-row-coupled-mode none|prev-row-add|prev-row-tail-add|prev-row-tail-positive|prev2-row-tail-positive|prev-ladder-tail-positive|prev2-k2-positive|prev-hybrid-k12-positive] [--outer-row-coupled-scale V] [--outer-caller-collapse-mode none|binary-validity|zero-rgb-on-invalid|propagated-validity-alpha] [--final-polar-rgb-mode none|clamp-nonnegative] [--aex-quality-span-scale] [--inner-scatter-span-minus-one|--no-inner-scatter-span-minus-one] [--inner-scatter-loop-minus-one] [--inner-scatter-table-span-minus-one] [--inner-scatter-stats path.json] [--witness-dump path.json --witness-x N --witness-y N]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
@@ -1998,6 +2513,7 @@ int main(int argc, char **argv) {
         params.ignore_size_variation = args.ignore_size_variation;
         params.inner_alpha_mode = args.inner_alpha_mode;
         params.inner_source_scatter_prepass = args.inner_source_scatter_prepass;
+        params.outer_source_scatter_prepass = args.outer_source_scatter_prepass;
         params.inner_prepass_mode = args.inner_prepass_mode;
         params.inner_prepass_span_mode = args.inner_prepass_span_mode;
         params.inner_prepass_weight_mode = args.inner_prepass_weight_mode;
@@ -2015,13 +2531,23 @@ int main(int argc, char **argv) {
         params.dynamic_offset_mode = args.dynamic_offset_mode;
         params.polar_valid_mode = args.polar_valid_mode;
         params.polar_sample_mode = args.polar_sample_mode;
+        params.rgba_sampler_alpha_mode = args.rgba_sampler_alpha_mode;
         params.aex_quality_span_scale = args.aex_quality_span_scale;
         params.inner_scatter_span_minus_one = args.inner_scatter_span_minus_one;
         params.inner_scatter_loop_minus_one = args.inner_scatter_loop_minus_one;
         params.inner_scatter_table_span_minus_one = args.inner_scatter_table_span_minus_one;
         params.rotation_gaussian_mode = args.rotation_gaussian_mode;
         params.rotation_grid_mode = args.rotation_grid_mode;
+        params.rotation_grid_angle_offset_steps = args.rotation_grid_angle_offset_steps;
+        params.rotation_grid_radius_offset = args.rotation_grid_radius_offset;
+        params.outer_row_coupled_mode = args.outer_row_coupled_mode;
+        params.outer_row_coupled_scale = args.outer_row_coupled_scale;
+        params.outer_caller_collapse_mode = args.outer_caller_collapse_mode;
+        params.final_polar_rgb_mode = args.final_polar_rgb_mode;
         params.inner_scatter_stats_path = args.inner_scatter_stats_path;
+        params.witness_dump_path = args.witness_dump_path;
+        params.witness_x = args.witness_x;
+        params.witness_y = args.witness_y;
         g_rotation_gaussian_mode = params.rotation_gaussian_mode;
         Image output = params.blur_type == 2 ? render_olmradialblur_rotation(input, params)
                                              : render_olmradialblur_zoom(input, params);

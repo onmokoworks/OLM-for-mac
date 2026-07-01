@@ -38,6 +38,13 @@ FEATURES = [
         next_proof="Prefer normalized 8bpc refs; request a narrow Edge trace only if a current Software residual reappears, then add 16/32bpc references.",
     ),
     FeatureSet(
+        name="OLMToonDilate",
+        candidate_dir="refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmtoondilate_exact_20260619/candidate",
+        normalized_ref_dir="refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMToonDilate",
+        legacy_ref_dir="refs/win_references/20260604_olm/OLMToonDilate",
+        next_proof="Keep the packaged 8bpc AE exact slice stable, then add 16/32bpc references for cases 0001..0003 without reopening the two-pass chamfer / premultiply rule.",
+    ),
+    FeatureSet(
         name="OLMDistanceGradation basic",
         candidate_dir="refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmdistancegradation_basic_exact_20260619/candidate",
         normalized_ref_dir="refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMDistanceGradation_basic",

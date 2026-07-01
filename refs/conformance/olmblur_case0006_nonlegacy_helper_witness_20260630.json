@@ -1,0 +1,63 @@
+{
+  "kind": "olmblur_case0006_nonlegacy_helper_witness",
+  "status": "diagnostic",
+  "source_dump": "/tmp/olmblur_case0006_helperdebug_20260630/blur_debug.txt",
+  "witnesses": {
+    "314,14": {
+      "iter10_vertical_out_norm": [
+        0.0335845947,
+        0.0335845947,
+        0.0335845947
+      ],
+      "store16_raw": [
+        1100.5,
+        1100.5,
+        1100.5
+      ],
+      "store16_stored": [
+        1100,
+        1100,
+        1100
+      ]
+    },
+    "29,71": {
+      "iter10_vertical_out_norm": [
+        0.0110931396,
+        0.0110931396,
+        0.0110931396
+      ],
+      "store16_raw": [
+        363.5,
+        363.5,
+        363.5
+      ],
+      "store16_stored": [
+        364,
+        364,
+        364
+      ]
+    }
+  },
+  "reading": [
+    "The two active case_0006 witnesses already diverge in helper-local outputs before store16.",
+    "Span, sample_count, and sumW stay structurally matched, so the remaining issue is not a trivial support-window mismatch.",
+    "The main live suspect remains helper-local source state / accumulation history rather than a writer-only rule."
+  ],
+  "windows_current_aex_answered_20260701": {
+    "status": "answered",
+    "witnesses": {
+      "314,14": {
+        "windows_pre_store": [1100.5, 1100.5, 1100.5],
+        "windows_stored_word": [1100, 1100, 1100]
+      },
+      "29,71": {
+        "windows_pre_store": [363.5, 363.5, 363.5],
+        "windows_stored_word": [364, 364, 364]
+      }
+    },
+    "reading": [
+      "Windows current-AEX witness agrees with Mac at the active case_0006 pre-store/store boundary.",
+      "The remaining mismatch for these points is now best treated as 16bpc reference/export provenance, not a live writer-rule disagreement."
+    ]
+  }
+}

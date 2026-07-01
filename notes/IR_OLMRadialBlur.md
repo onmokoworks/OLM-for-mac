@@ -34,6 +34,9 @@
 | The two RGBA polar samplers do not treat alpha identically: non-repeat `FUN_180001270` divides RGB by accumulated alpha and then rewrites `alpha = accumulated_alpha / in_bounds_weight_sum`, while repeat-border `FUN_180001520` divides RGB by accumulated alpha but keeps alpha as the raw accumulated edge-clamped sum and returns a separate loose-window validity flag. | 2026-06-30 Ghidra decompile pass on `0x180001270` and `0x180001520`. In `FUN_180001270`, `param_2[3] = fVar10 / fVar9` after RGB normalization; in `FUN_180001520`, RGB is normalized only when `param_2[3] != 0`, and the function returns `uVar7` for loose `-2 < int(coord) < extent` validity instead of rewriting alpha by a coverage denominator. | binary-grounded / 2026-06-30 ghidra |
 | `FUN_180004640` preserves the RGBA sampler return as a caller-visible side channel independent of sampled RGBA alpha. | 2026-06-30 Ghidra recheck on `FUN_180004640`: sampler return `uVar4` is stored per polar cell into a separate validity buffer (`param_1 + 0xf252`) before prepass/scatter, and that buffer is then passed into `FUN_180002780` and `RadialBlur_scatter_valid_polar_cells`. | binary-grounded / 2026-06-30 ghidra |
 | The final inverse sampler does not read the preserved validity side channel directly; `FUN_180004640` first collapses `+0xf252` into `+0xe.alpha` during polar normalization. | 2026-06-30 Ghidra recheck on `FUN_180004640`: if `*(float *)(... + 0xf252) == 0` it clears `+0xe.rgb`; otherwise it normalizes RGB from `+0xf250` and writes that same `0xf252` value into `+0xe.alpha` before the final `FUN_180009d80(param_1 + 0xe, ...)` call. | binary-grounded / 2026-06-30 ghidra |
+| The current Mac C++ port does not model that preserved-validity side channel yet; both Zoom and Rotation inverse sampling currently consume a single blurred alpha plane instead of a caller-collapsed `+0xe.alpha` derived from `+0xf252`. | 2026-06-30 source audit of `mac/OLMRadialBlur/OLMRadialBlur.cpp`: `RenderZoom8` and `RenderRotation8` build one `blurred.rgba[...,3]` plane, then inverse-sample `alpha` directly from that plane. There is no separate buffer corresponding to AEX `+0xf252`, no RGB zero-on-zero-validity collapse before inverse sampling, and no distinct `+0xf250`/`+0xe` split. | source-audit / 2026-06-30 |
+| A naive `0/1 preserved validity -> final alpha` substitution is rejected for the outer lanes. | `refs/conformance/olmradialblur_outer_caller_collapse_probe_20260630.md`: a bounded CLI probe with `--outer-caller-collapse-mode binary-validity` worsens both representative outer witnesses from the current narrow residuals to broad top-edge alpha staircases (`case_0009 mean=0.1146`, `case_0010 mean=0.1204`). This means the missing caller-collapse model is more specific than "sample valid flag becomes final alpha directly". | probe-rejected / 2026-06-30 |
+| A weaker `validity only zeros RGB; alpha stays blurred` substitute is also rejected for the outer lanes. | `refs/conformance/olmradialblur_outer_caller_collapse_probe_20260630.md`: `--outer-caller-collapse-mode zero-rgb-on-invalid` lowers the damage versus `binary-validity`, but still broadens Zoom (`case_0009 mean=0.0260`, `max=91`) and slightly worsens tiny Rotation (`case_0010 mean=0.0144`) by erasing top-edge RGB that Windows keeps. This narrows the live hypothesis to a more specific typed caller-collapse rule, not a simple binary keep/drop gate. | probe-rejected / 2026-06-30 |
 | Rotation caller plane ownership is `+0x38` polar RGBA, `+0x40` scatter span/gate, `+0x48` prepass alpha, and `+0x50` prepass factor. | `notes/OLMRadialBlur_ASM_FACTS.md`, `FUN_180004640` call sites. | binary-grounded |
 | Sequence is `prepass(+0x38,+0x48,+0x50)`, then `scatter(+0x38,+0x48,+0x40)`, then polar normalization/writeback. | `notes/OLMRadialBlur_ASM_FACTS.md`, `FUN_180002780`, `FUN_1800024c0`, `FUN_180004640`. | binary-grounded |
 | `FUN_180001c90` resolves outer/inner scatter spans from strength/offset mode, clamps to `3000`, multiplies by `param10`, and samples direction-specific 30000-entry tables. | Ghidra/ASM facts in `notes/OLMRadialBlur_ASM_FACTS.md`. | binary-grounded |
@@ -149,6 +152,11 @@ Current binary-grounded sequence:
   the remaining Zoom question is specifically about the pre-inverse-sample
   normalization/collapse into `+0xe`, not about a hidden second validity read
   inside `FUN_180009d80`.
+- A 2026-06-30 source audit shows the current Mac port still collapses this
+  too early: it stores only one blurred alpha plane and reuses that plane as
+  the inverse-sampled output alpha. So the local `255` vs Windows `254`
+  witness should be treated as "caller-collapse not implemented yet", not as a
+  generic final writeback or bilinear issue.
 - Mac-side witness audit
   `refs/reports/olmradialblur_zoom_witness_20260624/audit.md` recomputes the
   same `(6,0)` path from the 20260604 manifest. Local RGB floats match the
@@ -162,6 +170,98 @@ Current binary-grounded sequence:
   keeps this slice at `guarded-alpha-normalization`: the only local floor-vs-
   Windows byte delta at the witness is alpha `+1`, and final byte packing is
   already ruled out.
+- 2026-06-30 bounded Mac-side repeat-border sampler change switched polar RGBA
+  sampling from per-channel bilinear to AEX-style alpha-aware sampling for the
+  current C++ implementation. Result: Zoom `case_0009` stayed effectively
+  unchanged at `max=1 mean=0.00461347`, while tiny Rotation improved only
+  slightly (`mean 0.01040714 -> 0.01032034`, `max` still `255`). Treat this as
+  positive evidence that sampling style matters but does not remove the main
+  blocker; the missing caller-collapse / preserved-validity model remains the
+  next high-value lane.
+- 2026-06-30 local witness dumps now pin the remaining Zoom delta even tighter.
+  The new CLI witness facility captures `case_0009 (6,0)` as
+  `sample_rgba=[0.0822407,0.0141302,0.0141302,1.0]` with
+  `sample_u8=[20,3,3,255]`, which matches the old local audit and keeps the
+  only byte delta in alpha. Re-running the same witness with
+  `--rgba-sampler-alpha-mode repeat-raw` produces the same dumped floats and
+  bytes, so the narrow repeat-border raw-alpha hypothesis is no longer live by
+  itself. The remaining `255 vs 254` proof stays upstream in caller-side polar
+  alpha/sample collapse rather than in the final inverse-sampler byte packing.
+- The same 2026-06-30 local dump now exposes the four contributing polar cells
+  too. For Zoom `case_0009 (6,0)`, the current CLI sees `cell00/cell10` with
+  `valid=1` and `cell01/cell11` with `valid=0`, yet all four cells still carry
+  nonzero RGBA and the final sample remains the near-match
+  `[20,3,3,255]`. This is strong local evidence that the surviving Zoom lane
+  is not explained by a naive "invalid contributing cells must be zeroed before
+  final inverse sampling" rule. The live issue remains caller-side collapse /
+  alpha/sample formation, not a simple per-cell validity mask at the final
+  bilinear stage. See
+  `refs/conformance/olmradialblur_local_witness_dumps_20260630.md`.
+- 2026-07-01 expanded same-row witness probing sharpens that split even more.
+  Across `case_0009` top-row `x=2..10`, final inverse-sampled alpha stays
+  near-opaque (`255`) while the current local preserved-validity proxy falls
+  rapidly (`243 -> 47 -> 236`). The largest `alpha_u8 - validity_alpha_u8` gap
+  reaches `208` at `x=8`, with RGB still matching the reference there. So the
+  surviving Zoom lane is now narrower than "sample the current preserved
+  validity plane" and should be treated as caller-collapse state between
+  sampler return and final `+0xe` alpha. See
+  `refs/conformance/olmradialblur_caller_collapse_plane_diag_20260701.md`.
+- A same-day propagated-validity probe rejects the next obvious shortcut too.
+  Replacing final outer alpha with a same-kernel propagated validity plane
+  (`--outer-caller-collapse-mode propagated-validity-alpha`) leaves Zoom
+  effectively unchanged at `max=1 mean=0.0046`, so the missing `254/255` split
+  is not solved by "blur the validity bits with the same kernel" alone. See
+  `refs/conformance/olmradialblur_outer_propagated_validity_probe_20260701.md`.
+- A 2026-07-01 Mac AE debug hook now exists for the same narrow outer-lane
+  witnesses. `mac/OLMRadialBlur/OLMRadialBlur.cpp` accepts
+  `OLMRADIALBLUR_DEBUG_DUMP_PATH` and `OLMRADIALBLUR_DEBUG_POINTS=x,y;...`,
+  then appends one `OLMRADIALBLUR_DEBUG_POINT` line per matched output pixel
+  with `sample_rgba`, `sample_u8`, local bilinear `validity_alpha`, and the
+  four contributing `cell_valid` / `cell_alpha` values. Parse those logs with
+  `scripts/analyze_radialblur_debug_points.py`. This does not prove Windows
+  behavior, but it gives a Mac-AE-side witness surface parallel to the CLI
+  caller-collapse probes before the next source change. See
+  `refs/conformance/olmradialblur_mac_debug_hook_20260701.md`.
+- The first live Mac AE single-case rerun now confirms that this probe surface
+  is genuinely usable on host once the request fixes the project bit depth.
+  Without `project.bits_per_channel=8`, both `case_0009` and `case_0010`
+  copied the input frame, which matches the plug-in's current unsupported
+  16/32bpc fallback. After regenerating the single-case requests with
+  `bits_per_channel=8`, host output returned to the expected guarded lanes:
+  Zoom `case_0009 max=1 mean=0.00461347` and tiny Rotation
+  `case_0010 max=255 mean=0.01032033`. The live host debug dump also captured
+  both the Zoom row probe and the tiny Rotation witness, and those values agree
+  with the current CLI interpretation (`Zoom (6,0)` still `sample_u8=(20,3,3,255)`,
+  tiny Rotation `(1614,6)` still negative RGB with `validity_alpha=1`). See
+  `refs/conformance/olmradialblur_mac_ae_single_case_probe_20260701.md`.
+- A same-day automation fix removed one misleading host wrinkle from that
+  probe flow. The original paired rerun launched two `run_ae_single_case.py`
+  processes in parallel against one AE instance, which let `$.setenv(...)`
+  collide and caused mixed/missing `radialblur_debug.log` outputs. The runner
+  now serializes AE host executions with an exclusive lock at
+  `/tmp/olm_ae_single_case.lock`, and isolated reruns produced separate clean
+  logs for both `case_0009` and `case_0010`. Treat any earlier mixed dump as
+  an automation race, not as RadialBlur behavior.
+- A follow-up isolated host rerun with `cell_rgb` dumping narrows tiny
+  Rotation further. Around `case_0010`, `(1612,6)` still carries a small
+  bright family (`cell_rgb` contains `0.04418` / `0.00694`), `(1613,6)` mixes
+  those positives with one negative cell, and the max witness `(1614,6)` has
+  all four contributing cells already dark or negative
+  (`[-0.01471,0,-0.04855,0]` per channel family) while
+  `validity_alpha_u8` stays `255`. So the missing white lobe is not being
+  removed only at the final inverse sample; by that point the contributing
+  polar RGB neighborhood is already wrong on the Mac side. See
+  `refs/conformance/olmradialblur_mac_ae_single_case_probe_20260701.md`.
+- A same-day source-polar witness splits that upstream branch once more.
+  Adding `src_cell_rgba` to the host debug dump shows that the four direct
+  source polar cells feeding the witness neighborhood are all
+  `RGBA=(0,0,0,1)` at `(1612,6)`, `(1613,6)`, `(1614,6)`, `(1614,5)`,
+  `(1614,7)`, even though the blurred `cell_rgb` values there already contain
+  small positive and negative contributions. So the missing white lobe is not
+  "present in those exact source cells and later suppressed". It must depend on
+  which nearby polar cells are allowed to contribute into the final lobe, or
+  on a source-grid placement difference that changes where the bright family
+  enters the polar buffer in the first place.
 - 2026-06-24 witness contract:
   `refs/reports/olmradialblur_witness_contract_20260624/witness_contract.md`
   freezes the useful proof boundary for Zoom, tiny Rotation, and Inner. For
@@ -197,6 +297,19 @@ Current binary-grounded sequence:
   sampler-validity evidence: final byte conversion is not enough, and the next
   proof needs the exact sampler/validity/pre-writeback path for the high-max
   top-border witness.
+- 2026-07-01 same-row probing also removes one tempting dead-end here: across
+  the bounded witness row `x=1610..1618`, validity alpha is fully live at every
+  point (`alpha_u8 == validity_alpha_u8 == 255` throughout), yet the central
+  witness `(1614,6)` still drops from Windows `[255,255,255,255]` to local
+  `[0,0,0,255]`. So tiny Rotation is no longer well described as
+  "validity-alpha collapse"; the remaining gap lives in upstream polar RGB /
+  substitute-path population before the final inverse sample. See
+  `refs/conformance/olmradialblur_caller_collapse_plane_diag_20260701.md`.
+- The propagated-validity probe leaves tiny Rotation effectively unchanged too
+  (`max=255 mean=0.0103`), which reinforces the same reading: this witness is
+  not rescued by a better final alpha plane alone and still points upstream to
+  polar RGB / substitute-path population. See
+  `refs/conformance/olmradialblur_outer_propagated_validity_probe_20260701.md`.
 - The same 2026-06-30 Ghidra pass gives a tighter static fork for that
   witness. Repeat-border sampler `FUN_180001520` carries a separate loose
   `-2 < int(coord) < extent` validity return even while clamping taps to edge
@@ -215,18 +328,192 @@ Current binary-grounded sequence:
   should focus on the normalization step that produces `+0xe` for the witness
   cell: what `0xf252` value survived, whether RGB was zeroed there, and what
   exact `+0xe RGBA` reached the final inverse sampler.
+- A same-day source audit explains why the current Mac candidate can still
+  miss this badly even when geometry looks close: `RenderRotation8` does not
+  carry a preserved-validity plane at all. It inverse-samples one blurred alpha
+  plane, so it currently cannot express the AEX rule "RGB zeroed when
+  preserved validity is zero, while alpha comes from the caller-collapsed
+  validity value".
+- The current Rotation implementation is also structurally simpler than the
+  binary-grounded AEX path in one more important way: the no-inner branch in
+  both CLI and Mac code still does a direct row convolution over `polar.rgba`
+  (`weighted_rgb / weighted_alpha`, `accum_alpha=max(contribution)`), rather
+  than the AEX-owned sequence `prepass(+0x48) -> scatter(+0x40) -> normalize`.
+  That source audit now lines up with the live host cell dump above. If the
+  bright lobe never gets written into the polar RGB numerator, the final
+  inverse sampler cannot recover it no matter how validity is collapsed later.
+- A bounded local CLI experiment now rejects the most obvious shortcut. Routing
+  outer-only tiny Rotation through the existing source-scatter/prepass branch
+  (`--outer-source-scatter-prepass`) worsens `case_0010` from
+  `mean=0.01032034` to roughly `0.3340..0.3588` across a small sweep of seed /
+  final-alpha / denominator / param10 settings, with the witness still black.
+  So "reuse the current Inner source-scatter machinery for outer Rotation" is
+  not the missing AEX rule by itself.
+- A second bounded CLI diagnostic rejects the simplest global grid-placement
+  explanation too. Adding temporary `--rotation-grid-angle-offset-steps` and
+  `--rotation-grid-radius-offset` probes and sweeping
+  `angle_steps,radius_offset ∈ {-0.5,-0.25,0,0.25,0.5}` leaves the current
+  baseline `(0,0)` best at `mean=0.01032034`. Every tested offset worsens the
+  case (`best non-baseline ≈ 0.2547` for radius `+0.25`; quarter-step angular
+  offsets worsen to `≈0.385..0.390`). So the remaining tiny-Rotation split is
+  not well explained by a uniform half/quarter-step angular or radial grid
+  bias. The live lane is narrower: contribution geometry / neighbor ownership
+  rather than a simple global grid shift.
+- The current local support math now points to that same conclusion more
+  concretely. For the four blurred polar cells that feed the max witness
+  `(1614,6)`, the no-inner path uses only same-row backward support
+  `ai, ai-1, ai-2` because `Strength=4 -> effective length 3`. On the witness
+  rows:
+  - row `843`: backward support includes small positive source polar cells
+    (`(1602,843)≈0.0894`, `(1601,843)≈0.1683`), yielding blurred cells
+    `0.04419` / `0.00694`;
+  - rows `844` and `845`: backward support instead picks negative source polar
+    cells (`(1601,844)≈-0.1893`, `(1601,845)≈-0.6249`), yielding
+  `-0.01471` / `-0.04855`.
+  A pure forward same-row pass yields zeros for these witness cells, so the
+  missing white lobe is not explained by a simple direction flip either. This
+  makes the next live hypothesis "AEX outer Rotation contribution geometry is
+  not a plain same-row 1D blur support" rather than "small coordinate bias" or
+  "just reverse the direction".
+- A local source-polar neighborhood audit around the witness sharpens that
+  hypothesis further. In the searched block `rows 838..848`, `angles 1598..1608`,
+  the strongest positive source polar cells are:
+  - `(1601,843) ≈ 0.1683`
+  - `(1602,843) ≈ 0.0894`
+  - far weaker `(1608,839) ≈ 0.0356`
+  - one far-out bright outlier `(1608,838) ≈ 0.4526`
+  Meanwhile the direct source polar cells for the witness rows
+  `(1603..1604, 844..845)` are all zero, and the current same-row backward
+  support on rows `844/845` only reaches one negative source cell each
+  (`(1601,844)≈-0.1893`, `(1601,845)≈-0.6249`). So the only plausible local
+  bright family is the `row 843 / ai 1601..1602` cluster. The current model
+  already lets that family brighten row `843`, but it does not transport that
+  brightness into rows `844/845`, which dominate the final witness bilinear
+  weights. This makes the next structural hypothesis explicit: AEX outer
+  Rotation must couple neighboring radius rows or otherwise repopulate later
+  rows before final inverse sampling; a pure same-row support model cannot
+  generate the white lobe at `(1614,6)`.
+- A first bounded row-coupling probe gives directional evidence for that read.
+  A temporary CLI diagnostic
+  `--outer-row-coupled-mode prev-row-add --outer-row-coupled-scale S` injects
+  the previous radius row's same backward support into the current no-inner
+  outer blur. This is intentionally crude, but it tests whether carrying the
+  `row 843` bright family into `844/845` moves the patch the right way.
+  Results on `case_0010`:
+  - very small coupling (`S=0.01`) worsens mean only to `0.0191`, but already
+    injects local brightness into the witness patch (`R` patch around
+    `(1612..1614,4..6)` becomes `[[0,0,0],[4,0,0],[5,1,0]]`);
+  - stronger coupling progressively worsens global residuals
+    (`S=0.125 -> mean 0.1130`, `S=1.0 -> mean 0.4832`) while still leaving the
+    central witness dark.
+  So row coupling is not a dead end: even a crude previous-row add moves the
+  local patch in the expected direction. But the exact AEX rule is more
+  selective than "add the whole previous-row support with one constant scale".
+  Treat this as positive evidence for cross-row outer population, not as a
+  candidate implementation to promote.
+- A follow-up selective coupling probe sharpens the same conclusion. Two
+  narrower variants were tested:
+  - `prev-row-tail-add`: borrow only `k>0` previous-row taps
+  - `prev-row-tail-positive`: borrow only `k>0` previous-row taps whose source
+    RGB luma is positive
+  On `case_0010`, `prev-row-tail-positive` dominates the crude variants:
+  - `scale=0.01` yields `mean=0.01424` with the same local patch lift
+    `[[0,0,0],[4,0,0],[5,1,0]]`
+  - the matching `prev-row-tail-add scale=0.01` is worse at `mean=0.01570`
+  - larger scales still over-broaden the image (`0.0299` at `0.05`,
+    `0.0869` at `0.2`, `0.3181` at `1.0`)
+  This is the best local evidence so far for the structure of the missing
+  family: a small positive-only cross-row tail can move the witness patch in
+  the right direction without the broad damage caused by uniform previous-row
+  coupling. It still does not recover the central white pixel, so it remains a
+  diagnostic, not a promoted implementation.
+- A second selective sweep improves that hypothesis again. Two new variants
+  were tested:
+  - `prev2-row-tail-positive`: borrow positive-only `k>0` tail taps from
+    `ri-2`
+  - `prev-ladder-tail-positive`: borrow from both `ri-1` and `ri-2`
+  The current best result is now `prev2-row-tail-positive scale=0.005` with
+  `mean=0.01256`, beating both:
+  - `prev-row-tail-positive scale=0.01` at `0.01424`
+  - `prev-ladder-tail-positive scale=0.005` at `0.01436`
+  The local patch lift is the same family (`[[0,0,0],[4,0,0],[5,1,0]]`), but
+  the lower global residual suggests the useful missing coupling is more
+  compatible with transporting a small positive tail from `row 843` into later
+  rows two steps away than with uniformly mixing the immediately previous row.
+  This is still only a diagnostic, but it now points more specifically toward a
+  sparse long-tail row coupling rather than broad neighboring-row blur.
+- An ultra-narrow exact-tail probe is better still. Two more variants were
+  tested:
+  - `prev2-k2-positive`: borrow only the `k=2` positive tail from `ri-2`
+  - `prev-hybrid-k12-positive`: borrow `ri-1/k=1` plus `ri-2/k=2`
+  Current best local diagnostic is now:
+  - `prev2-k2-positive scale=0.0025` -> `mean=0.010719`
+  which is much closer to the current baseline `0.010320` than any broader
+  row-coupling probe while preserving the same witness-patch lift.
+  The hybrid version is consistently worse (`0.011432` at the same scale), so
+  the evidence now points to a very specific missing family: not generic
+  cross-row blur, but a sparse positive contribution that behaves like a weak
+  `ri-2 / k=2` tail injection. This remains diagnostic, but it is the tightest
+  structural clue we have for no-inner Rotation so far.
+- A follow-up "only borrow into dark destination support" variant was also
+  tested and rejected as a promotion candidate. Gating that same
+  `ri-2 / k=2` positive tail by current destination-source luma reduces the
+  collateral damage relative to the ungated version, but it still does not beat
+  baseline: `prev2-k2-positive-darkdst scale=0.0005` lands at
+  `mean=0.010326` versus baseline `0.010320`, and larger scales monotonically
+  worsen both `mean` and `nonzero_px`. So the useful clue remains
+  "there exists a sparse row-coupled positive family", not "gate the current
+  ad hoc carry by darkness and keep it".
 - This also clarifies what is no longer worth asking Windows for on this lane:
   a trace that only reports final `FUN_180009d80` output without the preceding
   `+0xf252` / `+0xf250` / `+0xe` state is now too late to distinguish
   substitute-path / validity-collapse behavior from ordinary bilinear sampling.
   The next actionable tiny-Rotation witness should explicitly include
   `0xf252`, `0xf250 RGBA`, normalized `+0xe RGBA`, and then final output.
+- 2026-06-30 local witness dumps tighten the tiny-Rotation diagnosis too. At
+  the max witness `case_0010 (1614,6)`, all four contributing local polar cells
+  are already `valid=1` with `alpha=1.0`, but their RGB values are
+  `[negative, zero, negative, zero]`, yielding a slightly negative final sample
+  and local output `[0,0,0,255]`. This means the high-max residual is not a
+  last-stage validity gate at this witness. It is upstream in polar RGB
+  population / normalization or in a source-coordinate choice that selects the
+  wrong polar neighborhood before final inverse sampling. See
+  `refs/conformance/olmradialblur_local_witness_dumps_20260630.md`.
+- A 2026-06-30 negative-RGB clamp probe confirms that diagnosis. Clamping only
+  the final inverse-sampled polar RGB contributors to `max(value, 0)` leaves
+  Zoom unchanged and improves tiny Rotation only marginally
+  (`mean 0.01032034 -> 0.01030189`, `max` still `255`). So the negative local
+  cells are real, but a last-stage RGB clamp is not the missing AEX rule. The
+  active lane stays upstream in polar RGB population / normalization or source
+  coordinate choice, not in final post-sample cleanup. See
+  `refs/conformance/olmradialblur_final_polar_rgb_clamp_probe_20260630.md`.
+- A same-day output patch audit sharpens the "coordinate choice" half of that
+  branch too. Around the tiny Rotation witness `(1614,6)`, the Windows
+  reference contains a small bright cluster across `(1612..1614,4..6)` while
+  the current candidate keeps the surrounding dark/low-gray support pixels but
+  drops that bright lobe entirely. This looks less like a clean one-pixel
+  output shift and more like a missing bright contribution family upstream of
+  final inverse sampling. See
+  `refs/conformance/olmradialblur_tiny_rotation_patch_audit_20260630.md`.
+- A 2026-06-30 bright-lobe search then makes the "not just a shift" reading
+  stronger. In a `25x25` window centered on the witness, the Windows reference
+  still has `17` bright pixels (`R >= 200`) with a local center of mass around
+  `(1611.74, 2.75)`, while the current candidate has `0` bright pixels in that
+  same search region. So the tiny Rotation blocker is not merely a displaced
+  nearby lobe; the bright contribution family is absent or numerically
+  suppressed upstream of final inverse sampling. See
+  `refs/conformance/olmradialblur_tiny_rotation_bright_lobe_search_20260630.md`.
 - 2026-06-21 Mac-side recheck while Smoother2 is paused:
   full Rotation remains expected-red in the current C++ CLI:
   `case_0001 max=255 mean=1.9034`,
   `case_0002 max=255 mean=1.3071`,
   while the tiny Rotation witness is unchanged at
   `case_0010 max=255 mean=0.0104`.
+- 2026-06-30 bounded sampler-alignment rerun nudges that witness only
+  slightly: `case_0010 max=255 mean=0.01032034` after switching repeat-border
+  polar sampling to alpha-aware RGBA. This is not enough to promote any
+  broader rule; it mainly confirms that the residual is no longer well modeled
+  as "plain sampling only".
 - Old Inner remains expected-red in the current C++ CLI:
   `case_0011 max=255 mean=23.0495`,
   `case_0012 max=255 mean=16.0039`,
@@ -429,6 +716,10 @@ folders by SHA-256 rather than case number. Current result:
 - Whether `FUN_180001c90` uses a case-dependent underflow/loop policy: the
   2026-06-22 quick matrix shows `loop-minus-one` and `circular-wrap` improve
   different case families, which is inconsistent with a single global toggle.
-- Exact Zoom one-step writeback/rounding behavior.
+- Exact Zoom one-step caller-collapse behavior from sampler return /
+  preserved-validity / accumulated RGBA into `+0xe`.
+- Whether the current Mac port should introduce explicit `polar_rgba`,
+  `polar_validity`, and caller-collapsed `polar_out` planes before any broader
+  RadialBlur exactness work.
 - Noise and Size Variation exactness outside currently guarded slices.
 - Mac AE exactness and 16/32bpc behavior.

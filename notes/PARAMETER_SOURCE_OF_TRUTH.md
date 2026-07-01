@@ -135,12 +135,26 @@ Current audit truth should be checked in:
 
 - [refs/reports/windows_fresh_defaults_audit_20260629.md:1](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/reports/windows_fresh_defaults_audit_20260629.md:1)
 - [refs/reports/windows_fresh_ranges_audit_20260629.md:1](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/reports/windows_fresh_ranges_audit_20260629.md:1)
+- [refs/reports/windows_fresh_param_parity_summary_20260630.md:1](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/reports/windows_fresh_param_parity_summary_20260630.md:1)
 
 Any newly reported mismatch after that point should be treated as a fresh host
 bug, schema-extraction bug, or normalization bug rather than a memory issue.
 
 The range audit exposed real Windows-vs-Mac UI bound mismatches that are
 tracked as schema work rather than algorithm drift.
+
+For a quick per-plug-in host-parity snapshot, use the generated summary:
+
+- [refs/reports/windows_fresh_param_parity_summary_20260630.md:1](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/reports/windows_fresh_param_parity_summary_20260630.md:1)
+
+This report compresses the defaults audit plus range audit into:
+
+- `fixed`
+- `mostly-fixed`
+- `needs-followup`
+
+for each plug-in, and lists the next schema/UI gap that still blocks a clean
+Windows-fresh host-parity claim.
 
 2026-06-29 first-pass host-range alignment has already landed for:
 
@@ -167,11 +181,19 @@ tracked as schema work rather than algorithm drift.
 After that pass, the highest-signal remaining host-range/schema gaps are:
 
 - `OLMKiraKira`
-  - `Blur Mode`: Windows `1..4`, Mac hard `1..2`
-  - `Strength Multiplier`: Windows `0..1000`, Mac hard `0..500`
-  - `Glow Opacity`: Windows `0..10000`, Mac hard `0..100`
-  - `Brightness Gain` / `Fade Out` also still disagree numerically and may need
-    scale/semantic interpretation rather than a blind range swap
+  - host surface alignment landed for:
+    - `Channel` choices: `Alpha|Luminance|RGB|Brightness`
+    - `Blur Mode` choices/range: Windows `1..4`
+    - `Strength Multiplier`: Windows `0..1000`, slider `0..200`
+    - `Glow Opacity`: Windows `0..10000`, slider `0..100`
+    - `Fade Out`: Windows fresh range `0..1`
+  - still unresolved:
+    - `Brightness Gain` range semantics
+      - Windows fresh range metadata says `1..100`
+      - returned reference manifests also contain real applied float values like
+        `9.39999961853027`, so the host control is not safely modeled as a
+        plain integer `1..100` slider yet
+    - `Highlight Radius` hard max (`500` Windows fresh capture vs `1000` manual/source)
 - `OLMRadialBlur`
   - `Offset` still reads as mismatched in the current audit, but this is mixed
     with duplicate label normalization (`Outer Offset`, `Inner Offset`,

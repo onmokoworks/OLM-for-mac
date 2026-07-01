@@ -132,6 +132,80 @@ def main() -> int:
         assert observations["cases"][1]["case_id"] == "case_0007"
         assert "aex_pre_writeback_rgb_hex" in observations["cases"][0]["residual_pixels"][0]
 
+        olmblur_case0006_output = Path(tmp) / "runtime_trace_olmblur_case0006_helper.zip"
+        proc = run(
+            [
+                sys.executable,
+                str(script),
+                "--profile",
+                "olmblur-case0006-helper-prestore",
+                "--output",
+                str(olmblur_case0006_output),
+            ],
+            root,
+        )
+        assert "[OK] runtime trace package:" in proc.stdout
+        with zipfile.ZipFile(olmblur_case0006_output) as archive:
+            names = set(archive.namelist())
+            required = {
+                "README_RUNTIME_TRACE.md",
+                "RETURN_RUNTIME_TRACE_TEMPLATE.json",
+                "runtime_trace_package_manifest.json",
+                "notes/WINDOWS_RUNTIME_TRACE_REQUESTS.md",
+                "notes/IR_OLMBlur.md",
+                "refs/conformance/olmblur_current_word_baseline_20260629.md",
+                "refs/conformance/olmblur_writer_only_hypothesis_20260630.md",
+            }
+            missing = required - names
+            assert not missing, f"missing OLMBlur case_0006 package entries: {sorted(missing)}"
+            manifest = json.loads(archive.read("runtime_trace_package_manifest.json"))
+            template = json.loads(archive.read("RETURN_RUNTIME_TRACE_TEMPLATE.json"))
+        assert manifest["profile"] == "olmblur-case0006-helper-prestore"
+        action_ids = [action["request_id"] for action in manifest["runtime_actions"]]
+        assert action_ids == ["olmblur_case0006_helper_prestore_witness_20260630"]
+        observations = template["results"][0]["observations"]
+        assert observations["case_id"] == "olmblur__case_0006"
+        assert observations["witnesses"][0]["x"] == 314
+        assert observations["witnesses"][1]["y"] == 71
+        assert "sign-mixed" in observations["case_level_contract"]["must_explain"][0]
+
+        dg_case0023_output = Path(tmp) / "runtime_trace_distancegradation_case0023.zip"
+        proc = run(
+            [
+                sys.executable,
+                str(script),
+                "--profile",
+                "distancegradation-constant-case0023-witness",
+                "--output",
+                str(dg_case0023_output),
+            ],
+            root,
+        )
+        assert "[OK] runtime trace package:" in proc.stdout
+        with zipfile.ZipFile(dg_case0023_output) as archive:
+            names = set(archive.namelist())
+            required = {
+                "README_RUNTIME_TRACE.md",
+                "RETURN_RUNTIME_TRACE_TEMPLATE.json",
+                "runtime_trace_package_manifest.json",
+                "notes/WINDOWS_RUNTIME_TRACE_REQUESTS.md",
+                "notes/IR_OLMDistanceGradation.md",
+                "refs/reports/runtime_trace_comparisons/olmdistancegradation_constant_boundary_witness_20260630.md",
+                "refs/conformance/olmdistancegradation_16bpc_constant_both_outside0_variants_20260630.md",
+            }
+            missing = required - names
+            assert not missing, f"missing DistanceGradation case_0023 package entries: {sorted(missing)}"
+            manifest = json.loads(archive.read("runtime_trace_package_manifest.json"))
+            template = json.loads(archive.read("RETURN_RUNTIME_TRACE_TEMPLATE.json"))
+        assert manifest["profile"] == "distancegradation-constant-case0023-witness"
+        action_ids = [action["request_id"] for action in manifest["runtime_actions"]]
+        assert action_ids == ["olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630"]
+        observations = template["results"][0]["observations"]
+        assert observations["case"]["case_id"] == "olmdistancegradation_extended__case_0023"
+        assert observations["case"]["params"]["outside_threshold"] == 0
+        assert observations["case"]["representative_pixels"][0]["x"] == 1699
+        assert "outside_threshold_zero_special_case" in observations["requested_for_each_pixel"]
+
         kirakira_output = Path(tmp) / "runtime_trace_kirakira_stage.zip"
         proc = run(
             [
@@ -345,6 +419,42 @@ def main() -> int:
         assert "$t3" in observations["writer_entry_target_address"]["candidate_addr_registers"]
         assert observations["writer_entry_target_address"]["selected_output_world"] == "$t3"
         assert observations["after_fun_18000c280"]["address"] == "OLMSmoother2+0xcd5f"
+
+        distance_constant_output = Path(tmp) / "runtime_trace_distancegradation_constant_boundary.zip"
+        proc = run(
+            [
+                sys.executable,
+                str(script),
+                "--profile",
+                "distancegradation-constant-boundary-witness",
+                "--output",
+                str(distance_constant_output),
+            ],
+            root,
+        )
+        assert "[OK] runtime trace package:" in proc.stdout
+        with zipfile.ZipFile(distance_constant_output) as archive:
+            names = set(archive.namelist())
+            required = {
+                "README_RUNTIME_TRACE.md",
+                "RETURN_RUNTIME_TRACE_TEMPLATE.json",
+                "runtime_trace_package_manifest.json",
+                "notes/WINDOWS_RUNTIME_TRACE_REQUESTS.md",
+                "notes/IR_OLMDistanceGradation.md",
+                "refs/conformance/olmdistancegradation_16bpc_constant_remaining_boundary_20260629.md",
+                "refs/conformance/olmdistancegradation_16bpc_case0020_field_witness_20260629.md",
+            }
+            missing = required - names
+            assert not missing, f"missing DistanceGradation constant package entries: {sorted(missing)}"
+            manifest = json.loads(archive.read("runtime_trace_package_manifest.json"))
+            template = json.loads(archive.read("RETURN_RUNTIME_TRACE_TEMPLATE.json"))
+        assert manifest["profile"] == "distancegradation-constant-boundary-witness"
+        action_ids = [action["request_id"] for action in manifest["runtime_actions"]]
+        assert action_ids == ["olmdistancegradation_16bpc_constant_boundary_witness_20260630"]
+        observations = template["results"][0]["observations"]
+        assert observations["cases"][0]["case_id"] == "olmdistancegradation_extended__case_0020"
+        assert observations["cases"][1]["case_id"] == "olmdistancegradation_extended__case_0022"
+        assert observations["requested_for_each_pixel"]["comparison_rule"].startswith("<")
     print("[OK] runtime trace package smoke")
     return 0
 

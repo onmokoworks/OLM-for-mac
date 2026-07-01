@@ -1,6 +1,6 @@
 # OLMDirectionalBlur Pending Witness Proof
 
-- Runtime package: `refs/runtime_trace_packages/olm_runtime_trace_directionalblur_residual_witness_20260629_helpercoverage.zip`
+- Runtime package: `refs/runtime_trace_packages/olm_runtime_trace_requests_20260630_004241.zip`
 
 ## Decision Boundary
 
@@ -24,16 +24,6 @@ Keep OLMDirectionalBlur blocked on typed witness proof only: the angle-0 strip s
   - writes start at offset = 1
   - loop continues while offset < param_9
   - front helper writes only to destination columns strictly left of the current source x
-- Endpoint constraint:
-  `refs/conformance/olmdirectionalblur_angle0_endpoint_constraint_20260630.md`
-  shows why the right strip endpoint is a real discriminator. The current local
-  strip row ends at `x=579`, while the documented front helper writes strictly
-  left of its source x and emits no center write. So a same-row front-helper
-  explanation for endpoint `(579,169)` would require a contributing source
-  `x >= 580`, which is outside the visible local strip. A useful Windows trace
-  must therefore reveal either source-range evidence beyond the visible strip,
-  a rotated-buffer/group-membership explanation, or another validity/alternate
-  path.
 - Required next proof: A helper-local source-to-destination range witness on the strip row, especially the right endpoint (579,169) plus companion witness (494,169), including actual touched destination x range, rowdriver/group membership, validity side-channel, accumulation, pre-writeback RGBA, and final bytes.
 
 ## Diagonal Lane

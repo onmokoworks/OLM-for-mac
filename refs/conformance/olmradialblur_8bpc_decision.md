@@ -8,7 +8,13 @@
 - Decision: `guarded-alpha-normalization`
 - Case/XY: `case_0009` `[6, 0]`
 - Local floor minus Windows u8: `[0, 0, 0, 1]`
-- Next evidence: Zoom polar alpha/sample accumulation; not final byte packing.
+- 2026-07-01 row probe: final alpha stays near-opaque across `x=2..10`, while
+  the current local validity proxy collapses far earlier (`max gap=208` at
+  `x=8`).
+- 2026-07-01 propagated-validity probe: a same-kernel propagated validity plane
+  leaves the current Zoom diff unchanged (`max=1 mean=0.0046`).
+- Next evidence: Zoom caller-collapse alpha/sample accumulation into `+0xe`;
+  not final byte packing and not direct sampling of the current validity plane.
 
 ## Tiny Rotation
 
@@ -16,7 +22,12 @@
 - Classification: `inverse-sampler / validity-side unresolved; not explained by a simple final byte conversion tie`
 - Final u8: `[255, 255, 255, 255]`
 - Closest sampler float: `[-0.004081939347088337, -0.004081939347088337, -0.004081939347088337, 1.0]`
-- Next evidence: Exact inverse-sampler validity/border and pre-writeback path for the high-max top-border witness.
+- 2026-07-01 row probe: validity alpha is already fully live across
+  `x=1610..1618`; the witness stays black only at `(1614,6)`.
+- 2026-07-01 propagated-validity probe: final stats stay effectively unchanged
+  (`max=255 mean=0.0103`).
+- Next evidence: Exact upstream polar RGB / substitute-path population and then
+  the pre-writeback path for the high-max top-border witness.
 
 ## Inner
 

@@ -35,6 +35,27 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=None,
     )
+    parser.add_argument(
+        "--preview-dir",
+        type=Path,
+        default=None,
+        help=(
+            "Optional report directory to populate with request_preview.json and README.md "
+            "for the generated request."
+        ),
+    )
+    parser.add_argument(
+        "--plugin",
+        action="append",
+        default=[],
+        help="Restrict the request to one or more plug-in names from the bit-depth plan.",
+    )
+    parser.add_argument(
+        "--feature",
+        action="append",
+        default=[],
+        help="Restrict the request to one or more feature names from the bit-depth plan.",
+    )
     return parser.parse_args()
 
 
@@ -116,8 +137,56 @@ def input_id_for(feature_name: str, case_id: str) -> str:
     return f"{safe_feature}_{case_id}_source"
 
 
+def default_preview_title(bit_depth: str, plugin_filter: list[str], feature_filter: list[str]) -> str:
+    if bit_depth != "32bpc":
+        return "Bit-Depth Request Preview"
+    if len(plugin_filter) == 1 and not feature_filter:
+        return f"32bpc {plugin_filter[0]} Probe Preview"
+    if len(feature_filter) == 1:
+        return f"32bpc {feature_filter[0]} Probe Preview"
+    return "32bpc Float-Output Probe Preview"
+
+
+def preview_readme(
+    request: dict[str, Any],
+    *,
+    bit_depth: str,
+    plugin_filter: list[str],
+    feature_filter: list[str],
+    command: str,
+) -> str:
+    cases = request["cases"]
+    plugins = sorted({str(row["plugin"]) for row in cases})
+    case_ids = sorted(str(row["source_case_id"]) for row in cases)
+    title = default_preview_title(bit_depth, plugin_filter, feature_filter)
+    scope_line = ", ".join(plugin_filter or feature_filter or plugins)
+    lines = [
+        f"# {title}",
+        "",
+        f"This preview captures the next Windows AE `{bit_depth}` float-output probe request for `{scope_line}`.",
+        "",
+        "- Request preview: `request_preview.json`",
+        f"- Scope: `{scope_line}`",
+        f"- Cases: `{len(cases)}` total (`{case_ids[0]}..{case_ids[-1]}`)",
+        f"- Renderer target: Windows AE `{request['render_sets'][0]['project_gpu_accel_type.current_name']}` only",
+        "- Output requirement: prefer EXR or raw float RGBA samples; PNG-only returns stay probe-only",
+        "- Completion note: this is not `AE exact` evidence until the return preserves float samples and a 32bpc comparator policy is fixed.",
+        "",
+        "Regenerate from the repo root with:",
+        "",
+        "```sh",
+        command,
+        "```",
+        "",
+        "When the Windows return arrives, import it with `scripts/intake_olm_return.py ... --quick` and keep the result labeled as probe-only unless the payload is float-preserving.",
+    ]
+    return "\n".join(lines) + "\n"
+
+
 def build_request(args: argparse.Namespace) -> dict[str, Any]:
     plan = read_json(args.plan_json)
+    plugin_filter = {item for item in args.plugin if item}
+    feature_filter = {item for item in args.feature if item}
     request_id = args.request_id or default_request_id(args.bit_depth)
     bits_per_channel = 32 if args.bit_depth == "32bpc" else 16
     render_set_id = f"software_{args.bit_depth}"
@@ -185,6 +254,10 @@ def build_request(args: argparse.Namespace) -> dict[str, Any]:
     for feature in plan.get("features", []):
         if not isinstance(feature, dict):
             continue
+        if plugin_filter and str(feature.get("plugin")) not in plugin_filter:
+            continue
+        if feature_filter and str(feature.get("name")) not in feature_filter:
+            continue
         by_id = manifest_cases(feature)
         for case_id in feature.get("case_ids", []):
             if case_id not in by_id:
@@ -224,8 +297,24 @@ def build_request(args: argparse.Namespace) -> dict[str, Any]:
                 }
             )
 
+    if not cases:
+        detail = []
+        if plugin_filter:
+            detail.append(f"plugin={sorted(plugin_filter)}")
+        if feature_filter:
+            detail.append(f"feature={sorted(feature_filter)}")
+        suffix = f" ({', '.join(detail)})" if detail else ""
+        raise ValueError(f"no bit-depth request cases selected{suffix}")
+
     return {
         "request_id": request_id,
+        "scope": {
+            "bit_depth": args.bit_depth,
+            "plugin_filters": sorted(plugin_filter),
+            "feature_filters": sorted(feature_filter),
+            "plugin_count": len({str(row["plugin"]) for row in cases}),
+            "case_count": len(cases),
+        },
         "effect": {
             "name": "OLM bit-depth conformance batch",
             "match_name": "mixed",
@@ -253,11 +342,37 @@ def main() -> int:
     args = parse_args()
     if args.request_id is None:
         args.request_id = default_request_id(args.bit_depth)
+    if args.output is None and args.preview_dir is not None:
+        args.output = args.preview_dir / "request_preview.json"
     if args.output is None:
         args.output = default_output(args.bit_depth, args.request_id)
     request = build_request(args)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(request, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    if args.preview_dir is not None:
+        args.preview_dir.mkdir(parents=True, exist_ok=True)
+        command_parts = [
+            "python3 scripts/generate_bitdepth_reference_request.py",
+            "--bit-depth",
+            args.bit_depth,
+        ]
+        for plugin in args.plugin:
+            command_parts.extend(["--plugin", plugin])
+        for feature in args.feature:
+            command_parts.extend(["--feature", feature])
+        command_parts.extend(["--request-id", request["request_id"]])
+        command_parts.extend(["--preview-dir", str(args.preview_dir)])
+        readme_path = args.preview_dir / "README.md"
+        readme_path.write_text(
+            preview_readme(
+                request,
+                bit_depth=args.bit_depth,
+                plugin_filter=args.plugin,
+                feature_filter=args.feature,
+                command=" ".join(command_parts),
+            ),
+            encoding="utf-8",
+        )
     print(f"request_json={args.output}")
     print(f"request_id={request['request_id']}")
     print(f"cases={len(request['cases'])}")

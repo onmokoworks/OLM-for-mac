@@ -1,0 +1,171 @@
+{
+  "kind": "olmdistancegradation_16bpc_constant_two_stage_variants",
+  "request_zip": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation/bitdepth16_olmdistancegradation_extended_exact.zip",
+  "results": [
+    {
+      "case_id": "olmdistancegradation_extended__case_0020",
+      "variant_results": [
+        {
+          "max_diff": 61165,
+          "mean_diff": 0.09034698109567901,
+          "nonzero_px": 304210,
+          "variant": "current_constant"
+        },
+        {
+          "max_diff": 61165,
+          "mean_diff": 14.498019627700618,
+          "nonzero_px": 304210,
+          "variant": "trunc_plateau_binary"
+        },
+        {
+          "max_diff": 61165,
+          "mean_diff": 14.498019627700618,
+          "nonzero_px": 304210,
+          "variant": "trunc_second_dt_binary_nonzero"
+        },
+        {
+          "max_diff": 61165,
+          "mean_diff": 14.498019627700618,
+          "nonzero_px": 304210,
+          "variant": "trunc_second_dt_binary_lt1"
+        },
+        {
+          "max_diff": 61165,
+          "mean_diff": 14.498019627700618,
+          "nonzero_px": 304210,
+          "variant": "trunc_second_dt_invnorm"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 9604.69382667824,
+          "nonzero_px": 970831,
+          "variant": "trunc_second_dt_norm"
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0021",
+      "variant_results": [
+        {
+          "max_diff": 61165,
+          "mean_diff": 0.3536676552854938,
+          "nonzero_px": 1406979,
+          "variant": "current_constant"
+        },
+        {
+          "max_diff": 61165,
+          "mean_diff": 14.761340301890431,
+          "nonzero_px": 1406979,
+          "variant": "trunc_plateau_binary"
+        },
+        {
+          "max_diff": 61165,
+          "mean_diff": 14.761340301890431,
+          "nonzero_px": 1406979,
+          "variant": "trunc_second_dt_binary_nonzero"
+        },
+        {
+          "max_diff": 61165,
+          "mean_diff": 14.761340301890431,
+          "nonzero_px": 1406979,
+          "variant": "trunc_second_dt_binary_lt1"
+        },
+        {
+          "max_diff": 61165,
+          "mean_diff": 14.761340301890431,
+          "nonzero_px": 1406979,
+          "variant": "trunc_second_dt_invnorm"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 9604.957147111303,
+          "nonzero_px": 2073599,
+          "variant": "trunc_second_dt_norm"
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0022",
+      "variant_results": [
+        {
+          "max_diff": 61166,
+          "mean_diff": 134.83795030381944,
+          "nonzero_px": 702677,
+          "variant": "trunc_plateau_binary"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 134.83795030381944,
+          "nonzero_px": 702677,
+          "variant": "trunc_second_dt_binary_nonzero"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 134.83795030381944,
+          "nonzero_px": 702677,
+          "variant": "trunc_second_dt_binary_lt1"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 134.83795030381944,
+          "nonzero_px": 702677,
+          "variant": "trunc_second_dt_invnorm"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 2.9357175925925927,
+          "nonzero_px": 702720,
+          "variant": "current_constant"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 19754.312473717207,
+          "nonzero_px": 2073598,
+          "variant": "trunc_second_dt_norm"
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0023",
+      "variant_results": [
+        {
+          "max_diff": 61166,
+          "mean_diff": 20.041925877700617,
+          "nonzero_px": 182793,
+          "variant": "trunc_plateau_binary"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 20.041925877700617,
+          "nonzero_px": 182793,
+          "variant": "trunc_second_dt_binary_nonzero"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 20.041925877700617,
+          "nonzero_px": 182793,
+          "variant": "trunc_second_dt_binary_lt1"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 20.041925877700617,
+          "nonzero_px": 182793,
+          "variant": "trunc_second_dt_invnorm"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 295.30543559510033,
+          "nonzero_px": 203213,
+          "variant": "current_constant"
+        },
+        {
+          "max_diff": 61166,
+          "mean_diff": 27243.535976803625,
+          "nonzero_px": 2073598,
+          "variant": "trunc_second_dt_norm"
+        }
+      ]
+    }
+  ],
+  "status": "diagnostic"
+}

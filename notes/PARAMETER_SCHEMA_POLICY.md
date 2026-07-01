@@ -170,7 +170,7 @@ linked replay は package 時点で `params_full` を持つ。
 | `OLMColorKey` | mostly fixed | fixed | request replay では困らない。Windows manifest 上の `Amount / Edge Thin / Edge Blur` は grouped-name 正規化の宿題が残る |
 | `OLMDirectionalBlur` | mostly fixed | fixed | 2026-06-29 first-pass range alignmentで `Front/Back Blur Strength`, `Alpha Fade`, `Seed` を Windows 側へ揃えた。残りは grouped-name (`Sharp Tail`) と Windows-no-range 項目 |
 | `OLMDistanceGradation` | fixed | fixed | 初期値・最小最大は source-backed として確定扱いしてよい |
-| `OLMKiraKira` | range mismatchあり | request replay fixed | `Ramp` 系 name driftに加え、`Blur Mode`, `Strength Multiplier`, `Glow Opacity` などの host range が Windows とズレる |
+| `OLMKiraKira` | range mismatchあり | request replay fixed | `Ramp` 系 name driftは残るが、host range の大物は整理済み。`Fade Out` は Windows fresh `0..1` に合わせ済み。未解決は `Brightness Gain` の単位系と `Highlight Radius` の上限。 |
 | `OLMRadialBlur` | mostly fixed | fixed | `Strength`, `Ratio`, `Seed` は Windows 側へ寄せた。`Offset` は duplicate-label 正規化を含む監査宿題が残る |
 | `OLMSmoother` | mostly fixed | n/a | `Do Smooth Range` が Windows manifest 側だけに見えており、完全一致はまだ保留 |
 | `OLMSmoother2` | fixed | fixed | 2026-06-29 first-pass range alignmentで `Smoothness`, `Extra Smooth`, `Smooth Range`, `Gamma Value` を Windows 側へ揃えた |

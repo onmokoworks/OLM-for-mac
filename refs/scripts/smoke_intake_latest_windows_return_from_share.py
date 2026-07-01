@@ -90,6 +90,65 @@ def write_bundle_return_zip(path: Path, request_zip: Path, return_zip: Path) -> 
         )
 
 
+def write_folder_style_bundle_return_zip(path: Path, request_ids: list[str]) -> None:
+    bundle_stem = path.stem
+    with zipfile.ZipFile(path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr(
+            f"{bundle_stem}/QUEUE_README.txt",
+            "synthetic folder-style runtime bundle\n",
+        )
+        for request_id in request_ids:
+            archive.writestr(
+                f"{bundle_stem}/{request_id}/RETURN_RUNTIME_TRACE_RESULT.json",
+                (
+                    "{\n"
+                    '  "kind": "olm_runtime_trace_result",\n'
+                    '  "schema": 1,\n'
+                    '  "results": [\n'
+                    "    {\n"
+                    f'      "request_id": "{request_id}",\n'
+                    '      "status": "answered",\n'
+                    '      "summary": "Synthetic folder-style bundled runtime witness."\n'
+                    "    }\n"
+                    "  ]\n"
+                    "}\n"
+                ),
+            )
+            archive.writestr(
+                f"{bundle_stem}/{request_id}/request_package/runtime_trace_package_manifest.json",
+                (
+                    "{\n"
+                    '  "kind": "olm_runtime_trace_request_package",\n'
+                    '  "runtime_actions": [\n'
+                    f'    {{"request_id": "{request_id}"}}\n'
+                    "  ]\n"
+                    "}\n"
+                ),
+            )
+
+
+def write_olmblur_standalone_witness_zip(path: Path) -> None:
+    with zipfile.ZipFile(path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr(
+            "databreak_probe/WITNESS_RESULT.json",
+            (
+                "{\n"
+                '  "plugin": "OLMBlur",\n'
+                '  "case": "olmblur__case_0007",\n'
+                '  "bit_depth": "16bpc",\n'
+                '  "target": {"x": 345, "y": 672, "channel": "B"},\n'
+                '  "runtime_path": "FUN_180005f20",\n'
+                '  "registers_at_write": {"rcx": "0x0"},\n'
+                '  "source_float_triplet_raw_words": ["0x46440000", "0x00003100", "0x00000000"],\n'
+                '  "source_float_triplet_big_endian_decode": {"b": 12544.498046875},\n'
+                '  "final_word": {"decimal": 12544, "hex": "0x3100"},\n'
+                '  "interpretation": "Synthetic standalone witness."\n'
+                "}\n"
+            ),
+        )
+        archive.writestr("databreak_probe/README_WITNESS.md", "synthetic standalone witness\n")
+
+
 def main() -> int:
     root = repo_root()
     helper = root / "scripts" / "intake_latest_windows_return_from_share.py"
@@ -109,6 +168,7 @@ def main() -> int:
         returned = new_dir / "runtime_trace_return.zip"
         make_return_zip(returned)
         (new_dir / "runtime_trace_return__README.txt").write_text("runtime trace return\n", encoding="utf-8")
+        (new_dir / "unrelated_pending_request.zip").write_text("leave me alone\n", encoding="utf-8")
 
         summary_json = tmp_root / "runtime_summary.json"
         summary_md = tmp_root / "runtime_summary.md"
@@ -162,8 +222,9 @@ def main() -> int:
         if not (tmp_root / "runtime_summary_proof_lanes.md").exists():
             print("[FAIL] helper did not produce runtime proof-lane Markdown")
             return 1
-        if any(path.is_file() for path in new_dir.iterdir()):
-            print("[FAIL] helper did not archive files out of share/new")
+        remaining_names = {path.name for path in new_dir.iterdir() if path.is_file()}
+        if remaining_names != {"unrelated_pending_request.zip"}:
+            print(f"[FAIL] helper archived the wrong files from share/new: {sorted(remaining_names)}")
             return 1
         archived_names = {path.name for path in old_dir.iterdir() if path.is_file()}
         if not any(name.endswith("runtime_trace_return.zip") for name in archived_names):
@@ -233,6 +294,87 @@ def main() -> int:
             return 1
         if any(path.is_file() for path in bundle_new.iterdir()):
             print("[FAIL] helper did not archive bundle-return files out of share/new")
+            return 1
+
+        folder_bundle_share_root = tmp_root / "olm_pr_folder_bundle"
+        folder_bundle_new = folder_bundle_share_root / "new"
+        folder_bundle_old = folder_bundle_share_root / "old"
+        folder_bundle_new.mkdir(parents=True)
+        folder_bundle_old.mkdir(parents=True)
+
+        folder_request_ids = [
+            "olmblur_final_word_witness_20260630",
+            "olmradialblur_caller_collapse_witness_20260630",
+        ]
+        folder_bundle_zip = folder_bundle_new / "olm_runtime_trace_requests_20260630_4pack_windows_return.zip"
+        write_folder_style_bundle_return_zip(folder_bundle_zip, folder_request_ids)
+
+        folder_bundle_proc = run(
+            [
+                py,
+                str(helper),
+                "--share-root",
+                str(folder_bundle_share_root),
+                "--kind",
+                "windows-action-bundle-return",
+            ],
+            root,
+        )
+        if "[OK] processed bundled runtime returns into" not in folder_bundle_proc.stdout:
+            print("[FAIL] helper did not process folder-style bundled runtime returns")
+            return 1
+        if f"runtime_trace_summary_{folder_request_ids[0]}" not in folder_bundle_proc.stdout:
+            print("[FAIL] helper did not emit expected folder-style runtime summary slug")
+            return 1
+        if any(path.is_file() for path in folder_bundle_new.iterdir()):
+            print("[FAIL] helper did not archive folder-style bundle-return files out of share/new")
+            return 1
+
+        witness_share_root = tmp_root / "olm_pr_witness"
+        witness_new = witness_share_root / "new"
+        witness_old = witness_share_root / "old"
+        witness_new.mkdir(parents=True)
+        witness_old.mkdir(parents=True)
+
+        witness_zip = witness_new / "olmblur_case0007_16bpc_345_672_b_witness_windows_20260630.zip"
+        write_olmblur_standalone_witness_zip(witness_zip)
+        (witness_new / "still_pending_request.zip").write_text("pending\n", encoding="utf-8")
+
+        witness_dry = run(
+            [
+                py,
+                str(helper),
+                "--share-root",
+                str(witness_share_root),
+                "--dry-run",
+            ],
+            root,
+        )
+        if "olmblur-standalone-witness" not in witness_dry.stdout:
+            print("[FAIL] dry-run did not choose OLMBlur standalone witness")
+            return 1
+
+        witness_proc = run(
+            [
+                py,
+                str(helper),
+                "--share-root",
+                str(witness_share_root),
+                "--kind",
+                "olmblur-standalone-witness",
+            ],
+            root,
+        )
+        if "output_json=" not in witness_proc.stdout or "output_md=" not in witness_proc.stdout:
+            print("[FAIL] helper did not run standalone witness intake")
+            return 1
+        witness_remaining = {path.name for path in witness_new.iterdir() if path.is_file()}
+        if witness_remaining != {"still_pending_request.zip"}:
+            print(f"[FAIL] helper archived the wrong standalone witness files: {sorted(witness_remaining)}")
+            return 1
+        archived_witness_names = {path.name for path in witness_old.iterdir() if path.is_file()}
+        if not any(name.endswith("olmblur_case0007_16bpc_345_672_b_witness_windows_20260630.zip") for name in archived_witness_names):
+            print("[FAIL] helper did not archive the standalone witness zip")
             return 1
 
     print("[OK] intake latest Windows return from share smoke")

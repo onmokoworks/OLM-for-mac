@@ -47,9 +47,26 @@ def build_summary(writer: dict, runtime_pkg: Path, runtime_summary: dict, runtim
         "latest_runtime_summary": str(runtime_summary_path),
         "decision_boundary": (
             "Decide whether the remaining OLMBlur residuals come from slightly different "
-            "pre-store floats/helper ordering at narrow witnesses, or from a true last-step "
-            "writer rule mismatch that would justify changing the non-Legacy 16bpc writer."
+            "pre-store floats/helper ordering at the two sign-mixed non-Legacy witnesses, "
+            "or from a true last-step writer rule mismatch that would justify changing the "
+            "non-Legacy 16bpc writer."
         ),
+        "current_live_request_gap": {
+            "why_old_windows_case0006_trace_is_not_enough": (
+                "The latest imported Windows case_0006 pre-writeback fact is still the older "
+                "full-comp output-address witness at (498,940). It proves the non-Legacy lane "
+                "already diverges before the final byte store, but it does not answer the current "
+                "normalized 16bpc current-word witnesses at (314,14) and (29,71)."
+            ),
+            "old_windows_case0006_xy": [case6_px.get("x"), case6_px.get("y")],
+            "current_live_request_xy": [[314, 14], [29, 71]],
+            "practical_consequence": (
+                "Treat the 2026-06-19 Windows trace as proof context only. The live "
+                "`olmblur_case0006_helper_prestore_witness_20260630` package is still required "
+                "because only those two current-word witnesses can decide whether the remaining "
+                "sign-mixed family is already split in helper/pre-store state."
+            ),
+        },
         "why_global_swap_is_forbidden_now": writer["conclusion"],
         "witness_families": [
             {
@@ -97,9 +114,11 @@ def build_summary(writer: dict, runtime_pkg: Path, runtime_summary: dict, runtim
                         "xy": [345, 672],
                         "mac_raw_blue": 12544.5,
                         "mac_stored_word_blue": 12545,
+                        "windows_pre_store_blue": 12544.498046875,
+                        "windows_internal_word_blue": 12544,
                         "windows_png_blue": 97,
                         "mac_png_blue": 98,
-                        "inference": "Windows would need internal word 12544 or a slightly smaller pre-store float.",
+                        "inference": "Resolved as pre-store float delta before truncation, not an open writer-rule question.",
                     },
                     {
                         "xy": [488, 941],
@@ -110,23 +129,23 @@ def build_summary(writer: dict, runtime_pkg: Path, runtime_summary: dict, runtim
                         "inference": "This is already a pure half-step boundary split.",
                     },
                 ],
-                "meaning": "Legacy border/all-same structural blocker is retired; only a narrow half-step family remains.",
+                "meaning": "Legacy border/all-same structural blocker is retired; only a narrow half-step family remained, and the 16bpc witness is now directly grounded.",
             },
         ],
         "actionable_return_if": [
-            "It records Windows pre-store float(s) at the listed witnesses, not only final PNG bytes.",
+            "It records Windows pre-store float(s) at the two listed case_0006 witnesses, not only final PNG bytes.",
             "It records any helper/clamp value between add-half and final CVTTSS2SI/truncate on the non-Legacy path.",
             "It can distinguish 'same writer rule but smaller pre-store float' from 'different writer/helper rule'.",
         ],
         "not_actionable_if": [
             "It only reports final PNG values or final RGBA16 words.",
-            "It revisits the retired old Legacy (0,0) spill without the surviving case_0007 half-step witness.",
+            "It revisits the retired old Legacy (0,0) spill or reopens the already-grounded 16bpc Legacy (345,672) witness instead of answering case_0006.",
             "It broadens back into generic blur-kernel tuning rather than the narrow writer/helper boundary.",
         ],
         "recommended_next_windows_probe": [
-            "16bpc non-Legacy case_0006 at (314,14) and (29,71): capture pre-store float, helper output, final internal word.",
-            "16bpc Legacy case_0007 at (345,672): capture pre-store float on blue before Legacy store16.",
-            "8bpc old normalized case_0007 at (488,941): capture pre-store float to confirm the same half-step direction on Windows.",
+            "16bpc non-Legacy case_0006 at (314,14) and (29,71): capture the last helper/upstream value, pre-store float, and final internal word.",
+            "Do not spend this package on the already-grounded 16bpc Legacy (345,672) point unless it is only being used as a debugger control sample.",
+            "Only revisit old normalized 8bpc (488,941) if the same debugger setup can return it almost for free after answering the two case_0006 witnesses.",
         ],
     }
 
@@ -136,14 +155,24 @@ def write_markdown(summary: dict, out: Path) -> None:
         "# OLMBlur Pending Final-Word Proof",
         "",
         f"- Runtime package context: `{summary['runtime_package_context']}`",
+        f"- Latest runtime summary: `{summary['latest_runtime_summary']}`",
         "",
         "## Decision Boundary",
         "",
         summary["decision_boundary"],
         "",
+        "## Why The Live Windows Request Still Matters",
+        "",
+        f"- {summary['current_live_request_gap']['why_old_windows_case0006_trace_is_not_enough']}",
+        f"- Older imported Windows case_0006 witness: `{summary['current_live_request_gap']['old_windows_case0006_xy']}`",
+        f"- Current live request witnesses: `{summary['current_live_request_gap']['current_live_request_xy']}`",
+        f"- Practical consequence: {summary['current_live_request_gap']['practical_consequence']}",
+        "",
         "## Why A Global Writer Swap Is Still Forbidden",
         "",
     ]
+    lines.extend([
+    ])
     for item in summary["why_global_swap_is_forbidden_now"]:
         lines.append(f"- {item}")
     lines.extend(["", "## Witness Families", ""])
@@ -180,7 +209,7 @@ def main() -> int:
     parser.add_argument(
         "--runtime-package",
         type=Path,
-        default=repo_root() / "refs" / "runtime_trace_packages" / "olm_runtime_trace_olmblur_repeat_threshold_20260620_overnight.zip",
+        default=repo_root() / "refs" / "runtime_trace_packages" / "olm_runtime_trace_olmblur_case0006_helper_prestore_witness_20260630.zip",
     )
     parser.add_argument(
         "--runtime-summary-json",

@@ -48,6 +48,41 @@ def build_schema_index() -> dict[str, dict[str, dict[str, Any]]]:
     return by_plugin
 
 
+def build_schema_rows() -> dict[str, list[dict[str, Any]]]:
+    schema = load_json(SCHEMA_PATH)
+    return {plugin["plugin"]: list(plugin["params"]) for plugin in schema["plugins"]}
+
+
+def resolve_source_row(
+    plugin: str,
+    normalized: str,
+    property_index: int | None,
+    params_by_label: dict[str, dict[str, Any]],
+    params_in_order: list[dict[str, Any]],
+) -> dict[str, Any] | None:
+    if plugin == "OLMRadialBlur" and normalized in {"Offset", "Offset Mode"} and property_index is not None:
+        radial_ordinals = {
+            ("Offset Mode", 5): 4,
+            ("Offset", 6): 5,
+            ("Offset Mode", 11): 10,
+            ("Offset", 12): 11,
+            ("Offset", 28): 27,
+        }
+        source_idx = radial_ordinals.get((normalized, property_index))
+        if source_idx is not None and source_idx < len(params_in_order):
+            return params_in_order[source_idx]
+    if plugin == "OLMDirectionalBlur" and normalized in {"Front Sharp Tail", "Back Sharp Tail"} and property_index is not None:
+        directional_ordinals = {
+            ("Front Sharp Tail", 7): 6,
+            ("Back Sharp Tail", 12): 11,
+            ("Offset", 19): 18,
+        }
+        source_idx = directional_ordinals.get((normalized, property_index))
+        if source_idx is not None and source_idx < len(params_in_order):
+            return params_in_order[source_idx]
+    return params_by_label.get(normalized)
+
+
 def parse_source_default(raw: str) -> Any:
     value = (raw or "").strip()
     if not value:
@@ -120,6 +155,7 @@ def compare_defaults(source_default: Any, windows_value: Any) -> str:
 def audit_manifest(manifest_path: Path) -> dict[str, Any]:
     manifest = load_json(manifest_path)
     schema_index = build_schema_index()
+    schema_rows = build_schema_rows()
     by_plugin: dict[str, dict[str, Any]] = {}
 
     for case in manifest.get("cases", []):
@@ -147,7 +183,13 @@ def audit_manifest(manifest_path: Path) -> dict[str, Any]:
                 )
                 if normalized is None:
                     continue
-                source_row = schema_index[plugin].get(normalized)
+                source_row = resolve_source_row(
+                    plugin,
+                    normalized,
+                    param.get("property_index"),
+                    schema_index[plugin],
+                    schema_rows[plugin],
+                )
                 windows_value = normalize_windows_value(param.get("value"))
                 record = {
                     "case_id": case_id,

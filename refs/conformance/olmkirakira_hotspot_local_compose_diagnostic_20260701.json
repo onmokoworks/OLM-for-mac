@@ -1,0 +1,91 @@
+{
+  "compose_audit_context": {
+    "baseline_id": "current_gain_0_62",
+    "decision_reason": "No audited candidate improves total mean and max while preserving strength0 anchors.",
+    "decision_status": "preserve-current-compose-model"
+  },
+  "date": "2026-07-01",
+  "decision_boundary": "Determine whether the remaining KiraKira 8bpc Software residual comes from the internal merge-mode-1 compose site itself, from the pre-writeback float->u8 quantization/export step, or from a narrower residual hotspot not yet instrumented.",
+  "focus": {
+    "case_id": "kk_vertical_len50_brightness1_strength100",
+    "xy": [
+      934,
+      118
+    ]
+  },
+  "grayscale_witnesses": [
+    {
+      "alpha_drop_from_mac_mid": 0.05861676611111116,
+      "attenuation_ratio_mid": 0.8845002700292843,
+      "label": "primary_hotspot",
+      "mac_compose_alpha": 0.507505655,
+      "mac_compose_u8": 144,
+      "predicted_windows_output_from_mid_alpha_u8": 131,
+      "source_float": 0.11764705882352941,
+      "source_u8": 30,
+      "windows_implied_alpha": {
+        "hi": 0.4511111111111112,
+        "lo": 0.4466666666666666,
+        "mid": 0.44888888888888884
+      },
+      "windows_u8": 131
+    },
+    {
+      "alpha_drop_from_mac_mid": 0.022567688222222215,
+      "attenuation_ratio_mid": 0.948750038402298,
+      "label": "center_control",
+      "mac_compose_alpha": 0.440345466,
+      "mac_compose_u8": 129,
+      "predicted_windows_output_from_mid_alpha_u8": 124,
+      "source_float": 0.11764705882352941,
+      "source_u8": 30,
+      "windows_implied_alpha": {
+        "hi": 0.42000000000000004,
+        "lo": 0.4155555555555556,
+        "mid": 0.4177777777777778
+      },
+      "windows_u8": 124
+    },
+    {
+      "alpha_drop_from_mac_mid": 0.025041781666666596,
+      "attenuation_ratio_mid": 0.9428759051100184,
+      "label": "right_control",
+      "mac_compose_alpha": 0.438375115,
+      "mac_compose_u8": 129,
+      "predicted_windows_output_from_mid_alpha_u8": 123,
+      "source_float": 0.11764705882352941,
+      "source_u8": 30,
+      "windows_implied_alpha": {
+        "hi": 0.4155555555555556,
+        "lo": 0.41111111111111115,
+        "mid": 0.4133333333333334
+      },
+      "windows_u8": 123
+    }
+  ],
+  "hotspot_vs_grayscale_controls": {
+    "control_ratio_mid_average": 0.9458129717561582,
+    "extra_alpha_drop_needed_beyond_control_ratio": 0.03111654284971671,
+    "extra_u8_drop_needed_beyond_control_ratio": 7,
+    "projected_hotspot_alpha_from_control_ratio": 0.48000543173860555,
+    "projected_hotspot_u8_from_control_ratio": 138,
+    "windows_hotspot_alpha_interval": {
+      "hi": 0.4511111111111112,
+      "lo": 0.4466666666666666,
+      "mid": 0.44888888888888884
+    },
+    "windows_hotspot_alpha_mid": 0.44888888888888884
+  },
+  "inputs": {
+    "audit_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmkirakira_compose_model_audit_20260625/compose_model_audit.json",
+    "pending_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmkirakira_pending_compose_proof_20260629.json",
+    "witness_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmkirakira_compose_boundary_mac_witness_20260630.json"
+  },
+  "kind": "olmkirakira_hotspot_local_compose_diagnostic",
+  "reading": [
+    "The hotspot already mismatches at the Mac compose boundary, and the exact Windows-match alpha interval at that point is 0.446666666667..0.451111111111.",
+    "Applying the average grayscale control attenuation to the hotspot still predicts byte 138, not the Windows byte 131.",
+    "So the remaining KiraKira gap at (934,118) is narrower than a broad grayscale/global compose retune; it needs an additional hotspot-local attenuation or branch before writeback."
+  ],
+  "status": "diagnostic"
+}

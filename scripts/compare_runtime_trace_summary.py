@@ -69,6 +69,11 @@ def fail(message: str) -> int:
 def comparators(py: str) -> list[Comparator]:
     return [
         Comparator(
+            request_id="olmblur_case0006_helper_prestore_witness_20260630",
+            slug="olmblur_case0006_helper_prestore_witness",
+            command=[py, "scripts/compare_olmblur_trace.py"],
+        ),
+        Comparator(
             request_id="olmblur_repeat_threshold_runtime_trace_20260619",
             slug="olmblur_repeat_threshold",
             command=[py, "scripts/compare_olmblur_trace.py"],
@@ -111,6 +116,11 @@ def comparators(py: str) -> list[Comparator]:
         Comparator(
             request_id="olmdistancegradation_field_prep_runtime_trace_20260619",
             slug="olmdistancegradation_field_prep",
+            command=[py, "scripts/compare_distancegradation_trace.py"],
+        ),
+        Comparator(
+            request_id="olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630",
+            slug="olmdistancegradation_constant_case0023_outside0_witness",
             command=[py, "scripts/compare_distancegradation_trace.py"],
         ),
         Comparator(

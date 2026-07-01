@@ -1,0 +1,91 @@
+{
+  "kind": "olmkirakira_compose_boundary_mac_witness",
+  "status": "diagnostic",
+  "source_log": "/tmp/kirakira_compose_debug_20260630_8bpc/kirakira_debug.log",
+  "case_id": "kk_vertical_len50_brightness1_strength100",
+  "points": {
+    "934,118": {
+      "src_rgba_float": [
+        0.117647059,
+        0.117647059,
+        0.117647059,
+        1.0
+      ],
+      "glow_rgba_float": [
+        1.0,
+        1.0,
+        1.0,
+        0.507505655
+      ],
+      "out_prequantized_rgba_float": [
+        0.565446138,
+        0.565446138,
+        0.565446138,
+        1.0
+      ],
+      "out_u8": [
+        144,
+        144,
+        144,
+        255
+      ],
+      "windows_reference_u8": [
+        131,
+        131,
+        131,
+        255
+      ]
+    },
+    "960,540": {
+      "glow_alpha_after_opacity": 0.440345466,
+      "out_u8": [
+        129,
+        129,
+        129,
+        255
+      ],
+      "windows_reference_u8": [
+        124,
+        124,
+        124,
+        255
+      ]
+    },
+    "960,490": {
+      "glow_alpha_after_opacity": 0.467837244,
+      "out_u8": [
+        242,
+        231,
+        151,
+        255
+      ],
+      "windows_reference_u8": [
+        240,
+        229,
+        144,
+        255
+      ]
+    },
+    "1010,540": {
+      "glow_alpha_after_opacity": 0.438375115,
+      "out_u8": [
+        129,
+        129,
+        129,
+        255
+      ],
+      "windows_reference_u8": [
+        123,
+        123,
+        123,
+        255
+      ]
+    }
+  },
+  "reading": [
+    "At the primary residual hotspot, the Mac compose-boundary out_u8 already equals the saved PNG candidate byte.",
+    "Therefore the current Mac mismatch is not only a final export/PNG step issue.",
+    "The remaining unresolved KiraKira lane stays in the internal glow/compose boundary before AE export."
+  ],
+  "follow_up_hotspot_local_diagnostic": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmkirakira_hotspot_local_compose_diagnostic_20260701.md"
+}

@@ -1,0 +1,263 @@
+{
+  "candidate_to_reference_endpoint_pairs": {
+    "65535,0,0,65535 -> 7195,0,61165,65535": 8,
+    "7195,0,61165,65535 -> 65535,0,0,65535": 65
+  },
+  "current_candidate": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_single_case_distancegradation_constant_no_post_20260630/olmdistancegradation_extended__case_0023/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+  "examples": [
+    {
+      "candidate_rgba": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "inside_distance": 1.0,
+      "outside_distance": 0.0,
+      "reference_rgba": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "x": 1699,
+      "y": 7
+    },
+    {
+      "candidate_rgba": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "inside_distance": 1.0,
+      "outside_distance": 0.0,
+      "reference_rgba": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "x": 985,
+      "y": 26
+    },
+    {
+      "candidate_rgba": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "inside_distance": 1.0,
+      "outside_distance": 0.0,
+      "reference_rgba": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "x": 1090,
+      "y": 41
+    },
+    {
+      "candidate_rgba": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "inside_distance": 1.0,
+      "outside_distance": 0.0,
+      "reference_rgba": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "x": 1097,
+      "y": 45
+    },
+    {
+      "candidate_rgba": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "inside_distance": 1.0,
+      "outside_distance": 0.0,
+      "reference_rgba": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "x": 1408,
+      "y": 73
+    },
+    {
+      "candidate_rgba": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "inside_distance": 1.0,
+      "outside_distance": 0.0,
+      "reference_rgba": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "x": 61,
+      "y": 112
+    },
+    {
+      "candidate_rgba": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "inside_distance": 1.0,
+      "outside_distance": 0.0,
+      "reference_rgba": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "x": 1853,
+      "y": 114
+    },
+    {
+      "candidate_rgba": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "inside_distance": 1.0,
+      "outside_distance": 0.0,
+      "reference_rgba": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "x": 1518,
+      "y": 129
+    },
+    {
+      "candidate_rgba": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "inside_distance": 1.0,
+      "outside_distance": 0.0,
+      "reference_rgba": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "x": 864,
+      "y": 130
+    },
+    {
+      "candidate_rgba": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "inside_distance": 1.0,
+      "outside_distance": 0.0,
+      "reference_rgba": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "x": 112,
+      "y": 147
+    },
+    {
+      "candidate_rgba": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "inside_distance": 1.0,
+      "outside_distance": 0.0,
+      "reference_rgba": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "x": 467,
+      "y": 150
+    },
+    {
+      "candidate_rgba": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "inside_distance": 1.0,
+      "outside_distance": 0.0,
+      "reference_rgba": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "x": 601,
+      "y": 150
+    }
+  ],
+  "inside_distance_buckets": [
+    {
+      "candidate_rgba_counts": {
+        "7195,0,61165,65535": 65
+      },
+      "count": 65,
+      "inside_distance": 1.0,
+      "outside_distance_values": [
+        0.0
+      ],
+      "reference_rgba_counts": {
+        "65535,0,0,65535": 65
+      }
+    },
+    {
+      "candidate_rgba_counts": {
+        "65535,0,0,65535": 8
+      },
+      "count": 8,
+      "inside_distance": 36.013885498046875,
+      "outside_distance_values": [
+        0.0
+      ],
+      "reference_rgba_counts": {
+        "7195,0,61165,65535": 8
+      }
+    }
+  ],
+  "kind": "olmdistancegradation_16bpc_case0023_residual_split",
+  "request_zip": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/ae_host_validation/20260625_221356_16bpc_mac_ae_validation/bitdepth16_olmdistancegradation_extended_exact.zip",
+  "residual_bbox_xyxy": [
+    61,
+    7,
+    1910,
+    895
+  ],
+  "residual_px": 73,
+  "status": "diagnostic"
+}
