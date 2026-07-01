@@ -6,6 +6,7 @@ from __future__ import annotations
 import subprocess
 import sys
 import tempfile
+import shutil
 import zipfile
 from pathlib import Path
 
@@ -219,6 +220,41 @@ def main() -> int:
         if not (tmp_root / "runtime_summary_proof_lanes.json").exists():
             print("[FAIL] helper did not produce runtime proof-lane JSON")
             return 1
+
+        older_request = tmp_root / "older_runtime_request.zip"
+        newer_request = tmp_root / "newer_runtime_request.zip"
+        write_runtime_request_zip(older_request, "older_request_id")
+        write_runtime_request_zip(newer_request, "newer_request_id")
+        runtime_package_dir = root / "refs" / "runtime_trace_packages"
+        old_repo_pkg = runtime_package_dir / "zzz_smoke_old_request_package.zip"
+        new_repo_pkg = runtime_package_dir / "zzz_smoke_new_request_package.zip"
+        shutil.copyfile(older_request, old_repo_pkg)
+        shutil.copyfile(newer_request, new_repo_pkg)
+        try:
+            mismatched_return = new_dir / "mismatched_runtime_trace_return.zip"
+            write_runtime_return_zip(mismatched_return, "older_request_id")
+            dry_runtime = run(
+                [
+                    py,
+                    str(helper),
+                    "--share-root",
+                    str(share_root),
+                    "--kind",
+                    "runtime-trace-return",
+                    "--dry-run",
+                ],
+                root,
+            )
+            if str(old_repo_pkg) not in dry_runtime.stdout:
+                print("[FAIL] helper did not auto-resolve runtime package from return request_id")
+                return 1
+            if str(new_repo_pkg) in dry_runtime.stdout:
+                print("[FAIL] helper chose the newest runtime package instead of matching request_id")
+                return 1
+        finally:
+            mismatched_return.unlink(missing_ok=True)
+            old_repo_pkg.unlink(missing_ok=True)
+            new_repo_pkg.unlink(missing_ok=True)
         if not (tmp_root / "runtime_summary_proof_lanes.md").exists():
             print("[FAIL] helper did not produce runtime proof-lane Markdown")
             return 1
@@ -323,8 +359,8 @@ def main() -> int:
         if "[OK] processed bundled runtime returns into" not in folder_bundle_proc.stdout:
             print("[FAIL] helper did not process folder-style bundled runtime returns")
             return 1
-        if f"runtime_trace_summary_{folder_request_ids[0]}" not in folder_bundle_proc.stdout:
-            print("[FAIL] helper did not emit expected folder-style runtime summary slug")
+        if "proof_lane_json=" not in folder_bundle_proc.stdout or folder_request_ids[0] not in folder_bundle_proc.stdout:
+            print("[FAIL] helper did not emit expected folder-style runtime summary/proof-lane output")
             return 1
         if any(path.is_file() for path in folder_bundle_new.iterdir()):
             print("[FAIL] helper did not archive folder-style bundle-return files out of share/new")

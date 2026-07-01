@@ -71,11 +71,11 @@ Current priority order:
 
 Current pending Windows runtime queue:
 
-1. `olmblur_case0006_helper_prestore_witness_20260630`
+1. `olmradialblur_caller_collapse_followup_20260701`
    - package:
-     `refs/runtime_trace_packages/olm_runtime_trace_olmblur_case0006_helper_prestore_witness_20260630.zip`
+     `refs/runtime_trace_packages/olm_runtime_trace_radialblur_caller_collapse_followup_20260701.zip`
    - current share copy:
-     `/Volumes/onmk/olm_pr/new/olm_runtime_trace_olmblur_case0006_helper_prestore_witness_20260630.zip`
+     `/Volumes/onmk/olm_pr/new/olm_runtime_trace_radialblur_caller_collapse_followup_20260701.zip`
 2. `olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630`
    - package:
      `refs/runtime_trace_packages/olm_runtime_trace_requests_20260630_182750.zip`
@@ -98,18 +98,9 @@ Historical but presently answered/superseded 2026-06-30 4pack requests:
 
 Queue note:
 
-- `olmblur_case0006_helper_prestore_witness_20260630` is the first truly new
-  post-4pack ask. It exists because the old `olmblur_final_word` package proved
-  the Legacy half-step lane but did not answer the sign-mixed non-Legacy
-  `case_0006` family.
-- The first focused return for that package has now been imported and classified
-  as `failed_breakpoint_watchpoint`, not as an answered witness. In other
-  words, Windows successfully rendered the Software case, but the debugger did
-  not stop at `TARGET_OLMBLUR_CASE0006_*`; the recorded blockers were AE
-  Crash Repair / startup modal interruption and an unresolved
-  `bu OLMBlur+0x2fad` that never bound before `ModLoad`. The package therefore
-  stays live in the queue unchanged until those stop conditions are made more
-  robust or the same package is rerun cleanly.
+- `olmblur_case0006_helper_prestore_witness_20260630` remains historically useful,
+  but the first focused return is already imported and classified as
+  `failed_breakpoint_watchpoint`, not a live pending request.
 - `kirakira_compose_writeback_witness_20260630` remains historically useful,
   but current user priority is to defer active KiraKira work behind broader
   16/32bpc expansion and the other hard-plugin proofs.

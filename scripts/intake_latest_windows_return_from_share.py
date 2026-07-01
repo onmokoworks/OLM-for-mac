@@ -249,6 +249,29 @@ def load_request_id_from_return(path: Path) -> str | None:
     return None
 
 
+def collect_request_ids_from_return(path: Path) -> list[str]:
+    try:
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
+    except Exception:
+        return []
+    if not isinstance(data, dict):
+        return []
+    request_ids: list[str] = []
+    seen: set[str] = set()
+    for key in ("results", "runtime_trace_results"):
+        rows = data.get(key)
+        if not isinstance(rows, list):
+            continue
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            request_id = row.get("request_id")
+            if isinstance(request_id, str) and request_id not in seen:
+                seen.add(request_id)
+                request_ids.append(request_id)
+    return request_ids
+
+
 def find_repo_runtime_package(root: Path, request_id: str) -> Path | None:
     package_dir = root / "refs" / "runtime_trace_packages"
     candidates = sorted(
@@ -264,6 +287,24 @@ def find_repo_runtime_package(root: Path, request_id: str) -> Path | None:
             if isinstance(action, dict) and action.get("request_id") == request_id:
                 return package
     return None
+
+
+def resolve_runtime_package_for_return(root: Path, source: Path) -> Path | None:
+    with tempfile.TemporaryDirectory(prefix="olm_return_pkg_resolve_") as tmp:
+        extracted = extract_if_zip(source, Path(tmp) / "return")
+        result_jsons = sorted(extracted.rglob("RETURN_RUNTIME_TRACE_RESULT.json"))
+        if not result_jsons:
+            return None
+        request_ids: list[str] = []
+        seen: set[str] = set()
+        for result_json in result_jsons:
+            for request_id in collect_request_ids_from_return(result_json):
+                if request_id not in seen:
+                    seen.add(request_id)
+                    request_ids.append(request_id)
+        if len(request_ids) != 1:
+            return None
+        return find_repo_runtime_package(root, request_ids[0])
 
 
 def nested_folder_bundle_return_pairs(root: Path, bundle_root: Path) -> list[tuple[Path, Path]]:
@@ -355,6 +396,10 @@ def main() -> int:
 
     chosen = choose_return(new_dir, args.kind)
     cmd = build_intake_command(root, chosen, args.intake_arg)
+    if chosen.get("kind") == "runtime-trace-return" and extract_flag_value(cmd, "--runtime-package") is None:
+        resolved_package = resolve_runtime_package_for_return(root, Path(str(chosen["path"])))
+        if resolved_package is not None:
+            cmd.extend(["--runtime-package", str(resolved_package)])
     if chosen.get("kind") == "win-reference-return" and extract_flag_value(cmd, "--next-actions-json") is None:
         auto_next_actions = root / "refs" / "reports" / f"{Path(str(chosen['path'])).stem}_next_actions.json"
         cmd.extend(["--next-actions-json", str(auto_next_actions)])

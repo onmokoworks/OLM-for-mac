@@ -55,7 +55,7 @@ AE-host validation で Mac AE 出力が Windows AE Software 参照に
 | OLMSmoother v1 | 960x540 再検証で 8bpc Mac AE exact。v2 互換扱いへ寄せる判断は別途 |
 | OLMDirectionalBlur | 参照は多いが、まだ blocked。2026-06-25 witness plan で angle-0 と diagonal の2系統に分け、PNG-only tuning は止めて asm/runtime evidence 待ち |
 | OLMRadialBlur | Zoom は caller-collapse alpha 残差、tiny Rotation は polar RGB / substitute-path 残差。2026-07-01 の propagated-validity probe で「validity plane を同カーネルで伝播させるだけ」では動かないことも確認。Inner は typed `FUN_180001c90` per-cell witness 待ち |
-| OLMKiraKira | BT.709 seed、OpenCV 4.5.5 AVX2、ray-helper、`FUN_18114fd90` aggregation まで grounding 済み。2026-07-01 の hotspot-local compose 診断で、残差は broad compose/gain ではなく hotspot `(934,118)` 専用の追加 attenuate/branch before writeback まで狭まった。加えて current Mac source は `Merge Mode`, `Approximated Input`, `Fade Out`, `Highlight Radius`, ramp 系など未消化 control が残る |
+| OLMKiraKira | BT.709 seed、OpenCV 4.5.5 AVX2、ray-helper、`FUN_18114fd90` aggregation まで grounding 済み。2026-07-01 の hotspot runtime return 取り込み後も、残差は broad compose/gain ではなく hotspot `(934,118)` 専用の追加 attenuate/branch before writeback まで狭い。加えて current Mac source は `Merge Mode`, `Approximated Input`, `Fade Out`, `Highlight Radius`, ramp 系など未消化 control が残る |
 
 AE 実機を触る前の短い目安です。詳細な理由と次アクションは
 `notes/CONFORMANCE_LEDGER.md` の Current Decision Matrix を見ます。
@@ -137,7 +137,7 @@ summary は `python3 scripts/generate_conformance_summary.py` で
 | OLMSmoother2 | Legacy key / gamma | current-AEX recapture 12ケースを取り込み済み。case 0002/0003 はAE保存before入力でCLI exact。0004 は Smooth Range threshold で target final writer float と一致。0012 は `cardinal6 key=50 -> f270/e170/e3a0` まで局所化 | 0012 `(91,841)` の scanner/emit 中間値と 0004 polygon/no-polygon path を binary/runtime evidence で確定 |
 | OLMDirectionalBlur | blocked | PNG tuning だけで進めると誤実装になりやすい。angle-0 と diagonal では見るべき証拠が違う | `case_0001 (465,169)` 系の rowdriver/valid-alpha と、`case_0005 (507,367)` 系の rotate/validity を別々に runtime/asm evidence で確定 |
 | OLMRadialBlur | Zoom / Rotation / Inner | Zoom は final byte packing ではなく caller-collapse alpha/sample accumulation、tiny Rotation は validity alpha ではなく polar RGB / substitute path、Inner は global toggle 不採用まで局所化 | Zoom は `+0xf252 -> +0xf250 -> +0xe` の caller-collapse chain、tiny Rotation は bright-lobe を落としている upstream RGB population、Inner は `rb_inner_only_strength_large` / `rb_inner_quality_1` の typed `FUN_180001c90` witness を詰める |
-| OLMKiraKira | compose / pre-writeback / final quantization | BT.709 seed、boxFilter、ray-helper、`FUN_18114fd90` は確定寄り。global compose gain 変更は悪化。2026-07-01 hotspot-local 診断で、残る差分は hotspot `(934,118)` の追加 attenuate/branch before writeback にさらに狭まった | merge-mode-1 compose float/writeback または residual hotspot の narrow trace を取る |
+| OLMKiraKira | compose / pre-writeback / final quantization | BT.709 seed、boxFilter、ray-helper、`FUN_18114fd90` は確定寄り。global compose gain 変更は悪化。2026-07-01 hotspot runtime return を取り込んでも、残る差分は hotspot `(934,118)` の追加 attenuate/branch before writeback にさらに狭いまま | merge-mode-1 compose float/writeback または residual hotspot の narrow trace を取る |
 
 ## 方針
 
@@ -262,10 +262,9 @@ README 上の current summary は次の通りです。
   `known-red=7`
 - 16bpc は `OLMColorKey` が covered slice 9/9 exact、`OLMBlur` /
   `OLMDistanceGradation` が witness-led binary-proof 継続中
-- いま Windows runtime queue に残っている pending は 3 件だけです
+- いま Windows runtime queue に残っている pending は 2 件だけです
   - `OLMRadialBlur` caller-collapse follow-up
   - `OLMDistanceGradation` 16bpc Constant `case_0023` witness
-  - `OLMKiraKira` hotspot compose/writeback witness
 
 priority は `notes/CONFORMANCE_LEDGER.md` を正にしますが、ざっくり言うと
 次の順です。

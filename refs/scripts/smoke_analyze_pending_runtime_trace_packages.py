@@ -86,9 +86,9 @@ def main() -> int:
             raise AssertionError(f"OLMBlur case_0006 helper/pre-store priority should be 18, got {blur_case0006['priority']}")
         if "compare_olmblur_trace.py" not in blur_case0006["comparison_command"]:
             raise AssertionError("OLMBlur case_0006 helper/pre-store request should point to the OLMBlur comparator")
-        if blur_case0006.get("latest_known_result_status") != "answered":
+        if blur_case0006.get("latest_known_result_status") not in ("answered", "failed_breakpoint_watchpoint"):
             raise AssertionError(
-                "OLMBlur case_0006 helper/pre-store request should expose the latest answered state"
+                "OLMBlur case_0006 helper/pre-store request should expose the latest imported state"
             )
         dg_case0023 = by_id.get("olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630")
         if dg_case0023 is None:
@@ -105,9 +105,9 @@ def main() -> int:
             raise AssertionError(
                 "DistanceGradation case_0023 OutsideThreshold=0 request should point to the DistanceGradation comparator"
             )
-        if dg_case0023.get("latest_known_result_status") not in ("", None, "diagnostic"):
+        if dg_case0023.get("latest_known_result_status") not in ("", None, "diagnostic", "answered_partial"):
             raise AssertionError(
-                "DistanceGradation case_0023 latest known result should be empty or diagnostic until the focused return is imported"
+                "DistanceGradation case_0023 latest known result should reflect the focused import state"
             )
         kirakira = by_id.get("kirakira_boxfilter_pass1_microprobe_20260622")
         if kirakira is None or kirakira["status"] != "answered":

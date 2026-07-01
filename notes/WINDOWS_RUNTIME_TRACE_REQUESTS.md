@@ -18,8 +18,8 @@ Use this report before sending another debugger package. It separates pending
 requests from answered/superseded packages and prints the comparator command to
 run after importing a return.
 
-As of 2026-07-01 after publishing the narrowed RadialBlur and KiraKira
-follow-ups alongside the still-live DistanceGradation `case_0023` package,
+As of 2026-07-01 after importing the narrowed KiraKira hotspot return and
+keeping the RadialBlur plus DistanceGradation follow-ups live,
 the live queue is:
 
 1. `olmradialblur_caller_collapse_followup_20260701`
@@ -48,19 +48,27 @@ the live queue is:
      returns typed `case_0023` values that decide the exact
      `Outside Threshold=0` ownership rule.
 
-3. `kirakira_hotspot_compose_writeback_witness_20260701`
-   - package:
-     `refs/runtime_trace_packages/olm_runtime_trace_kirakira_hotspot_compose_writeback_witness_20260701.zip`
-   - current share copy:
-     `/Volumes/onmk/olm_pr/new/olm_runtime_trace_kirakira_hotspot_compose_writeback_witness_20260701.zip`
-   - why this one exists:
-     broad compose/gain retuning is already rejected. The 2026-07-01 hotspot
-     diagnostic narrows the remaining lane to one pixel `(934,118)` on
-     `kk_vertical_len50_brightness1_strength100`, between post-`FUN_18114fd90`
-     glow and final writeback.
-
 If a new return arrives, import it first and regenerate the report before
 deciding whether the next package should be published.
+
+2026-07-01 KiraKira hotspot follow-up note:
+
+- Share return:
+  `/Volumes/onmk/olm_pr/old/20260701_144702__olm_runtime_trace_kirakira_hotspot_compose_writeback_witness_20260701_return_windows.zip`
+- Outcome summary:
+  - `OLMKiraKira`: useful and still `answered_partial`.
+  - The hotspot witness at `(934,118)` now directly preserves the current
+    narrowed reading: Mac BT.709 candidate is `[144,144,144,255]`, Windows
+    reference is `[131,131,131,255]`, and the captured compose-side values are
+    still consistent with the current screen-over model using glow alpha
+    `0.507505655`.
+  - What is still missing is the dedicated internal merge-mode-1 compose
+    writeback site or a narrower hotspot-local attenuation branch that would
+    explain why Windows lands below the already-modeled compose output.
+- Practical consequence:
+  - Remove the package from the live queue.
+  - Do not reopen luma, boxFilter, ray-helper, or global compose-scale tuning
+    from this return alone.
 
 2026-06-30 focused OLMBlur retry note:
 
