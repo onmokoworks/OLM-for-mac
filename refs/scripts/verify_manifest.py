@@ -14,6 +14,8 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
+FLOAT_PRIORITY_EXTS = [".exr", ".tiff", ".tif", ".hdr"]
+
 
 def normalized_relpath(value):
     return value.replace("\\", "/")
@@ -54,6 +56,49 @@ def magick_rgba16_array(path, header):
     if len(raw) != expected:
         raise ValueError(f"unexpected ImageMagick RGBA payload size in {path}: {len(raw)} != {expected}")
     return np.frombuffer(raw, dtype=">u2").reshape((header["height"], header["width"], 4))
+
+
+def magick_image_size(path):
+    magick = shutil.which("magick")
+    if not magick:
+        return None
+    output = subprocess.check_output(
+        [magick, "identify", "-format", "%w %h", str(path)],
+        text=True,
+    ).strip()
+    if not output:
+        return None
+    width_text, height_text = output.split()
+    return int(width_text), int(height_text)
+
+
+def magick_rgba_float32_array(path):
+    magick = shutil.which("magick")
+    if not magick:
+        return None
+    size = magick_image_size(path)
+    if not size:
+        return None
+    width, height = size
+    raw = subprocess.check_output(
+        [
+            magick,
+            str(path),
+            "-alpha",
+            "set",
+            "-define",
+            "quantum:format=floating-point",
+            "-depth",
+            "32",
+            "-endian",
+            "LSB",
+            "rgba:-",
+        ]
+    )
+    expected = width * height * 4 * 4
+    if len(raw) != expected:
+        raise ValueError(f"unexpected ImageMagick float RGBA payload size in {path}: {len(raw)} != {expected}")
+    return np.frombuffer(raw, dtype="<f4").reshape((height, width, 4))
 
 
 def png_rgba_array(path):
@@ -141,10 +186,29 @@ def png_rgba_array(path):
 
 
 def load_rgba(path):
+    suffix = Path(path).suffix.lower()
+    if suffix in FLOAT_PRIORITY_EXTS:
+        rgba = magick_rgba_float32_array(path)
+        if rgba is not None:
+            return rgba
     rgba = png_rgba_array(path)
     if rgba is not None:
         return rgba
     return np.asarray(Image.open(path).convert("RGBA"))
+
+
+def companion_path(path, suffix):
+    candidate = path.with_suffix(suffix)
+    return candidate if candidate.exists() else None
+
+
+def resolve_compare_paths(reference_path, candidate_path):
+    for suffix in FLOAT_PRIORITY_EXTS:
+        ref_alt = companion_path(reference_path, suffix)
+        cand_alt = companion_path(candidate_path, suffix)
+        if ref_alt and cand_alt:
+            return ref_alt, cand_alt
+    return reference_path, candidate_path
 
 
 def compare(reference_path, candidate_path, diff_path):
@@ -174,9 +238,9 @@ def compare(reference_path, candidate_path, diff_path):
                 {
                     "x": x,
                     "y": y,
-                    "reference": [int(v) for v in reference[y, x]],
-                    "candidate": [int(v) for v in candidate[y, x]],
-                    "delta": [int(v) for v in delta[y, x]],
+                    "reference": [float(v) if np.issubdtype(reference.dtype, np.floating) else int(v) for v in reference[y, x]],
+                    "candidate": [float(v) if np.issubdtype(candidate.dtype, np.floating) else int(v) for v in candidate[y, x]],
+                    "delta": [float(v) if np.issubdtype(delta.dtype, np.floating) else int(v) for v in delta[y, x]],
                 }
             )
 
@@ -254,7 +318,7 @@ def main():
     parser.add_argument("--report-name", default="manifest_diff")
     parser.add_argument("--case-id", action="append", default=None, help="verify only this case id; may be repeated")
     parser.add_argument("--expected-effect", default=None, help="skip cases that do not contain this effect name/matchName")
-    parser.add_argument("--max-diff", type=int, default=0)
+    parser.add_argument("--max-diff", type=float, default=0.0)
     parser.add_argument("--mean-diff", type=float, default=0.0)
     parser.add_argument("--nonzero-px-percent", type=float, default=0.0)
     args = parser.parse_args()
@@ -283,8 +347,15 @@ def main():
         normalized_frame = normalized_relpath(frame)
         reference_path = reference_dir / normalized_frame
         candidate_path = candidate_dir / normalized_frame
+        reference_path, candidate_path = resolve_compare_paths(reference_path, candidate_path)
         diff_path = diff_dir / f"{Path(normalized_frame).stem}_{case_id}_diff.png"
-        row = {"id": case_id, "frame": frame, "normalized_frame": normalized_frame}
+        row = {
+            "id": case_id,
+            "frame": frame,
+            "normalized_frame": normalized_frame,
+            "resolved_reference": str(reference_path.name),
+            "resolved_candidate": str(candidate_path.name),
+        }
 
         if not reference_path.exists() or not candidate_path.exists():
             row.update(

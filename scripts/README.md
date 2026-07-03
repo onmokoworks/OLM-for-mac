@@ -137,6 +137,10 @@ python3 scripts/summarize_win_reference_return.py path/to/returned_reference.zip
   --imported-set-dir refs/win_references/<set_id>
 ```
 
+`refs/scripts/verify_manifest.py` は、manifest 上の `frame` が `.png` でも
+reference/candidate 両方に同 stem の `.exr` companion があれば、比較時に
+そちらを優先します。
+
 次に何を送るべきか確認:
 
 ```sh

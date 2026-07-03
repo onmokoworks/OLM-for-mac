@@ -303,6 +303,9 @@ bit-depth profile suffix only where file naming requires it. Example:
   project is a smoke/probe artifact, not completion evidence. If the Windows
   runner cannot return `EXR` or another float-preserving output, record that as
   `32bpc-probe-only` and do not claim `AE exact`.
+- Local comparator note: `refs/scripts/verify_manifest.py` now prefers `.exr`
+  companions over `.png` when both reference and candidate provide the same
+  stem, so imported EXR returns can ride the existing manifest/frame naming.
 
 ## Promotion Rule
 
