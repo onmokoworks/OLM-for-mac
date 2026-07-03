@@ -13,12 +13,14 @@ Windows 実機との証拠収集、Mac AE 検証、比較、レポート更新�
 - `intake_latest_windows_return_from_share.py`
 - `list_olm_return_candidates.py`
 - `intake_olm_return.py`
+- `summarize_win_reference_return.py`
 
 使いどころ:
 
 - `/Volumes/onmk/olm_pr/new` に request zip を置く
 - Windows 側から戻ってきた `*_return_windows.zip` を検出する
 - 戻り zip を repo に取り込み、比較レポートを更新する
+- 返却が `PNG-only` だったか `EXR` / float-preserving だったかを summary で確認する
 
 ## 2. request / handoff 生成
 
@@ -126,6 +128,13 @@ python3 scripts/list_olm_return_candidates.py /Volumes/onmk/olm_pr/new /Volumes/
 
 ```sh
 python3 scripts/intake_latest_windows_return_from_share.py --share-root /Volumes/onmk/olm_pr
+```
+
+返却の format / float-preserving 状態を見る:
+
+```sh
+python3 scripts/summarize_win_reference_return.py path/to/returned_reference.zip \
+  --imported-set-dir refs/win_references/<set_id>
 ```
 
 次に何を送るべきか確認:
