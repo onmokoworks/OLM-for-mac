@@ -60,8 +60,10 @@ def main() -> int:
         assert request_32["render_sets"][0]["bit_depth"] == "32bpc"
         assert request_32["render_sets"][0]["bits_per_channel"] == 32
         assert len(request_32["cases"]) == 48
+        assert any("EXR output by default" in item for item in request_32["why"])
         assert any("float-preserving" in item for item in request_32["manifest_requirements"])
         assert any("PNG-only 32bpc" in item for item in request_32["stop_lines"])
+        assert any("EXR as the default output format" in item for item in request_32["mac_follow_up"])
         focused_json = tmp_path / "olm_bitdepth_32bpc_colorkey_probe_20260630.json"
         subprocess.run(
             [
@@ -105,6 +107,7 @@ def main() -> int:
         assert preview_request["request_id"] == "olm_bitdepth_32bpc_colorkey_probe_20260701"
         assert preview_request["scope"]["case_count"] == 9
         assert "32bpc OLMColorKey Probe Preview" in preview_readme
+        assert "EXR-first" in preview_readme
         assert "--preview-dir" in preview_readme
         focused_toon_json = tmp_path / "olm_bitdepth_32bpc_toondilate_probe_20260630.json"
         subprocess.run(

@@ -28,7 +28,7 @@ def parse_args() -> argparse.Namespace:
         "--bit-depth",
         choices=("16bpc", "32bpc"),
         default="16bpc",
-        help="Generate a 16bpc conformance request or a 32bpc float-output probe request.",
+        help="Generate a 16bpc conformance request or a 32bpc EXR-first float-output probe request.",
     )
     parser.add_argument(
         "--output",
@@ -163,7 +163,7 @@ def preview_readme(
     lines = [
         f"# {title}",
         "",
-        f"This preview captures the next Windows AE `{bit_depth}` float-output probe request for `{scope_line}`.",
+        f"This preview captures the next Windows AE `{bit_depth}` EXR-first float-output probe request for `{scope_line}`.",
         "",
         "- Request preview: `request_preview.json`",
         f"- Scope: `{scope_line}`",
@@ -192,12 +192,13 @@ def build_request(args: argparse.Namespace) -> dict[str, Any]:
     render_set_id = f"software_{args.bit_depth}"
     if args.bit_depth == "32bpc":
         case_reason = (
-            "32bpc float-output probe for a normalized 8bpc Software exact case. "
+            "32bpc EXR-first float-output probe for a normalized 8bpc Software exact case. "
             "This is not AE exact evidence unless the return includes float-preserving output."
         )
         why = [
             "The listed feature groups are normalized 8bpc Windows Software exact and need 32bpc output-format probing before 32bpc exactness can be claimed.",
-            "This request asks the Windows helper to render a 32bpc project and return float-preserving output if available, preferably EXR or raw float samples.",
+            "This request asks the Windows helper to render a 32bpc project and return EXR output by default.",
+            "If EXR is unavailable, return another float-preserving format such as raw float samples and record the exact format used.",
             "PNG output from this request is only a smoke/probe artifact and must not be used as 32bpc completion evidence.",
         ]
         manifest_requirements = [
@@ -206,13 +207,14 @@ def build_request(args: argparse.Namespace) -> dict[str, Any]:
             "project bit depth / bits per channel",
             "project color management settings",
             "before_effects_frame PNG or float-preserving input snapshot for every case",
-            "effect output in a float-preserving format when possible, such as EXR or raw float RGBA samples",
+            "effect output in EXR by default; if that is impossible, return another float-preserving format and record it explicitly",
             "if only PNG output is possible, record output_format=png and float_preserving=false",
             "all effect property names, match_names, indices, values, enabled/active state",
         ]
         mac_follow_up = [
             "Import with scripts/intake_olm_return.py path/to/returned_reference.zip --quick.",
             "Do not claim 32bpc exact unless the return preserves float samples and a 32bpc comparator verifies exact float equality or a documented exception profile.",
+            "For future 32bpc requests, treat EXR as the default output format.",
         ]
         stop_lines = [
             "Do not render CUDA/GPU as the conformance target for this request.",
