@@ -76,6 +76,9 @@ def main() -> int:
         if report["next_action"].get("request_id") != "synthetic_intake_20260606":
             print("[FAIL] expected next action request id", file=sys.stderr)
             return 1
+        if report["source_summary"]["float_preserving_present"]:
+            print("[FAIL] synthetic PNG-only return should not be float-preserving", file=sys.stderr)
+            return 1
     print("[OK] summarize Windows reference return smoke")
     return 0
 

@@ -12,6 +12,23 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+MEDIA_EXTENSIONS = {
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".tif",
+    ".tiff",
+    ".exr",
+    ".hdr",
+    ".bmp",
+}
+FLOAT_PRESERVING_EXTENSIONS = {
+    ".exr",
+    ".tif",
+    ".tiff",
+    ".hdr",
+}
+
 
 def repo_root() -> Path:
     return Path(__file__).resolve().parents[1]
@@ -94,6 +111,7 @@ def summarize_source(source_root: Path) -> dict[str, Any]:
     total_cases = 0
     render_sets = Counter()
     gpu_names = Counter()
+    asset_formats = Counter()
     per_manifest: list[dict[str, Any]] = []
     for path in manifests:
         data = load_json(path)
@@ -114,6 +132,19 @@ def summarize_source(source_root: Path) -> dict[str, Any]:
                 current_name = gpu.get("current_name")
                 if isinstance(current_name, str) and current_name:
                     gpu_names[current_name] += 1
+            for key in ("frame", "before_effects_frame"):
+                rel = case.get(key)
+                if not isinstance(rel, str) or not rel:
+                    continue
+                base = path.parent / rel
+                if base.exists():
+                    asset_formats[base.suffix.lower()] += 1
+                for companion in sorted(base.parent.glob(f"{base.stem}.*")) if base.parent.exists() else []:
+                    if companion == base or not companion.is_file():
+                        continue
+                    ext = companion.suffix.lower()
+                    if ext in MEDIA_EXTENSIONS:
+                        asset_formats[ext] += 1
         per_manifest.append(
             {
                 "manifest": str(path),
@@ -129,6 +160,9 @@ def summarize_source(source_root: Path) -> dict[str, Any]:
         "effects": dict(sorted(effects.items())),
         "render_sets": dict(sorted(render_sets.items())),
         "gpu_names": dict(sorted(gpu_names.items())),
+        "asset_formats": dict(sorted(asset_formats.items())),
+        "float_preserving_present": any(ext in FLOAT_PRESERVING_EXTENSIONS for ext in asset_formats),
+        "preferred_exr_present": ".exr" in asset_formats,
         "manifests": per_manifest,
     }
 
@@ -139,16 +173,27 @@ def summarize_imported_set(imported_set_dir: Path | None) -> dict[str, Any] | No
     receipts = sorted(imported_set_dir.rglob("reference_import.json"))
     manifests = sorted(imported_set_dir.rglob("reference_manifest.json"))
     matched_request_counts = Counter()
+    media_extensions = Counter()
+    float_preserving_present = False
+    preferred_exr_present = False
     for receipt_path in receipts:
         data = load_json(receipt_path)
         for request in data.get("matched_requests", []):
             if isinstance(request, str):
                 matched_request_counts[request] += 1
+        for ext, count in (data.get("media_extensions") or {}).items():
+            if isinstance(ext, str) and isinstance(count, int):
+                media_extensions[ext] += count
+        float_preserving_present = float_preserving_present or bool(data.get("float_preserving_present"))
+        preferred_exr_present = preferred_exr_present or bool(data.get("preferred_exr_present"))
     return {
         "imported_set_dir": str(imported_set_dir.resolve()),
         "receipt_count": len(receipts),
         "manifest_count": len(manifests),
         "matched_requests": dict(sorted(matched_request_counts.items())),
+        "media_extensions": dict(sorted(media_extensions.items())),
+        "float_preserving_present": float_preserving_present,
+        "preferred_exr_present": preferred_exr_present,
     }
 
 
@@ -205,6 +250,9 @@ def render_markdown(report: dict[str, Any]) -> str:
             f"- Effects: `{source_summary['effects']}`",
             f"- Render sets: `{source_summary['render_sets']}`",
             f"- GPU names: `{source_summary['gpu_names']}`",
+            f"- Asset formats: `{source_summary['asset_formats']}`",
+            f"- float_preserving_present: `{source_summary['float_preserving_present']}`",
+            f"- preferred_exr_present: `{source_summary['preferred_exr_present']}`",
             "",
         ]
     )
@@ -218,6 +266,9 @@ def render_markdown(report: dict[str, Any]) -> str:
                 f"- Receipts: `{imported['receipt_count']}`",
                 f"- Manifests: `{imported['manifest_count']}`",
                 f"- Matched requests: `{imported['matched_requests']}`",
+                f"- Media extensions: `{imported['media_extensions']}`",
+                f"- float_preserving_present: `{imported['float_preserving_present']}`",
+                f"- preferred_exr_present: `{imported['preferred_exr_present']}`",
                 "",
             ]
         )

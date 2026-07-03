@@ -16,6 +16,23 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+MEDIA_EXTENSIONS = {
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".tif",
+    ".tiff",
+    ".exr",
+    ".hdr",
+    ".bmp",
+}
+FLOAT_PRESERVING_EXTENSIONS = {
+    ".exr",
+    ".tif",
+    ".tiff",
+    ".hdr",
+}
+
 
 def repo_root() -> Path:
     return Path(__file__).resolve().parents[2]
@@ -62,6 +79,53 @@ def slug(value: str, fallback: str = "reference") -> str:
     value = value.strip().replace(" ", "")
     value = re.sub(r"[^A-Za-z0-9_.-]+", "_", value)
     return value or fallback
+
+
+def companion_assets(path: Path) -> list[Path]:
+    if not path.exists():
+        return []
+    companions: list[Path] = []
+    stem = path.stem
+    for candidate in sorted(path.parent.glob(f"{stem}.*")):
+        if candidate == path or not candidate.is_file():
+            continue
+        if candidate.name.startswith("._") or candidate.suffix.lower() not in MEDIA_EXTENSIONS:
+            continue
+        companions.append(candidate)
+    return companions
+
+
+def copy_asset_with_companions(source_manifest: Path, rel: str, dest_dir: Path, copied: set[str]) -> list[str]:
+    copied_now: list[str] = []
+    src = source_manifest.parent / rel
+    if not src.exists():
+        return copied_now
+    targets = [src, *companion_assets(src)]
+    for asset in targets:
+        rel_name = asset.name
+        if rel_name in copied:
+            continue
+        dest_path = dest_dir / rel_name
+        dest_path.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(asset, dest_path)
+        copied.add(rel_name)
+        copied_now.append(rel_name)
+    return copied_now
+
+
+def summarize_media_assets(dest_dir: Path) -> dict[str, Any]:
+    files = [path for path in dest_dir.rglob("*") if path.is_file()]
+    by_extension: dict[str, int] = {}
+    for path in files:
+        ext = path.suffix.lower()
+        if ext not in MEDIA_EXTENSIONS:
+            continue
+        by_extension[ext] = by_extension.get(ext, 0) + 1
+    return {
+        "media_extensions": dict(sorted(by_extension.items())),
+        "float_preserving_present": any(ext in FLOAT_PRESERVING_EXTENSIONS for ext in by_extension),
+        "preferred_exr_present": ".exr" in by_extension,
+    }
 
 
 def find_png(source_root: Path, frame: str) -> Path | None:
@@ -364,18 +428,20 @@ def copy_case_assets(source_manifest: Path, dest_dir: Path, manifest: dict[str, 
     dest_dir.mkdir(parents=True, exist_ok=True)
 
     copied: set[str] = set()
+    case_artifacts: dict[str, dict[str, list[str]]] = {}
     for case in manifest.get("cases", []):
         if not isinstance(case, dict):
             continue
+        case_id = case.get("id")
+        case_key = case_id if isinstance(case_id, str) and case_id else "unknown"
+        artifact_row = case_artifacts.setdefault(case_key, {})
         for key in ("frame", "before_effects_frame"):
             rel = case.get(key)
             if not isinstance(rel, str) or not rel or rel in copied:
                 continue
-            src = source_manifest.parent / rel
-            if src.exists():
-                (dest_dir / rel).parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(src, dest_dir / rel)
-                copied.add(rel)
+            copied_now = copy_asset_with_companions(source_manifest, rel, dest_dir, copied)
+            if copied_now:
+                artifact_row[key] = copied_now
 
     for extra_name in ("ae_runner_log.txt", "RUN_SUMMARY.md", "run_complete.json", "package_manifest.json"):
         src = source_manifest.parent / extra_name
@@ -386,6 +452,7 @@ def copy_case_assets(source_manifest: Path, dest_dir: Path, manifest: dict[str, 
         json.dumps(manifest, indent=2, sort_keys=False),
         encoding="utf-8",
     )
+    return case_artifacts
 
 
 def copy_manifest_folder(source_manifest: Path, dest_dir: Path, replace: bool) -> None:
@@ -440,14 +507,16 @@ def import_request_results(
             try:
                 if len(manifest_parts) == 1:
                     copy_manifest_folder(manifest_path, dest_dir, replace)
+                    case_artifacts = {}
                 else:
-                    copy_case_assets(manifest_path, dest_dir, part_manifest, replace)
+                    case_artifacts = copy_case_assets(manifest_path, dest_dir, part_manifest, replace)
             except Exception as exc:  # noqa: BLE001 - report destination-specific import errors.
                 print(f"[FAIL] {manifest_path}: {exc}", file=sys.stderr)
                 failures += 1
                 continue
 
             dest_manifest = dest_dir / "reference_manifest.json"
+            media_summary = summarize_media_assets(dest_dir)
             receipt = {
                 "schema": 1,
                 "kind": "olm_imported_request_reference",
@@ -457,6 +526,8 @@ def import_request_results(
                 "matched_requests": [display_request_path(path) for path, _request in matches],
                 "split_from_aggregate": len(manifest_parts) > 1,
                 "split_case_count": len(part_manifest.get("cases", [])),
+                "case_artifacts": case_artifacts,
+                **media_summary,
             }
             (dest_dir / "reference_import.json").write_text(
                 json.dumps(receipt, indent=2, sort_keys=True),
