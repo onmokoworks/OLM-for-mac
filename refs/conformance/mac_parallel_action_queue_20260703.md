@@ -73,15 +73,15 @@ class of work that remains forbidden.
   - [refs/reference_requests/olm_bitdepth_32bpc_colorkey_probe_20260703.json](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/reference_requests/olm_bitdepth_32bpc_colorkey_probe_20260703.json)
   - [refs/reports/parallel_lane_report.md](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/reports/parallel_lane_report.md)
 - Next allowed local action:
-  - keep status and intake/reporting ready so the Windows float-output return
-    can be compared immediately
-- 2026-07-03 share state:
-  - `refs/reports/parallel_lane_report.md` は更新済みで、
-    `olm_reference_request_32bpc_colorkey_probe_20260703.zip` は
-    `/Volumes/onmk/olm_pr/new` に出ている
+  - imported 32bpc return を probe-only として整理し、次の EXR request に
+    迷いなく進める
+- 2026-07-03 return state:
+  - `olm_reference_return_windows_20260703_32bpc_colorkey_probe.zip` は
+    import 済みで、request status は `covered`
+  - ただし返却は PNG-only だったので `AE exact` には昇格させない
+  - 次の ask は `EXR` 既定、raw float fallback の 32bpc return
 - Forbidden:
-  - any 32bpc exact claim before the returned reference is imported and
-    compared
+  - any 32bpc exact claim from this PNG-only return
 
 ## 4. OLMToonDilate 16bpc
 

@@ -132,10 +132,10 @@ def build_report() -> dict[str, Any]:
             request_json=ROOT / "refs/reference_requests/olm_bitdepth_32bpc_colorkey_probe_20260703.json",
             package_zip=ROOT / "refs/runtime_trace_packages/olm_reference_request_32bpc_colorkey_probe_20260703.zip",
             share_filename="olm_reference_request_32bpc_colorkey_probe_20260703.zip",
-            returned_reference_dir=None,
+            returned_reference_dir=ROOT / "refs/win_references/olm_reference_return_windows_20260703_32bpc_colorkey_probe/OLMbit-depthconformancebatch",
             tracked_note=ROOT / "refs/conformance/olmcolorkey_32bpc_request_materialized_20260703.md",
             compared_artifact=None,
-            next_action="Wait for Windows float-output return, then intake and compare before any 32bpc completion claim.",
+            next_action="PNG-only 32bpc return is now imported and covered, but it remains probe-only. Next ask is an EXR-first float-preserving Windows return before any 32bpc completion claim.",
         ),
         bitdepth_lane(
             plugin="OLMToonDilate",

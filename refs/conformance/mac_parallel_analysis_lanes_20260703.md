@@ -66,9 +66,12 @@ lane」を優先する。
   - normalized 8bpc packaged slice は AE exact
   - covered 16bpc slice も full batch `9/9 exact`
   - 32bpc focused probe request は materialized 済み
+  - 2026-07-03 の Windows return は import 済みだが PNG-only のため
+    `probe-only`
 - いま Mac だけでやる価値があること:
   - bit-depth expansion status/reporting の自動化
   - 32bpc comparison policy を mechanical に扱うための補助更新
+  - 次の EXR-first request に向けた request / note / intake 境界の固定
 
 ### 4. OLMToonDilate
 
