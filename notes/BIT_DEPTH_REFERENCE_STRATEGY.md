@@ -167,9 +167,9 @@ preempt the active 16bpc binary-proof wait.
   `refs/reports/bit_depth_32bpc_probe_plan_20260628/README.md`
 
 This preview is not completion evidence. It is a way to ask the Windows helper
-whether a float-preserving output path is available for the 45 normalized
-8bpc-exact cases. Move it into `refs/reference_requests/` only when 32bpc
-probing is intentionally scheduled.
+whether an `EXR`-first float-preserving output path is available for the 45
+normalized 8bpc-exact cases. Move it into `refs/reference_requests/` only when
+32bpc probing is intentionally scheduled.
 
 A focused variant now also exists for the already-strong ColorKey slice:
 
@@ -188,15 +188,15 @@ A second focused preview now exists for the already-exact ToonDilate slice:
   `refs/reports/bit_depth_32bpc_toondilate_probe_plan_20260630/request_preview.json`
 
 This is the same style of probe but reduced to the 3 normalized
-`OLMToonDilate` cases. It is useful when we want a tiny float-output turn
-instead of resending the full mixed batch.
+`OLMToonDilate` cases. It is useful when we want a tiny `EXR`-first
+float-output turn instead of resending the full mixed batch.
 
 ## 2026-07-01 OLMColorKey 32bpc Next Step
 
 The next clean 32bpc move stays plugin-scoped and probe-only: regenerate the
-focused `OLMColorKey` float-output request as a self-contained preview bundle,
-then send that smaller Windows turn instead of reopening the mixed 48-case
-batch.
+focused `OLMColorKey` `EXR`-first float-output request as a self-contained
+preview bundle, then send that smaller Windows turn instead of reopening the
+mixed 48-case batch.
 
 - Preview:
   `refs/reports/bit_depth_32bpc_colorkey_probe_plan_20260701/request_preview.json`
@@ -216,7 +216,7 @@ python3 scripts/generate_bitdepth_reference_request.py \
 The generator now writes both `request_preview.json` and a companion
 `README.md` into the preview directory. Keep this request out of
 `refs/reference_requests/` until the Windows helper is intentionally scheduled
-for a 32bpc float-output turn.
+for a 32bpc `EXR`-first float-output turn.
 
 Operational note on 2026-06-30:
 
@@ -298,9 +298,10 @@ bit-depth profile suffix only where file naming requires it. Example:
 - `16bpc`: integer sample exact, zero diff in the exported 16bpc comparison
   representation.
 - `32bpc`: exact float comparison only when the return format preserves
-  floating-point samples, such as EXR or a raw float dump. A PNG exported from a
-  32bpc project is a smoke/probe artifact, not completion evidence. If the
-  Windows runner cannot return float-preserving output, record that as
+  floating-point samples. `EXR` is the default and preferred return format.
+  Raw float dumps are acceptable as a fallback. A PNG exported from a 32bpc
+  project is a smoke/probe artifact, not completion evidence. If the Windows
+  runner cannot return `EXR` or another float-preserving output, record that as
   `32bpc-probe-only` and do not claim `AE exact`.
 
 ## Promotion Rule

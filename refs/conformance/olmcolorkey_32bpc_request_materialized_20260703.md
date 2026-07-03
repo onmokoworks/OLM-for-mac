@@ -28,7 +28,8 @@ still unverified.
 
 This request explicitly preserves the current policy boundary:
 
-- prefer float-preserving output such as EXR or raw float samples
+- prefer `EXR` as the default 32bpc return format
+- accept raw float samples only as a fallback when `EXR` is unavailable
 - do not treat PNG-only 32bpc returns as `AE exact`
 
 So the request is useful because it makes the next external step concrete

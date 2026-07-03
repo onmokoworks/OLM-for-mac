@@ -324,6 +324,9 @@ python3 scripts/intake_olm_return.py path/to/returned_runtime_trace.zip \
 pending runtime queue の正本:
 `refs/reports/pending_runtime_trace_packages.md`
 
+スクリプトの役割一覧:
+[`scripts/README.md`](/Users/onmk/Documents/Projects/Personal/OLM%20as/scripts/README.md)
+
 ## bit depth 拡張の現状
 
 16bpc normalized exact request の Windows 参照返却と Mac AE validation は
