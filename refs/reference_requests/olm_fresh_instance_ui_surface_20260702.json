@@ -1,0 +1,166 @@
+{
+  "request_id": "olm_fresh_instance_ui_surface_20260702",
+  "effect": {
+    "name": "OLM multi-effect UI surface capture",
+    "match_name": "olm_fresh_instance_ui_surface_20260702"
+  },
+  "why": [
+    "We already have Windows-grounded fresh defaults and fresh ranges, but the remaining concern is host/UI surface parity: the visible AE parameter boxes, twirled groups, nested sections, and label layout may not match between Windows AEX and the current Mac port.",
+    "This request is for the user-facing After Effects effect panel surface, not algorithm output. The primary artifacts are screenshots plus the same full property tree metadata used by the fresh default capture.",
+    "Separating UI-surface parity from algorithm parity prevents us from misclassifying a host panel mismatch as image-processing drift."
+  ],
+  "render_sets": [
+    {
+      "id": "software",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "required": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "opaque_grid_1920x1080",
+      "description": "Use a simple opaque 1920x1080 source layer. Pixels are not the point; the effect-controls panel is."
+    }
+  ],
+  "common_setup": {
+    "comp_width": 1920,
+    "comp_height": 1080,
+    "frame_rate": 24,
+    "bit_depth": 8,
+    "instructions": [
+      "For each case, create a fresh comp and a fresh source layer.",
+      "Add exactly one OLM effect to the selected layer.",
+      "Do not edit any OLM parameter after adding the effect.",
+      "Capture the full selected effect property tree exactly as AE scripting exposes it, including hidden/group/no-value entries, property_index, match_name, name, enabled/active state, and value where readable.",
+      "Also capture UI surface screenshots from the Effect Controls panel on Windows AE.",
+      "Save at least two screenshots per effect: (1) the cold-start top-level collapsed/default-visible state, and (2) the fully expanded state with every twirlable OLM group opened as far as AE allows.",
+      "If a plug-in has long grouped sections that do not fit in one viewport, capture a scrolled screenshot sequence that preserves the visible control order from top to bottom.",
+      "Do not crop away the effect title, built-in compositing controls, or group headers if they are visible in the panel.",
+      "Record a short note if AE prevents a group from being scripted open or if some controls are only visible after another popup/checkbox state changes."
+    ]
+  },
+  "cases": [
+    {
+      "id": "ui_surface_olmblur",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Blur",
+        "match_name": "OLM OLM Blur"
+      },
+      "reason": "Capture the top-level visible box layout for the simple OLM Blur surface.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ui_surface": true
+    },
+    {
+      "id": "ui_surface_olmcolorkey",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Color Key",
+        "match_name": "OLM Color Key"
+      },
+      "reason": "Capture the grouped threshold, edge, replace, and per-color block layout as Windows AE visibly presents it.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ui_surface": true
+    },
+    {
+      "id": "ui_surface_olmdirectionalblur",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM DirectionalBlur",
+        "match_name": "OLM Directional Blur"
+      },
+      "reason": "Capture front/back/noise group visibility and label order in the Windows panel.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ui_surface": true
+    },
+    {
+      "id": "ui_surface_olmdistancegradation",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation"
+      },
+      "reason": "Capture render/interpolation/blur groups, threshold controls, and color-box presentation as seen in Windows AE.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ui_surface": true
+    },
+    {
+      "id": "ui_surface_olmkirakira",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Kira Kira",
+        "match_name": "OLM OLM Kira Kira"
+      },
+      "reason": "Capture the complex grouped box layout including ramp sections and ray-direction controls as actually shown by Windows AE.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ui_surface": true
+    },
+    {
+      "id": "ui_surface_olmradialblur",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM RadialBlur",
+        "match_name": "OLM RadialBlur"
+      },
+      "reason": "Capture outer/inner/ellipse/noise box grouping and visible nested label structure.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ui_surface": true
+    },
+    {
+      "id": "ui_surface_olmsmoother_v1",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Smoother",
+        "match_name": "OLM Smoother"
+      },
+      "reason": "Capture the visible v1 panel and whether any extra group boxes such as Smooth Range appear in the Windows surface.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ui_surface": true
+    },
+    {
+      "id": "ui_surface_olmsmoother_v2",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Smoother v2",
+        "match_name": "OLM Smoother v2"
+      },
+      "reason": "Capture key/gamma/version grouping and visible control box shape in Windows AE.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ui_surface": true
+    },
+    {
+      "id": "ui_surface_olmtoondilate",
+      "input": "opaque_grid_1920x1080",
+      "effect_override": {
+        "name": "OLM Toon Dilate",
+        "match_name": "ADBE OLMToonDilate"
+      },
+      "reason": "Capture the simple single-control panel plus built-in AE effect box layout.",
+      "params": {},
+      "fresh_instance_defaults": true,
+      "capture_ui_surface": true
+    }
+  ],
+  "manifest_requirements": [
+    "Record all selected effect property names, match_names, property_index, property_type, property_value_type, enabled/active state, and values where readable.",
+    "Record hidden/group/no-value properties too; do not omit them just because AE scripting cannot read a scalar value.",
+    "Record project_gpu_accel_type.current_name and raw value.",
+    "Keep ADBE Force CPU GPU / GPU Rendering as reference-only metadata, not as the execution-path label.",
+    "Return Effect Controls panel screenshots for each effect in both cold-start and fully-expanded forms.",
+    "If multiple screenshots are needed to cover one panel vertically, preserve order with numbered filenames and include a small note describing the scroll sequence.",
+    "Treat this as UI-surface evidence first; before_effects_frame and effect-output PNGs are optional supporting artifacts, not the primary deliverable."
+  ],
+  "mac_follow_up": [
+    "Import with scripts/intake_olm_return.py path/to/returned_reference.zip --quick.",
+    "Use the screenshots and property tree together as the Windows source of truth for user-visible AE panel shape.",
+    "Compare against refs/reports/mac_plugin_param_schema_20260629.json and the current Mac AE panel before treating any panel mismatch as algorithm drift."
+  ]
+}

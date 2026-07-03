@@ -1,0 +1,93 @@
+{
+  "kind": "olmkirakira_hotspot_export_contract_audit",
+  "schema": 1,
+  "plugin": "OLMKiraKira",
+  "case_id": "kk_vertical_len50_brightness1_strength100",
+  "hotspot_xy": [
+    934,
+    118
+  ],
+  "artifacts": {
+    "canonical_reference_png": {
+      "path": "refs/reports/olmkirakira_remeasure_20260624_bt709_software/reference/kirakira_single_ray_20260606__software__fr24__kk_vertical_len50_brightness1_strength100.png",
+      "exists": true,
+      "bytes": 348910,
+      "sha256": "a72a1fcca76209537899c0faa3952bd9f6eccf602a5b86f4d38a7a694d56329a",
+      "hotspot_rgba": [
+        131,
+        131,
+        131,
+        255
+      ]
+    },
+    "archived_bt709_candidate_png": {
+      "path": "refs/reports/olmkirakira_remeasure_20260624_bt709_software/candidate/kirakira_single_ray_20260606__software__fr24__kk_vertical_len50_brightness1_strength100.png",
+      "exists": true,
+      "bytes": 376311,
+      "sha256": "2a4eee11d85ba54b225edbcd3cff981f4e585a4ced138325a1529df0d682de19",
+      "hotspot_rgba": [
+        145,
+        145,
+        145,
+        255
+      ]
+    },
+    "current_mac_compose_witness": {
+      "path": "refs/conformance/olmkirakira_compose_boundary_mac_witness_20260630.json",
+      "hotspot_rgba": [
+        144,
+        144,
+        144,
+        255
+      ],
+      "compose_rgba_float": [
+        0.565446138,
+        0.565446138,
+        0.565446138,
+        1.0
+      ]
+    },
+    "windows_traced_hotspot": {
+      "path": "refs/reports/runtime_trace_comparisons/olmkirakira_hotspot_compose_writeback_witness_20260701.json",
+      "hotspot_rgba": [
+        144,
+        144,
+        144,
+        255
+      ],
+      "compose_rgba_float": [
+        0.5654461661764706,
+        0.5654461661764706,
+        0.5654461661764706,
+        1.0
+      ],
+      "glow_after_opacity_rgba_float": [
+        1.0,
+        1.0,
+        1.0,
+        0.507505655
+      ]
+    },
+    "windows_current_export": null
+  },
+  "required_windows_payload": [
+    "same-run exported PNG file for the hotspot case",
+    "AE version",
+    "project renderer metadata",
+    "parameter/property snapshot for the same case",
+    "statement whether the export comes from the same current-AEX build/path as the trace run",
+    "if export and trace differ, any witness-placement or endgame-control note explaining the split"
+  ],
+  "decision": {
+    "status": "awaiting-same-run-export-or-witness-placement-proof",
+    "family": "pending",
+    "reason": "The traced hotspot already agrees with the current Mac compose-boundary witness at 144, while the canonical reference PNG is 131. Without a same-run Windows export or explicit witness-placement/endgame-control proof, this remains a provenance lane.",
+    "next_step": "Import a same-run Windows current-AEX export for the hotspot case, or a proof artifact that shows the traced hotspot is not the final export class."
+  },
+  "forbidden_moves": [
+    "retune BT.709 seed",
+    "retune boxFilter or ray-helper choreography from hotspot PNGs",
+    "promote a broad compose or final-quantization rewrite from the canonical 131 mismatch alone",
+    "treat missing endgame controls as proof that hotspot compose math is wrong"
+  ]
+}

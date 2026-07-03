@@ -1,0 +1,242 @@
+{
+  "kind": "olmradialblur_tiny_rotation_support_envelope",
+  "schema": 1,
+  "case_id": "case_0010",
+  "witness_xy": [
+    1614,
+    6
+  ],
+  "positive_cluster_xy": [
+    [
+      1601,
+      843
+    ],
+    [
+      1602,
+      843
+    ]
+  ],
+  "positive_cluster_rows": [
+    843
+  ],
+  "positive_cluster_angles": [
+    1601,
+    1602
+  ],
+  "outputs": [
+    {
+      "xy": [
+        1612,
+        6
+      ],
+      "sample_u8": [
+        5,
+        5,
+        5,
+        255
+      ],
+      "indices": [
+        1603,
+        1604,
+        842,
+        843
+      ],
+      "can_directly_see_cluster": true,
+      "supporting_cells": [
+        {
+          "cell": "x0y1",
+          "radius_row": 843,
+          "same_row_source_taps": [
+            1603,
+            1602,
+            1601
+          ],
+          "touched_cluster_angles": [
+            1601,
+            1602
+          ],
+          "cell_rgb": [
+            0.0441839024,
+            0.0441839024,
+            0.0441839024
+          ]
+        },
+        {
+          "cell": "x1y1",
+          "radius_row": 843,
+          "same_row_source_taps": [
+            1604,
+            1603,
+            1602
+          ],
+          "touched_cluster_angles": [
+            1602
+          ],
+          "cell_rgb": [
+            0.00694188103,
+            0.00694188103,
+            0.00694188103
+          ]
+        }
+      ],
+      "supported_cluster_angles": [
+        1601,
+        1602
+      ]
+    },
+    {
+      "xy": [
+        1613,
+        6
+      ],
+      "sample_u8": [
+        1,
+        1,
+        1,
+        255
+      ],
+      "indices": [
+        1603,
+        1604,
+        843,
+        844
+      ],
+      "can_directly_see_cluster": true,
+      "supporting_cells": [
+        {
+          "cell": "x0y0",
+          "radius_row": 843,
+          "same_row_source_taps": [
+            1603,
+            1602,
+            1601
+          ],
+          "touched_cluster_angles": [
+            1601,
+            1602
+          ],
+          "cell_rgb": [
+            0.0441839024,
+            0.0441839024,
+            0.0441839024
+          ]
+        },
+        {
+          "cell": "x1y0",
+          "radius_row": 843,
+          "same_row_source_taps": [
+            1604,
+            1603,
+            1602
+          ],
+          "touched_cluster_angles": [
+            1602
+          ],
+          "cell_rgb": [
+            0.00694188103,
+            0.00694188103,
+            0.00694188103
+          ]
+        }
+      ],
+      "supported_cluster_angles": [
+        1601,
+        1602
+      ]
+    },
+    {
+      "xy": [
+        1614,
+        5
+      ],
+      "sample_u8": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "indices": [
+        1603,
+        1604,
+        844,
+        845
+      ],
+      "can_directly_see_cluster": false,
+      "supporting_cells": [],
+      "supported_cluster_angles": []
+    },
+    {
+      "xy": [
+        1614,
+        6
+      ],
+      "sample_u8": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "indices": [
+        1603,
+        1604,
+        844,
+        845
+      ],
+      "can_directly_see_cluster": false,
+      "supporting_cells": [],
+      "supported_cluster_angles": []
+    },
+    {
+      "xy": [
+        1614,
+        7
+      ],
+      "sample_u8": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "indices": [
+        1604,
+        1605,
+        843,
+        844
+      ],
+      "can_directly_see_cluster": true,
+      "supporting_cells": [
+        {
+          "cell": "x0y0",
+          "radius_row": 843,
+          "same_row_source_taps": [
+            1604,
+            1603,
+            1602
+          ],
+          "touched_cluster_angles": [
+            1602
+          ],
+          "cell_rgb": [
+            0.00694188103,
+            0.00694188103,
+            0.00694188103
+          ]
+        }
+      ],
+      "supported_cluster_angles": [
+        1602
+      ]
+    }
+  ],
+  "decision": {
+    "status": "witness-cannot-directly-see-row843-cluster-in-current-branch",
+    "reason": "Within the probed neighborhood, the current same-row Rotation branch only gives direct row-843 cluster visibility to nearby outputs whose bilinear support includes radius row 843. The active witness `(1614,6)` samples rows 844/845 only, so it cannot directly receive the row-843 bright cluster under the current branch. The few nearby outputs that do directly see the cluster are still dim (`[5,5,5]`, `[1,1,1]`, `[0,0,0]`), which supports the existing reading that the missing white lobe needs upstream neighbor-row ownership or a substitute/fallback path.",
+    "forbidden_action": "Do not promote a same-row-only tweak, simple validity tweak, or final writeback tweak as the tiny-Rotation fix from this neighborhood alone.",
+    "next_allowed_action": "Keep the Windows ask focused on substitute/fallback or upstream neighboring-row contribution ownership before final inverse sampling, now anchored from the stable inverse-sampler hit with sampled-cell / neighboring-row pointer-watch context."
+  },
+  "summary_counts": {
+    "outputs_with_direct_cluster_visibility": 3,
+    "outputs_without_direct_cluster_visibility": 2,
+    "witness_has_direct_cluster_visibility": false
+  }
+}

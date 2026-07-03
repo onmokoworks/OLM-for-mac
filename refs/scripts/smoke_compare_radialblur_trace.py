@@ -12,6 +12,8 @@ from pathlib import Path
 
 DENSE_REQUEST_ID = "olmradialblur_dense_sampler_trace_20260620"
 RESIDUAL_REQUEST_ID = "olmradialblur_caller_collapse_witness_20260630"
+TINY_REQUEST_ID = "olmradialblur_tiny_rotation_substitute_path_followup_20260701"
+TINY_BACKSTEP_REQUEST_ID = "olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701"
 
 
 def run_compare(repo: Path, py: str, summary: Path, output_json: Path, output_md: Path) -> dict:
@@ -232,12 +234,138 @@ def main() -> int:
         assert_request(comparison, RESIDUAL_REQUEST_ID)
         assert_focus(
             comparison,
-            "zoom:alpha-normalization-or-writeback; tiny_rotation:sampler-or-validity",
+            "zoom:alpha-normalization-or-writeback; tiny_rotation:substitute-or-upstream-rgb",
         )
         recommendation = comparison.get("recommended_next_evidence", "")
         if "case_0009" not in recommendation or "case_0010" not in recommendation:
             print("[FAIL] focused residual trace missing case-specific recommendation")
             return 1
+
+        summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": TINY_REQUEST_ID,
+                            "status": "answered_partial",
+                            "summary": "synthetic tiny Rotation upstream substitute-path witness",
+                            "observations": {
+                                "cases": [
+                                    {
+                                        "case_id": "case_0010",
+                                        "aex_inverse_sampler_input_xy": [1613.75, 6.25],
+                                        "aex_polar_or_source_xy": [1601.0, 843.0],
+                                        "aex_validity_or_border_decision": "valid",
+                                        "aex_fallback_or_substitute_path": "substitute promoted bright source cluster from previous polar row",
+                                        "aex_source_or_polar_rgba_float": [0.168253, 0.168253, 0.168253, 1.0],
+                                        "aex_preserved_validity_f252": 1.0,
+                                        "aex_accumulated_f250_rgba_float": [0.95, 0.95, 0.95, 1.0],
+                                        "aex_normalized_final_e_rgba_float": [1.0, 1.0, 1.0, 1.0],
+                                        "aex_pre_writeback_rgba_float_or_hex": [
+                                            "0x1.fep+7",
+                                            "0x1.fep+7",
+                                            "0x1.fep+7",
+                                            "0x1.fep+7",
+                                        ],
+                                        "aex_final_rgba_u8": [255, 255, 255, 255],
+                                    }
+                                ]
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        comparison = run_compare(repo, py, summary, output_json, output_md)
+        assert_request(comparison, TINY_REQUEST_ID)
+        assert_focus(comparison, "tiny_rotation:substitute-or-upstream-rgb")
+        recommendation = comparison.get("recommended_next_evidence", "")
+        if "substitute/fallback branch state" not in recommendation:
+            print("[FAIL] tiny followup missing substitute-path recommendation")
+            return 1
+        if "local_tiny_rotation_context" not in comparison:
+            print("[FAIL] tiny followup should include local tiny Rotation context")
+            return 1
+        markdown = output_md.read_text(encoding="utf-8")
+        for needle in ("Local tiny Rotation Context", "Source-polar structure", "tiny_rotation:substitute-or-upstream-rgb"):
+            if needle not in markdown:
+                print(f"[FAIL] tiny followup Markdown missing: {needle}")
+                return 1
+
+        summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": TINY_REQUEST_ID,
+                            "status": "failed_partial",
+                            "summary": "synthetic failed-partial tiny Rotation return with final byte plus upstream hints only",
+                            "observations": {
+                                "cases": [
+                                    {
+                                        "case_id": "case_0010",
+                                        "aex_fallback_or_substitute_path": "not isolated",
+                                        "aex_final_rgba_u8": [255, 255, 255, 255],
+                                        "aex_inverse_sampler_input_xy": [1603.8, 844.3],
+                                        "aex_normalized_final_e_rgba_float": [1.0, 1.0, 1.0, 1.0],
+                                        "aex_polar_or_source_xy": [1603.8, 844.3],
+                                        "aex_pre_writeback_rgba_float_or_hex": [None, None, None, None],
+                                        "aex_preserved_validity_f252": None,
+                                        "aex_source_or_polar_rgba_float": [-0.004, -0.004, -0.004, 1.0],
+                                        "aex_validity_or_border_decision": "not isolated",
+                                    }
+                                ]
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        comparison = run_compare(repo, py, summary, output_json, output_md)
+        assert_request(comparison, TINY_REQUEST_ID)
+        assert_focus(comparison, "tiny_rotation:substitute-or-upstream-rgb")
+
+        summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": TINY_BACKSTEP_REQUEST_ID,
+                            "status": "failed_partial",
+                            "summary": "synthetic backstep followup still only reaches inverse-sampler anchor and not the upstream branch",
+                            "observations": {
+                                "cases": [
+                                    {
+                                        "case_id": "case_0010",
+                                        "aex_fallback_or_substitute_path": "not isolated",
+                                        "aex_final_rgba_u8": [255, 255, 255, 255],
+                                        "aex_inverse_sampler_input_xy": [1603.8, 844.3],
+                                        "aex_normalized_final_e_rgba_float": [1.0, 1.0, 1.0, 1.0],
+                                        "aex_polar_or_source_xy": [1603.8, 844.3],
+                                        "aex_pre_writeback_rgba_float_or_hex": [None, None, None, None],
+                                        "aex_preserved_validity_f252": None,
+                                        "aex_source_or_polar_rgba_float": [-0.004, -0.004, -0.004, 1.0],
+                                        "aex_validity_or_border_decision": "not isolated",
+                                    }
+                                ]
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        comparison = run_compare(repo, py, summary, output_json, output_md)
+        assert_request(comparison, TINY_BACKSTEP_REQUEST_ID)
+        assert_focus(comparison, "tiny_rotation:substitute-or-upstream-rgb")
     print("[OK] RadialBlur trace comparison smoke")
     return 0
 

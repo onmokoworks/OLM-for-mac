@@ -1,0 +1,194 @@
+{
+  "request_id": "olm_bitdepth_16bpc_toondilate_exact_20260703",
+  "scope": {
+    "bit_depth": "16bpc",
+    "plugin_filters": [
+      "OLMToonDilate"
+    ],
+    "feature_filters": [],
+    "plugin_count": 1,
+    "case_count": 3
+  },
+  "effect": {
+    "name": "OLM bit-depth conformance batch",
+    "match_name": "mixed",
+    "contains_mixed_effects": true
+  },
+  "why": [
+    "The listed feature groups are normalized 8bpc Windows Software exact and need the next declared bit-depth proof.",
+    "This request deliberately starts with 16bpc only; 32bpc waits until the float comparison policy is fixed.",
+    "Legacy 8bpc drift and AE-free CLI residuals are not tuning targets for this request."
+  ],
+  "render_sets": [
+    {
+      "id": "software_16bpc",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "bit_depth": "16bpc",
+      "bits_per_channel": 16,
+      "required": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "olmtoondilate_case_0001_source",
+      "description": "Use the same source image as normalized 8bpc OLMToonDilate case_0001. Recorded before_effects_frame: case_0001_before_effects.png",
+      "source_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMToonDilate/reference_manifest.json",
+      "source_case_id": "case_0001",
+      "before_effects_frame": "case_0001_before_effects.png"
+    },
+    {
+      "id": "olmtoondilate_case_0002_source",
+      "description": "Use the same source image as normalized 8bpc OLMToonDilate case_0002. Recorded before_effects_frame: case_0002_before_effects.png",
+      "source_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMToonDilate/reference_manifest.json",
+      "source_case_id": "case_0002",
+      "before_effects_frame": "case_0002_before_effects.png"
+    },
+    {
+      "id": "olmtoondilate_case_0003_source",
+      "description": "Use the same source image as normalized 8bpc OLMToonDilate case_0003. Recorded before_effects_frame: case_0003_before_effects.png",
+      "source_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMToonDilate/reference_manifest.json",
+      "source_case_id": "case_0003",
+      "before_effects_frame": "case_0003_before_effects.png"
+    }
+  ],
+  "cases": [
+    {
+      "id": "olmtoondilate__case_0001",
+      "feature": "OLMToonDilate",
+      "plugin": "OLMToonDilate",
+      "source_case_id": "case_0001",
+      "input": "olmtoondilate_case_0001_source",
+      "reason": "16bpc expansion of a normalized 8bpc Software exact case. Do not use this to retune 8bpc legacy drift.",
+      "effect": {
+        "name": "OLM Toon Dilate",
+        "match_name": "ADBE OLMToonDilate"
+      },
+      "params": {
+        "Search Radius": 13,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "params_full": [
+        {
+          "name": "Search Radius",
+          "match_name": "ADBE OLMToonDilate-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 13
+        },
+        {
+          "name": "Effect Opacity",
+          "match_name": "ADBE Effect Mask Opacity",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "GPU Rendering",
+          "match_name": "ADBE Force CPU GPU",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "olmtoondilate__case_0002",
+      "feature": "OLMToonDilate",
+      "plugin": "OLMToonDilate",
+      "source_case_id": "case_0002",
+      "input": "olmtoondilate_case_0002_source",
+      "reason": "16bpc expansion of a normalized 8bpc Software exact case. Do not use this to retune 8bpc legacy drift.",
+      "effect": {
+        "name": "OLM Toon Dilate",
+        "match_name": "ADBE OLMToonDilate"
+      },
+      "params": {
+        "Search Radius": 13,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "params_full": [
+        {
+          "name": "Search Radius",
+          "match_name": "ADBE OLMToonDilate-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 13
+        },
+        {
+          "name": "Effect Opacity",
+          "match_name": "ADBE Effect Mask Opacity",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "GPU Rendering",
+          "match_name": "ADBE Force CPU GPU",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "olmtoondilate__case_0003",
+      "feature": "OLMToonDilate",
+      "plugin": "OLMToonDilate",
+      "source_case_id": "case_0003",
+      "input": "olmtoondilate_case_0003_source",
+      "reason": "16bpc expansion of a normalized 8bpc Software exact case. Do not use this to retune 8bpc legacy drift.",
+      "effect": {
+        "name": "OLM Toon Dilate",
+        "match_name": "ADBE OLMToonDilate"
+      },
+      "params": {
+        "Search Radius": 27,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "params_full": [
+        {
+          "name": "Search Radius",
+          "match_name": "ADBE OLMToonDilate-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 27
+        },
+        {
+          "name": "Effect Opacity",
+          "match_name": "ADBE Effect Mask Opacity",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "GPU Rendering",
+          "match_name": "ADBE Force CPU GPU",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 1
+        }
+      ]
+    }
+  ],
+  "manifest_requirements": [
+    "AE version",
+    "project_gpu_accel_type.current_name and raw value",
+    "project bit depth / bits per channel",
+    "project color management settings",
+    "before_effects_frame PNG for every case",
+    "effect output image for every case, preserving 16bpc data if the runner can export it",
+    "all effect property names, match_names, indices, values, enabled/active state"
+  ],
+  "mac_follow_up": [
+    "Import with scripts/intake_olm_return.py path/to/returned_reference.zip --quick.",
+    "Do not claim 16bpc exact until a 16bpc-aware comparator verifies zero diff."
+  ],
+  "stop_lines": [
+    "Do not render CUDA/GPU as the conformance target for this request.",
+    "Do not include 32bpc in this request.",
+    "Do not mix legacy 20260604/20260605 drift references into this bit-depth batch."
+  ]
+}

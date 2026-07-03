@@ -42,6 +42,15 @@ def build_summary(
     return {
         "kind": "olmkirakira_pending_compose_proof",
         "date": "2026-06-29",
+        "status": "historical-superseded-by-hotspot-provenance-lane",
+        "superseded_by": {
+            "report": str(repo_root() / "refs" / "conformance" / "olmkirakira_hotspot_export_contract_audit_20260701.md"),
+            "reason": (
+                "The answered 2026-07-01 hotspot witness already matches the current Mac compose-boundary values "
+                "through pre-writeback and sampled RGBA8. The remaining lane is no longer live compose/quantization "
+                "isolation; it is same-run export provenance, witness-placement validation, or endgame-control coverage."
+            ),
+        },
         "latest_runtime_summary": str(runtime_summary_path),
         "decision_boundary": (
             "Determine whether the remaining KiraKira 8bpc Software residual comes from the internal "
@@ -117,6 +126,10 @@ def build_summary(
 def write_markdown(summary: dict, out: Path) -> None:
     lines = [
         "# OLMKiraKira Pending Compose Proof",
+        "",
+        f"- Historical status: `{summary['status']}`",
+        f"- Superseded by: `{summary['superseded_by']['report']}`",
+        f"- Why superseded: {summary['superseded_by']['reason']}",
         "",
         "## Decision Boundary",
         "",

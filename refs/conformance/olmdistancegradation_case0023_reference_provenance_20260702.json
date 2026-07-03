@@ -1,0 +1,150 @@
+{
+  "kind": "olmdistancegradation_case0023_reference_provenance",
+  "date": "2026-07-02",
+  "status": "threshold-family-reference-generation-split-candidate",
+  "request_dir": "handoff/ae_pixel_validation_20260618/requests/ae_single_distancegradation_case0023_probe_20260701",
+  "live_mac_ae_run": {
+    "result_json": "refs/reports/ae_single_case_distancegradation_case0023_live_20260702/AE_SINGLE_CASE_RESULT.json",
+    "output_png": "refs/reports/ae_single_case_distancegradation_case0023_live_20260702/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+    "field_debug": "refs/reports/ae_single_case_distancegradation_case0023_live_20260702/field_debug.txt"
+  },
+  "packaged_expected_png": "handoff/ae_pixel_validation_20260618/requests/ae_single_distancegradation_case0023_probe_20260701/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+  "diff_against_packaged_expected": {
+    "max_diff": 238,
+    "mean_diff": 0.0040925202546296295,
+    "nonzero_px": 73,
+    "nonzero_channels": 146
+  },
+  "threshold_triplet": [
+    {
+      "xy": [
+        414,
+        393
+      ],
+      "live_mac_rgba8": [
+        28,
+        0,
+        238,
+        255
+      ],
+      "packaged_expected_rgba8": [
+        28,
+        0,
+        238,
+        255
+      ],
+      "latest_windows_runtime_final_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "field_debug": {
+        "raw_inside": 35.0142822,
+        "raw_outside": 0.0,
+        "field_x": 0.0,
+        "compose_input_x": 0.0,
+        "inside_constant_binary": 0,
+        "outside_constant_binary": 0
+      }
+    },
+    {
+      "xy": [
+        415,
+        393
+      ],
+      "live_mac_rgba8": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "packaged_expected_rgba8": [
+        28,
+        0,
+        238,
+        255
+      ],
+      "latest_windows_runtime_final_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "field_debug": {
+        "raw_inside": 36.0138855,
+        "raw_outside": 0.0,
+        "field_x": 1.0,
+        "compose_input_x": 1.0,
+        "inside_constant_binary": 1,
+        "outside_constant_binary": 0
+      }
+    },
+    {
+      "xy": [
+        416,
+        393
+      ],
+      "live_mac_rgba8": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "packaged_expected_rgba8": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "latest_windows_runtime_final_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "field_debug": {
+        "raw_inside": 37.0135117,
+        "raw_outside": 0.0,
+        "field_x": 1.0,
+        "compose_input_x": 1.0,
+        "inside_constant_binary": 1,
+        "outside_constant_binary": 0
+      }
+    }
+  ],
+  "edge_family_examples": [
+    {
+      "xy": [
+        1699,
+        7
+      ],
+      "live_mac_rgba8": [
+        28,
+        0,
+        238,
+        255
+      ],
+      "packaged_expected_rgba8": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "field_debug": {
+        "raw_inside": 1.0,
+        "raw_outside": 0.0,
+        "field_x": 0.0,
+        "compose_input_x": 0.0,
+        "inside_constant_binary": 0,
+        "outside_constant_binary": 0
+      }
+    }
+  ],
+  "decision": {
+    "summary": "The packaged expected PNG cannot be treated as authoritative for the case_0023 threshold triplet. The live Mac AE output at (415,393) matches the latest Windows runtime-traced final stored value, while the packaged expected PNG still shows the older blue endpoint there.",
+    "safe_claim": "threshold-family reference-generation split candidate",
+    "not_yet_proven": "Do not promote the entire 73px residual to a pure provenance split yet. The edge-family witnesses such as (1699,7) still lack matching current Windows typed output in the latest return."
+  },
+  "next_action": "Keep the threshold-family triplet out of implementation tuning. Regenerate or recapture a current Windows Software reference for case_0023, or explicitly split the packaged expected lane from the current-runtime lane before touching compose/writeback."
+}

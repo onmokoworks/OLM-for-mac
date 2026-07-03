@@ -167,10 +167,10 @@ linked replay は package 時点で `params_full` を持つ。
 | Plug-in | UI defaults/min/max | Windows request replay | 今の運用結論 |
 | --- | --- | --- | --- |
 | `OLMBlur` | fixed | fixed | 初期値・最小最大は source-backed として確定扱いしてよい |
-| `OLMColorKey` | mostly fixed | fixed | request replay では困らない。Windows manifest 上の `Amount / Edge Thin / Edge Blur` は grouped-name 正規化の宿題が残る |
+| `OLMColorKey` | mostly fixed | fixed | request replay では困らない。2026-07-03 host-fix で `Threshold Parameters` / `Edge Thin` / `Edge Blur` topic と `Amount` visible label、per-color block order、`Amount` range を Windows surface へ寄せた。残りは symbolic default と group-end placeholder の扱い |
 | `OLMDirectionalBlur` | mostly fixed | fixed | 2026-06-29 first-pass range alignmentで `Front/Back Blur Strength`, `Alpha Fade`, `Seed` を Windows 側へ揃えた。残りは grouped-name (`Sharp Tail`) と Windows-no-range 項目 |
 | `OLMDistanceGradation` | fixed | fixed | 初期値・最小最大は source-backed として確定扱いしてよい |
-| `OLMKiraKira` | range mismatchあり | request replay fixed | `Ramp` 系 name driftは残るが、host range の大物は整理済み。`Fade Out` は Windows fresh `0..1` に合わせ済み。未解決は `Brightness Gain` の単位系と `Highlight Radius` の上限。 |
+| `OLMKiraKira` | mostly fixed | request replay fixed | 2026-07-03 host/UI cleanup で `Brightness Gain` を Windows visible `1..100`、`Highlight Radius` を Windows `0..500`、visible label を `Merge mode` / `Strength multiplier` / `Diagonal 2 length` / `Diagonal Color2` へ寄せた。残りは ramp 系 metadata と visible order のズレ。 |
 | `OLMRadialBlur` | mostly fixed | fixed | `Strength`, `Ratio`, `Seed` は Windows 側へ寄せた。`Offset` は duplicate-label 正規化を含む監査宿題が残る |
 | `OLMSmoother` | mostly fixed | n/a | `Do Smooth Range` が Windows manifest 側だけに見えており、完全一致はまだ保留 |
 | `OLMSmoother2` | fixed | fixed | 2026-06-29 first-pass range alignmentで `Smoothness`, `Extra Smooth`, `Smooth Range`, `Gamma Value` を Windows 側へ揃えた |
@@ -190,4 +190,35 @@ linked replay は package 時点で `params_full` を持つ。
 1. 参照 request を投げるだけなら、こちらから毎回「初期値はこれ、max はこれ」と人力で伝えなくてよい
 2. linked replay request は `fully-pinned` を優先し、default 依存を避ける
 3. もし default 挙動そのものを検証したい場合は、Mac source schema を正として request に明示値を書く
-4. 例外的に追加注意が必要なのは、現状では `OLMColorKey` の grouped-name、`OLMDirectionalBlur` の `Sharp Tail`、`OLMKiraKira` の Ramp 系、`OLMSmoother` の `Do Smooth Range`
+4. 例外的に追加注意が必要なのは、現状では `OLMDirectionalBlur` の `Sharp Tail`、`OLMKiraKira` の Ramp 系 / visible order、`OLMSmoother` の `Do Smooth Range`
+
+## UI surface parity lane
+
+ユーザーが気にしている「AE 上で見えている箱/group/twirl の見え方が違う」は、
+default/range/algorithm とは別レーンで扱う。
+
+- request:
+  `/Users/onmk/Documents/Projects/Personal/OLM as/refs/reference_requests/olm_fresh_instance_ui_surface_20260702.json`
+- primary artifact:
+  Windows AE Effect Controls panel screenshots
+- supporting artifact:
+  同じ fresh instance の property tree manifest
+
+この lane の目的は次を固定すること。
+
+- top-level effect panel の見え方
+- twirl/group section の有無
+- visible label order
+- built-in compositing controls を含む panel shape
+- 「manifest 上はあるが UI box としてどう見えるか不明」な項目の可視化
+
+つまり、
+
+- `manifest では見える`
+- `range metadata もある`
+- でも `Windows AE の Effect Controls 上でどう箱分けされているか不明`
+
+という曖昧さを潰すための便。
+
+この lane は algorithm drift を証明するためのものではない。
+逆に、ここで見つかった差分はまず host/UI parity 問題として扱う。

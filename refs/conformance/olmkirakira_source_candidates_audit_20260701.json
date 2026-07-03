@@ -1,0 +1,95 @@
+{
+  "kind": "olmkirakira_source_candidates_audit",
+  "schema": 1,
+  "case_id": "kk_vertical_len50_brightness1_strength100",
+  "witness_xy": [
+    934,
+    118
+  ],
+  "source_cpp": "mac/OLMKiraKira/OLMKiraKira.cpp",
+  "lane_summary": {
+    "hotspot_decision": "hotspot-proof-shifted-to-reference-or-witness-placement",
+    "provenance_decision": "reference-export-or-witness-placement-pending",
+    "canonical_reference_rgba": [
+      131,
+      131,
+      131,
+      255
+    ],
+    "windows_traced_rgba": [
+      144,
+      144,
+      144,
+      255
+    ],
+    "current_mac_witness_rgba": [
+      144,
+      144,
+      144,
+      255
+    ],
+    "archived_candidate_rgba": [
+      145,
+      145,
+      145,
+      255
+    ]
+  },
+  "non_source_gate": {
+    "required_before_source_patch": "Same-run export or witness-placement evidence that contradicts the current traced hotspot agreement.",
+    "why": "The current in-tree facts already split into reference/export provenance or witness-placement: Windows traced hotspot == current Mac witness == 144, while canonical reference is 131."
+  },
+  "source_candidates": [
+    {
+      "rank": 1,
+      "site": "render_typed_merge_mode_1_screen_compose",
+      "function": "RenderTyped",
+      "line": 456,
+      "why_still_live": "This is the first in-source place to reopen only if a future same-run export/reference witness explicitly contradicts the current traced hotspot agreement through compose and sampled writeback.",
+      "allowed_change_shape": "single-witness merge-mode-1 compose or writeback boundary only"
+    },
+    {
+      "rank": 2,
+      "site": "add_colored_union_glow_aggregation",
+      "function": "AddColoredUnion",
+      "line": 366,
+      "why_still_live": "Aggregation remains second-order only. Reopen it only if a later witness proves the same-run export disagrees before final compose, not because the canonical reference PNG differs from the traced hotspot.",
+      "allowed_change_shape": "typed per-ray aggregation contradiction only; no broad brightness/gain retune"
+    },
+    {
+      "rank": 3,
+      "site": "params_setup_highlight_ramp_control_surface",
+      "function": "ParamsSetup",
+      "line": 615,
+      "why_still_live": "The remaining KiraKira work may still need control-surface coverage because Windows manifests expose ramp/highlight controls. But that is a schema/endgame-coverage lane, not a hotspot compose fix.",
+      "allowed_change_shape": "parameter/control-surface coverage only; not a hotspot pixel-math patch"
+    }
+  ],
+  "decision_ladder": [
+    {
+      "step": 1,
+      "condition": "If no new same-run export/reference contradiction exists",
+      "action": "Do not patch OLMKiraKira source for the hotspot lane; keep work in provenance/export or witness-placement validation."
+    },
+    {
+      "step": 2,
+      "condition": "If a future witness says compose/writeback diverges on the same run and same hotspot",
+      "action": "Reopen RenderTyped merge-mode-1 screen compose at the hotspot before touching upstream aggregation."
+    },
+    {
+      "step": 3,
+      "condition": "If the future witness proves the mismatch already exists before final compose",
+      "action": "Only then reopen AddColoredUnion or upstream per-ray aggregation."
+    },
+    {
+      "step": 4,
+      "condition": "If remaining work is about missing Windows-visible controls rather than the hotspot pixel",
+      "action": "Treat highlight/ramp parameters as a separate schema/endgame-coverage lane."
+    }
+  ],
+  "forbidden_actions": [
+    "Do not retune BT.709, boxFilter, ray-helper choreography, or global brightness gain from the current hotspot evidence.",
+    "Do not promote a broad final-quantization tweak from the canonical-reference mismatch alone.",
+    "Do not treat highlight/ramp control coverage as proof that the hotspot compose math is wrong."
+  ]
+}

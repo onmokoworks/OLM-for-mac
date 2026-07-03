@@ -1,0 +1,85 @@
+{
+  "case_id": "case_0010",
+  "decision_ladder": [
+    {
+      "action": "Constrain changes to polar population / preserved-validity capture in RenderRotation8",
+      "condition": "If Windows typed witness shows the decisive bright contribution is missing before scatter/normalization",
+      "step": 1
+    },
+    {
+      "action": "Constrain changes to scatter/substitute-path ownership before final inverse sampling",
+      "condition": "If Windows proves the bright family exists upstream but is lost in ownership, substitute, or neighboring-row promotion",
+      "step": 2
+    },
+    {
+      "action": "Only then reopen final inverse-sample / writeback logic",
+      "condition": "If Windows shows upstream population already matches but the split still appears at final sampling",
+      "step": 3
+    }
+  ],
+  "forbidden_actions": [
+    "Do not promote a global validity-alpha rewrite from this lane.",
+    "Do not promote a same-row-only support tweak from the row-843 cluster evidence alone.",
+    "Do not retune final byte conversion while the witness remains black before the proven upstream boundary."
+  ],
+  "kind": "olmradialblur_tiny_rotation_source_candidates_audit",
+  "lane_summary": {
+    "all_variants_keep_bright_count_zero": true,
+    "current_candidate_rgba": [
+      0,
+      0,
+      0,
+      255
+    ],
+    "decision": "tiny-rotation-pending-upstream-rgb-or-substitute-proof",
+    "direct_source_cells_all_black": true,
+    "reference_bright_count": 17,
+    "windows_reference_rgba": [
+      255,
+      255,
+      255,
+      255
+    ],
+    "witness_direct_cluster_visibility": false
+  },
+  "pending_windows_followup": {
+    "acceptance_note": "refs/conformance/olmradialblur_tiny_rotation_anchor_context_watch_return_acceptance_20260702.md",
+    "package": "refs/runtime_trace_packages/olm_runtime_trace_radialblur_tiny_rotation_anchor_context_watch_followup_20260702.zip",
+    "request_id": "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702",
+    "status": "pending",
+    "stop_condition": "Return enough typed pointer/watchpoint evidence to decide which anchored upstream branch actually promotes the missing bright lobe at `case_0010 (1614,6)`. If the watchpoint path still cannot be held, return the exact failed address/condition plus the dumped `rsi/rbp/rsp` qword windows and pointer context used to reconstruct the sampled-cell address."
+  },
+  "schema": 1,
+  "source_candidates": [
+    {
+      "allowed_change_shape": "typed source-polar population or preserved-validity capture only",
+      "function": "RenderRotation8",
+      "line": 934,
+      "rank": 1,
+      "site": "rotation_polar_population_and_validity_capture",
+      "why_still_live": "The active witness is already black before final inverse sampling, and the local audits show the surviving bright family lives upstream in source-polar / preserved-validity ownership."
+    },
+    {
+      "allowed_change_shape": "upstream scatter/substitute-path ownership only; no broad same-row tweak",
+      "function": "scatter_row_small / RenderRotation8",
+      "line": 952,
+      "rank": 2,
+      "site": "rotation_scatter_and_neighboring_row_ownership",
+      "why_still_live": "The row-843 cluster is locally real, but the witness cannot directly see it in the current branch, so neighboring-row ownership or a substitute/fallback promotion before inverse sampling remains live."
+    },
+    {
+      "allowed_change_shape": "only with explicit Windows contradiction to the current upstream reading",
+      "function": "RenderRotation8",
+      "line": 1074,
+      "rank": 3,
+      "site": "rotation_final_inverse_sample_and_u8_writeback",
+      "why_still_live": "This is second-order only. Reopen it only if a Windows typed witness proves upstream population already matches and the decisive split still appears at final sampling."
+    }
+  ],
+  "source_cpp": "mac/OLMRadialBlur/OLMRadialBlur.cpp",
+  "windows_requirement": "Use the stable `+0x4eb9/+0x4ec8` anchor only as the entry point; the required witness is now the first retained promotion branch with stack/pointer or watchpoint context around the sampled cell and neighboring rows.",
+  "witness_xy": [
+    1614,
+    6
+  ]
+}

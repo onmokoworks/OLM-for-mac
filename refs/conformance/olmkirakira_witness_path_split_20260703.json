@@ -1,0 +1,77 @@
+{
+  "kind": "olmkirakira_witness_path_split",
+  "schema": 1,
+  "focus_xy": [
+    934,
+    118
+  ],
+  "reference_png": {
+    "path": "handoff/ae_pixel_validation_20260618/requests/ae_single_kirakira_hotspot_probe_20260703_r3/expected/kirakira_single_ray_20260606__software__fr24__kk_vertical_len50_brightness1_strength100.png",
+    "rgba8": [
+      131,
+      131,
+      131,
+      255
+    ]
+  },
+  "historical_8bpc_lane": {
+    "request_reference_manifest": "/tmp/ae_kirakira_single_ray_request_20260630/reference_manifest.json",
+    "project_bits_per_channel": 8,
+    "output_png": "/tmp/kirakira_compose_debug_20260703_8bpc_rerun/kirakira_single_ray_20260606__software__fr24__kk_vertical_len50_brightness1_strength100.png",
+    "rgba8": [
+      144,
+      144,
+      144,
+      255
+    ],
+    "debug_out_u8": [
+      144,
+      144,
+      144,
+      255
+    ],
+    "debug_src_rgba_float": [
+      0.117647059,
+      0.117647059,
+      0.117647059,
+      1.0
+    ],
+    "debug_glow_alpha_after_opacity": 0.507505655
+  },
+  "live_16bpc_lane": {
+    "request_reference_manifest": "handoff/ae_pixel_validation_20260618/requests/ae_single_kirakira_hotspot_probe_20260703_r3/reference_manifest.json",
+    "project_bits_per_channel": null,
+    "output_png": "/tmp/olm_ae_single_case_20260703_141656/kirakira_single_ray_20260606__software__fr24__kk_vertical_len50_brightness1_strength100.png",
+    "rgba8": [
+      91,
+      91,
+      91,
+      255
+    ],
+    "debug_out_u8": [
+      45,
+      45,
+      45,
+      128
+    ],
+    "debug_out_u8_times_2_rgb": [
+      90,
+      90,
+      90,
+      128
+    ],
+    "debug_out_prequantized_rgba_float": [
+      0.178238466,
+      0.178238466,
+      0.178238466,
+      0.500007629
+    ],
+    "debug_glow_alpha_after_opacity": 0.126878381
+  },
+  "decision": {
+    "status": "historical-8bpc-and-live-16bpc-lanes-must-not-be-mixed",
+    "summary": "The old 144-valued KiraKira hotspot witness belongs to an explicit 8bpc request lane, while the 2026-07-03 live probe was run through a request with no project bits_per_channel metadata and executed as a 16bpc host path. Those are different host contexts.",
+    "reason": "At the same hotspot `(934,118)`, the historical 8bpc rerun reproduces `[144,144,144,255]`, while the live 16bpc lane exports `[91,91,91,255]` and logs plugin-local `out_u8=[45,45,45,128]`. So the current KiraKira discrepancy is not permission to collapse the lane into a single provenance statement.",
+    "next_action": "Keep 8bpc witness reasoning and 16bpc/live-host reasoning separate. Reopen provenance/export claims only after matching bit-depth and host context."
+  }
+}

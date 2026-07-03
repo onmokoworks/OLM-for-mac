@@ -1,5 +1,9 @@
 # OLMKiraKira Pending Compose Proof
 
+- Historical status: `historical-superseded-by-hotspot-provenance-lane`
+- Superseded by: `/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmkirakira_hotspot_export_contract_audit_20260701.md`
+- Why superseded: The answered 2026-07-01 hotspot witness already matches the current Mac compose-boundary values through pre-writeback and sampled RGBA8. The remaining lane is no longer live compose/quantization isolation; it is same-run export provenance, witness-placement validation, or endgame-control coverage.
+
 ## Decision Boundary
 
 Determine whether the remaining KiraKira 8bpc Software residual comes from the internal merge-mode-1 compose site itself, from the pre-writeback float->u8 quantization/export step, or from a narrower residual hotspot not yet instrumented.
@@ -15,14 +19,6 @@ Determine whether the remaining KiraKira 8bpc Software residual comes from the i
 - Ray helper: `grounded-within-float-print-precision`
 - BoxFilter pass1 window: `resolved and explained by BT.709 seed correction`
 - fd90 aggregation witnesses: `{'center_glow_rgba': [1.0, 1.0, 1.0, 0.71891218], 'up_glow_rgba': [1.0, 1.0, 1.0, 0.76832885], 'right_glow_rgba': [1.0, 1.0, 1.0, 0.71564364]}`
-- 2026-06-30 live Mac AE compose-boundary witness now proves the Mac-side
-  saved-PNG mismatch is already present inside the plug-in at the compose
-  boundary, not only at final AE export. On
-  `kk_vertical_len50_brightness1_strength100`, hotspot `(934,118)` logs
-  `src=[30,30,30]`, `glow_alpha_after_opacity=0.507505655`,
-  `out_u8=[144,144,144,255]`, and the saved PNG is also `[144,144,144,255]`
-  while Windows stays `[131,131,131,255]`. Controls `(960,540)`,
-  `(960,490)`, and `(1010,540)` show the same boundary-vs-saved-PNG agreement.
 
 ## Missing Windows Trace Values
 
@@ -37,26 +33,6 @@ Determine whether the remaining KiraKira 8bpc Software residual comes from the i
 
 - primary_vertical_case: `{'case_id': 'kk_vertical_len50_brightness1_strength100', 'xy': [934, 118], 'windows_rgba': [131, 131, 131, 255], 'mac_bt709_candidate_rgba': [145, 145, 145, 255], 'delta': [14, 14, 14, 0]}`
 - optional_rotation13_case: `{'case_id': 'kk_diagonal_len50_rotation13', 'xy': [1098, 202], 'windows_rgba': [112, 112, 112, 255], 'mac_bt709_candidate_rgba': [46, 46, 46, 255], 'delta': [-66, -66, -66, 0]}`
-- 2026-06-30 hotspot inversion from the Mac witness makes the remaining Windows
-  ask even narrower:
-  - hotspot `(934,118)`: with source `[30,30,30]`, Windows `[131,131,131]`
-    implies effective screen alpha `0.44888888...`
-  - current Mac plug-in at the same hotspot uses
-    `glow_alpha_after_opacity=0.507505655` and produces `out_u8=[144,144,144]`
-  - the gap is therefore about `-0.0586` in effective alpha relative to the
-    current Mac direct-use compose path
-- 2026-07-01 hotspot-local compose diagnostic narrows it one step further:
-  - using the already-grounded grayscale controls `(960,540)` and `(1010,540)`,
-    the average control attenuation ratio still only projects the hotspot to
-    byte `138`
-  - Windows still needs byte `131`, which means there is an additional
-    hotspot-only drop of `7` bytes beyond the already-grounded control behavior
-  - artifact:
-    `refs/conformance/olmkirakira_hotspot_local_compose_diagnostic_20260701.md`
-- That means a useful Windows return only needs to answer one of three shapes:
-  1. fd90/post-opacity glow alpha is already lower than Mac at the hotspot,
-  2. merge-mode-1 compose attenuates the hotspot alpha below the fd90/post-opacity value,
-  3. compose float matches but final pre-writeback/quantization still lowers the byte.
 
 ## Actionable Return Criteria
 
@@ -75,11 +51,3 @@ Determine whether the remaining KiraKira 8bpc Software residual comes from the i
 - At one BT.709 residual hotspot from the 9 Software cases, capture source RGBA float, glow RGBA float after fd90/opacities, merge-mode-1 composed RGBA float, pre-writeback RGBA float, and final written u8/PNG byte.
 - If the compose-site float is unavailable, capture the last float before quantization/export plus the exact quantization helper or clamp path.
 - Prefer a residual hotspot over center/up/right because those witnesses already ground fd90 aggregation but do not isolate the failing branch.
-- Prefer hotspot `(934,118)` specifically and record the exact effective alpha
-  path there. Current Mac evidence already says:
-  - source gray = `30/255`
-  - Mac direct-use glow alpha = `0.507505655`
-  - Mac compose boundary byte = `144`
-  - Windows final byte = `131`
-  So a Windows answer that only repeats center/up/right or only returns final
-  PNG bytes is no longer enough.

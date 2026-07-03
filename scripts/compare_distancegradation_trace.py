@@ -10,11 +10,33 @@ from pathlib import Path
 from typing import Any
 
 
+ROOT = Path(__file__).resolve().parents[1]
 REQUEST_ID = "olmdistancegradation_16bpc_constant_boundary_witness_20260630"
 CASE0023_REQUEST_ID = "olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630"
+CASE0023_THRESHOLD_REQUEST_ID = "olmdistancegradation_case0023_threshold_family_followup_20260701"
+CASE0023_TRIPLET_XY_REQUEST_ID = "olmdistancegradation_case0023_triplet_xy_compose_hook_followup_20260701"
+CASE0023_OUTPUT_WORD_REQUEST_ID = "olmdistancegradation_case0023_output_word_triplet_followup_20260701"
+CASE0023_REFCON_STACK_WORDMAP_REQUEST_ID = "olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702"
+CASE0023_REFCON_WORDMAP_REQUEST_ID = "olmdistancegradation_case0023_refcon_wordmap_followup_20260702"
 FIELD_PREP_REQUEST_ID = "olmdistancegradation_field_prep_runtime_trace_20260619"
 CASE0026_REQUEST_ID = "olmdistancegradation_16bpc_case0026_x_witness_20260628"
-REQUEST_IDS = {REQUEST_ID, CASE0023_REQUEST_ID, FIELD_PREP_REQUEST_ID, CASE0026_REQUEST_ID}
+REQUEST_IDS = {
+    REQUEST_ID,
+    CASE0023_REQUEST_ID,
+    CASE0023_THRESHOLD_REQUEST_ID,
+    CASE0023_TRIPLET_XY_REQUEST_ID,
+    CASE0023_OUTPUT_WORD_REQUEST_ID,
+    CASE0023_REFCON_STACK_WORDMAP_REQUEST_ID,
+    CASE0023_REFCON_WORDMAP_REQUEST_ID,
+    FIELD_PREP_REQUEST_ID,
+    CASE0026_REQUEST_ID,
+}
+CASE0023_THRESHOLD_AUDIT = (
+    ROOT
+    / "refs"
+    / "conformance"
+    / "olmdistancegradation_case0023_threshold_family_audit_20260701.json"
+)
 
 LOCAL_ASSUMPTIONS = {
     "distance_transform": "scipy/OpenCV-like Euclidean distance_transform_edt for current CLI; Windows AEX embeds OpenCV 4.5.5",
@@ -27,7 +49,7 @@ LOCAL_ASSUMPTIONS = {
 
 
 def repo_root() -> Path:
-    return Path(__file__).resolve().parents[1]
+    return ROOT
 
 
 def parse_args() -> argparse.Namespace:
@@ -52,7 +74,17 @@ def fail(message: str) -> int:
 
 
 def find_result(summary: dict[str, Any]) -> dict[str, Any] | None:
-    ordered_ids = [CASE0023_REQUEST_ID, REQUEST_ID, CASE0026_REQUEST_ID, FIELD_PREP_REQUEST_ID]
+    ordered_ids = [
+        CASE0023_REFCON_STACK_WORDMAP_REQUEST_ID,
+        CASE0023_REFCON_WORDMAP_REQUEST_ID,
+        CASE0023_OUTPUT_WORD_REQUEST_ID,
+        CASE0023_TRIPLET_XY_REQUEST_ID,
+        CASE0023_THRESHOLD_REQUEST_ID,
+        CASE0023_REQUEST_ID,
+        REQUEST_ID,
+        CASE0026_REQUEST_ID,
+        FIELD_PREP_REQUEST_ID,
+    ]
     for request_id in ordered_ids:
         for row in summary.get("results", []):
             if isinstance(row, dict) and row.get("request_id") == request_id:
@@ -116,35 +148,54 @@ def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
     requested = observations.get("requested_for_each_pixel", {})
     if not isinstance(requested, dict):
         requested = {}
-    if row.get("request_id") in {REQUEST_ID, CASE0023_REQUEST_ID}:
-        if row.get("request_id") == CASE0023_REQUEST_ID:
+    if row.get("request_id") in {REQUEST_ID, CASE0023_REQUEST_ID, CASE0023_THRESHOLD_REQUEST_ID, CASE0023_TRIPLET_XY_REQUEST_ID, CASE0023_OUTPUT_WORD_REQUEST_ID}:
+        if row.get("request_id") in {CASE0023_REQUEST_ID, CASE0023_THRESHOLD_REQUEST_ID, CASE0023_TRIPLET_XY_REQUEST_ID, CASE0023_OUTPUT_WORD_REQUEST_ID}:
             case_meta = observations.get("case", {})
             if not isinstance(case_meta, dict):
                 case_meta = {}
+            threshold_triplet = observations.get("threshold_triplet")
+            if threshold_triplet is None:
+                threshold_triplet = case_meta.get("threshold_triplet")
+            if threshold_triplet is None:
+                threshold_triplet = requested.get("threshold_triplet")
             return {
                 "present": True,
                 "status": row.get("status"),
                 "summary": row.get("summary"),
                 "source_file": row.get("source_file"),
                 "cases": [case_meta] if case_meta else [],
+                "threshold_triplet": threshold_triplet,
                 "field_values": {
                     "source_input_rgba16": requested.get("source_input_rgba16"),
                     "binary_mask_before_distance_transform": requested.get("binary_mask_value_before_distance_transform"),
                     "inside_or_outside_distance_before_threshold": {
-                        "inside": requested.get("inside_distance_before_threshold"),
-                        "outside": requested.get("outside_distance_before_threshold"),
+                        "inside": (
+                            requested.get("inside_distance_before_threshold")
+                            or requested.get("raw_inside_distance_before_threshold")
+                        ),
+                        "outside": (
+                            requested.get("outside_distance_before_threshold")
+                            or requested.get("raw_outside_distance_before_threshold")
+                        ),
                     },
                     "field_value_before_compose_or_color_pick": requested.get(
+                        "helper_stage_field_value_before_compose"
+                    ) or requested.get(
                         "field_value_after_constant_threshold_before_compose"
                     ) or requested.get("field_value_finally_consumed_by_FUN_181170480"),
                 },
                 "threshold_and_normalization": {
-                    "threshold_values_ui_and_internal": requested.get("threshold_values"),
-                    "comparison_rule": requested.get("comparison_rule"),
-                    "selected_side_inside_outside_or_both": requested.get("selected_side_for_both_mode"),
+                    "threshold_values_ui_and_internal": requested.get("threshold_values")
+                    or requested.get("threshold_values_ui_and_internal"),
+                    "comparison_rule": requested.get("comparison_rule")
+                    or requested.get("threshold_equality_or_plateau_decision"),
+                    "selected_side_inside_outside_or_both": requested.get("selected_side_for_both_mode")
+                    or requested.get("selected_side_inside_outside_or_both"),
                     "outside_threshold_zero_special_case": requested.get("outside_threshold_zero_special_case"),
+                    "constant_binary_fork_order": requested.get("constant_binary_fork_order"),
                 },
                 "compose": {
+                    "field_value_consumed_by_compose": requested.get("field_value_finally_consumed_by_FUN_181170480"),
                     "output_rgba_float_before_cvt": requested.get("fun_181170480_output_rgba_before_word_store"),
                     "final_rgba16": requested.get("final_rgba16"),
                 },
@@ -296,7 +347,7 @@ def build_comparison(summary: dict[str, Any]) -> dict[str, Any]:
     result = find_result(summary)
     request_id = result.get("request_id") if isinstance(result, dict) else REQUEST_ID
     windows = summarize_windows(result)
-    return {
+    comparison = {
         "kind": "olmdistancegradation_trace_comparison",
         "schema": 1,
         "request_id": request_id,
@@ -304,6 +355,21 @@ def build_comparison(summary: dict[str, Any]) -> dict[str, Any]:
         "local_assumptions": LOCAL_ASSUMPTIONS,
         "windows": windows,
     }
+    if request_id in {
+        CASE0023_REQUEST_ID,
+        CASE0023_THRESHOLD_REQUEST_ID,
+        CASE0023_TRIPLET_XY_REQUEST_ID,
+        CASE0023_OUTPUT_WORD_REQUEST_ID,
+        CASE0023_REFCON_STACK_WORDMAP_REQUEST_ID,
+    } and CASE0023_THRESHOLD_AUDIT.exists():
+        audit = load_json(CASE0023_THRESHOLD_AUDIT)
+        comparison["local_case0023_threshold_context"] = {
+            "decision": audit.get("decision"),
+            "threshold_triplet_roles": audit.get("threshold_triplet_roles"),
+            "live_mac_triplet": audit.get("live_mac_triplet"),
+            "live_mac_edge_family": audit.get("live_mac_edge_family"),
+        }
+    return comparison
 
 
 def md_value(value: Any) -> str:
@@ -317,6 +383,7 @@ def md_value(value: Any) -> str:
 def render_markdown(comparison: dict[str, Any]) -> str:
     windows = comparison["windows"]
     assumptions = comparison["local_assumptions"]
+    local_case0023 = comparison.get("local_case0023_threshold_context")
     lines = [
         "# OLMDistanceGradation Trace Comparison",
         "",
@@ -337,12 +404,29 @@ def render_markdown(comparison: dict[str, Any]) -> str:
             f"- Summary: {windows.get('summary') or '-'}",
             f"- Cases: {md_value(windows.get('cases'))}",
             f"- Witness pixels: {md_value(windows.get('witness_pixels'))}",
+            f"- Threshold triplet: {md_value(windows.get('threshold_triplet'))}",
             f"- Field values: {md_value(windows.get('field_values'))}",
             f"- OpenCV calls: {md_value(windows.get('opencv_calls'))}",
             f"- Threshold/normalization: {md_value(windows.get('threshold_and_normalization'))}",
             f"- Compose: {md_value(windows.get('compose'))}",
             f"- Branch decision: {md_value(windows.get('branch_decision'))}",
             "",
+        ]
+    )
+    if local_case0023:
+        lines.extend(
+            [
+                "## Local case_0023 Context",
+                "",
+                f"- Decision: {md_value(local_case0023.get('decision'))}",
+                f"- Threshold triplet roles: {md_value(local_case0023.get('threshold_triplet_roles'))}",
+                f"- Live Mac triplet: {md_value(local_case0023.get('live_mac_triplet'))}",
+                f"- Live Mac edge family: {md_value(local_case0023.get('live_mac_edge_family'))}",
+                "",
+            ]
+        )
+    lines.extend(
+        [
             "## Interpretation",
             "",
             "- `constant-field-prep`: update the field construction/packing IR before touching compose.",

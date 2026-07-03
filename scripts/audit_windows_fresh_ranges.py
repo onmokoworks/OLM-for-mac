@@ -65,10 +65,10 @@ def normalize_manifest_param(plugin: str, path_parts: list[str], leaf: str, prop
         return "BG Color", "alias-trimmed-whitespace"
     if plugin == "OLMKiraKira":
         aliases = {
-            "Merge mode": "Merge Mode",
-            "Strength multiplier": "Strength Multiplier",
-            "Diagonal 2 length": "Diagonal2 Length",
-            "Diagonal Color2": "Diagonal2 Color",
+            "Merge mode": "Merge mode",
+            "Strength multiplier": "Strength multiplier",
+            "Diagonal 2 length": "Diagonal 2 length",
+            "Diagonal Color2": "Diagonal Color2",
         }
         if leaf in aliases:
             return aliases[leaf], "alias-legacy-label"
@@ -134,10 +134,8 @@ def normalize_manifest_param(plugin: str, path_parts: list[str], leaf: str, prop
             return direct_back[property_index], "alias-ordinal-ui"
     if plugin == "OLMColorKey":
         aliases = {
-            ("Edge Thin", "Amount"): "Edge Thin Amount",
-            ("Edge Blur", "Amount"): "Edge Blur Amount",
-            ("Edge Thin", "Distance Type"): "Distance Type",
-            ("Edge Blur", "Distance Type"): "Distance Type",
+            ("Edge Thin", "Amount"): "Amount",
+            ("Edge Blur", "Amount"): "Amount",
         }
         if (parent, leaf) in aliases:
             return aliases[(parent, leaf)], "alias-grouped-ui"
@@ -169,6 +167,16 @@ def resolve_source_param(
     params_by_label: dict[str, dict],
     params_in_order: list[dict],
 ) -> dict | None:
+    if plugin == "OLMColorKey" and normalized in {"Amount", "Distance Type"} and property_index is not None:
+        colorkey_ordinals = {
+            ("Amount", 14): 12,
+            ("Distance Type", 15): 13,
+            ("Amount", 18): 15,
+            ("Distance Type", 19): 16,
+        }
+        source_idx = colorkey_ordinals.get((normalized, property_index))
+        if source_idx is not None and source_idx < len(params_in_order):
+            return params_in_order[source_idx]
     if plugin == "OLMRadialBlur" and normalized in {"Offset", "Offset Mode"} and property_index is not None:
         radial_ordinals = {
             ("Offset Mode", 5): 4,

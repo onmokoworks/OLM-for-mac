@@ -21,6 +21,9 @@ POINT_RE = re.compile(
     r"sample_u8=\((?P<sample_u8>[^)]+)\) "
     r"alpha=(?P<alpha>[-+0-9.eE]+) alpha_hex=(?P<alpha_hex>\S+) "
     r"validity_alpha=(?P<validity_alpha>[-+0-9.eE]+) validity_alpha_hex=(?P<validity_alpha_hex>\S+) "
+    r"brightness_gain=(?P<brightness_gain>[-+0-9.eE]+) "
+    r"accum_rgba=\((?P<accum_rgba>[^)]+)\) accum_rgba_hex=\((?P<accum_rgba_hex>[^)]+)\) "
+    r"normalized_rgba=\((?P<normalized_rgba>[^)]+)\) normalized_rgba_hex=\((?P<normalized_rgba_hex>[^)]+)\) "
     r"cell_valid=\((?P<cell_valid>[^)]+)\) "
     r"cell_alpha=\((?P<cell_alpha>[^)]+)\) "
     r"cell_rgb=\(\((?P<cell_rgb>.+)\)\) "
@@ -88,6 +91,11 @@ def load_points(path: Path) -> list[dict[str, Any]]:
                 "validity_alpha": validity_alpha,
                 "validity_alpha_hex": data["validity_alpha_hex"],
                 "validity_alpha_u8": max(0, min(255, int(math.floor(validity_alpha * 255.0 + 1.0e-4)))),
+                "brightness_gain": float(data["brightness_gain"]),
+                "accum_rgba": parse_tuple(data["accum_rgba"], float),
+                "accum_rgba_hex": [part.strip() for part in data["accum_rgba_hex"].split(",")],
+                "normalized_rgba": parse_tuple(data["normalized_rgba"], float),
+                "normalized_rgba_hex": [part.strip() for part in data["normalized_rgba_hex"].split(",")],
                 "cell_valid": parse_tuple(data["cell_valid"], float),
                 "cell_alpha": parse_tuple(data["cell_alpha"], float),
                 "cell_rgb": parse_cell_rgb(data["cell_rgb"]),
@@ -128,16 +136,16 @@ def render_markdown(report: dict[str, Any]) -> str:
             [
                 f"## {kind}",
                 "",
-                "| XY | sample_u8 | alpha_u8 | validity_alpha_u8 | indices | cell_valid | cell_alpha | cell_rgb | src_cell_rgba |",
-                "| - | - | -: | -: | - | - | - | - | - |",
+                "| XY | sample_u8 | alpha_u8 | validity_alpha_u8 | brightness_gain | accum_rgba | normalized_rgba | indices | cell_valid | cell_alpha |",
+                "| - | - | -: | -: | -: | - | - | - | - | - |",
             ]
         )
         for point in report["by_kind"][kind]:
             lines.append(
                 f"| `({point['x']},{point['y']})` | `{point['sample_u8']}` | "
                 f"{point['alpha_u8']} | {point['validity_alpha_u8']} | "
-                f"`{point['indices']}` | `{point['cell_valid']}` | `{point['cell_alpha']}` | "
-                f"`{point['cell_rgb']}` | `{point['src_cell_rgba']}` |"
+                f"{point['brightness_gain']:.6g} | `{point['accum_rgba']}` | `{point['normalized_rgba']}` | "
+                f"`{point['indices']}` | `{point['cell_valid']}` | `{point['cell_alpha']}` |"
             )
         lines.append("")
     return "\n".join(lines)

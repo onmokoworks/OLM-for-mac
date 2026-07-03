@@ -1,6 +1,6 @@
 # OLMBlur Standalone Witness Intake
 
-- Source zip: `/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_share_intake_smoke_86i91636/olm_pr_witness/new/olmblur_case0007_16bpc_345_672_b_witness_windows_20260630.zip`
+- Source zip: `/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_share_intake_smoke_bfqkwzpd/olm_pr_witness/new/olmblur_case0007_16bpc_345_672_b_witness_windows_20260630.zip`
 - Case: `olmblur__case_0007`
 - Bit depth: `16bpc`
 - Target: `{'x': 345, 'y': 672, 'channel': 'B'}`

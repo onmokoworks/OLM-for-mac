@@ -1,0 +1,434 @@
+{
+  "kind": "olmradialblur_tiny_rotation_lane_audit",
+  "schema": 1,
+  "case_id": "case_0010",
+  "witness_xy": [
+    1614,
+    6
+  ],
+  "current_candidate_rgba": [
+    0,
+    0,
+    0,
+    255
+  ],
+  "windows_reference_rgba": [
+    255,
+    255,
+    255,
+    255
+  ],
+  "same_row_structure": {
+    "row_length": 3,
+    "row_weights": [
+      1.0,
+      0.6065306823076752,
+      0.13533530340315494
+    ],
+    "witness_same_row_cells": [
+      {
+        "cell": "x0y0",
+        "angle_index": 1603,
+        "radius_row": 844,
+        "same_row_source_taps": [
+          1603,
+          1602,
+          1601
+        ],
+        "cell_rgb": [
+          -0.0147110438,
+          -0.0147110438,
+          -0.0147110438
+        ],
+        "src_cell_rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "cell": "x1y0",
+        "angle_index": 1604,
+        "radius_row": 844,
+        "same_row_source_taps": [
+          1604,
+          1603,
+          1602
+        ],
+        "cell_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "src_cell_rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "cell": "x0y1",
+        "angle_index": 1603,
+        "radius_row": 845,
+        "same_row_source_taps": [
+          1603,
+          1602,
+          1601
+        ],
+        "cell_rgb": [
+          -0.0485489555,
+          -0.0485489555,
+          -0.0485489555
+        ],
+        "src_cell_rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "cell": "x1y1",
+        "angle_index": 1604,
+        "radius_row": 845,
+        "same_row_source_taps": [
+          1604,
+          1603,
+          1602
+        ],
+        "cell_rgb": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "src_cell_rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    ],
+    "direct_source_cells_all_black": true
+  },
+  "source_polar_structure": {
+    "witness_sample_rgba": [
+      -0.00408606,
+      -0.00408606,
+      -0.00408606,
+      1
+    ],
+    "witness_sample_u8": [
+      0,
+      0,
+      0,
+      255
+    ],
+    "dominant_local_positive_cluster": [
+      {
+        "xy": [
+          1601,
+          843
+        ],
+        "rgba": [
+          0.168253,
+          0.168253,
+          0.168253,
+          1
+        ],
+        "luma": 0.168253
+      },
+      {
+        "xy": [
+          1602,
+          843
+        ],
+        "rgba": [
+          0.0893472,
+          0.0893472,
+          0.0893472,
+          1
+        ],
+        "luma": 0.0893472
+      }
+    ],
+    "strongest_positive": [
+      {
+        "xy": [
+          1608,
+          838
+        ],
+        "rgba": [
+          0.452643,
+          0.452643,
+          0.452643,
+          1
+        ],
+        "luma": 0.45264299999999996
+      },
+      {
+        "xy": [
+          1601,
+          843
+        ],
+        "rgba": [
+          0.168253,
+          0.168253,
+          0.168253,
+          1
+        ],
+        "luma": 0.168253
+      },
+      {
+        "xy": [
+          1602,
+          843
+        ],
+        "rgba": [
+          0.0893472,
+          0.0893472,
+          0.0893472,
+          1
+        ],
+        "luma": 0.0893472
+      },
+      {
+        "xy": [
+          1608,
+          839
+        ],
+        "rgba": [
+          0.0355792,
+          0.0355792,
+          0.0355792,
+          1
+        ],
+        "luma": 0.0355792
+      }
+    ],
+    "strongest_negative": [
+      {
+        "xy": [
+          1601,
+          845
+        ],
+        "rgba": [
+          -0.624861,
+          -0.624861,
+          -0.624861,
+          1
+        ],
+        "luma": -0.624861
+      },
+      {
+        "xy": [
+          1601,
+          844
+        ],
+        "rgba": [
+          -0.189342,
+          -0.189342,
+          -0.189342,
+          1
+        ],
+        "luma": -0.189342
+      }
+    ],
+    "direct_source_cells": [
+      {
+        "xy": [
+          1603,
+          844
+        ],
+        "rgba": [
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "xy": [
+          1604,
+          844
+        ],
+        "rgba": [
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "xy": [
+          1603,
+          845
+        ],
+        "rgba": [
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "xy": [
+          1604,
+          845
+        ],
+        "rgba": [
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    ]
+  },
+  "row_coupling_probe": {
+    "reference_bright_count": 17,
+    "reference_patch_r": [
+      [
+        251,
+        247,
+        253
+      ],
+      [
+        4,
+        253,
+        251
+      ],
+      [
+        5,
+        1,
+        255
+      ]
+    ],
+    "variants": [
+      {
+        "name": "baseline",
+        "label": "baseline",
+        "diff": {
+          "max_diff": 255,
+          "mean_diff": 0.01032033661265432,
+          "nonzero_px": 33740,
+          "nonzero_px_percent": 1.6271219135802468
+        },
+        "bright_count": 0,
+        "center_of_mass": null,
+        "witness_rgba": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "patch_r": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            0,
+            0
+          ],
+          [
+            5,
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "name": "prev2-k2-positive",
+        "label": "prev2-k2-positive scale=0.0025",
+        "diff": {
+          "max_diff": 255,
+          "mean_diff": 0.010719039351851851,
+          "nonzero_px": 35974,
+          "nonzero_px_percent": 1.7348572530864197
+        },
+        "bright_count": 0,
+        "center_of_mass": null,
+        "witness_rgba": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "patch_r": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            0,
+            0
+          ],
+          [
+            5,
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "name": "prev2-row-tail-positive",
+        "label": "prev2-row-tail-positive scale=0.005",
+        "diff": {
+          "max_diff": 255,
+          "mean_diff": 0.012562572337962962,
+          "nonzero_px": 42503,
+          "nonzero_px_percent": 2.0497202932098766
+        },
+        "bright_count": 0,
+        "center_of_mass": null,
+        "witness_rgba": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "patch_r": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            0,
+            0
+          ],
+          [
+            5,
+            1,
+            0
+          ]
+        ]
+      }
+    ],
+    "all_variants_keep_bright_count_zero": true
+  },
+  "propagated_validity_probe": {
+    "reading": "The propagated-validity probe leaves tiny Rotation effectively unchanged (`max=255 mean=0.0103`). This supports the existing conclusion that the remaining blocker is RGB/substitute-path population, not a simple validity-plane collapse."
+  },
+  "pending_windows_followup": {
+    "request_id": "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702",
+    "status": "pending",
+    "package": "refs/runtime_trace_packages/olm_runtime_trace_radialblur_tiny_rotation_anchor_context_watch_followup_20260702.zip",
+    "acceptance_note": "refs/conformance/olmradialblur_tiny_rotation_anchor_context_watch_return_acceptance_20260702.md",
+    "stop_condition": "Return enough typed pointer/watchpoint evidence to decide which anchored upstream branch actually promotes the missing bright lobe at `case_0010 (1614,6)`. If the watchpoint path still cannot be held, return the exact failed address/condition plus the dumped `rsi/rbp/rsp` qword windows and pointer context used to reconstruct the sampled-cell address."
+  },
+  "decision": {
+    "status": "tiny-rotation-pending-upstream-rgb-or-substitute-proof",
+    "reason": "The current Mac branch already rejects final-byte tuning and validity-only explanations. At the max witness `(1614,6)`, all four direct same-row source cells are black, the surviving cell_rgb values are small or negative, the dominant local positive source-polar family sits one row above at row 843 / angles 1601..1602, and the tested row-coupled surrogates still leave the reference bright-lobe count at 17 versus 0 locally. So the remaining lane stays upstream in neighboring-row contribution ownership or an AEX substitute/fallback branch before final inverse sampling.",
+    "forbidden_action": "Do not promote global validity-alpha policy, final byte conversion, broad row-coupling tweaks, or a plain same-row support rewrite from the current local evidence alone.",
+    "next_windows_requirement": "Use the stable `+0x4eb9/+0x4ec8` anchor only as the entry point; the required witness is now the first retained promotion branch with stack/pointer or watchpoint context around the sampled cell and neighboring rows."
+  }
+}

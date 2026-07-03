@@ -1,0 +1,132 @@
+{
+  "kind": "olmdistancegradation_case0023_bgoff_current_probe",
+  "date": "2026-07-02",
+  "status": "upstream-field-ownership-still-live",
+  "live_mac_bg_off_run": {
+    "result_json": "refs/reports/ae_single_case_distancegradation_case0023_bgoff_live_20260702/AE_SINGLE_CASE_RESULT.json",
+    "output_png": "refs/reports/ae_single_case_distancegradation_case0023_bgoff_live_20260702/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+    "field_debug": "refs/reports/ae_single_case_distancegradation_case0023_bgoff_live_20260702/field_debug.txt"
+  },
+  "windows_bg_off_reference": "refs/win_references/olmdistancegradation_16bpc_bg_compose_variants_20260626/DistanceGradation/renders/olmdistancegradation_16bpc_bg_compose_variants_20260626__software_16bpc__fr24__olmdistancegradation_case_0023_bg_off_variant.png",
+  "diff_vs_windows_bg_off": {
+    "max_diff": 255,
+    "mean_diff": 0.004585382908950617,
+    "nonzero_px": 73,
+    "nonzero_channels": 219
+  },
+  "witnesses": [
+    {
+      "xy": [
+        1698,
+        7
+      ],
+      "live_mac_rgba8": [
+        28,
+        0,
+        238,
+        255
+      ],
+      "windows_bg_off_rgba8": [
+        28,
+        0,
+        238,
+        255
+      ]
+    },
+    {
+      "xy": [
+        1699,
+        7
+      ],
+      "live_mac_rgba8": [
+        28,
+        0,
+        238,
+        255
+      ],
+      "windows_bg_off_rgba8": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "xy": [
+        1700,
+        7
+      ],
+      "live_mac_rgba8": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "windows_bg_off_rgba8": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "xy": [
+        414,
+        393
+      ],
+      "live_mac_rgba8": [
+        28,
+        0,
+        238,
+        255
+      ],
+      "windows_bg_off_rgba8": [
+        28,
+        0,
+        238,
+        255
+      ]
+    },
+    {
+      "xy": [
+        415,
+        393
+      ],
+      "live_mac_rgba8": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "windows_bg_off_rgba8": [
+        28,
+        0,
+        238,
+        255
+      ]
+    },
+    {
+      "xy": [
+        416,
+        393
+      ],
+      "live_mac_rgba8": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "windows_bg_off_rgba8": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "decision": {
+    "summary": "Current Mac bg_off still differs from Windows bg_off by the same 73px cardinality. This means the residual is not just a bg_on compose issue.",
+    "safe_claim": "The edge-family and threshold-family remaining pixels still come from upstream field ownership even when Use Background Color is disabled.",
+    "important_split": "The current Mac bg_off probe agrees with Windows bg_off at (1698,7), (1700,7), (414,393), and (416,393), but still disagrees at (1699,7) and (415,393)."
+  }
+}

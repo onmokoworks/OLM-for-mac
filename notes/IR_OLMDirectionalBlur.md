@@ -74,6 +74,33 @@ Current verified reference slice:
   strip; a useful Windows trace must expose either source-range evidence beyond
   that strip, a rotated-buffer/group-membership explanation, or another
   validity/alternate path.
+- 2026-07-01 source-candidates audit:
+  `refs/conformance/olmdirectionalblur_source_candidates_audit_20260701.md`
+  freezes one more practical boundary on the Mac side. Keep
+  `rotated-aex-full-choreo` as the structural base, but treat
+  `rowdriver_prepass_and_alpha_fade_gather`, `source_driven_scatter`, the
+  combined `exact-rowdriver` bundle, and measurement scaffolds
+  `direct` / `rotated-front-strength` as rejected global-fix lanes. The only
+  surviving narrow implementation lanes are still
+  `angle0-rowdriver-valid-alpha` and `diagonal-rotate-validity`, both requiring
+  typed Windows witness values before source edits.
+- 2026-07-01 hook-anchor audit:
+  `refs/conformance/olmdirectionalblur_hook_anchor_audit_20260701.md`
+  freezes the active Windows witness boundary in one machine-generated note.
+  Angle-0 stays anchored on the long RGB-only strip witness `(494,169)` plus
+  the right-edge endpoint `(579,169)`, with helper-local destination coverage /
+  rowdriver-group / valid-alpha facts still missing. Diagonal stays anchored on
+  `(507,367)` with signed-red companion witnesses and still needs typed
+  rotate-sampler / border-validity / group-size-normalization facts. This keeps
+  the next Windows round on two bounded hook families rather than another broad
+  rowdriver/rotate retry.
+- 2026-07-02 witness logging prep:
+  `refs/conformance/olmdirectionalblur_witness_logging_prep_20260702.md`
+  turns the hook-anchor/source-candidate state into a concrete witness logging
+  checklist for the next Windows pass. It freezes the exact A/B pointer/mapping,
+  denominator, alpha-or-valid side-channel, numerator, pre-writeback, and final
+  byte fields needed for both active lanes, plus the source/decomp anchors that
+  should make the next harness or trace request nearly mechanical.
 
 ## Evidence Priority
 

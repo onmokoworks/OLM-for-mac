@@ -1,0 +1,231 @@
+{
+  "request_id": "olmdistancegradation_case0023_current_aex_recapture_20260702",
+  "effect": {
+    "name": "Distance Gradation",
+    "match_name": "OLM Distance Gradation"
+  },
+  "why": [
+    "The packaged expected PNG for 16bpc case_0023 no longer behaves like a fully authoritative reference.",
+    "A live Mac AE rerun on 2026-07-02 matches the latest Windows runtime-traced threshold triplet at (414,393)/(415,393)/(416,393), while the packaged expected PNG still disagrees at (415,393).",
+    "Before changing OLMDistanceGradation field ownership logic again, recapture the current installed Windows Software render for the exact same case and source so the remaining 73px residual can be split into provenance vs implementation."
+  ],
+  "render_sets": [
+    {
+      "id": "software_16bpc",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "bit_depth": "16bpc",
+      "bits_per_channel": 16,
+      "required": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "olmdistancegradation_extended_case_0023_source",
+      "description": "Use the same source image and framing as normalized 16bpc OLMDistanceGradation extended case_0023. The before-effects frame should match the existing case_0023 input used by the 2026-06-25 normalized 16bpc request."
+    }
+  ],
+  "cases": [
+    {
+      "id": "olmdistancegradation_extended__case_0023_current_aex",
+      "source_case_id": "case_0023",
+      "feature": "OLMDistanceGradation extended",
+      "plugin": "OLMDistanceGradation",
+      "input": "olmdistancegradation_extended_case_0023_source",
+      "reason": "Recapture current installed Windows Software output for the exact 16bpc normalized case_0023 settings before reopening helper/compose tuning.",
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation"
+      },
+      "params": {
+        "Invert": 0,
+        "In/Out": 3,
+        "Inside Threshold": 36,
+        "Outside Threshold": 0,
+        "Render Mode": 1,
+        "Use Background Color": 1,
+        "Gradation Color": [
+          0.1098041459918,
+          0,
+          0.93333333730698,
+          1
+        ],
+        "BG Color ": [
+          1,
+          0,
+          0,
+          1
+        ],
+        "Interpolation Mode": 1,
+        "Power": 1,
+        "Blur Mode": 1,
+        "Blur Size": 0,
+        "Effect Opacity": 100
+      },
+      "params_full": [
+        {
+          "name": "Invert",
+          "match_name": "OLM Distance Gradation-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "In/Out",
+          "match_name": "OLM Distance Gradation-0002",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 3
+        },
+        {
+          "name": "Inside Threshold",
+          "match_name": "OLM Distance Gradation-0003",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 36
+        },
+        {
+          "name": "Outside Threshold",
+          "match_name": "OLM Distance Gradation-0004",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Render Mode",
+          "match_name": "OLM Distance Gradation-0005",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Use Background Color",
+          "match_name": "OLM Distance Gradation-0006",
+          "property_index": 6,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Gradation Color",
+          "match_name": "OLM Distance Gradation-0007",
+          "property_index": 7,
+          "property_value_type": "COLOR",
+          "value": [
+            0.1098041459918,
+            0,
+            0.93333333730698,
+            1
+          ]
+        },
+        {
+          "name": "BG Color ",
+          "match_name": "OLM Distance Gradation-0008",
+          "property_index": 8,
+          "property_value_type": "COLOR",
+          "value": [
+            1,
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "name": "Interpolation Mode",
+          "match_name": "OLM Distance Gradation-0009",
+          "property_index": 9,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Power",
+          "match_name": "OLM Distance Gradation-0010",
+          "property_index": 10,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Blur Mode",
+          "match_name": "OLM Distance Gradation-0011",
+          "property_index": 11,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Blur Size",
+          "match_name": "OLM Distance Gradation-0012",
+          "property_index": 12,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Effect Opacity",
+          "match_name": "ADBE Effect Mask Opacity",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        }
+      ],
+      "witness_pixels": [
+        {
+          "xy": [
+            1698,
+            7
+          ],
+          "why": "edge-family inside=1.0 witness"
+        },
+        {
+          "xy": [
+            1699,
+            7
+          ],
+          "why": "edge-family representative split pixel"
+        },
+        {
+          "xy": [
+            1700,
+            7
+          ],
+          "why": "adjacent outside-side contrast point"
+        },
+        {
+          "xy": [
+            414,
+            393
+          ],
+          "why": "threshold-family below-threshold control"
+        },
+        {
+          "xy": [
+            415,
+            393
+          ],
+          "why": "threshold-family current provenance split witness"
+        },
+        {
+          "xy": [
+            416,
+            393
+          ],
+          "why": "threshold-family above-threshold control"
+        }
+      ]
+    }
+  ],
+  "manifest_requirements": [
+    {
+      "name": "project_gpu_accel_type.current_name",
+      "equals": "SOFTWARE"
+    },
+    {
+      "name": "bits_per_channel",
+      "equals": 16
+    }
+  ],
+  "mac_follow_up": [
+    "Import with scripts/intake_olm_return.py path/to/returned_reference.zip --quick --dispatch-dir /tmp/olm_reference_dispatch",
+    "Compare the returned current-AEX export against refs/conformance/olmdistancegradation_case0023_reference_provenance_20260702.md before changing Mac source."
+  ],
+  "stop_lines": [
+    "Do not reuse the older packaged expected PNG as proof of current Windows output if this request returns a different current-AEX export.",
+    "This is a provenance/export request, not a broad parameter sweep."
+  ]
+}

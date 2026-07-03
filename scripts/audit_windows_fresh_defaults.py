@@ -60,6 +60,16 @@ def resolve_source_row(
     params_by_label: dict[str, dict[str, Any]],
     params_in_order: list[dict[str, Any]],
 ) -> dict[str, Any] | None:
+    if plugin == "OLMColorKey" and normalized in {"Amount", "Distance Type"} and property_index is not None:
+        colorkey_ordinals = {
+            ("Amount", 14): 12,
+            ("Distance Type", 15): 13,
+            ("Amount", 18): 15,
+            ("Distance Type", 19): 16,
+        }
+        source_idx = colorkey_ordinals.get((normalized, property_index))
+        if source_idx is not None and source_idx < len(params_in_order):
+            return params_in_order[source_idx]
     if plugin == "OLMRadialBlur" and normalized in {"Offset", "Offset Mode"} and property_index is not None:
         radial_ordinals = {
             ("Offset Mode", 5): 4,

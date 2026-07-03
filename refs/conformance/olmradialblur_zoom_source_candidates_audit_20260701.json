@@ -1,0 +1,85 @@
+{
+  "case_id": "case_0009",
+  "decision_ladder": [
+    {
+      "action": "Constrain changes to polar population / preserved-validity capture in RenderZoom8",
+      "condition": "If Windows typed witness shows the alpha split is already present in caller-collapse inputs",
+      "step": 1
+    },
+    {
+      "action": "Constrain changes to alpha accumulation / denominator state only",
+      "condition": "If Windows proves sampler return is right but the denominator or collapse state differs before final inverse sampling",
+      "step": 2
+    },
+    {
+      "action": "Only then reopen final inverse-sample / writeback logic",
+      "condition": "If Windows shows caller-collapse state already matches but the 254/255 split still appears at final sampling",
+      "step": 3
+    }
+  ],
+  "forbidden_actions": [
+    "Do not promote direct use of the current preserved-validity plane as final alpha.",
+    "Do not promote a same-kernel propagated-validity plane as the fix.",
+    "Do not retune final byte conversion while Windows already matches the stored byte from traced pre-writeback floats."
+  ],
+  "kind": "olmradialblur_zoom_source_candidates_audit",
+  "lane_summary": {
+    "alpha_u8": 255,
+    "center_gap": 143,
+    "current_sample_u8": [
+      20,
+      3,
+      3,
+      255
+    ],
+    "largest_gap": 208,
+    "largest_gap_x": 8,
+    "propagated_validity_diff": {
+      "max_diff": 1,
+      "mean_diff": 0.004613474151234568,
+      "nonzero_px": 31119,
+      "verify_stdout": "=== verify reference_manifest.json ===\n[DIFF]    case_0009            max=1 mean=0.0046 nz=31119/2073600\n---\nok=0 fail=1 missing=0 total=1\nreport_json=/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/manifest_diff.json\nreport_csv=/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/manifest_diff.csv\n"
+    },
+    "propagated_validity_reading": "Replacing outer alpha with a same-kernel propagated validity plane leaves the current Zoom residual unchanged (`max=1 mean=0.0046`). This does not supply the missing 254/255 split by itself.",
+    "reference_u8": [
+      20,
+      3,
+      3,
+      254
+    ],
+    "validity_alpha_u8": 113
+  },
+  "outer_contract_path": "refs/conformance/olmradialblur_outer_witness_contract_20260701.md",
+  "schema": 1,
+  "source_candidates": [
+    {
+      "allowed_change_shape": "typed caller-collapse input / preserved-validity capture only",
+      "function": "RenderZoom8",
+      "line": 709,
+      "rank": 1,
+      "site": "zoom_polar_population_and_validity_capture",
+      "why_still_live": "The remaining Zoom split is no longer RGB or final-byte broad drift; it is the caller-collapse state between sampler return and final alpha, so source-polar population and preserved-validity capture stay first."
+    },
+    {
+      "allowed_change_shape": "alpha accumulation / denominator state only; no broad geometry rewrite",
+      "function": "RenderZoom8",
+      "line": 732,
+      "rank": 2,
+      "site": "zoom_alpha_accumulation_and_denominator_state",
+      "why_still_live": "Windows already truncates to the stored byte exactly, and the local propagated-validity probe is inert, so the live question is the alpha coverage denominator or equivalent normalization state before final inverse sampling."
+    },
+    {
+      "allowed_change_shape": "only with explicit Windows contradiction to the current caller-collapse reading",
+      "function": "RenderZoom8",
+      "line": 805,
+      "rank": 3,
+      "site": "zoom_final_inverse_sample_and_u8_writeback",
+      "why_still_live": "This is second-order only. Reopen it only if a Windows typed witness proves upstream caller-collapse state already matches while the 254/255 split still appears at final sampling."
+    }
+  ],
+  "source_cpp": "mac/OLMRadialBlur/OLMRadialBlur.cpp",
+  "witness_xy": [
+    6,
+    0
+  ]
+}

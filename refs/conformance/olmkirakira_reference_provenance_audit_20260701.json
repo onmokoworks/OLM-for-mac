@@ -1,0 +1,149 @@
+{
+  "kind": "olmkirakira_reference_provenance_audit",
+  "schema": 1,
+  "case_id": "kk_vertical_len50_brightness1_strength100",
+  "hotspot_xy": [
+    934,
+    118
+  ],
+  "artifacts": {
+    "canonical_reference_png": {
+      "path": "refs/reports/olmkirakira_remeasure_20260624_bt709_software/reference/kirakira_single_ray_20260606__software__fr24__kk_vertical_len50_brightness1_strength100.png",
+      "hotspot_rgba": [
+        131,
+        131,
+        131,
+        255
+      ]
+    },
+    "archived_bt709_candidate_png": {
+      "path": "refs/reports/olmkirakira_remeasure_20260624_bt709_software/candidate/kirakira_single_ray_20260606__software__fr24__kk_vertical_len50_brightness1_strength100.png",
+      "hotspot_rgba": [
+        145,
+        145,
+        145,
+        255
+      ]
+    },
+    "current_mac_compose_witness": {
+      "path": "refs/conformance/olmkirakira_compose_boundary_mac_witness_20260630.json",
+      "hotspot_rgba": [
+        144,
+        144,
+        144,
+        255
+      ],
+      "compose_rgba_float": [
+        0.565446138,
+        0.565446138,
+        0.565446138,
+        1.0
+      ]
+    },
+    "windows_traced_hotspot": {
+      "path": "refs/reports/runtime_trace_comparisons/olmkirakira_hotspot_compose_writeback_witness_20260701.json",
+      "hotspot_rgba": [
+        144,
+        144,
+        144,
+        255
+      ],
+      "compose_rgba_float": [
+        0.5654461661764706,
+        0.5654461661764706,
+        0.5654461661764706,
+        1.0
+      ],
+      "glow_after_opacity_rgba_float": [
+        1.0,
+        1.0,
+        1.0,
+        0.507505655
+      ],
+      "residual_hotspot_row": {
+        "aggregation_glow_rgba_float": [
+          1.0,
+          1.0,
+          1.0,
+          0.507505655
+        ],
+        "case_id": "kk_vertical_len50_brightness1_strength100",
+        "compose_output_rgba_float": [
+          0.5654461661764706,
+          0.5654461661764706,
+          0.5654461661764706,
+          1.0
+        ],
+        "delta_candidate_minus_windows": [
+          13,
+          13,
+          13,
+          0
+        ],
+        "final_writeback_or_png_rgba": [
+          144,
+          144,
+          144,
+          255
+        ],
+        "label": "primary_vertical_case_hotspot",
+        "mac_bt709_candidate_rgba": [
+          144,
+          144,
+          144,
+          255
+        ],
+        "source_xy": [
+          934,
+          118
+        ],
+        "windows_reference_rgba": [
+          131,
+          131,
+          131,
+          255
+        ]
+      }
+    }
+  },
+  "pairwise_deltas": {
+    "archived_candidate_minus_reference": [
+      14,
+      14,
+      14,
+      0
+    ],
+    "windows_traced_minus_reference": [
+      13,
+      13,
+      13,
+      0
+    ],
+    "mac_witness_minus_reference": [
+      13,
+      13,
+      13,
+      0
+    ],
+    "archived_candidate_minus_windows_traced": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  "role_matrix": {
+    "canonical_reference_vs_windows_traced": false,
+    "canonical_reference_vs_mac_witness": false,
+    "canonical_reference_vs_archived_candidate": false,
+    "windows_traced_vs_mac_witness": true,
+    "windows_traced_vs_archived_candidate": false,
+    "mac_witness_vs_archived_candidate": false
+  },
+  "decision": {
+    "status": "reference-export-or-witness-placement-pending",
+    "reason": "The primary hotspot now has three distinct in-tree facts: the canonical Windows Software reference PNG is 131, the current Mac compose-boundary witness and answered Windows traced writeback both say 144, and the archived BT.709 candidate PNG says 145. That means the remaining KiraKira hotspot is not a single compose-math disagreement; it is at least partly a provenance/export/witness-placement lane.",
+    "forbidden_action": "Do not retune BT.709, boxFilter, ray-helper, FUN_18114fd90 aggregation, merge-mode-1 screen compose, or final quantization from these hotspot artifacts alone.",
+    "next_allowed_action": "Treat the traced hotspot algorithm lane as matched through current writeback, and only spend further effort here on canonical reference provenance, same-run export comparison, witness placement validation, or endgame control coverage."
+  }
+}

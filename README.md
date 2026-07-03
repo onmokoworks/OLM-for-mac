@@ -47,15 +47,15 @@ AE-host validation で Mac AE 出力が Windows AE Software 参照に
 | 範囲 | 状態 |
 | --- | --- |
 | Mac plug-in project | 10 本とも Debug universal bundle としてビルド可能 |
-| OLMBlur | 8bpc packaged slice は Mac AE exact。16bpc Mac AE はまだ未exactだが、`case_0006` は 2026-07-01 の current-AEX witness で Windows/Mac の pre-store float と内部 word 一致まで到達し、主疑点は writer/helper から reference/export provenance へ移動。`case_0007` は Legacy境界/seed異常に分離済み |
+| OLMBlur | 8bpc packaged slice は Mac AE exact。16bpc Mac AE はまだ未exactだが、`case_0006` は 2026-07-01 の current-AEX witness で Windows/Mac の pre-store float と内部 word 一致まで到達し、機械監査 `refs/conformance/olmblur_case0006_reference_provenance_audit_20260701.md` でも canonical ref と Mac export 群の provenance split を再生成できるようになった。加えて同 audit で `handoff/results` は `mac_single_export`、`handoff/archive/.../results` は endian-fix `mac_batch_export` と byte-identical で、新しい第三の export 系ではないことも固定済み。主疑点は writer/helper から reference/export provenance へ移動。`case_0007` は Legacy境界/seed異常に分離済み |
 | OLMToonDilate | 8bpc packaged slice は Mac AE exact |
-| OLMDistanceGradation | basic / extended / blur の 8bpc packaged slice は Mac AE exact。16bpc は未exact。AE自動実行は復旧済み。`case_0026` の Power param 誤読と Constant 専用 binary threshold を修正し、Constant/background系は大幅改善 |
+| OLMDistanceGradation | basic / extended / blur の 8bpc packaged slice は Mac AE exact。16bpc は未exact。AE自動実行は復旧済み。`case_0026` の Power param 誤読と Constant 専用 binary threshold を修正し、Constant/background系は大幅改善。`case_0023` は機械監査 `refs/conformance/olmdistancegradation_case0023_threshold_family_audit_20260701.md` で、残差 `73px`、threshold-family `8px`、plateau probe 爆発 `182793px` が再生成できる状態まで整理済み |
 | OLMColorKey | core / Edge Thin / Edge Blur の normalized 8bpc packaged slice は Mac AE exact。16bpc covered slice も full batch 9/9 exact。次は32bpc方針と参照展開 |
 | OLMSmoother2 | no-key grid は 8bpc Mac AE exact。legacy current-AEX recapture 済み。key/gamma は Smooth Range threshold 昇格で大幅改善、残る局所残差を調査中 |
 | OLMSmoother v1 | 960x540 再検証で 8bpc Mac AE exact。v2 互換扱いへ寄せる判断は別途 |
 | OLMDirectionalBlur | 参照は多いが、まだ blocked。2026-06-25 witness plan で angle-0 と diagonal の2系統に分け、PNG-only tuning は止めて asm/runtime evidence 待ち |
-| OLMRadialBlur | Zoom は caller-collapse alpha/sample 残差で、2026-07-01 の row probe により current validity plane の直接サンプリングでは説明できない。tiny Rotation は propagated-validity でも不変で、row-coupling probe でも bright lobe を再現できず、source-polar probe では witness 直セルが黒のままなので、残差は upstream polar RGB / contribution geometry / substitute-path 側に狭まった。Inner は typed `FUN_180001c90` per-cell witness 待ち |
-| OLMKiraKira | BT.709 seed、OpenCV 4.5.5 AVX2、ray-helper、`FUN_18114fd90` aggregation まで grounding 済み。2026-07-01 の hotspot runtime return 取り込み後も、残差は broad compose/gain ではなく hotspot `(934,118)` 専用の追加 attenuate/branch before writeback まで狭い。current Mac source はなお `Merge Mode`, `Approximated Input`, `Brightness Gain`, `Highlight Radius`, ramp 系、non-BlurMode-2 dispatch などの endgame control gap を残す |
+| OLMRadialBlur | Zoom は caller-collapse alpha/sample 残差で、2026-07-01 の row probe により current validity plane の直接サンプリングでは説明できない。tiny Rotation は propagated-validity でも不変で、row-coupling probe でも bright lobe を再現できず、source-polar probe では witness 直セルが黒のままなので、機械監査 `refs/conformance/olmradialblur_tiny_rotation_lane_audit_20260701.md` 上でも残差は upstream polar RGB / neighboring-row contribution geometry / substitute-path 側に狭まった。Inner は typed `FUN_180001c90` per-cell witness 待ち |
+| OLMKiraKira | BT.709 seed、OpenCV 4.5.5 AVX2、ray-helper、`FUN_18114fd90` aggregation まで grounding 済み。さらに 2026-07-01 の hotspot witness で、`(934,118)` の Windows trace が current Mac compose-boundary と glow/compose/pre-writeback/final sampled RGBA8 まで一致することも確認された。加えて機械監査 `refs/conformance/olmkirakira_reference_provenance_audit_20260701.md` で canonical reference `131` / current traced+compose witness `144` / archived BT.709 candidate `145` の三者 split も固定した。なので live lane は broad compose/gain ではなく reference/export provenance または witness-placement drift 側に移動。current Mac source はなお `Merge Mode`, `Approximated Input`, `Brightness Gain`, `Highlight Radius`, ramp 系、non-BlurMode-2 dispatch などの endgame control gap を残す |
 
 AE 実機を触る前の短い目安です。詳細な理由と次アクションは
 `notes/CONFORMANCE_LEDGER.md` の Current Decision Matrix を見ます。
@@ -71,7 +71,7 @@ AE 実機を触る前の短い目安です。詳細な理由と次アクショ�
 | OLMSmoother2 legacy | `host-debuggable` | `binary-proof` | legacy/key/gamma の witness単位確認だけ有益 |
 | OLMDirectionalBlur | `host-debuggable` | `binary-proof` | witness単位の確認だけ有益 |
 | OLMRadialBlur | `host-debuggable` | `binary-proof` | witness単位の確認だけ有益。いまは Zoom の caller-collapse と tiny Rotation の polar RGB 分岐を別々に追う段階 |
-| OLMKiraKira | `host-smoke` | `parked` | load/UI/render smoke まで。見た目合わせはまだ薄い |
+| OLMKiraKira | `host-smoke` | `parked` | load/UI/render smoke まで。2026-07-01 hotspot witness は compose 側の修正根拠ではなく provenance/placement 側の根拠なので、見た目合わせはまだ薄い |
 
 つまり、`RadialBlur` や `KiraKira` を AE 上で見た目だけで詰める段階ではまだ
 ありません。先に asm / runtime trace / CLI で、どの出力を信用してよいかを
@@ -80,6 +80,10 @@ AE 実機を触る前の短い目安です。詳細な理由と次アクショ�
 詳しい台帳は `notes/CONFORMANCE_LEDGER.md`、IR の入口は
 `notes/IR_INDEX_20260621.md`、用語定義は
 `notes/AE_EXACT_CONFORMANCE.md` にあります。
+proof/request/provenance の薄い運用ノートは
+`notes/PROOF_CONTRACT_LEDGER.md`、
+`notes/REFERENCE_PROVENANCE_LEDGER.md`、
+`notes/TRACE_RETURN_CLASSIFICATION.md` を見ます。
 
 UI パラメータ定義の一次情報は `PF_ADD_*` から機械抽出した
 source-backed report
@@ -89,10 +93,26 @@ source-backed report
 
 Windows 参照 manifest / request との visible schema 差分は
 `refs/reports/param_schema_windows_ref_audit_20260629.md` に分けています。
-`OLMRadialBlur` と `OLMDirectionalBlur` は 2026-06-29 host-fix pass で主要な
-Windows-visible controls をほぼ揃えたため、残課題は主に UI 面ではなく
-binary-proof です。`OLMKiraKira` はまだ `Brightness Gain`,
-`Highlight Radius`, ramp 系、non-BlurMode-2 dispatch などの host drift を残します。
+さらに 2026-07-03 の fresh UI surface capture を用いた
+`refs/conformance/windows_ui_surface_parity_20260703.md` では、
+Windows の Effect Controls 表面と Mac source-backed schema の差分を
+host/UI 専用レーンとして再整理しました。現時点の高シグナルな結論は次です。
+
+- `OLMColorKey`: まだ host/UI follow-up 候補。Windows 側の grouped
+  `Threshold Parameters` / `Edge Thin` / `Edge Blur` topic、generic child
+  `Amount`、per-color block order、`Amount` range を Mac source 側へ寄せたので、
+  いまは broad mismatch ではなく mostly-fixed。残りは symbolic default と
+  group-end placeholder の扱い
+- `OLMKiraKira`: 2026-07-03 の host/UI cleanup で `Brightness Gain` と
+  `Highlight Radius` の visible range、`Merge mode` / `Strength multiplier` /
+  `Diagonal 2 length` / `Diagonal Color2` の visible label は Windows surface に
+  揃った。残りは ramp 系 metadata と visible order のズレ寄り
+- `OLMRadialBlur`: visible controls はかなり揃っており、残課題の中心は
+  host-fix ではなく binary-proof
+
+つまり、UI 面の broad な host-fix はかなり縮んでいて、
+`OLMColorKey` と `OLMKiraKira` はどちらも mostly-fixed 寄りです。一方で
+`OLMRadialBlur` は同様に「残りは狭い論点だけ見る」段階へ近づきました。
 
 Windows AEX を AE に追加した瞬間の cold-start default は
 `refs/reference_requests/olm_fresh_instance_defaults_20260629.json` で別取得し、
@@ -121,7 +141,7 @@ summary は `python3 scripts/generate_conformance_summary.py` で
 | OLMSmoother2 | Legacy key / gamma | current-AEX recapture 12ケースを取り込み済み。case 0002/0003 はAE保存before入力でCLI exact。0004 は Smooth Range threshold で target final writer float と一致。0012 は `cardinal6 key=50 -> f270/e170/e3a0` まで局所化 | 0012 `(91,841)` の scanner/emit 中間値と 0004 polygon/no-polygon path を binary/runtime evidence で確定 |
 | OLMDirectionalBlur | blocked | PNG tuning だけで進めると誤実装になりやすい。angle-0 と diagonal では見るべき証拠が違う | `case_0001 (465,169)` 系の rowdriver/valid-alpha と、`case_0005 (507,367)` 系の rotate/validity を別々に runtime/asm evidence で確定 |
 | OLMRadialBlur | Zoom / Rotation / Inner | Zoom は final byte packing ではなく caller-collapse alpha/sample accumulation、tiny Rotation は validity alpha ではなく polar RGB / substitute path。2026-07-01 probe で propagated-validity は不変、row-coupling surrogate は bright lobe を再現せず、source-polar probe では witness 直セルが黒のままなので、rotation は contribution geometry 側まで狭まった。Inner は global toggle 不採用まで局所化 | Zoom は `+0xf252 -> +0xf250 -> +0xe` の caller-collapse chain、tiny Rotation は upstream RGB population / substitute path / neighboring-row geometry、Inner は `rb_inner_only_strength_large` / `rb_inner_quality_1` の typed `FUN_180001c90` witness を詰める |
-| OLMKiraKira | compose / pre-writeback / final quantization | BT.709 seed、boxFilter、ray-helper、`FUN_18114fd90` は確定寄り。global compose gain 変更は悪化。2026-07-01 hotspot runtime return を取り込んでも、残る差分は hotspot `(934,118)` の追加 attenuate/branch before writeback にさらに狭いまま | merge-mode-1 compose float/writeback または residual hotspot の narrow trace を取る |
+| OLMKiraKira | reference/export provenance or witness placement | BT.709 seed、boxFilter、ray-helper、`FUN_18114fd90` は確定寄り。2026-07-01 hotspot runtime witness では `(934,118)` の Windows traced glow/compose/pre-writeback/final sampled RGBA8 が current Mac witness と一致したため、compose/gain/quantization をいじる根拠は薄くなった | hotspot traced sample と canonical Windows reference PNG の provenance / placement を確認しつつ、endgame control gaps を別レーンで埋める |
 
 ## 方針
 

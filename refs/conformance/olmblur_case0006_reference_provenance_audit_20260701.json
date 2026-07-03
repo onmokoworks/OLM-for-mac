@@ -1,0 +1,446 @@
+{
+  "kind": "olmblur_case0006_reference_provenance_audit",
+  "schema": 1,
+  "case_id": "olmblur__case_0006",
+  "bit_depth": "16bpc",
+  "files": {
+    "canonical_ref": {
+      "path": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+      "exists": true,
+      "bytes": 2485242,
+      "sha256": "27d24c96a6f3c15d27d8884ede039e5fd97480d752324f04d8e3aa77acc8791f",
+      "png_header": {
+        "width": 1920,
+        "height": 1080,
+        "bit_depth": 16,
+        "color_type": 6,
+        "compression": 0,
+        "filter_method": 0,
+        "interlace": 0
+      }
+    },
+    "handoff_expected": {
+      "path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+      "exists": true,
+      "bytes": 2485242,
+      "sha256": "27d24c96a6f3c15d27d8884ede039e5fd97480d752324f04d8e3aa77acc8791f",
+      "png_header": {
+        "width": 1920,
+        "height": 1080,
+        "bit_depth": 16,
+        "color_type": 6,
+        "compression": 0,
+        "filter_method": 0,
+        "interlace": 0
+      }
+    },
+    "mac_single_export": {
+      "path": "refs/reports/ae_single_case_olmblur_16bpc_witness_latest/olmblur__case_0006/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+      "exists": true,
+      "bytes": 2485331,
+      "sha256": "8990ef5b4cbf82b2d86e4a6014e4d8944eff24397aa97c1fb8ceafcc310a8787",
+      "png_header": {
+        "width": 1920,
+        "height": 1080,
+        "bit_depth": 16,
+        "color_type": 6,
+        "compression": 0,
+        "filter_method": 0,
+        "interlace": 0
+      }
+    },
+    "mac_batch_export": {
+      "path": "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmblur_exact/candidate/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+      "exists": true,
+      "bytes": 2485333,
+      "sha256": "d99b462a4f273578c616a556cf844db515694706ae3e7fad2bc2b9c4de152974",
+      "png_header": {
+        "width": 1920,
+        "height": 1080,
+        "bit_depth": 16,
+        "color_type": 6,
+        "compression": 0,
+        "filter_method": 0,
+        "interlace": 0
+      }
+    },
+    "handoff_results_export": {
+      "path": "handoff/ae_pixel_validation_20260618/results/bitdepth16_olmblur_exact/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+      "exists": true,
+      "bytes": 2485331,
+      "sha256": "8990ef5b4cbf82b2d86e4a6014e4d8944eff24397aa97c1fb8ceafcc310a8787",
+      "png_header": {
+        "width": 1920,
+        "height": 1080,
+        "bit_depth": 16,
+        "color_type": 6,
+        "compression": 0,
+        "filter_method": 0,
+        "interlace": 0
+      }
+    },
+    "archive_results_export": {
+      "path": "handoff/archive/ae_pixel_validation_20260618_before_rerun_20260626_204944/results/bitdepth16_olmblur_exact/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+      "exists": true,
+      "bytes": 2485333,
+      "sha256": "d99b462a4f273578c616a556cf844db515694706ae3e7fad2bc2b9c4de152974",
+      "png_header": {
+        "width": 1920,
+        "height": 1080,
+        "bit_depth": 16,
+        "color_type": 6,
+        "compression": 0,
+        "filter_method": 0,
+        "interlace": 0
+      }
+    },
+    "windows_current_export": null
+  },
+  "alias_groups": [
+    {
+      "sha256": "27d24c96a6f3c15d27d8884ede039e5fd97480d752324f04d8e3aa77acc8791f",
+      "roles": [
+        "canonical_ref",
+        "handoff_expected"
+      ],
+      "bytes": 2485242,
+      "paths": [
+        "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+        "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png"
+      ]
+    },
+    {
+      "sha256": "8990ef5b4cbf82b2d86e4a6014e4d8944eff24397aa97c1fb8ceafcc310a8787",
+      "roles": [
+        "handoff_results_export",
+        "mac_single_export"
+      ],
+      "bytes": 2485331,
+      "paths": [
+        "handoff/ae_pixel_validation_20260618/results/bitdepth16_olmblur_exact/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+        "refs/reports/ae_single_case_olmblur_16bpc_witness_latest/olmblur__case_0006/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png"
+      ]
+    },
+    {
+      "sha256": "d99b462a4f273578c616a556cf844db515694706ae3e7fad2bc2b9c4de152974",
+      "roles": [
+        "archive_results_export",
+        "mac_batch_export"
+      ],
+      "bytes": 2485333,
+      "paths": [
+        "handoff/archive/ae_pixel_validation_20260618_before_rerun_20260626_204944/results/bitdepth16_olmblur_exact/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+        "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/bitdepth16_olmblur_exact/candidate/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png"
+      ]
+    }
+  ],
+  "result_metadata": {
+    "handoff_result_json": {
+      "kind": "olm_ae_pixel_validation_render_result",
+      "request_id": "ae_pixel_bitdepth16_olmblur_exact_20260625",
+      "effect_name": "OLM Blur",
+      "output_dir": "/Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/results/bitdepth16_olmblur_exact",
+      "rendered": [
+        "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0001.png",
+        "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0002.png",
+        "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0004.png",
+        "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0005.png",
+        "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+        "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0007.png"
+      ],
+      "warnings": [],
+      "errors": [
+        "olmblur__case_0003: PNG was not written"
+      ]
+    },
+    "archive_result_json": {
+      "kind": "olm_ae_pixel_validation_render_result",
+      "request_id": "ae_pixel_bitdepth16_olmblur_exact_20260625",
+      "effect_name": "OLM Blur",
+      "output_dir": "/Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/results/bitdepth16_olmblur_exact",
+      "rendered": [
+        "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0001.png",
+        "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0002.png",
+        "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0004.png",
+        "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0005.png",
+        "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+        "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0007.png"
+      ],
+      "warnings": [],
+      "errors": [
+        "olmblur__case_0003: PNG was not written"
+      ]
+    }
+  },
+  "canonical_vs_handoff_identical": true,
+  "point_values": {
+    "canonical_ref": {
+      "314,14": [
+        2201,
+        2201,
+        2201,
+        65535
+      ],
+      "29,71": [
+        725,
+        725,
+        725,
+        65535
+      ],
+      "601,598": [
+        4609,
+        4609,
+        4637,
+        65535
+      ],
+      "378,487": [
+        64767,
+        35,
+        35,
+        65535
+      ]
+    },
+    "handoff_expected": {
+      "314,14": [
+        2201,
+        2201,
+        2201,
+        65535
+      ],
+      "29,71": [
+        725,
+        725,
+        725,
+        65535
+      ],
+      "601,598": [
+        4609,
+        4609,
+        4637,
+        65535
+      ],
+      "378,487": [
+        64767,
+        35,
+        35,
+        65535
+      ]
+    },
+    "mac_single_export": {
+      "314,14": [
+        2199,
+        2199,
+        2199,
+        65535
+      ],
+      "29,71": [
+        727,
+        727,
+        727,
+        65535
+      ],
+      "601,598": [
+        4607,
+        4607,
+        4637,
+        65535
+      ],
+      "378,487": [
+        64767,
+        35,
+        35,
+        65535
+      ]
+    },
+    "mac_batch_export": {
+      "314,14": [
+        2201,
+        2201,
+        2201,
+        65535
+      ],
+      "29,71": [
+        727,
+        727,
+        727,
+        65535
+      ],
+      "601,598": [
+        4609,
+        4609,
+        4637,
+        65535
+      ],
+      "378,487": [
+        64769,
+        35,
+        35,
+        65535
+      ]
+    }
+  },
+  "point_role_matrix": {
+    "29,71": {
+      "canonical_ref": [
+        725,
+        725,
+        725,
+        65535
+      ],
+      "mac_single_export": [
+        727,
+        727,
+        727,
+        65535
+      ],
+      "mac_batch_export": [
+        727,
+        727,
+        727,
+        65535
+      ],
+      "match_roles": [
+        "mac_single_matches_mac_batch"
+      ],
+      "single_minus_canonical": [
+        2,
+        2,
+        2,
+        0
+      ],
+      "batch_minus_canonical": [
+        2,
+        2,
+        2,
+        0
+      ]
+    },
+    "314,14": {
+      "canonical_ref": [
+        2201,
+        2201,
+        2201,
+        65535
+      ],
+      "mac_single_export": [
+        2199,
+        2199,
+        2199,
+        65535
+      ],
+      "mac_batch_export": [
+        2201,
+        2201,
+        2201,
+        65535
+      ],
+      "match_roles": [
+        "mac_batch_matches_canonical"
+      ],
+      "single_minus_canonical": [
+        -2,
+        -2,
+        -2,
+        0
+      ],
+      "batch_minus_canonical": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "378,487": {
+      "canonical_ref": [
+        64767,
+        35,
+        35,
+        65535
+      ],
+      "mac_single_export": [
+        64767,
+        35,
+        35,
+        65535
+      ],
+      "mac_batch_export": [
+        64769,
+        35,
+        35,
+        65535
+      ],
+      "match_roles": [
+        "mac_single_matches_canonical"
+      ],
+      "single_minus_canonical": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "batch_minus_canonical": [
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    "601,598": {
+      "canonical_ref": [
+        4609,
+        4609,
+        4637,
+        65535
+      ],
+      "mac_single_export": [
+        4607,
+        4607,
+        4637,
+        65535
+      ],
+      "mac_batch_export": [
+        4609,
+        4609,
+        4637,
+        65535
+      ],
+      "match_roles": [
+        "mac_batch_matches_canonical"
+      ],
+      "single_minus_canonical": [
+        -2,
+        -2,
+        0,
+        0
+      ],
+      "batch_minus_canonical": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "overall_point_pattern": {
+    "counts": {
+      "mac_single_matches_canonical": 1,
+      "mac_batch_matches_canonical": 2,
+      "mac_single_matches_mac_batch": 1,
+      "all_split": 0
+    },
+    "witness_pattern": {
+      "29,71": [
+        "mac_single_matches_mac_batch"
+      ],
+      "314,14": [
+        "mac_batch_matches_canonical"
+      ]
+    },
+    "reading": "No single export artifact dominates all sampled points: batch and single-case exports each match canonical at some points and disagree at others, while the original witness pair also splits by point."
+  },
+  "outcome": {
+    "status": "current-aex-export-missing",
+    "reason": "No same-run Windows current-AEX exported PNG is present, so the lane remains a provenance/export question rather than a reopened implementation bug.",
+    "recommended_action": "Keep OLMBlur case_0006 frozen on the Mac side and request only the precise same-run Windows current-AEX export artifact if this lane must advance."
+  }
+}

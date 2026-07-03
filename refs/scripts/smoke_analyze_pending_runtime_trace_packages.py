@@ -90,24 +90,72 @@ def main() -> int:
             raise AssertionError(
                 "OLMBlur case_0006 helper/pre-store request should expose the latest imported state"
             )
-        dg_case0023 = by_id.get("olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630")
-        if dg_case0023 is None:
-            raise AssertionError("missing DistanceGradation case_0023 OutsideThreshold=0 witness request")
-        if dg_case0023["status"] != "pending":
+        dg_case0023_answered = by_id.get("olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630")
+        if dg_case0023_answered is None:
+            raise AssertionError("missing answered DistanceGradation case_0023 OutsideThreshold=0 witness request")
+        if dg_case0023_answered["status"] != "answered":
             raise AssertionError(
-                f"DistanceGradation case_0023 OutsideThreshold=0 request should be pending, got {dg_case0023['status']}"
+                "DistanceGradation case_0023 OutsideThreshold=0 request should now be answered, "
+                f"got {dg_case0023_answered['status']}"
             )
-        if dg_case0023["priority"] != 22:
+        if dg_case0023_answered["priority"] != 22:
             raise AssertionError(
-                f"DistanceGradation case_0023 OutsideThreshold=0 priority should be 22, got {dg_case0023['priority']}"
+                "DistanceGradation case_0023 OutsideThreshold=0 priority should stay 22, "
+                f"got {dg_case0023_answered['priority']}"
             )
-        if "compare_distancegradation_trace.py" not in dg_case0023["comparison_command"]:
+        if "compare_distancegradation_trace.py" not in dg_case0023_answered["comparison_command"]:
             raise AssertionError(
                 "DistanceGradation case_0023 OutsideThreshold=0 request should point to the DistanceGradation comparator"
             )
-        if dg_case0023.get("latest_known_result_status") not in ("", None, "diagnostic", "answered_partial"):
+        dg_case0023_pending = by_id.get("olmdistancegradation_case0023_triplet_xy_compose_hook_followup_20260701")
+        if dg_case0023_pending is None:
+            raise AssertionError("missing DistanceGradation triplet compose-hook follow-up request")
+        if dg_case0023_pending["status"] != "superseded":
             raise AssertionError(
-                "DistanceGradation case_0023 latest known result should reflect the focused import state"
+                "DistanceGradation triplet compose-hook follow-up should now be superseded, "
+                f"got {dg_case0023_pending['status']}"
+            )
+        if dg_case0023_pending["priority"] != 20:
+            raise AssertionError(
+                "DistanceGradation triplet compose-hook follow-up priority should be 20, "
+                f"got {dg_case0023_pending['priority']}"
+            )
+        if "compare_distancegradation_trace.py" not in dg_case0023_pending["comparison_command"]:
+            raise AssertionError(
+                "DistanceGradation triplet compose-hook follow-up should point to the DistanceGradation comparator"
+            )
+        radial_backstep = by_id.get("olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701")
+        if radial_backstep is None:
+            raise AssertionError("missing RadialBlur inverse-sampler backstep follow-up request")
+        if radial_backstep["status"] != "superseded":
+            raise AssertionError(
+                "RadialBlur inverse-sampler backstep follow-up should now be superseded, "
+                f"got {radial_backstep['status']}"
+            )
+        radial_anchor = by_id.get("olmradialblur_tiny_rotation_anchor_watch_followup_20260701")
+        if radial_anchor is None:
+            raise AssertionError("missing RadialBlur anchor-watch follow-up request")
+        if radial_anchor["status"] != "pending":
+            raise AssertionError(
+                "RadialBlur anchor-watch follow-up should now be pending, "
+                f"got {radial_anchor['status']}"
+            )
+        if radial_anchor["priority"] != 5:
+            raise AssertionError(
+                f"RadialBlur anchor-watch follow-up priority should be 5, got {radial_anchor['priority']}"
+            )
+        dg_output_word = by_id.get("olmdistancegradation_case0023_output_word_triplet_followup_20260701")
+        if dg_output_word is None:
+            raise AssertionError("missing DistanceGradation output-word triplet follow-up request")
+        if dg_output_word["status"] != "pending":
+            raise AssertionError(
+                "DistanceGradation output-word triplet follow-up should now be pending, "
+                f"got {dg_output_word['status']}"
+            )
+        if dg_output_word["priority"] != 19:
+            raise AssertionError(
+                "DistanceGradation output-word triplet follow-up priority should be 19, "
+                f"got {dg_output_word['priority']}"
             )
         kirakira = by_id.get("kirakira_boxfilter_pass1_microprobe_20260622")
         if kirakira is None or kirakira["status"] != "answered":
@@ -149,15 +197,18 @@ def main() -> int:
         for needle in (
             "Pending Runtime Trace Packages",
             f"Pending: `{pending_count}`",
+            "olmradialblur_tiny_rotation_anchor_watch_followup_20260701",
+            "olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701",
+            "olmdistancegradation_case0023_output_word_triplet_followup_20260701",
             "kirakira_aggregation_compose_bt709_20260624",
             "kirakira_compose_writeback_witness_20260630",
             "olmblur_case0006_helper_prestore_witness_20260630",
             "olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630",
+            "olmdistancegradation_case0023_triplet_xy_compose_hook_followup_20260701",
             "olmradialblur_caller_collapse_witness_20260630",
             "olmdirectionalblur_helper_coverage_witness_20260630",
             "olmdistancegradation_16bpc_constant_boundary_witness_20260630",
-            "answered",
-            "Send First",
+            "superseded",
         ):
             if needle not in markdown:
                 raise AssertionError(f"markdown missing {needle}")

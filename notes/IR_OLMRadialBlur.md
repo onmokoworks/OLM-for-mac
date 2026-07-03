@@ -21,8 +21,10 @@
   - 2026-06-24 decision matrix
     `refs/conformance/olmradialblur_8bpc_decision.md`
     classifies RadialBlur as `blocked-needs-narrow-proof`: Zoom is a guarded
-    alpha-normalization/sampler residual, tiny Rotation is sampler/validity
-    unresolved, and Inner has no exact/global candidate to promote.
+    alpha-normalization/sampler residual, tiny Rotation is an upstream polar
+    RGB / substitute-path unresolved lane rather than a plain
+    sampler/validity issue, and Inner has no exact/global candidate to
+    promote.
 
 ## Source Evidence
 
@@ -212,12 +214,28 @@ Current binary-grounded sequence:
   effectively unchanged at `max=1 mean=0.0046`, so the missing `254/255` split
   is not solved by "blur the validity bits with the same kernel" alone. See
   `refs/conformance/olmradialblur_outer_propagated_validity_probe_20260701.md`.
+- A same-day source-candidates audit now freezes the implementation decision
+  ladder for the surviving Zoom lane too. With RGB already matched at the
+  witness, the current preserved-validity proxy collapsing far faster than the
+  final alpha plane, and the same-kernel propagated-validity substitute
+  explicitly inert, the allowed source order is now explicit and source-lined:
+  first `RenderZoom8` polar population / preserved-validity capture, then
+  alpha accumulation / denominator state, and only then final inverse-sample /
+  writeback if a later Windows typed witness explicitly contradicts the current
+  caller-collapse reading. See
+  `refs/conformance/olmradialblur_zoom_source_candidates_audit_20260701.md`.
 - A 2026-07-01 Mac AE debug hook now exists for the same narrow outer-lane
   witnesses. `mac/OLMRadialBlur/OLMRadialBlur.cpp` accepts
   `OLMRADIALBLUR_DEBUG_DUMP_PATH` and `OLMRADIALBLUR_DEBUG_POINTS=x,y;...`,
   then appends one `OLMRADIALBLUR_DEBUG_POINT` line per matched output pixel
-  with `sample_rgba`, `sample_u8`, local bilinear `validity_alpha`, and the
-  four contributing `cell_valid` / `cell_alpha` values. Parse those logs with
+  with `sample_rgba`, `sample_u8`, local bilinear `validity_alpha`,
+  `brightness_gain`, pre-normalized `accum_rgba`, pre-gain
+  `normalized_rgba`, and the four contributing `cell_valid` / `cell_alpha`
+  values. That makes the Mac witness closer to the active tiny Rotation
+  anchor-watch contract: `validity_alpha` is the local preserved-validity
+  analogue, `accum_rgba` mirrors the weighted pre-normalized promotion state,
+  and `normalized_rgba` is the last local state before brightness gain / byte
+  quantization. Parse those logs with
   `scripts/analyze_radialblur_debug_points.py`. This does not prove Windows
   behavior, but it gives a Mac-AE-side witness surface parallel to the CLI
   caller-collapse probes before the next source change. See
@@ -262,6 +280,29 @@ Current binary-grounded sequence:
   which nearby polar cells are allowed to contribute into the final lobe, or
   on a source-grid placement difference that changes where the bright family
   enters the polar buffer in the first place.
+- A new same-row source audit tightens that one step more by marrying the live
+  host dump to the current `RenderRotation8` source structure. For the active
+  case (`outer_strength=4`, `outer_offset=0`, `quality=5`), the current small
+  Rotation branch uses `row_length=3` and only same-radius-row angular taps for
+  each blurred polar cell. Around the witness, those taps are
+  `[1603,1602,1601]` / `[1604,1603,1602]` / `[1605,1604,1603]`, while all
+  direct `src_cell_rgba` are still black. That means the current Mac branch
+  cannot produce the missing bright lobe from those exact same-row direct
+  source cells, and it also cannot express any AEX rule that depends on
+  neighboring radius rows or a substitute path before the final inverse sample.
+  See `refs/conformance/olmradialblur_tiny_rotation_same_row_audit_20260701.md`.
+- A same-day consolidated lane audit now turns those local negatives into a
+  reproducible decision boundary:
+  `scripts/analyze_olmradialblur_tiny_rotation_lane.py`,
+  `refs/scripts/smoke_analyze_olmradialblur_tiny_rotation_lane.py`, and
+  `refs/conformance/olmradialblur_tiny_rotation_lane_audit_20260701.md`.
+  The lane now explicitly rejects four tempting promotions at once:
+  propagated-validity remains inert, the direct same-row source cells at the
+  witness are all black, the dominant local positive source-polar family sits
+  one row above, and the tested row-coupled surrogates still keep the local
+  bright-lobe count at `0` versus Windows `17`. This leaves only
+  neighboring-row contribution ownership or an AEX substitute/fallback branch
+  as the active upstream asks before final inverse sampling.
 - 2026-06-24 witness contract:
   `refs/reports/olmradialblur_witness_contract_20260624/witness_contract.md`
   freezes the useful proof boundary for Zoom, tiny Rotation, and Inner. For
@@ -520,6 +561,23 @@ Current binary-grounded sequence:
   cross-row positive family may exist upstream; they are not a close numeric
   stand-in for the AEX bright-lobe path. See
   `refs/conformance/olmradialblur_tiny_rotation_row_coupling_probe_20260701.md`.
+- A follow-up support-envelope audit sharpens the geometry again without
+  adding new rendering assumptions. The row-843 bright family is locally real,
+  and a few nearby outputs can directly see it in the current same-row branch,
+  but the active witness `(1614,6)` cannot because its bilinear support stays
+  on rows `844/845`. That makes the current branch boundary more concrete: the
+  witness cannot become white from that row-843 family without upstream
+  neighboring-row ownership or a substitute/fallback path. See
+  `refs/conformance/olmradialblur_tiny_rotation_support_envelope_20260701.md`.
+- A same-day source-candidates audit now freezes the implementation decision
+  ladder for that same lane. With the witness already black before final
+  inverse sampling and the row-843 cluster invisible to the witness in the
+  current branch, the allowed source order is now explicit and source-lined:
+  first `RenderRotation8` polar population / preserved-validity capture,
+  then scatter/substitute-path ownership, and only then final inverse-sample /
+  writeback if a later Windows typed witness explicitly contradicts the current
+  upstream reading. See
+  `refs/conformance/olmradialblur_tiny_rotation_source_candidates_audit_20260701.md`.
 - 2026-06-21 Mac-side recheck while Smoother2 is paused:
   full Rotation remains expected-red in the current C++ CLI:
   `case_0001 max=255 mean=1.9034`,
@@ -628,21 +686,26 @@ Current binary-grounded sequence:
     but still leaves `max=240`.
   - Edge/prepass fallback: `rb_inner_edgefade_only`, where
     `table-span-minus-one` is the best localization probe (`mean 3.957052 -> 3.920890`).
-- 2026-06-29 pending narrow-proof contract:
+- 2026-07-01 pending narrow-proof contract refresh:
   `refs/conformance/olmradialblur_pending_narrow_proof_20260629.md`.
-  This converts the remaining blocker into three explicit witness lanes that
-  should stay separate in future work:
-  - Zoom `case_0009 (6,0)` is frozen as a polar alpha/sample accumulation
-    question because Windows pre-writeback floats already truncate to the exact
-    Windows bytes.
-  - tiny Rotation `case_0010 (1614,6)` is frozen as an inverse-sampler
-    validity/border or substitute late-path question because the closest traced
-    sampler return still truncates to black.
-  - Inner is frozen as a helper-to-output continuity question past
+  This keeps the remaining blocker split into three explicit witness lanes, but
+  it also changes which one is actually live:
+  - Zoom `case_0009 (6,0)` is now context, not the first Windows ask, because
+    the sampled/pre-writeback floats already truncate to the exact stored
+    Windows byte and the unresolved part is specifically caller-collapse /
+    denominator-side state.
+  - tiny Rotation `case_0010 (1614,6)` is now the only active Windows runtime
+    package. It stays frozen as an upstream RGB / neighboring-contribution /
+    substitute-path question because the closest traced sampler return still
+    truncates to black, same-row direct sources are black, propagated validity
+    is inert, and the current row-coupled surrogates still leave the reference
+    bright-lobe count at `17 -> 0` locally.
+  - Inner remains a separate helper-to-output continuity question past
     `effective_span`, with representative low-span / quality-strong /
-    edge-prepass typed spans already recorded.
+    edge-prepass typed spans already recorded, but it is not the live send
+    package right now.
   Operationally, this means broad loop/wrap/final-byte retuning should remain
-  forbidden until one of those three lanes is closed with a typed witness that
+  forbidden until one of those lanes is closed with a typed witness that
   survives to accumulation/denominator/writeback.
   The decision is `typed-inner-cell-witnesses-only`: do not promote
   `loop-minus-one`, `circular-wrap`, or `table-span-minus-one` globally from
@@ -663,10 +726,20 @@ Current binary-grounded sequence:
 
 ## Focused Runtime Return Classification
 
-`scripts/compare_radialblur_trace.py` now understands both the older dense
-request `olmradialblur_dense_sampler_trace_20260620` and the focused residual
-request `olmradialblur_caller_collapse_witness_20260630`
-(`olmradialblur_zoom_tiny_rotation_residual_witness_20260622` legacy).
+`scripts/compare_radialblur_trace.py` now understands the older dense request
+`olmradialblur_dense_sampler_trace_20260620`, the mixed outer residual lane
+`olmradialblur_caller_collapse_witness_20260630`
+(`olmradialblur_zoom_tiny_rotation_residual_witness_20260622` legacy), and the
+tiny-Rotation-only narrow follow-ups
+`olmradialblur_tiny_rotation_substitute_path_followup_20260701` and its
+inverse-sampler-anchored successor
+`olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701`, plus
+the current fourth-round live ask
+`olmradialblur_tiny_rotation_anchor_pointer_watch_followup_20260702`. For
+those tiny-only follow-ups, the comparator now also injects the local lane audit from
+`refs/conformance/olmradialblur_tiny_rotation_lane_audit_20260701.json` so the
+Windows typed witness is read against the already-frozen Mac-side support,
+source-polar, and row-coupling envelope instead of as a standalone log.
 
 After importing the focused Windows return, run:
 
@@ -683,14 +756,63 @@ Expected useful classifications:
   conversion before changing the Zoom path. The 2026-06-24 witness audit now
   rules out the final byte conversion for `case_0009 (6,0)`, so continue with
   polar alpha/sample accumulation rather than writeback tuning.
-- `tiny_rotation:sampler-or-validity`: inspect inverse sampler coordinates and
-  border/validity before changing normalization/writeback.
+- `tiny_rotation:substitute-or-upstream-rgb`: treat the return as proof about
+  substitute/fallback ownership, source-population, preserved-validity
+  `+0xf252`, accumulated `+0xf250`, and normalized `+0xe` RGBA before touching
+  any final inverse-sample/writeback code. This is the intended classification
+  for `olmradialblur_tiny_rotation_substitute_path_followup_20260701` and the
+  tighter `olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701`,
+  and it remains the correct lane classification for the current
+  `olmradialblur_tiny_rotation_anchor_pointer_watch_followup_20260702` once
+  that return is imported.
+- `tiny_rotation:anchor-watch-upstream-rgb`: keep the stable inverse-sampler
+  anchor, but request pointer/watchpoint context and typed upstream
+  substitute/source-population values before changing code.
 - `trace-structure-present-values-missing`: repeat the Windows trace with typed
   numeric witness values; do not tune from placeholders.
+- The 2026-07-01 tiny-only partial return is now also archived as a stable
+  project-local evidence object:
+  `refs/returns/windows/20260701_214150_radialblur_tiny_rotation_substitute_followup/...return_windows.zip`
+  plus the focused comparison
+  `refs/reports/runtime_trace_comparisons/olmradialblur_tiny_rotation_substitute_followup_20260701.md`.
+  That report freezes the current read as
+  `tiny_rotation:substitute-or-upstream-rgb`, not a final-byte or
+  validity-only lane.
+- A dedicated backstep-anchor audit now freezes the exact last stable local
+  sample point for the active Windows follow-up:
+  `scripts/analyze_olmradialblur_tiny_rotation_backstep_anchor.py`,
+  `refs/scripts/smoke_analyze_olmradialblur_tiny_rotation_backstep_anchor.py`,
+  and
+  `refs/conformance/olmradialblur_tiny_rotation_backstep_anchor_audit_20260701.md`.
+  It records that the reliable inverse-sampler anchor for `case_0010 (1614,6)`
+  is `(angle=1603.83948, radius=844.317505)` with direct support only on rows
+  `844/845`, all direct source cells black, and the nearest positive family one
+  row above at `row 843 / angles 1601..1602`. That keeps the live Windows ask
+  on the first upstream inclusion/substitute branch, not on final sample
+  placement.
+- A same-day Windows return now freezes what that backstep ask still does not
+  capture:
+  `refs/returns/windows/20260701_225800_radialblur_tiny_rotation_backstep_followup/...return_windows.zip`,
+  `refs/reports/runtime_trace_comparisons/olmradialblur_tiny_rotation_backstep_followup_20260701.summary.md`,
+  and
+  `refs/reports/runtime_trace_comparisons/olmradialblur_tiny_rotation_backstep_followup_20260701.md`.
+  The result is still `failed_partial`: it preserves the stable
+  `+0x4eb9/+0x4ec8` inverse-sampler anchor, final white byte, and the same
+  near-black sampled RGBA, but it does not retain the first upstream branch
+  that promotes the witness to white. That means the next Windows ask is no
+  longer "backstep from the anchor" in general; it must attach stack/pointer
+  context or sampled-cell watchpoints to that same anchor so the first
+  substitute/source-population branch is retained.
+- The current live Windows ask is therefore the anchor-watch contract:
+  `refs/conformance/olmradialblur_tiny_rotation_anchor_watch_followup_contract_20260701.md`
+  and
+  `refs/conformance/olmradialblur_tiny_rotation_anchor_watch_return_acceptance_20260701.md`.
+  Treat the backstep package and its comparison as archived evidence that
+  justifies this narrower request, not as the active queue item.
 - The comparison JSON/Markdown also emits `recommended_next_evidence`. Use it
   as the stop/go note for the next Mac-side implementation step: Zoom needs
-  denominator/pre-writeback/writeback proof, while tiny Rotation needs
-  inverse-sampler/validity proof.
+  caller-collapse / denominator / pre-writeback proof, while tiny Rotation
+  needs the anchor-watch upstream RGB / substitute-path witness.
 - Latest focused comparison:
   `refs/reports/runtime_trace_comparisons/olmradialblur_residual_witness_20260624.md`.
   Use this over the older generic `olmradialblur_residual_witness.md` report

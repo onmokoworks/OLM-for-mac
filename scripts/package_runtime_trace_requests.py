@@ -94,9 +94,22 @@ def parse_args() -> argparse.Namespace:
             "radialblur-residual-witness",
             "radialblur-caller-collapse-witness",
             "radialblur-caller-collapse-followup",
+            "radialblur-tiny-rotation-followup",
+            "radialblur-tiny-rotation-backstep-followup",
+            "radialblur-tiny-rotation-anchor-watch-followup",
+            "radialblur-tiny-rotation-anchor-pointer-watch-followup",
+            "distancegradation-case0023-threshold-followup",
+            "distancegradation-case0023-triplet-xy-compose-followup",
+            "distancegradation-case0023-output-word-triplet-followup",
+            "distancegradation-case0023-refcon-wordmap-followup",
             "radialblur-inner-cell-witness",
             "directionalblur-residual-witness",
             "directionalblur-helper-coverage-witness",
+            "directionalblur-witness-logging-prep",
+            "directionalblur-angle0-helper-gate-retry",
+            "directionalblur-angle0-load-prewarm-retry",
+            "windows-ae-runner-startup-diagnostics",
+            "windows-ae-addproperty-stall-diagnostics",
             "smoother2-no-key-grid",
             "smoother2-legacy-key-gamma",
             "smoother2-legacy-writeback-extract",
@@ -108,6 +121,9 @@ def parse_args() -> argparse.Namespace:
             "smoother2-legacy-current-aex-polygon",
             "smoother2-current-aex-f270-witness",
             "smoother2-current-aex-writer-frame-followup",
+            "smoother2-current-aex-producer-path-diff",
+            "smoother2-current-aex-0004-writer-gate-retry",
+            "smoother2-current-aex-0004-load-prewarm-retry",
             "distancegradation-field-prep",
             "distancegradation-layer-no-bg-source-ownership",
             "distancegradation-constant-boundary-witness",
@@ -902,6 +918,87 @@ def smoother2_current_aex_writer_frame_followup_action() -> dict[str, Any]:
     }
 
 
+def smoother2_current_aex_producer_path_diff_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmsmoother2_current_aex_producer_path_diff_20260702",
+        "plugin_area": "OLMSmoother2 current-AEX producer-path diff from writer anchor",
+        "mode": "external-trace",
+        "command": (
+            "LIVE NEW TRACE REQUIRED. Do not answer from retained writer-anchor evidence alone, old notes, "
+            "or previously known final bytes. This request is only useful if a new debugger pass reaches the "
+            "first unresolved producer stage. Trace only the two active current-AEX Software residual lanes using the writer-anchored stage "
+            "matrix in `refs/conformance/olmsmoother2_producer_path_diff_20260702.md`. Do not spend this "
+            "round on broad PNG rerenders, global toggles, or retired legacy PNGs. Anchor from the already "
+            "confirmed final writer frame and capture only the first unresolved producer facts. For "
+            "`legacy_case_0004_current_aex` at `(1903,519)`, prove whether Windows stays on `idx=0xd0 / "
+            "FUN_180013140` with zero vertices and a nonzero cce0 fallback, or whether it appends a "
+            "neighbor-derived sample before cce0. Return the c280 switch index, polygon vertex count before "
+            "bb10/b120, helper append source xy/rgba/weight if any, and cce0 output floats before final u8 "
+            "packing. For `legacy_case_0012_gamma5_red_blue_current_aex` at `(91,841)`, keep the same writer "
+            "anchor but isolate the first divergence inside `cardinal6/e170/f270/e3a0`: return c280 switch "
+            "index, cardinal6 descriptor/key and polygon count before append, e170 bits/code, f270/e3a0 "
+            "append/no-append facts, and cce0 output floats before final u8 packing."
+        ),
+        "stop_condition": (
+            "A satisfactory answer must classify the first unresolved producer stage for at least one of the "
+            "two active lanes. `0004` is not answered by final writer bytes alone; it needs polygon-or-fallback "
+            "evidence. `0012` is not answered by a broad cce0 dump alone; it needs the first Windows-vs-local "
+            "difference inside the `cardinal6/e170/f270/e3a0` chain. If the exact callsite cannot be held, "
+            "return the precise failed breakpoint/watchpoint reason and the closest writer-anchored frame that "
+            "still preserves the needed producer inputs. Repeating the known writer-anchor facts alone counts "
+            "as failure, not partial success."
+        ),
+    }
+
+
+def smoother2_current_aex_0004_writer_gate_retry_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmsmoother2_current_aex_0004_writer_gate_retry_20260702",
+        "plugin_area": "OLMSmoother2 current-AEX 0004 writer-gated producer retry",
+        "mode": "external-trace",
+        "command": (
+            "LIVE NEW TRACE REQUIRED. Do not start with broad unconditioned `+0xc280/+0xcce0/+0x350b/+0x3610` "
+            "breakpoints. Use only `legacy_case_0004_current_aex` from "
+            "`smoother2_legacy_full_current_aex_recapture_20260621`, targeting witness `(1903,519)`, and follow "
+            "the gating contract in `refs/conformance/olmsmoother2_current_aex_0004_writer_gate_retry_20260702.md`. "
+            "First bind the exact output address or exact writer-frame xy for `(1903,519)` from the writer anchor. "
+            "Only after that exact writer hit is confirmed, single-step or one-shot-break through the corresponding "
+            "`+0x350b -> +0x3510` call path for the same frame. From that exact frame, capture c280 switch index, "
+            "polygon vertex count before `bb10/b120`, helper append source xy/rgba/weight or proof of no append, "
+            "and cce0 output floats before final u8 packing."
+        ),
+        "stop_condition": (
+            "A satisfactory answer must return at least one new witness-local producer fact for "
+            "`legacy_case_0004_current_aex (1903,519)` from a gated frame. Known writer-anchor bytes/floats or "
+            "another broad hit storm count as failure."
+        ),
+    }
+
+
+def smoother2_current_aex_0004_load_prewarm_retry_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmsmoother2_current_aex_0004_load_prewarm_retry_20260703",
+        "plugin_area": "OLMSmoother2 current-AEX 0004 exact-case module-load prewarm retry",
+        "mode": "external-trace",
+        "command": (
+            "LIVE NEW TRACE REQUIRED. This retry exists because the previous exact-gated 0004 run stalled before "
+            "`OLMSmoother2` loaded. Use only `legacy_case_0004_current_aex` from "
+            "`smoother2_legacy_full_current_aex_recapture_20260621`, and follow "
+            "`refs/conformance/smoother2_directionalblur_startup_stall_retry_20260703.md`. Do not begin with the "
+            "conditional `+0x350b` witness gate. First prove that the exact case/project path really loads "
+            "`OLMSmoother2` in the current AE session. If needed, use a prewarm render or a load-only pass with "
+            "only `sxe ld:OLMSmoother2(.aex)` and minimal logging. Once the load marker is confirmed, bind only "
+            "one narrow writer-gated breakpoint family for the same session or immediately report the exact startup "
+            "log tail if the session stalls before load again."
+        ),
+        "stop_condition": (
+            "A satisfactory answer must at minimum confirm target module load for `legacy_case_0004_current_aex`, "
+            "or return a fresh exact startup-stall signature narrower than the current timeout. It does not need "
+            "final producer facts if load stabilization is the only new progress."
+        ),
+    }
+
+
 def distancegradation_field_prep_action() -> dict[str, Any]:
     return {
         "request_id": "olmdistancegradation_field_prep_runtime_trace_20260619",
@@ -1031,6 +1128,118 @@ def distancegradation_constant_case0023_witness_action() -> dict[str, Any]:
     }
 
 
+def distancegradation_case0023_threshold_followup_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_case0023_threshold_family_followup_20260701",
+        "plugin_area": "OLMDistanceGradation case_0023 threshold-family triplet follow-up",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMDistanceGradation normalized Software 16bpc "
+            "olmdistancegradation_extended__case_0023 threshold-family witnesses "
+            "`(414,393)`, `(415,393)`, `(416,393)`. Do not spend this round on "
+            "the already well-described top-edge family. For the triplet, record "
+            "raw inside and outside distance values, helper-stage field value before "
+            "compose, the exact threshold/equality/plateau ownership decision, "
+            "whether the Constant-only binary fork sees the pixel before or after "
+            "that decision, the field value consumed by compose, compose output "
+            "RGBA before word store, and final stored RGBA16."
+        ),
+        "stop_condition": (
+            "Return enough typed values to explain the `35.014 -> 36.013 -> 37.013` "
+            "threshold-family crossing in case_0023. Final PNG values or another "
+            "edge-family-only answer are not enough. If the exact typed witness still "
+            "cannot be isolated, explicitly say whether the blocker is the hook point, "
+            "callsite, or a value only observable one stage earlier/later."
+        ),
+    }
+
+
+def distancegradation_case0023_triplet_xy_compose_followup_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_case0023_triplet_xy_compose_hook_followup_20260701",
+        "plugin_area": "OLMDistanceGradation case_0023 triplet XY-retained compose-hook follow-up",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMDistanceGradation normalized Software 16bpc "
+            "olmdistancegradation_extended__case_0023 threshold-family witnesses "
+            "`(414,393)`, `(415,393)`, `(416,393)`, but this round keep the XY identity attached at the "
+            "helper/compose hook itself. The last return already confirmed the endpoint flip "
+            "`35.014 < 36 -> blue/low`, `36.013/37.013 >= 36 -> red/high`, so do not spend time on broad "
+            "callback hits or final-only PNG restatement. At the actual case-local compose/helper stop, "
+            "record XY, raw inside/outside distances, helper-stage field value, exact threshold/equality/"
+            "plateau decision, whether the Constant binary fork runs before or after that decision, the "
+            "value consumed by FUN_181170480, compose output RGBA before word store, and final stored RGBA16."
+        ),
+        "stop_condition": (
+            "Return enough typed values to explain the case_0023 triplet crossing with retained XY at the "
+            "actual helper/compose hook. If the exact case-local stop still cannot be isolated, return the "
+            "precise failed hook/callsite reason and the closest earlier or later stage that still carries "
+            "the triplet XY identity."
+        ),
+    }
+
+
+def distancegradation_case0023_output_word_triplet_followup_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_case0023_output_word_triplet_followup_20260701",
+        "plugin_area": "OLMDistanceGradation case_0023 output-word / compose-refcon triplet follow-up",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMDistanceGradation normalized Software 16bpc "
+            "olmdistancegradation_extended__case_0023 threshold-family witnesses "
+            "`(414,393)`, `(415,393)`, `(416,393)`, but this round derive the triplet XY identity "
+            "from the actual output-word address or compose refcon at `FUN_181170480`. The previous "
+            "follow-up already proved the endpoint flip and already failed because XY was not retained "
+            "at the helper/compose hook, so do not spend time on broad callback hits or final-only PNG "
+            "restatement. Filter/dump only when the hook is bound to one of those three output pixels, "
+            "or stop from a data breakpoint on those output RGBA16 words and reconstruct the compose "
+            "frame from that stop. Record XY, raw inside/outside distances, helper-stage field value, "
+            "exact threshold/equality/plateau decision, whether the Constant binary fork runs before "
+            "or after that decision, the value consumed by `FUN_181170480`, compose output RGBA before "
+            "word store, and final stored RGBA16."
+        ),
+        "stop_condition": (
+            "Return enough typed values to explain the case_0023 triplet crossing with XY bound from "
+            "the output-word address or compose refcon at `FUN_181170480`. If even that stop cannot "
+            "be isolated, return the precise failed bind/watchpoint reason and the closest hook frame "
+            "that still exposes the output-word address or compose refcon needed to recover XY."
+        ),
+    }
+
+
+def distancegradation_case0023_refcon_wordmap_followup_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702",
+        "plugin_area": "OLMDistanceGradation case_0023 refcon/stack/output-word mapping follow-up",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMDistanceGradation normalized Software 16bpc "
+            "`olmdistancegradation_extended__case_0023` threshold-family witnesses "
+            "`(414,393)`, `(415,393)`, `(416,393)`, but this round treat stack/refcon/output-word "
+            "reconstruction as the primary task at `FUN_181170480`. At every relevant hit, first "
+            "dump `r8`, `r9`, `[rsp+0x28]`, and enough surrounding qwords/dwords to infer width, "
+            "stride, current output pointer, and any refcon layout needed to recover xy/output-address "
+            "mapping. Once that mapping is known, set data breakpoints on the three `RGBA16` output "
+            "word ranges and dump the same frame before store. Do not spend time on broad callback "
+            "activity or final-only endpoint restatement. Record XY, recovered output-word address, "
+            "raw inside/outside distances, helper-stage field value, exact threshold/equality/plateau "
+            "decision, whether the Constant binary fork runs before or after that decision, the value "
+            "consumed by `FUN_181170480`, compose output RGBA before word store, and final stored RGBA16. "
+            "The README triplet `(414,393)/(415,393)/(416,393)` is authoritative; do not fall back to "
+            "the older edge witnesses. If the watchpoint/bind still cannot be held, the retained log "
+            "must still include the exact failed address/condition plus the dumped `r8`, `r9`, "
+            "`[rsp+0x28]`, and surrounding pointer/stack window that blocked reconstruction."
+        ),
+        "stop_condition": (
+            "Return enough typed values to explain the `case_0023` triplet crossing with XY bound "
+            "from recovered output-word/refcon/stack mapping at `FUN_181170480`. If even that stop "
+            "cannot be isolated, return the precise failed bind/watchpoint reason plus the exact "
+            "address/condition and the dumped `r8/r9/[rsp+0x28]` layout and pointer state needed for "
+            "the next retry."
+        ),
+    }
+
+
 def radialblur_dense_action() -> dict[str, Any]:
     return {
         "request_id": "olmradialblur_dense_sampler_trace_20260620",
@@ -1120,6 +1329,114 @@ def radialblur_caller_collapse_followup_action() -> dict[str, Any]:
             "`+0xf252/+0xf250/+0xe`, and tiny Rotation as a concrete RGB/substitute-path issue rather than a "
             "validity-alpha issue. If the exact breakpoint cannot be held, return the precise failed "
             "address/condition and the closest captured values in this chain."
+        ),
+    }
+
+
+def radialblur_tiny_rotation_followup_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmradialblur_tiny_rotation_substitute_path_followup_20260701",
+        "plugin_area": "OLMRadialBlur tiny Rotation upstream RGB/substitute-path follow-up",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMRadialBlur tiny Rotation `case_0010` witness `(1614,6)` on the current "
+            "Software AEX path. Do not spend this round rediscovering only the final white byte or "
+            "the same near-black closest inverse-sampler return. Isolate the upstream branch that "
+            "creates the missing bright lobe before final inverse sampling: exact inverse-sampler "
+            "input/source-polar coordinates, validity/border decision, any substitute/fallback path, "
+            "and typed RGBA through source/population or substitute -> `+0xf252` -> `+0xf250` -> "
+            "`+0xe` -> pre-writeback -> final stored byte."
+        ),
+        "stop_condition": (
+            "Return enough typed values to decide whether the missing bright lobe is created by "
+            "substitute/fallback promotion or by neighboring/source-population ownership before "
+            "final inverse sampling. If the exact breakpoint cannot be held, return the precise "
+            "failed address/condition and the closest typed values that still land on the target "
+            "witness chain."
+        ),
+    }
+
+
+def radialblur_tiny_rotation_backstep_followup_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701",
+        "plugin_area": "OLMRadialBlur tiny Rotation inverse-sampler backstep follow-up",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMRadialBlur tiny Rotation `case_0010` witness `(1614,6)` on the current "
+            "Software AEX path, but anchor from the reliable inverse-sampler hit already known to "
+            "land on the witness chain. Break or log at the exact hit that yields source/polar RGBA "
+            "`[-0.0040819393, -0.0040819393, -0.0040819393, 1.0]` and final white output, then step "
+            "backward or earlier into the path that populated that output region. Capture the first "
+            "upstream branch that can still change the witness from near-black to the final white "
+            "pixel: substitute/fallback decision, neighboring-row or source-population selection, "
+            "preserved validity `+0xf252`, accumulated `+0xf250` RGBA, normalized final polar `+0xe` "
+            "RGBA, and any typed source rows/angles involved before final inverse sampling. Do not "
+            "spend effort rediscovering only the final byte or the same inverse-sampler sample."
+        ),
+        "stop_condition": (
+            "Return enough typed values to decide which upstream path actually promotes the missing "
+            "bright lobe at `case_0010 (1614,6)`: substitute/fallback, neighboring-row source "
+            "ownership, or another pre-inverse-sample branch. If the breakpoint/watchpoint still fails, "
+            "return the exact failed address/condition and the closest earlier stage that remains "
+            "stable from the inverse-sampler anchor."
+        ),
+    }
+
+
+def radialblur_tiny_rotation_anchor_watch_followup_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmradialblur_tiny_rotation_anchor_watch_followup_20260701",
+        "plugin_area": "OLMRadialBlur tiny Rotation anchor watchpoint follow-up",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMRadialBlur tiny Rotation `case_0010` witness `(1614,6)` on the current "
+            "Software AEX path, anchored from the already stable inverse-sampler hit "
+            "`OLMRadialBlur+0x4eb9/+0x4ec8`. Do not spend this round rediscovering only the same "
+            "near-black sample or the final white byte. From that anchor, log the surrounding "
+            "stack/pointer context for the sampled polar cell and neighboring rows, then set the "
+            "narrowest read/write watchpoints needed to retain the first upstream promotion branch "
+            "that turns the witness chain from near-black into white. Capture the typed substitute/"
+            "fallback or source-population decision, preserved validity `+0xf252`, accumulated "
+            "`+0xf250` RGBA, normalized final polar `+0xe` RGBA, and any concrete polar row/angle/"
+            "cell addresses involved before final inverse sampling."
+        ),
+        "stop_condition": (
+            "Return enough typed values to decide which anchored upstream branch actually promotes "
+            "the missing bright lobe at `case_0010 (1614,6)`. If the watchpoint path still cannot "
+            "be held, return the exact failed pointer/watchpoint condition plus the best retained "
+            "stack/pointer context around the sampled cell and neighboring rows."
+        ),
+    }
+
+
+def radialblur_tiny_rotation_anchor_pointer_watch_followup_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702",
+        "plugin_area": "OLMRadialBlur tiny Rotation anchor context/watch reconstruction follow-up",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMRadialBlur tiny Rotation `case_0010` witness `(1614,6)` on the current "
+            "Software AEX path, anchored from the already stable inverse-sampler hit "
+            "`OLMRadialBlur+0x4eb9/+0x4ec8`, but this round treat anchor-context reconstruction as the "
+            "primary task. At the stable anchor, dump `rsi/rbp/rsp` qword windows plus any polar-grid, "
+            "row-base, and metadata pointers before continuing, compute the exact sampled-cell address "
+            "for source xy `[1603.8396,844.3175]`, then set the narrowest read/write watchpoints on that "
+            "cell and adjacent row cells before final inverse sampling. Capture the first upstream "
+            "promotion branch that can still turn the witness chain from near-black into white: concrete "
+            "sampled-cell address, neighboring-row addresses, substitute/fallback or source-population "
+            "decision, preserved validity `+0xf252`, accumulated `+0xf250` RGBA, normalized final "
+            "polar `+0xe` RGBA, and any typed row/angle/cell addresses involved before final inverse "
+            "sampling. If the cell cannot be reconstructed, the retained log must still include the "
+            "exact failed address/condition together with the dumped `rsi/rbp/rsp` qword windows and "
+            "anchor-context pointers that blocked the reconstruction."
+        ),
+        "stop_condition": (
+            "Return enough typed pointer/watchpoint evidence to decide which anchored upstream branch "
+            "actually promotes the missing bright lobe at `case_0010 (1614,6)`. If the watchpoint "
+            "path still cannot be held, return the exact failed address/condition plus the dumped "
+            "`rsi/rbp/rsp` qword windows and pointer context used to reconstruct the sampled-cell "
+            "address."
         ),
     }
 
@@ -1227,6 +1544,138 @@ def directionalblur_helper_coverage_witness_action() -> dict[str, Any]:
     return action
 
 
+def directionalblur_witness_logging_prep_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdirectionalblur_witness_logging_prep_20260702",
+        "plugin_area": "OLMDirectionalBlur witness-level A/B denominator validity logging prep",
+        "mode": "external-trace",
+        "command": (
+            "LIVE NEW TRACE REQUIRED. Do not answer from retained evidence, old notes, or package prose. "
+            "If OLMDirectionalBlur fails to resolve as a loaded module, treat that load failure itself as "
+            "the primary debugging target and return the exact module-load / breakpoint-bind failure details. "
+            "Trace only the two active OLMDirectionalBlur Software witness lanes using the concrete "
+            "logging contract in `refs/conformance/olmdirectionalblur_witness_logging_prep_20260702.md`. "
+            "Stay on the current AEX-shaped `rotated-aex-full-choreo` structural base and do not satisfy "
+            "this request with broad PNG rerenders, candidate-matrix prose, or final-byte-only logs. "
+            "For the angle-0 lane, keep primary `(494,169)` and also include the right-edge endpoint "
+            "`(579,169)` in the same pass. Record normalized parameters, A/B image pointers, output-to-A/B "
+            "xy mapping, denominator plane pointer/value, `alpha_or_valid` pointer/value, accumulation "
+            "numerator RGBA, pre-writeback RGBA float/hex, final stored RGBA bytes, and helper-local "
+            "source x/y plus actual touched destination x range on row `y=169`, including rowdriver/group "
+            "membership for both witnesses. For the diagonal lane, keep primary `(507,367)` and a signed-red "
+            "companion such as `(423,187)` when possible. Record the same shared fields plus rotate sampler "
+            "source coordinates/order, border or validity decision, and the group-size or opacity gate "
+            "feeding the diagonal witness."
+        ),
+        "stop_condition": (
+            "Treat this request as answered only if at least one lane returns typed denominator + "
+            "`alpha_or_valid`/validity + pre-writeback evidence in the same witness record. Angle-0 is "
+            "not answered if the run omits helper-local touched destination range for `(494,169)` and "
+            "`(579,169)`. Diagonal is not answered if sampler order or border-validity is described only "
+            "qualitatively. Final PNG bytes or broad means alone are not enough. A retained-evidence rewrite "
+            "counts as failure, not partial success."
+        ),
+    }
+
+
+def directionalblur_angle0_helper_gate_retry_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdirectionalblur_angle0_helper_gate_retry_20260702",
+        "plugin_area": "OLMDirectionalBlur angle-0 helper-local witness gate retry",
+        "mode": "external-trace",
+        "command": (
+            "LIVE NEW TRACE REQUIRED. Do not use a surrogate load case and do not stop at broad +0x2000 hits. "
+            "Use the real request set `directionalblur_context_scale_20260606`, case "
+            "`db_existing_case_0001_software_pair`, and target only the angle-0 witness lane described in "
+            "`refs/conformance/olmdirectionalblur_angle0_helper_gate_retry_20260702.md`. If needed, use a "
+            "single broad entry hit only to confirm module load, then move to a narrower rowdriver/front-helper "
+            "stage for the same render. The required same-pass witness record is `(494,169)` plus endpoint "
+            "`(579,169)`, with normalized consumed parameters, A/B mapping, denominator, `alpha_or_valid` or "
+            "equivalent validity side-channel, helper-local source x/y, actual touched destination x range on "
+            "row `y=169`, rowdriver/group membership, pre-writeback RGBA, and final stored bytes."
+        ),
+        "stop_condition": (
+            "A satisfactory answer must return typed angle-0 witness-local fields for both `(494,169)` and "
+            "`(579,169)` in the same pass. Broad `+0x2000` hit storms, final bytes alone, or surrogate cases "
+            "count as failure."
+        ),
+    }
+
+
+def directionalblur_angle0_load_prewarm_retry_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdirectionalblur_angle0_load_prewarm_retry_20260703",
+        "plugin_area": "OLMDirectionalBlur angle-0 exact-case module-load prewarm retry",
+        "mode": "external-trace",
+        "command": (
+            "LIVE NEW TRACE REQUIRED. This retry exists because the previous exact-case narrow-gate run stalled "
+            "before `OLMDirectionalBlur` loaded. Use the real request set `directionalblur_context_scale_20260606`, "
+            "case `db_existing_case_0001_software_pair`, and follow "
+            "`refs/conformance/smoother2_directionalblur_startup_stall_retry_20260703.md`. Do not begin with the "
+            "narrow helper breakpoints. First prove that the exact case/project path really loads "
+            "`OLMDirectionalBlur` in the current AE session. If needed, use a prewarm render or a load-only pass "
+            "with only `sxe ld:OLMDirectionalBlur(.aex)` and minimal logging. Once the load marker is confirmed, "
+            "bind only one narrow helper-stage family for the same session or immediately report the exact startup "
+            "log tail if the session stalls before load again."
+        ),
+        "stop_condition": (
+            "A satisfactory answer must at minimum confirm target module load for the real angle-0 case/project "
+            "path, or return a fresh exact startup-stall signature narrower than the current timeout. It does not "
+            "need final witness-local values if load stabilization is the only new progress."
+        ),
+    }
+
+
+def windows_ae_runner_startup_diagnostics_action() -> dict[str, Any]:
+    return {
+        "request_id": "windows_ae_runner_startup_diagnostics_20260703",
+        "plugin_area": "Windows AE runner startup / request-dispatch diagnostics",
+        "mode": "external-trace",
+        "command": (
+            "LIVE NEW DIAGNOSTIC REQUIRED. Do not begin with plugin-local witness breakpoints. "
+            "Use the exact-case requests that recently stalled before module load: "
+            "`legacy_case_0004_current_aex` from `smoother2_legacy_full_current_aex_recapture_20260621` "
+            "and `db_existing_case_0001_software_pair` from `directionalblur_context_scale_20260606`. "
+            "Follow `refs/conformance/windows_ae_runner_startup_diagnostics_20260703.md` and return a "
+            "stage-by-stage ledger for AE launch -> startup scripts -> JSX runner invocation -> request "
+            "directory resolution -> request JSON enumeration -> case-id resolution -> dispatch start -> "
+            "target plugin module load. Include the exact invocation used, the final request dir path seen "
+            "by the runner, the final case id seen by the runner, whether `ae_runner_log.txt` or "
+            "`run_complete.json` creation was attempted, and the exact last startup/runner line before timeout. "
+            "If the JSX side falls back to a default request dir, report that explicit path."
+        ),
+        "stop_condition": (
+            "A satisfactory answer must return runner-stage evidence that classifies the first stage that fails "
+            "to advance. Another timeout with only AE startup banners or only `sxe ld:<module>` setup counts as "
+            "failure."
+        ),
+    }
+
+
+def windows_ae_addproperty_stall_diagnostics_action() -> dict[str, Any]:
+    return {
+        "request_id": "windows_ae_addproperty_stall_diagnostics_20260703",
+        "plugin_area": "Windows AE addProperty return / modal / native-stall diagnostics",
+        "mode": "external-trace",
+        "command": (
+            "LIVE NEW HOST DIAGNOSTIC REQUIRED. Do not use plugin-local witness breakpoints. "
+            "Use the same exact-case requests that now prove request dispatch and target module load: "
+            "`db_existing_case_0001_software_pair` from `directionalblur_context_scale_20260606` and "
+            "`legacy_case_0004_current_aex` from `smoother2_legacy_full_current_aex_recapture_20260621`. "
+            "Follow `refs/conformance/windows_ae_addproperty_stall_20260703.md`. The goal is to classify what "
+            "happens across `effectParade.addProperty(...)`: success, catchable AE/ExtendScript error, hidden "
+            "modal/dialog, or native/plugin init stall. Return the exact candidate string passed to addProperty, "
+            "whether JSX returns from the try/catch, the exact caught error if any, and if it does not return, "
+            "the exact last breadcrumb before stall plus any hidden/modal window titles, screenshot or window dump, "
+            "and a compact first-chance exception summary between `about_to_add_effect` and timeout."
+        ),
+        "stop_condition": (
+            "A satisfactory answer must classify the addProperty boundary itself for at least one exact case. "
+            "Repeating only that the module loaded is failure."
+        ),
+    }
+
+
 def toondilate_dense_action() -> dict[str, Any]:
     return {
         "request_id": "olmtoondilate_dense_chamfer_trace_20260620",
@@ -1316,12 +1765,38 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [radialblur_caller_collapse_witness_action()]
     if profile == "radialblur-caller-collapse-followup":
         return [radialblur_caller_collapse_followup_action()]
+    if profile == "radialblur-tiny-rotation-followup":
+        return [radialblur_tiny_rotation_followup_action()]
+    if profile == "radialblur-tiny-rotation-backstep-followup":
+        return [radialblur_tiny_rotation_backstep_followup_action()]
+    if profile == "radialblur-tiny-rotation-anchor-watch-followup":
+        return [radialblur_tiny_rotation_anchor_watch_followup_action()]
+    if profile == "radialblur-tiny-rotation-anchor-pointer-watch-followup":
+        return [radialblur_tiny_rotation_anchor_pointer_watch_followup_action()]
+    if profile == "distancegradation-case0023-threshold-followup":
+        return [distancegradation_case0023_threshold_followup_action()]
+    if profile == "distancegradation-case0023-triplet-xy-compose-followup":
+        return [distancegradation_case0023_triplet_xy_compose_followup_action()]
+    if profile == "distancegradation-case0023-output-word-triplet-followup":
+        return [distancegradation_case0023_output_word_triplet_followup_action()]
+    if profile == "distancegradation-case0023-refcon-wordmap-followup":
+        return [distancegradation_case0023_refcon_wordmap_followup_action()]
     if profile == "radialblur-inner-cell-witness":
         return [radialblur_inner_cell_witness_action()]
     if profile == "directionalblur-residual-witness":
         return [directionalblur_residual_witness_action()]
     if profile == "directionalblur-helper-coverage-witness":
         return [directionalblur_helper_coverage_witness_action()]
+    if profile == "directionalblur-witness-logging-prep":
+        return [directionalblur_witness_logging_prep_action()]
+    if profile == "directionalblur-angle0-helper-gate-retry":
+        return [directionalblur_angle0_helper_gate_retry_action()]
+    if profile == "directionalblur-angle0-load-prewarm-retry":
+        return [directionalblur_angle0_load_prewarm_retry_action()]
+    if profile == "windows-ae-runner-startup-diagnostics":
+        return [windows_ae_runner_startup_diagnostics_action()]
+    if profile == "windows-ae-addproperty-stall-diagnostics":
+        return [windows_ae_addproperty_stall_diagnostics_action()]
     if profile == "smoother2-no-key-grid":
         return [smoother2_no_key_grid_action()]
     if profile == "smoother2-legacy-key-gamma":
@@ -1344,6 +1819,12 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [smoother2_current_aex_f270_witness_action()]
     if profile == "smoother2-current-aex-writer-frame-followup":
         return [smoother2_current_aex_writer_frame_followup_action()]
+    if profile == "smoother2-current-aex-producer-path-diff":
+        return [smoother2_current_aex_producer_path_diff_action()]
+    if profile == "smoother2-current-aex-0004-writer-gate-retry":
+        return [smoother2_current_aex_0004_writer_gate_retry_action()]
+    if profile == "smoother2-current-aex-0004-load-prewarm-retry":
+        return [smoother2_current_aex_0004_load_prewarm_retry_action()]
     if profile == "distancegradation-field-prep":
         return [distancegradation_field_prep_action()]
     if profile == "distancegradation-layer-no-bg-source-ownership":
@@ -2455,67 +2936,114 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
             "olmradialblur_zoom_tiny_rotation_residual_witness_20260622",
             "olmradialblur_caller_collapse_witness_20260630",
             "olmradialblur_caller_collapse_followup_20260701",
+            "olmradialblur_tiny_rotation_substitute_path_followup_20260701",
+            "olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701",
+            "olmradialblur_tiny_rotation_anchor_watch_followup_20260701",
+            "olmradialblur_tiny_rotation_anchor_pointer_watch_followup_20260702",
+            "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702",
         }:
-            observations = {
-                "effect": "OLM RadialBlur",
-                "module_base": "0x...",
-                "residual_cluster_report": (
-                    "refs/reports/olmradialblur_residual_clusters_20260622_011750/residual_clusters.md"
-                ),
-                "cases": [
-                    {
-                        "case_id": "case_0009",
-                        "path": "Zoom no-inner/no-noise",
-                        "local_classification": "scattered one-step alpha/writeback residual",
-                        "witness": {
-                            "x": 6,
-                            "y": 0,
-                            "reference_rgba": [20, 3, 3, 254],
-                            "mac_candidate_rgba": [20, 3, 3, 255],
-                            "signed_delta_candidate_minus_reference": [0, 0, 0, 1],
+            if request_id in {
+                "olmradialblur_tiny_rotation_substitute_path_followup_20260701",
+                "olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701",
+                "olmradialblur_tiny_rotation_anchor_watch_followup_20260701",
+                "olmradialblur_tiny_rotation_anchor_pointer_watch_followup_20260702",
+                "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702",
+            }:
+                observations = {
+                    "effect": "OLM RadialBlur",
+                    "module_base": "0x...",
+                    "residual_cluster_report": (
+                        "refs/reports/olmradialblur_residual_clusters_20260622_011750/residual_clusters.md"
+                    ),
+                    "cases": [
+                        {
+                            "case_id": "case_0010",
+                            "path": "tiny Rotation",
+                            "local_classification": "localized high-max RGB miss, not pure rounding",
+                            "witness": {
+                                "x": 1614,
+                                "y": 6,
+                                "reference_rgba": [255, 255, 255, 255],
+                                "mac_candidate_rgba": [0, 0, 0, 255],
+                                "signed_delta_candidate_minus_reference": [-255, -255, -255, 0],
+                            },
+                            "aex_inverse_sampler_input_xy": [None, None],
+                            "aex_polar_or_source_xy": [None, None],
+                            "aex_validity_or_border_decision": None,
+                            "aex_fallback_or_substitute_path": None,
+                            "aex_source_or_polar_rgba_float": [None, None, None, None],
+                            "aex_preserved_validity_f252": None,
+                            "aex_accumulated_f250_rgba_float": [None, None, None, None],
+                            "aex_normalized_final_e_rgba_float": [None, None, None, None],
+                            "aex_pre_writeback_rgba_float_or_hex": [None, None, None, None],
+                            "aex_final_rgba_u8": [None, None, None, None],
+                            "classification": "substitute-path | source-population | neighbor-geometry | unresolved",
                         },
-                        "aex_sampler_or_polar_xy": None,
-                        "aex_validity_or_border_decision": None,
-                        "aex_sampler_return_rgba_float": [None, None, None, None],
-                        "aex_preserved_validity_f252": None,
-                        "aex_accumulated_f250_rgba_float": [None, None, None, None],
-                        "aex_normalized_final_e_rgba_float": [None, None, None, None],
-                        "aex_source_or_polar_rgba_float": [None, None, None, None],
-                        "aex_normalization_denominator": None,
-                        "aex_pre_writeback_rgba_float_or_hex": [None, None, None, None],
-                        "aex_writeback_operation": "round|floor(x+0.5)|trunc|cvt|other",
-                        "aex_final_rgba_u8": [None, None, None, None],
-                        "classification": "writeback | alpha-normalization | sampler | unresolved",
-                    },
-                    {
-                        "case_id": "case_0010",
-                        "path": "tiny Rotation",
-                        "local_classification": "localized high-max RGB miss, not pure rounding",
-                        "witness": {
-                            "x": 1614,
-                            "y": 6,
-                            "reference_rgba": [255, 255, 255, 255],
-                            "mac_candidate_rgba": [0, 0, 0, 255],
-                            "signed_delta_candidate_minus_reference": [-255, -255, -255, 0],
+                    ],
+                    "failed_breakpoint_or_watchpoint_reason": None,
+                }
+                summary = "Fill with focused OLMRadialBlur tiny Rotation substitute/source-population witness facts."
+            else:
+                observations = {
+                    "effect": "OLM RadialBlur",
+                    "module_base": "0x...",
+                    "residual_cluster_report": (
+                        "refs/reports/olmradialblur_residual_clusters_20260622_011750/residual_clusters.md"
+                    ),
+                    "cases": [
+                        {
+                            "case_id": "case_0009",
+                            "path": "Zoom no-inner/no-noise",
+                            "local_classification": "scattered one-step alpha/writeback residual",
+                            "witness": {
+                                "x": 6,
+                                "y": 0,
+                                "reference_rgba": [20, 3, 3, 254],
+                                "mac_candidate_rgba": [20, 3, 3, 255],
+                                "signed_delta_candidate_minus_reference": [0, 0, 0, 1],
+                            },
+                            "aex_sampler_or_polar_xy": None,
+                            "aex_validity_or_border_decision": None,
+                            "aex_sampler_return_rgba_float": [None, None, None, None],
+                            "aex_preserved_validity_f252": None,
+                            "aex_accumulated_f250_rgba_float": [None, None, None, None],
+                            "aex_normalized_final_e_rgba_float": [None, None, None, None],
+                            "aex_source_or_polar_rgba_float": [None, None, None, None],
+                            "aex_normalization_denominator": None,
+                            "aex_pre_writeback_rgba_float_or_hex": [None, None, None, None],
+                            "aex_writeback_operation": "round|floor(x+0.5)|trunc|cvt|other",
+                            "aex_final_rgba_u8": [None, None, None, None],
+                            "classification": "writeback | alpha-normalization | sampler | unresolved",
                         },
-                        "aex_inverse_sampler_input_xy": None,
-                        "aex_polar_or_source_xy": None,
-                        "aex_validity_or_border_decision": None,
-                        "aex_fallback_or_substitute_path": None,
-                        "aex_preserved_validity_f252": None,
-                        "aex_accumulated_f250_rgba_float": [None, None, None, None],
-                        "aex_normalized_final_e_rgba_float": [None, None, None, None],
-                        "aex_source_or_polar_rgba_float": [None, None, None, None],
-                        "aex_normalization_denominator": None,
-                        "aex_pre_writeback_rgba_float_or_hex": [None, None, None, None],
-                        "aex_writeback_operation": "round|floor(x+0.5)|trunc|cvt|other",
-                        "aex_final_rgba_u8": [None, None, None, None],
-                        "classification": "inverse-sampler | validity-border | normalization | writeback | unresolved",
-                    },
-                ],
-                "failed_breakpoint_or_watchpoint_reason": None,
-            }
-            summary = "Fill with focused OLMRadialBlur Zoom/tiny Rotation residual witness facts."
+                        {
+                            "case_id": "case_0010",
+                            "path": "tiny Rotation",
+                            "local_classification": "localized high-max RGB miss, not pure rounding",
+                            "witness": {
+                                "x": 1614,
+                                "y": 6,
+                                "reference_rgba": [255, 255, 255, 255],
+                                "mac_candidate_rgba": [0, 0, 0, 255],
+                                "signed_delta_candidate_minus_reference": [-255, -255, -255, 0],
+                            },
+                            "aex_inverse_sampler_input_xy": None,
+                            "aex_polar_or_source_xy": None,
+                            "aex_validity_or_border_decision": None,
+                            "aex_fallback_or_substitute_path": None,
+                            "aex_preserved_validity_f252": None,
+                            "aex_accumulated_f250_rgba_float": [None, None, None, None],
+                            "aex_normalized_final_e_rgba_float": [None, None, None, None],
+                            "aex_source_or_polar_rgba_float": [None, None, None, None],
+                            "aex_normalization_denominator": None,
+                            "aex_pre_writeback_rgba_float_or_hex": [None, None, None, None],
+                            "aex_writeback_operation": "round|floor(x+0.5)|trunc|cvt|other",
+                            "aex_final_rgba_u8": [None, None, None, None],
+                            "classification": "inverse-sampler | validity-border | normalization | writeback | unresolved",
+                        },
+                    ],
+                    "failed_breakpoint_or_watchpoint_reason": None,
+                }
+                summary = "Fill with focused OLMRadialBlur Zoom/tiny Rotation residual witness facts."
         elif request_id in {
             "olmdirectionalblur_angle0_diagonal_residual_witness_20260622",
             "olmdirectionalblur_helper_coverage_witness_20260630",
@@ -3299,7 +3827,14 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 },
             }
             summary = "Fill with OLMDistanceGradation Constant boundary threshold-ownership witness facts."
-        elif request_id == "olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630":
+        elif request_id in {
+            "olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630",
+            "olmdistancegradation_case0023_threshold_family_followup_20260701",
+            "olmdistancegradation_case0023_triplet_xy_compose_hook_followup_20260701",
+            "olmdistancegradation_case0023_output_word_triplet_followup_20260701",
+            "olmdistancegradation_case0023_refcon_wordmap_followup_20260702",
+            "olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702",
+        }:
             observations = {
                 "effect": "OLM Distance Gradation",
                 "module_base": "0x...",
@@ -3324,26 +3859,62 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                         "interpolation_mode": 1,
                         "invert": 0,
                     },
-                    "representative_pixels": [
-                        {
-                            "x": 1699,
-                            "y": 7,
-                            "source_input_rgba16": [0, 0, 0, 257],
-                            "windows_reference_rgba16": [65535, 0, 0, 65535],
-                            "mac_candidate_rgba16": [7195, 0, 61165, 65535],
-                            "inside_distance": 1.0,
-                            "outside_distance": 0.0,
-                        },
-                        {
-                            "x": 985,
-                            "y": 26,
-                            "source_input_rgba16": [0, 0, 0, 257],
-                            "windows_reference_rgba16": [65535, 0, 0, 65535],
-                            "mac_candidate_rgba16": [7195, 0, 61165, 65535],
-                            "inside_distance": 1.0,
-                            "outside_distance": 0.0,
-                        },
-                    ],
+                    "representative_pixels": (
+                        [
+                            {
+                                "x": 414,
+                                "y": 393,
+                                "source_input_rgba16": [0, 0, 0, 257],
+                                "windows_reference_rgba16": [7195, 0, 61165, 65535],
+                                "mac_candidate_rgba16": [65535, 0, 0, 65535],
+                                "inside_distance": 35.0142822,
+                                "outside_distance": 0.0,
+                            },
+                            {
+                                "x": 415,
+                                "y": 393,
+                                "source_input_rgba16": [0, 0, 0, 257],
+                                "windows_reference_rgba16": [65535, 0, 0, 65535],
+                                "mac_candidate_rgba16": [7195, 0, 61165, 65535],
+                                "inside_distance": 36.0138855,
+                                "outside_distance": 0.0,
+                            },
+                            {
+                                "x": 416,
+                                "y": 393,
+                                "source_input_rgba16": [0, 0, 0, 257],
+                                "windows_reference_rgba16": [65535, 0, 0, 65535],
+                                "mac_candidate_rgba16": [7195, 0, 61165, 65535],
+                                "inside_distance": 37.0135117,
+                                "outside_distance": 0.0,
+                            },
+                        ]
+                        if request_id in {
+                            "olmdistancegradation_case0023_threshold_family_followup_20260701",
+                            "olmdistancegradation_case0023_triplet_xy_compose_hook_followup_20260701",
+                            "olmdistancegradation_case0023_output_word_triplet_followup_20260701",
+                        }
+                        else [
+                            {
+                                "x": 1699,
+                                "y": 7,
+                                "source_input_rgba16": [0, 0, 0, 257],
+                                "windows_reference_rgba16": [65535, 0, 0, 65535],
+                                "mac_candidate_rgba16": [7195, 0, 61165, 65535],
+                                "inside_distance": 1.0,
+                                "outside_distance": 0.0,
+                            },
+                            {
+                                "x": 985,
+                                "y": 26,
+                                "source_input_rgba16": [0, 0, 0, 257],
+                                "windows_reference_rgba16": [65535, 0, 0, 65535],
+                                "mac_candidate_rgba16": [7195, 0, 61165, 65535],
+                                "inside_distance": 1.0,
+                                "outside_distance": 0.0,
+                            },
+                        ]
+                    ),
                 },
                 "requested_for_each_pixel": {
                     "source_input_rgba16": [None, None, None, None],
@@ -3365,7 +3936,9 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                     "final_rgba16": [None, None, None, None],
                 },
             }
-            summary = "Fill with OLMDistanceGradation case_0023 OutsideThreshold=0 threshold-ownership witness facts."
+            summary = (
+                "Fill with OLMDistanceGradation case_0023 threshold-ownership witness facts."
+            )
         elif request_id == "olmsmoother2_legacy_writeback_extract_20260620":
             observations = {
                 "existing_full_log_path_checked": (
@@ -4162,7 +4735,7 @@ def checked_files(root: Path, profile: str) -> list[Path]:
                 "olmkirakira_boxfilter_pass1_microprobe_20260624.json"
             ),
         ]
-    elif profile in {"radialblur-residual-witness", "radialblur-caller-collapse-witness", "radialblur-caller-collapse-followup"}:
+    elif profile in {"radialblur-residual-witness", "radialblur-caller-collapse-witness", "radialblur-caller-collapse-followup", "radialblur-tiny-rotation-followup", "radialblur-tiny-rotation-backstep-followup", "radialblur-tiny-rotation-anchor-watch-followup", "radialblur-tiny-rotation-anchor-pointer-watch-followup"}:
         files = [
             TRACE_NOTE,
             Path("notes/IR_OLMRadialBlur.md"),
@@ -4174,6 +4747,16 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("refs/conformance/olmradialblur_caller_collapse_plane_diag_20260701.json"),
             Path("refs/conformance/olmradialblur_outer_propagated_validity_probe_20260701.md"),
             Path("refs/conformance/olmradialblur_outer_propagated_validity_probe_20260701.json"),
+            Path("refs/conformance/olmradialblur_tiny_rotation_followup_contract_20260701.md"),
+            Path("refs/conformance/olmradialblur_tiny_rotation_return_acceptance_20260701.md"),
+            Path("refs/conformance/olmradialblur_tiny_rotation_backstep_followup_contract_20260701.md"),
+            Path("refs/conformance/olmradialblur_tiny_rotation_backstep_return_acceptance_20260701.md"),
+            Path("refs/conformance/olmradialblur_tiny_rotation_anchor_watch_followup_contract_20260701.md"),
+            Path("refs/conformance/olmradialblur_tiny_rotation_anchor_watch_return_acceptance_20260701.md"),
+            Path("refs/conformance/olmradialblur_tiny_rotation_anchor_context_watch_followup_contract_20260702.md"),
+            Path("refs/conformance/olmradialblur_tiny_rotation_anchor_context_watch_return_acceptance_20260702.md"),
+            Path("refs/conformance/olmradialblur_tiny_rotation_same_row_audit_20260701.md"),
+            Path("refs/conformance/olmradialblur_tiny_rotation_same_row_audit_20260701.json"),
             Path("refs/reports/olmradialblur_residual_clusters_20260622_011750/residual_clusters.md"),
             Path("refs/reports/olmradialblur_residual_clusters_20260622_011750/residual_clusters.json"),
         ]
@@ -4209,6 +4792,65 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             *DIRECTIONALBLUR_SUPPORTING_NOTES,
             Path("refs/conformance/olmdirectionalblur_pending_witness_proof_20260629.md"),
             Path("refs/conformance/olmdirectionalblur_pending_witness_proof_20260629.json"),
+        ]
+    elif profile == "directionalblur-witness-logging-prep":
+        files = [
+            TRACE_NOTE,
+            *DIRECTIONALBLUR_SUPPORTING_NOTES,
+            Path("refs/conformance/olmdirectionalblur_pending_witness_proof_20260629.md"),
+            Path("refs/conformance/olmdirectionalblur_pending_witness_proof_20260629.json"),
+            Path("refs/conformance/olmdirectionalblur_hook_anchor_audit_20260701.md"),
+            Path("refs/conformance/olmdirectionalblur_hook_anchor_audit_20260701.json"),
+            Path("refs/conformance/olmdirectionalblur_source_candidates_audit_20260701.md"),
+            Path("refs/conformance/olmdirectionalblur_source_candidates_audit_20260701.json"),
+            Path("refs/conformance/olmdirectionalblur_witness_logging_prep_20260702.md"),
+            Path("refs/conformance/olmdirectionalblur_witness_logging_prep_20260702.json"),
+        ]
+    elif profile == "directionalblur-angle0-helper-gate-retry":
+        files = [
+            TRACE_NOTE,
+            *DIRECTIONALBLUR_SUPPORTING_NOTES,
+            Path("refs/reference_requests/directionalblur_context_scale_20260606.json"),
+            Path("refs/conformance/olmdirectionalblur_witness_logging_prep_20260702.md"),
+            Path("refs/conformance/olmdirectionalblur_witness_logging_prep_20260702.json"),
+            Path("refs/conformance/olmdirectionalblur_angle0_helper_gate_retry_20260702.md"),
+            Path("refs/conformance/smoother2_directionalblur_runtime_retry_contract_20260702.md"),
+        ]
+    elif profile == "directionalblur-angle0-load-prewarm-retry":
+        files = [
+            TRACE_NOTE,
+            *DIRECTIONALBLUR_SUPPORTING_NOTES,
+            Path("refs/reference_requests/directionalblur_context_scale_20260606.json"),
+            Path("refs/conformance/olmdirectionalblur_angle0_helper_gate_retry_20260702.md"),
+            Path("refs/conformance/smoother2_directionalblur_startup_stall_retry_20260703.md"),
+            Path("refs/conformance/smoother2_directionalblur_runtime_retry_contract_20260702.md"),
+        ]
+    elif profile == "windows-ae-runner-startup-diagnostics":
+        files = [
+            TRACE_NOTE,
+            Path("refs/conformance/windows_ae_runner_startup_stall_20260703.md"),
+            Path("refs/conformance/windows_ae_runner_startup_diagnostics_20260703.md"),
+            Path("refs/conformance/olmdirectionalblur_angle0_helper_gate_retry_20260702.md"),
+            Path("refs/conformance/olmsmoother2_current_aex_0004_writer_gate_retry_20260702.md"),
+            Path("refs/reference_requests/directionalblur_context_scale_20260606.json"),
+            Path("refs/reference_requests/smoother2_legacy_full_current_aex_recapture_20260621.json"),
+            Path("scripts/run_ae_single_case.py"),
+            Path("scripts/ae_render_single_case.jsx"),
+            Path("scripts/diagnose_ae_host_block.py"),
+        ]
+    elif profile == "windows-ae-addproperty-stall-diagnostics":
+        files = [
+            TRACE_NOTE,
+            Path("refs/conformance/windows_ae_runner_startup_stall_20260703.md"),
+            Path("refs/conformance/windows_ae_runner_startup_diagnostics_20260703.md"),
+            Path("refs/conformance/windows_ae_addproperty_stall_20260703.md"),
+            Path("refs/conformance/olmdirectionalblur_angle0_helper_gate_retry_20260702.md"),
+            Path("refs/conformance/olmsmoother2_current_aex_0004_writer_gate_retry_20260702.md"),
+            Path("refs/reference_requests/directionalblur_context_scale_20260606.json"),
+            Path("refs/reference_requests/smoother2_legacy_full_current_aex_recapture_20260621.json"),
+            Path("scripts/run_ae_single_case.py"),
+            Path("scripts/ae_render_single_case.jsx"),
+            Path("scripts/diagnose_ae_host_block.py"),
         ]
     elif profile == "smoother2-no-key-grid":
         files = [
@@ -4394,6 +5036,63 @@ def checked_files(root: Path, profile: str) -> list[Path]:
                 "OLMSmootherv2/reference_manifest.json"
             ),
         ]
+    elif profile == "smoother2-current-aex-producer-path-diff":
+        files = [
+            TRACE_NOTE,
+            Path("notes/OLMSmoother2_ASM_FACTS.md"),
+            Path("notes/IR_OLMSmoother2.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/conformance/olmsmoother2_current_aex_8bpc_decision.md"),
+            Path("refs/conformance/olmsmoother2_current_aex_8bpc_decision.json"),
+            Path("refs/conformance/olmsmoother2_producer_path_diff_20260702.md"),
+            Path("refs/conformance/olmsmoother2_producer_path_diff_20260702.json"),
+            Path("refs/reports/olmsmoother2_current_aex_proof_plan_20260625/proof_plan.md"),
+            Path("refs/reports/olmsmoother2_current_aex_proof_plan_20260625/proof_plan.json"),
+            Path("refs/reports/olmsmoother2_witness_neighborhood_20260624/neighborhood.md"),
+            Path("refs/reports/olmsmoother2_witness_neighborhood_20260624/neighborhood.json"),
+            Path("refs/reports/olmsmoother2_current_aex_witness_contract_20260624/witness_contract.md"),
+            Path("refs/reports/olmsmoother2_current_aex_witness_contract_20260624/witness_contract.json"),
+            Path("refs/reports/smoother2_current_aex_writer_frame_followup_20260625/writer_frame_analysis.md"),
+            Path("refs/reports/smoother2_current_aex_writer_frame_followup_20260625/writer_frame_analysis.json"),
+            Path("refs/reference_requests/smoother2_legacy_full_current_aex_recapture_20260621.json"),
+            Path(
+                "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/"
+                "OLMSmootherv2/reference_manifest.json"
+            ),
+        ]
+    elif profile == "smoother2-current-aex-0004-writer-gate-retry":
+        files = [
+            TRACE_NOTE,
+            Path("notes/OLMSmoother2_ASM_FACTS.md"),
+            Path("notes/IR_OLMSmoother2.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/reference_requests/smoother2_legacy_full_current_aex_recapture_20260621.json"),
+            Path("refs/conformance/olmsmoother2_producer_path_diff_20260702.md"),
+            Path("refs/conformance/olmsmoother2_producer_path_diff_20260702.json"),
+            Path("refs/conformance/olmsmoother2_current_aex_0004_writer_gate_retry_20260702.md"),
+            Path("refs/conformance/smoother2_directionalblur_runtime_retry_contract_20260702.md"),
+            Path("refs/reports/smoother2_current_aex_writer_frame_followup_20260625/writer_frame_analysis.md"),
+            Path("refs/reports/smoother2_current_aex_writer_frame_followup_20260625/writer_frame_analysis.json"),
+            Path(
+                "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/"
+                "OLMSmootherv2/reference_manifest.json"
+            ),
+        ]
+    elif profile == "smoother2-current-aex-0004-load-prewarm-retry":
+        files = [
+            TRACE_NOTE,
+            Path("notes/OLMSmoother2_ASM_FACTS.md"),
+            Path("notes/IR_OLMSmoother2.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/reference_requests/smoother2_legacy_full_current_aex_recapture_20260621.json"),
+            Path("refs/conformance/olmsmoother2_current_aex_0004_writer_gate_retry_20260702.md"),
+            Path("refs/conformance/smoother2_directionalblur_startup_stall_retry_20260703.md"),
+            Path("refs/conformance/smoother2_directionalblur_runtime_retry_contract_20260702.md"),
+            Path(
+                "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/"
+                "OLMSmootherv2/reference_manifest.json"
+            ),
+        ]
     elif profile == "distancegradation-field-prep":
         files = [
             TRACE_NOTE,
@@ -4431,7 +5130,7 @@ def checked_files(root: Path, profile: str) -> list[Path]:
                 "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
             ),
         ]
-    elif profile == "distancegradation-constant-case0023-witness":
+    elif profile in {"distancegradation-constant-case0023-witness", "distancegradation-case0023-threshold-followup", "distancegradation-case0023-triplet-xy-compose-followup", "distancegradation-case0023-output-word-triplet-followup", "distancegradation-case0023-refcon-wordmap-followup"}:
         files = [
             TRACE_NOTE,
             Path("notes/IR_OLMDistanceGradation.md"),
@@ -4441,6 +5140,16 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("refs/conformance/olmdistancegradation_16bpc_constant_both_outside0_variants_20260630.md"),
             Path("refs/conformance/olmdistancegradation_16bpc_constant_both_outside0_variants_20260630.json"),
             Path("refs/conformance/olmdistancegradation_16bpc_rejected_outside_threshold_eq_probe_20260630.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_witness_contract_20260701.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_return_acceptance_20260701.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_threshold_followup_contract_20260701.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_threshold_return_acceptance_20260701.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_triplet_xy_compose_followup_contract_20260701.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_triplet_xy_compose_return_acceptance_20260701.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_output_word_triplet_followup_contract_20260701.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_output_word_triplet_return_acceptance_20260701.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_refcon_stack_wordmap_followup_contract_20260702.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_refcon_stack_wordmap_return_acceptance_20260702.md"),
             Path(
                 "handoff/ae_pixel_validation_20260618/requests/"
                 "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"

@@ -29,21 +29,24 @@ def main() -> int:
         )
         report = json.loads(out_json.read_text(encoding="utf-8"))
         assert report["kind"] == "olmradialblur_pending_narrow_proof"
-        lanes = {row["lane"]: row for row in report["narrow_lanes"]}
-        assert lanes["zoom"]["witness"]["x"] == 6 and lanes["zoom"]["witness"]["y"] == 0
-        assert lanes["tiny_rotation"]["witness"]["x"] == 1614 and lanes["tiny_rotation"]["witness"]["y"] == 6
-        assert lanes["inner"]["classification"] == "partial_trace_after_effective_span"
-        assert "alpha 0.99999994 versus local 1.0" in lanes["zoom"]["required_next_proof"]
-        assert lanes["zoom"]["caller_collapse_boundary"]["preserved_validity_plane"] == "+0xf252"
-        assert lanes["tiny_rotation"]["caller_collapse_boundary"]["final_polar_rgba_plane"] == "+0xe"
+        assert report["active_request"]["request_id"] == "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702"
+        assert report["active_request"]["status"] == "pending"
+        lanes = {row["lane"]: row for row in report["lanes"]}
+        assert lanes["zoom_context"]["witness"]["x"] == 6 and lanes["zoom_context"]["witness"]["y"] == 0
+        assert lanes["tiny_rotation_active"]["witness"]["x"] == 1614 and lanes["tiny_rotation_active"]["witness"]["y"] == 6
+        assert lanes["inner_context"]["status"] == "parked-typed-per-cell-witness-still-separate"
+        assert lanes["zoom_context"]["windows_final_rgba_u8"] == [20, 3, 3, 254]
+        assert lanes["tiny_rotation_active"]["lane_audit"]["reference_bright_count"] == 17
+        assert lanes["tiny_rotation_active"]["lane_audit"]["all_variants_keep_bright_count_zero"] is True
+        assert "+0x4eb9/+0x4ec8" in lanes["tiny_rotation_active"]["required_next_proof"]
         md = out_md.read_text(encoding="utf-8")
         for needle in (
-            "zoom",
-            "tiny_rotation",
-            "inner",
+            "zoom_context",
+            "tiny_rotation_active",
+            "inner_context",
             "1614,6",
-            "+0xf252",
-            "+0xe",
+            "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702",
+            "17",
         ):
             if needle not in md:
                 raise AssertionError(f"markdown missing {needle}")

@@ -1,0 +1,181 @@
+{
+  "kind": "olmblur_closeout_gate_audit",
+  "schema": 1,
+  "plugin": "OLMBlur",
+  "closeout_status": "provenance-first-case0006-and-split-case0007",
+  "decision": {
+    "status": "do-not-reopen-source-without-two-specific-external-proofs",
+    "reason": "The non-Legacy 16bpc lane `case_0006` is still a provenance/export gate because no same-run Windows current-AEX export is imported, while Legacy `case_0007` is no longer one unresolved family: its 16bpc witness is already closed as a Windows-side pre-store float delta and only the old normalized 8bpc half-step witness remains open.",
+    "next_allowed_action": "Preserve current source behavior. Advance only by importing a same-run Windows current-AEX export for `case_0006`, or by capturing the old normalized 8bpc Windows pre-store float/helper boundary at `(488,941)` for `case_0007`."
+  },
+  "lanes": [
+    {
+      "lane": "case_0006_nonlegacy_16bpc",
+      "status": "awaiting-windows-current-aex-export",
+      "reason": "No same-run Windows current-AEX export has been imported yet, so the contract remains a provenance gate rather than a source-change signal.",
+      "next_step": "Import the Windows current-AEX export PNG from the same run class as the witness capture and rerun this audit.",
+      "required_external_evidence": [
+        "exported PNG file",
+        "AE version",
+        "project renderer metadata",
+        "bit depth metadata",
+        "parameter/property snapshot for the same slice",
+        "statement whether the PNG came from the same current-AEX build/path and same render class as the witness run"
+      ],
+      "key_points": [
+        {
+          "xy": [
+            314,
+            14
+          ],
+          "reason": "lane-defining witness A",
+          "canonical_ref": [
+            2201,
+            2201,
+            2201,
+            65535
+          ],
+          "mac_single_export": [
+            2199,
+            2199,
+            2199,
+            65535
+          ],
+          "mac_batch_export": [
+            2201,
+            2201,
+            2201,
+            65535
+          ]
+        },
+        {
+          "xy": [
+            29,
+            71
+          ],
+          "reason": "lane-defining witness B",
+          "canonical_ref": [
+            725,
+            725,
+            725,
+            65535
+          ],
+          "mac_single_export": [
+            727,
+            727,
+            727,
+            65535
+          ],
+          "mac_batch_export": [
+            727,
+            727,
+            727,
+            65535
+          ]
+        }
+      ]
+    },
+    {
+      "lane": "case_0007_legacy_16bpc",
+      "status": "resolved-as-pre-store-float-delta",
+      "reason": "Windows pre-store float is already grounded at `12544.498046875 -> 12544`, so this lane is closed as a pre-store float delta rather than an open writer-rule mystery.",
+      "next_step": "Keep this lane closed unless contradictory same-run witness evidence appears.",
+      "key_points": [
+        {
+          "xy": [
+            345,
+            672
+          ],
+          "windows_pre_store": 12544.498046875,
+          "windows_final_word": {
+            "decimal": 12544,
+            "hex": "0x3100"
+          }
+        }
+      ]
+    },
+    {
+      "lane": "case_0007_legacy_8bpc_old_normalized",
+      "status": "still-needs-windows-pre-store-float",
+      "reason": "The remaining old normalized 8bpc witness stays just below the half-step on the Mac side and has no in-tree Windows pre-store float, so it cannot justify a writer or helper rewrite yet.",
+      "next_step": "Keep case_0007 split by bit depth: preserve the 16bpc witness as resolved, and only ask Windows for the old normalized 8bpc pre-store float/helper boundary at `(488,941)` if this family needs to move further.",
+      "key_points": [
+        {
+          "xy": [
+            488,
+            941
+          ],
+          "reference_rgba": [
+            251,
+            0,
+            0,
+            255
+          ],
+          "candidate_rgba": [
+            250,
+            0,
+            0,
+            255
+          ],
+          "trace": "OLMBLUR_TRACE x=488 y=941 rgb=(250.499985,0.00161030458,0.00161030458) rgb_hex=(0x1.f4fffep+7,0x1.a621b6p-10,0x1.a621b6p-10) floor05=(250,0,0) nearby=(250,0,0) legacy=1 repeat=10"
+        }
+      ]
+    }
+  ],
+  "source_reopen_order": [
+    {
+      "step": 1,
+      "condition": "If no same-run Windows current-AEX export/witness contradicts case_0006 provenance",
+      "action": "Do not patch OLMBlur source for case_0006; keep the lane in provenance/export classification."
+    },
+    {
+      "step": 2,
+      "condition": "If Windows shows case_0006 helper/pre-store already match but final stored words differ",
+      "action": "Reopen only the non-Legacy 16bpc writer boundary (`round_blur_value` / `store16`)."
+    },
+    {
+      "step": 3,
+      "condition": "If Windows shows case_0006 mismatch already exists before final store",
+      "action": "Only then reopen non-Legacy helper accumulation in `blur_1d_horizontal` / `blur_1d_vertical`."
+    },
+    {
+      "step": 4,
+      "condition": "If case_0007 advances again",
+      "action": "Keep Legacy split by bit depth: 16bpc remains closed, only the old normalized 8bpc witness may reopen carry-prev/helper logic."
+    }
+  ],
+  "forbidden_actions": [
+    "Do not promote a blind global `nearbyint -> floor05` writer swap from the current OLMBlur evidence.",
+    "Do not mix case_0006 provenance/export uncertainty with the resolved 16bpc Legacy case_0007 witness.",
+    "Do not reopen the retired Legacy `(0,0)` blocker or broad kernel tuning from these lanes.",
+    "Do not collapse the unresolved OLMBlur work back into one generic 16bpc writer problem.",
+    "Do not spend the next Windows round on the already-closed 16bpc Legacy witness unless it is only a debugger control sample."
+  ],
+  "supporting_evidence": {
+    "case0006_provenance_status": "current-aex-export-missing",
+    "case0006_point_pattern": {
+      "counts": {
+        "mac_single_matches_canonical": 1,
+        "mac_batch_matches_canonical": 2,
+        "mac_single_matches_mac_batch": 1,
+        "all_split": 0
+      },
+      "witness_pattern": {
+        "29,71": [
+          "mac_single_matches_mac_batch"
+        ],
+        "314,14": [
+          "mac_batch_matches_canonical"
+        ]
+      },
+      "reading": "No single export artifact dominates all sampled points: batch and single-case exports each match canonical at some points and disagree at others, while the original witness pair also splits by point."
+    },
+    "case0007_decision_status": "16bpc-resolved-8bpc-still-open-prestore-family",
+    "source_candidates_status": {
+      "case0006_status": "current-aex-export-missing",
+      "case0007_status": "16bpc-resolved-8bpc-still-open-prestore-family",
+      "case0006_recommended_action": "Keep OLMBlur case_0006 frozen on the Mac side and request only the precise same-run Windows current-AEX export artifact if this lane must advance.",
+      "case0007_next_allowed_action": "Keep case_0007 split by bit depth: preserve the 16bpc witness as resolved, and only ask Windows for the old normalized 8bpc pre-store float/helper boundary at `(488,941)` if this family needs to move further."
+    }
+  }
+}

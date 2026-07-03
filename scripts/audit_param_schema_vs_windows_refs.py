@@ -58,10 +58,10 @@ def normalize_manifest_param(plugin: str, path_parts: list[str], leaf: str, prop
         return "BG Color", "alias-trimmed-whitespace"
     if plugin == "OLMKiraKira":
         aliases = {
-            "Merge mode": "Merge Mode",
-            "Strength multiplier": "Strength Multiplier",
-            "Diagonal 2 length": "Diagonal2 Length",
-            "Diagonal Color2": "Diagonal2 Color",
+            "Merge mode": "Merge mode",
+            "Strength multiplier": "Strength multiplier",
+            "Diagonal 2 length": "Diagonal 2 length",
+            "Diagonal Color2": "Diagonal Color2",
         }
         if leaf in aliases:
             return aliases[leaf], "alias-legacy-label"
@@ -137,10 +137,8 @@ def normalize_manifest_param(plugin: str, path_parts: list[str], leaf: str, prop
             return direct_back[property_index], "alias-ordinal-ui"
     if plugin == "OLMColorKey":
         aliases = {
-            ("Edge Thin", "Amount"): "Edge Thin Amount",
-            ("Edge Blur", "Amount"): "Edge Blur Amount",
-            ("Edge Thin", "Distance Type"): "Distance Type",
-            ("Edge Blur", "Distance Type"): "Distance Type",
+            ("Edge Thin", "Amount"): "Amount",
+            ("Edge Blur", "Amount"): "Amount",
         }
         if (parent, leaf) in aliases:
             return aliases[(parent, leaf)], "alias-grouped-ui"
@@ -157,7 +155,7 @@ def normalize_request_param(plugin: str, key: str) -> tuple[str | None, str]:
     if plugin == "OLMDistanceGradation" and key == "BG Color":
         return "BG Color", "direct"
     if plugin == "OLMKiraKira" and key == "Strength":
-        return "Strength Multiplier", "alias-request-shortname"
+        return "Strength multiplier", "alias-request-shortname"
     if plugin == "OLMRadialBlur":
         aliases = {
             "Outer Blur/Strength": "Strength",
@@ -176,6 +174,8 @@ def normalize_request_param(plugin: str, key: str) -> tuple[str | None, str]:
             return target, "alias-request-grouped"
     if plugin == "OLMColorKey":
         aliases = {
+            "Edge Thin Amount": "Amount",
+            "Edge Blur Amount": "Amount",
             "Edge Thin Distance Type": "Distance Type",
             "Edge Blur Distance Type": "Distance Type",
             "Edge Blur Direction": "Direction",

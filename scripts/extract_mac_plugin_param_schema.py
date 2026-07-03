@@ -221,14 +221,14 @@ def extract_macros(plugin: str, source_path: Path, strings: dict[str, str]) -> l
             else:
                 expanded.append(row)
         indexed_bases = [
+            "Use Color",
+            "Use Replace Color",
             "Color",
+            "Replace Color",
             "Threshold",
             "Threshold(R,H,L,Y,Y)",
             "Threshold(G,S,a,U,Cr)",
             "Threshold(B,V,b,V,Cb)",
-            "Use Color",
-            "Use Replace Color",
-            "Replace Color",
         ]
         for color_index in range(1, 26):
             for group_index, base in enumerate(indexed_bases):

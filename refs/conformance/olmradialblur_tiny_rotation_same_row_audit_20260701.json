@@ -1,0 +1,563 @@
+{
+  "kind": "olmradialblur_tiny_rotation_same_row_audit",
+  "schema": 1,
+  "debug_json": "/Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/requests/ae_single_radialblur_case_0010_probe_20260701/radialblur_debug_points.json",
+  "manifest_json": "/Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/requests/ae_single_radialblur_case_0010_probe_20260701/reference_manifest.json",
+  "case_id": "case_0010",
+  "witness_xy": [
+    1614,
+    6
+  ],
+  "outer_strength": 4,
+  "outer_offset_mode": 1,
+  "outer_offset": 0,
+  "quality": 5.0,
+  "angular_count": 1800,
+  "row_length": 3,
+  "row_weights": [
+    1.0,
+    0.6065306823076752,
+    0.13533530340315494
+  ],
+  "rows": [
+    {
+      "xy": [
+        1612,
+        6
+      ],
+      "sample_u8": [
+        5,
+        5,
+        5,
+        255
+      ],
+      "validity_alpha_u8": 255,
+      "radius_index": 842.769226,
+      "angle_index": 1603.40942,
+      "indices": [
+        1603,
+        1604,
+        842,
+        843
+      ],
+      "cells": [
+        {
+          "cell": "x0y0",
+          "angle_index": 1603,
+          "radius_row": 842,
+          "same_row_source_taps": [
+            1603,
+            1602,
+            1601
+          ],
+          "cell_rgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "cell": "x1y0",
+          "angle_index": 1604,
+          "radius_row": 842,
+          "same_row_source_taps": [
+            1604,
+            1603,
+            1602
+          ],
+          "cell_rgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "cell": "x0y1",
+          "angle_index": 1603,
+          "radius_row": 843,
+          "same_row_source_taps": [
+            1603,
+            1602,
+            1601
+          ],
+          "cell_rgb": [
+            0.0441839024,
+            0.0441839024,
+            0.0441839024
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "cell": "x1y1",
+          "angle_index": 1604,
+          "radius_row": 843,
+          "same_row_source_taps": [
+            1604,
+            1603,
+            1602
+          ],
+          "cell_rgb": [
+            0.00694188103,
+            0.00694188103,
+            0.00694188103
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "xy": [
+        1613,
+        6
+      ],
+      "sample_u8": [
+        1,
+        1,
+        1,
+        255
+      ],
+      "validity_alpha_u8": 255,
+      "radius_index": 843.543152,
+      "angle_index": 1603.62463,
+      "indices": [
+        1603,
+        1604,
+        843,
+        844
+      ],
+      "cells": [
+        {
+          "cell": "x0y0",
+          "angle_index": 1603,
+          "radius_row": 843,
+          "same_row_source_taps": [
+            1603,
+            1602,
+            1601
+          ],
+          "cell_rgb": [
+            0.0441839024,
+            0.0441839024,
+            0.0441839024
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "cell": "x1y0",
+          "angle_index": 1604,
+          "radius_row": 843,
+          "same_row_source_taps": [
+            1604,
+            1603,
+            1602
+          ],
+          "cell_rgb": [
+            0.00694188103,
+            0.00694188103,
+            0.00694188103
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "cell": "x0y1",
+          "angle_index": 1603,
+          "radius_row": 844,
+          "same_row_source_taps": [
+            1603,
+            1602,
+            1601
+          ],
+          "cell_rgb": [
+            -0.0147110438,
+            -0.0147110438,
+            -0.0147110438
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "cell": "x1y1",
+          "angle_index": 1604,
+          "radius_row": 844,
+          "same_row_source_taps": [
+            1604,
+            1603,
+            1602
+          ],
+          "cell_rgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "xy": [
+        1614,
+        5
+      ],
+      "sample_u8": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "validity_alpha_u8": 255,
+      "radius_index": 844.950317,
+      "angle_index": 1603.57678,
+      "indices": [
+        1603,
+        1604,
+        844,
+        845
+      ],
+      "cells": [
+        {
+          "cell": "x0y0",
+          "angle_index": 1603,
+          "radius_row": 844,
+          "same_row_source_taps": [
+            1603,
+            1602,
+            1601
+          ],
+          "cell_rgb": [
+            -0.0147110438,
+            -0.0147110438,
+            -0.0147110438
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "cell": "x1y0",
+          "angle_index": 1604,
+          "radius_row": 844,
+          "same_row_source_taps": [
+            1604,
+            1603,
+            1602
+          ],
+          "cell_rgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "cell": "x0y1",
+          "angle_index": 1603,
+          "radius_row": 845,
+          "same_row_source_taps": [
+            1603,
+            1602,
+            1601
+          ],
+          "cell_rgb": [
+            -0.0485489555,
+            -0.0485489555,
+            -0.0485489555
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "cell": "x1y1",
+          "angle_index": 1604,
+          "radius_row": 845,
+          "same_row_source_taps": [
+            1604,
+            1603,
+            1602
+          ],
+          "cell_rgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "xy": [
+        1614,
+        6
+      ],
+      "sample_u8": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "validity_alpha_u8": 255,
+      "radius_index": 844.317505,
+      "angle_index": 1603.83948,
+      "indices": [
+        1603,
+        1604,
+        844,
+        845
+      ],
+      "cells": [
+        {
+          "cell": "x0y0",
+          "angle_index": 1603,
+          "radius_row": 844,
+          "same_row_source_taps": [
+            1603,
+            1602,
+            1601
+          ],
+          "cell_rgb": [
+            -0.0147110438,
+            -0.0147110438,
+            -0.0147110438
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "cell": "x1y0",
+          "angle_index": 1604,
+          "radius_row": 844,
+          "same_row_source_taps": [
+            1604,
+            1603,
+            1602
+          ],
+          "cell_rgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "cell": "x0y1",
+          "angle_index": 1603,
+          "radius_row": 845,
+          "same_row_source_taps": [
+            1603,
+            1602,
+            1601
+          ],
+          "cell_rgb": [
+            -0.0485489555,
+            -0.0485489555,
+            -0.0485489555
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "cell": "x1y1",
+          "angle_index": 1604,
+          "radius_row": 845,
+          "same_row_source_taps": [
+            1604,
+            1603,
+            1602
+          ],
+          "cell_rgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "xy": [
+        1614,
+        7
+      ],
+      "sample_u8": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "validity_alpha_u8": 255,
+      "radius_index": 843.685364,
+      "angle_index": 1604.10242,
+      "indices": [
+        1604,
+        1605,
+        843,
+        844
+      ],
+      "cells": [
+        {
+          "cell": "x0y0",
+          "angle_index": 1604,
+          "radius_row": 843,
+          "same_row_source_taps": [
+            1604,
+            1603,
+            1602
+          ],
+          "cell_rgb": [
+            0.00694188103,
+            0.00694188103,
+            0.00694188103
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "cell": "x1y0",
+          "angle_index": 1605,
+          "radius_row": 843,
+          "same_row_source_taps": [
+            1605,
+            1604,
+            1603
+          ],
+          "cell_rgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "cell": "x0y1",
+          "angle_index": 1604,
+          "radius_row": 844,
+          "same_row_source_taps": [
+            1604,
+            1603,
+            1602
+          ],
+          "cell_rgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "cell": "x1y1",
+          "angle_index": 1605,
+          "radius_row": 844,
+          "same_row_source_taps": [
+            1605,
+            1604,
+            1603
+          ],
+          "cell_rgb": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "src_cell_rgba": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusion": {
+    "summary": "The current Mac Rotation path can only populate each blurred witness cell from same-radius-row angular taps. Around the tiny-Rotation witness, those direct source cells are all black while the surviving blurred cell_rgb values stay small or negative, so the missing bright lobe cannot come from those exact same-row direct source cells.",
+    "implication": "This tightens the next proof boundary to upstream neighbor/contribution geometry, AEX prepass/scatter structure, or a substitute/fallback branch that the current same-row convolution does not model."
+  }
+}

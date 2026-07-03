@@ -335,6 +335,8 @@ struct DistanceField {
 };
 
 static float debug_raw_distance_at(const u_char *mask, long w, long h, long x, long y);
+static void dt_to_normalized(
+	const u_char *mask, float *out, long w, long h, long threshold, float ds_scale, bool constant_interp);
 
 static void debug_dump_distance_field(const char *path, const float *alpha, const DistanceField &df,
                                       const DGParams &p, long w, long h, size_t pixel_size)
@@ -358,10 +360,21 @@ static void debug_dump_distance_field(const char *path, const float *alpha, cons
 	if (points && points[0]) {
 		std::vector<u_char> inside_mask((size_t)w * h);
 		std::vector<u_char> outside_mask((size_t)w * h);
+		std::vector<float> inside_norm((size_t)w * h, 0.0f);
+		std::vector<float> outside_norm((size_t)w * h, 0.0f);
 		for (long i = 0; i < w * h; ++i) {
 			inside_mask[i] = (alpha[i] > 0.0f) ? 1 : 0;
 			outside_mask[i] = inside_mask[i] ? 0 : 1;
 		}
+		float ds = (p.ds_x + p.ds_y) * 0.5f;
+		if (ds <= 0.0f) ds = 1.0f;
+		bool constant_interp = (p.interp_mode == INTERP_CONSTANT);
+		dt_to_normalized(inside_mask.data(), inside_norm.data(), w, h, p.inside_threshold, ds, constant_interp);
+		dt_to_normalized(outside_mask.data(), outside_norm.data(), w, h, p.outside_threshold, ds, constant_interp);
+		float inside_t = (float)p.inside_threshold * ds;
+		float outside_t = (float)p.outside_threshold * ds;
+		if (!constant_interp && inside_t < 1.0f) inside_t = 1.0f;
+		if (!constant_interp && outside_t < 1.0f) outside_t = 1.0f;
 		const char *cursor = points;
 		while (*cursor) {
 			char *end = nullptr;
@@ -374,9 +387,17 @@ static void debug_dump_distance_field(const char *path, const float *alpha, cons
 				size_t idx = (size_t)y * w + x;
 				float raw_inside = debug_raw_distance_at(inside_mask.data(), w, h, x, y);
 				float raw_outside = debug_raw_distance_at(outside_mask.data(), w, h, x, y);
+				float inside_x = inside_norm[idx];
+				float outside_x = outside_norm[idx];
+				float both_x = (inside_x > outside_x) ? inside_x : outside_x;
+				const char *winner = (inside_x >= outside_x) ? "inside-or-tie" : "outside";
+				int inside_constant_binary = (raw_inside > inside_t) ? 1 : 0;
+				int outside_constant_binary = (raw_outside > outside_t) ? 1 : 0;
 				fprintf(f,
-				        "point x=%ld y=%ld alpha=%.9g d_alpha=%.9g field_x=%.9g raw_inside=%.9g raw_outside=%.9g\n",
-				        x, y, alpha[idx], df.d_alpha[idx], df.x[idx], raw_inside, raw_outside);
+				        "point x=%ld y=%ld alpha=%.9g d_alpha=%.9g field_x=%.9g raw_inside=%.9g raw_outside=%.9g inside_x=%.9g outside_x=%.9g both_x=%.9g winner=%s inside_t=%.9g outside_t=%.9g inside_constant_binary=%d outside_constant_binary=%d compose_input_x=%.9g\n",
+				        x, y, alpha[idx], df.d_alpha[idx], df.x[idx], raw_inside, raw_outside,
+				        inside_x, outside_x, both_x, winner, inside_t, outside_t,
+				        inside_constant_binary, outside_constant_binary, df.x[idx]);
 			} else {
 				fprintf(f, "point x=%ld y=%ld out_of_bounds=1\n", x, y);
 			}

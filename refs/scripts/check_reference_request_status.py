@@ -100,7 +100,12 @@ def package_time_pinning_summary(request_path: Path) -> dict[str, Any]:
     packaged_full = current_full
 
     materializer = request_path.parents[2] / "scripts" / "materialize_linked_request_params.py"
-    if materializer.exists():
+    # Fast paths:
+    # - no linked/source-backed cases means packaging cannot add params_full
+    # - already fully pinned means a staging materialization would be redundant
+    if linked_cases == 0 or current_full == total_cases or total_cases == 0:
+        packaged_full = current_full
+    elif materializer.exists():
         with tempfile.TemporaryDirectory(prefix="olm_request_pincheck_") as tmp_dir:
             staged = Path(tmp_dir) / request_path.name
             shutil.copy2(request_path, staged)

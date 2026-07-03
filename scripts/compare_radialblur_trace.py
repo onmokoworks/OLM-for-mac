@@ -14,7 +14,18 @@ from typing import Any
 DENSE_REQUEST_ID = "olmradialblur_dense_sampler_trace_20260620"
 CALLER_COLLAPSE_REQUEST_ID = "olmradialblur_caller_collapse_witness_20260630"
 FOLLOWUP_CALLER_COLLAPSE_REQUEST_ID = "olmradialblur_caller_collapse_followup_20260701"
+TINY_ROTATION_FOLLOWUP_REQUEST_ID = "olmradialblur_tiny_rotation_substitute_path_followup_20260701"
+TINY_ROTATION_BACKSTEP_REQUEST_ID = "olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701"
+TINY_ROTATION_ANCHOR_WATCH_REQUEST_ID = "olmradialblur_tiny_rotation_anchor_watch_followup_20260701"
+TINY_ROTATION_ANCHOR_CONTEXT_WATCH_REQUEST_ID = "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702"
+TINY_ROTATION_ANCHOR_POINTER_WATCH_REQUEST_ID = "olmradialblur_tiny_rotation_anchor_pointer_watch_followup_20260702"
 LEGACY_RESIDUAL_WITNESS_REQUEST_ID = "olmradialblur_zoom_tiny_rotation_residual_witness_20260622"
+TINY_ROTATION_LANE_AUDIT = (
+    Path(__file__).resolve().parents[1]
+    / "refs"
+    / "conformance"
+    / "olmradialblur_tiny_rotation_lane_audit_20260701.json"
+)
 
 
 def repo_root() -> Path:
@@ -180,14 +191,38 @@ def classify_residual_case(case: dict[str, Any] | None, *, zoom: bool) -> str:
     writeback = case.get("aex_writeback_operation")
     source_rgba = case.get("aex_source_or_polar_rgba_float")
     validity = case.get("aex_validity_or_border_decision")
+    substitute = case.get("aex_fallback_or_substitute_path")
+    preserved_validity = case.get("aex_preserved_validity_f252")
+    accumulated = case.get("aex_accumulated_f250_rgba_float")
+    normalized_final = case.get("aex_normalized_final_e_rgba_float")
     sampler_xy = case.get("aex_sampler_or_polar_xy") if zoom else case.get("aex_polar_or_source_xy")
+    inverse_sampler_xy = case.get("aex_inverse_sampler_input_xy")
     if not concrete_trace_value(final_rgba):
         if any(
             concrete_trace_value(value)
-            for value in (pre_writeback, denominator, source_rgba, validity, sampler_xy)
+            for value in (
+                pre_writeback,
+                denominator,
+                source_rgba,
+                validity,
+                sampler_xy,
+                inverse_sampler_xy,
+                substitute,
+                preserved_validity,
+                accumulated,
+                normalized_final,
+            )
         ):
             return "pre-writeback-values-without-final"
         return "trace-structure-present-values-missing"
+    if not zoom and (
+        concrete_trace_value(substitute)
+        or concrete_trace_value(accumulated)
+        or concrete_trace_value(normalized_final)
+        or concrete_trace_value(source_rgba)
+        or concrete_trace_value(inverse_sampler_xy)
+    ):
+        return "substitute-or-upstream-rgb"
     if not concrete_trace_value(pre_writeback):
         return "final-writeback-only"
     if zoom:
@@ -196,18 +231,22 @@ def classify_residual_case(case: dict[str, Any] | None, *, zoom: bool) -> str:
         if concrete_trace_value(denominator):
             return "alpha-normalization-or-writeback"
         return "zoom-final-values-need-denominator"
-    if concrete_trace_value(validity) or concrete_trace_value(sampler_xy):
+    if concrete_trace_value(substitute) or concrete_trace_value(accumulated) or concrete_trace_value(normalized_final):
+        return "substitute-or-upstream-rgb"
+    if concrete_trace_value(validity) or concrete_trace_value(sampler_xy) or concrete_trace_value(inverse_sampler_xy):
         return "sampler-or-validity"
     if concrete_trace_value(denominator):
         return "normalization-or-writeback"
     return "tiny-rotation-final-values-need-sampler"
 
 
-def classify_residual(row: dict[str, Any] | None, observations: dict[str, Any]) -> str:
+def classify_residual(row: dict[str, Any] | None, observations: dict[str, Any], request_id: str) -> str:
     if row is None:
         return "await-windows-trace"
     zoom = classify_residual_case(case_by_id(observations, "case_0009"), zoom=True)
     tiny = classify_residual_case(case_by_id(observations, "case_0010"), zoom=False)
+    if request_id in {TINY_ROTATION_FOLLOWUP_REQUEST_ID, TINY_ROTATION_BACKSTEP_REQUEST_ID}:
+        return f"tiny_rotation:{tiny}"
     if zoom == "trace-structure-present-values-missing" and tiny == "trace-structure-present-values-missing":
         return "trace-structure-present-values-missing"
     return f"zoom:{zoom}; tiny_rotation:{tiny}"
@@ -249,6 +288,8 @@ def recommended_next_evidence(focus: str) -> str:
         messages.append("Zoom: rerun with typed numeric witness values, not placeholders.")
     if tiny == "sampler-or-validity":
         messages.append("tiny Rotation: compare inverse sampler/polar coordinates and border validity at `case_0010`.")
+    elif tiny == "substitute-or-upstream-rgb":
+        messages.append("tiny Rotation: compare substitute/fallback branch state plus source-population, `+0xf252`, `+0xf250`, and normalized `+0xe` RGBA at `case_0010`.")
     elif tiny == "normalization-or-writeback":
         messages.append("tiny Rotation: denominator/writeback is concrete, but sampler/validity still needs proof.")
     elif tiny == "final-writeback-only":
@@ -282,12 +323,21 @@ def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
 def build_comparison(summary: dict[str, Any]) -> dict[str, Any]:
     residual_request_id, residual_row = find_first_result(
         summary,
-        [FOLLOWUP_CALLER_COLLAPSE_REQUEST_ID, CALLER_COLLAPSE_REQUEST_ID, LEGACY_RESIDUAL_WITNESS_REQUEST_ID],
+        [
+            TINY_ROTATION_ANCHOR_CONTEXT_WATCH_REQUEST_ID,
+            TINY_ROTATION_ANCHOR_POINTER_WATCH_REQUEST_ID,
+            TINY_ROTATION_ANCHOR_WATCH_REQUEST_ID,
+            TINY_ROTATION_BACKSTEP_REQUEST_ID,
+            TINY_ROTATION_FOLLOWUP_REQUEST_ID,
+            FOLLOWUP_CALLER_COLLAPSE_REQUEST_ID,
+            CALLER_COLLAPSE_REQUEST_ID,
+            LEGACY_RESIDUAL_WITNESS_REQUEST_ID,
+        ],
     )
     if residual_row is not None:
         observations = observations_for(residual_row)
-        focus = classify_residual(residual_row, observations)
-        return {
+        focus = classify_residual(residual_row, observations, residual_request_id)
+        comparison = {
             "kind": "olmradialblur_trace_comparison",
             "schema": 2,
             "request_id": residual_request_id,
@@ -296,6 +346,22 @@ def build_comparison(summary: dict[str, Any]) -> dict[str, Any]:
             "recommended_next_evidence": recommended_next_evidence(focus),
             "windows": summarize_windows(residual_row),
         }
+        if residual_request_id in {
+            TINY_ROTATION_FOLLOWUP_REQUEST_ID,
+            TINY_ROTATION_BACKSTEP_REQUEST_ID,
+            TINY_ROTATION_ANCHOR_CONTEXT_WATCH_REQUEST_ID,
+        } and TINY_ROTATION_LANE_AUDIT.exists():
+            audit = load_json(TINY_ROTATION_LANE_AUDIT)
+            comparison["local_tiny_rotation_context"] = {
+                "decision": audit.get("decision"),
+                "witness_xy": audit.get("witness_xy"),
+                "current_candidate_rgba": audit.get("current_candidate_rgba"),
+                "windows_reference_rgba": audit.get("windows_reference_rgba"),
+                "same_row_structure": audit.get("same_row_structure"),
+                "source_polar_structure": audit.get("source_polar_structure"),
+                "row_coupling_probe": audit.get("row_coupling_probe"),
+            }
+        return comparison
     row = find_result(summary, DENSE_REQUEST_ID)
     observations = observations_for(row)
     focus = classify_dense(row, observations)
@@ -319,6 +385,7 @@ def md_value(value: Any) -> str:
 
 def render_markdown(comparison: dict[str, Any]) -> str:
     windows = comparison["windows"]
+    local_tiny = comparison.get("local_tiny_rotation_context")
     lines = [
         "# OLMRadialBlur Trace Comparison",
         "",
@@ -335,17 +402,37 @@ def render_markdown(comparison: dict[str, Any]) -> str:
         f"- Cases: {md_value(windows.get('cases'))}",
         f"- Observed/inferred split: {md_value(windows.get('directly_observed_vs_inferred'))}",
         "",
-        "## Interpretation",
-        "",
-        "- `sampler-scatter-or-writeback-values`: compare concrete residual witness values before changing code.",
-        "- `sampler-scatter-or-normalization-values`: focus span/count/denominator and scatter normalization.",
-        "- `sampler-branch-or-order`: update sampler order/branch IR before tuning pixels.",
-        "- `inner-span-31-registers-only`: keep the span-31 fact, but do not treat this as a dense residual answer.",
-        "- `trace-structure-present-values-missing`: repeat with typed numeric witness values.",
-        "- `trace-too-sparse`: do not tune from broad PNGs or placeholders.",
-        "- `zoom:*; tiny_rotation:*`: focused residual witness classification for the 2026-06-22 package.",
-        "",
     ]
+    if local_tiny:
+        lines.extend(
+            [
+                "## Local tiny Rotation Context",
+                "",
+                f"- Decision: {md_value(local_tiny.get('decision'))}",
+                f"- Witness XY: {md_value(local_tiny.get('witness_xy'))}",
+                f"- Current candidate RGBA: {md_value(local_tiny.get('current_candidate_rgba'))}",
+                f"- Windows reference RGBA: {md_value(local_tiny.get('windows_reference_rgba'))}",
+                f"- Same-row structure: {md_value(local_tiny.get('same_row_structure'))}",
+                f"- Source-polar structure: {md_value(local_tiny.get('source_polar_structure'))}",
+                f"- Row-coupling probe: {md_value(local_tiny.get('row_coupling_probe'))}",
+                "",
+            ]
+        )
+    lines.extend(
+        [
+            "## Interpretation",
+            "",
+            "- `sampler-scatter-or-writeback-values`: compare concrete residual witness values before changing code.",
+            "- `sampler-scatter-or-normalization-values`: focus span/count/denominator and scatter normalization.",
+            "- `sampler-branch-or-order`: update sampler order/branch IR before tuning pixels.",
+            "- `inner-span-31-registers-only`: keep the span-31 fact, but do not treat this as a dense residual answer.",
+            "- `trace-structure-present-values-missing`: repeat with typed numeric witness values.",
+            "- `trace-too-sparse`: do not tune from broad PNGs or placeholders.",
+            "- `tiny_rotation:substitute-or-upstream-rgb`: prefer substitute/fallback or source-population ownership over validity-only or final-byte stories.",
+            "- `zoom:*; tiny_rotation:*`: focused residual witness classification for the mixed outer follow-up lanes.",
+            "",
+        ]
+    )
     return "\n".join(lines)
 
 

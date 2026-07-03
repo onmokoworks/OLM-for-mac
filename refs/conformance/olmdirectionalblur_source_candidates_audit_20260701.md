@@ -1,0 +1,77 @@
+# OLMDirectionalBlur Source Candidates Audit
+
+- Date: `2026-07-01`
+- Decision: `freeze-rejected-global-toggles-keep-two-narrow-lanes`
+
+## Current Structural Base
+
+- Candidate: `rotated-aex-full-choreo`
+- Source loci:
+  - `main_cpp`: `cli/OLMDirectionalBlur/main.cpp`
+  - `render_rotated_line`: `887`
+  - `full_choreo_line`: `1395`
+  - `prepass_full_choreo_line`: `1411`
+  - `exact_scatter_line`: `1399`
+  - `exact_rowdriver_line`: `1401`
+  - `front_strength_line`: `1441`
+- Why keep it:
+  - It preserves the confirmed A/B choreography instead of falling back to measurement-only scaffolds.
+  - The best broad-mean presets are still non-AEX baselines and remain forbidden as implementation truth.
+  - Later toggle families only make sense as narrow witness-driven patches on top of this base.
+
+## Rejected As Global Fix
+
+### `rowdriver_prepass_and_alpha_fade_gather`
+
+- Preset transition: `{'use_alpha_fade_gather': {'base': 'false', 'other': 'true'}, 'rowdriver_prepass': {'base': 'false', 'other': 'true'}}`
+- Broad measurements already classify rotated-rowdriver-prepass as worse than the current AEX-shaped base.
+- The current Mac notes report prepass/full-choreo as neutral on the tracked opaque witnesses.
+- No successful Windows typed rowdriver values were captured, so this cannot be promoted from PNGs.
+
+### `source_driven_scatter`
+
+- Preset transition: `{'source_driven_scatter': {'base': 'false', 'other': 'true'}}`
+- case_0001 witness-row masks stay identical: [[380, 579]] vs [[380, 579]].
+- case_0001 scatter-vs-full max abs is only [4, 0, 0, 0], so the dominant long strip does not move.
+- case_0005 scatter-vs-full max abs is only [5, 0, 0, 1]; this is diagnostic drift, not proof of the final lane.
+
+### `combined_exact_rowdriver_bundle`
+
+- Preset transition: `{'use_alpha_fade_gather': {'base': 'false', 'other': 'true'}, 'rowdriver_prepass': {'base': 'false', 'other': 'true'}, 'source_driven_scatter': {'base': 'false', 'other': 'true'}}`
+- Exact-rowdriver still differs from full-choreo only by the same prepass/scatter family and remains in the same residual band.
+- The latest helper-coverage return still says module trace not captured, so there is no typed proof that the combined bundle matches Windows internals.
+- Therefore exact-rowdriver remains a diagnostic preset, not a patch target.
+
+### `measurement_scaffolds_direct_or_rotated_front_strength`
+
+- Preset transition: `{'forbidden_candidates': ['direct', 'rotated-front-strength']}`
+- They score better numerically in broad PNG matrices, but they do not preserve the confirmed AEX buffer choreography.
+- The witness contract explicitly forbids promoting them from means alone.
+
+## Surviving Narrow Lanes
+
+### `angle0-rowdriver-valid-alpha`
+
+- Primary witness: `{'abs_delta_rgba': [164, 0, 0, 0], 'candidate_rgba': [0, 0, 0, 255], 'reference_rgba': [164, 0, 0, 255], 'signed_delta_candidate_minus_reference': [-164, 0, 0, 0], 'xy': [494, 169]}`
+- Endpoint constraint: `{'rightmost_visible_strip_x': 579, 'required_min_source_x_for_same_row_front_helper': 580, 'same_row_segment_contains_that_source_x': False, 'implication': 'If the angle-0 endpoint pixel is produced by the documented front helper on the same row, the contributing source x must be strictly greater than the endpoint destination x because front writes only to the left. The current local strip row ends at x=579, so a same-row source inside that visible strip cannot explain the endpoint by itself.'}`
+- Latest runtime status: `answered_partial_failed_module_trace_not_captured`
+- Still missing: A helper-local source-to-destination range witness on the strip row, especially the right endpoint (579,169) plus companion witness (494,169), including actual touched destination x range, rowdriver/group membership, validity side-channel, accumulation, pre-writeback RGBA, and final bytes.
+
+### `diagonal-rotate-validity`
+
+- Primary witness: `{'abs_delta_rgba': [251, 0, 0, 0], 'candidate_rgba': [252, 0, 0, 255], 'reference_rgba': [1, 0, 0, 255], 'signed_delta_candidate_minus_reference': [251, 0, 0, 0], 'xy': [507, 367]}`
+- Companion witnesses: `[{'abs_delta_rgba': [250, 0, 0, 0], 'candidate_rgba': [4, 0, 0, 255], 'reference_rgba': [254, 0, 0, 255], 'signed_delta_candidate_minus_reference': [-250, 0, 0, 0], 'xy': [423, 187]}, {'abs_delta_rgba': [251, 0, 0, 0], 'candidate_rgba': [252, 0, 0, 255], 'reference_rgba': [1, 0, 0, 255], 'signed_delta_candidate_minus_reference': [251, 0, 0, 0], 'xy': [507, 367]}, {'abs_delta_rgba': [250, 0, 0, 0], 'candidate_rgba': [250, 0, 0, 255], 'reference_rgba': [0, 0, 0, 255], 'signed_delta_candidate_minus_reference': [250, 0, 0, 0], 'xy': [519, 363]}]`
+- Latest runtime status: `answered_partial`
+- Still missing: Typed rotate sampler source coordinates/order, border or validity decision, group-size or opacity gate, accumulation denominator, pre-writeback RGBA, and final bytes at the diagonal witnesses.
+
+## Allowed Next Actions
+
+- Keep the current AEX-shaped base and patch only after typed Windows witness values land for one lane.
+- Use angle-0 endpoint (579,169) plus interior witness (494,169) to prove helper coverage or alternate path membership.
+- Use diagonal witnesses only for rotate sampler / validity / normalization proof, not for angle-0 tuning.
+
+## Forbidden Actions
+
+- Do not retune prepass/scatter/direct/front-strength globally from PNG means.
+- Do not merge angle-0 and diagonal residuals into one generic rowdriver theory.
+- Do not treat the current helper-coverage return as actionable binary proof; it failed before module-local values were captured.

@@ -1,0 +1,141 @@
+{
+  "kind": "olmkirakira_hotspot_lane_audit",
+  "schema": 1,
+  "case_id": "kk_vertical_len50_brightness1_strength100",
+  "witness_xy": [
+    934,
+    118
+  ],
+  "mac_compose_boundary": {
+    "src_rgba_float": [
+      0.117647059,
+      0.117647059,
+      0.117647059,
+      1.0
+    ],
+    "glow_rgba_float": [
+      1.0,
+      1.0,
+      1.0,
+      0.507505655
+    ],
+    "out_prequantized_rgba_float": [
+      0.565446138,
+      0.565446138,
+      0.565446138,
+      1.0
+    ],
+    "out_u8": [
+      144,
+      144,
+      144,
+      255
+    ],
+    "windows_reference_u8": [
+      131,
+      131,
+      131,
+      255
+    ]
+  },
+  "control_projection": {
+    "projected_hotspot_u8_from_control_ratio": 138,
+    "extra_u8_drop_needed_beyond_control_ratio": 7,
+    "windows_hotspot_alpha_mid": 0.44888888888888884
+  },
+  "windows_hotspot_witness": {
+    "glow_after_opacity_rgba_float": [
+      1.0,
+      1.0,
+      1.0,
+      0.507505655
+    ],
+    "composed_rgba_float": [
+      0.5654461661764706,
+      0.5654461661764706,
+      0.5654461661764706,
+      1.0
+    ],
+    "pre_writeback_rgba_float": [
+      0.5654461661764706,
+      0.5654461661764706,
+      0.5654461661764706,
+      1.0
+    ],
+    "final_writeback_or_png_rgba": [
+      144,
+      144,
+      144,
+      255
+    ],
+    "residual_hotspot_row": {
+      "aggregation_glow_rgba_float": [
+        1.0,
+        1.0,
+        1.0,
+        0.507505655
+      ],
+      "case_id": "kk_vertical_len50_brightness1_strength100",
+      "compose_output_rgba_float": [
+        0.5654461661764706,
+        0.5654461661764706,
+        0.5654461661764706,
+        1.0
+      ],
+      "delta_candidate_minus_windows": [
+        13,
+        13,
+        13,
+        0
+      ],
+      "final_writeback_or_png_rgba": [
+        144,
+        144,
+        144,
+        255
+      ],
+      "label": "primary_vertical_case_hotspot",
+      "mac_bt709_candidate_rgba": [
+        144,
+        144,
+        144,
+        255
+      ],
+      "source_xy": [
+        934,
+        118
+      ],
+      "windows_reference_rgba": [
+        131,
+        131,
+        131,
+        255
+      ]
+    }
+  },
+  "agreement_checks": {
+    "same_glow_after_opacity": true,
+    "same_compose_float": true,
+    "same_pre_writeback_float": true,
+    "same_final_writeback_or_png_rgba": true,
+    "writeback_minus_reference_rgba": [
+      13,
+      13,
+      13,
+      0
+    ]
+  },
+  "pending_windows_followup": {
+    "request_id": "kirakira_hotspot_compose_writeback_witness_20260701",
+    "status": "answered",
+    "package": "refs/runtime_trace_packages/olm_runtime_trace_kirakira_hotspot_compose_writeback_witness_20260701.zip",
+    "latest_known_result_status": "",
+    "latest_known_result_summary": ""
+  },
+  "decision": {
+    "status": "hotspot-proof-shifted-to-reference-or-witness-placement",
+    "reason": "The answered 2026-07-01 Windows hotspot witness no longer supports a KiraKira compose or pre-writeback patch. At `(934,118)`, the Windows trace reports the same glow-after-opacity alpha, the same composed float, the same pre-writeback float, and the same final sampled RGBA8 as the current Mac compose-boundary witness: 144, not the canonical Windows reference 131. That moves the live lane away from broad compose/gain/quantization tuning and toward reference/export provenance or witness-placement drift.",
+    "forbidden_action": "Do not reopen BT.709, boxFilter, ray-helper, global compose scale, hotspot-local attenuation, or final quantization tuning from this witness alone.",
+    "next_allowed_action": "Treat the hotspot algorithm lane as provisionally matched through the traced writeback sample, and only spend more effort here on reference/export provenance, witness-placement validation, or the still-missing endgame control coverage."
+  }
+}

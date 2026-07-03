@@ -33,6 +33,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--center", default="934,118")
     parser.add_argument("--radius", type=int, default=1)
     parser.add_argument("--windows-target-u8", type=int, default=131)
+    parser.add_argument("--bits-per-channel", type=int, default=8)
     return parser.parse_args()
 
 
@@ -82,6 +83,9 @@ def main() -> int:
     shutil.copy2(reference_dir / frame_name, expected_dir / frame_name)
 
     filtered_manifest = dict(manifest)
+    project_meta = dict(filtered_manifest.get("project") or {})
+    project_meta["bits_per_channel"] = int(args.bits_per_channel)
+    filtered_manifest["project"] = project_meta
     filtered_manifest["cases"] = [case]
     (out_dir / "reference_manifest.json").write_text(
         json.dumps(filtered_manifest, indent=2, ensure_ascii=False) + "\n",

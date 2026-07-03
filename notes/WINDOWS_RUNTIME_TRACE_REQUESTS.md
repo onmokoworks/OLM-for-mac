@@ -18,38 +18,160 @@ Use this report before sending another debugger package. It separates pending
 requests from answered/superseded packages and prints the comparator command to
 run after importing a return.
 
-As of 2026-07-01 after importing the narrowed KiraKira hotspot return and
-keeping the RadialBlur plus DistanceGradation follow-ups live,
-the live queue is:
+As of 2026-07-01 after importing the narrowed KiraKira hotspot return,
+reclassifying the broader RadialBlur outer follow-up as partially answered,
+and importing both second-round narrow follow-ups, the old live queue is
+exhausted. The next send queue is now the two third-round narrow requests
+described below.
 
-1. `olmradialblur_caller_collapse_followup_20260701`
+The two newest narrow requests both returned and are now evidence context,
+not active queue items:
+
+1. `olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701`
    - package:
-     `refs/runtime_trace_packages/olm_runtime_trace_radialblur_caller_collapse_followup_20260701.zip`
-   - current share copy:
-     `/Volumes/onmk/olm_pr/new/olm_runtime_trace_radialblur_caller_collapse_followup_20260701.zip`
-   - why this one exists:
-     the older caller-collapse request proved that naive validity-based
-     substitutes are wrong, and the 2026-07-01 local diagnostics now split the
-     remaining outer lane cleanly: Zoom still needs the exact
-     `sampler -> +0xf252 -> +0xf250 -> +0xe.alpha` caller-collapse chain,
-     while tiny Rotation needs the upstream RGB/substitute-path branch that
-     creates the missing bright lobe at `(1614,6)`.
-2. `olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630`
+     `refs/runtime_trace_packages/olm_runtime_trace_radialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701.zip`
+   - local archive:
+     `refs/returns/windows/20260701_225800_radialblur_tiny_rotation_backstep_followup/olm_runtime_trace_radialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701_return_windows.zip`
+   - local comparison:
+     `refs/reports/runtime_trace_comparisons/olmradialblur_tiny_rotation_backstep_followup_20260701.md`
+   - outcome:
+     `failed_partial`. The return preserves the stable `+0x4eb9/+0x4ec8`
+     inverse-sampler anchor, final white byte, and same near-black sampled
+     RGBA, but still does not isolate the first upstream promotion branch. The
+     next Windows ask must therefore be narrower than this package: attach
+     stack/pointer context or sampled-cell watchpoints to that anchor so the
+     first substitute/source-population branch is retained, not just the anchor.
+
+2. `olmdistancegradation_case0023_triplet_xy_compose_hook_followup_20260701`
    - package:
-     `refs/runtime_trace_packages/olm_runtime_trace_requests_20260630_182750.zip`
-   - current share copy:
-     `/Volumes/onmk/olm_pr/new/olm_runtime_trace_requests_20260630_182750.zip`
-   - why this one exists:
-     the broader 2026-06-30 Constant boundary return already proved the
-     general lane (`case_0020` plateau edge and family-level `answered_partial`
-     for `case_0022/0023`), and the narrowed `case_0023` return preserved that
-     same ownership diagnosis but still did not isolate a fresh
-     `FUN_181170480` per-call witness. So the package stays live until Windows
-     returns typed `case_0023` values that decide the exact
-     `Outside Threshold=0` ownership rule.
+     `refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_case0023_triplet_xy_compose_hook_followup_20260701.zip`
+   - local archive:
+     `refs/returns/windows/20260701_225800_distancegradation_case0023_triplet_hook_followup/olm_runtime_trace_olmdistancegradation_case0023_triplet_xy_compose_hook_followup_20260701_return_windows.zip`
+   - local comparison:
+     `refs/reports/runtime_trace_comparisons/olmdistancegradation_case0023_triplet_hook_followup_20260701.md`
+ - outcome:
+     `failed_partial` plus diagnostics. The return preserves the exact
+     `414/415/416,393` threshold crossing but still does not retain the triplet
+     XY identity at the actual `FUN_181170480` helper/compose hook. The next
+     Windows ask must reconstruct XY from output-word address or compose refcon
+     and stop only when the triplet is bound at the hook.
+
+The next send queue is therefore:
+
+Execution note for both live requests:
+
+- `refs/conformance/windows_runtime_retry_execution_20260702.md`
+- Treat these as register/pointer-retention tasks, not mere "run the package"
+  tasks. The next return is only useful if the retained log actually contains
+  the requested register windows, pointer metadata, or exact watchpoint failure
+  reason.
+- If the server share is unmounted, the same queue is staged locally under
+  `refs/share_staging/20260702_runtime_retry_queue/` and can be published later
+  with:
+  `python3 scripts/sync_share_staging_to_share.py --staging-dir refs/share_staging/20260702_runtime_retry_queue`
+
+1. `olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702`
+   - package:
+     `refs/runtime_trace_packages/olm_runtime_trace_radialblur_tiny_rotation_anchor_context_watch_followup_20260702.zip`
+   - contract:
+     `refs/conformance/olmradialblur_tiny_rotation_anchor_context_watch_followup_contract_20260702.md`
+   - acceptance:
+     `refs/conformance/olmradialblur_tiny_rotation_anchor_context_watch_return_acceptance_20260702.md`
+   - why:
+     The previous anchor-pointer return already proved that the stable
+     `+0x4eb9/+0x4ec8` anchor survives, but the missing fact is now more
+     specific: dump `rsi/rbp/rsp` qword windows plus row/grid metadata,
+     reconstruct the exact sampled-cell address for source xy
+     `[1603.8396,844.3175]`, and watch that cell plus adjacent rows strongly
+     enough to capture the first promotion branch.
+   - latest return:
+     `refs/returns/windows/20260702_1531_radialblur_anchor_context_watch_followup/olm_runtime_trace_radialblur_tiny_rotation_anchor_context_watch_followup_20260702_return_windows.zip`
+   - outcome:
+     `failed_partial`. The stable anchor and same near-black source sample were
+     retained again, but the retained artifact still does not include the
+     requested `rsi/rbp/rsp` qword windows, sampled-cell address reconstruction,
+     or held sampled-cell / adjacent-row watchpoints.
+   - next retry rule:
+     the next Windows-side run is only decision-advancing if the retained log
+     itself contains those anchor-context dumps or the exact failed
+     address/watchpoint condition named in the return JSON.
+
+2. `olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702`
+   - package:
+     `refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702.zip`
+   - contract:
+     `refs/conformance/olmdistancegradation_case0023_refcon_stack_wordmap_followup_contract_20260702.md`
+   - acceptance:
+     `refs/conformance/olmdistancegradation_case0023_refcon_stack_wordmap_return_acceptance_20260702.md`
+   - why:
+     The previous refcon-wordmap return still failed to bind the triplet at
+     `FUN_181170480`, but it made the next retry shape explicit: dump
+     `r8/r9/[rsp+0x28]`, recover xy/output-address mapping from the stack/refcon
+     frame, then data-watch the three `RGBA16` output word ranges so the
+     consumed helper/compose value is attached to the exact pixel.
+   - latest return:
+     `refs/returns/windows/20260702_1531_distancegradation_refcon_stack_wordmap_followup/olm_runtime_trace_olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702_return_windows.zip`
+   - outcome:
+     `failed_partial`. It usefully reconfirms the final current-AEX endpoint
+     split for the threshold triplet, but the retained artifact still does not
+     include the requested `r8/r9/[rsp+0x28]` dump, refcon/stack wordmap, or
+     data-break hold on the real `RGBA16` output ranges.
+   - next retry rule:
+     the next Windows-side run is only decision-advancing if the retained log
+     itself contains that stack/refcon layout dump or the exact failed
+     bind/watchpoint condition named in the return JSON.
+
+2026-07-01 DistanceGradation threshold follow-up note:
+
+- Practical consequence:
+  - Remove the edge-family-centric `olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630`
+    package from the live queue.
+  - Replace it first with the threshold-family-only follow-up:
+    `olmdistancegradation_case0023_threshold_family_followup_20260701`.
+  - After that returns `failed_partial`, replace it again with the tighter
+    helper/compose-hook ask:
+    `olmdistancegradation_case0023_triplet_xy_compose_hook_followup_20260701`.
+  - After that also returns `failed_partial`, replace it again with the current
+    output-word / compose-refcon ask:
+    `olmdistancegradation_case0023_output_word_triplet_followup_20260701`.
+  - After that also returns `failed_partial`, replace it again with the current
+    refcon/output-word mapping ask:
+    `olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702`.
+  - Keep the old package as evidence context; do not resend it first unless a
+    later code move specifically needs the edge-family chain again.
 
 If a new return arrives, import it first and regenerate the report before
 deciding whether the next package should be published.
+
+2026-07-01 RadialBlur outer follow-up note:
+
+- Share return:
+  `/Volumes/onmk/olm_pr/old/20260701_145045__olm_runtime_trace_radialblur_caller_collapse_followup_20260701_return_windows.zip`
+- Outcome summary:
+  - `OLMRadialBlur`: useful and `answered_partial`.
+  - Zoom `case_0009` no longer needs to stay at the front of the live queue.
+    The return already proves that the sampled/pre-writeback floats truncate to
+    the exact Windows byte, so this lane is now a caller-collapse /
+    denominator-side context lane rather than the best next debugger round.
+  - tiny Rotation `case_0010` is still unresolved. The return reconfirms the
+    final Windows white byte and the near-black closest inverse-sampler return,
+    but it still does not isolate the branch/value that creates the missing
+    bright lobe before final inverse sampling.
+- Practical consequence:
+  - Remove the broad two-lane package from the live queue.
+  - Replace it first with the tiny-Rotation-only follow-up:
+    `olmradialblur_tiny_rotation_substitute_path_followup_20260701`.
+  - After that returns `failed_partial`, replace it again with the tighter
+    inverse-sampler-anchored backstep ask:
+    `olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701`.
+  - After that also returns `failed_partial`, replace it again with the current
+    anchor-watch ask:
+    `olmradialblur_tiny_rotation_anchor_watch_followup_20260701`.
+  - After that also returns `failed_partial`, replace it again with the current
+    anchor pointer/watch reconstruction ask:
+    `olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702`.
+  - Keep Zoom as evidence context; do not resend it first unless a later patch
+    specifically needs the denominator state.
 
 2026-07-01 KiraKira hotspot follow-up note:
 
@@ -98,8 +220,8 @@ deciding whether the next package should be published.
 
 2026-06-30 narrowed DistanceGradation follow-up note:
 
-- Share return:
-  `/Volumes/onmk/olm_pr/new/olm_runtime_trace_requests_20260630_182750_return_windows.zip`
+- Historical share archive:
+  `/Volumes/onmk/olm_pr/old/20260701_131138__olm_runtime_trace_requests_20260630_182750_return_windows.zip`
 - Outcome summary:
   - `OLMDistanceGradation`: still useful, but still `answered_partial`.
   - The return preserves the boundary-localized fact pattern for `case_0023`:

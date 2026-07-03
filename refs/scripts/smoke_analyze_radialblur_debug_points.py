@@ -26,6 +26,9 @@ def main() -> int:
             "sample_rgba=(0.1,0.2,0.3,1) sample_rgba_hex=(0x1p-4,0x1p-3,0x1.333334p-2,0x1p+0) "
             "sample_u8=(25,51,76,255) "
             "alpha=1 alpha_hex=0x1p+0 validity_alpha=0.5 validity_alpha_hex=0x1p-1 "
+            "brightness_gain=1.25 "
+            "accum_rgba=(0.08,0.16,0.24,1) accum_rgba_hex=(0x1.47ae14p-4,0x1.47ae14p-3,0x1.eb851ep-3,0x1p+0) "
+            "normalized_rgba=(0.08,0.16,0.24,1) normalized_rgba_hex=(0x1.47ae14p-4,0x1.47ae14p-3,0x1.eb851ep-3,0x1p+0) "
             "cell_valid=(1,1,0,0) cell_alpha=(1,0.8,0.6,0.4) "
             "cell_rgb=((0.1,0.2,0.3),(0.4,0.5,0.6),(0.7,0.8,0.9),(1,1,1)) "
             "src_cell_rgba=((0.1,0.2,0.3,1),(0.4,0.5,0.6,0.8),(0.7,0.8,0.9,0.6),(1,1,1,0.4))\n",
@@ -49,6 +52,9 @@ def main() -> int:
         assert report["points"][0]["kind"] == "zoom"
         assert report["points"][0]["sample_u8"] == [25, 51, 76, 255]
         assert report["points"][0]["validity_alpha_u8"] == 127
+        assert report["points"][0]["brightness_gain"] == 1.25
+        assert report["points"][0]["accum_rgba"] == [0.08, 0.16, 0.24, 1.0]
+        assert report["points"][0]["normalized_rgba"] == [0.08, 0.16, 0.24, 1.0]
         assert report["points"][0]["cell_rgb"][0] == [0.1, 0.2, 0.3]
         assert report["points"][0]["src_cell_rgba"][0] == [0.1, 0.2, 0.3, 1.0]
         assert "## zoom" in out_md.read_text(encoding="utf-8")

@@ -1,0 +1,305 @@
+{
+  "kind": "olmdirectionalblur_witness_logging_prep",
+  "schema": 1,
+  "date": "2026-07-02",
+  "decision": "ready-for-next-witness-level-ab-denominator-validity-logging",
+  "inputs": {
+    "hook_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmdirectionalblur_hook_anchor_audit_20260701.json",
+    "source_candidates_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmdirectionalblur_source_candidates_audit_20260701.json",
+    "pending_proof_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmdirectionalblur_pending_witness_proof_20260629.json",
+    "trace_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/runtime_trace_comparisons/olmdirectionalblur_residual_witness_20260624.json"
+  },
+  "structural_base": "rotated-aex-full-choreo",
+  "runtime_package": "refs/runtime_trace_packages/olm_runtime_trace_requests_20260630_004241.zip",
+  "current_runtime_status": "answered_partial",
+  "current_runtime_summary": "The current package contains the exact Software reference renders for the two targeted cases and one prior live-attempt log, but no successful Windows per-pixel runtime trace. The prior live attempt failed before `OLMDirectionalBlur` resolved as a loaded module, so no rowdriver/rotate-path stage values were captured.",
+  "source_anchors": {
+    "rotate_helper_line": 493,
+    "rowdriver_line": 1509,
+    "rowdriver_front_helper_call_line": 1578,
+    "rowdriver_back_helper_call_line": 1589,
+    "rotate_into_b_call_line": 1935,
+    "copy_b_back_into_a_line": 1943,
+    "rowdriver_dispatch_line": 2018,
+    "rotate_back_output_call_line": 2063,
+    "cli_full_choreo_line": 1395,
+    "cli_exact_rowdriver_line": 1401,
+    "cli_rowdriver_prepass_line": 1445,
+    "cli_front_strength_line": 1441
+  },
+  "shared_logging_principles": [
+    "Stay on the AEX-shaped full choreography base while logging; direct and rotated-front-strength remain measurement baselines only.",
+    "Capture typed values for A/B mapping, denominator, alpha_or_valid, numerator, pre-writeback, and final bytes in the same witness record.",
+    "Treat angle-0 and diagonal as separate lanes even if one pass can log both."
+  ],
+  "lanes": [
+    {
+      "family": "angle0-rowdriver-valid-alpha",
+      "classification": "angle0-rgb-only-rowdriver-or-valid-alpha",
+      "primary_witness": {
+        "abs_delta_rgba": [
+          164,
+          0,
+          0,
+          0
+        ],
+        "candidate_rgba": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "reference_rgba": [
+          164,
+          0,
+          0,
+          255
+        ],
+        "signed_delta_candidate_minus_reference": [
+          -164,
+          0,
+          0,
+          0
+        ],
+        "xy": [
+          494,
+          169
+        ]
+      },
+      "primary_label": "[494, 169] ref=[164, 0, 0, 255] cand=[0, 0, 0, 255]",
+      "required_fields": [
+        "witness case id and output xy",
+        "normalized effect parameters actually consumed by the call",
+        "A/B image pointers plus output-to-A/B buffer xy mapping",
+        "denominator plane pointer/value at the witness",
+        "alpha_or_valid side-channel pointer/value at the witness",
+        "accumulation numerator RGBA before normalization",
+        "pre-writeback RGBA float/hex after normalization",
+        "final stored RGBA bytes",
+        "helper-local source x/y and actual touched destination x range on row y=169",
+        "rowdriver/group membership for both (494,169) and endpoint (579,169)",
+        "effective span inputs/outputs for the front helper"
+      ],
+      "witness_focus": [
+        "Primary interior witness stays (494,169), but the return should include the right-edge endpoint (579,169) in the same pass.",
+        "The point of this lane is to decide whether the missing red strip is a rowdriver/group-membership miss or a valid-alpha side-channel miss.",
+        "A useful answer must expose touched destination coverage, not only final bytes."
+      ],
+      "answerable_when": [
+        "The same return covers both (494,169) and (579,169) with typed rowdriver/group and alpha_or_valid values.",
+        "The helper-local source-to-destination coverage proves whether the right endpoint is inside or outside the front-helper write range.",
+        "Numerator, denominator, pre-writeback, and final bytes are all present at the witness."
+      ],
+      "not_answered_when": [
+        "Only final PNG bytes or broad means are returned.",
+        "The run confirms the witness coordinates but omits helper-local touched destination range.",
+        "The run logs rowdriver-ish prose without typed values for denominator, alpha_or_valid, and pre-writeback RGBA."
+      ],
+      "required_next_proof": "A helper-local source-to-destination range witness on the strip row, especially the right endpoint (579,169) plus companion witness (494,169), including actual touched destination x range, rowdriver/group membership, validity side-channel, accumulation, pre-writeback RGBA, and final bytes.",
+      "scan_order_max_witness": {
+        "abs_delta_rgba": [
+          164,
+          0,
+          0,
+          0
+        ],
+        "candidate_rgba": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "reference_rgba": [
+          164,
+          0,
+          0,
+          255
+        ],
+        "signed_delta_candidate_minus_reference": [
+          -164,
+          0,
+          0,
+          0
+        ],
+        "xy": [
+          465,
+          169
+        ]
+      },
+      "endpoint_constraint": {
+        "rightmost_visible_strip_x": 579,
+        "required_min_source_x_for_same_row_front_helper": 580,
+        "same_row_segment_contains_that_source_x": false,
+        "implication": "If the angle-0 endpoint pixel is produced by the documented front helper on the same row, the contributing source x must be strictly greater than the endpoint destination x because front writes only to the left. The current local strip row ends at x=579, so a same-row source inside that visible strip cannot explain the endpoint by itself."
+      },
+      "helper_local_static_facts": [
+        "front helper call uses param_3 = 1",
+        "effective span is int(param_9 * param_11) with left-edge clipping",
+        "writes start at offset = 1",
+        "loop continues while offset < param_9",
+        "front helper writes only to destination columns strictly left of the current source x"
+      ]
+    },
+    {
+      "family": "diagonal-rotate-validity",
+      "classification": "diagonal-rgb-alpha-rotate-validity",
+      "primary_witness": {
+        "abs_delta_rgba": [
+          251,
+          0,
+          0,
+          0
+        ],
+        "candidate_rgba": [
+          252,
+          0,
+          0,
+          255
+        ],
+        "reference_rgba": [
+          1,
+          0,
+          0,
+          255
+        ],
+        "signed_delta_candidate_minus_reference": [
+          251,
+          0,
+          0,
+          0
+        ],
+        "xy": [
+          507,
+          367
+        ]
+      },
+      "primary_label": "[507, 367] ref=[1, 0, 0, 255] cand=[252, 0, 0, 255]",
+      "required_fields": [
+        "witness case id and output xy",
+        "normalized effect parameters actually consumed by the call",
+        "A/B image pointers plus output-to-A/B buffer xy mapping",
+        "denominator plane pointer/value at the witness",
+        "alpha_or_valid side-channel pointer/value at the witness",
+        "accumulation numerator RGBA before normalization",
+        "pre-writeback RGBA float/hex after normalization",
+        "final stored RGBA bytes",
+        "rotate sampler source coordinates and sample order",
+        "border or validity decision for the sampled source set",
+        "group-size or opacity gate feeding the diagonal witness"
+      ],
+      "witness_focus": [
+        "Primary diagonal witness stays (507,367); keep a signed-red companion such as (423,187) in the same answer when possible.",
+        "The point of this lane is to separate rotate sampler order/border-validity from later normalization/writeback.",
+        "A useful answer must expose the sampled source coordinates/order and the validity decision feeding the witness."
+      ],
+      "answerable_when": [
+        "The return includes typed rotate source coordinates/order plus border-validity or equivalent substitute-path facts.",
+        "The return includes group-size/opacity gate, denominator, pre-writeback, and final bytes at the diagonal witness.",
+        "The same answer keeps diagonal evidence separate from the angle-0 strip theory."
+      ],
+      "not_answered_when": [
+        "Only the final diagonal byte is logged.",
+        "Sampler order is described qualitatively but no typed source coordinates or border-validity values are returned.",
+        "The answer collapses diagonal behavior into the angle-0 rowdriver theory."
+      ],
+      "required_next_proof": "Typed rotate sampler source coordinates/order, border or validity decision, group-size or opacity gate, accumulation denominator, pre-writeback RGBA, and final bytes at the diagonal witnesses.",
+      "companion_witnesses": [
+        {
+          "abs_delta_rgba": [
+            250,
+            0,
+            0,
+            0
+          ],
+          "candidate_rgba": [
+            4,
+            0,
+            0,
+            255
+          ],
+          "reference_rgba": [
+            254,
+            0,
+            0,
+            255
+          ],
+          "signed_delta_candidate_minus_reference": [
+            -250,
+            0,
+            0,
+            0
+          ],
+          "xy": [
+            423,
+            187
+          ]
+        },
+        {
+          "abs_delta_rgba": [
+            251,
+            0,
+            0,
+            0
+          ],
+          "candidate_rgba": [
+            252,
+            0,
+            0,
+            255
+          ],
+          "reference_rgba": [
+            1,
+            0,
+            0,
+            255
+          ],
+          "signed_delta_candidate_minus_reference": [
+            251,
+            0,
+            0,
+            0
+          ],
+          "xy": [
+            507,
+            367
+          ]
+        },
+        {
+          "abs_delta_rgba": [
+            250,
+            0,
+            0,
+            0
+          ],
+          "candidate_rgba": [
+            250,
+            0,
+            0,
+            255
+          ],
+          "reference_rgba": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "signed_delta_candidate_minus_reference": [
+            250,
+            0,
+            0,
+            0
+          ],
+          "xy": [
+            519,
+            363
+          ]
+        }
+      ]
+    }
+  ],
+  "parent_follow_up": [
+    "Use this prep artifact to shape the next Windows witness request or local logging harness fields.",
+    "When a new return lands, feed it through compare_directionalblur_trace.py and check it against the per-lane answerable/not-answered rules here.",
+    "Do not start source edits until at least one lane returns typed denominator + validity/alpha_or_valid + pre-writeback evidence."
+  ]
+}

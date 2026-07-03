@@ -1,0 +1,398 @@
+{
+  "cases": [
+    {
+      "candidate_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "case_id": "legacy_case_0004_current_aex",
+      "first_unresolved_stage": "c280-polygon-or-cce0-fallback",
+      "local_summary": {
+        "append": null,
+        "cardinal6": null,
+        "cce0_after_b120": null,
+        "center_rgba_float": "1.00000000,1.00000000,1.00000000,0.00000000",
+        "class_threshold": "0.02100000",
+        "e170": null,
+        "e3a0": null,
+        "f270": null,
+        "idx": 208,
+        "local_path": "local-transparent-center-no-polygon-passthrough",
+        "passthrough": "1.00000000,1.00000000,1.00000000,0.00000000",
+        "polygon_count": 0,
+        "producer_shape": "empty polygon -> transparent passthrough"
+      },
+      "ordered_probes": [
+        {
+          "evidence": "final raw 0xe8e8e871 derives [103, 103, 103, 113] after AE premultiply",
+          "name": "writer-anchor",
+          "question": "Does the target still store Windows `[103,103,103,113]` at the final 8bpc writer?",
+          "status": "satisfied",
+          "values": [
+            "final writer bytes",
+            "writer stack x/y",
+            "output buffer pointer"
+          ]
+        },
+        {
+          "name": "cce0-return",
+          "question": "Does Windows cce0 return a nonzero semitransparent value for the transparent center?",
+          "status": "unresolved",
+          "values": [
+            "cce0 output floats",
+            "poly count before b120",
+            "passthrough/fallback flag"
+          ]
+        },
+        {
+          "name": "c280-polygon",
+          "question": "Does the 0xd0/FUN_180013140 path pass the span/side-channel guards and append neighbor-derived samples?",
+          "status": "unresolved",
+          "values": [
+            "idx",
+            "class-plane bits",
+            "append list",
+            "sample source xy/rgba/weight"
+          ]
+        },
+        {
+          "name": "neighbor-correlation",
+          "question": "Does the missing center value match one of the strongest neighboring cells?",
+          "status": "unresolved",
+          "values": [
+            "neighbor [1903, 518]",
+            "neighbor [1901, 520]",
+            "neighbor [1901, 519]"
+          ]
+        }
+      ],
+      "reference_rgba": [
+        103,
+        103,
+        103,
+        113
+      ],
+      "required_windows_fields": [
+        "c280 switch index at exact writer-frame pixel",
+        "polygon vertex count before bb10/b120",
+        "helper append src xy / rgba / weight if any",
+        "cce0 output floats before final u8 packing"
+      ],
+      "stage_rows": [
+        {
+          "local": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "note": "Windows raw 0xe8e8e871 already explains reference PNG.",
+          "stage": "writer-anchor",
+          "status": "satisfied",
+          "windows": [
+            103,
+            103,
+            103,
+            113
+          ]
+        },
+        {
+          "local": "1.00000000,1.00000000,1.00000000,0.00000000",
+          "note": "Writer frame contains post-cce0 local result block, but the exact producer into that block is not isolated.",
+          "stage": "cce0-result",
+          "status": "unresolved",
+          "windows": [
+            0.80824906,
+            0.80824906,
+            0.80824906,
+            0.44156867
+          ]
+        },
+        {
+          "local": {
+            "dispatch": "FUN_180013140",
+            "hex": "0xd0",
+            "idx": "208"
+          },
+          "note": "Expected local dispatch shape for legacy_case_0004_current_aex.",
+          "stage": "c280-dispatch",
+          "status": "unresolved",
+          "windows": "unknown"
+        },
+        {
+          "local": {
+            "passthrough": "1.00000000,1.00000000,1.00000000,0.00000000",
+            "polygon_count": "0"
+          },
+          "note": "Need to learn whether Windows also has zero vertices or appends a neighbor-derived sample before cce0.",
+          "stage": "producer-branch",
+          "status": "unresolved",
+          "windows": "unknown"
+        }
+      ],
+      "static_dispatch": {
+        "dispatch": "FUN_180013140",
+        "hex": "0xd0",
+        "idx": 208,
+        "required_windows_fields": [
+          "c280 switch index at exact writer-frame pixel",
+          "polygon vertex count before bb10/b120",
+          "helper append src xy / rgba / weight if any",
+          "cce0 output floats before final u8 packing"
+        ],
+        "unresolved_stage": "c280-polygon-or-cce0-fallback"
+      },
+      "stop_line": "Do not add a global transparent-center fallback. This witness only proves a 0004-local path if cce0/c280 emits a neighbor sample for the same call.",
+      "windows_writer_anchor": {
+        "writer_explains_reference": true,
+        "writer_frame_rgba_float": [
+          0.80824906,
+          0.80824906,
+          0.80824906,
+          0.44156867
+        ],
+        "writer_raw": "0xe8e8e871",
+        "xy": [
+          1903,
+          519
+        ]
+      },
+      "xy": [
+        1903,
+        519
+      ]
+    },
+    {
+      "candidate_rgba": [
+        90,
+        90,
+        90,
+        91
+      ],
+      "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+      "first_unresolved_stage": "cardinal6-e170-f270-e3a0-emit-chain",
+      "local_summary": {
+        "append": {
+          "dst": "91,841",
+          "rgba": "0.99106717,0.99106717,0.99106717,0.99607843",
+          "src": "91,840",
+          "weight": "0.35632184"
+        },
+        "cardinal6": {
+          "count_before": "0",
+          "desc": "91,841,1,91,843,5",
+          "key": "50"
+        },
+        "cce0_after_b120": "0.99106723,0.99106723,0.99106723,0.35492450",
+        "center_rgba_float": "1.00000000,1.00000000,1.00000000,0.00000000",
+        "class_threshold": "0.88099998",
+        "e170": {
+          "a_center": "0",
+          "a_prev": "1",
+          "c": "2",
+          "desc": "91,841,1,91,843,5",
+          "r_left": "0"
+        },
+        "e3a0": {
+          "desc": "91,841,1,91,843,5",
+          "scale_h": "1",
+          "scale_m": "0.57999998",
+          "trap": "1.74,0,0.5",
+          "weight": "0.35632184"
+        },
+        "f270": {
+          "c": "2",
+          "count_before": "0",
+          "extra_n": "0.40000001",
+          "p3": "1"
+        },
+        "idx": 105,
+        "local_path": "local-cardinal6-f270-e3a0-append",
+        "passthrough": null,
+        "polygon_count": 1,
+        "producer_shape": "cardinal6 append -> nonzero cce0 blend"
+      },
+      "ordered_probes": [
+        {
+          "evidence": "final raw 0xffffff00 derives [0, 0, 0, 0] after AE premultiply",
+          "name": "writer-anchor",
+          "question": "Does Windows still store transparent output at the final 8bpc writer?",
+          "status": "satisfied",
+          "values": [
+            "final writer bytes",
+            "writer stack x/y",
+            "output buffer pointer"
+          ]
+        },
+        {
+          "name": "descriptor",
+          "question": "Does Windows FUN_180010760 enter the same cardinal6 descriptor/key as local?",
+          "status": "unresolved",
+          "values": [
+            "idx",
+            "cardinal6 desc",
+            "key",
+            "polygon count before append"
+          ]
+        },
+        {
+          "name": "emit-chain",
+          "question": "Where does the local f270/e3a0 append disappear in Windows?",
+          "status": "unresolved",
+          "values": [
+            "d3b0/da50 state",
+            "e170 bits/code",
+            "f270 branch",
+            "e3a0 trap/weight",
+            "append/no-append"
+          ]
+        },
+        {
+          "name": "blend",
+          "question": "If Windows appends the same sample, does cce0/b120 zero it later?",
+          "status": "unresolved",
+          "values": [
+            "pre-b120 rgba",
+            "post-b120 rgba",
+            "final writer bytes"
+          ]
+        }
+      ],
+      "reference_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "required_windows_fields": [
+        "c280 switch index at exact writer-frame pixel",
+        "cardinal6 descriptor/key and polygon count before append",
+        "e170 bits/code plus f270/e3a0 append/no-append",
+        "cce0 output floats before final u8 packing"
+      ],
+      "stage_rows": [
+        {
+          "local": [
+            90,
+            90,
+            90,
+            91
+          ],
+          "note": "Windows raw 0xffffff00 already explains reference PNG.",
+          "stage": "writer-anchor",
+          "status": "satisfied",
+          "windows": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "local": "0.99106723,0.99106723,0.99106723,0.35492450",
+          "note": "Writer frame contains post-cce0 local result block, but the exact producer into that block is not isolated.",
+          "stage": "cce0-result",
+          "status": "unresolved",
+          "windows": [
+            1.0,
+            1.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "local": {
+            "dispatch": "FUN_1800125c0 -> FUN_180010760 -> FUN_18000cc70",
+            "hex": "0x69",
+            "idx": "105"
+          },
+          "note": "Expected local dispatch shape for legacy_case_0012_gamma5_red_blue_current_aex.",
+          "stage": "c280-dispatch",
+          "status": "unresolved",
+          "windows": "unknown"
+        },
+        {
+          "local": {
+            "append": {
+              "dst": "91,841",
+              "rgba": "0.99106717,0.99106717,0.99106717,0.99607843",
+              "src": "91,840",
+              "weight": "0.35632184"
+            },
+            "cardinal6": {
+              "count_before": "0",
+              "desc": "91,841,1,91,843,5",
+              "key": "50"
+            },
+            "e170": {
+              "a_center": "0",
+              "a_prev": "1",
+              "c": "2",
+              "desc": "91,841,1,91,843,5",
+              "r_left": "0"
+            },
+            "e3a0": {
+              "desc": "91,841,1,91,843,5",
+              "scale_h": "1",
+              "scale_m": "0.57999998",
+              "trap": "1.74,0,0.5",
+              "weight": "0.35632184"
+            },
+            "f270": {
+              "c": "2",
+              "count_before": "0",
+              "extra_n": "0.40000001",
+              "p3": "1"
+            }
+          },
+          "note": "Need the first Windows-vs-local difference inside the cardinal6/e170/f270/e3a0 chain.",
+          "stage": "producer-branch",
+          "status": "unresolved",
+          "windows": "unknown"
+        }
+      ],
+      "static_dispatch": {
+        "dispatch": "FUN_1800125c0 -> FUN_180010760 -> FUN_18000cc70",
+        "hex": "0x69",
+        "idx": 105,
+        "required_windows_fields": [
+          "c280 switch index at exact writer-frame pixel",
+          "cardinal6 descriptor/key and polygon count before append",
+          "e170 bits/code plus f270/e3a0 append/no-append",
+          "cce0 output floats before final u8 packing"
+        ],
+        "unresolved_stage": "cardinal6-e170-f270-e3a0-emit-chain"
+      },
+      "stop_line": "Do not suppress f270 or transparent-center appends globally. Prior probes show global f270 suppression worsens the case set.",
+      "windows_writer_anchor": {
+        "writer_explains_reference": true,
+        "writer_frame_rgba_float": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "writer_raw": "0xffffff00",
+        "xy": [
+          91,
+          841
+        ]
+      },
+      "xy": [
+        91,
+        841
+      ]
+    }
+  ],
+  "decision": "writer-anchored-producer-trace-ready",
+  "inputs": {
+    "proof_plan_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmsmoother2_current_aex_proof_plan_20260625/proof_plan.json",
+    "witness_contract_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/olmsmoother2_current_aex_witness_contract_20260624/witness_contract.json",
+    "writer_frame_analysis_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/smoother2_current_aex_writer_frame_followup_20260625/writer_frame_analysis.json"
+  },
+  "kind": "olmsmoother2_current_aex_producer_path_diff",
+  "recommended_action": "Anchor the next local/Windows trace-diff harness at the confirmed writer frame, then capture only the listed producer fields until the first c280/cce0 divergence is observed.",
+  "schema": 1
+}

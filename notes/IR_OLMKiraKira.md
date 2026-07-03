@@ -446,8 +446,62 @@ BT.709 luma, boxFilter pass-1, ray-helper choreography, or global gain.
   breaks strength-0 anchors (`0/9`, max `113`). Premultiplied compose is also
   rejected (`0/9`, mean sum `26.803340`).
 - Conclusion: do not change the default compose scale or promote premultiplied
-  compose from PNG residuals. The remaining proof target is still the internal
-  merge-mode-1 compose/pre-writeback or final quantization site.
+  compose from PNG residuals. This is now historical compose-target evidence;
+  after the 2026-07-01 hotspot witness, the live lane is no longer direct
+  compose/pre-writeback isolation but same-run export provenance,
+  witness-placement validation, or endgame control coverage.
+
+2026-07-01 hotspot witness closure:
+
+- Report:
+  `refs/reports/runtime_trace_comparisons/olmkirakira_hotspot_compose_writeback_witness_20260701.md`.
+- Consolidated audit:
+  `refs/conformance/olmkirakira_hotspot_lane_audit_20260701.md`.
+- Provenance split audit:
+  `refs/conformance/olmkirakira_reference_provenance_audit_20260701.md`.
+- Source-candidates audit:
+  `refs/conformance/olmkirakira_source_candidates_audit_20260701.md`.
+- At the primary hotspot `(934,118)`, the answered Windows trace now reports:
+  - `glow_after_opacity_rgba_float = [1,1,1,0.507505655]`
+  - `composed_rgba_float = [0.565446166..., 0.565446166..., 0.565446166..., 1]`
+  - `pre_writeback_rgba_float = [0.565446166..., 0.565446166..., 0.565446166..., 1]`
+  - `final_writeback_or_png_rgba = [144,144,144,255]`
+- Those values agree with the current Mac compose-boundary witness rather than
+  with the canonical Windows reference PNG `[131,131,131,255]`.
+- The provenance split is now frozen more explicitly too:
+  - canonical Windows reference PNG hotspot: `[131,131,131,255]`
+  - current Mac compose-boundary witness hotspot: `[144,144,144,255]`
+  - answered Windows traced hotspot: `[144,144,144,255]`
+  - archived BT.709 candidate PNG hotspot: `[145,145,145,255]`
+- That three-way split is recorded in
+  `refs/conformance/olmkirakira_reference_provenance_audit_20260701.md`, so
+  this lane should stay out of compose/gain retuning unless stronger contrary
+  evidence appears.
+- A matching machine-readable export contract now fixes what later evidence is
+  allowed to mean:
+  `scripts/analyze_olmkirakira_hotspot_export_contract.py`,
+  `refs/scripts/smoke_analyze_olmkirakira_hotspot_export_contract.py`, and
+  `refs/conformance/olmkirakira_hotspot_export_contract_audit_20260701.md`
+  keep the lane at `awaiting-same-run-export-or-witness-placement-proof` until
+  a current-AEX export or explicit witness-placement/endgame-control artifact
+  lands. When it does, classify it first as:
+  - export matches traced hotspot `144`
+  - export matches canonical reference `131`
+  - export matches archived BT.709 candidate `145`
+  - or none of the above
+  before touching source.
+- A new source-order freeze now makes that operationally explicit:
+  `refs/conformance/olmkirakira_source_candidates_audit_20260701.md`
+  keeps a non-source gate ahead of any Mac patch, reopens `RenderTyped(...)`
+  screen compose only if a same-run export/reference contradiction appears,
+  keeps `AddColoredUnion(...)` second-order only, and splits highlight/ramp
+  coverage into a separate schema/endgame lane rather than a hotspot math fix.
+- So the remaining KiraKira hotspot is no longer permission to retune
+  merge-mode-1 compose, hotspot-local attenuation, or final quantization from
+  this witness alone. The live lane shifts to:
+  - reference/export provenance,
+  - witness-placement drift, or
+  - still-missing endgame control coverage outside this hotspot trace.
 
 The project-local 2026-06-22 window plan gives the exact local rows and
 50-sample arrays for that narrow trace:

@@ -582,7 +582,7 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_BrightnessGain_Param_Name),
-	                     0.01, 10.0, 0.01, 5.0, 1.0,
+	                     1.0, 100.0, 1.0, 100.0, 1.0,
 	                     PF_Precision_TENTHS, 0, 0, BRIGHTNESS_GAIN_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
@@ -592,7 +592,7 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_DiagonalLength_Param_Name), 0, 1000, 0, 300, 50, DIAGONAL_LENGTH_DISK_ID);
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(GetStringPtr(StrID_HighlightRadius_Param_Name), 0, 1000, 0, 300, 0, HIGHLIGHT_RADIUS_DISK_ID);
+	PF_ADD_SLIDER(GetStringPtr(StrID_HighlightRadius_Param_Name), 0, 500, 0, 500, 0, HIGHLIGHT_RADIUS_DISK_ID);
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_GlowOpacity_Param_Name), 0, 10000, 0, 100, 100, GLOW_OPACITY_DISK_ID);
 	AEFX_CLR_STRUCT(def);

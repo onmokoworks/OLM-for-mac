@@ -1,0 +1,76 @@
+{
+  "kind": "olmblur_source_candidates_audit",
+  "schema": 1,
+  "source_cpp": "mac/OLMBlur/OLMBlur.cpp",
+  "lane_summary": {
+    "case0006_status": "current-aex-export-missing",
+    "case0007_status": "16bpc-resolved-8bpc-still-open-prestore-family",
+    "case0006_recommended_action": "Keep OLMBlur case_0006 frozen on the Mac side and request only the precise same-run Windows current-AEX export artifact if this lane must advance.",
+    "case0007_next_allowed_action": "Keep case_0007 split by bit depth: preserve the 16bpc witness as resolved, and only ask Windows for the old normalized 8bpc pre-store float/helper boundary at `(488,941)` if this family needs to move further."
+  },
+  "non_source_gates": [
+    {
+      "lane": "case_0006_nonlegacy_16bpc",
+      "required_before_source_patch": "Same-run Windows current-AEX export or witness that contradicts the current provenance/export reading.",
+      "why": "No same-run Windows current-AEX exported PNG is present, so the lane remains a provenance/export question rather than a reopened implementation bug."
+    },
+    {
+      "lane": "case_0007_legacy_8bpc_old_normalized",
+      "required_before_source_patch": "Windows pre-store float/helper boundary at `(488,941)`.",
+      "why": "The surviving Legacy case_0007 family is no longer one undifferentiated residual. The normalized 16bpc witness at `(345,672)` is already closed as a pre-store float delta: Mac lands at exactly `12544.5`, while Windows runtime witness says `12544.498046875 -> 12544`. The old normalized 8bpc witness at `(488,941)` remains below the half-step on the Mac side (`250.499985`) and is not solved by either local writer rule, so that companion witness still needs a Windows pre-store float rather than a blind writer rewrite."
+    }
+  ],
+  "source_candidates": [
+    {
+      "rank": 1,
+      "site": "store16_nonlegacy_writer_boundary",
+      "function": "round_blur_value / store16",
+      "line": 451,
+      "why_still_live": "This is only the first source reopen point if a future same-run Windows export or witness explicitly contradicts the current case_0006 provenance reading and says helper/pre-store match while final stored words differ.",
+      "allowed_change_shape": "non-Legacy 16bpc writer-only contradiction only"
+    },
+    {
+      "rank": 2,
+      "site": "nonlegacy_helper_accumulation",
+      "function": "blur_1d_horizontal / blur_1d_vertical",
+      "line": 113,
+      "why_still_live": "Reopen the non-Legacy helpers only if a future Windows witness disproves the current provenance freeze and shows the decisive mismatch already exists before the 16bpc writer boundary.",
+      "allowed_change_shape": "case_0006 helper-local contradiction only; no broad kernel retune"
+    },
+    {
+      "rank": 3,
+      "site": "legacy_carry_prev_horizontal_vertical",
+      "function": "legacy_blur_1d_horizontal / legacy_blur_1d_vertical",
+      "line": 254,
+      "why_still_live": "The old normalized 8bpc case_0007 witness is still open, but only as a separate pre-store-float lane. The normalized 16bpc witness is already resolved as a Windows-side pre-store float delta.",
+      "allowed_change_shape": "old normalized 8bpc witness only; keep 16bpc Legacy witness closed"
+    }
+  ],
+  "decision_ladder": [
+    {
+      "step": 1,
+      "condition": "If no same-run Windows current-AEX export/witness contradicts case_0006 provenance",
+      "action": "Do not patch OLMBlur source for case_0006; keep the lane in provenance/export classification."
+    },
+    {
+      "step": 2,
+      "condition": "If Windows shows case_0006 helper/pre-store already match but final stored words differ",
+      "action": "Reopen only the non-Legacy 16bpc writer boundary (`round_blur_value` / `store16`)."
+    },
+    {
+      "step": 3,
+      "condition": "If Windows shows case_0006 mismatch already exists before final store",
+      "action": "Only then reopen non-Legacy helper accumulation in `blur_1d_horizontal` / `blur_1d_vertical`."
+    },
+    {
+      "step": 4,
+      "condition": "If case_0007 advances again",
+      "action": "Keep Legacy split by bit depth: 16bpc remains closed, only the old normalized 8bpc witness may reopen carry-prev/helper logic."
+    }
+  ],
+  "forbidden_actions": [
+    "Do not promote a blind global `nearbyint -> floor05` writer swap from the current OLMBlur evidence.",
+    "Do not mix case_0006 provenance/export uncertainty with the resolved 16bpc Legacy case_0007 witness.",
+    "Do not reopen the retired Legacy `(0,0)` blocker or broad kernel tuning from these lanes."
+  ]
+}

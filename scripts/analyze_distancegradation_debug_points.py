@@ -18,6 +18,12 @@ HEADER_RE = re.compile(
 POINT_RE = re.compile(
     r"point x=(?P<x>-?\d+) y=(?P<y>-?\d+) alpha=(?P<alpha>[-+0-9.eE]+) d_alpha=(?P<d_alpha>[-+0-9.eE]+) "
     r"field_x=(?P<field_x>[-+0-9.eE]+) raw_inside=(?P<raw_inside>[-+0-9.eE]+) raw_outside=(?P<raw_outside>[-+0-9.eE]+)"
+    r"(?: inside_x=(?P<inside_x>[-+0-9.eE]+) outside_x=(?P<outside_x>[-+0-9.eE]+) "
+    r"both_x=(?P<both_x>[-+0-9.eE]+) winner=(?P<winner>[A-Za-z0-9_-]+) "
+    r"inside_t=(?P<inside_t>[-+0-9.eE]+) outside_t=(?P<outside_t>[-+0-9.eE]+) "
+    r"inside_constant_binary=(?P<inside_constant_binary>-?\d+) "
+    r"outside_constant_binary=(?P<outside_constant_binary>-?\d+) "
+    r"compose_input_x=(?P<compose_input_x>[-+0-9.eE]+))?"
 )
 
 
@@ -54,17 +60,34 @@ def load_dump(path: Path) -> dict:
                 continue
         match = POINT_RE.search(line)
         if match:
-            points.append(
-                {
-                    "x": int(match.group("x")),
-                    "y": int(match.group("y")),
-                    "alpha": float(match.group("alpha")),
-                    "d_alpha": float(match.group("d_alpha")),
-                    "field_x": float(match.group("field_x")),
-                    "raw_inside": float(match.group("raw_inside")),
-                    "raw_outside": float(match.group("raw_outside")),
-                }
-            )
+            row = {
+                "x": int(match.group("x")),
+                "y": int(match.group("y")),
+                "alpha": float(match.group("alpha")),
+                "d_alpha": float(match.group("d_alpha")),
+                "field_x": float(match.group("field_x")),
+                "raw_inside": float(match.group("raw_inside")),
+                "raw_outside": float(match.group("raw_outside")),
+            }
+            for key in (
+                "inside_x",
+                "outside_x",
+                "both_x",
+                "inside_t",
+                "outside_t",
+                "compose_input_x",
+            ):
+                value = match.group(key)
+                if value is not None:
+                    row[key] = float(value)
+            for key in ("inside_constant_binary", "outside_constant_binary"):
+                value = match.group(key)
+                if value is not None:
+                    row[key] = int(value)
+            winner = match.group("winner")
+            if winner is not None:
+                row["winner"] = winner
+            points.append(row)
     if header is None:
         raise ValueError(f"missing DistanceGradation header in {path}")
     if not points:
@@ -91,12 +114,12 @@ def write_md(path: Path, payload: dict) -> None:
         f"- Debug log: `{payload['debug_log']}`",
         f"- Header: `{payload['header']}`",
         "",
-        "| class | x | y | alpha | d_alpha | field_x | raw_inside | raw_outside |",
-        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+        "| class | x | y | alpha | d_alpha | field_x | raw_inside | raw_outside | inside_x | outside_x | both_x | winner | compose_input_x |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: |",
     ]
     for row in payload["points"]:
         lines.append(
-            f"| `{row['class']}` | {row['x']} | {row['y']} | `{row['alpha']:.9g}` | `{row['d_alpha']:.9g}` | `{row['field_x']:.9g}` | `{row['raw_inside']:.9g}` | `{row['raw_outside']:.9g}` |"
+            f"| `{row['class']}` | {row['x']} | {row['y']} | `{row['alpha']:.9g}` | `{row['d_alpha']:.9g}` | `{row['field_x']:.9g}` | `{row['raw_inside']:.9g}` | `{row['raw_outside']:.9g}` | `{row.get('inside_x', float('nan')):.9g}` | `{row.get('outside_x', float('nan')):.9g}` | `{row.get('both_x', float('nan')):.9g}` | `{row.get('winner', '-')}` | `{row.get('compose_input_x', float('nan')):.9g}` |"
         )
     lines.extend(["", "## Reading", ""])
     lines.extend(f"- {line}" for line in payload["reading"])
@@ -124,6 +147,7 @@ def main() -> int:
             f"Captured {len(points)} witness points.",
             f"Class counts: {class_counts}.",
             "Use this to confirm whether the live residual is already decided in field prep before compose/writeback.",
+            "When present, inside_x/outside_x/both_x/winner show the per-side helper outputs and the winner handed toward compose.",
         ],
     }
     args.output_json.parent.mkdir(parents=True, exist_ok=True)

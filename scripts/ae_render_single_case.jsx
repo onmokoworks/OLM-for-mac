@@ -8,6 +8,11 @@
     OLM_AE_LOG_PATH=/abs/path/to/log.txt
     OLM_AE_RESULT_JSON=/abs/path/to/result.json
 
+  Preferred entrypoint:
+    python3 scripts/run_ae_single_case.py --request-dir ... --case-id ...
+    The wrapper sets the ExtendScript environment for you and avoids stale
+    manual-launch failures.
+
   Run from a live After Effects instance:
     osascript -e 'with timeout of 3600 seconds' \
       -e 'tell application "Adobe After Effects 2026" to DoScriptFile POSIX file "/abs/path/scripts/ae_render_single_case.jsx" with override' \

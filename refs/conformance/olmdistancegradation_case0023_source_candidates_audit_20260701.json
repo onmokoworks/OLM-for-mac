@@ -1,0 +1,208 @@
+{
+  "case_id": "olmdistancegradation_extended__case_0023",
+  "decision_ladder": [
+    {
+      "action": "Do not patch source until the current Windows export says the family is still a true mismatch",
+      "condition": "If the question is about the threshold-family triplet, resolve current-AEX export provenance first",
+      "step": 1
+    },
+    {
+      "action": "Constrain changes to build_distance_field() and dt_to_normalized()",
+      "condition": "If the question is about the surviving edge-family pixel and Windows says field/ownership is already wrong before compose",
+      "step": 2
+    },
+    {
+      "action": "Only then reopen compose_pixel()",
+      "condition": "If Windows says compose input already matches Mac but the endpoint still differs",
+      "step": 3
+    }
+  ],
+  "edge_family_candidates": [
+    {
+      "allowed_change_shape": "Both-mode ownership only; no broad field rewrite",
+      "family": "edge",
+      "function": "build_distance_field",
+      "line": 508,
+      "rank": 1,
+      "site": "build_distance_field_both_ownership",
+      "why_still_live": "The surviving bg_off mismatch at (1699,7) keeps the case_0023 lane upstream of the final background blend. Neighboring edge witnesses already match, so the remaining live suspicion is the Both-mode ownership handoff for a narrow subset of pixels."
+    },
+    {
+      "allowed_change_shape": "helper-stage threshold ownership / plateau membership only",
+      "family": "edge",
+      "function": "dt_to_normalized",
+      "line": 440,
+      "rank": 2,
+      "site": "dt_to_normalized_constant_threshold",
+      "why_still_live": "The edge-family mismatch still lives in Constant mode with Outside Threshold=0, so the binary threshold helper stays relevant if Windows current export later says the decisive edge pixel is already wrong before the Both-mode ownership merge."
+    },
+    {
+      "allowed_change_shape": "only with explicit Windows contradiction to current field-first reading",
+      "family": "edge",
+      "function": "compose_pixel",
+      "line": 558,
+      "rank": 3,
+      "site": "compose_pixel_constant_endpoint",
+      "why_still_live": "This remains second-order only. Reopen it only if a current Windows export or typed witness shows compose input already matches Mac while the endpoint still differs at the live edge pixel."
+    }
+  ],
+  "family_status": {
+    "edge_family": {
+      "important_split": "The current Mac bg_off probe agrees with Windows bg_off at (1698,7), (1700,7), (414,393), and (416,393), but still disagrees at (1699,7) and (415,393).",
+      "status": "upstream-field-ownership-still-live",
+      "summary": "Current Mac bg_off still differs from Windows bg_off by the same 73px cardinality. This means the residual is not just a bg_on compose issue."
+    },
+    "threshold_family": {
+      "next_action": "Keep the threshold-family triplet out of implementation tuning. Regenerate or recapture a current Windows Software reference for case_0023, or explicitly split the packaged expected lane from the current-runtime lane before touching compose/writeback.",
+      "status": "threshold-family-reference-generation-split-candidate",
+      "summary": "The packaged expected PNG cannot be treated as authoritative for the case_0023 threshold triplet. The live Mac AE output at (415,393) matches the latest Windows runtime-traced final stored value, while the packaged expected PNG still shows the older blue endpoint there."
+    }
+  },
+  "forbidden_actions": [
+    "Do not promote a global Constant plateau rewrite from the rejected trunc_plateau_binary family.",
+    "Do not retune generic 16bpc writeback from this lane.",
+    "Do not reopen broad color-mix tuning while the field-first witness still stands.",
+    "Do not treat the packaged expected PNG as equivalent to current Windows output for the threshold-family slice without proof."
+  ],
+  "kind": "olmdistancegradation_case0023_source_candidates_audit",
+  "pending_windows_followup": {
+    "acceptance_note": "refs/conformance/olmdistancegradation_case0023_refcon_stack_wordmap_return_acceptance_20260702.md",
+    "package": "refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702.zip",
+    "request_id": "olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702",
+    "status": "pending",
+    "stop_condition": "Return enough typed values to explain the `case_0023` triplet crossing with XY bound from recovered output-word/refcon/stack mapping at `FUN_181170480`. If even that stop cannot be isolated, return the precise failed bind/watchpoint reason plus the dumped `r8/r9/[rsp+0x28]` layout and pointer state needed for the next retry."
+  },
+  "provenance_reference_request": {
+    "contract": "refs/conformance/olmdistancegradation_case0023_current_aex_export_contract_20260702.md",
+    "request_id": "olmdistancegradation_case0023_current_aex_recapture_20260702",
+    "request_json": "refs/reference_requests/olmdistancegradation_case0023_current_aex_recapture_20260702.json"
+  },
+  "residual_summary": {
+    "edge_bucket_count": 65,
+    "threshold_bucket_count": 8,
+    "threshold_crossing": [
+      {
+        "alpha": 1.0,
+        "d_alpha": 1.0,
+        "field_x": 0.0,
+        "inside_minus_threshold": -0.9857178,
+        "raw_inside": 35.0142822,
+        "raw_outside": 0.0,
+        "role": "below_threshold_same_row",
+        "x": 414,
+        "y": 393
+      },
+      {
+        "alpha": 1.0,
+        "d_alpha": 1.0,
+        "field_x": 1.0,
+        "inside_minus_threshold": 0.0138855,
+        "raw_inside": 36.0138855,
+        "raw_outside": 0.0,
+        "role": "first_above_threshold_same_row",
+        "x": 415,
+        "y": 393
+      },
+      {
+        "alpha": 1.0,
+        "d_alpha": 1.0,
+        "field_x": 1.0,
+        "inside_minus_threshold": 1.0135117,
+        "raw_inside": 37.0135117,
+        "raw_outside": 0.0,
+        "role": "deeper_plateau_same_row",
+        "x": 416,
+        "y": 393
+      }
+    ],
+    "total_px": 73
+  },
+  "schema": 1,
+  "source_candidates": [
+    {
+      "allowed_change_shape": "Both-mode ownership only; no broad field rewrite",
+      "family": "edge",
+      "function": "build_distance_field",
+      "line": 508,
+      "rank": 1,
+      "site": "build_distance_field_both_ownership",
+      "why_still_live": "The surviving bg_off mismatch at (1699,7) keeps the case_0023 lane upstream of the final background blend. Neighboring edge witnesses already match, so the remaining live suspicion is the Both-mode ownership handoff for a narrow subset of pixels."
+    },
+    {
+      "allowed_change_shape": "helper-stage threshold ownership / plateau membership only",
+      "family": "edge",
+      "function": "dt_to_normalized",
+      "line": 440,
+      "rank": 2,
+      "site": "dt_to_normalized_constant_threshold",
+      "why_still_live": "The edge-family mismatch still lives in Constant mode with Outside Threshold=0, so the binary threshold helper stays relevant if Windows current export later says the decisive edge pixel is already wrong before the Both-mode ownership merge."
+    },
+    {
+      "allowed_change_shape": "only with explicit Windows contradiction to current field-first reading",
+      "family": "edge",
+      "function": "compose_pixel",
+      "line": 558,
+      "rank": 3,
+      "site": "compose_pixel_constant_endpoint",
+      "why_still_live": "This remains second-order only. Reopen it only if a current Windows export or typed witness shows compose input already matches Mac while the endpoint still differs at the live edge pixel."
+    },
+    {
+      "allowed_change_shape": "no source patch until current export provenance is resolved",
+      "family": "threshold",
+      "function": "reference/export lane",
+      "line": 0,
+      "rank": 1,
+      "site": "current_aex_export_provenance_gate",
+      "why_still_live": "The latest live Mac AE rerun already matches the latest Windows typed triplet at (415,393), while the packaged expected PNG stays stale there. This family must stay in provenance/export classification until a same-run current Windows export lands."
+    },
+    {
+      "allowed_change_shape": "threshold-family reopen only after provenance contradiction",
+      "family": "threshold",
+      "function": "dt_to_normalized",
+      "line": 440,
+      "rank": 2,
+      "site": "dt_to_normalized_constant_threshold",
+      "why_still_live": "Keep this as the first implementation reopen site only if a current Windows export or a future typed witness contradicts the current provenance split and says the threshold family is still a true output mismatch."
+    },
+    {
+      "allowed_change_shape": "only after threshold-family provenance is cleared",
+      "family": "threshold",
+      "function": "compose_pixel",
+      "line": 558,
+      "rank": 3,
+      "site": "compose_pixel_constant_endpoint",
+      "why_still_live": "This remains second-order even for the threshold family. Reopen it only if both current export provenance and helper-stage ownership are cleared first."
+    }
+  ],
+  "source_cpp": "mac/OLMDistanceGradation/OLMDistanceGradation.cpp",
+  "threshold_family_candidates": [
+    {
+      "allowed_change_shape": "no source patch until current export provenance is resolved",
+      "family": "threshold",
+      "function": "reference/export lane",
+      "line": 0,
+      "rank": 1,
+      "site": "current_aex_export_provenance_gate",
+      "why_still_live": "The latest live Mac AE rerun already matches the latest Windows typed triplet at (415,393), while the packaged expected PNG stays stale there. This family must stay in provenance/export classification until a same-run current Windows export lands."
+    },
+    {
+      "allowed_change_shape": "threshold-family reopen only after provenance contradiction",
+      "family": "threshold",
+      "function": "dt_to_normalized",
+      "line": 440,
+      "rank": 2,
+      "site": "dt_to_normalized_constant_threshold",
+      "why_still_live": "Keep this as the first implementation reopen site only if a current Windows export or a future typed witness contradicts the current provenance split and says the threshold family is still a true output mismatch."
+    },
+    {
+      "allowed_change_shape": "only after threshold-family provenance is cleared",
+      "family": "threshold",
+      "function": "compose_pixel",
+      "line": 558,
+      "rank": 3,
+      "site": "compose_pixel_constant_endpoint",
+      "why_still_live": "This remains second-order even for the threshold family. Reopen it only if both current export provenance and helper-stage ownership are cleared first."
+    }
+  ],
+  "windows_requirement": "Bind the `414/415/416,393` triplet from the output-word address or compose refcon at `FUN_181170480`; do not accept another broad callback stop with no retained XY."
+}

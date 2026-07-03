@@ -89,6 +89,10 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	                PER_COMPONENT_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	PF_ADD_TOPIC(GetStringPtr(StrID_ThresholdGroup_Param_Name),
+	             THRESHOLD_GROUP_START_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_ThresholdR_Param_Name),
 	                     0.0, 1.0, 0.0, 1.0, 0.0,
 	                     PF_Precision_TEN_THOUSANDTHS, 0, 0,
@@ -107,8 +111,15 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	                     THRESHOLD_B_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_EdgeThinAmount_Param_Name),
-	                     -100.0, 100.0, -100.0, 100.0, 0.0,
+	PF_END_TOPIC(THRESHOLD_GROUP_END_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_TOPIC(GetStringPtr(StrID_EdgeThinGroup_Param_Name),
+	             EDGE_THIN_GROUP_START_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_Amount_Param_Name),
+	                     -4000.0, 4000.0, -4000.0, 4000.0, 0.0,
 	                     PF_Precision_TENTHS, 0, 0,
 	                     EDGE_THIN_AMOUNT_DISK_ID);
 
@@ -118,8 +129,15 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	             EDGE_THIN_DISTANCE_TYPE_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_EdgeBlurAmount_Param_Name),
-	                     0.0, 100.0, 0.0, 100.0, 0.0,
+	PF_END_TOPIC(EDGE_THIN_GROUP_END_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_TOPIC(GetStringPtr(StrID_EdgeBlurGroup_Param_Name),
+	             EDGE_BLUR_GROUP_START_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_Amount_Param_Name),
+	                     0.0, 4000.0, 0.0, 4000.0, 0.0,
 	                     PF_Precision_TENTHS, 0, 0,
 	                     EDGE_BLUR_AMOUNT_DISK_ID);
 
@@ -134,6 +152,9 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	             EDGE_BLUR_DIRECTION_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	PF_END_TOPIC(EDGE_BLUR_GROUP_END_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_NumberOfColors_Param_Name),
 	              1, OLMCOLORKEY_MAX_COLORS, 1, OLMCOLORKEY_MAX_COLORS, 1,
 	              NUMBER_OF_COLORS_DISK_ID);
@@ -146,9 +167,23 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 		char name[128];
 		int display_index = i + 1;
 
+		MakeIndexedName(name, sizeof(name), GetStringPtr(StrID_UseColor_Param_Name), display_index);
+		AEFX_CLR_STRUCT(def);
+		PF_ADD_CHECKBOX(name, "", i == 0 ? TRUE : FALSE, 0,
+		                USE_COLOR_DISK_ID_FIRST + i * 3);
+
+		MakeIndexedName(name, sizeof(name), GetStringPtr(StrID_UseReplaceColor_Param_Name), display_index);
+		AEFX_CLR_STRUCT(def);
+		PF_ADD_CHECKBOX(name, "", FALSE, 0,
+		                USE_REPLACE_DISK_ID_FIRST + i * 3);
+
 		MakeIndexedName(name, sizeof(name), GetStringPtr(StrID_Color_Param_Name), display_index);
 		AEFX_CLR_STRUCT(def);
 		PF_ADD_COLOR(name, 0, 0, 0, COLOR_DISK_ID_FIRST + i * 5);
+
+		MakeIndexedName(name, sizeof(name), GetStringPtr(StrID_ReplaceColor_Param_Name), display_index);
+		AEFX_CLR_STRUCT(def);
+		PF_ADD_COLOR(name, 0, 0, 0, REPLACE_COLOR_DISK_ID_FIRST + i * 3);
 
 		MakeIndexedName(name, sizeof(name), GetStringPtr(StrID_ThresholdIndexed_Param_Name), display_index);
 		AEFX_CLR_STRUCT(def);
@@ -173,20 +208,6 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 		PF_ADD_FLOAT_SLIDERX(name, 0.0, 1.0, 0.0, 1.0, 0.0,
 		                     PF_Precision_TEN_THOUSANDTHS, 0, 0,
 		                     THRESHOLD_B_DISK_ID_FIRST + i * 5);
-
-		MakeIndexedName(name, sizeof(name), GetStringPtr(StrID_UseColor_Param_Name), display_index);
-		AEFX_CLR_STRUCT(def);
-		PF_ADD_CHECKBOX(name, "", i == 0 ? TRUE : FALSE, 0,
-		                USE_COLOR_DISK_ID_FIRST + i * 3);
-
-		MakeIndexedName(name, sizeof(name), GetStringPtr(StrID_UseReplaceColor_Param_Name), display_index);
-		AEFX_CLR_STRUCT(def);
-		PF_ADD_CHECKBOX(name, "", FALSE, 0,
-		                USE_REPLACE_DISK_ID_FIRST + i * 3);
-
-		MakeIndexedName(name, sizeof(name), GetStringPtr(StrID_ReplaceColor_Param_Name), display_index);
-		AEFX_CLR_STRUCT(def);
-		PF_ADD_COLOR(name, 0, 0, 0, REPLACE_COLOR_DISK_ID_FIRST + i * 3);
 	}
 
 	out_data->num_params = OLMCOLORKEY_NUM_PARAMS;

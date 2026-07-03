@@ -21,18 +21,18 @@ TableString g_strs[StrID_NUMTYPES] = {
 	{ StrID_BlurMode_Param_Name,          "Blur Mode" },
 	{ StrID_BlurMode_Choices,             "Box|Approximated Gaussian|Gaussian|Exponential" },
 	{ StrID_ApproximatedInput_Param_Name, "Approximated Input" },
-	{ StrID_StrengthMultiplier_Param_Name,"Strength Multiplier" },
+	{ StrID_StrengthMultiplier_Param_Name,"Strength multiplier" },
 	{ StrID_SourceOpacity_Param_Name,     "Source Opacity" },
 	{ StrID_VerticalColor_Param_Name,     "Vertical Color" },
 	{ StrID_HorizontalColor_Param_Name,   "Horizontal Color" },
 	{ StrID_DiagonalColor_Param_Name,     "Diagonal Color" },
 	{ StrID_HighlightColor_Param_Name,    "Highlight Color" },
-	{ StrID_MergeMode_Param_Name,         "Merge Mode" },
+	{ StrID_MergeMode_Param_Name,         "Merge mode" },
 	{ StrID_MergeMode_Choices,            "Premultiply Add|Add" },
 	{ StrID_UseRamp_Param_Name,           "Use Ramp" },
-	{ StrID_Diagonal2Length_Param_Name,   "Diagonal2 Length" },
+	{ StrID_Diagonal2Length_Param_Name,   "Diagonal 2 length" },
 	{ StrID_FadeOut_Param_Name,           "Fade Out" },
-	{ StrID_Diagonal2Color_Param_Name,    "Diagonal2 Color" },
+	{ StrID_Diagonal2Color_Param_Name,    "Diagonal Color2" },
 };
 
 char *GetStringPtr(int strNum)

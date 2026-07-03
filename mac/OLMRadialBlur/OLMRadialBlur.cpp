@@ -20,6 +20,14 @@ struct RadialBlurDebugConfig {
 	std::vector<RadialBlurDebugPoint> points;
 };
 
+struct RadialBlurOuterSampleState {
+	double alpha = 0.0;
+	double validity_alpha = 0.0;
+	double accum_rgb[3] = {0.0, 0.0, 0.0};
+	double normalized_rgb[3] = {0.0, 0.0, 0.0};
+	double final_rgb[3] = {0.0, 0.0, 0.0};
+};
+
 static std::vector<RadialBlurDebugPoint> ParseRadialBlurDebugPoints(const char *spec)
 {
 	std::vector<RadialBlurDebugPoint> points;
@@ -70,6 +78,45 @@ static bool PolarValidSample(float x, float y, A_long width, A_long height, bool
 	return x >= 0.0f && x <= (float)(width - 1) && y >= 0.0f && y <= (float)(height - 1);
 }
 
+template<typename SampleFn, typename SampleValidFn>
+static RadialBlurOuterSampleState ComputeRadialBlurOuterSampleState(
+	float fx,
+	float fy,
+	A_long x0,
+	A_long x1,
+	A_long y0,
+	A_long y1,
+	const SampleFn &sample,
+	const SampleValidFn &sample_valid,
+	float brightness_gain)
+{
+	const double w00 = (1.0 - fx) * (1.0 - fy);
+	const double w10 = fx * (1.0 - fy);
+	const double w01 = (1.0 - fx) * fy;
+	const double w11 = fx * fy;
+	const double a00 = sample(x0, y0, 3) * w00;
+	const double a10 = sample(x1, y0, 3) * w10;
+	const double a01 = sample(x0, y1, 3) * w01;
+	const double a11 = sample(x1, y1, 3) * w11;
+
+	RadialBlurOuterSampleState state;
+	state.alpha = a00 + a10 + a01 + a11;
+	state.validity_alpha =
+		sample_valid(x0, y0) * w00 + sample_valid(x1, y0) * w10 +
+		sample_valid(x0, y1) * w01 + sample_valid(x1, y1) * w11;
+
+	if (state.alpha > 1.0e-8) {
+		for (int c = 0; c < 3; ++c) {
+			state.accum_rgb[c] = sample(x0, y0, c) * a00 + sample(x1, y0, c) * a10 +
+			                     sample(x0, y1, c) * a01 + sample(x1, y1, c) * a11;
+			state.normalized_rgb[c] = state.accum_rgb[c] / state.alpha;
+			state.final_rgb[c] = state.normalized_rgb[c] * brightness_gain;
+		}
+	}
+
+	return state;
+}
+
 static void DumpRadialBlurDebugPoint(
 	const RadialBlurDebugConfig &debug,
 	const char *kind,
@@ -89,6 +136,9 @@ static void DumpRadialBlurDebugPoint(
 	const A_u_char sample_u8[4],
 	float alpha,
 	float validity_alpha,
+	float brightness_gain,
+	const float accum_rgba[4],
+	const float normalized_rgba[4],
 	const float cell_valid[4],
 	const float cell_alpha[4],
 	const float cell_rgb[4][3],
@@ -105,6 +155,9 @@ static void DumpRadialBlurDebugPoint(
 		"sample_rgba=(%.9g,%.9g,%.9g,%.9g) sample_rgba_hex=(%a,%a,%a,%a) "
 		"sample_u8=(%u,%u,%u,%u) "
 		"alpha=%.9g alpha_hex=%a validity_alpha=%.9g validity_alpha_hex=%a "
+		"brightness_gain=%.9g "
+		"accum_rgba=(%.9g,%.9g,%.9g,%.9g) accum_rgba_hex=(%a,%a,%a,%a) "
+		"normalized_rgba=(%.9g,%.9g,%.9g,%.9g) normalized_rgba_hex=(%a,%a,%a,%a) "
 		"cell_valid=(%.9g,%.9g,%.9g,%.9g) "
 		"cell_alpha=(%.9g,%.9g,%.9g,%.9g) "
 		"cell_rgb=((%.9g,%.9g,%.9g),(%.9g,%.9g,%.9g),(%.9g,%.9g,%.9g),(%.9g,%.9g,%.9g)) "
@@ -129,6 +182,11 @@ static void DumpRadialBlurDebugPoint(
 		(double)alpha,
 		validity_alpha,
 		(double)validity_alpha,
+		brightness_gain,
+		accum_rgba[0], accum_rgba[1], accum_rgba[2], accum_rgba[3],
+		(double)accum_rgba[0], (double)accum_rgba[1], (double)accum_rgba[2], (double)accum_rgba[3],
+		normalized_rgba[0], normalized_rgba[1], normalized_rgba[2], normalized_rgba[3],
+		(double)normalized_rgba[0], (double)normalized_rgba[1], (double)normalized_rgba[2], (double)normalized_rgba[3],
 		cell_valid[0], cell_valid[1], cell_valid[2], cell_valid[3],
 		cell_alpha[0], cell_alpha[1], cell_alpha[2], cell_alpha[3],
 		cell_rgb[0][0], cell_rgb[0][1], cell_rgb[0][2],
@@ -741,37 +799,39 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			auto sample_valid = [&](A_long px, A_long py) -> float {
 				return polar_valid[(size_t)py * radius_count + px];
 			};
-			const double w00 = (1.0 - fx) * (1.0 - fy);
-			const double w10 = fx * (1.0 - fy);
-			const double w01 = (1.0 - fx) * fy;
-			const double w11 = fx * fy;
-			const double a00 = sample(xi, y0, 3) * w00;
-			const double a10 = sample(x1, y0, 3) * w10;
-			const double a01 = sample(xi, y1, 3) * w01;
-			const double a11 = sample(x1, y1, 3) * w11;
-			const double alpha = a00 + a10 + a01 + a11;
-			const double validity_alpha =
-				sample_valid(xi, y0) * w00 + sample_valid(x1, y0) * w10 +
-				sample_valid(xi, y1) * w01 + sample_valid(x1, y1) * w11;
+			// The unresolved AEX difference lives between preserved validity and
+			// final caller-collapsed alpha, so keep those channels explicit even
+			// while the current port still writes final alpha from blurred alpha.
+			const RadialBlurOuterSampleState outer_state = ComputeRadialBlurOuterSampleState(
+				fx, fy, xi, x1, y0, y1, sample, sample_valid, (float)info.brightness_gain);
 			PF_Pixel8 *out = PixelAt<PF_Pixel8>(output, x, y);
-			double rgb[3] = {0.0, 0.0, 0.0};
-			if (alpha > 1.0e-8) {
-				for (int c = 0; c < 3; ++c) {
-					rgb[c] = (sample(xi, y0, c) * a00 + sample(x1, y0, c) * a10 +
-					          sample(xi, y1, c) * a01 + sample(x1, y1, c) * a11) / alpha;
-					rgb[c] *= info.brightness_gain;
-				}
-			}
-			out->red   = (A_u_char)ClampFloat((float)std::floor(rgb[0] * 255.0 + rgb_quantize_epsilon), 0.0f, 255.0f);
-			out->green = (A_u_char)ClampFloat((float)std::floor(rgb[1] * 255.0 + rgb_quantize_epsilon), 0.0f, 255.0f);
-			out->blue  = (A_u_char)ClampFloat((float)std::floor(rgb[2] * 255.0 + rgb_quantize_epsilon), 0.0f, 255.0f);
-			out->alpha = (A_u_char)ClampFloat((float)std::floor(alpha * 255.0 + alpha_quantize_epsilon), 0.0f, 255.0f);
+			out->red   = (A_u_char)ClampFloat((float)std::floor(outer_state.final_rgb[0] * 255.0 + rgb_quantize_epsilon), 0.0f, 255.0f);
+			out->green = (A_u_char)ClampFloat((float)std::floor(outer_state.final_rgb[1] * 255.0 + rgb_quantize_epsilon), 0.0f, 255.0f);
+			out->blue  = (A_u_char)ClampFloat((float)std::floor(outer_state.final_rgb[2] * 255.0 + rgb_quantize_epsilon), 0.0f, 255.0f);
+			out->alpha = (A_u_char)ClampFloat((float)std::floor(outer_state.alpha * 255.0 + alpha_quantize_epsilon), 0.0f, 255.0f);
 			if (debug.dump_path && RadialBlurDebugHasPoint(debug, x, y)) {
 				auto sample_source = [&](A_long px, A_long py, int c) -> float {
 					return polar.rgba[((size_t)py * radius_count + px) * 4 + c];
 				};
-				const float sample_rgba[4] = {(float)rgb[0], (float)rgb[1], (float)rgb[2], (float)alpha};
+				const float sample_rgba[4] = {
+					(float)outer_state.final_rgb[0],
+					(float)outer_state.final_rgb[1],
+					(float)outer_state.final_rgb[2],
+					(float)outer_state.alpha
+				};
 				const A_u_char sample_u8[4] = {out->red, out->green, out->blue, out->alpha};
+				const float accum_rgba[4] = {
+					(float)outer_state.accum_rgb[0],
+					(float)outer_state.accum_rgb[1],
+					(float)outer_state.accum_rgb[2],
+					(float)outer_state.alpha
+				};
+				const float normalized_rgba[4] = {
+					(float)outer_state.normalized_rgb[0],
+					(float)outer_state.normalized_rgb[1],
+					(float)outer_state.normalized_rgb[2],
+					(float)outer_state.alpha
+				};
 				const float cell_valid[4] = {
 					sample_valid(xi, y0), sample_valid(x1, y0),
 					sample_valid(xi, y1), sample_valid(x1, y1)
@@ -796,7 +856,8 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					debug, "zoom", w, h, x, y,
 					radius_index, angle_index, fx, fy,
 					xi, x1, y0, y1,
-					sample_rgba, sample_u8, (float)alpha, (float)validity_alpha,
+					sample_rgba, sample_u8, (float)outer_state.alpha, (float)outer_state.validity_alpha,
+					(float)info.brightness_gain, accum_rgba, normalized_rgba,
 					cell_valid, cell_alpha, cell_rgb, src_cell_rgba);
 			}
 		}
@@ -1007,37 +1068,36 @@ static PF_Err RenderRotation8(PF_EffectWorld *input, PF_EffectWorld *output, con
 			auto sample_valid = [&](A_long px, A_long py) -> float {
 				return polar_valid[(size_t)py * angular_count + px];
 			};
-			const double w00 = (1.0 - fx) * (1.0 - fy);
-			const double w10 = fx * (1.0 - fy);
-			const double w01 = (1.0 - fx) * fy;
-			const double w11 = fx * fy;
-			const double a00 = sample(x0, y0, 3) * w00;
-			const double a10 = sample(x1, y0, 3) * w10;
-			const double a01 = sample(x0, y1, 3) * w01;
-			const double a11 = sample(x1, y1, 3) * w11;
-			const double alpha = a00 + a10 + a01 + a11;
-			const double validity_alpha =
-				sample_valid(x0, y0) * w00 + sample_valid(x1, y0) * w10 +
-				sample_valid(x0, y1) * w01 + sample_valid(x1, y1) * w11;
+			const RadialBlurOuterSampleState outer_state = ComputeRadialBlurOuterSampleState(
+				fx, fy, x0, x1, y0, y1, sample, sample_valid, (float)info.brightness_gain);
 			PF_Pixel8 *out = PixelAt<PF_Pixel8>(output, x, y);
-			double rgb[3] = {0.0, 0.0, 0.0};
-			if (alpha > 1.0e-8) {
-				for (int c = 0; c < 3; ++c) {
-					rgb[c] = (sample(x0, y0, c) * a00 + sample(x1, y0, c) * a10 +
-					          sample(x0, y1, c) * a01 + sample(x1, y1, c) * a11) / alpha;
-					rgb[c] *= info.brightness_gain;
-				}
-			}
-			out->red = (A_u_char)ClampFloat((float)std::floor(rgb[0] * 255.0), 0.0f, 255.0f);
-			out->green = (A_u_char)ClampFloat((float)std::floor(rgb[1] * 255.0), 0.0f, 255.0f);
-			out->blue = (A_u_char)ClampFloat((float)std::floor(rgb[2] * 255.0), 0.0f, 255.0f);
-			out->alpha = (A_u_char)ClampFloat((float)std::floor(alpha * 255.0 + alpha_quantize_epsilon), 0.0f, 255.0f);
+			out->red = (A_u_char)ClampFloat((float)std::floor(outer_state.final_rgb[0] * 255.0), 0.0f, 255.0f);
+			out->green = (A_u_char)ClampFloat((float)std::floor(outer_state.final_rgb[1] * 255.0), 0.0f, 255.0f);
+			out->blue = (A_u_char)ClampFloat((float)std::floor(outer_state.final_rgb[2] * 255.0), 0.0f, 255.0f);
+			out->alpha = (A_u_char)ClampFloat((float)std::floor(outer_state.alpha * 255.0 + alpha_quantize_epsilon), 0.0f, 255.0f);
 			if (debug.dump_path && RadialBlurDebugHasPoint(debug, x, y)) {
 				auto sample_source = [&](A_long px, A_long py, int c) -> float {
 					return polar.rgba[((size_t)py * angular_count + px) * 4 + c];
 				};
-				const float sample_rgba[4] = {(float)rgb[0], (float)rgb[1], (float)rgb[2], (float)alpha};
+				const float sample_rgba[4] = {
+					(float)outer_state.final_rgb[0],
+					(float)outer_state.final_rgb[1],
+					(float)outer_state.final_rgb[2],
+					(float)outer_state.alpha
+				};
 				const A_u_char sample_u8[4] = {out->red, out->green, out->blue, out->alpha};
+				const float accum_rgba[4] = {
+					(float)outer_state.accum_rgb[0],
+					(float)outer_state.accum_rgb[1],
+					(float)outer_state.accum_rgb[2],
+					(float)outer_state.alpha
+				};
+				const float normalized_rgba[4] = {
+					(float)outer_state.normalized_rgb[0],
+					(float)outer_state.normalized_rgb[1],
+					(float)outer_state.normalized_rgb[2],
+					(float)outer_state.alpha
+				};
 				const float cell_valid[4] = {
 					sample_valid(x0, y0), sample_valid(x1, y0),
 					sample_valid(x0, y1), sample_valid(x1, y1)
@@ -1062,7 +1122,8 @@ static PF_Err RenderRotation8(PF_EffectWorld *input, PF_EffectWorld *output, con
 					debug, "rotation", w, h, x, y,
 					radius_index, angle_index, fx, fy,
 					x0, x1, y0, y1,
-					sample_rgba, sample_u8, (float)alpha, (float)validity_alpha,
+					sample_rgba, sample_u8, (float)outer_state.alpha, (float)outer_state.validity_alpha,
+					(float)info.brightness_gain, accum_rgba, normalized_rgba,
 					cell_valid, cell_alpha, cell_rgb, src_cell_rgba);
 			}
 		}

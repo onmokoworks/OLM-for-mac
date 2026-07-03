@@ -22,6 +22,6 @@
 ## Interpretation
 
 - A pure non-Legacy writer swap from nearbyint to floor05 would fix the 16bpc witness (314,14), but it leaves (29,71) unchanged and does not explain the sign-mixed family by itself.
-- The surviving 16bpc Legacy witness (345,672) actually prefers nearbyint at the exact Mac-side raw=12544.5 value, and a 2026-06-30 Windows databreak witness now confirms the Windows pre-store blue float is `12544.498046875` before `cvttss2si -> 12544`. So this lane is now directly explained as a pre-store float delta on Windows rather than a different local Legacy writer rule.
+- The surviving 16bpc Legacy witness (345,672) actually prefers nearbyint at the exact Mac-side raw=12544.5 value, so its remaining mismatch is more consistent with a slight pre-store float delta on Windows than with a different local Legacy writer rule.
 - The surviving old 8bpc Legacy witness (488,941) is not solved by either local floor05 or nearbyint because the current raw value is already below 250.5; Windows must either reach a slightly larger pre-store float or differ earlier in state.
-- Therefore the pending Windows final-word witness is still required: we need the actual Windows pre-store/helper boundary, not a blind source-side writer rewrite.
+- This audit is now historical context for the OLMBlur closeout gate: it explains why a blind source-side writer rewrite stayed forbidden before the later provenance/export lane narrowed the remaining reopen condition.

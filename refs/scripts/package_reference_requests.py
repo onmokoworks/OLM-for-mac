@@ -86,6 +86,17 @@ def resolve_pending_requests(root: Path, request_dir: Path) -> list[Path]:
     return requests
 
 
+def request_archive_name(root: Path, request_dir: Path, request: Path) -> Path:
+    request = request.resolve()
+    try:
+        relative = request.relative_to(root)
+    except ValueError:
+        relative = None
+    if relative is not None and relative.parts[:2] == ("refs", "reference_requests"):
+        return relative
+    return request_dir.relative_to(root) / request.name
+
+
 def validate_request(path: Path) -> dict:
     with path.open("r", encoding="utf-8") as f:
         data = json.load(f)
@@ -269,6 +280,19 @@ def main() -> int:
         print(f"no request JSON files found in {request_dir}", file=sys.stderr)
         return 1
 
+    archive_names = {request: request_archive_name(root, request_dir, request) for request in requests}
+    reverse_archive_names: dict[Path, Path] = {}
+    for request, archive_name in archive_names.items():
+        other = reverse_archive_names.get(archive_name)
+        if other is not None:
+            print(
+                "duplicate archive path for requests "
+                f"{other} and {request}: {archive_name}",
+                file=sys.stderr,
+            )
+            return 1
+        reverse_archive_names[archive_name] = request
+
     output = args.output
     if output is None:
         stamp = dt.datetime.now().strftime("%Y%m%d")
@@ -293,7 +317,7 @@ def main() -> int:
             zf.writestr(HANDOFF_NAME, build_handoff(validated))
             for request, _data in validated:
                 source = staged_requests.get(request, request)
-                zf.write(source, request.relative_to(root))
+                zf.write(source, archive_names[request])
 
     print(f"wrote {output}")
     for request, data in validated:

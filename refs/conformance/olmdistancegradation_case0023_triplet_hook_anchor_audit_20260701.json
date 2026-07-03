@@ -1,0 +1,118 @@
+{
+  "kind": "olmdistancegradation_case0023_triplet_hook_anchor_audit",
+  "schema": 1,
+  "case_id": "olmdistancegradation_extended__case_0023",
+  "triplet_xy": [
+    [
+      414,
+      393
+    ],
+    [
+      415,
+      393
+    ],
+    [
+      416,
+      393
+    ]
+  ],
+  "triplet_roles": [
+    {
+      "role": "below_threshold_same_row",
+      "x": 414,
+      "y": 393,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 0.0,
+      "raw_inside": 35.0142822,
+      "raw_outside": 0.0,
+      "inside_minus_threshold": -0.9857178
+    },
+    {
+      "role": "first_above_threshold_same_row",
+      "x": 415,
+      "y": 393,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 1.0,
+      "raw_inside": 36.0138855,
+      "raw_outside": 0.0,
+      "inside_minus_threshold": 0.0138855
+    },
+    {
+      "role": "deeper_plateau_same_row",
+      "x": 416,
+      "y": 393,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 1.0,
+      "raw_inside": 37.0135117,
+      "raw_outside": 0.0,
+      "inside_minus_threshold": 1.0135117
+    }
+  ],
+  "vertical_context": [
+    {
+      "role": "vertical_contrast_above",
+      "x": 415,
+      "y": 392,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 0.0,
+      "raw_inside": 35.9026451,
+      "raw_outside": 0.0,
+      "inside_minus_threshold": -0.0973549
+    },
+    {
+      "role": "vertical_contrast_below",
+      "x": 415,
+      "y": 394,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 1.0,
+      "raw_inside": 36.0555115,
+      "raw_outside": 0.0,
+      "inside_minus_threshold": 0.0555115
+    }
+  ],
+  "current_local_field_boundary": {
+    "below_threshold_xy": [
+      414,
+      393
+    ],
+    "below_threshold_field_x": 0.0,
+    "first_above_xy": [
+      415,
+      393
+    ],
+    "first_above_field_x": 1.0,
+    "deeper_plateau_xy": [
+      416,
+      393
+    ],
+    "deeper_plateau_field_x": 1.0
+  },
+  "hook_reading": {
+    "status": "triplet-bounded-compose-hook-still-missing",
+    "reason": "The local threshold triplet is already precise: `(414,393)` is below threshold with `field_x=0`, `(415,393)` is the first above-threshold point with `field_x=1`, and `(416,393)` stays on the same plateau side. So the missing Windows fact is no longer where the transition lives; it is the exact helper/compose hook that retains this XY identity and shows which typed value is consumed at the boundary.",
+    "next_windows_hook": "Bind the triplet from the output-word address or compose refcon at the case-local helper/compose hook for `(414,393)`, `(415,393)`, `(416,393)`, and dump raw distances, helper-stage field value, Constant binary fork ordering, compose-consumed value, pre-store RGBA16, and final RGBA16.",
+    "why_this_anchor_matters": "This anchor removes the ambiguity around which boundary pixels matter. The remaining uncertainty is the typed ownership rule at the hook, not the existence of the red/blue endpoint flip."
+  },
+  "wanted_fields": [
+    "raw inside/outside distances",
+    "helper-stage field value",
+    "threshold/equality/plateau decision",
+    "Constant binary fork order",
+    "FUN_181170480 consumed value",
+    "compose output before word store",
+    "final RGBA16"
+  ],
+  "pending_windows_followup": {
+    "request_id": "olmdistancegradation_case0023_output_word_triplet_followup_20260701",
+    "status": "pending",
+    "package": "refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_case0023_output_word_triplet_followup_20260701.zip",
+    "acceptance_note": "refs/conformance/olmdistancegradation_case0023_output_word_triplet_return_acceptance_20260701.md",
+    "stop_condition": "Return enough typed values to explain the case_0023 triplet crossing with XY bound from the output-word address or compose refcon at `FUN_181170480`. If even that stop cannot be isolated, return the precise failed bind/watchpoint reason and the closest hook frame that still exposes the output-word address or compose refcon needed to recover XY."
+  },
+  "contract_path": "refs/conformance/olmdistancegradation_case0023_output_word_triplet_followup_contract_20260701.md"
+}

@@ -591,6 +591,29 @@ def runtime_trace_package_manifest(path: Path) -> dict[str, Any] | None:
     return None
 
 
+def runtime_trace_acceptance_note(request_ids: list[str]) -> str:
+    mapping = {
+        "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702": "refs/conformance/olmradialblur_tiny_rotation_anchor_context_watch_return_acceptance_20260702.md",
+        "olmradialblur_tiny_rotation_anchor_pointer_watch_followup_20260702": "refs/conformance/olmradialblur_tiny_rotation_anchor_pointer_watch_return_acceptance_20260702.md",
+        "olmradialblur_tiny_rotation_anchor_watch_followup_20260701": "refs/conformance/olmradialblur_tiny_rotation_anchor_watch_return_acceptance_20260701.md",
+        "olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701": "refs/conformance/olmradialblur_tiny_rotation_backstep_return_acceptance_20260701.md",
+        "olmradialblur_tiny_rotation_substitute_path_followup_20260701": "refs/conformance/olmradialblur_tiny_rotation_return_acceptance_20260701.md",
+        "olmradialblur_caller_collapse_followup_20260701": "refs/conformance/olmradialblur_outer_return_acceptance_20260701.md",
+        "olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702": "refs/conformance/olmdistancegradation_case0023_refcon_stack_wordmap_return_acceptance_20260702.md",
+        "olmdistancegradation_case0023_refcon_wordmap_followup_20260702": "refs/conformance/olmdistancegradation_case0023_refcon_wordmap_return_acceptance_20260702.md",
+        "olmdistancegradation_case0023_output_word_triplet_followup_20260701": "refs/conformance/olmdistancegradation_case0023_output_word_triplet_return_acceptance_20260701.md",
+        "olmdistancegradation_case0023_triplet_xy_compose_hook_followup_20260701": "refs/conformance/olmdistancegradation_case0023_triplet_xy_compose_return_acceptance_20260701.md",
+        "olmdistancegradation_case0023_threshold_family_followup_20260701": "refs/conformance/olmdistancegradation_case0023_threshold_return_acceptance_20260701.md",
+        "olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630": "refs/conformance/olmdistancegradation_case0023_return_acceptance_20260701.md",
+        "olmblur_case0006_helper_prestore_witness_20260630": "refs/conformance/olmblur_case0006_reference_provenance_20260701.md",
+    }
+    for request_id in request_ids:
+        note = mapping.get(request_id)
+        if note:
+            return note
+    return ""
+
+
 def windows_action_bundle_manifest(path: Path) -> dict[str, Any] | None:
     try:
         with zipfile.ZipFile(path) as archive:
@@ -670,6 +693,7 @@ def project_runtime_trace_packages(
         row["suggested_command"] = "send this package to the Windows debugger/helper"
         row["profile"] = profile
         row["request_ids"] = request_ids
+        row["acceptance_note"] = runtime_trace_acceptance_note(request_ids)
         row["plugin_areas"] = [
             str(action.get("plugin_area", ""))
             for action in actions
@@ -1076,6 +1100,7 @@ def decide(
             "reason": "No Windows PNG requests are pending; the highest-value unresolved proof is a project-local runtime trace package.",
             "target": runtime_package,
             "command": f"send this runtime trace package to the Windows debugger/helper ({request_text})",
+            "acceptance_note": runtime_package.get("acceptance_note", ""),
         }
 
     runtime_actions = runtime_trace_actions(next_actions, trace_summary)
@@ -1409,6 +1434,8 @@ def main() -> int:
         print(f"- target: {target['path']}")
     if decision.get("command"):
         print(f"- run/do: {decision['command']}")
+    if decision.get("acceptance_note"):
+        print(f"- acceptance note: {decision['acceptance_note']}")
     if decision.get("return_intake_command"):
         print(f"- after return: {decision['return_intake_command']}")
     print(f"- pending Windows refs: {len(status['pending'])}")

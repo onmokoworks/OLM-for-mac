@@ -13,6 +13,10 @@ import sys
 import tempfile
 import zipfile
 from pathlib import Path
+from typing import Any
+
+
+RUNTIME_SUMMARY_KIND = "olm_runtime_trace_return_summary"
 
 
 def parse_args() -> argparse.Namespace:
@@ -183,6 +187,95 @@ def load_json(path: Path) -> dict | None:
     except Exception:
         return None
     return data if isinstance(data, dict) else None
+
+
+def load_runtime_summary(path: Path) -> dict[str, Any] | None:
+    data = load_json(path)
+    if not isinstance(data, dict) or data.get("kind") != RUNTIME_SUMMARY_KIND:
+        return None
+    return data
+
+
+def merge_runtime_summaries(existing: dict[str, Any] | None, incoming: dict[str, Any]) -> dict[str, Any]:
+    merged_results: list[dict[str, Any]] = []
+    seen: set[tuple[str, str, str, str]] = set()
+    for summary in (existing, incoming):
+        if not isinstance(summary, dict):
+            continue
+        for row in summary.get("results", []):
+            if not isinstance(row, dict):
+                continue
+            request_id = str(row.get("request_id") or "")
+            status = str(row.get("status") or "")
+            source_file = str(row.get("source_file") or "")
+            summary_text = str(row.get("summary") or "")
+            key = (request_id, status, source_file, summary_text)
+            if key in seen:
+                continue
+            seen.add(key)
+            merged_results.append(row)
+
+    by_id: dict[str, list[dict[str, Any]]] = {}
+    for row in merged_results:
+        request_id = row.get("request_id")
+        if isinstance(request_id, str) and request_id:
+            by_id.setdefault(request_id, []).append(row)
+
+    required: list[dict[str, Any]] = []
+    for request_id in sorted(by_id):
+        rows = by_id[request_id]
+        statuses = sorted({str(row.get("status") or "") for row in rows if str(row.get("status") or "")})
+        answered = any(
+            status in {"answered", "ok", "done", "complete", "completed"} or status.startswith("answered")
+            for status in statuses
+        )
+        required.append(
+            {
+                "request_id": request_id,
+                "count": len(rows),
+                "answered": answered,
+                "statuses": statuses,
+            }
+        )
+
+    source_roots = []
+    packages = []
+    for summary in (existing, incoming):
+        if not isinstance(summary, dict):
+            continue
+        source_root = summary.get("source_root")
+        package = summary.get("package")
+        if isinstance(source_root, str) and source_root and source_root not in source_roots:
+            source_roots.append(source_root)
+        if isinstance(package, str) and package and package not in packages:
+            packages.append(package)
+
+    return {
+        "kind": RUNTIME_SUMMARY_KIND,
+        "schema": 1,
+        "source_root": " + ".join(source_roots) if source_roots else "runtime-trace-return-merged",
+        "package": packages[0] if len(packages) == 1 else None,
+        "required": required,
+        "extra_request_ids": [],
+        "results": merged_results,
+    }
+
+
+def render_runtime_summary_markdown(summary: dict[str, Any]) -> str:
+    lines = [
+        "# OLM Runtime Trace Return Summary",
+        "",
+        "| Request | Count | Answered | Statuses |",
+        "| --- | ---: | --- | --- |",
+    ]
+    for row in summary.get("required", []):
+        request_id = row.get("request_id", "-")
+        count = int(row.get("count", 0) or 0)
+        answered = "yes" if row.get("answered") else "no"
+        statuses = ", ".join(row.get("statuses") or []) or "-"
+        lines.append(f"| `{request_id}` | {count} | {answered} | `{statuses}` |")
+    lines.append("")
+    return "\n".join(lines)
 
 
 def package_kind(path: Path) -> str | None:
@@ -451,7 +544,12 @@ def runtime_trace_request_ids_from_json(data: dict) -> list[str]:
         if not isinstance(rows, list):
             continue
         for row in rows:
-            if isinstance(row, dict) and isinstance(row.get("request_id"), str):
+            if not isinstance(row, dict):
+                continue
+            status = str(row.get("status") or "").lower()
+            if status == "diagnostic":
+                continue
+            if isinstance(row.get("request_id"), str):
                 ids.append(str(row["request_id"]))
     seen: set[str] = set()
     unique: list[str] = []
@@ -481,9 +579,16 @@ def find_matching_runtime_package(root: Path, source: Path) -> Path | None:
                 continue
             request_ids.extend(runtime_trace_request_ids_from_json(data))
         request_ids = sorted(set(request_ids))
-    if len(request_ids) != 1:
+    if not request_ids:
         return None
-    request_id = request_ids[0]
+    if len(request_ids) == 1:
+        request_id = request_ids[0]
+    else:
+        source_name = source.name.lower()
+        matched = next((rid for rid in request_ids if rid.lower() in source_name), None)
+        if matched is None:
+            return None
+        request_id = matched
     candidates = sorted(package_dir.glob("*.zip"), key=lambda path: (path.stat().st_mtime, path.name), reverse=True)
     for package in candidates:
         try:
@@ -704,19 +809,32 @@ def run_runtime_trace(args: argparse.Namespace, root: Path) -> int:
             comparison_dir = default_comparison_dir
     if comparison_dir is None and not args.no_runtime_comparisons:
         comparison_dir = root / "refs" / "reports" / "runtime_trace_comparisons"
-    cmd = [
-        sys.executable,
-        "scripts/verify_runtime_trace_return.py",
-        str(args.source.resolve()),
-        "--require-all",
-    ]
-    if package:
-        cmd.extend(["--package", str(package)])
-    if summary_json:
-        cmd.extend(["--summary-json", str(summary_json)])
-    if summary_md:
-        cmd.extend(["--summary-md", str(summary_md)])
-    rc = run(cmd, root)
+    with tempfile.TemporaryDirectory(prefix="olm_runtime_trace_intake_") as tmp:
+        tmp_dir = Path(tmp)
+        tmp_summary_json = tmp_dir / "runtime_trace_summary.json"
+        tmp_summary_md = tmp_dir / "runtime_trace_summary.md"
+        cmd = [
+            sys.executable,
+            "scripts/verify_runtime_trace_return.py",
+            str(args.source.resolve()),
+            "--require-all",
+        ]
+        if package:
+            cmd.extend(["--package", str(package)])
+        cmd.extend(["--summary-json", str(tmp_summary_json)])
+        cmd.extend(["--summary-md", str(tmp_summary_md)])
+        rc = run(cmd, root)
+
+        if summary_json and tmp_summary_json.exists():
+            existing = load_runtime_summary(summary_json) if summary_json.exists() else None
+            incoming = load_runtime_summary(tmp_summary_json)
+            if incoming is not None:
+                merged = merge_runtime_summaries(existing, incoming)
+                summary_json.parent.mkdir(parents=True, exist_ok=True)
+                summary_json.write_text(json.dumps(merged, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+                if summary_md:
+                    summary_md.parent.mkdir(parents=True, exist_ok=True)
+                    summary_md.write_text(render_runtime_summary_markdown(merged), encoding="utf-8")
     if args.no_runtime_comparisons or summary_json is None:
         return rc
     compare_cmd = [

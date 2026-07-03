@@ -102,7 +102,96 @@ fi
 
 find_installed_bundles() {
   local plugin="$1"
-  /usr/bin/find "$MEDIA_CORE" -maxdepth 6 -type d -name "$plugin.plugin" -print 2>/dev/null || true
+  while IFS= read -r bundle; do
+    [[ -z "$bundle" ]] && continue
+    canonical="$(canonical_plugin_from_bundle "$bundle")"
+    if [[ "$canonical" == "$plugin" ]]; then
+      printf '%s\n' "$bundle"
+    fi
+  done < <(find_all_plugin_bundles)
+}
+
+find_all_plugin_bundles() {
+  /usr/bin/find "$MEDIA_CORE" -maxdepth 6 -type d -name "*.plugin" -print 2>/dev/null | sort || true
+}
+
+read_plist_key() {
+  local plist="$1"
+  local key="$2"
+  /usr/libexec/PlistBuddy -c "Print :$key" "$plist" 2>/dev/null || true
+}
+
+is_expected_plugin_name() {
+  local name="$1"
+  for plugin in "${plugins[@]}"; do
+    if [[ "$name" == "$plugin" ]]; then
+      return 0
+    fi
+  done
+  return 1
+}
+
+canonical_plugin_from_bundle() {
+  local bundle="$1"
+  local bundle_base plist cf_name cf_exec cf_id candidate
+  bundle_base="$(basename "$bundle" .plugin)"
+  plist="$bundle/Contents/Info.plist"
+  cf_name="$(read_plist_key "$plist" CFBundleName)"
+  cf_exec="$(read_plist_key "$plist" CFBundleExecutable)"
+  cf_id="$(read_plist_key "$plist" CFBundleIdentifier)"
+  for candidate in "$bundle_base" "$cf_name" "$cf_exec"; do
+    if is_expected_plugin_name "$candidate"; then
+      printf '%s\n' "$candidate"
+      return 0
+    fi
+  done
+  if [[ "$cf_id" =~ com\.adobe\.AfterEffects\.(.+)$ ]]; then
+    candidate="${BASH_REMATCH[1]}"
+    if is_expected_plugin_name "$candidate"; then
+      printf '%s\n' "$candidate"
+      return 0
+    fi
+  fi
+  printf '%s\n' "$bundle_base"
+}
+
+bundle_is_olm_family() {
+  local bundle="$1"
+  local plist="$bundle/Contents/Info.plist"
+  local bundle_base cf_name cf_exec cf_id
+  bundle_base="$(basename "$bundle" .plugin)"
+  cf_name="$(read_plist_key "$plist" CFBundleName)"
+  cf_exec="$(read_plist_key "$plist" CFBundleExecutable)"
+  cf_id="$(read_plist_key "$plist" CFBundleIdentifier)"
+  if is_expected_plugin_name "$bundle_base" || is_expected_plugin_name "$cf_name" || is_expected_plugin_name "$cf_exec"; then
+    return 0
+  fi
+  if [[ "$cf_id" == com.adobe.AfterEffects.OLM* || "$cf_id" == com.adobe.AfterEffects.ColorKeep* ]]; then
+    return 0
+  fi
+  if [[ "$bundle_base" == OLM* || "$bundle_base" == ColorKeep* || "$cf_name" == OLM* || "$cf_name" == ColorKeep* ]]; then
+    return 0
+  fi
+  return 1
+}
+
+find_unexpected_olm_family_bundles() {
+  local bundle canonical expected_path
+  while IFS= read -r bundle; do
+    [[ -z "$bundle" ]] && continue
+    if ! bundle_is_olm_family "$bundle"; then
+      continue
+    fi
+    canonical="$(canonical_plugin_from_bundle "$bundle")"
+    if ! is_expected_plugin_name "$canonical"; then
+      printf '%s\n' "$bundle"
+      continue
+    fi
+    expected_path="$MEDIA_CORE/$canonical.plugin"
+    if [[ "$bundle" != "$expected_path" ]]; then
+      printf '%s\n' "$bundle"
+    fi
+  done < <(find_all_plugin_bundles)
 }
 
 if [[ "$AUDIT_ONLY" -eq 1 ]]; then
@@ -112,6 +201,13 @@ if [[ "$AUDIT_ONLY" -eq 1 ]]; then
     exit 1
   fi
   status=0
+  while IFS= read -r unexpected; do
+    [[ -z "$unexpected" ]] && continue
+    canonical="$(canonical_plugin_from_bundle "$unexpected")"
+    echo "[UNEXPECTED] $(basename "$unexpected") canonical=$canonical"
+    printf '  %s\n' "$unexpected"
+    status=1
+  done < <(find_unexpected_olm_family_bundles)
   for plugin in "${plugins[@]}"; do
     installed=()
     while IFS= read -r bundle; do
@@ -195,6 +291,17 @@ echo "backup: $backup_dir"
 if [[ "$DRY_RUN" -eq 0 ]]; then
   mkdir -p "$backup_dir"
 fi
+
+while IFS= read -r unexpected; do
+  [[ -z "$unexpected" ]] && continue
+  rel="${unexpected#"$MEDIA_CORE"/}"
+  dest="$backup_dir/unexpected/$rel"
+  echo "[QUARANTINE] $unexpected -> $dest"
+  if [[ "$DRY_RUN" -eq 0 ]]; then
+    mkdir -p "$(dirname "$dest")"
+    mv "$unexpected" "$dest"
+  fi
+done < <(find_unexpected_olm_family_bundles)
 
 for plugin in "${plugins[@]}"; do
   while IFS= read -r existing; do

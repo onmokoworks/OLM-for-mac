@@ -11,9 +11,19 @@ from typing import Any
 
 
 PRIORITY_PROFILES = {
+    "radialblur-tiny-rotation-anchor-context-watch-followup": 3,
+    "radialblur-tiny-rotation-anchor-pointer-watch-followup": 4,
+    "radialblur-tiny-rotation-anchor-watch-followup": 5,
+    "radialblur-tiny-rotation-backstep-followup": 6,
+    "radialblur-tiny-rotation-followup": 7,
     "radialblur-residual-witness": 10,
     "radialblur-caller-collapse-witness": 9,
     "radialblur-caller-collapse-followup": 8,
+    "distancegradation-case0023-refcon-stack-wordmap-followup": 17,
+    "distancegradation-case0023-refcon-wordmap-followup": 18,
+    "distancegradation-case0023-output-word-triplet-followup": 19,
+    "distancegradation-case0023-triplet-xy-compose-followup": 20,
+    "distancegradation-case0023-threshold-followup": 21,
     "kirakira-hotspot-compose-writeback-witness": 43,
     "olmblur-case0006-helper-prestore": 18,
     "distancegradation-constant-case0023-witness": 22,
@@ -30,10 +40,7 @@ PRIORITY_PROFILES = {
     "distancegradation-field-prep": 80,
 }
 
-PARTIAL_STILL_PENDING_REQUEST_IDS = {
-    "olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630",
-    "olmradialblur_caller_collapse_followup_20260701",
-}
+PARTIAL_STILL_PENDING_REQUEST_IDS = set()
 
 COMPARISON_COMMANDS = [
     (
@@ -47,6 +54,26 @@ COMPARISON_COMMANDS = [
     (
         "kirakira_aggregation_compose_bt709_20260624",
         "python3 scripts/compare_kirakira_stage_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --local-trace-json refs/reports/olmkirakira_trace_baseline_20260624_bt709_mac/trace.json --output-json refs/reports/runtime_trace_comparisons/olmkirakira_aggregation_compose_bt709_20260624.json --output-md refs/reports/runtime_trace_comparisons/olmkirakira_aggregation_compose_bt709_20260624.md",
+    ),
+    (
+        "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702",
+        "python3 scripts/compare_radialblur_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702.json --output-md refs/reports/runtime_trace_comparisons/olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702.md",
+    ),
+    (
+        "olmradialblur_tiny_rotation_anchor_pointer_watch_followup_20260702",
+        "python3 scripts/compare_radialblur_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmradialblur_tiny_rotation_anchor_pointer_watch_followup_20260702.json --output-md refs/reports/runtime_trace_comparisons/olmradialblur_tiny_rotation_anchor_pointer_watch_followup_20260702.md",
+    ),
+    (
+        "olmradialblur_tiny_rotation_anchor_watch_followup_20260701",
+        "python3 scripts/compare_radialblur_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmradialblur_tiny_rotation_anchor_watch_followup_20260701.json --output-md refs/reports/runtime_trace_comparisons/olmradialblur_tiny_rotation_anchor_watch_followup_20260701.md",
+    ),
+    (
+        "olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701",
+        "python3 scripts/compare_radialblur_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmradialblur_tiny_rotation_backstep_followup_20260701.json --output-md refs/reports/runtime_trace_comparisons/olmradialblur_tiny_rotation_backstep_followup_20260701.md",
+    ),
+    (
+        "olmradialblur_tiny_rotation_substitute_path_followup_20260701",
+        "python3 scripts/compare_radialblur_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmradialblur_tiny_rotation_followup_20260701.json --output-md refs/reports/runtime_trace_comparisons/olmradialblur_tiny_rotation_followup_20260701.md",
     ),
     (
         "olmradialblur_caller_collapse_followup_20260701",
@@ -101,6 +128,26 @@ COMPARISON_COMMANDS = [
         "python3 scripts/compare_distancegradation_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmdistancegradation_constant_boundary_witness.json --output-md refs/reports/runtime_trace_comparisons/olmdistancegradation_constant_boundary_witness.md",
     ),
     (
+        "olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702",
+        "python3 scripts/compare_distancegradation_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702.json --output-md refs/reports/runtime_trace_comparisons/olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702.md",
+    ),
+    (
+        "olmdistancegradation_case0023_refcon_wordmap_followup_20260702",
+        "python3 scripts/compare_distancegradation_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmdistancegradation_case0023_refcon_wordmap_followup_20260702.json --output-md refs/reports/runtime_trace_comparisons/olmdistancegradation_case0023_refcon_wordmap_followup_20260702.md",
+    ),
+    (
+        "olmdistancegradation_case0023_output_word_triplet_followup_20260701",
+        "python3 scripts/compare_distancegradation_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmdistancegradation_case0023_output_word_triplet_followup_20260701.json --output-md refs/reports/runtime_trace_comparisons/olmdistancegradation_case0023_output_word_triplet_followup_20260701.md",
+    ),
+    (
+        "olmdistancegradation_case0023_triplet_xy_compose_hook_followup_20260701",
+        "python3 scripts/compare_distancegradation_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmdistancegradation_case0023_triplet_xy_compose_hook_followup_20260701.json --output-md refs/reports/runtime_trace_comparisons/olmdistancegradation_case0023_triplet_xy_compose_hook_followup_20260701.md",
+    ),
+    (
+        "olmdistancegradation_case0023_threshold_family_followup_20260701",
+        "python3 scripts/compare_distancegradation_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmdistancegradation_case0023_threshold_family_followup_20260701.json --output-md refs/reports/runtime_trace_comparisons/olmdistancegradation_case0023_threshold_family_followup_20260701.md",
+    ),
+    (
         "olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630",
         "python3 scripts/compare_distancegradation_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmdistancegradation_constant_case0023_outside0_witness.json --output-md refs/reports/runtime_trace_comparisons/olmdistancegradation_constant_case0023_outside0_witness.md",
     ),
@@ -109,6 +156,22 @@ COMPARISON_COMMANDS = [
         "python3 scripts/compare_distancegradation_trace.py --runtime-summary-json refs/reports/runtime_trace_summary.json --output-json refs/reports/runtime_trace_comparisons/olmdistancegradation_field_prep.json --output-md refs/reports/runtime_trace_comparisons/olmdistancegradation_field_prep.md",
     ),
 ]
+
+ACCEPTANCE_NOTES = {
+    "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702": "refs/conformance/olmradialblur_tiny_rotation_anchor_context_watch_return_acceptance_20260702.md",
+    "olmradialblur_tiny_rotation_anchor_pointer_watch_followup_20260702": "refs/conformance/olmradialblur_tiny_rotation_anchor_pointer_watch_return_acceptance_20260702.md",
+    "olmradialblur_tiny_rotation_anchor_watch_followup_20260701": "refs/conformance/olmradialblur_tiny_rotation_anchor_watch_return_acceptance_20260701.md",
+    "olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701": "refs/conformance/olmradialblur_tiny_rotation_backstep_return_acceptance_20260701.md",
+    "olmradialblur_tiny_rotation_substitute_path_followup_20260701": "refs/conformance/olmradialblur_tiny_rotation_return_acceptance_20260701.md",
+    "olmradialblur_caller_collapse_followup_20260701": "refs/conformance/olmradialblur_outer_return_acceptance_20260701.md",
+    "olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702": "refs/conformance/olmdistancegradation_case0023_refcon_stack_wordmap_return_acceptance_20260702.md",
+    "olmdistancegradation_case0023_refcon_wordmap_followup_20260702": "refs/conformance/olmdistancegradation_case0023_refcon_wordmap_return_acceptance_20260702.md",
+    "olmdistancegradation_case0023_output_word_triplet_followup_20260701": "refs/conformance/olmdistancegradation_case0023_output_word_triplet_return_acceptance_20260701.md",
+    "olmdistancegradation_case0023_triplet_xy_compose_hook_followup_20260701": "refs/conformance/olmdistancegradation_case0023_triplet_xy_compose_return_acceptance_20260701.md",
+    "olmdistancegradation_case0023_threshold_family_followup_20260701": "refs/conformance/olmdistancegradation_case0023_threshold_return_acceptance_20260701.md",
+    "olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630": "refs/conformance/olmdistancegradation_case0023_return_acceptance_20260701.md",
+    "olmblur_case0006_helper_prestore_witness_20260630": "refs/conformance/olmblur_case0006_reference_provenance_20260701.md",
+}
 
 
 def repo_root() -> Path:
@@ -187,7 +250,7 @@ def answered_request_ids(root: Path) -> set[str]:
 
 
 def latest_result_rows(root: Path) -> dict[str, dict[str, Any]]:
-    latest: dict[str, tuple[float, dict[str, Any]]] = {}
+    latest: dict[str, tuple[int, float, dict[str, Any]]] = {}
     reports_root = root / "refs/reports"
     candidates = sorted(reports_root.glob("**/runtime_trace_summary*.json"))
     candidates.extend(
@@ -211,10 +274,78 @@ def latest_result_rows(root: Path) -> dict[str, dict[str, Any]]:
             if not isinstance(row, dict) or not isinstance(row.get("request_id"), str):
                 continue
             request_id = str(row["request_id"])
+            source_file = str(row.get("source_file") or "")
+            status = str(row.get("status") or "").lower()
+            priority = 0
+            if source_file.endswith("RETURN_RUNTIME_TRACE_RESULT.json"):
+                priority += 4
+            if status in {"failed_partial", "answered_partial", "answered", "ok", "complete"}:
+                priority += 2
+            if status == "diagnostic":
+                priority -= 2
+            current = latest.get(request_id)
+            if current is None or (priority, mtime) >= (current[0], current[1]):
+                latest[request_id] = (priority, mtime, row)
+    return {request_id: row for request_id, (_, _, row) in latest.items()}
+
+
+def latest_comparison_paths(root: Path) -> dict[str, str]:
+    latest: dict[str, tuple[float, str]] = {}
+    for path in sorted((root / "refs/reports/runtime_trace_comparisons").glob("*.json")):
+        data = read_json(path)
+        if not isinstance(data, dict) or not isinstance(data.get("request_id"), str):
+            continue
+        request_id = str(data["request_id"])
+        try:
+            mtime = path.stat().st_mtime
+        except OSError:
+            mtime = 0.0
+        md_path = path.with_suffix(".md")
+        display = display_path(root, md_path if md_path.exists() else path)
+        current = latest.get(request_id)
+        if current is None or mtime >= current[0]:
+            latest[request_id] = (mtime, display)
+    return {request_id: display for request_id, (_, display) in latest.items()}
+
+
+def latest_return_archives(root: Path) -> dict[str, str]:
+    latest: dict[str, tuple[float, str]] = {}
+    for path in sorted((root / "refs/returns/windows").glob("**/*.zip")):
+        try:
+            mtime = path.stat().st_mtime
+        except OSError:
+            mtime = 0.0
+        request_ids: list[str] = []
+        try:
+            with zipfile.ZipFile(path) as archive:
+                result_name = next(
+                    (
+                        member
+                        for member in archive.namelist()
+                        if member.replace("\\", "/").endswith("RETURN_RUNTIME_TRACE_RESULT.json")
+                    ),
+                    None,
+                )
+                if result_name is not None:
+                    data = json.loads(archive.read(result_name).decode("utf-8"))
+                    if isinstance(data, dict):
+                        for row in data.get("results", []):
+                            if isinstance(row, dict) and isinstance(row.get("request_id"), str):
+                                request_ids.append(str(row["request_id"]))
+        except Exception:
+            request_ids = []
+        if not request_ids:
+            name = path.name
+            if "_return_windows" not in name:
+                continue
+            fallback = name.split("__", 1)[-1].rsplit("_return_windows.zip", 1)[0]
+            request_ids = [fallback]
+        display = display_path(root, path)
+        for request_id in request_ids:
             current = latest.get(request_id)
             if current is None or mtime >= current[0]:
-                latest[request_id] = (mtime, row)
-    return {request_id: row for request_id, (_, row) in latest.items()}
+                latest[request_id] = (mtime, display)
+    return {request_id: display for request_id, (_, display) in latest.items()}
 
 
 def superseded_request_ids(root: Path) -> set[str]:
@@ -235,6 +366,10 @@ def comparison_command(request_id: str) -> str:
     return "python3 scripts/intake_olm_return.py path/to/return.zip --runtime-summary-json refs/reports/runtime_trace_summary.json --runtime-summary-md refs/reports/runtime_trace_summary.md --runtime-comparison-dir refs/reports/runtime_trace_comparisons"
 
 
+def acceptance_note(request_id: str) -> str:
+    return ACCEPTANCE_NOTES.get(request_id, "")
+
+
 def row_status(request_id: str, answered: set[str], superseded: set[str]) -> str:
     if request_id in superseded:
         return "superseded"
@@ -247,6 +382,8 @@ def collect(root: Path, package_dir: Path) -> list[dict[str, Any]]:
     answered = answered_request_ids(root)
     superseded = superseded_request_ids(root)
     latest_rows = latest_result_rows(root)
+    latest_comparisons = latest_comparison_paths(root)
+    latest_archives = latest_return_archives(root)
     rows: list[dict[str, Any]] = []
     for package in sorted(package_dir.glob("*.zip")):
         manifest = package_manifest(package)
@@ -272,8 +409,11 @@ def collect(root: Path, package_dir: Path) -> list[dict[str, Any]]:
                     "stop_condition": action.get("stop_condition") or "",
                     "intake_command": "python3 scripts/intake_olm_return.py path/to/return.zip --runtime-summary-json refs/reports/runtime_trace_summary.json --runtime-summary-md refs/reports/runtime_trace_summary.md --runtime-comparison-dir refs/reports/runtime_trace_comparisons",
                     "comparison_command": comparison_command(request_id),
+                    "acceptance_note": acceptance_note(request_id),
                     "latest_known_result_status": str((latest_rows.get(request_id) or {}).get("status") or ""),
                     "latest_known_result_summary": str((latest_rows.get(request_id) or {}).get("summary") or ""),
+                    "latest_comparison": latest_comparisons.get(request_id, ""),
+                    "latest_return_archive": latest_archives.get(request_id, ""),
                 }
             )
     newest_by_request: dict[str, dict[str, Any]] = {}
@@ -302,16 +442,24 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- Pending: `{len(pending)}`",
         f"- Answered/superseded: `{len(rows) - len(pending)}`",
         "",
-        "| Status | Priority | Request | Package | Why needed | Latest known result |",
-        "| --- | ---: | --- | --- | --- | --- |",
+        "| Status | Priority | Request | Package | Why needed | Acceptance note | Latest known result | Latest evidence |",
+        "| --- | ---: | --- | --- | --- | --- | --- | --- |",
     ]
     for row in rows:
         latest = row.get("latest_known_result_status") or "-"
         if row.get("latest_known_result_summary"):
             latest = f"{latest}: {row['latest_known_result_summary']}"
+        acceptance = row.get("acceptance_note") or "-"
+        evidence_bits = []
+        if row.get("latest_comparison"):
+            evidence_bits.append(f"cmp={row['latest_comparison']}")
+        if row.get("latest_return_archive"):
+            evidence_bits.append(f"zip={row['latest_return_archive']}")
+        evidence = " ; ".join(evidence_bits) if evidence_bits else "-"
         lines.append(
             f"| `{row['status']}` | {row['priority']} | `{row['request_id']}` | "
-            f"`{row['package']}` | {short(row['plugin_area'] or row['command'])} | {short(latest, 120)} |"
+            f"`{row['package']}` | {short(row['plugin_area'] or row['command'])} | "
+            f"`{acceptance}` | {short(latest, 120)} | {short(evidence, 120)} |"
         )
     if pending:
         lines.extend(["", "## Send First", ""])
@@ -325,6 +473,7 @@ def render_markdown(report: dict[str, Any]) -> str:
                 f"- Request: `{first['request_id']}`",
                 f"- Why: {first['plugin_area']}",
                 f"- Stop condition: {first['stop_condition']}",
+                f"- Acceptance note: `{first['acceptance_note'] or '-'}`",
                 "",
                 "After the Windows return is imported:",
                 "",

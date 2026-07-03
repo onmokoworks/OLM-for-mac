@@ -129,6 +129,11 @@
     "If the compose-site float is unavailable, capture the last float before quantization/export plus the exact quantization helper or clamp path.",
     "Prefer a residual hotspot over center/up/right because those witnesses already ground fd90 aggregation but do not isolate the failing branch."
   ],
+  "status": "historical-superseded-by-hotspot-provenance-lane",
+  "superseded_by": {
+    "reason": "The answered 2026-07-01 hotspot witness already matches the current Mac compose-boundary values through pre-writeback and sampled RGBA8. The remaining lane is no longer live compose/quantization isolation; it is same-run export provenance, witness-placement validation, or endgame-control coverage.",
+    "report": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmkirakira_hotspot_export_contract_audit_20260701.md"
+  },
   "why_rejected_paths_stay_rejected": [
     "BT.709 seed luma now explains the prior pass-1 upstream source-buffer mismatch.",
     "Ray helper stages and fd90 aggregation are already grounded within float print precision at the traced witnesses.",

@@ -1,7 +1,7 @@
 # OLMBlur Current Word Baseline
 
 - Date: `2026-06-29`
-- Purpose: freeze the current Mac-side witness values before the next Windows final-word runtime proof is interpreted.
+- Purpose: freeze the current Mac-side witness values as historical baseline context for later OLMBlur closeout and provenance/export decisions.
 
 ## Reading
 

@@ -1,0 +1,216 @@
+{
+  "kind": "olmdistancegradation_case0023_threshold_family_audit",
+  "schema": 1,
+  "case_id": "olmdistancegradation_extended__case_0023",
+  "mode": {
+    "interpolation": "Constant",
+    "in_out": "Both",
+    "outside_threshold": 0
+  },
+  "residual": {
+    "total_px": 73,
+    "endpoint_pairs": {
+      "65535,0,0,65535 -> 7195,0,61165,65535": 8,
+      "7195,0,61165,65535 -> 65535,0,0,65535": 65
+    },
+    "edge_bucket": {
+      "inside_distance": 1.0,
+      "count": 65,
+      "outside_distance_values": [
+        0.0
+      ],
+      "candidate_rgba_counts": {
+        "7195,0,61165,65535": 65
+      },
+      "reference_rgba_counts": {
+        "65535,0,0,65535": 65
+      }
+    },
+    "threshold_bucket": {
+      "inside_distance": 36.013885498046875,
+      "count": 8,
+      "outside_distance_values": [
+        0.0
+      ],
+      "candidate_rgba_counts": {
+        "65535,0,0,65535": 8
+      },
+      "reference_rgba_counts": {
+        "7195,0,61165,65535": 8
+      }
+    }
+  },
+  "threshold_triplet_roles": [
+    {
+      "role": "below_threshold_same_row",
+      "x": 414,
+      "y": 393,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 0.0,
+      "raw_inside": 35.0142822,
+      "raw_outside": 0.0,
+      "inside_minus_threshold": -0.9857178
+    },
+    {
+      "role": "first_above_threshold_same_row",
+      "x": 415,
+      "y": 393,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 1.0,
+      "raw_inside": 36.0138855,
+      "raw_outside": 0.0,
+      "inside_minus_threshold": 0.0138855
+    },
+    {
+      "role": "deeper_plateau_same_row",
+      "x": 416,
+      "y": 393,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 1.0,
+      "raw_inside": 37.0135117,
+      "raw_outside": 0.0,
+      "inside_minus_threshold": 1.0135117
+    },
+    {
+      "role": "vertical_contrast_above",
+      "x": 415,
+      "y": 392,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 0.0,
+      "raw_inside": 35.9026451,
+      "raw_outside": 0.0,
+      "inside_minus_threshold": -0.0973549
+    },
+    {
+      "role": "vertical_contrast_below",
+      "x": 415,
+      "y": 394,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 1.0,
+      "raw_inside": 36.0555115,
+      "raw_outside": 0.0,
+      "inside_minus_threshold": 0.0555115
+    }
+  ],
+  "live_mac_triplet": [
+    {
+      "x": 415,
+      "y": 393,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 1.0,
+      "raw_inside": 36.0138855,
+      "raw_outside": 0.0
+    },
+    {
+      "x": 414,
+      "y": 393,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 0.0,
+      "raw_inside": 35.0142822,
+      "raw_outside": 0.0
+    },
+    {
+      "x": 416,
+      "y": 393,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 1.0,
+      "raw_inside": 37.0135117,
+      "raw_outside": 0.0
+    },
+    {
+      "x": 415,
+      "y": 392,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 0.0,
+      "raw_inside": 35.9026451,
+      "raw_outside": 0.0
+    },
+    {
+      "x": 415,
+      "y": 394,
+      "alpha": 1.0,
+      "d_alpha": 1.0,
+      "field_x": 1.0,
+      "raw_inside": 36.0555115,
+      "raw_outside": 0.0
+    }
+  ],
+  "live_mac_edge_family": [
+    {
+      "x": 1699,
+      "y": 7,
+      "alpha": 0.00393676758,
+      "d_alpha": 1.0,
+      "field_x": 0.0,
+      "raw_inside": 1.0,
+      "raw_outside": 0.0
+    },
+    {
+      "x": 1698,
+      "y": 7,
+      "alpha": 0.0274658203,
+      "d_alpha": 1.0,
+      "field_x": 0.0,
+      "raw_inside": 1.0,
+      "raw_outside": 0.0
+    },
+    {
+      "x": 1700,
+      "y": 7,
+      "alpha": 0.0,
+      "d_alpha": 0.0,
+      "field_x": 1.0,
+      "raw_inside": 0.0,
+      "raw_outside": 1.0
+    },
+    {
+      "x": 1699,
+      "y": 6,
+      "alpha": 0.0,
+      "d_alpha": 0.0,
+      "field_x": 1.0,
+      "raw_inside": 0.0,
+      "raw_outside": 1.0
+    },
+    {
+      "x": 1699,
+      "y": 8,
+      "alpha": 0.756866455,
+      "d_alpha": 1.0,
+      "field_x": 0.0,
+      "raw_inside": 1.41421354,
+      "raw_outside": 0.0
+    }
+  ],
+  "plateau_probe": {
+    "current_residual_px": 73,
+    "plateau_residual_px": 182793,
+    "edge_bucket_delta": 14922,
+    "threshold_bucket_current_count": 8,
+    "threshold_bucket_plateau_count": 8,
+    "threshold_bucket_delta": 0,
+    "threshold_bucket_invariant_under_plateau_probe": true
+  },
+  "pending_windows_followup": {
+    "request_id": "olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702",
+    "status": "pending",
+    "package": "refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702.zip",
+    "acceptance_note": "refs/conformance/olmdistancegradation_case0023_refcon_stack_wordmap_return_acceptance_20260702.md",
+    "stop_condition": "Return enough typed values to explain the `case_0023` triplet crossing with XY bound from recovered output-word/refcon/stack mapping at `FUN_181170480`. If even that stop cannot be isolated, return the precise failed bind/watchpoint reason plus the exact address/condition and the dumped `r8/r9/[rsp+0x28]` layout and pointer state needed for the next retry."
+  },
+  "decision": {
+    "status": "threshold-family-historical-bounded-context",
+    "reason": "The current residual is only 73px and already splits into two helper-stage buckets, including an 8px threshold-family crossing at raw_inside 35.014 -> 36.013 -> 37.013. Local field debug proves the field_x flip happens before compose, while the broad trunc_plateau_binary probe explodes the frame to 182793px. This lane is now historical bounded context: it explains why broad Constant rewrites stay forbidden, while the live Windows ask has moved to the narrower output-word / compose-refcon triplet witness.",
+    "forbidden_action": "Do not promote a global Constant plateau/equality tweak or compose/writeback retune from the current local evidence alone.",
+    "next_windows_requirement": "Bind the `414/415/416,393` triplet from the output-word address or compose refcon at `FUN_181170480`; do not accept another broad callback stop with no retained XY."
+  }
+}

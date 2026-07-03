@@ -43,6 +43,16 @@ def build_summary(writer: dict, runtime_pkg: Path, runtime_summary: dict, runtim
     return {
         "kind": "olmblur_pending_final_word_proof",
         "date": "2026-06-29",
+        "status": "historical-superseded-by-closeout-gate",
+        "superseded_by": {
+            "report": str(repo_root() / "refs" / "conformance" / "olmblur_closeout_gate_audit_20260701.md"),
+            "reason": (
+                "The remaining OLMBlur work is no longer one live final-word lane. "
+                "case_0006 is now provenance/export-first, normalized 16bpc Legacy case_0007 "
+                "is closed as a Windows pre-store float delta, and only old normalized 8bpc "
+                "case_0007 remains reopenable."
+            ),
+        },
         "runtime_package_context": str(runtime_pkg),
         "latest_runtime_summary": str(runtime_summary_path),
         "decision_boundary": (
@@ -153,6 +163,10 @@ def build_summary(writer: dict, runtime_pkg: Path, runtime_summary: dict, runtim
 def write_markdown(summary: dict, out: Path) -> None:
     lines = [
         "# OLMBlur Pending Final-Word Proof",
+        "",
+        f"- Historical status: `{summary['status']}`",
+        f"- Superseded by: `{summary['superseded_by']['report']}`",
+        f"- Why superseded: {summary['superseded_by']['reason']}",
         "",
         f"- Runtime package context: `{summary['runtime_package_context']}`",
         f"- Latest runtime summary: `{summary['latest_runtime_summary']}`",

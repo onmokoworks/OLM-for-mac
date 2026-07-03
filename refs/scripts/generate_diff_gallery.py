@@ -301,6 +301,7 @@ def write_gallery(items: list[dict[str, Any]], output_dir: Path, crop_radius: in
     }
     output_dir.mkdir(parents=True, exist_ok=True)
     (output_dir / "data.json").write_text(json.dumps(data, indent=2, ensure_ascii=False, sort_keys=True), encoding="utf-8")
+    (output_dir / "data.js").write_text(f"window.olmDiffGalleryData = {json.dumps(data, ensure_ascii=False)};\n", encoding="utf-8")
     (output_dir / "index.html").write_text(render_html(data), encoding="utf-8")
     return data
 
@@ -338,47 +339,14 @@ def render_html(data: dict[str, Any]) -> str:
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for item in data["items"]:
         grouped[item["plugin"]].append(item)
-    sections = []
     plugins = [plugin for plugin in PLUGIN_ORDER if plugin != "Unassigned"]
-    for plugin in sorted(set(plugins) | set(grouped), key=plugin_sort_key):
-        cards = []
-        for item in grouped[plugin]:
-            assets = item["assets"]
-            cards.append(
-                f"""
-                <article class="card">
-                  <div class="card-head">
-                    <h3>{escape(item['case_id'])}</h3>
-                    <div class="metrics">
-                      <span>max {escape(str(item.get('max_diff')))}</span>
-                      <span>mean {escape(str(item.get('mean_diff')))}</span>
-                      <span>nz% {escape(str(item.get('nonzero_px_percent')))}</span>
-                    </div>
-                  </div>
-                  <div class="witness">{escape(witness_text(item.get('witness')))}</div>
-                  <div class="triptych">
-                    <figure><figcaption>Windows / reference</figcaption>{img_tag(assets['reference'], 'reference')}</figure>
-                    <figure><figcaption>Mac / candidate</figcaption>{img_tag(assets['candidate'], 'candidate')}</figure>
-                    <figure><figcaption>Amplified diff</figcaption>{img_tag(assets['diff'], 'diff')}</figure>
-                  </div>
-                  <details>
-                    <summary>files</summary>
-                    <p>report: <code>{escape(item['report'])}</code></p>
-                    <p>run: <code>{escape(item['run_dir'])}</code></p>
-                    <p>frame: <code>{escape(item.get('frame') or '-')}</code></p>
-                  </details>
-                </article>
-                """
-            )
-        sections.append(
-            f"""
-            <section id="{escape(plugin)}">
-              <h2>{escape(plugin)} <span>{len(grouped[plugin])}</span></h2>
-              <div class="cards">{''.join(cards) if cards else '<div class="empty">No durable non-exact image comparison report found for this plug-in yet.</div>'}</div>
-            </section>
-            """
-        )
-    nav = "".join(f'<a href="#{escape(plugin)}">{escape(plugin)} ({len(grouped[plugin])})</a>' for plugin in sorted(set(plugins) | set(grouped), key=plugin_sort_key))
+    plugin_counts = {
+        plugin: len(grouped[plugin])
+        for plugin in sorted(set(plugins) | set(grouped), key=plugin_sort_key)
+    }
+    plugin_order = list(plugin_counts)
+    plugin_counts_json = json.dumps(plugin_counts, ensure_ascii=False)
+    plugin_order_json = json.dumps(plugin_order, ensure_ascii=False)
     return f"""<!doctype html>
 <html lang="ja">
 <head>
@@ -386,43 +354,143 @@ def render_html(data: dict[str, Any]) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>OLM Diff Gallery</title>
   <style>
-    :root {{ color-scheme: light dark; --bg:#f6f7f9; --fg:#17191f; --muted:#69707d; --line:#d9dde5; --panel:#ffffff; }}
-    @media (prefers-color-scheme: dark) {{ :root {{ --bg:#111319; --fg:#e8eaf0; --muted:#a4abb8; --line:#303642; --panel:#181c24; }} }}
-    body {{ margin:0; font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg); color:var(--fg); }}
-    header {{ padding:24px 28px 12px; border-bottom:1px solid var(--line); background:var(--panel); position:sticky; top:0; z-index:2; }}
-    h1 {{ margin:0 0 6px; font-size:24px; letter-spacing:0; }}
-    .sub {{ color:var(--muted); }}
-    nav {{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }}
-    nav a {{ color:inherit; text-decoration:none; border:1px solid var(--line); padding:5px 8px; border-radius:6px; background:var(--bg); }}
-    main {{ padding:24px 28px 48px; }}
-    section {{ margin-bottom:34px; }}
-    h2 {{ font-size:19px; margin:0 0 14px; }}
-    h2 span {{ color:var(--muted); font-size:14px; font-weight:500; }}
-    .cards {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(520px,1fr)); gap:14px; }}
-    .card {{ background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; overflow:hidden; }}
-    .card-head {{ display:flex; justify-content:space-between; gap:12px; align-items:start; }}
+    :root {{ color-scheme: dark; --bg:#1b1c1f; --fg:#edf1f5; --muted:#98a2ad; --line:#31353b; --panel:#22262b; --image-bg:#171a1f; --panel-alt:#1d2025; --accent:#c7d2df; --accent-strong:#eef3f8; }}
+    * {{ box-sizing:border-box; }}
+    body {{ margin:0; font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg); color:var(--fg); }}
+    header {{ padding:22px 28px 14px; border-bottom:1px solid var(--line); background:rgba(29,32,37,0.96); backdrop-filter:blur(10px); position:sticky; top:0; z-index:2; }}
+    h1 {{ margin:0 0 4px; font-size:24px; letter-spacing:0; }}
+    .sub {{ color:var(--muted); max-width:980px; }}
+    nav {{ display:flex; flex-wrap:wrap; gap:10px 14px; margin-top:14px; padding-top:12px; border-top:1px solid var(--line); }}
+    nav a {{ color:var(--muted); text-decoration:none; padding:0 0 3px; border-bottom:1px solid transparent; }}
+    nav a:hover {{ color:var(--accent-strong); border-bottom-color:var(--accent); }}
+    main {{ padding:24px 28px 56px; }}
+    section {{ margin-bottom:40px; }}
+    h2 {{ display:flex; align-items:baseline; gap:10px; font-size:18px; margin:0 0 14px; padding-bottom:8px; border-bottom:1px solid var(--line); }}
+    h2 span {{ color:var(--muted); font-size:13px; font-weight:500; }}
+    .cards {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(560px,1fr)); gap:16px; }}
+    .card {{ background:var(--panel); border:1px solid var(--line); padding:14px; overflow:hidden; box-shadow:0 0 0 1px rgba(255,255,255,0.01) inset; }}
+    .card-head {{ display:flex; justify-content:space-between; gap:12px; align-items:start; padding-bottom:10px; border-bottom:1px solid var(--line); }}
     h3 {{ margin:0; font-size:15px; overflow-wrap:anywhere; }}
     .metrics {{ display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }}
-    .metrics span {{ border:1px solid var(--line); border-radius:6px; padding:2px 6px; color:var(--muted); }}
-    .witness {{ margin:8px 0 12px; color:var(--muted); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; overflow-wrap:anywhere; }}
-    .triptych {{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }}
+    .metrics span {{ border:1px solid var(--line); padding:2px 6px; color:var(--muted); background:var(--panel-alt); min-width:72px; text-align:center; }}
+    .witness {{ margin:10px 0 12px; padding:8px 10px; background:#1c2025; border-left:2px solid #4a5663; color:var(--muted); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; overflow-wrap:anywhere; }}
+    .triptych {{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }}
     figure {{ margin:0; min-width:0; }}
     figcaption {{ font-size:12px; color:var(--muted); margin-bottom:5px; }}
-    img {{ max-width:100%; width:100%; height:220px; object-fit:contain; image-rendering:pixelated; background:#05070a; border:1px solid var(--line); border-radius:4px; }}
-    .missing {{ height:220px; display:grid; place-items:center; text-align:center; color:var(--muted); border:1px dashed var(--line); border-radius:4px; }}
-    .empty {{ background:var(--panel); border:1px dashed var(--line); border-radius:8px; color:var(--muted); padding:18px; }}
-    details {{ margin-top:10px; color:var(--muted); }}
+    img {{ display:block; max-width:100%; width:100%; height:220px; object-fit:contain; image-rendering:pixelated; background:var(--image-bg); border:1px solid var(--line); }}
+    .missing {{ height:220px; display:grid; place-items:center; text-align:center; color:var(--muted); border:1px dashed var(--line); background:#191c21; }}
+    .empty {{ background:var(--panel); border:1px dashed var(--line); color:var(--muted); padding:18px; }}
+    details {{ margin-top:12px; color:var(--muted); padding-top:10px; border-top:1px solid var(--line); }}
+    summary {{ cursor:pointer; color:var(--accent); }}
     code {{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; overflow-wrap:anywhere; }}
-    @media (max-width:760px) {{ .cards {{ grid-template-columns:1fr; }} .triptych {{ grid-template-columns:1fr; }} img,.missing {{ height:180px; }} header,main {{ padding-left:14px; padding-right:14px; }} }}
+    @media (max-width:760px) {{ .cards {{ grid-template-columns:1fr; }} .triptych {{ grid-template-columns:1fr; }} img,.missing {{ height:180px; }} header,main {{ padding-left:14px; padding-right:14px; }} nav {{ gap:8px 12px; }} }}
   </style>
+  <script src="./data.js"></script>
 </head>
 <body>
   <header>
     <h1>OLM Diff Gallery</h1>
     <div class="sub">Generated {escape(data['generated_at'])}. Non-exact local reports only. Crops are centered on the first/max witness when available.</div>
-    <nav>{nav}</nav>
+    <nav id="plugin-nav"></nav>
   </header>
-  <main>{''.join(sections) if sections else '<p>No non-exact image reports found.</p>'}</main>
+  <main id="gallery-root"><p>Loading gallery...</p></main>
+  <script>
+    const ROOT_PREFIX = "../../../";
+    const PLUGIN_COUNTS = {plugin_counts_json};
+    const PLUGIN_ORDER = {plugin_order_json};
+
+    function escapeHtml(value) {{
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }}
+
+    function witnessText(witness) {{
+      if (!witness || typeof witness !== "object") return "-";
+      const parts = [];
+      if ("x" in witness && "y" in witness) parts.push(`(${{witness.x}},${{witness.y}})`);
+      for (const key of ["reference", "candidate", "delta"]) {{
+        if (key in witness) parts.push(`${{key}}=${{JSON.stringify(witness[key])}}`);
+      }}
+      return parts.length ? parts.join(" / ") : "-";
+    }}
+
+    function imgTag(asset, label) {{
+      const crop = asset && asset.crop;
+      const full = asset && asset.full;
+      if (!crop) return `<div class="missing">${{escapeHtml(label)}}<br>not available</div>`;
+      const href = ROOT_PREFIX + escapeHtml(full || crop);
+      const src = ROOT_PREFIX + escapeHtml(crop);
+      return `<a href="${{href}}"><img src="${{src}}" alt="${{escapeHtml(label)}}"></a>`;
+    }}
+
+    function renderCard(item) {{
+      const assets = item.assets || {{}};
+      return `
+        <article class="card">
+          <div class="card-head">
+            <h3>${{escapeHtml(item.case_id)}}</h3>
+            <div class="metrics">
+              <span>max ${{escapeHtml(item.max_diff)}}</span>
+              <span>mean ${{escapeHtml(item.mean_diff)}}</span>
+              <span>nz% ${{escapeHtml(item.nonzero_px_percent)}}</span>
+            </div>
+          </div>
+          <div class="witness">${{escapeHtml(witnessText(item.witness))}}</div>
+          <div class="triptych">
+            <figure><figcaption>Windows / reference</figcaption>${{imgTag(assets.reference, "reference")}}</figure>
+            <figure><figcaption>Mac / candidate</figcaption>${{imgTag(assets.candidate, "candidate")}}</figure>
+            <figure><figcaption>Amplified diff</figcaption>${{imgTag(assets.diff, "diff")}}</figure>
+          </div>
+          <details>
+            <summary>files</summary>
+            <p>report: <code>${{escapeHtml(item.report)}}</code></p>
+            <p>run: <code>${{escapeHtml(item.run_dir)}}</code></p>
+            <p>frame: <code>${{escapeHtml(item.frame || "-")}}</code></p>
+          </details>
+        </article>
+      `;
+    }}
+
+    function renderGallery() {{
+      const data = window.olmDiffGalleryData;
+      const nav = document.getElementById("plugin-nav");
+      const root = document.getElementById("gallery-root");
+      if (!data || !Array.isArray(data.items)) {{
+        root.innerHTML = "<p>Gallery data was not loaded.</p>";
+        return;
+      }}
+
+      const grouped = new Map();
+      for (const item of data.items) {{
+        const key = item.plugin || "Unassigned";
+        if (!grouped.has(key)) grouped.set(key, []);
+        grouped.get(key).push(item);
+      }}
+
+      nav.innerHTML = PLUGIN_ORDER.map((plugin) =>
+        `<a href="#${{escapeHtml(plugin)}}">${{escapeHtml(plugin)}} (${{PLUGIN_COUNTS[plugin] ?? 0}})</a>`
+      ).join("");
+
+      root.innerHTML = PLUGIN_ORDER.map((plugin) => {{
+        const items = grouped.get(plugin) || [];
+        const cards = items.length
+          ? items.map(renderCard).join("")
+          : '<div class="empty">No durable non-exact image comparison report found for this plug-in yet.</div>';
+        return `
+          <section id="${{escapeHtml(plugin)}}">
+            <h2>${{escapeHtml(plugin)}} <span>${{items.length}}</span></h2>
+            <div class="cards">${{cards}}</div>
+          </section>
+        `;
+      }}).join("");
+    }}
+
+    renderGallery();
+  </script>
 </body>
 </html>
 """

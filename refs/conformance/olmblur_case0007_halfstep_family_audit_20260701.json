@@ -1,0 +1,258 @@
+{
+  "kind": "olmblur_case0007_halfstep_family_audit",
+  "schema": 1,
+  "family": "legacy_last_pixel_half_step",
+  "cases": {
+    "16bpc": {
+      "case_id": "olmblur__case_0007",
+      "witness_xy": [
+        345,
+        672
+      ],
+      "mac_reference_rgba": [
+        1247,
+        0,
+        25087,
+        65535
+      ],
+      "mac_candidate_rgba": [
+        1247,
+        0,
+        25089,
+        65535
+      ],
+      "mac_probe": {
+        "x": 345,
+        "y": 672,
+        "raw": [
+          "624.429565",
+          "1.26167242e-05",
+          "12544.5"
+        ],
+        "raw_hex": [
+          "0x1.3836fcp+9",
+          "0x1.a758d6p-17",
+          "0x1.8804p+13"
+        ],
+        "floor05": [
+          "624",
+          "0",
+          "12545"
+        ],
+        "nearby": [
+          "624",
+          "0",
+          "12544"
+        ],
+        "rounded": [
+          "624",
+          "0",
+          "12545"
+        ],
+        "clamped": [
+          "624",
+          "0",
+          "12545"
+        ],
+        "stored": [
+          "624",
+          "0",
+          "12545"
+        ],
+        "line": "OLMBLUR_DEBUG_POINT x=345 y=672 raw=(624.429565,1.26167242e-05,12544.5) raw_hex=(0x1.3836fcp+9,0x1.a758d6p-17,0x1.8804p+13) floor05=(624,0,12545) nearby=(624,0,12544) rounded=(624,0,12545) clamped=(624,0,12545) stored=(624,0,12545)"
+      },
+      "writer_only_row": {
+        "case_id": "olmblur__case_0007",
+        "bit_depth": "16bpc",
+        "xy": [
+          345,
+          672
+        ],
+        "reference": [
+          1247,
+          0,
+          25087,
+          65535
+        ],
+        "candidate": [
+          1247,
+          0,
+          25089,
+          65535
+        ],
+        "raw": [
+          624.429565,
+          1.26167242e-05,
+          12544.5
+        ],
+        "predicted_nearby": [
+          1247,
+          0,
+          25087,
+          65535
+        ],
+        "predicted_floor05": [
+          1247,
+          0,
+          25089,
+          65535
+        ],
+        "candidate_error_l1": 2,
+        "nearby_error_l1": 0,
+        "floor05_error_l1": 2,
+        "best_writer_only_rule": "nearby",
+        "writer_only_can_match_reference": true,
+        "writer_only_diagnosis": "nearby-only-match"
+      },
+      "windows_witness": {
+        "target_channel_pre_store_float": 12544.498046875,
+        "final_word": {
+          "decimal": 12544,
+          "hex": "0x3100"
+        },
+        "summary": "olmblur__case_0007 16bpc witness at (345,672) channel B shows pre-store 12544.498046875 -> final word 12544."
+      },
+      "status": "resolved-as-pre-store-float-delta"
+    },
+    "8bpc_old_normalized": {
+      "case_id": "case_0007",
+      "low_witness_xy": [
+        488,
+        941
+      ],
+      "high_control_xy": [
+        488,
+        942
+      ],
+      "low_witness": {
+        "reference_rgba": [
+          251,
+          0,
+          0,
+          255
+        ],
+        "candidate_rgba": [
+          250,
+          0,
+          0,
+          255
+        ],
+        "trace": "OLMBLUR_TRACE x=488 y=941 rgb=(250.499985,0.00161030458,0.00161030458) rgb_hex=(0x1.f4fffep+7,0x1.a621b6p-10,0x1.a621b6p-10) floor05=(250,0,0) nearby=(250,0,0) legacy=1 repeat=10",
+        "writer_only_row": {
+          "case_id": "case_0007",
+          "bit_depth": "8bpc-old-normalized",
+          "xy": [
+            488,
+            941
+          ],
+          "reference": [
+            251,
+            0,
+            0,
+            255
+          ],
+          "candidate": [
+            250,
+            0,
+            0,
+            255
+          ],
+          "raw": [
+            250.499985,
+            0.00161030458,
+            0.00161030458
+          ],
+          "predicted_nearby": [
+            250,
+            0,
+            0,
+            255
+          ],
+          "predicted_floor05": [
+            250,
+            0,
+            0,
+            255
+          ],
+          "candidate_error_l1": 1,
+          "nearby_error_l1": 1,
+          "floor05_error_l1": 1,
+          "best_writer_only_rule": "tie",
+          "writer_only_can_match_reference": false,
+          "writer_only_diagnosis": "writer-rule-irrelevant-at-this-witness"
+        }
+      },
+      "high_control": {
+        "reference_rgba": [
+          251,
+          0,
+          0,
+          255
+        ],
+        "candidate_rgba": [
+          251,
+          0,
+          0,
+          255
+        ],
+        "trace": "OLMBLUR_TRACE x=488 y=942 rgb=(250.500015,0.00162608409,0.00162608409) rgb_hex=(0x1.f50002p+7,0x1.aa44a8p-10,0x1.aa44a8p-10) floor05=(251,0,0) nearby=(251,0,0) legacy=1 repeat=10",
+        "writer_only_row": {
+          "case_id": "case_0007",
+          "bit_depth": "8bpc-old-normalized",
+          "xy": [
+            488,
+            942
+          ],
+          "reference": [
+            251,
+            0,
+            0,
+            255
+          ],
+          "candidate": [
+            251,
+            0,
+            0,
+            255
+          ],
+          "raw": [
+            250.500015,
+            0.00162608409,
+            0.00162608409
+          ],
+          "predicted_nearby": [
+            251,
+            0,
+            0,
+            255
+          ],
+          "predicted_floor05": [
+            251,
+            0,
+            0,
+            255
+          ],
+          "candidate_error_l1": 0,
+          "nearby_error_l1": 0,
+          "floor05_error_l1": 0,
+          "best_writer_only_rule": "tie",
+          "writer_only_can_match_reference": true,
+          "writer_only_diagnosis": "both-writer-rules-match"
+        }
+      },
+      "status": "still-needs-windows-pre-store-float"
+    }
+  },
+  "decision": {
+    "status": "16bpc-resolved-8bpc-still-open-prestore-family",
+    "reason": "The surviving Legacy case_0007 family is no longer one undifferentiated residual. The normalized 16bpc witness at `(345,672)` is already closed as a pre-store float delta: Mac lands at exactly `12544.5`, while Windows runtime witness says `12544.498046875 -> 12544`. The old normalized 8bpc witness at `(488,941)` remains below the half-step on the Mac side (`250.499985`) and is not solved by either local writer rule, so that companion witness still needs a Windows pre-store float rather than a blind writer rewrite.",
+    "forbidden_action": "Do not reopen the retired Legacy `(0,0)` blocker, do not treat case_0007 as proof for a global writer-rule swap, and do not mix the resolved 16bpc witness with the still-open 8bpc witness.",
+    "next_allowed_action": "Keep case_0007 split by bit depth: preserve the 16bpc witness as resolved, and only ask Windows for the old normalized 8bpc pre-store float/helper boundary at `(488,941)` if this family needs to move further."
+  },
+  "writer_only_conclusion": [
+    "A pure non-Legacy writer swap from nearbyint to floor05 would fix the 16bpc witness (314,14), but it leaves (29,71) unchanged and does not explain the sign-mixed family by itself.",
+    "The surviving 16bpc Legacy witness (345,672) actually prefers nearbyint at the exact Mac-side raw=12544.5 value, so its remaining mismatch is more consistent with a slight pre-store float delta on Windows than with a different local Legacy writer rule.",
+    "The surviving old 8bpc Legacy witness (488,941) is not solved by either local floor05 or nearbyint because the current raw value is already below 250.5; Windows must either reach a slightly larger pre-store float or differ earlier in state.",
+    "This audit is now historical context for the OLMBlur closeout gate: it explains why a blind source-side writer rewrite stayed forbidden before the later provenance/export lane narrowed the remaining reopen condition."
+  ]
+}

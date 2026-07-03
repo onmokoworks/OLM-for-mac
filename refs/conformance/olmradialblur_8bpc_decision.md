@@ -1,7 +1,7 @@
 # OLMRadialBlur Decision Matrix
 
 - Decision: `blocked-needs-narrow-proof`
-- Recommended action: Do not promote broad RadialBlur toggles from PNG matrices. Zoom is alpha-normalization/sampler-side; tiny Rotation needs sampler/validity proof; Inner needs typed per-cell helper evidence.
+- Recommended action: Do not promote broad RadialBlur toggles from PNG matrices. Zoom is alpha-normalization/caller-collapse-side; tiny Rotation needs upstream polar RGB / substitute-path proof; Inner needs typed per-cell helper evidence.
 
 ## Zoom
 
@@ -18,8 +18,8 @@
 
 ## Tiny Rotation
 
-- Decision: `blocked-sampler-validity`
-- Classification: `inverse-sampler / validity-side unresolved; not explained by a simple final byte conversion tie`
+- Decision: `blocked-upstream-rgb-substitute`
+- Classification: `inverse-sampler return is still near-black, so the live blocker is upstream polar RGB / substitute-path ownership rather than a simple validity-side or final-byte tie`
 - Final u8: `[255, 255, 255, 255]`
 - Closest sampler float: `[-0.004081939347088337, -0.004081939347088337, -0.004081939347088337, 1.0]`
 - 2026-07-01 row probe: validity alpha is already fully live across
