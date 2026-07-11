@@ -8,12 +8,12 @@
 - Candidate: `rotated-aex-full-choreo`
 - Source loci:
   - `main_cpp`: `cli/OLMDirectionalBlur/main.cpp`
-  - `render_rotated_line`: `887`
-  - `full_choreo_line`: `1395`
-  - `prepass_full_choreo_line`: `1411`
-  - `exact_scatter_line`: `1399`
-  - `exact_rowdriver_line`: `1401`
-  - `front_strength_line`: `1441`
+  - `render_rotated_line`: `951`
+  - `full_choreo_line`: `1541`
+  - `prepass_full_choreo_line`: `1557`
+  - `exact_scatter_line`: `1545`
+  - `exact_rowdriver_line`: `1547`
+  - `front_strength_line`: `1587`
 - Why keep it:
   - It preserves the confirmed A/B choreography instead of falling back to measurement-only scaffolds.
   - The best broad-mean presets are still non-AEX baselines and remain forbidden as implementation truth.

@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <filesystem>
 #include <fstream>
+#include <iomanip>
 #include <limits>
 #include <map>
 #include <stdexcept>
@@ -26,6 +27,11 @@ struct FloatImage {
     int width = 0;
     int height = 0;
     std::vector<float> rgba;
+};
+
+struct TracePoint {
+    int x = 0;
+    int y = 0;
 };
 
 struct ComponentInfo {
@@ -54,8 +60,12 @@ struct DirectionalBlurParams {
     double back_sharp_tail = 0.0;
     double noise_variation = 0.0;
     double frame_rate = 0.0;
-    double ctx_render_scale = std::numeric_limits<double>::quiet_NaN();
+    double ctx_render_scale_x = std::numeric_limits<double>::quiet_NaN();
+    double ctx_render_scale_y = std::numeric_limits<double>::quiet_NaN();
 };
+
+std::vector<TracePoint> g_witness_points;
+std::string g_witness_json_path;
 
 struct Json {
     enum Type { Null, Bool, Number, String, Array, Object } type = Null;
@@ -262,6 +272,45 @@ double json_number_or(const Json *value, double fallback) {
     return fallback;
 }
 
+std::vector<TracePoint> parse_trace_points(const std::string &text) {
+    std::vector<TracePoint> points;
+    size_t pos = 0;
+    while (pos < text.size()) {
+        while (pos < text.size() && (text[pos] == ';' || std::isspace(static_cast<unsigned char>(text[pos])))) ++pos;
+        if (pos >= text.size()) break;
+        char *end = nullptr;
+        const long x = std::strtol(text.c_str() + pos, &end, 10);
+        if (end == text.c_str() + pos || *end != ',') {
+            throw std::runtime_error("invalid --witness-points entry; expected x,y[;x,y...]");
+        }
+        pos = static_cast<size_t>(end - text.c_str()) + 1;
+        const long y = std::strtol(text.c_str() + pos, &end, 10);
+        if (end == text.c_str() + pos) {
+            throw std::runtime_error("invalid --witness-points entry; expected x,y[;x,y...]");
+        }
+        points.push_back({static_cast<int>(x), static_cast<int>(y)});
+        pos = static_cast<size_t>(end - text.c_str());
+        if (pos < text.size() && text[pos] != ';' && !std::isspace(static_cast<unsigned char>(text[pos]))) {
+            throw std::runtime_error("invalid --witness-points separator; expected semicolon");
+        }
+    }
+    return points;
+}
+
+void write_json_rgba(std::ostream &out, const float *rgba) {
+    out << '[' << rgba[0] << ',' << rgba[1] << ',' << rgba[2] << ',' << rgba[3] << ']';
+}
+
+void write_json_rgb(std::ostream &out, const std::vector<float> &rgb, size_t pixel) {
+    const size_t base = pixel * 3;
+    out << '[' << rgb[base] << ',' << rgb[base + 1] << ',' << rgb[base + 2] << ']';
+}
+
+void write_json_rgba8(std::ostream &out, const unsigned char *rgba) {
+    out << '[' << static_cast<int>(rgba[0]) << ',' << static_cast<int>(rgba[1]) << ','
+        << static_cast<int>(rgba[2]) << ',' << static_cast<int>(rgba[3]) << ']';
+}
+
 const Json *find_number_key(const Json &json, const std::vector<std::string> &keys) {
     if (json.type == Json::Object) {
         for (const std::string &key : keys) {
@@ -281,12 +330,16 @@ const Json *find_number_key(const Json &json, const std::vector<std::string> &ke
     return nullptr;
 }
 
-double read_ctx_render_scale(const Json &root) {
-    const Json *direct = find_number_key(root, {"ctx_render_scale", "render_scale"});
+double read_ctx_render_scale(const Json &root, const std::string& axis) {
+    std::string key = "ctx_render_scale" + (axis.empty() ? "" : "_" + axis);
+    std::string fallback = "render_scale" + (axis.empty() ? "" : "_" + axis);
+    const Json *direct = find_number_key(root, {key, fallback});
     if (direct) return json_number_or(direct, std::numeric_limits<double>::quiet_NaN());
 
-    const Json *num = find_number_key(root, {"ctx_0x11c"});
-    const Json *den = find_number_key(root, {"ctx_0x120"});
+    std::string num_key = "ctx_0x11c" + (axis.empty() ? "" : "_" + axis);
+    std::string den_key = "ctx_0x120" + (axis.empty() ? "" : "_" + axis);
+    const Json *num = find_number_key(root, {num_key});
+    const Json *den = find_number_key(root, {den_key});
     const double numerator = json_number_or(num, std::numeric_limits<double>::quiet_NaN());
     const double denominator = json_number_or(den, std::numeric_limits<double>::quiet_NaN());
     if (std::isfinite(numerator) && std::isfinite(denominator) && denominator != 0.0) return numerator / denominator;
@@ -373,7 +426,13 @@ DirectionalBlurParams read_params(const std::string &path) {
     dp.back_sharp_tail = json_number_or(get("back_sharp_tail_1"), 0.0) / 100.0;
     dp.noise_variation = json_number_or(get("noise_variation"), 0.0);
     if (const Json *comp = root.get("comp")) dp.frame_rate = json_number_or(comp->get("frame_rate"), 0.0);
-    dp.ctx_render_scale = read_ctx_render_scale(root);
+    dp.ctx_render_scale_x = read_ctx_render_scale(root, "x");
+    dp.ctx_render_scale_y = read_ctx_render_scale(root, "y");
+    if (!std::isfinite(dp.ctx_render_scale_x) && !std::isfinite(dp.ctx_render_scale_y)) {
+        double uniform = read_ctx_render_scale(root, "");
+        dp.ctx_render_scale_x = uniform;
+        dp.ctx_render_scale_y = uniform;
+    }
     return dp;
 }
 
@@ -765,7 +824,12 @@ Image render_direct(const Image &input, const DirectionalBlurParams &params, dou
     out.rgba.resize(static_cast<size_t>(pixels) * 4);
 
     if (strength_scale < 0.0) {
-        strength_scale = std::isfinite(params.ctx_render_scale) ? params.ctx_render_scale : 1.0;
+        double sx = std::isfinite(params.ctx_render_scale_x) ? params.ctx_render_scale_x : 1.0;
+        double sy = std::isfinite(params.ctx_render_scale_y) ? params.ctx_render_scale_y : 1.0;
+        const double a_rad = params.angle * angle_sign * M_PI / 180.0;
+        const double vx = std::cos(a_rad);
+        const double vy = std::sin(a_rad);
+        strength_scale = std::sqrt(vx * sx * vx * sx + vy * sy * vy * sy);
     } else if (strength_scale == -2.0) {
         strength_scale = params.frame_rate > 0.0 ? 1.0 / params.frame_rate : 1.0;
     }
@@ -922,7 +986,12 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
     const int pad_pixels = pad_w * pad_h;
 
     if (strength_scale < 0.0) {
-        strength_scale = std::isfinite(params.ctx_render_scale) ? params.ctx_render_scale : 1.0;
+        double sx = std::isfinite(params.ctx_render_scale_x) ? params.ctx_render_scale_x : 1.0;
+        double sy = std::isfinite(params.ctx_render_scale_y) ? params.ctx_render_scale_y : 1.0;
+        const double a_rad = params.angle * angle_sign * M_PI / 180.0;
+        const double vx = std::cos(a_rad);
+        const double vy = std::sin(a_rad);
+        strength_scale = std::sqrt(vx * sx * vx * sx + vy * sy * vy * sy);
     } else if (strength_scale == -2.0) {
         strength_scale = params.frame_rate > 0.0 ? 1.0 / params.frame_rate : 1.0;
     }
@@ -1288,6 +1357,7 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
     out.width = w;
     out.height = h;
     out.rgba.resize(static_cast<size_t>(w) * h * 4, 0);
+    std::vector<float> final_sample_rgba(static_cast<size_t>(w) * h * 4, 0.0f);
     const int crop_x = pad_w / 2 - w / 2;
     const int crop_y = pad_h / 2 - h / 2;
     for (int y = 0; y < h; ++y) {
@@ -1308,6 +1378,7 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
                 else sample_bilinear(blurred_for_rotateback, bx, by, sample);
             }
             const size_t dst = (static_cast<size_t>(y) * w + x) * 4;
+            for (int c = 0; c < 4; ++c) final_sample_rgba[dst + c] = sample[c];
             for (int c = 0; c < 3; ++c) {
                 const float value = sample[c] * static_cast<float>(params.brightness_gain);
                 out.rgba[dst + c] = truncate_output_quantize ? quantize_trunc(value) : quantize(value);
@@ -1322,6 +1393,70 @@ Image render_rotated(const Image &input, const DirectionalBlurParams &params, do
             out.rgba[dst + 3] = truncate_output_quantize ? quantize_trunc(alpha) : quantize(alpha);
         }
     }
+    if (!g_witness_json_path.empty()) {
+        std::ofstream trace(g_witness_json_path, std::ios::binary);
+        if (!trace) throw std::runtime_error("failed to open witness JSON " + g_witness_json_path);
+        trace << std::setprecision(9);
+        trace << "{\n";
+        trace << "  \"kind\": \"olmdirectionalblur_cli_witness\",\n";
+        trace << "  \"algorithm_family\": \"render_rotated\",\n";
+        trace << "  \"width\": " << w << ",\n";
+        trace << "  \"height\": " << h << ",\n";
+        trace << "  \"pad_width\": " << pad_w << ",\n";
+        trace << "  \"pad_height\": " << pad_h << ",\n";
+        trace << "  \"crop_x\": " << crop_x << ",\n";
+        trace << "  \"crop_y\": " << crop_y << ",\n";
+        trace << "  \"front_strength_scaled\": " << front_strength << ",\n";
+        trace << "  \"back_strength_scaled\": 0,\n";
+        trace << "  \"strength_scale\": " << strength_scale << ",\n";
+        trace << "  \"front_strength_rgb_denom\": " << (front_strength_rgb_denom ? "true" : "false") << ",\n";
+        trace << "  \"aex_two_stage_output\": " << (aex_two_stage_output ? "true" : "false") << ",\n";
+        trace << "  \"points\": [\n";
+        for (size_t i = 0; i < g_witness_points.size(); ++i) {
+            const TracePoint &point = g_witness_points[i];
+            if (point.x < 0 || point.x >= w || point.y < 0 || point.y >= h) {
+                throw std::runtime_error("witness point outside output image");
+            }
+            const int pad_x = point.x + crop_x;
+            const int pad_y = point.y + crop_y;
+            const size_t out_pixel = static_cast<size_t>(point.y) * w + point.x;
+            const size_t out_base = out_pixel * 4;
+            const size_t pad_pixel = static_cast<size_t>(pad_y) * pad_w + pad_x;
+            const size_t pad_base = pad_pixel * 4;
+            const float denom = front_strength_rgb_denom ? std::max(static_cast<float>(front_strength), 1.0f)
+                                                         : accum_sum[pad_pixel];
+            trace << "    {\n";
+            trace << "      \"x\": " << point.x << ", \"y\": " << point.y << ",\n";
+            trace << "      \"pad_x\": " << pad_x << ", \"pad_y\": " << pad_y << ",\n";
+            trace << "      \"source_alpha\": " << source_alpha[pad_pixel] << ",\n";
+            trace << "      \"accum_sum_denominator\": " << accum_sum[pad_pixel] << ",\n";
+            trace << "      \"effective_rgb_denominator\": " << denom << ",\n";
+            trace << "      \"accum_alpha\": " << accum_alpha[pad_pixel] << ",\n";
+            trace << "      \"source_rgb\": ";
+            write_json_rgb(trace, source_rgb, pad_pixel);
+            trace << ",\n";
+            trace << "      \"accum_rgb\": ";
+            write_json_rgb(trace, accum_rgb, pad_pixel);
+            trace << ",\n";
+            trace << "      \"blurred_rgba_pre_rotateback\": ";
+            write_json_rgba(trace, &blurred.rgba[pad_base]);
+            trace << ",\n";
+            if (aex_two_stage_output) {
+                trace << "      \"output_canvas_rgba\": ";
+                write_json_rgba(trace, &output_canvas.rgba[pad_base]);
+                trace << ",\n";
+            }
+            trace << "      \"final_sample_rgba_pre_quant\": ";
+            write_json_rgba(trace, &final_sample_rgba[out_base]);
+            trace << ",\n";
+            trace << "      \"final_rgba8\": ";
+            write_json_rgba8(trace, &out.rgba[out_base]);
+            trace << "\n";
+            trace << "    }" << (i + 1 == g_witness_points.size() ? "\n" : ",\n");
+        }
+        trace << "  ]\n";
+        trace << "}\n";
+    }
     return out;
 }
 
@@ -1335,6 +1470,8 @@ struct Args {
     double strength_scale = -1.0;
     std::string rgb_normalize = "front-strength";
     std::string direction = "front";
+    std::string witness_json;
+    std::vector<TracePoint> witness_points;
     bool ignore_noise_variation = false;
 };
 
@@ -1361,9 +1498,13 @@ Args parse_args(int argc, char **argv) {
         else if (key == "--direction") {
             args.direction = need_value("--direction");
             if (args.direction != "front" && args.direction != "both") throw std::runtime_error("--direction must be front or both");
+        } else if (key == "--witness-json") {
+            args.witness_json = need_value("--witness-json");
+        } else if (key == "--witness-points") {
+            args.witness_points = parse_trace_points(need_value("--witness-points"));
         } else if (key == "--ignore-noise-variation") args.ignore_noise_variation = true;
         else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmdirectionalblur_cli --input in.png --params params.json --output out.png [--algorithm direct|direct-map|rotated|rotated-aex-choreo|rotated-aex-full-choreo|rotated-aex-rotateback-denom-alpha|rotated-aex-exact-scatter-helper|rotated-aex-exact-rowdriver|rotated-aex-exact-rowdriver-plain-input|rotated-aex-exact-rowdriver-plain-output|rotated-aex-exact-rowdriver-plain-rotate|rotated-aex-pad-full-choreo|rotated-aex-prepass-full-choreo|rotated-aex-halfheight|rotated-aex-float-center|rotated-aex-component-tail-only|rotated-aex-global-tail-only|rotated-aex-no-tail|rotated-aex-preserve-invalid-input|rotated-aex-binary-alpha|rotated-aex-straight-source-rgb|rotated-aex-float-math|rotated-aex-trunc-output|rotated-aex-truncated-span|rotated-aex-row-init-straight-zero|rotated-aex-row-init-premul-zero|rotated-aex-row-init-zero|rotated-front-strength|rotated-front-strength-preserve-alpha|rotated-rowdriver-prepass|rotated-rowdriver-prepass-init|rotated-aex-pad|rotated-alpha-sum|rotated-strict|rotated-strict-preserve-alpha|rotated-preserve-alpha|rotated-min-alpha|rotated-max-alpha|rotated-zero-alpha|rotated-gather|rotated-alpha|rotated-alpha-in|rotated-alpha-out|rotated-aex|rotated-aex-init|rotated-map|rotated-map-dest-coeff|rotated-map-alpha-coeff|rotated-map-preserve-alpha|rotated-map-aex|rotated-map-aex-init|rotated-aex-premul|rotated-map-aex-premul] [--direction front|both] [--ignore-noise-variation] [--angle-sign -1] [--sample-sign -1] [--strength-scale auto|ctx|frame-rate|<number>] [--rgb-normalize front-strength]\n");
+            std::printf("Usage: olmdirectionalblur_cli --input in.png --params params.json --output out.png [--algorithm direct|direct-map|rotated|rotated-aex-choreo|rotated-aex-full-choreo|rotated-aex-rotateback-denom-alpha|rotated-aex-exact-scatter-helper|rotated-aex-exact-rowdriver|rotated-aex-exact-rowdriver-plain-input|rotated-aex-exact-rowdriver-plain-output|rotated-aex-exact-rowdriver-plain-rotate|rotated-aex-pad-full-choreo|rotated-aex-prepass-full-choreo|rotated-aex-halfheight|rotated-aex-float-center|rotated-aex-component-tail-only|rotated-aex-global-tail-only|rotated-aex-no-tail|rotated-aex-preserve-invalid-input|rotated-aex-binary-alpha|rotated-aex-straight-source-rgb|rotated-aex-float-math|rotated-aex-trunc-output|rotated-aex-truncated-span|rotated-aex-row-init-straight-zero|rotated-aex-row-init-premul-zero|rotated-aex-row-init-zero|rotated-front-strength|rotated-front-strength-preserve-alpha|rotated-rowdriver-prepass|rotated-rowdriver-prepass-init|rotated-aex-pad|rotated-alpha-sum|rotated-strict|rotated-strict-preserve-alpha|rotated-preserve-alpha|rotated-min-alpha|rotated-max-alpha|rotated-zero-alpha|rotated-gather|rotated-alpha|rotated-alpha-in|rotated-alpha-out|rotated-aex|rotated-aex-init|rotated-map|rotated-map-dest-coeff|rotated-map-alpha-coeff|rotated-map-preserve-alpha|rotated-map-aex|rotated-map-aex-init|rotated-aex-premul|rotated-map-aex-premul] [--direction front|both] [--ignore-noise-variation] [--angle-sign -1] [--sample-sign -1] [--strength-scale auto|ctx|frame-rate|<number>] [--rgb-normalize front-strength] [--witness-json trace.json --witness-points '494,169;579,169']\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
@@ -1371,6 +1512,9 @@ Args parse_args(int argc, char **argv) {
     }
     if (args.input.empty() || args.params.empty() || args.output.empty()) {
         throw std::runtime_error("required arguments: --input, --params, --output");
+    }
+    if (args.witness_json.empty() != args.witness_points.empty()) {
+        throw std::runtime_error("--witness-json and --witness-points must be used together");
     }
     return args;
 }
@@ -1380,6 +1524,8 @@ Args parse_args(int argc, char **argv) {
 int main(int argc, char **argv) {
     try {
         Args args = parse_args(argc, argv);
+        g_witness_points = args.witness_points;
+        g_witness_json_path = args.witness_json;
         Image input = read_png(args.input);
         DirectionalBlurParams params = read_params(args.params);
         const bool include_back = args.direction == "both";
@@ -1393,7 +1539,7 @@ int main(int argc, char **argv) {
         } else if (args.algorithm == "rotated-aex-choreo") {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, false, false, false, false, false, false, "blurred", false, false, false, false, false, false, false, true);
         } else if (args.algorithm == "rotated-aex-full-choreo") {
-            output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, false, false, "blurred", false, false, false, false, false, false, false, true, true);
+            output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, false, true, true, false, false, false, "blurred", false, false, false, false, false, false, false, true, true);
         } else if (args.algorithm == "rotated-aex-rotateback-denom-alpha") {
             output = render_rotated(input, params, args.strength_scale, args.angle_sign, args.sample_sign, false, true, true, true, false, false, false, "blurred", false, false, false, false, false, false, false, true, true, -1, false, false, false, false, false, false, false, false, false, false, false, true);
         } else if (args.algorithm == "rotated-aex-exact-scatter-helper") {

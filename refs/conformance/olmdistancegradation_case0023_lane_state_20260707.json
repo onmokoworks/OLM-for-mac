@@ -1,0 +1,1073 @@
+{
+  "kind": "olmdistancegradation_case0023_lane_state",
+  "materialized_at": "2026-07-07T12:42:50Z",
+  "case_id": "olmdistancegradation_extended__case_0023",
+  "inputs": {
+    "threshold_json": "refs/conformance/olmdistancegradation_case0023_threshold_family_audit_20260701.json",
+    "source_json": "refs/conformance/olmdistancegradation_case0023_source_candidates_audit_20260701.json",
+    "provenance_json": "refs/conformance/olmdistancegradation_case0023_reference_provenance_20260702.json",
+    "bgoff_json": "refs/conformance/olmdistancegradation_case0023_bgoff_current_probe_20260702.json",
+    "aex_cpu_simu_json": "refs/conformance/olmdistancegradation_case0023_aex_cpu_simu_fullframe_20260707.json",
+    "compose_witness_json": "refs/conformance/olmdistancegradation_case0023_compose_witness_20260707.json",
+    "source_model_audit_json": "refs/conformance/olmdistancegradation_case0023_source_model_audit_20260707.json",
+    "reference_export_audit_json": "refs/conformance/olmdistancegradation_case0023_reference_export_audit_20260707.json"
+  },
+  "residual": {
+    "total_px": 73,
+    "edge_bucket_px": 65,
+    "threshold_bucket_px": 8
+  },
+  "threshold_family": {
+    "status": "reference-export-exact-mac-source-output-live",
+    "summary": "The packaged 2026-06-25 16bpc Windows Software reference is byte-identical to the current-AEX Windows recaptures now in the worktree. Do not use the older packaged-stale explanation for this lane.",
+    "next_action": "Keep threshold-family out of implementation tuning; compare Mac AE output against the now-consistent Windows Software reference set and classify the residual by source/output ownership.",
+    "authoritative_request": {
+      "contract": "refs/conformance/olmdistancegradation_case0023_current_aex_export_contract_20260702.md",
+      "request_id": "olmdistancegradation_case0023_current_aex_recapture_20260702",
+      "request_json": "refs/reference_requests/olmdistancegradation_case0023_current_aex_recapture_20260702.json"
+    },
+    "witness_triplet": [
+      {
+        "xy": [
+          414,
+          393
+        ],
+        "live_mac_rgba8": [
+          28,
+          0,
+          238,
+          255
+        ],
+        "packaged_expected_rgba8": [
+          28,
+          0,
+          238,
+          255
+        ],
+        "latest_windows_runtime_final_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "field_debug": {
+          "raw_inside": 35.0142822,
+          "raw_outside": 0.0,
+          "field_x": 0.0,
+          "compose_input_x": 0.0,
+          "inside_constant_binary": 0,
+          "outside_constant_binary": 0
+        }
+      },
+      {
+        "xy": [
+          415,
+          393
+        ],
+        "live_mac_rgba8": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "packaged_expected_rgba8": [
+          28,
+          0,
+          238,
+          255
+        ],
+        "latest_windows_runtime_final_rgba16": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "field_debug": {
+          "raw_inside": 36.0138855,
+          "raw_outside": 0.0,
+          "field_x": 1.0,
+          "compose_input_x": 1.0,
+          "inside_constant_binary": 1,
+          "outside_constant_binary": 0
+        }
+      },
+      {
+        "xy": [
+          416,
+          393
+        ],
+        "live_mac_rgba8": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "packaged_expected_rgba8": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "latest_windows_runtime_final_rgba16": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "field_debug": {
+          "raw_inside": 37.0135117,
+          "raw_outside": 0.0,
+          "field_x": 1.0,
+          "compose_input_x": 1.0,
+          "inside_constant_binary": 1,
+          "outside_constant_binary": 0
+        }
+      }
+    ],
+    "reference_export_audit": {
+      "kind": "olmdistancegradation_case0023_reference_export_audit",
+      "materialized_at": "2026-07-07T12:20:28Z",
+      "case_id": "olmdistancegradation_extended__case_0023",
+      "sample_points": [
+        [
+          1698,
+          7
+        ],
+        [
+          1699,
+          7
+        ],
+        [
+          1700,
+          7
+        ],
+        [
+          414,
+          393
+        ],
+        [
+          415,
+          393
+        ],
+        [
+          416,
+          393
+        ]
+      ],
+      "missing": {},
+      "images": {
+        "packaged_16bpc": {
+          "path": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+          "sha256": "4ffcbd0015557e076067969ce364625e9aad12ffb8c96756a97d7dc6d8ad4910",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "dtype": ">u2",
+          "samples": {
+            "1698,7": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "1699,7": [
+              65535,
+              0,
+              0,
+              65535
+            ],
+            "1700,7": [
+              65535,
+              0,
+              0,
+              65535
+            ],
+            "414,393": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "415,393": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "416,393": [
+              65535,
+              0,
+              0,
+              65535
+            ]
+          }
+        },
+        "current_win_20260703": {
+          "path": "refs/win_references/olm_reference_return_windows_20260703_combined/DistanceGradation/olmdistancegradation_case0023_current_aex_recapture_20260702__software_16bpc__fr24__olmdistancegradation_extended__case_0023_current_aex.png",
+          "sha256": "4ffcbd0015557e076067969ce364625e9aad12ffb8c96756a97d7dc6d8ad4910",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "dtype": ">u2",
+          "samples": {
+            "1698,7": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "1699,7": [
+              65535,
+              0,
+              0,
+              65535
+            ],
+            "1700,7": [
+              65535,
+              0,
+              0,
+              65535
+            ],
+            "414,393": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "415,393": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "416,393": [
+              65535,
+              0,
+              0,
+              65535
+            ]
+          }
+        },
+        "current_win_20260706": {
+          "path": "refs/win_references/olm_return_20260706/DistanceGradation/olmdistancegradation_case0023_current_aex_recapture_20260702__software_16bpc__fr24__olmdistancegradation_extended__case_0023_current_aex.png",
+          "sha256": "4ffcbd0015557e076067969ce364625e9aad12ffb8c96756a97d7dc6d8ad4910",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "dtype": ">u2",
+          "samples": {
+            "1698,7": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "1699,7": [
+              65535,
+              0,
+              0,
+              65535
+            ],
+            "1700,7": [
+              65535,
+              0,
+              0,
+              65535
+            ],
+            "414,393": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "415,393": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "416,393": [
+              65535,
+              0,
+              0,
+              65535
+            ]
+          }
+        },
+        "mac_live_bg_on_20260703": {
+          "path": "refs/reports/ae_single_case_distancegradation_case0023_live_20260703_bg_on/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+          "sha256": "cc68fbe4645a6711ba1ea253885b8d84b2f55c09e30389f43d9ae48da95a4d67",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "dtype": ">u2",
+          "samples": {
+            "1698,7": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "1699,7": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "1700,7": [
+              65535,
+              0,
+              0,
+              65535
+            ],
+            "414,393": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "415,393": [
+              65535,
+              0,
+              0,
+              65535
+            ],
+            "416,393": [
+              65535,
+              0,
+              0,
+              65535
+            ]
+          }
+        },
+        "win_bg_off": {
+          "path": "refs/win_references/olmdistancegradation_16bpc_bg_compose_variants_20260626/DistanceGradation/renders/olmdistancegradation_16bpc_bg_compose_variants_20260626__software_16bpc__fr24__olmdistancegradation_case_0023_bg_off_variant.png",
+          "sha256": "933ea782e5781556b95cfb739abcfb8f0dfa021ff63d99a784ca2497262dbf64",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "dtype": ">u2",
+          "samples": {
+            "1698,7": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "1699,7": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "1700,7": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "414,393": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "415,393": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "416,393": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "mac_bg_off_20260703": {
+          "path": "refs/reports/ae_single_case_distancegradation_case0023_live_20260703_bg_off/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+          "sha256": "28b2b3a99766f30665c5efe646cfbcb50cfba1bc614079140d38df3221cf5391",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "dtype": ">u2",
+          "samples": {
+            "1698,7": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "1699,7": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "1700,7": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "414,393": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "415,393": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "416,393": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "mac_bg_off_refresh": {
+          "path": "refs/reports/ae_single_case_distancegradation_case0023_live_refresh_bg_off/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+          "sha256": "28b2b3a99766f30665c5efe646cfbcb50cfba1bc614079140d38df3221cf5391",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "dtype": ">u2",
+          "samples": {
+            "1698,7": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "1699,7": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "1700,7": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "414,393": [
+              7195,
+              0,
+              61165,
+              65535
+            ],
+            "415,393": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "416,393": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      "comparisons": {
+        "packaged_vs_current_win_20260703": {
+          "status": "compared",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "dtype_a": ">u2",
+          "dtype_b": ">u2",
+          "nonzero_px": 0,
+          "max_diff": 0,
+          "mean_diff": 0.0
+        },
+        "packaged_vs_current_win_20260706": {
+          "status": "compared",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "dtype_a": ">u2",
+          "dtype_b": ">u2",
+          "nonzero_px": 0,
+          "max_diff": 0,
+          "mean_diff": 0.0
+        },
+        "current_win_20260703_vs_20260706": {
+          "status": "compared",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "dtype_a": ">u2",
+          "dtype_b": ">u2",
+          "nonzero_px": 0,
+          "max_diff": 0,
+          "mean_diff": 0.0
+        },
+        "current_win_20260706_vs_mac_live_bg_on_20260703": {
+          "status": "compared",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "dtype_a": ">u2",
+          "dtype_b": ">u2",
+          "nonzero_px": 73,
+          "max_diff": 61165,
+          "mean_diff": 1.0517777054398147
+        },
+        "win_bg_off_vs_mac_bg_off_20260703": {
+          "status": "compared",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "dtype_a": ">u2",
+          "dtype_b": ">u2",
+          "nonzero_px": 73,
+          "max_diff": 65535,
+          "mean_diff": 1.1784258053626544
+        },
+        "win_bg_off_vs_mac_bg_off_refresh": {
+          "status": "compared",
+          "shape": [
+            1080,
+            1920,
+            4
+          ],
+          "dtype_a": ">u2",
+          "dtype_b": ">u2",
+          "nonzero_px": 73,
+          "max_diff": 65535,
+          "mean_diff": 1.1784258053626544
+        }
+      },
+      "reference_exact": true,
+      "safe_claim": "The packaged 2026-06-25 16bpc Windows Software reference is byte-identical to the 2026-07-03 and 2026-07-06 current-AEX Windows recaptures for case_0023. The old packaged-stale explanation is therefore not valid for the current files in this worktree."
+    }
+  },
+  "edge_family": {
+    "status": "upstream-field-ownership-still-live",
+    "summary": "Current Mac bg_off still differs from Windows bg_off by the same 73px cardinality. This means the residual is not just a bg_on compose issue.",
+    "next_action": "Keep binary-proof lane on field ownership / output binding; do not reopen threshold-family tuning from packaged PNG drift.",
+    "authoritative_request": {
+      "acceptance_note": "refs/conformance/olmdistancegradation_case0023_refcon_stack_wordmap_return_acceptance_20260702.md",
+      "active_send_target": false,
+      "package": "refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702.zip",
+      "request_id": "olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702",
+      "status": "superseded_by_local_aex_cpu_simu",
+      "stop_condition": "Return enough typed values to explain the `case_0023` triplet crossing with XY bound from recovered output-word/refcon/stack mapping at `FUN_181170480`. If even that stop cannot be isolated, return the precise failed bind/watchpoint reason plus the exact address/condition and the dumped `r8/r9/[rsp+0x28]` layout and pointer state needed for the next retry.",
+      "superseded_by": "refs/conformance/olmdistancegradation_case0023_aex_cpu_simu_fullframe_20260707.json"
+    },
+    "live_bg_off_mismatches": [
+      "(1699,7)",
+      "(415,393)"
+    ],
+    "matching_bg_off_neighbors": [
+      "(1698,7)",
+      "(1700,7)",
+      "(414,393)",
+      "(416,393)"
+    ],
+    "aex_cpu_simu": {
+      "status": "diagnostic_binary_grounded_field_witness",
+      "kind": "olmdistancegradation_case0023_aex_cpu_simu_fullframe",
+      "inside_threshold": 36,
+      "outside_threshold": 0,
+      "combine": "cvAdd/saturating add modeled as min(inside+outside,1) at sampled binary outputs",
+      "reading": [
+        "Full-frame AEX CPU helper output gives both_add_saturate_field=0 at (1699,7).",
+        "With DistanceGradation compose/invert semantics, field 0 maps to the blue Gradation endpoint for this case, matching current Mac-side field/debug behavior. The current Windows Software export is not stale, so this points at source/output ownership rather than reference drift.",
+        "This does not by itself prove Mac AE final exact, but it strengthens the reference-path split classification for the 65px edge family."
+      ],
+      "samples": [
+        {
+          "both_add_saturate_field": 0.0,
+          "inside_field": 0.0,
+          "inside_mask": 255,
+          "outside_field": 0.0,
+          "outside_mask": 0,
+          "xy": [
+            1698,
+            7
+          ]
+        },
+        {
+          "both_add_saturate_field": 0.0,
+          "inside_field": 0.0,
+          "inside_mask": 255,
+          "outside_field": 0.0,
+          "outside_mask": 0,
+          "xy": [
+            1699,
+            7
+          ]
+        },
+        {
+          "both_add_saturate_field": 1.0,
+          "inside_field": 0.0,
+          "inside_mask": 0,
+          "outside_field": 1.0,
+          "outside_mask": 255,
+          "xy": [
+            1700,
+            7
+          ]
+        },
+        {
+          "both_add_saturate_field": 1.0,
+          "inside_field": 0.0,
+          "inside_mask": 0,
+          "outside_field": 1.0,
+          "outside_mask": 255,
+          "xy": [
+            1699,
+            6
+          ]
+        },
+        {
+          "both_add_saturate_field": 0.0,
+          "inside_field": 0.0,
+          "inside_mask": 255,
+          "outside_field": 0.0,
+          "outside_mask": 0,
+          "xy": [
+            1699,
+            8
+          ]
+        },
+        {
+          "both_add_saturate_field": 0.0,
+          "inside_field": 0.0,
+          "inside_mask": 255,
+          "outside_field": 0.0,
+          "outside_mask": 0,
+          "xy": [
+            414,
+            393
+          ]
+        },
+        {
+          "both_add_saturate_field": 1.0,
+          "inside_field": 1.0,
+          "inside_mask": 255,
+          "outside_field": 0.0,
+          "outside_mask": 0,
+          "xy": [
+            415,
+            393
+          ]
+        },
+        {
+          "both_add_saturate_field": 1.0,
+          "inside_field": 1.0,
+          "inside_mask": 255,
+          "outside_field": 0.0,
+          "outside_mask": 0,
+          "xy": [
+            416,
+            393
+          ]
+        },
+        {
+          "both_add_saturate_field": 0.0,
+          "inside_field": 0.0,
+          "inside_mask": 255,
+          "outside_field": 0.0,
+          "outside_mask": 0,
+          "xy": [
+            415,
+            392
+          ]
+        },
+        {
+          "both_add_saturate_field": 1.0,
+          "inside_field": 1.0,
+          "inside_mask": 255,
+          "outside_field": 0.0,
+          "outside_mask": 0,
+          "xy": [
+            415,
+            394
+          ]
+        }
+      ]
+    },
+    "compose_witness": {
+      "kind": "olmdistancegradation_case0023_compose_witness",
+      "materialized_at": "2026-07-07T12:35:49Z",
+      "status": "compose-writeback-triplet-binary-grounded",
+      "source": "tools/emulation/test_dg_compose.py",
+      "aex": "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex",
+      "function": "DistanceGradation.aex FUN_181170480",
+      "case_id": "olmdistancegradation_extended__case_0023",
+      "leaf_check": {
+        "use_bg_on": {
+          "got": [
+            32768,
+            16384,
+            32768,
+            8192
+          ],
+          "expected": [
+            32768,
+            16384,
+            32768,
+            8192
+          ],
+          "match": true
+        },
+        "use_bg_off": {
+          "got": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "expected": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "match": true
+        }
+      },
+      "triplet": [
+        {
+          "xy": [
+            414,
+            393
+          ],
+          "field_x": 0.0,
+          "raw_words_agrb": [
+            32768,
+            0,
+            3598,
+            30583
+          ],
+          "raw_rgba": [
+            3598,
+            0,
+            30583,
+            32768
+          ],
+          "promoted_rgba": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "windows_final_rgba16": [
+            7195,
+            0,
+            61165,
+            65535
+          ],
+          "match_promoted": true
+        },
+        {
+          "xy": [
+            415,
+            393
+          ],
+          "field_x": 1.0,
+          "raw_words_agrb": [
+            32768,
+            0,
+            32768,
+            0
+          ],
+          "raw_rgba": [
+            32768,
+            0,
+            0,
+            32768
+          ],
+          "promoted_rgba": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "windows_final_rgba16": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "match_promoted": true
+        },
+        {
+          "xy": [
+            416,
+            393
+          ],
+          "field_x": 1.0,
+          "raw_words_agrb": [
+            32768,
+            0,
+            32768,
+            0
+          ],
+          "raw_rgba": [
+            32768,
+            0,
+            0,
+            32768
+          ],
+          "promoted_rgba": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "windows_final_rgba16": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "match_promoted": true
+        }
+      ],
+      "promotion_rule": "trunc(half_word / 32768.0 * 65535.0)",
+      "safe_claim": "For the case_0023 threshold triplet, executing the Windows AEX compose/writeback callback locally maps injected field_x values to the recorded runtime RGBA16 words for this witness. The 2026-07-07 reference export audit supersedes treating those recorded words as the current PNG reference at every point, so this witness is a field-to-color mapping check, not current AE exact evidence.",
+      "limitations": [
+        "field_x values are injected from already-recorded threshold-side field witnesses; this does not re-prove field generation",
+        "the recorded triplet words are not authoritative over the 2026-07-07 current Windows Software PNG recapture",
+        "promotion rule is empirically grounded on this triplet, not all possible intermediate values",
+        "8bpc sibling and non-linear interpolation branches are not covered by this witness",
+        "this is binary-grounded local emulation evidence, not Mac AE exact completion"
+      ]
+    },
+    "source_model_audit": {
+      "kind": "olmdistancegradation_case0023_source_model_audit",
+      "materialized_at": "2026-07-07T12:02:28Z",
+      "status": "source-model-matches-aex-helper-samples",
+      "source": "scripts/materialize_distancegradation_case0023_source_model_audit.py",
+      "input_aex_cpu_simu_json": "refs/conformance/olmdistancegradation_case0023_aex_cpu_simu_fullframe_20260707.json",
+      "source_png": "refs/win_references/olm_return_20260706/DistanceGradation/olmdistancegradation_case0023_current_aex_recapture_20260702__software_16bpc__fr24__olmdistancegradation_extended__case_0023_current_aex_before_effects.png",
+      "inside_threshold": 36,
+      "outside_threshold": 0,
+      "mask_channel": "alpha",
+      "samples": [
+        {
+          "xy": [
+            1698,
+            7
+          ],
+          "mac_source_model": {
+            "inside_field": 0.0,
+            "outside_field": 0.0,
+            "both_add_saturate_field": 0.0
+          },
+          "aex_cpu_helper": {
+            "inside_field": 0.0,
+            "outside_field": 0.0,
+            "both_add_saturate_field": 0.0
+          },
+          "match": true
+        },
+        {
+          "xy": [
+            1699,
+            7
+          ],
+          "mac_source_model": {
+            "inside_field": 0.0,
+            "outside_field": 0.0,
+            "both_add_saturate_field": 0.0
+          },
+          "aex_cpu_helper": {
+            "inside_field": 0.0,
+            "outside_field": 0.0,
+            "both_add_saturate_field": 0.0
+          },
+          "match": true
+        },
+        {
+          "xy": [
+            1700,
+            7
+          ],
+          "mac_source_model": {
+            "inside_field": 0.0,
+            "outside_field": 1.0,
+            "both_add_saturate_field": 1.0
+          },
+          "aex_cpu_helper": {
+            "inside_field": 0.0,
+            "outside_field": 1.0,
+            "both_add_saturate_field": 1.0
+          },
+          "match": true
+        },
+        {
+          "xy": [
+            1699,
+            6
+          ],
+          "mac_source_model": {
+            "inside_field": 0.0,
+            "outside_field": 1.0,
+            "both_add_saturate_field": 1.0
+          },
+          "aex_cpu_helper": {
+            "inside_field": 0.0,
+            "outside_field": 1.0,
+            "both_add_saturate_field": 1.0
+          },
+          "match": true
+        },
+        {
+          "xy": [
+            1699,
+            8
+          ],
+          "mac_source_model": {
+            "inside_field": 0.0,
+            "outside_field": 0.0,
+            "both_add_saturate_field": 0.0
+          },
+          "aex_cpu_helper": {
+            "inside_field": 0.0,
+            "outside_field": 0.0,
+            "both_add_saturate_field": 0.0
+          },
+          "match": true
+        },
+        {
+          "xy": [
+            414,
+            393
+          ],
+          "mac_source_model": {
+            "inside_field": 0.0,
+            "outside_field": 0.0,
+            "both_add_saturate_field": 0.0
+          },
+          "aex_cpu_helper": {
+            "inside_field": 0.0,
+            "outside_field": 0.0,
+            "both_add_saturate_field": 0.0
+          },
+          "match": true
+        },
+        {
+          "xy": [
+            415,
+            393
+          ],
+          "mac_source_model": {
+            "inside_field": 1.0,
+            "outside_field": 0.0,
+            "both_add_saturate_field": 1.0
+          },
+          "aex_cpu_helper": {
+            "inside_field": 1.0,
+            "outside_field": 0.0,
+            "both_add_saturate_field": 1.0
+          },
+          "match": true
+        },
+        {
+          "xy": [
+            416,
+            393
+          ],
+          "mac_source_model": {
+            "inside_field": 1.0,
+            "outside_field": 0.0,
+            "both_add_saturate_field": 1.0
+          },
+          "aex_cpu_helper": {
+            "inside_field": 1.0,
+            "outside_field": 0.0,
+            "both_add_saturate_field": 1.0
+          },
+          "match": true
+        },
+        {
+          "xy": [
+            415,
+            392
+          ],
+          "mac_source_model": {
+            "inside_field": 0.0,
+            "outside_field": 0.0,
+            "both_add_saturate_field": 0.0
+          },
+          "aex_cpu_helper": {
+            "inside_field": 0.0,
+            "outside_field": 0.0,
+            "both_add_saturate_field": 0.0
+          },
+          "match": true
+        },
+        {
+          "xy": [
+            415,
+            394
+          ],
+          "mac_source_model": {
+            "inside_field": 1.0,
+            "outside_field": 0.0,
+            "both_add_saturate_field": 1.0
+          },
+          "aex_cpu_helper": {
+            "inside_field": 1.0,
+            "outside_field": 0.0,
+            "both_add_saturate_field": 1.0
+          },
+          "match": true
+        }
+      ],
+      "safe_claim": "For the recorded case_0023 witness points, a Mac-source-shaped Constant/BOTH field model matches the Windows AEX CPU helper samples. This is not AE exact, but it makes broad field-helper retuning unsafe and keeps the live lane on reference/export/source ownership.",
+      "limitations": [
+        "comparison is sampled at the recorded witness points, not a full image diff against an exported Windows field buffer",
+        "model uses the already-grounded OpenCV-detour EDT implementation rather than re-entering the Mac plug-in binary",
+        "this does not settle stale packaged PNG vs current Windows Software export provenance"
+      ]
+    }
+  },
+  "forbidden_actions": [
+    "Do not promote a global Constant plateau rewrite from the rejected trunc_plateau_binary family.",
+    "Do not retune generic 16bpc writeback from this lane.",
+    "Do not reopen broad color-mix tuning while the field-first witness still stands.",
+    "Do not use the old packaged-stale explanation after the 2026-07-07 reference export audit proved packaged/current Windows exact.",
+    "Do not retune the Both-mode saturating-add field merge while AEX CPU simu evidence says the helper already produces the live edge zero."
+  ],
+  "safe_claim": "Windows packaged/current references are exact for case_0023; threshold-family is no longer a packaged-stale lane in this worktree. Edge/source helper samples match, while the compose witness is now only a recorded field-to-color mapping check; the remaining work is Mac AE output/source ownership closeout without broad retuning."
+}

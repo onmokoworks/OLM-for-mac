@@ -1,0 +1,2346 @@
+{
+  "case_id": "case_0009",
+  "classifications": [
+    {
+      "emitted_254": [],
+      "fn": [
+        6,
+        7,
+        12
+      ],
+      "fp": [],
+      "quantizer": "epsilon",
+      "sequence": "current_double_sum",
+      "tp": []
+    },
+    {
+      "emitted_254": [
+        0,
+        1,
+        4,
+        5,
+        7,
+        11,
+        12,
+        15,
+        16,
+        18,
+        20,
+        21,
+        25
+      ],
+      "fn": [
+        6
+      ],
+      "fp": [
+        0,
+        1,
+        4,
+        5,
+        11,
+        15,
+        16,
+        18,
+        20,
+        21,
+        25
+      ],
+      "quantizer": "truncate",
+      "sequence": "current_double_sum",
+      "tp": [
+        7,
+        12
+      ]
+    },
+    {
+      "emitted_254": [],
+      "fn": [
+        6,
+        7,
+        12
+      ],
+      "fp": [],
+      "quantizer": "epsilon",
+      "sequence": "f32_products_sum_double",
+      "tp": []
+    },
+    {
+      "emitted_254": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        12,
+        15,
+        16,
+        17,
+        18,
+        21,
+        25
+      ],
+      "fn": [],
+      "fp": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        15,
+        16,
+        17,
+        18,
+        21,
+        25
+      ],
+      "quantizer": "truncate",
+      "sequence": "f32_products_sum_double",
+      "tp": [
+        6,
+        7,
+        12
+      ]
+    },
+    {
+      "emitted_254": [],
+      "fn": [
+        6,
+        7,
+        12
+      ],
+      "fp": [],
+      "quantizer": "epsilon",
+      "sequence": "f32_sequential_sum",
+      "tp": []
+    },
+    {
+      "emitted_254": [
+        1,
+        12,
+        15,
+        16
+      ],
+      "fn": [
+        6,
+        7
+      ],
+      "fp": [
+        1,
+        15,
+        16
+      ],
+      "quantizer": "truncate",
+      "sequence": "f32_sequential_sum",
+      "tp": [
+        12
+      ]
+    },
+    {
+      "emitted_254": [],
+      "fn": [
+        6,
+        7,
+        12
+      ],
+      "fp": [],
+      "quantizer": "epsilon",
+      "sequence": "f32_grouped_sum",
+      "tp": []
+    },
+    {
+      "emitted_254": [
+        1,
+        7,
+        15,
+        17
+      ],
+      "fn": [
+        6,
+        12
+      ],
+      "fp": [
+        1,
+        15,
+        17
+      ],
+      "quantizer": "truncate",
+      "sequence": "f32_grouped_sum",
+      "tp": [
+        7
+      ]
+    },
+    {
+      "emitted_254": [],
+      "fn": [
+        6,
+        7,
+        12
+      ],
+      "fp": [],
+      "quantizer": "epsilon",
+      "sequence": "weight_sum_double",
+      "tp": []
+    },
+    {
+      "emitted_254": [
+        0,
+        4,
+        5,
+        7,
+        15,
+        18,
+        20,
+        21,
+        25
+      ],
+      "fn": [
+        6,
+        12
+      ],
+      "fp": [
+        0,
+        4,
+        5,
+        15,
+        18,
+        20,
+        21,
+        25
+      ],
+      "quantizer": "truncate",
+      "sequence": "weight_sum_double",
+      "tp": [
+        7
+      ]
+    },
+    {
+      "emitted_254": [],
+      "fn": [
+        6,
+        7,
+        12
+      ],
+      "fp": [],
+      "quantizer": "epsilon",
+      "sequence": "weight_sum_f32_products_double",
+      "tp": []
+    },
+    {
+      "emitted_254": [
+        0,
+        2,
+        4,
+        5,
+        7,
+        15,
+        17,
+        18,
+        21,
+        25
+      ],
+      "fn": [
+        6,
+        12
+      ],
+      "fp": [
+        0,
+        2,
+        4,
+        5,
+        15,
+        17,
+        18,
+        21,
+        25
+      ],
+      "quantizer": "truncate",
+      "sequence": "weight_sum_f32_products_double",
+      "tp": [
+        7
+      ]
+    },
+    {
+      "emitted_254": [],
+      "fn": [
+        6,
+        7,
+        12
+      ],
+      "fp": [],
+      "quantizer": "epsilon",
+      "sequence": "weight_sum_f32_sequential",
+      "tp": []
+    },
+    {
+      "emitted_254": [],
+      "fn": [
+        6,
+        7,
+        12
+      ],
+      "fp": [],
+      "quantizer": "truncate",
+      "sequence": "weight_sum_f32_sequential",
+      "tp": []
+    }
+  ],
+  "interpretation": "All epsilon-quantized final-sample arithmetic variants miss the Windows alpha=254 set, including the all-one x=7 spoiler. Truncate-only variants either miss target pixels or add broad false positives. Therefore weight/sum precision alone is rejected; the live lane must move to final-polar cell selection, coordinate generation, or source-plane population.",
+  "kind": "olmradialblur_zoom_case0009_final_sample_float_sequence",
+  "points": [
+    {
+      "angle_index": 1046.788818,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        0.9999999404,
+        1.000000119
+      ],
+      "fx": 0.4536130130290985,
+      "fy": 0.7888180017471313,
+      "polar_alpha_candidate": [
+        20,
+        2,
+        2,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 254,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 254,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 254,
+        "weight_sum_f32_products_double": 254,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1101.453613,
+      "reference": [
+        20,
+        2,
+        2,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 0.9999999870904406,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 0.999999962747097,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 0.9999999701976776,
+        "weight_sum_f32_products_double": 0.999999962747097,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.11538708943416509,
+        0.09579490252498957,
+        0.430999867734414,
+        0.35781811050410894
+      ],
+      "weights_product_f32": [
+        0.11538708955049515,
+        0.09579490125179291,
+        0.43099987506866455,
+        0.3578180968761444
+      ],
+      "x": 0,
+      "xi": 1101,
+      "yi": 1046
+    },
+    {
+      "angle_index": 1046.916382,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        0.9999999404
+      ],
+      "fx": 0.5821530222892761,
+      "fy": 0.9163820147514343,
+      "polar_alpha_candidate": [
+        20,
+        2,
+        2,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 254,
+        "f32_grouped_sum": 254,
+        "f32_products_sum_double": 254,
+        "f32_sequential_sum": 254,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1100.582153,
+      "reference": [
+        20,
+        2,
+        2,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 0.9999999682049162,
+        "f32_grouped_sum": 0.9999999403953552,
+        "f32_products_sum_double": 0.9999999403953552,
+        "f32_sequential_sum": 0.9999999403953552,
+        "weight_sum_double": 1.0,
+        "weight_sum_f32_products_double": 1.0,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.03493952241837306,
+        0.048678462830192615,
+        0.3829074552923508,
+        0.5334745594590835
+      ],
+      "weights_product_f32": [
+        0.03493952378630638,
+        0.04867846146225929,
+        0.3829074501991272,
+        0.5334745645523071
+      ],
+      "x": 1,
+      "xi": 1100,
+      "yi": 1046
+    },
+    {
+      "angle_index": 1047.044189,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        0.9999999404,
+        0.9999999404
+      ],
+      "fx": 0.7108150124549866,
+      "fy": 0.04418899863958359,
+      "polar_alpha_candidate": [
+        20,
+        3,
+        3,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 254,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 254,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1099.710815,
+      "reference": [
+        20,
+        3,
+        3,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 1.0000000197180774,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 0.999999986961484,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0000000223517418,
+        "weight_sum_f32_products_double": 0.9999999916180968,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.276406198987587,
+        0.6794048247245712,
+        0.012778795021214595,
+        0.03141020361836899
+      ],
+      "weights_product_f32": [
+        0.2764061987400055,
+        0.6794047951698303,
+        0.012778795324265957,
+        0.031410202383995056
+      ],
+      "x": 2,
+      "xi": 1099,
+      "yi": 1047
+    },
+    {
+      "angle_index": 1047.172241,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        0.9999999404
+      ],
+      "fx": 0.8398439884185791,
+      "fy": 0.1722410023212433,
+      "polar_alpha_candidate": [
+        20,
+        3,
+        3,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1098.839844,
+      "reference": [
+        20,
+        3,
+        3,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 1.0000000211808504,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 1.0000000298023224,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0000000298023224,
+        "weight_sum_f32_products_double": 1.0000000447034836,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.1325705843918854,
+        0.6951884430891937,
+        0.027585431962556584,
+        0.1446555703586867
+      ],
+      "weights_product_f32": [
+        0.13257057964801788,
+        0.6951884627342224,
+        0.027585431933403015,
+        0.14465557038784027
+      ],
+      "x": 3,
+      "xi": 1098,
+      "yi": 1047
+    },
+    {
+      "angle_index": 1047.300415,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        0.9999999404,
+        1.0
+      ],
+      "fx": 0.9689940214157104,
+      "fy": 0.3004150092601776,
+      "polar_alpha_candidate": [
+        20,
+        3,
+        3,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 254,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 254,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 254,
+        "weight_sum_f32_products_double": 254,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1097.968994,
+      "reference": [
+        20,
+        3,
+        3,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 0.9999999696425238,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 0.9999999683350325,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 0.9999999701976776,
+        "weight_sum_f32_products_double": 0.999999969266355,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.021691316316719167,
+        0.6778936446207808,
+        0.009314661343520214,
+        0.2911003479166574
+      ],
+      "weights_product_f32": [
+        0.02169131673872471,
+        0.6778936386108398,
+        0.009314660914242268,
+        0.2911003530025482
+      ],
+      "x": 4,
+      "xi": 1097,
+      "yi": 1047
+    },
+    {
+      "angle_index": 1047.428833,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        0.9999999404,
+        1.0
+      ],
+      "fx": 0.09838899970054626,
+      "fy": 0.4288330078125,
+      "polar_alpha_candidate": [
+        20,
+        3,
+        3,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 254,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 254,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 254,
+        "weight_sum_f32_products_double": 254,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1097.098389,
+      "reference": [
+        20,
+        3,
+        3,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 0.9999999471539012,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 0.9999999403953552,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 0.9999999701976776,
+        "weight_sum_f32_products_double": 0.9999999701976776,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.5149704261420993,
+        0.05619654902329785,
+        0.38664054435503203,
+        0.042192450677248416
+      ],
+      "weights_product_f32": [
+        0.5149704217910767,
+        0.05619654804468155,
+        0.3866405487060547,
+        0.042192451655864716
+      ],
+      "x": 5,
+      "xi": 1097,
+      "yi": 1047
+    },
+    {
+      "angle_index": 1047.557495,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        0.9999999404
+      ],
+      "fx": 0.22802700102329254,
+      "fy": 0.5574949979782104,
+      "polar_alpha_candidate": [
+        20,
+        3,
+        3,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 254,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1096.228027,
+      "reference": [
+        20,
+        3,
+        3,
+        254
+      ],
+      "sequences": {
+        "current_double_sum": 1.000000007324576,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 0.9999999925494194,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0000000149011612,
+        "weight_sum_f32_products_double": 1.0000000074505806,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.34160192006679324,
+        0.10090308854883467,
+        0.4303710938110754,
+        0.12712391247445787
+      ],
+      "weights_product_f32": [
+        0.3416019082069397,
+        0.10090308636426926,
+        0.43037110567092896,
+        0.1271239072084427
+      ],
+      "x": 6,
+      "xi": 1096,
+      "yi": 1047
+    },
+    {
+      "angle_index": 1047.686279,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fx": 0.35791000723838806,
+      "fy": 0.6862789988517761,
+      "polar_alpha_candidate": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 254,
+        "f32_grouped_sum": 254,
+        "f32_products_sum_double": 254,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 254,
+        "weight_sum_f32_products_double": 254,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1095.35791,
+      "reference": [
+        21,
+        3,
+        3,
+        254
+      ],
+      "sequences": {
+        "current_double_sum": 0.9999999701976776,
+        "f32_grouped_sum": 0.9999999403953552,
+        "f32_products_sum_double": 0.9999999552965164,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 0.9999999701976776,
+        "weight_sum_f32_products_double": 0.9999999552965164,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.2014371060068143,
+        0.11228388579179516,
+        0.44065285695247525,
+        0.2456261214465929
+      ],
+      "weights_product_f32": [
+        0.2014371007680893,
+        0.11228388547897339,
+        0.44065284729003906,
+        0.24562612175941467
+      ],
+      "x": 7,
+      "xi": 1095,
+      "yi": 1047
+    },
+    {
+      "angle_index": 1047.815308,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fx": 0.48803699016571045,
+      "fy": 0.8153079748153687,
+      "polar_alpha_candidate": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1094.488037,
+      "reference": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 1.0,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 1.0,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0,
+        "weight_sum_f32_products_double": 1.0,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.09455548510591427,
+        0.09013654007871708,
+        0.4174075247283753,
+        0.3979004500869934
+      ],
+      "weights_product_f32": [
+        0.09455548226833344,
+        0.09013654291629791,
+        0.4174075126647949,
+        0.39790046215057373
+      ],
+      "x": 8,
+      "xi": 1094,
+      "yi": 1047
+    },
+    {
+      "angle_index": 1047.94458,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fx": 0.6182860136032104,
+      "fy": 0.9445800185203552,
+      "polar_alpha_candidate": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1093.618286,
+      "reference": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 1.0,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 1.0,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0,
+        "weight_sum_f32_products_double": 1.0,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.021154582056631455,
+        0.03426539942301332,
+        0.3605594043401581,
+        0.5840206141801971
+      ],
+      "weights_product_f32": [
+        0.021154582500457764,
+        0.03426539897918701,
+        0.3605594038963318,
+        0.5840206146240234
+      ],
+      "x": 9,
+      "xi": 1093,
+      "yi": 1047
+    },
+    {
+      "angle_index": 1048.074097,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fx": 0.7487789988517761,
+      "fy": 0.07409700006246567,
+      "polar_alpha_candidate": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1092.748779,
+      "reference": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 1.0000000223517418,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 1.0000000055879354,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0000000223517418,
+        "weight_sum_f32_products_double": 1.0000000055879354,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.2326062842256782,
+        0.6932967380635979,
+        0.018614722537772632,
+        0.055482277524693036
+      ],
+      "weights_product_f32": [
+        0.23260627686977386,
+        0.6932967305183411,
+        0.018614722415804863,
+        0.055482275784015656
+      ],
+      "x": 10,
+      "xi": 1092,
+      "yi": 1048
+    },
+    {
+      "angle_index": 1048.203735,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        0.9999999404,
+        1.0
+      ],
+      "fx": 0.8795170187950134,
+      "fy": 0.20373499393463135,
+      "polar_alpha_candidate": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 254,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1091.879517,
+      "reference": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 0.9999999985370227,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 1.000000026077032,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0,
+        "weight_sum_f32_products_double": 1.0000000279396772,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.09593638175996233,
+        0.7003286243054063,
+        0.024546599445024242,
+        0.1791883944896071
+      ],
+      "weights_product_f32": [
+        0.0959363803267479,
+        0.7003286480903625,
+        0.02454659901559353,
+        0.17918840050697327
+      ],
+      "x": 11,
+      "xi": 1091,
+      "yi": 1048
+    },
+    {
+      "angle_index": 1048.333618,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        0.9999999404,
+        1.0
+      ],
+      "fx": 0.01049800030887127,
+      "fy": 0.3336179852485657,
+      "polar_alpha_candidate": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 254,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 254,
+        "f32_sequential_sum": 254,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1091.010498,
+      "reference": [
+        21,
+        4,
+        4,
+        254
+      ],
+      "sequences": {
+        "current_double_sum": 0.9999999933636222,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 0.999999983003363,
+        "f32_sequential_sum": 0.9999999403953552,
+        "weight_sum_double": 1.000000013038516,
+        "weight_sum_f32_products_double": 1.0000000128056854,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.6593863448433801,
+        0.006995678596686816,
+        0.3301156678862647,
+        0.003502321712184453
+      ],
+      "weights_product_f32": [
+        0.6593863368034363,
+        0.006995678413659334,
+        0.3301156759262085,
+        0.0035023216623812914
+      ],
+      "x": 12,
+      "xi": 1091,
+      "yi": 1048
+    },
+    {
+      "angle_index": 1048.463623,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        0.9999999404
+      ],
+      "fx": 0.14172400534152985,
+      "fy": 0.4636229872703552,
+      "polar_alpha_candidate": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1090.141724,
+      "reference": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 1.0000000109850533,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 1.0000000074505806,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0000000149011612,
+        "weight_sum_f32_products_double": 1.0000000149011612,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.4603595221051151,
+        0.07601749861717,
+        0.39791648745451624,
+        0.06570650672435985
+      ],
+      "weights_product_f32": [
+        0.46035951375961304,
+        0.07601749897003174,
+        0.3979164958000183,
+        0.06570650637149811
+      ],
+      "x": 13,
+      "xi": 1090,
+      "yi": 1048
+    },
+    {
+      "angle_index": 1048.593872,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fx": 0.27319300174713135,
+      "fy": 0.5938720107078552,
+      "polar_alpha_candidate": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1089.273193,
+      "reference": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 1.0,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 1.0000000074505806,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0,
+        "weight_sum_f32_products_double": 1.0000000074505806,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.2951766648038969,
+        0.11095132448824785,
+        0.4316303334489717,
+        0.1622416772588835
+      ],
+      "weights_product_f32": [
+        0.2951766550540924,
+        0.11095132678747177,
+        0.43163034319877625,
+        0.16224168241024017
+      ],
+      "x": 14,
+      "xi": 1089,
+      "yi": 1048
+    },
+    {
+      "angle_index": 1048.724365,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        0.9999999404,
+        1.0
+      ],
+      "fx": 0.40478500723838806,
+      "fy": 0.7243649959564209,
+      "polar_alpha_candidate": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 254,
+        "f32_grouped_sum": 254,
+        "f32_products_sum_double": 254,
+        "f32_sequential_sum": 254,
+        "weight_sum_double": 254,
+        "weight_sum_f32_products_double": 254,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1088.404785,
+      "reference": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 0.9999999445009657,
+        "f32_grouped_sum": 0.9999999403953552,
+        "f32_products_sum_double": 0.9999999329447746,
+        "f32_sequential_sum": 0.9999998807907104,
+        "weight_sum_double": 0.9999999701976776,
+        "weight_sum_f32_products_double": 0.999999962747097,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.16406207872208256,
+        0.11157291710693329,
+        0.431152884237207,
+        0.2932120901314548
+      ],
+      "weights_product_f32": [
+        0.16406208276748657,
+        0.11157291382551193,
+        0.431152880191803,
+        0.29321208596229553
+      ],
+      "x": 15,
+      "xi": 1088,
+      "yi": 1048
+    },
+    {
+      "angle_index": 1048.855103,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        0.9999999404
+      ],
+      "fx": 0.5366209745407104,
+      "fy": 0.8551030158996582,
+      "polar_alpha_candidate": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 254,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 254,
+        "f32_sequential_sum": 254,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1087.536621,
+      "reference": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 0.9999999726515736,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 0.9999999701976776,
+        "f32_sequential_sum": 0.9999999403953552,
+        "weight_sum_double": 1.0,
+        "weight_sum_f32_products_double": 1.0,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.06714222328440655,
+        0.07775476081593524,
+        0.396236802174883,
+        0.4588662137247752
+      ],
+      "weights_product_f32": [
+        0.06714222580194473,
+        0.07775475829839706,
+        0.3962368071079254,
+        0.4588662087917328
+      ],
+      "x": 16,
+      "xi": 1087,
+      "yi": 1048
+    },
+    {
+      "angle_index": 1048.985962,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fx": 0.6688230037689209,
+      "fy": 0.9859619736671448,
+      "polar_alpha_candidate": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 254,
+        "f32_products_sum_double": 254,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 254,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1086.668823,
+      "reference": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 1.0,
+        "f32_grouped_sum": 0.9999999403953552,
+        "f32_products_sum_double": 0.9999999706633389,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0,
+        "weight_sum_f32_products_double": 0.9999999706633389,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.004649071393927784,
+        0.00938895493892744,
+        0.3265279248371513,
+        0.6594340488299935
+      ],
+      "weights_product_f32": [
+        0.004649071488529444,
+        0.009388955309987068,
+        0.3265279233455658,
+        0.6594340205192566
+      ],
+      "x": 17,
+      "xi": 1086,
+      "yi": 1048
+    },
+    {
+      "angle_index": 1049.117065,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        0.9999999404,
+        1.0
+      ],
+      "fx": 0.8011469841003418,
+      "fy": 0.11706499755382538,
+      "polar_alpha_candidate": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 254,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 254,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 254,
+        "weight_sum_f32_products_double": 254,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1085.801147,
+      "reference": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 0.9999999837114266,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 0.9999999683350325,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 0.9999999850988388,
+        "weight_sum_f32_products_double": 0.9999999701976776,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.17557428511665307,
+        0.7073607024283604,
+        0.023278727819864287,
+        0.09378626973396109
+      ],
+      "weights_product_f32": [
+        0.17557428777217865,
+        0.7073606848716736,
+        0.023278728127479553,
+        0.09378626942634583
+      ],
+      "x": 18,
+      "xi": 1085,
+      "yi": 1049
+    },
+    {
+      "angle_index": 1049.248413,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        0.9999999404
+      ],
+      "fx": 0.9335939884185791,
+      "fy": 0.24841299653053284,
+      "polar_alpha_candidate": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1084.933594,
+      "reference": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 1.0000000159800764,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 1.0000000167638063,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0000000298023224,
+        "weight_sum_f32_products_double": 1.0000000316649675,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.04990989723589223,
+        0.7016771360358973,
+        0.016496116324582033,
+        0.2319168802059508
+      ],
+      "weights_product_f32": [
+        0.04990989714860916,
+        0.701677143573761,
+        0.016496116295456886,
+        0.2319168746471405
+      ],
+      "x": 19,
+      "xi": 1084,
+      "yi": 1049
+    },
+    {
+      "angle_index": 1049.380005,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        0.9999999404
+      ],
+      "fx": 0.0664059966802597,
+      "fy": 0.38000500202178955,
+      "polar_alpha_candidate": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 254,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 254,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1084.066406,
+      "reference": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 0.999999983594856,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 1.0000000149011612,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 0.9999999850988388,
+        "weight_sum_f32_products_double": 1.0000000167638063,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.5788236029620464,
+        0.041171385777518665,
+        0.3547703854565327,
+        0.02523461090274104
+      ],
+      "weights_product_f32": [
+        0.5788236260414124,
+        0.04117138683795929,
+        0.35477039217948914,
+        0.025234611704945564
+      ],
+      "x": 20,
+      "xi": 1084,
+      "yi": 1049
+    },
+    {
+      "angle_index": 1049.511719,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fx": 0.19946299493312836,
+      "fy": 0.5117189884185791,
+      "polar_alpha_candidate": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 254,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 254,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 254,
+        "weight_sum_f32_products_double": 254,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1083.199463,
+      "reference": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 0.9999999850988388,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 0.9999999850988388,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 0.9999999850988388,
+        "weight_sum_f32_products_double": 0.9999999850988388,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.3908870113664591,
+        0.09739399293900775,
+        0.40964997879925136,
+        0.10206900199412061
+      ],
+      "weights_product_f32": [
+        0.3908870220184326,
+        0.09739398956298828,
+        0.40964996814727783,
+        0.10206900537014008
+      ],
+      "x": 21,
+      "xi": 1083,
+      "yi": 1049
+    },
+    {
+      "angle_index": 1049.643677,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fx": 0.33264198899269104,
+      "fy": 0.6436769962310791,
+      "polar_alpha_candidate": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1082.332642,
+      "reference": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 1.0000000298023224,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 1.0000000298023224,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0000000298023224,
+        "weight_sum_f32_products_double": 1.0000000298023224,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.23779502169062994,
+        0.118527992697544,
+        0.4295630191190014,
+        0.21411399629514705
+      ],
+      "weights_product_f32": [
+        0.23779502511024475,
+        0.11852799355983734,
+        0.4295630156993866,
+        0.2141139954328537
+      ],
+      "x": 22,
+      "xi": 1082,
+      "yi": 1049
+    },
+    {
+      "angle_index": 1049.775879,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fx": 0.4661870002746582,
+      "fy": 0.7758790254592896,
+      "polar_alpha_candidate": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1081.466187,
+      "reference": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 1.0,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 1.0,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0,
+        "weight_sum_f32_products_double": 1.0,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.1196386897209436,
+        0.10448228481976685,
+        0.4141743100043982,
+        0.36170471545489136
+      ],
+      "weights_product_f32": [
+        0.11963868886232376,
+        0.10448228567838669,
+        0.41417431831359863,
+        0.3617047071456909
+      ],
+      "x": 23,
+      "xi": 1081,
+      "yi": 1049
+    },
+    {
+      "angle_index": 1049.908203,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fx": 0.5998539924621582,
+      "fy": 0.9082030057907104,
+      "polar_alpha_candidate": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1080.599854,
+      "reference": [
+        21,
+        4,
+        4,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 1.0,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 1.0,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0,
+        "weight_sum_f32_products_double": 1.0,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.036732200736821596,
+        0.055064793472467954,
+        0.3634138068010202,
+        0.5447891989896902
+      ],
+      "weights_product_f32": [
+        0.03673220053315163,
+        0.055064793676137924,
+        0.36341381072998047,
+        0.54478919506073
+      ],
+      "x": 24,
+      "xi": 1080,
+      "yi": 1049
+    },
+    {
+      "angle_index": 1050.040771,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        0.9999999404,
+        1.0
+      ],
+      "fx": 0.7337650060653687,
+      "fy": 0.0407710000872612,
+      "polar_alpha_candidate": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 254,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 254,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 254,
+        "weight_sum_f32_products_double": 254,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1079.733765,
+      "reference": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 0.9999999919024812,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 0.9999999916180968,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 0.9999999925494194,
+        "weight_sum_f32_products_double": 0.9999999925494194,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.25538032499008523,
+        0.703848667472073,
+        0.01085466696094084,
+        0.02991633312632036
+      ],
+      "weights_product_f32": [
+        0.2553803324699402,
+        0.703848659992218,
+        0.01085466705262661,
+        0.02991633303463459
+      ],
+      "x": 25,
+      "xi": 1079,
+      "yi": 1050
+    },
+    {
+      "angle_index": 1050.173584,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        0.9999999404
+      ],
+      "fx": 0.8679199814796448,
+      "fy": 0.1735839992761612,
+      "polar_alpha_candidate": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1078.86792,
+      "reference": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 1.0000000059220027,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 1.0000000149011612,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0000000149011612,
+        "weight_sum_f32_products_double": 1.0000000298023224,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.10915304264926817,
+        0.7172629729757318,
+        0.0229269778392327,
+        0.1506570214369285
+      ],
+      "weights_product_f32": [
+        0.10915303975343704,
+        0.7172629833221436,
+        0.022926978766918182,
+        0.1506570279598236
+      ],
+      "x": 26,
+      "xi": 1078,
+      "yi": 1050
+    },
+    {
+      "angle_index": 1050.306641,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        0.9999999404
+      ],
+      "fx": 0.0023189999628812075,
+      "fy": 0.30664101243019104,
+      "polar_alpha_candidate": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1078.002319,
+      "reference": [
+        21,
+        3,
+        3,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 1.0000000514131913,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 1.00000005151378,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.000000051455573,
+        "weight_sum_f32_products_double": 1.0000000515719876,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.6917511328500581,
+        0.001607899535549323,
+        0.30592991857352203,
+        0.0007111004964434689
+      ],
+      "weights_product_f32": [
+        0.6917511224746704,
+        0.0016078995540738106,
+        0.30592992901802063,
+        0.0007111005252227187
+      ],
+      "x": 27,
+      "xi": 1078,
+      "yi": 1050
+    },
+    {
+      "angle_index": 1050.439819,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fx": 0.13696299493312836,
+      "fy": 0.43981900811195374,
+      "polar_alpha_candidate": [
+        20,
+        2,
+        2,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1077.136963,
+      "reference": [
+        20,
+        2,
+        2,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 1.0000000149011607,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 1.0000000149011612,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0000000149011607,
+        "weight_sum_f32_products_double": 1.0000000149011612,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.4834569429076083,
+        0.07672407043541263,
+        0.37958007297860874,
+        0.06023892857953106
+      ],
+      "weights_product_f32": [
+        0.48345693945884705,
+        0.07672406733036041,
+        0.3795800805091858,
+        0.060238927602767944
+      ],
+      "x": 28,
+      "xi": 1077,
+      "yi": 1050
+    },
+    {
+      "angle_index": 1050.573242,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fx": 0.2718510031700134,
+      "fy": 0.5732420086860657,
+      "polar_alpha_candidate": [
+        20,
+        2,
+        2,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1076.271851,
+      "reference": [
+        20,
+        2,
+        2,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 1.0,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 1.0,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0,
+        "weight_sum_f32_products_double": 1.0,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.3107434032644214,
+        0.11601458804951292,
+        0.41740559356556517,
+        0.1558364151205005
+      ],
+      "weights_product_f32": [
+        0.31074339151382446,
+        0.11601458489894867,
+        0.4174056053161621,
+        0.15583641827106476
+      ],
+      "x": 29,
+      "xi": 1076,
+      "yi": 1050
+    },
+    {
+      "angle_index": 1050.706909,
+      "cell_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "fx": 0.40685999393463135,
+      "fy": 0.7069090008735657,
+      "polar_alpha_candidate": [
+        20,
+        2,
+        2,
+        255
+      ],
+      "q_epsilon": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "q_truncate": {
+        "current_double_sum": 255,
+        "f32_grouped_sum": 255,
+        "f32_products_sum_double": 255,
+        "f32_sequential_sum": 255,
+        "weight_sum_double": 255,
+        "weight_sum_f32_products_double": 255,
+        "weight_sum_f32_sequential": 255
+      },
+      "radius_index": 1075.40686,
+      "reference": [
+        20,
+        2,
+        2,
+        255
+      ],
+      "sequences": {
+        "current_double_sum": 1.0,
+        "f32_grouped_sum": 1.0,
+        "f32_products_sum_double": 1.0,
+        "f32_sequential_sum": 1.0,
+        "weight_sum_double": 1.0,
+        "weight_sum_f32_products_double": 1.0,
+        "weight_sum_f32_sequential": 1.0
+      },
+      "weights_current_double": [
+        0.17384399699955821,
+        0.11924700212687611,
+        0.41929600906581044,
+        0.28761299180775524
+      ],
+      "weights_product_f32": [
+        0.17384399473667145,
+        0.11924700438976288,
+        0.419295996427536,
+        0.28761300444602966
+      ],
+      "x": 30,
+      "xi": 1075,
+      "yi": 1050
+    }
+  ],
+  "schema": 1,
+  "source_locus": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmradialblur_zoom_case0009_quantize_locus_20260709.json",
+  "target_alpha254": [
+    6,
+    7,
+    12
+  ]
+}

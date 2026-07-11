@@ -1,0 +1,454 @@
+{
+  "cases": [
+    {
+      "id": "final_random10_olm_radialblur_01",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": 1,
+        "__index_10": 1222,
+        "__index_11": 2,
+        "__index_12": 166,
+        "__index_13": 31,
+        "__index_15": 0,
+        "__index_17": 4.5422,
+        "__index_18": 6,
+        "__index_2": [
+          720,
+          805
+        ],
+        "__index_20": 39.9632,
+        "__index_21": 9.6282,
+        "__index_22": 60,
+        "__index_24": 96,
+        "__index_25": 1,
+        "__index_27": 401,
+        "__index_28": 43,
+        "__index_29": 92,
+        "__index_4": 917,
+        "__index_5": 2,
+        "__index_6": 32,
+        "__index_7": 22
+      },
+      "random_seed": 20266630,
+      "reason": "Per-plugin final random reference case 1/10 generated from Windows range metadata seed 20266630."
+    },
+    {
+      "id": "final_random10_olm_radialblur_02",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 2,
+        "__index_10": 225,
+        "__index_11": 3,
+        "__index_12": 350,
+        "__index_13": 5,
+        "__index_15": 0,
+        "__index_17": 3.292,
+        "__index_18": -167,
+        "__index_2": [
+          1283,
+          480
+        ],
+        "__index_20": 25.2618,
+        "__index_21": 5.8734,
+        "__index_22": 2,
+        "__index_24": 58,
+        "__index_25": 1,
+        "__index_27": 788,
+        "__index_28": 50,
+        "__index_29": 18,
+        "__index_4": 1344,
+        "__index_5": 1,
+        "__index_6": 469,
+        "__index_7": 66
+      },
+      "random_seed": 20266631,
+      "reason": "Per-plugin final random reference case 2/10 generated from Windows range metadata seed 20266631."
+    },
+    {
+      "id": "final_random10_olm_radialblur_03",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": 1,
+        "__index_10": 1228,
+        "__index_11": 3,
+        "__index_12": 35,
+        "__index_13": 78,
+        "__index_15": 1,
+        "__index_17": 2.0418,
+        "__index_18": 21,
+        "__index_2": [
+          1846,
+          154
+        ],
+        "__index_20": 10.5604,
+        "__index_21": 2.1186,
+        "__index_22": 44,
+        "__index_24": 20,
+        "__index_25": 1,
+        "__index_27": 176,
+        "__index_28": 6,
+        "__index_29": 42,
+        "__index_4": 1771,
+        "__index_5": 2,
+        "__index_6": 406,
+        "__index_7": 11
+      },
+      "random_seed": 20266632,
+      "reason": "Per-plugin final random reference case 3/10 generated from Windows range metadata seed 20266632."
+    },
+    {
+      "id": "final_random10_olm_radialblur_04",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 2,
+        "__index_10": 232,
+        "__index_11": 3,
+        "__index_12": 219,
+        "__index_13": 52,
+        "__index_15": 1,
+        "__index_17": 4.7916,
+        "__index_18": -152,
+        "__index_2": [
+          490,
+          909
+        ],
+        "__index_20": 44.859,
+        "__index_21": 8.3638,
+        "__index_22": 87,
+        "__index_24": 82,
+        "__index_25": 1,
+        "__index_27": 563,
+        "__index_28": 12,
+        "__index_29": 66,
+        "__index_4": 198,
+        "__index_5": 3,
+        "__index_6": 343,
+        "__index_7": 56
+      },
+      "random_seed": 20266633,
+      "reason": "Per-plugin final random reference case 4/10 generated from Windows range metadata seed 20266633."
+    },
+    {
+      "id": "final_random10_olm_radialblur_05",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": 1,
+        "__index_10": 1235,
+        "__index_11": 1,
+        "__index_12": 403,
+        "__index_13": 26,
+        "__index_15": 0,
+        "__index_17": 3.5414,
+        "__index_18": 35,
+        "__index_2": [
+          1053,
+          584
+        ],
+        "__index_20": 30.1577,
+        "__index_21": 4.609,
+        "__index_22": 29,
+        "__index_24": 44,
+        "__index_25": 1,
+        "__index_27": 949,
+        "__index_28": 19,
+        "__index_29": 91,
+        "__index_4": 624,
+        "__index_5": 2,
+        "__index_6": 280,
+        "__index_7": 1
+      },
+      "random_seed": 20266634,
+      "reason": "Per-plugin final random reference case 5/10 generated from Windows range metadata seed 20266634."
+    },
+    {
+      "id": "final_random10_olm_radialblur_06",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 2,
+        "__index_10": 238,
+        "__index_11": 1,
+        "__index_12": 88,
+        "__index_13": 100,
+        "__index_15": 0,
+        "__index_17": 2.2912,
+        "__index_18": -138,
+        "__index_2": [
+          1617,
+          259
+        ],
+        "__index_20": 15.4563,
+        "__index_21": 0.8542,
+        "__index_22": 71,
+        "__index_24": 6,
+        "__index_25": 1,
+        "__index_27": 337,
+        "__index_28": 26,
+        "__index_29": 16,
+        "__index_4": 1051,
+        "__index_5": 3,
+        "__index_6": 217,
+        "__index_7": 46
+      },
+      "random_seed": 20266635,
+      "reason": "Per-plugin final random reference case 6/10 generated from Windows range metadata seed 20266635."
+    },
+    {
+      "id": "final_random10_olm_radialblur_07",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": 1,
+        "__index_10": 1242,
+        "__index_11": 1,
+        "__index_12": 272,
+        "__index_13": 73,
+        "__index_15": 1,
+        "__index_17": 1.041,
+        "__index_18": 50,
+        "__index_2": [
+          260,
+          1014
+        ],
+        "__index_20": 49.7549,
+        "__index_21": 7.0994,
+        "__index_22": 13,
+        "__index_24": 68,
+        "__index_25": 2,
+        "__index_27": 724,
+        "__index_28": 33,
+        "__index_29": 40,
+        "__index_4": 1478,
+        "__index_5": 2,
+        "__index_6": 154,
+        "__index_7": 90
+      },
+      "random_seed": 20266636,
+      "reason": "Per-plugin final random reference case 7/10 generated from Windows range metadata seed 20266636."
+    },
+    {
+      "id": "final_random10_olm_radialblur_08",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 2,
+        "__index_10": 245,
+        "__index_11": 2,
+        "__index_12": 456,
+        "__index_13": 47,
+        "__index_15": 1,
+        "__index_17": 3.7908,
+        "__index_18": -123,
+        "__index_2": [
+          823,
+          689
+        ],
+        "__index_20": 35.0535,
+        "__index_21": 3.3446,
+        "__index_22": 55,
+        "__index_24": 30,
+        "__index_25": 2,
+        "__index_27": 112,
+        "__index_28": 39,
+        "__index_29": 64,
+        "__index_4": 1905,
+        "__index_5": 3,
+        "__index_6": 91,
+        "__index_7": 35
+      },
+      "random_seed": 20266637,
+      "reason": "Per-plugin final random reference case 8/10 generated from Windows range metadata seed 20266637."
+    },
+    {
+      "id": "final_random10_olm_radialblur_09",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": 1,
+        "__index_10": 1249,
+        "__index_11": 2,
+        "__index_12": 141,
+        "__index_13": 21,
+        "__index_15": 1,
+        "__index_17": 2.5406,
+        "__index_18": 65,
+        "__index_2": [
+          1387,
+          364
+        ],
+        "__index_20": 20.3521,
+        "__index_21": 9.5898,
+        "__index_22": 97,
+        "__index_24": 92,
+        "__index_25": 2,
+        "__index_27": 499,
+        "__index_28": 46,
+        "__index_29": 89,
+        "__index_4": 332,
+        "__index_5": 1,
+        "__index_6": 28,
+        "__index_7": 80
+      },
+      "random_seed": 20266638,
+      "reason": "Per-plugin final random reference case 9/10 generated from Windows range metadata seed 20266638."
+    },
+    {
+      "id": "final_random10_olm_radialblur_10",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 2,
+        "__index_10": 252,
+        "__index_11": 3,
+        "__index_12": 325,
+        "__index_13": 94,
+        "__index_15": 0,
+        "__index_17": 1.2904,
+        "__index_18": -109,
+        "__index_2": [
+          30,
+          39
+        ],
+        "__index_20": 5.6508,
+        "__index_21": 5.835,
+        "__index_22": 39,
+        "__index_24": 54,
+        "__index_25": 2,
+        "__index_27": 885,
+        "__index_28": 2,
+        "__index_29": 14,
+        "__index_4": 759,
+        "__index_5": 3,
+        "__index_6": 465,
+        "__index_7": 25
+      },
+      "random_seed": 20266639,
+      "reason": "Per-plugin final random reference case 10/10 generated from Windows range metadata seed 20266639."
+    }
+  ],
+  "common_setup": {
+    "bit_depth": 32,
+    "comp_height": 1080,
+    "comp_width": 1920,
+    "frame_rate": 24,
+    "project_renderer": "SOFTWARE"
+  },
+  "effect": {
+    "match_name": "OLM RadialBlur",
+    "name": "OLM RadialBlur"
+  },
+  "inputs": [
+    {
+      "description": "Opaque deterministic stress image.",
+      "id": "random_final_grid_1920x1080",
+      "path": "inputs/random_final_grid_1920x1080.png"
+    },
+    {
+      "description": "RGBA deterministic stress image.",
+      "id": "random_final_alpha_1920x1080",
+      "path": "inputs/random_final_alpha_1920x1080.png"
+    }
+  ],
+  "manifest_requirements": [
+    "AE version",
+    "project_gpu_accel_type.current_name and raw value; current_name must be SOFTWARE",
+    "project bit depth / bits per channel; must be 32bpc / 32",
+    "project color management settings",
+    "before_effects_frame PNG or float-preserving input snapshot for every case",
+    "effect output in EXR by default; if that is impossible, return typed float-preserving TIFF/TIF, HDR, or raw-float RGBA and record the exact format",
+    "output header metadata: container format, channel order/count, sample type, bits per channel, dimensions, color space, alpha mode, and endianness when applicable",
+    "SHA-256 for every before/effect artifact, any raw-float payload, and the returned manifest",
+    "if only PNG output is possible, record output_format=png and float_preserving=false",
+    "all effect property names, match_names, indices, values, enabled/active state"
+  ],
+  "render_sets": [
+    {
+      "id": "software_32bpc",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "bit_depth": "32bpc",
+      "bits_per_channel": 32,
+      "required": true
+    }
+  ],
+  "request_id": "olm_bitdepth_32bpc_olmradialblur_exr_20260710",
+  "why": [
+    "Existing Windows range-metadata random10 cases for OLMRadialBlur; preserve case IDs and parameters.",
+    "Render in a 32bpc Windows AE SOFTWARE project; CUDA/GPU is outside this request.",
+    "Return EXR first, with typed float-preserving fallback only when EXR is unavailable.",
+    "PNG-only output is probe-only and cannot support an AE exact claim."
+  ],
+  "scope": {
+    "bit_depth": "32bpc",
+    "plugin_filters": [
+      "OLMRadialBlur"
+    ],
+    "feature_filters": [],
+    "plugin_count": 1,
+    "case_count": 10
+  },
+  "compare_policy": {
+    "path": "refs/conformance/bitdepth_32bpc_compare_policy_20260703.md",
+    "mode": "float-preserving-required",
+    "png_only_classification": "probe-only"
+  },
+  "output_requirements": {
+    "preferred_formats": [
+      "exr"
+    ],
+    "acceptable_float_preserving_fallbacks": [
+      "tiff",
+      "tif",
+      "hdr",
+      "raw-float-rgba"
+    ],
+    "png_only_allowed": true,
+    "png_only_classification": "probe-only",
+    "float_preserving_required_for_ae_exact": true,
+    "record_exact_format_used": true,
+    "artifact_integrity": {
+      "sha256_required": true,
+      "sha256_scope": [
+        "before_effects_frame",
+        "effect_output",
+        "raw_float_payload_when_used",
+        "manifest"
+      ],
+      "header_metadata_required": true,
+      "header_metadata_scope": [
+        "container_format",
+        "channel_order",
+        "channel_count",
+        "sample_type",
+        "bits_per_channel",
+        "width",
+        "height",
+        "color_space",
+        "alpha_mode",
+        "endianness_when_applicable"
+      ],
+      "typed_fallbacks": [
+        {
+          "format": "tiff",
+          "required_sample_type": "float32 or float64",
+          "required_bits_per_channel": 32
+        },
+        {
+          "format": "tif",
+          "required_sample_type": "float32 or float64",
+          "required_bits_per_channel": 32
+        },
+        {
+          "format": "hdr",
+          "required_sample_type": "float32",
+          "required_bits_per_channel": 32
+        },
+        {
+          "format": "raw-float-rgba",
+          "required_sample_type": "IEEE-754 float32",
+          "required_bits_per_channel": 32,
+          "required_metadata": [
+            "width",
+            "height",
+            "channel_order",
+            "endianness"
+          ]
+        }
+      ]
+    }
+  }
+}

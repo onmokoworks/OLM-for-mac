@@ -1,0 +1,64 @@
+{
+  "kind": "dblur_iterate8_area_audit",
+  "schema": 1,
+  "date": "2026-07-11",
+  "verdict": "pass",
+  "claim": "PF Iterate8 walks host-world area_words [left, top, right, bottom], while callback 0x180006980 applies padded work offsets.",
+  "audited_file": "tools/emulation/dblur_fullrender_host_fixture_20260711.py",
+  "binary": "plugins_2025/OLMDirectionalBlur.aex",
+  "evidence": {
+    "asm": [
+      "disasm/OLMDirectionalBlur.aex.asm.txt:180005267-18000528a",
+      "disasm/OLMDirectionalBlur.aex.asm.txt:18000563e-180005665",
+      "disasm/OLMDirectionalBlur.aex.asm.txt:180006700-1800067ee"
+    ],
+    "decomp": [
+      "decomp/OLMDirectionalBlur.aex.c.txt:2433-2434",
+      "decomp/OLMDirectionalBlur.aex.c.txt:2568-2569",
+      "decomp/OLMDirectionalBlur.aex.c.txt:3187-3221"
+    ],
+    "callback": {
+      "populate": "0x180006980",
+      "output": "0x180006b30",
+      "work_index_formula": "((params+0x8098+y) * params+0x80a0 + (params+0x809c+x)) * 16"
+    },
+    "wrapper_stack_at_suite_callback": {
+      "area": "RSP+0x28",
+      "refcon": "RSP+0x30",
+      "pixel_fn": "RSP+0x38",
+      "dst": "RSP+0x40"
+    },
+    "world_layout": {
+      "data": "+0x18",
+      "rowbytes": "+0x20",
+      "width": "+0x24",
+      "height": "+0x28",
+      "extent": "+0x2c",
+      "extent_words": "[left, top, right, bottom]"
+    }
+  },
+  "observed_existing_fixture_witness": {
+    "area_words": [0, 0, 960, 540],
+    "host_world": [960, 540],
+    "work_dimensions": [1104, 1104],
+    "callbacks": ["0x180006980", "0x180006b30"],
+    "callback_error": 0
+  },
+  "smoke": {
+    "command": "python3 tools/emulation/smoke_dblur_fullrender_detour_equivalence_20260711.py",
+    "exit_code": 0,
+    "stdout": "{\"status\": \"pass\", \"dimensions\": [16, 16], \"argb_sha256\": \"8b8a28887908f089024bc38f69221148b612adfdcf44afc63d282216a0d7d3ae\", \"actual_aex_instructions\": 326427, \"detoured_instructions\": 124347, \"rowdriver_detour_calls\": 26}",
+    "assertions": {
+      "real_and_detoured_status": "ok",
+      "real_and_detoured_output_complete": true,
+      "real_and_detoured_output_equal": true,
+      "iterate_areas": [[0, 0, 16, 16], [0, 0, 16, 16]]
+    }
+  },
+  "concrete_bug_found": null,
+    "post_audit_hardening": "The loop now rejects rowbytes < width*4 and verifies that the declared final source and destination rows are readable.",
+  "changed_paths": [
+    "refs/conformance/dblur_iterate8_area_audit_20260711.md",
+    "refs/conformance/dblur_iterate8_area_audit_20260711.json"
+  ]
+}

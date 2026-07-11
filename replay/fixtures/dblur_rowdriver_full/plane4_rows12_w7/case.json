@@ -1,0 +1,35 @@
+{
+  "id": "plane4_rows12_w7",
+  "width": 7,
+  "height": 4,
+  "row_start": 1,
+  "row_end": 3,
+  "zero_alpha": [],
+  "front_count": 6,
+  "back_count": 5,
+  "pre_front_count": 5,
+  "pre_back_count": 6,
+  "exponent": 0.75,
+  "scale": 0.9,
+  "edge_x": 1.15,
+  "edge_y": 0.42,
+  "map_row": 1.6,
+  "extent": 3.1,
+  "input_sha256": {
+    "source.bin": "7d4ec1cbeaad691a067d451c2d8f5dc1122d7543e7c4432422768aaedeb41d08",
+    "destination.bin": "c6a9030d3cc8a02f2f452bbc7ad5c4f5a85279959f3198847e7634ce714360b3",
+    "denominator.bin": "9348502bdd5705dc88d63ff0f745975a1d89becbc83d581d6c3e0f846189d87c",
+    "alpha.bin": "35f78657eec9b6f910dd04f495828f8607cc7fbbd61fc1f5b4d3beaa1ba04da0",
+    "comp_map.bin": "d609ff88f1d995341bb857c32128837ba0bfb8640e75be2541f9488d27da7949"
+  },
+  "actual_sha256": {
+    "destination.bin": "a404be279b551bedfe1303e5f6a90aeceaf8fe5ac8bfe0f5c587a98ec5823384",
+    "denominator.bin": "8e2307ac79e8f873c1df04d8c0cd0557f2bb09aa5d213e674f36cb7c68b6be53",
+    "alpha.bin": "d0c7a70aa14babfb17f44347191f4bb99d85d3a654ede6fdd107b6ba12002a2f"
+  },
+  "execution": {
+    "instructions": 7658,
+    "canary_failures": [],
+    "unimplemented_imports": []
+  }
+}

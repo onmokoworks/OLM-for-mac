@@ -14,6 +14,7 @@ from check_reference_request_status import load_status_rows
 
 
 HANDOFF_NAME = "refs/reference_requests/WIN_CODEX_HANDOFF.md"
+REQUIRED_32BPC_COMPARE_POLICY_PATH = "refs/conformance/bitdepth_32bpc_compare_policy_20260703.md"
 
 
 def parse_args() -> argparse.Namespace:
@@ -62,7 +63,65 @@ def request_id_from_json(name: str, data: bytes) -> str:
     cases = value.get("cases")
     if not isinstance(cases, list) or not cases:
         raise ValueError(f"{name}: missing non-empty cases")
+    validate_request_contract(name, value)
     return request_id
+
+
+def validate_request_contract(name: str, value: dict[str, Any]) -> None:
+    request_id = value.get("request_id")
+    scope = value.get("scope")
+    if not isinstance(scope, dict):
+        if isinstance(request_id, str) and request_id.startswith("olm_bitdepth_"):
+            raise ValueError(f"{name}: missing scope object")
+        return
+    bit_depth = scope.get("bit_depth")
+    if bit_depth not in {"16bpc", "32bpc"}:
+        if isinstance(request_id, str) and request_id.startswith("olm_bitdepth_"):
+            raise ValueError(f"{name}: unexpected scope.bit_depth={bit_depth!r}")
+        return
+
+    compare_policy = value.get("compare_policy")
+    if not isinstance(compare_policy, dict):
+        raise ValueError(f"{name}: missing compare_policy object")
+
+    output_requirements = value.get("output_requirements")
+    if not isinstance(output_requirements, dict):
+        raise ValueError(f"{name}: missing output_requirements object")
+
+    preferred_formats = output_requirements.get("preferred_formats")
+    if not isinstance(preferred_formats, list) or not all(isinstance(item, str) and item for item in preferred_formats):
+        raise ValueError(f"{name}: output_requirements.preferred_formats must be a non-empty string list")
+
+    record_exact_format_used = output_requirements.get("record_exact_format_used")
+    if not isinstance(record_exact_format_used, bool) or not record_exact_format_used:
+        raise ValueError(f"{name}: output_requirements.record_exact_format_used must be true")
+
+    if bit_depth == "32bpc":
+        if compare_policy.get("path") != REQUIRED_32BPC_COMPARE_POLICY_PATH:
+            raise ValueError(
+                f"{name}: compare_policy.path must be {REQUIRED_32BPC_COMPARE_POLICY_PATH!r} for 32bpc"
+            )
+        if compare_policy.get("mode") != "float-preserving-required":
+            raise ValueError(f"{name}: compare_policy.mode must be 'float-preserving-required' for 32bpc")
+        if compare_policy.get("png_only_classification") != "probe-only":
+            raise ValueError(f"{name}: compare_policy.png_only_classification must be 'probe-only' for 32bpc")
+        if preferred_formats != ["exr"]:
+            raise ValueError(f"{name}: output_requirements.preferred_formats must be ['exr'] for 32bpc")
+        if output_requirements.get("png_only_classification") != "probe-only":
+            raise ValueError(f"{name}: output_requirements.png_only_classification must be 'probe-only' for 32bpc")
+        if output_requirements.get("float_preserving_required_for_ae_exact") is not True:
+            raise ValueError(
+                f"{name}: output_requirements.float_preserving_required_for_ae_exact must be true for 32bpc"
+            )
+    else:
+        if compare_policy.get("mode") != "bitdepth-aware-integer-exact":
+            raise ValueError(f"{name}: compare_policy.mode must be 'bitdepth-aware-integer-exact' for 16bpc")
+        if preferred_formats != ["png"]:
+            raise ValueError(f"{name}: output_requirements.preferred_formats must be ['png'] for 16bpc")
+        if output_requirements.get("float_preserving_required_for_ae_exact") is not False:
+            raise ValueError(
+                f"{name}: output_requirements.float_preserving_required_for_ae_exact must be false for 16bpc"
+            )
 
 
 def packaged_request_ids(package: Path) -> list[str]:

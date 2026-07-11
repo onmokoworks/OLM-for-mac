@@ -197,6 +197,57 @@ def summarize_imported_set(imported_set_dir: Path | None) -> dict[str, Any] | No
     }
 
 
+def load_request_contracts(root: Path, request_ids: list[str]) -> dict[str, dict[str, Any]]:
+    requests_dir = root / "refs" / "reference_requests"
+    contracts: dict[str, dict[str, Any]] = {}
+    if not requests_dir.exists():
+        return contracts
+    for path in sorted(requests_dir.glob("*.json")):
+        try:
+            data = load_json(path)
+        except Exception:
+            continue
+        request_id = data.get("request_id")
+        if not isinstance(request_id, str) or request_id not in request_ids:
+            continue
+        contracts[request_id] = {
+            "bit_depth": (data.get("scope") or {}).get("bit_depth") if isinstance(data.get("scope"), dict) else None,
+            "compare_policy": data.get("compare_policy"),
+            "output_requirements": data.get("output_requirements"),
+            "request_json": str(path.resolve()),
+        }
+    return contracts
+
+
+def classify_reference_quality(
+    source_summary: dict[str, Any],
+    imported_summary: dict[str, Any] | None,
+    request_contracts: dict[str, dict[str, Any]],
+) -> tuple[str, str]:
+    all_contracts = list(request_contracts.values())
+    if not all_contracts:
+        return ("unclassified", "No matching tracked request contract was found for this return.")
+    is_32 = any(contract.get("bit_depth") == "32bpc" for contract in all_contracts)
+    float_present = bool(source_summary.get("float_preserving_present")) or bool((imported_summary or {}).get("float_preserving_present"))
+    exr_present = bool(source_summary.get("preferred_exr_present")) or bool((imported_summary or {}).get("preferred_exr_present"))
+    if not is_32:
+        return ("reference-return", "Matched request contract is not 32bpc-specific; treat this as a normal reference return.")
+    if exr_present and float_present:
+        return (
+            "float-preserving-return",
+            "32bpc request contract matched and the return includes EXR/float-preserving assets.",
+        )
+    if float_present:
+        return (
+            "float-preserving-fallback-return",
+            "32bpc request contract matched and the return preserves float samples, but not via EXR.",
+        )
+    return (
+        "probe-only-png-return",
+        "32bpc request contract matched, but the return is PNG-only/non-float-preserving, so it remains probe-only.",
+    )
+
+
 def summarize_next_actions(path: Path | None) -> dict[str, Any] | None:
     if path is None or not path.exists():
         return None
@@ -215,6 +266,16 @@ def build_report(source_root: Path, source: Path, imported_set_dir: Path | None,
     source_summary = summarize_source(source_root)
     imported_summary = summarize_imported_set(imported_set_dir)
     next_action_summary = summarize_next_actions(next_actions_json)
+    request_ids = sorted(
+        {
+            *source_summary.get("request_ids", []),
+            *((imported_summary or {}).get("matched_requests", {}) or {}).keys(),
+        }
+    )
+    request_contracts = load_request_contracts(repo_root(), request_ids)
+    reference_quality, reference_quality_reason = classify_reference_quality(
+        source_summary, imported_summary, request_contracts
+    )
     next_lane = "reference-followup"
     if next_action_summary is None:
         next_lane = "reference-imported"
@@ -225,8 +286,11 @@ def build_report(source_root: Path, source: Path, imported_set_dir: Path | None,
         "schema": 1,
         "source": str(source.resolve()),
         "next_lane": next_lane,
+        "reference_quality": reference_quality,
+        "reference_quality_reason": reference_quality_reason,
         "source_summary": source_summary,
         "imported_summary": imported_summary,
+        "request_contracts": request_contracts,
         "next_action": next_action_summary,
     }
 
@@ -237,6 +301,8 @@ def render_markdown(report: dict[str, Any]) -> str:
         "",
         f"- Source: `{report['source']}`",
         f"- next_lane: `{report['next_lane']}`",
+        f"- reference_quality: `{report['reference_quality']}`",
+        f"- reference_quality_reason: `{report['reference_quality_reason']}`",
         "",
     ]
     source_summary = report["source_summary"]
@@ -272,6 +338,25 @@ def render_markdown(report: dict[str, Any]) -> str:
                 "",
             ]
         )
+    contracts = report.get("request_contracts") or {}
+    if contracts:
+        lines.extend(
+            [
+                "## Request Contracts",
+                "",
+            ]
+        )
+        for request_id, contract in sorted(contracts.items()):
+            lines.extend(
+                [
+                    f"### {request_id}",
+                    "",
+                    f"- bit_depth: `{contract.get('bit_depth')}`",
+                    f"- compare_policy: `{contract.get('compare_policy')}`",
+                    f"- output_requirements: `{contract.get('output_requirements')}`",
+                    "",
+                ]
+            )
     next_action = report.get("next_action")
     if next_action:
         lines.append("## Next Action")

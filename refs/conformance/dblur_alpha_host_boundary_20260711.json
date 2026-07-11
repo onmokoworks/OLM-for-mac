@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "kind": "dblur_alpha_host_boundary_closeout",
+  "case_id": "db_angle0_alpha_fade_hard_edges",
+  "status": "blocked-reference-provenance",
+  "mac_premultiplied_replay": {
+    "input_rgba8_sha256": "abd939d253b6b955f2912f8ace74cb4c1fe19b44029479fb30bb095082c63ed8",
+    "callback_argb8_sha256": "cb1c843b9bcbcee8e37bfdf54208578888c70b11ed2de157e1a7c76d11df815c",
+    "max_diff": 1,
+    "differing_bytes": 234049,
+    "differing_pixels": 183121,
+    "alpha_differing_bytes": 0,
+    "input_unpremultiply": "floor((premultiplied_rgb * 255 + floor(alpha / 2)) / alpha)"
+  },
+  "floor_input_probe": {
+    "actual_aex_raw_argb8_sha256": "7f64aa7caef89cbdf2bb86eee5f6b87f063fb2927e85e10e8abbce2d2fcd5bd9",
+    "actual_aex_instructions": 557498777,
+    "modeled_nearest_premultiply": {
+      "max_diff": 1,
+      "differing_bytes": 22993
+    },
+    "mac_ae": {
+      "max_diff": 1,
+      "differing_bytes": 23053,
+      "differing_pixels": 21778,
+      "alpha_differing_bytes": 0
+    }
+  },
+  "architecture_probe": {
+    "straight_input_raw_differing_bytes": 2055,
+    "straight_input_raw_differing_pixels": 1646,
+    "floor_input_actual_aex_vs_mac_raw_differing_bytes": 78,
+    "max_diff": 1
+  },
+  "input_formula_search": {
+    "ambiguous_groups": 64,
+    "best_case_specific_local_search_differing_bytes": 12621,
+    "production_eligible": false
+  },
+  "reference_provenance": {
+    "windows_ae_version": "26.2x49",
+    "loaded_aex_sha256_recorded": false,
+    "expected_2025_aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+  },
+  "next_required_evidence": "same-run Windows loaded-binary identity plus complete PF input/output ARGB8 worlds"
+}

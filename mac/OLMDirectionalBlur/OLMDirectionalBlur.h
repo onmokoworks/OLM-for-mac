@@ -104,7 +104,8 @@ typedef struct {
 	A_long seed;
 	A_long noise_offset;
 	PF_FpLong thickness;
-	PF_FpLong render_scale;
+	PF_FpLong render_scale_x;
+	PF_FpLong render_scale_y;
 } OLMDirectionalBlurInfo;
 
 extern "C" {

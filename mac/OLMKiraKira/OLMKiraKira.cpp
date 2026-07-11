@@ -413,7 +413,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	};
 
 	std::vector<float> seed = MakeSeed<PixelT>(input, info);
-	const A_long passes = 3;
+	// Windows Blur Mode 1 uses one box-filter pass. Keep the existing
+	// three-pass behavior for Mode 2 and the currently unimplemented modes.
+	const A_long passes = info.blur_mode == 1 ? 1 : 3;
 	const double glow_rotation = info.glow_rotation;
 	const std::vector<float> zero_ray((size_t)w * h, 0.0f);
 	auto make_ray = [&](A_long raw_len, double angle) -> std::vector<float> {

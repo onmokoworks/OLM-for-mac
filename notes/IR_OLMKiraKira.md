@@ -43,7 +43,11 @@
 | Strength | Seed exponent / ray enable strength, not the final brightness multiplier. | single-ray refs |
 | Vertical/Horizontal/Diagonal lengths | Per-ray raw length; zero skips ray, nonzero feeds `boxFilter` width. | binary + single-ray refs |
 | Glow Rotation | Adds to diagonal/axis ray angles and temp-canvas rotation. | helper audit |
-| Blur Mode 2 | Three-pass horizontal `boxFilter` helper path. | `FUN_181150790` |
+| Blur Mode 1 | One horizontal `boxFilter` call through `FUN_181280bc0`; branch `0x181150958 -> 0x18115122e`, call at `0x181151290`. | static binary dispatch |
+| Blur Mode 2 | Three-pass horizontal `boxFilter` helper path; calls at `0x18115116f`, `0x1811511c2`, `0x181151215`. | static binary dispatch |
+| Blur Mode 3 | One call to `FUN_181272ec0`, the recovered GaussianBlur wrapper; branch `0x18115096a -> 0x1811510a9`. | static binary dispatch |
+| Blur Mode 4 | Inline recursive/separable accumulation body at `0x181150979..0x181150f3a`; no subordinate filter call. The UI label “Exponential” is semantic metadata, not derived from the body alone. | static binary dispatch/body |
+| Merge Mode 1/2 | `param_15==1` selects `FUN_18114fd90`; `==2` selects `FUN_18114ffd0`. | static vtable dispatch |
 | Channel | Seed function; current traced `Channel=2` vtable normalize byte returns `1`. | vtable / refs |
 
 ## Current Mac Source Gap Audit
@@ -89,7 +93,8 @@ Windows behavior.
      formula;
    - center-copy the source seed into the first temp ROI;
    - forward-rotate through OpenCV `warpAffine` semantics;
-   - apply Blur Mode 2 as three horizontal normalized box filters;
+   - dispatch Blur Mode: one box filter (1), three box filters (2), Gaussian
+     wrapper (3), or the inline recursive accumulation body (4);
    - rotate back through OpenCV `warpAffine` semantics;
    - center-copy back to the final ray buffer.
 3. Aggregate five ray buffers with `FUN_18114fd90` shape:

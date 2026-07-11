@@ -29,6 +29,14 @@ def repo_root() -> Path:
     return Path(__file__).resolve().parents[1]
 
 
+def load_json(path: Path) -> dict | None:
+    try:
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
+    except Exception:
+        return None
+    return data if isinstance(data, dict) else None
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -518,6 +526,20 @@ def main() -> int:
         print(summary_proc.stdout, end="" if summary_proc.stdout.endswith("\n") else "\n")
         if summary_proc.returncode != 0:
             return summary_proc.returncode
+        summary_data = load_json(output_json)
+        if isinstance(summary_data, dict):
+            source_summary = summary_data.get("source_summary")
+            request_ids = source_summary.get("request_ids") if isinstance(source_summary, dict) else None
+            print(
+                "[INFO] win-reference quality: "
+                f"{summary_data.get('reference_quality', 'unknown')} "
+                f"(requests={request_ids or []}, "
+                f"float_preserving={source_summary.get('float_preserving_present') if isinstance(source_summary, dict) else None}, "
+                f"preferred_exr={source_summary.get('preferred_exr_present') if isinstance(source_summary, dict) else None})"
+            )
+            reason = summary_data.get("reference_quality_reason")
+            if isinstance(reason, str) and reason:
+                print(f"[INFO] win-reference quality reason: {reason}")
 
     if not args.no_archive:
         archived = archive_paths(archive_targets_for_chosen(new_dir, Path(str(chosen["path"]))), old_dir)

@@ -59,7 +59,8 @@ def main() -> int:
             {
                 "OLMColorKey/reference_manifest.json": json.dumps(
                     {"kind": "ae_effect_reference_manifest", "cases": []}
-                )
+                ),
+                "OLMColorKey/case_0001.png": "png",
             },
         )
         write_zip(
@@ -301,7 +302,10 @@ def main() -> int:
         assert kinds["olmblur_standalone_witness.zip"] == "olmblur-standalone-witness"
         assert "other.zip" not in kinds
         commands = {Path(row["path"]).name: row["suggested_command"] for row in data["candidates"]}
+        hints = {Path(row["path"]).name: row["hints"] for row in data["candidates"]}
         assert "--dispatch-dir /tmp/olm_reference_dispatch" in commands["returned_refs.zip"]
+        assert any("asset_formats" in hint for hint in hints["returned_refs.zip"])
+        assert any("float_preserving_present=False" in hint for hint in hints["returned_refs.zip"])
         assert "--require-all-pass" in commands["ae_host.zip"]
         assert "Windows debugger/helper" in commands["runtime_requests.zip"]
         assert "Windows debugger/helper" in commands["wrapped_runtime_requests.zip"]

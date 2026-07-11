@@ -33,6 +33,8 @@ BLUR_MODE_NONE = 1
 BLUR_MODE_NO_SCALE = 2
 BLUR_MODE_SCALE = 3
 
+SOURCE_MASK_ALPHA_THRESHOLD = 1.5 / 255.0
+
 
 def key_for_name(name: str) -> str:
     return name.strip().lower().replace(" ", "_").replace("/", "_")
@@ -94,7 +96,7 @@ def dt_to_normalized(mask: np.ndarray, threshold: int, ds_scale: float) -> np.nd
 def render(input_rgba: np.ndarray, params: dict[str, object], ds_x: float, ds_y: float) -> np.ndarray:
     rgba = input_rgba.astype(np.float32) / 255.0
     alpha = rgba[..., 3]
-    mask = (alpha > 0.0).astype(np.uint8)
+    mask = (alpha > SOURCE_MASK_ALPHA_THRESHOLD).astype(np.uint8)
 
     invert = bool(int(params.get("invert", 0)))
     in_out = int(params.get("in_out", IN_OUT_BOTH))

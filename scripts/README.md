@@ -9,6 +9,7 @@ Windows 実機との証拠収集、Mac AE 検証、比較、レポート更新�
 
 - `publish_windows_request_to_share.sh`
 - `stage_next_windows_request_to_share.py`
+- `materialize_windows_send_first_staging.py`
 - `publish_pending_runtime_trace_packages_to_share.py`
 - `intake_latest_windows_return_from_share.py`
 - `list_olm_return_candidates.py`
@@ -18,6 +19,7 @@ Windows 実機との証拠収集、Mac AE 検証、比較、レポート更新�
 使いどころ:
 
 - `/Volumes/onmk/olm_pr/new` に request zip を置く
+- repo 内 `refs/share_staging/...` に現在の Send First zip と README を再生成する
 - Windows 側から戻ってきた `*_return_windows.zip` を検出する
 - 戻り zip を repo に取り込み、比較レポートを更新する
 - 返却が `PNG-only` だったか `EXR` / float-preserving だったかを summary で確認する
@@ -82,12 +84,18 @@ Windows 実機との証拠収集、Mac AE 検証、比較、レポート更新�
 - `analyze_pending_runtime_trace_packages.py`
 - `summarize_runtime_trace_proof_lanes.py`
 - `summarize_windows_fresh_param_parity.py`
+- `materialize_windows_fresh_param_parity.py`
+- `materialize_16bpc_exact_manifest.py`
+- `materialize_32bpc_probe_status.py`
 
 使いどころ:
 
 - conformance 状態を再集計する
 - pending queue を更新する
 - dashboard / ledger 向けの中間 JSON / Markdown を再出力する
+- Windows fresh defaults / ranges の parity を `refs/conformance/` に確定記録する
+- live request/result から covered 16bpc exact slice を `refs/conformance/` に確定記録する
+- 32bpc probe lane を `probe-only-png-return` / `awaiting-return` として committed に固定する
 
 ## 6. 補助
 
@@ -118,6 +126,12 @@ pending runtime trace をまとめて置く:
 python3 scripts/publish_pending_runtime_trace_packages_to_share.py
 ```
 
+project-local Send First staging を再生成:
+
+```sh
+python3 scripts/materialize_windows_send_first_staging.py
+```
+
 返却候補を見る:
 
 ```sh
@@ -130,6 +144,17 @@ python3 scripts/list_olm_return_candidates.py /Volumes/onmk/olm_pr/new /Volumes/
 python3 scripts/intake_latest_windows_return_from_share.py --share-root /Volumes/onmk/olm_pr
 ```
 
+reference request zip の契約チェック:
+
+```sh
+python3 refs/scripts/verify_reference_request_package.py path/to/package.zip
+```
+
+2026-07-03 以降、この verifier は `request_id` / `cases` だけでなく request
+JSON の契約も見ます。とくに `32bpc` は `compare_policy` と
+`output_requirements` が揃っていないと通らないので、EXR-first /
+`probe-only` の約束が zip 検証でも落ちます。
+
 返却の format / float-preserving 状態を見る:
 
 ```sh
@@ -137,14 +162,45 @@ python3 scripts/summarize_win_reference_return.py path/to/returned_reference.zip
   --imported-set-dir refs/win_references/<set_id>
 ```
 
+この summary は 2026-07-03 以降、`reference_quality` も出します。
+とくに 32bpc は `float-preserving-return` / `probe-only-png-return` を
+request 契約と返却 format の両方から判定します。
+
 `refs/scripts/verify_manifest.py` は、manifest 上の `frame` が `.png` でも
 reference/candidate 両方に同 stem の `.exr` companion があれば、比較時に
-そちらを優先します。
+そちらを優先します。2026-07-03 以降は EXR/TIFF/HDR companion の比較を
+float のまま行うので、`32bpc` の `0 < delta < 1` も潰れません。
+比較ポリシーは
+`refs/conformance/bitdepth_32bpc_compare_policy_20260703.md` を見てください。
 
 次に何を送るべきか確認:
 
 ```sh
 python3 scripts/print_next_olm_action.py ~/Downloads /tmp
+```
+
+出力の `pending Windows refs` は PNG/EXR などの Windows reference request
+だけを数えます。`pending runtime traces` は debugger/runtime trace package
+の待ち数です。前者が `0` でも後者が `1` なら、次に送るものは runtime trace
+zip です。
+
+Windows Send First staging の中身が現在の pending queue と一致しているか確認:
+
+```sh
+python3 refs/scripts/smoke_windows_send_first_staging.py
+```
+
+`OLMDirectionalBlur` のローカル witness JSON 出力と比較器を確認:
+
+```sh
+python3 refs/scripts/smoke_olmdirectionalblur_cli_witness.py
+python3 refs/scripts/smoke_compare_directionalblur_trace.py
+```
+
+AEX CPU simulation / OpenCV detour の最低限の健全性を確認:
+
+```sh
+python3 refs/scripts/smoke_emulation_opencv_detours.py
 ```
 
 ## 見方の目安

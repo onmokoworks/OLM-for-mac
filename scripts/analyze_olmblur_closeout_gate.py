@@ -38,25 +38,42 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     case0006_provenance = read_json(args.case0006_provenance_json)
     case0007_halfstep = read_json(args.case0007_halfstep_json)
     source_candidates = read_json(args.source_candidates_json)
+    case0006_status = str(case0006_contract["decision"]["status"])
+    case0006_closed = case0006_status == "outcome-a-current-aex-matches-canonical"
+    if case0006_closed:
+        case0006_reason = (
+            "The non-Legacy 16bpc `case_0006` Windows reference/provenance question is closed as Outcome A: "
+            "the imported current-AEX export is byte-identical to the canonical Windows Software reference. "
+            "Remaining work, if any, is Mac export / AE-host run provenance before source changes."
+        )
+        case0006_next = (
+            "Preserve current source behavior. If this lane is reopened, audit Mac export / AE-host run "
+            "provenance for `case_0006`; only ask Windows again if a new contradictory current-AEX artifact appears."
+        )
+        closeout_status = "case0006-windows-provenance-closed-and-split-case0007"
+    else:
+        case0006_reason = (
+            "The non-Legacy 16bpc lane `case_0006` is still a provenance/export gate because no same-run Windows "
+            "current-AEX export is imported, while Legacy `case_0007` is no longer one unresolved family: its "
+            "16bpc witness is already closed as a Windows-side pre-store float delta and only the old normalized "
+            "8bpc half-step witness remains open."
+        )
+        case0006_next = (
+            "Preserve current source behavior. Advance only by importing a same-run Windows current-AEX export for "
+            "`case_0006`, or by capturing the old normalized 8bpc Windows pre-store float/helper boundary at "
+            "`(488,941)` for `case_0007`."
+        )
+        closeout_status = "provenance-first-case0006-and-split-case0007"
 
     return {
         "kind": "olmblur_closeout_gate_audit",
         "schema": 1,
         "plugin": "OLMBlur",
-        "closeout_status": "provenance-first-case0006-and-split-case0007",
+        "closeout_status": closeout_status,
         "decision": {
             "status": "do-not-reopen-source-without-two-specific-external-proofs",
-            "reason": (
-                "The non-Legacy 16bpc lane `case_0006` is still a provenance/export gate because no same-run Windows "
-                "current-AEX export is imported, while Legacy `case_0007` is no longer one unresolved family: its "
-                "16bpc witness is already closed as a Windows-side pre-store float delta and only the old normalized "
-                "8bpc half-step witness remains open."
-            ),
-            "next_allowed_action": (
-                "Preserve current source behavior. Advance only by importing a same-run Windows current-AEX export for "
-                "`case_0006`, or by capturing the old normalized 8bpc Windows pre-store float/helper boundary at "
-                "`(488,941)` for `case_0007`."
-            ),
+            "reason": case0006_reason,
+            "next_allowed_action": case0006_next,
         },
         "lanes": [
             {
@@ -108,6 +125,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "Do not spend the next Windows round on the already-closed 16bpc Legacy witness unless it is only a debugger control sample.",
         ],
         "supporting_evidence": {
+            "case0006_contract_status": case0006_status,
             "case0006_provenance_status": case0006_provenance["outcome"]["status"],
             "case0006_point_pattern": case0006_provenance["overall_point_pattern"],
             "case0007_decision_status": case0007_halfstep["decision"]["status"],

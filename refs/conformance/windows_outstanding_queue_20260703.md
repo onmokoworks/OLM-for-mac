@@ -9,10 +9,20 @@ so multiple live asks can coexist in `/Volumes/onmk/olm_pr/new`.
 
 Current share payload:
 
-- `olm_runtime_trace_windows_ae_addproperty_stall_diagnostics_20260703.zip`
-- `olm_reference_requests_pending_20260703.zip`
-- `olm_reference_request_16bpc_toondilate_exact_20260703.zip`
-- `olm_reference_request_32bpc_colorkey_probe_20260703.zip`
+- `olm_reference_request_32bpc_full_probe_exr_rerun_20260703.zip`
+
+Runtime-trace pending asks are tracked separately in:
+
+- `refs/reports/pending_runtime_trace_packages.md`
+
+That report now carries the current hard-lane context for each live debugger ask,
+so the shared-folder payload can stay small while the proof intent remains
+explicit in-repo.
+
+32bpc status authority:
+
+- `refs/conformance/bitdepth_32bpc_probe_status_20260703.md`
+- `refs/conformance/bitdepth_32bpc_compare_policy_20260703.md`
 
 ## Reason
 
@@ -34,16 +44,18 @@ Result:
 
 - passed
 - still regenerates the mixed 16bpc request as `48` cases
-- still confirms focused `OLMColorKey` 32bpc (`9` cases)
+- still confirms focused `OLMColorKey` 32bpc (`9` cases), but only as
+  `probe-only-png-return`
 - still confirms focused `OLMToonDilate` 32bpc (`3` cases)
 
 ## Practical consequence
 
 Windows-side work can now pick up:
 
-1. the host `addProperty` diagnostic
-2. the pending reference bundle
-3. the focused `OLMToonDilate` 16bpc request
-4. the focused `OLMColorKey` 32bpc probe
+1. the broad `32bpc` EXR-first full-probe rerun bundle
 
 without requiring another republish between each item.
+
+For runtime-trace work, use `refs/reports/pending_runtime_trace_packages.md`
+as the source of truth for which request is still live, why it exists, and what
+exact witness it must return.

@@ -68,7 +68,7 @@ def normalize_manifest_param(plugin: str, path_parts: list[str], leaf: str, prop
         if leaf in {"Use Ramp", "Highlight Color"}:
             return leaf, "direct"
         if leaf in {"Vertical Color Ramp", "Horizontal Color Ramp", "Diagonal Color Ramp", "Diagonal 2 Color Ramp", "Highlight Color Ramp", "Ramp"}:
-            return None, "windows-only-legacy-ui"
+            return None, "windows-topic-only-legacy-ui"
     if plugin == "OLMRadialBlur":
         aliases = {
             ("Outer Blur", "Outer Blur"): "Outer Blur",
@@ -202,6 +202,7 @@ def audit() -> dict:
             "manifest_exact": Counter(),
             "manifest_alias": Counter(),
             "manifest_windows_only": Counter(),
+            "manifest_topic_only": Counter(),
             "manifest_unknown": Counter(),
             "request_exact": Counter(),
             "request_alias": Counter(),
@@ -231,7 +232,12 @@ def audit() -> dict:
                         param.get("property_index"),
                     )
                     if normalized is None:
-                        target = plugin_rows[plugin]["manifest_windows_only" if "windows-only" in reason or "likely-semantic" in reason else "manifest_alias"]
+                        if "topic-only" in reason:
+                            target = plugin_rows[plugin]["manifest_topic_only"]
+                        elif "windows-only" in reason or "likely-semantic" in reason:
+                            target = plugin_rows[plugin]["manifest_windows_only"]
+                        else:
+                            target = plugin_rows[plugin]["manifest_alias"]
                         target[raw_name or "(blank)"] += 1
                     elif normalized in schema_params:
                         target = plugin_rows[plugin]["manifest_exact" if reason == "direct" else "manifest_alias"]
@@ -281,6 +287,7 @@ def audit() -> dict:
                 "manifest_exact_unique": len(row["manifest_exact"]),
                 "manifest_alias_unique": len(row["manifest_alias"]),
                 "manifest_windows_only_unique": len(row["manifest_windows_only"]),
+                "manifest_topic_only_unique": len(row["manifest_topic_only"]),
                 "manifest_unknown_unique": len(row["manifest_unknown"]),
                 "request_exact_unique": len(row["request_exact"]),
                 "request_alias_unique": len(row["request_alias"]),
@@ -288,6 +295,7 @@ def audit() -> dict:
                 "request_unknown_unique": len(row["request_unknown"]),
                 "manifest_alias_examples": row["manifest_alias"].most_common(12),
                 "manifest_windows_only_examples": row["manifest_windows_only"].most_common(12),
+                "manifest_topic_only_examples": row["manifest_topic_only"].most_common(12),
                 "manifest_unknown_examples": row["manifest_unknown"].most_common(12),
                 "request_alias_examples": row["request_alias"].most_common(12),
                 "request_windows_only_examples": row["request_windows_only"].most_common(12),
@@ -317,6 +325,7 @@ def write_report(report: dict) -> None:
         "- `manifest_exact` / `request_exact`: same visible parameter name exists in the Mac source schema.",
         "- `alias`: name drift that can be normalized mechanically from group/path context.",
         "- `windows_only`: Windows manifests/requests mention a control that does not exist as a current Mac source-visible parameter.",
+        "- `topic_only`: Windows manifests show a grouped topic/header label that is not itself a child control in the Mac source schema.",
         "- `unknown`: still not mapped; investigate before treating the mismatch as algorithm-only.",
         "",
     ]
@@ -324,10 +333,11 @@ def write_report(report: dict) -> None:
         lines.append(f"## {plugin['plugin']}")
         lines.append("")
         lines.append(f"- Source schema params: `{plugin['source_schema_param_count']}`")
-        lines.append(f"- Windows manifest exact/alias/windows-only/unknown: `{plugin['manifest_exact_unique']}` / `{plugin['manifest_alias_unique']}` / `{plugin['manifest_windows_only_unique']}` / `{plugin['manifest_unknown_unique']}`")
+        lines.append(f"- Windows manifest exact/alias/topic-only/windows-only/unknown: `{plugin['manifest_exact_unique']}` / `{plugin['manifest_alias_unique']}` / `{plugin['manifest_topic_only_unique']}` / `{plugin['manifest_windows_only_unique']}` / `{plugin['manifest_unknown_unique']}`")
         lines.append(f"- Request exact/alias/windows-only/unknown: `{plugin['request_exact_unique']}` / `{plugin['request_alias_unique']}` / `{plugin['request_windows_only_unique']}` / `{plugin['request_unknown_unique']}`")
         for label, key in [
             ("Manifest alias examples", "manifest_alias_examples"),
+            ("Manifest topic-only examples", "manifest_topic_only_examples"),
             ("Manifest windows-only examples", "manifest_windows_only_examples"),
             ("Manifest unknown examples", "manifest_unknown_examples"),
             ("Request alias examples", "request_alias_examples"),

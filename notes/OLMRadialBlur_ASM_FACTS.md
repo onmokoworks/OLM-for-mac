@@ -69,6 +69,25 @@ Decompiler pointer-index aliases: `+0xe == +0x38`, `+0x10 == +0x40`,
   the last output stage does not consume `0xf252` directly: by that point the
   preserved validity/alpha side channel has already been collapsed into the
   normalized polar RGBA alpha stored in `+0xe`.
+- 2026-07-10 Windows sampler-args return binds the final inverse sampler call
+  for Zoom case_0009 at `OLMRadialBlur+0x5e68` and its return at `+0x5e6d`.
+  The coordinate gate is `(EBX,R13D)=(x,y)`. For `(7,0)`, `(8,0)`, and
+  `(24,0)`, `RCX` is the same pool, `RDX`/`RDI` identify a distinct
+  four-float destination cell, and `R8/R9` are consistently `1104/1800`.
+  The cell destinations advance by 16 bytes, matching the static
+  `FUN_180009d80` output-cell stride. This proves the sampler ABI and cell
+  binding, not the values of the upstream `+0xf250/+0xf252/+0xe` collapse
+  planes; see
+  `refs/conformance/olmradialblur_zoom_case0009_sampler_args_intake_20260710.md`.
+- 2026-07-05 local Unicorn emulation confirms this final inverse-sample
+  boundary for tiny Rotation `case_0010`. After running the CPU `.aex` through
+  `FUN_180008690 -> FUN_180007520 -> FUN_180004640`, the normalized `+0xe`
+  cells retained in earlier Windows CDB logs match to `<=1 ULP` RGB with exact
+  alpha. A direct call sequence `FUN_180001b10(1614,6)` followed by
+  `FUN_180001000(+0xe, sample_x=1603.839558785, sample_y=844.317504883)`
+  returns near-black `[-0.004081939, -0.004081939, -0.004081939, 1.0]`.
+  Therefore the legacy PNG white witness at `(1614,6)` is not explained by the
+  observed CPU `.aex` normalized-polar final sampler path.
 
 ## Size-Variation / Scatter-Span Source (2026-06-15, RESOLVED)
 

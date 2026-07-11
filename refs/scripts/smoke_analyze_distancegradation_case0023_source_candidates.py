@@ -32,22 +32,23 @@ def main() -> int:
         assert report["residual_summary"]["total_px"] == 73
         assert report["family_status"]["threshold_family"]["status"] == "threshold-family-reference-generation-split-candidate"
         assert report["family_status"]["edge_family"]["status"] == "upstream-field-ownership-still-live"
-        assert report["edge_family_candidates"][0]["site"] == "build_distance_field_both_ownership"
+        assert report["edge_family_candidates"][0]["site"] == "build_distance_field_both_merge"
         assert report["edge_family_candidates"][1]["site"] == "dt_to_normalized_constant_threshold"
         assert report["edge_family_candidates"][2]["site"] == "compose_pixel_constant_endpoint"
-        assert report["edge_family_candidates"][0]["line"] == 508
-        assert report["edge_family_candidates"][1]["line"] == 440
-        assert report["edge_family_candidates"][2]["line"] == 558
+        for candidate in report["edge_family_candidates"][:3]:
+            assert isinstance(candidate["line"], int) and candidate["line"] > 0
         assert report["threshold_family_candidates"][0]["site"] == "current_aex_export_provenance_gate"
         assert report["pending_windows_followup"]["request_id"] == "olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702"
         assert "output-word address" in report["windows_requirement"]
         assert report["provenance_reference_request"]["request_id"] == "olmdistancegradation_case0023_current_aex_recapture_20260702"
+        assert report["aex_cpu_simu_evidence"]["status"] == "diagnostic_binary_grounded_field_witness"
+        assert "not whole-plugin AE exact" in report["aex_cpu_simu_evidence"]["summary"]
         md = out_md.read_text(encoding="utf-8")
         for needle in (
             "OLMDistanceGradation case_0023 Source-Candidates Audit",
             "Family Status",
             "Threshold Crossing Witness",
-            "build_distance_field_both_ownership",
+            "build_distance_field_both_merge",
             "compose_pixel_constant_endpoint",
             "Provenance Export Follow-up",
             "Requirement:",

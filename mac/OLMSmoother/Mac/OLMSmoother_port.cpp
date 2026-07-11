@@ -255,6 +255,24 @@ struct LinearThreeOffsetFunction : LinearEvalBase {
 };
 
 // ============================================================================
+// Debug trace (mirrors the Smoother2 g_olmsmoother2_trace_* convention):
+// set OLMSMOOTHER_TRACE_X / OLMSMOOTHER_TRACE_Y to log dispatcher decisions
+// near the row and every interp-executor step writing that dst pixel.
+// ============================================================================
+static bool trace_xy_enabled(int *tx, int *ty)
+{
+	static int cached_tx = -2, cached_ty = -2;
+	if (cached_tx == -2) {
+		const char *ex = getenv("OLMSMOOTHER_TRACE_X");
+		const char *ey = getenv("OLMSMOOTHER_TRACE_Y");
+		cached_tx = (ex && ey) ? atoi(ex) : -1;
+		cached_ty = (ex && ey) ? atoi(ey) : -1;
+	}
+	*tx = cached_tx; *ty = cached_ty;
+	return cached_tx >= 0;
+}
+
+// ============================================================================
 // FUN_180001620 — 16-bit color blend (literal).
 // Reads 9-neighbor pointer table at param_1+0x10..0x30 (rel offsets -0x10..0x10
 // from the do-loop's puVar14), reads center pixel at param_1+0x20 (puVar14[2]
@@ -868,6 +886,18 @@ DispatchDirection8(RenderState *state, uintptr_t *neigh,
 		            &local_c, &local_28, &local_28_b,
 		            &local_1c, &local_20, &local_18, &local_24, &local_10, &local_14);
 		if ((local_1c != local_18) || (local_20 != local_24)) {
+			{
+				int tx, ty;
+				if (trace_xy_enabled(&tx, &ty) &&
+				    (int)y >= ty - 2 && (int)y <= ty + 2) {
+					fprintf(stderr,
+					        "[disp8] center=(%u,%u) dir=%u case=%u p7=%d p8=%d "
+					        "p9=(%d,%d) p11=(%d,%d) p13=(%d,%d)\n",
+					        x, y, dir, local_c, (int)local_28, (int)local_28_b,
+					        (int)local_1c, (int)local_20, (int)local_18, (int)local_24,
+					        (int)local_10, (int)local_14);
+				}
+			}
 			MainInterpKernel8(state, neigh, (int)x, (int)y, (int)dir,
 			                  (int)local_c, (char)local_28, (char)local_28_b,
 			                  (int)local_1c, (int)local_20, (int)local_18, (int)local_24,
@@ -1555,6 +1585,15 @@ EdgeWalker8(RenderState *state, int x, int y, int dir1, uint32_t dir2,
 
 	*out_x -= iVar2;
 	*out_y -= iVar1;
+	{
+		int tx, ty;
+		if (trace_xy_enabled(&tx, &ty) && y >= ty - 2 && y <= ty + 2) {
+			fprintf(stderr,
+			        "[walk8] start=(%d,%d) dir1=%d dir2=%u thr=%d -> out=(%d,%d) res=%d\n",
+			        x, y, dir1, dir2, threshold, *out_x, *out_y,
+			        (int)(intptr_t)result);
+		}
+	}
 	return result;
 }
 
@@ -2162,7 +2201,10 @@ LAB_180003117_check:
 		loc_param10 = (uint32_t)p10_x;
 		loc_param9  = (uint32_t)p10_y;
 		loc_param5  = (uint32_t)p5_x;
-		// local_res18_0 stays as is (Win reuses this as second output local_res18[0] from EW)
+		// Win FUN_180002740 (decomp 1126) writes walk B's out_y into
+		// local_res18[0]; keep the original x for the distance terms.
+		uint32_t saved_x = local_res18_0;
+		local_res18_0 = (uint32_t)p5_y;  // walk B end y
 
 		bool bVar6 = false, bVar7 = false;
 		if (tol_hi == 0) {
@@ -2187,16 +2229,16 @@ LAB_180003117_check:
 			local_res18_0 = loc_param9;
 		} else if (bVar7) {
 			*o11 = loc_param5;
-			// local_res18_0 stays
+			// *o12 = local_res18_0 (= walk B end y) below, per decomp 1204/1206
 		} else {
-			uint32_t a = local_res18_0 - loc_param5;
-			uint32_t b = local_res20  - loc_param9;
+			uint32_t a = saved_x    - loc_param5;     // x - B.x (decomp 1182)
+			uint32_t b = local_res20 - local_res18_0; // y - B.y (decomp 1183)
 			auto absi = [](uint32_t v) -> int {
 				uint32_t s = (uint32_t)((int)v >> 31);
 				return (int)((v ^ s) - s);
 			};
-			uint32_t c = local_res18_0 - loc_param10;
-			uint32_t d = local_res20  - loc_param9;
+			uint32_t c = saved_x    - loc_param10;    // x - A.x
+			uint32_t d = local_res20 - loc_param9;    // y - A.y
 			*o11 = loc_param5;
 			*o12 = local_res18_0;
 			if (absi(c) <= absi(d)) c = d;
@@ -2544,12 +2586,12 @@ LAB_180003d0d_8:
 		(void)rl_y;
 		loc_param10 = (uint32_t)p10_x;
 		loc_param9  = (uint32_t)p10_y;
-		// In Win FUN_1800033d0 the second EdgeWalker writes to local_res20[0] and param_5;
-		// after that, local_res18_0 is unchanged but local_res20_0 may be overwritten too.
-		// Strict literal port matches Win semantics.
-		uint32_t local_res20_after = (uint32_t)rl_x;
-		loc_param5 = (uint32_t)p5_x;
-		(void)local_res20_after;
+		// In Win FUN_1800033d0 (decomp 1565) the second EdgeWalker writes out_x
+		// into local_res20[0] and out_y into param_5; every later use of
+		// local_res20[0] (decomp 1621/1624/1643) therefore reads walk B's end X,
+		// not the original y.
+		uint32_t local_res20_after = (uint32_t)rl_x;  // walk B end x
+		loc_param5 = (uint32_t)p5_x;                  // walk B end y
 
 		bool bVar6 = false, bVar7 = false;
 		if (iVar23 == 0) {
@@ -2569,13 +2611,13 @@ LAB_180003d0d_8:
 			*o11 = loc_param10;
 			loc_param5 = loc_param9;
 		} else if (bVar7) {
-			*o11 = local_res20_0;  // matches Win  *param_11 = local_res20[0]
+			*o11 = local_res20_after;  // Win *param_11 = local_res20[0] = walk B end x
 		} else {
-			uint32_t a = uVar9b - local_res20_0;
-			uint32_t b = uVar18 - loc_param5;
-			uint32_t c = uVar9b - loc_param10;
-			uint32_t d = uVar18 - loc_param9;
-			*o11 = local_res20_0;
+			uint32_t a = uVar9b - local_res20_after;  // x - B.x (decomp 1621)
+			uint32_t b = uVar18 - loc_param5;         // y - B.y
+			uint32_t c = uVar9b - loc_param10;        // x - A.x
+			uint32_t d = uVar18 - loc_param9;         // y - A.y
+			*o11 = local_res20_after;
 			*o12 = loc_param5;
 			auto absi = [](uint32_t v) -> int {
 				uint32_t s = (uint32_t)((int)v >> 31);
@@ -3170,6 +3212,9 @@ InterpExecutor8(RenderState *state, int param_2, int param_3, int param_4,
                 const uint8_t *param_8, LinearEvalBase *evaluator,
                 char param_10, int param_11)
 {
+	int trace_x, trace_y;
+	const bool tracing = trace_xy_enabled(&trace_x, &trace_y);
+	const int start_x = param_3, start_y = param_4;
 	int iVar8  = param_11;
 	char cVar7 = param_10;
 	float fVar5 = DAT_18000d1f4;
@@ -3202,6 +3247,17 @@ InterpExecutor8(RenderState *state, int param_2, int param_3, int param_4,
 				t = 0.0f;
 			}
 			float fVar19 = evaluator->Evaluate(t);
+			if (tracing && param_3 == trace_x && param_4 == trace_y) {
+				fprintf(stderr,
+				        "[exec8] dir=%d start=(%d,%d) end_hint=(%d,%d) i=%d/%d t=%.6f eval=%.6f "
+				        "iVar8=%d cVar7=%d src5=[%u,%u,%u,%u] src8=[%u,%u,%u,%u] "
+				        "curve{ofs=%.6f v0=%.6f v1=%.6f v2=%.6f}\n",
+				        param_2, start_x, start_y, param_6, param_7,
+				        iVar13_loop, iVar16, t, fVar19, iVar8, (int)cVar7,
+				        param_5[0], param_5[1], param_5[2], param_5[3],
+				        param_8[0], param_8[1], param_8[2], param_8[3],
+				        evaluator->offset, evaluator->v0, evaluator->v1, evaluator->v2);
+			}
 			float fVar3 = fVar5;
 			if (fVar19 <= fVar5) fVar3 = fVar19;
 			fVar19 = 0.0f;
@@ -3295,14 +3351,20 @@ ScanlinePixel8_Main(void *refconV, A_long x, A_long y,
 
 	NeighborExtract8((int)x, (int)y, state, neigh);
 
+	int tx, ty;
+	const bool tr = trace_xy_enabled(&tx, &ty) && (int)x == tx && (int)y == ty;
 	int32_t st;
 	st = Classifier8(state, (uint32_t)x, (uint32_t)y, neigh, 5);
+	if (tr) fprintf(stderr, "[cls8] (%d,%d) dir=5 scan_type=%d\n", (int)x, (int)y, st);
 	DispatchDirection8(state, neigh, (uint32_t)x, (uint32_t)y, 5, st);
 	st = Classifier8(state, (uint32_t)x, (uint32_t)y, neigh, 3);
+	if (tr) fprintf(stderr, "[cls8] (%d,%d) dir=3 scan_type=%d\n", (int)x, (int)y, st);
 	DispatchDirection8(state, neigh, (uint32_t)x, (uint32_t)y, 3, st);
 	st = Classifier8(state, (uint32_t)x, (uint32_t)y, neigh, 1);
+	if (tr) fprintf(stderr, "[cls8] (%d,%d) dir=1 scan_type=%d\n", (int)x, (int)y, st);
 	DispatchDirection8(state, neigh, (uint32_t)x, (uint32_t)y, 1, st);
 	st = Classifier8(state, (uint32_t)x, (uint32_t)y, neigh, 7);
+	if (tr) fprintf(stderr, "[cls8] (%d,%d) dir=7 scan_type=%d\n", (int)x, (int)y, st);
 	DispatchDirection8(state, neigh, (uint32_t)x, (uint32_t)y, 7, st);
 	return PF_Err_NONE;
 }

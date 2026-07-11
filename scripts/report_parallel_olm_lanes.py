@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SHARE_NEW = Path("/Volumes/onmk/olm_pr/new")
 KIRAKIRA_WITNESS_PATH_SPLIT_JSON = ROOT / "refs/conformance/olmkirakira_witness_path_split_20260703.json"
 KIRAKIRA_LIVE_PROBE_JSON = ROOT / "refs/conformance/olmkirakira_live_hotspot_probe_20260703.json"
+BITDEPTH_32BPC_PROBE_STATUS_JSON = ROOT / "refs/conformance/bitdepth_32bpc_probe_status_20260703.json"
 
 
 def rel(path: Path | None) -> str | None:
@@ -32,6 +33,21 @@ def exists_row(path: Path | None) -> dict[str, Any]:
     if path is None:
         return {"path": None, "exists": False}
     return {"path": rel(path), "exists": path.exists()}
+
+
+def load_32bpc_status_map() -> dict[str, dict[str, Any]]:
+    if not BITDEPTH_32BPC_PROBE_STATUS_JSON.exists():
+        return {}
+    data = read_json(BITDEPTH_32BPC_PROBE_STATUS_JSON)
+    suites = data.get("suites", [])
+    out: dict[str, dict[str, Any]] = {}
+    for row in suites:
+        if not isinstance(row, dict):
+            continue
+        request_id = row.get("request_id")
+        if isinstance(request_id, str) and request_id:
+            out[request_id] = row
+    return out
 
 
 def in_share(filename: str) -> dict[str, Any]:
@@ -54,6 +70,7 @@ def bitdepth_lane(
     returned_reference_dir: Path | None,
     tracked_note: Path | None,
     compared_artifact: Path | None,
+    committed_status_row: dict[str, Any] | None,
     next_action: str,
 ) -> dict[str, Any]:
     preview_readme = preview_dir / "README.md" if preview_dir else None
@@ -80,7 +97,7 @@ def bitdepth_lane(
         lifecycle = "preview"
     else:
         lifecycle = "missing"
-    return {
+    row = {
         "kind": "bitdepth_lane",
         "plugin": plugin,
         "bit_depth": bit_depth,
@@ -89,6 +106,17 @@ def bitdepth_lane(
         "stages": stages,
         "next_action": next_action,
     }
+    if committed_status_row:
+        row["committed_status"] = {
+            "classification": committed_status_row.get("classification"),
+            "expected_status": committed_status_row.get("expected_status"),
+            "float_preserving_present": committed_status_row.get("float_preserving_present"),
+            "preferred_exr_present": committed_status_row.get("preferred_exr_present"),
+            "returned_asset_formats": committed_status_row.get("returned_asset_formats"),
+            "share_present": committed_status_row.get("share_present"),
+            "next_action": committed_status_row.get("next_action"),
+        }
+    return row
 
 
 def provenance_lane(
@@ -123,6 +151,7 @@ def provenance_lane(
 
 
 def build_report() -> dict[str, Any]:
+    status_32bpc = load_32bpc_status_map()
     bitdepth = [
         bitdepth_lane(
             plugin="OLMColorKey",
@@ -135,7 +164,22 @@ def build_report() -> dict[str, Any]:
             returned_reference_dir=ROOT / "refs/win_references/olm_reference_return_windows_20260703_32bpc_colorkey_probe/OLMbit-depthconformancebatch",
             tracked_note=ROOT / "refs/conformance/olmcolorkey_32bpc_request_materialized_20260703.md",
             compared_artifact=None,
+            committed_status_row=status_32bpc.get("olm_bitdepth_32bpc_colorkey_probe_20260703"),
             next_action="PNG-only 32bpc return is now imported and covered, but it remains probe-only. Next ask is an EXR-first float-preserving Windows return before any 32bpc completion claim.",
+        ),
+        bitdepth_lane(
+            plugin="Full exact-origin batch",
+            bit_depth="32bpc",
+            request_id="olm_bitdepth_32bpc_full_probe_exr_rerun_20260703",
+            preview_dir=ROOT / "refs/reports/bit_depth_32bpc_full_probe_exr_rerun_20260703",
+            request_json=ROOT / "refs/reference_requests/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703.json",
+            package_zip=ROOT / "refs/runtime_trace_packages/olm_reference_request_32bpc_full_probe_exr_rerun_20260703.zip",
+            share_filename="olm_reference_request_32bpc_full_probe_exr_rerun_20260703.zip",
+            returned_reference_dir=ROOT / "refs/win_references/olm_reference_return_windows_20260703_32bpc_full_probe_exr_rerun/OLMbit-depthconformancebatch",
+            tracked_note=ROOT / "refs/reports/bit_depth_32bpc_full_probe_exr_rerun_20260703/README.md",
+            compared_artifact=None,
+            committed_status_row=status_32bpc.get("olm_bitdepth_32bpc_full_probe_exr_rerun_20260703"),
+            next_action="Broad 32bpc EXR-first rerun is imported and covered, but it came back PNG-only/non-float-preserving. Keep it probe-only; another Windows return must preserve float samples before any 32bpc exact claim.",
         ),
         bitdepth_lane(
             plugin="OLMToonDilate",
@@ -148,6 +192,7 @@ def build_report() -> dict[str, Any]:
             returned_reference_dir=ROOT / "refs/win_references/olm_reference_return_windows_20260703_combined/OLMbit-depthconformancebatch",
             tracked_note=ROOT / "refs/conformance/olmtoondilate_16bpc_request_materialized_20260703.md",
             compared_artifact=ROOT / "refs/conformance/olmtoondilate_16bpc_single_case_host_probe_20260703.md",
+            committed_status_row=None,
             next_action="Windows 16bpc reference is now imported and the fresh Mac AE batch rerun is exact for all three ToonDilate cases. Treat this lane as covered and move the next effort to broader bit-depth expansion or final holdout use.",
         ),
         bitdepth_lane(
@@ -161,6 +206,7 @@ def build_report() -> dict[str, Any]:
             returned_reference_dir=ROOT / "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625",
             tracked_note=ROOT / "refs/conformance/bitdepth_16bpc_reference_return_20260625.md",
             compared_artifact=ROOT / "refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix",
+            committed_status_row=None,
             next_action="Keep using this as the authoritative returned 16bpc base batch; do not resend unless request contents change.",
         ),
     ]
@@ -190,13 +236,13 @@ def build_report() -> dict[str, Any]:
         provenance_lane(
             plugin="OLMBlur",
             lane="case_0006 reference/export provenance",
-            audit_json=ROOT / "refs/conformance/olmblur_case0006_reference_provenance_audit_20260701.json",
+            audit_json=ROOT / "refs/conformance/olmblur_case0006_current_aex_export_contract_audit_20260701.json",
             summary_fields={
-                "status": "outcome.status",
-                "summary": "outcome.reason",
-                "next_allowed_action": "outcome.recommended_action",
+                "status": "decision.status",
+                "summary": "decision.reason",
+                "next_allowed_action": "decision.next_step",
             },
-            next_action="Do not patch OLMBlur source from case_0006 alone; import same-run Windows current-AEX export if this lane must move.",
+            next_action="Do not patch OLMBlur source from case_0006 alone; Windows current-AEX export now matches canonical, so reopen only as Mac export / AE-host run provenance.",
         ),
         provenance_lane(
             plugin="OLMKiraKira",
@@ -234,13 +280,15 @@ def render_md(report: dict[str, Any]) -> str:
         "",
         "## Bit-depth lanes",
         "",
-        "| Plug-in | Depth | Lifecycle | Shared | Returned | Compared | Tracked | Next action |",
-        "| --- | --- | --- | --- | --- | --- | --- | --- |",
+        "| Plug-in | Depth | Lifecycle | Committed | Shared | Returned | Compared | Tracked | Next action |",
+        "| --- | --- | --- | --- | --- | --- | --- | --- | --- |",
     ]
     for row in report["bitdepth_lanes"]:
         stages = row["stages"]
+        committed = row.get("committed_status", {})
+        committed_label = committed.get("classification", "-")
         lines.append(
-            f"| `{row['plugin']}` | `{row['bit_depth']}` | `{row['lifecycle']}` | "
+            f"| `{row['plugin']}` | `{row['bit_depth']}` | `{row['lifecycle']}` | `{committed_label}` | "
             f"`{stages['shared_exchange']['exists']}` | `{stages['returned_reference']['exists']}` | "
             f"`{stages['compared_artifact']['exists']}` | `{stages['tracked_note']['exists']}` | {row['next_action']} |"
         )

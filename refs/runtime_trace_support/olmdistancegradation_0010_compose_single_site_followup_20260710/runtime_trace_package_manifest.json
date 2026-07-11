@@ -1,0 +1,16 @@
+{
+  "kind": "olm_runtime_trace_request_package",
+  "schema": 1,
+  "profile": "distancegradation-0010-compose-single-site-followup",
+  "entrypoint": "refs/conformance/olmdistancegradation_0010_compose_single_site_followup_contract_20260710.md",
+  "repo_root_name": "OLM as",
+  "runtime_actions": [
+    {
+      "request_id": "olmdistancegradation_0010_compose_single_site_followup_20260710",
+      "plugin_area": "OLMDistanceGradation 16bpc case_0010 single-site compose witness",
+      "mode": "external-trace",
+      "command": "Run the included PowerShell launcher separately for field and source at (6,40); run writer only after those two are stable. Use one target and one downstream breakpoint per invocation. Fill RETURN_RUNTIME_TRACE_TEMPLATE.json from fresh Windows debugger output.",
+      "stop_condition": "Satisfactory: an exact RDI==target_output stop returns typed RCX field words or RDX source words for (6,40). Partial: entry address is derived but the single selected site misses with the failed comparison retained. Failure: multiple downstream sites in one run, rbp=y or broad r9=x gating, PNG-only evidence, or package-local recomputation."
+    }
+  ]
+}

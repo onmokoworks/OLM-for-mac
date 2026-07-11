@@ -1,0 +1,37 @@
+{
+  "schema": "olm.aex.cpu-fixture/1",
+  "plugin": "OLMBlur",
+  "binary_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "entry": "0x180002280",
+  "bit_depth": 16,
+  "legacy": 0,
+  "pixel_layout": "little-endian A,R,G,B",
+  "cases": [
+    {
+      "id": "16bpc_nonlegacy_basic",
+      "width": 12,
+      "height": 12,
+      "blur_amount": 3.0,
+      "smoothness": 100.0,
+      "repeat": 2,
+      "bias_direction": 1,
+      "source_sha256": "df143537b2c987564fd2c0d0b4f9ad3b2332c4db8d5ccbaf8ac3ebc71b05bb8d",
+      "expected_sha256": "28d648118306c3ed9bedbcd7e99c7af8f8bc26813b701b366c56b966f3a3e846",
+      "instructions": 102918,
+      "callback_count": 48
+    },
+    {
+      "id": "16bpc_nonlegacy_large_radius_reverse",
+      "width": 18,
+      "height": 18,
+      "blur_amount": 11.0,
+      "smoothness": 100.0,
+      "repeat": 3,
+      "bias_direction": 2,
+      "source_sha256": "bc3bfbf7c3d5a908690b71819c9dd83e4bddb9b6f09a417ff06ec6cc3d3943ae",
+      "expected_sha256": "64355b2ce493e3d318de8fa09f45234b98236029347b62e9d09e4ef8cb98a4bc",
+      "instructions": 383372,
+      "callback_count": 48
+    }
+  ]
+}

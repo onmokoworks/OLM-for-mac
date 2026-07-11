@@ -1,0 +1,694 @@
+{
+  "request_id": "olmblur_32bpc_mac_windows_float_focus_20260711",
+  "scope": {
+    "bit_depth": "32bpc",
+    "plugin_filters": [
+      "OLMBlur"
+    ],
+    "feature_filters": [],
+    "plugin_count": 1,
+    "case_count": 7
+  },
+  "effect": {
+    "name": "OLM Blur",
+    "match_name": "OLM OLM Blur"
+  },
+  "why": [
+    "Focused OLMBlur extraction of the authoritative 48-case 32bpc request/return.",
+    "Preserves the authoritative case IDs, input IDs, effect property manifests, and parameter values.",
+    "Mac and Windows runs must use 32bpc SOFTWARE rendering and float-preserving output; PNG-only output is probe-only."
+  ],
+  "source_provenance": {
+    "authoritative_request": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reference_requests/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703.json",
+    "authoritative_request_id": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703",
+    "authoritative_case_count": 48,
+    "focused_plugin": "OLMBlur",
+    "focused_case_ids": [
+      "olmblur__case_0001",
+      "olmblur__case_0002",
+      "olmblur__case_0003",
+      "olmblur__case_0004",
+      "olmblur__case_0005",
+      "olmblur__case_0006",
+      "olmblur__case_0007"
+    ],
+    "normalized_input_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMBlur/reference_manifest.json",
+    "normalized_input_manifest_sha256": "42dc18ec6e6a6b095800ed0e253372f6206de45e38459fb2e04099c4512dd2f0",
+    "normalized_input_directory": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMBlur",
+    "input_format": "png",
+    "float_exr_status": {
+      "normalized_input_directory": false,
+      "windows_answered_partial_return": true,
+      "windows_return_directory": "refs/win_references/20260710_185500__RETURN__olm_32bpc_existing48_exr_20260710__answered_partial_portable/OLMbit-depthconformancebatch",
+      "windows_return_cases": 7,
+      "windows_return_output_format": "exr",
+      "windows_return_float_preserving": true
+    }
+  },
+  "render_sets": [
+    {
+      "id": "software_32bpc",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "bit_depth": "32bpc",
+      "bits_per_channel": 32,
+      "required": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "olmblur_case_0001_source",
+      "description": "Use the same source image as normalized 8bpc OLMBlur case_0001. Recorded before_effects_frame: case_0001_before_effects.png",
+      "source_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMBlur/reference_manifest.json",
+      "source_case_id": "case_0001",
+      "before_effects_frame": "case_0001_before_effects.png",
+      "sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+      "hash_algorithm": "sha256",
+      "source_manifest_sha256": "42dc18ec6e6a6b095800ed0e253372f6206de45e38459fb2e04099c4512dd2f0"
+    },
+    {
+      "id": "olmblur_case_0002_source",
+      "description": "Use the same source image as normalized 8bpc OLMBlur case_0002. Recorded before_effects_frame: case_0002_before_effects.png",
+      "source_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMBlur/reference_manifest.json",
+      "source_case_id": "case_0002",
+      "before_effects_frame": "case_0002_before_effects.png",
+      "sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+      "hash_algorithm": "sha256",
+      "source_manifest_sha256": "42dc18ec6e6a6b095800ed0e253372f6206de45e38459fb2e04099c4512dd2f0"
+    },
+    {
+      "id": "olmblur_case_0003_source",
+      "description": "Use the same source image as normalized 8bpc OLMBlur case_0003. Recorded before_effects_frame: case_0003_before_effects.png",
+      "source_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMBlur/reference_manifest.json",
+      "source_case_id": "case_0003",
+      "before_effects_frame": "case_0003_before_effects.png",
+      "sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+      "hash_algorithm": "sha256",
+      "source_manifest_sha256": "42dc18ec6e6a6b095800ed0e253372f6206de45e38459fb2e04099c4512dd2f0"
+    },
+    {
+      "id": "olmblur_case_0004_source",
+      "description": "Use the same source image as normalized 8bpc OLMBlur case_0004. Recorded before_effects_frame: case_0004_before_effects.png",
+      "source_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMBlur/reference_manifest.json",
+      "source_case_id": "case_0004",
+      "before_effects_frame": "case_0004_before_effects.png",
+      "sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+      "hash_algorithm": "sha256",
+      "source_manifest_sha256": "42dc18ec6e6a6b095800ed0e253372f6206de45e38459fb2e04099c4512dd2f0"
+    },
+    {
+      "id": "olmblur_case_0005_source",
+      "description": "Use the same source image as normalized 8bpc OLMBlur case_0005. Recorded before_effects_frame: case_0005_before_effects.png",
+      "source_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMBlur/reference_manifest.json",
+      "source_case_id": "case_0005",
+      "before_effects_frame": "case_0005_before_effects.png",
+      "sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+      "hash_algorithm": "sha256",
+      "source_manifest_sha256": "42dc18ec6e6a6b095800ed0e253372f6206de45e38459fb2e04099c4512dd2f0"
+    },
+    {
+      "id": "olmblur_case_0006_source",
+      "description": "Use the same source image as normalized 8bpc OLMBlur case_0006. Recorded before_effects_frame: case_0006_before_effects.png",
+      "source_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMBlur/reference_manifest.json",
+      "source_case_id": "case_0006",
+      "before_effects_frame": "case_0006_before_effects.png",
+      "sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+      "hash_algorithm": "sha256",
+      "source_manifest_sha256": "42dc18ec6e6a6b095800ed0e253372f6206de45e38459fb2e04099c4512dd2f0"
+    },
+    {
+      "id": "olmblur_case_0007_source",
+      "description": "Use the same source image as normalized 8bpc OLMBlur case_0007. Recorded before_effects_frame: case_0007_before_effects.png",
+      "source_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMBlur/reference_manifest.json",
+      "source_case_id": "case_0007",
+      "before_effects_frame": "case_0007_before_effects.png",
+      "sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+      "hash_algorithm": "sha256",
+      "source_manifest_sha256": "42dc18ec6e6a6b095800ed0e253372f6206de45e38459fb2e04099c4512dd2f0"
+    }
+  ],
+  "cases": [
+    {
+      "id": "olmblur__case_0001",
+      "feature": "OLMBlur",
+      "plugin": "OLMBlur",
+      "source_case_id": "case_0001",
+      "input": "olmblur_case_0001_source",
+      "reason": "32bpc EXR-first float-output probe for a normalized 8bpc Software exact case. This is not AE exact evidence unless the return includes float-preserving output.",
+      "effect": {
+        "name": "OLM Blur",
+        "match_name": "OLM OLM Blur"
+      },
+      "params": {
+        "Blur Amount": 129.4,
+        "Blur Smoothness": 100,
+        "Number of Repeat": 2,
+        "Bias Direction": 1,
+        "Legacy": 0,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "params_full": [
+        {
+          "name": "Blur Amount",
+          "match_name": "OLM OLM Blur-0005",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 129.4
+        },
+        {
+          "name": "Blur Smoothness",
+          "match_name": "OLM OLM Blur-0006",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Number of Repeat",
+          "match_name": "OLM OLM Blur-0003",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Bias Direction",
+          "match_name": "OLM OLM Blur-0004",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Legacy",
+          "match_name": "OLM OLM Blur-0007",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Effect Opacity",
+          "match_name": "ADBE Effect Mask Opacity",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "GPU Rendering",
+          "match_name": "ADBE Force CPU GPU",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "olmblur__case_0002",
+      "feature": "OLMBlur",
+      "plugin": "OLMBlur",
+      "source_case_id": "case_0002",
+      "input": "olmblur_case_0002_source",
+      "reason": "32bpc EXR-first float-output probe for a normalized 8bpc Software exact case. This is not AE exact evidence unless the return includes float-preserving output.",
+      "effect": {
+        "name": "OLM Blur",
+        "match_name": "OLM OLM Blur"
+      },
+      "params": {
+        "Blur Amount": 129.4,
+        "Blur Smoothness": 100,
+        "Number of Repeat": 2,
+        "Bias Direction": 2,
+        "Legacy": 0,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "params_full": [
+        {
+          "name": "Blur Amount",
+          "match_name": "OLM OLM Blur-0005",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 129.4
+        },
+        {
+          "name": "Blur Smoothness",
+          "match_name": "OLM OLM Blur-0006",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Number of Repeat",
+          "match_name": "OLM OLM Blur-0003",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Bias Direction",
+          "match_name": "OLM OLM Blur-0004",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Legacy",
+          "match_name": "OLM OLM Blur-0007",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Effect Opacity",
+          "match_name": "ADBE Effect Mask Opacity",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "GPU Rendering",
+          "match_name": "ADBE Force CPU GPU",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "olmblur__case_0003",
+      "feature": "OLMBlur",
+      "plugin": "OLMBlur",
+      "source_case_id": "case_0003",
+      "input": "olmblur_case_0003_source",
+      "reason": "32bpc EXR-first float-output probe for a normalized 8bpc Software exact case. This is not AE exact evidence unless the return includes float-preserving output.",
+      "effect": {
+        "name": "OLM Blur",
+        "match_name": "OLM OLM Blur"
+      },
+      "params": {
+        "Blur Amount": 248.6,
+        "Blur Smoothness": 100,
+        "Number of Repeat": 10,
+        "Bias Direction": 1,
+        "Legacy": 1,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "params_full": [
+        {
+          "name": "Blur Amount",
+          "match_name": "OLM OLM Blur-0005",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 248.6
+        },
+        {
+          "name": "Blur Smoothness",
+          "match_name": "OLM OLM Blur-0006",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Number of Repeat",
+          "match_name": "OLM OLM Blur-0003",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 10
+        },
+        {
+          "name": "Bias Direction",
+          "match_name": "OLM OLM Blur-0004",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Legacy",
+          "match_name": "OLM OLM Blur-0007",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Effect Opacity",
+          "match_name": "ADBE Effect Mask Opacity",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "GPU Rendering",
+          "match_name": "ADBE Force CPU GPU",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "olmblur__case_0004",
+      "feature": "OLMBlur",
+      "plugin": "OLMBlur",
+      "source_case_id": "case_0004",
+      "input": "olmblur_case_0004_source",
+      "reason": "32bpc EXR-first float-output probe for a normalized 8bpc Software exact case. This is not AE exact evidence unless the return includes float-preserving output.",
+      "effect": {
+        "name": "OLM Blur",
+        "match_name": "OLM OLM Blur"
+      },
+      "params": {
+        "Blur Amount": 125.6,
+        "Blur Smoothness": 100,
+        "Number of Repeat": 4,
+        "Bias Direction": 1,
+        "Legacy": 0,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "params_full": [
+        {
+          "name": "Blur Amount",
+          "match_name": "OLM OLM Blur-0005",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 125.6
+        },
+        {
+          "name": "Blur Smoothness",
+          "match_name": "OLM OLM Blur-0006",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Number of Repeat",
+          "match_name": "OLM OLM Blur-0003",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 4
+        },
+        {
+          "name": "Bias Direction",
+          "match_name": "OLM OLM Blur-0004",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Legacy",
+          "match_name": "OLM OLM Blur-0007",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Effect Opacity",
+          "match_name": "ADBE Effect Mask Opacity",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "GPU Rendering",
+          "match_name": "ADBE Force CPU GPU",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "olmblur__case_0005",
+      "feature": "OLMBlur",
+      "plugin": "OLMBlur",
+      "source_case_id": "case_0005",
+      "input": "olmblur_case_0005_source",
+      "reason": "32bpc EXR-first float-output probe for a normalized 8bpc Software exact case. This is not AE exact evidence unless the return includes float-preserving output.",
+      "effect": {
+        "name": "OLM Blur",
+        "match_name": "OLM OLM Blur"
+      },
+      "params": {
+        "Blur Amount": 5,
+        "Blur Smoothness": 100,
+        "Number of Repeat": 2,
+        "Bias Direction": 1,
+        "Legacy": 0,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "params_full": [
+        {
+          "name": "Blur Amount",
+          "match_name": "OLM OLM Blur-0005",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 5
+        },
+        {
+          "name": "Blur Smoothness",
+          "match_name": "OLM OLM Blur-0006",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Number of Repeat",
+          "match_name": "OLM OLM Blur-0003",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 2
+        },
+        {
+          "name": "Bias Direction",
+          "match_name": "OLM OLM Blur-0004",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Legacy",
+          "match_name": "OLM OLM Blur-0007",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Effect Opacity",
+          "match_name": "ADBE Effect Mask Opacity",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "GPU Rendering",
+          "match_name": "ADBE Force CPU GPU",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "olmblur__case_0006",
+      "feature": "OLMBlur",
+      "plugin": "OLMBlur",
+      "source_case_id": "case_0006",
+      "input": "olmblur_case_0006_source",
+      "reason": "32bpc EXR-first float-output probe for a normalized 8bpc Software exact case. This is not AE exact evidence unless the return includes float-preserving output.",
+      "effect": {
+        "name": "OLM Blur",
+        "match_name": "OLM OLM Blur"
+      },
+      "params": {
+        "Blur Amount": 5,
+        "Blur Smoothness": 100,
+        "Number of Repeat": 10,
+        "Bias Direction": 1,
+        "Legacy": 0,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "params_full": [
+        {
+          "name": "Blur Amount",
+          "match_name": "OLM OLM Blur-0005",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 5
+        },
+        {
+          "name": "Blur Smoothness",
+          "match_name": "OLM OLM Blur-0006",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Number of Repeat",
+          "match_name": "OLM OLM Blur-0003",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 10
+        },
+        {
+          "name": "Bias Direction",
+          "match_name": "OLM OLM Blur-0004",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Legacy",
+          "match_name": "OLM OLM Blur-0007",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Effect Opacity",
+          "match_name": "ADBE Effect Mask Opacity",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "GPU Rendering",
+          "match_name": "ADBE Force CPU GPU",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "olmblur__case_0007",
+      "feature": "OLMBlur",
+      "plugin": "OLMBlur",
+      "source_case_id": "case_0007",
+      "input": "olmblur_case_0007_source",
+      "reason": "32bpc EXR-first float-output probe for a normalized 8bpc Software exact case. This is not AE exact evidence unless the return includes float-preserving output.",
+      "effect": {
+        "name": "OLM Blur",
+        "match_name": "OLM OLM Blur"
+      },
+      "params": {
+        "Blur Amount": 5,
+        "Blur Smoothness": 100,
+        "Number of Repeat": 10,
+        "Bias Direction": 1,
+        "Legacy": 1,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "params_full": [
+        {
+          "name": "Blur Amount",
+          "match_name": "OLM OLM Blur-0005",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 5
+        },
+        {
+          "name": "Blur Smoothness",
+          "match_name": "OLM OLM Blur-0006",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Number of Repeat",
+          "match_name": "OLM OLM Blur-0003",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 10
+        },
+        {
+          "name": "Bias Direction",
+          "match_name": "OLM OLM Blur-0004",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Legacy",
+          "match_name": "OLM OLM Blur-0007",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Effect Opacity",
+          "match_name": "ADBE Effect Mask Opacity",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "GPU Rendering",
+          "match_name": "ADBE Force CPU GPU",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 1
+        }
+      ]
+    }
+  ],
+  "compare_policy": {
+    "path": "refs/conformance/bitdepth_32bpc_compare_policy_20260703.md",
+    "mode": "float-preserving-required",
+    "png_only_classification": "probe-only",
+    "ae_exact_claim": false,
+    "mac_windows_comparison": "required before any exactness claim"
+  },
+  "output_requirements": {
+    "preferred_formats": [
+      "exr"
+    ],
+    "acceptable_float_preserving_fallbacks": [
+      "tiff",
+      "tif",
+      "hdr",
+      "raw-float-rgba"
+    ],
+    "png_only_allowed": true,
+    "png_only_classification": "probe-only",
+    "float_preserving_required_for_ae_exact": true,
+    "record_exact_format_used": true
+  },
+  "artifact_integrity": {
+    "sha256_required": true,
+    "sha256_scope": [
+      "input",
+      "effect_output",
+      "before_effects_output",
+      "manifest"
+    ],
+    "header_metadata_required": true,
+    "required_float_header": {
+      "container_format": "OpenEXR",
+      "channel_order": "RGBA",
+      "channel_count": 4,
+      "sample_type": "float",
+      "bits_per_channel": 32
+    }
+  },
+  "manifest_requirements": [
+    "AE version",
+    "project_gpu_accel_type.current_name and raw value",
+    "project bit depth / bits per channel",
+    "project color management settings",
+    "before_effects_frame PNG or float-preserving input snapshot for every case",
+    "effect output in EXR by default; if that is impossible, return another float-preserving format and record it explicitly",
+    "if only PNG output is possible, record output_format=png and float_preserving=false",
+    "all effect property names, match_names, indices, values, enabled/active state"
+  ],
+  "mac_follow_up": [
+    "Import with scripts/intake_olm_return.py path/to/returned_reference.zip --quick.",
+    "Do not claim 32bpc exact unless the return preserves float samples and a 32bpc comparator verifies exact float equality or a documented exception profile.",
+    "For future 32bpc requests, treat EXR as the default output format."
+  ],
+  "stop_lines": [
+    "Do not render CUDA/GPU as the conformance target for this request.",
+    "Do not use PNG-only 32bpc returns as AE exact evidence.",
+    "Do not mix legacy 20260604/20260605 drift references into this bit-depth batch."
+  ]
+}

@@ -5,12 +5,12 @@ the current plug-in exposes the live field through output alpha.
 
 | Case | Witness | Observed X | Max-model X | Add-model X | Candidate RGB | Reference RGB | Reading |
 | --- | --- | ---: | ---: | ---: | --- | --- | --- |
-| `case_0020` | `(951,417)` | 0.000000 | 0.000000 | 0.000000 | `[65535, 0, 0]` | `[6940, 0, 60910]` | Mac no_bg probe matches current model; Windows reference is opposite color on bg-on render |
-| `case_0021` | `(951,417)` | 0.000000 | 0.000000 | 0.000000 | `[65535, 0, 0]` | `[6940, 0, 60910]` | Mac no_bg probe matches current model; Windows reference is opposite color on bg-on render |
-| `case_0022` | `(4,0)` | 0.000000 | 0.000000 | 0.000000 | `[65535, 0, 0]` | `[6940, 0, 60910]` | Mac no_bg probe matches current model; Windows reference is opposite color on bg-on render |
+| `case_0020` | `(951,417)` | 0.000000 | 0.000000 | 0.000000 | `[65535, 0, 0]` | `[7195, 0, 61165]` | Mac no_bg probe matches current model; Windows reference is opposite color on bg-on render |
+| `case_0021` | `(951,417)` | 0.000000 | 0.000000 | 0.000000 | `[65535, 0, 0]` | `[7195, 0, 61165]` | Mac no_bg probe matches current model; Windows reference is opposite color on bg-on render |
+| `case_0022` | `(4,0)` | 0.000000 | 0.000000 | 0.000000 | `[65535, 0, 0]` | `[7195, 0, 61165]` | Mac no_bg probe matches current model; Windows reference is opposite color on bg-on render |
 | `case_0023` | `(1699,7)` | 1.000000 | 1.000000 | 1.000000 | `[65535, 0, 0]` | `[65535, 0, 0]` | Mac no_bg probe matches current model; Windows reference is opposite color on bg-on render |
-| `case_0027` | `(3,0)` | 1.000000 | 0.812285 | 0.812285 | `[0, 0, 0]` | `[3376, 0, 0]` | Observed X stays much higher than both max and add models |
-| `case_0028` | `(3,0)` | 1.000000 | 0.968477 | 0.968477 | `[0, 0, 0]` | `[4360, 0, 0]` | Observed X stays much higher than both max and add models |
+| `case_0027` | `(3,0)` | 1.000000 | 0.812285 | 0.812285 | `[0, 0, 0]` | `[12301, 0, 0]` | Observed X stays much higher than both max and add models |
+| `case_0028` | `(3,0)` | 1.000000 | 0.968477 | 0.968477 | `[0, 0, 0]` | `[2065, 0, 0]` | Observed X stays much higher than both max and add models |
 
 ## Conclusions
 

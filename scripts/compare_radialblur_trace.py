@@ -18,13 +18,28 @@ TINY_ROTATION_FOLLOWUP_REQUEST_ID = "olmradialblur_tiny_rotation_substitute_path
 TINY_ROTATION_BACKSTEP_REQUEST_ID = "olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701"
 TINY_ROTATION_ANCHOR_WATCH_REQUEST_ID = "olmradialblur_tiny_rotation_anchor_watch_followup_20260701"
 TINY_ROTATION_ANCHOR_CONTEXT_WATCH_REQUEST_ID = "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702"
+TINY_ROTATION_ANCHOR_CONTEXT_WATCH_RETRY_REQUEST_ID = "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702_retry_20260704"
+TINY_ROTATION_DIRECT_POSTRETURN_REQUEST_ID = "olmradialblur_tiny_rotation_anchor_context_watch_followup_direct_postreturn_20260705"
 TINY_ROTATION_ANCHOR_POINTER_WATCH_REQUEST_ID = "olmradialblur_tiny_rotation_anchor_pointer_watch_followup_20260702"
+CASE0010_FINAL_WRITEBACK_REQUEST_ID = "olmradialblur_case0010_final_writeback_20260708"
+ZOOM_CASE0009_FINAL_PLANE_CELLS_REQUEST_ID = (
+    "olmradialblur_zoom_case0009_final_plane_cells_20260709"
+)
+ZOOM_CASE0009_FINAL_PLANE_TYPED_REQUEST_ID = (
+    "olmradialblur_zoom_case0009_final_plane_typed_20260710"
+)
 LEGACY_RESIDUAL_WITNESS_REQUEST_ID = "olmradialblur_zoom_tiny_rotation_residual_witness_20260622"
 TINY_ROTATION_LANE_AUDIT = (
     Path(__file__).resolve().parents[1]
     / "refs"
     / "conformance"
     / "olmradialblur_tiny_rotation_lane_audit_20260701.json"
+)
+TINY_ROTATION_LANE_STATE = (
+    Path(__file__).resolve().parents[1]
+    / "refs"
+    / "conformance"
+    / "olmradialblur_tiny_rotation_lane_state_20260703.json"
 )
 
 
@@ -120,10 +135,68 @@ def safe_source_file(value: Any) -> str | None:
 def case_rows(observations: dict[str, Any]) -> list[dict[str, Any]]:
     rows = observations.get("cases", [])
     if isinstance(rows, list):
-        return [row for row in rows if isinstance(row, dict)]
+        parsed = [row for row in rows if isinstance(row, dict)]
+        if parsed:
+            return parsed
     if isinstance(rows, dict):
         return [rows]
+    if observations.get("request_id") == CASE0010_FINAL_WRITEBACK_REQUEST_ID:
+        return [case0010_final_writeback_case(observations)]
+    if observations.get("case_id") == "case_0010" and isinstance(observations.get("same_run_values"), dict):
+        return [case0010_final_writeback_case(observations)]
     return []
+
+
+def first_polar_cell_value(cells: Any, key: str) -> Any:
+    if not isinstance(cells, list):
+        return None
+    values = []
+    for cell in cells:
+        if isinstance(cell, dict):
+            values.append(cell.get(key))
+    return values or None
+
+
+def case0010_final_writeback_case(observations: dict[str, Any]) -> dict[str, Any]:
+    same_run = observations.get("same_run_values")
+    if not isinstance(same_run, dict):
+        same_run = observations
+    cells = same_run.get("polar_cells")
+    witness = observations.get("witness") if isinstance(observations.get("witness"), dict) else {}
+    return {
+        "case_id": "case_0010",
+        "classification": observations.get("classification"),
+        "inverse_sampler_input_xy": same_run.get("final_inverse_sampler_xy")
+        or same_run.get("inverse_sampler_input_xy")
+        or witness.get("local_inverse_sampler_xy"),
+        "contributing_polar_cells": [cell.get("cell_xy") for cell in cells if isinstance(cell, dict)]
+        if isinstance(cells, list)
+        else None,
+        "accumulated_f250_rgba": same_run.get("accumulated_f250_rgba")
+        or same_run.get("+0xf250_rgba")
+        or first_polar_cell_value(cells, "f250_rgba_float"),
+        "preserved_validity_f252": same_run.get("preserved_validity_f252")
+        or same_run.get("+0xf252")
+        or first_polar_cell_value(cells, "f252_validity_or_alpha"),
+        "collapsed_e_rgba": same_run.get("collapsed_e_rgba")
+        or same_run.get("normalized_e_rgba")
+        or same_run.get("+0xe_rgba")
+        or first_polar_cell_value(cells, "collapsed_e_rgba_float"),
+        "direct_inverse_sampler_result_from_e": same_run.get("direct_inverse_sampler_result_from_e")
+        or same_run.get("direct_inverse_sampler_result_rgba_float")
+        or same_run.get("direct_inverse_sampler_e_rgba")
+        or witness.get("local_direct_e_rgba_float"),
+        "output_buffer_rgba_after_writeback": same_run.get("output_buffer_rgba_after_writeback")
+        or same_run.get("output_buffer_rgba")
+        or witness.get("local_output_world_rgba8"),
+        "exported_rgba8_or_png_byte": same_run.get("exported_rgba8_or_png_byte")
+        or same_run.get("exported_rgba8")
+        or same_run.get("exported_byte")
+        or same_run.get("final_exported_rgba8")
+        or witness.get("current_windows_software_rgba8"),
+        "alternate_final_output_path": same_run.get("alternate_final_output_path_if_any")
+        or same_run.get("alternate_final_output_path"),
+    }
 
 
 def case_by_id(observations: dict[str, Any], case_id: str) -> dict[str, Any] | None:
@@ -142,6 +215,216 @@ def witness_rows(observations: dict[str, Any]) -> list[dict[str, Any]]:
         if isinstance(witnesses, list):
             rows.extend(row for row in witnesses if isinstance(row, dict))
     return rows
+
+
+def xy_tuple(row: dict[str, Any]) -> tuple[int, int] | None:
+    value = (
+        row.get("xy")
+        or row.get("output_xy")
+        or row.get("final_output_xy")
+        or row.get("pixel_xy")
+        or row.get("target_xy")
+    )
+    if isinstance(value, list | tuple) and len(value) >= 2:
+        try:
+            return int(value[0]), int(value[1])
+        except (TypeError, ValueError):
+            return None
+    if "x" in row and "y" in row:
+        try:
+            return int(row["x"]), int(row["y"])
+        except (TypeError, ValueError):
+            return None
+    return None
+
+
+def final_plane_pixel_rows(observations: dict[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for case in case_rows(observations):
+        for key in (
+            "final_plane_pixels",
+            "witness_pixels",
+            "pixels",
+            "final_plane_cell_witnesses",
+            "case0009_final_plane_cells",
+        ):
+            value = case.get(key)
+            if isinstance(value, dict):
+                rows.append(value)
+            elif isinstance(value, list):
+                rows.extend(item for item in value if isinstance(item, dict))
+    for key in (
+        "final_plane_pixels",
+        "witness_pixels",
+        "pixels",
+        "final_plane_cell_witnesses",
+        "case0009_final_plane_cells",
+    ):
+        value = observations.get(key)
+        if isinstance(value, dict):
+            rows.append(value)
+        elif isinstance(value, list):
+            rows.extend(item for item in value if isinstance(item, dict))
+    return rows
+
+
+def has_final_plane_cell_facts(row: dict[str, Any]) -> bool:
+    final_byte = (
+        row.get("windows_final_rgba8")
+        or row.get("final_rgba8")
+        or row.get("final_rgba")
+        or row.get("exported_rgba8_or_png_byte")
+    )
+    sampler_xy = (
+        row.get("final_inverse_sampler_xy")
+        or row.get("inverse_sampler_input_xy")
+        or row.get("sampler_xy")
+    )
+    cells = (
+        row.get("four_bilinear_source_cells")
+        or row.get("bilinear_source_cells")
+        or row.get("final_plane_cells")
+        or row.get("source_cells")
+    )
+    weights = row.get("bilinear_weights") or row.get("weights")
+    alpha_sum = (
+        row.get("final_sample_alpha_sum")
+        or row.get("final_sample_alpha")
+        or row.get("pre_byte_alpha")
+        or row.get("pre_byte_rgba_float")
+        or row.get("pre_byte_rgba")
+        or row.get("pre_writeback_rgba_float")
+    )
+    if not all(concrete_trace_value(value) for value in (final_byte, sampler_xy, cells, weights, alpha_sum)):
+        return False
+    return isinstance(cells, list) and len(cells) >= 4
+
+
+TYPED_CASE0009_POINTS = ((7, 0), (8, 0), (24, 0))
+
+
+def typed_witness_value(value: Any) -> bool:
+    """Accept complete typed values while rejecting template/placeholders."""
+    if value is None or isinstance(value, bool):
+        return False
+    if isinstance(value, (int, float)):
+        return True
+    if isinstance(value, str):
+        lowered = value.strip().lower()
+        if not lowered or lowered in {"null", "none", "n/a", "unknown", "0x..."}:
+            return False
+        return not any(
+            needle in lowered
+            for needle in (
+                "not traced",
+                "not isolated",
+                "not reached",
+                "inferred",
+                "expected",
+                "untraced",
+                "was not captured",
+            )
+        )
+    if isinstance(value, list):
+        return bool(value) and all(typed_witness_value(item) for item in value)
+    if isinstance(value, dict):
+        return bool(value) and all(typed_witness_value(item) for item in value.values())
+    return False
+
+
+def typed_case0009_point_complete(point: Any) -> bool:
+    if not isinstance(point, dict) or xy_tuple(point) not in TYPED_CASE0009_POINTS:
+        return False
+    if not all(
+        typed_witness_value(point.get(key))
+        for key in ("observed_rgba8", "inverse_sample_xy", "final_alpha_sum", "pre_byte_alpha")
+    ):
+        return False
+    cells = point.get("cells")
+    if not isinstance(cells, list) or len(cells) != 4:
+        return False
+    required_cell_fields = ("cell_id", "plus_0xe_rgba_float", "plus_0xf252", "bilinear_weight")
+    return all(
+        isinstance(cell, dict)
+        and all(typed_witness_value(cell.get(key)) for key in required_cell_fields)
+        for cell in cells
+    )
+
+
+def classify_zoom_case0009_final_plane_typed(
+    row: dict[str, Any] | None, observations: dict[str, Any]
+) -> tuple[str, dict[str, Any]]:
+    if row is None:
+        return "missing", {"reason": "await-windows-trace", "points": []}
+    points = observations.get("points", [])
+    points = points if isinstance(points, list) else []
+    by_xy = {xy_tuple(point): point for point in points if isinstance(point, dict) and xy_tuple(point)}
+    binding = all(
+        typed_witness_value(observations.get(key))
+        for key in ("run_id", "hook_or_watchpoint", "console_artifact")
+    )
+    complete_points = [xy for xy in TYPED_CASE0009_POINTS if typed_case0009_point_complete(by_xy.get(xy))]
+    primary_complete = (7, 0) in complete_points
+    failure_reason = observations.get("failed_reason") or row.get("failed_reason")
+    if primary_complete and len(complete_points) == len(TYPED_CASE0009_POINTS) and binding:
+        classification = "complete"
+    elif primary_complete and isinstance(failure_reason, str) and bool(failure_reason.strip()):
+        classification = "partial"
+    else:
+        classification = "missing"
+    surfaced_points = []
+    for xy in TYPED_CASE0009_POINTS:
+        point = by_xy.get(xy)
+        surfaced_points.append(
+            {
+                "xy": list(xy),
+                "complete": xy in complete_points,
+                "observed_rgba8": point.get("observed_rgba8") if point else None,
+                "inverse_sample_xy": point.get("inverse_sample_xy") if point else None,
+                "cells": point.get("cells") if point else None,
+                "final_alpha_sum": point.get("final_alpha_sum") if point else None,
+                "pre_byte_alpha": point.get("pre_byte_alpha") if point else None,
+                "failed_reason": point.get("failed_reason") if point else None,
+            }
+        )
+    return classification, {
+        "run_id": observations.get("run_id"),
+        "hook_or_watchpoint": observations.get("hook_or_watchpoint"),
+        "console_artifact": observations.get("console_artifact"),
+        "points": surfaced_points,
+        "complete_points": [list(xy) for xy in complete_points],
+        "failed_reason": failure_reason,
+    }
+
+
+def classify_zoom_case0009_final_plane(row: dict[str, Any] | None, observations: dict[str, Any]) -> str:
+    if row is None:
+        return "await-windows-trace"
+    rows = final_plane_pixel_rows(observations)
+    primary = {(6, 0), (7, 0), (12, 0)}
+    controls = {(3, 0), (4, 0), (8, 0), (10, 0), (11, 0), (13, 0), (24, 0), (25, 0), (26, 0), (27, 0), (28, 0)}
+    complete_primary = {
+        xy_tuple(pixel)
+        for pixel in rows
+        if xy_tuple(pixel) in primary and has_final_plane_cell_facts(pixel)
+    }
+    complete_controls = {
+        xy_tuple(pixel)
+        for pixel in rows
+        if xy_tuple(pixel) in controls and has_final_plane_cell_facts(pixel)
+    }
+    if len(complete_primary) >= 3 and len(complete_controls) >= 4:
+        return "zoom_case0009:final-plane-cells-answered"
+    if complete_primary:
+        return "zoom_case0009:final-plane-cells-partial"
+    row_text = json.dumps(
+        {"status": row.get("status"), "summary": row.get("summary"), "observations": observations},
+        ensure_ascii=False,
+        sort_keys=True,
+    ).lower()
+    if rows or any(needle in row_text for needle in ("final rgba", "png byte", "wrapper", "hit count")):
+        return "zoom_case0009:final-plane-witness-missing"
+    return "trace-structure-present-values-missing"
 
 
 def summary_has_inner_span_registers(text: str | None) -> bool:
@@ -243,8 +526,73 @@ def classify_residual_case(case: dict[str, Any] | None, *, zoom: bool) -> str:
 def classify_residual(row: dict[str, Any] | None, observations: dict[str, Any], request_id: str) -> str:
     if row is None:
         return "await-windows-trace"
+    if request_id == CASE0010_FINAL_WRITEBACK_REQUEST_ID:
+        case = case_by_id(observations, "case_0010") or observations.get("case_0010") or observations
+        if not isinstance(case, dict):
+            case = {}
+        row_text = json.dumps(
+            {"status": row.get("status"), "summary": row.get("summary"), "observations": observations},
+            ensure_ascii=False,
+            sort_keys=True,
+        ).lower()
+        if row.get("status") == "answered_partial" and (
+            "no fresh same-run" in row_text or "not freshly re-hooked" in row_text
+        ):
+            return "tiny_rotation:case0010-final-writeback-partial-missing-same-run-debugger-stop"
+        final_byte = (
+            case.get("exported_rgba8_or_png_byte")
+            or case.get("exported_rgba8")
+            or case.get("exported_byte")
+            or case.get("final_exported_rgba8")
+        )
+        output_buffer = case.get("output_buffer_rgba_after_writeback") or case.get("output_buffer_rgba")
+        collapsed_e = case.get("collapsed_e_rgba") or case.get("normalized_e_rgba") or case.get("+0xe_rgba")
+        direct_e_sample = (
+            case.get("direct_inverse_sampler_result_from_e")
+            or case.get("direct_inverse_sampler_e_rgba")
+            or case.get("direct_e_sampler_rgba")
+            or case.get("+0xe_direct_inverse_sampler_rgba")
+        )
+        validity = case.get("preserved_validity_f252") or case.get("+0xf252")
+        accumulated = case.get("accumulated_f250_rgba") or case.get("+0xf250_rgba")
+        if all(
+            concrete_trace_value(value)
+            for value in (final_byte, output_buffer, collapsed_e, direct_e_sample, validity, accumulated)
+        ):
+            return "tiny_rotation:case0010-final-writeback-provenance"
+        fields = {
+            "export": final_byte,
+            "output-buffer": output_buffer,
+            "+0xe": collapsed_e,
+            "direct-+0xe-sampler": direct_e_sample,
+            "+0xf252": validity,
+            "+0xf250": accumulated,
+        }
+        missing = [name for name, value in fields.items() if not concrete_trace_value(value)]
+        if len(missing) < len(fields):
+            if len(missing) == 1:
+                return f"tiny_rotation:case0010-final-writeback-partial-missing-{missing[0]}"
+            return "tiny_rotation:case0010-final-writeback-partial"
+        return "trace-structure-present-values-missing"
+    if request_id == TINY_ROTATION_DIRECT_POSTRETURN_REQUEST_ID:
+        status = row.get("status")
+        if status == "partial_with_direct_postreturn_registers":
+            return "tiny_rotation:direct-postreturn-captured-upstream-branch-still-missing"
     zoom = classify_residual_case(case_by_id(observations, "case_0009"), zoom=True)
     tiny = classify_residual_case(case_by_id(observations, "case_0010"), zoom=False)
+    if request_id in {
+        TINY_ROTATION_ANCHOR_CONTEXT_WATCH_REQUEST_ID,
+        TINY_ROTATION_ANCHOR_CONTEXT_WATCH_RETRY_REQUEST_ID,
+        TINY_ROTATION_DIRECT_POSTRETURN_REQUEST_ID,
+    } and tiny == "substitute-or-upstream-rgb":
+        return "tiny_rotation:anchor-context-upstream-branch"
+    if request_id in {
+        TINY_ROTATION_ANCHOR_POINTER_WATCH_REQUEST_ID,
+        TINY_ROTATION_ANCHOR_WATCH_REQUEST_ID,
+        TINY_ROTATION_BACKSTEP_REQUEST_ID,
+        TINY_ROTATION_FOLLOWUP_REQUEST_ID,
+    } and tiny == "substitute-or-upstream-rgb":
+        return "tiny_rotation:upstream-branch-not-isolated"
     if request_id in {TINY_ROTATION_FOLLOWUP_REQUEST_ID, TINY_ROTATION_BACKSTEP_REQUEST_ID}:
         return f"tiny_rotation:{tiny}"
     if zoom == "trace-structure-present-values-missing" and tiny == "trace-structure-present-values-missing":
@@ -267,6 +615,18 @@ def recommended_next_evidence(focus: str) -> str:
         return "Update sampler branch/order IR before tuning pixels."
     if focus == "inner-span-31-registers-only":
         return "Keep the span-31 fact, but request typed sampler/scatter/writeback witnesses before changing Inner behavior."
+    if focus == "zoom_case0009:final-plane-cells-answered":
+        return "Use the same-run final-plane cell ids/alphas/weights to update the Zoom case_0009 IR and only then decide whether the C++ cell-set or coordinate rule changes."
+    if focus == "zoom_case0009:final-plane-cells-partial":
+        return "Preserve the captured primary final-plane facts, but request the missing primary/control cells before promoting this to proof or changing broad RadialBlur behavior."
+    if focus == "zoom_case0009:final-plane-witness-missing":
+        return "Do not tune from this return; rerun the final-plane cell witness with typed same-run cells/weights/alpha sums for primary pixels and controls."
+    if focus == "zoom_case0009:final-plane-typed-complete":
+        return "Use the same-run `(7,0)`, `(8,0)`, and `(24,0)` cell ids, `+0xe`, `+0xf252`, weights, and pre-byte alpha to update the Zoom case_0009 IR."
+    if focus == "zoom_case0009:final-plane-typed-partial":
+        return "Preserve the complete `(7,0)` typed witness and exact isolation failure; do not promote controls or change broad RadialBlur behavior."
+    if focus == "zoom_case0009:final-plane-typed-missing":
+        return "Do not tune from this return; rerun one same-run Windows witness with all typed fields and the exact hook/watchpoint artifact."
     parts = {}
     for segment in focus.split(";"):
         if ":" not in segment:
@@ -288,6 +648,30 @@ def recommended_next_evidence(focus: str) -> str:
         messages.append("Zoom: rerun with typed numeric witness values, not placeholders.")
     if tiny == "sampler-or-validity":
         messages.append("tiny Rotation: compare inverse sampler/polar coordinates and border validity at `case_0010`.")
+    elif tiny == "case0010-final-writeback-provenance":
+        messages.append("tiny Rotation: classify the returned `+0xf250/+0xf252/+0xe/output-buffer/export` chain before any implementation change.")
+    elif tiny == "case0010-final-writeback-partial-missing-export":
+        messages.append("tiny Rotation: request the missing same-run export byte; `+0xf250/+0xf252/+0xe/direct-sampler/output-buffer` are already the proof material to preserve.")
+    elif tiny == "case0010-final-writeback-partial-missing-output-buffer":
+        messages.append("tiny Rotation: request the missing output-buffer writeback value before deciding whether the gap is writeback or export/provenance.")
+    elif tiny == "case0010-final-writeback-partial-missing-+0xe":
+        messages.append("tiny Rotation: request the missing collapsed `+0xe` value before connecting `+0xf250/+0xf252` to final output.")
+    elif tiny == "case0010-final-writeback-partial-missing-direct-+0xe-sampler":
+        messages.append("tiny Rotation: request the missing direct inverse-sampler result from `+0xe`; the collapsed cells alone do not prove final sampling.")
+    elif tiny == "case0010-final-writeback-partial-missing-+0xf252":
+        messages.append("tiny Rotation: request the missing preserved validity `+0xf252` side channel before changing caller-collapse behavior.")
+    elif tiny == "case0010-final-writeback-partial-missing-+0xf250":
+        messages.append("tiny Rotation: request the missing accumulated `+0xf250` RGBA before changing accumulation or normalization behavior.")
+    elif tiny == "case0010-final-writeback-partial-missing-same-run-debugger-stop":
+        messages.append("tiny Rotation: current return is useful provenance evidence, but still needs one same-run Windows debugger stop tying `+0xf250/+0xf252/+0xe/direct sampler/output-buffer/export` together before changing code.")
+    elif tiny == "case0010-final-writeback-partial":
+        messages.append("tiny Rotation: final-writeback evidence is partial; keep this as proof material, but request the missing output-buffer/export or `+0xe` link before changing code.")
+    elif tiny == "anchor-context-upstream-branch":
+        messages.append("tiny Rotation: retain sampled-cell address plus `rsi/rbp/rsp` qword windows and neighboring-row watches so the first upstream promotion branch is captured at `case_0010`.")
+    elif tiny == "direct-postreturn-captured-upstream-branch-still-missing":
+        messages.append("tiny Rotation: `+0x7b4a` and `+0x41f8` are now retained, so the next useful witness is the first upstream promotion branch itself, plus `+0x7404` or equivalent normalized `+0xe` state that explains how near-black becomes final white at `case_0010`.")
+    elif tiny == "upstream-branch-not-isolated":
+        messages.append("tiny Rotation: keep the stable inverse-sampler anchor, but the next useful witness must retain the first upstream promotion/substitute branch rather than another anchor-only replay.")
     elif tiny == "substitute-or-upstream-rgb":
         messages.append("tiny Rotation: compare substitute/fallback branch state plus source-population, `+0xf252`, `+0xf250`, and normalized `+0xe` RGBA at `case_0010`.")
     elif tiny == "normalization-or-writeback":
@@ -307,6 +691,35 @@ def recommended_next_evidence(focus: str) -> str:
 
 def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
     observations = observations_for(row)
+    final_writeback = None
+    if row is not None and row.get("request_id") == CASE0010_FINAL_WRITEBACK_REQUEST_ID:
+        case = case_by_id(observations, "case_0010") or observations.get("case_0010") or observations
+        if isinstance(case, dict):
+            final_writeback = {
+                "module_base_or_aex_version": case.get("module_base_or_aex_version")
+                or case.get("module_base")
+                or case.get("aex_version"),
+                "inverse_sampler_input_xy": case.get("inverse_sampler_input_xy")
+                or case.get("aex_inverse_sampler_input_xy"),
+                "contributing_polar_cells": case.get("contributing_polar_cells")
+                or case.get("four_contributing_polar_cells"),
+                "accumulated_f250_rgba": case.get("accumulated_f250_rgba") or case.get("+0xf250_rgba"),
+                "preserved_validity_f252": case.get("preserved_validity_f252") or case.get("+0xf252"),
+                "collapsed_e_rgba": case.get("collapsed_e_rgba")
+                or case.get("normalized_e_rgba")
+                or case.get("+0xe_rgba"),
+                "direct_inverse_sampler_result_from_e": case.get("direct_inverse_sampler_result_from_e")
+                or case.get("direct_inverse_sampler_e_rgba")
+                or case.get("direct_e_sampler_rgba")
+                or case.get("+0xe_direct_inverse_sampler_rgba"),
+                "output_buffer_rgba_after_writeback": case.get("output_buffer_rgba_after_writeback")
+                or case.get("output_buffer_rgba"),
+                "exported_rgba8_or_png_byte": case.get("exported_rgba8_or_png_byte")
+                or case.get("exported_rgba8")
+                or case.get("exported_byte")
+                or case.get("final_exported_rgba8"),
+                "alternate_final_output_path": case.get("alternate_final_output_path"),
+            }
     return {
         "present": row is not None,
         "status": row.get("status") if row else None,
@@ -314,6 +727,7 @@ def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
         "source_file": safe_source_file(row.get("source_file")) if row else None,
         "ae_context": observations.get("ae_context") if observations else None,
         "cases": case_rows(observations),
+        "case0010_final_writeback": final_writeback,
         "directly_observed_vs_inferred": observations.get("directly_observed_vs_inferred")
         if observations
         else None,
@@ -324,6 +738,11 @@ def build_comparison(summary: dict[str, Any]) -> dict[str, Any]:
     residual_request_id, residual_row = find_first_result(
         summary,
         [
+            ZOOM_CASE0009_FINAL_PLANE_TYPED_REQUEST_ID,
+            ZOOM_CASE0009_FINAL_PLANE_CELLS_REQUEST_ID,
+            CASE0010_FINAL_WRITEBACK_REQUEST_ID,
+            TINY_ROTATION_ANCHOR_CONTEXT_WATCH_RETRY_REQUEST_ID,
+            TINY_ROTATION_DIRECT_POSTRETURN_REQUEST_ID,
             TINY_ROTATION_ANCHOR_CONTEXT_WATCH_REQUEST_ID,
             TINY_ROTATION_ANCHOR_POINTER_WATCH_REQUEST_ID,
             TINY_ROTATION_ANCHOR_WATCH_REQUEST_ID,
@@ -336,7 +755,15 @@ def build_comparison(summary: dict[str, Any]) -> dict[str, Any]:
     )
     if residual_row is not None:
         observations = observations_for(residual_row)
-        focus = classify_residual(residual_row, observations, residual_request_id)
+        if residual_request_id == ZOOM_CASE0009_FINAL_PLANE_TYPED_REQUEST_ID:
+            classification, typed_witness = classify_zoom_case0009_final_plane_typed(
+                residual_row, observations
+            )
+            focus = f"zoom_case0009:final-plane-typed-{classification}"
+        elif residual_request_id == ZOOM_CASE0009_FINAL_PLANE_CELLS_REQUEST_ID:
+            focus = classify_zoom_case0009_final_plane(residual_row, observations)
+        else:
+            focus = classify_residual(residual_row, observations, residual_request_id)
         comparison = {
             "kind": "olmradialblur_trace_comparison",
             "schema": 2,
@@ -346,10 +773,18 @@ def build_comparison(summary: dict[str, Any]) -> dict[str, Any]:
             "recommended_next_evidence": recommended_next_evidence(focus),
             "windows": summarize_windows(residual_row),
         }
+        if residual_request_id == ZOOM_CASE0009_FINAL_PLANE_TYPED_REQUEST_ID:
+            comparison["classification"] = classification
+            comparison["windows"]["case0009_final_plane_typed"] = typed_witness
         if residual_request_id in {
             TINY_ROTATION_FOLLOWUP_REQUEST_ID,
             TINY_ROTATION_BACKSTEP_REQUEST_ID,
+            TINY_ROTATION_ANCHOR_POINTER_WATCH_REQUEST_ID,
+            TINY_ROTATION_ANCHOR_WATCH_REQUEST_ID,
             TINY_ROTATION_ANCHOR_CONTEXT_WATCH_REQUEST_ID,
+            TINY_ROTATION_ANCHOR_CONTEXT_WATCH_RETRY_REQUEST_ID,
+            TINY_ROTATION_DIRECT_POSTRETURN_REQUEST_ID,
+            CASE0010_FINAL_WRITEBACK_REQUEST_ID,
         } and TINY_ROTATION_LANE_AUDIT.exists():
             audit = load_json(TINY_ROTATION_LANE_AUDIT)
             comparison["local_tiny_rotation_context"] = {
@@ -360,6 +795,24 @@ def build_comparison(summary: dict[str, Any]) -> dict[str, Any]:
                 "same_row_structure": audit.get("same_row_structure"),
                 "source_polar_structure": audit.get("source_polar_structure"),
                 "row_coupling_probe": audit.get("row_coupling_probe"),
+            }
+        if residual_request_id in {
+            TINY_ROTATION_FOLLOWUP_REQUEST_ID,
+            TINY_ROTATION_BACKSTEP_REQUEST_ID,
+            TINY_ROTATION_ANCHOR_POINTER_WATCH_REQUEST_ID,
+            TINY_ROTATION_ANCHOR_WATCH_REQUEST_ID,
+            TINY_ROTATION_ANCHOR_CONTEXT_WATCH_REQUEST_ID,
+            TINY_ROTATION_ANCHOR_CONTEXT_WATCH_RETRY_REQUEST_ID,
+            TINY_ROTATION_DIRECT_POSTRETURN_REQUEST_ID,
+            CASE0010_FINAL_WRITEBACK_REQUEST_ID,
+        } and TINY_ROTATION_LANE_STATE.exists():
+            state = load_json(TINY_ROTATION_LANE_STATE)
+            comparison["local_tiny_rotation_lane_state"] = {
+                "status": state.get("status"),
+                "safe_claim": state.get("safe_claim"),
+                "pending_windows_followup": state.get("pending_windows_followup"),
+                "decision_ladder": state.get("decision_ladder"),
+                "forbidden_actions": state.get("forbidden_actions"),
             }
         return comparison
     row = find_result(summary, DENSE_REQUEST_ID)
@@ -386,6 +839,7 @@ def md_value(value: Any) -> str:
 def render_markdown(comparison: dict[str, Any]) -> str:
     windows = comparison["windows"]
     local_tiny = comparison.get("local_tiny_rotation_context")
+    local_lane_state = comparison.get("local_tiny_rotation_lane_state")
     lines = [
         "# OLMRadialBlur Trace Comparison",
         "",
@@ -418,6 +872,19 @@ def render_markdown(comparison: dict[str, Any]) -> str:
                 "",
             ]
         )
+    if local_lane_state:
+        lines.extend(
+            [
+                "## Local tiny Rotation Lane State",
+                "",
+                f"- Status: {md_value(local_lane_state.get('status'))}",
+                f"- Safe claim: {local_lane_state.get('safe_claim') or '-'}",
+                f"- Pending Windows follow-up: {md_value(local_lane_state.get('pending_windows_followup'))}",
+                f"- Decision ladder: {md_value(local_lane_state.get('decision_ladder'))}",
+                f"- Forbidden actions: {md_value(local_lane_state.get('forbidden_actions'))}",
+                "",
+            ]
+        )
     lines.extend(
         [
             "## Interpretation",
@@ -428,6 +895,8 @@ def render_markdown(comparison: dict[str, Any]) -> str:
             "- `inner-span-31-registers-only`: keep the span-31 fact, but do not treat this as a dense residual answer.",
             "- `trace-structure-present-values-missing`: repeat with typed numeric witness values.",
             "- `trace-too-sparse`: do not tune from broad PNGs or placeholders.",
+            "- `tiny_rotation:anchor-context-upstream-branch`: this is now the narrow live lane; preserve sampled-cell address, neighboring-row context, and first promotion-branch ownership.",
+            "- `tiny_rotation:upstream-branch-not-isolated`: anchor-only or backstep-only evidence is still insufficient; keep chasing the first upstream promotion/substitute branch.",
             "- `tiny_rotation:substitute-or-upstream-rgb`: prefer substitute/fallback or source-population ownership over validity-only or final-byte stories.",
             "- `zoom:*; tiny_rotation:*`: focused residual witness classification for the mixed outer follow-up lanes.",
             "",

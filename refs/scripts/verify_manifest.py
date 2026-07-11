@@ -197,6 +197,17 @@ def load_rgba(path):
     return np.asarray(Image.open(path).convert("RGBA"))
 
 
+def normalize_integer_compare_arrays(reference, candidate):
+    ref_max = np.iinfo(reference.dtype).max
+    cand_max = np.iinfo(candidate.dtype).max
+    if ref_max == cand_max:
+        return reference.astype(np.int64, copy=False), candidate.astype(np.int64, copy=False), "integer"
+
+    reference_cmp = reference.astype(np.float64, copy=False) * (255.0 / ref_max)
+    candidate_cmp = candidate.astype(np.float64, copy=False) * (255.0 / cand_max)
+    return reference_cmp, candidate_cmp, "integer-normalized-8bit"
+
+
 def companion_path(path, suffix):
     candidate = path.with_suffix(suffix)
     return candidate if candidate.exists() else None
@@ -221,11 +232,19 @@ def compare(reference_path, candidate_path, diff_path):
             "candidate_shape": list(candidate.shape),
         }
 
-    delta = np.abs(reference.astype(np.int64) - candidate.astype(np.int64))
+    float_compare = np.issubdtype(reference.dtype, np.floating) or np.issubdtype(candidate.dtype, np.floating)
+    if float_compare:
+        reference_cmp = reference.astype(np.float64, copy=False)
+        candidate_cmp = candidate.astype(np.float64, copy=False)
+        delta = np.abs(reference_cmp - candidate_cmp)
+        compare_mode = "float"
+    else:
+        reference_cmp, candidate_cmp, compare_mode = normalize_integer_compare_arrays(reference, candidate)
+        delta = np.abs(reference_cmp - candidate_cmp)
     mask = delta.any(axis=-1)
     nonzero_px = int(mask.sum())
     total_px = int(reference.shape[0] * reference.shape[1])
-    max_diff = int(delta.max())
+    max_diff = float(delta.max()) if delta.dtype.kind == "f" else int(delta.max())
     mean_diff = float(delta.mean())
 
     samples = []
@@ -252,6 +271,9 @@ def compare(reference_path, candidate_path, diff_path):
 
     return {
         "status": "compared",
+        "compare_mode": compare_mode,
+        "reference_dtype": str(reference.dtype),
+        "candidate_dtype": str(candidate.dtype),
         "max_diff": max_diff,
         "mean_diff": mean_diff,
         "nonzero_px": nonzero_px,

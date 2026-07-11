@@ -1,0 +1,231 @@
+{
+  "kind": "olmradialblur_tiny_rotation_lane_state",
+  "materialized_at": "2026-07-03T10:23:56Z",
+  "case_id": "case_0010",
+  "witness_xy": [
+    1614,
+    6
+  ],
+  "inputs": {
+    "lane_audit_json": "refs/conformance/olmradialblur_tiny_rotation_lane_audit_20260701.json",
+    "source_candidates_json": "refs/conformance/olmradialblur_tiny_rotation_source_candidates_audit_20260701.json"
+  },
+  "status": "reference-path-split-suspected",
+  "safe_claim": "Do not tune Mac scatter from the legacy 20260604 PNG white witness alone. Local CPU AEX emulation matches Windows typed +0xe cells to <=1 ULP and direct AEX inverse sampling at (1614,6) returns black while the legacy PNG remains white.",
+  "local_aex_emulation_gate_20260705": {
+    "harness": "tools/emulation/test_m4_case0010.py",
+    "aex_path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "chain": "FUN_180008690 -> FUN_180007520 -> FUN_180004640",
+    "typed_cell_exact": "2/4",
+    "typed_cell_within_1ulp_rgb_alpha_exact": "4/4",
+    "direct_inverse_sample": {
+      "xy": [
+        1614,
+        6
+      ],
+      "radius": 844.317504883,
+      "angle": 5.598455906,
+      "sample_xy": [
+        1603.839558785,
+        844.317504883
+      ],
+      "rgba_float": [
+        -0.004081939,
+        -0.004081939,
+        -0.004081939,
+        1.0
+      ],
+      "rgba_u8": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    "legacy_png_rgba": [
+      255,
+      255,
+      255,
+      255
+    ],
+    "consequence": "reference-provenance/render-path split candidate"
+  },
+  "current_candidate_rgba": [
+    0,
+    0,
+    0,
+    255
+  ],
+  "windows_reference_rgba": [
+    255,
+    255,
+    255,
+    255
+  ],
+  "same_row_boundary": {
+    "row_length": 3,
+    "row_weights": [
+      1.0,
+      0.6065306823076752,
+      0.13533530340315494
+    ],
+    "direct_source_cells_all_black": true
+  },
+  "source_polar_boundary": {
+    "witness_sample_rgba": [
+      -0.00408606,
+      -0.00408606,
+      -0.00408606,
+      1
+    ],
+    "witness_sample_u8": [
+      0,
+      0,
+      0,
+      255
+    ],
+    "dominant_local_positive_cluster": [
+      {
+        "xy": [
+          1601,
+          843
+        ],
+        "rgba": [
+          0.168253,
+          0.168253,
+          0.168253,
+          1
+        ],
+        "luma": 0.168253
+      },
+      {
+        "xy": [
+          1602,
+          843
+        ],
+        "rgba": [
+          0.0893472,
+          0.0893472,
+          0.0893472,
+          1
+        ],
+        "luma": 0.0893472
+      }
+    ],
+    "strongest_positive": [
+      {
+        "xy": [
+          1608,
+          838
+        ],
+        "rgba": [
+          0.452643,
+          0.452643,
+          0.452643,
+          1
+        ],
+        "luma": 0.45264299999999996
+      },
+      {
+        "xy": [
+          1601,
+          843
+        ],
+        "rgba": [
+          0.168253,
+          0.168253,
+          0.168253,
+          1
+        ],
+        "luma": 0.168253
+      },
+      {
+        "xy": [
+          1602,
+          843
+        ],
+        "rgba": [
+          0.0893472,
+          0.0893472,
+          0.0893472,
+          1
+        ],
+        "luma": 0.0893472
+      },
+      {
+        "xy": [
+          1608,
+          839
+        ],
+        "rgba": [
+          0.0355792,
+          0.0355792,
+          0.0355792,
+          1
+        ],
+        "luma": 0.0355792
+      }
+    ],
+    "strongest_negative": [
+      {
+        "xy": [
+          1601,
+          845
+        ],
+        "rgba": [
+          -0.624861,
+          -0.624861,
+          -0.624861,
+          1
+        ],
+        "luma": -0.624861
+      },
+      {
+        "xy": [
+          1601,
+          844
+        ],
+        "rgba": [
+          -0.189342,
+          -0.189342,
+          -0.189342,
+          1
+        ],
+        "luma": -0.189342
+      }
+    ]
+  },
+  "row_coupling_boundary": {
+    "reference_bright_count": 17,
+    "all_variants_keep_bright_count_zero": true
+  },
+  "pending_windows_followup": {
+    "acceptance_note": "refs/conformance/olmradialblur_tiny_rotation_anchor_context_watch_return_acceptance_20260702.md",
+    "package": "refs/runtime_trace_packages/olm_runtime_trace_radialblur_tiny_rotation_anchor_context_watch_followup_20260702.zip",
+    "request_id": "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702",
+    "status": "superseded",
+    "stop_condition": "Superseded by local CPU AEX emulation. Next proof must be a current-AEX Software/EXR recapture or CPU final writeback witness, not another promotion-branch search based on the legacy PNG white pixel."
+  },
+  "decision_ladder": [
+    {
+      "action": "Mark the legacy PNG witness invalid for this lane and stop chasing the white pixel.",
+      "condition": "If a current-AEX Software/EXR recapture or CPU writeback trace confirms black at `(1614,6)`",
+      "step": 1
+    },
+    {
+      "action": "Find the alternate final-output branch before touching Mac scatter.",
+      "condition": "If a current-AEX CPU writeback trace proves white while direct `+0xe` sample remains black",
+      "step": 2
+    },
+    {
+      "action": "Reopen `FUN_180002780 / FUN_1800024c0` scatter ownership with the mismatching typed cells.",
+      "condition": "If a current-AEX CPU trace shows upstream polar values differ from local emulation",
+      "step": 3
+    }
+  ],
+  "forbidden_actions": [
+    "Do not promote a global validity-alpha rewrite from this lane.",
+    "Do not promote a same-row-only support tweak from the row-843 cluster evidence alone.",
+    "Do not retune final byte conversion or scatter solely to match the legacy PNG white while CPU AEX direct sampling returns black."
+  ]
+}

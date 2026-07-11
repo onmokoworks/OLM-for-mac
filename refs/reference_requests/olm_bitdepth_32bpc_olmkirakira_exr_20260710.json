@@ -1,0 +1,714 @@
+{
+  "cases": [
+    {
+      "id": "final_random10_olm_kira_kira_01",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": 4,
+        "__index_10": 581,
+        "__index_11": [
+          0.5809,
+          0.549,
+          0.4345,
+          1
+        ],
+        "__index_13": 0,
+        "__index_16": 823,
+        "__index_17": [
+          0.4419,
+          0.245,
+          0.9577,
+          1
+        ],
+        "__index_19": 0,
+        "__index_2": 4,
+        "__index_22": 196,
+        "__index_23": [
+          0.9824,
+          0.586,
+          0.9999,
+          1
+        ],
+        "__index_25": 0,
+        "__index_28": 227,
+        "__index_29": [
+          0.4386,
+          0.5771,
+          0.3439,
+          1
+        ],
+        "__index_3": 2,
+        "__index_31": 1,
+        "__index_34": 282,
+        "__index_35": [
+          0.7034,
+          0.6498,
+          0.8152,
+          1
+        ],
+        "__index_37": 1,
+        "__index_4": 0,
+        "__index_40": -25,
+        "__index_5": 17,
+        "__index_6": 167,
+        "__index_7": 0,
+        "__index_8": 9264,
+        "__index_9": 85
+      },
+      "random_seed": 20265630,
+      "reason": "Per-plugin final random reference case 1/10 generated from Windows range metadata seed 20265630."
+    },
+    {
+      "id": "final_random10_olm_kira_kira_02",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 2,
+        "__index_10": 949,
+        "__index_11": [
+          0.3176,
+          0.3297,
+          0.1219,
+          1
+        ],
+        "__index_13": 1,
+        "__index_16": 523,
+        "__index_17": [
+          0.0664,
+          0.6654,
+          0.5777,
+          1
+        ],
+        "__index_19": 0,
+        "__index_2": 1,
+        "__index_22": 583,
+        "__index_23": [
+          0.1153,
+          0.8314,
+          0.1689,
+          1
+        ],
+        "__index_25": 1,
+        "__index_28": 325,
+        "__index_29": [
+          0.0818,
+          0.4369,
+          0.9635,
+          1
+        ],
+        "__index_3": 1,
+        "__index_31": 0,
+        "__index_34": 184,
+        "__index_35": [
+          0.0725,
+          0.9132,
+          0.2173,
+          1
+        ],
+        "__index_37": 1,
+        "__index_4": 0,
+        "__index_40": 101,
+        "__index_5": 61,
+        "__index_6": 41,
+        "__index_7": 1,
+        "__index_8": 4281,
+        "__index_9": 98
+      },
+      "random_seed": 20265631,
+      "reason": "Per-plugin final random reference case 2/10 generated from Windows range metadata seed 20265631."
+    },
+    {
+      "id": "final_random10_olm_kira_kira_03",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": 4,
+        "__index_10": 318,
+        "__index_11": [
+          0.0543,
+          0.1104,
+          0.8094,
+          1
+        ],
+        "__index_13": 0,
+        "__index_16": 223,
+        "__index_17": [
+          0.691,
+          0.0857,
+          0.1977,
+          1
+        ],
+        "__index_19": 0,
+        "__index_2": 3,
+        "__index_22": 970,
+        "__index_23": [
+          0.2482,
+          0.0767,
+          0.3379,
+          1
+        ],
+        "__index_25": 0,
+        "__index_28": 423,
+        "__index_29": [
+          0.725,
+          0.2967,
+          0.5831,
+          1
+        ],
+        "__index_3": 1,
+        "__index_31": 0,
+        "__index_34": 87,
+        "__index_35": [
+          0.4417,
+          0.1766,
+          0.6195,
+          1
+        ],
+        "__index_37": 0,
+        "__index_4": 0,
+        "__index_40": -133,
+        "__index_5": 7,
+        "__index_6": 915,
+        "__index_7": 0,
+        "__index_8": 9298,
+        "__index_9": 10
+      },
+      "random_seed": 20265632,
+      "reason": "Per-plugin final random reference case 3/10 generated from Windows range metadata seed 20265632."
+    },
+    {
+      "id": "final_random10_olm_kira_kira_04",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 2,
+        "__index_10": 687,
+        "__index_11": [
+          0.7911,
+          0.8911,
+          0.4968,
+          1
+        ],
+        "__index_13": 1,
+        "__index_16": 923,
+        "__index_17": [
+          0.3155,
+          0.5061,
+          0.8177,
+          1
+        ],
+        "__index_19": 0,
+        "__index_2": 4,
+        "__index_22": 357,
+        "__index_23": [
+          0.381,
+          0.3221,
+          0.5069,
+          1
+        ],
+        "__index_25": 0,
+        "__index_28": 521,
+        "__index_29": [
+          0.3682,
+          0.1564,
+          0.2027,
+          1
+        ],
+        "__index_3": 2,
+        "__index_31": 1,
+        "__index_34": 490,
+        "__index_35": [
+          0.8109,
+          0.44,
+          0.0216,
+          1
+        ],
+        "__index_37": 0,
+        "__index_4": 1,
+        "__index_40": -7,
+        "__index_5": 52,
+        "__index_6": 789,
+        "__index_7": 1,
+        "__index_8": 4314,
+        "__index_9": 22
+      },
+      "random_seed": 20265633,
+      "reason": "Per-plugin final random reference case 4/10 generated from Windows range metadata seed 20265633."
+    },
+    {
+      "id": "final_random10_olm_kira_kira_05",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": 4,
+        "__index_10": 56,
+        "__index_11": [
+          0.5278,
+          0.6718,
+          0.1843,
+          1
+        ],
+        "__index_13": 0,
+        "__index_16": 623,
+        "__index_17": [
+          0.94,
+          0.9265,
+          0.4377,
+          1
+        ],
+        "__index_19": 0,
+        "__index_2": 1,
+        "__index_22": 744,
+        "__index_23": [
+          0.5139,
+          0.5674,
+          0.6759,
+          1
+        ],
+        "__index_25": 1,
+        "__index_28": 619,
+        "__index_29": [
+          0.0114,
+          0.0162,
+          0.8223,
+          1
+        ],
+        "__index_3": 2,
+        "__index_31": 0,
+        "__index_34": 392,
+        "__index_35": [
+          0.1801,
+          0.7034,
+          0.4237,
+          1
+        ],
+        "__index_37": 0,
+        "__index_4": 1,
+        "__index_40": 119,
+        "__index_5": 96,
+        "__index_6": 663,
+        "__index_7": 1,
+        "__index_8": 9331,
+        "__index_9": 35
+      },
+      "random_seed": 20265634,
+      "reason": "Per-plugin final random reference case 5/10 generated from Windows range metadata seed 20265634."
+    },
+    {
+      "id": "final_random10_olm_kira_kira_06",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 2,
+        "__index_10": 424,
+        "__index_11": [
+          0.2645,
+          0.4526,
+          0.8717,
+          1
+        ],
+        "__index_13": 1,
+        "__index_16": 323,
+        "__index_17": [
+          0.5645,
+          0.3468,
+          0.0577,
+          1
+        ],
+        "__index_19": 0,
+        "__index_2": 2,
+        "__index_22": 132,
+        "__index_23": [
+          0.6468,
+          0.8127,
+          0.8449,
+          1
+        ],
+        "__index_25": 0,
+        "__index_28": 717,
+        "__index_29": [
+          0.6546,
+          0.876,
+          0.4419,
+          1
+        ],
+        "__index_3": 1,
+        "__index_31": 0,
+        "__index_34": 295,
+        "__index_35": [
+          0.5492,
+          0.9668,
+          0.8258,
+          1
+        ],
+        "__index_37": 0,
+        "__index_4": 0,
+        "__index_40": -116,
+        "__index_5": 42,
+        "__index_6": 536,
+        "__index_7": 0,
+        "__index_8": 4348,
+        "__index_9": 47
+      },
+      "random_seed": 20265635,
+      "reason": "Per-plugin final random reference case 6/10 generated from Windows range metadata seed 20265635."
+    },
+    {
+      "id": "final_random10_olm_kira_kira_07",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": 4,
+        "__index_10": 793,
+        "__index_11": [
+          0.0013,
+          0.2333,
+          0.5592,
+          1
+        ],
+        "__index_13": 0,
+        "__index_16": 23,
+        "__index_17": [
+          0.189,
+          0.7672,
+          0.6777,
+          1
+        ],
+        "__index_19": 0,
+        "__index_2": 3,
+        "__index_22": 519,
+        "__index_23": [
+          0.7796,
+          0.0581,
+          0.0139,
+          1
+        ],
+        "__index_25": 0,
+        "__index_28": 815,
+        "__index_29": [
+          0.2977,
+          0.7357,
+          0.0615,
+          1
+        ],
+        "__index_3": 2,
+        "__index_31": 1,
+        "__index_34": 198,
+        "__index_35": [
+          0.9184,
+          0.2302,
+          0.228,
+          1
+        ],
+        "__index_37": 0,
+        "__index_4": 0,
+        "__index_40": 10,
+        "__index_5": 87,
+        "__index_6": 410,
+        "__index_7": 1,
+        "__index_8": 9365,
+        "__index_9": 60
+      },
+      "random_seed": 20265636,
+      "reason": "Per-plugin final random reference case 7/10 generated from Windows range metadata seed 20265636."
+    },
+    {
+      "id": "final_random10_olm_kira_kira_08",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 3,
+        "__index_10": 162,
+        "__index_11": [
+          0.738,
+          0.014,
+          0.2466,
+          1
+        ],
+        "__index_13": 1,
+        "__index_16": 723,
+        "__index_17": [
+          0.8136,
+          0.1875,
+          0.2977,
+          1
+        ],
+        "__index_19": 0,
+        "__index_2": 1,
+        "__index_22": 906,
+        "__index_23": [
+          0.9125,
+          0.3034,
+          0.183,
+          1
+        ],
+        "__index_25": 1,
+        "__index_28": 913,
+        "__index_29": [
+          0.9409,
+          0.5955,
+          0.6811,
+          1
+        ],
+        "__index_3": 2,
+        "__index_31": 1,
+        "__index_34": 100,
+        "__index_35": [
+          0.2876,
+          0.4936,
+          0.6301,
+          1
+        ],
+        "__index_37": 0,
+        "__index_4": 1,
+        "__index_40": 136,
+        "__index_5": 33,
+        "__index_6": 284,
+        "__index_7": 0,
+        "__index_8": 4382,
+        "__index_9": 72
+      },
+      "random_seed": 20265637,
+      "reason": "Per-plugin final random reference case 8/10 generated from Windows range metadata seed 20265637."
+    },
+    {
+      "id": "final_random10_olm_kira_kira_09",
+      "input": "random_final_grid_1920x1080",
+      "params": {
+        "__index_1": 1,
+        "__index_10": 531,
+        "__index_11": [
+          0.4747,
+          0.7947,
+          0.9341,
+          1
+        ],
+        "__index_13": 0,
+        "__index_16": 423,
+        "__index_17": [
+          0.4381,
+          0.6079,
+          0.9177,
+          1
+        ],
+        "__index_19": 0,
+        "__index_2": 2,
+        "__index_22": 293,
+        "__index_23": [
+          0.0454,
+          0.5487,
+          0.352,
+          1
+        ],
+        "__index_25": 0,
+        "__index_28": 11,
+        "__index_29": [
+          0.5841,
+          0.4552,
+          0.3008,
+          1
+        ],
+        "__index_3": 1,
+        "__index_31": 0,
+        "__index_34": 3,
+        "__index_35": [
+          0.6568,
+          0.757,
+          0.0322,
+          1
+        ],
+        "__index_37": 0,
+        "__index_4": 1,
+        "__index_40": -99,
+        "__index_5": 77,
+        "__index_6": 158,
+        "__index_7": 1,
+        "__index_8": 9399,
+        "__index_9": 84
+      },
+      "random_seed": 20265638,
+      "reason": "Per-plugin final random reference case 9/10 generated from Windows range metadata seed 20265638."
+    },
+    {
+      "id": "final_random10_olm_kira_kira_10",
+      "input": "random_final_alpha_1920x1080",
+      "params": {
+        "__index_1": 3,
+        "__index_10": 899,
+        "__index_11": [
+          0.2114,
+          0.5754,
+          0.6215,
+          1
+        ],
+        "__index_13": 1,
+        "__index_16": 123,
+        "__index_17": [
+          0.0626,
+          0.0283,
+          0.5377,
+          1
+        ],
+        "__index_19": 0,
+        "__index_2": 3,
+        "__index_22": 680,
+        "__index_23": [
+          0.1783,
+          0.7941,
+          0.521,
+          1
+        ],
+        "__index_25": 1,
+        "__index_28": 109,
+        "__index_29": [
+          0.2273,
+          0.315,
+          0.9204,
+          1
+        ],
+        "__index_3": 1,
+        "__index_31": 0,
+        "__index_34": 406,
+        "__index_35": [
+          0.026,
+          0.0204,
+          0.4343,
+          1
+        ],
+        "__index_37": 0,
+        "__index_4": 1,
+        "__index_40": 27,
+        "__index_5": 23,
+        "__index_6": 32,
+        "__index_7": 0,
+        "__index_8": 4416,
+        "__index_9": 97
+      },
+      "random_seed": 20265639,
+      "reason": "Per-plugin final random reference case 10/10 generated from Windows range metadata seed 20265639."
+    }
+  ],
+  "common_setup": {
+    "bit_depth": 32,
+    "comp_height": 1080,
+    "comp_width": 1920,
+    "frame_rate": 24,
+    "project_renderer": "SOFTWARE"
+  },
+  "effect": {
+    "match_name": "OLM OLM Kira Kira",
+    "name": "OLM Kira Kira"
+  },
+  "inputs": [
+    {
+      "description": "Opaque deterministic stress image.",
+      "id": "random_final_grid_1920x1080",
+      "path": "inputs/random_final_grid_1920x1080.png"
+    },
+    {
+      "description": "RGBA deterministic stress image.",
+      "id": "random_final_alpha_1920x1080",
+      "path": "inputs/random_final_alpha_1920x1080.png"
+    }
+  ],
+  "manifest_requirements": [
+    "AE version",
+    "project_gpu_accel_type.current_name and raw value; current_name must be SOFTWARE",
+    "project bit depth / bits per channel; must be 32bpc / 32",
+    "project color management settings",
+    "before_effects_frame PNG or float-preserving input snapshot for every case",
+    "effect output in EXR by default; if that is impossible, return typed float-preserving TIFF/TIF, HDR, or raw-float RGBA and record the exact format",
+    "output header metadata: container format, channel order/count, sample type, bits per channel, dimensions, color space, alpha mode, and endianness when applicable",
+    "SHA-256 for every before/effect artifact, any raw-float payload, and the returned manifest",
+    "if only PNG output is possible, record output_format=png and float_preserving=false",
+    "all effect property names, match_names, indices, values, enabled/active state"
+  ],
+  "render_sets": [
+    {
+      "id": "software_32bpc",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "bit_depth": "32bpc",
+      "bits_per_channel": 32,
+      "required": true
+    }
+  ],
+  "request_id": "olm_bitdepth_32bpc_olmkirakira_exr_20260710",
+  "why": [
+    "Existing Windows range-metadata random10 cases for OLMKiraKira; preserve case IDs and parameters.",
+    "Render in a 32bpc Windows AE SOFTWARE project; CUDA/GPU is outside this request.",
+    "Return EXR first, with typed float-preserving fallback only when EXR is unavailable.",
+    "PNG-only output is probe-only and cannot support an AE exact claim."
+  ],
+  "scope": {
+    "bit_depth": "32bpc",
+    "plugin_filters": [
+      "OLMKiraKira"
+    ],
+    "feature_filters": [],
+    "plugin_count": 1,
+    "case_count": 10
+  },
+  "compare_policy": {
+    "path": "refs/conformance/bitdepth_32bpc_compare_policy_20260703.md",
+    "mode": "float-preserving-required",
+    "png_only_classification": "probe-only"
+  },
+  "output_requirements": {
+    "preferred_formats": [
+      "exr"
+    ],
+    "acceptable_float_preserving_fallbacks": [
+      "tiff",
+      "tif",
+      "hdr",
+      "raw-float-rgba"
+    ],
+    "png_only_allowed": true,
+    "png_only_classification": "probe-only",
+    "float_preserving_required_for_ae_exact": true,
+    "record_exact_format_used": true,
+    "artifact_integrity": {
+      "sha256_required": true,
+      "sha256_scope": [
+        "before_effects_frame",
+        "effect_output",
+        "raw_float_payload_when_used",
+        "manifest"
+      ],
+      "header_metadata_required": true,
+      "header_metadata_scope": [
+        "container_format",
+        "channel_order",
+        "channel_count",
+        "sample_type",
+        "bits_per_channel",
+        "width",
+        "height",
+        "color_space",
+        "alpha_mode",
+        "endianness_when_applicable"
+      ],
+      "typed_fallbacks": [
+        {
+          "format": "tiff",
+          "required_sample_type": "float32 or float64",
+          "required_bits_per_channel": 32
+        },
+        {
+          "format": "tif",
+          "required_sample_type": "float32 or float64",
+          "required_bits_per_channel": 32
+        },
+        {
+          "format": "hdr",
+          "required_sample_type": "float32",
+          "required_bits_per_channel": 32
+        },
+        {
+          "format": "raw-float-rgba",
+          "required_sample_type": "IEEE-754 float32",
+          "required_bits_per_channel": 32,
+          "required_metadata": [
+            "width",
+            "height",
+            "channel_order",
+            "endianness"
+          ]
+        }
+      ]
+    }
+  }
+}

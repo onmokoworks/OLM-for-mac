@@ -11,6 +11,21 @@ AEX, using Windows AE Software render as the reference path.
 settings, and same bit depth produce a zero-diff Mac AE render against the
 Windows AE Software reference.
 
+The target plug-in set, critical-path ordering, and release gate are defined in
+`notes/PORTING_ROADMAP.md`. The machine-readable completion population lives in
+`refs/conformance/olm_release_scope.json`; check it with:
+
+```bash
+python3 scripts/check_olm_release_scope.py
+```
+
+An `AE exact` feature/depth slice is not the same as a complete plug-in. Release
+completion additionally requires every declared feature/path/depth cell, stable
+host integration, complete binary-grounded IR, manifests, and reproducible
+comparators. `ColorKeep` is currently support-only and excluded from that
+release population. `OLMSmoother v1` remains in the population with an explicit
+endgame policy decision still required.
+
 ## Status Vocabulary
 
 Use these terms in progress notes, dashboards, and release communication:
@@ -23,6 +38,7 @@ Use these terms in progress notes, dashboards, and release communication:
 | `guarded` | A regression gate passes with nonzero tolerance or known residuals. | Not complete. |
 | `known-red` | A checked case is intentionally red and preserved as a regression/proof target. | Not complete. |
 | `reference-generation split` | A case differs against a superseded or legacy reference, but matches the canonical normalized/current reference. | Not a compatibility failure; keep the reference sets separated. |
+| `host-version split` | A no-effect render differs because the AE version, platform, color-management, or EXR path differs. | Not a plug-in failure and not an `AE exact` verdict; align the host profile first. |
 | `blocked` | PNG-only tuning is unsafe; needs asm/runtime trace/AE-host reference. | Do not tune blindly. |
 | `off-by-1 candidate` | `max_diff <= 1`, but not AE exact. | Not complete; investigate rounding/quantization. |
 | `synthetic probe` | A helper or synthetic fixture checks a local invariant rather than a Windows AE reference. | Not a compatibility claim. |
@@ -112,6 +128,11 @@ Default next-action priority:
   CPU/GPU execution path.
 - Record AE version, project renderer, color management, bit depth, input PNG,
   parameter manifest, and output format with every reference set.
+- For float-preserving 32bpc comparisons, the AE host version and a no-effect
+  EXR control are also part of the comparison profile. If the no-effect control
+  differs, classify the pair as `host-version split`; do not attribute an
+  effect-output residual to the plug-in or correct it with a compensating
+  gamma transform.
 
 ## Bit Depth Order
 
@@ -125,9 +146,24 @@ Use the same case IDs, inputs, and parameters across bit depths whenever
 possible. A feature is not "all bit depth exact" until every declared bit-depth
 profile is `AE exact`.
 
+Reference image format policy:
+
+- `8bpc`: PNG is acceptable for exact image references.
+- `16bpc`: prefer TIFF or EXR for newly captured references. PNG may remain in
+  older fixture bundles as reproduction context, but a PNG-only rerender should
+  not override a typed PF16 store/export witness.
+- `32bpc`: use EXR or another float-preserving format. PNG-only 32bpc returns
+  are probe/smoke evidence only and cannot establish `AE exact`.
+
 For `32bpc`, define the comparator before claiming completion. Prefer exact
 float equivalence when the host/output format supports it; otherwise document
 the epsilon as a compatibility exception, not as `AE exact`.
+
+Before comparing a 32bpc effect case, render the corresponding
+`before_effects` artifact through the same Mac AE import/project/output path.
+It must be exact to the Windows no-effect artifact for the host profile in
+use. A no-effect mismatch blocks effect attribution even when both EXRs are
+valid FLOAT files.
 
 ## Why Bit Depths Diverge
 

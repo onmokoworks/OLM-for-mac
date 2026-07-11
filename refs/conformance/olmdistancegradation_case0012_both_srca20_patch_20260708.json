@@ -1,0 +1,485 @@
+{
+  "kind": "olmdistancegradation_layer_source_true16_audit",
+  "schema": 1,
+  "request_dir": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625",
+  "candidate_root": "refs/reports/ae_single_case_olmdistancegradation_case0012_both_srca20_patch_20260708",
+  "cases": [
+    {
+      "case_id": "olmdistancegradation_extended__case_0012",
+      "candidate_path": "refs/reports/ae_single_case_olmdistancegradation_case0012_both_srca20_patch_20260708/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+      "reference_path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+      "input_path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012_before_effects.png",
+      "nonzero_pixels": 8224,
+      "max_abs_diff_true16": 20,
+      "mean_abs_diff_true16": 0.009963589891975308,
+      "max_abs_diff_byte_equivalent": 0.078125,
+      "channel_abs_max_true16": [
+        20,
+        20,
+        20,
+        2
+      ],
+      "channel_nonzero": [
+        8183,
+        7524,
+        7525,
+        155
+      ],
+      "same_alpha_changed_pixels": 8069,
+      "diff_common_by_channel": {
+        "R": [
+          {
+            "value": -2,
+            "count": 5191
+          },
+          {
+            "value": -4,
+            "count": 1597
+          },
+          {
+            "value": -6,
+            "count": 552
+          },
+          {
+            "value": -8,
+            "count": 439
+          },
+          {
+            "value": -10,
+            "count": 115
+          },
+          {
+            "value": -14,
+            "count": 113
+          },
+          {
+            "value": -12,
+            "count": 57
+          },
+          {
+            "value": -20,
+            "count": 55
+          }
+        ],
+        "G": [
+          {
+            "value": -2,
+            "count": 4745
+          },
+          {
+            "value": -4,
+            "count": 1497
+          },
+          {
+            "value": 0,
+            "count": 700
+          },
+          {
+            "value": -6,
+            "count": 516
+          },
+          {
+            "value": -8,
+            "count": 407
+          },
+          {
+            "value": -10,
+            "count": 107
+          },
+          {
+            "value": -14,
+            "count": 107
+          },
+          {
+            "value": -12,
+            "count": 51
+          }
+        ],
+        "B": [
+          {
+            "value": -2,
+            "count": 4745
+          },
+          {
+            "value": -4,
+            "count": 1497
+          },
+          {
+            "value": 0,
+            "count": 699
+          },
+          {
+            "value": -6,
+            "count": 516
+          },
+          {
+            "value": -8,
+            "count": 407
+          },
+          {
+            "value": -10,
+            "count": 107
+          },
+          {
+            "value": -14,
+            "count": 107
+          },
+          {
+            "value": -12,
+            "count": 51
+          }
+        ],
+        "A": [
+          {
+            "value": 0,
+            "count": 8069
+          },
+          {
+            "value": -2,
+            "count": 131
+          },
+          {
+            "value": 2,
+            "count": 24
+          }
+        ]
+      },
+      "ratios": {
+        "ref_minus_source_over_alpha_times_candidate_alpha_quantiles": [
+          -0.8612871024888591,
+          -0.593265119852731,
+          0.17847083078959258,
+          2.2774143772439857,
+          11.501487754634582,
+          22.155980375571744,
+          28.572439412700987
+        ],
+        "reference_over_candidate_red_quantiles": [
+          1.0,
+          1.0000314955669989,
+          1.0000355069504856,
+          1.0000826070794266,
+          1.000759974667511,
+          1.0023943902856165,
+          1.0035810205908684
+        ],
+        "source_red_over_source_alpha_quantiles": [
+          0.011718661114524314,
+          0.08579515301609765,
+          0.14879672299027139,
+          0.44306325539754143,
+          0.8666478863320246,
+          0.9803576709365126,
+          0.9882031406821796
+        ]
+      },
+      "examples": [
+        {
+          "xy": [
+            3,
+            487
+          ],
+          "source_rgba16": [
+            485,
+            485,
+            485,
+            5653
+          ],
+          "candidate_rgba16": [
+            5585,
+            5585,
+            5585,
+            64997
+          ],
+          "reference_rgba16": [
+            5605,
+            5605,
+            5605,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -20,
+            -20,
+            -20,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1617,
+            19
+          ],
+          "source_rgba16": [
+            485,
+            485,
+            485,
+            5653
+          ],
+          "candidate_rgba16": [
+            5585,
+            5585,
+            5585,
+            64997
+          ],
+          "reference_rgba16": [
+            5605,
+            5605,
+            5605,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -20,
+            -20,
+            -20,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1004,
+            110
+          ],
+          "source_rgba16": [
+            485,
+            485,
+            485,
+            5653
+          ],
+          "candidate_rgba16": [
+            5585,
+            5585,
+            5585,
+            64997
+          ],
+          "reference_rgba16": [
+            5605,
+            5605,
+            5605,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -20,
+            -20,
+            -20,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1645,
+            465
+          ],
+          "source_rgba16": [
+            485,
+            485,
+            485,
+            5653
+          ],
+          "candidate_rgba16": [
+            5585,
+            5585,
+            5585,
+            64997
+          ],
+          "reference_rgba16": [
+            5605,
+            5605,
+            5605,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -20,
+            -20,
+            -20,
+            0
+          ]
+        },
+        {
+          "xy": [
+            366,
+            315
+          ],
+          "source_rgba16": [
+            485,
+            485,
+            485,
+            5653
+          ],
+          "candidate_rgba16": [
+            5585,
+            5585,
+            5585,
+            64997
+          ],
+          "reference_rgba16": [
+            5605,
+            5605,
+            5605,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -20,
+            -20,
+            -20,
+            0
+          ]
+        },
+        {
+          "xy": [
+            485,
+            536
+          ],
+          "source_rgba16": [
+            485,
+            0,
+            0,
+            5653
+          ],
+          "candidate_rgba16": [
+            5585,
+            0,
+            0,
+            64997
+          ],
+          "reference_rgba16": [
+            5605,
+            0,
+            0,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -20,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1880,
+            499
+          ],
+          "source_rgba16": [
+            485,
+            485,
+            485,
+            5653
+          ],
+          "candidate_rgba16": [
+            5585,
+            5585,
+            5585,
+            64997
+          ],
+          "reference_rgba16": [
+            5605,
+            5605,
+            5605,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -20,
+            -20,
+            -20,
+            0
+          ]
+        },
+        {
+          "xy": [
+            490,
+            609
+          ],
+          "source_rgba16": [
+            485,
+            0,
+            0,
+            5653
+          ],
+          "candidate_rgba16": [
+            5585,
+            0,
+            0,
+            64997
+          ],
+          "reference_rgba16": [
+            5605,
+            0,
+            0,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -20,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1521,
+            384
+          ],
+          "source_rgba16": [
+            485,
+            485,
+            485,
+            5653
+          ],
+          "candidate_rgba16": [
+            5585,
+            5585,
+            5585,
+            64997
+          ],
+          "reference_rgba16": [
+            5605,
+            5605,
+            5605,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -20,
+            -20,
+            -20,
+            0
+          ]
+        },
+        {
+          "xy": [
+            916,
+            149
+          ],
+          "source_rgba16": [
+            485,
+            485,
+            485,
+            5653
+          ],
+          "candidate_rgba16": [
+            5585,
+            5585,
+            5585,
+            64997
+          ],
+          "reference_rgba16": [
+            5605,
+            5605,
+            5605,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -20,
+            -20,
+            -20,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "reading": [
+    "The audited candidate must be treated as true 16-bit data. Pillow's default RGBA decode collapses these PNGs to 8-bit and hides the scale of this family.",
+    "Use the `max true16` column for implementation work. The `max byte-equiv` column is included only to explain older reports that described true16 residuals after an 8-bit-style scale conversion.",
+    "If the high-delta examples preserve alpha while RGB is lower on the Mac candidate, the active lane is Layer/no-bg source RGB ownership or source-to-output-alpha scaling, not distance-field topology."
+  ]
+}

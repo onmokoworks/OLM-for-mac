@@ -1,0 +1,16 @@
+{
+  "kind": "olm_runtime_trace_request_package",
+  "schema": 1,
+  "profile": "radialblur-zoom-case0009-final-plane-typed",
+  "entrypoint": "refs/conformance/olmradialblur_zoom_case0009_final_plane_typed_contract_20260710.md",
+  "repo_root_name": "OLM as",
+  "runtime_actions": [
+    {
+      "request_id": "olmradialblur_zoom_case0009_final_plane_typed_20260710",
+      "plugin_area": "OLMRadialBlur Zoom case_0009 final-plane typed witness",
+      "mode": "external-trace",
+      "command": "Run one current Windows AE Software case_0009 debugger/render and bind (7,0), (8,0), and (24,0) in that same run. Capture inverse sample coordinates, four ordered final-polar cell IDs, each +0xe RGBA float, corresponding +0xf252, bilinear weights, final alpha sum, pre-byte alpha, observed RGBA8, and the exact hook/watchpoint artifact.",
+      "stop_condition": "Answered requires complete typed rows for all three points from one run. Partial requires a complete (7,0) row plus the exact isolation failure for the controls. PNG-only output, inferred cells, null typed fields, or mixed runs are failed_partial."
+    }
+  ]
+}

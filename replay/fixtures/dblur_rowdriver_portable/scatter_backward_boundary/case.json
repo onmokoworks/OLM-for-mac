@@ -1,0 +1,24 @@
+{
+  "id": "scatter_backward_boundary",
+  "kind": "scatter",
+  "width": 8,
+  "height": 3,
+  "row": 1,
+  "start": 5,
+  "count": 5,
+  "end": 8,
+  "coefficient": 0.8,
+  "backward": true,
+  "input_sha256": {
+    "source.bin": "47b193f97bd24a74243d235e021265171574335875eec28ca6bc38ad8589619b",
+    "destination.bin": "24b46f68040dbd1118c5553f7b3128e713dc93adbd2e2610130ee4be2d1f6203",
+    "denominator.bin": "f7a180be6694a99969180e08d497939cdf982795170215dbbb8069221940ec1c",
+    "alpha_max.bin": "f7a180be6694a99969180e08d497939cdf982795170215dbbb8069221940ec1c",
+    "weights.bin": "c59d629ca00ee5bf987694f10c3bef853bc2e297985eaa9fde25ccc424f93982"
+  },
+  "expected_sha256": {
+    "destination.bin": "9984c45cc4fc5104a71e04b1acae6d7e48d5cdd2e425a47233e35c9e438a2828",
+    "denominator.bin": "9753128be31a60e534d199e5a2445c44b374ce8eeb5bdd3fb7fdc0bc4e7006d3",
+    "alpha_max.bin": "f7a180be6694a99969180e08d497939cdf982795170215dbbb8069221940ec1c"
+  }
+}

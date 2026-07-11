@@ -1,0 +1,128 @@
+{
+  "kind": "olm_32bpc_probe_status",
+  "schema": 1,
+  "generated_at": "2026-07-09T08:37:16Z",
+  "compare_policy": "refs/conformance/bitdepth_32bpc_compare_policy_20260703.md",
+  "suites": [
+    {
+      "plugin": "OLMColorKey",
+      "scope": "focused 32bpc probe",
+      "request_id": "olm_bitdepth_32bpc_colorkey_probe_20260703",
+      "request_json": "refs/reference_requests/olm_bitdepth_32bpc_colorkey_probe_20260703.json",
+      "package_zip": "refs/runtime_trace_packages/olm_reference_request_32bpc_colorkey_probe_20260703.zip",
+      "share_copy": "olm_reference_request_32bpc_colorkey_probe_20260703.zip",
+      "share_present": false,
+      "case_count": 9,
+      "plugins": [
+        "OLMColorKey"
+      ],
+      "expected_status": "probe-only",
+      "next_action": "Keep this return probe-only because it is PNG-only; wait for a float-preserving EXR-first return before any 32bpc exact claim.",
+      "returned_reference_dir": "refs/win_references/olm_reference_return_windows_20260703_32bpc_colorkey_probe",
+      "imported_set_dir": "refs/win_references/olm_reference_return_windows_20260703_32bpc_colorkey_probe/OLMbit-depthconformancebatch",
+      "returned_case_count": 9,
+      "returned_asset_formats": {
+        ".png": 18
+      },
+      "float_preserving_present": false,
+      "preferred_exr_present": false,
+      "classification": "probe-only-png-return",
+      "reference_quality_reason": "32bpc request contract matched, but the return is PNG-only/non-float-preserving, so it remains probe-only.",
+      "imported_summary": {
+        "imported_set_dir": "refs/win_references/olm_reference_return_windows_20260703_32bpc_colorkey_probe/OLMbit-depthconformancebatch",
+        "receipt_count": 1,
+        "manifest_count": 1,
+        "matched_requests": {
+          "refs/reference_requests/olm_bitdepth_32bpc_colorkey_probe_20260703.json": 1
+        },
+        "media_extensions": {
+          ".png": 18
+        },
+        "float_preserving_present": false,
+        "preferred_exr_present": false
+      }
+    },
+    {
+      "plugin": "Cross-plugin batch",
+      "scope": "broad 32bpc full probe",
+      "request_id": "olm_bitdepth_32bpc_full_probe_20260703",
+      "request_json": "refs/reference_requests/olm_bitdepth_32bpc_full_probe_20260703.json",
+      "package_zip": "refs/runtime_trace_packages/olm_reference_request_32bpc_full_probe_20260703.zip",
+      "share_copy": "olm_reference_request_32bpc_full_probe_20260703.zip",
+      "share_present": false,
+      "case_count": 48,
+      "plugins": [
+        "OLMBlur",
+        "OLMColorKey",
+        "OLMDistanceGradation",
+        "OLMToonDilate"
+      ],
+      "expected_status": "probe-only",
+      "next_action": "Keep this broad batch probe-only because it is PNG-only; request a float-preserving EXR-first rerun before any 32bpc exact claim.",
+      "returned_reference_dir": "refs/win_references/olm_reference_return_windows_20260703_32bpc_full_probe",
+      "imported_set_dir": "refs/win_references/olm_reference_return_windows_20260703_32bpc_full_probe/OLMbit-depthconformancebatch",
+      "returned_case_count": 48,
+      "returned_asset_formats": {
+        ".png": 96
+      },
+      "float_preserving_present": false,
+      "preferred_exr_present": false,
+      "classification": "probe-only-png-return",
+      "reference_quality_reason": "32bpc request contract matched, but the return is PNG-only/non-float-preserving, so it remains probe-only.",
+      "imported_summary": {
+        "imported_set_dir": "refs/win_references/olm_reference_return_windows_20260703_32bpc_full_probe/OLMbit-depthconformancebatch",
+        "receipt_count": 1,
+        "manifest_count": 1,
+        "matched_requests": {
+          "refs/reference_requests/olm_bitdepth_32bpc_full_probe_20260703.json": 1
+        },
+        "media_extensions": {
+          ".png": 96
+        },
+        "float_preserving_present": false,
+        "preferred_exr_present": false
+      }
+    },
+    {
+      "plugin": "Cross-plugin batch",
+      "scope": "broad 32bpc EXR-first rerun",
+      "request_id": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703",
+      "request_json": "refs/reference_requests/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703.json",
+      "package_zip": "refs/runtime_trace_packages/olm_reference_request_32bpc_full_probe_exr_rerun_20260703.zip",
+      "share_copy": "olm_reference_request_32bpc_full_probe_exr_rerun_20260703.zip",
+      "share_present": false,
+      "case_count": 48,
+      "plugins": [
+        "OLMBlur",
+        "OLMColorKey",
+        "OLMDistanceGradation",
+        "OLMToonDilate"
+      ],
+      "expected_status": "probe-only",
+      "next_action": "The EXR-first rerun still came back PNG-only/non-float-preserving, so it remains probe-only. Another Windows return must preserve float samples before any 32bpc exact claim.",
+      "returned_reference_dir": "refs/win_references/olm_reference_return_windows_20260703_32bpc_full_probe_exr_rerun",
+      "imported_set_dir": "refs/win_references/olm_reference_return_windows_20260703_32bpc_full_probe_exr_rerun/OLMbit-depthconformancebatch",
+      "returned_case_count": 48,
+      "returned_asset_formats": {
+        ".png": 96
+      },
+      "float_preserving_present": false,
+      "preferred_exr_present": false,
+      "classification": "probe-only-png-return",
+      "reference_quality_reason": "32bpc request contract matched, but the return is PNG-only/non-float-preserving, so it remains probe-only.",
+      "imported_summary": {
+        "imported_set_dir": "refs/win_references/olm_reference_return_windows_20260703_32bpc_full_probe_exr_rerun/OLMbit-depthconformancebatch",
+        "receipt_count": 1,
+        "manifest_count": 1,
+        "matched_requests": {
+          "refs/reference_requests/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703.json": 1
+        },
+        "media_extensions": {
+          ".png": 96
+        },
+        "float_preserving_present": false,
+        "preferred_exr_present": false
+      }
+    }
+  ]
+}

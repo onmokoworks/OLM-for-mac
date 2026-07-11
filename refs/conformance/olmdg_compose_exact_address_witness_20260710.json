@@ -1,0 +1,105 @@
+{
+  "kind": "olmdg_compose_exact_address_witness",
+  "generated_at": "2026-07-11T12:15:22Z",
+  "status": "local_actual_aex_bounded_witness",
+  "binary": {
+    "path": "plugins_2025/DistanceGradation.aex",
+    "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "function": "0x181170480",
+    "max_instructions_per_call": 200000,
+    "calls": 2
+  },
+  "address_formula": {
+    "field": "field_base + y * field_rowbytes + x * field_pixel_size",
+    "source": "source_base + y * source_rowbytes + x * source_pixel_size",
+    "output": "output_base + output_index * output_pixel_size (local two-point output); Windows full-frame form is output_base + y * 0x3c00 + x * 8",
+    "field_read": "field_addr + 0x2 (FUN_181170480 reads [RCX+2])",
+    "rowbytes": 15360,
+    "pixel_size": 8,
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "channel_layout": "A,G,R,B words in this harness, with compose read at +0x2"
+  },
+  "local_bases": {
+    "field_base": "0x20fd2000",
+    "source_base": "0x20000000",
+    "output_base": "0x21fa4000",
+    "note": "Unicorn heap addresses; not Windows address evidence."
+  },
+  "windows_reference": {
+    "source_output_rowbytes": "0x3c00",
+    "pixel_size": 8,
+    "output_formula": "output_base + y * 0x3c00 + x * 8",
+    "field_base": "not returned",
+    "field_world_layout": "not returned"
+  },
+  "instructions_total": 272,
+  "points": [
+    {
+      "xy": [
+        6,
+        40
+      ],
+      "field_addr": "0x21068030",
+      "source_addr": "0x20096030",
+      "output_addr": "0x21fa4000",
+      "field_words_agrb": [
+        0,
+        29500,
+        0,
+        0
+      ],
+      "source_words_agrb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "field_read_word_at_rcx_plus_2": 29500,
+      "field_scalar_x": 0.9002685546875,
+      "compose_alpha_xmm2_model": 0.0997314453125,
+      "aex_output_words_agrb": [
+        3268,
+        0,
+        32768,
+        0
+      ],
+      "windows_store_a": 3268,
+      "aex_matches_windows_store_a": true
+    },
+    {
+      "xy": [
+        901,
+        394
+      ],
+      "field_addr": "0x21599428",
+      "source_addr": "0x205c7428",
+      "output_addr": "0x21fa4008",
+      "field_words_agrb": [
+        0,
+        22892,
+        0,
+        0
+      ],
+      "source_words_agrb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "field_read_word_at_rcx_plus_2": 22892,
+      "field_scalar_x": 0.6986083984375,
+      "compose_alpha_xmm2_model": 0.3013916015625,
+      "aex_output_words_agrb": [
+        9876,
+        0,
+        32768,
+        0
+      ],
+      "windows_store_a": 9876,
+      "aex_matches_windows_store_a": true
+    }
+  ]
+}

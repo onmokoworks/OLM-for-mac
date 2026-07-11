@@ -1,0 +1,126 @@
+{
+  "case_id": "distancegradation.case0023.compose.triplet",
+  "claim": "Actual AEX compose output with relocatable binary-built parameters; field values are tied to the case_0023 AEX fieldgen fixture.",
+  "field_values": [
+    0.0,
+    1.0,
+    1.0
+  ],
+  "intermediates": [
+    {
+      "bpc": 16,
+      "byte_order": "little",
+      "channels": [
+        "A",
+        "G",
+        "R",
+        "B"
+      ],
+      "descriptor": {
+        "blob": "field_agrb16.bin",
+        "offset": 0,
+        "sha256": "71f626ab1d5ad03c56f9eb30fdabd65229faf832dc2e976e60f302b7d4502b2d",
+        "size": 1344000
+      },
+      "format": "INTERLEAVED",
+      "height": 400,
+      "name": "field_world",
+      "rowbytes": 3360,
+      "sample_type": "uint16",
+      "width": 420
+    }
+  ],
+  "output": {
+    "bpc": 16,
+    "byte_order": "little",
+    "channels": [
+      "A",
+      "G",
+      "R",
+      "B"
+    ],
+    "descriptor": {
+      "blob": "output_triplet_agrb16.bin",
+      "offset": 0,
+      "sha256": "d3313750a1a35f3e9c2b876b8ee385a1564dfba9f1afbc377912f322c7b0750f",
+      "size": 24
+    },
+    "format": "INTERLEAVED",
+    "height": 1,
+    "name": "compose_triplet",
+    "rowbytes": 24,
+    "sample_type": "uint16",
+    "width": 3
+  },
+  "points": [
+    [
+      414,
+      393
+    ],
+    [
+      415,
+      393
+    ],
+    [
+      416,
+      393
+    ]
+  ],
+  "provenance": {
+    "binary_path": "plugins_2025/DistanceGradation.aex",
+    "binary_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "function": "0x181170480",
+    "oracle": "unicorn-aex",
+    "parameter_block_basis": "AEX callback layout plus case manifest; not runtime-captured",
+    "parameter_block_origin": "binary-built"
+  },
+  "raw_param_block": {
+    "descriptor": {
+      "blob": "refcon.bin",
+      "offset": 0,
+      "sha256": "547c102230f9929ab9e1cee19410bb097612d7de4b7c2134cc9e0d05123ec09a",
+      "size": 256
+    },
+    "format": "raw",
+    "relocations": [
+      {
+        "offset": 0,
+        "target": "source_world",
+        "width": 8
+      },
+      {
+        "offset": 8,
+        "target": "field_world",
+        "width": 8
+      }
+    ],
+    "scalar_range": {
+      "offset": 144,
+      "size": 68
+    }
+  },
+  "schema": "olm.aex.cpu-fixture/1",
+  "scope": "function",
+  "world": {
+    "bpc": 16,
+    "byte_order": "little",
+    "channels": [
+      "A",
+      "G",
+      "R",
+      "B"
+    ],
+    "descriptor": {
+      "blob": "source_agrb16.bin",
+      "offset": 0,
+      "sha256": "d37a5d7abcc9d895f232ec4be6ef49af7c77f133808e392576f0e6a96a2f8fcd",
+      "size": 1344000
+    },
+    "format": "INTERLEAVED",
+    "height": 400,
+    "name": "source_world",
+    "rowbytes": 3360,
+    "sample_type": "uint16",
+    "width": 420
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "kind": "olmsmoother2_typed_witness",
+  "status": "local-aex-cpu-execution",
+  "source": "tools/emulation/test_smoother2_typed_witness.py",
+  "aex": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
+  "functions": [
+    "FUN_18000e170",
+    "FUN_18000f270",
+    "FUN_18000e3a0"
+  ],
+  "claim_boundary": "This is not Windows truth and not AE exact evidence; Mac source was not modified.",
+  "cases": [
+    {
+      "name": "legacy_current_aex",
+      "xy": [
+        91,
+        841
+      ],
+      "descriptor": [
+        91,
+        841,
+        1,
+        91,
+        843,
+        5
+      ],
+      "producer_bytes": {
+        "center_b0": 0,
+        "prev_b0": 1,
+        "left_b1": 0,
+        "center_pixel": {
+          "b0": 0,
+          "b1": 0,
+          "b2": 0,
+          "b3": 0
+        },
+        "prev_pixel": {
+          "b0": 1,
+          "b1": 0,
+          "b2": 0,
+          "b3": 0
+        },
+        "left_pixel": {
+          "b0": 0,
+          "b1": 0,
+          "b2": 0,
+          "b3": 0
+        }
+      },
+      "e170": {
+        "c": 2,
+        "return_type": "u8"
+      },
+      "f270": {
+        "return": 1,
+        "return_type": "u8",
+        "append": true,
+        "count": 1,
+        "vertices": [
+          {
+            "rgba": [
+              0.9910671710968018,
+              0.9910671710968018,
+              0.9910671710968018,
+              0.9960784316062927
+            ],
+            "weight": 0.4281609058380127
+          }
+        ]
+      },
+      "e3a0": {
+        "return": 1,
+        "return_type": "u8",
+        "append": true,
+        "count": 1,
+        "vertices": [
+          {
+            "rgba": [
+              0.9910671710968018,
+              0.9910671710968018,
+              0.9910671710968018,
+              0.9960784316062927
+            ],
+            "weight": 0.4583333134651184
+          }
+        ]
+      },
+      "append": true
+    },
+    {
+      "name": "control_suppressing",
+      "xy": [
+        91,
+        841
+      ],
+      "descriptor": [
+        91,
+        841,
+        1,
+        91,
+        843,
+        5
+      ],
+      "producer_bytes": {
+        "center_b0": 0,
+        "prev_b0": 0,
+        "left_b1": 1,
+        "center_pixel": {
+          "b0": 0,
+          "b1": 0,
+          "b2": 0,
+          "b3": 0
+        },
+        "prev_pixel": {
+          "b0": 0,
+          "b1": 0,
+          "b2": 0,
+          "b3": 0
+        },
+        "left_pixel": {
+          "b0": 0,
+          "b1": 1,
+          "b2": 0,
+          "b3": 0
+        }
+      },
+      "e170": {
+        "c": 4,
+        "return_type": "u8"
+      },
+      "f270": {
+        "return": 0,
+        "return_type": "u8",
+        "append": false,
+        "count": 0,
+        "vertices": []
+      },
+      "e3a0": {
+        "return": 1,
+        "return_type": "u8",
+        "append": true,
+        "count": 1,
+        "vertices": [
+          {
+            "rgba": [
+              0.9910671710968018,
+              0.9910671710968018,
+              0.9910671710968018,
+              0.9960784316062927
+            ],
+            "weight": 0.4583333134651184
+          }
+        ]
+      },
+      "append": false
+    }
+  ],
+  "assertions": {
+    "expected_shape_matches": true,
+    "per_case": [
+      true,
+      true
+    ]
+  }
+}

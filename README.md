@@ -3,6 +3,10 @@
 OLM Tools の Windows 版 After Effects plug-in を、現行 macOS / Apple
 Silicon / After Effects 向けに移植するための作業リポジトリです。
 
+現在の進行方針は `notes/PORTING_ROADMAP.md`、状態と禁止事項は
+`notes/CONFORMANCE_LEDGER.md`、完了母集団は
+`refs/conformance/olm_release_scope.json` を正とします。
+
 この repo では、単に「似た出力」を作るのではなく、Windows AE の
 Software render を基準にして、Mac AE 上で同じ入力・同じパラメータ・同じ
 bit depth の出力が一致することを目標にしています。
@@ -47,8 +51,8 @@ AE-host validation で Mac AE 出力が Windows AE Software 参照に
 | 範囲 | 状態 |
 | --- | --- |
 | Mac plug-in project | 10 本とも Debug universal bundle としてビルド可能 |
-| OLMBlur | 8bpc packaged slice は Mac AE exact。16bpc Mac AE はまだ未exactだが、`case_0006` は 2026-07-01 の current-AEX witness で Windows/Mac の pre-store float と内部 word 一致まで到達し、機械監査 `refs/conformance/olmblur_case0006_reference_provenance_audit_20260701.md` でも canonical ref と Mac export 群の provenance split を再生成できるようになった。加えて同 audit で `handoff/results` は `mac_single_export`、`handoff/archive/.../results` は endian-fix `mac_batch_export` と byte-identical で、新しい第三の export 系ではないことも固定済み。主疑点は writer/helper から reference/export provenance へ移動。`case_0007` は Legacy境界/seed異常に分離済み |
-| OLMToonDilate | 8bpc packaged slice は Mac AE exact |
+| OLMBlur | 8bpc packaged slice は Mac AE exact。16bpc は未exact。2026-07-10 のMac AE再実行では `case_0006/0007` ともsingle/batchが2回ずつ同一ハッシュへ収束し、古いexport経路差は再現しなかった。一方、canonical検証は7ケースすべて `max_diff=2`。次は `case_0006` のtyped helper/pre-store証拠で、`case_0007` は別のLegacy half-step family |
+| OLMToonDilate | 8bpc packaged slice は Mac AE exact。さらに covered 16bpc slice `case_0001..0003` も live Mac AE で exact |
 | OLMDistanceGradation | basic / extended / blur の 8bpc packaged slice は Mac AE exact。16bpc は未exact。AE自動実行は復旧済み。`case_0026` の Power param 誤読と Constant 専用 binary threshold を修正し、Constant/background系は大幅改善。`case_0023` は機械監査 `refs/conformance/olmdistancegradation_case0023_threshold_family_audit_20260701.md` で、残差 `73px`、threshold-family `8px`、plateau probe 爆発 `182793px` が再生成できる状態まで整理済み |
 | OLMColorKey | core / Edge Thin / Edge Blur の normalized 8bpc packaged slice は Mac AE exact。16bpc covered slice も full batch 9/9 exact。次は32bpc方針と参照展開 |
 | OLMSmoother2 | no-key grid は 8bpc Mac AE exact。legacy current-AEX recapture 済み。key/gamma は Smooth Range threshold 昇格で大幅改善、残る局所残差を調査中 |
@@ -63,7 +67,7 @@ AE 実機を触る前の短い目安です。詳細な理由と次アクショ�
 | Plug-in | host status | work_lane | いま AE で手で触る意味 |
 | --- | --- | --- | --- |
 | OLMColorKey | `host-stable` | `bitdepth-expand` | 回帰確認と32bpc展開向き |
-| OLMBlur | `host-visual-tuning-ready` | `binary-proof` | 16bpc残差は分類済み。`case_0006` は writer/helper より reference/export provenance 側の確認が先。`case_0007` は Legacy境界証拠を維持 |
+| OLMBlur | `host-visual-tuning-ready` | `binary-proof` | Mac export provenanceは収束確認済み。`case_0006` のtyped helper/pre-storeと、別レーンのLegacy `case_0007` を詰める |
 | OLMToonDilate | `host-stable` | `bitdepth-expand` | 回帰確認とbit depth展開向き |
 | OLMDistanceGradation | `host-debuggable` | `binary-proof` | witness単位の16bpc確認と回帰確認だけ有益 |
 | OLMSmoother v1 | `host-stable` | `parked` | いまは endgame 扱い。v1/v2方針を明示するときだけ触る |
@@ -117,14 +121,25 @@ host/UI 専用レーンとして再整理しました。現時点の高シグナ
 Windows AEX を AE に追加した瞬間の cold-start default は
 `refs/reference_requests/olm_fresh_instance_defaults_20260629.json` で別取得し、
 source-backed schema との役割分担は `notes/PARAMETER_SOURCE_OF_TRUTH.md` に
-固定しています。linked replay request は
+固定しています。fresh defaults / ranges の committed 監査要約は
+`refs/conformance/windows_fresh_param_parity_20260703.md` に materialize しました。
+linked replay request は
 `scripts/materialize_linked_request_params.py` で `params_full` を自動展開します。
+32bpc の compare policy は
+`refs/conformance/bitdepth_32bpc_compare_policy_20260703.md` に固定しました。
+2026-07-03 以降の `refs/scripts/verify_manifest.py` は `.exr` companion があれば
+float のまま比較するので、`0 < delta < 1` の差分も潰しません。現在 share に
+置いている `olm_reference_request_32bpc_full_probe_exr_rerun_20260703.zip` の返却もこの
+ルールで扱います。
 
 packaged 8bpc AE-host validation の最小M0集計は機械生成します。
 現在の manifest は `refs/conformance/packaged_8bpc_manifest.json` です。
 summary は `python3 scripts/generate_conformance_summary.py` で
 `refs/reports/conformance_summary_packaged_8bpc.md` にローカル生成します。
 この集計では `AE exact` と known-red / residual を混ぜません。
+32bpc probe lane についても committed な状態票を持ち、
+`refs/conformance/bitdepth_32bpc_probe_status_20260703.{json,md}` で
+focused `OLMColorKey` PNG-only return と broad full-probe pending を分けて追います。
 
 ## 未解決点
 
@@ -133,9 +148,9 @@ summary は `python3 scripts/generate_conformance_summary.py` で
 | Plug-in | 未解決 | 理由 | 解決方法 |
 | --- | --- | --- | --- |
 | ColorKeep | 実参照が薄い | synthetic/helper 扱いが中心 | 必要なら Windows Software 実参照を作る |
-| OLMBlur | 16bpc Mac AE が未exact | 8bpc AE exact は維持。`case_0006` は 2026-07-01 imported current-AEX witness で Windows/Mac の pre-store float と internal word 一致が確認され、残る差分は reference/export provenance 疑いへ移動。`case_0007` は Legacy境界/seed family のまま | `case_0006` は current-AEX exported PNG と canonical 16bpc reference の provenance を確認し、`case_0007` は Legacy border/all-same state を binary/runtime evidence で確定 |
+| OLMBlur | 16bpc Mac AE が未exact | current Windows AEX exportとcanonicalは一致。現在のMac single/batchは2回ずつ同一ハッシュで収束するが、7ケースすべて `max_diff=2`。`case_0007` はLegacy half-step family | `case_0006` のtyped helper/pre-storeまたは同等のAEX binary proofを取り、`case_0007` は別レーンで維持 |
 | OLMColorKey | 32bpc 未検証 | normalized 8bpc packaged slice と16bpc covered slice は通った。16bpc full batch は9/9 `max=0` | 32bpc比較ポリシーと参照取得を決める |
-| OLMToonDilate | 16/32bpc 未検証 | 8bpc packaged slice は通ったが bit depth 展開がまだ | 16bpc/32bpc Windows Software 参照を追加 |
+| OLMToonDilate | 32bpc 未検証 | 8bpc packaged slice に加えて covered 16bpc slice `case_0001..0003` は exact。committed summary: `refs/conformance/bitdepth_16bpc_exact_manifest_20260703.md` | 32bpc Windows Software 参照を追加 |
 | OLMDistanceGradation | 16bpc 未一致 | 2026-06-29 Windows trace とMac plug-in debug dumpで `case_0026` のfield rampは一致。`PF_ADD_FLOAT_SLIDERX` の Power に `FIX_2_FLOAT` をかけていた誤読を修正。さらに `FUN_181174760` の Constant 専用 `THRESH_BINARY` を反映し、`case_0020 1001->1`、`case_0021 1002->1`、`case_0022 9347->192`、`case_0023 1388->73` changed pixels まで改善。残るConstant差分は全てしきい値1px以内。direct Layer/no-bg unpremultiply は悪化したので棄却。extended 16bpc はまだ 1/16 exact | Power / Constant fixes を維持し、Constant境界witness、Layer/no-bg source ownership、Sphere/Power boundary quantization を binary/runtime evidence でfamily別に詰める |
 | OLMSmoother v1 | 8bpc AE exact | 960x540 再検証で `case_0001..0003` が exact | v2 互換扱いへ寄せるか、v1 独立維持かを明示する |
 | OLMSmoother2 | Legacy key / gamma | current-AEX recapture 12ケースを取り込み済み。case 0002/0003 はAE保存before入力でCLI exact。0004 は Smooth Range threshold で target final writer float と一致。0012 は `cardinal6 key=50 -> f270/e170/e3a0` まで局所化 | 0012 `(91,841)` の scanner/emit 中間値と 0004 polygon/no-polygon path を binary/runtime evidence で確定 |
@@ -264,7 +279,8 @@ README 上の current summary は次の通りです。
 
 - packaged 8bpc machine summary は `AE exact=62`, `reference-generation split=1`,
   `known-red=7`
-- 16bpc は `OLMColorKey` が covered slice 9/9 exact、`OLMBlur` /
+- 16bpc は `OLMColorKey` が covered slice 9/9 exact、`OLMToonDilate` が covered
+  slice 3/3 exact、`OLMBlur` /
   `OLMDistanceGradation` が witness-led binary-proof 継続中
 - いま Windows runtime queue に残っている pending は 2 件だけです
   - `OLMRadialBlur` caller-collapse follow-up
@@ -333,9 +349,26 @@ pending runtime queue の正本:
 一巡済みで、現在は broad rerun ではなく witness-led に詰めています。
 
 - `OLMColorKey`: covered 16bpc slice 9/9 exact
+- `OLMToonDilate`: covered 16bpc slice 3/3 exact
 - `OLMToonDilate`: 8bpc exact を維持したまま 16/32bpc 展開候補
 - `OLMBlur`: `case_0006/0007` を narrow witness に分離済み
 - `OLMDistanceGradation`: `case_0023` OutsideThreshold=0 witness が active
+
+32bpc については broad EXR-first batch も tracked artifact 化しました。
+
+- request JSON:
+  `refs/reference_requests/olm_bitdepth_32bpc_full_probe_20260703.json`
+- packaged zip:
+  `refs/runtime_trace_packages/olm_reference_request_32bpc_full_probe_20260703.zip`
+- note:
+  `refs/conformance/olm_32bpc_full_probe_request_materialized_20260703.md`
+
+これは `OLMBlur` / `OLMColorKey` / `OLMDistanceGradation` /
+`OLMToonDilate` の `48` ケースをまとめた `EXR` 優先の
+float-preserving 参照取得便です。
+2026-07-03 時点では request JSON 自体にも
+`compare_policy` / `output_requirements` を持たせ、PNG-only 返却を
+`probe-only` 扱いにする契約を機械可読で固定しています。
 
 詳細は `notes/CONFORMANCE_LEDGER.md` と各 `refs/conformance/*.md` を見ます。
 

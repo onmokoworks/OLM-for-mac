@@ -1,5 +1,12 @@
 # OLMBlur case_0006 Non-Legacy Helper Witness - 2026-06-30
 
+> **2026-07-10 correction:** the later claim below that Windows current-AEX
+> pre-store/store agrees with Mac is retracted. The CDB target was never
+> captured; the populated `windows_*` fields were not backed by a Windows debug
+> artifact. Use
+> `refs/conformance/olmblur_case0006_unverified_windows_value_audit_20260710.md`.
+> The Mac helper/store observations in this note remain valid.
+
 Live Mac AE witness capture for the remaining 16bpc non-Legacy `case_0006`
 pair `(314,14)` and `(29,71)`.
 

@@ -1,0 +1,64 @@
+{
+  "kind": "dblur_rotateback_output",
+  "schema": 1,
+  "status": "bounded_helper_only",
+  "aex": "plugins_2025/OLMDirectionalBlur.aex",
+  "static_callsite": {
+    "call": "0x180005628 -> FUN_180001ec0",
+    "rcx_source": "RSI",
+    "rdx_destination": "R15",
+    "r8_width": "dword ptr [RBX+0x80a0]",
+    "r9_height": "dword ptr [RBX+0x80a4]",
+    "angle": "float at [RSP+0x20] before CALL; -[RBX+0x24] at this callsite",
+    "after_return": "qword ptr [RBX+0x8090] = R15",
+    "return_site": "0x1800057a2"
+  },
+  "destination_identity": {
+    "rotateback_destination": "R15, the RGBA float work buffer A",
+    "host_world": "R13 at FUN_180004a20; distinct from R15",
+    "host_output_callback_input": "param_6+0x8090 points to R15 after rotate-back"
+  },
+  "unicorn_entry": {
+    "rip": 6442458816,
+    "rsp": 252702664,
+    "rcx_source": 536870912,
+    "rdx_destination": 545165312,
+    "r8_width": 960,
+    "r9_height": 540,
+    "stack_arg5_bits_at_entry_rsp_plus_28": 2147483648,
+    "stack_arg5_at_entry_rsp_plus_28": -0.0
+  },
+  "targets": {
+    "494,169": {
+      "address": 547769056,
+      "rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rgba_bytes_le": "00000000000000000000000000000000"
+    },
+    "579,169": {
+      "address": 547770416,
+      "rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rgba_bytes_le": "00000000000000000000000000000000"
+    }
+  },
+  "full_render": {
+    "status": "blocked",
+    "reason": "No bounded fixture currently supplies the FUN_180004a20 host callback/world layout through the 0x180005628 call.",
+    "next_fixture_requirements": [
+      "8bpc FUN_180004a20 entry with R13 world/context and R12/R14/R15 preserved",
+      "param_6 fields at +0x8078/+0x8080/+0x8088/+0x8090 and dimensions +0x80a0/+0x80a4",
+      "PF Iterate8 populate/output callbacks that materialize A and consume param_6+0x8090",
+      "capture hooks at 0x180005628 and 0x1800057a2 in the same render invocation"
+    ],
+    "target_output_bytes_or_floats": "not captured"
+  }
+}

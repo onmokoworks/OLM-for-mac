@@ -20490,6 +20490,26 @@
       ]
     }
   ],
+  "compare_policy": {
+    "path": "refs/conformance/bitdepth_32bpc_compare_policy_20260703.md",
+    "mode": "float-preserving-required",
+    "png_only_classification": "probe-only"
+  },
+  "output_requirements": {
+    "preferred_formats": [
+      "exr"
+    ],
+    "acceptable_float_preserving_fallbacks": [
+      "tiff",
+      "tif",
+      "hdr",
+      "raw-float-rgba"
+    ],
+    "png_only_allowed": true,
+    "png_only_classification": "probe-only",
+    "float_preserving_required_for_ae_exact": true,
+    "record_exact_format_used": true
+  },
   "manifest_requirements": [
     "AE version",
     "project_gpu_accel_type.current_name and raw value",

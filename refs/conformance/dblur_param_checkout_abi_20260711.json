@@ -1,0 +1,73 @@
+{
+  "kind": "olmdirectionalblur_param_checkout_abi_audit",
+  "schema": 1,
+  "date": "2026-07-11",
+  "status": "static-AEX-grounded",
+  "aex": {
+    "path": "plugins_2025/OLMDirectionalBlur.aex",
+    "image_base": "0x180000000",
+    "checkout_function": "0x180006c50",
+    "checkout_record_bytes": 176,
+    "checkout_buffer": "RSP+0x30",
+    "union_offset": "0x38",
+    "signed_short_payload_offset": "0x3a",
+    "evidence": {
+      "asm": "disasm/OLMDirectionalBlur.aex.asm.txt:5423-5838",
+      "decomp": "decomp/OLMDirectionalBlur.aex.c.txt:3242-3438"
+    }
+  },
+  "indices": {
+    "1": {"name": "Angle", "union_read": "signed int16 at +0x3a", "context": "+0x24; conversion at 0x180006cf3-0x180006d24", "source_lines": "decomp:3264-3273; asm:5442-5474"},
+    "2": {"name": "Brightness Gain", "union_read": "PF_FpLong/int64 at +0x38", "context": "+0x28", "source_lines": "decomp:3277-3283; asm:5477-5492"},
+    "3": {"name": "Size Variation", "union_read": "signed int16 at +0x3a", "context": "+0x30, divided by 0x18000b384", "source_lines": "decomp:3287-3295; asm:5503-5521"},
+    "5": {"name": "Front Blur Strength", "union_read": "uint32 at +0x38", "context": "+0x48", "source_lines": "decomp:3300-3308; asm:5532-5546"},
+    "6": {"name": "Front Alpha Fade", "union_read": "uint32 at +0x38", "context": "+0x4c", "source_lines": "decomp:3312-3320; asm:5557-5571"},
+    "7": {"name": "Front Sharp Tail", "union_read": "signed int16 at +0x3a", "context": "+0x40, divided by 0x18000b384", "source_lines": "decomp:3324-3332; asm:5582-5599"},
+    "10": {"name": "Back Blur Strength", "union_read": "uint32 at +0x38", "context": "+0x50", "source_lines": "decomp:3336-3344; asm:5610-5624"},
+    "11": {"name": "Back Alpha Fade", "union_read": "uint32 at +0x38", "context": "+0x54", "source_lines": "decomp:3348-3356; asm:5635-5649"},
+    "12": {"name": "Back Sharp Tail", "union_read": "signed int16 at +0x3a", "context": "+0x44, divided by 0x18000b384", "source_lines": "decomp:3360-3368; asm:5660-5677"},
+    "15": {"name": "Noise Variation", "union_read": "signed int16 at +0x3a", "context": "+0x2c, divided by 0x18000b384", "source_lines": "decomp:3372-3380; asm:5688-5705"},
+    "16": {"name": "Noise Type", "union_read": "uint32 popup at +0x38", "context": "+0x3c; bool +0x80bc is (value == 1); mode +0x20 transforms only when variation > 0", "source_lines": "decomp:3384-3400; asm:5716-5750"},
+    "18": {"name": "Seed", "union_read": "uint32 at +0x38", "context": "+0x8108", "source_lines": "decomp:3401-3409; asm:5753-5775"},
+    "19": {"name": "Noise Offset", "union_read": "signed int16 at +0x3a", "context": "+0x810c, divided by 0x18000b380", "source_lines": "decomp:3413-3421; asm:5778-5803"},
+    "20": {"name": "Thickness", "union_read": "PF_FpLong/int64 at +0x38", "context": "+0x8110", "source_lines": "decomp:3425-3434; asm:5806-5825"}
+  },
+  "current_case": {
+    "Noise Variation": 0,
+    "Noise Type": 1,
+    "Seed": 1,
+    "Noise Offset": 0,
+    "Thickness": 10,
+    "source": "notes/PARAMETER_SOURCE_OF_TRUTH.md:288-292"
+  },
+  "output_effect": {
+    "status": "no_noise_path_effect_when_variation_zero",
+    "facts": [
+      "ctx+0x20 starts at 1",
+      "ctx+0x20 becomes 2 or 3 only when ctx+0x2c > 0",
+      "rowdriver mode 2 reads the noise map and mode 3 calls FUN_180003370; mode 1 does neither"
+    ],
+    "evidence": [
+      "decomp/OLMDirectionalBlur.aex.c.txt:3391-3400",
+      "decomp/OLMDirectionalBlur.aex.c.txt:1549-1566"
+    ],
+    "inference_boundary": "The conclusion covers the observed noise dispatch path, not every hypothetical side path in the binary."
+  },
+  "actual_aex_capture": {
+    "status": "pass",
+    "fixture": "tools/emulation/dblur_fullrender_host_fixture_20260711.py",
+    "return_addresses": ["0x180007cda", "0x180007d85", "0x180007e30"],
+    "observed_8bpc": {
+      "internal_mode": 1,
+      "angle_radians": 1.5707963705062866,
+      "brightness_gain": 1.0,
+      "noise_variation": 0.0,
+      "size_variation_exponent": 0.0,
+      "noise_type": 1,
+      "seed": 1,
+      "noise_offset": 0.0,
+      "thickness": 10.0
+    },
+    "reason": "The fixture implements PF_ParamCheckout and captured the actual AEX-materialized worker context immediately after FUN_180006c50 returned."
+  }
+}

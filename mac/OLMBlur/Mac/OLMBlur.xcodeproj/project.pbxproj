@@ -13,6 +13,14 @@
 		D0FE57610993C4E900139A60 /* OLMBlurPiPL.r in Rez */ = {isa = PBXBuildFile; fileRef = D0FE575E0993C4E900139A60 /* OLMBlurPiPL.r */; };
 		D0FE579D0993C5E500139A60 /* AEGP_SuiteHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FE579A0993C5E500139A60 /* AEGP_SuiteHandler.cpp */; };
 		D0FE579E0993C5E500139A60 /* MissingSuiteError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FE579C0993C5E500139A60 /* MissingSuiteError.cpp */; };
+		F10000010000000100000001 /* olmblur_helper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F10000020000000200000002 /* olmblur_helper.cpp */; };
+		F10000030000000300000003 /* olmblur_worker_orchestration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F10000040000000400000004 /* olmblur_worker_orchestration.cpp */; };
+		F10000070000000700000007 /* olmblur_worker16_nonlegacy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F10000080000000800000008 /* olmblur_worker16_nonlegacy.cpp */; };
+		F10000050000000500000005 /* olmblur_worker32_nonlegacy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F10000060000000600000006 /* olmblur_worker32_nonlegacy.cpp */; };
+		F10000090000000900000009 /* olmblur_fullworker_helper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F100000A0000000A0000000A /* olmblur_fullworker_helper.cpp */; };
+		F100000B0000000B0000000B /* olmblur_worker8_legacy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F100000C0000000C0000000C /* olmblur_worker8_legacy.cpp */; };
+		F100000D0000000D0000000D /* olmblur_worker16_legacy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F100000E0000000E0000000E /* olmblur_worker16_legacy.cpp */; };
+		F100000F0000000F0000000F /* olmblur_worker32_legacy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F10000100000001000000010 /* olmblur_worker32_legacy.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +36,14 @@
 		D0FE579A0993C5E500139A60 /* AEGP_SuiteHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = AEGP_SuiteHandler.cpp; path = ../../../Util/AEGP_SuiteHandler.cpp; sourceTree = SOURCE_ROOT; };
 		D0FE579B0993C5E500139A60 /* AEGP_SuiteHandler.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AEGP_SuiteHandler.h; path = ../../../Util/AEGP_SuiteHandler.h; sourceTree = SOURCE_ROOT; };
 		D0FE579C0993C5E500139A60 /* MissingSuiteError.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = MissingSuiteError.cpp; path = ../../../Util/MissingSuiteError.cpp; sourceTree = SOURCE_ROOT; };
+		F10000020000000200000002 /* olmblur_helper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = olmblur_helper.cpp; path = ../../../core/olmblur_helper.cpp; sourceTree = SOURCE_ROOT; };
+		F10000040000000400000004 /* olmblur_worker_orchestration.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = olmblur_worker_orchestration.cpp; path = ../../../core/olmblur_worker_orchestration.cpp; sourceTree = SOURCE_ROOT; };
+		F10000080000000800000008 /* olmblur_worker16_nonlegacy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = olmblur_worker16_nonlegacy.cpp; path = ../../../core/olmblur_worker16_nonlegacy.cpp; sourceTree = SOURCE_ROOT; };
+		F10000060000000600000006 /* olmblur_worker32_nonlegacy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = olmblur_worker32_nonlegacy.cpp; path = ../../../core/olmblur_worker32_nonlegacy.cpp; sourceTree = SOURCE_ROOT; };
+		F100000A0000000A0000000A /* olmblur_fullworker_helper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = olmblur_fullworker_helper.cpp; path = ../../../core/olmblur_fullworker_helper.cpp; sourceTree = SOURCE_ROOT; };
+		F100000C0000000C0000000C /* olmblur_worker8_legacy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = olmblur_worker8_legacy.cpp; path = ../../../core/olmblur_worker8_legacy.cpp; sourceTree = SOURCE_ROOT; };
+		F100000E0000000E0000000E /* olmblur_worker16_legacy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = olmblur_worker16_legacy.cpp; path = ../../../core/olmblur_worker16_legacy.cpp; sourceTree = SOURCE_ROOT; };
+		F10000100000001000000010 /* olmblur_worker32_legacy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = olmblur_worker32_legacy.cpp; path = ../../../core/olmblur_worker32_legacy.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +62,14 @@
 			isa = PBXGroup;
 			children = (
 				D0FE575C0993C4E900139A60 /* OLMBlur.cpp */,
+				F10000020000000200000002 /* olmblur_helper.cpp */,
+				F10000040000000400000004 /* olmblur_worker_orchestration.cpp */,
+				F10000080000000800000008 /* olmblur_worker16_nonlegacy.cpp */,
+				F10000060000000600000006 /* olmblur_worker32_nonlegacy.cpp */,
+				F100000A0000000A0000000A /* olmblur_fullworker_helper.cpp */,
+				F100000C0000000C0000000C /* olmblur_worker8_legacy.cpp */,
+				F100000E0000000E0000000E /* olmblur_worker16_legacy.cpp */,
+				F10000100000001000000010 /* olmblur_worker32_legacy.cpp */,
 				7EF36FB816F29807002A3CB3 /* OLMBlur.h */,
 				D0FE575A0993C4E900139A60 /* OLMBlur_Strings.cpp */,
 				D0FE575B0993C4E900139A60 /* OLMBlur_Strings.h */,
@@ -152,6 +176,14 @@
 				D0FE57600993C4E900139A60 /* OLMBlur.cpp in Sources */,
 				D0FE579D0993C5E500139A60 /* AEGP_SuiteHandler.cpp in Sources */,
 				D0FE579E0993C5E500139A60 /* MissingSuiteError.cpp in Sources */,
+				F10000010000000100000001 /* olmblur_helper.cpp in Sources */,
+				F10000030000000300000003 /* olmblur_worker_orchestration.cpp in Sources */,
+				F10000070000000700000007 /* olmblur_worker16_nonlegacy.cpp in Sources */,
+				F10000050000000500000005 /* olmblur_worker32_nonlegacy.cpp in Sources */,
+				F10000090000000900000009 /* olmblur_fullworker_helper.cpp in Sources */,
+				F100000B0000000B0000000B /* olmblur_worker8_legacy.cpp in Sources */,
+				F100000D0000000D0000000D /* olmblur_worker16_legacy.cpp in Sources */,
+				F100000F0000000F0000000F /* olmblur_worker32_legacy.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,10 +214,13 @@
 				HEADER_SEARCH_PATHS = (
 					../../../Headers,
 					../../../Util,
+					../../../core,
 					../../../Headers/SP,
 					../../../Resources,
 				);
 				ONLY_ACTIVE_ARCH = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				OTHER_CPLUSPLUSFLAGS = "-ffp-contract=off";
 				REZ_PREPROCESSOR_DEFINITIONS = __MACH__;
 				SDKROOT = macosx;
 				STRIP_INSTALLED_PRODUCT = NO;

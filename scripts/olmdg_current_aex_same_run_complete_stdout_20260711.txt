@@ -1,0 +1,40 @@
+OLMDG_ENTRY run_id=dg-synthetic-001 case_id=case_0010 case_tag=10 inside_threshold=63 outside_threshold=82 x=6 y=40 module_base=0x180000000 output_base=0x41000000 param_block=0x10001000
+OLMDG_FIELD run_id=dg-synthetic-001 case_id=case_0010 x=6 y=40 rcx=0x21068030 rcx_plus2_word=29500 field_base=0x21000000 field_header=0x21000010 field_rowbytes=15360 field_pixel_size=8
+OLMDG_SOURCE run_id=dg-synthetic-001 case_id=case_0010 x=6 y=40 rdx=0x20096030 rdx_plus2_word=0
+OLMDG_COMPOSE run_id=dg-synthetic-001 case_id=case_0010 x=6 y=40
+xmm1=00000000000000003f666000
+xmm2=00000000000000003dcc8000
+xmm4=000000000000000000000000
+xmm5=000000000000000000000000
+OLMDG_WRITER run_id=dg-synthetic-001 case_id=case_0010 x=6 y=40 output=0x41000000 output_store_word=3268 final_writer_site=DistanceGradation+0x1170814 word0=3268 word1=0 word2=32768 word3=0
+xmm1=00000000000000003dcc8000
+OLMDG_ENTRY run_id=dg-synthetic-001 case_id=case_0010 case_tag=10 inside_threshold=63 outside_threshold=82 x=901 y=394 module_base=0x180000000 output_base=0x41000000 param_block=0x10001000
+OLMDG_FIELD run_id=dg-synthetic-001 case_id=case_0010 x=901 y=394 rcx=0x21599428 rcx_plus2_word=22892 field_base=0x21000000 field_header=0x21000010 field_rowbytes=15360 field_pixel_size=8
+OLMDG_SOURCE run_id=dg-synthetic-001 case_id=case_0010 x=901 y=394 rdx=0x205c7428 rdx_plus2_word=0
+OLMDG_COMPOSE run_id=dg-synthetic-001 case_id=case_0010 x=901 y=394
+xmm1=00000000000000003f32c000
+xmm2=00000000000000003e9a0000
+xmm4=000000000000000000000000
+xmm5=000000000000000000000000
+OLMDG_WRITER run_id=dg-synthetic-001 case_id=case_0010 x=901 y=394 output=0x41000008 output_store_word=9876 final_writer_site=DistanceGradation+0x1170814 word0=9876 word1=0 word2=32768 word3=0
+xmm1=00000000000000003e9a0000
+OLMDG_ENTRY run_id=dg-synthetic-001 case_id=case_0011 case_tag=11 inside_threshold=348 outside_threshold=0 x=6 y=40 module_base=0x180000000 output_base=0x42000000 param_block=0x10002000
+OLMDG_FIELD run_id=dg-synthetic-001 case_id=case_0011 x=6 y=40 rcx=0x22068030 rcx_plus2_word=29500 field_base=0x22000000 field_header=0x22000010 field_rowbytes=15360 field_pixel_size=8
+OLMDG_SOURCE run_id=dg-synthetic-001 case_id=case_0011 x=6 y=40 rdx=0x20096030 rdx_plus2_word=0
+OLMDG_COMPOSE run_id=dg-synthetic-001 case_id=case_0011 x=6 y=40
+xmm1=00000000000000003f666000
+xmm2=00000000000000003dcc8000
+xmm4=000000000000000000000000
+xmm5=000000000000000000000000
+OLMDG_WRITER run_id=dg-synthetic-001 case_id=case_0011 x=6 y=40 output=0x42000000 output_store_word=3268 final_writer_site=DistanceGradation+0x1170814 word0=3268 word1=0 word2=32768 word3=0
+xmm1=00000000000000003dcc8000
+OLMDG_ENTRY run_id=dg-synthetic-001 case_id=case_0011 case_tag=11 inside_threshold=348 outside_threshold=0 x=901 y=394 module_base=0x180000000 output_base=0x42000000 param_block=0x10002000
+OLMDG_FIELD run_id=dg-synthetic-001 case_id=case_0011 x=901 y=394 rcx=0x22599428 rcx_plus2_word=22892 field_base=0x22000000 field_header=0x22000010 field_rowbytes=15360 field_pixel_size=8
+OLMDG_SOURCE run_id=dg-synthetic-001 case_id=case_0011 x=901 y=394 rdx=0x205c7428 rdx_plus2_word=0
+OLMDG_COMPOSE run_id=dg-synthetic-001 case_id=case_0011 x=901 y=394
+xmm1=00000000000000003f32c000
+xmm2=00000000000000003e9a0000
+xmm4=000000000000000000000000
+xmm5=000000000000000000000000
+OLMDG_WRITER run_id=dg-synthetic-001 case_id=case_0011 x=901 y=394 output=0x42000008 output_store_word=9876 final_writer_site=DistanceGradation+0x1170814 word0=9876 word1=0 word2=32768 word3=0
+xmm1=00000000000000003e9a0000

@@ -671,16 +671,16 @@ struct OLMCKPixelTraits<PF_PixelFloat> {
 	static void zero(PF_PixelFloat &p) { p.alpha = p.red = p.green = p.blue = 0.0f; }
 	static void replace_rgb(PF_PixelFloat &p, const PF_PixelFloat &rep)
 	{
-		p.red = ClampValue<float>(rep.red, 0.0f, 1.0f);
-		p.green = ClampValue<float>(rep.green, 0.0f, 1.0f);
-		p.blue = ClampValue<float>(rep.blue, 0.0f, 1.0f);
+		p.red = rep.red;
+		p.green = rep.green;
+		p.blue = rep.blue;
 	}
 	static void scale(PF_PixelFloat &dst, const PF_PixelFloat &src, float weight)
 	{
-		dst.red = ClampValue<float>(src.red * weight, 0.0f, 1.0f);
-		dst.green = ClampValue<float>(src.green * weight, 0.0f, 1.0f);
-		dst.blue = ClampValue<float>(src.blue * weight, 0.0f, 1.0f);
-		dst.alpha = ClampValue<float>(src.alpha * weight, 0.0f, 1.0f);
+		dst.red = src.red * weight;
+		dst.green = src.green * weight;
+		dst.blue = src.blue * weight;
+		dst.alpha = src.alpha * weight;
 	}
 };
 

@@ -1,0 +1,172 @@
+{
+  "aex": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
+  "callback_counts": {
+    "PFHandle.dispose": 8,
+    "PFHandle.lock": 8,
+    "PFHandle.new": 8,
+    "PFHandle.unlock": 8,
+    "SPBasic.AcquireSuite": 16,
+    "SPBasic.ReleaseSuite": 16,
+    "cv::dist_transform": 1,
+    "cv::normalize_minmax": 1,
+    "cv::resize_same_shape": 2,
+    "cv::threshold": 1
+  },
+  "function": "0x181174760",
+  "hits": [
+    "FUN_1812aef70",
+    "FUN_1812aef70",
+    "FUN_18117ca50"
+  ],
+  "input": {
+    "crop_origin_xy": [
+      0,
+      0
+    ],
+    "crop_xywh": null,
+    "invert_mask": true,
+    "mask_channel": "alpha",
+    "mask_nonzero": 1102769,
+    "mask_zero": 970831,
+    "source_dtype": ">u2",
+    "source_png": "refs/win_references/olm_return_20260706/DistanceGradation/olmdistancegradation_case0023_current_aex_recapture_20260702__software_16bpc__fr24__olmdistancegradation_extended__case_0023_current_aex_before_effects.png",
+    "source_shape": [
+      1080,
+      1920,
+      4
+    ]
+  },
+  "instructions": 6921,
+  "output_max": 1.0,
+  "output_mean": 0.5318137407302856,
+  "output_min": 0.0,
+  "param8": 1,
+  "samples": [
+    {
+      "local_xy": [
+        1698,
+        7
+      ],
+      "mask": 0,
+      "output": 0.0,
+      "requested_xy": [
+        1698,
+        7
+      ]
+    },
+    {
+      "local_xy": [
+        1699,
+        7
+      ],
+      "mask": 0,
+      "output": 0.0,
+      "requested_xy": [
+        1699,
+        7
+      ]
+    },
+    {
+      "local_xy": [
+        1700,
+        7
+      ],
+      "mask": 255,
+      "output": 1.0,
+      "requested_xy": [
+        1700,
+        7
+      ]
+    },
+    {
+      "local_xy": [
+        1699,
+        6
+      ],
+      "mask": 255,
+      "output": 1.0,
+      "requested_xy": [
+        1699,
+        6
+      ]
+    },
+    {
+      "local_xy": [
+        1699,
+        8
+      ],
+      "mask": 0,
+      "output": 0.0,
+      "requested_xy": [
+        1699,
+        8
+      ]
+    },
+    {
+      "local_xy": [
+        414,
+        393
+      ],
+      "mask": 0,
+      "output": 0.0,
+      "requested_xy": [
+        414,
+        393
+      ]
+    },
+    {
+      "local_xy": [
+        415,
+        393
+      ],
+      "mask": 0,
+      "output": 0.0,
+      "requested_xy": [
+        415,
+        393
+      ]
+    },
+    {
+      "local_xy": [
+        416,
+        393
+      ],
+      "mask": 0,
+      "output": 0.0,
+      "requested_xy": [
+        416,
+        393
+      ]
+    },
+    {
+      "local_xy": [
+        415,
+        392
+      ],
+      "mask": 0,
+      "output": 0.0,
+      "requested_xy": [
+        415,
+        392
+      ]
+    },
+    {
+      "local_xy": [
+        415,
+        394
+      ],
+      "mask": 0,
+      "output": 0.0,
+      "requested_xy": [
+        415,
+        394
+      ]
+    }
+  ],
+  "shape": [
+    1080,
+    1920
+  ],
+  "status": "completed",
+  "threshold": 0
+}

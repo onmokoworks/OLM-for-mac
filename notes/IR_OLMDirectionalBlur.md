@@ -101,6 +101,14 @@ Current verified reference slice:
   denominator, alpha-or-valid side-channel, numerator, pre-writeback, and final
   byte fields needed for both active lanes, plus the source/decomp anchors that
   should make the next harness or trace request nearly mechanical.
+- 2026-07-08 focused request is prepared but not queued:
+  `refs/conformance/olmdirectionalblur_angle0_single_shot_witness_contract_20260708.md`
+  and the package profile `directionalblur-angle0-single-shot-witness` define a
+  one-case angle-0 witness for `olmdirectionalblur_angle0_single_shot_witness_20260708`.
+  It is intentionally narrower than the older helper-gate retries: it should
+  only be sent after the active RadialBlur final-writeback request returns or is
+  explicitly deprioritized. Acceptance requires typed per-pixel rowdriver /
+  side-channel / pre-writeback values, not a PNG-only restatement.
 
 ## Evidence Priority
 
@@ -212,6 +220,10 @@ software cases (alpha_fade 29.99->27.37, diagonal_ramp 16.33->11.88,
 size_var 23.47->21.01, sharp_tail 16.51->14.93) and did not regress the
 existing GPU-rendered pairs. Earlier narrow-table probes that "felt" closer
 were chasing this same width error empirically.
+
+2026-07-09 Mac-port follow-up: `mac/OLMDirectionalBlur` now uses the same
+`length/3.0` denominator. This is a narrow static parity patch only; it does
+not replace the required angle-0 rowdriver/valid-alpha runtime witness.
 
 ### Input Rotate
 
@@ -977,3 +989,53 @@ returns a paired focus string:
 Stop line: do not promote another DirectionalBlur implementation toggle from
 PNG mean improvements until one of these witnesses is explained by asm/runtime
 values.
+
+## 2026-07-11 Front-only full-entry and Mac AE closeout
+
+The previous broad candidate matrix is superseded for the front-only 8bpc
+slice with Size Variation, Alpha Fade, Sharp Tail, Back, and Noise all zero.
+The complete portable pipeline in `core/dblur_frontonly.cpp` reproduces actual
+AEX full-entry raw output SHA-256
+`ebfda2207558a335d35a3928fe623b6d6d5cc44a7e0befe89dc06cdf1c4d9544`
+for `db_angle0_strength_sweep_small`.
+
+The last raw-to-reference residual was not a rowdriver, rotate, or writer
+arithmetic error. It occurred only where raw output was `[RGB=247,A=254]` and
+the AE-rendered PNG was `[RGB=246,A=254]`. An external premultiply stage closes
+all 523 pixels. Do not encode that operation inside the plug-in.
+
+Mac AE 26.3 Software rendering is now byte-exact for:
+
+- `db_angle0_strength_sweep_small` (Front Strength 48)
+- `db_angle0_no_tail_no_size` (Front Strength 240)
+
+The exact adapter deliberately excludes Size Variation, Sharp Tail, Back,
+Noise, and non-8bpc paths. Front Alpha Fade now executes the complete shared
+core, but its retained AE fixture has a separate host-boundary provenance gate.
+
+## 2026-07-11 Alpha Fade host-boundary classification
+
+The Alpha Fade kernel must no longer be changed by broad PNG fitting. Complete
+actual-AEX and Mac callback captures establish a strong host/provenance
+hypothesis, pending the Windows PF-world capture:
+
+- Mac AE PREMULTIPLIED import reconstructs the input RGB with half-up
+  `premultiplied_rgb * 255 / alpha` and preserves alpha exactly.
+- A floor-unpremultiplied input reduces the retained Windows-PNG residual from
+  `234049` to `22993` RGB channel bytes, both at `max_diff=1`.
+- The complete actual-AEX floor-input raw output is
+  `7f64aa7caef89cbdf2bb86eee5f6b87f063fb2927e85e10e8abbce2d2fcd5bd9`.
+  It differs from the Mac callback at only `78` raw bytes; this is far too small
+  to explain the original 234049-byte family by itself.
+- The June 19 manifest has no loaded AEX path/hash. It therefore cannot prove
+  that the reference came from the analyzed 2025 AEX rather than another
+  packaged generation.
+
+The remaining proof is a same-run Windows boundary capture, not a new blur
+formula. For the exact 2025 AEX hash
+`d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e`,
+capture the PF input world before populate at `+0x5267` and the PF output world
+after output Iterate8 at `+0x566a`. A different loaded hash stops the offset
+trace and requires a hash-pinned recapture instead.
+
+Source of truth: `refs/conformance/dblur_alpha_host_boundary_20260711.md`.

@@ -1,0 +1,81 @@
+{
+  "schema": "olm.aex.cpu-fixture/3",
+  "plugin": "OLMBlur",
+  "binary_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "worker": "0x180007300",
+  "bit_depth": 8,
+  "legacy": 1,
+  "pixel_layout": "little-endian A,R,G,B",
+  "cases": [
+    {
+      "id": "8bpc_legacy_basic",
+      "width": 12,
+      "height": 12,
+      "blur_amount": 3.0,
+      "smoothness": 100.0,
+      "repeat": 2,
+      "bias_direction": 1,
+      "zero_alpha_count": 0,
+      "partial_alpha_values": [],
+      "source_sha256": "586835578947adf0b3f1a5a5e574398ca66df585766d3af9fd6381ae92225e4a",
+      "expected_sha256": "2d8a58a1fc24f03a2082a2d20ec824ea63f1c7f0f658ea8f3506329e39cac9cd",
+      "instructions": 184049,
+      "callback_count": 48
+    },
+    {
+      "id": "8bpc_legacy_large_radius_reverse",
+      "width": 18,
+      "height": 18,
+      "blur_amount": 11.0,
+      "smoothness": 100.0,
+      "repeat": 3,
+      "bias_direction": 2,
+      "zero_alpha_count": 0,
+      "partial_alpha_values": [],
+      "source_sha256": "dac589013b502bab4b245ab77028a823782f09f5fba333c26f775536b389ba04",
+      "expected_sha256": "286b898d8aa8742573965764088c4d1c7f2835e7214f30f1ffce9e6251ecddef",
+      "instructions": 1363249,
+      "callback_count": 48
+    },
+    {
+      "id": "8bpc_legacy_mixed_alpha_reverse",
+      "width": 18,
+      "height": 12,
+      "blur_amount": 3.0,
+      "smoothness": 100.0,
+      "repeat": 2,
+      "bias_direction": 2,
+      "mixed_alpha": true,
+      "zero_alpha_count": 69,
+      "partial_alpha_values": [
+        32,
+        96,
+        160,
+        224
+      ],
+      "source_sha256": "aa8120e34bbcffd2b5eab03b01c9df29a073d3d985a8b505612b9b553ca9aae0",
+      "expected_sha256": "663cb730bdaa4cf552fa74e1e18120e74e0efccda17a11f3f29d29095ca94dba",
+      "instructions": 196710,
+      "callback_count": 48
+    },
+    {
+      "id": "8bpc_legacy_case0003_radius248_boundary_gradient",
+      "width": 6,
+      "height": 6,
+      "blur_amount": 248.6,
+      "smoothness": 100.0,
+      "repeat": 10,
+      "bias_direction": 1,
+      "boundary_gradient": true,
+      "formal_case": "case0003",
+      "formal_width": 960,
+      "formal_height": 540,
+      "zero_alpha_count": 0,
+      "partial_alpha_values": [],
+      "source_sha256": "680c3cf7dffabc4d4527f3a3698bea01d3a7352786c47e2389891d8f3f19083e",
+      "expected_sha256": "c72f434389bffe31e9164d8c23605657f33b2c421ece6f49b62074afa533a5d7",
+      "instructions": 3624003,
+      "callback_count": 48
+    }
+  ]
+}

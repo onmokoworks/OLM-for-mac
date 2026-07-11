@@ -1,0 +1,197 @@
+{
+  "blockers": {
+    "c280": "AEX FUN_18000c280 requires the live five-argument host/config binding; this fixture does not fabricate the opaque parameter object.",
+    "cce0_final_float": "AEX FUN_18000cce0 requires gamma/key/config state beyond the identical polygon fixture; only the port composite float is reported, not compared."
+  },
+  "facts": [
+    {
+      "aex": {
+        "after_125c0_count": 0,
+        "append": true,
+        "c": 2,
+        "cardinal6_descriptor": [
+          5,
+          6,
+          1,
+          5,
+          6,
+          0
+        ],
+        "chain_before_normalize": 1,
+        "chain_count": 1,
+        "chain_vertices": [
+          {
+            "rgba": [
+              0.9910671710968018,
+              0.9910671710968018,
+              0.9910671710968018,
+              0.9960784316062927
+            ],
+            "weight": 0.3214285671710968
+          }
+        ],
+        "descriptor_direct": [
+          5,
+          6,
+          1,
+          5,
+          8,
+          5
+        ],
+        "direct_count": 1,
+        "direct_vertices": [
+          {
+            "rgba": [
+              0.9910671710968018,
+              0.9910671710968018,
+              0.9910671710968018,
+              0.9960784316062927
+            ],
+            "weight": 0.4281609058380127
+          }
+        ],
+        "fixture": "c2_witness",
+        "pre125c0_ret": 0
+      },
+      "comparison": {
+        "all_replayed_boundaries_equal": true,
+        "append_equal": true,
+        "c_equal": true,
+        "cardinal6_descriptor_equal": true,
+        "chain_count_equal": true,
+        "chain_vertices_weights_equal_1e-6": true,
+        "descriptor_direct_equal": true,
+        "direct_vertices_weights_equal_1e-6": true
+      },
+      "port": {
+        "append": true,
+        "c": 2,
+        "cardinal6_descriptor": [
+          5,
+          6,
+          1,
+          5,
+          6,
+          0
+        ],
+        "chain_before_normalize": 1,
+        "chain_count": 1,
+        "chain_vertices": [
+          {
+            "rgba": [
+              0.991067171,
+              0.991067171,
+              0.991067171,
+              0.996078432
+            ],
+            "weight": 0.321428567
+          }
+        ],
+        "descriptor": [
+          5,
+          6,
+          1,
+          5,
+          8,
+          5
+        ],
+        "direct_count": 1,
+        "direct_vertices": [
+          {
+            "rgba": [
+              0.991067171,
+              0.991067171,
+              0.991067171,
+              0.996078432
+            ],
+            "weight": 0.428160906
+          }
+        ],
+        "fixture": "c2_witness",
+        "idx": 105,
+        "port_composite_float": [
+          0.996175289,
+          0.996175289,
+          0.996175289,
+          0.426481843
+        ],
+        "pre125c0_append": false
+      }
+    },
+    {
+      "aex": {
+        "after_125c0_count": 0,
+        "append": false,
+        "c": 4,
+        "cardinal6_descriptor": [
+          5,
+          6,
+          1,
+          5,
+          6,
+          0
+        ],
+        "chain_before_normalize": 0,
+        "chain_count": 0,
+        "chain_vertices": [],
+        "descriptor_direct": [
+          5,
+          6,
+          1,
+          5,
+          8,
+          5
+        ],
+        "direct_count": 0,
+        "direct_vertices": [],
+        "fixture": "c4_control",
+        "pre125c0_ret": 0
+      },
+      "comparison": {
+        "all_replayed_boundaries_equal": true,
+        "append_equal": true,
+        "c_equal": true,
+        "cardinal6_descriptor_equal": true,
+        "chain_count_equal": true,
+        "chain_vertices_weights_equal_1e-6": true,
+        "descriptor_direct_equal": true,
+        "direct_vertices_weights_equal_1e-6": true
+      },
+      "port": {
+        "append": false,
+        "c": 4,
+        "cardinal6_descriptor": [
+          5,
+          6,
+          1,
+          5,
+          6,
+          0
+        ],
+        "chain_before_normalize": 0,
+        "chain_count": 0,
+        "chain_vertices": [],
+        "descriptor": [
+          5,
+          6,
+          1,
+          5,
+          8,
+          5
+        ],
+        "direct_count": 0,
+        "direct_vertices": [],
+        "fixture": "c4_control",
+        "idx": 105,
+        "port_composite_float": [
+          1,
+          1,
+          1,
+          0
+        ],
+        "pre125c0_append": false
+      }
+    }
+  ],
+  "scope": "local binary-semantic evidence; not Windows AE truth"
+}

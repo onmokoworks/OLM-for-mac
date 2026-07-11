@@ -10,6 +10,7 @@
 		7EF36FB716F29701002A3CB3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF36FB616F29701002A3CB3 /* Cocoa.framework */; };
 		D0FE575F0993C4E900139A60 /* OLMDistanceGradation_Strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FE575A0993C4E900139A60 /* OLMDistanceGradation_Strings.cpp */; };
 		D0FE57600993C4E900139A60 /* OLMDistanceGradation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FE575C0993C4E900139A60 /* OLMDistanceGradation.cpp */; };
+		A1C0F0012F00000100000001 /* olmdistancegradation_fieldgen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A1C0F0022F00000100000001 /* olmdistancegradation_fieldgen.cpp */; };
 		D0FE57610993C4E900139A60 /* OLMDistanceGradationPiPL.r in Rez */ = {isa = PBXBuildFile; fileRef = D0FE575E0993C4E900139A60 /* OLMDistanceGradationPiPL.r */; };
 		D0FE579D0993C5E500139A60 /* AEGP_SuiteHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FE579A0993C5E500139A60 /* AEGP_SuiteHandler.cpp */; };
 		D0FE579E0993C5E500139A60 /* MissingSuiteError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FE579C0993C5E500139A60 /* MissingSuiteError.cpp */; };
@@ -24,6 +25,8 @@
 		D0FE575A0993C4E900139A60 /* OLMDistanceGradation_Strings.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OLMDistanceGradation_Strings.cpp; path = ../OLMDistanceGradation_Strings.cpp; sourceTree = SOURCE_ROOT; };
 		D0FE575B0993C4E900139A60 /* OLMDistanceGradation_Strings.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OLMDistanceGradation_Strings.h; path = ../OLMDistanceGradation_Strings.h; sourceTree = SOURCE_ROOT; };
 		D0FE575C0993C4E900139A60 /* OLMDistanceGradation.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OLMDistanceGradation.cpp; path = ../OLMDistanceGradation.cpp; sourceTree = SOURCE_ROOT; };
+		A1C0F0022F00000100000001 /* olmdistancegradation_fieldgen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = olmdistancegradation_fieldgen.cpp; path = ../../../core/olmdistancegradation_fieldgen.cpp; sourceTree = SOURCE_ROOT; };
+		A1C0F0032F00000100000001 /* olmdistancegradation_fieldgen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = olmdistancegradation_fieldgen.h; path = ../../../core/olmdistancegradation_fieldgen.h; sourceTree = SOURCE_ROOT; };
 		D0FE575E0993C4E900139A60 /* OLMDistanceGradationPiPL.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; name = OLMDistanceGradationPiPL.r; path = ../OLMDistanceGradationPiPL.r; sourceTree = SOURCE_ROOT; };
 		D0FE579A0993C5E500139A60 /* AEGP_SuiteHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = AEGP_SuiteHandler.cpp; path = ../../../Util/AEGP_SuiteHandler.cpp; sourceTree = SOURCE_ROOT; };
 		D0FE579B0993C5E500139A60 /* AEGP_SuiteHandler.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AEGP_SuiteHandler.h; path = ../../../Util/AEGP_SuiteHandler.h; sourceTree = SOURCE_ROOT; };
@@ -46,6 +49,8 @@
 			isa = PBXGroup;
 			children = (
 				D0FE575C0993C4E900139A60 /* OLMDistanceGradation.cpp */,
+				A1C0F0022F00000100000001 /* olmdistancegradation_fieldgen.cpp */,
+				A1C0F0032F00000100000001 /* olmdistancegradation_fieldgen.h */,
 				7EF36FB816F29807002A3CB3 /* OLMDistanceGradation.h */,
 				D0FE575A0993C4E900139A60 /* OLMDistanceGradation_Strings.cpp */,
 				D0FE575B0993C4E900139A60 /* OLMDistanceGradation_Strings.h */,
@@ -150,6 +155,7 @@
 			files = (
 				D0FE575F0993C4E900139A60 /* OLMDistanceGradation_Strings.cpp in Sources */,
 				D0FE57600993C4E900139A60 /* OLMDistanceGradation.cpp in Sources */,
+				A1C0F0012F00000100000001 /* olmdistancegradation_fieldgen.cpp in Sources */,
 				D0FE579D0993C5E500139A60 /* AEGP_SuiteHandler.cpp in Sources */,
 				D0FE579E0993C5E500139A60 /* MissingSuiteError.cpp in Sources */,
 			);
@@ -161,6 +167,7 @@
 		C4E61880095A3C800012CA3F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_TESTABILITY = YES;
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
@@ -196,6 +203,7 @@
 		C4E618CF095A3CE90012CA3F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_MODEL_TUNING = G5;
 				GENERATE_PKGINFO_FILE = YES;

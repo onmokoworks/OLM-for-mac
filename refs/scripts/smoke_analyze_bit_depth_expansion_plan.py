@@ -32,16 +32,33 @@ def main() -> int:
         report = json.loads(report_json.read_text(encoding="utf-8"))
         assert report["kind"] == "olm_bit_depth_expansion_plan"
         assert report["decision"] == "request-16bpc-for-normalized-8bpc-exact-features"
-        assert report["totals"]["feature_count"] == 5
-        assert report["totals"]["plugin_count"] == 3
-        assert report["totals"]["case_count"] == 45
+        features = report["features"]
+        groups = report["groups"]
+        assert report["totals"]["feature_count"] == len(features)
+        assert report["totals"]["plugin_count"] == len(groups)
+        assert report["totals"]["case_count"] == sum(row["case_count"] for row in features)
         features = {row["name"]: row for row in report["features"]}
+        assert set(features) == {
+            "OLMBlur",
+            "OLMColorKey",
+            "OLMToonDilate",
+            "OLMDistanceGradation basic",
+            "OLMDistanceGradation extended",
+            "OLMDistanceGradation blur",
+        }
         assert features["OLMBlur"]["case_count"] == 7
         assert features["OLMColorKey"]["case_count"] == 9
+        assert features["OLMToonDilate"]["case_count"] == 3
         assert features["OLMDistanceGradation basic"]["case_count"] == 12
         assert features["OLMDistanceGradation extended"]["case_count"] == 16
         assert features["OLMDistanceGradation blur"]["case_count"] == 1
         groups = {row["plugin"]: row for row in report["groups"]}
+        assert set(groups) == {
+            "OLMBlur",
+            "OLMColorKey",
+            "OLMToonDilate",
+            "OLMDistanceGradation",
+        }
         assert groups["OLMDistanceGradation"]["case_count"] == 29
         md = report_md.read_text(encoding="utf-8")
         for needle in (
@@ -49,6 +66,7 @@ def main() -> int:
             "request-16bpc-for-normalized-8bpc-exact-features",
             "Do not claim all-bit-depth compatibility",
             "OLMDistanceGradation extended",
+            "OLMToonDilate",
         ):
             assert needle in md
     print("[OK] bit-depth expansion plan smoke passed")

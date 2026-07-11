@@ -161,6 +161,14 @@
     var logPath = getenv("OLM_AE_LOG_PATH");
     var resultJson = getenv("OLM_AE_RESULT_JSON");
     var overrideJson = getenv("OLM_AE_PARAM_OVERRIDES_JSON");
+    var outputMode = getenv("OLM_AE_OUTPUT_MODE");
+    var outputTemplate = getenv("OLM_AE_OUTPUT_TEMPLATE");
+    var keepOpen = getenv("OLM_AE_KEEP_OPEN") === "1";
+    var disableEffect = getenv("OLM_AE_DISABLE_EFFECT") === "1";
+    var disableProjectColorManagement = getenv("OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT") === "1";
+    var forceNewProject = getenv("OLM_AE_FORCE_NEW_PROJECT") === "1";
+    var forceSoftware = getenv("OLM_AE_FORCE_SOFTWARE") === "1";
+    var inputAlphaMode = String(getenv("OLM_AE_INPUT_ALPHA_MODE") || "").toUpperCase();
 
     if (!requestDir) {
         requestDir = File($.fileName).parent.parent.fsName +
@@ -190,6 +198,12 @@
         case_id: caseId,
         output_dir: outputDir,
         output_png: "",
+        output_exr: "",
+        project_bits_per_channel: -1,
+        project_working_space: "unknown",
+        project_linear_blending: false,
+        input_alpha_mode: inputAlphaMode || "default",
+        effect_disabled: disableEffect,
         status: "unknown",
         error: "",
         warnings: []
@@ -215,14 +229,56 @@
             throw new Error("missing case in request manifest: " + caseId);
         }
 
-        if (!app.project) {
+        if (forceNewProject) {
+            if (app.project) {
+                try {
+                    app.project.close(CloseOptions.DO_NOT_SAVE_CHANGES);
+                    appendText(logPath, "closed pre-existing project\n");
+                } catch (closeExistingError) {
+                    appendText(logPath, "pre-existing project close warning " + closeExistingError.toString() + "\n");
+                }
+            }
+            app.newProject();
+        } else if (!app.project) {
             app.newProject();
         }
-        try {
-            if (referenceManifest.project && referenceManifest.project.bits_per_channel) {
-                app.project.bitsPerChannel = Number(referenceManifest.project.bits_per_channel);
-                appendText(logPath, "bitsPerChannel=" + app.project.bitsPerChannel + "\n");
+        if (forceSoftware) {
+            try {
+                app.project.gpuAccelType = GpuAccelType.SOFTWARE;
+                appendText(logPath, "gpuAccelType=SOFTWARE\n");
+            } catch (gpuError) {
+                summary.warnings.push("gpuAccelType: " + gpuError.toString());
             }
+        }
+        if (disableProjectColorManagement) {
+            try {
+                appendText(logPath, "workingSpace.before=" + app.project.workingSpace + "\n");
+                appendText(logPath, "linearBlending.before=" + app.project.linearBlending + "\n");
+                app.project.workingSpace = "";
+                app.project.linearBlending = false;
+                appendText(logPath, "workingSpace.after=" + app.project.workingSpace + "\n");
+                appendText(logPath, "linearBlending.after=" + app.project.linearBlending + "\n");
+            } catch (colorManagementError) {
+                summary.warnings.push("projectColorManagement: " + colorManagementError.toString());
+            }
+        }
+        try {
+            var requestedBits = null;
+            var requestedBitsSource = "";
+            if (referenceManifest.project && referenceManifest.project.bits_per_channel) {
+                requestedBits = Number(referenceManifest.project.bits_per_channel);
+                requestedBitsSource = "project.bits_per_channel";
+            } else if (referenceManifest.comp && referenceManifest.comp.bpc) {
+                requestedBits = Number(referenceManifest.comp.bpc);
+                requestedBitsSource = "comp.bpc";
+            }
+            if (requestedBits) {
+                app.project.bitsPerChannel = requestedBits;
+                appendText(logPath, "bitsPerChannel=" + app.project.bitsPerChannel + " source=" + requestedBitsSource + "\n");
+            }
+            summary.project_bits_per_channel = Number(app.project.bitsPerChannel);
+            summary.project_working_space = String(app.project.workingSpace);
+            summary.project_linear_blending = app.project.linearBlending ? true : false;
         } catch (bitsError) {
             summary.warnings.push("bitsPerChannel: " + bitsError.toString());
         }
@@ -230,11 +286,28 @@
         var inputPath = requestDir + "/" + requestManifest.input_dir + "/" + requestCase.before_effects_frame;
         appendText(logPath, "import " + inputPath + "\n");
         var footage = importFootage(inputPath);
+        if (inputAlphaMode) {
+            try {
+                if (inputAlphaMode === "PREMULTIPLIED") {
+                    footage.mainSource.alphaMode = AlphaMode.PREMULTIPLIED;
+                    footage.mainSource.premulColor = [0, 0, 0];
+                } else if (inputAlphaMode === "STRAIGHT") {
+                    footage.mainSource.alphaMode = AlphaMode.STRAIGHT;
+                } else if (inputAlphaMode === "IGNORE") {
+                    footage.mainSource.alphaMode = AlphaMode.IGNORE;
+                } else {
+                    throw new Error("unsupported OLM_AE_INPUT_ALPHA_MODE: " + inputAlphaMode);
+                }
+                appendText(logPath, "inputAlphaMode=" + inputAlphaMode + " actual=" + footage.mainSource.alphaMode + "\n");
+            } catch (alphaModeError) {
+                throw new Error("input alpha interpretation failed: " + alphaModeError.toString());
+            }
+        }
         var compInfo = referenceManifest.comp || {};
         var comp = app.project.items.addComp(
             "single_" + caseId,
-            Number(footage.width || compInfo.width || 1920),
-            Number(footage.height || compInfo.height || 1080),
+            Number(compInfo.width || footage.width || 1920),
+            Number(compInfo.height || footage.height || 1080),
             1.0,
             Number(compInfo.duration || 1.0),
             Number(compInfo.frame_rate || 24.0)
@@ -243,37 +316,40 @@
         layer.startTime = 0;
         appendText(logPath, "comp/layer ready\n");
 
-        var effectParade = layer.property("ADBE Effect Parade");
-        var effectCandidates = [requestManifest.effect_match_name, requestManifest.effect_name];
-        if (caseRef.effects && caseRef.effects.length > 0) {
-            effectCandidates.unshift(caseRef.effects[0].match_name);
-            effectCandidates.push(caseRef.effects[0].name);
-        }
-        var effect = null;
-        var addErrors = [];
-        for (var ec = 0; ec < effectCandidates.length; ec++) {
-            var candidateName = effectCandidates[ec];
-            if (!candidateName) {
-                continue;
+        if (disableEffect) {
+            appendText(logPath, "effect disabled by OLM_AE_DISABLE_EFFECT\n");
+        } else {
+            var effectParade = layer.property("ADBE Effect Parade");
+            var effectCandidates = [requestManifest.effect_match_name, requestManifest.effect_name];
+            if (caseRef.effects && caseRef.effects.length > 0) {
+                effectCandidates.unshift(caseRef.effects[0].match_name);
+                effectCandidates.push(caseRef.effects[0].name);
             }
-            try {
-                appendText(logPath, "try add effect " + candidateName + "\n");
-                effect = effectParade.addProperty(candidateName);
-                if (effect) {
-                    appendText(logPath, "effect added " + effect.name + " / " + effect.matchName + "\n");
-                    break;
+            var effect = null;
+            var addErrors = [];
+            for (var ec = 0; ec < effectCandidates.length; ec++) {
+                var candidateName = effectCandidates[ec];
+                if (!candidateName) {
+                    continue;
                 }
-            } catch (addError) {
-                addErrors.push(candidateName + ": " + addError.toString());
+                try {
+                    appendText(logPath, "try add effect " + candidateName + "\n");
+                    effect = effectParade.addProperty(candidateName);
+                    if (effect) {
+                        appendText(logPath, "effect added " + effect.name + " / " + effect.matchName + "\n");
+                        break;
+                    }
+                } catch (addError) {
+                    addErrors.push(candidateName + ": " + addError.toString());
+                }
             }
-        }
-        if (!effect) {
-            throw new Error("could not add effect: " + addErrors.join(" | "));
-        }
+            if (!effect) {
+                throw new Error("could not add effect: " + addErrors.join(" | "));
+            }
 
-        var params = (caseRef.effects && caseRef.effects.length > 0) ? (caseRef.effects[0].params || []) : [];
-        var overrides = parseJsonText(overrideJson);
-        for (var p = 0; p < params.length; p++) {
+            var params = (caseRef.effects && caseRef.effects.length > 0) ? (caseRef.effects[0].params || []) : [];
+            var overrides = parseJsonText(overrideJson);
+            for (var p = 0; p < params.length; p++) {
             var param = params[p];
             if (param.value === null || param.value === undefined) {
                 continue;
@@ -340,23 +416,47 @@
                 );
                 throw setError;
             }
-            appendText(logPath, "set.ok index=" + p + " match=" + (leaf.match_name || prop.name) + "\n");
+                appendText(logPath, "set.ok index=" + p + " match=" + (leaf.match_name || prop.name) + "\n");
+            }
         }
 
-        var outputPath = outputDir + "/" + requestCase.frame;
-        var png = new File(outputPath);
-        if (png.exists) {
-            png.remove();
+        if (outputMode === "exr_render_queue") {
+            if (!outputTemplate) {
+                throw new Error("OLM_AE_OUTPUT_TEMPLATE is required for exr_render_queue");
+            }
+            var exrBase = outputDir + "/" + caseId + ".exr";
+            var exrSequence = exrBase.replace(/\.exr$/i, "_[#####].exr");
+            var rqItem = app.project.renderQueue.items.add(comp);
+            rqItem.timeSpanStart = Number(caseRef.time || 0);
+            rqItem.timeSpanDuration = 1.0 / Number(comp.frameRate || 24.0);
+            var outputModule = rqItem.outputModule(1);
+            outputModule.applyTemplate(outputTemplate);
+            outputModule.file = new File(exrSequence);
+            appendText(logPath, "renderQueue template=" + outputTemplate + " output=" + exrSequence + "\n");
+            app.project.renderQueue.render();
+            var exr = new File(exrSequence.replace("[#####]", "00000"));
+            if (!exr.exists) {
+                throw new Error("EXR was not written: " + exrSequence);
+            }
+            summary.output_exr = exr.fsName;
+            try { rqItem.remove(); } catch (_) {}
+            appendText(logPath, "exr exists " + summary.output_exr + "\n");
+        } else {
+            var outputPath = outputDir + "/" + requestCase.frame;
+            var png = new File(outputPath);
+            if (png.exists) {
+                png.remove();
+            }
+            summary.output_png = outputPath;
+            appendText(logPath, "saveFrameToPng " + outputPath + "\n");
+            var renderStarted = new Date();
+            comp.saveFrameToPng(Number(caseRef.time || 0), png);
+            appendText(logPath, "saveFrameToPng returned\n");
+            if (!waitForFreshFile(png, renderStarted, 120, 250)) {
+                throw new Error("PNG was not written: " + outputPath);
+            }
+            appendText(logPath, "png exists\n");
         }
-        summary.output_png = outputPath;
-        appendText(logPath, "saveFrameToPng " + outputPath + "\n");
-        var renderStarted = new Date();
-        comp.saveFrameToPng(Number(caseRef.time || 0), png);
-        appendText(logPath, "saveFrameToPng returned\n");
-        if (!waitForFreshFile(png, renderStarted, 120, 250)) {
-            throw new Error("PNG was not written: " + outputPath);
-        }
-        appendText(logPath, "png exists\n");
         summary.status = "ok";
     } catch (error) {
         summary.status = "error";
@@ -373,20 +473,28 @@
             "  \"case_id\": \"" + esc(summary.case_id) + "\",\n" +
             "  \"output_dir\": \"" + esc(summary.output_dir) + "\",\n" +
             "  \"output_png\": \"" + esc(summary.output_png) + "\",\n" +
+            "  \"output_exr\": \"" + esc(summary.output_exr) + "\",\n" +
+            "  \"project_bits_per_channel\": " + summary.project_bits_per_channel + ",\n" +
+            "  \"project_working_space\": \"" + esc(summary.project_working_space) + "\",\n" +
+            "  \"project_linear_blending\": " + (summary.project_linear_blending ? "true" : "false") + ",\n" +
+            "  \"input_alpha_mode\": \"" + esc(summary.input_alpha_mode) + "\",\n" +
+            "  \"effect_disabled\": " + (summary.effect_disabled ? "true" : "false") + ",\n" +
             "  \"status\": \"" + esc(summary.status) + "\",\n" +
             "  \"error\": \"" + esc(summary.error) + "\",\n" +
             "  \"warnings\": [\"" + esc(summary.warnings.join("\" , \"")) + "\"]\n" +
             "}\n"
     );
     appendText(logPath, "done status=" + summary.status + "\n");
-    try {
-        app.project.close(CloseOptions.DO_NOT_SAVE_CHANGES);
-    } catch (closeError) {
-        appendText(logPath, "close warning " + closeError.toString() + "\n");
-    }
-    try {
-        app.quit();
-    } catch (quitError) {
-        appendText(logPath, "quit warning " + quitError.toString() + "\n");
+    if (!keepOpen) {
+        try {
+            app.project.close(CloseOptions.DO_NOT_SAVE_CHANGES);
+        } catch (closeError) {
+            appendText(logPath, "close warning " + closeError.toString() + "\n");
+        }
+        try {
+            app.quit();
+        } catch (quitError) {
+            appendText(logPath, "quit warning " + quitError.toString() + "\n");
+        }
     }
 }());

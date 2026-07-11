@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		7EF36FB716F29701002A3CB3 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EF36FB616F29701002A3CB3 /* Cocoa.framework */; };
+		DB1100010000000000000001 /* dblur_rotate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB1100110000000000000001 /* dblur_rotate.cpp */; settings = {COMPILER_FLAGS = "-O0 -fno-fast-math -ffp-contract=off"; }; };
+		DB1100020000000000000001 /* dblur_rowdriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB1100120000000000000001 /* dblur_rowdriver.cpp */; settings = {COMPILER_FLAGS = "-O2 -fno-fast-math -ffp-contract=off"; }; };
+		DB1100030000000000000001 /* dblur_frontonly.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB1100130000000000000001 /* dblur_frontonly.cpp */; settings = {COMPILER_FLAGS = "-O2 -fno-fast-math -ffp-contract=off"; }; };
 		D0FE575F0993C4E900139A60 /* OLMDirectionalBlur_Strings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FE575A0993C4E900139A60 /* OLMDirectionalBlur_Strings.cpp */; };
 		D0FE57600993C4E900139A60 /* OLMDirectionalBlur.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FE575C0993C4E900139A60 /* OLMDirectionalBlur.cpp */; };
 		D0FE57610993C4E900139A60 /* OLMDirectionalBlurPiPL.r in Rez */ = {isa = PBXBuildFile; fileRef = D0FE575E0993C4E900139A60 /* OLMDirectionalBlurPiPL.r */; };
@@ -21,6 +24,9 @@
 		7EF36FB616F29701002A3CB3 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		7EF36FB816F29807002A3CB3 /* OLMDirectionalBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OLMDirectionalBlur.h; path = ../OLMDirectionalBlur.h; sourceTree = "<group>"; };
 		C4E618CC095A3CE80012CA3F /* OLMDirectionalBlur.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OLMDirectionalBlur.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB1100110000000000000001 /* dblur_rotate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dblur_rotate.cpp; path = ../../../core/dblur_rotate.cpp; sourceTree = SOURCE_ROOT; };
+		DB1100120000000000000001 /* dblur_rowdriver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dblur_rowdriver.cpp; path = ../../../core/dblur_rowdriver.cpp; sourceTree = SOURCE_ROOT; };
+		DB1100130000000000000001 /* dblur_frontonly.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dblur_frontonly.cpp; path = ../../../core/dblur_frontonly.cpp; sourceTree = SOURCE_ROOT; };
 		D0FE575A0993C4E900139A60 /* OLMDirectionalBlur_Strings.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OLMDirectionalBlur_Strings.cpp; path = ../OLMDirectionalBlur_Strings.cpp; sourceTree = SOURCE_ROOT; };
 		D0FE575B0993C4E900139A60 /* OLMDirectionalBlur_Strings.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = OLMDirectionalBlur_Strings.h; path = ../OLMDirectionalBlur_Strings.h; sourceTree = SOURCE_ROOT; };
 		D0FE575C0993C4E900139A60 /* OLMDirectionalBlur.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = OLMDirectionalBlur.cpp; path = ../OLMDirectionalBlur.cpp; sourceTree = SOURCE_ROOT; };
@@ -46,6 +52,9 @@
 			isa = PBXGroup;
 			children = (
 				D0FE575C0993C4E900139A60 /* OLMDirectionalBlur.cpp */,
+				DB1100110000000000000001 /* dblur_rotate.cpp */,
+				DB1100120000000000000001 /* dblur_rowdriver.cpp */,
+				DB1100130000000000000001 /* dblur_frontonly.cpp */,
 				7EF36FB816F29807002A3CB3 /* OLMDirectionalBlur.h */,
 				D0FE575A0993C4E900139A60 /* OLMDirectionalBlur_Strings.cpp */,
 				D0FE575B0993C4E900139A60 /* OLMDirectionalBlur_Strings.h */,
@@ -150,6 +159,9 @@
 			files = (
 				D0FE575F0993C4E900139A60 /* OLMDirectionalBlur_Strings.cpp in Sources */,
 				D0FE57600993C4E900139A60 /* OLMDirectionalBlur.cpp in Sources */,
+				DB1100010000000000000001 /* dblur_rotate.cpp in Sources */,
+				DB1100020000000000000001 /* dblur_rowdriver.cpp in Sources */,
+				DB1100030000000000000001 /* dblur_frontonly.cpp in Sources */,
 				D0FE579D0993C5E500139A60 /* AEGP_SuiteHandler.cpp in Sources */,
 				D0FE579E0993C5E500139A60 /* MissingSuiteError.cpp in Sources */,
 			);

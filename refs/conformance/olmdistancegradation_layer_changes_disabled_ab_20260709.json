@@ -1,0 +1,122 @@
+{
+  "kind": "olmdistancegradation_layer_changes_disabled_ab_20260709",
+  "schema": 1,
+  "date": "2026-07-09",
+  "decision": "Disabling the Layer/no-bg source/color changes does not recover case_0010/0011/0024..0028. Therefore the current-vs-depthgate split is not caused by the Layer/no-bg compose/inheritance changes alone; the top suspect remains the global 16bpc source-mask/depthgate rule or field input mask ownership.",
+  "rows": [
+    {
+      "case_id": "0008",
+      "max": 0,
+      "nonzero_px": 0,
+      "mean": 0.0,
+      "pass": true
+    },
+    {
+      "case_id": "0010",
+      "max": 2,
+      "nonzero_px": 351,
+      "mean": 0.00016927083333333334,
+      "pass": false
+    },
+    {
+      "case_id": "0011",
+      "max": 2,
+      "nonzero_px": 501,
+      "mean": 0.0002416087962962963,
+      "pass": false
+    },
+    {
+      "case_id": "0012",
+      "max": 16384,
+      "nonzero_px": 278028,
+      "mean": 332.1975165171682,
+      "pass": false
+    },
+    {
+      "case_id": "0013",
+      "max": 16384,
+      "nonzero_px": 167383,
+      "mean": 239.50123456790124,
+      "pass": false
+    },
+    {
+      "case_id": "0014",
+      "max": 16384,
+      "nonzero_px": 378683,
+      "mean": 416.175807894483,
+      "pass": false
+    },
+    {
+      "case_id": "0016",
+      "max": 9710,
+      "nonzero_px": 14131,
+      "mean": 26.64367621527778,
+      "pass": false
+    },
+    {
+      "case_id": "0020",
+      "max": 0,
+      "nonzero_px": 0,
+      "mean": 0.0,
+      "pass": true
+    },
+    {
+      "case_id": "0021",
+      "max": 0,
+      "nonzero_px": 0,
+      "mean": 0.0,
+      "pass": true
+    },
+    {
+      "case_id": "0022",
+      "max": 0,
+      "nonzero_px": 0,
+      "mean": 0.0,
+      "pass": true
+    },
+    {
+      "case_id": "0023",
+      "max": 0,
+      "nonzero_px": 0,
+      "mean": 0.0,
+      "pass": true
+    },
+    {
+      "case_id": "0024",
+      "max": 20,
+      "nonzero_px": 1051915,
+      "mean": 0.3274211516203704,
+      "pass": false
+    },
+    {
+      "case_id": "0025",
+      "max": 6,
+      "nonzero_px": 860084,
+      "mean": 0.28962311921296297,
+      "pass": false
+    },
+    {
+      "case_id": "0026",
+      "max": 4,
+      "nonzero_px": 900709,
+      "mean": 0.26815574363425926,
+      "pass": false
+    },
+    {
+      "case_id": "0027",
+      "max": 4,
+      "nonzero_px": 451535,
+      "mean": 0.11760971257716049,
+      "pass": false
+    },
+    {
+      "case_id": "0028",
+      "max": 3080,
+      "nonzero_px": 457177,
+      "mean": 7.260353250385802,
+      "pass": false
+    }
+  ],
+  "source_restored": true,
+  "result_root": "refs/reports/ae_validation_batch_olmdistancegradation_16bpc_depthgate_approx_ab_20260709"
+}

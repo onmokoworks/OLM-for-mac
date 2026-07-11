@@ -6,6 +6,7 @@ from __future__ import annotations
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 
@@ -20,9 +21,7 @@ def main() -> int:
     if build.returncode != 0:
         return build.returncode
 
-    run_dir = Path("/tmp/olmradialblur_cpp_tiny_rotation_smoke")
-    if run_dir.exists():
-        shutil.rmtree(run_dir)
+    run_dir = Path(tempfile.mkdtemp(prefix="olmradialblur_cpp_tiny_rotation_smoke_"))
 
     command = (
         '"cli/OLMRadialBlur/olmradialblur_cli" '
@@ -47,7 +46,10 @@ def main() -> int:
         "--nonzero-px-percent",
         "1.7",
     ]
-    return subprocess.run(args, cwd=root).returncode
+    try:
+        return subprocess.run(args, cwd=root).returncode
+    finally:
+        shutil.rmtree(run_dir, ignore_errors=True)
 
 
 if __name__ == "__main__":

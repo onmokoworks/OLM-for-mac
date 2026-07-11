@@ -80,8 +80,11 @@ def main() -> int:
         blur_case0006 = by_id.get("olmblur_case0006_helper_prestore_witness_20260630")
         if blur_case0006 is None:
             raise AssertionError("missing OLMBlur case_0006 helper/pre-store request")
-        if blur_case0006["status"] != "answered":
-            raise AssertionError(f"OLMBlur case_0006 helper/pre-store request should be answered, got {blur_case0006['status']}")
+        if blur_case0006["status"] != "invalid_unverified_values":
+            raise AssertionError(
+                "OLMBlur case_0006 helper/pre-store request must remain invalid until a retained "
+                f"Windows target proves the numeric fields, got {blur_case0006['status']}"
+            )
         if blur_case0006["priority"] != 18:
             raise AssertionError(f"OLMBlur case_0006 helper/pre-store priority should be 18, got {blur_case0006['priority']}")
         if "compare_olmblur_trace.py" not in blur_case0006["comparison_command"]:
@@ -135,21 +138,135 @@ def main() -> int:
         radial_anchor = by_id.get("olmradialblur_tiny_rotation_anchor_watch_followup_20260701")
         if radial_anchor is None:
             raise AssertionError("missing RadialBlur anchor-watch follow-up request")
-        if radial_anchor["status"] != "pending":
+        if radial_anchor["status"] != "superseded":
             raise AssertionError(
-                "RadialBlur anchor-watch follow-up should now be pending, "
+                "RadialBlur anchor-watch follow-up should now be superseded, "
                 f"got {radial_anchor['status']}"
             )
         if radial_anchor["priority"] != 5:
             raise AssertionError(
                 f"RadialBlur anchor-watch follow-up priority should be 5, got {radial_anchor['priority']}"
             )
+        radial_anchor_context = by_id.get("olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702")
+        if radial_anchor_context is None:
+            raise AssertionError("missing RadialBlur anchor-context follow-up request")
+        if radial_anchor_context["status"] != "superseded":
+            raise AssertionError(
+                "RadialBlur anchor-context follow-up should now be superseded by local AEX emulation, "
+                f"got {radial_anchor_context['status']}"
+            )
+        hard_lane = radial_anchor_context.get("hard_lane_context") or {}
+        if hard_lane.get("note") != "refs/conformance/olmradialblur_tiny_rotation_lane_state_20260703.md":
+            raise AssertionError("RadialBlur anchor-context follow-up should expose the lane-state note")
+        dg_stack = by_id.get("olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702")
+        if dg_stack is None:
+            raise AssertionError("missing DistanceGradation refcon/stack wordmap follow-up request")
+        if dg_stack["status"] != "superseded":
+            raise AssertionError(
+                "DistanceGradation refcon/stack wordmap follow-up should now be superseded by local AEX CPU simu, "
+                f"got {dg_stack['status']}"
+            )
+        if (dg_stack.get("hard_lane_context") or {}).get("note") != "refs/conformance/olmdistancegradation_case0023_lane_state_20260707.md":
+            raise AssertionError("DistanceGradation pending follow-up should expose the lane-state note")
+        dg_final_source = by_id.get("olmdistancegradation_case0023_final_source_ownership_20260707")
+        if dg_final_source is None:
+            raise AssertionError("missing DistanceGradation case_0023 final/source ownership request")
+        if dg_final_source["status"] != "answered":
+            raise AssertionError(
+                "DistanceGradation case_0023 final/source ownership request should be answered after depth-gate closeout, "
+                f"got {dg_final_source['status']}"
+            )
+        if dg_final_source["priority"] != 16:
+            raise AssertionError(
+                "DistanceGradation case_0023 final/source ownership priority should be 16, "
+                f"got {dg_final_source['priority']}"
+            )
+        if "compare_distancegradation_trace.py" not in dg_final_source["comparison_command"]:
+            raise AssertionError(
+                "DistanceGradation case_0023 final/source ownership request should point to the DistanceGradation comparator"
+            )
+        if "olmdistancegradation_case0023_final_source_ownership_20260707" not in dg_final_source["comparison_command"]:
+            raise AssertionError("DistanceGradation case_0023 final/source ownership should use its own comparison slug")
+        if dg_final_source.get("acceptance_note") != "refs/conformance/olmdistancegradation_case0023_final_source_ownership_contract_20260707.md":
+            raise AssertionError("DistanceGradation case_0023 final/source ownership should expose its contract")
+        if (dg_final_source.get("hard_lane_context") or {}).get("note") != "refs/conformance/olmdistancegradation_case0023_neighborhood_probe_result_20260707.md":
+            raise AssertionError("DistanceGradation case_0023 final/source ownership should expose the neighborhood probe note")
+        dg_depthgate = by_id.get("olmdistancegradation_depthgate_quantization_witness_20260708")
+        if dg_depthgate is None:
+            raise AssertionError("missing DistanceGradation depth-gate quantization witness request")
+        if dg_depthgate["status"] != "answered":
+            raise AssertionError(
+                "DistanceGradation depth-gate quantization witness should be answered after the 2026-07-08 return, "
+                f"got {dg_depthgate['status']}"
+            )
+        if dg_depthgate["priority"] != 17:
+            raise AssertionError(
+                "DistanceGradation depth-gate quantization witness priority should be 17, "
+                f"got {dg_depthgate['priority']}"
+            )
+        if "compare_distancegradation_trace.py" not in dg_depthgate["comparison_command"]:
+            raise AssertionError("DistanceGradation depth-gate quantization witness should point to the DistanceGradation comparator")
+        if "olmdistancegradation_depthgate_quantization_witness_20260708" not in dg_depthgate["comparison_command"]:
+            raise AssertionError("DistanceGradation depth-gate quantization witness should use its own comparison slug")
+        if dg_depthgate.get("acceptance_note") != "refs/conformance/olmdistancegradation_depthgate_quantization_witness_contract_20260708.md":
+            raise AssertionError("DistanceGradation depth-gate quantization witness should expose its contract")
+        if (dg_depthgate.get("hard_lane_context") or {}).get("note") != "refs/conformance/olmdistancegradation_depthgate_nearmiss_witness_20260708.md":
+            raise AssertionError("DistanceGradation depth-gate quantization witness should expose the near-miss witness note")
+        dg_depthgate_907 = by_id.get("olmdistancegradation_depthgate_907_store_export_witness_20260708")
+        if dg_depthgate_907 is None:
+            raise AssertionError("missing DistanceGradation depth-gate 907 store/export witness request")
+        if dg_depthgate_907["status"] != "answered_partial":
+            raise AssertionError(
+                "DistanceGradation depth-gate 907 store/export witness should stay visible as answered_partial, "
+                f"got {dg_depthgate_907['status']}"
+            )
+        if dg_depthgate_907.get("latest_known_result_status") != "answered_partial":
+            raise AssertionError("DistanceGradation depth-gate 907 should expose its latest answered_partial result")
+        if "compare_distancegradation_trace.py" not in dg_depthgate_907["comparison_command"]:
+            raise AssertionError("DistanceGradation depth-gate 907 should point to the DistanceGradation comparator")
+        directional_gate = by_id.get("olmdirectionalblur_angle0_helper_gate_retry_20260702")
+        if directional_gate is None or directional_gate["status"] != "answered":
+            raise AssertionError("DirectionalBlur helper-gate retry should be answered_partial/answered after import")
+        if directional_gate["priority"] != 110:
+            raise AssertionError(
+                "DirectionalBlur helper-gate retry should be the first algorithm runtime pending item, "
+                f"got priority {directional_gate['priority']}"
+            )
+        if (directional_gate.get("hard_lane_context") or {}).get("note") != "refs/conformance/olmdirectionalblur_lane_state_20260703.md":
+            raise AssertionError("DirectionalBlur helper-gate retry should expose the lane-state note")
+        if directional_gate.get("latest_known_result_status") != "failed":
+            raise AssertionError("DirectionalBlur helper-gate retry should expose its latest failed real-case retry result")
+        if "directionalblur_angle0_helper_gate_retry" not in directional_gate.get("latest_return_archive", ""):
+            raise AssertionError("DirectionalBlur helper-gate retry should expose its raw return zip evidence")
+        directional_prewarm = by_id.get("olmdirectionalblur_angle0_load_prewarm_retry_20260703")
+        if directional_prewarm is None or directional_prewarm["status"] != "failed_partial":
+            raise AssertionError("DirectionalBlur load-prewarm retry should be failed_partial, not pending")
+        if directional_prewarm.get("latest_known_result_status") != "failed_partial":
+            raise AssertionError("DirectionalBlur load-prewarm retry should expose its latest failed_partial result")
+        if "directionalblur_angle0_load_prewarm_retry" not in directional_prewarm.get("latest_return_archive", ""):
+            raise AssertionError("DirectionalBlur load-prewarm retry should expose its raw return zip evidence")
+        smoother_gate = by_id.get("olmsmoother2_current_aex_0004_writer_gate_retry_20260702")
+        if smoother_gate is None or smoother_gate["status"] != "failed":
+            raise AssertionError("Smoother2 writer-gate retry should be failed, not pending")
+        if (smoother_gate.get("hard_lane_context") or {}).get("note") != "refs/conformance/olmsmoother2_legacy_lane_state_20260703.md":
+            raise AssertionError("Smoother2 writer-gate retry should expose the lane-state note")
+        if smoother_gate.get("latest_known_result_status") != "failed":
+            raise AssertionError("Smoother2 writer-gate retry should expose its latest failed retry result")
+        if "smoother2_current_aex_0004_writer_gate_retry" not in smoother_gate.get("latest_return_archive", ""):
+            raise AssertionError("Smoother2 writer-gate retry should expose its raw return zip evidence")
+        smoother_prewarm = by_id.get("olmsmoother2_current_aex_0004_load_prewarm_retry_20260703")
+        if smoother_prewarm is None or smoother_prewarm["status"] != "failed_partial":
+            raise AssertionError("Smoother2 load-prewarm retry should be failed_partial, not pending")
+        if smoother_prewarm.get("latest_known_result_status") != "failed_partial":
+            raise AssertionError("Smoother2 load-prewarm retry should expose its latest failed_partial result")
+        if "smoother2_current_aex_0004_load_prewarm_retry" not in smoother_prewarm.get("latest_return_archive", ""):
+            raise AssertionError("Smoother2 load-prewarm retry should expose its raw return zip evidence")
         dg_output_word = by_id.get("olmdistancegradation_case0023_output_word_triplet_followup_20260701")
         if dg_output_word is None:
             raise AssertionError("missing DistanceGradation output-word triplet follow-up request")
-        if dg_output_word["status"] != "pending":
+        if dg_output_word["status"] != "superseded":
             raise AssertionError(
-                "DistanceGradation output-word triplet follow-up should now be pending, "
+                "DistanceGradation output-word triplet follow-up should now be superseded, "
                 f"got {dg_output_word['status']}"
             )
         if dg_output_word["priority"] != 19:
@@ -197,9 +314,24 @@ def main() -> int:
         for needle in (
             "Pending Runtime Trace Packages",
             f"Pending: `{pending_count}`",
+            "Hard lane context",
+            "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702",
             "olmradialblur_tiny_rotation_anchor_watch_followup_20260701",
             "olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701",
             "olmdistancegradation_case0023_output_word_triplet_followup_20260701",
+            "olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702",
+            "olmdistancegradation_case0023_final_source_ownership_20260707",
+            "olmdistancegradation_case0023_final_source_ownership_contract_20260707.md",
+            "olmdistancegradation_case0023_neighborhood_probe_result_20260707.md",
+            "olmdistancegradation_depthgate_quantization_witness_20260708",
+            "olmdistancegradation_depthgate_quantization_witness_contract_20260708.md",
+            "olmdistancegradation_depthgate_nearmiss_witness_20260708.md",
+            "olmdirectionalblur_angle0_helper_gate_retry_20260702",
+            "olmsmoother2_current_aex_0004_writer_gate_retry_20260702",
+            "olmradialblur_tiny_rotation_lane_state_20260703.md",
+            "olmdistancegradation_case0023_lane_state_20260707.md",
+            "olmdirectionalblur_lane_state_20260703.md",
+            "olmsmoother2_legacy_lane_state_20260703.md",
             "kirakira_aggregation_compose_bt709_20260624",
             "kirakira_compose_writeback_witness_20260630",
             "olmblur_case0006_helper_prestore_witness_20260630",

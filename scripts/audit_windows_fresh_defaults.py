@@ -53,6 +53,17 @@ def build_schema_rows() -> dict[str, list[dict[str, Any]]]:
     return {plugin["plugin"]: list(plugin["params"]) for plugin in schema["plugins"]}
 
 
+def build_schema_row_lookup() -> dict[str, dict[str, dict[str, Any]]]:
+    schema = load_json(SCHEMA_PATH)
+    out: dict[str, dict[str, dict[str, Any]]] = {}
+    for plugin in schema["plugins"]:
+        rows: dict[str, dict[str, Any]] = {}
+        for param in plugin["params"]:
+            rows[param["label"]] = param
+        out[plugin["plugin"]] = rows
+    return out
+
+
 def resolve_source_row(
     plugin: str,
     normalized: str,
@@ -166,6 +177,7 @@ def audit_manifest(manifest_path: Path) -> dict[str, Any]:
     manifest = load_json(manifest_path)
     schema_index = build_schema_index()
     schema_rows = build_schema_rows()
+    schema_row_lookup = build_schema_row_lookup()
     by_plugin: dict[str, dict[str, Any]] = {}
 
     for case in manifest.get("cases", []):
@@ -235,7 +247,15 @@ def audit_manifest(manifest_path: Path) -> dict[str, Any]:
                 symbolic.append(first)
             elif first["compare_status"] == "windows-only":
                 windows_only.append(first)
-        source_only = sorted(source_labels - windows_labels)
+        source_only_labels = sorted(source_labels - windows_labels)
+        source_only = []
+        source_topic_only = []
+        for label in source_only_labels:
+            source_row = schema_row_lookup[plugin].get(label)
+            if source_row and source_row.get("macro") == "TOPIC":
+                source_topic_only.append(label)
+            else:
+                source_only.append(label)
         plugins.append(
             {
                 "plugin": plugin,
@@ -246,6 +266,7 @@ def audit_manifest(manifest_path: Path) -> dict[str, Any]:
                 "mismatch_examples": mismatches[:20],
                 "symbolic_examples": symbolic[:20],
                 "windows_only_examples": windows_only[:20],
+                "source_topic_only_examples": source_topic_only[:20],
                 "source_only_examples": source_only[:20],
             }
         )
@@ -304,6 +325,10 @@ def write_report(report: dict[str, Any], output_json: Path, output_md: Path) -> 
         if plugin["source_only_examples"]:
             lines.append("- Source-only examples:")
             for label in plugin["source_only_examples"][:8]:
+                lines.append(f"  - `{label}`")
+        if plugin.get("source_topic_only_examples"):
+            lines.append("- Source topic-only examples:")
+            for label in plugin["source_topic_only_examples"][:8]:
                 lines.append(f"  - `{label}`")
         lines.append("")
     output_md.write_text("\n".join(lines), encoding="utf-8")

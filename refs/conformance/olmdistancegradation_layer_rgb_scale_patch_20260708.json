@@ -1,0 +1,1421 @@
+{
+  "kind": "olmdistancegradation_layer_source_true16_audit",
+  "schema": 1,
+  "request_dir": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625",
+  "candidate_root": "refs/reports/ae_single_case_olmdistancegradation_layer_rgb_scale_patch_20260708",
+  "cases": [
+    {
+      "case_id": "olmdistancegradation_extended__case_0012",
+      "candidate_path": "refs/reports/ae_single_case_olmdistancegradation_layer_rgb_scale_patch_20260708/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+      "reference_path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+      "input_path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012_before_effects.png",
+      "nonzero_pixels": 9241,
+      "max_abs_diff_true16": 251,
+      "mean_abs_diff_true16": 0.023775438850308642,
+      "max_abs_diff_byte_equivalent": 0.98046875,
+      "channel_abs_max_true16": [
+        251,
+        251,
+        251,
+        2
+      ],
+      "channel_nonzero": [
+        9200,
+        8443,
+        8444,
+        155
+      ],
+      "same_alpha_changed_pixels": 9086,
+      "diff_common_by_channel": {
+        "R": [
+          {
+            "value": -2,
+            "count": 5191
+          },
+          {
+            "value": -4,
+            "count": 1666
+          },
+          {
+            "value": -8,
+            "count": 618
+          },
+          {
+            "value": -6,
+            "count": 552
+          },
+          {
+            "value": -14,
+            "count": 208
+          },
+          {
+            "value": -20,
+            "count": 162
+          },
+          {
+            "value": -24,
+            "count": 120
+          },
+          {
+            "value": -10,
+            "count": 115
+          }
+        ],
+        "G": [
+          {
+            "value": -2,
+            "count": 4745
+          },
+          {
+            "value": -4,
+            "count": 1556
+          },
+          {
+            "value": 0,
+            "count": 798
+          },
+          {
+            "value": -8,
+            "count": 574
+          },
+          {
+            "value": -6,
+            "count": 516
+          },
+          {
+            "value": -14,
+            "count": 195
+          },
+          {
+            "value": -20,
+            "count": 146
+          },
+          {
+            "value": -10,
+            "count": 107
+          }
+        ],
+        "B": [
+          {
+            "value": -2,
+            "count": 4745
+          },
+          {
+            "value": -4,
+            "count": 1556
+          },
+          {
+            "value": 0,
+            "count": 797
+          },
+          {
+            "value": -8,
+            "count": 574
+          },
+          {
+            "value": -6,
+            "count": 516
+          },
+          {
+            "value": -14,
+            "count": 195
+          },
+          {
+            "value": -20,
+            "count": 146
+          },
+          {
+            "value": -10,
+            "count": 107
+          }
+        ],
+        "A": [
+          {
+            "value": 0,
+            "count": 9086
+          },
+          {
+            "value": -2,
+            "count": 131
+          },
+          {
+            "value": 2,
+            "count": 24
+          }
+        ]
+      },
+      "ratios": {
+        "ref_minus_source_over_alpha_times_candidate_alpha_quantiles": [
+          -0.8612871024888591,
+          -0.5126679226013948,
+          0.2846384191943798,
+          2.7165244707830425,
+          25.214007782100907,
+          126.90058479532166,
+          172.88456549935142
+        ],
+        "reference_over_candidate_red_quantiles": [
+          1.0,
+          1.0000316490750558,
+          1.00003628512854,
+          1.0001075095414718,
+          1.0024205748865356,
+          1.051197357555739,
+          1.1337295690936107
+        ],
+        "source_red_over_source_alpha_quantiles": [
+          0.005847953216374269,
+          0.009079118028534372,
+          0.07392996108949416,
+          0.39991607217792696,
+          0.850956624648102,
+          0.9803576709365126,
+          0.9882031406821796
+        ]
+      },
+      "examples": [
+        {
+          "xy": [
+            985,
+            26
+          ],
+          "source_rgba16": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "candidate_rgba16": [
+            0,
+            0,
+            0,
+            64095
+          ],
+          "reference_rgba16": [
+            251,
+            251,
+            251,
+            64095
+          ],
+          "candidate_minus_reference": [
+            -251,
+            -251,
+            -251,
+            0
+          ]
+        },
+        {
+          "xy": [
+            483,
+            510
+          ],
+          "source_rgba16": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "candidate_rgba16": [
+            0,
+            0,
+            0,
+            64095
+          ],
+          "reference_rgba16": [
+            251,
+            0,
+            0,
+            64095
+          ],
+          "candidate_minus_reference": [
+            -251,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1400,
+            190
+          ],
+          "source_rgba16": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "candidate_rgba16": [
+            0,
+            0,
+            0,
+            64095
+          ],
+          "reference_rgba16": [
+            251,
+            251,
+            251,
+            64095
+          ],
+          "candidate_minus_reference": [
+            -251,
+            -251,
+            -251,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1026,
+            232
+          ],
+          "source_rgba16": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "candidate_rgba16": [
+            0,
+            0,
+            0,
+            64095
+          ],
+          "reference_rgba16": [
+            251,
+            251,
+            251,
+            64095
+          ],
+          "candidate_minus_reference": [
+            -251,
+            -251,
+            -251,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1808,
+            376
+          ],
+          "source_rgba16": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "candidate_rgba16": [
+            0,
+            0,
+            0,
+            64095
+          ],
+          "reference_rgba16": [
+            251,
+            251,
+            251,
+            64095
+          ],
+          "candidate_minus_reference": [
+            -251,
+            -251,
+            -251,
+            0
+          ]
+        },
+        {
+          "xy": [
+            887,
+            273
+          ],
+          "source_rgba16": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "candidate_rgba16": [
+            0,
+            0,
+            0,
+            64095
+          ],
+          "reference_rgba16": [
+            251,
+            251,
+            251,
+            64095
+          ],
+          "candidate_minus_reference": [
+            -251,
+            -251,
+            -251,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1699,
+            7
+          ],
+          "source_rgba16": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "candidate_rgba16": [
+            0,
+            0,
+            0,
+            64095
+          ],
+          "reference_rgba16": [
+            251,
+            251,
+            251,
+            64095
+          ],
+          "candidate_minus_reference": [
+            -251,
+            -251,
+            -251,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1910,
+            507
+          ],
+          "source_rgba16": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "candidate_rgba16": [
+            0,
+            0,
+            0,
+            64095
+          ],
+          "reference_rgba16": [
+            251,
+            251,
+            251,
+            64095
+          ],
+          "candidate_minus_reference": [
+            -251,
+            -251,
+            -251,
+            0
+          ]
+        },
+        {
+          "xy": [
+            316,
+            449
+          ],
+          "source_rgba16": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "candidate_rgba16": [
+            0,
+            0,
+            0,
+            64095
+          ],
+          "reference_rgba16": [
+            251,
+            251,
+            251,
+            64095
+          ],
+          "candidate_minus_reference": [
+            -251,
+            -251,
+            -251,
+            0
+          ]
+        },
+        {
+          "xy": [
+            964,
+            301
+          ],
+          "source_rgba16": [
+            0,
+            0,
+            0,
+            257
+          ],
+          "candidate_rgba16": [
+            0,
+            0,
+            0,
+            64095
+          ],
+          "reference_rgba16": [
+            251,
+            251,
+            251,
+            64095
+          ],
+          "candidate_minus_reference": [
+            -251,
+            -251,
+            -251,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0013",
+      "candidate_path": "refs/reports/ae_single_case_olmdistancegradation_layer_rgb_scale_patch_20260708/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0013.png",
+      "reference_path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0013.png",
+      "input_path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0013_before_effects.png",
+      "nonzero_pixels": 14221,
+      "max_abs_diff_true16": 9526,
+      "mean_abs_diff_true16": 26.098238932291668,
+      "max_abs_diff_byte_equivalent": 37.2109375,
+      "channel_abs_max_true16": [
+        9526,
+        9526,
+        9526,
+        2
+      ],
+      "channel_nonzero": [
+        14198,
+        12932,
+        12932,
+        5394
+      ],
+      "same_alpha_changed_pixels": 8827,
+      "diff_common_by_channel": {
+        "R": [
+          {
+            "value": -9526,
+            "count": 177
+          },
+          {
+            "value": -9522,
+            "count": 111
+          },
+          {
+            "value": -9510,
+            "count": 105
+          },
+          {
+            "value": -4344,
+            "count": 95
+          },
+          {
+            "value": -4596,
+            "count": 89
+          },
+          {
+            "value": -1848,
+            "count": 88
+          },
+          {
+            "value": -5682,
+            "count": 85
+          },
+          {
+            "value": -886,
+            "count": 83
+          }
+        ],
+        "G": [
+          {
+            "value": 0,
+            "count": 1289
+          },
+          {
+            "value": -9526,
+            "count": 169
+          },
+          {
+            "value": -9522,
+            "count": 104
+          },
+          {
+            "value": -9510,
+            "count": 100
+          },
+          {
+            "value": -4596,
+            "count": 86
+          },
+          {
+            "value": -7876,
+            "count": 71
+          },
+          {
+            "value": -8310,
+            "count": 71
+          },
+          {
+            "value": -2200,
+            "count": 70
+          }
+        ],
+        "B": [
+          {
+            "value": 0,
+            "count": 1289
+          },
+          {
+            "value": -9526,
+            "count": 169
+          },
+          {
+            "value": -9522,
+            "count": 104
+          },
+          {
+            "value": -9510,
+            "count": 100
+          },
+          {
+            "value": -4596,
+            "count": 86
+          },
+          {
+            "value": -7876,
+            "count": 71
+          },
+          {
+            "value": -8310,
+            "count": 71
+          },
+          {
+            "value": -2200,
+            "count": 70
+          }
+        ],
+        "A": [
+          {
+            "value": 0,
+            "count": 8827
+          },
+          {
+            "value": 2,
+            "count": 5394
+          }
+        ]
+      },
+      "ratios": {
+        "ref_minus_source_over_alpha_times_candidate_alpha_quantiles": [
+          -1.9177032721127034,
+          -1.781369166514196,
+          -1.158493360009743,
+          -0.2848225685520447,
+          0.9220397267090448,
+          1.5545891508354543,
+          1.653174015598779
+        ],
+        "reference_over_candidate_red_quantiles": [
+          1.0039332634802933,
+          1.020032277922899,
+          1.1135620738175127,
+          1.8088708935308733,
+          6.9282051282051285,
+          39.0,
+          79.0
+        ],
+        "source_red_over_source_alpha_quantiles": [
+          0.03415477734543882,
+          0.042801556420233464,
+          0.14502050688821116,
+          0.5528879322239699,
+          0.8980170934361885,
+          0.9803576709365126,
+          0.9960783712985799
+        ]
+      },
+      "examples": [
+        {
+          "xy": [
+            517,
+            89
+          ],
+          "source_rgba16": [
+            28783,
+            28783,
+            28783,
+            43433
+          ],
+          "candidate_rgba16": [
+            18715,
+            18715,
+            18715,
+            42613
+          ],
+          "reference_rgba16": [
+            28241,
+            28241,
+            28241,
+            42613
+          ],
+          "candidate_minus_reference": [
+            -9526,
+            -9526,
+            -9526,
+            0
+          ]
+        },
+        {
+          "xy": [
+            325,
+            788
+          ],
+          "source_rgba16": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "candidate_rgba16": [
+            19049,
+            19049,
+            19049,
+            42865
+          ],
+          "reference_rgba16": [
+            28575,
+            28575,
+            28575,
+            42865
+          ],
+          "candidate_minus_reference": [
+            -9526,
+            -9526,
+            -9526,
+            0
+          ]
+        },
+        {
+          "xy": [
+            374,
+            313
+          ],
+          "source_rgba16": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "candidate_rgba16": [
+            19049,
+            19049,
+            19049,
+            42865
+          ],
+          "reference_rgba16": [
+            28575,
+            28575,
+            28575,
+            42865
+          ],
+          "candidate_minus_reference": [
+            -9526,
+            -9526,
+            -9526,
+            0
+          ]
+        },
+        {
+          "xy": [
+            763,
+            409
+          ],
+          "source_rgba16": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "candidate_rgba16": [
+            19049,
+            19049,
+            19049,
+            42865
+          ],
+          "reference_rgba16": [
+            28575,
+            28575,
+            28575,
+            42865
+          ],
+          "candidate_minus_reference": [
+            -9526,
+            -9526,
+            -9526,
+            0
+          ]
+        },
+        {
+          "xy": [
+            750,
+            78
+          ],
+          "source_rgba16": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "candidate_rgba16": [
+            19049,
+            19049,
+            19049,
+            42865
+          ],
+          "reference_rgba16": [
+            28575,
+            28575,
+            28575,
+            42865
+          ],
+          "candidate_minus_reference": [
+            -9526,
+            -9526,
+            -9526,
+            0
+          ]
+        },
+        {
+          "xy": [
+            549,
+            211
+          ],
+          "source_rgba16": [
+            29469,
+            29469,
+            29469,
+            43947
+          ],
+          "candidate_rgba16": [
+            19387,
+            19387,
+            19387,
+            43117
+          ],
+          "reference_rgba16": [
+            28913,
+            28913,
+            28913,
+            43117
+          ],
+          "candidate_minus_reference": [
+            -9526,
+            -9526,
+            -9526,
+            0
+          ]
+        },
+        {
+          "xy": [
+            847,
+            233
+          ],
+          "source_rgba16": [
+            29469,
+            29469,
+            29469,
+            43947
+          ],
+          "candidate_rgba16": [
+            19387,
+            19387,
+            19387,
+            43117
+          ],
+          "reference_rgba16": [
+            28913,
+            28913,
+            28913,
+            43117
+          ],
+          "candidate_minus_reference": [
+            -9526,
+            -9526,
+            -9526,
+            0
+          ]
+        },
+        {
+          "xy": [
+            479,
+            473
+          ],
+          "source_rgba16": [
+            29469,
+            0,
+            0,
+            43947
+          ],
+          "candidate_rgba16": [
+            19387,
+            0,
+            0,
+            43117
+          ],
+          "reference_rgba16": [
+            28913,
+            0,
+            0,
+            43117
+          ],
+          "candidate_minus_reference": [
+            -9526,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1914,
+            505
+          ],
+          "source_rgba16": [
+            28783,
+            28783,
+            28783,
+            43433
+          ],
+          "candidate_rgba16": [
+            18715,
+            18715,
+            18715,
+            42613
+          ],
+          "reference_rgba16": [
+            28241,
+            28241,
+            28241,
+            42613
+          ],
+          "candidate_minus_reference": [
+            -9526,
+            -9526,
+            -9526,
+            0
+          ]
+        },
+        {
+          "xy": [
+            389,
+            332
+          ],
+          "source_rgba16": [
+            29125,
+            0,
+            0,
+            43689
+          ],
+          "candidate_rgba16": [
+            19049,
+            0,
+            0,
+            42865
+          ],
+          "reference_rgba16": [
+            28575,
+            0,
+            0,
+            42865
+          ],
+          "candidate_minus_reference": [
+            -9526,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0014",
+      "candidate_path": "refs/reports/ae_single_case_olmdistancegradation_layer_rgb_scale_patch_20260708/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0014.png",
+      "reference_path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0014.png",
+      "input_path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0014_before_effects.png",
+      "nonzero_pixels": 14618,
+      "max_abs_diff_true16": 9686,
+      "mean_abs_diff_true16": 26.57501880787037,
+      "max_abs_diff_byte_equivalent": 37.8359375,
+      "channel_abs_max_true16": [
+        9686,
+        9686,
+        9686,
+        2
+      ],
+      "channel_nonzero": [
+        14306,
+        12934,
+        12934,
+        5804
+      ],
+      "same_alpha_changed_pixels": 8814,
+      "diff_common_by_channel": {
+        "R": [
+          {
+            "value": 0,
+            "count": 312
+          },
+          {
+            "value": -9686,
+            "count": 177
+          },
+          {
+            "value": 2,
+            "count": 175
+          },
+          {
+            "value": -9682,
+            "count": 111
+          },
+          {
+            "value": -9446,
+            "count": 106
+          },
+          {
+            "value": -9670,
+            "count": 105
+          },
+          {
+            "value": -8010,
+            "count": 102
+          },
+          {
+            "value": -4416,
+            "count": 95
+          }
+        ],
+        "G": [
+          {
+            "value": 0,
+            "count": 1684
+          },
+          {
+            "value": -9686,
+            "count": 169
+          },
+          {
+            "value": -9682,
+            "count": 104
+          },
+          {
+            "value": -9670,
+            "count": 100
+          },
+          {
+            "value": -9446,
+            "count": 100
+          },
+          {
+            "value": -8010,
+            "count": 98
+          },
+          {
+            "value": -9676,
+            "count": 76
+          },
+          {
+            "value": -8450,
+            "count": 71
+          }
+        ],
+        "B": [
+          {
+            "value": 0,
+            "count": 1684
+          },
+          {
+            "value": -9686,
+            "count": 169
+          },
+          {
+            "value": -9682,
+            "count": 104
+          },
+          {
+            "value": -9670,
+            "count": 100
+          },
+          {
+            "value": -9446,
+            "count": 100
+          },
+          {
+            "value": -8010,
+            "count": 98
+          },
+          {
+            "value": -9676,
+            "count": 76
+          },
+          {
+            "value": -8450,
+            "count": 71
+          }
+        ],
+        "A": [
+          {
+            "value": 0,
+            "count": 8814
+          },
+          {
+            "value": 2,
+            "count": 5804
+          }
+        ]
+      },
+      "ratios": {
+        "ref_minus_source_over_alpha_times_candidate_alpha_quantiles": [
+          -1.7652599022258073,
+          -1.6491952125461466,
+          -1.1140220424931613,
+          -0.21537944741430692,
+          0.8420408341708026,
+          1.5309714492559579,
+          1.7447604415428941
+        ],
+        "reference_over_candidate_red_quantiles": [
+          1.0039309757796178,
+          1.020017873100983,
+          1.1135657357884279,
+          1.8087955841100354,
+          7.1878453038674035,
+          28.6,
+          79.0
+        ],
+        "source_red_over_source_alpha_quantiles": [
+          0.03415477734543882,
+          0.04638339279922154,
+          0.14106583072100312,
+          0.5528879322239699,
+          0.8980170934361885,
+          0.9803576709365126,
+          0.9960783712985799
+        ]
+      },
+      "examples": [
+        {
+          "xy": [
+            703,
+            234
+          ],
+          "source_rgba16": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "candidate_rgba16": [
+            19369,
+            19369,
+            19369,
+            43585
+          ],
+          "reference_rgba16": [
+            29055,
+            29055,
+            29055,
+            43585
+          ],
+          "candidate_minus_reference": [
+            -9686,
+            -9686,
+            -9686,
+            0
+          ]
+        },
+        {
+          "xy": [
+            290,
+            226
+          ],
+          "source_rgba16": [
+            29469,
+            29469,
+            29469,
+            43947
+          ],
+          "candidate_rgba16": [
+            19713,
+            19713,
+            19713,
+            43843
+          ],
+          "reference_rgba16": [
+            29399,
+            29399,
+            29399,
+            43843
+          ],
+          "candidate_minus_reference": [
+            -9686,
+            -9686,
+            -9686,
+            0
+          ]
+        },
+        {
+          "xy": [
+            297,
+            376
+          ],
+          "source_rgba16": [
+            29469,
+            29469,
+            29469,
+            43947
+          ],
+          "candidate_rgba16": [
+            19713,
+            19713,
+            19713,
+            43843
+          ],
+          "reference_rgba16": [
+            29399,
+            29399,
+            29399,
+            43843
+          ],
+          "candidate_minus_reference": [
+            -9686,
+            -9686,
+            -9686,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1310,
+            56
+          ],
+          "source_rgba16": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "candidate_rgba16": [
+            19369,
+            19369,
+            19369,
+            43585
+          ],
+          "reference_rgba16": [
+            29055,
+            29055,
+            29055,
+            43585
+          ],
+          "candidate_minus_reference": [
+            -9686,
+            -9686,
+            -9686,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1168,
+            140
+          ],
+          "source_rgba16": [
+            28783,
+            28783,
+            28783,
+            43433
+          ],
+          "candidate_rgba16": [
+            19029,
+            19029,
+            19029,
+            43331
+          ],
+          "reference_rgba16": [
+            28715,
+            28715,
+            28715,
+            43329
+          ],
+          "candidate_minus_reference": [
+            -9686,
+            -9686,
+            -9686,
+            2
+          ]
+        },
+        {
+          "xy": [
+            233,
+            839
+          ],
+          "source_rgba16": [
+            29469,
+            29469,
+            29469,
+            43947
+          ],
+          "candidate_rgba16": [
+            19713,
+            19713,
+            19713,
+            43843
+          ],
+          "reference_rgba16": [
+            29399,
+            29399,
+            29399,
+            43843
+          ],
+          "candidate_minus_reference": [
+            -9686,
+            -9686,
+            -9686,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1276,
+            626
+          ],
+          "source_rgba16": [
+            28783,
+            28783,
+            28783,
+            43433
+          ],
+          "candidate_rgba16": [
+            19029,
+            19029,
+            19029,
+            43331
+          ],
+          "reference_rgba16": [
+            28715,
+            28715,
+            28715,
+            43329
+          ],
+          "candidate_minus_reference": [
+            -9686,
+            -9686,
+            -9686,
+            2
+          ]
+        },
+        {
+          "xy": [
+            457,
+            257
+          ],
+          "source_rgba16": [
+            28783,
+            28783,
+            28783,
+            43433
+          ],
+          "candidate_rgba16": [
+            19029,
+            19029,
+            19029,
+            43331
+          ],
+          "reference_rgba16": [
+            28715,
+            28715,
+            28715,
+            43329
+          ],
+          "candidate_minus_reference": [
+            -9686,
+            -9686,
+            -9686,
+            2
+          ]
+        },
+        {
+          "xy": [
+            1703,
+            92
+          ],
+          "source_rgba16": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "candidate_rgba16": [
+            19369,
+            19369,
+            19369,
+            43585
+          ],
+          "reference_rgba16": [
+            29055,
+            29055,
+            29055,
+            43585
+          ],
+          "candidate_minus_reference": [
+            -9686,
+            -9686,
+            -9686,
+            0
+          ]
+        },
+        {
+          "xy": [
+            197,
+            1020
+          ],
+          "source_rgba16": [
+            29125,
+            29125,
+            29125,
+            43689
+          ],
+          "candidate_rgba16": [
+            19369,
+            19369,
+            19369,
+            43585
+          ],
+          "reference_rgba16": [
+            29055,
+            29055,
+            29055,
+            43585
+          ],
+          "candidate_minus_reference": [
+            -9686,
+            -9686,
+            -9686,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "reading": [
+    "The audited candidate must be treated as true 16-bit data. Pillow's default RGBA decode collapses these PNGs to 8-bit and hides the scale of this family.",
+    "The current case_0012 rerender shows a true16 max residual of 16384, which is the same as a byte-equivalent max of 64. This is a large Layer-source formula gap, not a one-word rounding issue.",
+    "Most changed pixels keep alpha unchanged while RGB is lower on the Mac candidate, so the active lane remains Layer/no-bg source RGB ownership or source-to-output-alpha scaling."
+  ]
+}

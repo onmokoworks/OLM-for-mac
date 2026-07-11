@@ -1,0 +1,9 @@
+{
+  "id": "alpha_boundary",
+  "width": 7,
+  "height": 6,
+  "angle": 1.0,
+  "source_sha256": "7dd26c82d6156eca31345f7f555f8430886a3d3afb86bef5fe25a7e9a2777adc",
+  "expected_sha256": "e847de3bd09447c51ff5015003f82397d899881ac1e3484731da8daee6cae2d5",
+  "destination_poison_hex": "a3b1c2d3"
+}

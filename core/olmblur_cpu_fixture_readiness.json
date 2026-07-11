@@ -1,0 +1,72 @@
+{
+  "binary": {
+    "path": "plugins_2025/OLMBlur.aex",
+    "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+  },
+  "blockers": [
+    {
+      "detail": "FUN_180005f20 still lacks independently grounded OLMBlur allocation ownership and later host-buffer layout, so full-entry output cannot be treated as an exact case fixture.",
+      "id": "full-entry-host-layout-missing",
+      "scope": "case-bound",
+      "unblock_with": "A retained full-entry helper/fullentry capture identifying all PF Handle allocations and host buffer ranges."
+    }
+  ],
+  "claim": "Portable core matches retained actual AEX helper fixtures byte-for-byte; this is not a full-entry or AE-exact claim.",
+  "execution": {
+    "import_free": true,
+    "input": {
+      "16bpc_words": [
+        100,
+        200,
+        300,
+        1000,
+        2000,
+        3000,
+        300,
+        600,
+        900
+      ],
+      "float_lift": "identity word-to-float for helper isolation",
+      "kind": "harness-constructed"
+    },
+    "instructions": 1542,
+    "oracle": "unicorn-aex"
+  },
+  "fixture_kind": "function-scope-typed-helper",
+  "functions": {
+    "horizontal": {
+      "abi": "RCX,RDX,R8,R9 then [RSP+0x28..] = flags,src,dst,weights,width,height64,arg7,arg8,arg9",
+      "address": "0x180001000",
+      "observed_output_bytes": 120,
+      "observed_output_sha256": "d79ae6181c40e47dac79146b65be84335cf40e2214bfdf93edea57476c6017fc"
+    },
+    "vertical": {
+      "abi": "RCX,RDX,R8,R9 then [RSP+0x28..] = flags,src,dst,weights,width,height,arg7,arg8,arg9",
+      "address": "0x180001980",
+      "observed_output_bytes": 120,
+      "observed_output_sha256": "865e2578f2f3009c88743ef32372e90bccb653e7f7212a83a6ac05c3985b6ae0"
+    }
+  },
+  "plugin": "OLMBlur",
+  "portable_core": {
+    "contract": {
+      "arithmetic": "ordered scalar SSE-style accumulation; FMA contraction disabled",
+      "boundaries": "each direction clamps at the edge/radius and breaks at its first inactive flag",
+      "center": "active flag zero copies the center RGB triplet",
+      "input": "float32 interleaved RGB triplets plus one active flag byte per pixel",
+      "weights": "left/top include center weights[0] then weights[d] toward the edge; right/bottom use weights[d]",
+      "zero_denominator": "sum zero writes positive zero before channel stores"
+    },
+    "fixture_manifest": "tools/emulation/fixtures/olmblur_helper/manifest.json",
+    "header": "core/olmblur_helper.h",
+    "implementation": "core/olmblur_helper.cpp",
+    "smoke": "tools/emulation/smoke_olmblur_helper.py"
+  },
+  "schema": "olm.aex.cpu-fixture-readiness/1",
+  "source_of_truth": {
+    "fullentry_probe": "tools/emulation/test_olmblur_case0006_fullentry.py",
+    "fullentry_report": "refs/conformance/olmblur_case0006_fullentry_probe_20260710.md",
+    "helper_probe": "tools/emulation/test_olmblur_case0006.py"
+  },
+  "status": "portable-core-ready"
+}

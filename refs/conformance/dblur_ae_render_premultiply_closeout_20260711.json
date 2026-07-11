@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "kind": "dblur_ae_render_premultiply_stage_closeout",
+  "status": "binary-grounded_host_model_exact",
+  "not_ae_exact": true,
+  "source_fullentry_report": "/tmp/dblur_current_strength48_fullrender_v3.json",
+  "plugin_callback_raw": {
+    "path": "/tmp/dblur_current_strength48_v3.argb",
+    "sha256": "ebfda2207558a335d35a3928fe623b6d6d5cc44a7e0befe89dc06cdf1c4d9544",
+    "exact": false,
+    "max_diff": 1,
+    "differing_bytes": 1569,
+    "actual_sha256": "ebfda2207558a335d35a3928fe623b6d6d5cc44a7e0befe89dc06cdf1c4d9544",
+    "expected_sha256": "8f21af17e2e187edda3b93609cf140f9e0cb9def4e48598adbfa03bbff19909d"
+  },
+  "windows_ae_render_png": {
+    "path": "refs/win_references/olm_reference_return_windows_20260611/OLMDirectionalBlur/directionalblur_context_scale_20260606__software__fr24__db_angle0_strength_sweep_small.png",
+    "sha256": "bd1e82f2648cdf2f5f3c814608498b71fc4dba3ed518f4b3c52fb00320a96f9b",
+    "decoded_argb_sha256": "8f21af17e2e187edda3b93609cf140f9e0cb9def4e48598adbfa03bbff19909d",
+    "dimensions": [
+      1920,
+      1080
+    ]
+  },
+  "premultiply_models": {
+    "formula": "A unchanged; RGB=(RGB*A+bias)//255",
+    "bias": {
+      "floor": 0,
+      "nearest": 127
+    },
+    "results": {
+      "floor": {
+        "exact": true,
+        "max_diff": 0,
+        "differing_bytes": 0,
+        "actual_sha256": "8f21af17e2e187edda3b93609cf140f9e0cb9def4e48598adbfa03bbff19909d",
+        "expected_sha256": "8f21af17e2e187edda3b93609cf140f9e0cb9def4e48598adbfa03bbff19909d"
+      },
+      "nearest": {
+        "exact": true,
+        "max_diff": 0,
+        "differing_bytes": 0,
+        "actual_sha256": "8f21af17e2e187edda3b93609cf140f9e0cb9def4e48598adbfa03bbff19909d",
+        "expected_sha256": "8f21af17e2e187edda3b93609cf140f9e0cb9def4e48598adbfa03bbff19909d"
+      }
+    },
+    "matching_models": [
+      "floor",
+      "nearest"
+    ],
+    "rounding_resolved": false
+  },
+  "residual_family": {
+    "differing_pixels": 523,
+    "differing_bytes": 1569,
+    "xy_bounds": [
+      0,
+      0,
+      1919,
+      0
+    ],
+    "raw_alpha_values": [
+      254
+    ],
+    "raw_rgb_values": [
+      [
+        247,
+        247,
+        247
+      ]
+    ],
+    "reference_rgb_values": [
+      [
+        246,
+        246,
+        246
+      ]
+    ]
+  },
+  "conclusion": {
+    "fact": "All 1569 raw-reference differing bytes close to zero after either standard ARGB8 premultiply rounding model; alpha is unchanged.",
+    "implementation": "Do not subtract one or premultiply inside OLMDirectionalBlur. Compare plugin callback output and AE-rendered PNG at aligned stages.",
+    "remaining": "Actual Mac AE render is still required before calling this case AE exact; this witness does not distinguish floor from nearest rounding."
+  }
+}

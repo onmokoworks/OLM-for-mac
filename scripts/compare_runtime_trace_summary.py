@@ -14,7 +14,7 @@ from typing import Any
 
 @dataclass(frozen=True)
 class Comparator:
-    request_id: str
+    request_ids: tuple[str, ...]
     slug: str
     command: list[str]
 
@@ -69,32 +69,32 @@ def fail(message: str) -> int:
 def comparators(py: str) -> list[Comparator]:
     return [
         Comparator(
-            request_id="olmblur_case0006_helper_prestore_witness_20260630",
+            request_ids=("olmblur_case0006_helper_prestore_witness_20260630",),
             slug="olmblur_case0006_helper_prestore_witness",
             command=[py, "scripts/compare_olmblur_trace.py"],
         ),
         Comparator(
-            request_id="olmblur_repeat_threshold_runtime_trace_20260619",
+            request_ids=("olmblur_repeat_threshold_runtime_trace_20260619",),
             slug="olmblur_repeat_threshold",
             command=[py, "scripts/compare_olmblur_trace.py"],
         ),
         Comparator(
-            request_id="kirakira_fun_181150790_stage_values_20260620",
+            request_ids=("kirakira_fun_181150790_stage_values_20260620",),
             slug="olmkirakira_stage_values",
             command=[py, "scripts/compare_kirakira_stage_trace.py"],
         ),
         Comparator(
-            request_id="kirakira_fun_181150790_deep_stage_values_20260621",
+            request_ids=("kirakira_fun_181150790_deep_stage_values_20260621",),
             slug="olmkirakira_deep_stage_values",
             command=[py, "scripts/compare_kirakira_stage_trace.py"],
         ),
         Comparator(
-            request_id="kirakira_forward_warp_box_input_20260621",
+            request_ids=("kirakira_forward_warp_box_input_20260621",),
             slug="olmkirakira_forward_warp_box_input",
             command=[py, "scripts/compare_kirakira_stage_trace.py"],
         ),
         Comparator(
-            request_id="kirakira_aggregation_compose_bt709_20260624",
+            request_ids=("kirakira_aggregation_compose_bt709_20260624",),
             slug="olmkirakira_aggregation_compose_bt709",
             command=[
                 py,
@@ -104,37 +104,111 @@ def comparators(py: str) -> list[Comparator]:
             ],
         ),
         Comparator(
-            request_id="colorkey_edge_runtime_trace_20260619",
+            request_ids=("colorkey_edge_runtime_trace_20260619",),
             slug="olmcolorkey_edge",
             command=[py, "scripts/compare_colorkey_edge_trace.py"],
         ),
         Comparator(
-            request_id="colorkey_16bpc_case0009_runtime_trace_20260626",
+            request_ids=("colorkey_16bpc_case0009_runtime_trace_20260626",),
             slug="olmcolorkey_16bpc_case0009",
             command=[py, "scripts/compare_colorkey_16bpc_case0009_trace.py"],
         ),
         Comparator(
-            request_id="olmdistancegradation_field_prep_runtime_trace_20260619",
+            request_ids=("olmdistancegradation_field_prep_runtime_trace_20260619",),
             slug="olmdistancegradation_field_prep",
-            command=[py, "scripts/compare_distancegradation_trace.py"],
+            command=[
+                py,
+                "scripts/compare_distancegradation_trace.py",
+                "--request-id",
+                "olmdistancegradation_field_prep_runtime_trace_20260619",
+            ],
         ),
         Comparator(
-            request_id="olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630",
+            request_ids=("olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630",),
             slug="olmdistancegradation_constant_case0023_outside0_witness",
-            command=[py, "scripts/compare_distancegradation_trace.py"],
+            command=[
+                py,
+                "scripts/compare_distancegradation_trace.py",
+                "--request-id",
+                "olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630",
+            ],
         ),
         Comparator(
-            request_id="olmradialblur_dense_sampler_trace_20260620",
+            request_ids=("olmdistancegradation_0010_0011_compose_exact_address_witness_20260710",),
+            slug="olmdistancegradation_0010_0011_compose_exact_address_witness",
+            command=[
+                py,
+                "scripts/compare_distancegradation_trace.py",
+                "--request-id",
+                "olmdistancegradation_0010_0011_compose_exact_address_witness_20260710",
+            ],
+        ),
+        Comparator(
+            request_ids=("olmdistancegradation_0010_compose_single_site_followup_20260710",),
+            slug="olmdistancegradation_0010_compose_single_site_followup",
+            command=[
+                py,
+                "scripts/compare_distancegradation_trace.py",
+                "--request-id",
+                "olmdistancegradation_0010_compose_single_site_followup_20260710",
+            ],
+        ),
+        Comparator(
+            request_ids=("olmdistancegradation_0010_compose_single_site_break_ignore_retry_20260710",),
+            slug="olmdistancegradation_0010_compose_single_site_break_ignore_retry",
+            command=[
+                py,
+                "scripts/compare_distancegradation_trace.py",
+                "--request-id",
+                "olmdistancegradation_0010_compose_single_site_break_ignore_retry_20260710",
+            ],
+        ),
+        Comparator(
+            request_ids=("olmdistancegradation_0010_compose_source_901_394_tile_retry_20260710",),
+            slug="olmdistancegradation_0010_compose_source_901_394_tile_retry",
+            command=[
+                py,
+                "scripts/compare_distancegradation_trace.py",
+                "--request-id",
+                "olmdistancegradation_0010_compose_source_901_394_tile_retry_20260710",
+            ],
+        ),
+        Comparator(
+            request_ids=("olmdistancegradation_0010_compose_visited_tile_source_0_45_20260710",),
+            slug="olmdistancegradation_0010_compose_visited_tile_source_0_45",
+            command=[
+                py,
+                "scripts/compare_distancegradation_trace.py",
+                "--request-id",
+                "olmdistancegradation_0010_compose_visited_tile_source_0_45_20260710",
+            ],
+        ),
+        Comparator(
+            request_ids=("olmradialblur_dense_sampler_trace_20260620",),
             slug="olmradialblur_dense_sampler",
             command=[py, "scripts/compare_radialblur_trace.py"],
         ),
         Comparator(
-            request_id="olmdirectionalblur_dense_sampler_trace_20260620",
+            request_ids=("olmradialblur_zoom_case0009_final_plane_typed_20260710",),
+            slug="olmradialblur_zoom_case0009_final_plane_typed",
+            command=[py, "scripts/compare_radialblur_trace.py"],
+        ),
+        Comparator(
+            request_ids=(
+                "olmdirectionalblur_angle0_helper_gate_retry_20260702",
+                "olmdirectionalblur_dense_sampler_trace_20260620",
+            ),
             slug="olmdirectionalblur_dense_sampler",
             command=[py, "scripts/compare_directionalblur_trace.py"],
         ),
         Comparator(
-            request_id="olmsmoother2_legacy_key_gamma_runtime_trace_20260620",
+            request_ids=(
+                "olmsmoother2_current_aex_0004_writer_gate_retry_20260702",
+                "olmsmoother2_current_aex_producer_path_diff_20260702",
+                "olmsmoother2_current_aex_0004_load_prewarm_retry_20260703",
+                "olmsmoother2_current_aex_writer_frame_followup_trace_20260625",
+                "olmsmoother2_legacy_key_gamma_runtime_trace_20260620",
+            ),
             slug="olmsmoother2_legacy_key_gamma",
             command=[py, "scripts/compare_smoother2_legacy_trace.py"],
         ),
@@ -163,7 +237,8 @@ def run_comparator(root: Path, summary_path: Path, output_dir: Path, comparator:
     ]
     proc = subprocess.run(cmd, cwd=root, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     row: dict[str, Any] = {
-        "request_id": comparator.request_id,
+        "request_id": comparator.request_ids[0],
+        "candidate_request_ids": list(comparator.request_ids),
         "slug": comparator.slug,
         "command": [
             display_path(root, Path(part)) if part.startswith(str(root)) else part
@@ -219,7 +294,7 @@ def main() -> int:
     output_dir.mkdir(parents=True, exist_ok=True)
     rows: list[dict[str, Any]] = []
     for comparator in comparators(sys.executable):
-        if args.run_missing or comparator.request_id in present_ids:
+        if args.run_missing or any(request_id in present_ids for request_id in comparator.request_ids):
             row = run_comparator(root, summary_path, output_dir, comparator)
             rows.append(row)
             print(

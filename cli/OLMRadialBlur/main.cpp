@@ -1,15 +1,18 @@
 #include <png.h>
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <complex>
 #include <cstdint>
 #include <cctype>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <deque>
 #include <filesystem>
 #include <fstream>
+#include <iomanip>
 #include <map>
 #include <stdexcept>
 #include <string>
@@ -20,7 +23,9 @@ namespace {
 struct Image {
     int width = 0;
     int height = 0;
+    int bit_depth = 8;
     std::vector<unsigned char> rgba;
+    std::vector<uint16_t> rgba16;
 };
 
 struct RadialBlurParams {
@@ -71,20 +76,144 @@ struct RadialBlurParams {
     bool inner_scatter_loop_minus_one = false;
     bool inner_scatter_table_span_minus_one = false;
     std::string rotation_gaussian_mode = "double";
+    std::string zoom_grid_mode = "double";
+    bool zoom_paired_trig_float = false;
+    bool zoom_inverse_float = false;
+    std::string zoom_aex_trig_table_path;
     std::string rotation_grid_mode = "double";
     double rotation_grid_angle_offset_steps = 0.0;
     double rotation_grid_radius_offset = 0.0;
     std::string outer_row_coupled_mode = "none";
     double outer_row_coupled_scale = 1.0;
     std::string outer_caller_collapse_mode = "none";
+    std::string outer_alpha_quantize_mode = "epsilon";
     std::string final_polar_rgb_mode = "none";
     std::string inner_scatter_stats_path;
     std::string witness_dump_path;
     int witness_x = -1;
     int witness_y = -1;
+    int witness_row_half_span = 4;
 };
 
 std::string g_rotation_gaussian_mode = "double";
+
+struct PairedTrigFloat {
+    float sin_value = 0.0f;
+    float cos_value = 1.0f;
+};
+
+class Sha256 {
+public:
+    void update(const uint8_t *data, size_t size) {
+        for (size_t i = 0; i < size; ++i) {
+            block_[length_ & 63] = data[i];
+            ++length_;
+            if ((length_ & 63) == 0) transform();
+        }
+    }
+
+    std::array<uint8_t, 32> finish() const {
+        Sha256 copy = *this;
+        const uint64_t bit_length = copy.length_ * 8;
+        copy.update_byte(0x80);
+        while ((copy.length_ & 63) != 56) copy.update_byte(0);
+        for (int i = 7; i >= 0; --i) copy.update_byte(static_cast<uint8_t>(bit_length >> (i * 8)));
+        std::array<uint8_t, 32> result{};
+        for (size_t i = 0; i < copy.state_.size(); ++i) {
+            for (int j = 0; j < 4; ++j) result[i * 4 + j] = static_cast<uint8_t>(copy.state_[i] >> (24 - j * 8));
+        }
+        return result;
+    }
+
+private:
+    static uint32_t rotr(uint32_t value, int bits) { return (value >> bits) | (value << (32 - bits)); }
+    void update_byte(uint8_t value) {
+        block_[length_ & 63] = value;
+        ++length_;
+        if ((length_ & 63) == 0) transform();
+    }
+    void transform() {
+        static constexpr uint32_t k[64] = {
+            0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+            0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+            0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+            0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+            0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+            0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+            0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+            0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2};
+        uint32_t w[64];
+        for (int i = 0; i < 16; ++i) w[i] = (static_cast<uint32_t>(block_[i * 4]) << 24) |
+            (static_cast<uint32_t>(block_[i * 4 + 1]) << 16) | (static_cast<uint32_t>(block_[i * 4 + 2]) << 8) | block_[i * 4 + 3];
+        for (int i = 16; i < 64; ++i) {
+            const uint32_t s0 = rotr(w[i - 15], 7) ^ rotr(w[i - 15], 18) ^ (w[i - 15] >> 3);
+            const uint32_t s1 = rotr(w[i - 2], 17) ^ rotr(w[i - 2], 19) ^ (w[i - 2] >> 10);
+            w[i] = w[i - 16] + s0 + w[i - 7] + s1;
+        }
+        uint32_t a=state_[0], b=state_[1], c=state_[2], d=state_[3], e=state_[4], f=state_[5], g=state_[6], h=state_[7];
+        for (int i = 0; i < 64; ++i) {
+            const uint32_t s1 = rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25);
+            const uint32_t ch = (e & f) ^ (~e & g);
+            const uint32_t temp1 = h + s1 + ch + k[i] + w[i];
+            const uint32_t s0 = rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22);
+            const uint32_t maj = (a & b) ^ (a & c) ^ (b & c);
+            const uint32_t temp2 = s0 + maj;
+            h=g; g=f; f=e; e=d+temp1; d=c; c=b; b=a; a=temp1+temp2;
+        }
+        state_[0]+=a; state_[1]+=b; state_[2]+=c; state_[3]+=d; state_[4]+=e; state_[5]+=f; state_[6]+=g; state_[7]+=h;
+    }
+
+    std::array<uint8_t, 64> block_{};
+    uint64_t length_ = 0;
+    std::array<uint32_t, 8> state_ = {0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19};
+};
+
+uint32_t read_le_u32(const std::vector<uint8_t> &data, size_t offset) {
+    if (offset + 4 > data.size()) throw std::runtime_error("trig table header is truncated");
+    return static_cast<uint32_t>(data[offset]) | (static_cast<uint32_t>(data[offset + 1]) << 8) |
+           (static_cast<uint32_t>(data[offset + 2]) << 16) | (static_cast<uint32_t>(data[offset + 3]) << 24);
+}
+
+std::vector<PairedTrigFloat> load_zoom_trig_table(const std::string &path, int expected_count, float expected_step) {
+    std::ifstream in(path, std::ios::binary);
+    if (!in) throw std::runtime_error("failed to open Zoom AEX trig table: " + path);
+    std::vector<uint8_t> data((std::istreambuf_iterator<char>(in)), std::istreambuf_iterator<char>());
+    constexpr size_t header_size = 20;
+    constexpr size_t digest_size = 32;
+    const char magic[] = "OLMTRIG1";
+    if (data.size() < header_size + digest_size || !std::equal(magic, magic + 8, data.begin()))
+        throw std::runtime_error("invalid Zoom AEX trig table magic");
+    if (read_le_u32(data, 8) != 1) throw std::runtime_error("unsupported Zoom AEX trig table version");
+    const uint32_t count = read_le_u32(data, 12);
+    const uint32_t step_bits = read_le_u32(data, 16);
+    const size_t payload_size = static_cast<size_t>(count) * 8;
+    if (data.size() != header_size + payload_size + digest_size) throw std::runtime_error("Zoom AEX trig table length mismatch");
+    uint32_t expected_step_bits = 0;
+    std::memcpy(&expected_step_bits, &expected_step, sizeof(expected_step_bits));
+    if (count != static_cast<uint32_t>(expected_count) || step_bits != expected_step_bits)
+        throw std::runtime_error("Zoom AEX trig table grid metadata mismatch");
+    Sha256 hash;
+    hash.update(data.data(), header_size + payload_size);
+    const auto digest = hash.finish();
+    if (!std::equal(digest.begin(), digest.end(), data.begin() + header_size + payload_size))
+        throw std::runtime_error("Zoom AEX trig table SHA-256 mismatch");
+    std::vector<PairedTrigFloat> table(count);
+    for (uint32_t i = 0; i < count; ++i) {
+        std::memcpy(&table[i].sin_value, data.data() + header_size + i * 8, sizeof(float));
+        std::memcpy(&table[i].cos_value, data.data() + header_size + i * 8 + 4, sizeof(float));
+    }
+    return table;
+}
+
+// FUN_18001d060 returns sine in the low lane and cosine in the high lane.
+// This diagnostic preserves that paired call boundary, but intentionally uses
+// platform sinf/cosf; it does not reproduce the AEX helper's SIMD polynomial.
+PairedTrigFloat paired_trig_float(float theta) {
+    PairedTrigFloat result;
+    result.sin_value = ::sinf(theta);
+    result.cos_value = ::cosf(theta);
+    return result;
+}
 
 struct WitnessDump {
     struct PlaneProbePoint {
@@ -155,6 +284,7 @@ void maybe_write_witness_dump(const RadialBlurParams &params, const WitnessDump 
     if (params.witness_dump_path.empty() || !witness.enabled || !witness.captured) return;
     std::ofstream out(params.witness_dump_path);
     if (!out) throw std::runtime_error("failed to open witness dump path: " + params.witness_dump_path);
+    out << std::setprecision(10);
     out << "{\n";
     out << "  \"path_kind\": \"" << witness.path_kind << "\",\n";
     out << "  \"xy\": [" << witness.x << ", " << witness.y << "],\n";
@@ -576,7 +706,8 @@ Image read_png(const std::string &path) {
     int color_type = png_get_color_type(png, info);
     int bit_depth = png_get_bit_depth(png, info);
 
-    if (bit_depth == 16) png_set_strip_16(png);
+    int original_bit_depth = bit_depth;
+    if (original_bit_depth == 16) png_set_swap(png);
     if (color_type == PNG_COLOR_TYPE_PALETTE) png_set_palette_to_rgb(png);
     if (color_type == PNG_COLOR_TYPE_GRAY && bit_depth < 8) png_set_expand_gray_1_2_4_to_8(png);
     bool has_alpha = (color_type & PNG_COLOR_MASK_ALPHA) != 0;
@@ -586,18 +717,31 @@ Image read_png(const std::string &path) {
     if (!has_alpha && !has_trns) png_set_filler(png, 0xff, PNG_FILLER_AFTER);
 
     png_read_update_info(png, info);
-    if (png_get_rowbytes(png, info) != width * 4) {
-        png_destroy_read_struct(&png, &info, nullptr);
-        std::fclose(fp);
-        throw std::runtime_error("unsupported PNG color conversion result");
-    }
     Image image;
     image.width = static_cast<int>(width);
     image.height = static_cast<int>(height);
-    image.rgba.resize(static_cast<size_t>(image.width) * static_cast<size_t>(image.height) * 4);
-    std::vector<png_bytep> rows(image.height);
-    for (int y = 0; y < image.height; ++y) rows[y] = image.rgba.data() + static_cast<size_t>(y) * image.width * 4;
-    png_read_image(png, rows.data());
+    image.bit_depth = original_bit_depth == 16 ? 16 : 8;
+    if (image.bit_depth == 16) {
+        if (png_get_rowbytes(png, info) != width * 8) {
+            png_destroy_read_struct(&png, &info, nullptr);
+            std::fclose(fp);
+            throw std::runtime_error("unsupported PNG color conversion result");
+        }
+        image.rgba16.resize(static_cast<size_t>(image.width) * static_cast<size_t>(image.height) * 4);
+        std::vector<png_bytep> rows(image.height);
+        for (int y = 0; y < image.height; ++y) rows[y] = reinterpret_cast<png_bytep>(image.rgba16.data() + static_cast<size_t>(y) * image.width * 4);
+        png_read_image(png, rows.data());
+    } else {
+        if (png_get_rowbytes(png, info) != width * 4) {
+            png_destroy_read_struct(&png, &info, nullptr);
+            std::fclose(fp);
+            throw std::runtime_error("unsupported PNG color conversion result");
+        }
+        image.rgba.resize(static_cast<size_t>(image.width) * static_cast<size_t>(image.height) * 4);
+        std::vector<png_bytep> rows(image.height);
+        for (int y = 0; y < image.height; ++y) rows[y] = image.rgba.data() + static_cast<size_t>(y) * image.width * 4;
+        png_read_image(png, rows.data());
+    }
     png_read_end(png, nullptr);
     png_destroy_read_struct(&png, &info, nullptr);
     std::fclose(fp);
@@ -625,12 +769,17 @@ void write_png(const std::string &path, const Image &image) {
     }
 
     png_init_io(png, fp);
-    png_set_IHDR(png, info, image.width, image.height, 8, PNG_COLOR_TYPE_RGBA,
+    png_set_IHDR(png, info, image.width, image.height, image.bit_depth, PNG_COLOR_TYPE_RGBA,
                  PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+    if (image.bit_depth == 16) png_set_swap(png);
     png_write_info(png, info);
     std::vector<png_bytep> rows(image.height);
     for (int y = 0; y < image.height; ++y) {
-        rows[y] = const_cast<unsigned char *>(image.rgba.data() + static_cast<size_t>(y) * image.width * 4);
+        if (image.bit_depth == 16) {
+            rows[y] = reinterpret_cast<png_bytep>(const_cast<uint16_t *>(image.rgba16.data() + static_cast<size_t>(y) * image.width * 4));
+        } else {
+            rows[y] = const_cast<unsigned char *>(image.rgba.data() + static_cast<size_t>(y) * image.width * 4);
+        }
     }
     png_write_image(png, rows.data());
     png_write_end(png, nullptr);
@@ -905,6 +1054,7 @@ void sample_rgba_aex_alpha(const FloatImage &image,
 
     double rgb_sum[3] = {0.0, 0.0, 0.0};
     double alpha_sum = 0.0;
+    float alpha_sum_f32 = 0.0f;
     double weight_sum = 0.0;
     auto tap = [&](int px, int py, double weight) {
         if (weight == 0.0) return;
@@ -912,6 +1062,8 @@ void sample_rgba_aex_alpha(const FloatImage &image,
         const size_t idx = (static_cast<size_t>(py) * w + px) * 4;
         const double alpha_weight = static_cast<double>(image.rgba[idx + 3]) * weight;
         alpha_sum += alpha_weight;
+        const float alpha_weight_f32 = static_cast<float>(image.rgba[idx + 3] * static_cast<float>(weight));
+        alpha_sum_f32 = static_cast<float>(alpha_sum_f32 + alpha_weight_f32);
         weight_sum += weight;
         for (int c = 0; c < 3; ++c) {
             rgb_sum[c] += static_cast<double>(image.rgba[idx + c]) * alpha_weight;
@@ -926,6 +1078,8 @@ void sample_rgba_aex_alpha(const FloatImage &image,
         for (int c = 0; c < 3; ++c) out[c] = static_cast<float>(rgb_sum[c] / alpha_sum);
         if (repeat && alpha_mode == "repeat-raw") {
             out[3] = static_cast<float>(alpha_sum);
+        } else if (repeat && alpha_mode == "repeat-raw-f32") {
+            out[3] = alpha_sum_f32;
         } else {
             out[3] = static_cast<float>(alpha_sum / std::max(1.0e-12, weight_sum));
         }
@@ -1139,8 +1293,11 @@ Image render_olmradialblur_zoom(const Image &input, const RadialBlurParams &para
     src.width = w;
     src.height = h;
     src.rgba.resize(static_cast<size_t>(w) * h * 4);
-    for (size_t i = 0; i < input.rgba.size(); ++i) src.rgba[i] = static_cast<float>(input.rgba[i]) / 255.0f;
-
+    if (input.bit_depth == 16) {
+        for (size_t i = 0; i < input.rgba16.size(); ++i) src.rgba[i] = static_cast<float>(input.rgba16[i]) / 65535.0f;
+    } else {
+        for (size_t i = 0; i < input.rgba.size(); ++i) src.rgba[i] = static_cast<float>(input.rgba[i]) / 255.0f;
+    }
     const double scale_x = static_cast<double>(w) / params.comp_width;
     const double scale_y = static_cast<double>(h) / params.comp_height;
     const double cx = params.center_x * scale_x;
@@ -1159,6 +1316,9 @@ Image render_olmradialblur_zoom(const Image &input, const RadialBlurParams &para
     const int min_r = std::max(0, static_cast<int>(std::sqrt(min_dx * min_dx + min_dy * min_dy) / ratio) - 2);
     const int max_r = static_cast<int>(std::sqrt(max_dx * max_dx + max_dy * max_dy)) + 2;
     const int radius_count = max_r - min_r + 1;
+    const std::vector<PairedTrigFloat> trig_table = params.zoom_aex_trig_table_path.empty()
+        ? std::vector<PairedTrigFloat>()
+        : load_zoom_trig_table(params.zoom_aex_trig_table_path, angular_count, static_cast<float>(step_rad));
 
     FloatImage polar;
     polar.width = radius_count;
@@ -1167,19 +1327,42 @@ Image render_olmradialblur_zoom(const Image &input, const RadialBlurParams &para
     std::vector<float> polar_valid(static_cast<size_t>(angular_count) * radius_count, 0.0f);
     const double cos_a = std::cos(base_angle);
     const double sin_a = std::sin(base_angle);
+    const float ratio_f = static_cast<float>(ratio);
+    const float cx_f = static_cast<float>(cx);
+    const float cy_f = static_cast<float>(cy);
+    const float base_angle_f = static_cast<float>(base_angle);
+    const float cos_a_f = ::cosf(base_angle_f);
+    const float sin_a_f = ::sinf(base_angle_f);
+    const float step_rad_f = static_cast<float>(step_rad);
     for (int ai = 0; ai < angular_count; ++ai) {
-        const double theta = static_cast<double>(ai) * step_rad;
-        const double cos_t = std::cos(theta);
-        const double sin_t = std::sin(theta);
-        for (int ri = 0; ri < radius_count; ++ri) {
-            const double r = static_cast<double>(min_r + ri);
-            const double sx0 = r * cos_t;
-            const double sy0 = r * sin_t * ratio;
-            const float sx = static_cast<float>(cx + cos_a * sx0 - sin_a * sy0);
-            const float sy = static_cast<float>(cy + sin_a * sx0 + cos_a * sy0);
-            const size_t dst = (static_cast<size_t>(ai) * radius_count + ri) * 4;
-            float sampled[4];
-            sample_rgba_aex_alpha(src, sx, sy, params.repeat_border, params.rgba_sampler_alpha_mode, sampled);
+            const double theta = static_cast<double>(ai) * step_rad;
+            const double cos_t = std::cos(theta);
+            const double sin_t = std::sin(theta);
+            for (int ri = 0; ri < radius_count; ++ri) {
+                const double r = static_cast<double>(min_r + ri);
+                float sx = 0.0f;
+                float sy = 0.0f;
+                if (!trig_table.empty() || params.zoom_paired_trig_float || params.zoom_grid_mode == "aex-float") {
+                    const float theta_f = static_cast<float>(static_cast<float>(ai) * step_rad_f);
+                    const PairedTrigFloat trig = trig_table.empty() ? paired_trig_float(theta_f) : trig_table[static_cast<size_t>(ai)];
+                    const float radius_f = static_cast<float>(min_r + ri);
+                    const float sx0 = static_cast<float>(radius_f * trig.cos_value);
+                    const float sy0 = static_cast<float>(static_cast<float>(radius_f * trig.sin_value) * ratio_f);
+                    const float rotated_x = static_cast<float>(cos_a_f * sx0);
+                    const float rotated_y = static_cast<float>(sin_a_f * sy0);
+                    sx = static_cast<float>(static_cast<float>(rotated_x - rotated_y) + cx_f);
+                    const float rotated_x_y = static_cast<float>(sin_a_f * sx0);
+                    const float rotated_y_y = static_cast<float>(cos_a_f * sy0);
+                    sy = static_cast<float>(static_cast<float>(rotated_x_y + rotated_y_y) + cy_f);
+                } else {
+                    const double sx0 = r * cos_t;
+                    const double sy0 = r * sin_t * ratio;
+                    sx = static_cast<float>(cx + cos_a * sx0 - sin_a * sy0);
+                    sy = static_cast<float>(cy + sin_a * sx0 + cos_a * sy0);
+                }
+                const size_t dst = (static_cast<size_t>(ai) * radius_count + ri) * 4;
+                float sampled[4];
+                sample_rgba_aex_alpha(src, sx, sy, params.repeat_border, params.rgba_sampler_alpha_mode, sampled);
             for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = sampled[c];
             polar_valid[static_cast<size_t>(ai) * radius_count + ri] =
                 polar_valid_sample(sx, sy, w, h, params.repeat_border, params.polar_valid_mode) ? 1.0f : 0.0f;
@@ -1274,24 +1457,54 @@ Image render_olmradialblur_zoom(const Image &input, const RadialBlurParams &para
     Image out;
     out.width = w;
     out.height = h;
-    out.rgba.resize(static_cast<size_t>(w) * h * 4);
+    out.bit_depth = input.bit_depth;
+    if (out.bit_depth == 16) out.rgba16.resize(static_cast<size_t>(w) * h * 4);
+    else out.rgba.resize(static_cast<size_t>(w) * h * 4);
+    const float max_val = out.bit_depth == 16 ? 65535.0f : 255.0f;
     WitnessDump witness;
     witness.enabled = !params.witness_dump_path.empty() && params.witness_x >= 0 && params.witness_y >= 0;
+    witness.row_probe_half_span = params.witness_row_half_span;
     witness.rgba_sampler_alpha_mode = params.rgba_sampler_alpha_mode;
     witness.outer_caller_collapse_mode = params.outer_caller_collapse_mode;
     const double rgb_quantize_epsilon = use_fft_convolution ? 0.0 : 1.0e-4;
-    const double alpha_quantize_epsilon = 1.0e-4;
+    const double alpha_quantize_epsilon = params.outer_alpha_quantize_mode == "truncate" ? 0.0 : 1.0e-4;
     for (int y = 0; y < h; ++y) {
         for (int x = 0; x < w; ++x) {
-            const double dx = static_cast<double>(x) - cx;
-            const double dy = static_cast<double>(y) - cy;
-            const double ex = cos_a * dx + sin_a * dy;
-            const double ey = (cos_a * dy - sin_a * dx) / ratio;
-            const double radius = std::sqrt(ex * ex + ey * ey);
-            double angle = std::atan2(ey, ex);
-            if (angle < 0.0) angle += M_PI * 2.0;
-            const float radius_index = static_cast<float>(radius - min_r);
-            const float angle_index = static_cast<float>(angle / step_rad);
+            float radius_index = 0.0f;
+            float angle_index = 0.0f;
+            if (params.zoom_inverse_float) {
+                // FUN_18000a850: preserve the SUBSS/MULSS/SUBSS/ADDSS/
+                // DIVSS/MULSS/ADDSS/SQRTSS order before atan2f.
+                const float y_delta = static_cast<float>(static_cast<float>(y) - cy_f);
+                const float x_delta = static_cast<float>(static_cast<float>(x) - cx_f);
+                const float cos_y = static_cast<float>(cos_a_f * y_delta);
+                const float sin_x = static_cast<float>(sin_a_f * x_delta);
+                const float sin_y = static_cast<float>(sin_a_f * y_delta);
+                const float cos_x = static_cast<float>(cos_a_f * x_delta);
+                const float radial_unscaled = static_cast<float>(cos_y - sin_x);
+                const float angular = static_cast<float>(cos_x + sin_y);
+                const float radial = static_cast<float>(radial_unscaled / ratio_f);
+                const float angular_squared = static_cast<float>(angular * angular);
+                const float radial_squared = static_cast<float>(radial * radial);
+                const float radius = ::sqrtf(static_cast<float>(radial_squared + angular_squared));
+                const float angle_float = ::atan2f(radial, angular);
+                float normalized_angle = angle_float;
+                if (normalized_angle < 0.0f) {
+                    normalized_angle = static_cast<float>(static_cast<double>(normalized_angle) + M_PI * 2.0);
+                }
+                radius_index = static_cast<float>(radius - static_cast<float>(min_r));
+                angle_index = static_cast<float>(normalized_angle / step_rad_f);
+            } else {
+                const double dx = static_cast<double>(x) - cx;
+                const double dy = static_cast<double>(y) - cy;
+                const double ex = cos_a * dx + sin_a * dy;
+                const double ey = (cos_a * dy - sin_a * dx) / ratio;
+                const double radius = std::sqrt(ex * ex + ey * ey);
+                double angle = std::atan2(ey, ex);
+                if (angle < 0.0) angle += M_PI * 2.0;
+                radius_index = static_cast<float>(radius - min_r);
+                angle_index = static_cast<float>(angle / step_rad);
+            }
 
             int xi_raw = static_cast<int>(std::floor(radius_index));
             int yi = static_cast<int>(std::floor(angle_index));
@@ -1317,6 +1530,10 @@ Image render_olmradialblur_zoom(const Image &input, const RadialBlurParams &para
                 if (params.outer_caller_collapse_mode == "propagated-validity-alpha") {
                     if (c == 3) return outer_collapse_plane[cell];
                     return outer_collapse_plane[cell] > 0.0f ? blurred.rgba[cell * 4 + c] : 0.0f;
+                }
+                if (params.outer_caller_collapse_mode == "polar-alpha") {
+                    if (c == 3) return polar.rgba[cell * 4 + 3];
+                    return blurred.rgba[cell * 4 + c];
                 }
                 float value = blurred.rgba[cell * 4 + c];
                 if (c < 3 && params.final_polar_rgb_mode == "clamp-nonnegative") value = std::max(0.0f, value);
@@ -1408,23 +1625,25 @@ Image render_olmradialblur_zoom(const Image &input, const RadialBlurParams &para
                     rgb = rgb_numerator / alpha;
                 }
                 rgb *= params.brightness_gain;
-                const int q = static_cast<int>(clamp_float(static_cast<float>(std::floor(rgb * 255.0 + rgb_quantize_epsilon)), 0.0f, 255.0f));
-                out.rgba[dst + c] = static_cast<unsigned char>(q);
+                const int q = static_cast<int>(clamp_float(static_cast<float>(std::floor(rgb * max_val + rgb_quantize_epsilon)), 0.0f, max_val));
+                if (out.bit_depth == 16) out.rgba16[dst + c] = static_cast<uint16_t>(q);
+                else out.rgba[dst + c] = static_cast<unsigned char>(q);
                 if (witness.enabled && x == params.witness_x && y == params.witness_y) {
                     witness.sample_rgb_numerator[c] = rgb_numerator;
                     witness.sample_rgba[c] = static_cast<float>(rgb);
-                    witness.sample_u8[c] = q;
+                    witness.sample_u8[c] = out.bit_depth == 16 ? q >> 8 : q;
                 }
                 if (capture_row_probe) {
                     row_probe_point.sample_rgba[c] = static_cast<float>(rgb);
-                    row_probe_point.sample_u8[c] = q;
+                    row_probe_point.sample_u8[c] = out.bit_depth == 16 ? q >> 8 : q;
                 }
             }
-            const int aq = static_cast<int>(clamp_float(static_cast<float>(std::floor(alpha * 255.0 + alpha_quantize_epsilon)), 0.0f, 255.0f));
-            out.rgba[dst + 3] = static_cast<unsigned char>(aq);
+            const int aq = static_cast<int>(clamp_float(static_cast<float>(std::floor(alpha * max_val + alpha_quantize_epsilon)), 0.0f, max_val));
+            if (out.bit_depth == 16) out.rgba16[dst + 3] = static_cast<uint16_t>(aq);
+            else out.rgba[dst + 3] = static_cast<unsigned char>(aq);
             if (witness.enabled && x == params.witness_x && y == params.witness_y) {
                 witness.sample_rgba[3] = static_cast<float>(alpha);
-                witness.sample_u8[3] = aq;
+                witness.sample_u8[3] = out.bit_depth == 16 ? aq >> 8 : aq;
             }
             if (capture_row_probe) {
                 row_probe_point.sample_rgba[3] = static_cast<float>(alpha);
@@ -1450,8 +1669,11 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
     src.width = w;
     src.height = h;
     src.rgba.resize(static_cast<size_t>(w) * h * 4);
-    for (size_t i = 0; i < input.rgba.size(); ++i) src.rgba[i] = static_cast<float>(input.rgba[i]) / 255.0f;
-
+    if (input.bit_depth == 16) {
+        for (size_t i = 0; i < input.rgba16.size(); ++i) src.rgba[i] = static_cast<float>(input.rgba16[i]) / 65535.0f;
+    } else {
+        for (size_t i = 0; i < input.rgba.size(); ++i) src.rgba[i] = static_cast<float>(input.rgba[i]) / 255.0f;
+    }
     const double scale_x = static_cast<double>(w) / params.comp_width;
     const double scale_y = static_cast<double>(h) / params.comp_height;
     const double cx = params.center_x * scale_x;
@@ -2108,7 +2330,10 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
     Image out;
     out.width = w;
     out.height = h;
-    out.rgba.resize(static_cast<size_t>(w) * h * 4);
+    out.bit_depth = input.bit_depth;
+    if (out.bit_depth == 16) out.rgba16.resize(static_cast<size_t>(w) * h * 4);
+    else out.rgba.resize(static_cast<size_t>(w) * h * 4);
+    const float max_val = out.bit_depth == 16 ? 65535.0f : 255.0f;
     WitnessDump witness;
     witness.enabled = !params.witness_dump_path.empty() && params.witness_x >= 0 && params.witness_y >= 0;
     witness.rgba_sampler_alpha_mode = params.rgba_sampler_alpha_mode;
@@ -2262,28 +2487,30 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
                     rgb = rgb_numerator / alpha;
                 }
                 rgb *= params.brightness_gain;
-                const int q = static_cast<int>(clamp_float(static_cast<float>(std::floor(rgb * 255.0)), 0.0f, 255.0f));
-                out.rgba[dst + c] = static_cast<unsigned char>(q);
+                const int q = static_cast<int>(clamp_float(static_cast<float>(std::floor(rgb * max_val)), 0.0f, max_val));
+                if (out.bit_depth == 16) out.rgba16[dst + c] = static_cast<uint16_t>(q);
+                else out.rgba[dst + c] = static_cast<unsigned char>(q);
                 if (witness.enabled && x == params.witness_x && y == params.witness_y) {
                     witness.sample_rgb_numerator[c] = rgb_numerator;
                     witness.sample_rgba[c] = static_cast<float>(rgb);
-                    witness.sample_u8[c] = q;
+                    witness.sample_u8[c] = out.bit_depth == 16 ? q >> 8 : q;
                 }
                 if (capture_row_probe) {
                     row_probe_point.sample_rgba[c] = static_cast<float>(rgb);
-                    row_probe_point.sample_u8[c] = q;
+                    row_probe_point.sample_u8[c] = out.bit_depth == 16 ? q >> 8 : q;
                 }
             }
-            const int aq = static_cast<int>(clamp_float(static_cast<float>(std::floor(alpha * 255.0 + alpha_quantize_epsilon)), 0.0f, 255.0f));
-            out.rgba[dst + 3] = static_cast<unsigned char>(aq);
+            const int aq = static_cast<int>(clamp_float(static_cast<float>(std::floor(alpha * max_val + alpha_quantize_epsilon)), 0.0f, max_val));
+            if (out.bit_depth == 16) out.rgba16[dst + 3] = static_cast<uint16_t>(aq);
+            else out.rgba[dst + 3] = static_cast<unsigned char>(aq);
             if (witness.enabled && x == params.witness_x && y == params.witness_y) {
                 witness.sample_rgba[3] = static_cast<float>(alpha);
-                witness.sample_u8[3] = aq;
+                witness.sample_u8[3] = out.bit_depth == 16 ? aq >> 8 : aq;
             }
             if (capture_row_probe) {
                 row_probe_point.sample_rgba[3] = static_cast<float>(alpha);
-                row_probe_point.sample_u8[3] = aq;
-                row_probe_point.alpha_u8 = aq;
+                row_probe_point.sample_u8[3] = out.bit_depth == 16 ? aq >> 8 : aq;
+                row_probe_point.alpha_u8 = out.bit_depth == 16 ? aq >> 8 : aq;
                 witness.row_probe.push_back(row_probe_point);
             }
         }
@@ -2323,17 +2550,23 @@ struct Args {
     bool inner_scatter_loop_minus_one = false;
     bool inner_scatter_table_span_minus_one = false;
     std::string rotation_gaussian_mode = "double";
+    std::string zoom_grid_mode = "double";
+    bool zoom_paired_trig_float = false;
+    bool zoom_inverse_float = false;
+    std::string zoom_aex_trig_table_path;
     std::string rotation_grid_mode = "double";
     double rotation_grid_angle_offset_steps = 0.0;
     double rotation_grid_radius_offset = 0.0;
     std::string outer_row_coupled_mode = "none";
     double outer_row_coupled_scale = 1.0;
     std::string outer_caller_collapse_mode = "none";
+    std::string outer_alpha_quantize_mode = "epsilon";
     std::string final_polar_rgb_mode = "none";
     std::string inner_scatter_stats_path;
     std::string witness_dump_path;
     int witness_x = -1;
     int witness_y = -1;
+    int witness_row_half_span = 4;
 };
 
 Args parse_args(int argc, char **argv) {
@@ -2453,8 +2686,9 @@ Args parse_args(int argc, char **argv) {
         } else if (key == "--rgba-sampler-alpha-mode") {
             args.rgba_sampler_alpha_mode = need_value("--rgba-sampler-alpha-mode");
             if (args.rgba_sampler_alpha_mode != "shared-normalized" &&
-                args.rgba_sampler_alpha_mode != "repeat-raw") {
-                throw std::runtime_error("--rgba-sampler-alpha-mode must be shared-normalized or repeat-raw");
+                args.rgba_sampler_alpha_mode != "repeat-raw" &&
+                args.rgba_sampler_alpha_mode != "repeat-raw-f32") {
+                throw std::runtime_error("--rgba-sampler-alpha-mode must be shared-normalized, repeat-raw, or repeat-raw-f32");
             }
         } else if (key == "--aex-quality-span-scale") {
             args.aex_quality_span_scale = true;
@@ -2471,6 +2705,17 @@ Args parse_args(int argc, char **argv) {
             if (args.rotation_gaussian_mode != "double" && args.rotation_gaussian_mode != "aex-float") {
                 throw std::runtime_error("--rotation-gaussian-mode must be double or aex-float");
             }
+        } else if (key == "--zoom-grid-mode") {
+            args.zoom_grid_mode = need_value("--zoom-grid-mode");
+            if (args.zoom_grid_mode != "double" && args.zoom_grid_mode != "aex-float") {
+                throw std::runtime_error("--zoom-grid-mode must be double or aex-float");
+            }
+        } else if (key == "--zoom-paired-trig-float") {
+            args.zoom_paired_trig_float = true;
+        } else if (key == "--zoom-inverse-float") {
+            args.zoom_inverse_float = true;
+        } else if (key == "--zoom-aex-trig-table") {
+            args.zoom_aex_trig_table_path = need_value("--zoom-aex-trig-table");
         } else if (key == "--rotation-grid-mode") {
             args.rotation_grid_mode = need_value("--rotation-grid-mode");
             if (args.rotation_grid_mode != "double" && args.rotation_grid_mode != "aex-float") {
@@ -2499,8 +2744,14 @@ Args parse_args(int argc, char **argv) {
             if (args.outer_caller_collapse_mode != "none" &&
                 args.outer_caller_collapse_mode != "binary-validity" &&
                 args.outer_caller_collapse_mode != "zero-rgb-on-invalid" &&
-                args.outer_caller_collapse_mode != "propagated-validity-alpha") {
-                throw std::runtime_error("--outer-caller-collapse-mode must be none, binary-validity, zero-rgb-on-invalid, or propagated-validity-alpha");
+                args.outer_caller_collapse_mode != "propagated-validity-alpha" &&
+                args.outer_caller_collapse_mode != "polar-alpha") {
+                throw std::runtime_error("--outer-caller-collapse-mode must be none, binary-validity, zero-rgb-on-invalid, propagated-validity-alpha, or polar-alpha");
+            }
+        } else if (key == "--outer-alpha-quantize-mode") {
+            args.outer_alpha_quantize_mode = need_value("--outer-alpha-quantize-mode");
+            if (args.outer_alpha_quantize_mode != "epsilon" && args.outer_alpha_quantize_mode != "truncate") {
+                throw std::runtime_error("--outer-alpha-quantize-mode must be epsilon or truncate");
             }
         } else if (key == "--final-polar-rgb-mode") {
             args.final_polar_rgb_mode = need_value("--final-polar-rgb-mode");
@@ -2516,6 +2767,8 @@ Args parse_args(int argc, char **argv) {
             args.witness_x = std::stoi(need_value("--witness-x"));
         } else if (key == "--witness-y") {
             args.witness_y = std::stoi(need_value("--witness-y"));
+        } else if (key == "--witness-row-half-span") {
+            args.witness_row_half_span = std::stoi(need_value("--witness-row-half-span"));
         } else if (key == "--inner-alpha-mode") {
             args.inner_alpha_mode = need_value("--inner-alpha-mode");
             if (args.inner_alpha_mode != "max" && args.inner_alpha_mode != "sum" &&
@@ -2524,7 +2777,7 @@ Args parse_args(int argc, char **argv) {
                 throw std::runtime_error("--inner-alpha-mode must be max, sum, outer, inner, or input");
             }
         } else if (key == "--help" || key == "-h") {
-            std::printf("Usage: olmradialblur_cli --input in.png --params params.json --output out.png [--ignore-size-variation] [--inner-alpha-mode max|sum|outer|inner|input] [--inner-source-scatter-prepass] [--outer-source-scatter-prepass] [--inner-prepass-mode simple|tail-gather] [--inner-prepass-span-mode strength|offset|edge-fade] [--inner-prepass-weight-mode row-span|aex-alpha] [--inner-prepass-factor-mode alpha|one|valid] [--inner-prepass-overwrite-seed] [--inner-scatter-rgb-mode straight|prepass-premul] [--inner-scatter-seed-mode source|none|edgefade-none] [--inner-seed-alpha-mode input|prepass] [--inner-final-alpha-mode max|denom|source] [--inner-rgb-denominator-mode accum|max] [--inner-scatter-span-scale-mode one|source-alpha|input-alpha] [--inner-scatter-param10-plane one|polar-alpha|prepass-alpha|factor] [--inner-wrap-mode circular|aex-next-row] [--inner-source-scale-mode one|alpha|inv-alpha] [--dynamic-offset-mode current|aex-row|min-radius] [--polar-valid-mode strict|aex-repeat] [--polar-sample-mode plain|aex-alpha|conditional-inner] [--rgba-sampler-alpha-mode shared-normalized|repeat-raw] [--rotation-gaussian-mode double|aex-float] [--rotation-grid-mode double|aex-float] [--rotation-grid-angle-offset-steps S] [--rotation-grid-radius-offset R] [--outer-row-coupled-mode none|prev-row-add|prev-row-tail-add|prev-row-tail-positive|prev2-row-tail-positive|prev-ladder-tail-positive|prev2-k2-positive|prev-hybrid-k12-positive] [--outer-row-coupled-scale V] [--outer-caller-collapse-mode none|binary-validity|zero-rgb-on-invalid|propagated-validity-alpha] [--final-polar-rgb-mode none|clamp-nonnegative] [--aex-quality-span-scale] [--inner-scatter-span-minus-one|--no-inner-scatter-span-minus-one] [--inner-scatter-loop-minus-one] [--inner-scatter-table-span-minus-one] [--inner-scatter-stats path.json] [--witness-dump path.json --witness-x N --witness-y N]\n");
+            std::printf("Usage: olmradialblur_cli --input in.png --params params.json --output out.png [--ignore-size-variation] [--inner-alpha-mode max|sum|outer|inner|input] [--inner-source-scatter-prepass] [--outer-source-scatter-prepass] [--inner-prepass-mode simple|tail-gather] [--inner-prepass-span-mode strength|offset|edge-fade] [--inner-prepass-weight-mode row-span|aex-alpha] [--inner-prepass-factor-mode alpha|one|valid] [--inner-prepass-overwrite-seed] [--inner-scatter-rgb-mode straight|prepass-premul] [--inner-scatter-seed-mode source|none|edgefade-none] [--inner-seed-alpha-mode input|prepass] [--inner-final-alpha-mode max|denom|source] [--inner-rgb-denominator-mode accum|max] [--inner-scatter-span-scale-mode one|source-alpha|input-alpha] [--inner-scatter-param10-plane one|polar-alpha|prepass-alpha|factor] [--inner-wrap-mode circular|aex-next-row] [--inner-source-scale-mode one|alpha|inv-alpha] [--dynamic-offset-mode current|aex-row|min-radius] [--polar-valid-mode strict|aex-repeat] [--polar-sample-mode plain|aex-alpha|conditional-inner] [--rgba-sampler-alpha-mode shared-normalized|repeat-raw] [--zoom-grid-mode double|aex-float] [--zoom-paired-trig-float] [--zoom-aex-trig-table table.bin] [--zoom-inverse-float] [--rotation-gaussian-mode double|aex-float] [--rotation-grid-mode double|aex-float] [--rotation-grid-angle-offset-steps S] [--rotation-grid-radius-offset R] [--outer-row-coupled-mode none|prev-row-add|prev-row-tail-add|prev-row-tail-positive|prev2-row-tail-positive|prev-ladder-tail-positive|prev2-k2-positive|prev-hybrid-k12-positive] [--outer-row-coupled-scale V] [--outer-caller-collapse-mode none|binary-validity|zero-rgb-on-invalid|propagated-validity-alpha] [--final-polar-rgb-mode none|clamp-nonnegative] [--aex-quality-span-scale] [--inner-scatter-span-minus-one|--no-inner-scatter-span-minus-one] [--inner-scatter-loop-minus-one] [--inner-scatter-table-span-minus-one] [--inner-scatter-stats path.json] [--witness-dump path.json --witness-x N --witness-y N]\n");
             std::exit(0);
         } else {
             throw std::runtime_error("unknown argument: " + key);
@@ -2570,17 +2823,23 @@ int main(int argc, char **argv) {
         params.inner_scatter_loop_minus_one = args.inner_scatter_loop_minus_one;
         params.inner_scatter_table_span_minus_one = args.inner_scatter_table_span_minus_one;
         params.rotation_gaussian_mode = args.rotation_gaussian_mode;
+        params.zoom_grid_mode = args.zoom_grid_mode;
+        params.zoom_paired_trig_float = args.zoom_paired_trig_float;
+        params.zoom_inverse_float = args.zoom_inverse_float;
+        params.zoom_aex_trig_table_path = args.zoom_aex_trig_table_path;
         params.rotation_grid_mode = args.rotation_grid_mode;
         params.rotation_grid_angle_offset_steps = args.rotation_grid_angle_offset_steps;
         params.rotation_grid_radius_offset = args.rotation_grid_radius_offset;
         params.outer_row_coupled_mode = args.outer_row_coupled_mode;
         params.outer_row_coupled_scale = args.outer_row_coupled_scale;
         params.outer_caller_collapse_mode = args.outer_caller_collapse_mode;
+        params.outer_alpha_quantize_mode = args.outer_alpha_quantize_mode;
         params.final_polar_rgb_mode = args.final_polar_rgb_mode;
         params.inner_scatter_stats_path = args.inner_scatter_stats_path;
         params.witness_dump_path = args.witness_dump_path;
         params.witness_x = args.witness_x;
         params.witness_y = args.witness_y;
+        params.witness_row_half_span = args.witness_row_half_span;
         g_rotation_gaussian_mode = params.rotation_gaussian_mode;
         Image output = params.blur_type == 2 ? render_olmradialblur_rotation(input, params)
                                              : render_olmradialblur_zoom(input, params);

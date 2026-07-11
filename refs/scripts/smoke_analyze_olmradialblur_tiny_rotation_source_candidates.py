@@ -35,9 +35,9 @@ def main() -> int:
         assert report["source_candidates"][0]["site"] == "rotation_polar_population_and_validity_capture"
         assert report["source_candidates"][1]["site"] == "rotation_scatter_and_neighboring_row_ownership"
         assert report["source_candidates"][2]["site"] == "rotation_final_inverse_sample_and_u8_writeback"
-        assert report["source_candidates"][0]["line"] == 934
-        assert report["source_candidates"][1]["line"] == 952
-        assert report["source_candidates"][2]["line"] == 1074
+        assert report["source_candidates"][0]["line"] == 940
+        assert report["source_candidates"][1]["line"] == 958
+        assert report["source_candidates"][2]["line"] == 1080
         assert report["pending_windows_followup"]["request_id"] == "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702"
         assert "+0x4eb9/+0x4ec8" in report["windows_requirement"]
         md = out_md.read_text(encoding="utf-8")

@@ -1,0 +1,33 @@
+{
+  "kind": "olmdistancegradation_case0023_probe_plan",
+  "case_id": "olmdistancegradation_extended__case_0023",
+  "request_dir": "refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/request",
+  "debug_points_spec": "1698,6;1699,6;1700,6;1698,7;1699,7;1700,7;1698,8;1699,8;1700,8;414,392;415,392;416,392;414,393;415,393;416,393;414,394;415,394;416,394",
+  "purpose": "Differentiate Mac AE source alpha / mask / field-boundary ownership from 16bpc host output packing for the remaining 73px case_0023 residual.",
+  "suggested_runs": [
+    {
+      "name": "bg_on",
+      "use_background_color": 1,
+      "output_dir": "refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/bg_on",
+      "discriminator": "If field/debug values match the source-model audit but exported pixels differ, suspect 16bpc host output/source ownership; if alpha/raw_inside/field_x differs, suspect Mac AE source alpha or field-boundary ownership.",
+      "command": "python3 scripts/run_ae_single_case.py --request-dir refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/request --case-id olmdistancegradation_extended__case_0023 --output-dir refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/bg_on --param-override 'Use Background Color=1' --ae-env \"OLM_DG_DEBUG_DUMP_PATH=$(pwd)/refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/bg_on/field_debug.txt\" --ae-env \"OLM_DG_SHADE_DEBUG_PATH=$(pwd)/refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/bg_on/shade_debug.txt\" --ae-env \"OLM_DG_DEBUG_POINTS=1698,6;1699,6;1700,6;1698,7;1699,7;1700,7;1698,8;1699,8;1700,8;414,392;415,392;416,392;414,393;415,393;416,393;414,394;415,394;416,394\""
+    },
+    {
+      "name": "bg_off",
+      "use_background_color": 0,
+      "output_dir": "refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/bg_off",
+      "discriminator": "If field/debug values match the source-model audit but exported pixels differ, suspect 16bpc host output/source ownership; if alpha/raw_inside/field_x differs, suspect Mac AE source alpha or field-boundary ownership.",
+      "command": "python3 scripts/run_ae_single_case.py --request-dir refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/request --case-id olmdistancegradation_extended__case_0023 --output-dir refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/bg_off --param-override 'Use Background Color=0' --ae-env \"OLM_DG_DEBUG_DUMP_PATH=$(pwd)/refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/bg_off/field_debug.txt\" --ae-env \"OLM_DG_SHADE_DEBUG_PATH=$(pwd)/refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/bg_off/shade_debug.txt\" --ae-env \"OLM_DG_DEBUG_POINTS=1698,6;1699,6;1700,6;1698,7;1699,7;1700,7;1698,8;1699,8;1700,8;414,392;415,392;416,392;414,393;415,393;416,393;414,394;415,394;416,394\""
+    }
+  ],
+  "interpretation": [
+    "Compare alpha/raw_inside/raw_outside/inside_x/outside_x/field_x at (1699,7) and (415,393) against refs/conformance/olmdistancegradation_case0023_source_model_audit_20260707.md.",
+    "If bg_on and bg_off debug fields are identical but PNG deltas differ only at output, keep the investigation on host/source/output ownership.",
+    "If debug alpha or raw distance changes between runs, the remaining seam is source-world or mask provenance before compose."
+  ],
+  "forbidden_actions": [
+    "Do not retune compose_pixel from this probe; the 2026-07-07 compose witness already excludes the triplet compose/writeback path.",
+    "Do not retune Both-mode cv::add / saturating-add field merge while AEX CPU simu and the Mac source-model audit match the live witnesses.",
+    "Do not revive the old packaged-stale explanation; packaged/current Windows references are exact in the 2026-07-07 audit."
+  ]
+}

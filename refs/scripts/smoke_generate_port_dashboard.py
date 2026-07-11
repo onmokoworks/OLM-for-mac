@@ -71,12 +71,17 @@ def main() -> int:
             pass
         elif send_target.get("status") == "ready" and send_target.get("kind") in {
             "runtime-trace-package",
+            "runtime-trace-request-package",
+            "reference-request-package",
             "windows-action-bundle",
             "await-runtime-trace-return",
+            "boundary-localization-report",
+            "lane-state-report",
+            "local-model-audit",
         }:
             pass
         else:
-            print("[FAIL] send target should be not-needed or a concrete project-local handoff")
+            print("[FAIL] send target should be not-needed, a concrete handoff, or a local proof report")
             return 1
         audit = data.get("mediacore_audit") or {}
         if "status" not in audit or "duplicate_count" not in audit:
@@ -112,6 +117,12 @@ def main() -> int:
                 print(f"[FAIL] expected machine-readable report guidance for {plugin_name}")
                 return 1
         html = html_path.read_text(encoding="utf-8")
+        if "border-radius" in html:
+            print("[FAIL] dashboard HTML reintroduced border-radius")
+            return 1
+        if "color-scheme: dark" not in html or "--bg: #151719" not in html:
+            print("[FAIL] dashboard HTML dark gray theme missing")
+            return 1
         for needle in (
             "Completion Policy",
             "Next Send Target",
@@ -123,6 +134,11 @@ def main() -> int:
             if needle not in html:
                 print(f"[FAIL] dashboard HTML missing section: {needle}")
                 return 1
+        if pending_traces:
+            request_id = str(pending_traces[0].get("request_id") or "")
+            if request_id and request_id not in html:
+                print("[FAIL] dashboard HTML missing pending runtime trace request id")
+                return 1
         markdown = markdown_path.read_text(encoding="utf-8")
         for needle in (
             "# OLM Port Dashboard",
@@ -133,6 +149,11 @@ def main() -> int:
         ):
             if needle not in markdown:
                 print(f"[FAIL] dashboard Markdown missing section: {needle}")
+                return 1
+        if pending_traces:
+            request_id = str(pending_traces[0].get("request_id") or "")
+            if request_id and request_id not in markdown:
+                print("[FAIL] dashboard Markdown missing pending runtime trace request id")
                 return 1
     print("[OK] generate port dashboard smoke")
     return 0

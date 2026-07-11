@@ -11,6 +11,8 @@ from typing import Any
 
 
 RETURN_EXTENSIONS = {".zip"}
+MEDIA_EXTENSIONS = {".png", ".jpg", ".jpeg", ".tif", ".tiff", ".exr", ".hdr", ".bmp"}
+FLOAT_PRESERVING_EXTENSIONS = {".exr", ".tif", ".tiff", ".hdr"}
 
 
 def parse_args() -> argparse.Namespace:
@@ -158,6 +160,11 @@ def classify_zip_names(names: list[str], read_json: Any) -> tuple[str, list[str]
             kind == "olm_runtime_trace_result"
             or (data and isinstance(data.get("runtime_trace_results"), list))
             or (data and isinstance(data.get("results"), list))
+            or (
+                data
+                and isinstance(data.get("request_id"), str)
+                and isinstance(data.get("status"), str)
+            )
         ):
             return ("runtime-trace-return", [f"{name}: {kind or 'runtime_trace_results'}"])
     for name in names:
@@ -204,6 +211,12 @@ def classify_zip_names(names: list[str], read_json: Any) -> tuple[str, list[str]
             kind == "olm_runtime_trace_result"
             or (data and isinstance(data.get("runtime_trace_results"), list))
             or (data and isinstance(data.get("results"), list) and Path(name).name.startswith("RETURN_RUNTIME_TRACE"))
+            or (
+                data
+                and Path(name).name == "RETURN_RUNTIME_TRACE_RESULT.json"
+                and isinstance(data.get("request_id"), str)
+                and isinstance(data.get("status"), str)
+            )
         ):
             return ("runtime-trace-return", [f"{name}: {kind or 'runtime_trace_results'}"])
     for name in names:
@@ -224,7 +237,18 @@ def classify_zip_names(names: list[str], read_json: Any) -> tuple[str, list[str]
             if kind == "olm_mac_plugin_package":
                 return ("mac-plugin-package", [f"{name}: {kind}"])
             if kind == "ae_effect_reference_manifest":
-                return ("win-reference-return", [f"{name}: {kind}"])
+                media_exts = {}
+                for candidate in names:
+                    ext = Path(candidate).suffix.lower()
+                    if ext in MEDIA_EXTENSIONS:
+                        media_exts[ext] = media_exts.get(ext, 0) + 1
+                hints = [f"{name}: {kind}"]
+                if media_exts:
+                    hints.append(f"asset_formats={dict(sorted(media_exts.items()))}")
+                    hints.append(
+                        f"float_preserving_present={any(ext in FLOAT_PRESERVING_EXTENSIONS for ext in media_exts)}"
+                    )
+                return ("win-reference-return", hints)
             if kind == "olm_ae_pixel_validation_request":
                 return ("ae-pixel-validation-request", [f"{name}: {kind}"])
     for name in names:
@@ -250,7 +274,18 @@ def classify_zip_names(names: list[str], read_json: Any) -> tuple[str, list[str]
     if any(name.endswith("AE_PIXEL_VALIDATION/request_manifest.json") for name in names):
         return ("mac-plugin-package", ["contains AE_PIXEL_VALIDATION requests"])
     if any(name.endswith("reference_manifest.json") for name in names):
-        return ("win-reference-return", ["contains reference_manifest.json"])
+        media_exts = {}
+        for candidate in names:
+            ext = Path(candidate).suffix.lower()
+            if ext in MEDIA_EXTENSIONS:
+                media_exts[ext] = media_exts.get(ext, 0) + 1
+        hints = ["contains reference_manifest.json"]
+        if media_exts:
+            hints.append(f"asset_formats={dict(sorted(media_exts.items()))}")
+            hints.append(
+                f"float_preserving_present={any(ext in FLOAT_PRESERVING_EXTENSIONS for ext in media_exts)}"
+            )
+        return ("win-reference-return", hints)
     if any(name.endswith("WIN_CODEX_HANDOFF.md") for name in names):
         return ("reference-request-package", ["contains WIN_CODEX_HANDOFF.md"])
     if any(name.endswith("next_reference_actions.json") for name in names):

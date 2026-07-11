@@ -36,9 +36,9 @@
         65535
       ],
       "reference_rgba_u16": [
-        6940,
+        7195,
         0,
-        60910,
+        61165,
         65535
       ],
       "observed_x_from_probe": 0.0,
@@ -47,7 +47,7 @@
       "inside_x": 1.0,
       "outside_x": 0.0,
       "candidate_x_est_from_red": -0.0,
-      "reference_x_est_from_red": 1.004388145151614
+      "reference_x_est_from_red": 1.0000171411919985
     },
     {
       "case_id": "olmdistancegradation_extended__case_0021",
@@ -84,9 +84,9 @@
         65535
       ],
       "reference_rgba_u16": [
-        6940,
+        7195,
         0,
-        60910,
+        61165,
         65535
       ],
       "observed_x_from_probe": 0.0,
@@ -95,7 +95,7 @@
       "inside_x": 1.0,
       "outside_x": 0.0,
       "candidate_x_est_from_red": -0.0,
-      "reference_x_est_from_red": 1.004388145151614
+      "reference_x_est_from_red": 1.0000171411919985
     },
     {
       "case_id": "olmdistancegradation_extended__case_0022",
@@ -132,9 +132,9 @@
         65535
       ],
       "reference_rgba_u16": [
-        6940,
+        7195,
         0,
-        60910,
+        61165,
         65535
       ],
       "observed_x_from_probe": 0.0,
@@ -143,7 +143,7 @@
       "inside_x": 0.0,
       "outside_x": 1.0,
       "candidate_x_est_from_red": -0.0,
-      "reference_x_est_from_red": 1.004388145151614
+      "reference_x_est_from_red": 1.0000171411919985
     },
     {
       "case_id": "olmdistancegradation_extended__case_0023",
@@ -168,9 +168,9 @@
         257
       ],
       "probe_no_bg_rgba_u16": [
-        6940,
+        7195,
         0,
-        60910,
+        61165,
         65535
       ],
       "candidate_rgba_u16": [
@@ -228,7 +228,7 @@
         65535
       ],
       "reference_rgba_u16": [
-        3376,
+        12301,
         0,
         0,
         65535
@@ -239,7 +239,7 @@
       "inside_x": 0.0,
       "outside_x": 0.9230769230769231,
       "candidate_x_est_from_red": 1.1233480176211454,
-      "reference_x_est_from_red": 1.0654793534342377
+      "reference_x_est_from_red": 0.9124942148477005
     },
     {
       "case_id": "olmdistancegradation_extended__case_0028",
@@ -276,7 +276,7 @@
         65535
       ],
       "reference_rgba_u16": [
-        4360,
+        2065,
         0,
         0,
         65535
@@ -287,7 +287,7 @@
       "inside_x": 0.0,
       "outside_x": 0.9230769230769231,
       "candidate_x_est_from_red": 1.1233480176211454,
-      "reference_x_est_from_red": 1.048612420507722
+      "reference_x_est_from_red": 1.0879514561442603
     }
   ]
 }

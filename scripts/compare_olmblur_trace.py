@@ -187,8 +187,40 @@ def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
         "source_file": row.get("source_file"),
         "cases": cases,
         "case_0006": case_0006,
+        "case_0006_grounded_windows_witness": case0006_windows_witness_grounded(case_0006),
         "case_0007": case_0007,
     }
+
+
+def case0006_windows_witness_grounded(case: dict[str, Any] | None) -> bool:
+    """Require an explicit retained Windows runtime target before trusting values.
+
+    The 2026-07-01 return manually populated the Windows fields from an AE debug
+    dump while also recording that the CDB target was never captured. Numeric
+    fields alone are therefore not sufficient provenance.
+    """
+    if not isinstance(case, dict):
+        return False
+    provenance = case.get("windows_witness_provenance")
+    if isinstance(provenance, dict):
+        kind = str(provenance.get("kind") or "").lower()
+        if provenance.get("target_block_captured") is True and kind in {
+            "cdb",
+            "runtime-trace",
+            "instrumented-windows-aex",
+        }:
+            return True
+    for attempt in case.get("debugger_attempts", []):
+        if not isinstance(attempt, dict):
+            continue
+        result = str(attempt.get("result") or "").lower()
+        if "no target_olmblur_case0006" in result:
+            continue
+        if "target_olmblur_case0006" in result and any(
+            word in result for word in ("captured", "retained", "hit")
+        ):
+            return True
+    return False
 
 
 def maybe_float(value: Any) -> float | None:
@@ -229,6 +261,7 @@ def build_case0006_narrow_analysis(
 ) -> dict[str, Any] | None:
     if not isinstance(windows_case, dict):
         return None
+    grounded = case0006_windows_witness_grounded(windows_case)
     witnesses = windows_case.get("witnesses", [])
     if not isinstance(witnesses, list) or not witnesses:
         return None
@@ -245,7 +278,7 @@ def build_case0006_narrow_analysis(
         probe = sample.get("probe", {}) if isinstance(sample, dict) else {}
         mac_raw = [maybe_float(v) for v in probe.get("raw", [])] if isinstance(probe, dict) else []
         mac_stored = [maybe_int(v) for v in probe.get("stored", [])] if isinstance(probe, dict) else []
-        windows_pre_store = witness.get("windows_pre_store_rgb_float")
+        windows_pre_store = witness.get("windows_pre_store_rgb_float") if grounded else []
         if not isinstance(windows_pre_store, list):
             windows_pre_store = []
         if not windows_pre_store:
@@ -253,12 +286,14 @@ def build_case0006_narrow_analysis(
             if not isinstance(windows_pre_store, list):
                 windows_pre_store = []
         windows_pre_store = [maybe_float(v) for v in windows_pre_store]
-        windows_words = witness.get("windows_internal_word_store")
+        windows_words = witness.get("windows_internal_word_store") if grounded else []
         if not isinstance(windows_words, list):
             windows_words = []
         windows_words = [maybe_int(v) for v in windows_words]
 
-        if windows_pre_store and mac_raw and windows_words and mac_stored:
+        if not grounded:
+            verdict = "unverified-windows-values"
+        elif windows_pre_store and mac_raw and windows_words and mac_stored:
             if windows_words[0] != mac_stored[0]:
                 if windows_pre_store[0] is not None and mac_raw[0] is not None:
                     if windows_pre_store[0] < mac_raw[0]:
@@ -281,6 +316,7 @@ def build_case0006_narrow_analysis(
                 "mac_probe_stored_word": mac_stored,
                 "windows_pre_store_rgb_float": windows_pre_store,
                 "windows_internal_word_store": windows_words,
+                "windows_witness_grounded": grounded,
                 "sample_reference_rgba": sample.get("reference") if isinstance(sample, dict) else None,
                 "sample_candidate_rgba": sample.get("candidate") if isinstance(sample, dict) else None,
                 "verdict": verdict,
@@ -313,6 +349,8 @@ def has_prewriteback(case: dict[str, Any] | None) -> bool:
 
 def has_case0006_helper_prestore(case: dict[str, Any] | None) -> bool:
     if not isinstance(case, dict):
+        return False
+    if not case0006_windows_witness_grounded(case):
         return False
     for pixel in case.get("witnesses", []):
         if not isinstance(pixel, dict):
@@ -354,6 +392,19 @@ def classify_next_focus(windows: dict[str, Any], current_word_baseline: dict[str
         return "await-windows-trace"
     case_0006 = windows.get("case_0006")
     case_0007 = windows.get("case_0007")
+    if isinstance(case_0006, dict) and not windows.get("case_0006_grounded_windows_witness"):
+        if any(
+            concrete_trace_value(witness.get(field))
+            for witness in case_0006.get("witnesses", [])
+            if isinstance(witness, dict)
+            for field in (
+                "windows_pre_store_rgb_float",
+                "windows_pre_store_rgb_hex",
+                "windows_internal_word_store",
+                "windows_final_rgba",
+            )
+        ):
+            return "case0006-windows-values-unverified"
     narrow = build_case0006_narrow_analysis(case_0006, current_word_baseline)
     if narrow:
         verdicts = [str(row.get("verdict") or "") for row in narrow.get("results", []) if isinstance(row, dict)]
@@ -420,6 +471,7 @@ def render_markdown(comparison: dict[str, Any]) -> str:
         "## Windows Observations",
         "",
         f"- Status: {md_value(windows.get('status'))}",
+        f"- Case 0006 grounded Windows witness: {md_value(windows.get('case_0006_grounded_windows_witness'))}",
         f"- Summary: {windows.get('summary') or '-'}",
         f"- Case 0006: {md_value(windows.get('case_0006'))}",
         f"- Case 0007: {md_value(windows.get('case_0007'))}",
@@ -435,6 +487,7 @@ def render_markdown(comparison: dict[str, Any]) -> str:
     lines.extend([
         "## Interpretation",
         "",
+        "- `case0006-windows-values-unverified`: numeric fields exist, but no retained Windows runtime target proves their provenance. Treat them as non-evidence and re-bind the address/target before changing source.",
         "- `case0006-reference-or-export-provenance`: Windows and Mac now agree on the traced pre-store float and stored 16bpc word at the active `case_0006` witnesses, so the remaining exported-PNG mismatch should be treated as reference provenance / export-layer evidence, not as a live OLMBlur helper-or-writer bug.",
         "- `case0006-helper-or-prestore`: the new narrow case_0006 witness returned concrete upstream/pre-store values; compare those before changing OLMBlur math.",
         "- `nonlegacy-accumulation-or-writeback`: decide whether case_0006 differs before or only at byte writeback.",

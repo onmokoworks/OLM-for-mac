@@ -23,11 +23,17 @@
 | `first_above_threshold_same_row` | `(415,393)` | `1.0` | `36.0138855` |
 | `deeper_plateau_same_row` | `(416,393)` | `1.0` | `37.0135117` |
 
+## AEX CPU Simu Evidence
+
+- Path: `refs/conformance/olmdistancegradation_case0023_aex_cpu_simu_fullframe_20260707.json`
+- Status: `diagnostic_binary_grounded_field_witness`
+- Summary: Binary-grounded helper evidence only: this proves the emulated AEX helper can produce the case_0023 live edge zero, but it is not whole-plugin AE exact.
+
 ## Edge-Family Source Candidates
 
 | Rank | Site | Function | Line | Why live | Allowed change shape |
 | --- | --- | --- | ---: | --- | --- |
-| 1 | `build_distance_field_both_ownership` | `build_distance_field` | `508` | The surviving bg_off mismatch at (1699,7) keeps the case_0023 lane upstream of the final background blend. Neighboring edge witnesses already match, so the remaining live suspicion is the Both-mode ownership handoff for a narrow subset of pixels. | Both-mode ownership only; no broad field rewrite |
+| 1 | `build_distance_field_both_saturating_add` | `build_distance_field` | `508` | The 2026-07-07 AEX CPU simu shows the helper's full-frame Both field can already produce the decisive zero at the live edge pixel. This source site therefore remains the first audit anchor for provenance/output-binding contradictions, not a license to retune the merge. | Both-mode saturating-add field merge only after final-output/export proof contradicts the CPU-helper evidence |
 | 2 | `dt_to_normalized_constant_threshold` | `dt_to_normalized` | `440` | The edge-family mismatch still lives in Constant mode with Outside Threshold=0, so the binary threshold helper stays relevant if Windows current export later says the decisive edge pixel is already wrong before the Both-mode ownership merge. | helper-stage threshold ownership / plateau membership only |
 | 3 | `compose_pixel_constant_endpoint` | `compose_pixel` | `558` | This remains second-order only. Reopen it only if a current Windows export or typed witness shows compose input already matches Mac while the endpoint still differs at the live edge pixel. | only with explicit Windows contradiction to current field-first reading |
 
@@ -42,7 +48,7 @@
 ## Decision Ladder
 
 1. If the question is about the threshold-family triplet, resolve current-AEX export provenance first -> Do not patch source until the current Windows export says the family is still a true mismatch
-2. If the question is about the surviving edge-family pixel and Windows says field/ownership is already wrong before compose -> Constrain changes to build_distance_field() and dt_to_normalized()
+2. If the question is about the surviving edge-family pixel and Windows final-output/export proof contradicts the CPU-helper zero -> Constrain changes to build_distance_field() and dt_to_normalized()
 3. If Windows says compose input already matches Mac but the endpoint still differs -> Only then reopen compose_pixel()
 
 ## Forbidden Actions
@@ -51,11 +57,12 @@
 - Do not retune generic 16bpc writeback from this lane.
 - Do not reopen broad color-mix tuning while the field-first witness still stands.
 - Do not treat the packaged expected PNG as equivalent to current Windows output for the threshold-family slice without proof.
+- Do not retune the Both-mode saturating-add field merge while AEX CPU simu evidence says the helper already produces the live edge zero.
 
 ## Active Runtime Follow-up
 
 - Request: `olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702`
-- Status: `pending`
+- Status: `superseded_by_local_aex_cpu_simu`
 - Package: `refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702.zip`
 - Acceptance: `refs/conformance/olmdistancegradation_case0023_refcon_stack_wordmap_return_acceptance_20260702.md`
 - Requirement: Bind the `414/415/416,393` triplet from the output-word address or compose refcon at `FUN_181170480`; do not accept another broad callback stop with no retained XY.

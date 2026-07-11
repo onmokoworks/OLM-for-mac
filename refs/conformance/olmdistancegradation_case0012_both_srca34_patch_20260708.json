@@ -1,0 +1,469 @@
+{
+  "kind": "olmdistancegradation_layer_source_true16_audit",
+  "schema": 1,
+  "request_dir": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625",
+  "candidate_root": "refs/reports/ae_single_case_olmdistancegradation_case0012_both_srca34_patch_20260708",
+  "cases": [
+    {
+      "case_id": "olmdistancegradation_extended__case_0012",
+      "candidate_path": "refs/reports/ae_single_case_olmdistancegradation_case0012_both_srca34_patch_20260708/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+      "reference_path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+      "input_path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012_before_effects.png",
+      "nonzero_pixels": 7542,
+      "max_abs_diff_true16": 10,
+      "mean_abs_diff_true16": 0.00761694637345679,
+      "max_abs_diff_byte_equivalent": 0.0390625,
+      "channel_abs_max_true16": [
+        10,
+        10,
+        10,
+        2
+      ],
+      "channel_nonzero": [
+        7501,
+        6895,
+        6896,
+        155
+      ],
+      "same_alpha_changed_pixels": 7387,
+      "diff_common_by_channel": {
+        "R": [
+          {
+            "value": -2,
+            "count": 5136
+          },
+          {
+            "value": -4,
+            "count": 1597
+          },
+          {
+            "value": -6,
+            "count": 434
+          },
+          {
+            "value": -8,
+            "count": 203
+          },
+          {
+            "value": -10,
+            "count": 115
+          },
+          {
+            "value": 0,
+            "count": 41
+          },
+          {
+            "value": 2,
+            "count": 16
+          }
+        ],
+        "G": [
+          {
+            "value": -2,
+            "count": 4696
+          },
+          {
+            "value": -4,
+            "count": 1497
+          },
+          {
+            "value": 0,
+            "count": 647
+          },
+          {
+            "value": -6,
+            "count": 406
+          },
+          {
+            "value": -8,
+            "count": 189
+          },
+          {
+            "value": -10,
+            "count": 107
+          }
+        ],
+        "B": [
+          {
+            "value": -2,
+            "count": 4696
+          },
+          {
+            "value": -4,
+            "count": 1497
+          },
+          {
+            "value": 0,
+            "count": 646
+          },
+          {
+            "value": -6,
+            "count": 406
+          },
+          {
+            "value": -8,
+            "count": 189
+          },
+          {
+            "value": -10,
+            "count": 107
+          },
+          {
+            "value": 2,
+            "count": 1
+          }
+        ],
+        "A": [
+          {
+            "value": 0,
+            "count": 7387
+          },
+          {
+            "value": -2,
+            "count": 131
+          },
+          {
+            "value": 2,
+            "count": 24
+          }
+        ]
+      },
+      "ratios": {
+        "ref_minus_source_over_alpha_times_candidate_alpha_quantiles": [
+          -0.8612871024888591,
+          -0.593265119852731,
+          0.14156231181550538,
+          1.968505993259896,
+          6.293236195049758,
+          13.436974029500561,
+          13.694431576021088
+        ],
+        "reference_over_candidate_red_quantiles": [
+          1.0,
+          1.0000314955669989,
+          1.0000351027871772,
+          1.0000676521327334,
+          1.0003340292275573,
+          1.0009133254178464,
+          1.002635046113307
+        ],
+        "source_red_over_source_alpha_quantiles": [
+          0.011718661114524314,
+          0.14106583072100312,
+          0.19981689173723965,
+          0.47054054930445216,
+          0.870541426393003,
+          0.9803576709365126,
+          0.9882031406821796
+        ]
+      },
+      "examples": [
+        {
+          "xy": [
+            450,
+            247
+          ],
+          "source_rgba16": [
+            1861,
+            1861,
+            1861,
+            11051
+          ],
+          "candidate_rgba16": [
+            10949,
+            10949,
+            10949,
+            64997
+          ],
+          "reference_rgba16": [
+            10959,
+            10959,
+            10959,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -10,
+            -10,
+            -10,
+            0
+          ]
+        },
+        {
+          "xy": [
+            101,
+            343
+          ],
+          "source_rgba16": [
+            1775,
+            1775,
+            1775,
+            10793
+          ],
+          "candidate_rgba16": [
+            10693,
+            10693,
+            10693,
+            64997
+          ],
+          "reference_rgba16": [
+            10703,
+            10703,
+            10703,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -10,
+            -10,
+            -10,
+            0
+          ]
+        },
+        {
+          "xy": [
+            655,
+            70
+          ],
+          "source_rgba16": [
+            1775,
+            1775,
+            1775,
+            10793
+          ],
+          "candidate_rgba16": [
+            10693,
+            10693,
+            10693,
+            64997
+          ],
+          "reference_rgba16": [
+            10703,
+            10703,
+            10703,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -10,
+            -10,
+            -10,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1370,
+            70
+          ],
+          "source_rgba16": [
+            1775,
+            1775,
+            1775,
+            10793
+          ],
+          "candidate_rgba16": [
+            10693,
+            10693,
+            10693,
+            64997
+          ],
+          "reference_rgba16": [
+            10703,
+            10703,
+            10703,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -10,
+            -10,
+            -10,
+            0
+          ]
+        },
+        {
+          "xy": [
+            264,
+            954
+          ],
+          "source_rgba16": [
+            1775,
+            1775,
+            1775,
+            10793
+          ],
+          "candidate_rgba16": [
+            10693,
+            10693,
+            10693,
+            64997
+          ],
+          "reference_rgba16": [
+            10703,
+            10703,
+            10703,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -10,
+            -10,
+            -10,
+            0
+          ]
+        },
+        {
+          "xy": [
+            280,
+            947
+          ],
+          "source_rgba16": [
+            1861,
+            1861,
+            1861,
+            11051
+          ],
+          "candidate_rgba16": [
+            10949,
+            10949,
+            10949,
+            64997
+          ],
+          "reference_rgba16": [
+            10959,
+            10959,
+            10959,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -10,
+            -10,
+            -10,
+            0
+          ]
+        },
+        {
+          "xy": [
+            395,
+            75
+          ],
+          "source_rgba16": [
+            1861,
+            1861,
+            1861,
+            11051
+          ],
+          "candidate_rgba16": [
+            10949,
+            10949,
+            10949,
+            64997
+          ],
+          "reference_rgba16": [
+            10959,
+            10959,
+            10959,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -10,
+            -10,
+            -10,
+            0
+          ]
+        },
+        {
+          "xy": [
+            668,
+            345
+          ],
+          "source_rgba16": [
+            1775,
+            1775,
+            1775,
+            10793
+          ],
+          "candidate_rgba16": [
+            10693,
+            10693,
+            10693,
+            64997
+          ],
+          "reference_rgba16": [
+            10703,
+            10703,
+            10703,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -10,
+            -10,
+            -10,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1410,
+            75
+          ],
+          "source_rgba16": [
+            1861,
+            1861,
+            1861,
+            11051
+          ],
+          "candidate_rgba16": [
+            10949,
+            10949,
+            10949,
+            64997
+          ],
+          "reference_rgba16": [
+            10959,
+            10959,
+            10959,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -10,
+            -10,
+            -10,
+            0
+          ]
+        },
+        {
+          "xy": [
+            109,
+            942
+          ],
+          "source_rgba16": [
+            1861,
+            1861,
+            1861,
+            11051
+          ],
+          "candidate_rgba16": [
+            10949,
+            10949,
+            10949,
+            64997
+          ],
+          "reference_rgba16": [
+            10959,
+            10959,
+            10959,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -10,
+            -10,
+            -10,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "reading": [
+    "The audited candidate must be treated as true 16-bit data. Pillow's default RGBA decode collapses these PNGs to 8-bit and hides the scale of this family.",
+    "Use the `max true16` column for implementation work. The `max byte-equiv` column is included only to explain older reports that described true16 residuals after an 8-bit-style scale conversion.",
+    "If the high-delta examples preserve alpha while RGB is lower on the Mac candidate, the active lane is Layer/no-bg source RGB ownership or source-to-output-alpha scaling, not distance-field topology."
+  ]
+}

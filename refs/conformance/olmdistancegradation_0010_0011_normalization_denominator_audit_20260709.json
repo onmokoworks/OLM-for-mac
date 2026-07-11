@@ -1,0 +1,81 @@
+{
+  "kind": "olmdistancegradation_0010_0011_normalization_denominator_audit",
+  "generated_at": "2026-07-09T12:29:22Z",
+  "decision": "mixed-actual-max-and-threshold-half-boundary",
+  "witnesses": [
+    {
+      "case_id": "olmdistancegradation_extended__case_0010",
+      "xy": [
+        6,
+        40
+      ],
+      "mode": "outside",
+      "raw_distance": 41.0,
+      "mac_field_x": 0.9002838730812073,
+      "normalization_denominator_kind": "actual_raw_max",
+      "ui_threshold": 82.0,
+      "windows_field_word_required": 29500,
+      "windows_store_a": 3268,
+      "mac_field_word_float": 29500.501953125,
+      "windows_field_x_required": 0.9002685546875,
+      "mac_denominator_implied": 45.541191201924065,
+      "denominator_required_if_raw_fixed": 45.54196610169492,
+      "denominator_delta_required_minus_mac": 0.0007748997708532102,
+      "raw_required_if_mac_denominator_fixed": 40.99930238210327,
+      "raw_delta_required_minus_mac": -0.0006976178967335045,
+      "raw_required_if_ui_threshold_fixed": 73.822021484375,
+      "raw_delta_if_ui_threshold_fixed": 32.822021484375
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0010",
+      "xy": [
+        901,
+        394
+      ],
+      "mode": "inside",
+      "raw_distance": 44.0113639831543,
+      "mac_field_x": 0.6985930800437927,
+      "normalization_denominator_kind": "ui_threshold",
+      "ui_threshold": 63.0,
+      "windows_field_word_required": 22892,
+      "windows_store_a": 9876,
+      "mac_field_word_float": 22891.498046875,
+      "windows_field_x_required": 0.6986083984375,
+      "mac_denominator_implied": 62.99999991467902,
+      "denominator_required_if_raw_fixed": 62.99861851301765,
+      "denominator_delta_required_minus_mac": -0.001381401661376458,
+      "raw_required_if_mac_denominator_fixed": 44.01232904195655,
+      "raw_delta_required_minus_mac": 0.000965058802250951,
+      "raw_required_if_ui_threshold_fixed": 44.0123291015625,
+      "raw_delta_if_ui_threshold_fixed": 0.000965118408203125
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0011",
+      "xy": [
+        915,
+        392
+      ],
+      "mode": "inside",
+      "raw_distance": 46.81879806518555,
+      "mac_field_x": 0.1345367729663849,
+      "normalization_denominator_kind": "ui_threshold",
+      "ui_threshold": 348.0,
+      "windows_field_word_required": 4409,
+      "windows_store_a": 28359,
+      "mac_field_word_float": 4408.5009765625,
+      "windows_field_x_required": 0.134552001953125,
+      "mac_denominator_implied": 348.00000797464946,
+      "denominator_required_if_raw_fixed": 347.9606203220685,
+      "denominator_delta_required_minus_mac": -0.039387652580956,
+      "raw_required_if_mac_denominator_fixed": 46.82409775269255,
+      "raw_delta_required_minus_mac": 0.005299687507005046,
+      "raw_required_if_ui_threshold_fixed": 46.8240966796875,
+      "raw_delta_if_ui_threshold_fixed": 0.005298614501953125
+    }
+  ],
+  "source_reports": [
+    "refs/conformance/olmdistancegradation_0010_0011_field_pack_read_audit_20260709.md",
+    "refs/conformance/olmdistancegradation_0010_0011_local_field_normalization_probe_20260709.md",
+    "refs/conformance/olmdistancegradation_0010_0011_writeback_pointer_map_return_intake_20260709.md"
+  ]
+}

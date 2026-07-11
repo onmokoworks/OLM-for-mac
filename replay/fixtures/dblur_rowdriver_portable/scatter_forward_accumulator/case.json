@@ -1,0 +1,24 @@
+{
+  "id": "scatter_forward_accumulator",
+  "kind": "scatter",
+  "width": 8,
+  "height": 3,
+  "row": 1,
+  "start": 3,
+  "count": 5,
+  "end": 8,
+  "coefficient": 1.4,
+  "backward": false,
+  "input_sha256": {
+    "source.bin": "a35ffffaf2454c88de3c05f0e7065f57116ccfaef90db06facfa14513f8a18d7",
+    "destination.bin": "529a4ec50d5edbb0cb21df6b0438c4a0e94ef7bd00796eb7749f37964e4e6e0d",
+    "denominator.bin": "266940cf4f0a0d1a4695bc89fe82f897fcaec1d26c7e3c019e36a1a26a8b5bf9",
+    "alpha_max.bin": "534a846eeaa9b934da34e996f511a50cd99516a478d7fede66471b1dcc45824d",
+    "weights.bin": "060ef630d69d2a170e9256e6e0637a08fad3b8a7bdddb3055a0264205a83a8a3"
+  },
+  "expected_sha256": {
+    "destination.bin": "f51aac425c46603b7a96926a4cf163679378f0604c917f5a8cafe8d68be0770d",
+    "denominator.bin": "ed24def798b08a66161c3dcc7db050445eb5b9b220d21ba777164cfdfea938ef",
+    "alpha_max.bin": "534a846eeaa9b934da34e996f511a50cd99516a478d7fede66471b1dcc45824d"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "kind": "dblur_rowdriver_exact_microfixture",
+  "status": "generated",
+  "harness": "tools/emulation/test_dblur_rowdriver_exact_20260711.py",
+  "fixture_dir": "replay/fixtures/dblur_rowdriver/case_0001",
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "rowdriver": {
+    "instructions": 1506,
+    "output_sha256": "7369de39733663d571b626f9ad17b56d0c005591145baaa9cf6686b98aeec172",
+    "denom_sha256": "539b08c51dbd2e56287b3ef4594d1dd4e7542ebe007ce317ab0dd4e2e3415b77",
+    "av_sha256": "539b08c51dbd2e56287b3ef4594d1dd4e7542ebe007ce317ab0dd4e2e3415b77"
+  },
+  "leaf": {
+    "source_sha256": "a494b000da8beafe326864242aaf7b1296b4a7891603c05a3a89c8014215ff36",
+    "prepass_output_sha256": "0e42586f5c9368f316c10c8ab239bec0fda29343f0b0a42ad4ea5151933151f3",
+    "scatter_output_sha256": "ab1ebbe0311c5a006070c261fbf1edd0348a4ab41aeb1127e844381896f0e10a"
+  },
+  "comparison": "byte-exact SHA-256 equality; tolerance is prohibited",
+  "fact_basis": [
+    "disasm/OLMDirectionalBlur.aex.asm.txt",
+    "decomp/OLMDirectionalBlur.aex.c.txt",
+    "notes/OLMDirectionalBlur_ASM_FACTS.md"
+  ]
+}

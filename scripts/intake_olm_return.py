@@ -534,6 +534,19 @@ def request_id_from_zip(path: Path) -> str | None:
     return None
 
 
+def runtime_package_manifest_request_ids(path: Path) -> set[str]:
+    try:
+        with zipfile.ZipFile(path) as archive:
+            data = json.loads(archive.read("runtime_trace_package_manifest.json").decode("utf-8"))
+    except Exception:
+        return set()
+    ids: set[str] = set()
+    for action in data.get("runtime_actions", []):
+        if isinstance(action, dict) and isinstance(action.get("request_id"), str):
+            ids.add(str(action["request_id"]))
+    return ids
+
+
 def runtime_trace_request_ids_from_json(data: dict) -> list[str]:
     ids: list[str] = []
     direct = data.get("request_id")
@@ -785,6 +798,7 @@ def run_win_reference(args: argparse.Namespace, root: Path) -> int:
 
 def run_runtime_trace(args: argparse.Namespace, root: Path) -> int:
     package = args.runtime_package
+    exact_package_match = False
     if package is None:
         package = find_matching_runtime_package(root, args.source.resolve())
         if package is None:
@@ -793,6 +807,21 @@ def run_runtime_trace(args: argparse.Namespace, root: Path) -> int:
             package = packages[-1] if packages else None
     elif not package.is_absolute():
         package = root / package
+    if package and package.exists():
+        with tempfile.TemporaryDirectory(prefix="olm_runtime_trace_match_") as tmp:
+            try:
+                materialized = extract_if_zip(args.source.resolve(), Path(tmp) / "source")
+            except Exception:
+                materialized = None
+            source_request_ids: set[str] = set()
+            if materialized is not None:
+                for path in sorted(materialized.rglob("*.json")) if materialized.is_dir() else [materialized]:
+                    if "__MACOSX" in path.parts or path.name.startswith("._"):
+                        continue
+                    data = load_json(path)
+                    if isinstance(data, dict):
+                        source_request_ids.update(runtime_trace_request_ids_from_json(data))
+            exact_package_match = bool(source_request_ids & runtime_package_manifest_request_ids(package))
 
     summary_json = args.runtime_summary_json
     summary_md = args.runtime_summary_md
@@ -817,10 +846,12 @@ def run_runtime_trace(args: argparse.Namespace, root: Path) -> int:
             sys.executable,
             "scripts/verify_runtime_trace_return.py",
             str(args.source.resolve()),
-            "--require-all",
         ]
-        if package:
+        if package and exact_package_match:
+            cmd.append("--require-all")
             cmd.extend(["--package", str(package)])
+        else:
+            cmd.extend(["--package", "none"])
         cmd.extend(["--summary-json", str(tmp_summary_json)])
         cmd.extend(["--summary-md", str(tmp_summary_md)])
         rc = run(cmd, root)

@@ -1,0 +1,180 @@
+{
+  "kind": "olmdistancegradation_0010_0011_aex_fieldgen_probe",
+  "generated_at": "2026-07-09T12:43:44Z",
+  "decision": "fieldgen-floats-match-current-mac-but-pack-rule-sign-flips",
+  "probes": [
+    {
+      "id": "case0010_inside",
+      "case_id": "olmdistancegradation_extended__case_0010",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/test_dg_fieldgen_p1b.py",
+        "--mask-png",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0010_before_effects.png",
+        "--mask-channel",
+        "alpha",
+        "--threshold",
+        "63",
+        "--param8",
+        "0",
+        "--points",
+        "901,394;6,40",
+        "--points-global"
+      ],
+      "returncode": 0,
+      "raw_stdout": "{\n  \"aex\": \"/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex\",\n  \"callback_counts\": {\n    \"PFHandle.dispose\": 8,\n    \"PFHandle.lock\": 8,\n    \"PFHandle.new\": 8,\n    \"PFHandle.unlock\": 8,\n    \"SPBasic.AcquireSuite\": 16,\n    \"SPBasic.ReleaseSuite\": 16,\n    \"cv::dist_transform\": 1,\n    \"cv::normalize_minmax\": 1,\n    \"cv::resize_same_shape\": 2,\n    \"cv::threshold\": 1\n  },\n  \"function\": \"0x181174760\",\n  \"hits\": [\n    \"FUN_1812aef70\",\n    \"FUN_1812aef70\",\n    \"FUN_18117ca50\"\n  ],\n  \"input\": {\n    \"crop_origin_xy\": [\n      0,\n      0\n    ],\n    \"crop_xywh\": null,\n    \"invert_mask\": false,\n    \"mask_channel\": \"alpha\",\n    \"mask_nonzero\": 970831,\n    \"mask_zero\": 1102769,\n    \"source_dtype\": \">u2\",\n    \"source_png\": \"/Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0010_before_effects.png\",\n    \"source_shape\": [\n      1080,\n      1920,\n      4\n    ]\n  },\n  \"instructions\": 6923,\n  \"output_max\": 1.0,\n  \"output_mean\": 0.39376160502433777,\n  \"output_min\": 0.0,\n  \"param8\": 0,\n  \"samples\": [\n    {\n      \"local_xy\": [\n        901,\n        394\n      ],\n      \"mask\": 255,\n      \"output\": 0.6985931396484375,\n      \"requested_xy\": [\n        901,\n        394\n      ]\n    },\n    {\n      \"local_xy\": [\n        6,\n        40\n      ],\n      \"mask\": 0,\n      \"output\": 0.0,\n      \"requested_xy\": [\n        6,\n        40\n      ]\n    }\n  ],\n  \"shape\": [\n    1080,\n    1920\n  ],\n  \"status\": \"completed\",\n  \"threshold\": 63\n}\n",
+      "threshold": 63,
+      "invert_mask": false,
+      "witness_xy": [
+        901,
+        394
+      ],
+      "field_x": 0.6985931396484375,
+      "field_word_float": 22891.5,
+      "field_word_floor": 22891,
+      "field_word_ceil": 22892,
+      "windows_required_field_word": 22892,
+      "windows_required_matches_floor": false,
+      "windows_required_matches_ceil": true,
+      "windows_store_a": 9876,
+      "callback_counts": {
+        "PFHandle.dispose": 8,
+        "PFHandle.lock": 8,
+        "PFHandle.new": 8,
+        "PFHandle.unlock": 8,
+        "SPBasic.AcquireSuite": 16,
+        "SPBasic.ReleaseSuite": 16,
+        "cv::dist_transform": 1,
+        "cv::normalize_minmax": 1,
+        "cv::resize_same_shape": 2,
+        "cv::threshold": 1
+      },
+      "hits": [
+        "FUN_1812aef70",
+        "FUN_1812aef70",
+        "FUN_18117ca50"
+      ],
+      "instructions": 6923,
+      "output_min": 0.0,
+      "output_max": 1.0,
+      "output_mean": 0.39376160502433777
+    },
+    {
+      "id": "case0010_outside",
+      "case_id": "olmdistancegradation_extended__case_0010",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/test_dg_fieldgen_p1b.py",
+        "--mask-png",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0010_before_effects.png",
+        "--mask-channel",
+        "alpha",
+        "--invert-mask",
+        "--threshold",
+        "82",
+        "--param8",
+        "0",
+        "--points",
+        "901,394;6,40",
+        "--points-global"
+      ],
+      "returncode": 0,
+      "raw_stdout": "{\n  \"aex\": \"/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex\",\n  \"callback_counts\": {\n    \"PFHandle.dispose\": 8,\n    \"PFHandle.lock\": 8,\n    \"PFHandle.new\": 8,\n    \"PFHandle.unlock\": 8,\n    \"SPBasic.AcquireSuite\": 16,\n    \"SPBasic.ReleaseSuite\": 16,\n    \"cv::dist_transform\": 1,\n    \"cv::normalize_minmax\": 1,\n    \"cv::resize_same_shape\": 2,\n    \"cv::threshold\": 1\n  },\n  \"function\": \"0x181174760\",\n  \"hits\": [\n    \"FUN_1812aef70\",\n    \"FUN_1812aef70\",\n    \"FUN_18117ca50\"\n  ],\n  \"input\": {\n    \"crop_origin_xy\": [\n      0,\n      0\n    ],\n    \"crop_xywh\": null,\n    \"invert_mask\": true,\n    \"mask_channel\": \"alpha\",\n    \"mask_nonzero\": 1102769,\n    \"mask_zero\": 970831,\n    \"source_dtype\": \">u2\",\n    \"source_png\": \"/Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0010_before_effects.png\",\n    \"source_shape\": [\n      1080,\n      1920,\n      4\n    ]\n  },\n  \"instructions\": 6923,\n  \"output_max\": 0.9999999403953552,\n  \"output_mean\": 0.14503996074199677,\n  \"output_min\": 0.0,\n  \"param8\": 0,\n  \"samples\": [\n    {\n      \"local_xy\": [\n        901,\n        394\n      ],\n      \"mask\": 0,\n      \"output\": 0.0,\n      \"requested_xy\": [\n        901,\n        394\n      ]\n    },\n    {\n      \"local_xy\": [\n        6,\n        40\n      ],\n      \"mask\": 255,\n      \"output\": 0.9002838134765625,\n      \"requested_xy\": [\n        6,\n        40\n      ]\n    }\n  ],\n  \"shape\": [\n    1080,\n    1920\n  ],\n  \"status\": \"completed\",\n  \"threshold\": 82\n}\n",
+      "threshold": 82,
+      "invert_mask": true,
+      "witness_xy": [
+        6,
+        40
+      ],
+      "field_x": 0.9002838134765625,
+      "field_word_float": 29500.5,
+      "field_word_floor": 29500,
+      "field_word_ceil": 29501,
+      "windows_required_field_word": 29500,
+      "windows_required_matches_floor": true,
+      "windows_required_matches_ceil": false,
+      "windows_store_a": 3268,
+      "callback_counts": {
+        "PFHandle.dispose": 8,
+        "PFHandle.lock": 8,
+        "PFHandle.new": 8,
+        "PFHandle.unlock": 8,
+        "SPBasic.AcquireSuite": 16,
+        "SPBasic.ReleaseSuite": 16,
+        "cv::dist_transform": 1,
+        "cv::normalize_minmax": 1,
+        "cv::resize_same_shape": 2,
+        "cv::threshold": 1
+      },
+      "hits": [
+        "FUN_1812aef70",
+        "FUN_1812aef70",
+        "FUN_18117ca50"
+      ],
+      "instructions": 6923,
+      "output_min": 0.0,
+      "output_max": 0.9999999403953552,
+      "output_mean": 0.14503996074199677
+    },
+    {
+      "id": "case0011_inside",
+      "case_id": "olmdistancegradation_extended__case_0011",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/test_dg_fieldgen_p1b.py",
+        "--mask-png",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0011_before_effects.png",
+        "--mask-channel",
+        "alpha",
+        "--threshold",
+        "348",
+        "--param8",
+        "0",
+        "--points",
+        "915,392",
+        "--points-global"
+      ],
+      "returncode": 0,
+      "raw_stdout": "{\n  \"aex\": \"/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex\",\n  \"callback_counts\": {\n    \"PFHandle.dispose\": 8,\n    \"PFHandle.lock\": 8,\n    \"PFHandle.new\": 8,\n    \"PFHandle.unlock\": 8,\n    \"SPBasic.AcquireSuite\": 16,\n    \"SPBasic.ReleaseSuite\": 16,\n    \"cv::dist_transform\": 1,\n    \"cv::normalize_minmax\": 1,\n    \"cv::resize_same_shape\": 2,\n    \"cv::threshold\": 1\n  },\n  \"function\": \"0x181174760\",\n  \"hits\": [\n    \"FUN_1812aef70\",\n    \"FUN_1812aef70\",\n    \"FUN_18117ca50\"\n  ],\n  \"input\": {\n    \"crop_origin_xy\": [\n      0,\n      0\n    ],\n    \"crop_xywh\": null,\n    \"invert_mask\": false,\n    \"mask_channel\": \"alpha\",\n    \"mask_nonzero\": 970831,\n    \"mask_zero\": 1102769,\n    \"source_dtype\": \">u2\",\n    \"source_png\": \"/Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0011_before_effects.png\",\n    \"source_shape\": [\n      1080,\n      1920,\n      4\n    ]\n  },\n  \"instructions\": 6923,\n  \"output_max\": 1.0,\n  \"output_mean\": 0.2255031019449234,\n  \"output_min\": 0.0,\n  \"param8\": 0,\n  \"samples\": [\n    {\n      \"local_xy\": [\n        915,\n        392\n      ],\n      \"mask\": 255,\n      \"output\": 0.1345367729663849,\n      \"requested_xy\": [\n        915,\n        392\n      ]\n    }\n  ],\n  \"shape\": [\n    1080,\n    1920\n  ],\n  \"status\": \"completed\",\n  \"threshold\": 348\n}\n",
+      "threshold": 348,
+      "invert_mask": false,
+      "witness_xy": [
+        915,
+        392
+      ],
+      "field_x": 0.1345367729663849,
+      "field_word_float": 4408.5009765625,
+      "field_word_floor": 4408,
+      "field_word_ceil": 4409,
+      "windows_required_field_word": 4409,
+      "windows_required_matches_floor": false,
+      "windows_required_matches_ceil": true,
+      "windows_store_a": 28359,
+      "callback_counts": {
+        "PFHandle.dispose": 8,
+        "PFHandle.lock": 8,
+        "PFHandle.new": 8,
+        "PFHandle.unlock": 8,
+        "SPBasic.AcquireSuite": 16,
+        "SPBasic.ReleaseSuite": 16,
+        "cv::dist_transform": 1,
+        "cv::normalize_minmax": 1,
+        "cv::resize_same_shape": 2,
+        "cv::threshold": 1
+      },
+      "hits": [
+        "FUN_1812aef70",
+        "FUN_1812aef70",
+        "FUN_18117ca50"
+      ],
+      "instructions": 6923,
+      "output_min": 0.0,
+      "output_max": 1.0,
+      "output_mean": 0.2255031019449234
+    }
+  ],
+  "source_reports": [
+    "refs/conformance/olmdistancegradation_0010_0011_opencv_field_prep_audit_20260709.md",
+    "tools/emulation/OPENCV_DETOUR_P1_REPORT.md"
+  ]
+}

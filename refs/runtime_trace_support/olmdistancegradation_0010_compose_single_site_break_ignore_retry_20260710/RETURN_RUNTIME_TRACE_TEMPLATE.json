@@ -1,0 +1,42 @@
+{
+  "kind": "olm_runtime_trace_result",
+  "schema": 1,
+  "results": [
+    {
+      "request_id": "olmdistancegradation_0010_compose_single_site_break_ignore_retry_20260710",
+      "status": "answered_partial",
+      "summary": "Fill with fresh break-ignore single-site Windows trace facts.",
+      "observations": {
+        "classification": "answered | answered_partial | failed_partial",
+        "effect": "OLM Distance Gradation",
+        "case_id": "olmdistancegradation_extended__case_0010",
+        "xy": [6, 40],
+        "ignored_first_chance_80000003": true,
+        "site_runs": [
+          {
+            "site": "field",
+            "site_address": "DistanceGradation+0x117057d",
+            "exact_rdi_gate_hit": null,
+            "rdi": null,
+            "target_output": null,
+            "rcx_field_addr": null,
+            "rcx_field_words": null,
+            "console_artifact": null,
+            "failed_reason": null
+          },
+          {
+            "site": "source",
+            "site_address": "DistanceGradation+0x11705f1",
+            "exact_rdi_gate_hit": null,
+            "rdi": null,
+            "target_output": null,
+            "rdx_source_addr": null,
+            "rdx_source_words": null,
+            "console_artifact": null,
+            "failed_reason": null
+          }
+        ]
+      }
+    }
+  ]
+}

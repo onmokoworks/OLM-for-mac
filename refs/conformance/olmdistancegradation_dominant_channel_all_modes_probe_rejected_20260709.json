@@ -1,0 +1,306 @@
+{
+  "kind": "olmdistancegradation_dominant_channel_all_modes_probe_deferred",
+  "schema": 1,
+  "date": "2026-07-09",
+  "candidate_change": "16bpc+ dominant channel low-alpha mask generalized from IN_OUT_BOTH only to all in/out modes. Reverted after this probe because the evidence is insufficient for adoption.",
+  "decision": "deferred-not-adopted",
+  "reason": "The probe reduces the focused case_0014 residual from max 4 to max 2, but it still leaves the 16bpc focused family non-exact and is not binary-grounded. The full 16-case single-case run is not an exact-count gate here: after reverting to the BOTH-only rule, case_0010/case_0011 still show max 2 under the single-case runner, so those diffs are runner/context artifacts rather than proof that the probe broke exact cases. Keep the BOTH-only rule until a binary-grounded discriminator or canonical batch validation supports broadening.",
+  "ae_runner_note": "AE 2026 single-case host repeatedly exited between cases; cases were retried after relaunch. A reverted spot-check also reports case_0010/case_0011 max 2 under the same single-case runner, so this run must not be used as the 16bpc exact-count authority.",
+  "exact": 5,
+  "total": 16,
+  "rows": [
+    {
+      "case_id": "0008",
+      "status": "exact",
+      "nonzero_values": 0,
+      "nonzero_pixels": 0,
+      "max_abs": 0,
+      "mean_abs": 0.0,
+      "channel_max_abs": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": "refs/reports/ae_single_case_olmdistancegradation_dominant_all_modes_full16_20260709/case0008/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0008.png",
+      "reference": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0008.png"
+    },
+    {
+      "case_id": "0010",
+      "status": "diff",
+      "nonzero_values": 702,
+      "nonzero_pixels": 351,
+      "max_abs": 2,
+      "mean_abs": 0.00016927083333333334,
+      "channel_max_abs": [
+        2,
+        0,
+        0,
+        2
+      ],
+      "candidate": "refs/reports/ae_single_case_olmdistancegradation_dominant_all_modes_full16_20260709/case0010/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0010.png",
+      "reference": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0010.png"
+    },
+    {
+      "case_id": "0011",
+      "status": "diff",
+      "nonzero_values": 1002,
+      "nonzero_pixels": 501,
+      "max_abs": 2,
+      "mean_abs": 0.0002416087962962963,
+      "channel_max_abs": [
+        2,
+        0,
+        0,
+        2
+      ],
+      "candidate": "refs/reports/ae_single_case_olmdistancegradation_dominant_all_modes_full16_20260709/case0011/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0011.png",
+      "reference": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0011.png"
+    },
+    {
+      "case_id": "0012",
+      "status": "diff",
+      "nonzero_values": 8255,
+      "nonzero_pixels": 2948,
+      "max_abs": 2,
+      "mean_abs": 0.0019904996141975307,
+      "channel_max_abs": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "candidate": "refs/reports/ae_single_case_olmdistancegradation_dominant_all_modes_full16_20260709/case0012/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+      "reference": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+      "baseline_nonzero_pixels": 2948,
+      "baseline_max_abs": 2,
+      "baseline_mean_abs": 0.0019904996141975307,
+      "baseline_channel_max_abs": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "case_id": "0013",
+      "status": "diff",
+      "nonzero_values": 15814,
+      "nonzero_pixels": 7052,
+      "max_abs": 2,
+      "mean_abs": 0.0038131751543209877,
+      "channel_max_abs": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "candidate": "refs/reports/ae_single_case_olmdistancegradation_dominant_all_modes_full16_20260709/case0013/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0013.png",
+      "reference": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0013.png",
+      "baseline_nonzero_pixels": 9006,
+      "baseline_max_abs": 2,
+      "baseline_mean_abs": 0.005261622299382716,
+      "baseline_channel_max_abs": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "case_id": "0014",
+      "status": "diff",
+      "nonzero_values": 15992,
+      "nonzero_pixels": 7415,
+      "max_abs": 2,
+      "mean_abs": 0.003856095679012346,
+      "channel_max_abs": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "candidate": "refs/reports/ae_single_case_olmdistancegradation_dominant_all_modes_full16_20260709/case0014/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0014.png",
+      "reference": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0014.png",
+      "baseline_nonzero_pixels": 9630,
+      "baseline_max_abs": 4,
+      "baseline_mean_abs": 0.005750385802469136,
+      "baseline_channel_max_abs": [
+        4,
+        4,
+        4,
+        2
+      ]
+    },
+    {
+      "case_id": "0016",
+      "status": "diff",
+      "nonzero_values": 5421,
+      "nonzero_pixels": 1899,
+      "max_abs": 2,
+      "mean_abs": 0.0013071469907407407,
+      "channel_max_abs": [
+        2,
+        2,
+        2,
+        0
+      ],
+      "candidate": "refs/reports/ae_single_case_olmdistancegradation_dominant_all_modes_full16_20260709/case0016/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0016.png",
+      "reference": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0016.png",
+      "baseline_nonzero_pixels": 5373,
+      "baseline_max_abs": 2,
+      "baseline_mean_abs": 0.0037005690586419753,
+      "baseline_channel_max_abs": [
+        2,
+        2,
+        2,
+        0
+      ]
+    },
+    {
+      "case_id": "0020",
+      "status": "exact",
+      "nonzero_values": 0,
+      "nonzero_pixels": 0,
+      "max_abs": 0,
+      "mean_abs": 0.0,
+      "channel_max_abs": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": "refs/reports/ae_single_case_olmdistancegradation_dominant_all_modes_full16_20260709/case0020/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0020.png",
+      "reference": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0020.png"
+    },
+    {
+      "case_id": "0021",
+      "status": "exact",
+      "nonzero_values": 0,
+      "nonzero_pixels": 0,
+      "max_abs": 0,
+      "mean_abs": 0.0,
+      "channel_max_abs": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": "refs/reports/ae_single_case_olmdistancegradation_dominant_all_modes_full16_20260709/case0021/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0021.png",
+      "reference": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0021.png"
+    },
+    {
+      "case_id": "0022",
+      "status": "exact",
+      "nonzero_values": 0,
+      "nonzero_pixels": 0,
+      "max_abs": 0,
+      "mean_abs": 0.0,
+      "channel_max_abs": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": "refs/reports/ae_single_case_olmdistancegradation_dominant_all_modes_full16_20260709/case0022/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0022.png",
+      "reference": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0022.png"
+    },
+    {
+      "case_id": "0023",
+      "status": "exact",
+      "nonzero_values": 0,
+      "nonzero_pixels": 0,
+      "max_abs": 0,
+      "mean_abs": 0.0,
+      "channel_max_abs": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate": "refs/reports/ae_single_case_olmdistancegradation_dominant_all_modes_full16_20260709/case0023/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+      "reference": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png"
+    },
+    {
+      "case_id": "0024",
+      "status": "diff",
+      "nonzero_values": 1284585,
+      "nonzero_pixels": 1051915,
+      "max_abs": 20,
+      "mean_abs": 0.3274211516203704,
+      "channel_max_abs": [
+        20,
+        0,
+        20,
+        0
+      ],
+      "candidate": "refs/reports/ae_single_case_olmdistancegradation_dominant_all_modes_full16_20260709/case0024/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0024.png",
+      "reference": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0024.png"
+    },
+    {
+      "case_id": "0025",
+      "status": "diff",
+      "nonzero_values": 1088429,
+      "nonzero_pixels": 860084,
+      "max_abs": 6,
+      "mean_abs": 0.28962311921296297,
+      "channel_max_abs": [
+        6,
+        0,
+        6,
+        0
+      ],
+      "candidate": "refs/reports/ae_single_case_olmdistancegradation_dominant_all_modes_full16_20260709/case0025/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0025.png",
+      "reference": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0025.png"
+    },
+    {
+      "case_id": "0026",
+      "status": "diff",
+      "nonzero_values": 1080949,
+      "nonzero_pixels": 900709,
+      "max_abs": 4,
+      "mean_abs": 0.26815574363425926,
+      "channel_max_abs": [
+        4,
+        0,
+        4,
+        0
+      ],
+      "candidate": "refs/reports/ae_single_case_olmdistancegradation_dominant_all_modes_full16_20260709/case0026/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0026.png",
+      "reference": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0026.png"
+    },
+    {
+      "case_id": "0027",
+      "status": "diff",
+      "nonzero_values": 466820,
+      "nonzero_pixels": 451535,
+      "max_abs": 4,
+      "mean_abs": 0.11760971257716049,
+      "channel_max_abs": [
+        4,
+        4,
+        4,
+        0
+      ],
+      "candidate": "refs/reports/ae_single_case_olmdistancegradation_dominant_all_modes_full16_20260709/case0027/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0027.png",
+      "reference": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0027.png"
+    },
+    {
+      "case_id": "0028",
+      "status": "diff",
+      "nonzero_values": 506874,
+      "nonzero_pixels": 457177,
+      "max_abs": 3080,
+      "mean_abs": 7.260353250385802,
+      "channel_max_abs": [
+        3078,
+        3080,
+        3080,
+        0
+      ],
+      "candidate": "refs/reports/ae_single_case_olmdistancegradation_dominant_all_modes_full16_20260709/case0028/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0028.png",
+      "reference": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0028.png"
+    }
+  ],
+  "reverted_spotcheck": "refs/reports/ae_single_case_olmdistancegradation_reverted_both_rule_spotcheck_20260709/ reports case_0010 max=2 and case_0011 max=2 after source revert, proving the single-case runner/context cannot support the earlier breakage claim."
+}

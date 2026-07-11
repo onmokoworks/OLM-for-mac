@@ -1,0 +1,26 @@
+{
+  "id": "prepass_zero_alpha",
+  "kind": "prepass",
+  "width": 7,
+  "height": 3,
+  "row": 1,
+  "start": 3,
+  "front_count": 6,
+  "back_count": 5,
+  "end": 7,
+  "coefficient": 0.75,
+  "alpha_zero": true,
+  "input_sha256": {
+    "source.bin": "24ef9fc293b694f8a88042029f1838ef2991a7bdc0fefd0866a76170f91fda62",
+    "destination.bin": "28948f6797277f74f691f262e7b7353202707d1e2c87cb69550c8d8e57eda7cc",
+    "denominator.bin": "95e50642ccfb4650c38ab5c55c69cf59d23fbf5d82bc5a9b3d2a8f5389e5b547",
+    "valid.bin": "a0e2d20857e47b50f5dcb2c6e50c669926087cac9d216b3e8ab8e23ab3ce4d6e",
+    "front_weights.bin": "086e670063fce2a6a7837d9de92067efb6c279ab7762833220e5735316e51a38",
+    "back_weights.bin": "ee6123fcdec4a3ccbab136265a42a13bf3ddaaf558f25e040808227ef79977b2"
+  },
+  "expected_sha256": {
+    "destination.bin": "19a601113a470af4da1502490c654621ee5b7813af08c7268f25afa84c52810d",
+    "denominator.bin": "faead95b2e3c119ae33649e45e6980dffe0a38a3fa4d58977cd887ff04dd005c",
+    "valid.bin": "0beb1c643b04f3da865aecb3168d39db7a09231f1b1c1ac69a1798a0c7bd3d72"
+  }
+}

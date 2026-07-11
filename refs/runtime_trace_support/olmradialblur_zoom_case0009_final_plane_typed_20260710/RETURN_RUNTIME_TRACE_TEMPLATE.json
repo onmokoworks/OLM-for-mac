@@ -1,0 +1,63 @@
+{
+  "kind": "olm_runtime_trace_result",
+  "schema": 1,
+  "results": [
+    {
+      "request_id": "olmradialblur_zoom_case0009_final_plane_typed_20260710",
+      "status": "answered_partial",
+      "summary": "Fill with one-run Windows typed final-plane witness facts.",
+      "observations": {
+        "classification": "answered | answered_partial | failed_partial",
+        "effect": "OLM RadialBlur",
+        "case_id": "case_0009",
+        "run_id": null,
+        "hook_or_watchpoint": null,
+        "points": [
+          {
+            "role": "primary",
+            "xy": [7, 0],
+            "reference_rgba8": [21, 3, 3, 254],
+            "observed_rgba8": null,
+            "inverse_sample_xy": [null, null],
+            "cells": [
+              {"slot": "00", "cell_id": null, "angle_index": null, "radius_index": null, "address": null, "plus_0xe_rgba_float": [null, null, null, null], "plus_0xf252": null, "bilinear_weight": null},
+              {"slot": "10", "cell_id": null, "angle_index": null, "radius_index": null, "address": null, "plus_0xe_rgba_float": [null, null, null, null], "plus_0xf252": null, "bilinear_weight": null},
+              {"slot": "01", "cell_id": null, "angle_index": null, "radius_index": null, "address": null, "plus_0xe_rgba_float": [null, null, null, null], "plus_0xf252": null, "bilinear_weight": null},
+              {"slot": "11", "cell_id": null, "angle_index": null, "radius_index": null, "address": null, "plus_0xe_rgba_float": [null, null, null, null], "plus_0xf252": null, "bilinear_weight": null}
+            ],
+            "final_alpha_sum": null,
+            "pre_byte_alpha": null,
+            "evidence_artifact": null,
+            "failed_reason": null
+          },
+          {
+            "role": "control",
+            "xy": [8, 0],
+            "reference_rgba8": [21, 3, 3, 255],
+            "observed_rgba8": null,
+            "inverse_sample_xy": [null, null],
+            "cells": [],
+            "final_alpha_sum": null,
+            "pre_byte_alpha": null,
+            "evidence_artifact": null,
+            "failed_reason": null
+          },
+          {
+            "role": "control",
+            "xy": [24, 0],
+            "reference_rgba8": [21, 3, 3, 255],
+            "observed_rgba8": null,
+            "inverse_sample_xy": [null, null],
+            "cells": [],
+            "final_alpha_sum": null,
+            "pre_byte_alpha": null,
+            "evidence_artifact": null,
+            "failed_reason": null
+          }
+        ],
+        "console_artifact": null,
+        "failed_reason": null
+      }
+    }
+  ]
+}

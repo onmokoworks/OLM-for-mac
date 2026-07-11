@@ -1,0 +1,1212 @@
+{
+  "kind": "olmdistancegradation_case0023_neighborhood_probe_result",
+  "materialized_at": "2026-07-11T12:16:12Z",
+  "case_id": "olmdistancegradation_extended__case_0023",
+  "probe_dir": "refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707",
+  "points_count": 18,
+  "debug_fields_match_between_bg_modes": true,
+  "shade_stores_match_mac_png": true,
+  "shade_source_matches_input_png": true,
+  "comparisons": {
+    "win_bg_on_vs_mac_bg_on": {
+      "status": "compared",
+      "nonzero_px": 73,
+      "max_diff": 61165,
+      "mean_diff": 1.0517777054398147
+    },
+    "win_bg_off_vs_mac_bg_off": {
+      "status": "compared",
+      "nonzero_px": 73,
+      "max_diff": 65535,
+      "mean_diff": 1.1784258053626544
+    }
+  },
+  "mismatch_points": {
+    "bg_on": [
+      [
+        415,
+        393
+      ],
+      [
+        1699,
+        7
+      ]
+    ],
+    "bg_off": [
+      [
+        415,
+        393
+      ],
+      [
+        1699,
+        7
+      ]
+    ]
+  },
+  "rows": [
+    {
+      "xy": [
+        414,
+        392
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 1.0,
+      "raw_inside": 34.9284973,
+      "field_x": 0.0,
+      "src_a": 1.0,
+      "input_source_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "shade_source_promoted_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "bg_on_matches_windows": true,
+      "bg_off_matches_windows": true
+    },
+    {
+      "xy": [
+        414,
+        393
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 1.0,
+      "raw_inside": 35.0142822,
+      "field_x": 0.0,
+      "src_a": 1.0,
+      "input_source_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "shade_source_promoted_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "bg_on_matches_windows": true,
+      "bg_off_matches_windows": true
+    },
+    {
+      "xy": [
+        414,
+        394
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 1.0,
+      "raw_inside": 35.0570946,
+      "field_x": 0.0,
+      "src_a": 1.0,
+      "input_source_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "shade_source_promoted_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "bg_on_matches_windows": true,
+      "bg_off_matches_windows": true
+    },
+    {
+      "xy": [
+        415,
+        392
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 1.0,
+      "raw_inside": 35.9026451,
+      "field_x": 0.0,
+      "src_a": 1.0,
+      "input_source_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "shade_source_promoted_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "bg_on_matches_windows": true,
+      "bg_off_matches_windows": true
+    },
+    {
+      "xy": [
+        415,
+        393
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 1.0,
+      "raw_inside": 36.0138855,
+      "field_x": 1.0,
+      "src_a": 1.0,
+      "input_source_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "shade_source_promoted_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        0.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bg_on_matches_windows": false,
+      "bg_off_matches_windows": false
+    },
+    {
+      "xy": [
+        415,
+        394
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 1.0,
+      "raw_inside": 36.0555115,
+      "field_x": 1.0,
+      "src_a": 1.0,
+      "input_source_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "shade_source_promoted_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        0.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mac_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bg_on_matches_windows": true,
+      "bg_off_matches_windows": true
+    },
+    {
+      "xy": [
+        416,
+        392
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 1.0,
+      "raw_inside": 36.8781776,
+      "field_x": 1.0,
+      "src_a": 1.0,
+      "input_source_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "shade_source_promoted_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        0.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mac_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bg_on_matches_windows": true,
+      "bg_off_matches_windows": true
+    },
+    {
+      "xy": [
+        416,
+        393
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 1.0,
+      "raw_inside": 37.0135117,
+      "field_x": 1.0,
+      "src_a": 1.0,
+      "input_source_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "shade_source_promoted_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        0.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mac_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bg_on_matches_windows": true,
+      "bg_off_matches_windows": true
+    },
+    {
+      "xy": [
+        416,
+        394
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 1.0,
+      "raw_inside": 37.0540161,
+      "field_x": 1.0,
+      "src_a": 1.0,
+      "input_source_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "shade_source_promoted_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        0.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mac_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bg_on_matches_windows": true,
+      "bg_off_matches_windows": true
+    },
+    {
+      "xy": [
+        1698,
+        6
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 0.0,
+      "raw_inside": 0.0,
+      "field_x": 1.0,
+      "src_a": 0.0,
+      "input_source_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "shade_source_promoted_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        0.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mac_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bg_on_matches_windows": true,
+      "bg_off_matches_windows": true
+    },
+    {
+      "xy": [
+        1698,
+        7
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 0.0274658203,
+      "raw_inside": 1.0,
+      "field_x": 0.0,
+      "src_a": 0.0274658203,
+      "input_source_rgba16": [
+        47,
+        47,
+        47,
+        1799
+      ],
+      "shade_source_promoted_rgba16": [
+        47,
+        47,
+        47,
+        1799
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "bg_on_matches_windows": true,
+      "bg_off_matches_windows": true
+    },
+    {
+      "xy": [
+        1698,
+        8
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 0.784301758,
+      "raw_inside": 1.41421354,
+      "field_x": 0.0,
+      "src_a": 0.784301758,
+      "input_source_rgba16": [
+        40311,
+        40311,
+        40311,
+        51399
+      ],
+      "shade_source_promoted_rgba16": [
+        40311,
+        40311,
+        40311,
+        51399
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "bg_on_matches_windows": true,
+      "bg_off_matches_windows": true
+    },
+    {
+      "xy": [
+        1699,
+        6
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 0.0,
+      "raw_inside": 0.0,
+      "field_x": 1.0,
+      "src_a": 0.0,
+      "input_source_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "shade_source_promoted_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        0.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mac_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bg_on_matches_windows": true,
+      "bg_off_matches_windows": true
+    },
+    {
+      "xy": [
+        1699,
+        7
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 0.00393676758,
+      "raw_inside": 1.0,
+      "field_x": 0.0,
+      "src_a": 0.00393676758,
+      "input_source_rgba16": [
+        0,
+        0,
+        0,
+        257
+      ],
+      "shade_source_promoted_rgba16": [
+        0,
+        0,
+        0,
+        257
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mac_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "bg_on_matches_windows": false,
+      "bg_off_matches_windows": false
+    },
+    {
+      "xy": [
+        1699,
+        8
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 0.756866455,
+      "raw_inside": 1.41421354,
+      "field_x": 0.0,
+      "src_a": 0.756866455,
+      "input_source_rgba16": [
+        37541,
+        37541,
+        37541,
+        49601
+      ],
+      "shade_source_promoted_rgba16": [
+        37541,
+        37541,
+        37541,
+        49601
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "bg_on_matches_windows": true,
+      "bg_off_matches_windows": true
+    },
+    {
+      "xy": [
+        1700,
+        6
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 0.0,
+      "raw_inside": 0.0,
+      "field_x": 1.0,
+      "src_a": 0.0,
+      "input_source_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "shade_source_promoted_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        0.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mac_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bg_on_matches_windows": true,
+      "bg_off_matches_windows": true
+    },
+    {
+      "xy": [
+        1700,
+        7
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 0.0,
+      "raw_inside": 0.0,
+      "field_x": 1.0,
+      "src_a": 0.0,
+      "input_source_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "shade_source_promoted_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        0.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mac_bg_off_rgba16": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bg_on_matches_windows": true,
+      "bg_off_matches_windows": true
+    },
+    {
+      "xy": [
+        1700,
+        8
+      ],
+      "fields_equal_between_bg_modes": true,
+      "alpha": 0.384307861,
+      "raw_inside": 1.0,
+      "field_x": 0.0,
+      "src_a": 0.384307861,
+      "input_source_rgba16": [
+        9677,
+        9677,
+        9677,
+        25185
+      ],
+      "shade_source_promoted_rgba16": [
+        9677,
+        9677,
+        9677,
+        25185
+      ],
+      "source_matches_input_png": true,
+      "bg_on_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_off_out_rgba_float": [
+        0.109804153,
+        0.0,
+        0.933333397,
+        1.0
+      ],
+      "bg_on_store_matches_mac_png": true,
+      "bg_off_store_matches_mac_png": true,
+      "win_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_on_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "win_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "mac_bg_off_rgba16": [
+        7195,
+        0,
+        61165,
+        65535
+      ],
+      "bg_on_matches_windows": true,
+      "bg_off_matches_windows": true
+    }
+  ],
+  "safe_claim": "The 3x3 neighborhoods around the two live case_0023 witnesses reproduce the same 73px full-frame residual while all logged shade sources match the request input PNG under AE PF_Pixel16 promotion and all logged shade stores match the Mac PNG. The newly logged neighboring points show the mismatch is still confined to the previously live boundary representatives in this neighborhood; this supports continuing with Windows final/source-ownership proof rather than broad field-helper or compose retuning.",
+  "inputs": {
+    "before_effects": "refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/request/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023_before_effects.png",
+    "bg_on_field": "refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/bg_on/field_debug_report.json",
+    "bg_off_field": "refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/bg_off/field_debug_report.json",
+    "bg_on_shade": "refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/bg_on/shade_debug.txt",
+    "bg_off_shade": "refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/bg_off/shade_debug.txt",
+    "mac_bg_on": "refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/bg_on/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+    "mac_bg_off": "refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707/bg_off/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+    "win_bg_on": "refs/win_references/olm_return_20260706/DistanceGradation/olmdistancegradation_case0023_current_aex_recapture_20260702__software_16bpc__fr24__olmdistancegradation_extended__case_0023_current_aex.png",
+    "win_bg_off": "refs/win_references/olmdistancegradation_16bpc_bg_compose_variants_20260626/DistanceGradation/renders/olmdistancegradation_16bpc_bg_compose_variants_20260626__software_16bpc__fr24__olmdistancegradation_case_0023_bg_off_variant.png"
+  }
+}

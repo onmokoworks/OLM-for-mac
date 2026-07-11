@@ -25,6 +25,39 @@
     RGB / substitute-path unresolved lane rather than a plain
     sampler/validity issue, and Inner has no exact/global candidate to
     promote.
+  - 2026-07-05 local AEX emulation updates the tiny Rotation lane: the CPU
+    `.aex` normalized polar cells match the retained Windows typed cells to
+    <=1 ULP, and the direct AEX inverse sample for `case_0010 (1614,6)` returns
+    black. The legacy PNG reference is still white, so this witness is now
+    classified as `reference-path-split-suspected` rather than a safe Mac-side
+    scatter tuning target.
+  - 2026-07-08 static witness plan freezes the next useful evidence:
+    `refs/conformance/olmradialblur_static_witness_plan_20260708.md`.
+    The active Windows/NAS request is
+    `refs/runtime_trace_packages/olm_runtime_trace_radialblur_case0010_final_writeback_20260708.zip`,
+    with acceptance contract
+    `refs/conformance/olmradialblur_case0010_final_writeback_contract_20260708.md`.
+    It asks for a same-run `case_0010 (1614,6)` final-writeback/provenance
+    witness that captures `+0xf250.rgba`, `+0xf252`, collapsed `+0xe.rgba`,
+    final output-buffer RGBA, and export RGBA. Locally, Zoom remains the
+    better caller-collapse lane if `+0xf252 -> +0xe.alpha` can be dumped
+    without Windows.
+  - 2026-07-08 static summary
+    `refs/conformance/olmradialblur_static_witness_20260708.md` reuses existing
+    M4/M5 artifacts without a fresh multi-minute emulation run. It restates the
+    black direct `+0xe` sample at `(1614,6)`, the local output-world bytes, and
+    the four-cell neighborhood, while explicitly preserving the limitation that
+    `+0xf252` is missing for the `1604` column and no Windows final-writeback
+    dump exists yet.
+  - 2026-07-08 final-writeback return:
+    `refs/conformance/olmradialblur_case0010_final_writeback_return_intake_20260708.md`
+    classifies the Windows return as `answered_partial`. It is useful
+    provenance evidence: current Windows SOFTWARE export is still bright at
+    `(1614,6)` (`[237,237,237,255]`), the legacy reference is brighter
+    (`[255,255,255,255]`), and the direct collapsed `+0xe` path remains black.
+    It is not sufficient for a Mac implementation change because no fresh
+    same-run Windows debugger stop tied `+0xf250`, `+0xf252`, collapsed `+0xe`,
+    direct `+0xe` sampling, output-buffer writeback, and export together.
 
 ## Source Evidence
 
@@ -36,6 +69,7 @@
 | The two RGBA polar samplers do not treat alpha identically: non-repeat `FUN_180001270` divides RGB by accumulated alpha and then rewrites `alpha = accumulated_alpha / in_bounds_weight_sum`, while repeat-border `FUN_180001520` divides RGB by accumulated alpha but keeps alpha as the raw accumulated edge-clamped sum and returns a separate loose-window validity flag. | 2026-06-30 Ghidra decompile pass on `0x180001270` and `0x180001520`. In `FUN_180001270`, `param_2[3] = fVar10 / fVar9` after RGB normalization; in `FUN_180001520`, RGB is normalized only when `param_2[3] != 0`, and the function returns `uVar7` for loose `-2 < int(coord) < extent` validity instead of rewriting alpha by a coverage denominator. | binary-grounded / 2026-06-30 ghidra |
 | `FUN_180004640` preserves the RGBA sampler return as a caller-visible side channel independent of sampled RGBA alpha. | 2026-06-30 Ghidra recheck on `FUN_180004640`: sampler return `uVar4` is stored per polar cell into a separate validity buffer (`param_1 + 0xf252`) before prepass/scatter, and that buffer is then passed into `FUN_180002780` and `RadialBlur_scatter_valid_polar_cells`. | binary-grounded / 2026-06-30 ghidra |
 | The final inverse sampler does not read the preserved validity side channel directly; `FUN_180004640` first collapses `+0xf252` into `+0xe.alpha` during polar normalization. | 2026-06-30 Ghidra recheck on `FUN_180004640`: if `*(float *)(... + 0xf252) == 0` it clears `+0xe.rgb`; otherwise it normalizes RGB from `+0xf250` and writes that same `0xf252` value into `+0xe.alpha` before the final `FUN_180009d80(param_1 + 0xe, ...)` call. | binary-grounded / 2026-06-30 ghidra |
+| Zoom case-0009 final sampler ABI is bound in one Windows run for `(7,0)`, `(8,0)`, and `(24,0)`: coordinate gate is `(EBX,R13D)`, call is `+0x5e68`, return is `+0x5e6d`, all calls use one pool and `R8/R9 = 1104/1800`, and destination cells advance by 16 bytes. | `refs/conformance/olmradialblur_zoom_case0009_sampler_args_intake_20260710.md`; `FUN_180009d80` callsite in `disasm/OLMRadialBlur.aex.asm.txt`. The post-capture PNG write failed, but not the gated CDB observations. | runtime-trace / binary-grounded / 2026-07-10 |
 | The current Mac C++ port does not model that preserved-validity side channel yet; both Zoom and Rotation inverse sampling currently consume a single blurred alpha plane instead of a caller-collapsed `+0xe.alpha` derived from `+0xf252`. | 2026-06-30 source audit of `mac/OLMRadialBlur/OLMRadialBlur.cpp`: `RenderZoom8` and `RenderRotation8` build one `blurred.rgba[...,3]` plane, then inverse-sample `alpha` directly from that plane. There is no separate buffer corresponding to AEX `+0xf252`, no RGB zero-on-zero-validity collapse before inverse sampling, and no distinct `+0xf250`/`+0xe` split. | source-audit / 2026-06-30 |
 | A naive `0/1 preserved validity -> final alpha` substitution is rejected for the outer lanes. | `refs/conformance/olmradialblur_outer_caller_collapse_probe_20260630.md`: a bounded CLI probe with `--outer-caller-collapse-mode binary-validity` worsens both representative outer witnesses from the current narrow residuals to broad top-edge alpha staircases (`case_0009 mean=0.1146`, `case_0010 mean=0.1204`). This means the missing caller-collapse model is more specific than "sample valid flag becomes final alpha directly". | probe-rejected / 2026-06-30 |
 | A weaker `validity only zeros RGB; alpha stays blurred` substitute is also rejected for the outer lanes. | `refs/conformance/olmradialblur_outer_caller_collapse_probe_20260630.md`: `--outer-caller-collapse-mode zero-rgb-on-invalid` lowers the damage versus `binary-validity`, but still broadens Zoom (`case_0009 mean=0.0260`, `max=91`) and slightly worsens tiny Rotation (`case_0010 mean=0.0144`) by erasing top-edge RGB that Windows keeps. This narrows the live hypothesis to a more specific typed caller-collapse rule, not a simple binary keep/drop gate. | probe-rejected / 2026-06-30 |
@@ -67,6 +101,120 @@ current RadialBlur program:
 If we only get one readable Ghidra target from this session, `RadialBlur` is
 the right one to keep open because the highest-value pending Windows witness is
 `olmradialblur_caller_collapse_witness_20260630`.
+
+2026-07-08 update: the RadialBlur final-writeback request has returned
+`answered_partial`. Do not tune the Mac code from it. If this lane is pursued
+again, ask only for the missing same-run debugger stop described in
+`refs/conformance/olmradialblur_case0010_final_writeback_return_intake_20260708.md`;
+otherwise move the shared Windows queue to the next prepared hard-lane package.
+
+2026-07-08 Zoom emulator update: `case_0009` local AEX emulation has two
+separate harness facts. The normal `FUN_180007520` path is an entry/staging
+bottleneck, not a semantic proof: it reaches `blur_type=1`, but stalls around
+the full-frame `0x180007811` staging loop before the useful Zoom core hooks. A
+direct `FUN_1800056f0` harness now reaches the Zoom core and computes the full
+`1800 * 1104` polar grid, but the active local bottleneck is the in-function
+polar input prefill before `FUN_18000b150`/`FUN_18000a9d0`. A reduced
+non-semantic debug run (`32x32`, quality step `90.0`) reaches `FUN_18000b150`
+and `FUN_18000a9d0`, proving the direct harness can hook those branches once
+the prefill budget is controlled. A full-size synthetic prefill + no-op
+heavy-worker run reaches the final-plane branch at `0x180005c9f`, proving the
+downstream dispatch is reachable at real case geometry while keeping semantic
+claims blocked until the prefill/worker state is real. Use
+`refs/conformance/olmradialblur_zoom_emulator_dispatch_bottleneck_20260708.md`,
+`refs/conformance/olmradialblur_zoom_staging_loop_probe_20260708.md`, and
+`refs/conformance/olmradialblur_zoom_direct_core_prefill_probe_20260708.md` as
+the current local classification. Do not change Mac output code from these
+local emulator witnesses.
+
+2026-07-08 follow-up: `tools/emulation/test_zoom_case0009.py` now has
+`--direct-python-prefill`, which fills the hot `FUN_1800056f0` polar prefill
+planes from the decompiled repeat-border samplers (`FUN_18000a6a0` RGBA and
+`FUN_18000a270` scalar) instead of synthetic all-one planes. The full-size
+candidate run keeps `1800 * 1104` cells and reaches the same downstream
+branches with `b150/a9d0` no-op detoured. At output `(6,0)`, one of the four
+sampled final-plane cells has `alpha = 0.9999999403953552`; bilinear sampling
+therefore yields alpha `0.9999999924232991`, which truncates to byte `254`.
+The same Python prefill was then validated against the original AEX prefill at
+the reduced `32x32/q90` pre-worker boundary with `max_abs_diff = 0.0` across
+the compared final-polar, denominator, and accumulation cells. This makes it a
+validated reduced-geometry candidate for the Zoom `254/255` split, but still
+not proof because the full-size run detours the heavy workers. Evidence files:
+`refs/reports/olmradialblur_zoom_case0009_python_prefill_candidate_20260708.json`
+and `refs/conformance/olmradialblur_zoom_python_prefill_validation_20260708.md`.
+The single-worker detour matrix in
+`refs/conformance/olmradialblur_zoom_python_prefill_worker_detour_matrix_20260708.md`
+keeps the same target sample alpha/truncation when either `FUN_18000b150` or
+`FUN_18000a9d0` is live in isolation. The observed target `accum_0x842` and
+`denom_0x843` cells remain zero in those runs, so the current local explanation
+for the `(6,0)` alpha byte is prefill/final-plane bilinear/truncate, not a late
+byte writer and not the observed worker accumulation cells.
+The first direct CLI translation candidate
+(`--zoom-grid-mode aex-float --rgba-sampler-alpha-mode repeat-raw-f32
+--outer-caller-collapse-mode polar-alpha`) is near-inert:
+`refs/conformance/olmradialblur_zoom_cli_polar_alpha_candidate_20260708.md`
+still reports `(6,0) = [20,3,3,255]` and target cell alpha `[1,1,1,1]`.
+Adding global alpha truncation moves `(6,0)` to `254` but is overbroad:
+`refs/conformance/olmradialblur_zoom_cli_truncate_candidate_20260708.md`
+worsens the full image to `mean=0.0688` / `567071` nonzero pixels and flips
+many Windows-255 top-row pixels to 254. Therefore the next implementation step
+is not simply "read alpha from polar" or "truncate alpha globally"; it must
+first align the exact AEX polar cell coordinate/float sequence or identify the
+precise final-plane source used by `FUN_1800056f0`.
+The 2026-07-09 quantize-boundary recheck
+`refs/conformance/olmradialblur_zoom_case0009_quantize_boundary_probe_20260709.md`
+updates that witness with the current CLI: `polar-alpha` now exposes
+`alpha=0.9999999924` at `(6,0)` because one final-polar cell contributes
+`0.9999999404`, but normal epsilon quantization still stores `255`. Adding
+`--outer-alpha-quantize-mode truncate` stores the desired `254` only by
+reintroducing the same overbroad `567071`-pixel failure. Keep global alpha
+truncation rejected; the live Zoom lane remains final-polar cell/plane
+selection, not output byte packing.
+The same-day quantize-locus report
+`refs/conformance/olmradialblur_zoom_case0009_quantize_locus_20260709.md`
+pins the locality: on top row `x=0..30`, Windows alpha is `254` only at
+`x=[6,7,12]`, and the current default path is alpha-only `+1` at exactly
+those positions. The global truncate variant fixes the `(6,0)` witness but
+also flips many Windows-255 row pixels and keeps the full-frame `567071`
+nonzero-pixel failure. This further rules out a late byte-pack fix and keeps
+the next proof target in final-polar plane population / coordinate-float
+sequence. The off-by-one details are stricter than the earlier single-pixel
+witness: `x=6` and `x=12` expose `polar-alpha < 1.0`, but `x=7` has all four
+local `polar-alpha` cells equal to `1.0` while Windows still stores alpha
+`254`. So the missing rule is not simply "use the source polar alpha plane";
+it must alter the final-polar cell contents, the sampled cell set, or the
+coordinate/float sequence before final byte quantization.
+The final-sample arithmetic probe
+`refs/conformance/olmradialblur_zoom_case0009_final_sample_float_sequence_20260709.md`
+then rejects the narrow "weight/sum precision only" branch. Replaying the
+top-row final alpha sum with current double accumulation, f32 product sums, f32
+sequential/grouped sums, and corresponding weight-only sums emits no `254`
+pixels under the normal epsilon quantizer; `x=[6,7,12]` all remain false
+negatives. Truncate-only variants can hit parts of the target set, but only
+with false positives or missed targets. Keep the live proof on final-polar cell
+selection, coordinate generation, or source-plane population, not on final
+bilinear arithmetic order.
+The prefill-coordinate probe
+`refs/conformance/olmradialblur_zoom_case0009_prefill_coordinate_probe_20260709.md`
+then checks the cheaper neighbor-shift branch using the C++ repeat-raw-f32
+sampler operation order. The known `0.9999999404` polar cells are reproduced by
+negative repeat-clamp weights plus sequential `float` accumulation, not by
+input alpha itself. For target `x=7`, the current four final cells are still
+all alpha `1.0`, but the immediate neighborhood includes sub-one
+repeat-sampler cells such as `[1048,1097]` and `[1049,1097]`. This keeps a
+small sampled-cell/coordinate selection mismatch plausible and moves the next
+proof away from late quantization. The next useful evidence is either a
+bounded C++ coordinate/cell-set candidate or a Windows final-plane cell capture
+for the same top-row points.
+The bounded cell-set candidate probe
+`refs/conformance/olmradialblur_zoom_case0009_cellset_candidate_20260709.md`
+tests small global angle/radius cell offsets against the top row. It can find
+partial explanations, and the best tested offset (`cpp-double`, angle `+1`,
+radius `-2`, truncate) hits all three Windows alpha-254 targets `[6,7,12]`,
+but it also emits eleven false positives on the same row. This is not safe to
+promote as a Mac implementation rule. It does, however, sharpen the next
+Windows ask: capture the actual final-plane four-cell ids/alphas and pre-byte
+alpha for `x=6,7,12` plus nearby false-positive controls.
 
 ## Parameters
 
@@ -104,6 +252,30 @@ Current binary-grounded sequence:
    - otherwise RGB output is accumulation RGB divided by accumulation alpha,
      while alpha output is the scalar max/denom.
 7. Inverse sample the polar buffer into the output image.
+
+### Tiny Rotation Reference Split Gate (2026-07-05)
+
+`tools/emulation/test_m4_case0010.py` now runs the Windows CPU AEX locally for
+`case_0010` and performs a direct final inverse sample without trusting the
+mocked AE output world:
+
+- `FUN_180008690 -> FUN_180007520 -> FUN_180004640` reaches the Rotation body
+  on the real `1920x1080` input.
+- Local `+0xe` cells match the Windows retained typed cells:
+  `2/4` exact and `4/4` within `<=1 ULP` RGB with exact alpha.
+- `FUN_180001b10` maps output pixel `(1614,6)` to
+  `radius=844.317504883`, `angle=5.598455906`.
+- The AEX final sampler coordinate is
+  `(1603.839558785, 844.317504883)`.
+- Direct `FUN_180001000(+0xe)` returns
+  `[-0.004081939, -0.004081939, -0.004081939, 1.0]`, which clamps to
+  `[0,0,0,255]`.
+- The legacy 20260604 PNG reference remains `[255,255,255,255]`.
+
+Interpretation: the CPU `.aex` evidence no longer supports tuning the Mac
+Rotation scatter path toward that white PNG witness. Treat this as a
+reference-provenance / render-path split until a current-AEX Software/EXR
+recapture or a CPU final writeback trace proves otherwise.
 
 ## Zoom Status
 
@@ -718,6 +890,7 @@ Current binary-grounded sequence:
 | Case group | Bit depth | Expected status | Current result | Next evidence |
 | --- | --- | --- | --- | --- |
 | Zoom no-inner/no-noise `case_0009` | 8bpc | guarded near-exact | 2026-06-19 rerun: `max=1 mean=0.0046`; 2026-06-24 witness audit shows RGB float match and alpha-only local `[20,3,3,255]` vs Windows `[20,3,3,254]` | AE exact check and Zoom polar alpha/sample accumulation proof |
+| Zoom AEX emulation entry/direct-core probe `case_0009` | 8bpc | partial local witness / validated reduced-geometry candidate | `refs/conformance/olmradialblur_zoom_case0009_aex_witness_20260708.md`: normal parameter setup completes with `blur_type=1`, but the normal render path remains a full-frame staging bottleneck before Zoom dispatch. `refs/conformance/olmradialblur_zoom_direct_core_prefill_probe_20260708.md`: direct core reaches `FUN_1800056f0` and computes the `1800 * 1104` polar grid; reduced non-semantic `32x32/q90` debug reaches `b150/a9d0`; full-size synthetic prefill plus no-op heavy workers reaches final-plane branch `0x180005c9f`. New Python prefill candidate uses decomp-grounded repeat-border samplers and produces `(6,0)` alpha `0.9999999924232991 -> trunc 254`; `refs/conformance/olmradialblur_zoom_python_prefill_validation_20260708.md` validates the Python prefill against original AEX prefill for reduced `32x32/q90` geometry with `max_abs_diff=0.0`; `refs/conformance/olmradialblur_zoom_python_prefill_worker_detour_matrix_20260708.md` shows the target sample is stable when either heavy worker is live in isolation. The first direct CLI translation candidate is near-inert (`refs/conformance/olmradialblur_zoom_cli_polar_alpha_candidate_20260708.md`), so the C++ gap is narrower: exact polar cell coordinate/float sequence or final-plane source, not final byte packing. | align C++ polar prefill cell generation to the AEX/Python witness or capture Windows final-plane cells for the same four-cell neighborhood |
 | tiny Rotation `case_0010` | 8bpc | guarded mean-only | 2026-06-19 rerun: `max=255 mean=0.0104` | binary-ground high-max residual before broad compatibility claim |
 | old Inner `case_0011..0013` | 8bpc | expected-red | 2026-06-19 rerun: `max=255/255/238`, `mean=23.0495/16.0039/18.0193` | narrow asm/runtime proof for remaining sampler/prepass/scatter/writeback split |
 | Inner small-span witness | 8bpc | runtime-trace-informed guard | span fact resolved to 31, image still `max=255 mean=0.2346` in current smoke | compare more per-cell scatter/writeback witnesses before changing defaults |
@@ -790,29 +963,34 @@ Expected useful classifications:
   row above at `row 843 / angles 1601..1602`. That keeps the live Windows ask
   on the first upstream inclusion/substitute branch, not on final sample
   placement.
+- 2026-07-05 update: that live ask is now superseded for `case_0010 (1614,6)`.
+  The local CPU AEX emulation reproduces the retained Windows typed `+0xe`
+  cells to <=1 ULP, and direct `FUN_180001b10 -> FUN_180001000(+0xe)` sampling
+  at the witness returns black. The next proof is no longer another
+  promotion-branch search from a white PNG assumption; it is a current-AEX
+  Software/EXR recapture or CPU final writeback witness that proves whether the
+  legacy PNG white belongs to the same path.
 - A same-day Windows return now freezes what that backstep ask still does not
   capture:
   `refs/returns/windows/20260701_225800_radialblur_tiny_rotation_backstep_followup/...return_windows.zip`,
   `refs/reports/runtime_trace_comparisons/olmradialblur_tiny_rotation_backstep_followup_20260701.summary.md`,
   and
   `refs/reports/runtime_trace_comparisons/olmradialblur_tiny_rotation_backstep_followup_20260701.md`.
-  The result is still `failed_partial`: it preserves the stable
+  Historical result: it preserved the stable
   `+0x4eb9/+0x4ec8` inverse-sampler anchor, final white byte, and the same
-  near-black sampled RGBA, but it does not retain the first upstream branch
-  that promotes the witness to white. That means the next Windows ask is no
-  longer "backstep from the anchor" in general; it must attach stack/pointer
-  context or sampled-cell watchpoints to that same anchor so the first
-  substitute/source-population branch is retained.
-- The current live Windows ask is therefore the anchor-watch contract:
+  near-black sampled RGBA, but it did not retain the first upstream branch
+  then believed necessary. After the 2026-07-05 local AEX emulation gate, this
+  historical gap should not be used to justify white-pixel tuning.
+- The archived anchor-watch contract is:
   `refs/conformance/olmradialblur_tiny_rotation_anchor_watch_followup_contract_20260701.md`
   and
   `refs/conformance/olmradialblur_tiny_rotation_anchor_watch_return_acceptance_20260701.md`.
   Treat the backstep package and its comparison as archived evidence that
-  justifies this narrower request, not as the active queue item.
+  explains why the older queue item existed, not as the active queue item.
 - The comparison JSON/Markdown also emits `recommended_next_evidence`. Use it
   as the stop/go note for the next Mac-side implementation step: Zoom needs
-  caller-collapse / denominator / pre-writeback proof, while tiny Rotation
-  needs the anchor-watch upstream RGB / substitute-path witness.
+  caller-collapse / denominator / pre-writeback proof, while tiny Rotation now
+  needs reference-path proof before any implementation change.
 - Latest focused comparison:
   `refs/reports/runtime_trace_comparisons/olmradialblur_residual_witness_20260624.md`.
   Use this over the older generic `olmradialblur_residual_witness.md` report

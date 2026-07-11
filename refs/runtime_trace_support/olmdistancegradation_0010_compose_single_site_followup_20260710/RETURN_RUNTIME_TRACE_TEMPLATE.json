@@ -1,0 +1,60 @@
+{
+  "kind": "olm_runtime_trace_result",
+  "schema": 1,
+  "results": [
+    {
+      "request_id": "olmdistancegradation_0010_compose_single_site_followup_20260710",
+      "status": "answered_partial",
+      "summary": "Fill with fresh single-site Windows trace facts.",
+      "observations": {
+        "classification": "answered | answered_partial | failed_partial",
+        "effect": "OLM Distance Gradation",
+        "case_id": "olmdistancegradation_extended__case_0010",
+        "xy": [6, 40],
+        "address_model": {
+          "output_base": null,
+          "output_addr": null,
+          "output_rowbytes": 15360,
+          "output_pixel_size": 8
+        },
+        "site_runs": [
+          {
+            "site": "field",
+            "site_address": "DistanceGradation+0x117057d",
+            "exact_rdi_gate_hit": null,
+            "rdi": null,
+            "target_output": null,
+            "rcx_field_addr": null,
+            "rcx_field_words": null,
+            "xmm": {},
+            "console_artifact": null,
+            "failed_reason": null
+          },
+          {
+            "site": "source",
+            "site_address": "DistanceGradation+0x11705f1",
+            "exact_rdi_gate_hit": null,
+            "rdi": null,
+            "target_output": null,
+            "rdx_source_addr": null,
+            "rdx_source_words": null,
+            "xmm": {},
+            "console_artifact": null,
+            "failed_reason": null
+          },
+          {
+            "site": "writer",
+            "site_address": "DistanceGradation+0x1170814",
+            "exact_rdi_gate_hit": null,
+            "rdi": null,
+            "target_output": null,
+            "final_pf16_words": null,
+            "xmm": {},
+            "console_artifact": null,
+            "failed_reason": null
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -4,15 +4,19 @@
 
 - Plug-in: OLM Toon Dilate
 - Feature/path: 8bpc Search Radius dilation path
-- Bit depth: 8bpc documented here; 16/32bpc still need references
+- Bit depth: 8bpc documented here; covered 16bpc slice is AE exact;
+  32bpc has returned only as PNG/non-float-preserving probe evidence
 - Reference set:
   - `refs/win_references/20260604_olm/OLMToonDilate`
   - normalized Software refs under
     `refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMToonDilate`
 - Current status: packaged 8bpc `AE exact` for `case_0001..0003`.
   Python/C++ CLI are also exact against normalized Software refs for the same
-  cases. 16/32bpc are still untested, so the plug-in as a whole is not
-  complete.
+  cases. The covered 16bpc Mac AE slice is also `AE exact` for the same three
+  cases (`refs/conformance/bitdepth_16bpc_exact_manifest_20260703.md`).
+  32bpc is not exact evidence yet: the broad EXR-first rerun came back
+  PNG-only/non-float-preserving and is frozen as `probe-only-png-return` in
+  `refs/conformance/bitdepth_32bpc_probe_status_20260703.md`.
 
 ## Source Evidence
 
@@ -85,12 +89,16 @@ The current exact CLI kernel is:
 
 | Case | Bit depth | Expected status | Current result | Next evidence |
 | --- | --- | --- | --- | --- |
-| `case_0001` | 8bpc | `AE exact` for packaged Software ref | `max_diff=0` in 2026-06-19 AE pixel return; exact in Python/C++ normalized checks | 16/32bpc references |
-| `case_0002` | 8bpc | `AE exact` for packaged Software ref | `max_diff=0` in 2026-06-19 AE pixel return; exact in Python/C++ normalized checks | 16/32bpc references |
-| `case_0003` | 8bpc | `AE exact` for packaged Software ref | `max_diff=0` in 2026-06-19 AE pixel return; exact in Python/C++ normalized checks | 16/32bpc references |
+| `case_0001` | 8bpc | `AE exact` for packaged Software ref | `max_diff=0` in 2026-06-19 AE pixel return; exact in Python/C++ normalized checks | Preserve exact behavior; next open depth is float-preserving 32bpc |
+| `case_0002` | 8bpc | `AE exact` for packaged Software ref | `max_diff=0` in 2026-06-19 AE pixel return; exact in Python/C++ normalized checks | Preserve exact behavior; next open depth is float-preserving 32bpc |
+| `case_0003` | 8bpc | `AE exact` for packaged Software ref | `max_diff=0` in 2026-06-19 AE pixel return; exact in Python/C++ normalized checks | Preserve exact behavior; next open depth is float-preserving 32bpc |
+| `case_0001..0003` | 16bpc | `AE exact` for covered Software slice | Live Mac AE verification against imported Windows Software 16bpc refs passes `3/3` with `max_diff=0` | Preserve exact behavior; broaden only with declared references |
 
 ## Open Questions
 
-- 16bpc and 32bpc propagation/writeback behavior.
+- 32bpc propagation/writeback behavior under a float-preserving EXR/TIFF/HDR
+  return.
+- Broader 16bpc behavior beyond the declared covered slice, if new ToonDilate
+  parameters or inputs are introduced.
 - Whether non-normalized older residuals were stale reference drift or hidden AE
   host/export differences; do not use them as algorithm guidance now.

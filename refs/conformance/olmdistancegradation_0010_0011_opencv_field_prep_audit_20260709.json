@@ -1,0 +1,127 @@
+{
+  "kind": "olmdistancegradation_0010_0011_opencv_field_prep_audit",
+  "generated_at": "2026-07-09T12:35:45Z",
+  "decision": "field-prep-structural-boundary-not-final-writer",
+  "facts": [
+    {
+      "id": "fieldgen_entry",
+      "file": "decomp/DistanceGradation.aex.c.txt",
+      "line": 3542506,
+      "marker": "void FUN_181174760",
+      "reading": "DistanceGradation field-prep helper entry.",
+      "path": "decomp/DistanceGradation.aex.c.txt",
+      "marker_found": true
+    },
+    {
+      "id": "first_distance_transform",
+      "file": "decomp/DistanceGradation.aex.c.txt",
+      "line": 3542536,
+      "marker": "FUN_1812b15a0(local_48[0],local_88[0],2,0,0,0,0);",
+      "reading": "First OpenCV distanceTransform call shape: uint8 source to float32 destination, DIST_L2, DIST_MASK_PRECISE.",
+      "path": "decomp/DistanceGradation.aex.c.txt",
+      "marker_found": true
+    },
+    {
+      "id": "trunc_threshold",
+      "file": "decomp/DistanceGradation.aex.c.txt",
+      "line": 3542540,
+      "marker": "uVar2 = 2;",
+      "reading": "Non-constant path starts with THRESH_TRUNC mode for the later threshold/normalize wrapper.",
+      "path": "decomp/DistanceGradation.aex.c.txt",
+      "marker_found": true
+    },
+    {
+      "id": "constant_switch",
+      "file": "decomp/DistanceGradation.aex.c.txt",
+      "line": 3542544,
+      "marker": "if (param_8 == 1)",
+      "reading": "Constant interpolation switches the mode used by the final wrapper.",
+      "path": "decomp/DistanceGradation.aex.c.txt",
+      "marker_found": true
+    },
+    {
+      "id": "final_wrapper_call",
+      "file": "decomp/DistanceGradation.aex.c.txt",
+      "line": 3542553,
+      "marker": "FUN_1812b6a40(local_68[0],local_a8[0],(double)fVar4,(double)fVar3,CONCAT44(uVar5,uVar2));",
+      "reading": "The helper emits the field through the wrapper fed by fVar4/fVar3 and threshold mode.",
+      "path": "decomp/DistanceGradation.aex.c.txt",
+      "marker_found": true
+    },
+    {
+      "id": "cvthreshold_string",
+      "file": "decomp/DistanceGradation.aex.c.txt",
+      "line": 3797673,
+      "marker": "\"cvThreshold\"",
+      "reading": "FUN_1812b6a40 assertion path names cvThreshold.",
+      "path": "decomp/DistanceGradation.aex.c.txt",
+      "marker_found": true
+    },
+    {
+      "id": "cvnormalize_path",
+      "file": "tools/emulation/opencv_impls.py",
+      "line": 227,
+      "marker": "def cvnormalize_minmax_native",
+      "reading": "The repo already has a limited cvNormalize NORM_MINMAX detour and sidecar gate for the fieldgen path.",
+      "path": "tools/emulation/opencv_impls.py",
+      "marker_found": true
+    },
+    {
+      "id": "current_mac_dt",
+      "file": "mac/OLMDistanceGradation/OLMDistanceGradation.cpp",
+      "line": 484,
+      "marker": "static void dt_to_normalized",
+      "reading": "Current Mac source computes EDT, clamps to threshold, finds raw max, then divides in float.",
+      "path": "mac/OLMDistanceGradation/OLMDistanceGradation.cpp",
+      "marker_found": true
+    }
+  ],
+  "witnesses": [
+    {
+      "case_id": "olmdistancegradation_extended__case_0010",
+      "xy": [
+        6,
+        40
+      ],
+      "family": "outside_actual_max",
+      "mac_raw_distance": 41.0,
+      "mac_field_x": 0.9002838730812073,
+      "required_field_word": 29500,
+      "windows_store_a": 3268,
+      "meaning": "The denominator behaves like an actual outside-field max near 45.54, not the UI threshold 82."
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0010",
+      "xy": [
+        901,
+        394
+      ],
+      "family": "inside_threshold_half_boundary",
+      "mac_raw_distance": 44.0113639831543,
+      "mac_field_x": 0.6985930800437927,
+      "required_field_word": 22892,
+      "windows_store_a": 9876,
+      "meaning": "The witness is threshold-limited by 63 and sits on the opposite half-boundary sign."
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0011",
+      "xy": [
+        915,
+        392
+      ],
+      "family": "inside_threshold_half_boundary",
+      "mac_raw_distance": 46.81879806518555,
+      "mac_field_x": 0.1345367729663849,
+      "required_field_word": 4409,
+      "windows_store_a": 28359,
+      "meaning": "A second inside threshold witness with the same sign as case_0010 (901,394)."
+    }
+  ],
+  "source_reports": [
+    "refs/conformance/olmdistancegradation_0010_0011_writeback_pointer_map_return_intake_20260709.md",
+    "refs/conformance/olmdistancegradation_0010_0011_field_pack_read_audit_20260709.md",
+    "refs/conformance/olmdistancegradation_0010_0011_normalization_denominator_audit_20260709.md",
+    "refs/conformance/olmdistancegradation_0010_0011_local_field_normalization_probe_20260709.md",
+    "tools/emulation/OPENCV_DETOUR_P1_REPORT.md"
+  ]
+}

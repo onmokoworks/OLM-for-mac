@@ -34,7 +34,9 @@ def case_metadata(case, manifest):
         "project_gpu_accel_type": case.get("project_gpu_accel_type") or manifest.get("project_gpu_accel_type"),
         "render_set": case.get("render_set") or case.get("render_set_id") or manifest.get("render_set"),
     }
-    for key in ("ctx_render_scale", "render_scale", "ctx_0x11c", "ctx_0x120", "render_context"):
+    for key in ("ctx_render_scale", "render_scale", "ctx_0x11c", "ctx_0x120", "render_context",
+                "ctx_render_scale_x", "render_scale_x", "ctx_0x11c_x", "ctx_0x120_x",
+                "ctx_render_scale_y", "render_scale_y", "ctx_0x11c_y", "ctx_0x120_y"):
         if key in case:
             metadata[key] = case[key]
         elif key in manifest:

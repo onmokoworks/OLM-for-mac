@@ -30,7 +30,7 @@ def main() -> int:
         report = json.loads(out_json.read_text(encoding="utf-8"))
         assert report["kind"] == "olmradialblur_pending_narrow_proof"
         assert report["active_request"]["request_id"] == "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702"
-        assert report["active_request"]["status"] == "pending"
+        assert report["active_request"]["status"] == "superseded"
         lanes = {row["lane"]: row for row in report["lanes"]}
         assert lanes["zoom_context"]["witness"]["x"] == 6 and lanes["zoom_context"]["witness"]["y"] == 0
         assert lanes["tiny_rotation_active"]["witness"]["x"] == 1614 and lanes["tiny_rotation_active"]["witness"]["y"] == 6

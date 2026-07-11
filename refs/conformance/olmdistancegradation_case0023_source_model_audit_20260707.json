@@ -1,0 +1,189 @@
+{
+  "kind": "olmdistancegradation_case0023_source_model_audit",
+  "materialized_at": "2026-07-07T12:02:28Z",
+  "status": "source-model-matches-aex-helper-samples",
+  "source": "scripts/materialize_distancegradation_case0023_source_model_audit.py",
+  "input_aex_cpu_simu_json": "refs/conformance/olmdistancegradation_case0023_aex_cpu_simu_fullframe_20260707.json",
+  "source_png": "refs/win_references/olm_return_20260706/DistanceGradation/olmdistancegradation_case0023_current_aex_recapture_20260702__software_16bpc__fr24__olmdistancegradation_extended__case_0023_current_aex_before_effects.png",
+  "inside_threshold": 36,
+  "outside_threshold": 0,
+  "mask_channel": "alpha",
+  "samples": [
+    {
+      "xy": [
+        1698,
+        7
+      ],
+      "mac_source_model": {
+        "inside_field": 0.0,
+        "outside_field": 0.0,
+        "both_add_saturate_field": 0.0
+      },
+      "aex_cpu_helper": {
+        "inside_field": 0.0,
+        "outside_field": 0.0,
+        "both_add_saturate_field": 0.0
+      },
+      "match": true
+    },
+    {
+      "xy": [
+        1699,
+        7
+      ],
+      "mac_source_model": {
+        "inside_field": 0.0,
+        "outside_field": 0.0,
+        "both_add_saturate_field": 0.0
+      },
+      "aex_cpu_helper": {
+        "inside_field": 0.0,
+        "outside_field": 0.0,
+        "both_add_saturate_field": 0.0
+      },
+      "match": true
+    },
+    {
+      "xy": [
+        1700,
+        7
+      ],
+      "mac_source_model": {
+        "inside_field": 0.0,
+        "outside_field": 1.0,
+        "both_add_saturate_field": 1.0
+      },
+      "aex_cpu_helper": {
+        "inside_field": 0.0,
+        "outside_field": 1.0,
+        "both_add_saturate_field": 1.0
+      },
+      "match": true
+    },
+    {
+      "xy": [
+        1699,
+        6
+      ],
+      "mac_source_model": {
+        "inside_field": 0.0,
+        "outside_field": 1.0,
+        "both_add_saturate_field": 1.0
+      },
+      "aex_cpu_helper": {
+        "inside_field": 0.0,
+        "outside_field": 1.0,
+        "both_add_saturate_field": 1.0
+      },
+      "match": true
+    },
+    {
+      "xy": [
+        1699,
+        8
+      ],
+      "mac_source_model": {
+        "inside_field": 0.0,
+        "outside_field": 0.0,
+        "both_add_saturate_field": 0.0
+      },
+      "aex_cpu_helper": {
+        "inside_field": 0.0,
+        "outside_field": 0.0,
+        "both_add_saturate_field": 0.0
+      },
+      "match": true
+    },
+    {
+      "xy": [
+        414,
+        393
+      ],
+      "mac_source_model": {
+        "inside_field": 0.0,
+        "outside_field": 0.0,
+        "both_add_saturate_field": 0.0
+      },
+      "aex_cpu_helper": {
+        "inside_field": 0.0,
+        "outside_field": 0.0,
+        "both_add_saturate_field": 0.0
+      },
+      "match": true
+    },
+    {
+      "xy": [
+        415,
+        393
+      ],
+      "mac_source_model": {
+        "inside_field": 1.0,
+        "outside_field": 0.0,
+        "both_add_saturate_field": 1.0
+      },
+      "aex_cpu_helper": {
+        "inside_field": 1.0,
+        "outside_field": 0.0,
+        "both_add_saturate_field": 1.0
+      },
+      "match": true
+    },
+    {
+      "xy": [
+        416,
+        393
+      ],
+      "mac_source_model": {
+        "inside_field": 1.0,
+        "outside_field": 0.0,
+        "both_add_saturate_field": 1.0
+      },
+      "aex_cpu_helper": {
+        "inside_field": 1.0,
+        "outside_field": 0.0,
+        "both_add_saturate_field": 1.0
+      },
+      "match": true
+    },
+    {
+      "xy": [
+        415,
+        392
+      ],
+      "mac_source_model": {
+        "inside_field": 0.0,
+        "outside_field": 0.0,
+        "both_add_saturate_field": 0.0
+      },
+      "aex_cpu_helper": {
+        "inside_field": 0.0,
+        "outside_field": 0.0,
+        "both_add_saturate_field": 0.0
+      },
+      "match": true
+    },
+    {
+      "xy": [
+        415,
+        394
+      ],
+      "mac_source_model": {
+        "inside_field": 1.0,
+        "outside_field": 0.0,
+        "both_add_saturate_field": 1.0
+      },
+      "aex_cpu_helper": {
+        "inside_field": 1.0,
+        "outside_field": 0.0,
+        "both_add_saturate_field": 1.0
+      },
+      "match": true
+    }
+  ],
+  "safe_claim": "For the recorded case_0023 witness points, a Mac-source-shaped Constant/BOTH field model matches the Windows AEX CPU helper samples. This is not AE exact, but it makes broad field-helper retuning unsafe and keeps the live lane on reference/export/source ownership.",
+  "limitations": [
+    "comparison is sampled at the recorded witness points, not a full image diff against an exported Windows field buffer",
+    "model uses the already-grounded OpenCV-detour EDT implementation rather than re-entering the Mac plug-in binary",
+    "this does not settle stale packaged PNG vs current Windows Software export provenance"
+  ]
+}

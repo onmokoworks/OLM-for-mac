@@ -62,6 +62,7 @@ struct Options {
     std::string output;
     std::string seed_mode = "aex";
     std::string falloff = "box3";
+    bool has_falloff_override = false;
     std::string compose_mode = "aex-screen-over";
     double gain_scale = 0.62;
     double scale_override = -1.0;
@@ -1592,7 +1593,9 @@ Image render_kirakira(const Image &input, const KiraKiraParams &params, const Op
         if (options.box_size_mode == "radius" && len > 0) len = len * 2 + 1;
         return len;
     };
-    int passes = options.falloff == "box3" ? 3 : 1;
+    const int passes = options.has_falloff_override
+        ? (options.falloff == "box3" ? 3 : 1)
+        : (params.blur_mode == 1 ? 1 : 3);
     bool axis_fast_path = options.axis_fast_path;
     if (options.axis_fast_path_mode == "strength-nonzero") {
         axis_fast_path = params.strength_multiplier > 1.0e-6;
@@ -1723,6 +1726,7 @@ Options parse_args(int argc, char **argv) {
             args.seed_mode = need_value("--seed-mode");
         } else if (key == "--falloff") {
             args.falloff = need_value("--falloff");
+            args.has_falloff_override = true;
         } else if (key == "--filter-border") {
             args.filter_border = need_value("--filter-border");
             if (args.filter_border != "reflect" && args.filter_border != "mirror") {

@@ -418,41 +418,149 @@ def latest_runtime_trace_package() -> dict:
     packages = sorted(package_dir.glob("*.zip"), key=lambda item: item.stat().st_mtime if item.exists() else 0)
     if not packages:
         return {"status": "missing", "dir": rel(package_dir)}
-    latest = packages[-1]
-    stat = latest.stat()
-    result = {
-        "status": "ready",
-        "relative_path": rel(latest),
-        "size_bytes": stat.st_size,
-        "modified_at": datetime.fromtimestamp(stat.st_mtime, timezone.utc).astimezone().isoformat(timespec="seconds"),
-        "mtime": stat.st_mtime,
-    }
-    try:
-        with zipfile.ZipFile(latest) as archive:
-            for name in archive.namelist():
-                if name.endswith("runtime_trace_package_manifest.json"):
+    ready: list[dict] = []
+    for candidate in reversed(packages):
+        try:
+            with zipfile.ZipFile(candidate) as archive:
+                for name in archive.namelist():
+                    if not name.endswith("runtime_trace_package_manifest.json"):
+                        continue
                     manifest = json.loads(archive.read(name).decode("utf-8"))
-                    if isinstance(manifest, dict):
-                        actions = manifest.get("runtime_actions") or []
-                        result["profile"] = manifest.get("profile")
-                        result["request_ids"] = [
-                            row.get("request_id")
-                            for row in actions
-                            if isinstance(row, dict) and row.get("request_id")
-                        ]
-                        result["plugin_areas"] = [
-                            row.get("plugin_area")
-                            for row in actions
-                            if isinstance(row, dict) and row.get("plugin_area")
-                        ]
+                    if not isinstance(manifest, dict):
+                        continue
+                    actions = manifest.get("runtime_actions") or []
+                    stat = candidate.stat()
+                    ready.append(
+                        {
+                            "status": "ready",
+                            "relative_path": rel(candidate),
+                            "size_bytes": stat.st_size,
+                            "modified_at": datetime.fromtimestamp(stat.st_mtime, timezone.utc).astimezone().isoformat(timespec="seconds"),
+                            "mtime": stat.st_mtime,
+                            "profile": manifest.get("profile"),
+                            "request_ids": [
+                                row.get("request_id")
+                                for row in actions
+                                if isinstance(row, dict) and row.get("request_id")
+                            ],
+                            "plugin_areas": [
+                                row.get("plugin_area")
+                                for row in actions
+                                if isinstance(row, dict) and row.get("plugin_area")
+                            ],
+                        }
+                    )
                     break
-    except (OSError, zipfile.BadZipFile, json.JSONDecodeError, UnicodeDecodeError):
-        pass
+        except (OSError, zipfile.BadZipFile, json.JSONDecodeError, UnicodeDecodeError):
+            continue
+    if ready:
+        return ready[0]
+    return {"status": "missing", "dir": rel(package_dir), "reason": "no runtime-trace manifest zip found"}
+
+
+def load_next_send_target() -> dict | None:
+    script = ROOT / "scripts" / "print_next_olm_action.py"
+    try:
+        proc = subprocess.run(
+            [sys.executable, str(script), "--json", str(Path.home() / "Downloads"), "/tmp"],
+            cwd=ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL,
+            check=False,
+        )
+    except OSError:
+        return None
+    if proc.returncode != 0:
+        return None
+    try:
+        data = json.loads(proc.stdout)
+    except json.JSONDecodeError:
+        return None
+    decision = data.get("decision")
+    if not isinstance(decision, dict):
+        return None
+    target = decision.get("target")
+    if not isinstance(target, dict):
+        return None
+    path = target.get("path")
+    resolved_path = None
+    if isinstance(path, str) and path:
+        candidate = Path(path)
+        repo_copy = ROOT / "refs" / "runtime_trace_packages" / candidate.name
+        resolved_path = repo_copy if repo_copy.exists() else candidate
+    result = {
+        "status": "ready" if resolved_path else "missing",
+        "relative_path": rel(resolved_path) if resolved_path else "",
+        "kind": target.get("kind") or decision.get("action") or "unknown",
+        "reason": decision.get("reason") or "",
+        "suggested_command": target.get("suggested_command") or decision.get("command") or "",
+        "size_bytes": target.get("size") or 0,
+        "mtime": target.get("mtime") or 0,
+    }
+    # If the planner points at a temporary packaged bundle, prefer a committed
+    # repo/share copy of the same live ask when one already exists.
+    if result["kind"] == "reference-request-package":
+        status_json = ROOT / "refs" / "conformance" / "bitdepth_32bpc_probe_status_20260703.json"
+        if status_json.exists():
+            try:
+                status_data = read_json(status_json)
+                suites = status_data.get("suites", [])
+            except Exception:
+                suites = []
+            awaiting = [
+                row for row in suites
+                if isinstance(row, dict)
+                and row.get("classification") == "awaiting-return"
+                and row.get("share_present") is True
+            ]
+            if len(awaiting) == 1:
+                row = awaiting[0]
+                package_zip = row.get("package_zip")
+                share_copy = row.get("share_copy")
+                candidate = ROOT / package_zip if isinstance(package_zip, str) else None
+                if candidate and candidate.exists():
+                    result["relative_path"] = rel(candidate)
+                    result["size_bytes"] = candidate.stat().st_size
+                if isinstance(share_copy, str) and share_copy:
+                    result["share_copy"] = share_copy
+                request_id = row.get("request_id")
+                if request_id:
+                    result["request_id"] = request_id
+                result["reason"] = row.get("next_action") or result["reason"]
+    if result["status"] == "ready" and result["mtime"]:
+        result["modified_at"] = datetime.fromtimestamp(float(result["mtime"]), timezone.utc).astimezone().isoformat(timespec="seconds")
     return result
 
 
 def load_32bpc_probe_preview() -> dict:
-    preview = ROOT / "refs" / "reports" / "bit_depth_32bpc_probe_plan_20260628" / "request_preview.json"
+    rerun_request = ROOT / "refs" / "reference_requests" / "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703.json"
+    rerun_readme = ROOT / "refs" / "reports" / "bit_depth_32bpc_full_probe_exr_rerun_20260703" / "README.md"
+    if rerun_request.exists():
+        data = read_json(rerun_request)
+        cases = data.get("cases")
+        render_sets = data.get("render_sets")
+        bit_depth = None
+        if isinstance(render_sets, list):
+            for row in render_sets:
+                if isinstance(row, dict) and row.get("bit_depth"):
+                    bit_depth = row.get("bit_depth")
+                    break
+        return {
+            "status": "request-materialized",
+            "path": rel(rerun_request),
+            "readme": rel(rerun_readme) if rerun_readme.exists() else None,
+            "request_id": data.get("request_id"),
+            "bit_depth": bit_depth,
+            "case_count": len(cases) if isinstance(cases, list) else 0,
+            "render_set_count": len(render_sets) if isinstance(render_sets, list) else 0,
+            "note": "Active EXR-first rerun ask; completion still depends on a float-preserving Windows return.",
+        }
+    preview_candidates = [
+        ROOT / "refs" / "reports" / "bit_depth_32bpc_full_probe_exr_rerun_20260703" / "request_preview.json",
+        ROOT / "refs" / "reports" / "bit_depth_32bpc_probe_plan_20260628" / "request_preview.json",
+    ]
+    preview = next((path for path in preview_candidates if path.exists()), preview_candidates[0])
     if not preview.exists():
         return {"status": "missing", "path": rel(preview)}
     data = read_json(preview)
@@ -913,17 +1021,18 @@ def render_html(data: dict) -> str:
   <title>OLM Port Dashboard</title>
   <style>
     :root {{
-      color-scheme: light;
-      --bg: #f6f7f9;
-      --panel: #ffffff;
-      --text: #18202a;
-      --muted: #687381;
-      --line: #d9dee7;
-      --good: #12805c;
-      --warn: #9a6500;
-      --bad: #b42318;
-      --unknown: #5b6472;
-      --accent: #2858a8;
+      color-scheme: dark;
+      --bg: #151719;
+      --panel: #1e2227;
+      --panel-soft: #20252b;
+      --text: #f0f3f6;
+      --muted: #a8b1bd;
+      --line: #343b45;
+      --good: #36c58a;
+      --warn: #d7a43a;
+      --bad: #ef6f64;
+      --unknown: #87919f;
+      --accent: #8bb8ff;
     }}
     * {{ box-sizing: border-box; }}
     body {{
@@ -936,7 +1045,7 @@ def render_html(data: dict) -> str:
     header {{
       padding: 28px 32px 20px;
       border-bottom: 1px solid var(--line);
-      background: #ffffff;
+      background: #1b1f24;
     }}
     h1 {{ margin: 0 0 8px; font-size: 28px; letter-spacing: 0; }}
     header p {{ margin: 0; color: var(--muted); }}
@@ -945,7 +1054,7 @@ def render_html(data: dict) -> str:
       gap: 8px;
       overflow-x: auto;
       padding: 12px 32px;
-      background: #ffffff;
+      background: #1b1f24;
       border-bottom: 1px solid var(--line);
       position: sticky;
       top: 0;
@@ -954,12 +1063,11 @@ def render_html(data: dict) -> str:
     nav a {{
       color: var(--accent);
       border: 1px solid var(--line);
-      border-radius: 6px;
       padding: 6px 9px;
       text-decoration: none;
       white-space: nowrap;
       font-size: 13px;
-      background: #fbfcfe;
+      background: var(--panel-soft);
     }}
     main {{ max-width: 1440px; margin: 0 auto; padding: 22px 24px 44px; }}
     .summary {{
@@ -971,7 +1079,6 @@ def render_html(data: dict) -> str:
     .summary div, .ops-panel, .plugin-card {{
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 8px;
     }}
     .summary div {{ padding: 14px 16px; }}
     .summary span, .metric-grid span {{ display: block; color: var(--muted); font-size: 12px; }}
@@ -1013,7 +1120,6 @@ def render_html(data: dict) -> str:
     }}
     .metric-grid div {{
       border: 1px solid var(--line);
-      border-radius: 6px;
       padding: 9px 10px;
       min-height: 58px;
       overflow-wrap: anywhere;
@@ -1026,14 +1132,14 @@ def render_html(data: dict) -> str:
       justify-content: space-between;
       gap: 12px;
       padding: 7px 0;
-      border-top: 1px solid #edf0f5;
+      border-top: 1px solid var(--line);
       font-size: 12px;
     }}
     li span {{ color: var(--muted); overflow-wrap: anywhere; }}
     li b {{ text-align: right; overflow-wrap: anywhere; }}
     details {{ margin-top: 12px; }}
     summary {{ cursor: pointer; color: var(--accent); font-size: 13px; }}
-    code {{ background: #edf0f5; padding: 2px 4px; border-radius: 4px; }}
+    code {{ background: #2a3038; padding: 2px 4px; }}
     footer {{ color: var(--muted); font-size: 12px; margin-top: 20px; }}
     @media (max-width: 760px) {{
       header, nav {{ padding-left: 16px; padding-right: 16px; }}
@@ -1248,7 +1354,7 @@ def build_data(args: argparse.Namespace) -> dict:
         "unassigned_reports": reports_by_plugin.get("Unassigned", []),
         "next_actions": next_actions,
         "pending_runtime_trace_packages": pending_runtime,
-        "send_target": choose_send_target(runtime_package, windows_batch, ae_pixel_return, pending_runtime),
+        "send_target": load_next_send_target() or choose_send_target(runtime_package, windows_batch, ae_pixel_return, pending_runtime),
         "runtime_trace_package": runtime_package,
         "bitdepth_32bpc_probe_preview": bitdepth_32bpc_probe_preview,
         "windows_batch": windows_batch,

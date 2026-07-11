@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "kind": "dblur_rowdriver_full_exact_gate",
+  "status": "pass",
+  "harness": "tools/emulation/test_dblur_rowdriver_full_exact_20260711.py",
+  "fixture_dir": "replay/fixtures/dblur_rowdriver_full",
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "comparison": "byte equality only; no tolerance",
+  "cases": 3,
+  "failures": []
+}

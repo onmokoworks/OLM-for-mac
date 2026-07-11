@@ -453,6 +453,12 @@ static inline void win_FUN_1800104d0_append(SmootherPolygon &poly,
 		             "trace append src=(%d,%d) dst_center=(%d,%d) rgba=(%.8g,%.8g,%.8g,%.8g) w=%.8g before_count=%d\n",
 		             gi_x, gi_y, poly.cur_x, poly.cur_y, px.r, px.g, px.b, px.a, w, poly.count);
 	}
+	// Reverse trace: which cur_x,cur_y is pulling from the trace pixel?
+	if (gi_x == g_olmsmoother2_trace_x && gi_y == g_olmsmoother2_trace_y) {
+		std::fprintf(stderr,
+		             "trace rev_append src=(%d,%d) from_center=(%d,%d) w=%.8g before_count=%d\n",
+		             gi_x, gi_y, poly.cur_x, poly.cur_y, w, poly.count);
+	}
 	PolyVertex &v = poly.samples[poly.count++];
 	v.r = px.r; v.g = px.g; v.b = px.b; v.a = px.a; v.w = w;
 }
@@ -2432,6 +2438,9 @@ static void win_FUN_180013140(SmootherPolygon &poly) {
 	int spanX = (L[0] - cx) + 1;
 	int spanY = (R[1] - cy) + 1;
 	// Win: byte at stride*cy + cx*4 - 1 = pixel (cx-1, cy) byte index 3 (B).
+	if (poly.cur_x == 501 && poly.cur_y == 1055) {
+		std::fprintf(stderr, "trace case0004: spanX=%d spanY=%d cp_b=%d\n", spanX, spanY, cp_b(&g, cx - 1, cy, 3));
+	}
 	if ((spanX < 4 || spanY < 4) && (spanX < 2 || spanY < 2 ||
 	    cp_b(&g, cx - 1, cy, 3) == 0)) {
 		int len = (spanY < spanX) ? spanY : spanX;

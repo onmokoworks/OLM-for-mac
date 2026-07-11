@@ -12,6 +12,8 @@ from typing import Any
 
 
 DENSE_REQUEST_ID = "olmdirectionalblur_dense_sampler_trace_20260620"
+SINGLE_SHOT_WITNESS_REQUEST_ID = "olmdirectionalblur_angle0_single_shot_witness_20260708"
+HELPER_GATE_RETRY_REQUEST_ID = "olmdirectionalblur_angle0_helper_gate_retry_20260702"
 HELPER_COVERAGE_REQUEST_ID = "olmdirectionalblur_helper_coverage_witness_20260630"
 LEGACY_RESIDUAL_WITNESS_REQUEST_ID = "olmdirectionalblur_angle0_diagonal_residual_witness_20260622"
 
@@ -22,10 +24,14 @@ def repo_root() -> Path:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--runtime-summary-json", type=Path, required=True)
+    parser.add_argument("--runtime-summary-json", type=Path, default=None)
+    parser.add_argument("--witness-json", type=Path, default=None)
     parser.add_argument("--output-json", type=Path, default=None)
     parser.add_argument("--output-md", type=Path, default=None)
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.runtime_summary_json is None and args.witness_json is None:
+        parser.error("at least one of --runtime-summary-json or --witness-json is required")
+    return args
 
 
 def resolve(root: Path, path: Path) -> Path:
@@ -115,6 +121,44 @@ def case_rows(observations: dict[str, Any]) -> list[dict[str, Any]]:
     return []
 
 
+def per_pixel_witness_records(case: dict[str, Any] | None) -> list[dict[str, Any]]:
+    if not isinstance(case, dict):
+        return []
+    records = case.get("aex_per_pixel_witness_records")
+    if not isinstance(records, list):
+        return []
+    return [record for record in records if isinstance(record, dict)]
+
+
+def complete_angle0_per_pixel_record(record: dict[str, Any]) -> bool:
+    required = [
+        "aex_output_to_ab_buffer_xy",
+        "aex_output_buffer_identity",
+        "aex_helper_local_source_xy",
+        "aex_rowdriver_or_group_membership",
+        "aex_validity_or_alpha_side_channel",
+        "aex_accumulation_denominator",
+        "aex_pre_writeback_rgba_float_or_hex",
+        "aex_final_rgba_u8",
+    ]
+    return all(concrete_trace_value(record.get(key)) for key in required)
+
+
+def angle0_per_pixel_status(case: dict[str, Any] | None) -> str | None:
+    records = per_pixel_witness_records(case)
+    if not records:
+        return None
+    complete = [record for record in records if complete_angle0_per_pixel_record(record)]
+    concrete = [record for record in records if concrete_trace_value(record)]
+    if len(complete) >= 2:
+        return "per-pixel-witness-complete"
+    if complete:
+        return "per-pixel-witness-partial"
+    if concrete:
+        return "per-pixel-witness-values-incomplete"
+    return "per-pixel-witness-placeholders-only"
+
+
 def case_by_id(observations: dict[str, Any], case_id: str) -> dict[str, Any] | None:
     for row in case_rows(observations):
         if row.get("case_id") == case_id:
@@ -133,12 +177,174 @@ def witness_rows(observations: dict[str, Any]) -> list[dict[str, Any]]:
     return rows
 
 
+def helper_gate_breakpoint_partial(row: dict[str, Any] | None, observations: dict[str, Any]) -> bool:
+    if row is None or row.get("request_id") != HELPER_GATE_RETRY_REQUEST_ID:
+        return False
+    if str(row.get("status") or "").lower() != "answered_partial":
+        return False
+    for witness in witness_rows(observations):
+        branch = str(witness.get("branch_or_dispatch") or "").lower()
+        intermediate = witness.get("intermediate_values")
+        if not isinstance(intermediate, dict):
+            continue
+        if "front-scatter-helper" not in branch:
+            continue
+        if intermediate.get("confirm_module_load") is not True:
+            continue
+        if intermediate.get("confirm_breakpoint_offsets") is not True:
+            continue
+        if intermediate.get("per_pixel_isolation") != "not_achieved":
+            continue
+        note = " ".join(
+            str(intermediate.get(key) or "")
+            for key in ("hit_storm_note", "previous_stall_root_cause")
+        ).lower()
+        if any(token in note for token in ("conditional", "single-shot", "hit storm", "storm", "excessive hits")):
+            return True
+    return False
+
+
+def witness_case_xy(case: dict[str, Any]) -> tuple[int, int] | None:
+    witness = case.get("witness")
+    if isinstance(witness, dict):
+        x = witness.get("x")
+        y = witness.get("y")
+        if isinstance(x, int) and isinstance(y, int):
+            return (x, y)
+    return None
+
+
+def load_cli_witness(path: Path) -> dict[str, Any]:
+    payload = load_json(path)
+    if not isinstance(payload, dict):
+        raise ValueError("witness JSON must be an object")
+    kind = payload.get("kind")
+    if kind != "olmdirectionalblur_cli_witness":
+        raise ValueError(f"unsupported witness kind: {kind!r}")
+    return payload
+
+
+def summarize_cli_witness(witness: dict[str, Any], path: Path) -> dict[str, Any]:
+    points = witness.get("points", [])
+    point_rows = [row for row in points if isinstance(row, dict)] if isinstance(points, list) else []
+    return {
+        "present": True,
+        "kind": witness.get("kind"),
+        "source_file": safe_source_file(path),
+        "algorithm_family": witness.get("algorithm_family"),
+        "width": witness.get("width"),
+        "height": witness.get("height"),
+        "pad_width": witness.get("pad_width"),
+        "pad_height": witness.get("pad_height"),
+        "crop_x": witness.get("crop_x"),
+        "crop_y": witness.get("crop_y"),
+        "front_strength_scaled": witness.get("front_strength_scaled"),
+        "back_strength_scaled": witness.get("back_strength_scaled"),
+        "strength_scale": witness.get("strength_scale"),
+        "front_strength_rgb_denom": witness.get("front_strength_rgb_denom"),
+        "aex_two_stage_output": witness.get("aex_two_stage_output"),
+        "points": point_rows,
+    }
+
+
+def windows_coordinate_rows(row: dict[str, Any] | None) -> list[dict[str, Any]]:
+    observations = observations_for(row)
+    out: list[dict[str, Any]] = []
+    for case in case_rows(observations):
+        case_id = case.get("case_id")
+        for witness in case.get("witness_pixels", []) if isinstance(case.get("witness_pixels", []), list) else []:
+            if not isinstance(witness, dict):
+                continue
+            x = witness.get("x")
+            y = witness.get("y")
+            if isinstance(x, int) and isinstance(y, int):
+                out.append({"kind": "dense", "case_id": case_id, "x": x, "y": y, "fields": witness})
+        xy = witness_case_xy(case)
+        if xy is not None:
+            out.append({"kind": "residual", "case_id": case_id, "x": xy[0], "y": xy[1], "fields": case})
+    return out
+
+
+def local_witness_points(witness: dict[str, Any]) -> list[dict[str, Any]]:
+    points = witness.get("points", [])
+    if not isinstance(points, list):
+        return []
+    return [row for row in points if isinstance(row, dict)]
+
+
+def compare_point_fields(local_point: dict[str, Any], windows_fields: dict[str, Any], field_map: dict[str, str]) -> dict[str, Any]:
+    comparisons: dict[str, Any] = {}
+    for local_key, windows_key in field_map.items():
+        comparisons[local_key] = {
+            "local": local_point.get(local_key),
+            "windows_field": windows_key,
+            "windows": windows_fields.get(windows_key),
+        }
+    return comparisons
+
+
+def build_local_windows_comparisons(row: dict[str, Any] | None, witness: dict[str, Any] | None) -> list[dict[str, Any]]:
+    if witness is None:
+        return []
+    windows_rows = {(item["x"], item["y"]): item for item in windows_coordinate_rows(row)}
+    comparisons: list[dict[str, Any]] = []
+    for point in local_witness_points(witness):
+        x = point.get("x")
+        y = point.get("y")
+        if not isinstance(x, int) or not isinstance(y, int):
+            continue
+        match = windows_rows.get((x, y))
+        entry = {
+            "x": x,
+            "y": y,
+            "local_fields": point,
+            "windows_match_present": match is not None,
+        }
+        if match is None:
+            comparisons.append(entry)
+            continue
+        windows_fields = match["fields"]
+        entry.update(
+            {
+                "windows_match_kind": match["kind"],
+                "windows_case_id": match.get("case_id"),
+                "windows_fields": windows_fields,
+                "field_comparison": compare_point_fields(
+                    point,
+                    windows_fields,
+                    {
+                        "source_alpha": "source_alpha",
+                        "accum_sum_denominator": "aex_accumulation_denominator"
+                        if match["kind"] == "residual"
+                        else "loop_bounds_or_sample_count",
+                        "effective_rgb_denominator": "aex_accumulation_denominator"
+                        if match["kind"] == "residual"
+                        else "intermediate_values",
+                        "source_rgb": "aex_rotate_sampler_source_coordinates_order"
+                        if match["kind"] == "residual"
+                        else "sample_order",
+                        "accum_rgb": "aex_accumulation_numerator_rgba_float_or_hex"
+                        if match["kind"] == "residual"
+                        else "intermediate_values",
+                        "blurred_rgba_pre_rotateback": "aex_pre_writeback_rgba_float_or_hex",
+                        "final_sample_rgba_pre_quant": "aex_pre_writeback_rgba_float_or_hex",
+                        "final_rgba8": "aex_final_rgba_u8" if match["kind"] == "residual" else "final_rgba",
+                    },
+                ),
+            }
+        )
+        comparisons.append(entry)
+    return comparisons
+
+
 def classify_dense(row: dict[str, Any] | None, observations: dict[str, Any]) -> str:
     if row is None:
         return "await-windows-trace"
     status = str(row.get("status") or "").lower()
     if "failed_before_module_load" in status or "before_module_load" in status:
         return "trace-failed-before-module-load"
+    if helper_gate_breakpoint_partial(row, observations):
+        return "loader-breakpoints-answered-per-pixel-typed-witness-missing-hit-storm-followup"
     for witness in witness_rows(observations):
         if concrete_trace_value(witness.get("pre_writeback_rgba_float_hex")) or concrete_trace_value(
             witness.get("final_rgba")
@@ -169,12 +375,21 @@ def classify_residual_case(case: dict[str, Any] | None, *, angle0: bool) -> str:
             return lowered
     final_rgba = case.get("aex_final_rgba_u8")
     pre_writeback = case.get("aex_pre_writeback_rgba_float_or_hex")
-    numerator = case.get("aex_accumulation_numerator_rgba_float_or_hex")
-    denominator = case.get("aex_accumulation_denominator")
+    numerator = case.get("aex_accumulation_numerator_rgba_float_or_hex") or case.get(
+        "aex_accumulation_numerator_rgba"
+    )
+    denominator = case.get("aex_accumulation_denominator") or case.get("aex_normalization_denominator")
     ab_xy = case.get("aex_output_to_ab_buffer_xy")
     if angle0:
+        per_pixel = angle0_per_pixel_status(case)
+        if per_pixel in {"per-pixel-witness-complete", "per-pixel-witness-partial"}:
+            return per_pixel
         rowdriver = case.get("aex_rowdriver_or_group_membership")
-        validity = case.get("aex_validity_or_alpha_side_channel")
+        validity = case.get("aex_validity_or_alpha_side_channel") or case.get(
+            "aex_alpha_or_valid_side_channel"
+        )
+        if per_pixel:
+            return per_pixel
         if concrete_trace_value(rowdriver):
             return "rowdriver-or-group-membership"
         if concrete_trace_value(validity):
@@ -229,6 +444,12 @@ def recommended_next_evidence(focus: str) -> str:
         return "Ground loop bounds, weights, numerator/denominator, and accumulation before changing writeback."
     if focus == "sample-order-or-branch-values":
         return "Update sampler order/branch IR before tuning pixels."
+    if focus == "loader-breakpoints-answered-per-pixel-typed-witness-missing-hit-storm-followup":
+        return (
+            "Loader and helper/normalize/writeback breakpoints are answered, but the per-pixel typed witness is still "
+            "missing; rerun with conditional or single-shot breakpointing that isolates `(494,169)` / `(579,169)` "
+            "without another hit storm."
+        )
     parts = {}
     for segment in focus.split(";"):
         if ":" not in segment:
@@ -240,6 +461,14 @@ def recommended_next_evidence(focus: str) -> str:
     messages: list[str] = []
     if angle0 == "rowdriver-or-group-membership":
         messages.append("angle-0: update rowdriver/group membership IR before changing sampler math.")
+    elif angle0 == "per-pixel-witness-complete":
+        messages.append("angle-0: compare the two independent per-pixel witness records before changing implementation.")
+    elif angle0 == "per-pixel-witness-partial":
+        messages.append("angle-0: one required pixel is complete; keep the request open for the missing per-pixel record.")
+    elif angle0 == "per-pixel-witness-values-incomplete":
+        messages.append("angle-0: per-pixel records exist but lack enough typed values to classify the lane.")
+    elif angle0 == "per-pixel-witness-placeholders-only":
+        messages.append("angle-0: per-pixel fields are present but only placeholders; rerun or fill concrete values.")
     elif angle0 == "valid-alpha-side-channel":
         messages.append("angle-0: prove the hidden validity/alpha side-channel used by the final pass.")
     elif angle0 == "normalization-or-accumulation":
@@ -284,34 +513,43 @@ def summarize_windows(row: dict[str, Any] | None) -> dict[str, Any]:
     }
 
 
-def build_comparison(summary: dict[str, Any]) -> dict[str, Any]:
+def select_windows_row(summary: dict[str, Any] | None) -> tuple[str, dict[str, Any] | None, str]:
+    if summary is None:
+        return DENSE_REQUEST_ID, None, "dense"
+    helper_gate_request_id, helper_gate_row = find_first_result(
+        summary,
+        [SINGLE_SHOT_WITNESS_REQUEST_ID, HELPER_GATE_RETRY_REQUEST_ID],
+    )
+    if helper_gate_row is not None:
+        mode = "residual" if helper_gate_request_id == SINGLE_SHOT_WITNESS_REQUEST_ID else "dense"
+        return helper_gate_request_id, helper_gate_row, mode
     residual_request_id, residual_row = find_first_result(
         summary,
         [HELPER_COVERAGE_REQUEST_ID, LEGACY_RESIDUAL_WITNESS_REQUEST_ID],
     )
     if residual_row is not None:
-        observations = observations_for(residual_row)
-        focus = classify_residual(residual_row, observations)
-        return {
-            "kind": "olmdirectionalblur_trace_comparison",
-            "schema": 2,
-            "request_id": residual_request_id,
-            "legacy_request_id": DENSE_REQUEST_ID,
-            "likely_next_focus": focus,
-            "recommended_next_evidence": recommended_next_evidence(focus),
-            "windows": summarize_windows(residual_row),
-        }
-    row = find_result(summary, DENSE_REQUEST_ID)
+        return residual_request_id, residual_row, "residual"
+    return DENSE_REQUEST_ID, find_result(summary, DENSE_REQUEST_ID), "dense"
+
+
+def build_comparison(summary: dict[str, Any] | None, witness: dict[str, Any] | None, witness_path: Path | None) -> dict[str, Any]:
+    request_id, row, mode = select_windows_row(summary)
     observations = observations_for(row)
-    focus = classify_dense(row, observations)
-    return {
+    focus = classify_residual(row, observations) if mode == "residual" else classify_dense(row, observations)
+    comparison = {
         "kind": "olmdirectionalblur_trace_comparison",
-        "schema": 2,
-        "request_id": DENSE_REQUEST_ID,
+        "schema": 3,
+        "request_id": request_id,
         "likely_next_focus": focus,
         "recommended_next_evidence": recommended_next_evidence(focus),
         "windows": summarize_windows(row),
     }
+    if mode == "residual":
+        comparison["legacy_request_id"] = DENSE_REQUEST_ID
+    if witness is not None and witness_path is not None:
+        comparison["local_witness"] = summarize_cli_witness(witness, witness_path)
+        comparison["local_vs_windows"] = build_local_windows_comparisons(row, witness)
+    return comparison
 
 
 def md_value(value: Any) -> str:
@@ -340,30 +578,89 @@ def render_markdown(comparison: dict[str, Any]) -> str:
         f"- Cases: {md_value(windows.get('cases'))}",
         f"- Observed/inferred split: {md_value(windows.get('directly_observed_vs_inferred'))}",
         "",
+    ]
+    local_witness = comparison.get("local_witness")
+    if isinstance(local_witness, dict):
+        lines.extend(
+            [
+                "## Local CLI Witness",
+                "",
+                f"- Source file: {md_value(local_witness.get('source_file'))}",
+                f"- Algorithm family: {md_value(local_witness.get('algorithm_family'))}",
+                f"- Output size: `{local_witness.get('width')}x{local_witness.get('height')}`",
+                f"- Pad size: `{local_witness.get('pad_width')}x{local_witness.get('pad_height')}`",
+                f"- Crop: `({local_witness.get('crop_x')}, {local_witness.get('crop_y')})`",
+                f"- Front strength scaled: {md_value(local_witness.get('front_strength_scaled'))}",
+                f"- RGB denom mode: {md_value(local_witness.get('front_strength_rgb_denom'))}",
+                f"- Two-stage output: {md_value(local_witness.get('aex_two_stage_output'))}",
+                f"- Points: {md_value(local_witness.get('points'))}",
+                "",
+            ]
+        )
+    local_vs_windows = comparison.get("local_vs_windows")
+    if isinstance(local_vs_windows, list):
+        lines.extend(
+            [
+                "## Coordinate Cross-Compare",
+                "",
+            ]
+        )
+        if local_vs_windows:
+            for row in local_vs_windows:
+                lines.append(
+                    f"- ({row.get('x')}, {row.get('y')}): "
+                    f"windows_match={md_value(row.get('windows_match_present'))}, "
+                    f"case={md_value(row.get('windows_case_id'))}, "
+                    f"kind={md_value(row.get('windows_match_kind'))}, "
+                    f"fields={md_value(row.get('field_comparison'))}"
+                )
+        else:
+            lines.append("- No local witness points were available for coordinate comparison.")
+        lines.extend(
+            [
+                "",
+            ]
+        )
+    lines.extend(
+        [
         "## Interpretation",
         "",
         "- `sampler-or-writeback-values`: compare concrete residual witness values before changing code.",
         "- `sample-count-or-accumulation-values`: focus loop bounds, weights, denominator, and scatter accumulation.",
         "- `sample-order-or-branch-values`: update sampler order/branch IR before tuning pixels.",
+        "- `loader-breakpoints-answered-per-pixel-typed-witness-missing-hit-storm-followup`: loader and broad helper/normalize/writeback reachability are proven, but typed per-pixel witness values still need a narrower rerun.",
         "- `trace-failed-before-module-load`: the run did not reach the plug-in; no algorithm fact was captured.",
         "- `trace-structure-present-values-missing`: repeat with typed numeric witness values.",
         "- `trace-too-sparse`: do not tune from broad PNGs or placeholders.",
         "- `angle0:*; diagonal:*`: focused residual witness classification for the 2026-06-22 package.",
         "",
-    ]
+        ]
+    )
     return "\n".join(lines)
 
 
 def main() -> int:
     args = parse_args()
     root = repo_root()
-    summary_path = resolve(root, args.runtime_summary_json)
-    if not summary_path.exists():
-        return fail(f"runtime summary JSON not found: {summary_path}")
-    summary = load_json(summary_path)
-    if not isinstance(summary, dict):
-        return fail("runtime summary JSON must be an object")
-    comparison = build_comparison(summary)
+    summary = None
+    witness = None
+    witness_path = None
+    if args.runtime_summary_json is not None:
+        summary_path = resolve(root, args.runtime_summary_json)
+        if not summary_path.exists():
+            return fail(f"runtime summary JSON not found: {summary_path}")
+        summary = load_json(summary_path)
+        if not isinstance(summary, dict):
+            return fail("runtime summary JSON must be an object")
+    if args.witness_json is not None:
+        witness_path = resolve(root, args.witness_json)
+        if not witness_path.exists():
+            return fail(f"witness JSON not found: {witness_path}")
+        try:
+            witness = load_cli_witness(witness_path)
+        except ValueError as exc:
+            return fail(str(exc))
+    comparison = build_comparison(summary, witness, witness_path)
     if args.output_json:
         output = resolve(root, args.output_json)
         output.parent.mkdir(parents=True, exist_ok=True)

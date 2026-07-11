@@ -1,0 +1,115 @@
+{
+  "aex": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
+  "callback_counts": {
+    "PFHandle.dispose": 8,
+    "PFHandle.lock": 8,
+    "PFHandle.new": 8,
+    "PFHandle.unlock": 8,
+    "SPBasic.AcquireSuite": 16,
+    "SPBasic.ReleaseSuite": 16,
+    "cv::dist_transform": 1,
+    "cv::resize_same_shape": 2,
+    "cv::threshold": 1
+  },
+  "function": "0x181174760",
+  "hits": [
+    "FUN_1812aef70",
+    "FUN_1812aef70",
+    "FUN_18117ca50"
+  ],
+  "input": {
+    "crop_origin_xy": [
+      380,
+      350
+    ],
+    "crop_xywh": [
+      380,
+      350,
+      96,
+      96
+    ],
+    "mask_channel": "alpha",
+    "mask_nonzero": 8679,
+    "mask_zero": 537,
+    "source_dtype": ">u2",
+    "source_png": "refs/win_references/olm_return_20260706/DistanceGradation/olmdistancegradation_case0023_current_aex_recapture_20260702__software_16bpc__fr24__olmdistancegradation_extended__case_0023_current_aex_before_effects.png",
+    "source_shape": [
+      96,
+      96,
+      4
+    ]
+  },
+  "instructions": 68743,
+  "output_max": 1.0,
+  "output_mean": 0.3202039897441864,
+  "output_min": 0.0,
+  "param8": 1,
+  "samples": [
+    {
+      "local_xy": [
+        34,
+        43
+      ],
+      "mask": 255,
+      "output": 0.0,
+      "requested_xy": [
+        414,
+        393
+      ]
+    },
+    {
+      "local_xy": [
+        35,
+        43
+      ],
+      "mask": 255,
+      "output": 1.0,
+      "requested_xy": [
+        415,
+        393
+      ]
+    },
+    {
+      "local_xy": [
+        36,
+        43
+      ],
+      "mask": 255,
+      "output": 1.0,
+      "requested_xy": [
+        416,
+        393
+      ]
+    },
+    {
+      "local_xy": [
+        35,
+        42
+      ],
+      "mask": 255,
+      "output": 0.0,
+      "requested_xy": [
+        415,
+        392
+      ]
+    },
+    {
+      "local_xy": [
+        35,
+        44
+      ],
+      "mask": 255,
+      "output": 1.0,
+      "requested_xy": [
+        415,
+        394
+      ]
+    }
+  ],
+  "shape": [
+    96,
+    96
+  ],
+  "status": "completed",
+  "threshold": 36
+}

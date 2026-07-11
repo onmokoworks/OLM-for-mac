@@ -34,6 +34,8 @@ def main() -> int:
             check=True,
         )
         manifest = json.loads(manifest_json.read_text(encoding="utf-8"))
+        summary_report = json.loads(summary_json.read_text(encoding="utf-8"))
+        summary_md_text = summary_md.read_text(encoding="utf-8")
         summary = manifest["summary"]
         assert manifest["kind"] == "olm_conformance_manifest"
         assert summary["total_cases"] == 70
@@ -50,7 +52,21 @@ def main() -> int:
         assert summary["by_plugin"]["OLMSmoother2"]["known-red"] == 7
         assert all(row["reference_kind"] for row in manifest["cases"])
         assert all(row["runner_kind"] for row in manifest["cases"])
-        assert summary_md.read_text(encoding="utf-8").startswith("# Packaged 8bpc")
+        assert summary_report["summary"]["counts"]["AE exact"] == 62
+        supp16 = summary_report["supplemental_16bpc_exact"]
+        assert supp16["counts"]["AE exact"] == 12
+        assert supp16["by_plugin"]["OLMColorKey"]["AE exact"] == 9
+        assert supp16["by_plugin"]["OLMToonDilate"]["AE exact"] == 3
+        supp32 = summary_report["supplemental_32bpc_probe"]
+        assert len(supp32["lanes"]) == 3
+        by_request = {row["request_id"]: row for row in supp32["lanes"]}
+        assert by_request["olm_bitdepth_32bpc_colorkey_probe_20260703"]["classification"] == "probe-only-png-return"
+        assert by_request["olm_bitdepth_32bpc_full_probe_20260703"]["classification"] == "probe-only-png-return"
+        assert by_request["olm_bitdepth_32bpc_full_probe_exr_rerun_20260703"]["classification"] == "probe-only-png-return"
+        assert summary_md_text.startswith("# Packaged 8bpc")
+        assert "## Supplemental 16bpc Exact Slices" in summary_md_text
+        assert "## Supplemental 32bpc Probe Lanes" in summary_md_text
+        assert "probe-only-png-return" in summary_md_text
     print("[OK] conformance summary smoke passed")
     return 0
 

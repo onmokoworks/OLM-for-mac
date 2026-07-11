@@ -1,0 +1,9 @@
+{
+  "id": "even_angle0",
+  "width": 6,
+  "height": 4,
+  "angle": 0.0,
+  "source_sha256": "f59e5fc9f82249fce3e326a0ff8545ff620a2c5d7333be7524905e067b33dca1",
+  "expected_sha256": "a46e31467921e49136d890bfc5e7d7497b145bb7e748bdfee90d48325562a91f",
+  "destination_poison_hex": "a0b1c2d3"
+}

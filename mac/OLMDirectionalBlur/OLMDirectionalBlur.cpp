@@ -1,8 +1,14 @@
 #include "OLMDirectionalBlur.h"
 
+#include "../../core/dblur_frontonly.h"
+
 #include <algorithm>
 #include <cmath>
+#include <cstdint>
 #include <cstdio>
+#if defined(OLM_DBLUR_ENABLE_BOUNDARY_CAPTURE)
+#include <cstdlib>
+#endif
 #include <vector>
 
 static constexpr PF_FpLong kPi = 3.141592653589793238462643383279502884;
@@ -192,7 +198,7 @@ static std::vector<float> DirectionalGaussianWeights(A_long length)
 {
 	length = std::max<A_long>(length, 1);
 	std::vector<float> weights((size_t)length, 1.0f);
-	const float denom = 2.0f * ((float)length / 0.5f) * ((float)length / 0.5f) + 1.0e-5f;
+	const float denom = 2.0f * ((float)length / 3.0f) * ((float)length / 3.0f) + 1.0e-5f;
 	for (A_long i = 0; i < length; ++i) {
 		weights[(size_t)i] = std::exp(-((float)(i * i)) / denom);
 	}
@@ -250,7 +256,12 @@ static PF_Err RenderDirectional8(PF_EffectWorld *input, PF_EffectWorld *output,
 		}
 	}
 
-	const double scale = info.render_scale > 0.0 ? info.render_scale : 1.0;
+	const double scale_x = info.render_scale_x > 0.0 ? info.render_scale_x : 1.0;
+	const double scale_y = info.render_scale_y > 0.0 ? info.render_scale_y : 1.0;
+	const double angle = -info.angle_deg * kPi / 180.0;
+	const float vx = (float)std::cos(angle);
+	const float vy = (float)std::sin(angle);
+	const double scale = std::sqrt(std::pow(vx * scale_x, 2) + std::pow(vy * scale_y, 2));
 	const A_long strength = std::max<A_long>(0, (A_long)((double)info.front_strength * scale));
 	if (strength <= 1) {
 		CopyWorld<PF_Pixel8>(input, output);
@@ -258,9 +269,6 @@ static PF_Err RenderDirectional8(PF_EffectWorld *input, PF_EffectWorld *output,
 	}
 
 	const std::vector<float> weights = DirectionalGaussianWeights(strength);
-	const double angle = -info.angle_deg * kPi / 180.0;
-	const float vx = (float)std::cos(angle);
-	const float vy = (float)std::sin(angle);
 	const float center = ((float)h - 1.0f) * 0.5f;
 	const float span = std::max(center, 1.0f);
 	const float sharp_tail = (float)(info.front_sharp_tail / 100.0);
@@ -322,10 +330,136 @@ static PF_Err RenderDirectional8(PF_EffectWorld *input, PF_EffectWorld *output,
 	return PF_Err_NONE;
 }
 
+static bool CanUseExactFrontOnly8(const PF_EffectWorld *input,
+                                  const PF_EffectWorld *output,
+                                  const OLMDirectionalBlurInfo &info)
+{
+	return input && output && input->width == output->width &&
+	       input->height == output->height && info.front_strength > 0 &&
+	       info.size_variation == 0.0 && info.front_alpha_fade >= 0 &&
+	       info.front_sharp_tail == 0.0 && info.back_strength == 0 &&
+	       info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
+	       info.noise_variation == 0.0 && info.render_scale_x == 1.0 &&
+	       info.render_scale_y == 1.0;
+}
+
+#if defined(OLM_DBLUR_ENABLE_BOUNDARY_CAPTURE)
+static bool WriteDirectionalBlurCapture(const char *prefix,
+	                                     const char *suffix,
+	                                     const void *data,
+	                                     size_t byte_count)
+{
+	if (!prefix || !*prefix || !suffix || !data) {
+		return false;
+	}
+	char path[4096];
+	const int length = std::snprintf(path, sizeof(path), "%s.%s", prefix, suffix);
+	if (length <= 0 || static_cast<size_t>(length) >= sizeof(path)) {
+		return false;
+	}
+	FILE *file = std::fopen(path, "wb");
+	if (!file) {
+		return false;
+	}
+	const bool complete = std::fwrite(data, 1, byte_count, file) == byte_count;
+	return std::fclose(file) == 0 && complete;
+}
+#endif
+
+static PF_Err RenderExactFrontOnly8(PF_EffectWorld *input,
+	                                PF_EffectWorld *output,
+	                                const OLMDirectionalBlurInfo &info)
+{
+	const A_long width = output->width;
+	const A_long height = output->height;
+	const size_t byte_count = static_cast<size_t>(width) *
+	                          static_cast<size_t>(height) * 4;
+	std::vector<std::uint8_t> source(byte_count);
+	std::vector<std::uint8_t> destination(byte_count);
+	for (A_long y = 0; y < height; ++y) {
+		for (A_long x = 0; x < width; ++x) {
+			const PF_Pixel8 *pixel = PixelAtConst<PF_Pixel8>(input, x, y);
+			const size_t offset = (static_cast<size_t>(y) * width + x) * 4;
+			source[offset + 0] = pixel->red;
+			source[offset + 1] = pixel->green;
+			source[offset + 2] = pixel->blue;
+			source[offset + 3] = pixel->alpha;
+		}
+	}
+
+	const int result = olm_dblur_frontonly_rgba8(
+		source.data(), destination.data(), width, height,
+		static_cast<float>(info.angle_deg),
+		static_cast<float>(info.brightness_gain),
+		static_cast<int>(info.front_strength),
+		static_cast<int>(info.front_alpha_fade));
+	if (result != 0) {
+		return result == -5 ? PF_Err_OUT_OF_MEMORY : PF_Err_INTERNAL_STRUCT_DAMAGED;
+	}
+
+#if defined(OLM_DBLUR_ENABLE_BOUNDARY_CAPTURE)
+	const char *capture_prefix = std::getenv("OLM_DBLUR_CAPTURE_PREFIX");
+	const bool capture_enabled = capture_prefix && *capture_prefix;
+	std::vector<std::uint8_t> output_argb;
+	if (capture_enabled) {
+		output_argb.resize(byte_count);
+	}
+#endif
+	for (A_long y = 0; y < height; ++y) {
+		for (A_long x = 0; x < width; ++x) {
+			PF_Pixel8 *pixel = PixelAt<PF_Pixel8>(output, x, y);
+			const size_t offset = (static_cast<size_t>(y) * width + x) * 4;
+			pixel->red = destination[offset + 0];
+			pixel->green = destination[offset + 1];
+			pixel->blue = destination[offset + 2];
+			pixel->alpha = destination[offset + 3];
+#if defined(OLM_DBLUR_ENABLE_BOUNDARY_CAPTURE)
+			if (capture_enabled) {
+				output_argb[offset + 0] = pixel->alpha;
+				output_argb[offset + 1] = pixel->red;
+				output_argb[offset + 2] = pixel->green;
+				output_argb[offset + 3] = pixel->blue;
+			}
+#endif
+		}
+	}
+
+#if defined(OLM_DBLUR_ENABLE_BOUNDARY_CAPTURE)
+	if (capture_enabled) {
+		bool capture_ok = true;
+		capture_ok &= WriteDirectionalBlurCapture(capture_prefix, "input.rgba8", source.data(), byte_count);
+		capture_ok &= WriteDirectionalBlurCapture(capture_prefix, "core-output.rgba8", destination.data(), byte_count);
+		capture_ok &= WriteDirectionalBlurCapture(capture_prefix, "callback-output.argb8", output_argb.data(), byte_count);
+		char metadata[512];
+		const int metadata_length = std::snprintf(
+			metadata, sizeof(metadata),
+			"width=%ld\nheight=%ld\ninput_rowbytes=%ld\noutput_rowbytes=%ld\n"
+			"angle=%.17g\nbrightness_gain=%.17g\nfront_strength=%ld\nfront_alpha_fade=%ld\n",
+			static_cast<long>(width), static_cast<long>(height),
+			static_cast<long>(input->rowbytes), static_cast<long>(output->rowbytes),
+			static_cast<double>(info.angle_deg), static_cast<double>(info.brightness_gain),
+			static_cast<long>(info.front_strength), static_cast<long>(info.front_alpha_fade));
+		if (metadata_length > 0) {
+			capture_ok &= WriteDirectionalBlurCapture(capture_prefix, "metadata.txt", metadata,
+				static_cast<size_t>(std::min<int>(metadata_length, sizeof(metadata) - 1)));
+		}
+		if (!capture_ok) {
+			return PF_Err_INTERNAL_STRUCT_DAMAGED;
+		}
+	}
+#endif
+	return PF_Err_NONE;
+}
+
 static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
                           const OLMDirectionalBlurInfo &info, short bitdepth)
 {
-	if (bitdepth == 8) return RenderDirectional8(input, output, info);
+	if (bitdepth == 8) {
+		if (CanUseExactFrontOnly8(input, output, info)) {
+			return RenderExactFrontOnly8(input, output, info);
+		}
+		return RenderDirectional8(input, output, info);
+	}
 	if (bitdepth == 16) {
 		CopyWorld<PF_Pixel16>(input, output);
 		return PF_Err_NONE;
@@ -337,7 +471,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	return PF_Err_BAD_CALLBACK_PARAM;
 }
 
-static OLMDirectionalBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong render_scale)
+static OLMDirectionalBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong render_scale_x, PF_FpLong render_scale_y)
 {
 	OLMDirectionalBlurInfo info;
 	info.angle_deg = params[OLMDIRECTIONALBLUR_ANGLE]->u.fs_d.value;
@@ -355,28 +489,38 @@ static OLMDirectionalBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong re
 	info.seed = params[OLMDIRECTIONALBLUR_SEED]->u.sd.value;
 	info.noise_offset = params[OLMDIRECTIONALBLUR_NOISE_OFFSET]->u.sd.value;
 	info.thickness = params[OLMDIRECTIONALBLUR_THICKNESS]->u.fs_d.value;
-	info.render_scale = render_scale;
+	info.render_scale_x = render_scale_x;
+	info.render_scale_y = render_scale_y;
 	return info;
 }
 
-static PF_FpLong RenderScaleFromInData(PF_InData *in_data)
+static void RenderScaleFromInData(PF_InData *in_data, PF_FpLong &scale_x, PF_FpLong &scale_y)
 {
-	if (in_data && in_data->downsample_x.den != 0) {
-		return (PF_FpLong)in_data->downsample_x.num / (PF_FpLong)in_data->downsample_x.den;
+	scale_x = 1.0;
+	scale_y = 1.0;
+	if (in_data) {
+		if (in_data->downsample_x.den != 0) {
+			scale_x = (PF_FpLong)in_data->downsample_x.num / (PF_FpLong)in_data->downsample_x.den;
+		}
+		if (in_data->downsample_y.den != 0) {
+			scale_y = (PF_FpLong)in_data->downsample_y.num / (PF_FpLong)in_data->downsample_y.den;
+		}
 	}
-	return 1.0;
 }
 
 static PF_Err
 Render(PF_InData *in_data, PF_OutData *, PF_ParamDef *params[], PF_LayerDef *output)
 {
-	OLMDirectionalBlurInfo info = InfoFromParams(params, RenderScaleFromInData(in_data));
+	PF_FpLong scale_x, scale_y;
+	RenderScaleFromInData(in_data, scale_x, scale_y);
+	OLMDirectionalBlurInfo info = InfoFromParams(params, scale_x, scale_y);
 	short bitdepth = PF_WORLD_IS_DEEP(output) ? 16 : 8;
 	return RenderWorld(&params[OLMDIRECTIONALBLUR_INPUT]->u.ld, output, info, bitdepth);
 }
 
 typedef struct {
-	PF_FpLong render_scale;
+	PF_FpLong render_scale_x;
+	PF_FpLong render_scale_y;
 } PreRenderData;
 
 static void DeletePreRenderData(void *data)
@@ -400,7 +544,7 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 		UnionLRect(&in_result.result_rect, &extra->output->result_rect);
 		UnionLRect(&in_result.max_result_rect, &extra->output->max_result_rect);
 		PreRenderData *pre = new PreRenderData;
-		pre->render_scale = RenderScaleFromInData(in_data);
+		RenderScaleFromInData(in_data, pre->render_scale_x, pre->render_scale_y);
 		extra->output->pre_render_data = pre;
 		extra->output->delete_pre_render_data_func = DeletePreRenderData;
 	}
@@ -430,13 +574,15 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 	}
 	param_ptrs[OLMDIRECTIONALBLUR_INPUT] = NULL;
 
-	PF_FpLong render_scale = RenderScaleFromInData(in_data);
+	PF_FpLong render_scale_x, render_scale_y;
+	RenderScaleFromInData(in_data, render_scale_x, render_scale_y);
 	if (PreRenderData *pre = reinterpret_cast<PreRenderData *>(extra->input->pre_render_data)) {
-		if (pre->render_scale > 0.0) render_scale = pre->render_scale;
+		if (pre->render_scale_x > 0.0) render_scale_x = pre->render_scale_x;
+		if (pre->render_scale_y > 0.0) render_scale_y = pre->render_scale_y;
 	}
 
 	if (!err) {
-		OLMDirectionalBlurInfo info = InfoFromParams(param_ptrs, render_scale);
+		OLMDirectionalBlurInfo info = InfoFromParams(param_ptrs, render_scale_x, render_scale_y);
 		ERR(RenderWorld(input_world, output_world, info, extra->input->bitdepth));
 	}
 

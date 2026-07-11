@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import json
 import os
 import subprocess
 import sys
@@ -70,8 +71,44 @@ def main() -> int:
             [
                 sys.executable,
                 str(stage_script),
+                "--dry-run",
                 "--share-root",
                 str(share_root),
+                "--scan-path",
+                str(tmp_root),
+            ],
+            root,
+        )
+        dry_run = json.loads(proc.stdout)
+        if dry_run.get("publishable") is False:
+            assert dry_run.get("reason")
+            proc = run(
+                [
+                    sys.executable,
+                    str(stage_script),
+                    "--share-root",
+                    str(share_root),
+                    "--scan-path",
+                    str(tmp_root),
+                ],
+                root,
+            )
+            assert "nothing to publish:" in proc.stdout
+            assert not any(path.is_file() for path in new_dir.iterdir())
+            print("[OK] Windows share publish smoke")
+            return 0
+        assert dry_run["request_id"]
+        assert dry_run["sha256"]
+        assert len(dry_run["sha256"]) == 64
+
+        proc = run(
+            [
+                sys.executable,
+                str(stage_script),
+                "--share-root",
+                str(share_root),
+                "--scan-path",
+                str(tmp_root),
             ],
             root,
         )
@@ -81,6 +118,10 @@ def main() -> int:
         assert new_files[0].endswith(".txt") or new_files[1].endswith(".txt")
         assert any(name.endswith(".zip") for name in new_files)
         assert any(name.endswith("__README.txt") for name in new_files)
+        readme_path = next(path for path in new_dir.iterdir() if path.name.endswith("__README.txt"))
+        readme = readme_path.read_text(encoding="utf-8")
+        assert f"Pending request id: {dry_run['request_id']}" in readme
+        assert f"Package SHA256: {dry_run['sha256']}" in readme
         archived = {path.name for path in old_dir.iterdir() if path.is_file()}
         assert any(name.endswith(outgoing_zip.name) for name in archived)
         assert any(name.endswith(outgoing_note.name) for name in archived)

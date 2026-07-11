@@ -1,0 +1,10 @@
+{
+  "kind": "olm_runtime_trace_result",
+  "schema": 1,
+  "results": [{
+    "request_id": "olmradialblur_zoom_case0009_sampler_args_20260710",
+    "status": "answered_partial",
+    "summary": "Fill with same-run sampler helper argument facts.",
+    "observations": {"effect": "OLM RadialBlur", "case_id": "case_0009", "target_xy": [[7, 0], [8, 0], [24, 0]], "call_hits": [], "return_hits": [], "console_artifact": null, "failed_reason": null}
+  }]
+}

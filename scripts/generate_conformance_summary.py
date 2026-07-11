@@ -13,6 +13,8 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
+BITDEPTH_16BPC_EXACT_MANIFEST = ROOT / "refs/conformance/bitdepth_16bpc_exact_manifest_20260703.json"
+BITDEPTH_32BPC_PROBE_STATUS = ROOT / "refs/conformance/bitdepth_32bpc_probe_status_20260703.json"
 
 SUITES = [
     {
@@ -129,6 +131,45 @@ def load_json(path: Path) -> dict[str, Any]:
     return data
 
 
+def supplemental_16bpc() -> dict[str, Any] | None:
+    if not BITDEPTH_16BPC_EXACT_MANIFEST.exists():
+        return None
+    data = load_json(BITDEPTH_16BPC_EXACT_MANIFEST)
+    summary = data.get("summary", {})
+    return {
+        "path": rel(BITDEPTH_16BPC_EXACT_MANIFEST),
+        "scope": data.get("scope"),
+        "counts": summary.get("counts", {}),
+        "by_plugin": summary.get("by_plugin", {}),
+    }
+
+
+def supplemental_32bpc() -> dict[str, Any] | None:
+    if not BITDEPTH_32BPC_PROBE_STATUS.exists():
+        return None
+    data = load_json(BITDEPTH_32BPC_PROBE_STATUS)
+    suites = data.get("suites", [])
+    lanes: list[dict[str, Any]] = []
+    for row in suites:
+        if not isinstance(row, dict):
+            continue
+        lanes.append(
+            {
+                "plugin": row.get("plugin"),
+                "scope": row.get("scope"),
+                "request_id": row.get("request_id"),
+                "classification": row.get("classification"),
+                "float_preserving_present": row.get("float_preserving_present"),
+                "share_present": row.get("share_present"),
+            }
+        )
+    return {
+        "path": rel(BITDEPTH_32BPC_PROBE_STATUS),
+        "compare_policy": "refs/conformance/bitdepth_32bpc_compare_policy_20260703.md",
+        "lanes": lanes,
+    }
+
+
 def result_status(row: dict[str, Any], suite: dict[str, str]) -> str:
     if row.get("status") == "missing":
         return "invalid"
@@ -219,6 +260,8 @@ def build_manifest() -> dict[str, Any]:
 
 def write_markdown(manifest: dict[str, Any], path: Path) -> None:
     summary = manifest["summary"]
+    summary_16 = supplemental_16bpc()
+    summary_32 = supplemental_32bpc()
     lines = [
         "# Packaged 8bpc Conformance Summary",
         "",
@@ -279,6 +322,45 @@ def write_markdown(manifest: dict[str, Any], path: Path) -> None:
             "4. Do not promote Smoother2 legacy/key cases from `known-red` without new AE exact proof.",
         ]
     )
+    if summary_16:
+        lines.extend(
+            [
+                "",
+                "## Supplemental 16bpc Exact Slices",
+                "",
+                "This section is supplemental only. It does not change the packaged 8bpc counts above.",
+                f"- Source: `{summary_16['path']}`",
+            ]
+        )
+        for status, count in sorted((summary_16.get("counts") or {}).items()):
+            lines.append(f"- {status}: `{count}`")
+        lines.extend(["", "| Plug-in | Total | AE exact |", "| --- | ---: | ---: |"])
+        by_plugin = summary_16.get("by_plugin") or {}
+        for plugin, counts in sorted(by_plugin.items()):
+            if not isinstance(counts, dict):
+                continue
+            lines.append(
+                f"| {plugin} | {counts.get('total', 0)} | {counts.get('AE exact', 0)} |"
+            )
+    if summary_32:
+        lines.extend(
+            [
+                "",
+                "## Supplemental 32bpc Probe Lanes",
+                "",
+                "These lanes are non-completion state only. They do not contribute to `AE exact` counts.",
+                f"- Source: `{summary_32['path']}`",
+                f"- Compare policy: `{summary_32['compare_policy']}`",
+                "",
+                "| Plug-in | Scope | Classification | float-preserving | Shared |",
+                "| --- | --- | --- | --- | --- |",
+            ]
+        )
+        for row in summary_32["lanes"]:
+            lines.append(
+                f"| {row.get('plugin')} | {row.get('scope')} | `{row.get('classification')}` | "
+                f"`{row.get('float_preserving_present')}` | `{row.get('share_present')}` |"
+            )
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -287,6 +369,8 @@ def main() -> int:
     args = parse_args()
     manifest = build_manifest()
     generated_at = datetime.now(timezone.utc).isoformat()
+    summary_16 = supplemental_16bpc()
+    summary_32 = supplemental_32bpc()
     args.manifest_json.parent.mkdir(parents=True, exist_ok=True)
     args.summary_json.parent.mkdir(parents=True, exist_ok=True)
     args.manifest_json.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -299,6 +383,8 @@ def main() -> int:
                 "scope": manifest["scope"],
                 "summary": manifest["summary"],
                 "manifest": rel(args.manifest_json),
+                "supplemental_16bpc_exact": summary_16,
+                "supplemental_32bpc_probe": summary_32,
             },
             indent=2,
             ensure_ascii=False,

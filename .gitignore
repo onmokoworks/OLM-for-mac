@@ -35,6 +35,19 @@ disasm/v1_analysis/*.log
 # Local logs
 *.log
 
+# Root-level local experiments and ad hoc build outputs
+/a.out
+/cli_radialblur
+/cli_smoother
+/patch.py
+/patch2.py
+/test_*.py
+/test_*.cpp
+/trace_out.txt
+/trace_s2.py
+/mac/OLMSmoother2/patch.py
+/mac/OLMSmoother2/patch_class_plane.py
+
 # Upstream binary/doc package snapshots kept locally, not in this source repo
 aex/
 aex_mac/
@@ -60,6 +73,9 @@ refs/upstream_official/**/*.html
 
 # External local tools
 tools/GhidraMCP/
+tools/emulation/.venv/
+tools/emulation/.venv-cv455/
+tools/emulation/__pycache__/
 
 # Local After Effects SDK links
 Headers

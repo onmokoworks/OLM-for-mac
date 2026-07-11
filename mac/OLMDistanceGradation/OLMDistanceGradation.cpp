@@ -1,4 +1,5 @@
 #include "OLMDistanceGradation.h"
+#include "../../core/olmdistancegradation_fieldgen.h"
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
@@ -125,6 +126,7 @@ struct DGParams {
 	// downsample scale (full-res -> current-res)
 	float         ds_x;
 	float         ds_y;
+	size_t        pixel_size;       // sizeof(render pixel P); selects the source-mask alpha rule
 };
 
 static PF_Err
@@ -323,6 +325,41 @@ template<> inline void load_rgba_norm<PF_PixelFloat>(const PF_PixelFloat *p, flo
 static inline u_char clamp8(float v)   { v = v * 255.0f + 0.5f; return (v < 0) ? 0 : (v > 255.f ? 255 : (u_char)v); }
 static inline u_short clamp16(float v) { v = v * 32768.0f + 0.5f; return (v < 0) ? 0 : (v > 32768.f ? 32768 : (u_short)v); }
 
+static bool debug_point_selected(const char *points, long x, long y)
+{
+	if (!points || !points[0]) return false;
+	const char *cursor = points;
+	while (*cursor) {
+		char *end = nullptr;
+		long px = strtol(cursor, &end, 10);
+		if (end == cursor || *end != ',') return false;
+		cursor = end + 1;
+		long py = strtol(cursor, &end, 10);
+		if (end == cursor) return false;
+		if (px == x && py == y) return true;
+		cursor = end;
+		while (*cursor == ';' || *cursor == ' ' || *cursor == '\t') ++cursor;
+	}
+	return false;
+}
+
+static void debug_dump_shade_point(
+	const char *path, const DGParams &p, long x, long y, size_t pixel_size,
+	float sa, float sr, float sg, float sb, float field_x, float d_alpha,
+	float oa, float orv, float og, float ob,
+	unsigned long stored_a, unsigned long stored_r, unsigned long stored_g, unsigned long stored_b)
+{
+	if (!path || !path[0]) return;
+	FILE *f = fopen(path, "a");
+	if (!f) return;
+	fprintf(f,
+	        "shade x=%ld y=%ld pixel_size=%zu use_bg=%d render_mode=%ld src_a=%.9g src_r=%.9g src_g=%.9g src_b=%.9g field_x=%.9g d_alpha=%.9g out_a=%.9g out_r=%.9g out_g=%.9g out_b=%.9g store_a=%lu store_r=%lu store_g=%lu store_b=%lu\n",
+	        x, y, pixel_size, p.use_bg ? 1 : 0, (long)p.render_mode,
+	        sa, sr, sg, sb, field_x, d_alpha, oa, orv, og, ob,
+	        stored_a, stored_r, stored_g, stored_b);
+	fclose(f);
+}
+
 // ============================================================================
 // Distance field builder (shared across bit depths)
 //   input_alpha_norm: 0..1 alpha, size w*h
@@ -337,6 +374,22 @@ struct DistanceField {
 static float debug_raw_distance_at(const u_char *mask, long w, long h, long x, long y);
 static void dt_to_normalized(
 	const u_char *mask, float *out, long w, long h, long threshold, float ds_scale, bool constant_interp);
+
+// Depth-dependent source-mask rule (both sides AE-host proven at the correct
+// project depth; earlier sentinel confusion came from 8bpc requests silently
+// rendering at 16bpc project depth — a reference_manifest without
+// project.bits_per_channel leaves the previous project depth active):
+//  - 8bpc (PF_Pixel8): any nonzero alpha participates. The packaged 8bpc
+//    suite is byte-exact with the inclusive rule (2026-06-19 return).
+//  - 16bpc and deeper: the 1-code (8U-equivalent) alpha fringe is NOT part
+//    of the source mask, matching the Windows 8U-convert +
+//    cvThreshold(thresh=1.0) field staging; this closes case_0023
+//    (Both + Outside Threshold=0) bg_on/bg_off to nonzero_px=0.
+static inline bool source_mask_owns_alpha(float alpha, size_t pixel_size)
+{
+	if (pixel_size == sizeof(PF_Pixel8)) return alpha > 0.0f;
+	return alpha > (1.5f / 255.0f);
+}
 
 static void debug_dump_distance_field(const char *path, const float *alpha, const DistanceField &df,
                                       const DGParams &p, long w, long h, size_t pixel_size)
@@ -363,7 +416,7 @@ static void debug_dump_distance_field(const char *path, const float *alpha, cons
 		std::vector<float> inside_norm((size_t)w * h, 0.0f);
 		std::vector<float> outside_norm((size_t)w * h, 0.0f);
 		for (long i = 0; i < w * h; ++i) {
-			inside_mask[i] = (alpha[i] > 0.0f) ? 1 : 0;
+			inside_mask[i] = source_mask_owns_alpha(alpha[i], pixel_size) ? 1 : 0;
 			outside_mask[i] = inside_mask[i] ? 0 : 1;
 		}
 		float ds = (p.ds_x + p.ds_y) * 0.5f;
@@ -408,9 +461,9 @@ static void debug_dump_distance_field(const char *path, const float *alpha, cons
 	fclose(f);
 }
 
-static void build_mask_from_alpha(const float *alpha, u_char *mask, long w, long h)
+static void build_mask_from_alpha(const float *alpha, u_char *mask, long w, long h, size_t pixel_size)
 {
-	for (long i = 0; i < w * h; ++i) mask[i] = (alpha[i] > 0.0f) ? 1 : 0;
+	for (long i = 0; i < w * h; ++i) mask[i] = source_mask_owns_alpha(alpha[i], pixel_size) ? 1 : 0;
 }
 static void invert_mask(u_char *mask, long w, long h)
 {
@@ -432,26 +485,10 @@ static void invert_mask(u_char *mask, long w, long h)
 static void dt_to_normalized(
 	const u_char *mask, float *out, long w, long h, long threshold, float ds_scale, bool constant_interp)
 {
-	meijster_edt(mask, out, w, h);
 	float t = (float)threshold * ds_scale;
-	if (!constant_interp && t < 1.0f) t = 1.0f;
-	if (constant_interp) {
-		for (long i = 0; i < w * h; ++i) {
-			out[i] = (out[i] > t) ? 1.0f : 0.0f;
-		}
-		return;
-	}
-	float raw_max = 0.0f;
-	for (long i = 0; i < w * h; ++i) {
-		float v = out[i];
-		if (v > t) v = t;
-		if (v > raw_max) raw_max = v;
-		out[i] = v;
-	}
-	float denom = (raw_max > 1.0f) ? raw_max : 1.0f;
-	for (long i = 0; i < w * h; ++i) {
-		out[i] /= denom;
-	}
+	(void)olm::distancegradation::distance_to_normalized_u8(
+		mask, (size_t)w, (size_t)h, (size_t)w,
+		out, (size_t)w * sizeof(float), t, constant_interp);
 }
 
 static float debug_raw_distance_at(const u_char *mask, long w, long h, long x, long y)
@@ -470,9 +507,9 @@ static void build_distance_field(
 	df.d_alpha.assign((size_t)w * h, 0.0f);
 
 	std::vector<u_char> mask((size_t)w * h);
-	build_mask_from_alpha(alpha, mask.data(), w, h);
+	build_mask_from_alpha(alpha, mask.data(), w, h, p.pixel_size);
 
-	// d_alpha: any non-zero input alpha contributes (becomes 1)
+	// d_alpha: source ownership follows the same depth-dependent mask rule
 	for (long i = 0; i < w * h; ++i) df.d_alpha[i] = mask[i] ? 1.0f : 0.0f;
 
 	float ds = (p.ds_x + p.ds_y) * 0.5f;
@@ -528,6 +565,20 @@ static void build_distance_field(
 		if (bs < 1) bs = 1;
 		int ksize = (int)(2 * bs + 1);
 		if (ksize > 1) gauss_blur_separable(df.x.data(), w, h, ksize);
+	}
+
+	// The Windows 16bpc path merges the float field into an OpenCV image, then
+	// stores it through cvConvertScale before PF Iterate16 reads it back. Match
+	// that PF16 boundary here; keeping the float directly changes half-integer
+	// cases before compose. The 8bpc and float paths have separate exactness
+	// contracts and are intentionally unchanged.
+	if (p.pixel_size == sizeof(PF_Pixel16)) {
+		for (float &value : df.x) {
+			value = olm::distancegradation::roundtrip_normalized_pf16_even(value);
+		}
+		for (float &value : df.d_alpha) {
+			value = olm::distancegradation::roundtrip_normalized_pf16_even(value);
+		}
 	}
 }
 
@@ -585,8 +636,40 @@ static inline void compose_pixel(
 	} else {
 		out_a = d_alpha * X;        // no bg: alpha = d_alpha * X
 		if (p.render_mode == RENDER_MODE_LAYER && src_a > 0.0f) {
-			// Windows 16bpc Layer/no-bg witnesses are consistent with using
-			// straight source RGB and then premultiplying by the final alpha.
+			// Windows 16bpc Layer/no-bg stores RGB from the straight source
+			// ownership mask, while alpha still carries the gradation field.
+			// Keep the older 8bpc path unchanged because that suite is already
+			// canonical AE exact.
+			bool low_alpha_hidden_color = (p.pixel_size != sizeof(PF_Pixel8)) &&
+			                              src_a <= (1.5f / 255.0f) &&
+			                              src_r <= src_a && src_g <= src_a && src_b <= src_a;
+			bool both_channel_mask_color = (p.pixel_size != sizeof(PF_Pixel8)) &&
+			                               p.in_out == IN_OUT_BOTH &&
+			                               src_a <= (150.0f / 255.0f) &&
+			                               src_r <= src_a && src_g <= src_a && src_b <= src_a;
+			if (low_alpha_hidden_color || both_channel_mask_color) {
+				if (both_channel_mask_color) {
+						// Windows promotes only the dominant mask channel to
+						// source alpha here; smaller color components keep the
+						// straight-source ratio and are premultiplied by AE export.
+						float inv_a = 1.0f / src_a;
+						float straight_r = src_r * inv_a;
+						float straight_g = src_g * inv_a;
+						float straight_b = src_b * inv_a;
+						float max_src = src_r;
+						if (src_g > max_src) max_src = src_g;
+						if (src_b > max_src) max_src = src_b;
+						out_r = (src_r > 0.0f && src_r >= max_src) ? src_a : straight_r;
+						out_g = (src_g > 0.0f && src_g >= max_src) ? src_a : straight_g;
+						out_b = (src_b > 0.0f && src_b >= max_src) ? src_a : straight_b;
+					} else {
+						float channel_alpha = src_a * out_a;
+						out_r = (src_r > 0.0f) ? channel_alpha : 0.0f;
+						out_g = (src_g > 0.0f) ? channel_alpha : 0.0f;
+						out_b = (src_b > 0.0f) ? channel_alpha : 0.0f;
+					}
+					return;
+				}
 			float inv_a = 1.0f / src_a;
 			float straight_r = src_r * inv_a;
 			float straight_g = src_g * inv_a;
@@ -594,9 +677,10 @@ static inline void compose_pixel(
 			if (straight_r < 0.0f) straight_r = 0.0f; else if (straight_r > 1.0f) straight_r = 1.0f;
 			if (straight_g < 0.0f) straight_g = 0.0f; else if (straight_g > 1.0f) straight_g = 1.0f;
 			if (straight_b < 0.0f) straight_b = 0.0f; else if (straight_b > 1.0f) straight_b = 1.0f;
-			out_r = straight_r * out_a;
-			out_g = straight_g * out_a;
-			out_b = straight_b * out_a;
+			float rgb_alpha = (p.pixel_size == sizeof(PF_Pixel8)) ? out_a : 1.0f;
+			out_r = straight_r * rgb_alpha;
+			out_g = straight_g * rgb_alpha;
+			out_b = straight_b * rgb_alpha;
 		} else {
 			out_r = ir;
 			out_g = ig;
@@ -616,45 +700,121 @@ struct ShadeCtx {
 template<typename P>
 static void shade_scanline(const P *src_row, P *dst_row,
                            const float *x_row, const float *a_row,
-                           const DGParams &p, long w);
+                           const DGParams &p, long w, long h, long y,
+                           const PF_LayerDef *input_world);
 
 template<> void shade_scanline<PF_Pixel8>(
 	const PF_Pixel8 *src, PF_Pixel8 *dst,
 	const float *x_row, const float *a_row,
-	const DGParams &p, long w)
+	const DGParams &p, long w, long /*h*/, long y,
+	const PF_LayerDef */*input_world*/)
 {
+	const char *shade_debug_path = getenv("OLM_DG_SHADE_DEBUG_PATH");
+	const char *points = getenv("OLM_DG_DEBUG_POINTS");
 	for (long i = 0; i < w; ++i) {
 		float sa, sr, sg, sb;
 		load_rgba_norm(&src[i], sa, sr, sg, sb);
 		float oa, orv, og, ob;
 		compose_pixel(sa, sr, sg, sb, a_row[i], x_row[i], p, oa, orv, og, ob);
-		dst[i].alpha = clamp8(oa);
-		dst[i].red   = clamp8(orv);
-		dst[i].green = clamp8(og);
-		dst[i].blue  = clamp8(ob);
+		u_char da = clamp8(oa);
+		u_char dr = clamp8(orv);
+		u_char dg = clamp8(og);
+		u_char db = clamp8(ob);
+		dst[i].alpha = da;
+		dst[i].red   = dr;
+		dst[i].green = dg;
+		dst[i].blue  = db;
+		if (debug_point_selected(points, i, y)) {
+			debug_dump_shade_point(shade_debug_path, p, i, y, sizeof(PF_Pixel8),
+			                       sa, sr, sg, sb, x_row[i], a_row[i], oa, orv, og, ob,
+			                       da, dr, dg, db);
+		}
 	}
 }
 template<> void shade_scanline<PF_Pixel16>(
 	const PF_Pixel16 *src, PF_Pixel16 *dst,
 	const float *x_row, const float *a_row,
-	const DGParams &p, long w)
+	const DGParams &p, long w, long h, long y,
+	const PF_LayerDef *input_world)
 {
+	const char *shade_debug_path = getenv("OLM_DG_SHADE_DEBUG_PATH");
+	const char *points = getenv("OLM_DG_DEBUG_POINTS");
 	for (long i = 0; i < w; ++i) {
 		float sa, sr, sg, sb;
 		load_rgba_norm(&src[i], sa, sr, sg, sb);
+		if (p.render_mode == RENDER_MODE_LAYER && !p.use_bg &&
+		    src[i].alpha > 0 && src[i].alpha <= 193 &&
+		    src[i].red == 0 && src[i].green == 0 && src[i].blue == 0) {
+			bool inherit_r = false, inherit_g = false, inherit_b = false;
+			for (long dx = 1; dx <= 3 && !(inherit_r || inherit_g || inherit_b); ++dx) {
+				long candidates[2] = { i - dx, i + dx };
+				for (long ci = 0; ci < 2; ++ci) {
+					long nx = candidates[ci];
+					if (nx < 0 || nx >= w) continue;
+					const PF_Pixel16 &n = src[nx];
+					if (n.alpha == 0 || (n.red == 0 && n.green == 0 && n.blue == 0)) continue;
+					inherit_r = n.red > 0;
+					inherit_g = n.green > 0;
+					inherit_b = n.blue > 0;
+					break;
+				}
+			}
+			if (inherit_r || inherit_g || inherit_b) {
+				sr = inherit_r ? sa : 0.0f;
+				sg = inherit_g ? sa : 0.0f;
+				sb = inherit_b ? sa : 0.0f;
+			} else if (input_world) {
+				for (long dy = 1; dy <= 3 && !(inherit_r || inherit_g || inherit_b); ++dy) {
+					long rows[2] = { y - dy, y + dy };
+					for (long ri = 0; ri < 2; ++ri) {
+						long ny = rows[ri];
+						if (ny < 0 || ny >= h) continue;
+						const PF_Pixel16 *nrow = (const PF_Pixel16 *)((const char *)input_world->data + (size_t)ny * input_world->rowbytes);
+						for (long dx = -3; dx <= 3; ++dx) {
+							long nx = i + dx;
+							if (nx < 0 || nx >= w) continue;
+							const PF_Pixel16 &n = nrow[nx];
+							if (n.alpha == 0 || (n.red == 0 && n.green == 0 && n.blue == 0)) continue;
+							inherit_r = n.red > 0;
+							inherit_g = n.green > 0;
+							inherit_b = n.blue > 0;
+							break;
+						}
+						if (inherit_r || inherit_g || inherit_b) break;
+					}
+				}
+				if (inherit_r || inherit_g || inherit_b) {
+					sr = inherit_r ? sa : 0.0f;
+					sg = inherit_g ? sa : 0.0f;
+					sb = inherit_b ? sa : 0.0f;
+				}
+			}
+		}
 		float oa, orv, og, ob;
 		compose_pixel(sa, sr, sg, sb, a_row[i], x_row[i], p, oa, orv, og, ob);
-		dst[i].alpha = clamp16(oa);
-		dst[i].red   = clamp16(orv);
-		dst[i].green = clamp16(og);
-		dst[i].blue  = clamp16(ob);
+		u_short da = clamp16(oa);
+		u_short dr = clamp16(orv);
+		u_short dg = clamp16(og);
+		u_short db = clamp16(ob);
+		dst[i].alpha = da;
+		dst[i].red   = dr;
+		dst[i].green = dg;
+		dst[i].blue  = db;
+		if (debug_point_selected(points, i, y)) {
+			debug_dump_shade_point(shade_debug_path, p, i, y, sizeof(PF_Pixel16),
+			                       sa, sr, sg, sb, x_row[i], a_row[i], oa, orv, og, ob,
+			                       da, dr, dg, db);
+		}
 	}
 }
 template<> void shade_scanline<PF_PixelFloat>(
 	const PF_PixelFloat *src, PF_PixelFloat *dst,
 	const float *x_row, const float *a_row,
-	const DGParams &p, long w)
+	const DGParams &p, long w, long /*h*/, long y,
+	const PF_LayerDef */*input_world*/)
 {
+	const char *shade_debug_path = getenv("OLM_DG_SHADE_DEBUG_PATH");
+	const char *points = getenv("OLM_DG_DEBUG_POINTS");
 	for (long i = 0; i < w; ++i) {
 		float sa, sr, sg, sb;
 		load_rgba_norm(&src[i], sa, sr, sg, sb);
@@ -664,6 +824,11 @@ template<> void shade_scanline<PF_PixelFloat>(
 		dst[i].red   = orv;
 		dst[i].green = og;
 		dst[i].blue  = ob;
+		if (debug_point_selected(points, i, y)) {
+			debug_dump_shade_point(shade_debug_path, p, i, y, sizeof(PF_PixelFloat),
+			                       sa, sr, sg, sb, x_row[i], a_row[i], oa, orv, og, ob,
+			                       0, 0, 0, 0);
+		}
 	}
 }
 
@@ -684,6 +849,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	long w = output->width;
 	long h = output->height;
 	p.w = w; p.h = h;
+	p.pixel_size = sizeof(P);
 
 	// Extract normalized alpha for DT
 	std::vector<float> alpha((size_t)w * h, 0.0f);
@@ -707,7 +873,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 		P *dst       = (P *)      ((char *)output->data + (size_t)y * output->rowbytes);
 		const float *xrow = df.x.data()       + (size_t)y * w;
 		const float *arow = df.d_alpha.data() + (size_t)y * w;
-		shade_scanline<P>(src, dst, xrow, arow, p, w);
+		shade_scanline<P>(src, dst, xrow, arow, p, w, h, y, input);
 	}
 
 	return err;

@@ -31,11 +31,12 @@ def main() -> int:
         assert report["kind"] == "olmblur_closeout_gate_audit"
         assert report["decision"]["status"] == "do-not-reopen-source-without-two-specific-external-proofs"
         lanes = {row["lane"]: row for row in report["lanes"]}
-        assert lanes["case_0006_nonlegacy_16bpc"]["status"] == "awaiting-windows-current-aex-export"
+        assert lanes["case_0006_nonlegacy_16bpc"]["status"] == "outcome-a-current-aex-matches-canonical"
         assert lanes["case_0007_legacy_16bpc"]["status"] == "resolved-as-pre-store-float-delta"
         assert lanes["case_0007_legacy_8bpc_old_normalized"]["status"] == "still-needs-windows-pre-store-float"
         assert lanes["case_0006_nonlegacy_16bpc"]["key_points"][0]["xy"] == [314, 14]
         assert lanes["case_0007_legacy_8bpc_old_normalized"]["key_points"][0]["xy"] == [488, 941]
+        assert report["supporting_evidence"]["case0006_contract_status"] == "outcome-a-current-aex-matches-canonical"
         assert report["supporting_evidence"]["case0006_provenance_status"] == "current-aex-export-missing"
         md = out_md.read_text(encoding="utf-8")
         for needle in (
@@ -43,6 +44,7 @@ def main() -> int:
             "case_0006_nonlegacy_16bpc",
             "case_0007_legacy_16bpc",
             "case_0007_legacy_8bpc_old_normalized",
+            "outcome-a-current-aex-matches-canonical",
             "do-not-reopen-source-without-two-specific-external-proofs",
         ):
             if needle not in md:

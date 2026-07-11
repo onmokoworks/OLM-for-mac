@@ -1,0 +1,142 @@
+{
+  "kind": "olmdistancegradation_0010_0011_field_pack_read_audit",
+  "generated_at": "2026-07-09T12:24:08Z",
+  "decision": "field-pack-alone-insufficient-sign-flipped-boundary",
+  "witnesses": [
+    {
+      "case_id": "olmdistancegradation_extended__case_0010",
+      "xy": [
+        6,
+        40
+      ],
+      "mode": "outside",
+      "raw_distance": 41.0,
+      "threshold": 82.0,
+      "mac_field_x": 0.9002838730812073,
+      "mac_out_a": 0.09971612691879272,
+      "mac_store_a": 3267,
+      "windows_xmm2_alpha": 0.0997314,
+      "windows_store_a": 3268,
+      "mac_field_word_float": 29500.501953125,
+      "mac_field_word_fraction": 0.501953125,
+      "windows_field_word_required": 29500,
+      "windows_field_x_required": 0.9002685546875,
+      "field_word_delta_required_minus_mac_float": -0.501953125,
+      "denom_required_to_match_windows": 45.54196610169492,
+      "models": {
+        "floor_mac_field_word": {
+          "field_word": 29500,
+          "store_a": 3268,
+          "matches_windows_store": true
+        },
+        "ceil_mac_field_word": {
+          "field_word": 29501,
+          "store_a": 3267,
+          "matches_windows_store": false
+        },
+        "round_half_up_mac_field_word": {
+          "field_word": 29501,
+          "store_a": 3267,
+          "matches_windows_store": false
+        },
+        "python_round_mac_field_word": {
+          "field_word": 29501,
+          "store_a": 3267,
+          "matches_windows_store": false
+        }
+      }
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0010",
+      "xy": [
+        901,
+        394
+      ],
+      "mode": "inside",
+      "raw_distance": 44.0113639831543,
+      "threshold": 63.0,
+      "mac_field_x": 0.6985930800437927,
+      "mac_out_a": 0.3014069199562073,
+      "mac_store_a": 9877,
+      "windows_xmm2_alpha": 0.301392,
+      "windows_store_a": 9876,
+      "mac_field_word_float": 22891.498046875,
+      "mac_field_word_fraction": 0.498046875,
+      "windows_field_word_required": 22892,
+      "windows_field_x_required": 0.6986083984375,
+      "field_word_delta_required_minus_mac_float": 0.501953125,
+      "denom_required_to_match_windows": 62.99861851301765,
+      "models": {
+        "floor_mac_field_word": {
+          "field_word": 22891,
+          "store_a": 9877,
+          "matches_windows_store": false
+        },
+        "ceil_mac_field_word": {
+          "field_word": 22892,
+          "store_a": 9876,
+          "matches_windows_store": true
+        },
+        "round_half_up_mac_field_word": {
+          "field_word": 22891,
+          "store_a": 9877,
+          "matches_windows_store": false
+        },
+        "python_round_mac_field_word": {
+          "field_word": 22891,
+          "store_a": 9877,
+          "matches_windows_store": false
+        }
+      }
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0011",
+      "xy": [
+        915,
+        392
+      ],
+      "mode": "inside",
+      "raw_distance": 46.81879806518555,
+      "threshold": 348.0,
+      "mac_field_x": 0.1345367729663849,
+      "mac_out_a": 0.8654632570336152,
+      "mac_store_a": 28360,
+      "windows_xmm2_alpha": null,
+      "windows_store_a": 28359,
+      "mac_field_word_float": 4408.5009765625,
+      "mac_field_word_fraction": 0.5009765625,
+      "windows_field_word_required": 4409,
+      "windows_field_x_required": 0.134552001953125,
+      "field_word_delta_required_minus_mac_float": 0.4990234375,
+      "denom_required_to_match_windows": 347.9606203220685,
+      "models": {
+        "floor_mac_field_word": {
+          "field_word": 4408,
+          "store_a": 28360,
+          "matches_windows_store": false
+        },
+        "ceil_mac_field_word": {
+          "field_word": 4409,
+          "store_a": 28359,
+          "matches_windows_store": true
+        },
+        "round_half_up_mac_field_word": {
+          "field_word": 4409,
+          "store_a": 28359,
+          "matches_windows_store": true
+        },
+        "python_round_mac_field_word": {
+          "field_word": 4409,
+          "store_a": 28359,
+          "matches_windows_store": true
+        }
+      }
+    }
+  ],
+  "source_reports": [
+    "refs/conformance/olmdistancegradation_0010_0011_ra_quantization_probe_20260709.md",
+    "refs/conformance/olmdistancegradation_0010_0011_writeback_pointer_map_return_intake_20260709.md",
+    "decomp/DistanceGradation.aex.c.txt FUN_181170480",
+    "disasm/DistanceGradation.aex.asm.txt FUN_181170480"
+  ]
+}

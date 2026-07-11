@@ -1,0 +1,445 @@
+{
+  "kind": "olmdistancegradation_layer_source_true16_audit",
+  "schema": 1,
+  "request_dir": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625",
+  "candidate_root": "refs/reports/ae_single_case_olmdistancegradation_case0012_both_srca52_patch_20260708",
+  "cases": [
+    {
+      "case_id": "olmdistancegradation_extended__case_0012",
+      "candidate_path": "refs/reports/ae_single_case_olmdistancegradation_case0012_both_srca52_patch_20260708/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+      "reference_path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+      "input_path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012_before_effects.png",
+      "nonzero_pixels": 6741,
+      "max_abs_diff_true16": 6,
+      "mean_abs_diff_true16": 0.005918933256172839,
+      "max_abs_diff_byte_equivalent": 0.0234375,
+      "channel_abs_max_true16": [
+        6,
+        6,
+        6,
+        2
+      ],
+      "channel_nonzero": [
+        6700,
+        6142,
+        6143,
+        155
+      ],
+      "same_alpha_changed_pixels": 6586,
+      "diff_common_by_channel": {
+        "R": [
+          {
+            "value": -2,
+            "count": 5028
+          },
+          {
+            "value": -4,
+            "count": 1425
+          },
+          {
+            "value": -6,
+            "count": 231
+          },
+          {
+            "value": 0,
+            "count": 41
+          },
+          {
+            "value": 2,
+            "count": 16
+          }
+        ],
+        "G": [
+          {
+            "value": -2,
+            "count": 4596
+          },
+          {
+            "value": -4,
+            "count": 1332
+          },
+          {
+            "value": 0,
+            "count": 599
+          },
+          {
+            "value": -6,
+            "count": 214
+          }
+        ],
+        "B": [
+          {
+            "value": -2,
+            "count": 4596
+          },
+          {
+            "value": -4,
+            "count": 1332
+          },
+          {
+            "value": 0,
+            "count": 598
+          },
+          {
+            "value": -6,
+            "count": 214
+          },
+          {
+            "value": 2,
+            "count": 1
+          }
+        ],
+        "A": [
+          {
+            "value": 0,
+            "count": 6586
+          },
+          {
+            "value": -2,
+            "count": 131
+          },
+          {
+            "value": 2,
+            "count": 24
+          }
+        ]
+      },
+      "ratios": {
+        "ref_minus_source_over_alpha_times_candidate_alpha_quantiles": [
+          -0.8612871024888591,
+          -0.593265119852731,
+          0.015147654892643914,
+          1.7236145684801158,
+          4.835961499078621,
+          9.512957932603967,
+          9.512957932603967
+        ],
+        "reference_over_candidate_red_quantiles": [
+          1.0,
+          1.0000314955669989,
+          1.0000347808950667,
+          1.0000581277065714,
+          1.0001868722261154,
+          1.0004443457009553,
+          1.002635046113307
+        ],
+        "source_red_over_source_alpha_quantiles": [
+          0.011718661114524314,
+          0.20769400190881726,
+          0.27051260362036883,
+          0.5411250528690258,
+          0.8862278542036122,
+          0.9803576709365126,
+          0.9882031406821796
+        ]
+      },
+      "examples": [
+        {
+          "xy": [
+            15,
+            0
+          ],
+          "source_rgba16": [
+            7451,
+            7451,
+            7451,
+            22101
+          ],
+          "candidate_rgba16": [
+            21913,
+            21913,
+            21913,
+            64997
+          ],
+          "reference_rgba16": [
+            21919,
+            21919,
+            21919,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -6,
+            -6,
+            -6,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1241,
+            131
+          ],
+          "source_rgba16": [
+            2829,
+            2829,
+            2829,
+            13621
+          ],
+          "candidate_rgba16": [
+            13503,
+            13503,
+            13503,
+            64997
+          ],
+          "reference_rgba16": [
+            13509,
+            13509,
+            13509,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -6,
+            -6,
+            -6,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1327,
+            162
+          ],
+          "source_rgba16": [
+            7451,
+            7451,
+            7451,
+            22101
+          ],
+          "candidate_rgba16": [
+            21913,
+            21913,
+            21913,
+            64997
+          ],
+          "reference_rgba16": [
+            21919,
+            21919,
+            21919,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -6,
+            -6,
+            -6,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1276,
+            405
+          ],
+          "source_rgba16": [
+            6129,
+            6129,
+            6129,
+            20045
+          ],
+          "candidate_rgba16": [
+            19873,
+            19873,
+            19873,
+            64997
+          ],
+          "reference_rgba16": [
+            19879,
+            19879,
+            19879,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -6,
+            -6,
+            -6,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1199,
+            161
+          ],
+          "source_rgba16": [
+            2829,
+            2829,
+            2829,
+            13621
+          ],
+          "candidate_rgba16": [
+            13503,
+            13503,
+            13503,
+            64997
+          ],
+          "reference_rgba16": [
+            13509,
+            13509,
+            13509,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -6,
+            -6,
+            -6,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1789,
+            407
+          ],
+          "source_rgba16": [
+            6129,
+            6129,
+            6129,
+            20045
+          ],
+          "candidate_rgba16": [
+            19873,
+            19873,
+            19873,
+            64997
+          ],
+          "reference_rgba16": [
+            19879,
+            19879,
+            19879,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -6,
+            -6,
+            -6,
+            0
+          ]
+        },
+        {
+          "xy": [
+            714,
+            605
+          ],
+          "source_rgba16": [
+            6129,
+            6129,
+            6129,
+            20045
+          ],
+          "candidate_rgba16": [
+            19873,
+            19873,
+            19873,
+            64997
+          ],
+          "reference_rgba16": [
+            19879,
+            19879,
+            19879,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -6,
+            -6,
+            -6,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1517,
+            408
+          ],
+          "source_rgba16": [
+            2829,
+            2829,
+            2829,
+            13621
+          ],
+          "candidate_rgba16": [
+            13503,
+            13503,
+            13503,
+            64997
+          ],
+          "reference_rgba16": [
+            13509,
+            13509,
+            13509,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -6,
+            -6,
+            -6,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1071,
+            156
+          ],
+          "source_rgba16": [
+            2829,
+            2829,
+            2829,
+            13621
+          ],
+          "candidate_rgba16": [
+            13503,
+            13503,
+            13503,
+            64997
+          ],
+          "reference_rgba16": [
+            13509,
+            13509,
+            13509,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -6,
+            -6,
+            -6,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1823,
+            154
+          ],
+          "source_rgba16": [
+            7451,
+            7451,
+            7451,
+            22101
+          ],
+          "candidate_rgba16": [
+            21913,
+            21913,
+            21913,
+            64997
+          ],
+          "reference_rgba16": [
+            21919,
+            21919,
+            21919,
+            64997
+          ],
+          "candidate_minus_reference": [
+            -6,
+            -6,
+            -6,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "reading": [
+    "The audited candidate must be treated as true 16-bit data. Pillow's default RGBA decode collapses these PNGs to 8-bit and hides the scale of this family.",
+    "Use the `max true16` column for implementation work. The `max byte-equiv` column is included only to explain older reports that described true16 residuals after an 8-bit-style scale conversion.",
+    "If the high-delta examples preserve alpha while RGB is lower on the Mac candidate, the active lane is Layer/no-bg source RGB ownership or source-to-output-alpha scaling, not distance-field topology."
+  ]
+}

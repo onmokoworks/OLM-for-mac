@@ -35,6 +35,13 @@ This request explicitly preserves the current policy boundary:
 So the request is useful because it makes the next external step concrete
 without weakening the correctness bar.
 
+The request JSON now carries that contract in machine-readable form too:
+
+- `compare_policy.path = refs/conformance/bitdepth_32bpc_compare_policy_20260703.md`
+- `compare_policy.mode = float-preserving-required`
+- `output_requirements.preferred_formats = ["exr"]`
+- `output_requirements.png_only_classification = probe-only`
+
 ## Validation
 
 The packaged handoff zip was validated with:

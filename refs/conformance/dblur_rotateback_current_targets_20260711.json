@@ -1,0 +1,181 @@
+{
+  "schema": 1,
+  "kind": "dblur_rotateback_current_targets_actual_aex_gate",
+  "status": "pass",
+  "comparison": "float32 RGBA byte equality; no tolerance",
+  "aex": "plugins_2025/OLMDirectionalBlur.aex",
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "source": "refs/win_references/olm_reference_return_windows_20260611/OLMDirectionalBlur/directionalblur_context_scale_20260606__software__fr24__db_angle0_strength_sweep_small_before_effects.png",
+  "normalized_plane_sha256": "f9383f94079457719921600a132a2e8281c137c00defb90f6089d821156a6bcd",
+  "candidate_rotateback_sha256": "263644ba0c30c65b6007dacf76d6f4e514256a1057a95887ef5f4188af5a3df7",
+  "targets": [
+    {
+      "output_xy": [
+        0,
+        0
+      ],
+      "work_xy": [
+        143,
+        563
+      ],
+      "actual_aex_instructions": 205,
+      "actual_bits": [
+        "0x3f78f8f2",
+        "0x3f78f8f2",
+        "0x3f78f8f2",
+        "0x3f7ffc00"
+      ],
+      "candidate_bits": [
+        "0x3f78f8f2",
+        "0x3f78f8f2",
+        "0x3f78f8f2",
+        "0x3f7ffc00"
+      ],
+      "exact": true
+    },
+    {
+      "output_xy": [
+        261,
+        0
+      ],
+      "work_xy": [
+        404,
+        563
+      ],
+      "actual_aex_instructions": 205,
+      "actual_bits": [
+        "0x3f78f8f2",
+        "0x3f78f8f2",
+        "0x3f78f8f2",
+        "0x3f7ffc00"
+      ],
+      "candidate_bits": [
+        "0x3f78f8f2",
+        "0x3f78f8f2",
+        "0x3f78f8f2",
+        "0x3f7ffc00"
+      ],
+      "exact": true
+    },
+    {
+      "output_xy": [
+        262,
+        0
+      ],
+      "work_xy": [
+        405,
+        563
+      ],
+      "actual_aex_instructions": 205,
+      "actual_bits": [
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f800000"
+      ],
+      "candidate_bits": [
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f800000"
+      ],
+      "exact": true
+    },
+    {
+      "output_xy": [
+        500,
+        0
+      ],
+      "work_xy": [
+        643,
+        563
+      ],
+      "actual_aex_instructions": 205,
+      "actual_bits": [
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f800000"
+      ],
+      "candidate_bits": [
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f800000"
+      ],
+      "exact": true
+    },
+    {
+      "output_xy": [
+        1658,
+        0
+      ],
+      "work_xy": [
+        1801,
+        563
+      ],
+      "actual_aex_instructions": 205,
+      "actual_bits": [
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f800000"
+      ],
+      "candidate_bits": [
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f800000"
+      ],
+      "exact": true
+    },
+    {
+      "output_xy": [
+        1659,
+        0
+      ],
+      "work_xy": [
+        1802,
+        563
+      ],
+      "actual_aex_instructions": 205,
+      "actual_bits": [
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f7ffffe"
+      ],
+      "candidate_bits": [
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f7ffffe"
+      ],
+      "exact": true
+    },
+    {
+      "output_xy": [
+        1919,
+        0
+      ],
+      "work_xy": [
+        2062,
+        563
+      ],
+      "actual_aex_instructions": 205,
+      "actual_bits": [
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f7ffffe"
+      ],
+      "candidate_bits": [
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f78f8f1",
+        "0x3f7ffffe"
+      ],
+      "exact": true
+    }
+  ]
+}

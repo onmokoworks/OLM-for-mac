@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "kind": "dblur_frontonly_current_portable_core_gate",
+  "status": "pass",
+  "comparison": "raw full-entry AEX SHA-256 plus modeled AE-rendered PNG; no tolerance",
+  "cases": [
+    {
+      "id": "db_angle0_strength_sweep_small",
+      "source": "refs/win_references/olm_reference_return_windows_20260611/OLMDirectionalBlur/directionalblur_context_scale_20260606__software__fr24__db_angle0_strength_sweep_small_before_effects.png",
+      "expected": "refs/win_references/olm_reference_return_windows_20260611/OLMDirectionalBlur/directionalblur_context_scale_20260606__software__fr24__db_angle0_strength_sweep_small.png",
+      "parameters": {
+        "angle": 0.0,
+        "brightness_gain": 1.0,
+        "front_strength": 48,
+        "front_alpha_fade": 0
+      },
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "return_code": 0,
+      "portable_raw_argb_sha256": "ebfda2207558a335d35a3928fe623b6d6d5cc44a7e0befe89dc06cdf1c4d9544",
+      "actual_aex_raw_argb_sha256": "ebfda2207558a335d35a3928fe623b6d6d5cc44a7e0befe89dc06cdf1c4d9544",
+      "raw_exact": true,
+      "ae_output_premultiply_models": {
+        "floor": {
+          "exact": true,
+          "max_diff": 0,
+          "differing_bytes": 0,
+          "actual_sha256": "8f21af17e2e187edda3b93609cf140f9e0cb9def4e48598adbfa03bbff19909d",
+          "expected_sha256": "8f21af17e2e187edda3b93609cf140f9e0cb9def4e48598adbfa03bbff19909d"
+        },
+        "nearest": {
+          "exact": true,
+          "max_diff": 0,
+          "differing_bytes": 0,
+          "actual_sha256": "8f21af17e2e187edda3b93609cf140f9e0cb9def4e48598adbfa03bbff19909d",
+          "expected_sha256": "8f21af17e2e187edda3b93609cf140f9e0cb9def4e48598adbfa03bbff19909d"
+        }
+      },
+      "modeled_ae_render_exact": true
+    },
+    {
+      "id": "db_angle0_alpha_fade_hard_edges",
+      "source": "refs/win_references/olm_reference_return_windows_20260611/OLMDirectionalBlur/directionalblur_context_scale_20260606__software__fr24__db_angle0_alpha_fade_hard_edges_before_effects.png",
+      "expected": "refs/win_references/olm_reference_return_windows_20260611/OLMDirectionalBlur/directionalblur_context_scale_20260606__software__fr24__db_angle0_alpha_fade_hard_edges.png",
+      "parameters": {
+        "angle": 0.0,
+        "brightness_gain": 1.0,
+        "front_strength": 240,
+        "front_alpha_fade": 96
+      },
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "return_code": 0,
+      "portable_raw_argb_sha256": "250023dbd2dbba4fbeb160b7cc17d428a744d97ce52926481d45edea8e453ac9",
+      "actual_aex_raw_argb_sha256": "250023dbd2dbba4fbeb160b7cc17d428a744d97ce52926481d45edea8e453ac9",
+      "raw_exact": true,
+      "ae_output_premultiply_models": {
+        "floor": {
+          "exact": false,
+          "max_diff": 61,
+          "differing_bytes": 1346561,
+          "actual_sha256": "0bebed501e88989d51f80b6d220433c639d6906132376f36c532aec88b582c7e",
+          "expected_sha256": "b04cc869dbb500bdaee0b33abdb762147f8ff2da48f0a543f050c6828ba43027"
+        },
+        "nearest": {
+          "exact": false,
+          "max_diff": 60,
+          "differing_bytes": 734308,
+          "actual_sha256": "cc654e58be60e31e9c83faa9b548f94d13a5b3f61bfac750cd04e809c06c8cc2",
+          "expected_sha256": "b04cc869dbb500bdaee0b33abdb762147f8ff2da48f0a543f050c6828ba43027"
+        }
+      },
+      "modeled_ae_render_exact": false
+    }
+  ],
+  "raw_exact_cases": 2,
+  "total_cases": 2,
+  "not_ae_exact": true
+}

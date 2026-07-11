@@ -1,0 +1,154 @@
+{
+  "kind": "olmdistancegradation_case0023_lane_state",
+  "materialized_at": "2026-07-03T10:23:56Z",
+  "case_id": "olmdistancegradation_extended__case_0023",
+  "inputs": {
+    "threshold_json": "refs/conformance/olmdistancegradation_case0023_threshold_family_audit_20260701.json",
+    "source_json": "refs/conformance/olmdistancegradation_case0023_source_candidates_audit_20260701.json",
+    "provenance_json": "refs/conformance/olmdistancegradation_case0023_reference_provenance_20260702.json",
+    "bgoff_json": "refs/conformance/olmdistancegradation_case0023_bgoff_current_probe_20260702.json",
+    "aex_cpu_simu_json": "refs/conformance/olmdistancegradation_case0023_aex_cpu_simu_fullframe_20260707.json"
+  },
+  "residual": {
+    "total_px": 73,
+    "edge_bucket_px": 65,
+    "threshold_bucket_px": 8
+  },
+  "threshold_family": {
+    "status": "threshold-family-reference-generation-split-candidate",
+    "summary": "The packaged expected PNG cannot be treated as authoritative for the case_0023 threshold triplet. The live Mac AE output at (415,393) matches the latest Windows runtime-traced final stored value, while the packaged expected PNG still shows the older blue endpoint there.",
+    "next_action": "Keep the threshold-family triplet out of implementation tuning. Regenerate or recapture a current Windows Software reference for case_0023, or explicitly split the packaged expected lane from the current-runtime lane before touching compose/writeback.",
+    "authoritative_request": {
+      "contract": "refs/conformance/olmdistancegradation_case0023_current_aex_export_contract_20260702.md",
+      "request_id": "olmdistancegradation_case0023_current_aex_recapture_20260702",
+      "request_json": "refs/reference_requests/olmdistancegradation_case0023_current_aex_recapture_20260702.json"
+    },
+    "witness_triplet": [
+      {
+        "xy": [
+          414,
+          393
+        ],
+        "live_mac_rgba8": [
+          28,
+          0,
+          238,
+          255
+        ],
+        "packaged_expected_rgba8": [
+          28,
+          0,
+          238,
+          255
+        ],
+        "latest_windows_runtime_final_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "field_debug": {
+          "raw_inside": 35.0142822,
+          "raw_outside": 0.0,
+          "field_x": 0.0,
+          "compose_input_x": 0.0,
+          "inside_constant_binary": 0,
+          "outside_constant_binary": 0
+        }
+      },
+      {
+        "xy": [
+          415,
+          393
+        ],
+        "live_mac_rgba8": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "packaged_expected_rgba8": [
+          28,
+          0,
+          238,
+          255
+        ],
+        "latest_windows_runtime_final_rgba16": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "field_debug": {
+          "raw_inside": 36.0138855,
+          "raw_outside": 0.0,
+          "field_x": 1.0,
+          "compose_input_x": 1.0,
+          "inside_constant_binary": 1,
+          "outside_constant_binary": 0
+        }
+      },
+      {
+        "xy": [
+          416,
+          393
+        ],
+        "live_mac_rgba8": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "packaged_expected_rgba8": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "latest_windows_runtime_final_rgba16": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "field_debug": {
+          "raw_inside": 37.0135117,
+          "raw_outside": 0.0,
+          "field_x": 1.0,
+          "compose_input_x": 1.0,
+          "inside_constant_binary": 1,
+          "outside_constant_binary": 0
+        }
+      }
+    ]
+  },
+  "edge_family": {
+    "status": "reference-path-split-or-final-output-export-closeout",
+    "summary": "Current Mac bg_off still differs from Windows bg_off by the same 73px cardinality, so the residual is not just a bg_on compose issue. The 2026-07-06 reference-path split note says the 65px family may be structurally unreachable through the recorded CPU pipeline, and the 2026-07-07 AEX CPU simu adds binary-grounded helper evidence that Both add-saturate field is 0.0 at (1699,7), matching the current Mac-side field/debug reading rather than the stale/reference red endpoint.",
+    "next_action": "Keep the edge-family out of Mac helper tuning. Close it with float-preserving Software/EXR recapture or typed final output/export evidence that contradicts or confirms the CPU-helper witness; do not reopen threshold-family tuning from packaged PNG drift.",
+    "authoritative_request": {
+      "binary_grounded_helper_evidence": "refs/conformance/olmdistancegradation_case0023_aex_cpu_simu_fullframe_20260707.json",
+      "closeout_requirement": "float-preserving Software/EXR recapture or typed final output/export witness",
+      "prior_runtime_trace_followup": "olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702",
+      "prior_runtime_trace_status": "superseded"
+    },
+    "live_bg_off_mismatches": [
+      "(1699,7)",
+      "(415,393)"
+    ],
+    "matching_bg_off_neighbors": [
+      "(1698,7)",
+      "(1700,7)",
+      "(414,393)",
+      "(416,393)"
+    ]
+  },
+  "forbidden_actions": [
+    "Do not promote a global Constant plateau rewrite from the rejected trunc_plateau_binary family.",
+    "Do not retune generic 16bpc writeback from this lane.",
+    "Do not reopen broad color-mix tuning while the field-first witness still stands.",
+    "Do not treat the packaged expected PNG as equivalent to current Windows output for the threshold-family slice without proof.",
+    "Do not retune the Both-mode saturating-add field merge while the AEX CPU simu already produces the live edge zero."
+  ],
+  "safe_claim": "Threshold-family is provenance/export-first; edge-family is now a reference-path split / final output-export closeout lane, not a Mac helper tuning lane."
+}

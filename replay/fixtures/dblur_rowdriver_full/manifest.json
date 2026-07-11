@@ -1,0 +1,120 @@
+{
+  "schema": 1,
+  "kind": "dblur_rowdriver_full_actual_aex_fixture",
+  "aex": "plugins_2025/OLMDirectionalBlur.aex",
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "comparison": "byte equality only; no tolerance",
+  "cases": [
+    {
+      "id": "plane3_rows01_w5",
+      "width": 5,
+      "height": 3,
+      "row_start": 0,
+      "row_end": 2,
+      "zero_alpha": [
+        1
+      ],
+      "front_count": 4,
+      "back_count": 3,
+      "pre_front_count": 3,
+      "pre_back_count": 4,
+      "exponent": 1.25,
+      "scale": 1.7,
+      "edge_x": 0.35,
+      "edge_y": 0.85,
+      "map_row": 0.4,
+      "extent": 2.3,
+      "input_sha256": {
+        "source.bin": "662b4f5afb26dad2e45d81807d4d22685064a61981aa6d6d394c1c4ec3785102",
+        "destination.bin": "36cf2f64b73e6b92242969e59bda7a92e449293d52b8ca5318adcaadc5a7de15",
+        "denominator.bin": "45340b6a234695bcae441273d539823d1f96e9e72a8f4eeceed32cd12c147010",
+        "alpha.bin": "4503beef0142b622f9bf9e2822019d3dcc82771098f67e852e6a807e1496c359",
+        "comp_map.bin": "665584ee9b96b7c5e34ce64acdb7ed17db33ce816975c968f5cac8a0c7ff457e"
+      },
+      "actual_sha256": {
+        "destination.bin": "353c17560245a2f7433151b69c21463b2f9d057092719b0bf7531a5ca8d7db05",
+        "denominator.bin": "d14b5380ff5420270cd6aaedbaf5ea52e66c84261e354cbf4dd51202afd30e0d",
+        "alpha.bin": "30b8e0f39cd37be2976b974da68f2535d5e704a6c1ce7b6b63b21ded9d436cf8"
+      },
+      "execution": {
+        "instructions": 2792,
+        "canary_failures": [],
+        "unimplemented_imports": []
+      }
+    },
+    {
+      "id": "plane4_rows12_w7",
+      "width": 7,
+      "height": 4,
+      "row_start": 1,
+      "row_end": 3,
+      "zero_alpha": [],
+      "front_count": 6,
+      "back_count": 5,
+      "pre_front_count": 5,
+      "pre_back_count": 6,
+      "exponent": 0.75,
+      "scale": 0.9,
+      "edge_x": 1.15,
+      "edge_y": 0.42,
+      "map_row": 1.6,
+      "extent": 3.1,
+      "input_sha256": {
+        "source.bin": "7d4ec1cbeaad691a067d451c2d8f5dc1122d7543e7c4432422768aaedeb41d08",
+        "destination.bin": "c6a9030d3cc8a02f2f452bbc7ad5c4f5a85279959f3198847e7634ce714360b3",
+        "denominator.bin": "9348502bdd5705dc88d63ff0f745975a1d89becbc83d581d6c3e0f846189d87c",
+        "alpha.bin": "35f78657eec9b6f910dd04f495828f8607cc7fbbd61fc1f5b4d3beaa1ba04da0",
+        "comp_map.bin": "d609ff88f1d995341bb857c32128837ba0bfb8640e75be2541f9488d27da7949"
+      },
+      "actual_sha256": {
+        "destination.bin": "a404be279b551bedfe1303e5f6a90aeceaf8fe5ac8bfe0f5c587a98ec5823384",
+        "denominator.bin": "8e2307ac79e8f873c1df04d8c0cd0557f2bb09aa5d213e674f36cb7c68b6be53",
+        "alpha.bin": "d0c7a70aa14babfb17f44347191f4bb99d85d3a654ede6fdd107b6ba12002a2f"
+      },
+      "execution": {
+        "instructions": 7658,
+        "canary_failures": [],
+        "unimplemented_imports": []
+      }
+    },
+    {
+      "id": "plane5_rows24_w9_mode1",
+      "width": 9,
+      "height": 5,
+      "row_start": 2,
+      "row_end": 5,
+      "zero_alpha": [
+        0,
+        8
+      ],
+      "front_count": 5,
+      "back_count": 7,
+      "pre_front_count": 7,
+      "pre_back_count": 5,
+      "exponent": 1.6,
+      "scale": 2.2,
+      "edge_x": 0.63,
+      "edge_y": 1.4,
+      "map_row": 2.25,
+      "extent": 4.7,
+      "mode": 1,
+      "input_sha256": {
+        "source.bin": "3933c7482ebc283216692d18cdb34461c964a7cea40b6a211461a6e948226a39",
+        "destination.bin": "43f7a2bda12c022baad92c7c22ea4b20803b18e4751dfad13425ffb6f7a83cb3",
+        "denominator.bin": "c1449690103256f0fcba231d4e4a407872bdbc61ca624539edc6fbde43fcd209",
+        "alpha.bin": "320a52f184d98828c3a23be0870bb7ec4feb25ad8dd8c0d5cde8a9df01abe6ec",
+        "comp_map.bin": "ac9c087ce432551f2ff16e1c05438b464dd4b8d57ba5b9512f050e6d9636ee53"
+      },
+      "actual_sha256": {
+        "destination.bin": "1bf8be275459e8ca7b3c47f64f5111d08a025e2151743187de781e686faf9230",
+        "denominator.bin": "0e084dcd75f828745dcae69095060cbf21509d5b681451ff7ad2aafff4fae295",
+        "alpha.bin": "1e4ea74960ad505821f4d33bb5d071c594b6a0a72d8fd9f481e7b3cfb2052924"
+      },
+      "execution": {
+        "instructions": 8527,
+        "canary_failures": [],
+        "unimplemented_imports": []
+      }
+    }
+  ]
+}

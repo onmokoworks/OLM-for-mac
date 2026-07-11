@@ -36,8 +36,8 @@ def main() -> int:
         assert report["source_candidates"][1]["site"] == "zoom_alpha_accumulation_and_denominator_state"
         assert report["source_candidates"][2]["site"] == "zoom_final_inverse_sample_and_u8_writeback"
         assert report["source_candidates"][0]["line"] == 709
-        assert report["source_candidates"][1]["line"] == 732
-        assert report["source_candidates"][2]["line"] == 805
+        assert report["source_candidates"][1]["line"] == 733
+        assert report["source_candidates"][2]["line"] == 811
         md = out_md.read_text(encoding="utf-8")
         for needle in (
             "OLMRadialBlur Zoom Source-Candidates Audit",

@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "kind": "dblur_rowdriver_portable_candidate",
+  "status": "portable_candidate_byte_exact_bounded",
+  "aex": "plugins_2025/OLMDirectionalBlur.aex",
+  "candidate": "core/dblur_rowdriver.cpp",
+  "abi": {
+    "leaf_prepass": "olm_dblur_prepass_f32",
+    "leaf_scatter": "olm_dblur_scatter_f32",
+    "rowdriver": "olm_dblur_rowdriver_f32",
+    "rowdriver_shape": "row_start,row_end,source,destination,width,mode,opacity,exponent,scale,edge_x,edge_y,scatter_front,scatter_back,prepass_front,prepass_back,denominator,alpha_max,comp_map,scatter_front_count,scatter_back_count,prepass_front_count,prepass_back_count"
+  },
+  "fixtures": "replay/fixtures/dblur_rowdriver_portable/manifest.json",
+  "comparison": "byte equality only; no tolerance",
+  "result": {
+    "leaf_cases": 5,
+    "exact_cases": 5,
+    "canary_failures": 0
+  },
+  "fact": [
+    "The fixture expected bytes are read directly after FUN_180001000 or FUN_1800013e0 in AexLoader.",
+    "The leaf fixtures use valid three-row planes and row*width bases.",
+    "The rowdriver candidate exposes the default-mode fields needed by FUN_1800038d0 as typed arguments.",
+    "No tolerance is used."
+  ],
+  "inference": [
+    "The typed ABI is suitable for a one-call detour together with the separate full-rowdriver exact gate.",
+    "Mode-2 and mode-3 host fields remain intentionally unimplemented and unproven."
+  ]
+}

@@ -300,9 +300,19 @@
     function renderRequest(requestRoot, outputBase, progressLog) {
         var requestManifest = parseJson(requestRoot.fsName + "/request_manifest.json");
         var referenceManifest = parseJson(requestRoot.fsName + "/" + requestManifest.reference_manifest);
+        var requestedBits = null;
+        var requestedBitsSource = "";
         if (referenceManifest.project && referenceManifest.project.bits_per_channel) {
+            requestedBits = Number(referenceManifest.project.bits_per_channel);
+            requestedBitsSource = "project.bits_per_channel";
+        } else if (referenceManifest.comp && referenceManifest.comp.bpc) {
+            requestedBits = Number(referenceManifest.comp.bpc);
+            requestedBitsSource = "comp.bpc";
+        }
+        if (requestedBits) {
             try {
-                app.project.bitsPerChannel = Number(referenceManifest.project.bits_per_channel);
+                app.project.bitsPerChannel = requestedBits;
+                appendText(progressLog, "bits_per_channel " + requestedBits + " source=" + requestedBitsSource + "\n");
             } catch (bitsError) {
                 appendText(progressLog, "bits_per_channel_warning " + bitsError.toString() + "\n");
             }

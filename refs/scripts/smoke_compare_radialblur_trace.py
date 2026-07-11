@@ -14,6 +14,10 @@ DENSE_REQUEST_ID = "olmradialblur_dense_sampler_trace_20260620"
 RESIDUAL_REQUEST_ID = "olmradialblur_caller_collapse_witness_20260630"
 TINY_REQUEST_ID = "olmradialblur_tiny_rotation_substitute_path_followup_20260701"
 TINY_BACKSTEP_REQUEST_ID = "olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701"
+TINY_CONTEXT_REQUEST_ID = "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702"
+CASE0010_FINAL_WRITEBACK_REQUEST_ID = "olmradialblur_case0010_final_writeback_20260708"
+ZOOM_CASE0009_FINAL_PLANE_CELLS_REQUEST_ID = "olmradialblur_zoom_case0009_final_plane_cells_20260709"
+ZOOM_CASE0009_FINAL_PLANE_TYPED_REQUEST_ID = "olmradialblur_zoom_case0009_final_plane_typed_20260710"
 
 
 def run_compare(repo: Path, py: str, summary: Path, output_json: Path, output_md: Path) -> dict:
@@ -281,10 +285,10 @@ def main() -> int:
         )
         comparison = run_compare(repo, py, summary, output_json, output_md)
         assert_request(comparison, TINY_REQUEST_ID)
-        assert_focus(comparison, "tiny_rotation:substitute-or-upstream-rgb")
+        assert_focus(comparison, "tiny_rotation:upstream-branch-not-isolated")
         recommendation = comparison.get("recommended_next_evidence", "")
-        if "substitute/fallback branch state" not in recommendation:
-            print("[FAIL] tiny followup missing substitute-path recommendation")
+        if "first upstream promotion/substitute branch" not in recommendation:
+            print("[FAIL] tiny followup missing branch-isolation recommendation")
             return 1
         if "local_tiny_rotation_context" not in comparison:
             print("[FAIL] tiny followup should include local tiny Rotation context")
@@ -329,7 +333,7 @@ def main() -> int:
         )
         comparison = run_compare(repo, py, summary, output_json, output_md)
         assert_request(comparison, TINY_REQUEST_ID)
-        assert_focus(comparison, "tiny_rotation:substitute-or-upstream-rgb")
+        assert_focus(comparison, "tiny_rotation:upstream-branch-not-isolated")
 
         summary.write_text(
             json.dumps(
@@ -365,7 +369,337 @@ def main() -> int:
         )
         comparison = run_compare(repo, py, summary, output_json, output_md)
         assert_request(comparison, TINY_BACKSTEP_REQUEST_ID)
-        assert_focus(comparison, "tiny_rotation:substitute-or-upstream-rgb")
+        assert_focus(comparison, "tiny_rotation:upstream-branch-not-isolated")
+
+        summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": TINY_CONTEXT_REQUEST_ID,
+                            "status": "failed_partial",
+                            "summary": "synthetic anchor-context followup still needs first upstream promotion branch",
+                            "observations": {
+                                "cases": [
+                                    {
+                                        "case_id": "case_0010",
+                                        "aex_fallback_or_substitute_path": "captured branch neighborhood",
+                                        "aex_final_rgba_u8": [255, 255, 255, 255],
+                                        "aex_inverse_sampler_input_xy": [1603.8, 844.3],
+                                        "aex_normalized_final_e_rgba_float": [1.0, 1.0, 1.0, 1.0],
+                                        "aex_polar_or_source_xy": [1603.8, 844.3],
+                                        "aex_pre_writeback_rgba_float_or_hex": [None, None, None, None],
+                                        "aex_preserved_validity_f252": 1.0,
+                                        "aex_source_or_polar_rgba_float": [-0.004, -0.004, -0.004, 1.0],
+                                        "aex_validity_or_border_decision": "not isolated",
+                                    }
+                                ]
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        comparison = run_compare(repo, py, summary, output_json, output_md)
+        assert_request(comparison, TINY_CONTEXT_REQUEST_ID)
+        assert_focus(comparison, "tiny_rotation:anchor-context-upstream-branch")
+        recommendation = comparison.get("recommended_next_evidence", "")
+        if "first upstream promotion branch" not in recommendation:
+            print("[FAIL] anchor-context followup missing branch-specific recommendation")
+            return 1
+        if "local_tiny_rotation_lane_state" not in comparison:
+            print("[FAIL] anchor-context followup should include lane-state context")
+            return 1
+
+        summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": DENSE_REQUEST_ID,
+                            "status": "answered",
+                            "summary": "older dense result that must not win over the final-writeback request",
+                            "observations": {},
+                        },
+                        {
+                            "request_id": CASE0010_FINAL_WRITEBACK_REQUEST_ID,
+                            "status": "answered",
+                            "summary": "synthetic case_0010 final-writeback chain",
+                            "observations": {
+                                "cases": [
+                                    {
+                                        "case_id": "case_0010",
+                                        "module_base_or_aex_version": "OLMRadialBlur.aex+synthetic",
+                                        "inverse_sampler_input_xy": [1603.8, 844.3],
+                                        "contributing_polar_cells": [[1603, 844], [1604, 844], [1603, 845], [1604, 845]],
+                                        "accumulated_f250_rgba": [1.0, 1.0, 1.0, 1.0],
+                                        "preserved_validity_f252": 1.0,
+                                        "collapsed_e_rgba": [1.0, 1.0, 1.0, 1.0],
+                                        "direct_inverse_sampler_result_from_e": [1.0, 1.0, 1.0, 1.0],
+                                        "output_buffer_rgba_after_writeback": [255, 255, 255, 255],
+                                        "exported_rgba8_or_png_byte": [255, 255, 255, 255],
+                                    }
+                                ]
+                            },
+                        },
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        comparison = run_compare(repo, py, summary, output_json, output_md)
+        assert_request(comparison, CASE0010_FINAL_WRITEBACK_REQUEST_ID)
+        assert_focus(comparison, "tiny_rotation:case0010-final-writeback-provenance")
+        windows = comparison.get("windows", {})
+        final = windows.get("case0010_final_writeback", {})
+        if final.get("collapsed_e_rgba") != [1.0, 1.0, 1.0, 1.0]:
+            print("[FAIL] case0010 final-writeback fields were not surfaced")
+            return 1
+        if final.get("direct_inverse_sampler_result_from_e") != [1.0, 1.0, 1.0, 1.0]:
+            print("[FAIL] case0010 direct +0xe sampler field was not surfaced")
+            return 1
+        if "classify the returned" not in comparison.get("recommended_next_evidence", ""):
+            print("[FAIL] case0010 final-writeback recommendation missing")
+            return 1
+
+        summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": CASE0010_FINAL_WRITEBACK_REQUEST_ID,
+                            "status": "answered_partial",
+                            "summary": "synthetic case_0010 final-writeback chain missing same-run export only",
+                            "observations": {
+                                "cases": [
+                                    {
+                                        "case_id": "case_0010",
+                                        "accumulated_f250_rgba": [1.0, 1.0, 1.0, 1.0],
+                                        "preserved_validity_f252": 1.0,
+                                        "collapsed_e_rgba": [1.0, 1.0, 1.0, 1.0],
+                                        "direct_inverse_sampler_result_from_e": [1.0, 1.0, 1.0, 1.0],
+                                        "output_buffer_rgba_after_writeback": [255, 255, 255, 255],
+                                    }
+                                ]
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        comparison = run_compare(repo, py, summary, output_json, output_md)
+        assert_request(comparison, CASE0010_FINAL_WRITEBACK_REQUEST_ID)
+        assert_focus(comparison, "tiny_rotation:case0010-final-writeback-partial-missing-export")
+        if "same-run export byte" not in comparison.get("recommended_next_evidence", ""):
+            print("[FAIL] case0010 partial missing-export recommendation was not narrowed")
+            return 1
+
+        summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": CASE0010_FINAL_WRITEBACK_REQUEST_ID,
+                            "status": "answered_partial",
+                            "summary": "No fresh same-run Windows debugger stop was captured in this return.",
+                            "observations": {
+                                "case_id": "case_0010",
+                                "classification": "final-writeback-export-split | stale-reference-or-aex-drift",
+                                "aex_path_or_version": "Not freshly re-hooked in this return.",
+                                "same_run_values": {
+                                    "final_inverse_sampler_xy": [1603.839558785, 844.317504883],
+                                    "polar_cells": [
+                                        {
+                                            "cell_xy": [1603, 844],
+                                            "f250_rgba_float": [-0.025, -0.025, -0.025, 1.7],
+                                            "f252_validity_or_alpha": [0.0, 0.0, 0.0, 1.0],
+                                            "collapsed_e_rgba_float": [-0.014, -0.014, -0.014, 1.0],
+                                        }
+                                    ],
+                                    "direct_inverse_sampler_result_rgba_float": [-0.004, -0.004, -0.004, 1.0],
+                                    "output_buffer_rgba_after_writeback": [0, 0, 0, 0],
+                                    "exported_rgba8_or_png_byte": [237, 237, 237, 255],
+                                },
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        comparison = run_compare(repo, py, summary, output_json, output_md)
+        assert_request(comparison, CASE0010_FINAL_WRITEBACK_REQUEST_ID)
+        assert_focus(comparison, "tiny_rotation:case0010-final-writeback-partial-missing-same-run-debugger-stop")
+        if "same-run Windows debugger stop" not in comparison.get("recommended_next_evidence", ""):
+            print("[FAIL] case0010 no-fresh-debugger recommendation was not preserved")
+            return 1
+
+        final_plane_pixels = []
+        for xy in ([6, 0], [7, 0], [12, 0], [3, 0], [4, 0], [8, 0], [10, 0]):
+            final_plane_pixels.append(
+                {
+                    "xy": xy,
+                    "windows_final_rgba8": [20, 3, 3, 254] if xy in ([6, 0], [7, 0], [12, 0]) else [20, 3, 3, 255],
+                    "final_inverse_sampler_xy": [100.25 + xy[0], 0.75],
+                    "four_bilinear_source_cells": [
+                        {"cell_xy": [100 + xy[0], 0], "rgba_float": [0.1, 0.01, 0.01, 1.0]},
+                        {"cell_xy": [101 + xy[0], 0], "rgba_float": [0.1, 0.01, 0.01, 0.999]},
+                        {"cell_xy": [100 + xy[0], 1], "rgba_float": [0.1, 0.01, 0.01, 1.0]},
+                        {"cell_xy": [101 + xy[0], 1], "rgba_float": [0.1, 0.01, 0.01, 1.0]},
+                    ],
+                    "bilinear_weights": [0.1875, 0.0625, 0.5625, 0.1875],
+                    "final_sample_alpha_sum": 0.99999994,
+                    "conversion_rule": "truncate",
+                }
+            )
+        summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": DENSE_REQUEST_ID,
+                            "status": "answered",
+                            "summary": "older dense result that must not win over final-plane cells",
+                            "observations": {},
+                        },
+                        {
+                            "request_id": ZOOM_CASE0009_FINAL_PLANE_CELLS_REQUEST_ID,
+                            "status": "answered",
+                            "summary": "synthetic Zoom case_0009 final-plane cell witness",
+                            "observations": {
+                                "cases": [
+                                    {
+                                        "case_id": "case_0009",
+                                        "final_plane_pixels": final_plane_pixels,
+                                    }
+                                ]
+                            },
+                        },
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        comparison = run_compare(repo, py, summary, output_json, output_md)
+        assert_request(comparison, ZOOM_CASE0009_FINAL_PLANE_CELLS_REQUEST_ID)
+        assert_focus(comparison, "zoom_case0009:final-plane-cells-answered")
+        if "cell ids/alphas/weights" not in comparison.get("recommended_next_evidence", ""):
+            print("[FAIL] final-plane complete recommendation missing")
+            return 1
+
+        summary.write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_return_summary",
+                    "results": [
+                        {
+                            "request_id": ZOOM_CASE0009_FINAL_PLANE_CELLS_REQUEST_ID,
+                            "status": "failed_partial",
+                            "summary": "Only final RGBA PNG bytes and wrapper hit counts were captured.",
+                            "observations": {
+                                "cases": [
+                                    {
+                                        "case_id": "case_0009",
+                                        "witness_pixels": [
+                                            {"xy": [6, 0], "windows_final_rgba8": [20, 3, 3, 254]},
+                                            {"xy": [7, 0], "windows_final_rgba8": [20, 3, 3, 254]},
+                                        ],
+                                    }
+                                ]
+                            },
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        comparison = run_compare(repo, py, summary, output_json, output_md)
+        assert_request(comparison, ZOOM_CASE0009_FINAL_PLANE_CELLS_REQUEST_ID)
+        assert_focus(comparison, "zoom_case0009:final-plane-witness-missing")
+        if "Do not tune" not in comparison.get("recommended_next_evidence", ""):
+            print("[FAIL] final-plane missing recommendation should forbid tuning")
+            return 1
+
+        def typed_point(xy: list[int], complete: bool = True) -> dict:
+            point = {
+                "role": "primary" if xy == [7, 0] else "control",
+                "xy": xy,
+                "observed_rgba8": [21, 3, 3, 254 if xy == [7, 0] else 255],
+                "inverse_sample_xy": [100.25 + xy[0], 0.75],
+                "cells": [
+                    {
+                        "slot": slot,
+                        "cell_id": f"angle{slot}:radius{xy[0]}",
+                        "plus_0xe_rgba_float": [0.1, 0.01, 0.01, 1.0],
+                        "plus_0xf252": {"raw_word": "0xffff", "alpha": 1.0},
+                        "bilinear_weight": weight,
+                    }
+                    for slot, weight in zip(("00", "10", "01", "11"), (0.1875, 0.0625, 0.5625, 0.1875))
+                ],
+                "final_alpha_sum": 0.99999994,
+                "pre_byte_alpha": 0.99999994,
+                "failed_reason": None,
+            }
+            if not complete:
+                point["cells"][0]["cell_id"] = None
+            return point
+
+        typed_base = {
+            "kind": "olm_runtime_trace_return_summary",
+            "results": [
+                {
+                    "request_id": ZOOM_CASE0009_FINAL_PLANE_TYPED_REQUEST_ID,
+                    "status": "answered",
+                    "observations": {
+                        "run_id": "run-0009-a",
+                        "hook_or_watchpoint": "OLMRadialBlur+0x7b4a",
+                        "console_artifact": "debugger/run-0009-a.log",
+                        "points": [typed_point([7, 0]), typed_point([8, 0]), typed_point([24, 0])],
+                    },
+                }
+            ],
+        }
+        summary.write_text(json.dumps(typed_base, indent=2), encoding="utf-8")
+        comparison = run_compare(repo, py, summary, output_json, output_md)
+        assert_request(comparison, ZOOM_CASE0009_FINAL_PLANE_TYPED_REQUEST_ID)
+        assert_focus(comparison, "zoom_case0009:final-plane-typed-complete")
+        typed_windows = comparison["windows"]["case0009_final_plane_typed"]
+        if typed_windows["points"][0]["cells"][0]["plus_0xf252"]["raw_word"] != "0xffff":
+            print("[FAIL] typed +0xf252 cell witness was not surfaced")
+            return 1
+
+        partial = typed_base.copy()
+        partial["results"] = [dict(typed_base["results"][0])]
+        partial["results"][0]["status"] = "answered_partial"
+        partial["results"][0]["observations"] = dict(typed_base["results"][0]["observations"])
+        partial["results"][0]["observations"]["points"] = [typed_point([7, 0]), {"xy": [8, 0]}, {"xy": [24, 0]}]
+        partial["results"][0]["observations"]["failed_reason"] = "control watchpoints were not isolated in the same run"
+        summary.write_text(json.dumps(partial, indent=2), encoding="utf-8")
+        comparison = run_compare(repo, py, summary, output_json, output_md)
+        assert_focus(comparison, "zoom_case0009:final-plane-typed-partial")
+        if comparison["classification"] != "partial":
+            print("[FAIL] typed partial classification missing")
+            return 1
+
+        missing = typed_base.copy()
+        missing["results"] = [dict(typed_base["results"][0])]
+        missing["results"][0]["observations"] = {"points": [{"xy": [7, 0], "observed_rgba8": [21, 3, 3, 254]}]}
+        summary.write_text(json.dumps(missing, indent=2), encoding="utf-8")
+        comparison = run_compare(repo, py, summary, output_json, output_md)
+        assert_focus(comparison, "zoom_case0009:final-plane-typed-missing")
     print("[OK] RadialBlur trace comparison smoke")
     return 0
 

@@ -1,6 +1,11 @@
 {
   "kind": "olmblur_case0006_nonlegacy_helper_witness",
   "status": "diagnostic",
+  "evidence_correction_20260710": {
+    "status": "windows_values_retracted",
+    "reason": "No TARGET_OLMBLUR_CASE0006_* CDB block was captured; the later windows_* fields have no independent Windows runtime provenance.",
+    "authority": "refs/conformance/olmblur_case0006_unverified_windows_value_audit_20260710.md"
+  },
   "source_dump": "/tmp/olmblur_case0006_helperdebug_20260630/blur_debug.txt",
   "witnesses": {
     "314,14": {
@@ -44,7 +49,9 @@
     "The main live suspect remains helper-local source state / accumulation history rather than a writer-only rule."
   ],
   "windows_current_aex_answered_20260701": {
-    "status": "answered",
+    "status": "invalid_unverified_values",
+    "target_captured": false,
+    "runtime_provenance": null,
     "witnesses": {
       "314,14": {
         "windows_pre_store": [1100.5, 1100.5, 1100.5],
@@ -56,8 +63,8 @@
       }
     },
     "reading": [
-      "Windows current-AEX witness agrees with Mac at the active case_0006 pre-store/store boundary.",
-      "The remaining mismatch for these points is now best treated as 16bpc reference/export provenance, not a live writer-rule disagreement."
+      "RETRACTED: these numeric fields were not captured at the requested Windows runtime target.",
+      "Do not use them to claim Windows/Mac agreement or to classify the mismatch as export-only."
     ]
   }
 }

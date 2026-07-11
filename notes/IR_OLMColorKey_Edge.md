@@ -4,19 +4,24 @@
 
 - Plug-in: OLM Color Key
 - Feature/path: 8bpc Edge Thin erode/dilate and Edge Blur after core keying
-- Bit depth: 8bpc normalized Software is documented here; 16bpc has one active
-  Mac AE residual after the Force Lower Precision fix; 32bpc still needs
-  references
+- Bit depth: 8bpc normalized Software is documented here; the covered 16bpc
+  slice is AE exact; 32bpc has returned only as PNG/non-float-preserving probe
+  evidence
 - Current status: packaged 8bpc AE-host return is exact for core RGB,
   Edge Thin, and Edge Blur against the 20260618 normalized Software reference
   generation. The apparent Edge Blur stress `case_0009` residual is now a
   reference-generation split against the older 20260604 PNG, not a clean
   algorithm witness. AE-free CLI residuals remain useful diagnostics, but they
   are not current proof that the Mac AE path is wrong.
-  For 16bpc, ColorKey is 8/9 exact after the binary-grounded `Force Lower
-  Precision` epsilon fix. The remaining case is not an Edge Blur blend path:
-  it is `case_0009` with Lab76, `Force Lower Precision=3`, `Edge Thin Amount=25`,
-  `Edge Thin Distance Type=2`, and `Edge Blur Amount=0`.
+  For 16bpc, the earlier 8/9 state after the binary-grounded `Force Lower
+  Precision` epsilon fix is now superseded by
+  `refs/conformance/bitdepth_16bpc_exact_manifest_20260703.md`: the covered
+  ColorKey 16bpc slice is 9/9 `AE exact` with `max_diff=0`. The formerly
+  remaining case was `case_0009` with Lab76, `Force Lower Precision=3`,
+  `Edge Thin Amount=25`, `Edge Thin Distance Type=2`, and `Edge Blur Amount=0`;
+  keep the older analysis below as provenance only. For 32bpc, use
+  `refs/conformance/bitdepth_32bpc_probe_status_20260703.md`: returned PNG-only
+  probes are not exact evidence.
 
 ## Source Evidence
 
@@ -190,6 +195,12 @@
     comparator audit supersedes the seed-world hypothesis for this case.
     The next proof is a Mac AE re-render after the comparator fix; no further
     Windows trace is needed unless that re-render still differs.
+- 2026-07-03 covered 16bpc exact manifest supersedes the prior active-residual
+  status for this slice:
+  - `refs/conformance/bitdepth_16bpc_exact_manifest_20260703.md` records
+    `OLMColorKey` as 9/9 `AE exact`.
+  - Treat the 2026-06-26/28 `case_0009` records above as the proof trail that
+    led to the fix, not as the current conformance state.
 
 ## Current Port Rules
 
@@ -210,12 +221,12 @@
 These rules are implementation-grounded, but the residuals show at least one
 caller/world semantic is still missing.
 
-For the current 16bpc residual, the missing semantic is now narrowed to the
-Lab76 per-component comparator in the Mac port. Windows removes additional
-pixels that are still input-identical in the old Mac AE candidate, and the
-binary-grounded comparator mapping reproduces those removals exactly in the
-exported-PNG model. So the next proof is host validation of the Mac plug-in
-change, not another Windows trace.
+For the now-closed 16bpc `case_0009` residual, the missing semantic was narrowed
+to the Lab76 per-component comparator in the Mac port. Windows removed
+additional pixels that were still input-identical in the old Mac AE candidate,
+and the binary-grounded comparator mapping reproduced those removals exactly in
+the exported-PNG model. The subsequent covered 16bpc manifest is the current
+status authority: 9/9 `AE exact` for the declared ColorKey slice.
 
 The older seed-world / caller-stage hypotheses are kept above as provenance,
 but they are superseded for this case unless the Mac AE re-render still differs.
@@ -226,9 +237,9 @@ but they are superseded for this case unless the Mac AE re-render still differs.
   from the current clamped-neighbor `Boundary8` / distance transform path?
 - For erode, is the effective threshold `abs(amount)`, `abs(amount)+1`, or a
   ctx-scaled value at runtime for the legacy `case_0005/0006` path?
-- Does the 2026-06-28 Lab76 per-component comparator fix make the Mac AE
-  16bpc `case_0009` render exact, or is there a second host-only difference
-  after the now-exact exported-PNG model?
+- If the covered ColorKey 16bpc slice is broadened beyond the declared
+  `case_0001..0009`, do the Lab76/Edge Thin rules still hold without a new
+  host-only difference?
 - Which world does `FUN_1800049a0` and the Edge Blur apply helper consume:
   current keep mask, pre-thin matched matte, boundary seed world, or an
   inverted/drop-side matte?
@@ -245,9 +256,9 @@ but they are superseded for this case unless the Mac AE re-render still differs.
 | --- | --- | --- | --- | --- |
 | RGB core `case_0001..0004` | 8bpc | CLI exact / AE-host exact for current refs | exact in Python/C++/Rust and AE-host return | Preserve normalized 8bpc behavior; add 16/32bpc coverage |
 | Edge Thin dilate `case_0007` | 8bpc | CLI exact / AE-host exact for current refs | exact | Preserve normalized 8bpc behavior; add 16/32bpc coverage |
-| Edge Thin dilate `case_0009` | 16bpc | not exact / active Mac AE residual | 2026-06-26 Mac AE rerun: `max=65535 mean=100.9161`; residual pixels are input-identical in the candidate and transparent in the Windows ref. 2026-06-27/28 Windows runtime tracing proves live `Force Lower Precision=3`, `amount=25`, `distance_type=2`, and `dist <= amount` on the current-AEX `+0x9000` path. 2026-06-28 PE/capstone audit proves the Lab76 per-component comparator uses separate epsilon multipliers; applying them makes the exported-PNG model exact (`diff=0`) and puts `(1110,149)` at `dist=2`, matching raw CDB. | Mac AE re-render after the comparator fix; request more Windows trace only if it still differs |
+| Edge Thin dilate `case_0009` | 16bpc | `AE exact` for covered Software slice | Earlier 2026-06-26 residual (`max=65535 mean=100.9161`) was traced to Lab76 per-component comparator semantics. 2026-06-27/28 Windows runtime tracing proves live `Force Lower Precision=3`, `amount=25`, `distance_type=2`, and `dist <= amount` on the current-AEX `+0x9000` path; the covered 2026-07-03 16bpc manifest now records ColorKey 9/9 `AE exact`. | Preserve exact behavior; broaden only with declared references |
 | Edge Thin erode `case_0005/0006` | 8bpc | AE-host exact return, CLI residual | Windows AE-host exact; C++ CLI `max=255 mean=0.3031`; decision matrix keeps this diagnostic-only for current refs | Preserve normalized 8bpc behavior; add 16/32bpc coverage; runtime trace only if a current Software ref residual reappears |
-| Edge Blur `case_0008/0009` | 8bpc | AE-host exact against normalized current refs / AE-free CLI residual | AE-host exact for `case_0008`; `case_0009` exact against 20260618 normalized ref but `max=47` against older 20260604 ref; decision matrix says preserve normalized AE exact | Prefer normalized 20260618 reference generation; next proof is 16/32bpc coverage. Runtime trace only if a current Software ref residual reappears |
+| Edge Blur `case_0008/0009` | 8bpc | AE-host exact against normalized current refs / AE-free CLI residual | AE-host exact for `case_0008`; `case_0009` exact against 20260618 normalized ref but `max=47` against older 20260604 ref; decision matrix says preserve normalized AE exact | Prefer normalized 20260618 reference generation; next proof is float-preserving 32bpc coverage. Runtime trace only if a current Software ref residual reappears |
 
 ## Validation Packages
 

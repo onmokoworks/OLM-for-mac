@@ -1,0 +1,238 @@
+{
+  "request_id": "olmradialblur_case0010_gpu0_software_recapture_20260706",
+  "scope": {
+    "bit_depth": "8bpc",
+    "plugin_filters": [
+      "OLMRadialBlur"
+    ],
+    "feature_filters": [
+      "tiny Rotation"
+    ],
+    "plugin_count": 1,
+    "case_count": 1
+  },
+  "effect": {
+    "name": "OLM RadialBlur",
+    "match_name": "OLM RadialBlur"
+  },
+  "why": [
+    "Local Unicorn emulation of the CPU OLMRadialBlur.aex (tools/emulation M1-M4) reproduces the Windows CDB typed polar cells at <=1 ULP and shows the AEX inverse sampler returns BLACK [0,0,0,255] at witness (1614,6).",
+    "The packaged 20260604 reference PNG shows WHITE [255,255,255,255] at (1614,6); that white is structurally unreachable from the CPU AEX path, and the case was recorded with effect GPU Rendering=1.",
+    "Recapture the current installed Windows render with project_gpu_accel_type=SOFTWARE (CPU) for the exact same case/source, to decide whether the packaged white is a GPU-path / stale-reference artifact (reference-path-split) rather than a CPU-software algorithm value.",
+    "Do not treat this as a look-tuning request; it is a provenance split test."
+  ],
+  "render_sets": [
+    {
+      "id": "software_8bpc",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "bit_depth": "8bpc",
+      "bits_per_channel": 8,
+      "required": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "olmradialblur_case_0010_source",
+      "description": "Use the same source image and framing as 20260604 OLMRadialBlur case_0010 (tiny Rotation). before_effects_frame: case_0010_before_effects.png",
+      "source_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/win_references/20260604_olm/OLMRadialBlur/reference_manifest.json",
+      "source_case_id": "case_0010",
+      "before_effects_frame": "case_0010_before_effects.png"
+    }
+  ],
+  "cases": [
+    {
+      "id": "olmradialblur__case_0010_gpu0_software",
+      "source_case_id": "case_0010",
+      "feature": "OLMRadialBlur tiny Rotation",
+      "plugin": "OLMRadialBlur",
+      "input": "olmradialblur_case_0010_source",
+      "reason": "SOFTWARE (GPU=0) recapture of case_0010 to test reference-path-split at witness (1614,6). Report project_gpu_accel_type raw+name and the effect's hidden GPU Rendering param as metadata.",
+      "effect": {
+        "name": "OLM RadialBlur",
+        "match_name": "OLM RadialBlur"
+      },
+      "witness_pixels": [
+        {
+          "x": 1614,
+          "y": 6,
+          "packaged_reference_rgba8": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "mac_cpu_emulation_rgba8": [
+            0,
+            0,
+            0,
+            255
+          ]
+        }
+      ],
+      "params_ordered": [
+        {
+          "name": "Blur Type",
+          "match_name": "OLM RadialBlur-0001",
+          "property_index": 1,
+          "value": 2
+        },
+        {
+          "name": "Center",
+          "match_name": "OLM RadialBlur-0002",
+          "property_index": 2,
+          "value": [
+            960,
+            540
+          ]
+        },
+        {
+          "name": "Strength",
+          "match_name": "OLM RadialBlur-0004",
+          "property_index": 4,
+          "value": 4
+        },
+        {
+          "name": "Offset Mode",
+          "match_name": "OLM RadialBlur-0028",
+          "property_index": 5,
+          "value": 1
+        },
+        {
+          "name": "Offset",
+          "match_name": "OLM RadialBlur-0029",
+          "property_index": 6,
+          "value": 0
+        },
+        {
+          "name": "Edge Fade",
+          "match_name": "OLM RadialBlur-0005",
+          "property_index": 7,
+          "value": 0
+        },
+        {
+          "name": "Strength",
+          "match_name": "OLM RadialBlur-0008",
+          "property_index": 10,
+          "value": 0
+        },
+        {
+          "name": "Offset Mode",
+          "match_name": "OLM RadialBlur-0030",
+          "property_index": 11,
+          "value": 1
+        },
+        {
+          "name": "Offset",
+          "match_name": "OLM RadialBlur-0031",
+          "property_index": 12,
+          "value": 0
+        },
+        {
+          "name": "Edge Fade",
+          "match_name": "OLM RadialBlur-0009",
+          "property_index": 13,
+          "value": 0
+        },
+        {
+          "name": "Repeat Border",
+          "match_name": "OLM RadialBlur-0026",
+          "property_index": 15,
+          "value": 1
+        },
+        {
+          "name": "Ratio",
+          "match_name": "OLM RadialBlur-0012",
+          "property_index": 17,
+          "value": 1
+        },
+        {
+          "name": "Angle",
+          "match_name": "OLM RadialBlur-0013",
+          "property_index": 18,
+          "value": 0
+        },
+        {
+          "name": "Quality",
+          "match_name": "OLM RadialBlur-0015",
+          "property_index": 20,
+          "value": 5
+        },
+        {
+          "name": "Brightness Gain",
+          "match_name": "OLM RadialBlur-0016",
+          "property_index": 21,
+          "value": 1
+        },
+        {
+          "name": "Size Variation",
+          "match_name": "OLM RadialBlur-0017",
+          "property_index": 22,
+          "value": 0
+        },
+        {
+          "name": "Noise Variation",
+          "match_name": "OLM RadialBlur-0019",
+          "property_index": 24,
+          "value": 0
+        },
+        {
+          "name": "Noise Type",
+          "match_name": "OLM RadialBlur-0020",
+          "property_index": 25,
+          "value": 1
+        },
+        {
+          "name": "Noise Layer",
+          "match_name": "OLM RadialBlur-0021",
+          "property_index": 26,
+          "value": 0
+        },
+        {
+          "name": "Seed",
+          "match_name": "OLM RadialBlur-0022",
+          "property_index": 27,
+          "value": 1
+        },
+        {
+          "name": "Offset",
+          "match_name": "OLM RadialBlur-0023",
+          "property_index": 28,
+          "value": 0
+        },
+        {
+          "name": "Thickness",
+          "match_name": "OLM RadialBlur-0024",
+          "property_index": 29,
+          "value": 10
+        },
+        {
+          "name": "Effect Opacity",
+          "match_name": "ADBE Effect Mask Opacity",
+          "property_index": 2,
+          "value": 100
+        },
+        {
+          "name": "GPU Rendering",
+          "match_name": "ADBE Force CPU GPU",
+          "property_index": 3,
+          "value": 1
+        }
+      ]
+    }
+  ],
+  "manifest_requirements": [
+    {
+      "name": "project_gpu_accel_type.current_name",
+      "equals": "SOFTWARE"
+    },
+    {
+      "name": "bits_per_channel",
+      "equals": 8
+    }
+  ],
+  "mac_follow_up": "Import with scripts/intake_olm_return.py path/to/returned_reference.zip --quick, then compare SOFTWARE (1614,6) against packaged 20260604 white and Mac/emulation black to resolve reference-path-split.",
+  "stop_lines": [
+    "This is a provenance-split test, not a look-tuning request.",
+    "Do not change Mac scatter/sampler to match the packaged white before this SOFTWARE recapture resolves (a) CPU-distance vs (b) GPU/stale."
+  ]
+}

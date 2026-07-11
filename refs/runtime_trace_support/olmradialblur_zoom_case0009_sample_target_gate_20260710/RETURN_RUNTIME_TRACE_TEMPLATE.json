@@ -1,0 +1,18 @@
+{
+  "kind": "olm_runtime_trace_result",
+  "schema": 1,
+  "results": [{
+    "request_id": "olmradialblur_zoom_case0009_sample_target_gate_20260710",
+    "status": "answered_partial",
+    "summary": "Fill with same-run sampler target gate facts.",
+    "observations": {
+      "effect": "OLM RadialBlur",
+      "case_id": "case_0009",
+      "target_xy": [[7, 0], [8, 0], [24, 0]],
+      "call_hits": [],
+      "return_hits": [],
+      "console_artifact": null,
+      "failed_reason": null
+    }
+  }]
+}

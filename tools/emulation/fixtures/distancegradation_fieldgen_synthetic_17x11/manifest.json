@@ -1,0 +1,88 @@
+{
+  "case_id": "distancegradation.fieldgen.synthetic_17x11.threshold3.param8_1",
+  "claim": "Actual AEX function output for this harness-constructed small input; not an AE-host fixture.",
+  "execution": {
+    "callback_counts": {
+      "PFHandle.dispose": 8,
+      "PFHandle.lock": 8,
+      "PFHandle.new": 8,
+      "PFHandle.unlock": 8,
+      "SPBasic.AcquireSuite": 16,
+      "SPBasic.ReleaseSuite": 16,
+      "cv::dist_transform": 1,
+      "cv::normalize_minmax": 1,
+      "cv::resize_same_shape": 2,
+      "cv::threshold": 1
+    },
+    "hits": [
+      "FUN_1812aef70",
+      "FUN_1812aef70",
+      "FUN_18117ca50"
+    ],
+    "instructions": 6921
+  },
+  "input_source": {
+    "kind": "synthetic-cross-mask"
+  },
+  "intermediates": [],
+  "output": {
+    "bpc": 32,
+    "byte_order": "little",
+    "descriptor": {
+      "blob": "field_f32.bin",
+      "offset": 0,
+      "sha256": "46bcad5d35e92cc307131a741607edf516f1743da6fbe7ae183d527fdf429998",
+      "size": 748
+    },
+    "format": "SCALAR",
+    "height": 11,
+    "name": "normalized_distance_field",
+    "rowbytes": 68,
+    "sample_type": "float32",
+    "width": 17
+  },
+  "provenance": {
+    "binary_path": "plugins_2025/DistanceGradation.aex",
+    "binary_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "function": "0x181174760",
+    "oracle": "unicorn-aex",
+    "parameter_block_origin": "harness-constructed"
+  },
+  "raw_param_block": {
+    "descriptor": {
+      "blob": "call_params_le_i32.bin",
+      "offset": 0,
+      "sha256": "18479e1b3ddec536605ec8cd8aeac15a7ab2387a8b8063921a91bf5f7cdf70f5",
+      "size": 32
+    },
+    "format": "raw",
+    "layout": [
+      "threshold:i32",
+      "reserved:i32",
+      "width:i32",
+      "height:i32",
+      "param8:i32",
+      "invert:i32",
+      "source_width:i32",
+      "source_height:i32"
+    ]
+  },
+  "schema": "olm.aex.cpu-fixture/1",
+  "scope": "function",
+  "world": {
+    "bpc": 8,
+    "byte_order": "little",
+    "descriptor": {
+      "blob": "input_mask_u8.bin",
+      "offset": 0,
+      "sha256": "8312ba3ea7be9f8f4a9c8b6620224e89d04a7e9f7404a43e36a4335b49c0e7d2",
+      "size": 187
+    },
+    "format": "SCALAR",
+    "height": 11,
+    "name": "source_mask",
+    "rowbytes": 17,
+    "sample_type": "uint8",
+    "width": 17
+  }
+}

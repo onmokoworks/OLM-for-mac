@@ -13,12 +13,25 @@ from datetime import datetime
 from pathlib import Path
 
 
+VOLATILE_AE_ENV_KEYS = (
+    "OLM_AE_DISABLE_EFFECT",
+    "OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT",
+    "OLM_AE_FORCE_NEW_PROJECT",
+    "OLM_AE_FORCE_SOFTWARE",
+    "OLM_AE_INPUT_ALPHA_MODE",
+    "OLM_DBLUR_CAPTURE_PREFIX",
+)
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--request-dir", type=Path, required=True)
     parser.add_argument("--case-id", required=True)
     parser.add_argument("--output-dir", type=Path, default=None)
     parser.add_argument("--app-name", default="Adobe After Effects 2026")
+    parser.add_argument("--output-mode", choices=("png", "exr_render_queue"), default="png")
+    parser.add_argument("--output-template", default="", help="Output Module template required for --output-mode exr_render_queue.")
+    parser.add_argument("--keep-open", action="store_true", help="Keep the live AE project/application open after rendering.")
     parser.add_argument("--timeout", type=int, default=1200)
     parser.add_argument(
         "--param-override",
@@ -110,17 +123,25 @@ def main() -> int:
             print(f"[FAIL] --ae-env key is empty: {item}", file=sys.stderr)
             return 1
         ae_env[key] = value
+    if args.output_mode == "exr_render_queue" and not args.output_template:
+        print("[FAIL] --output-template is required for --output-mode exr_render_queue", file=sys.stderr)
+        return 1
+    reset_env_lines = [f"$.setenv({js_string(key)}, '');" for key in VOLATILE_AE_ENV_KEYS]
     extra_env_lines = [f"$.setenv({js_string(key)}, {js_string(value)});" for key, value in sorted(ae_env.items())]
     js = "\n".join(
         [
             "function __olmWriteText(path, text) { var f = new File(path); f.encoding = 'UTF-8'; if (f.open('w')) { f.write(text); f.close(); } }",
             "function __olmEsc(value) { return String(value).replace(/\\\\/g, '\\\\\\\\').replace(/\"/g, '\\\\\"').replace(/\\r/g, '\\\\r').replace(/\\n/g, '\\\\n'); }",
+            *reset_env_lines,
             f"$.setenv('OLM_AE_REQUEST_DIR', {js_string(str(request_dir))});",
             f"$.setenv('OLM_AE_CASE_ID', {js_string(args.case_id)});",
             f"$.setenv('OLM_AE_OUTPUT_DIR', {js_string(str(output_dir))});",
             f"$.setenv('OLM_AE_LOG_PATH', {js_string(str(log_path))});",
             f"$.setenv('OLM_AE_RESULT_JSON', {js_string(str(result_json))});",
             f"$.setenv('OLM_AE_PARAM_OVERRIDES_JSON', {js_string(json.dumps(overrides))});",
+            f"$.setenv('OLM_AE_OUTPUT_MODE', {js_string(args.output_mode)});",
+            f"$.setenv('OLM_AE_OUTPUT_TEMPLATE', {js_string(args.output_template)});",
+            f"$.setenv('OLM_AE_KEEP_OPEN', {js_string('1' if args.keep_open else '0')});",
             *extra_env_lines,
             "try {",
             f"  $.evalFile(new File({js_string(str(jsx_path))}));",
@@ -135,6 +156,7 @@ def main() -> int:
                 f" + '  \"case_id\": \"{js_escape_expr(args.case_id)}\",\\n'"
                 f" + '  \"output_dir\": \"{js_escape_expr(str(output_dir))}\",\\n'"
                 f" + '  \"output_png\": \"\",\\n'"
+                f" + '  \"output_exr\": \"\",\\n'"
                 f" + '  \"status\": \"error\",\\n'"
                 f" + '  \"error\": \"' + __olmEsc(__olmError.toString()) + '\",\\n'"
                 f" + '  \"warnings\": []\\n'"
@@ -182,6 +204,8 @@ def main() -> int:
     print(f"[INFO] result_json: {result_json}")
     if result.get("output_png"):
         print(f"[INFO] output_png: {result['output_png']}")
+    if result.get("output_exr"):
+        print(f"[INFO] output_exr: {result['output_exr']}")
     if result.get("status") != "ok":
         print(f"[FAIL] AE single case error: {result.get('error')}", file=sys.stderr)
         return 1

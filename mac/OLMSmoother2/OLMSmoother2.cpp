@@ -338,8 +338,97 @@ static inline void poly_append(Polygon &poly, const FPlane &plane,
 // alpha>0 and emit up to 12 sub-pixel samples with appropriate coverage
 // weights for every mismatched direction.  This produces structurally
 // correct AA for cardinal edges, diagonal edges, and corners.
+
+static void win_FUN_18000ae10_build_class_plane(std::vector<uint8_t> &class_plane,
+                                                const FPlane &plane,
+                                                const SMParams &p)
+{
+	int w = p.w;
+	int h = p.h;
+	class_plane.assign((size_t)w * h * 4, 0);
+
+	const float WIN_LUMA_R = 0.2126f;
+	const float WIN_LUMA_G = 0.7152f;
+	const float WIN_LUMA_B = 0.0722f;
+	const float WIN_THRESH_BIAS = 0.001f;
+
+	auto color_dist = [&](const FPix &a, const FPix &b) -> float {
+		if (a.a == 0.0f && b.a == 0.0f) return 0.0f;
+		float dr = std::fabs(a.r - b.r);
+		float dg = std::fabs(a.g - b.g);
+		float db = std::fabs(a.b - b.b);
+		float la = a.r * WIN_LUMA_R + a.g * WIN_LUMA_G + a.b * WIN_LUMA_B;
+		float lb = b.r * WIN_LUMA_R + b.g * WIN_LUMA_G + b.b * WIN_LUMA_B;
+		float dy = std::fabs(la - lb);
+		float maxv = std::max(std::max(dr, dg), std::max(db, dy));
+		return maxv + std::fabs(a.a - b.a);
+	};
+
+	float threshold = (float)p.smooth_range / 100.0f + WIN_THRESH_BIAS;
+
+	auto fpix_at = [&](int x, int y) -> const FPix& {
+		int xc = x < 0 ? 0 : (x >= w ? w - 1 : x);
+		int yc = y < 0 ? 0 : (y >= h ? h - 1 : y);
+		const size_t stride = plane.rowbytes / sizeof(FPix);
+		return plane.base[(size_t)yc * stride + (size_t)xc];
+	};
+
+	for (int y = 0; y < h; ++y) {
+		for (int x = 0; x < w; ++x) {
+			const FPix &self = fpix_at(x, y);
+			uint8_t *row = class_plane.data() + ((size_t)y * w + x) * 4;
+			
+			float dW = (x > 0) ? color_dist(self, fpix_at(x - 1, y)) : 0.0f;
+			float dN = (y > 0) ? color_dist(self, fpix_at(x, y - 1)) : 0.0f;
+			float dE = (x < w - 1) ? color_dist(self, fpix_at(x + 1, y)) : 0.0f;
+			float dS = (y < h - 1) ? color_dist(self, fpix_at(x, y + 1)) : 0.0f;
+
+			row[0] = (dW >= threshold) ? 0xFF : 0; // W
+			row[1] = (dN >= threshold) ? 0xFF : 0; // N
+			row[2] = (dE >= threshold) ? 0xFF : 0; // E
+			row[3] = (dS >= threshold) ? 0xFF : 0; // S
+		}
+	}
+
+	if (p.enable_key) {
+		std::vector<uint8_t> pruned = class_plane;
+		const float K = 1.5f; // DAT_180022de0
+		for (int y = 0; y < h; ++y) {
+			for (int x = 0; x < w; ++x) {
+				const FPix &self = fpix_at(x, y);
+				float dW = (x > 0) ? color_dist(self, fpix_at(x - 1, y)) : 0.0f;
+				float dN = (y > 0) ? color_dist(self, fpix_at(x, y - 1)) : 0.0f;
+				float dE = (x < w - 1) ? color_dist(self, fpix_at(x + 1, y)) : 0.0f;
+				float dS = (y < h - 1) ? color_dist(self, fpix_at(x, y + 1)) : 0.0f;
+				
+				float max_4 = std::max(std::max(dW, dE), std::max(dN, dS));
+				
+				uint8_t *row = pruned.data() + ((size_t)y * w + x) * 4;
+				if (row[0]) {
+					float dWW = (x > 1) ? color_dist(self, fpix_at(x - 2, y)) : 0.0f;
+					if (std::max(max_4, dWW) > dW * K) row[0] = 0;
+				}
+				if (row[1]) {
+					float dNN = (y > 1) ? color_dist(self, fpix_at(x, y - 2)) : 0.0f;
+					if (std::max(max_4, dNN) > dN * K) row[1] = 0;
+				}
+				if (row[2]) {
+					float dEE = (x < w - 2) ? color_dist(self, fpix_at(x + 2, y)) : 0.0f;
+					if (std::max(max_4, dEE) > dE * K) row[2] = 0;
+				}
+				if (row[3]) {
+					float dSS = (y < h - 2) ? color_dist(self, fpix_at(x, y + 2)) : 0.0f;
+					if (std::max(max_4, dSS) > dS * K) row[3] = 0;
+				}
+			}
+		}
+		class_plane = pruned;
+	}
+}
+
 static void build_polygon(Polygon &poly,
                           const FPlane &plane_in,
+                          const std::vector<uint8_t> &class_plane,
                           int x, int y,
                           const SMParams &p)
 {
@@ -348,21 +437,26 @@ static void build_polygon(Polygon &poly,
 	const int w = p.w;
 	const int h = p.h;
 
-	float ac = fplane_alpha(plane_in, x, y, w, h);
-	bool  inside = (ac > 0.0f);
+	// Read directly from class_plane
+	const uint8_t *cp = class_plane.data() + ((size_t)y * w + x) * 4;
+	bool mismatch_W = cp[0] != 0;
+	bool mismatch_N = cp[1] != 0;
+	bool mismatch_E = cp[2] != 0;
+	bool mismatch_S = cp[3] != 0;
 
-	// 8-neighborhood alpha classification.
-	bool N  = fplane_alpha(plane_in, x,     y - 1, w, h) > 0.0f;
-	bool S  = fplane_alpha(plane_in, x,     y + 1, w, h) > 0.0f;
-	bool E  = fplane_alpha(plane_in, x + 1, y,     w, h) > 0.0f;
-	bool W  = fplane_alpha(plane_in, x - 1, y,     w, h) > 0.0f;
-	bool NE = fplane_alpha(plane_in, x + 1, y - 1, w, h) > 0.0f;
-	bool NW = fplane_alpha(plane_in, x - 1, y - 1, w, h) > 0.0f;
-	bool SE = fplane_alpha(plane_in, x + 1, y + 1, w, h) > 0.0f;
-	bool SW = fplane_alpha(plane_in, x - 1, y + 1, w, h) > 0.0f;
+	auto get_cp = [&](int xx, int yy, int offset) -> bool {
+		if (xx < 0 || xx >= w || yy < 0 || yy >= h) return false;
+		return class_plane[((size_t)yy * w + xx) * 4 + offset] != 0;
+	};
 
-	int mismatch_card = (N != inside) + (S != inside) + (E != inside) + (W != inside);
-	int mismatch_diag = (NE != inside) + (NW != inside) + (SE != inside) + (SW != inside);
+	// For diagonals, infer from neighbors
+	bool mismatch_NE = get_cp(x+1, y, 1) || get_cp(x, y-1, 2);
+	bool mismatch_NW = get_cp(x-1, y, 1) || get_cp(x, y-1, 0);
+	bool mismatch_SE = get_cp(x+1, y, 3) || get_cp(x, y+1, 2);
+	bool mismatch_SW = get_cp(x-1, y, 3) || get_cp(x, y+1, 0);
+
+	int mismatch_card = mismatch_N + mismatch_S + mismatch_E + mismatch_W;
+	int mismatch_diag = mismatch_NE + mismatch_NW + mismatch_SE + mismatch_SW;
 
 	// All-same pattern: not near an edge — pass-through.
 	if (mismatch_card == 0 && mismatch_diag == 0) {
@@ -401,18 +495,18 @@ static void build_polygon(Polygon &poly,
 	};
 
 	// Cardinal edges.
-	if (N != inside) emit(0.0f, -off_card, base_cov);
-	if (S != inside) emit(0.0f, +off_card, base_cov);
-	if (E != inside) emit(+off_card, 0.0f, base_cov);
-	if (W != inside) emit(-off_card, 0.0f, base_cov);
+	if (mismatch_N) emit(0.0f, -off_card, base_cov);
+	if (mismatch_S) emit(0.0f, +off_card, base_cov);
+	if (mismatch_E) emit(+off_card, 0.0f, base_cov);
+	if (mismatch_W) emit(-off_card, 0.0f, base_cov);
 
 	// Diagonal corners — only emit when the corresponding cardinals DON'T already
 	// cover them.  For a solid corner (e.g. N and E both match, NE mismatched),
 	// we emit one diagonal sample; for an isolated diagonal edge, we emit too.
-	if (NE != inside) emit(+off_diag, -off_diag, corner_cov);
-	if (NW != inside) emit(-off_diag, -off_diag, corner_cov);
-	if (SE != inside) emit(+off_diag, +off_diag, corner_cov);
-	if (SW != inside) emit(-off_diag, +off_diag, corner_cov);
+	if (mismatch_NE) emit(+off_diag, -off_diag, corner_cov);
+	if (mismatch_NW) emit(-off_diag, -off_diag, corner_cov);
+	if (mismatch_SE) emit(+off_diag, +off_diag, corner_cov);
+	if (mismatch_SW) emit(-off_diag, +off_diag, corner_cov);
 
 	// Extra-smooth second pass — reaches one pixel farther along mismatched
 	// cardinals, weighted by `extra`.
@@ -523,6 +617,7 @@ static void post_unpremul_gamma(FPix &px, bool gamma_enable, float gamma_value) 
 static void win_FUN_18000cce0_orchestrate(FPix &out_pixel,
                                           const FPlane &plane_in,
                                           const FPlane & /*plane_out*/,
+                                          const std::vector<uint8_t> &class_plane,
                                           int x, int y,
                                           const SMParams &p)
 {
@@ -530,7 +625,7 @@ static void win_FUN_18000cce0_orchestrate(FPix &out_pixel,
 	const int h = p.h;
 
 	Polygon poly;
-	build_polygon(poly, plane_in, x, y, p);
+	build_polygon(poly, plane_in, class_plane, x, y, p);
 
 	FPix center = fplane_fetch(plane_in, x, y, w, h);
 
@@ -650,10 +745,13 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	FPlane plane_in  = { scratch.data(),     (size_t)w * sizeof(FPix), 0 };
 	FPlane plane_out = { scratch_out.data(), (size_t)w * sizeof(FPix), 0 };
 
+	std::vector<uint8_t> class_plane;
+	win_FUN_18000ae10_build_class_plane(class_plane, plane_in, p);
+
 	for (int32_t y = 0; y < h; ++y) {
 		for (int32_t x = 0; x < w; ++x) {
 			FPix out_px;
-			win_FUN_18000cce0_orchestrate(out_px, plane_in, plane_out, x, y, p);
+			win_FUN_18000cce0_orchestrate(out_px, plane_in, plane_out, class_plane, x, y, p);
 			plane_out.base[(size_t)y * w + x] = out_px;
 		}
 	}

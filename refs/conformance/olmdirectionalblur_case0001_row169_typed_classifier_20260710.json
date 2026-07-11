@@ -1,0 +1,205 @@
+{
+  "kind": "olmdirectionalblur_case0001_row169_typed_classifier",
+  "schema": 1,
+  "status": "ok",
+  "platform": "Mac host / Unicorn x86-64 emulation",
+  "case_id": "case_0001",
+  "row_y": 169,
+  "strip_x": [
+    487,
+    494
+  ],
+  "targets": [
+    487,
+    488,
+    489,
+    490,
+    491,
+    492,
+    493,
+    494,
+    579
+  ],
+  "source_path": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png",
+  "aex_path": "plugins_2025/OLMDirectionalBlur.aex",
+  "function": "FUN_1800038d0",
+  "blocked": null,
+  "records": [
+    {
+      "xy": [
+        487,
+        169
+      ],
+      "valid": 1.0,
+      "component": 518400.0,
+      "param_11": 0.6296296119689941,
+      "span": 1064,
+      "source_x": 959,
+      "reach": true,
+      "valid_source_range": [
+        0,
+        959
+      ],
+      "outside_valid_source_range": false,
+      "span_le_1": false,
+      "classification": "reachable"
+    },
+    {
+      "xy": [
+        488,
+        169
+      ],
+      "valid": 1.0,
+      "component": 518400.0,
+      "param_11": 0.6296296119689941,
+      "span": 1064,
+      "source_x": 959,
+      "reach": true,
+      "valid_source_range": [
+        0,
+        959
+      ],
+      "outside_valid_source_range": false,
+      "span_le_1": false,
+      "classification": "reachable"
+    },
+    {
+      "xy": [
+        489,
+        169
+      ],
+      "valid": 1.0,
+      "component": 518400.0,
+      "param_11": 0.6296296119689941,
+      "span": 1064,
+      "source_x": 959,
+      "reach": true,
+      "valid_source_range": [
+        0,
+        959
+      ],
+      "outside_valid_source_range": false,
+      "span_le_1": false,
+      "classification": "reachable"
+    },
+    {
+      "xy": [
+        490,
+        169
+      ],
+      "valid": 1.0,
+      "component": 518400.0,
+      "param_11": 0.6296296119689941,
+      "span": 1064,
+      "source_x": 959,
+      "reach": true,
+      "valid_source_range": [
+        0,
+        959
+      ],
+      "outside_valid_source_range": false,
+      "span_le_1": false,
+      "classification": "reachable"
+    },
+    {
+      "xy": [
+        491,
+        169
+      ],
+      "valid": 1.0,
+      "component": 518400.0,
+      "param_11": 0.6296296119689941,
+      "span": 1064,
+      "source_x": 959,
+      "reach": true,
+      "valid_source_range": [
+        0,
+        959
+      ],
+      "outside_valid_source_range": false,
+      "span_le_1": false,
+      "classification": "reachable"
+    },
+    {
+      "xy": [
+        492,
+        169
+      ],
+      "valid": 1.0,
+      "component": 518400.0,
+      "param_11": 0.6296296119689941,
+      "span": 1064,
+      "source_x": 959,
+      "reach": true,
+      "valid_source_range": [
+        0,
+        959
+      ],
+      "outside_valid_source_range": false,
+      "span_le_1": false,
+      "classification": "reachable"
+    },
+    {
+      "xy": [
+        493,
+        169
+      ],
+      "valid": 1.0,
+      "component": 518400.0,
+      "param_11": 0.6296296119689941,
+      "span": 1064,
+      "source_x": 959,
+      "reach": true,
+      "valid_source_range": [
+        0,
+        959
+      ],
+      "outside_valid_source_range": false,
+      "span_le_1": false,
+      "classification": "reachable"
+    },
+    {
+      "xy": [
+        494,
+        169
+      ],
+      "valid": 1.0,
+      "component": 518400.0,
+      "param_11": 0.6296296119689941,
+      "span": 1064,
+      "source_x": 959,
+      "reach": true,
+      "valid_source_range": [
+        0,
+        959
+      ],
+      "outside_valid_source_range": false,
+      "span_le_1": false,
+      "classification": "reachable"
+    },
+    {
+      "xy": [
+        579,
+        169
+      ],
+      "valid": 1.0,
+      "component": 518400.0,
+      "param_11": 0.6296296119689941,
+      "span": 1064,
+      "source_x": 959,
+      "reach": true,
+      "valid_source_range": [
+        0,
+        959
+      ],
+      "outside_valid_source_range": false,
+      "span_le_1": false,
+      "classification": "reachable"
+    }
+  ],
+  "helper_call_count": 960,
+  "source_dimensions": [
+    960,
+    540
+  ]
+}

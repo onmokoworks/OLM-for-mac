@@ -26,6 +26,8 @@ def main() -> int:
                 "distancegradation-case0023-refcon-wordmap",
                 "--target",
                 "radialblur-tiny-rotation-anchor-pointer",
+                "--target",
+                "smoother2-producer-path-diff",
                 "--index-json",
                 str(index_json),
                 "--index-md",
@@ -44,13 +46,14 @@ def main() -> int:
             print("unexpected index kind", file=sys.stderr)
             return 1
         targets = data.get("targets")
-        if not isinstance(targets, list) or len(targets) != 2:
+        if not isinstance(targets, list) or len(targets) != 3:
             print("unexpected targets payload", file=sys.stderr)
             return 1
         slugs = {row.get("slug") for row in targets if isinstance(row, dict)}
         if slugs != {
             "distancegradation-case0023-refcon-wordmap",
             "radialblur-tiny-rotation-anchor-pointer",
+            "smoother2-producer-path-diff",
         }:
             print("unexpected slug set", file=sys.stderr)
             return 1

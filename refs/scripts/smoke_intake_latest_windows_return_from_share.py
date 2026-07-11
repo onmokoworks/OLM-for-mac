@@ -11,6 +11,7 @@ import zipfile
 from pathlib import Path
 
 from smoke_runtime_trace_return import make_return_zip
+from smoke_olm_return_intake import make_windows_ref_return
 
 def repo_root() -> Path:
     return Path(__file__).resolve().parents[2]
@@ -411,6 +412,36 @@ def main() -> int:
         archived_witness_names = {path.name for path in witness_old.iterdir() if path.is_file()}
         if not any(name.endswith("olmblur_case0007_16bpc_345_672_b_witness_windows_20260630.zip") for name in archived_witness_names):
             print("[FAIL] helper did not archive the standalone witness zip")
+            return 1
+
+        winref_share_root = tmp_root / "olm_pr_winref"
+        winref_new = winref_share_root / "new"
+        winref_old = winref_share_root / "old"
+        winref_new.mkdir(parents=True)
+        winref_old.mkdir(parents=True)
+        winref_build = tmp_root / "winref_build"
+        winref_build.mkdir(parents=True)
+        winref_zip, _, _ = make_windows_ref_return(winref_build)
+        shared_winref_zip = winref_new / "synthetic_win_reference_return.zip"
+        shutil.copyfile(winref_zip, shared_winref_zip)
+        (winref_new / "synthetic_win_reference_return__README.txt").write_text("reference return\n", encoding="utf-8")
+
+        winref_proc = run(
+            [
+                py,
+                str(helper),
+                "--share-root",
+                str(winref_share_root),
+                "--kind",
+                "win-reference-return",
+            ],
+            root,
+        )
+        if "[INFO] win-reference quality:" not in winref_proc.stdout:
+            print("[FAIL] helper did not print win-reference quality summary")
+            return 1
+        if "win_reference_summary_json=" not in winref_proc.stdout:
+            print("[FAIL] helper did not emit win-reference summary output paths")
             return 1
 
     print("[OK] intake latest Windows return from share smoke")

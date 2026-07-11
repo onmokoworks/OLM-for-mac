@@ -1,0 +1,120 @@
+{
+  "kind": "olm_release_scope",
+  "schema": 1,
+  "source_of_truth": [
+    "notes/PORTING_ROADMAP.md",
+    "notes/AE_EXACT_CONFORMANCE.md",
+    "notes/CONFORMANCE_LEDGER.md"
+  ],
+  "reference_path": "Windows AE CPU Software",
+  "required_depths": ["8bpc", "16bpc", "32bpc"],
+  "completion_rule": "Every required depth must cover the declared feature set with result_status AE exact; the plug-in must also be host-stable with complete binary-grounded IR. 32bpc additionally requires float-preserving references.",
+  "excluded": [
+    {
+      "plugin": "ColorKeep",
+      "reason": "Support/helper only; not part of the OLM compatibility release target unless explicitly promoted in the ledger."
+    }
+  ],
+  "plugins": [
+    {
+      "plugin": "OLMBlur",
+      "feature_scope": "all declared Blur modes and Legacy behavior",
+      "host_status": "host-visual-tuning-ready",
+      "ir_status": "partial",
+      "depths": {
+        "8bpc": {"reference_status": "available", "result_status": "partial-ae-exact", "coverage": "retained AE25.2 family is exact for cases 0001/0002/0004/0005/0006/0007; Legacy case 0003 and canonical AEX provenance remain"},
+        "16bpc": {"reference_status": "available", "result_status": "AE exact", "coverage": "formal Mac AE batch cases 0001..0007 all max_diff=0 after binary-grounded Legacy center-copy correction"},
+        "32bpc": {"reference_status": "float-preserving", "result_status": "blocked", "coverage": "FLOAT32 RGBA references exist, but cross-host disabled-effect EXR control is not exact; same-host or no-op-exact comparison path remains required"}
+      }
+    },
+    {
+      "plugin": "OLMColorKey",
+      "feature_scope": "core, Edge Thin, Edge Blur, replace/color-space behavior",
+      "host_status": "host-stable",
+      "ir_status": "partial",
+      "depths": {
+        "8bpc": {"reference_status": "available", "result_status": "partial-ae-exact", "coverage": "normalized packaged slice is exact; full replace/color-space and declared feature coverage are not closed"},
+        "16bpc": {"reference_status": "available", "result_status": "partial-ae-exact", "coverage": "covered 9-case slice is exact; full declared feature coverage is not yet closed"},
+        "32bpc": {"reference_status": "probe-only", "result_status": "blocked", "coverage": "PNG-only return is not float-preserving"}
+      }
+    },
+    {
+      "plugin": "OLMToonDilate",
+      "feature_scope": "declared ToonDilate controls and boundary behavior",
+      "host_status": "host-stable",
+      "ir_status": "partial",
+      "depths": {
+        "8bpc": {"reference_status": "available", "result_status": "partial-ae-exact", "coverage": "packaged 3-case slice is exact; all declared controls and boundary behavior are not closed"},
+        "16bpc": {"reference_status": "available", "result_status": "partial-ae-exact", "coverage": "covered 3-case slice is exact; full declared feature coverage is not yet closed"},
+        "32bpc": {"reference_status": "probe-only", "result_status": "blocked", "coverage": "PNG-only return is not float-preserving"}
+      }
+    },
+    {
+      "plugin": "OLMDistanceGradation",
+      "feature_scope": "basic, extended, blur, layer/background and in/out modes",
+      "host_status": "host-debuggable",
+      "ir_status": "partial",
+      "depths": {
+        "8bpc": {"reference_status": "available", "result_status": "partial-ae-exact", "coverage": "packaged basic/extended/blur slices are exact; all declared layer/background and in/out paths are not closed"},
+        "16bpc": {"reference_status": "available", "result_status": "partial-ae-exact", "coverage": "current canonical extended batch is 5/16 exact"},
+        "32bpc": {"reference_status": "probe-only", "result_status": "blocked", "coverage": "PNG-only return is not float-preserving"}
+      }
+    },
+    {
+      "plugin": "OLMDirectionalBlur",
+      "feature_scope": "angle-0 and diagonal paths, front/back and validity handling",
+      "host_status": "host-debuggable",
+      "ir_status": "partial",
+      "depths": {
+        "8bpc": {"reference_status": "available", "result_status": "blocked", "coverage": "typed angle-0 and diagonal witnesses remain"},
+        "16bpc": {"reference_status": "missing", "result_status": "blocked", "coverage": "not closed"},
+        "32bpc": {"reference_status": "missing", "result_status": "blocked", "coverage": "not closed"}
+      }
+    },
+    {
+      "plugin": "OLMRadialBlur",
+      "feature_scope": "Zoom, Rotation, Inner, Size/Noise variation and edge behavior",
+      "host_status": "host-debuggable",
+      "ir_status": "partial",
+      "depths": {
+        "8bpc": {"reference_status": "available", "result_status": "blocked", "coverage": "Zoom and tiny Rotation proof lanes remain"},
+        "16bpc": {"reference_status": "missing", "result_status": "blocked", "coverage": "not closed"},
+        "32bpc": {"reference_status": "missing", "result_status": "blocked", "coverage": "not closed"}
+      }
+    },
+    {
+      "plugin": "OLMSmoother2",
+      "feature_scope": "no-key plus legacy/key/gamma paths",
+      "host_status": "host-debuggable",
+      "ir_status": "partial",
+      "depths": {
+        "8bpc": {"reference_status": "available", "result_status": "partial-ae-exact", "coverage": "no-key 12/12 exact; legacy/key/gamma remains known-red"},
+        "16bpc": {"reference_status": "missing", "result_status": "blocked", "coverage": "not closed"},
+        "32bpc": {"reference_status": "missing", "result_status": "blocked", "coverage": "not closed"}
+      }
+    },
+    {
+      "plugin": "OLMKiraKira",
+      "feature_scope": "ray generation, blur modes, compose, ramps and remaining visible controls",
+      "host_status": "host-smoke",
+      "ir_status": "partial",
+      "depths": {
+        "8bpc": {"reference_status": "available", "result_status": "blocked", "coverage": "export/witness placement and control coverage remain"},
+        "16bpc": {"reference_status": "missing", "result_status": "blocked", "coverage": "not closed"},
+        "32bpc": {"reference_status": "missing", "result_status": "blocked", "coverage": "not closed"}
+      }
+    },
+    {
+      "plugin": "OLMSmoother v1",
+      "feature_scope": "independent v1 behavior or an explicitly proven Smoother2 compatibility mapping",
+      "host_status": "host-stable",
+      "ir_status": "policy-pending",
+      "policy_status": "pending",
+      "depths": {
+        "8bpc": {"reference_status": "available", "result_status": "partial-ae-exact", "coverage": "packaged 3-case slice is exact; independent-v1 or compatibility-map policy remains open"},
+        "16bpc": {"reference_status": "missing", "result_status": "blocked", "coverage": "deferred until v1 policy is fixed"},
+        "32bpc": {"reference_status": "missing", "result_status": "blocked", "coverage": "deferred until v1 policy is fixed"}
+      }
+    }
+  ]
+}

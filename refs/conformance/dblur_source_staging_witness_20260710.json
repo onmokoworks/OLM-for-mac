@@ -1,0 +1,145 @@
+{
+  "kind": "dblur_source_staging_witness",
+  "schema": 1,
+  "status": "ok",
+  "case_id": "case_0001",
+  "row_y": 169,
+  "source_xy": [
+    959,
+    169
+  ],
+  "targets": [
+    [
+      494,
+      169
+    ],
+    [
+      579,
+      169
+    ]
+  ],
+  "aex": {
+    "path": "plugins_2025/OLMDirectionalBlur.aex",
+    "rowdriver": "FUN_1800038d0",
+    "scatter": "FUN_1800013e0"
+  },
+  "inputs": {
+    "source_path": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png",
+    "windows_reference_path": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001.png"
+  },
+  "records": [
+    {
+      "xy": [
+        494,
+        169
+      ],
+      "source_before_rgba_u8": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "source_before_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_after_rowdriver_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "staging_before_scatter_B_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "staging_after_scatter_B_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "staging_writeback_input_B_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "staging_classification": "scatter_write_zero_rgb",
+      "windows_final_rgba_u8": [
+        164,
+        0,
+        0,
+        255
+      ],
+      "windows_red_delta_from_zero": 164
+    },
+    {
+      "xy": [
+        579,
+        169
+      ],
+      "source_before_rgba_u8": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "source_before_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_after_rowdriver_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "staging_before_scatter_B_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "staging_after_scatter_B_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "staging_writeback_input_B_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "staging_classification": "scatter_write_zero_rgb",
+      "windows_final_rgba_u8": [
+        25,
+        0,
+        0,
+        255
+      ],
+      "windows_red_delta_from_zero": 25
+    }
+  ],
+  "facts": [
+    "FACT: source (959,169) is [0,0,0,255] in the Windows before-effects input.",
+    "FACT: the real AEX rowdriver capture reaches source_x=959 on row 169 and observes source RGB zero after return.",
+    "FACT: with zero-initialized staging, the observed B RGB at (494,169) and (579,169) is zero immediately after scatter and at rowdriver writeback input.",
+    "FACT: Windows final reference is red=164 at (494,169) and red=25 at (579,169), both alpha=255.",
+    "FACT: disassembly makes the front helper write leftward from a source position: offsets begin at 1 and continue while offset < param_9; the effective span is int(param_9 * param_11), subject to clipping."
+  ],
+  "inference": [
+    "INFERENCE: source (959,169) is expected zero before scatter under this source/staging model; it cannot itself explain Windows red=164 when A is loaded from the before-effects image.",
+    "INFERENCE: red=164 must arise from a different populated source/staging path, a different contributing source coordinate/group, or a later host-store path; it is not evidence for changing coefficients.",
+    "INFERENCE: this witness does not identify which of those Windows-side paths produced red=164 because final host pixel storage is not observed by FUN_1800038d0-only capture."
+  ],
+  "next_boundary": "Capture one real helper call that writes the target B record for (494,169) or (579,169), with the exact source coordinate, B destination address/record, pre/post B floats, and the final host-store bytes in the same run. Keep the required source coordinate fixed at (959,169) and do not tune coefficients."
+}

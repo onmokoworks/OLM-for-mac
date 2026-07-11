@@ -1,0 +1,393 @@
+{
+  "kind": "olmdirectionalblur_case0001_row169_boundary_capture",
+  "schema": 1,
+  "status": "ok",
+  "platform": "Mac host / Unicorn x86-64 emulation",
+  "case_id": "case_0001",
+  "row_y": 169,
+  "source_x": 959,
+  "targets": [
+    [
+      494,
+      169
+    ],
+    [
+      579,
+      169
+    ]
+  ],
+  "functions": {
+    "rowdriver": "FUN_1800038d0",
+    "scatter": "FUN_1800013e0",
+    "post_scatter": "FUN_180003b60"
+  },
+  "source_path": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png",
+  "aex_path": "plugins_2025/OLMDirectionalBlur.aex",
+  "blocked": null,
+  "records": [
+    {
+      "xy": [
+        494,
+        169
+      ],
+      "source": {
+        "xy": [
+          959,
+          169
+        ],
+        "rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "rowdriver_membership": {
+        "row_base": 162240,
+        "direction": 1,
+        "source_reached_target": true
+      },
+      "scatter_arguments": {
+        "source_x": 959,
+        "row_base": 162240,
+        "direction": 1,
+        "A_pointer": 536870912,
+        "B_pointer": 545165312,
+        "denom_pointer": 553459712,
+        "alpha_or_valid_pointer": 555533312,
+        "table_pointer": 565914984,
+        "front_strength": 1690,
+        "width": 960,
+        "param_11": 0.6296296119689941,
+        "span": 1064,
+        "write_event_count": 4806,
+        "write_address_min": 252702304,
+        "write_address_max": 554112508,
+        "write_samples_first": [
+          {
+            "address": 252702392,
+            "size": 4
+          },
+          {
+            "address": 252702368,
+            "size": 8
+          },
+          {
+            "address": 252702360,
+            "size": 8
+          },
+          {
+            "address": 252702320,
+            "size": 8
+          },
+          {
+            "address": 252702328,
+            "size": 8
+          },
+          {
+            "address": 252702304,
+            "size": 8
+          },
+          {
+            "address": 252702312,
+            "size": 8
+          },
+          {
+            "address": 252702448,
+            "size": 4
+          }
+        ],
+        "write_samples_last": [
+          {
+            "address": 547761192,
+            "size": 4
+          },
+          {
+            "address": 554108680,
+            "size": 4
+          },
+          {
+            "address": 547761196,
+            "size": 4
+          },
+          {
+            "address": 547761168,
+            "size": 4
+          },
+          {
+            "address": 547761172,
+            "size": 4
+          },
+          {
+            "address": 547761176,
+            "size": 4
+          },
+          {
+            "address": 554108676,
+            "size": 4
+          },
+          {
+            "address": 547761180,
+            "size": 4
+          }
+        ]
+      },
+      "pre_scatter": {
+        "A_rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "B_rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "denom": 1.0,
+        "alpha_or_valid": 1.0
+      },
+      "post_scatter": {
+        "A_rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "B_rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "denom": 1.0,
+        "alpha_or_valid": 1.0,
+        "touched_B_channel_addresses": [
+          {
+            "offset": 0,
+            "size": 4
+          },
+          {
+            "offset": 4,
+            "size": 4
+          },
+          {
+            "offset": 8,
+            "size": 4
+          },
+          {
+            "offset": 12,
+            "size": 4
+          }
+        ],
+        "B_buffer_identity": "rowdriver_B",
+        "state_changed_from_source959_entry": false
+      },
+      "writeback_input": {
+        "A_rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "B_rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "denom": 1.0,
+        "alpha_or_valid": 1.0
+      },
+      "classification": "scatter_write_zero_rgb",
+      "final_stored_rgba": {
+        "status": "not-observed-by-rowdriver-probe"
+      }
+    },
+    {
+      "xy": [
+        579,
+        169
+      ],
+      "source": {
+        "xy": [
+          959,
+          169
+        ],
+        "rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "rowdriver_membership": {
+        "row_base": 162240,
+        "direction": 1,
+        "source_reached_target": true
+      },
+      "scatter_arguments": {
+        "source_x": 959,
+        "row_base": 162240,
+        "direction": 1,
+        "A_pointer": 536870912,
+        "B_pointer": 545165312,
+        "denom_pointer": 553459712,
+        "alpha_or_valid_pointer": 555533312,
+        "table_pointer": 565914984,
+        "front_strength": 1690,
+        "width": 960,
+        "param_11": 0.6296296119689941,
+        "span": 1064,
+        "write_event_count": 4806,
+        "write_address_min": 252702304,
+        "write_address_max": 554112508,
+        "write_samples_first": [
+          {
+            "address": 252702392,
+            "size": 4
+          },
+          {
+            "address": 252702368,
+            "size": 8
+          },
+          {
+            "address": 252702360,
+            "size": 8
+          },
+          {
+            "address": 252702320,
+            "size": 8
+          },
+          {
+            "address": 252702328,
+            "size": 8
+          },
+          {
+            "address": 252702304,
+            "size": 8
+          },
+          {
+            "address": 252702312,
+            "size": 8
+          },
+          {
+            "address": 252702448,
+            "size": 4
+          }
+        ],
+        "write_samples_last": [
+          {
+            "address": 547761192,
+            "size": 4
+          },
+          {
+            "address": 554108680,
+            "size": 4
+          },
+          {
+            "address": 547761196,
+            "size": 4
+          },
+          {
+            "address": 547761168,
+            "size": 4
+          },
+          {
+            "address": 547761172,
+            "size": 4
+          },
+          {
+            "address": 547761176,
+            "size": 4
+          },
+          {
+            "address": 554108676,
+            "size": 4
+          },
+          {
+            "address": 547761180,
+            "size": 4
+          }
+        ]
+      },
+      "pre_scatter": {
+        "A_rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "B_rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "denom": 1.0,
+        "alpha_or_valid": 1.0
+      },
+      "post_scatter": {
+        "A_rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "B_rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "denom": 1.0,
+        "alpha_or_valid": 1.0,
+        "touched_B_channel_addresses": [
+          {
+            "offset": 0,
+            "size": 4
+          },
+          {
+            "offset": 4,
+            "size": 4
+          },
+          {
+            "offset": 8,
+            "size": 4
+          },
+          {
+            "offset": 12,
+            "size": 4
+          }
+        ],
+        "B_buffer_identity": "rowdriver_B",
+        "state_changed_from_source959_entry": false
+      },
+      "writeback_input": {
+        "A_rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "B_rgba": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "denom": 1.0,
+        "alpha_or_valid": 1.0
+      },
+      "classification": "scatter_write_zero_rgb",
+      "final_stored_rgba": {
+        "status": "not-observed-by-rowdriver-probe"
+      }
+    }
+  ],
+  "source_dimensions": [
+    960,
+    540
+  ]
+}

@@ -49,6 +49,9 @@ PARAMETERS = {
     "Legacy": 0,
 }
 
+CURRENT_EXPORT_REQUEST_ID = "olmblur_case0006_current_aex_export_20260709"
+CURRENT_EXPORT_CASE_ID = "olmblur__case_0006"
+
 
 def display_path(path: Path | None) -> str | None:
     if path is None:
@@ -87,6 +90,46 @@ def sample_points(path: Path) -> dict[str, list[int]]:
     for x, y, _reason in POINTS:
         values[f"{x},{y}"] = [int(v) for v in rgba[y, x]]
     return values
+
+
+def candidate_case_frame(manifest_path: Path, case: dict[str, Any]) -> Path | None:
+    frame = case.get("frame")
+    if not isinstance(frame, str) or not frame:
+        return None
+    candidate = manifest_path.parent / frame
+    return candidate if candidate.exists() else None
+
+
+def manifest_case_matches(case: dict[str, Any]) -> bool:
+    request_id = case.get("request_id")
+    case_id = case.get("id")
+    return request_id == CURRENT_EXPORT_REQUEST_ID or (
+        case_id == CURRENT_EXPORT_CASE_ID and request_id == CURRENT_EXPORT_REQUEST_ID
+    )
+
+
+def find_imported_windows_current_export(root: Path) -> Path | None:
+    win_refs = root / "refs" / "win_references"
+    if not win_refs.exists():
+        return None
+    candidates: list[Path] = []
+    for manifest_path in sorted(win_refs.glob("**/reference_manifest.json")):
+        try:
+            data = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        cases = data.get("cases")
+        if not isinstance(cases, list):
+            continue
+        for case in cases:
+            if not isinstance(case, dict) or not manifest_case_matches(case):
+                continue
+            frame = candidate_case_frame(manifest_path, case)
+            if frame is not None:
+                candidates.append(frame)
+    if not candidates:
+        return None
+    return max(candidates, key=lambda path: path.stat().st_mtime)
 
 
 def classify_outcome(
@@ -152,6 +195,8 @@ def classify_outcome(
 
 
 def build_report(args: argparse.Namespace) -> dict[str, Any]:
+    if args.windows_current_export is None and args.auto_find_windows_current_export:
+        args.windows_current_export = find_imported_windows_current_export(ROOT)
     canonical_info = file_info(args.canonical_ref)
     mac_single_info = file_info(args.mac_single_export)
     mac_batch_info = file_info(args.mac_batch_export)
@@ -294,6 +339,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--mac-single-export", type=Path, default=MAC_SINGLE)
     parser.add_argument("--mac-batch-export", type=Path, default=MAC_BATCH)
     parser.add_argument("--windows-current-export", type=Path, default=None)
+    parser.add_argument(
+        "--no-auto-find-windows-current-export",
+        dest="auto_find_windows_current_export",
+        action="store_false",
+        help="Do not scan refs/win_references for the current-AEX export request.",
+    )
+    parser.set_defaults(auto_find_windows_current_export=True)
     parser.add_argument("--output-json", type=Path, default=OUT_JSON)
     parser.add_argument("--output-md", type=Path, default=OUT_MD)
     return parser.parse_args()

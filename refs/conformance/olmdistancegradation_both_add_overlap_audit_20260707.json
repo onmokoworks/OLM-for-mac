@@ -1,0 +1,133 @@
+{
+  "kind": "olmdistancegradation_both_add_overlap_audit",
+  "generated_at": "2026-07-07T10:27:28Z",
+  "manifest": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/reference_manifest.json",
+  "reference_dir": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch",
+  "both_case_count": 11,
+  "divergent_case_count": 0,
+  "total_divergent_px": 0,
+  "decision": "no-current-fullres-add-vs-max-lever",
+  "cases": [
+    {
+      "case_id": "olmdistancegradation_extended__case_0010",
+      "bits_per_channel": 16,
+      "interpolation_mode": 2,
+      "blur_mode": 1,
+      "inside_threshold": 63,
+      "outside_threshold": 82,
+      "nonzero_px": 0,
+      "max_delta": 0.0,
+      "sample": null
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0011",
+      "bits_per_channel": 16,
+      "interpolation_mode": 2,
+      "blur_mode": 1,
+      "inside_threshold": 348,
+      "outside_threshold": 0,
+      "nonzero_px": 0,
+      "max_delta": 0.0,
+      "sample": null
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0012",
+      "bits_per_channel": 16,
+      "interpolation_mode": 2,
+      "blur_mode": 1,
+      "inside_threshold": 122,
+      "outside_threshold": 204,
+      "nonzero_px": 0,
+      "max_delta": 0.0,
+      "sample": null
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0021",
+      "bits_per_channel": 16,
+      "interpolation_mode": 1,
+      "blur_mode": 1,
+      "inside_threshold": 78,
+      "outside_threshold": 402,
+      "nonzero_px": 0,
+      "max_delta": 0.0,
+      "sample": null
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0022",
+      "bits_per_channel": 16,
+      "interpolation_mode": 1,
+      "blur_mode": 1,
+      "inside_threshold": 36,
+      "outside_threshold": 11,
+      "nonzero_px": 0,
+      "max_delta": 0.0,
+      "sample": null
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0023",
+      "bits_per_channel": 16,
+      "interpolation_mode": 1,
+      "blur_mode": 1,
+      "inside_threshold": 36,
+      "outside_threshold": 0,
+      "nonzero_px": 0,
+      "max_delta": 0.0,
+      "sample": null
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0024",
+      "bits_per_channel": 16,
+      "interpolation_mode": 3,
+      "blur_mode": 1,
+      "inside_threshold": 158,
+      "outside_threshold": 17,
+      "nonzero_px": 0,
+      "max_delta": 0.0,
+      "sample": null
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0025",
+      "bits_per_channel": 16,
+      "interpolation_mode": 3,
+      "blur_mode": 1,
+      "inside_threshold": 158,
+      "outside_threshold": 13,
+      "nonzero_px": 0,
+      "max_delta": 0.0,
+      "sample": null
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0026",
+      "bits_per_channel": 16,
+      "interpolation_mode": 4,
+      "blur_mode": 1,
+      "inside_threshold": 158,
+      "outside_threshold": 13,
+      "nonzero_px": 0,
+      "max_delta": 0.0,
+      "sample": null
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0027",
+      "bits_per_channel": 16,
+      "interpolation_mode": 4,
+      "blur_mode": 1,
+      "inside_threshold": 158,
+      "outside_threshold": 13,
+      "nonzero_px": 0,
+      "max_delta": 0.0,
+      "sample": null
+    },
+    {
+      "case_id": "olmdistancegradation_extended__case_0028",
+      "bits_per_channel": 16,
+      "interpolation_mode": 4,
+      "blur_mode": 1,
+      "inside_threshold": 158,
+      "outside_threshold": 13,
+      "nonzero_px": 0,
+      "max_delta": 0.0,
+      "sample": null
+    }
+  ]
+}

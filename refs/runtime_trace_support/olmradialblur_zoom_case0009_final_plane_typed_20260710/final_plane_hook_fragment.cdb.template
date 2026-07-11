@@ -1,0 +1,17 @@
+$$ Package-local hook fragment for OLMRadialBlur Zoom case_0009.
+$$
+$$ This file is inserted only after RadialBlur.aex has loaded in the exact
+$$ process that runs scripts/ae_render_single_case.jsx with the package-local
+$$ case_0009 request. It must set the known final-plane breakpoints/watchpoints,
+$$ capture (7,0), (8,0), and (24,0), and continue the process as required.
+$$
+$$ Do not call `g` before each hook is armed unless the hook script itself has
+$$ finished installing all breakpoints. Do not launch AE, select another case,
+$$ or read a prior CDB log from this fragment.
+$$
+$$ Return JSON must name this generated probe.cdb and cdb_trace.log so the
+$$ typed rows can be audited as one run.
+$$
+$$ Insert the established Windows final-plane hook commands below this line.
+$$ A template is intentionally not a fake capture: a return with placeholders
+$$ is failed_partial under the contract.

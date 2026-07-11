@@ -1,0 +1,81 @@
+{
+  "kind": "olmdistancegradation_case0012_dominant_channel_closeout_20260708",
+  "schema": 1,
+  "accepted_patch": "Both channel-mask branch uses src_a for dominant source channels only, limited to src_a <= 150/255; non-dominant channels keep straight-source ratio.",
+  "accepted_evidence": {
+    "case0012": "refs/conformance/olmdistancegradation_case0012_both_dominant150_patch_20260708.md",
+    "ae_candidate_root": "refs/reports/ae_single_case_olmdistancegradation_case0012_both_dominant150_patch_20260708"
+  },
+  "results": {
+    "case_0012": {
+      "max_true16": 2,
+      "mean_true16": 0.0019904996141975307,
+      "nonzero_px": 2948,
+      "channel_max": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    "case_0013": {
+      "max_true16": 2,
+      "mean_true16": 0.005261622299382716,
+      "nonzero_px": 9006,
+      "channel_max": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    "case_0014": {
+      "max_true16": 4,
+      "mean_true16": 0.005750385802469136,
+      "nonzero_px": 9630,
+      "channel_max": [
+        4,
+        4,
+        4,
+        2
+      ]
+    },
+    "case_0016": {
+      "max_true16": 2,
+      "mean_true16": 0.0037005690586419753,
+      "nonzero_px": 5373,
+      "channel_max": [
+        2,
+        2,
+        2,
+        0
+      ]
+    }
+  },
+  "rejected_probes": [
+    {
+      "probe": "both_channel_mask src_a for all source alpha",
+      "evidence": "refs/conformance/olmdistancegradation_case0012_both_srca_all_patch_20260708.md",
+      "result": "rejected: full-alpha small-color channels exploded to max 64744"
+    },
+    {
+      "probe": "dominant-channel src_a up to 180/255",
+      "evidence": "refs/conformance/olmdistancegradation_case0012_both_dominant180_patch_20260708.md",
+      "result": "rejected: high-alpha low-luma uniform point exploded to max 42676"
+    }
+  ],
+  "reading": [
+    "The accepted rule is not AE exact for case_0012, but it narrows the broad Layer/no-bg Both residual from true16 max 28 to max 2 without moving neighboring Inside cases beyond their prior 2/4/2 residuals.",
+    "The remaining max 2/4/2 family is now a common 16bpc export/rounding residual candidate rather than a broad Layer-source ownership problem.",
+    "Do not broaden the rule past 150/255 without an additional dominance/low-luma guard or Windows store/export proof."
+  ],
+  "remaining_rounding_residual": {
+    "classification": "shared-16bpc-store-export-rounding-candidate",
+    "facts": [
+      "After the dominant-channel rule, case_0012/0013/0014/0016 are max 2/2/4/2 true16.",
+      "Residual tuples are mostly even +/-2 true16 words, with case_0014 containing a small -4 RGB subset.",
+      "Output-space what-if corrections show simple +2 on negative RGB would reduce means, but the condition depends on knowing the Windows reference and is not an implementation proof."
+    ],
+    "next_evidence": "Windows or Mac same-run PF16 store/export witness for representative +/-2 and case_0014 -4 pixels before changing global clamp/export rounding."
+  }
+}

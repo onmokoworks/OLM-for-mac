@@ -1,0 +1,1 @@
+OLMDG_ENTRY run_id=dg-synthetic-dead case_id=case_0010 case_tag=57005 inside_threshold=7 outside_threshold=9 x=6 y=40 module_base=0x180000000 output_base=0x41000000 param_block=0x10001000

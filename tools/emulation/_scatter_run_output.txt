@@ -1,0 +1,73 @@
+# OLMDirectionalBlur angle-0 front-scatter emulation report
+# aex: /Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex
+# constants: DAT_b1e0=1e-05(add) DAT_b1ec=3.0(div) DAT_b1e8=1.0(1/p11 base)
+
+## ABI / leaf health: FUN_180001830 (front table builder)
+  len=  4 maxdiff=1.847e-08 PASS  head=['1.00000', '0.75484', '0.32465', '0.07956']
+  len=  8 maxdiff=2.669e-08 PASS  head=['1.00000', '0.93210', '0.75484', '0.53110']
+  len= 16 maxdiff=5.085e-08 PASS  head=['1.00000', '0.98258', '0.93210', '0.85368']
+  len= 32 maxdiff=5.846e-08 PASS  head=['1.00000', '0.99562', '0.98258', '0.96122']
+  => table builder ABI health: PASS
+
+## FUN_1800013e0 scatter behaviour (span / membership / direction)
+Layout confirmed from decomp: A/B = RGBA(4 f32) at pixel (row*W+col); denom/alpha_or_valid = 1 f32/pixel. param_3=1 => leftward scatter, iVar11=-1. offset 0 (source col) never written.
+
+### Direction test: src_x=500 fs=32 p11=1.0 -> span=32
+  written cols: min=469 max=499 count=31
+  src col 500 in written set? False (expect False)
+  all written < src? True (expect True=leftward)
+  reaches dst 494? True  (src-494=6 vs span=32)
+  B[494]=([0.8824968934059143, 0.0, 0.0, 0.8824968934059143], 0.8824968934059143)
+
+## Candidate 1 (span reach / membership): does a src col >494 reach 494?
+Sweep: fixed src_x, fs=32, vary param_11 to change effective span/reach.
+Reach condition (FACT from decomp): dst = src - offset, 1<=offset<span=int(fs*p11). So min dst reached = src-(span-1). 494 reached iff src-(span-1) <= 494 <= src-1.
+  src=495 p11=0.5 span= 16 min_dst_written=480 pred=480 reach494=True R@494=0.9862
+  src=495 p11=1.0 span= 32 min_dst_written=464 pred=464 reach494=True R@494=0.9965
+  src=495 p11=1.5 span= 48 min_dst_written=448 pred=448 reach494=True R@494=1.0000
+  src=495 p11=2.0 span= 64 min_dst_written=432 pred=432 reach494=True R@494=1.0000
+  src=500 p11=0.5 span= 16 min_dst_written=485 pred=485 reach494=True R@494=0.6065
+  src=500 p11=1.0 span= 32 min_dst_written=469 pred=469 reach494=True R@494=0.8825
+  src=500 p11=1.5 span= 48 min_dst_written=453 pred=453 reach494=True R@494=0.9460
+  src=500 p11=2.0 span= 64 min_dst_written=437 pred=437 reach494=True R@494=0.9692
+  src=520 p11=0.5 span= 16 min_dst_written=505 pred=505 reach494=False
+  src=520 p11=1.0 span= 32 min_dst_written=489 pred=489 reach494=True R@494=0.0956
+  src=520 p11=1.5 span= 48 min_dst_written=473 pred=473 reach494=True R@494=0.3666
+  src=520 p11=2.0 span= 64 min_dst_written=457 pred=457 reach494=True R@494=0.5561
+  src=540 p11=0.5 span= 16 min_dst_written=525 pred=525 reach494=False
+  src=540 p11=1.0 span= 32 min_dst_written=509 pred=509 reach494=False
+  src=540 p11=1.5 span= 48 min_dst_written=493 pred=493 reach494=True R@494=0.0439
+  src=540 p11=2.0 span= 64 min_dst_written=477 pred=477 reach494=True R@494=0.1593
+
+## Candidate 2 (param_11 degeneracy): span=int(fs*p11) collapses to <=1
+FACT from decomp: body gated by (0<param_9) at outer and (1<param_9) for the write loops. param_9 = int(front_strength*param_11).
+  fs=  4 p11=0.00 span=  0 nonzero_cols=0  body-skipped SKIP(outer 0<param_9 false)
+  fs=  4 p11=0.01 span=  0 nonzero_cols=0  body-skipped SKIP(outer 0<param_9 false)
+  fs=  4 p11=0.03 span=  0 nonzero_cols=0  body-skipped SKIP(outer 0<param_9 false)
+  fs=  4 p11=0.06 span=  0 nonzero_cols=0  body-skipped SKIP(outer 0<param_9 false)
+  fs=  4 p11=0.10 span=  0 nonzero_cols=0  body-skipped SKIP(outer 0<param_9 false)
+  fs=  4 p11=0.25 span=  1 nonzero_cols=0  body-skipped SKIP(inner 1<param_9 false)
+  fs= 16 p11=0.00 span=  0 nonzero_cols=0  body-skipped SKIP(outer 0<param_9 false)
+  fs= 16 p11=0.01 span=  0 nonzero_cols=0  body-skipped SKIP(outer 0<param_9 false)
+  fs= 16 p11=0.03 span=  0 nonzero_cols=0  body-skipped SKIP(outer 0<param_9 false)
+  fs= 16 p11=0.06 span=  0 nonzero_cols=0  body-skipped SKIP(outer 0<param_9 false)
+  fs= 16 p11=0.10 span=  1 nonzero_cols=0  body-skipped SKIP(inner 1<param_9 false)
+  fs= 16 p11=0.25 span=  4 nonzero_cols=3  body-ran 
+  fs= 32 p11=0.00 span=  0 nonzero_cols=0  body-skipped SKIP(outer 0<param_9 false)
+  fs= 32 p11=0.01 span=  0 nonzero_cols=0  body-skipped SKIP(outer 0<param_9 false)
+  fs= 32 p11=0.03 span=  0 nonzero_cols=0  body-skipped SKIP(outer 0<param_9 false)
+  fs= 32 p11=0.06 span=  1 nonzero_cols=0  body-skipped SKIP(inner 1<param_9 false)
+  fs= 32 p11=0.10 span=  3 nonzero_cols=2  body-ran 
+  fs= 32 p11=0.25 span=  8 nonzero_cols=7  body-ran 
+  fs= 64 p11=0.00 span=  0 nonzero_cols=0  body-skipped SKIP(outer 0<param_9 false)
+  fs= 64 p11=0.01 span=  0 nonzero_cols=0  body-skipped SKIP(outer 0<param_9 false)
+  fs= 64 p11=0.03 span=  1 nonzero_cols=0  body-skipped SKIP(inner 1<param_9 false)
+  fs= 64 p11=0.06 span=  3 nonzero_cols=2  body-ran 
+  fs= 64 p11=0.10 span=  6 nonzero_cols=5  body-ran 
+  fs= 64 p11=0.25 span= 16 nonzero_cols=15  body-ran 
+
+## Valid-alpha side channel (alpha_or_valid weights each source col)
+FACT: contribution fVar16 = alpha_or_valid[src]*table[...]; if the source col's alpha_or_valid==0, it scatters nothing.
+  alpha_or_valid[src]=0.0 -> nonzero_cols=0 (494 not reached/zero)
+  alpha_or_valid[src]=0.5 -> nonzero_cols=31 R@494=0.4412 denom@494=0.4412
+  alpha_or_valid[src]=1.0 -> nonzero_cols=31 R@494=0.8825 denom@494=0.8825

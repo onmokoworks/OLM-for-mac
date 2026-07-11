@@ -3,7 +3,11 @@
 This ledger replaces percentage-style progress tracking. The only completion
 status is `AE exact`; all other states are evidence or work states.
 
-See `notes/AE_EXACT_CONFORMANCE.md` for definitions.
+See `notes/AE_EXACT_CONFORMANCE.md` for definitions and
+`notes/PORTING_ROADMAP.md` for the current release scope and critical path.
+`refs/conformance/olm_release_scope.json` is the machine-readable whole-release
+gate. A passing row or packaged subset must not be promoted to plug-in complete
+unless `scripts/check_olm_release_scope.py --require-complete` passes.
 
 This ledger tracks three separate questions:
 
@@ -21,47 +25,996 @@ source-backed Mac UI schema snapshot is
 Use that report to answer "what UI value should this parameter have?" before
 treating a mismatch as algorithm drift.
 
+## Latest Overrides
+
+- 2026-07-11 `OLMDirectionalBlur Alpha Fade host boundary`: the complete 2025
+  AEX wrapper and Mac callback capture make further kernel tuning unjustified
+  pending boundary proof. Mac PREMULTIPLIED import uses half-up
+  unpremultiplication; a floor-input replay reduces the RGB-only residual from
+  `234049` to `22993` channel bytes at `max_diff=1`, while the complete AEX and
+  Mac callback differ by only `78` raw channel bytes on that floor probe. The
+  retained June 19 manifest has no loaded AEX path/hash and the official bundle
+  contains distinct 2024/2025 binaries, so the remaining family is provisionally
+  `blocked-reference-provenance`. This is a strong inference, not final
+  ownership proof. Use
+  `refs/conformance/dblur_alpha_host_boundary_20260711.md`. The next proof is a
+  hash-gated same-run Windows PF input/output world capture, not an input-floor
+  rule or PNG bias in the plug-in.
+
+- 2026-07-11 `OLMDirectionalBlur front-only 8bpc exact`: the portable shared
+  core now reproduces the actual-AEX full-entry raw ARGB8 SHA-256 for
+  `db_angle0_strength_sweep_small`. The former 523-pixel max-1 residual was a
+  stage mismatch: raw plug-in `[RGB=247,A=254]` versus AE-rendered PNG
+  `[RGB=246,A=254]`; a host premultiply model closes all 1,569 channel bytes,
+  and no darkening was added to the plug-in. Actual Mac AE 26.3 Software
+  renders are `max_diff=0` for both `db_angle0_strength_sweep_small` and
+  `db_angle0_no_tail_no_size`. Use
+  `refs/conformance/dblur_frontonly_mac_ae_exact_20260711.md`. This promotes
+  only the declared front-only/no-variation/no-fade/no-tail/no-back/no-noise
+  8bpc slice; Alpha Fade, Size Variation, Sharp Tail, Back, Noise, and 16/32bpc
+  remain open.
+
+- 2026-07-11 `OLMBlur 32bpc Mac candidate`: the latest Mac plug-in renders all
+  seven focused cases as uncompressed FLOAT32 RGBA EXR. Cross-host no-effect
+  controls are byte-exact for cases `0001..0004`; cases `0005..0007` retain a
+  small PNG-input conversion difference. Effect-on outputs differ for all
+  seven, but both 32bpc complete workers replay actual AEX fixtures byte-exact
+  at every declared parameter tuple. The retained Windows return omits the
+  loaded AEX hash, so version split remains unresolved. Use
+  `refs/conformance/olmblur_32bpc_mac_ae_candidate_20260711.md`; next action is
+  hash-pinned current-AEX 8/32bpc recapture, not PNG/EXR tuning.
+
+- 2026-07-11 `OLMBlur Legacy center-copy closeout`: decomp proves the
+  `FUN_1800014f0/FUN_180001ea0` `all_same` branch copies the current center
+  source RGB; carry RGB is comparison state only. Correcting the portable
+  helper preserves all prior helper/8bpc/16bpc fixtures and makes all three
+  32bpc Legacy complete-worker fixtures exact. Formal Mac AE now has 16bpc
+  `case_0001..0007` all `max_diff=0`, so the declared OLMBlur 16bpc cell is
+  `AE exact`. 8bpc case 0007 is also exact against both retained families;
+  case 0003 and canonical-family provenance remain open. Use
+  `refs/conformance/olmblur_legacy_center_copy_fix_20260711.md`.
+
+- 2026-07-11 `OLMBlur complete-worker Mac AE update`: 8bpc Legacy
+  `FUN_180007300` and 16bpc Legacy `FUN_180005f20` portable cores now replay
+  actual-AEX complete-buffer fixtures byte-exact and are wired through narrow
+  Mac adapters. Formal 16bpc Mac AE is exact for cases `0001..0006`; case
+  `0007` remains `max=16` at 18 pixels. Formal 8bpc against the retained
+  AE25.2 family is exact for `0001/0002/0004/0005/0006`; Legacy `0003` is
+  `max=1` and `0007` is `max=16` at 18 pixels. Use
+  `refs/conformance/olmblur_8bpc_worker_mac_ae_20260711.md` and
+  `refs/conformance/olmblur_16bpc_worker_mac_ae_20260711.md`. Because the
+  complete worker cores are exact, the next allowed action for these residuals
+  is host-boundary/reference-provenance proof, not kernel tuning.
+
+- 2026-07-10 `ToonDilate Mac 32bpc candidates`: live Mac AE `26.3x87`
+  rendered all three declared cases as uncompressed FLOAT `A,B,G,R` EXRs;
+  the fail-closed candidate-index validator accepts `3/3`. Use
+  `refs/conformance/olmtoondilate_32bpc_mac_candidates_20260710.md`. The
+  current registered template is `OLM EXR 32 Float`; the name ending in `2`
+  is invalid. This completes the Mac candidate side only. Cross-host no-op RGB
+  drift still prevents a 32bpc `AE exact` verdict.
+- 2026-07-10 `OLMBlur portable helper exact`: actual AEX
+  `FUN_180001000/FUN_180001980` and `core/olmblur_helper.cpp` are byte exact
+  across six typed fixtures covering basic traversal, inactive-center copy,
+  directional flag break, edge/radius clamp, zero denominator, and nonzero
+  offset. The AEX includes the active center with `weights[0]`; an earlier
+  prose audit saying “center excluded” was rejected by decomp plus fixture
+  output. Helper status is `portable-core-ready`; full worker
+  `FUN_180005f20` PF Handle/layout remains blocked, so this is not case_0006
+  full-entry or `AE exact`.
+- 2026-07-10 `OLMBlur shared-core broad integration rejected`: the portable
+  `FUN_180001000/FUN_180001980` core remains byte-exact for its six typed
+  function fixtures, but substituting it for all Mac non-Legacy horizontal /
+  vertical calls is not grounded by `FUN_180005f20`, whose audited branch uses
+  the differently labelled `FUN_1800014f0/FUN_180001ea0` family. Formal 8bpc
+  comparison with depth explicitly fixed to 8 produced red-channel maxima
+  `59/59/14/58` in case_0001..0004 against normalized references, but these
+  outputs are identical before/after the integration and match the old
+  20260604 drift family; only case_0006 moved by one red value. The wiring was
+  removed because the callsite mapping is unproven and the 16bpc run gained an
+  extra residual, not because of the pre-existing 8bpc family. Use
+  `refs/conformance/olmblur_shared_core_mac_ae_case0006_20260710.md`. Preserve
+  the standalone core evidence, but do not integrate it again until the exact
+  full-worker callsite/ABI/branch alias is proven. Current-AEX 8bpc Windows
+  references must pin the AEX SHA-256 before selecting the canonical family.
+- 2026-07-11 `OLMBlur 8bpc reference/AEX provenance`: use
+  `refs/conformance/olmblur_8bpc_reference_aex_provenance_audit_20260711.md`.
+  The current Mac maxima `59/59/14/58/0/0/1` reproduce the old Windows AE
+  25.2 reference-family shape, while the retained Windows AE 26.2 normalized
+  family and its historical Mac candidate are 7/7 byte-identical. Both
+  manifests omit the loaded AEX hash. The local helper fixtures are pinned to
+  official 2025 AEX SHA-256 `f0611785...e96e5b`, but no existing reference
+  proves it used that binary. Treat canonical 8bpc selection as blocked on a
+  hash-pinned current-AEX Software recapture; do not tune either family into
+  the implementation by assumption.
+- 2026-07-11 `OLMBlur hash-pinned 8bpc recapture ready`: project-local package
+  `refs/reference_requests/olmblur_windows_software_8bpc_aex_canonical_recapture_20260711.zip`
+  gates rendering on installed `OLMBlur.aex` SHA-256
+  `f0611785...e96e5b`, records path/size/time/hash, forces Software and 8bpc,
+  renders all seven normalized cases plus an effect-disabled control, and
+  fails closed on hash or render mismatch. Package SHA-256 is
+  `2e5473ace6edb38e644141bdab04f5abc5f4c66200dcb6fd2e068cd5706cee84`.
+  It is prepared but not staged;
+  do not overwrite the active RadialBlur NAS request.
+- 2026-07-11 `OLMBlur full-worker helper fixtures`: actual 2025 AEX functions
+  `FUN_1800014f0/FUN_180001ea0` now replay byte-exact against six portable C++
+  fixtures covering offsets, partial passes, flag breaks, asymmetric inactive
+  behavior, and large radii. Use
+  `refs/conformance/olmblur_fullworker_helper_20260711.md` and
+  `refs/scripts/smoke_olmblur_fullworker_helper.py`. This grounds the helper
+  pair only. Keep Mac source unchanged until `FUN_180005f20` callsites map the
+  `1000/1980` and `14f0/1ea0` pairs to exact Legacy/Bias parameter branches;
+  do not infer the mapping from function names.
+- 2026-07-11 `OLMBlur full-worker branch map`: use
+  `refs/conformance/olmblur_fullworker_branch_map_20260711.md`. Dispatch
+  `FUN_18000a380` proves `1000/1980` are Non-Legacy and `14f0/1ea0` are Legacy
+  for 8/16/32bpc; Bias `1` is horizontal-then-vertical and Bias `2` reverses
+  it. Mac direction order matches, but its full-plane helper signature does
+  not represent the AEX's six subpass offsets and plane swaps. The next local
+  implementation boundary is full-worker orchestration against an actual-AEX
+  full-entry fixture, not another direct helper substitution.
+- 2026-07-11 `OLMBlur 8bpc Non-Legacy worker exact`: portable orchestration for
+  `FUN_180003710` now includes A/R/G/B staging, six row/column chunks,
+  plane swaps, direction order, repeat decay, weights/radius, and 8bpc
+  writeback. Two complete-buffer fixtures (basic and large-radius/reverse
+  direction) replay byte-exact against the actual 2025 AEX. Use
+  `refs/conformance/olmblur_worker_orchestration_20260711.md` and
+  `refs/scripts/smoke_olmblur_worker_orchestration.py`. This grounds only the
+  8bpc Non-Legacy worker; Mac integration must remain depth/mode-limited and
+  pass AE host regression before any `AE exact` claim.
+- 2026-07-11 `OLMBlur 8bpc worker Mac AE`: the depth/mode-limited adapter is
+  installed and the formal Mac AE batch was rerun with depth explicitly fixed
+  to 8. All five Non-Legacy cases `0001/0002/0004/0005/0006` are byte-exact
+  against the retained Windows AE25.2 family; normalized AE26.2 remains split
+  at `59/59/58` for 0001/0002/0004 while 0005/0006 are exact. Legacy cases are
+  outside the adapter and remain red. Use
+  `refs/conformance/olmblur_8bpc_worker_mac_ae_20260711.md`. Do not select the
+  canonical family until the prepared current-AEX hash-pinned Windows recapture
+  returns.
+- 2026-07-11 `OLMBlur 32bpc Non-Legacy worker exact`: portable
+  `FUN_180004b80` orchestration now covers raw float A/R/G/B staging, active
+  alpha semantics, six subpasses/plane swaps, repeat decay/weights, and
+  float-preserving RGB writeback. Basic and large-radius reverse-direction
+  complete buffers replay byte-exact against the actual 2025 AEX; no EXR was
+  used as oracle. Use `refs/conformance/olmblur_worker32_nonlegacy_20260711.md`
+  and `refs/scripts/smoke_olmblur_worker32_nonlegacy.py`. This is binary core
+  proof, not cross-host `AE exact` until the float host/no-effect policy is
+  satisfied.
+- 2026-07-11 `OLMBlur 32bpc Non-Legacy Mac integration`: the Mac adapter now
+  packs/unpacks PF_PixelFloat A/R/G/B with rowbytes awareness, preserves alpha,
+  calls the exact 32bpc worker only for Non-Legacy, and catches allocation
+  failure at the host boundary. 8bpc and 32bpc fixture smokes plus universal
+  Debug build (`x86_64 arm64`) pass. The installed MediaCore bundle contains
+  this adapter. No cross-host exact claim is made before a float-preserving
+  Mac candidate/no-effect comparison under the declared 32bpc policy.
+- 2026-07-11 `OLMBlur 16bpc Non-Legacy worker exact`: corrected entry
+  `FUN_180002280` stages PF_Pixel16 A/R/G/B, executes the exact Non-Legacy
+  helper pair in six subpasses with decay/weights, and applies the AEX
+  `+0.5` truncating/clamped writer. Basic and large-radius reverse-direction
+  complete buffers replay byte-exact against actual AEX. Use
+  `refs/conformance/olmblur_worker16_nonlegacy_complete_worker_20260711.md`
+  and `refs/scripts/smoke_olmblur_worker16_nonlegacy.py`. Earlier use of
+  `FUN_180005f20` for this lane was rejected because that entry is Legacy.
+- 2026-07-11 `OLMBlur 8bpc Legacy worker exact`: portable `FUN_180007300`
+  uses the exact `14f0/1ea0` helper pair, centered weights, six subpasses /
+  plane swaps, Legacy repeat/smoothness rules, and 8bpc writer. Three complete
+  buffers replay byte-exact against actual AEX, including a reverse-direction
+  mixed-alpha fixture with 69 zero-alpha pixels and partial alpha
+  `32/96/160/224`. Use `refs/conformance/olmblur_worker8_legacy_20260711.md`
+  and `refs/scripts/smoke_olmblur_worker8_legacy.py`.
+- 2026-07-10 `DirectionalBlur angle-0 rowdriver classifier`: local actual-AEX
+  `FUN_1800038d0` execution on case_0001 source row 169 classifies strip
+  `x=487..494` and control `(579,169)` as reachable. All records have valid
+  source, positive component, `param_11=0.629629612`, and span `1064`; neither
+  source-range exclusion nor `span<=1` explains the zero-RGB Mac result. Use
+  `refs/conformance/olmdirectionalblur_case0001_row169_typed_classifier_20260710.md`.
+  Keep Mac source frozen; the next local boundary is post-scatter accumulation
+  and writeback, not coefficient or PNG tuning.
+- 2026-07-10 `DirectionalBlur row169 scatter boundary`: actual-AEX capture at
+  source `(959,169)` shows both target `(494,169)` and control `(579,169)` are
+  written by `FUN_1800013e0` with RGB zero and valid/denominator `1`; the same
+  values remain when `FUN_1800038d0` returns. This rules out non-reachability,
+  alternate buffer ownership, and a later rowdriver erase for this boundary.
+  Use
+  `refs/conformance/olmdirectionalblur_case0001_row169_boundary_capture_20260710.md`.
+  Keep coefficient/PNG tuning frozen. The next proof boundary is why the
+  Windows reference's nonzero red differs at source/staging or final source
+  modelling; final stored bytes remain outside this rowdriver-only probe.
+- 2026-07-10 `DirectionalBlur source/staging witness`: the packaged
+  before-effects input and actual-AEX rowdriver both show source `(959,169)` as
+  zero RGB, and the observed staging records for `(494,169)` / `(579,169)`
+  remain zero through rowdriver return. Therefore the Windows reference reds
+  `164` / `25` cannot be attributed to that single source under the current
+  staging model. Use
+  `refs/conformance/dblur_source_staging_witness_20260710.md`. The exact next
+  boundary is the real helper call that writes either target, with contributing
+  source coordinate, B pre/post floats, and final host-store bytes in one run;
+  coefficient tuning remains forbidden.
+- 2026-07-11 `DirectionalBlur target-writer capture`: actual AEX rowdriver
+  records all helper contributors that overlap the two targets. `(494,169)`
+  receives 465 calls from source x `495..959`; `(579,169)` receives 380 from
+  `580..959`. All 845 observed contributors and target B states remain zero
+  RGB with denominator/valid `1`, direction `1`, span `1064`. Use
+  `refs/conformance/dblur_target_writer_capture_20260711.md`. This closes the
+  local contributor/scatter explanation for the Windows red values. The next
+  exact boundary is host output storage after rowdriver normalization /
+  rotate-back; do not modify coefficients or source selection from this local
+  witness alone.
+- 2026-07-11 `DirectionalBlur rotate-back ownership`: use
+  `refs/conformance/dblur_rotateback_output_20260711.md`. At `0x180005628`,
+  `FUN_180001ec0` receives source buffer B in `RCX`, destination buffer A in
+  `RDX`, width/height in `R8D/R9D`, and stack angle; afterward A is published
+  at `param_6+0x8090`. This is still an internal float buffer, not the host
+  world. The next local fixture must implement the grounded PF Iterate8
+  populate/output callbacks and param fields through `+0x80a4`; do not invent
+  an external host-writer breakpoint.
+- 2026-07-11 `DirectionalBlur 8bpc host callbacks`: use
+  `refs/conformance/dblur_fullrender_host_fixture_20260711.md`. Actual AEX
+  populate `0x180006980` and output `0x180006b30` callbacks match the local
+  model, including final byte A/R/G/B stores; authoritative objdump shows
+  `movb` where the checked-in disassembly is stale. The exact 960x540 source,
+  `PF_Cmd_RENDER=0x18`, depth dispatch, checkout callbacks, and descriptor now
+  reach `FUN_180004a20` and the real PF Iterate8 suite. The next local blocker
+  is the wrapper stack ABI at `0x1800067c5` for callback/refcon/source/dest
+  worlds; SmartRender selection and callback byte semantics are no longer the
+  blocker.
+- 2026-07-10 `Smoother2 local producer leaf witness`: actual AEX execution of
+  `FUN_18000e170`, `FUN_18000f270`, and `FUN_18000e3a0` now fixes the local
+  branch shape at legacy `(91,841)`. Producer bytes `0,1,0` yield `c=2`,
+  `f270=1`, `e3a0=1`, and one chain append; control `0,0,1` yields `c=4` and
+  suppresses the wrapper append. Use
+  `refs/conformance/olmsmoother2_typed_witness_20260710.md`. This is local AEX
+  binary evidence, not Windows truth, Mac AE exactness, or permission to alter
+  the global class plane.
+- 2026-07-10 `Smoother2 0012 strict typed request ready`: project-local package
+  `refs/runtime_trace_packages/olm_smoother2_current_aex_0012_typed_bind_read_20260710.zip`
+  contains the exact case fixture, AE runner, CDB hooks/parser, complete-trace
+  and missing-field parser tests, and a runtime package manifest. `answered`
+  is reachable only when idx105, descriptor, class bytes, e170/f270/e3a0,
+  polygon, cce0, and final writer share one run; all missing fields fail closed
+  as `exact_bind_failure`. Package SHA-256 is
+  `a1e78fc99941717e31a96ff23c345274663a909efc72901758ca749bf12315d5`.
+  It is pending behind the already staged RadialBlur
+  request and must not overwrite `/Volumes/onmk/olm_pr/new`.
+- 2026-07-10 `RadialBlur full-frame confirmation staged`: the one-shot package
+  `refs/runtime_trace_packages/olm_runtime_trace_radialblur_case0009_fullframe_postnorm_typed_20260710.zip`
+  is the sole item in `/Volumes/onmk/olm_pr/new` with matching SHA-256
+  `a4bc1b52fa78130f5dc2a2c1b214a674a7315c761956b4d6b2439887f8e60191`.
+  It recalculates actual inverse indices in the live full-frame run and captures
+  paired accum/denom/valid/final cells for `(7,0)`, `(8,0)`, and `(24,0)`.
+  Do not run or resend older RadialBlur final-plane packages.
+- 2026-07-10 `OLMBlur CPU fixture readiness`: real AEX helpers
+  `FUN_180001000` and `FUN_180001980` execute import-free and retain typed
+  output hashes in `core/olmblur_cpu_fixture_readiness.json`. Portable replay
+  remains explicitly blocked on the disassembly-backed traversal/boundary
+  contract and full-entry PF Handle layout. This is useful binary readiness,
+  not an exact fixture and not permission to encode observed outputs.
+- 2026-07-10 `DistanceGradation shared-core Mac AE validation`: use
+  `refs/conformance/olmdistancegradation_shared_core_mac_ae_case0023_20260710.md`.
+  After installing the shared-core build and restarting AE `26.3x87`, 16bpc
+  case_0023 is `AE exact` for both Use Background Color on and off
+  (`max_diff=0`, `nonzero_px=0`). This promotes only that declared case/variant
+  slice; the complete OLMDistanceGradation depth cell and release gate remain
+  open.
+- 2026-07-10 `DistanceGradation compose exact-address local witness`: actual
+  `DistanceGradation.aex` compose executed under Unicorn for `(6,40)` and
+  `(901,394)` and produced PF16 alpha words `3268` / `9876`, matching accepted
+  Windows stores in 272 total instructions. Use
+  `refs/conformance/olmdg_compose_exact_address_witness_20260710.md`. This
+  grounds compose/address arithmetic for supplied field words, not Windows
+  field production. The remaining blocker is the Windows field-world base,
+  layout, and exact `RCX` words; do not infer a global pack/rounding change.
+- 2026-07-11 `DistanceGradation strict same-run request ready`: package
+  `refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_current_aex_same_run_exact_address_20260711.zip`
+  fingerprints the live worker block at `RBX+0xB8/+0xBC` as case0010
+  `(63,82)` or case0011 `(348,0)`, tags every stage in CDB, rebinds output base
+  at each entry, derives XY from output address, and reads all field/source /
+  compose/writer values from live state. Unknown fingerprints use a DEAD tag
+  and fail closed; ordering, JSX stdout, external run-specific addresses, and
+  hardcoded writer words are rejected by smoke. It is pending but not staged
+  over the active RadialBlur NAS request. Package SHA-256 is
+  `19c0d4c4974eb68c30302635803dd20c6dd985a1e92837a463ebe83d15905f6f`.
+- 2026-07-10 `DistanceGradation fixture provenance`: the compose refcon is now
+  a relocatable `binary-built` block rather than a dump containing emulator
+  heap addresses. Source/field world pointers are zeroed and represented as
+  explicit `+0x00/+0x08` relocations; scalar range `+0x90:+0xd4` remains tied
+  to the AEX callback layout and case manifest. The verifier requires
+  relocations for binary-built blocks. This is stronger deterministic
+  provenance, not a claim of Windows runtime capture or `AE exact`.
+- 2026-07-10 `Mac 32bpc candidate fail-close`: the candidate batch now records
+  case ID, canonical parameter SHA-256, artifact SHA-256, and depth, and the
+  validator rejects non-FLOAT, non-RGBA, compressed, malformed-scanline,
+  hash-mismatched, or implicit-exact candidates. Dry/non-Mac runs emit a
+  readiness artifact instead of a render claim. This improves ColorKey and
+  ToonDilate 32bpc host evidence only; the cross-host no-op split still blocks
+  algorithm attribution and neither plug-in is `AE exact` at 32bpc.
+- 2026-07-10 `RadialBlur bounded nonzero witness`: the prior zero-plane result
+  was a harness setup omission, not an AEX semantic fact. Calling real AEX
+  `FUN_180008690` before the direct Zoom core yields `196/196` informative
+  accum/denom/valid cells on `32x32`; actual prepass and scatter each execute
+  once. Actual inverse mapping now selects the four-cell neighborhoods for
+  `(7,0)`, `(8,0)`, and `(24,0)`. This remains bounded `binary-grounded`
+  evidence, not full-frame case_0009 or `AE exact`; permit one narrow Windows
+  typed-cell confirmation and keep Mac source frozen until it returns.
+- 2026-07-10 `DistanceGradation shared core integration`: the Mac plug-in now
+  compiles and invokes the same AE-free EDT/threshold/normalize implementation
+  used by the exact AEX CPU fixtures. Synthetic fieldgen (`748` bytes),
+  case_0023 inside/outside (`8,294,400` bytes each), compose (`24` bytes), and
+  an independent `280`-value brute-force distance test pass; the Universal
+  Debug plug-in build also succeeds. Keep the lane `binary-grounded` until a
+  Mac AE render proves the declared slice `AE exact`. Blur, compose, bit-depth
+  mask ownership, and writeback remain adapter-side and are not covered by this
+  integration claim.
+- 2026-07-10 `AEX CPU fixture pivot first closure`: use
+  `refs/conformance/aex_cpu_fixture_template_result_20260710.md` and
+  `notes/CPU_KERNEL_PORTING_PIVOT.md`. The real DistanceGradation AEX
+  `FUN_181174760` fieldgen now matches a portable AE-free C++ core exactly for
+  the committed `17x11` fixture and for both full-frame case_0023 inside and
+  outside passes (`8,294,400` bytes each). Real AEX `FUN_181170480` compose and
+  portable compose also match for the case_0023 triplet (`24` bytes), with the
+  fieldgen `0,1,1` values bound to compose words `0,32768,32768`. This is
+  function-level `binary-grounded` evidence with harness-constructed parameter
+  provenance, not `AE exact`. RadialBlur now reaches `0x180005d99` locally and
+  grounds all four plane pointers at `4x1`, but its bounded accum/denom/valid
+  planes are zero; keep it plane-layout-only and do not change Mac source.
+- 2026-07-10 `AE26.3 32bpc EXR recap accepted`: imported
+  `refs/win_references/20260710_190500__ae26_3_32bpc_recap/` from the portable
+  return. The six contracted requests reconcile as `98/98` requested cases and
+  `196/196` paired effect/before-effect FLOAT32 RGBA EXRs, all uncompressed,
+  rendered by Windows AE `26.3x87` with `SOFTWARE` (`raw=1816`) at `32bpc`.
+  This removes the AE25.2-vs-26.3 version mismatch for the covered 32bpc lane.
+  The return manifest leaves `working_space`, `linearize_working_space`, and
+  `blend_colors_using_1_0_gamma` unreported; retain the user's recorded
+  template settings as supporting evidence and require these fields in future
+  return manifests. The matching Mac AE26.3 no-effect control is now recorded
+  in `refs/conformance/ae26_3_32bpc_noop_cross_platform_control_20260710.md`:
+  it still differs in every RGB float sample with ColorKey disabled, including
+  the explicit project-color-management-disable variant. Thus this lane is a
+  Windows/Mac `host-platform split`, not a plug-in verdict.
+- 2026-07-10 `32bpc no-op EXR host-version split`: the accepted Windows
+  FLOAT EXR existing-48 return was generated by AE `25.2x131`; current Mac
+  candidate renders use AE `26.3x87`. A no-effect ColorKey case-0001 control
+  rendered through the Mac EXR path changes `0.9725490808` to
+  `0.9884691238` (`pow(x, 1/2.4)`), with all RGB float samples differing.
+  Mac project working space `None` and linear blending `false` did not change
+  that result. This is `host-version split`, not a ColorKey or ToonDilate
+  algorithm residual. Keep the accepted AE25.2 reference as valid provenance,
+  but do not use it for Mac AE26.3 32bpc `AE exact` attribution. The active
+  replacement is the AE26.3/SOFTWARE/98-case FLOAT-EXR recapture request at
+  `refs/reference_requests/AE_26_3_32BPC_RECAPTURE_20260710.md`.
+- 2026-07-10 `32bpc float acceptance / Mac host path`: use
+  `refs/conformance/bitdepth_32bpc_colorkey_toondilate_acceptance_audit_20260710.md`
+  and
+  `refs/conformance/mac_ae_32bpc_float_candidate_path_design_20260710.md`.
+  The focused 9+3 request is contract-ready, and
+  `scripts/verify_32bpc_float_return.py` now fail-closes PNG, HALF, bad hashes,
+  non-SOFTWARE metadata, case/parameter mismatches, false channel-order
+  declarations, and unsupported compressed EXR. It does not make either lane
+  exact: the current Mac AE runners remain PNG-only. The selected host-final
+  path is Render Queue/OpenEXR. Cold `-r`/`-noui -r` startup crashes even with
+  all OLM/ColorKeep plug-ins removed, while ordinary GUI startup is stable;
+  enumerate the Output Module template from a stable GUI session before
+  implementing the separate 32bpc runner. Do not use plug-in raw dumps as AE
+  exact evidence.
+- 2026-07-10 `OLMDistanceGradation break-ignore return`: use
+  `refs/conformance/olmdistancegradation_0010_compose_break_ignore_return_intake_20260710.md`.
+  The source run proves software `bp` still reached the live entry under
+  `sxi 80000003`, but its first callback was `(0,90)` and target `(6,40)` never
+  reached `+0x11705f1`; AE then closed with `PNG was not written`. No typed
+  compose values were returned. The active successor is source-only target
+  `(901,394)` in
+  `refs/runtime_trace_packages/olmdistancegradation_0010_compose_source_901_394_tile_retry_windows_20260710.zip`.
+  Do not stage the hardware-breakpoint fallback unless a later live log proves
+  the software stop itself is suppressed.
+- 2026-07-10 `OLMDistanceGradation exact-address return`: use
+  `refs/conformance/olmdistancegradation_0010_0011_compose_exact_address_return_intake_20260710.md`.
+  The return is `answered_partial`: same-run 16bpc source/output bases,
+  rowbytes, pixel size, and exact addresses for `(6,40)` / `(901,394)` are
+  grounded. Field addresses/words, exact RCX/RDX values, transform scalars,
+  and final PF16 stores are all missing. Do not change Mac source; retry as one
+  target and one downstream site per run.
+- 2026-07-10 `OLMDistanceGradation single-site retry`: the direct successor is
+  `refs/conformance/olmdistancegradation_0010_compose_single_site_followup_contract_20260710.md`.
+  The first single-site package returned `answered_partial`, so the active
+  standard runtime package is now
+  `refs/runtime_trace_packages/olmdistancegradation_0010_compose_single_site_break_ignore_retry_windows_20260710.zip`.
+  It is staged in `/Volumes/onmk/olm_pr/new` with matching SHA-256 and adds only
+  `sxi 80000003`. It still runs field and source as separate debugger processes
+  for case_0010 `(6,40)`; do not replace it with either earlier script while
+  awaiting return.
+- 2026-07-10 `OLMDistanceGradation single-site first return`: use
+  `refs/conformance/olmdistancegradation_0010_compose_single_site_return_intake_20260710.md`.
+  Field/source runs reached entry but ended on first-chance `0x80000003` before
+  either downstream breakpoint. The replacement package adds
+  `sxi 80000003`; this is a debugger-control retry, not a new math hypothesis.
+- 2026-07-10 `parallel proof materialization`: the focused 32bpc
+  float-preserving Windows reference requests for ColorKey (`9` cases) and
+  ToonDilate (`3` cases) are ready under `refs/reference_requests/`; they are
+  requests, not exact evidence, and are not staged while the active DG exchange
+  occupies `/Volumes/onmk/olm_pr/new`. The DirectionalBlur angle-0 single-shot
+  runtime package is also materialized project-locally at
+  `refs/runtime_trace_packages/olm_runtime_trace_directionalblur_angle0_single_shot_20260710.zip`.
+- 2026-07-10 `OLMRadialBlur Zoom remaining boundary`: use
+  `refs/conformance/olmradialblur_zoom_remaining_polar_sampler_audit_20260710.md`.
+  Exact AEX paired trig plus the recovered float inverse order still leaves the
+  alpha-254 targets unresolved. Static sampler ownership rules out a new global
+  late-alpha policy; the strongest remaining boundary is final polar cell
+  population/collapse from `+0xf252` into `+0xe.alpha`. Do not tune a global
+  quantizer or fixed cell offset. When this lane becomes active, request one
+  typed final-plane witness for `(7,0)` with controls `(8,0)` and `(24,0)`.
+  That focused package is now materialized at
+  `refs/runtime_trace_packages/olm_runtime_trace_radialblur_zoom_case0009_final_plane_typed_20260710.zip`
+  under
+  `refs/conformance/olmradialblur_zoom_case0009_final_plane_typed_contract_20260710.md`;
+  it is pending locally and is not staged while the DG exchange is active.
+- 2026-07-10 `OLMDirectionalBlur angle-0 static audit`: use
+  `refs/conformance/olmdirectionalblur_angle0_static_helper_writeback_audit_20260710.md`.
+  Helper validity input, effective-span/denominator accumulation, A/B buffer
+  ownership, and writeback order are binary-grounded. The actual source range,
+  validity, and denominator for `(494,169)` / `(579,169)` remain runtime facts;
+  no current Mac-only probe distinguishes them. Keep the existing angle-0
+  single-shot package as the minimal next Windows proof and do not tune PNGs.
+- 2026-07-10 `OLMBlur local AEX CPU witness`: use
+  `refs/conformance/olmblur_case0006_aex_cpu_emulation_20260710.md` and
+  `refs/conformance/olmblur_fullentry_host_layout_probe_20260710.md`. The bounded
+  harness now executes the actual non-Legacy helpers `FUN_180001000` and
+  `FUN_180001980` and produces nontrivial weighted outputs. A second harness
+  now drives full worker `FUN_180005f20` through a complete PF Handle lifecycle
+  to a changed synthetic 16bpc output buffer. This grounds local helper ABI and
+  host-layout reachability, but it does not close `case_0006`: synthetic worlds
+  are not the canonical case input, and final values still need typed Windows
+  or equivalent case-bound evidence.
+- 2026-07-10 `OLMBlur case_0006 full-frame AEX probe`: use
+  `refs/conformance/olmblur_case0006_fullentry_probe_20260710.md`. Canonical
+  1920x1080 RGBA16 input/parameter loading and guest ARGB word layout are
+  materialized, but the full worker completes `0` frames in the 30-second
+  practical cap. The probe now enforces that cap with a subprocess hard kill.
+  A cropped result is not admissible until binary evidence grounds crop origin
+  and halo semantics at the absolute witness coordinates.
+- 2026-07-10 `OLMKiraKira mode dispatch`: use
+  `refs/conformance/olmkirakira_mode_dispatch_static_audit_20260710.md`. Blur
+  Modes `1/2/3/4` are now statically mapped: one-pass boxFilter, three-pass
+  boxFilter, GaussianBlur wrapper, and an inline recursive accumulation body,
+  respectively. Merge Mode `1/2` is grounded as the
+  `FUN_18114fd90` / `FUN_18114ffd0` dispatch, while Approximated Input, Fade
+  Out, and highlight consumers remain open. Do not infer popup semantics from
+  ordering.
+- 2026-07-10 `OLMRadialBlur Zoom local float probe`: use
+  `refs/conformance/olmradialblur_zoom_aex_float_mode_local_probe_20260710.md`
+  and
+  `refs/conformance/olmradialblur_zoom_paired_trig_float_inverse_probe_20260710.md`.
+  The existing forward AEX-float mode improves only `22` full-frame pixels and
+  the recovered float-inverse order plus platform-libm paired trig improves
+  `57`, but every variant still misses all three top-row alpha targets; sampler
+  alpha and caller-collapse toggles are inert there. The next bounded local
+  experiment must feed a table generated by directly invoking the actual
+  `FUN_18001d060` SIMD polynomial into the CLI. Direct local AEX execution now
+  proves platform libm differs by up to about `2.3e-7` on sampled angles; do
+  not treat `sinf/cosf` as helper-exact or change the final quantizer.
+- 2026-07-10 `OLMRadialBlur Zoom exact AEX trig table`: use
+  `refs/conformance/olmradialblur_zoom_exact_aex_trig_table_probe_20260710.md`.
+  All `1800` real case-grid trig pairs were executed from the Windows AEX and
+  consumed by the CLI with the recovered float inverse sequence. The result
+  improves the full-frame nonzero count to `31,025` but still misses all three
+  alpha-254 targets while preserving both controls. Trig and inverse coordinate
+  order are not sufficient; keep source changes frozen and return to typed
+  polar-plane/sampler-collapse/alpha-ownership evidence.
+
+- 2026-07-10 `release scope`: use `notes/PORTING_ROADMAP.md` for target-set and
+  critical-path decisions, and `refs/conformance/olm_release_scope.json` for
+  whole-release completion. The current machine gate is intentionally red:
+  only fully declared depth cells with `AE exact` count; partial covered slices
+  and PNG-only 32bpc returns do not. The independent evidence audit
+  `refs/conformance/olm_release_scope_evidence_audit_20260710.md` confirms that
+  no whole-feature depth cell is complete yet; packaged exact slices remain
+  valid evidence but are `partial-ae-exact` at release scope. `ColorKeep`
+  remains support-only.
+- 2026-07-10 `OLMDistanceGradation case_0012/0014`: use
+  `refs/conformance/olmdistancegradation_0012_0014_store_export_local_audit_20260710.md`.
+  Existing local evidence closes neither family. `0012` is compatible with an
+  export-only explanation but lacks a same-run Windows chain; `0014` still
+  requires a pre-store/store discriminator. Do not implement either inference.
+- 2026-07-10 `OLMDirectionalBlur angle-0`: use
+  `refs/conformance/olmdirectionalblur_angle0_local_readiness_audit_20260710.md`.
+  The single-shot contract/profile is self-consistent and comparator smoke
+  passes, but no focused package or live return exists. The missing proof is two
+  independent typed records for `(494,169)` and `(579,169)`.
+- 2026-07-10 `OLMSmoother2 legacy`: use
+  `refs/conformance/olmsmoother2_legacy_local_readiness_audit_20260710.md`.
+  The shortest next witness is `0012 (91,841)`: bind the live Windows class
+  base/stride, then read `center_b0`, `prev_b0`, `left_b1`, and `e170 c` in the
+  same run. Local Unicorn facts are not Windows truth.
+- 2026-07-10 `32bpc`: use
+  `refs/conformance/bitdepth_32bpc_completion_matrix_20260710.md`. No 32bpc
+  slice is complete. Existing ColorKey/ToonDilate and broad returns are
+  PNG-only probe evidence; the next references must preserve float samples and
+  metadata, preferably in EXR.
+- 2026-07-10 `32bpc all-plugin reference bundle`: the separate Windows request
+  `handoffs/windows_batch/olm_windows_reference_request_32bpc_all_plugins_exr_20260710.zip`
+  covers 98 deduplicated cases across all release plugins. It combines the
+  existing 48-case Blur/ColorKey/ToonDilate/DistanceGradation batch with
+  random10 cases for RadialBlur, DirectionalBlur, KiraKira, Smoother2, and
+  Smoother v1. It is a reference request, not completion evidence; require
+  EXR-first float-preserving returns and do not stage it over the active DG
+  runtime-trace request.
+- 2026-07-10 `OLMBlur Mac provenance`: use
+  `refs/conformance/olmblur_mac_export_provenance_readiness_20260710.md`.
+  `case_0006` needs no further Windows export: current-AEX and canonical hashes
+  already match. A fresh Mac single/batch rerun can classify deterministic
+  export-path provenance, but cannot authorize source or writer changes.
+- 2026-07-10 `OLMBlur Mac provenance result`: use
+  `refs/conformance/olmblur_mac_export_provenance_result_20260710.md`. Two
+  single-case and two batch runs converge to the same stable Mac hash per case;
+  the historical single/batch split is not live. Canonical verification remains
+  `0/7` exact with `max_diff=2`, so the next proof is typed helper/pre-store or
+  equivalent binary-grounded AEX evidence, not another export-provenance pass.
+- 2026-07-10 `OLMBlur Windows value correction`: use
+  `refs/conformance/olmblur_case0006_unverified_windows_value_audit_20260710.md`.
+  The old `answered` helper/pre-store result is invalid: CDB never captured the
+  target, the later ZIP adds no debug-dump artifact, and its `windows_*` values
+  duplicate the Mac values despite the missed bind. Retract all claims that
+  Windows pre-store/store matched Mac at `(314,14)` / `(29,71)`; the request is
+  now `invalid_unverified_values`.
+- 2026-07-10 `OLMRadialBlur Zoom`: use
+  `refs/conformance/olmradialblur_zoom_polar_cell_sequence_audit_20260710.md`.
+  The narrow binary-grounded divergence is scalar-float paired-trig and
+  coordinate/index generation, not a uniform cell offset or late quantizer.
+  Do not change source until a full-size typed final-plane witness exists.
+- 2026-07-10 `OLMKiraKira controls`: use
+  `refs/conformance/olmkirakira_endgame_control_coverage_audit_20260710.md`.
+  Keep the hotspot compose lane frozen. Non-2 Blur modes and Merge mode 2 are
+  P0 uncovered paths; Approximated Input, ramps/toggles, highlight behavior,
+  and Fade Out are visible P1 gaps. UI/default parity is not render parity.
+- 2026-07-10 `AEX CPU simulation performance`: use
+  `refs/conformance/aex_cpu_sim_detour_performance_audit_20260710.md`. The
+  detoured full-frame DG fieldgen is repeatable at about 7.22s and 6,921 AEX
+  instructions locally, but speedup is not proven because no comparable
+  non-detoured baseline completes. GATE C remains blocked at OpenCV static init.
+
+- 2026-07-08 `OpenCV detour / AEX CPU simu`: P1 is no longer a pending
+  implementation task. `refs/conformance/opencv_detour_current_gate_20260708.md`
+  records that `python3 refs/scripts/smoke_emulation_opencv_detours.py` passes
+  in the current workspace: `cvDistTransform(DIST_L2, DIST_MASK_PRECISE)`,
+  `cvThreshold`, same-shape `cvResize`, and limited `cvNormalize` all pass
+  GATE A+B. Do not spend orchestration time "implementing P1" unless this gate
+  regresses; the next DG proof is the queued store/export rounding witness.
+- 2026-07-08 `OLMRadialBlur Zoom emulator`: use
+  `refs/conformance/olmradialblur_zoom_emulator_dispatch_bottleneck_20260708.md`
+  as the current local emulator classification. Zoom `case_0009` reaches
+  `blur_type=1` but not the Zoom core functions within the instruction cap; the
+  active local work is staging-loop/entrypoint shortening around `0x180007811`,
+  not Mac source tuning. The follow-up staging probe
+  `refs/conformance/olmradialblur_zoom_staging_loop_probe_20260708.md` shows
+  that this loop is a full-frame `1920x1080` pass with 16-byte pixel strides,
+  explaining why the current emulator path burns budget before dispatch.
+- 2026-07-08 `OLMDistanceGradation`: use
+  `refs/conformance/olmdistancegradation_depth_gate_result_20260708.md` as the
+  source-mask-rule evidence. The installed Mac build uses a depth-gated
+  source-mask rule: 8bpc keeps the HEAD behavior (`alpha > 0`), while 16bpc and
+  deeper exclude the one-code 8bpc alpha fringe (`alpha > 1.5/255.0`). This
+  closes 16bpc `case_0023`. The earlier `7/16` extended-batch exact count in
+  that report is superseded for true16 conformance by
+  `refs/conformance/olmdistancegradation_depthgate_true16_reverify_20260709.md`:
+  re-verifying the same `/tmp/olmdg_16ext_depthgate2` artifacts with the
+  canonical verifier gives `5/16`, matching the current non-Layer true16
+  residual shape. 8bpc is structurally HEAD-identical, but the canonical 8bpc
+  batch reconfirmation remains an explicit follow-up because
+  `scripts/run_ae_single_case.py` is not a valid 8bpc verdict runner.
+- 2026-07-08 `OLMDistanceGradation case_0024..0027`: the `max=1` family is now
+  classified in
+  `refs/conformance/olmdistancegradation_depthgate_nearmiss_family_20260708.md`.
+  Mac AE debug witnesses in
+  `refs/conformance/olmdistancegradation_depthgate_nearmiss_witness_20260708.md`
+  point at compose/interpolation/store/export quantization, not distance-field
+  topology. The Windows return
+  `refs/conformance/olmdistancegradation_depthgate_quantization_return_intake_20260708.md`
+  classifies three of four `case_0026` representatives as export-quantization;
+  only `(907,222)` remains unresolved and needs a direct PF16 store/export stop
+  if this family is pursued further.
+- 2026-07-08 `OLMRadialBlur`: use
+  `refs/conformance/olmradialblur_case0010_final_writeback_return_intake_20260708.md`
+  as the current return classification for tiny Rotation `case_0010 (1614,6)`.
+  The final-writeback package returned `answered_partial`: it proves the
+  package-bundled current Windows SOFTWARE recapture is still bright at the
+  witness (`[237,237,237,255]`) while the direct collapsed `+0xe` path remains
+  black, and it also proves the legacy `[255,255,255,255]` reference should not
+  be treated as the only current target. It does not contain a fresh same-run
+  Windows debugger stop, so do not change Mac code from this return. If this
+  lane is retried, the missing proof is one same-run debugger stop tying
+  `+0xf250`, `+0xf252`, collapsed `+0xe`, direct `+0xe` sampling,
+  output-buffer writeback, and exported byte together.
+- 2026-07-08 `OLMDirectionalBlur` / `OLMDistanceGradation` follow-up queue:
+  the next-but-not-active runtime packages are now prepared as focused,
+  single-request packages and have smoke coverage. DirectionalBlur uses
+  `refs/conformance/olmdirectionalblur_angle0_single_shot_witness_contract_20260708.md`
+  to capture angle-0 `(494,169)` / `(579,169)` typed rowdriver/valid/writeback
+  facts without the prior hit storm. DistanceGradation uses
+  `refs/conformance/olmdistancegradation_case0014_layer_source_witness_contract_20260708.md`
+  for the broad 16bpc Layer-source family, choosing `case_0014` because the
+  primary witness already has matching alpha and isolates RGB/source ownership.
+  The RadialBlur final-writeback request has returned `answered_partial`, so the
+  active shared-folder send target is now
+  `/Volumes/onmk/olm_pr/new/20260708_runtime_trace__olm_runtime_trace_distancegradation_case0014_layer_source_witness_20260708.zip`.
+  DirectionalBlur remains prepared but not active until this DG package returns
+  or is explicitly superseded.
+- 2026-07-08 `OLMDistanceGradation case_0014`: the Layer-source witness return is
+  `failed_partial`, not implementation proof. Use
+  `refs/conformance/olmdistancegradation_case0014_layer_source_return_intake_20260708.md`
+  and
+  `refs/reports/runtime_trace_comparisons/olmdistancegradation_case0014_layer_source_witness_20260708.md`
+  as the current classification. The return confirms the alpha-preserving RGB
+  deficit shape at `(1652,2)` and `(461,6)`, but it did not capture a fresh live
+  Windows callback witness, consumed source RGBA16, compose inputs, pre-store
+  float, or final stored RGBA16. Do not change Mac code from this return; a
+  retry must bind the witness pixels inside a same-run live callback stop.
+- 2026-07-09 `OLMDistanceGradation case_0014 resend2`: the resend return is
+  `failed`, not implementation proof. Use
+  `refs/conformance/olmdistancegradation_case0014_layer_source_return_resend2_intake_20260709.md`
+  as the current classification. It contains neither a fresh Windows live
+  callback witness nor an exact hook/watchpoint failure artifact. Do not resend
+  the same package unchanged; this lane needs a different Windows debug tactic
+  or local evidence before another runtime trip.
+- 2026-07-09 `OLMDistanceGradation 16bpc export/rounding residual audit`:
+  use
+  `refs/conformance/olmdistancegradation_16bpc_export_rounding_residual_audit_20260709.md`
+  as the current local classification for the focused Layer/no-bg residual.
+  Across `case_0012/0013/0014/0016`, every nonzero true16 delta is even-valued;
+  `case_0014` is the only focused case with RGB abs delta `4`. This supports a
+  store/export-boundary lane, not broad source-ownership retuning, but it is not
+  an implementation proof and does not justify changing Mac code by itself.
+- 2026-07-09 `OLMDistanceGradation dominant-channel all-modes probe`:
+  deferred / not adopted.
+  `refs/conformance/olmdistancegradation_dominant_channel_all_modes_probe_rejected_20260709.md`
+  shows that generalizing the 16bpc+ low-alpha dominant-channel promotion from
+  `IN_OUT_BOTH` to all in/out modes reduces `case_0014` from max `4` to max `2`,
+  but still does not reach exact and is not binary-grounded. A reverted
+  BOTH-only spot-check also reports `case_0010` and `case_0011` at max `2`
+  under `scripts/run_ae_single_case.py`, so the full single-case run is not an
+  exact-count authority for this 16bpc batch. The source and installed plug-in
+  were rebuilt back to the BOTH-only rule. Do not adopt this broadening without
+  a new binary-grounded discriminator or a canonical batch validation.
+- 2026-07-09 `OLMDistanceGradation PF16 store/export samples`: use
+  `refs/conformance/olmdistancegradation_pf16_store_export_sample_analysis_20260709.md`
+  as the current local arithmetic split. `case_0012` retained samples are
+  explainable by export rounding from the same Mac PF16 store words; `case_0014`
+  is not, and needs a pre-store/store discriminator because the deferred
+  all-modes probe moves the representative store RGB word from `18117` to
+  `18119`, matching the Windows PNG direction. Treat `case_0012` and
+  `case_0014` as related but not identical subfamilies.
+- 2026-07-09 `OLMDistanceGradation current integrated 16bpc batch`: use
+  `refs/conformance/olmdistancegradation_current_integrated_16bpc_batch_20260709.md`
+  as the current canonical-batch measurement for the installed/worktree build.
+  It verifies at `5/16` exact. The later true16 reverify
+  `refs/conformance/olmdistancegradation_depthgate_true16_reverify_20260709.md`
+  shows that the old depthgate `/tmp` artifacts also verify at `5/16` under
+  the canonical 16bpc verifier; the suspected current-vs-depthgate provenance
+  delta is therefore not a live lane. The next DG task is to classify and close
+  the actual true16 residual families: sparse `0010/0011`, Layer/no-bg
+  `0012/0013/0014/0016`, and `0024..0028`.
+- 2026-07-09 `OLMDistanceGradation Layer/no-bg disabled A/B`: use
+  `refs/conformance/olmdistancegradation_layer_changes_disabled_ab_20260709.md`
+  as a negative control from before the true16 reverify. It remains useful
+  evidence that Layer/no-bg color handling is not the source of
+  `case_0010/0011/0024..0028`, but it no longer implies a current-vs-depthgate
+  split.
+- 2026-07-09 `OLMDistanceGradation source-mask old-rule A/B`: rejected.
+  `refs/conformance/olmdistancegradation_source_mask_old_rule_ab_rejected_20260709.md`
+  shows that reverting 16bpc `source_mask_owns_alpha()` to global `alpha > 0`
+  makes the canonical 16bpc batch far worse (`1/16` exact) and reopens
+  `case_0023` (`73px`, max `61165`). The depth-gated source mask is necessary;
+  the remaining true16 residuals are not solved by returning to the old
+  inclusive mask.
+- 2026-07-09 `OLMDistanceGradation depthgate true16 reverify`: use
+  `refs/conformance/olmdistancegradation_depthgate_true16_reverify_20260709.md`
+  as the correction for depthgate exact counts. It proves that the old `7/16`
+  number was not a true16 verifier result; the same `/tmp/olmdg_16ext_depthgate2`
+  output verifies at `5/16` with `scripts/verify_ae_pixel_validation_result.py`.
+  Do not chase a provenance delta between depthgate and current integrated
+  builds unless a new canonical verifier result contradicts this correction.
+- 2026-07-09 `OLMDistanceGradation true16 residual family audit`: use
+  `refs/conformance/olmdistancegradation_true16_residual_family_audit_20260709.md`
+  as the current family split. The active 16bpc residuals are now:
+  sparse R/A-only quantization `case_0010/0011` (`max=2`, `852px` total),
+  Layer/no-bg rounding `case_0012/0013/0014/0016` (`max=4`, `26957px` total,
+  with `case_0014` the only abs-4 subfamily), and field/export true16
+  `case_0024..0028` (`max=3080`, `3721420px` total, `case_0028` outlier).
+  The next local DG work should start with `case_0010/0011` because it is the
+  smallest true16 family and only moves R/A.
+- 2026-07-09 `OLMDistanceGradation case_0010/0011 R/A probe`: use
+  `refs/conformance/olmdistancegradation_0010_0011_ra_quantization_probe_20260709.md`
+  as the current closeout boundary for the smallest 16bpc family. Mac AE debug
+  shows these visible R/A `±2` deltas are one-word `PF_Pixel16` alpha-store
+  differences exposed through AE export (`2 * store_a - 1`). The sign flips by
+  witness, so a global store rounding toggle is forbidden. Next local proof is
+  to compare the exact distance-field normalization/field packing for those raw
+  distances against the OpenCV/AEX rule, or ask Windows for one positive and one
+  negative same-run field/store witness if local proof cannot decide it.
+- 2026-07-09 `OLMDistanceGradation case_0010/0011 local field-normalization`:
+  use
+  `refs/conformance/olmdistancegradation_0010_0011_local_field_normalization_probe_20260709.md`
+  as the current closeout boundary. Local Mac EDT and the repository OpenCV
+  detour EDT agree bit-for-bit at the representative witnesses; simple
+  field-pack/store simulations are not safe as a broad fix; the sign-flipped
+  half-boundary stores require a narrow Windows same-run witness before code
+  changes. The next action is to package `case_0010 (6,40)` and `(901,394)`
+  with raw distance, consumed field value/word, compose `out_a`, PF16 store,
+  and export sample.
+- 2026-07-09 `OLMDistanceGradation case_0010/0011 pointer-map return`: use
+  `refs/conformance/olmdistancegradation_0010_0011_writeback_pointer_map_return_intake_20260709.md`
+  as the current closeout boundary for the sparse 16bpc R/A family. The return
+  is `partial_success_missing_true16_export`, not full request acceptance, but
+  it answers the output-address and same-run PF16 store questions: output
+  rowbytes are `0x3c00`, pixel size is `8`, and the formula
+  `out = base + y * 0x3c00 + x * 8` verified for `24356` hits with zero bad
+  hits. Windows same-run final PF16 words are `0cc4 8000 0000 0000` at
+  `(6,40)` and `2694 8000 0000 0000` at `(901,394)`, with writer sites
+  `DistanceGradation+0x1170814/+0x117081c/+0x1170824/+0x117082b`.
+  Do not resend the same pointer-map package unchanged. The next action is
+  local Mac-side classification of field/compose/float-to-PF16/store/export
+  against those words; only request a same-run true16 TIFF/EXR export if export
+  binding remains mandatory after local classification.
+- 2026-07-09 `OLMDistanceGradation case_0010/0011 PF16 store classification`:
+  use
+  `refs/conformance/olmdistancegradation_0010_0011_pf16_store_classification_20260709.md`
+  as the current local interpretation. Windows `xmm2_alpha` is already close to
+  the final PF16 word grid (`3268` and `9876`) before the observed writer
+  stores, while Mac `out_a` sits on opposite half-boundary sides. A global final
+  `clamp16()` truncation/rounding swap is still forbidden: it would help
+  `(901,394)` but not `(6,40)`. The next local proof is the 16bpc field-world
+  pack/read path consumed by `FUN_181170480`.
+- 2026-07-09 `OLMDistanceGradation case_0010/0011 field-pack/read audit`: use
+  `refs/conformance/olmdistancegradation_0010_0011_field_pack_read_audit_20260709.md`
+  as the current local arithmetic boundary. It confirms that Windows
+  `FUN_181170480` consuming a PF16 field-world word is the right source shape to
+  inspect, but simple `floor`/`ceil`/`round` packing of the current Mac float
+  field does not explain all sign-flipped witnesses at once. The next proof is
+  therefore the raw-distance / normalization-denominator / OpenCV field-pack
+  boundary, not final `clamp16()` and not a single field-pack toggle.
+- 2026-07-09 `OLMDistanceGradation case_0010/0011 normalization denominator`:
+  use
+  `refs/conformance/olmdistancegradation_0010_0011_normalization_denominator_audit_20260709.md`
+  as the current local denominator split. The sparse witnesses are
+  `mixed-actual-max-and-threshold-half-boundary`: `(6,40)` is normalized by the
+  outside field's actual max (`~45.54119`), while `(901,394)` and `(915,392)`
+  are threshold-limited inside-field witnesses. This rejects a single global
+  denominator constant or a final output rounding fix. The next proof is the
+  AEX/OpenCV field-prep detail that measures/clamps max and packs the field
+  world before `FUN_181170480`.
+- 2026-07-09 `OLMDistanceGradation case_0010/0011 OpenCV field-prep audit`:
+  use
+  `refs/conformance/olmdistancegradation_0010_0011_opencv_field_prep_audit_20260709.md`
+  as the current source-shape classifier. It confirms this lane is no longer a
+  broad final writer issue: the Windows pointer-map return binds the PF16 output
+  writes, the sign-flipped witnesses reject a global `clamp16()` swap, and the
+  remaining open boundary is the AEX/OpenCV field-prep chain that clamps,
+  normalizes, and feeds/stores the field world before `FUN_181170480`. The next
+  allowed action is a local AEX CPU fieldgen probe for `case_0010/0011` at
+  `(6,40)`, `(901,394)`, and `(915,392)` with the existing
+  `threshold`/`dist_transform`/`resize_same_shape`/`normalize_minmax` detours
+  registered. Only if that reproduces the current Mac field rather than the
+  Windows-required words should we ask Windows for a narrower primitive trace or
+  true16 TIFF/EXR same-run export.
+- 2026-07-09 `OLMDistanceGradation case_0010/0011 AEX fieldgen probe`: use
+  `refs/conformance/olmdistancegradation_0010_0011_aex_fieldgen_probe_20260709.md`
+  as the current local AEX CPU witness. The full-frame real-AEX helper, with
+  validated OpenCV detours, completes for `case_0010` inside/outside and
+  `case_0011` inside. It reproduces the current Mac float fields, while the
+  Windows-required field-word relation sign-flips: outside `(6,40)` matches
+  `floor`, inside `(901,394)` and `(915,392)` require `ceil`. This rules out
+  both a generic helper rewrite and a single field-pack/final-writer toggle.
+  The next Windows ask should be narrower than the old pointer-map package:
+  bind the real Windows run's field-world pack/read boundary for those exact
+  pixels, plus true16 TIFF/EXR only as export confirmation.
+- 2026-07-09 `OLMDistanceGradation case_0010/0011 field-world pack/read return`:
+  use
+  `refs/conformance/olmdistancegradation_0010_0011_field_world_pack_read_return_intake_20260709.md`
+  as the current Windows boundary. The return is
+  `partial_success_fieldread_boundary_not_pack`, not implementation proof, but
+  it captures the final-writer read-side `rdx` candidate in the same run:
+  `(6,40)` reads all-zero `rdx_src_words`, `(901,394)` reads alternating
+  `8000 8000 0000 0000`, and the retained run has `rdx = rdi - 0xfe0000` at
+  `DistanceGradation+0x1170814`. Static asm then corrects the interpretation:
+  late `rdx` is the source/shade pointer from `param_1[0]`, while the
+  field-world pointer is `RCX` from `param_1[1]` at
+  `DistanceGradation+0x117057d`. The corrected next ask is
+  `refs/conformance/olmdistancegradation_0010_0011_compose_input_pointer_contract_20260709.md`,
+  which binds both `RCX` field-world and `RDX` source/shade reads. Do not resend
+  the field-world pack/read or misclassified `rdx producer` package unchanged,
+  and do not retune Mac final rounding from this return.
+- 2026-07-10 `OLMDistanceGradation case_0010/0011 rdx producer return`:
+  use
+  `refs/conformance/olmdistancegradation_0010_0011_rdx_producer_return_intake_20260710.md`
+  as negative evidence for the superseded `rdx producer` ask. The return is
+  `partial_watch_miss_prepopulated_rdx`: both derived `rdx` addresses were
+  already populated before the first captured `DistanceGradation+0x1170480`
+  callback, so a callback-level data watch cannot catch that producer. Combined
+  with static asm, this reinforces the corrected next action: bind `RCX`
+  field-world and `RDX` source/shade compose inputs, not late final-writer
+  `rdx` alone.
+- 2026-07-10 `OLMDistanceGradation case_0010/0011 compose input pointer return`:
+  use
+  `refs/conformance/olmdistancegradation_0010_0011_compose_input_pointer_return_intake_20260710.md`
+  as the current partial Windows evidence. It confirms `RCX` is the
+  field-world read at `DistanceGradation+0x117057d` and `RDX` is the
+  source/shade read at `DistanceGradation+0x11705f1`, but it did not bind
+  exact `(6,40)` or `(901,394)`: the attempted `r9=x && rbp=y` gate produced no
+  exact hits. The live next action is now
+  `refs/conformance/olmdistancegradation_0010_0011_compose_exact_address_contract_20260710.md`:
+  derive field/source/output base pointers, rowbytes, pixel size, and sub-rect
+  offsets, then gate compose input reads and final writer by exact address.
+  Do not repeat broad `x=6` logging or `rbp=y`.
+- 2026-07-09 `OLMBlur case_0006 current-AEX export`: the one-case Windows
+  current-AEX export return is imported and closes the reference-provenance
+  question as Outcome A. Use
+  `refs/conformance/olmblur_case0006_current_aex_export_contract_audit_20260701.md`
+  as the machine audit: the Windows current-AEX export for 16bpc
+  `olmblur__case_0006` is byte-identical to the canonical 2026-06-25 Windows
+  Software reference
+  (`27d24c96a6f3c15d27d8884ede039e5fd97480d752324f04d8e3aa77acc8791f`).
+  Do not resend `olmblur_case0006_current_aex_export_20260709` unchanged. If
+  this lane is reopened, the next proof is Mac export / AE-host run provenance,
+  not Windows reference equivalence or helper/writer surgery.
+- 2026-07-08 `OLMDistanceGradation depthgate endgame`: the depthgate quantization
+  return is `answered` and classifies three of four `case_0026` representatives
+  as export-quantization. The remaining open pixel is `(907,222)`. The next
+  prepared package is
+  `olmdistancegradation_depthgate_907_store_export_witness_20260708`, which must
+  capture the target PF_Pixel16 store words and same-run export byte. Do not
+  repeat the broad four-pixel depthgate batch.
+- 2026-07-08 `OLMDistanceGradation depthgate 907`: the one-pixel store/export
+  return is `answered_partial`, not closeout proof. Use
+  `refs/conformance/olmdistancegradation_depthgate_907_store_export_return_intake_20260708.md`
+  and
+  `refs/reports/runtime_trace_comparisons/olmdistancegradation_depthgate_907_store_export_witness_20260708.md`
+  as the current classification. It preserves the carried source/field/float
+  values for `(907,222)`, but does not freshly bind the Windows output-world
+  address, directly observed PF_Pixel16 store words, or a same-run export. The
+  family remains `depthgate-907-store-export-still-open`.
+- 2026-07-08 `OLMDistanceGradation Layer/no-bg`: the Mac port now keeps 8bpc
+  Layer/no-bg RGB on the old path but uses straight source RGB without final
+  alpha scaling for 16bpc and deeper. The current focused Mac AE family is
+  `refs/conformance/olmdistancegradation_layer_both_lowalpha_20260708.md`:
+  `case_0013 max=2`, `case_0014 max=4`, `case_0016 max=2`, and `case_0012
+  max=28` true16 after the Both-only low-alpha channel-mask rule. This is still
+  not `AE exact`; next DG work should isolate the remaining low-alpha
+  source-word/rounding rule, not revisit the old straight-vs-premultiplied
+  broad rewrite.
+- 2026-07-08 `OLMDistanceGradation case0012/case0014 store/export rounding`:
+  the return
+  `20260708_return__olm_runtime_trace_olmdistancegradation_case0012_case0014_store_export_rounding_20260708_windows.zip`
+  is `failed_partial`, not a proof. Use
+  `refs/conformance/olmdistancegradation_case0012_case0014_store_export_rounding_return_intake_20260708.md`
+  as the current intake classification. It preserves package-local PNG bytes
+  and carried notes, but does not contain fresh same-run pre-store float,
+  PF16 store word, or TIFF/EXR true16 export for either requested family. Do not
+  change Mac code from this return.
+- 2026-07-08 `OLMSmoother2 current-AEX producer bytes`: the return
+  `20260708_return__olm_runtime_trace_smoother2_current_aex_producer_bytes_20260708_windows.zip`
+  is `failed_partial`, not a proof. Use
+  `refs/conformance/olmsmoother2_current_aex_producer_bytes_return_intake_20260708.md`
+  as the current intake classification. It preserves the local Mac/Unicorn
+  producer sweeps for `0012` and `0004`, but contains no fresh same-run Windows
+  stop for the requested producer bytes/class-plane values. Do not change
+  `mac/OLMSmoother2` from this return; the next Windows ask must first bind the
+  actual Windows producer/class buffer address, then read one lane's typed bytes
+  in the same run.
+- 2026-07-08 `OLMSmoother2 current-AEX 0012 bind-then-read`: the return
+  `20260708_return__olm_runtime_trace_smoother2_current_aex_0012_bind_then_read_20260708_windows.zip`
+  is also `failed_partial`, not a proof. Use
+  `refs/conformance/olmsmoother2_current_aex_0012_bind_then_read_return_intake_20260708.md`
+  as the current classification. It kept the request narrowed to
+  `legacy_case_0012_gamma5_red_blue_current_aex` at `(91,841)`, but still
+  did not include a fresh same-run Windows Stage A bind or Stage B typed byte
+  read. Do not change `mac/OLMSmoother2` from this return; the next retry must
+  first prove the live Windows witness-local stop and pointer recovery route.
+- 2026-07-08 `OLMRadialBlur Zoom direct core`: use
+  `refs/conformance/olmradialblur_zoom_direct_core_prefill_probe_20260708.md`
+  as the current local emulator state. The direct-core harness now reaches
+  `FUN_1800056f0` and computes the full Zoom geometry (`1800 * 1104` polar
+  grid). A reduced non-semantic debug run (`32x32`, quality step `90.0`)
+  reaches `FUN_18000b150` and `FUN_18000a9d0` once each, proving hookability.
+  A full-size synthetic prefill + no-op heavy-worker run reaches the final-plane
+  branch at `0x180005c9f`. The newer `--direct-python-prefill` run replaces the
+  hot prefill loop with a decomp-grounded repeat-border sampler and produces
+  Zoom `(6,0)` alpha `0.9999999924232991 -> trunc 254`, matching the shape of
+  the Windows alpha byte split. Reduced `32x32/q90` validation against the
+  original AEX prefill now reports `max_abs_diff=0.0` in
+  `refs/conformance/olmradialblur_zoom_python_prefill_validation_20260708.md`.
+  This is stronger than synthetic reachability but still a candidate only:
+  the one-worker detour matrix in
+  `refs/conformance/olmradialblur_zoom_python_prefill_worker_detour_matrix_20260708.md`
+  keeps the same target alpha/truncation when either heavy worker is live in
+  isolation, but full AE exact still requires translating the rule into the
+  C++ port and validating against Windows/Mac AE output or capturing Windows
+  final-plane cell evidence. The first direct CLI translation candidate
+  (`refs/conformance/olmradialblur_zoom_cli_polar_alpha_candidate_20260708.md`)
+  is near-inert, and the global-truncate extension
+  (`refs/conformance/olmradialblur_zoom_cli_truncate_candidate_20260708.md`)
+  is overbroad. Do not promote `polar-alpha` / `repeat-raw-f32` /
+  `zoom-grid-mode=aex-float` / global alpha truncation as the fix yet.
+- 2026-07-09 `OLMRadialBlur Zoom final-plane index variants`: use
+  `refs/conformance/olmradialblur_zoom_case0009_final_plane_index_variants_20260709.md`
+  as the current Mac-only closeout for bounded final-plane index/bias
+  variants. The best tested variant (`cpp-double`, double-before-floor,
+  angle bias `-0.5`, radius bias `0.5`, truncate) hits only `x=[6,7]`, misses
+  `x=12`, and still emits false positives `[14,15,16,29,30]`. This reinforces
+  that `case_0009` is not ready for a Mac source change from local index
+  arithmetic alone; the next proof remains either exact C++ polar
+  coordinate/float-sequence grounding or a Windows same-run final-plane
+  four-cell witness.
+
 ## Current Decision Matrix
 
 Use this table to choose the next action. It is intentionally stricter than a
 progress summary: if a row says a class of work is forbidden, do not spend time
 there unless new evidence changes the row.
 
+The 2026-07-10 `AEX CPU fixture pivot first closure` override supersedes the
+older DistanceGradation sentence that names another broad CDB exact-address
+attempt as the live next action. Its current next action is fixture provenance:
+replace the harness-constructed compose/fieldgen parameter block with a
+runtime-captured or binary-built block, then replay the same portable core.
+
 | Plug-in / feature | correctness_status | host_status | work_lane | next allowed action | forbidden action |
 | --- | --- | --- | --- | --- | --- |
 | ColorKeep | `guarded` | `host-smoke` | `parked` | Keep as support/helper unless a real Windows Software reference is requested. | Treat synthetic helper output as OLM compatibility. |
-| OLMColorKey | 8bpc and 16bpc covered slices are `AE exact`; 32bpc untested | `host-stable` | `bitdepth-expand` | Preserve the passing 8/16bpc behavior; use the 32bpc float-output probe preview only when intentionally scheduled. | Visual/look tuning, broad algorithm changes, or PNG-only 32bpc exact claims. |
-| OLMBlur | 8bpc `AE exact`; 16bpc narrow residual only | `host-visual-tuning-ready` | `binary-proof` | Preserve the new decomp-backed Legacy carry-prev rule. The new combined gate is `refs/conformance/olmblur_closeout_gate_audit_20260701.md`: `case_0006` remains provenance/export-first until a same-run Windows current-AEX export is imported, normalized 16bpc Legacy `case_0007` is already closed as a Windows pre-store float delta, and only old normalized 8bpc `(488,941)` remains a valid reopen lane. Until one of those external proofs lands, do not treat OLMBlur as a live writer/helper surgery lane. | Broad rewrites, global rounding swaps, helper rewrites from the answered `case_0006` witness alone, or kernel tuning that risks the passing 8bpc slice. |
-| OLMToonDilate | 8bpc `AE exact` | `host-stable` | `bitdepth-expand` | Add or validate 16/32bpc references for the existing exact slice. | Reopen the 8bpc two-pass dilation algorithm without new evidence. |
-| OLMDistanceGradation | 8bpc `AE exact`; 16bpc not exact | `host-debuggable` | `binary-proof` | Preserve the 2026-06-29 Power and Constant binary-threshold fixes plus the narrow Layer/no-bg source-ownership patch. The active 16bpc Constant lane is still `case_0023`, but it is now split two ways: threshold-family and edge-family. The new provenance note `refs/conformance/olmdistancegradation_case0023_reference_provenance_20260702.md` shows that the threshold triplet `(414,393)/(415,393)/(416,393)` is no longer safe implementation evidence against the Mac build, because live Mac AE now matches the latest Windows typed final at `(415,393)` while the packaged expected PNG stays stale there. So keep the threshold-family slice in provenance/export classification and use the new same-run export request `refs/reference_requests/olmdistancegradation_case0023_current_aex_recapture_20260702.json` plus contract `refs/conformance/olmdistancegradation_case0023_current_aex_export_contract_20260702.md`. In parallel, the still-live binary-proof lane is the edge-family ownership / output binding around `(1698,7)/(1699,7)/(1700,7)`, with the latest stack/refcon follow-up still archived as `failed_partial`. | Revert the Power/Constant fixes, broaden Layer/no-bg changes outside the proven `render_mode=Layer && use_bg=0` path, retune from broad PNGs / 8-bit viewer-space numbers alone, or treat the packaged expected PNG as equivalent to current Windows output for the threshold-family slice without proof. |
+| OLMColorKey | 8bpc and 16bpc covered slices are `AE exact`; 32bpc is `host-version split` against the accepted Windows AE25.2 EXR and is not exact evidence | `host-stable` | `bitdepth-expand` | Preserve the passing 8/16bpc behavior. Wait for the Windows AE26.3 FLOAT-EXR recapture, then require the no-effect EXR control before classifying a ColorKey residual. | Visual/look tuning, broad algorithm changes, PNG-only 32bpc exact claims, or compensating for the observed host gamma split in plug-in code. |
+| OLMBlur | 8bpc packaged slice `AE exact`; 16bpc current-AEX/canonical reference provenance closed; current Mac single/batch outputs converge but remain `max_diff=2` | `host-visual-tuning-ready` | `binary-proof` | Preserve the decomp-backed Legacy carry-prev rule. Use `refs/conformance/olmblur_mac_export_provenance_result_20260710.md` as the current Mac authority: two single and two batch runs converge to the same stable hash per case, so export-path provenance is no longer live. The next useful proof is typed helper/pre-store or equivalent AEX evidence for `case_0006`; keep `case_0007` as a separate Legacy half-step family and old normalized 8bpc `(488,941)` as a distinct reopen lane. | Broad rewrites, global rounding swaps, another Mac export-provenance pass, another Windows current-AEX reference export, helper rewrites without typed proof, or kernel tuning that risks the passing 8bpc slice. |
+| OLMToonDilate | 8bpc `AE exact`; covered 16bpc slice is `AE exact`; 32bpc is unclassified pending an AE26.3 host-parity control | `host-stable` | `bitdepth-expand` | Keep the exact 8/16bpc slice stable. Use the AE26.3 FLOAT-EXR recapture and no-effect control before reopening the float kernel. | Reopen the 8bpc two-pass dilation algorithm, promote PNG-only 32bpc evidence, or attribute the AE25.2/26.3 host split to ToonDilate. |
+| OLMDistanceGradation | 8bpc `AE exact`; current 16bpc extended is `5/16 AE exact` | `host-debuggable` | `binary-proof` | Preserve the 2026-06-29 Power and Constant binary-threshold fixes, the 2026-07-08 depth-gated source-mask rule, the 16bpc Layer/no-bg straight-source RGB rule, the narrow low-alpha hidden-color rule, and the Both-only low-alpha channel-mask rule. Use `refs/conformance/olmdistancegradation_current_integrated_16bpc_batch_20260709.md` for the current canonical batch: `case_0008/0020/0021/0022/0023` are exact. Use `refs/conformance/olmdistancegradation_depthgate_true16_reverify_20260709.md` as the correction that invalidates the old `7/16` count. Use `refs/conformance/olmdistancegradation_true16_residual_family_audit_20260709.md` as the current residual split. The pointer-map return `refs/conformance/olmdistancegradation_0010_0011_writeback_pointer_map_return_intake_20260709.md` binds `case_0010 (6,40)` and `(901,394)` to `out = base + y * 0x3c00 + x * 8` and Windows final PF16 words. The field-world pack/read, rdx-producer, and compose-input returns (`refs/conformance/olmdistancegradation_0010_0011_field_world_pack_read_return_intake_20260709.md`, `refs/conformance/olmdistancegradation_0010_0011_rdx_producer_return_intake_20260710.md`, `refs/conformance/olmdistancegradation_0010_0011_compose_input_pointer_return_intake_20260710.md`) are partial but useful: `RCX` is field-world at `+0x117057d`, `RDX` is source/shade at `+0x11705f1`, late final-writer `rdx` is not field proof, and `rbp=y` is not a valid exact-pixel gate. The live next action is `refs/conformance/olmdistancegradation_0010_0011_compose_exact_address_contract_20260710.md`: derive field/source/output address formulas and bind exact `(6,40)` / `(901,394)` reads and stores by address. | Revert the Power/Constant fixes, use `scripts/run_ae_single_case.py` as an 8bpc verdict runner, call any 16bpc slice `7/16` exact without canonical verifier evidence, use the old `case_0023 73px` residual as current state, replace the depth-gated mask with global `alpha > 0`, broaden the 16bpc alpha rule without a new witness, retune Both-combine from the flagged `cv::add` latent diff, retune field/source-mask topology from an 8-bit/PIL comparison, apply a global `clamp16()` rounding toggle from `0010/0011`, resend the old non-prewarm field/store package unchanged, resend the field-world pack/read package unchanged, resend the misclassified `rdx producer` package unchanged, resend the compose-input package unchanged, repeat `rbp=y` exact gates, repeat broad Windows requests without a narrowed true16 witness, reapply the old Layer/no-bg final-alpha RGB multiplication for 16bpc, broaden the low-alpha rule beyond the focused hidden-color/Both witness families, generalize the dominant-channel promotion from BOTH to all in/out modes without binary proof or canonical batch validation, repeat broad PF interleave/final-writer stepping instead of exact-address compose input binding, or use CLI reimplementation output as Windows-reference truth. |
 | OLMSmoother v1 | 8bpc `AE exact` | `host-stable` | `parked` | Leave v1 policy/bit-depth expansion until higher-priority plug-ins have stronger 16/32bpc coverage; then decide whether v1 remains independent or maps to Smoother2 compatibility. | Mix v1/v2 behavior without an explicit policy, or spend early 32bpc effort here before broader plugins are grounded. |
 | OLMSmoother2 no-key | 8bpc `AE exact` | `host-debuggable` | `ae-validate` | Preserve no-key exact behavior; use only bounded regression checks. | Spend Windows/runtime trips on no-key tuning. |
-| OLMSmoother2 legacy/key/gamma | `guarded` / writer-grounded residual | `host-debuggable` | `binary-proof` | Trace the 0004/0012 witness paths and keep the Smooth Range threshold fix. | Global fallback, alpha, index, curve-index, or `f270` changes without proof. |
-| OLMDirectionalBlur | `blocked` | `host-debuggable` | `binary-proof` | Capture angle-0 rowdriver/valid-alpha and diagonal rotate/validity witnesses. | PNG-only exploration or broad AE look matching. |
-| OLMRadialBlur | `guarded` / `blocked` | `host-debuggable` | `binary-proof` | Treat the remaining lanes separately, and note that the old shared outer follow-up is now only partially live. Zoom `case_0009` is no longer the best active Windows ask after the 2026-07-01 return: it is narrowed to caller-collapse / denominator state, with sampled floats already truncating to the exact stored Windows byte. The new machine audit `refs/conformance/olmradialblur_zoom_source_candidates_audit_20260701.md` now freezes the allowed `RenderZoom8` suspicion order too: polar population / preserved-validity capture first, alpha accumulation / denominator second, and final inverse-sample/writeback only if a later Windows typed witness explicitly contradicts the current caller-collapse reading. The first tiny-only follow-up returned `failed_partial`, and the tighter backstep follow-up also returned `failed_partial`: the stable `+0x4eb9/+0x4ec8` anchor and same near-black sample are reconfirmed, but the first upstream promotion branch is still not retained. So the next Windows ask must go narrower than the current backstep package by attaching pointer/context watches to that same anchor, not by re-asking the same chain. See `refs/reports/runtime_trace_comparisons/olmradialblur_tiny_rotation_backstep_followup_20260701.md`. The current Mac source still lacks an explicit preserved-validity plane, and a 2026-07-01 propagated-validity probe showed that simply blurring the validity bits with the same kernel does not move either focused witness. | AE visual matching, blind alpha tuning, treating tiny Rotation as a validity-alpha issue, promoting propagated-validity-alpha as a fix, reopening Zoom as the first Windows ask, or global span/wrap toggles. |
+| OLMSmoother2 legacy/key/gamma | `guarded` / writer-grounded residual | `host-debuggable` | `binary-proof` | Trace the 0004/0012 witness paths and keep the Smooth Range threshold fix. The machine-materialized snapshot `refs/conformance/olmsmoother2_legacy_lane_state_20260707.md` is now the shortest authoritative read: final writer bytes/floats remain grounded, local AEX CPU emulation adds a producer branch table at `refs/conformance/olmsmoother2_producer_branch_table_20260707.md`, and the 2026-07-08 sweep at `refs/conformance/olmsmoother2_producer_branch_sweep_20260708.md` narrows `0012` further: local Mac is `center=0, prev=1, left_b1=0 -> c=2 -> append`, while the only local `e170/f270` no-append pattern in the three-byte sweep is `center=0, prev=0, left_b1=1 -> c=4`. The 2026-07-08 producer-bytes return is `failed_partial` (`refs/conformance/olmsmoother2_current_aex_producer_bytes_return_intake_20260708.md`): it did not include the required same-run Windows stop, so next proof should first bind the Windows producer/class buffer address and then read one lane's typed bytes/c value in-run. `0004` remains narrowed to Windows-side producer/class-plane state before `c280/cce0`. | Global fallback, alpha, index, curve-index, or `f270` changes without proof; request final writer bytes again for these witnesses; change Mac Smoother2 from local Mac/Unicorn-only producer facts. |
+| OLMDirectionalBlur | front-only/no-variation/no-fade/no-tail/no-back/no-noise 8bpc slice is `AE exact` for 2/2 declared cases; Front Alpha Fade complete raw path is `binary-grounded` and its retained AE reference is provisionally `blocked-reference-provenance` pending PF-world proof; other feature families remain `blocked` | `host-debuggable` | `binary-proof` | Preserve `core/dblur_frontonly.cpp` and the narrow Mac adapter. For Alpha Fade, run `refs/runtime_trace_packages/olmdirectionalblur_front_alpha_host_boundary_2025_20260711.zip`; accept only the exact 2025 hash and invocation-bound Windows PF input/output ARGB8 worlds before changing code. Then keep Size Variation, Sharp Tail, Back, and Noise as independent proof lanes. Expand to 16/32bpc only after each writer/host layout is grounded. | Bake floor unpremultiplication, a channel bias, or a case-specific lookup into the plug-in; reopen the exact rotate/rowdriver/front-only core; count a modeled host transform as AE exact; broad PNG tuning; or apply the front-only component-map shortcut to variation/tail modes. |
+| OLMRadialBlur | `guarded` / `blocked`; local post-normalization plane layout is binary-grounded but case_0009 semantics remain open | `host-debuggable` | `binary-proof` | Treat lanes separately. The Windows final-plane package returned `failed_partial` before hook arming and must not be retried unchanged. Use `refs/conformance/aex_cpu_fixture_template_result_20260710.md`: the local real-AEX `4x1` probe reaches `0x180005d99`, grounds final/accum/denom/valid pointers and `4x9` geometry, and executes real prepass/scatter once, but accum/denom/valid remain zero. Next obtain one bounded nonzero typed cell, then allow one re-scoped Windows confirmation for `(7,0)/(8,0)/(24,0)`. | AE visual matching, blind alpha tuning, resending the failed hook unchanged, treating plane-layout evidence as case semantics, or changing Mac source before a nonzero typed witness. |
 | OLMKiraKira | `binary-grounded` / guarded provenance lane | `host-smoke` | `parked` | Treat the answered 2026-07-01 hotspot witness as proof that the traced Windows hotspot agrees with the current Mac compose-boundary values through compose, pre-writeback, and sampled RGBA8. The machine audits `refs/conformance/olmkirakira_hotspot_lane_audit_20260701.md`, `refs/conformance/olmkirakira_reference_provenance_audit_20260701.md`, and `refs/conformance/olmkirakira_hotspot_export_contract_audit_20260701.md` now freeze the next decision boundary too: current traced+compose witness = `144`, canonical Windows reference PNG = `131`, archived BT.709 candidate PNG = `145`, and no same-run export/witness-placement proof is in-tree yet. The 2026-07-03 host/UI cleanup also removed the fresh-surface `Brightness Gain` / `Highlight Radius` range blockers and aligned the visible `Merge mode` / `Strength multiplier` / `Diagonal 2 length` / `Diagonal Color2` labels. So this is no longer a compose/gain/quantization tuning lane; next work is reference/export provenance, witness-placement validation, or the narrower remaining endgame control coverage (`Approximated Input`, ramps, non-BlurMode-2 dispatch, visible order). | Pull it forward ahead of wider 16/32bpc expansion on stronger plug-ins, or re-tune luma/boxFilter/ray-helper/gain/compose from broad PNGs or from the 2026-07-01 hotspot witness alone. |
 
 Current priority order:
 
-1. `OLMBlur` 16bpc provenance closeout. This is still first, but no longer as a
-   broad writer/helper lane: `case_0006` should now be treated as a narrow
-   reference/export provenance check, while `case_0007` stays a separate Legacy
-   family witness. Do not reopen global writer surgery from the answered
-   2026-07-01 proof alone.
-2. `OLMRadialBlur` narrow proof, split by lane rather than by plug-in:
-   the old combined outer follow-up is now only partially useful, so the next
-   live Windows ask is `tiny Rotation upstream polar RGB / substitute-path`
-   first, then `Zoom caller-collapse / denominator` only if a later code move
-   truly needs it, then `Inner FUN_180001c90` typed per-cell witnesses. Do not
-   merge those into one broad “RadialBlur progress” bucket.
-3. `OLMDistanceGradation` 16bpc bounded binary proof, because the active
-   `case_0023` `Both + Outside Threshold=0` lane is now narrow enough that a
-   focused ownership/helper-staging witness is likely to close more of the
-   family than another broad rerun.
-4. `OLMSmoother2 legacy` bounded upstream-producer proof only. The final writer
+RadialBlur release accounting is split even though the decision matrix keeps a
+single operational row:
+
+| RadialBlur feature obligation | Current state | Required proof |
+| --- | --- | --- |
+| Zoom | `guarded` / `blocked` | Exact polar-cell coordinate and float sequence, or Windows final-plane cell witness. |
+| Tiny Rotation | `blocked` | Same-run sampler, output-buffer, and export writeback binding. |
+| Inner | `blocked` | Sampler/prepass/scatter normalization proof. |
+| Size Variation / Noise Variation / edge behavior | `blocked` | Explicit nonzero-control case sets and binary/runtime witnesses at 8/16/32bpc. |
+
+1. `OLMDistanceGradation` 16bpc `case_0010/0011` exact-address compose witness.
+   The R/A probe shows these are sign-flipping one-word PF16 alpha-store
+   differences, not color bugs, and the local EDT/field-normalization probe
+   could not decide the rule. The latest writeback-follow return reached
+   `DistanceGradation+0x117051c` and PF interleave, but did not bind the target
+   pixels. The pointer-map return then bound `(6,40)` and `(901,394)` to the
+   PF16 output formula and same-run Windows store words, but did not include
+   true16 export samples. The active work is now Mac-side classification
+   against Windows words `3268` and `9876`, not resending the same debugger
+   package. Do not use
+   `scripts/run_ae_single_case.py` for 8bpc verdicts or PIL/8-bit comparisons
+   for 16bpc verdicts.
+2. `OLMDirectionalBlur` angle-0 helper-gate proof. The 2026-07-07 return for
+   `olmdirectionalblur_angle0_helper_gate_retry_20260702` is `answered_partial`:
+   module load and the broad helper/normalize/writeback breakpoints are proven,
+   but the per-pixel typed witness for `(494,169)` and `(579,169)` is still
+   missing because the front-scatter helper hit-storm overwhelmed the trace.
+   The prepared `olmdirectionalblur_angle0_single_shot_witness_20260708`
+   request is conditional/single-shot and must return rowdriver/group,
+   helper-local destination range, denominator, `alpha_or_valid`,
+   pre-writeback, and final-byte values in the same run.
+3. `OLMRadialBlur` same-run final-writeback retry, only if we decide this lane
+   should consume another Windows trip. The 2026-07-08 return is useful
+   provenance evidence but missing the same-run debugger stop. Do not requeue
+   it ahead of DG/DirectionalBlur unless the explicit decision is to resolve
+   RadialBlur tiny Rotation first.
+4. `OLMBlur` 16bpc typed helper/pre-store proof, only if it becomes the best
+   binary-proof lane. The 2026-07-10 Mac rerun proves single-case and batch
+   exports now converge deterministically while canonical verification remains
+   `0/7` exact with `max_diff=2`. Do not repeat export provenance or request a
+   new Windows reference image; keep `case_0007` as a separate Legacy family.
+5. `OLMSmoother2 legacy` bounded upstream-producer proof only. The final writer
    is already grounded; next useful work is writer-anchor to producer-path
    reconstruction, not more broad PNG or final-writeback toggles.
-5. `OLMDirectionalBlur` narrow runtime witness only.
 6. Bit-depth expansion on already-strong plug-ins:
    `OLMColorKey`, `OLMToonDilate`, and then other slices that are already
    `AE exact` or close enough to validate safely.
@@ -75,54 +1028,97 @@ Current priority order:
 2026-07-02 external review note:
 
 - An `oracle` browser review over the current hard-lane evidence agreed with
-  the live ordering above: keep `OLMRadialBlur tiny Rotation case_0010` ahead
-  of `OLMDistanceGradation case_0023`.
+  the then-current hard-lane ordering: keep `OLMRadialBlur tiny Rotation
+  case_0010` ahead of `OLMDistanceGradation case_0023`.
 - It also agreed that Mac-side source edits should pause on both lanes until a
   Windows return retains the requested anchor-context or
   refcon/stack/output-word mapping itself. Local diagnostics and intake logic
   remain allowed; source-side algorithm tuning does not.
 
+2026-07-07 queue sync note:
+
+- The queue source of truth has moved since the 2026-07-02 review. In
+  the then-current `refs/reports/pending_runtime_trace_packages.md`, the RadialBlur
+  anchor-context request is now `superseded`, `OLMBlur case_0006` is already
+  `answered`, `OLMDistanceGradation case_0023 refcon/stack` is now
+  `superseded` by the local AEX CPU simu probe, and the 2026-07-07 Send First
+  item was `olmdistancegradation_case0023_final_source_ownership_20260707`.
+- This remains historical context only. Use the current priority list above and
+  the freshly generated `refs/reports/pending_runtime_trace_packages.md` for
+  the live send order.
+
+2026-07-07 AEX CPU simu probe note:
+
+- `tools/emulation/test_dg_fieldgen_p1b.py` now accepts a real RGBA PNG,
+  derives a binary mask from alpha, applies an optional crop, and samples
+  witness points after directly calling Windows `DistanceGradation.aex`
+  `FUN_181174760` through the local AEX CPU emulation harness.
+- The case_0023 threshold-family crop over the current Windows Software
+  recapture before-effects PNG completes and reproduces the known field pattern:
+  `(414,393)=0`, `(415,393)=1`, `(416,393)=1`, `(415,392)=0`, `(415,394)=1`.
+  Report: `refs/conformance/olmdistancegradation_case0023_aex_cpu_simu_probe_20260707.md`.
+- After adding the limited `cv::normalize_minmax` detour, the same harness also
+  completes full-frame inside/outside `FUN_181174760` passes for case_0023. At
+  the live edge witness `(1699,7)`, inside field is `0.0`, outside field is
+  `0.0`, and Both add-saturate field is `0.0`. Report JSON:
+  `refs/conformance/olmdistancegradation_case0023_aex_cpu_simu_fullframe_20260707.json`.
+- This strengthens the reference-path split classification for the 65px
+  edge-family: the Windows CPU AEX helper itself produces the Mac-side field
+  value at `(1699,7)`. It still does not prove whole-plugin Mac AE exact, so
+  keep Software/EXR recapture or typed final-output witness as the closeout
+  evidence before changing completion state.
+- A follow-up local overlap audit found that the binary-grounded BOTH
+  `cv::add` fact is not a current full-resolution implementation lever for the
+  existing 16bpc cases: all 11 BOTH cases in
+  `olm_bitdepth_16bpc_normalized_exact_20260625` have `0` pixels where
+  `max(inside,outside)` differs from `min(inside+outside,1)`. Report:
+  `refs/conformance/olmdistancegradation_both_add_overlap_audit_20260707.md`.
+  Keep `cv::add` in the IR, but only reopen it for a resize/downsample witness
+  that proves overlapping support.
+
 Current pending Windows runtime queue:
 
-1. `olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702`
+- No current `OLMDistanceGradation case_0023` runtime request is pending. The
+  2026-07-07 final/source ownership return has been consumed, and the
+  2026-07-08 depth-gated source-mask result is now the live DG evidence.
+- Use `refs/reports/pending_runtime_trace_packages.md` as the queue authority
+  for non-DG hard lanes such as DirectionalBlur/RadialBlur/KiraKira when those
+  packages are regenerated or returned.
+
+Answered/superseded context:
+
+1. Answered partial: `olmdirectionalblur_angle0_helper_gate_retry_20260702`
    - package:
-     `refs/runtime_trace_packages/olm_runtime_trace_radialblur_tiny_rotation_anchor_context_watch_followup_20260702.zip`
-   - current share copy:
-     `/Volumes/onmk/olm_pr/new/olm_runtime_trace_radialblur_tiny_rotation_anchor_context_watch_followup_20260702.zip`
-   - why this one is live:
-     the earlier anchor-pointer return is now superseded by a still tighter
-     anchor-context ask. The live lane still targets `case_0010 (1614,6)`, but
-     the next round must dump `rsi/rbp/rsp` qword windows plus row/grid
-     metadata, reconstruct the exact sampled-cell address, and retain sampled
-     cell / neighboring-row watchpoints strongly enough to capture the first
-     promotion branch from the stable `+0x4eb9/+0x4ec8` anchor.
-   - intake path:
-     `scripts/compare_radialblur_trace.py` now recognizes this request id
-     directly and emits the local tiny-Rotation lane context from
-     `refs/conformance/olmradialblur_tiny_rotation_lane_audit_20260701.json`.
-     A typed upstream return should therefore classify as
-     `tiny_rotation:substitute-or-upstream-rgb` rather than being mixed back
-     into the older shared outer-lane wording.
+     `refs/runtime_trace_packages/olm_runtime_trace_directionalblur_angle0_helper_gate_retry_20260702.zip`
    - latest return:
-     `refs/returns/windows/20260702_1531_radialblur_anchor_context_watch_followup/olm_runtime_trace_radialblur_tiny_rotation_anchor_context_watch_followup_20260702_return_windows.zip`
-     is `failed_partial`, but it narrows the failure correctly: witness
-     selection is no longer the blocker; retained anchor-context is.
-2. `olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702`
+     `refs/reports/runtime_trace_comparisons/olmdirectionalblur_dense_sampler.md`
+     records the 2026-07-07 result as `answered_partial`.
+   - why it still matters:
+     the angle-0 residual is reduced to typed helper-local proof, not broad
+     PNG tuning. The broad breakpoint reachability is now proven, but the
+     useful follow-up must isolate both `(494,169)` and endpoint `(579,169)`
+     and retain helper-local source/destination range, rowdriver group,
+     denominator, `alpha_or_valid`, pre-writeback, and final byte values.
+2. Superseded context only: `olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702`
    - package:
      `refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702.zip`
-   - current share copy:
-     `/Volumes/onmk/olm_pr/new/olm_runtime_trace_olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702.zip`
-   - why this one is live:
-     the threshold-family triplet is already bounded, and the earlier
-     refcon-wordmap ask is now superseded by a still tighter stack/refcon/
-     wordmap ask that must dump `r8/r9/[rsp+0x28]`, recover xy/output-address
-     mapping at `FUN_181170480`, and then data-watch the real stored-pixel side
-     rather than relying on broad callback activity.
-   - latest return:
-     `refs/returns/windows/20260702_1531_distancegradation_refcon_stack_wordmap_followup/olm_runtime_trace_olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702_return_windows.zip`
-     is also `failed_partial`, but it confirms that the remaining blocker is
-     retained stack/refcon/output-word mapping rather than a broad threshold
-     ambiguity.
+   - current status:
+     `superseded` in `refs/reports/pending_runtime_trace_packages.md`.
+   - why it is no longer first:
+     the 2026-07-07 local AEX CPU simu shows the Windows CPU helper produces
+     the Mac-side field value at the live edge witness. The live question moved
+     from stack/refcon isolation to reference-path split vs final
+     output/export evidence.
+3. Superseded context only: `olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702`
+   - package:
+     `refs/runtime_trace_packages/olm_runtime_trace_radialblur_tiny_rotation_anchor_context_watch_followup_20260702.zip`
+   - current status:
+     `superseded` in `refs/reports/pending_runtime_trace_packages.md`.
+   - why it is no longer first:
+     the 2026-07-05 local CPU AEX emulation changes the live question from
+     "which upstream branch was retained?" to "is the remaining difference a
+     reference-path split or CPU final writeback/export issue?" Do not resend
+     this anchor-context package as-is.
 
 Queue acceptance rule:
 
@@ -134,15 +1130,21 @@ Queue acceptance rule:
   `not isolated`, or `non-actionable`; do not silently promote it into a live
   proof lane.
 - For current hard lanes, “final PNG rendered correctly” is not enough:
-  `OLMRadialBlur`, `OLMSmoother2 legacy`, and `OLMKiraKira` each require
-  producer-side or compose-side witness values before implementation changes.
-- For current `OLMRadialBlur`, that means the broad outer package should no
-  longer be treated as live just because it once spanned Zoom and tiny
-  Rotation. The Zoom half is now evidence context; the active send target is
-  the tiny-Rotation-only follow-up contract.
-- For current `OLMDistanceGradation case_0023`, that means the old edge-family
-  package should no longer be treated as the active send target either. The
-  live queue is now the output-word / compose-refcon follow-up contract.
+  `OLMDirectionalBlur`, `OLMRadialBlur`, `OLMSmoother2 legacy`, and
+  `OLMKiraKira` each require producer-side, helper-side, or compose-side
+  witness values before implementation changes.
+- For current `OLMDirectionalBlur`, the next prepared request is the angle-0
+  single-shot witness, not the old broad helper-gate retry. A usable answer
+  must include typed helper-local coverage and staged values for both
+  `(494,169)` and `(579,169)`.
+- For current `OLMRadialBlur`, the broad outer package should no longer be
+  treated as live just because it once spanned Zoom and tiny Rotation. The
+  anchor-context package is superseded; the active useful proof is now the
+  tiny Rotation `case_0010` final-writeback/export evidence.
+- For current `OLMDistanceGradation case_0023`, the old edge-family package
+  should no longer be treated as the active send target either. Local AEX CPU
+  simu has moved that lane into reference-path split vs final output/export
+  closeout evidence.
 
 Historical but presently answered/superseded 2026-06-30 4pack requests:
 
@@ -163,9 +1165,9 @@ Queue note:
 - `olmdistancegradation_16bpc_constant_boundary_witness_20260630` is no longer
   pending as a broad family request. The imported return classifies the
   remaining Constant/background 16bpc lane as threshold ownership / plateau
-  membership before compose-writeback, and the active follow-up is now the
-  narrower `case_0023` / `Outside Threshold=0` witness rather than another
-  broad Constant-boundary package.
+  membership before compose-writeback; later local AEX CPU simu then superseded
+  the stack/refcon follow-up and shifted the lane to Software/EXR recapture or
+  typed final-output evidence.
 
 Authoritative queue report:
 `refs/reports/pending_runtime_trace_packages.md`.
@@ -213,6 +1215,11 @@ Final randomized holdout set:
 
 ## Current Feature Status
 
+This long table is a historical evidence snapshot. When a row conflicts with
+`Latest Overrides` or `Current Decision Matrix`, the newer sections are
+authoritative. In particular, its old `OLMDirectionalBlur | blocked` row
+predates the 2026-07-11 front-only 8bpc AE-exact closeout.
+
 | Plug-in / feature | 8bpc Software status | 16bpc status | 32bpc status | Evidence | Next required proof |
 | --- | --- | --- | --- | --- | --- |
 | ColorKeep synthetic helper | guarded | untested | untested | Synthetic CLI smoke only. | Real Windows Software reference or keep as support utility. |
@@ -221,10 +1228,17 @@ Final randomized holdout set:
 | OLMColorKey core RGB/color-space/Replace | AE exact for core packaged 8bpc slices | reference covered / compare pending | untested | 2026-06-19 AE pixel return is exact for `case_0001..0008`; local report: `refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmcolorkey_exact_20260619/reports/ae_pixel_all_exact.json`. Normalized CLI is exact for core `case_0001..0004` and `case_0007`. | Add 16/32bpc references for the core path after Edge Blur reference generation is fixed. |
 | OLMColorKey Edge Thin erode / Edge Blur | AE-host exact against normalized 8bpc refs / AE-free CLI residual | AE exact for all 9 covered 16bpc ColorKey cases | untested | 2026-06-19 AE pixel return has Edge Thin erode `case_0005/0006` exact and Edge Blur `case_0008` exact. `case_0009` reports `max=47 mean=0.069921` only against the older 20260604 reference; 2026-06-21 and 2026-06-22 provenance audits show the returned candidate is exact against the 20260618 normalized ref and CLI reference, so this is a reference-generation split rather than a clean algorithm witness. Latest audit: `refs/reports/olmcolorkey_edge_reference_provenance_20260622_024907/audit.md`; it now emits the machine-readable classification `reference-generation-split` and the action “do not tune Edge Blur from the 20260604 residual.” Cross-feature canonicalization reports ColorKey 9/9 `normalized-software-exact` in `refs/reports/software_reference_canonicalization_8bpc.md`. 2026-06-26 16bpc reverify still leaves only `case_0009` failing (`12597px` in the `candidate kept / Windows removed` direction). 2026-06-27/28 runtime tracing proves that the live current-AEX 16bpc path uses `Force Lower Precision=3`, `amount=25`, `distance_type=2`, and `dist <= amount` inside a current `OLMColorKey+0x9000` positive Edge Thin orchestrator. Follow-up raw CDB proves primary residual `(1110,149)` consumes `dist=2.0`, takes the copy path, and writes matte word0 `0x0000 -> 0x8000`. 2026-06-28 PE/capstone audit of the Lab76 per-component comparator at `0x1800043a0` shows separate threshold/epsilon multipliers; applying that binary-grounded formula makes `Lab76 hit + taxicab Edge Thin <=25` exact against the Windows 16bpc reference (`diff=0`). 2026-06-28 Mac AE full-batch rerun completed all 9 `ae_pixel_bitdepth16_olmcolorkey_exact_20260625` cases, and `scripts/verify_ae_pixel_validation_result.py` reported `ok=9 fail=0 missing=0 total=9`, all `max=0 mean=0.0000`; report: `/tmp/olm_colorkey_16bpc_full_rerun_20260628/reports/ae_pixel_16bpc_all_exact.json`. 2026-06-28 adds a preview-only 32bpc float-output probe at `refs/reports/bit_depth_32bpc_probe_plan_20260628/request_preview.json`; it is not active and not completion evidence. | Preserve passing 8/16bpc behavior. Next ColorKey work is an intentionally scheduled 32bpc float-preserving reference/probe, not more 8/16bpc tuning. |
 | OLMToonDilate cases `1..3` | AE exact for packaged 8bpc slices | AE exact for the focused 16bpc slice `case_0001..0003`; 32bpc untested | untested | 2026-06-19 AE pixel return is exact for `case_0001..0003` with `max_diff=0`; local report: `refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmtoondilate_exact_20260619/reports/ae_pixel_all_exact.json`. AEX-style two-pass chamfer propagation plus semi-alpha RGB premultiply also makes the normalized Windows AE Software refs exact in Python and C++ CLI. 2026-07-03 imported the focused Windows 16bpc batch and confirmed live Mac AE exactness for `case_0001..0003` in both isolated single-case reruns and a fresh batch rerun; note: `refs/conformance/olmtoondilate_16bpc_single_case_host_probe_20260703.md`, batch verifier: `/private/tmp/verify_toondilate16_batch_20260703/reports/ae_pixel_all_exact.json`. Current IR: `notes/IR_OLMToonDilate.md`. | Keep the IR tied to the two-pass/premultiply evidence; next ToonDilate work is broader bit-depth expansion or holdout use, not reopening the 8/16bpc kernel. |
-| OLMDistanceGradation basic/extended/blur | AE exact for packaged 8bpc slices | not AE exact; extended Constant-binary batch is `1/16` exact | untested | 2026-06-19 AE pixel return is exact for all packaged basic/extended/blur cases (`12 + 16 + 1` cases, `max_diff=0`); local reports live under `refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmdistancegradation_*`. 2026-06-22 provenance audit shows those AE-host candidates are exact against all 29 20260618 normalized Software refs; latest report: `refs/reports/olmdistancegradation_reference_provenance_20260622_025045/audit.md`, classified as `normalized-software-exact-with-legacy-drift`. Cross-feature canonicalization reports all three groups `normalized-software-exact` in `refs/reports/software_reference_canonicalization_8bpc.md`. 2026-06-26 endian-fix reverify keeps the exact count at `9/29` but corrects residual amplitudes; current batch lives under `refs/reports/ae_pixel_validation_16bpc_mac_20260626_2335_endian_fix/`. Ghidra confirms 8bpc compose is an AE iterate callback over a prebuilt field world and reads the field green byte. A 2026-06-27 Windows bg-on/bg-off return for `case_0020..0023` removes one false narrowing: these residuals are not just `Use Background Color=1` compose drift, because Windows `bg_off` for `case_0020..0022` still stays grad-color opaque at the witness and `case_0023 bg_off` still differs from the prior Mac `no_bg` probe over the full frame. 2026-06-29 Windows runtime trace answers the `case_0026` branch question: field green already ramps before `FUN_181170480`. Mac AE automation was recovered by avoiding AE 26.3 `JSON.parse` on the large manifest. A gated Mac plug-in dump then proved the field itself ramps but `Power` was collapsed by an erroneous `FIX_2_FLOAT` conversion. The Power fix recovers the row0 ramp within `0..4`, but the 16bpc extended batch remains `1/16` exact. The remaining failures were split into families, and the representative `case_0020` point dump proved the Constant/background mismatch was pre-writeback. Implementing the Constant-specific `THRESH_BINARY` path from `FUN_181174760` moves `case_0020 1001->1`, `case_0021 1002->1`, `case_0022 9347->192`, and `case_0023 1388->73` changed pixels; report: `refs/conformance/olmdistancegradation_16bpc_constant_binary_fix_20260629.md`. The remaining Constant changed pixels are all within 1px of the active threshold; report: `refs/conformance/olmdistancegradation_16bpc_constant_remaining_boundary_20260629.md`. A direct Layer/no-bg unpremultiply probe was rejected because it broadened `case_0012` from `25421` to `285406` changed pixels and required an AE restart to verify the revert; report: `refs/conformance/olmdistancegradation_16bpc_rejected_layer_unpremultiply_20260629.md`. A new machine-generated current-baseline audit then froze the post-fix witness values and revealed that the earlier quick PNG-space `case_0012 max=65` note was optimistic: the authoritative RGBA16 compare still sees a broad residual (`max=16476`, `mean=332.8368`, `nonzero_px=285406`) even though the main witness points improve to small RGB deltas (`-266/-354`) at `(462,7)`, `(72,8)`, and `(106,19)`; report: `refs/conformance/olmdistancegradation_16bpc_layer_source_current_baseline_20260629.md`. The 2026-06-30 Constant boundary return plus the new targeted diagnostic now narrow the unresolved Constant lane further: only `Both + Outside Threshold=0` (`case_0023`) responds to outside-side helper staging variants, while `case_0022` stays flat. See `refs/reports/runtime_trace_comparisons/olmdistancegradation_constant_boundary_witness_20260630.md` and `refs/conformance/olmdistancegradation_16bpc_constant_both_outside0_variants_20260630.md`. A live Mac AE outside-side equality probe was then rejected: the broad `dist >= t` variant breaks the whole frame, while the narrower `threshold floor 1 + equality` retry leaves `case_0023` at the existing `73px` residual and `case_0022` at `192px`; report: `refs/conformance/olmdistancegradation_16bpc_rejected_outside_threshold_eq_probe_20260630.md`. | Preserve passing 8bpc AE behavior and keep the Power plus Constant binary-threshold fixes. The next bounded move is no longer an outside-side equality tweak; it needs a stricter upstream helper-staging / threshold-ownership proof for the Constant `Both + Outside Threshold=0` lane. |
+- 2026-07-03 covered 16bpc exact manifest:
+  `refs/conformance/bitdepth_16bpc_exact_manifest_20260703.md`.
+  This re-verifies the currently covered 16bpc exact slices directly from the
+  live request/result directories and freezes them into committed artifacts:
+  - `OLMColorKey`: `9/9` exact
+  - `OLMToonDilate`: `3/3` exact
+  Treat this as a narrow bit-depth conformance slice, not whole-plugin 16bpc completion.
+| OLMDistanceGradation basic/extended/blur | AE exact for packaged 8bpc slices | current 16bpc extended is `5/16` exact; 32bpc untested | untested | 2026-06-19 AE pixel return is exact for all packaged 8bpc basic/extended/blur cases (`12 + 16 + 1`, `max_diff=0`) and remains the canonical 8bpc verdict path. 2026-07-08 depth-gated source-mask result (`refs/conformance/olmdistancegradation_depth_gate_result_20260708.md`) closes 16bpc `case_0023`, but its old `7/16` count is superseded by `refs/conformance/olmdistancegradation_depthgate_true16_reverify_20260709.md`, which verifies the same depthgate artifacts at `5/16`. The current integrated batch (`refs/conformance/olmdistancegradation_current_integrated_16bpc_batch_20260709.md`) is exact for `case_0008/0020/0021/0022/0023`; Layer/no-bg cases are much improved, while `0010/0011/0024..0028` remain true16 residuals. | Preserve passing 8bpc behavior, Power fix, Constant binary-threshold path, and depth-gated source-mask rule. Next classify the true16 residual families before further Windows requests; do not use single-case 8bpc runner, PIL/8-bit 16bpc comparison, or CLI reimplementation as Windows-reference truth. |
 | OLMSmoother v1 via Smoother2 compatibility | AE exact for packaged 8bpc v1 slices | untested | untested | 2026-06-20 AE pixel rerun corrected the v1 comp to `960x540`; `case_0001..0003` are exact with `max_diff=0`. Local report: `refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmsmoother_v1_20260619/reports/ae_pixel_exact.json`. | Decide whether v1 remains an independent compatibility path or is formally mapped to Smoother2; add 16/32bpc refs if v1 remains supported. |
 | OLMSmoother2 no-key grid | AE exact for packaged 8bpc grid | untested | untested | 2026-06-19 and 2026-06-20 AE pixel returns are exact for all 12 no-key grid cases with `max_diff=0`; latest local report: `refs/reports/ae_host_validation_20260620_1425/ae_pixel_olmsmoother2_no_key_grid_20260619/reports/ae_pixel_no_key_grid_exact.json`. This supersedes the earlier AE-free near-exact residual as an AE-host conformance fact. Current IR: `notes/IR_OLMSmoother2.md`. | Optional runtime trace only for binary-grounding if it returns; do not spend the next Windows trip on no-key tuning. |
-| OLMSmoother2 legacy current-AEX recapture | guarded / writer-confirmed internal unresolved | untested | untested | 2026-06-21 full current-AEX Software recapture covers all 12 requested legacy cases. With AE-saved premultiplied before frames, `legacy_case_0002` and `legacy_case_0003` are exact. CDB captures final writer values: `0004 (501,1055)` emits `[159,95,95,255]`; `0012 (500,877)` emits `[9,9,9,255]`, ruling out PNG export / byte packing. Mac audit reclassifies the preserved `+0x350b` pre-call `[rsp+0x48]` floats as stale output-buffer content. Promoting Smooth Range threshold for key-enabled class-plane generation moves `0004` to `idx=208` and `cce0_after_b120=[0.34566417,0.11387399,0.11387399,1.0]`, matching the Windows final writer floats within print precision. The 11 before-frame measured cases improve from mean-sum `1.3008` to `0.0589`; remaining residuals are localized (`0004 max=113 mean=0.0045`, `0012 max=91 mean=0.0151`). Mac-side 2026-06-21 audit isolates `0012 (91,841)` to `cardinal6 key=50 -> f270/e170/e3a0`, while automated residual audit shows `0004 (1903,519)` is the opposite failure shape: transparent center, `idx=208`, polygon count `0`, Mac `[0,0,0,0]` vs Windows `[103,103,103,113]`. Decision matrix `refs/reports/olmsmoother2_current_aex_decision_matrix_20260624/decision_matrix.md` rejects global cplane/idx0 toggles, rejects `bb10/curve_idx` as inert, and rejects global `f270` suppression as worse (`mean_sum 0.058945 -> 0.083017`, max `113 -> 169`). Witness contract `refs/reports/olmsmoother2_current_aex_witness_contract_20260624/witness_contract.md` freezes the two active local paths and the exact proof boundary. Neighborhood report `refs/reports/olmsmoother2_witness_neighborhood_20260624/neighborhood.md` further classifies the opposite 5x5 shapes: Windows adds semitransparent output where local passthrough is transparent for `0004`, while local adds semitransparent output where Windows stays transparent for `0012`; next proof should stay at center-pixel `c280/cce0` and strongest-neighbor state, not broad PNGs. Tracked decision `refs/conformance/olmsmoother2_current_aex_8bpc_decision.md` records the earlier 2026-06-25 return, and the new writer-frame bundle analysis upgrades the conclusion: the latest writer-frame floats already explain the Windows reference pixels for both active witnesses, so the remaining blocker is upstream producer selection rather than final writer packing; report: `refs/reports/runtime_trace_bundle/olm_windows_action_bundle_20260629_232710_priority4_runtime_return_windows/smoother2_writer_frame_followup_analysis_20260629.md`. Current IR: `notes/IR_OLMSmoother2.md`. | Keep the Smooth Range threshold fix. Next proof: exact `d3b0/da50/e170/f270/e3a0` state for `0012 (91,841)` and a 0004 polygon/no-polygon proof if Windows runtime tracing resumes; otherwise avoid global alpha/index/curve-index/f270-suppression toggles. |
+| OLMSmoother2 legacy current-AEX recapture | guarded / writer-confirmed internal unresolved | untested | untested | 2026-06-21 full current-AEX Software recapture covers all 12 requested legacy cases. With AE-saved premultiplied before frames, `legacy_case_0002` and `legacy_case_0003` are exact. CDB captures final writer values: `0004 (501,1055)` emits `[159,95,95,255]`; `0012 (500,877)` emits `[9,9,9,255]`, ruling out PNG export / byte packing. Mac audit reclassifies the preserved `+0x350b` pre-call `[rsp+0x48]` floats as stale output-buffer content. Promoting Smooth Range threshold for key-enabled class-plane generation moves `0004` to `idx=208` and `cce0_after_b120=[0.34566417,0.11387399,0.11387399,1.0]`, matching the Windows final writer floats within print precision. The 11 before-frame measured cases improve from mean-sum `1.3008` to `0.0589`; remaining residuals are localized (`0004 max=113 mean=0.0045`, `0012 max=91 mean=0.0151`). Mac-side 2026-06-21 audit isolates `0012 (91,841)` to `cardinal6 key=50 -> f270/e170/e3a0`, while automated residual audit shows `0004 (1903,519)` is the opposite failure shape: transparent center, `idx=208`, polygon count `0`, Mac `[0,0,0,0]` vs Windows `[103,103,103,113]`. Decision matrix `refs/reports/olmsmoother2_current_aex_decision_matrix_20260624/decision_matrix.md` rejects global cplane/idx0 toggles, rejects `bb10/curve_idx` as inert, and rejects global `f270` suppression as worse (`mean_sum 0.058945 -> 0.083017`, max `113 -> 169`). Witness contract `refs/reports/olmsmoother2_current_aex_witness_contract_20260624/witness_contract.md` freezes the two active local paths and the exact proof boundary. Neighborhood report `refs/reports/olmsmoother2_witness_neighborhood_20260624/neighborhood.md` further classifies the opposite 5x5 shapes: Windows adds semitransparent output where local passthrough is transparent for `0004`, while local adds semitransparent output where Windows stays transparent for `0012`; next proof should stay at center-pixel producer/class-plane state, not broad PNGs. Tracked decision `refs/conformance/olmsmoother2_current_aex_8bpc_decision.md` records the earlier 2026-06-25 return, and the writer-frame bundle analysis upgrades the conclusion: the latest writer-frame floats already explain the Windows reference pixels for both active witnesses, so the remaining blocker is upstream producer selection rather than final writer packing; report: `refs/reports/runtime_trace_bundle/olm_windows_action_bundle_20260629_232710_priority4_runtime_return_windows/smoother2_writer_frame_followup_analysis_20260629.md`. The 2026-07-08 local Unicorn producer sweep (`refs/conformance/olmsmoother2_producer_branch_sweep_20260708.md`) narrows `0012` to the exact three e170 bytes and c value (`center=0, prev=1, left_b1=0 -> c=2 -> append`; only `center=0, prev=0, left_b1=1 -> c=4` suppresses f270 locally) and narrows `0004` no-emit to scanner spans/class-prev byte3. Current IR: `notes/IR_OLMSmoother2.md`. | Keep the Smooth Range threshold fix. Next proof: Windows-side producer bytes only: for `0012 (91,841)`, read `center_b0`, `prev_b0`, `left_b1`, and `e170 c`; for `0004 (1903,519)`, read `iVar6`, `iVar5`, `class_prev_b3`, and c280/cce0 output state. Do not request final writer bytes again, and avoid global alpha/index/curve-index/f270-suppression toggles. |
 | OLMDirectionalBlur | blocked | untested | untested | Official manual describes a non-generic anisotropic blur: front/back strengths are asymmetric, transparent pixels are ignored, and Size Variation / Edge Fade / Sharp Tail depend on opaque pixel groups. Current C++ probes remain expected-red after the 2026-06-21 recheck: `rotated-aex-full-choreo case_0001 max=164 mean=4.9570`, `case_0005 max=251 mean=2.2971`; exact rowdriver/scatter variants stay in the same band, and rowdriver-prepass is worse. The 2026-06-22 candidate matrix confirms this split across `case_0001..0005`: measurement scaffolds `rotated-front-strength/direct` have the best total means (`18.197798` / `18.310725`) but are not AEX-structured, while AEX choreography variants cluster around `22.12` and only clearly beat direct on the diagonal `case_0005`; reports: `refs/reports/olmdirectionalblur_candidate_matrix_20260622_010324/candidate_matrix.md` and `refs/reports/olmdirectionalblur_candidate_matrix_20260622_010433/candidate_matrix.md`. The 2026-06-22 residual cluster audit isolates two concrete witnesses for the next runtime proof: angle-0 `case_0001 (494,169)` is `angle0-rgb-only-rowdriver-or-valid-alpha`, Windows `[164,0,0,255]` vs local `[0,0,0,255]`, alpha diff exactly zero; diagonal `case_0005 (507,367)` is `diagonal-rgb-alpha-rotate-validity`, Windows `[1,0,0,255]` vs local `[252,0,0,255]`, with RGB inversion and smaller alpha residuals; report: `refs/reports/olmdirectionalblur_residual_clusters_20260622_022500/residual_clusters.md`; packaged focused request: `refs/runtime_trace_packages/olm_runtime_trace_directionalblur_residual_witness_20260622_022500.zip`. The 2026-06-24 focused return is only `answered_partial`: it includes exact Software reference renders and a prior live-attempt log, but no successful per-pixel rowdriver/rotate-path values because the module did not resolve before the attempt failed. Current comparison: `refs/reports/runtime_trace_comparisons/olmdirectionalblur_residual_witness_20260624.md`. Decision matrix `refs/conformance/olmdirectionalblur_8bpc_decision.md` classifies this as `blocked-await-runtime-or-asm-proof`: no exact candidate, best overall is a non-AEX measurement scaffold, best AEX-shaped candidate still has `max=251`, and the runtime return is not actionable. Witness contract `refs/reports/olmdirectionalblur_witness_contract_20260624/witness_contract.md` freezes the proof boundary: angle-0 rowdriver/valid-alpha and diagonal rotate/sampler/validity must be proven separately; `direct`/`rotated-front-strength` remain measurement baselines only. 2026-06-21 reference audit shows the 20260619 bulk `OLMDirectionalBlur` folder is mixed: 76 PNGs total, only 16 DirectionalBlur; 60 belong to KiraKira/ColorKey/RadialBlur/Smoother2. Current IR: `notes/IR_OLMDirectionalBlur.md`. | Do not tune from broad PNGs or parent folder names. Need a successful focused runtime/asm proof for angle-0 rowdriver accumulation / validity-alpha side channel separately from the diagonal rotate path, plus final normalization and group-size behavior on non-opaque alpha cases. |
 | OLMRadialBlur Zoom / tiny Rotation | guarded / blocked | untested | untested | 2026-06-22 Mac-side recheck: Zoom `case_0009 max=1 mean=0.0046`; tiny Rotation `case_0010 max=255 mean=0.0104` under a mean guard. 2026-06-22 residual cluster audits classify Zoom as `rgba-off-by-one` and tiny Rotation as `high-rgb-border-sampler-or-validity`. The 2026-06-24 focused runtime return narrows this: Zoom final Windows bytes `[20,3,3,254]` are explained by pre-writeback floats, so the mismatch is not a final byte-writer issue but upstream alpha-normalization / sampler-side state. Mac-side witness audit `refs/reports/olmradialblur_zoom_witness_20260624/audit.md` reproduces the local witness: RGB floats match Windows within about `1.3e-7`, local alpha clips to `1.0`, Windows alpha is `0.9999999403953552`, and the only byte delta is alpha `+1`. Tiny Rotation final bytes were captured, but the closest traced inverse-sampler value does not explain the final white pixel, so it remains sampler/validity unresolved rather than rounding. Decision matrix `refs/conformance/olmradialblur_8bpc_decision.md` classifies Zoom as `guarded-alpha-normalization` and tiny Rotation as `blocked-sampler-validity`. Witness contract `refs/reports/olmradialblur_witness_contract_20260624/witness_contract.md` freezes the narrow proof boundary and explicitly rejects final-byte tuning for Zoom plus treating the closest tiny-Rotation sampler return as pre-writeback truth. 2026-06-30 bounded caller-collapse probes reject both `binary-validity` and `zero-rgb-on-invalid`, and a new local witness dump shows `case_0009 (6,0)` remains exactly `[20,3,3,255]` locally even with `--rgba-sampler-alpha-mode repeat-raw`, so the surviving Zoom delta is still caller-side polar alpha/sample collapse rather than the narrow repeat-border alpha rule. A same-day richer witness dump sharpens both lanes further: Zoom's `(6,0)` near-match already uses two `valid=0` contributing cells with nonzero RGBA, so the live issue is not a naive per-cell zero-on-invalid rule; tiny Rotation's `(1614,6)` max witness has all four contributing cells `valid=1` but two negative and two zero RGB contributors, so the black result is upstream in polar RGB population / coordinate choice rather than a last-stage validity gate. A final local clamp probe then shows that clamping negative polar RGB only at the last inverse-sampling stage leaves Zoom unchanged and improves tiny Rotation only marginally (`mean 0.01032034 -> 0.01030189`, `max` still `255`), so that cleanup is not the missing AEX rule either. A nearby patch audit strengthens the remaining call: the Windows output keeps a small bright cluster across `(1612..1614,4..6)` while the candidate preserves surrounding dark/low-gray support pixels but drops that bright lobe entirely, which looks more like a missing bright contribution family than a simple one-pixel output shift. A wider bright-lobe search now makes that even stronger: within a `25x25` window centered on the witness, the reference still has `17` bright pixels (`R>=200`) while the candidate has `0`, so this is not a small local displacement. See `refs/conformance/olmradialblur_local_witness_dumps_20260630.md`, `refs/conformance/olmradialblur_final_polar_rgb_clamp_probe_20260630.md`, `refs/conformance/olmradialblur_tiny_rotation_patch_audit_20260630.md`, and `refs/conformance/olmradialblur_tiny_rotation_bright_lobe_search_20260630.md`. Full Rotation remains expected-red: `case_0001 max=255 mean=1.9034`, `case_0002 max=255 mean=1.3071`. 2026-06-21 reference audit shows same-numbered `case_0001..0013` files conflict between the 20260604 legacy set and the 20260605 extra/img2 set, so do not compare RadialBlur by case number alone. Current IR: `notes/IR_OLMRadialBlur.md`. | AE exact check for Zoom slices and binary-ground the tiny/full Rotation high-max residual before claiming compatibility. Zoom next proof is caller-side polar alpha/sample formation, not final byte packing or naive validity masking; tiny Rotation next proof is the upstream polar RGB / contribution path at the localized high-max witness, not simple final validity gating or a one-pixel output shift. |
 | OLMRadialBlur Inner | binary-grounded / guarded / blocked | untested | untested | Runtime trace confirmed `rb_inner_only_strength_small` helper effective span resolves to `31`; C++ CLI default mirrors the span-31 population and the span-stat guard passes. 2026-06-21 recheck still leaves old Inner expected-red: `case_0011 max=255 mean=23.0495`, `case_0012 max=255 mean=16.0039`, `case_0013 max=238 mean=18.0193`. A Mac-side source-scatter/prepass force does not move those old-Inner means, and the `param10` probe rejects the simple alpha-plane hypothesis: `one/factor` are equivalent while `polar-alpha/prepass-alpha` worsen old Inner and Edge Fade. The 2026-06-22 static scatter audit (`refs/reports/olmradialblur_scatter_static_facts.md`) rejects promoting `loop-minus-one`, `table-span-minus-one`, or `circular-wrap` as global rules: asm shows `R14D = trunc(resolved_distance * span_gate)`, table step `30000/R14D`, inner tail `offset < R14D`, and next-row underflow. Decision matrix `refs/conformance/olmradialblur_8bpc_decision.md` classifies Inner as `blocked-no-global-toggle`: `loop-minus-one` has the best total mean in the wide matrix but no candidate is exact and top candidates still keep `max=255`. The dense RadialBlur comparator separates placeholder-only dense returns from the useful-but-narrow span-31 live fact: dense-all is `trace-structure-present-values-missing`, live-followup is `inner-span-31-registers-only`. 2026-06-21 reference audit also shows 18 RadialBlur bulk files are misplaced under an `OLMDirectionalBlur` folder; key by request filename/manifest, not parent folder. Current IR: `notes/IR_OLMRadialBlur.md`. | Binary-ground the remaining wrong plane/value with typed sampler/scatter/writeback witness values; then Mac AE exact check. Prefer the full 20260617 Inner return for coverage. |
@@ -283,6 +1297,18 @@ Practical rule:
   - `OLMRadialBlur` remains mostly past host-fix: the new UI-surface return
     mainly reconfirms grouped/no-value rows and missing Windows range metadata,
     not missing actionable controls. Keep it on witness-led `binary-proof`.
+- 2026-07-03 Windows fresh defaults/ranges parity snapshot:
+  `refs/conformance/windows_fresh_param_parity_20260703.md`.
+  This freezes the cold-start defaults/range lane into committed artifacts
+  instead of relying only on ignored `refs/reports/*` summaries. Current
+  operational read:
+  - `OLMToonDilate` is the only plug-in that is fully `fixed` in this narrow
+    cold-start parity lane.
+  - `OLMColorKey`, `OLMKiraKira`, `OLMRadialBlur`, and `OLMSmoother2` are
+    `mostly-fixed`: remaining drift is narrow schema/default metadata, not
+    broad missing controls.
+  - none of these rows are algorithm claims; they are host/UI-source-of-truth
+    bookkeeping only.
 - 2026-06-29 UI schema drift audit:
   `refs/reports/param_schema_windows_ref_audit_20260629.md`.
   This separates "same visible parameter set?" from "same algorithm?" using the
@@ -430,12 +1456,11 @@ Practical rule:
 - 2026-06-30 post-4pack queue collapse:
   `refs/reports/pending_runtime_trace_packages.md`.
   After importing the later DistanceGradation boundary return and reclassifying
-  the 4pack, the live Windows runtime queue is now just one package:
-  `refs/runtime_trace_packages/olm_runtime_trace_olmblur_case0006_helper_prestore_witness_20260630.zip`
-  with the current share copy at
-  `/Volumes/onmk/olm_pr/new/olm_runtime_trace_olmblur_case0006_helper_prestore_witness_20260630.zip`.
-  Everything else in the old 4pack remains useful as proof contract material,
-  but not as an outstanding send target.
+  the 4pack, that older one-package statement is no longer current. Treat
+  `refs/reports/pending_runtime_trace_packages.md` as the only live queue
+  authority for runtime requests; share-folder contents may instead be occupied
+  by bit-depth reference bundles such as the 2026-07-03 broad 32bpc EXR-first
+  probe.
 - 2026-06-29 `OLMDirectionalBlur` pending witness-proof contract:
   `refs/conformance/olmdirectionalblur_pending_witness_proof_20260629.md`.
   This sharpens DirectionalBlur into two independent unresolved lanes. The
@@ -475,6 +1500,14 @@ Practical rule:
   this makes broad scatter toggles even less admissible: the next proof target
   is rowdriver/group-membership or hidden validity-side-channel behavior inside
   those fixed left/right boundaries, not another global ownership toggle.
+- 2026-07-07 `OLMDirectionalBlur` angle-0 local static review:
+  `refs/conformance/olmdirectionalblur_angle0_local_static_review_20260707.md`.
+  This re-audits the current Windows send package and confirms that it already
+  targets both `(494,169)` and endpoint `(579,169)` with the necessary
+  denominator / `alpha_or_valid` / pre-writeback / helper-local destination
+  range fields. The lane remains `blocked` until that typed return lands; a
+  module-load-only, final-byte-only, or broad `+0x2000` hit-storm answer stays
+  `answered_partial` / `failed_partial`, not proof.
 
 - 2026-06-25 bit-depth expansion plan:
   `refs/reports/bit_depth_expansion_plan_20260625/bit_depth_plan.md`.

@@ -1,7 +1,15 @@
 # OLMBlur `case_0006` Reference Provenance - 2026-07-01
 
-This note closes the current `case_0006` lane down to a provenance/export
-question rather than a live Mac implementation question.
+> **Evidence correction (2026-07-10):** the claimed Windows helper/pre-store
+> values in this historical note are not runtime-grounded. The CDB target bind
+> failed, no `TARGET_OLMBLUR_CASE0006_*` block was captured, and the later
+> `windows_*` values merely duplicate the Mac values. Do not use the sections
+> below that say Windows and Mac agree internally. The current authority is
+> `refs/conformance/olmblur_case0006_unverified_windows_value_audit_20260710.md`.
+
+This note historically narrowed `case_0006` to a provenance/export question.
+That narrowing is retracted by the correction above; the typed Windows
+helper/pre-store boundary remains open.
 
 ## Scope
 

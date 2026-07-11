@@ -2,6 +2,11 @@
 
 Updated: 2026-06-18 (status correction below supersedes the 2026-06-06 snapshot)
 
+> Historical only. Percentages and pending-request statements below are not a
+> current roadmap. Use `notes/PORTING_ROADMAP.md`,
+> `notes/CONFORMANCE_LEDGER.md`, and
+> `refs/reports/pending_runtime_trace_packages.md`.
+
 This is the parent-owned historical progress matrix for the OLM Tools Apple
 Silicon port.
 

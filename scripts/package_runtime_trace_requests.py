@@ -98,15 +98,31 @@ def parse_args() -> argparse.Namespace:
             "radialblur-tiny-rotation-backstep-followup",
             "radialblur-tiny-rotation-anchor-watch-followup",
             "radialblur-tiny-rotation-anchor-pointer-watch-followup",
+            "radialblur-case0010-final-writeback",
+            "radialblur-zoom-case0009-final-plane-cells",
             "distancegradation-case0023-threshold-followup",
             "distancegradation-case0023-triplet-xy-compose-followup",
             "distancegradation-case0023-output-word-triplet-followup",
             "distancegradation-case0023-refcon-wordmap-followup",
+            "distancegradation-case0023-final-source-ownership",
+            "distancegradation-depthgate-quantization-witness",
+            "distancegradation-depthgate-907-store-export-witness",
+            "distancegradation-case0012-case0014-store-export-rounding",
+            "distancegradation-case0014-layer-source-witness",
+            "distancegradation-0010-0011-field-store-witness",
+            "distancegradation-0010-0011-field-store-prewarm-witness",
+            "distancegradation-0010-0011-writeback-follow-witness",
+            "distancegradation-0010-0011-writeback-pointer-map-witness",
+            "distancegradation-0010-0011-field-world-pack-read-witness",
+            "distancegradation-0010-0011-rdx-producer-packsite-witness",
+            "distancegradation-0010-0011-compose-input-pointer-witness",
+            "distancegradation-0010-0011-compose-exact-address-witness",
             "radialblur-inner-cell-witness",
             "directionalblur-residual-witness",
             "directionalblur-helper-coverage-witness",
             "directionalblur-witness-logging-prep",
             "directionalblur-angle0-helper-gate-retry",
+            "directionalblur-angle0-single-shot-witness",
             "directionalblur-angle0-load-prewarm-retry",
             "windows-ae-runner-startup-diagnostics",
             "windows-ae-addproperty-stall-diagnostics",
@@ -122,6 +138,9 @@ def parse_args() -> argparse.Namespace:
             "smoother2-current-aex-f270-witness",
             "smoother2-current-aex-writer-frame-followup",
             "smoother2-current-aex-producer-path-diff",
+            "smoother2-current-aex-producer-bytes-20260708",
+            "smoother2-current-aex-0012-bind-then-read-20260708",
+            "smoother2-current-aex-0012-typed-bind-read-20260710",
             "smoother2-current-aex-0004-writer-gate-retry",
             "smoother2-current-aex-0004-load-prewarm-retry",
             "distancegradation-field-prep",
@@ -951,6 +970,112 @@ def smoother2_current_aex_producer_path_diff_action() -> dict[str, Any]:
     }
 
 
+def smoother2_current_aex_producer_bytes_20260708_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmsmoother2_current_aex_producer_bytes_20260708",
+        "plugin_area": "OLMSmoother2 current-AEX producer-byte/class-plane witness",
+        "mode": "external-trace",
+        "command": (
+            "Trace only the two active current-AEX Software residual lanes using "
+            "`refs/conformance/olmsmoother2_producer_branch_sweep_20260708.md` "
+            "as the current proof boundary. Do not recapture final writer bytes; "
+            "the final writer is already grounded and repeating it is a failed "
+            "answer. For `legacy_case_0012_gamma5_red_blue_current_aex` at "
+            "`(91,841)`, capture the exact producer bytes that feed "
+            "`FUN_18000e170`: `center_b0`, `prev_b0`, `left_b1`, the resulting "
+            "`e170 c` value, whether `FUN_18000f270` appends, whether "
+            "`FUN_18000e3a0` appends, and the cce0 output floats before final "
+            "u8 packing. The local Mac AEX sweep says `center=0, prev=1, "
+            "left_b1=0 -> c=2 -> append`; the only local no-append pattern in "
+            "the three-byte sweep is `center=0, prev=0, left_b1=1 -> c=4`. "
+            "For `legacy_case_0004_current_aex` at `(1903,519)`, capture the "
+            "`FUN_180013140` scanner state: `iVar6` right span, `iVar5` down "
+            "span, `class_prev_b3`, emit/no-emit guard result, polygon vertex "
+            "count before `bb10/b120`, and cce0 output floats. The local Mac "
+            "AEX sweep says no-emit occurs either when `iVar6>=4 && iVar5>=4`, "
+            "or when `iVar6>=2 && iVar5>=2 && class_prev_b3!=0`. Return only "
+            "same-run typed producer facts for these two witnesses."
+        ),
+        "stop_condition": (
+            "A satisfactory answer must classify the first Windows-vs-Mac "
+            "producer divergence for at least one active lane. For 0012, it "
+            "must include `center_b0`, `prev_b0`, `left_b1`, `e170 c`, and "
+            "append/no-append facts. For 0004, it must include `iVar6`, "
+            "`iVar5`, `class_prev_b3`, emit/no-emit, polygon count, and cce0 "
+            "output or a precise failed-hook reason. Final writer bytes alone, "
+            "broad hit counts, or repeating old writer-frame facts count as "
+            "failed_partial."
+        ),
+    }
+
+
+def smoother2_current_aex_0012_bind_then_read_20260708_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmsmoother2_current_aex_0012_bind_then_read_20260708",
+        "plugin_area": "OLMSmoother2 current-AEX 0012 bind-then-read witness",
+        "mode": "external-trace",
+        "command": (
+            "Trace only `legacy_case_0012_gamma5_red_blue_current_aex` at "
+            "`(91,841)` using the two-stage bind-then-read contract in "
+            "`refs/conformance/olmsmoother2_current_aex_0012_bind_then_read_contract_20260708.md`. "
+            "Do not broaden this run to `0004`, broad PNG rerenders, or final "
+            "writer-byte recapture. Stage A must bind the live producer/class "
+            "buffer for the exact same-run Windows witness and return module "
+            "base, exact hook/breakpoint site, exact case id and pixel xy held "
+            "at the stop, the concrete base/pointer/address arithmetic used to "
+            "recover `center_b0`, `prev_b0`, and `left_b1`, or the exact failed "
+            "bind reason if the witness-local stop cannot be held. Stage B must "
+            "read from that Stage A-bound stop in the same run and return the "
+            "typed producer facts `center_b0`, `prev_b0`, `left_b1`, and "
+            "observed `FUN_18000e170` bitsum `c`. Only after those four fields "
+            "are captured, nice-to-have follow-up values are whether "
+            "`FUN_18000f270` appends or suppresses, whether `FUN_18000e3a0` "
+            "appends or suppresses, and the `cce0` output floats before final "
+            "u8 packing. The current local Mac witness is `center_b0=0`, "
+            "`prev_b0=1`, `left_b1=0`, `c=2`, append on both `f270` and `e3a0`; "
+            "the only local three-byte `f270` no-append family is "
+            "`center_b0=0`, `prev_b0=0`, `left_b1=1`, `c=4`."
+        ),
+        "stop_condition": (
+            "Stop successfully at the first same-run Windows `0012` witness stop "
+            "that binds exact xy `(91,841)` and returns `center_b0`, `prev_b0`, "
+            "`left_b1`, and observed `e170 c`. `answered_partial` is acceptable "
+            "only when Stage A succeeds with the exact pointer recovery route but "
+            "Stage B cannot yet read all four typed fields, or when the run "
+            "returns the exact failed breakpoint/watchpoint condition plus the "
+            "nearest bound pointer context needed for retry. Broad hit counts, "
+            "local Mac facts restated as Windows facts, final writer bytes/floats "
+            "only, or another combined `0012 + 0004` package count as failed."
+        ),
+    }
+
+
+def smoother2_current_aex_0012_typed_bind_read_20260710_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmsmoother2_current_aex_0012_typed_bind_read_20260710",
+        "plugin_area": "OLMSmoother2 current-AEX 0012 strict typed bind/read",
+        "mode": "external-trace",
+        "schema": "olm_smoother2_current_aex_0012_typed_bind_read_return_v2",
+        "command": (
+            "Run exactly one fresh Windows AE Software current-AEX render for "
+            "legacy_case_0012_gamma5_red_blue_current_aex, hold descriptor "
+            "[91,841,1,91,843,5] / idx105, bind the live producer/class buffer, "
+            "then in that same run read class_bytes center_b0/prev_b0/left_b1, "
+            "e170.c, f270 append/source/weight, e3a0 append/source/weight, polygon count, "
+            "cce0 raw/output, and final-writer output. Use the packaged runner "
+            "and its exact hook/address arithmetic. Missing any bind or field is "
+            "exact_bind_failure; never return answered_partial."
+        ),
+        "stop_condition": (
+            "Success requires every schema field from the same run identity. "
+            "A missing module, witness gate, pointer, typed field, or final "
+            "writer must produce exact_bind_failure with stage, concrete reason, "
+            "module/hook/run context, and last observation. Local Mac values, "
+            "final bytes alone, broad hits, or answered_partial are invalid."
+        ),
+    }
+
+
 def smoother2_current_aex_0004_writer_gate_retry_action() -> dict[str, Any]:
     return {
         "request_id": "olmsmoother2_current_aex_0004_writer_gate_retry_20260702",
@@ -1240,6 +1365,396 @@ def distancegradation_case0023_refcon_wordmap_followup_action() -> dict[str, Any
     }
 
 
+def distancegradation_case0023_final_source_ownership_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_case0023_final_source_ownership_20260707",
+        "plugin_area": "OLMDistanceGradation case_0023 final/source ownership proof",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMDistanceGradation normalized Software 16bpc "
+            "`olmdistancegradation_extended__case_0023`, focused on the two remaining "
+            "representative pixels `(1699,7)` and `(415,393)`. The Mac-side 2026-07-07 "
+            "neighborhood probe already proves the request input PNG matches the Mac "
+            "PF_Pixel16 source, the Mac shade stores match the Mac PNG, and the checked "
+            "3x3 neighborhoods disagree with Windows only at those two pixels. Do not "
+            "rerun the old broad threshold/refcon stack hunt. For each representative "
+            "pixel and its immediate matching controls `(1698,7)`, `(1700,7)`, "
+            "`(414,393)`, `(415,394)`, `(416,393)`, capture the same-run Windows source pixel words, "
+            "mask/alpha ownership, field value consumed by the final compose/writeback "
+            "path, final pre-store RGBA/word values, and exported RGBA16. The answer "
+            "must explain why `(1699,7)` is red/transparent-owned on Windows while its "
+            "neighbors align with Mac, and why `(415,393)` stays blue-owned on Windows "
+            "while `(415,394)` and `(416,393)` are red/transparent-owned."
+        ),
+        "stop_condition": (
+            "Return enough typed same-run values to decide whether the two remaining "
+            "case_0023 mismatches are caused by Windows source/mask ownership, final "
+            "compose/writeback ownership, or an export/path split. A final PNG restatement "
+            "alone is not enough. If the exact store hook cannot be isolated, return the "
+            "precise failed hook/watchpoint reason and the closest retained frame that "
+            "still exposes source words, consumed field value, output address, and final "
+            "pre-store words for `(1699,7)` or `(415,393)`."
+        ),
+    }
+
+
+def distancegradation_depthgate_quantization_witness_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_depthgate_quantization_witness_20260708",
+        "plugin_area": "OLMDistanceGradation 16bpc depth-gate case_0026/0027 quantization witness",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMDistanceGradation normalized Software 16bpc "
+            "`olmdistancegradation_extended__case_0026`, with `case_0027` as an optional Render Mode "
+            "control. Follow `refs/conformance/olmdistancegradation_depthgate_quantization_witness_contract_20260708.md`. "
+            "The depth-gated Mac build already closes case_0023; do not rerun the old source-mask, "
+            "field, threshold, or Both-combine proof. Primary pixels are case_0026 `(907,222)`, "
+            "`(395,477)`, `(1589,579)`, and `(898,670)`. Capture source RGBA16, consumed field/X, "
+            "X before/after invert and after power interpolation, render-mode branch, output RGBA float "
+            "immediately before PF_Pixel16 conversion, PF_Pixel16 store words, and exported RGBA16/PNG "
+            "bytes from the same run if observable. The decision needed is whether the Windows/Mac max=1 "
+            "near-miss comes from interpolation/compose float, PF_Pixel16 store rounding/clamp, or "
+            "AE/PNG export quantization."
+        ),
+        "stop_condition": (
+            "A satisfactory answer classifies at least two case_0026 representative pixels with typed "
+            "values. One fully classified pixel, or callback-local float/store values without export, "
+            "counts as partial. Final PNG bytes alone, broad callback hit counts, or a repeated case_0023 "
+            "field/source-mask proof count as failure."
+        ),
+    }
+
+
+def distancegradation_case0014_layer_source_witness_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_case0014_layer_source_witness_20260708",
+        "plugin_area": "OLMDistanceGradation 16bpc case_0014 Layer-source ownership proof",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMDistanceGradation normalized Software 16bpc "
+            "`olmdistancegradation_extended__case_0014`, focused on the Layer/no-bg source-ownership "
+            "witness pixels `(1652,2)` and `(461,6)`. Follow "
+            "`refs/conformance/olmdistancegradation_case0014_layer_source_witness_contract_20260708.md`. "
+            "This is not a case_0023 source-mask retry and not a `case_0024..0027` export-quantization "
+            "probe. The 2026-07-08 return was `failed_partial` because it only restated package-local "
+            "PNG/residual evidence; do not repeat that shape. Capture consumed source-layer RGBA16, source "
+            "RGB before/after unpremultiply, ownership alpha/mask, field pixel/channels presented to compose, "
+            "final X/d_alpha/out_a, output RGBA float immediately before `CVTTSS2SI`, final stored RGBA16, "
+            "and exported RGBA16/PNG bytes if observable in the same live callback run."
+        ),
+        "stop_condition": (
+            "A satisfactory answer proves whether Windows case_0014 still follows straight source RGB times "
+            "output alpha at both witness pixels, or consumes a different source form before compose. One "
+            "complete pixel or source/field records without downstream writeback count as partial. Final PNG "
+            "bytes alone, broad hit counts, surrogate cases, package-local PNG artifacts, or a restatement of "
+            "the old residual report count as failure."
+        ),
+    }
+
+
+def distancegradation_0010_0011_field_store_witness_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_0010_0011_field_store_witness_20260709",
+        "plugin_area": "OLMDistanceGradation 16bpc case_0010/0011 sparse R/A PF16 store proof",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMDistanceGradation normalized Software 16bpc "
+            "`olmdistancegradation_extended__case_0010`, with "
+            "`olmdistancegradation_extended__case_0011` as an optional control. Follow "
+            "`refs/conformance/olmdistancegradation_0010_0011_field_store_witness_contract_20260709.md`. "
+            "This is not a broad PNG rerun and not a distance-field topology hunt. Local Mac proof already shows "
+            "Mac Meijster EDT and the repository OpenCV-compatible EDT are bit-identical at the target fields, "
+            "and simple field-pack/store simulations do not safely classify the residual. Primary pixels are "
+            "case_0010 `(6,40)` where Mac store is one word low versus Windows, and case_0010 `(901,394)` where "
+            "Mac store is one word high versus Windows. Optional control is case_0011 `(915,392)`. Capture "
+            "fresh same-run Windows AEX values, not package-local recomputation. The first 2026-07-09 return was "
+            "`failed_partial` because it only restated local/implied store directions without binding the live "
+            "Windows path. Capture "
+            "same-run source RGBA16, inside/outside raw distance, normalized field consumed by compose, "
+            "field-world stored value if present, final compose `out_a`/RGBA float immediately before "
+            "PF_Pixel16 conversion, PF_Pixel16 stored RGBA words immediately after writeback, and exported "
+            "true16/TIFF/EXR sample if observable. Prefer TIFF or EXR for export evidence; PNG/display bytes "
+            "alone are not enough."
+        ),
+        "stop_condition": (
+            "A satisfactory answer binds field, pre-store float, PF16 store word, and exported true16 value for "
+            "both primary case_0010 pixels so the sign-flipping one-word alpha split can be classified as "
+            "field/normalization, PF16 conversion, or export behavior. One complete primary pixel counts as "
+            "partial. Final PNG values alone, package-local recomputation, broad hit counts, or a repeated "
+            "case_0023/depthgate proof count as failure."
+        ),
+    }
+
+
+def distancegradation_0010_0011_field_store_prewarm_witness_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_0010_0011_field_store_prewarm_witness_20260709",
+        "plugin_area": "OLMDistanceGradation 16bpc case_0010/0011 sparse R/A PF16 store proof with module prewarm",
+        "mode": "external-trace",
+        "command": (
+            "LIVE NEW TRACE REQUIRED. Follow "
+            "`refs/conformance/olmdistancegradation_0010_0011_field_store_prewarm_contract_20260709.md`. "
+            "Use the exact normalized Software 16bpc request "
+            "`ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625` and start with "
+            "`olmdistancegradation_extended__case_0010`. This retry exists because the previous "
+            "`olmdistancegradation_0010_0011_field_store_witness_20260709` run launched AE/CDB but did not reach "
+            "the `DistanceGradation.aex` module-load stop, so the coordinate-gated hooks never armed. Do not start "
+            "with only the final pixel gates. First run a load-only or prewarm render that proves "
+            "`DistanceGradation.aex` module load and returns the module base for this exact request/case path. "
+            "Only after module load is proven in the same AE session, bind the narrow final compose/writeback "
+            "witnesses for case_0010 `(6,40)` and `(901,394)`. Optional control: case_0011 `(915,392)`. Capture "
+            "source RGBA16, raw inside/outside distance, normalized field consumed by compose, field-world stored "
+            "word/value if present, final compose `out_a`/RGBA float immediately before PF_Pixel16 conversion, "
+            "PF_Pixel16 stored RGBA words immediately after writeback, and exported true16 TIFF/EXR sample if "
+            "observable. PNG/display bytes alone are not enough."
+        ),
+        "stop_condition": (
+            "A satisfactory answer first proves `DistanceGradation.aex` module load for the exact case path, then "
+            "binds field, pre-store float, PF16 store word, and exported true16 value for both primary case_0010 "
+            "pixels in the same run. One fully typed primary pixel after proven module load counts as partial. If "
+            "module load still fails, return the exact AE/CDB command, timeout/process state, and startup log tail; "
+            "a module-load failure without that diagnostic context counts as failed. Package-local recomputation, "
+            "Windows-implied store words, PNG residual direction, broad hit counts, or final display bytes alone "
+            "are failed_partial."
+        ),
+    }
+
+
+def distancegradation_0010_0011_writeback_follow_witness_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_0010_0011_writeback_follow_witness_20260709",
+        "plugin_area": "OLMDistanceGradation 16bpc case_0010/0011 0x117051c to PF interleave/writeback proof",
+        "mode": "external-trace",
+        "command": (
+            "LIVE NEW TRACE REQUIRED. Follow "
+            "`refs/conformance/olmdistancegradation_0010_0011_writeback_follow_contract_20260709.md`. "
+            "Use the exact normalized Software 16bpc request "
+            "`ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625`, starting with "
+            "`olmdistancegradation_extended__case_0010`. This supersedes the broad field/store retry tactic. "
+            "The 2026-07-09 return proves `DistanceGradation.aex` module-load reliability, the live callback/store "
+            "path at `DistanceGradation+0x1170480`, and a stable hardware-entry path reaching "
+            "`DistanceGradation+0x117051c`. Do not use resident software/hardware breakpoints at "
+            "`DistanceGradation+0x1170509` unless you provide a new guard, because both variants failed before "
+            "store samples. Continue from the hardware-entry freeze past `DistanceGradation+0x117051c` into "
+            "PF interleave/writeback. Target case_0010 `(6,40)` and `(901,394)`; optional control case_0011 "
+            "`(915,392)`. Capture same-run source RGBA16 if still available, normalized field/`out_a`, pre-store "
+            "float RGBA, PF interleave inputs/outputs/registers, PF_Pixel16 stored words, and the exported "
+            "true16 TIFF/EXR sample tied to the same render. Use symbol-free compact step logging plus `ln @rip` "
+            "postprocessing if CDB `.if` on `PF!PF_Interleave1to4<float>` is fragile."
+        ),
+        "stop_condition": (
+            "Satisfactory: for both primary case_0010 pixels, capture a same-run chain from `+0x117051c` through "
+            "PF interleave/writeback to PF16 store/export, enough to classify the sign-flipping one-word alpha "
+            "split as pre-store float, PF16 conversion, or export behavior. Partial: one primary pixel is fully "
+            "typed, or module/load/writeback-path addresses are proven with the exact downstream blocker. Failure: "
+            "PNG/display bytes only, package-local recomputation, local/implied store words, broad hit counts, or "
+            "another `+0x1170509` resident breakpoint miss without new address context."
+        ),
+    }
+
+
+def distancegradation_0010_0011_writeback_pointer_map_witness_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_0010_0011_writeback_pointer_map_witness_20260709",
+        "plugin_area": "OLMDistanceGradation 16bpc case_0010/0011 output pointer/stride to PF16 writeback proof",
+        "mode": "external-trace",
+        "command": (
+            "LIVE NEW TRACE REQUIRED. Follow "
+            "`refs/conformance/olmdistancegradation_0010_0011_writeback_pointer_map_contract_20260709.md`. "
+            "Use the exact normalized Software 16bpc request "
+            "`ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625`, starting with "
+            "`olmdistancegradation_extended__case_0010`. This supersedes the writeback-follow request. The previous "
+            "return reached `DistanceGradation+0x117051c` and PF!PF_Interleave1to4<float>+0x1585..+0x15a9, retaining "
+            "rdi/rdx/r8/r9 and xmm values, but did not bind those writes to `(6,40)` or `(901,394)`. First derive "
+            "the output world base pointer, rowbytes/stride, pixel size/channel layout, and exact output addresses "
+            "for case_0010 `(6,40)` and `(901,394)`. Then data-watch or conditionally log only when PF interleave/"
+            "writeback spans those addresses. Capture same-run pre-store float, PF16 stored words, and true16 TIFF/"
+            "EXR export tied to the same render. Avoid decorated `PF!PF_Interleave1to4<float>` in CDB `.if`/`bu`; "
+            "use wildcard `bm PF!*Interleave1to4*`, numeric resolved addresses, or symbol-free step logging."
+        ),
+        "stop_condition": (
+            "Satisfactory: explicit output pointer/stride/pixel-size map plus same-run pre-store/PF16/export evidence "
+            "for both primary case_0010 pixels. Partial: one primary pixel is address-bound and fully typed, or the "
+            "map is explicit but the target watchpoint fails with exact address/register reason. Failure: broad PF "
+            "interleave hits without target address mapping, PNG/display bytes only, package-local recomputation, "
+            "Windows-implied store words, or another decorated-symbol CDB failure without numeric fallback."
+        ),
+    }
+
+
+def distancegradation_0010_0011_field_world_pack_read_witness_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_0010_0011_field_world_pack_read_witness_20260709",
+        "plugin_area": "OLMDistanceGradation 16bpc case_0010/0011 field-world pack/read proof",
+        "mode": "external-trace",
+        "command": (
+            "LIVE NEW TRACE REQUIRED. Follow "
+            "`refs/conformance/olmdistancegradation_0010_0011_field_world_pack_read_contract_20260709.md`. "
+            "Use the exact normalized Software 16bpc request "
+            "`ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625`, starting with "
+            "`olmdistancegradation_extended__case_0010`. This supersedes the writeback-pointer-map request. "
+            "The previous return already binds the final output address formula and PF16 output words, while "
+            "the local real-AEX fieldgen probe shows the helper float values match current Mac and the "
+            "Windows-required field-word relation sign-flips: outside `(6,40)` follows floor, inside "
+            "`(901,394)` and optional case_0011 `(915,392)` require ceil. Do not retread broad PF writeback "
+            "or final writer tuning. Bind the live Windows field-world pack/read boundary before "
+            "`FUN_181170480`: source alpha/mask, raw distance, threshold-clamped value, min/max or denominator, "
+            "field float, field-world pointer/rowbytes/pixel layout, stored field word(s), value read by "
+            "`FUN_181170480`, compose/pre-store float, final PF16 output word, and true16 TIFF/EXR export "
+            "if available."
+        ),
+        "stop_condition": (
+            "Satisfactory: both primary case_0010 pixels bind field float, field-world stored/read value, "
+            "compose/pre-store float, and final PF16 output word, explaining the floor/ceil split or proving "
+            "it occurs before field-world packing. Partial: one primary pixel is fully typed, or the field-world "
+            "pointer/layout is explicit but the target watchpoint fails with exact address/register reason. "
+            "Failure: broad PF interleave hits without field-world pack/read binding, final PNG/display bytes "
+            "only, package-local recomputation, Windows-implied store words without a live stop, or resending "
+            "the old pointer-map result unchanged."
+        ),
+    }
+
+
+def distancegradation_0010_0011_rdx_producer_packsite_witness_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_0010_0011_rdx_producer_packsite_witness_20260709",
+        "plugin_area": "OLMDistanceGradation 16bpc case_0010/0011 rdx producer / field-world pack-site proof",
+        "mode": "external-trace",
+        "command": (
+            "LIVE NEW TRACE REQUIRED. Follow "
+            "`refs/conformance/olmdistancegradation_0010_0011_rdx_producer_packsite_contract_20260709.md`. "
+            "Use the exact normalized Software 16bpc request "
+            "`ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625`, starting with "
+            "`olmdistancegradation_extended__case_0010`. The previous return "
+            "`partial_success_fieldread_boundary_not_pack` captured the final-writer read-side candidate "
+            "`rdx` at `DistanceGradation+0x1170814`: `(6,40)` reads all-zero source words, `(901,394)` "
+            "reads alternating `8000 8000 0000 0000`, and the retained run had `rdx = rdi - 0xfe0000`. "
+            "Do not repeat broad PF interleave or the same final writer boundary. Recompute live `rdi` "
+            "from `base + y * 0x3c00 + x * 8`, derive the same-run candidate `rdx`, then watch writes to "
+            "those `rdx` addresses before `DistanceGradation+0x1170814`. Identify the producer "
+            "instruction/function/callsite, stored words/bytes, field/pre-compose scalar, and whether the "
+            "floor/ceil split appears before packing, at packing, or after readback."
+        ),
+        "stop_condition": (
+            "Satisfactory: both primary case_0010 pixels bind the producer of their `rdx` read-side buffer "
+            "with producer instruction/function, stored words/bytes, and field/pre-compose scalar values. "
+            "Partial: one primary pixel is fully typed, or both derived `rdx` addresses are watched and the "
+            "watchpoint miss is explained with exact addresses and logs. Failure: broad PF interleave/final "
+            "writer hits only, final PNG/display bytes only, package-local recomputation, or a repeated "
+            "field-world pack/read boundary stop without upstream producer identification."
+        ),
+    }
+
+
+def distancegradation_0010_0011_compose_input_pointer_witness_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_0010_0011_compose_input_pointer_witness_20260709",
+        "plugin_area": "OLMDistanceGradation 16bpc case_0010/0011 compose input pointer proof",
+        "mode": "external-trace",
+        "command": (
+            "LIVE NEW TRACE REQUIRED. Follow "
+            "`refs/conformance/olmdistancegradation_0010_0011_compose_input_pointer_contract_20260709.md`. "
+            "Use the exact normalized Software 16bpc request "
+            "`ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625`, starting with "
+            "`olmdistancegradation_extended__case_0010`. Static asm shows the prior late `rdx` capture at "
+            "`DistanceGradation+0x1170814` was source/shade input from `param_1[0]`, not the field-world. "
+            "Bind both inputs: `RCX` field-world words at `DistanceGradation+0x117057d` and `RDX` "
+            "source/shade words at `DistanceGradation+0x11705f1`, for `(6,40)` and `(901,394)`. "
+            "Record field scalar `XMM1/XMM2` before/after invert, source/shade words, and final writer "
+            "scalars at `+0x1170808/+0x1170814/+0x117081c/+0x1170824`. If feasible, watch the `RCX` "
+            "field-world address backwards to the producer/pack-site."
+        ),
+        "stop_condition": (
+            "Satisfactory: both primary case_0010 pixels bind same-run `RCX` field-world words, `RDX` "
+            "source/shade words, `XMM1/XMM2` field scalars, and final writer scalars; producer/pack-site "
+            "for `RCX` is identified or the consumed field words explain the residual boundary. Partial: "
+            "one primary pixel is fully typed, or `RCX`/`RDX` are bound for both pixels but producer watch "
+            "misses with exact logs. Failure: final writer/PF interleave only, treating late `RDX` source "
+            "words as field proof, final PNG bytes only, or package-local recomputation."
+        ),
+    }
+
+
+def distancegradation_0010_0011_compose_exact_address_witness_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_0010_0011_compose_exact_address_witness_20260710",
+        "plugin_area": "OLMDistanceGradation 16bpc case_0010/0011 compose exact-address proof",
+        "mode": "external-trace",
+        "command": (
+            "LIVE NEW TRACE REQUIRED. Follow "
+            "`refs/conformance/olmdistancegradation_0010_0011_compose_exact_address_contract_20260710.md`. "
+            "Use the exact normalized Software 16bpc request "
+            "`ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625`, starting with "
+            "`olmdistancegradation_extended__case_0010`. The previous compose-input return confirmed "
+            "`RCX` is field-world at `DistanceGradation+0x117057d` and `RDX` is source/shade at "
+            "`DistanceGradation+0x11705f1`, but exact `(6,40)` and `(901,394)` were missed because "
+            "`rbp=y` is not a reliable discriminator. Derive or log field/source/output base pointers, "
+            "rowbytes, pixel size, and any sub-rect offsets, compute exact target addresses, then gate "
+            "`+0x117057d`, `+0x11705f1`, and final writer sites by address equality/range rather than "
+            "`rbp`. Capture same-run `RCX` field words, `RDX` source words, compose scalars, and final "
+            "PF16 store words for both target pixels."
+        ),
+        "stop_condition": (
+            "Satisfactory: both primary case_0010 pixels have address-bound same-run `RCX` field words, "
+            "`RDX` source words, compose scalars, final store words, and the explicit address formula. "
+            "Partial: one target is fully typed, or both target addresses are derived and the hook/watch "
+            "miss is explained with exact logs. Failure: broad `r9=x` logs only, another `rbp=y` gate, "
+            "final writer/PF interleave only without address-bound input reads, PNG/display bytes only, "
+            "or package-local recomputation."
+        ),
+    }
+
+
+def distancegradation_depthgate_907_store_export_witness_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_depthgate_907_store_export_witness_20260708",
+        "plugin_area": "OLMDistanceGradation 16bpc case_0026 single-pixel PF16 store/export proof",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMDistanceGradation normalized Software 16bpc "
+            "`olmdistancegradation_extended__case_0026` at witness pixel `(907,222)`. Follow "
+            "`refs/conformance/olmdistancegradation_depthgate_907_store_export_witness_contract_20260708.md`. "
+            "This is not a broad depthgate representative rerun and not a case_0014 Layer-source request. "
+            "Capture the target output-world address, output RGBA float immediately before PF_Pixel16 "
+            "conversion, PF_Pixel16 words immediately after store, and the exported RGBA16/display byte from "
+            "the same run if observable. If a file export is needed, prefer TIFF/EXR over a PNG-only return."
+        ),
+        "stop_condition": (
+            "A satisfactory answer proves whether Windows stores B as zero before export, or stores a small "
+            "positive B that export quantizes to byte zero. PF_Pixel16 store words without export count as "
+            "partial. Final PNG/display bytes alone, broad hit counts, or a repeated four-pixel depthgate "
+            "batch count as failure."
+        ),
+    }
+
+
+def distancegradation_case0012_case0014_store_export_rounding_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdistancegradation_case0012_case0014_store_export_rounding_20260708",
+        "plugin_area": "OLMDistanceGradation 16bpc Layer/no-bg store/export rounding proof",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMDistanceGradation normalized Software 16bpc "
+            "`olmdistancegradation_extended__case_0012` and `olmdistancegradation_extended__case_0014` "
+            "at representative residual pixels from "
+            "`refs/conformance/olmdistancegradation_case0012_dominant_channel_closeout_20260708.md`. "
+            "For case_0012, use a max-2 rounding representative such as `(438,0)` or `(657,0)`. "
+            "For case_0014, use a max-4 representative such as `(448,0)` or `(752,10)`. "
+            "Capture source RGBA16, consumed normalized source RGBA, field X/d_alpha, composed RGBA float "
+            "immediately before PF_Pixel16 conversion, PF_Pixel16 words immediately after store, and the "
+            "exported true16/TIFF/EXR value from the same run if observable. Prefer TIFF or EXR for the "
+            "exported value; PNG-only final bytes are not enough."
+        ),
+        "stop_condition": (
+            "A satisfactory answer binds pre-store float, PF16 store word, and exported true16 value for at "
+            "least one case_0012 pixel and one case_0014 pixel. If Windows pre-store and PF16 store match "
+            "Mac but export differs, classify as host/export rounding. If Windows pre-store differs, return "
+            "the source/compose inputs that explain it. Final PNG/display values alone, broad hit counts, "
+            "or package-local recomputation count as failed_partial."
+        ),
+    }
+
+
 def radialblur_dense_action() -> dict[str, Any]:
     return {
         "request_id": "olmradialblur_dense_sampler_trace_20260620",
@@ -1380,6 +1895,32 @@ def radialblur_tiny_rotation_backstep_followup_action() -> dict[str, Any]:
             "ownership, or another pre-inverse-sample branch. If the breakpoint/watchpoint still fails, "
             "return the exact failed address/condition and the closest earlier stage that remains "
             "stable from the inverse-sampler anchor."
+        ),
+    }
+
+
+def radialblur_case0010_final_writeback_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmradialblur_case0010_final_writeback_20260708",
+        "plugin_area": "OLMRadialBlur case_0010 tiny Rotation final writeback/provenance witness",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMRadialBlur tiny Rotation `case_0010` witness `(1614,6)` on the current "
+            "Windows AE Software AEX path. Follow "
+            "`refs/conformance/olmradialblur_case0010_final_writeback_contract_20260708.md`. "
+            "Local CPU AEX emulation already returns black from the collapsed `+0xe` final sampler path, "
+            "while the legacy Windows PNG is white. This is not a broad caller-collapse retry and not a "
+            "low-alpha/span/wrap tuning request. Capture the final inverse-sampler coordinate, the four "
+            "contributing polar cells around `(1603.839558785,844.317504883)`, each cell's `+0xf250.rgba`, "
+            "`+0xf252`, collapsed `+0xe.rgba`, the direct inverse-sampler result from `+0xe`, final output "
+            "buffer RGBA immediately after writeback for `(1614,6)`, and exported RGBA8/PNG byte from the "
+            "same run if observable. The needed classification is CPU-side rule gap vs final output/export "
+            "path split vs stale/reference-provenance drift."
+        ),
+        "stop_condition": (
+            "A satisfactory answer includes typed `+0xf250`, `+0xf252`, `+0xe`, output-buffer, and exported-byte "
+            "or precise failed-hook evidence for `(1614,6)`. Returning only final PNG bytes, repeating the old "
+            "anchor-context request, or reopening low-alpha/span/wrap hypotheses counts as failure."
         ),
     }
 
@@ -1602,6 +2143,31 @@ def directionalblur_angle0_helper_gate_retry_action() -> dict[str, Any]:
     }
 
 
+def directionalblur_angle0_single_shot_witness_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmdirectionalblur_angle0_single_shot_witness_20260708",
+        "plugin_area": "OLMDirectionalBlur angle-0 single-shot helper/writeback witness",
+        "mode": "external-trace",
+        "command": (
+            "LIVE NEW TRACE REQUIRED. Follow "
+            "`refs/conformance/olmdirectionalblur_angle0_single_shot_witness_contract_20260708.md`. "
+            "Use only the real request set `directionalblur_context_scale_20260606`, case "
+            "`db_existing_case_0001_software_pair`, and only the angle-0 lane. The 2026-07-07 retry "
+            "already proved module and broad stage reachability; do not repeat broad `gc` auto-continue "
+            "or diagonal capture. Gate on the exact witness pixels `(494,169)` and `(579,169)` and retain "
+            "the first qualifying helper/writeback event. Capture normalized parameters, output-to-A/B or "
+            "rotated-buffer mapping, helper-local source x/y, touched destination x range on row 169, "
+            "rowdriver/group membership, denominator, `alpha_or_valid`, accumulation numerator RGBA, "
+            "pre-writeback RGBA float/hex, and final stored bytes."
+        ),
+        "stop_condition": (
+            "A satisfactory answer returns typed same-run witness records for both `(494,169)` and "
+            "`(579,169)`. Broad hit storms, module-load-only proof, final bytes alone, surrogate cases, "
+            "or PNG restatements count as failure."
+        ),
+    }
+
+
 def directionalblur_angle0_load_prewarm_retry_action() -> dict[str, Any]:
     return {
         "request_id": "olmdirectionalblur_angle0_load_prewarm_retry_20260703",
@@ -1728,6 +2294,41 @@ def dense_live_followup_actions() -> list[dict[str, Any]]:
     return actions
 
 
+def radialblur_zoom_case0009_final_plane_cells_action() -> dict[str, Any]:
+    return {
+        "request_id": "olmradialblur_zoom_case0009_final_plane_cells_20260709",
+        "plugin_area": "OLMRadialBlur Zoom case_0009 final polar-plane cell witness",
+        "mode": "external-trace",
+        "command": (
+            "Trace only OLMRadialBlur old 8bpc Software `case_0009` from "
+            "`refs/win_references/20260604_olm/OLMRadialBlur`, following "
+            "`refs/conformance/olmradialblur_zoom_case0009_final_plane_cells_contract_20260709.md`. "
+            "Do not recapture broad PNGs and do not tune from appearance. For top-row "
+            "primary pixels `(6,0)`, `(7,0)`, `(12,0)` and controls `(3,0)`, "
+            "`(4,0)`, `(8,0)`, `(10,0)`, `(11,0)`, `(13,0)`, `(24,0)`, "
+            "`(25,0)`, `(26,0)`, `(27,0)`, `(28,0)`, capture the final inverse-sampler "
+            "coordinate, radius/angle cell indices, the four final polar-plane cells, "
+            "their RGBA/alpha floats, bilinear weights, final alpha sum, pre-byte RGBA "
+            "float if observable, final RGBA8 byte, and the hook/breakpoint address. "
+            "The first 2026-07-09 return was `failed_partial` because it restated "
+            "package-local candidate cells without same-run Windows typed values. "
+            "Do not answer a retry with local candidate analysis, inferred offsets, "
+            "or PNG residual direction. Prioritize `(7,0)`: local probes currently "
+            "see four alpha-1.0 cells there while Windows still writes alpha 254. "
+            "The local best candidate is `cpp-double` source cells with angle offset "
+            "`+1`, radius offset `-2`, and truncate; it hits the three Windows alpha=254 "
+            "targets but creates many false positives, so Windows cell identity is the "
+            "proof needed."
+        ),
+        "stop_condition": (
+            "Return same-run typed final-plane cell facts for all three primary pixels "
+            "and at least four controls, or the exact failed hook/watchpoint reason. "
+            "Final PNG bytes, broad wrapper hit counts, or restating the local candidate "
+            "without Windows cell ids count as failed_partial."
+        ),
+    }
+
+
 def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, Any]]:
     if profile == "dense-all":
         return dense_all_actions()
@@ -1773,6 +2374,10 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [radialblur_tiny_rotation_anchor_watch_followup_action()]
     if profile == "radialblur-tiny-rotation-anchor-pointer-watch-followup":
         return [radialblur_tiny_rotation_anchor_pointer_watch_followup_action()]
+    if profile == "radialblur-case0010-final-writeback":
+        return [radialblur_case0010_final_writeback_action()]
+    if profile == "radialblur-zoom-case0009-final-plane-cells":
+        return [radialblur_zoom_case0009_final_plane_cells_action()]
     if profile == "distancegradation-case0023-threshold-followup":
         return [distancegradation_case0023_threshold_followup_action()]
     if profile == "distancegradation-case0023-triplet-xy-compose-followup":
@@ -1781,6 +2386,32 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [distancegradation_case0023_output_word_triplet_followup_action()]
     if profile == "distancegradation-case0023-refcon-wordmap-followup":
         return [distancegradation_case0023_refcon_wordmap_followup_action()]
+    if profile == "distancegradation-case0023-final-source-ownership":
+        return [distancegradation_case0023_final_source_ownership_action()]
+    if profile == "distancegradation-depthgate-quantization-witness":
+        return [distancegradation_depthgate_quantization_witness_action()]
+    if profile == "distancegradation-depthgate-907-store-export-witness":
+        return [distancegradation_depthgate_907_store_export_witness_action()]
+    if profile == "distancegradation-case0012-case0014-store-export-rounding":
+        return [distancegradation_case0012_case0014_store_export_rounding_action()]
+    if profile == "distancegradation-case0014-layer-source-witness":
+        return [distancegradation_case0014_layer_source_witness_action()]
+    if profile == "distancegradation-0010-0011-field-store-witness":
+        return [distancegradation_0010_0011_field_store_witness_action()]
+    if profile == "distancegradation-0010-0011-field-store-prewarm-witness":
+        return [distancegradation_0010_0011_field_store_prewarm_witness_action()]
+    if profile == "distancegradation-0010-0011-writeback-follow-witness":
+        return [distancegradation_0010_0011_writeback_follow_witness_action()]
+    if profile == "distancegradation-0010-0011-writeback-pointer-map-witness":
+        return [distancegradation_0010_0011_writeback_pointer_map_witness_action()]
+    if profile == "distancegradation-0010-0011-field-world-pack-read-witness":
+        return [distancegradation_0010_0011_field_world_pack_read_witness_action()]
+    if profile == "distancegradation-0010-0011-rdx-producer-packsite-witness":
+        return [distancegradation_0010_0011_rdx_producer_packsite_witness_action()]
+    if profile == "distancegradation-0010-0011-compose-input-pointer-witness":
+        return [distancegradation_0010_0011_compose_input_pointer_witness_action()]
+    if profile == "distancegradation-0010-0011-compose-exact-address-witness":
+        return [distancegradation_0010_0011_compose_exact_address_witness_action()]
     if profile == "radialblur-inner-cell-witness":
         return [radialblur_inner_cell_witness_action()]
     if profile == "directionalblur-residual-witness":
@@ -1791,6 +2422,8 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [directionalblur_witness_logging_prep_action()]
     if profile == "directionalblur-angle0-helper-gate-retry":
         return [directionalblur_angle0_helper_gate_retry_action()]
+    if profile == "directionalblur-angle0-single-shot-witness":
+        return [directionalblur_angle0_single_shot_witness_action()]
     if profile == "directionalblur-angle0-load-prewarm-retry":
         return [directionalblur_angle0_load_prewarm_retry_action()]
     if profile == "windows-ae-runner-startup-diagnostics":
@@ -1821,6 +2454,12 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
         return [smoother2_current_aex_writer_frame_followup_action()]
     if profile == "smoother2-current-aex-producer-path-diff":
         return [smoother2_current_aex_producer_path_diff_action()]
+    if profile == "smoother2-current-aex-producer-bytes-20260708":
+        return [smoother2_current_aex_producer_bytes_20260708_action()]
+    if profile == "smoother2-current-aex-0012-bind-then-read-20260708":
+        return [smoother2_current_aex_0012_bind_then_read_20260708_action()]
+    if profile == "smoother2-current-aex-0012-typed-bind-read-20260710":
+        return [smoother2_current_aex_0012_typed_bind_read_20260710_action()]
     if profile == "smoother2-current-aex-0004-writer-gate-retry":
         return [smoother2_current_aex_0004_writer_gate_retry_action()]
     if profile == "smoother2-current-aex-0004-load-prewarm-retry":
@@ -1840,15 +2479,61 @@ def selected_actions(snapshot: dict[str, Any], profile: str) -> list[dict[str, A
 
 def package_manifest(root: Path, snapshot: dict[str, Any], profile: str) -> dict[str, Any]:
     actions = selected_actions(snapshot, profile)
+    if profile == "distancegradation-case0023-final-source-ownership":
+        entrypoint = "refs/conformance/olmdistancegradation_case0023_final_source_ownership_contract_20260707.md"
+    elif profile == "distancegradation-depthgate-quantization-witness":
+        entrypoint = "refs/conformance/olmdistancegradation_depthgate_quantization_witness_contract_20260708.md"
+    elif profile == "distancegradation-depthgate-907-store-export-witness":
+        entrypoint = "refs/conformance/olmdistancegradation_depthgate_907_store_export_witness_contract_20260708.md"
+    elif profile == "distancegradation-case0012-case0014-store-export-rounding":
+        entrypoint = "refs/conformance/olmdistancegradation_case0012_case0014_store_export_rounding_contract_20260708.md"
+    elif profile == "distancegradation-case0014-layer-source-witness":
+        entrypoint = "refs/conformance/olmdistancegradation_case0014_layer_source_witness_contract_20260708.md"
+    elif profile == "distancegradation-0010-0011-field-store-witness":
+        entrypoint = "refs/conformance/olmdistancegradation_0010_0011_field_store_witness_contract_20260709.md"
+    elif profile == "distancegradation-0010-0011-field-store-prewarm-witness":
+        entrypoint = "refs/conformance/olmdistancegradation_0010_0011_field_store_prewarm_contract_20260709.md"
+    elif profile == "distancegradation-0010-0011-writeback-follow-witness":
+        entrypoint = "refs/conformance/olmdistancegradation_0010_0011_writeback_follow_contract_20260709.md"
+    elif profile == "distancegradation-0010-0011-writeback-pointer-map-witness":
+        entrypoint = "refs/conformance/olmdistancegradation_0010_0011_writeback_pointer_map_contract_20260709.md"
+    elif profile == "distancegradation-0010-0011-field-world-pack-read-witness":
+        entrypoint = "refs/conformance/olmdistancegradation_0010_0011_field_world_pack_read_contract_20260709.md"
+    elif profile == "distancegradation-0010-0011-rdx-producer-packsite-witness":
+        entrypoint = "refs/conformance/olmdistancegradation_0010_0011_rdx_producer_packsite_contract_20260709.md"
+    elif profile == "distancegradation-0010-0011-compose-input-pointer-witness":
+        entrypoint = "refs/conformance/olmdistancegradation_0010_0011_compose_input_pointer_contract_20260709.md"
+    elif profile == "distancegradation-0010-0011-compose-exact-address-witness":
+        entrypoint = "refs/conformance/olmdistancegradation_0010_0011_compose_exact_address_contract_20260710.md"
+    elif profile == "radialblur-case0010-final-writeback":
+        entrypoint = "refs/conformance/olmradialblur_case0010_final_writeback_contract_20260708.md"
+    elif profile == "radialblur-zoom-case0009-final-plane-cells":
+        entrypoint = "refs/conformance/olmradialblur_zoom_case0009_final_plane_cells_contract_20260709.md"
+    elif profile == "directionalblur-angle0-single-shot-witness":
+        entrypoint = "refs/conformance/olmdirectionalblur_angle0_single_shot_witness_contract_20260708.md"
+    elif profile == "smoother2-current-aex-producer-bytes-20260708":
+        entrypoint = "refs/conformance/olmsmoother2_current_aex_producer_bytes_contract_20260708.md"
+    elif profile == "smoother2-current-aex-0012-bind-then-read-20260708":
+        entrypoint = "refs/conformance/olmsmoother2_current_aex_0012_bind_then_read_contract_20260708.md"
+    elif profile == "smoother2-current-aex-0012-typed-bind-read-20260710":
+        entrypoint = "refs/conformance/olmsmoother2_current_aex_0012_typed_bind_read_contract_20260710.md"
+    else:
+        entrypoint = str(TRACE_NOTE)
     return {
         "kind": "olm_runtime_trace_request_package",
         "schema": 1,
+        "request_schema": (
+            "olm_smoother2_current_aex_0012_typed_bind_read_return_v2"
+            if profile == "smoother2-current-aex-0012-typed-bind-read-20260710"
+            else None
+        ),
         "profile": profile,
         "packaged_at": dt.datetime.now(dt.UTC).replace(microsecond=0).isoformat(),
         "repo_root_name": root.name,
         "runtime_actions": [
             {
                 "request_id": action.get("request_id"),
+                "request_schema": action.get("schema"),
                 "plugin_area": action.get("plugin_area"),
                 "mode": action.get("mode"),
                 "command": action.get("command"),
@@ -1856,24 +2541,282 @@ def package_manifest(root: Path, snapshot: dict[str, Any], profile: str) -> dict
             }
             for action in actions
         ],
-        "entrypoint": str(TRACE_NOTE),
+        "entrypoint": entrypoint,
     }
 
 
 def build_readme(manifest: dict[str, Any]) -> str:
     actions = manifest["runtime_actions"]
     live_followup = manifest.get("profile") == "dense-live-followup"
+    final_source_ownership = manifest.get("profile") == "distancegradation-case0023-final-source-ownership"
+    depthgate_quantization = manifest.get("profile") == "distancegradation-depthgate-quantization-witness"
+    depthgate_907_store_export = manifest.get("profile") == "distancegradation-depthgate-907-store-export-witness"
+    dg_case0012_case0014_rounding = manifest.get("profile") == "distancegradation-case0012-case0014-store-export-rounding"
+    dg_case0014_layer_source = manifest.get("profile") == "distancegradation-case0014-layer-source-witness"
+    dg_0010_0011_field_store = manifest.get("profile") == "distancegradation-0010-0011-field-store-witness"
+    dg_0010_0011_field_store_prewarm = (
+        manifest.get("profile") == "distancegradation-0010-0011-field-store-prewarm-witness"
+    )
+    dg_0010_0011_writeback_follow = (
+        manifest.get("profile") == "distancegradation-0010-0011-writeback-follow-witness"
+    )
+    dg_0010_0011_writeback_pointer_map = (
+        manifest.get("profile") == "distancegradation-0010-0011-writeback-pointer-map-witness"
+    )
+    dg_0010_0011_field_world_pack_read = (
+        manifest.get("profile") == "distancegradation-0010-0011-field-world-pack-read-witness"
+    )
+    dg_0010_0011_rdx_producer_packsite = (
+        manifest.get("profile") == "distancegradation-0010-0011-rdx-producer-packsite-witness"
+    )
+    dg_0010_0011_compose_input_pointer = (
+        manifest.get("profile") == "distancegradation-0010-0011-compose-input-pointer-witness"
+    )
+    dg_0010_0011_compose_exact_address = (
+        manifest.get("profile") == "distancegradation-0010-0011-compose-exact-address-witness"
+    )
+    radialblur_final_writeback = manifest.get("profile") == "radialblur-case0010-final-writeback"
+    radialblur_zoom_case0009_cells = manifest.get("profile") == "radialblur-zoom-case0009-final-plane-cells"
+    directionalblur_single_shot = manifest.get("profile") == "directionalblur-angle0-single-shot-witness"
+    smoother2_producer_bytes = manifest.get("profile") == "smoother2-current-aex-producer-bytes-20260708"
+    smoother2_bind_then_read = manifest.get("profile") == "smoother2-current-aex-0012-bind-then-read-20260708"
+    if final_source_ownership:
+        entrypoint = "refs/conformance/olmdistancegradation_case0023_final_source_ownership_contract_20260707.md"
+    elif depthgate_quantization:
+        entrypoint = "refs/conformance/olmdistancegradation_depthgate_quantization_witness_contract_20260708.md"
+    elif depthgate_907_store_export:
+        entrypoint = "refs/conformance/olmdistancegradation_depthgate_907_store_export_witness_contract_20260708.md"
+    elif dg_case0012_case0014_rounding:
+        entrypoint = "refs/conformance/olmdistancegradation_case0012_case0014_store_export_rounding_contract_20260708.md"
+    elif dg_case0014_layer_source:
+        entrypoint = "refs/conformance/olmdistancegradation_case0014_layer_source_witness_contract_20260708.md"
+    elif dg_0010_0011_field_store:
+        entrypoint = "refs/conformance/olmdistancegradation_0010_0011_field_store_witness_contract_20260709.md"
+    elif dg_0010_0011_field_store_prewarm:
+        entrypoint = "refs/conformance/olmdistancegradation_0010_0011_field_store_prewarm_contract_20260709.md"
+    elif dg_0010_0011_writeback_follow:
+        entrypoint = "refs/conformance/olmdistancegradation_0010_0011_writeback_follow_contract_20260709.md"
+    elif dg_0010_0011_writeback_pointer_map:
+        entrypoint = "refs/conformance/olmdistancegradation_0010_0011_writeback_pointer_map_contract_20260709.md"
+    elif dg_0010_0011_field_world_pack_read:
+        entrypoint = "refs/conformance/olmdistancegradation_0010_0011_field_world_pack_read_contract_20260709.md"
+    elif dg_0010_0011_rdx_producer_packsite:
+        entrypoint = "refs/conformance/olmdistancegradation_0010_0011_rdx_producer_packsite_contract_20260709.md"
+    elif dg_0010_0011_compose_input_pointer:
+        entrypoint = "refs/conformance/olmdistancegradation_0010_0011_compose_input_pointer_contract_20260709.md"
+    elif dg_0010_0011_compose_exact_address:
+        entrypoint = "refs/conformance/olmdistancegradation_0010_0011_compose_exact_address_contract_20260710.md"
+    elif radialblur_final_writeback:
+        entrypoint = "refs/conformance/olmradialblur_case0010_final_writeback_contract_20260708.md"
+    elif radialblur_zoom_case0009_cells:
+        entrypoint = "refs/conformance/olmradialblur_zoom_case0009_final_plane_cells_contract_20260709.md"
+    elif directionalblur_single_shot:
+        entrypoint = "refs/conformance/olmdirectionalblur_angle0_single_shot_witness_contract_20260708.md"
+    elif smoother2_producer_bytes:
+        entrypoint = "refs/conformance/olmsmoother2_current_aex_producer_bytes_contract_20260708.md"
+    elif smoother2_bind_then_read:
+        entrypoint = "refs/conformance/olmsmoother2_current_aex_0012_bind_then_read_contract_20260708.md"
+    else:
+        entrypoint = str(TRACE_NOTE)
     lines = [
         "# OLM Runtime Trace Request Package",
         "",
         "This zip is for the Windows machine / Windows Codex session.",
         "It asks for debugger or exact-library primitive facts, not another PNG render batch.",
         "",
-        f"Entrypoint: `{TRACE_NOTE}`",
+        f"Entrypoint: `{entrypoint}`",
         "",
         "Priority order:",
         "",
     ]
+    if final_source_ownership:
+        lines.extend(
+            [
+                "Important: this package has one authoritative request.",
+                "",
+                "- Execute `olmdistancegradation_case0023_final_source_ownership_20260707` only.",
+                "- Ignore older stack/refcon, field-helper, and broad compose-retune requests unless they are named in this README.",
+                "- Minimum useful return: source RGBA16, mask/alpha, consumed field, pre-store RGBA/word, final stored RGBA16, exported RGBA16, or the exact failed hook/watchpoint reason.",
+                "",
+            ]
+        )
+    if depthgate_quantization:
+        lines.extend(
+            [
+                "Important: this package has one authoritative request.",
+                "",
+                "- Execute `olmdistancegradation_depthgate_quantization_witness_20260708` only.",
+                "- This is not a case_0023/source-mask retry; case_0023 is already closed by the depth gate.",
+                "- Minimum useful return: for at least one representative pixel, either (a) output float + PF_Pixel16 store words, with export bytes if observable, or (b) a precise failed hook/watchpoint reason.",
+                "- The included `reference_manifest.json` is metadata only; if it contains an original Windows absolute `request_dir`, ignore that path and use the package-local `request_manifest.json`, `input/`, and `expected/` files.",
+                "",
+            ]
+        )
+    if dg_case0014_layer_source:
+        lines.extend(
+            [
+                "Important: this package has one authoritative request.",
+                "",
+                "- Execute `olmdistancegradation_case0014_layer_source_witness_20260708` only.",
+                "- This is not a case_0023/depth-gate retry and not a 0024..0027 export-quantization probe.",
+                "- Previous 2026-07-08 return was `failed_partial`: package-local PNG/residual evidence is not enough.",
+                "- Minimum useful return: one complete fresh live callback witness with source RGBA16, field/compose inputs, pre-store float, and final stored RGBA16.",
+                "- If the live callback cannot be stopped, return the exact hook/watchpoint failure reason and do not mark the request answered.",
+                "",
+            ]
+        )
+    if depthgate_907_store_export:
+        lines.extend(
+            [
+                "Important: this package has one authoritative request.",
+                "",
+                "- Execute `olmdistancegradation_depthgate_907_store_export_witness_20260708` only.",
+                "- This is the single unresolved `(907,222)` pixel from the depthgate max=1 family.",
+                "- Do not repeat the broad four-pixel depthgate batch and do not include case_0014 Layer-source work.",
+                "- Minimum useful return: PF_Pixel16 store words for `(907,222)` plus same-run export byte, or the precise failed hook/watchpoint reason.",
+                "",
+            ]
+        )
+    if dg_0010_0011_field_store:
+        lines.extend(
+            [
+                "Important: this package has one authoritative request.",
+                "",
+                "- Execute `olmdistancegradation_0010_0011_field_store_witness_20260709` only.",
+                "- This is not a broad PNG rerun and not a distance-field topology hunt.",
+                "- Local Mac EDT paths already match at the target fields; the remaining question is field/store/export ownership for the sign-flipping one-word alpha split.",
+                "- Previous 2026-07-09 return was `failed_partial`: local/implied store directions are not enough.",
+                "- Do not answer with package-local recomputation, Windows-implied store words, PNG residual direction, or broad hit counts.",
+                "- Minimum useful return: for both primary case_0010 pixels, bind normalized field, pre-store float, PF_Pixel16 store word, and exported true16/TIFF/EXR value from the same run.",
+                "- Final PNG/display values alone, package-local recomputation, or broad hit counts are failed_partial.",
+                "",
+            ]
+        )
+    if dg_0010_0011_field_store_prewarm:
+        lines.extend(
+            [
+                "Important: this package has one authoritative request.",
+                "",
+                "- Execute `olmdistancegradation_0010_0011_field_store_prewarm_witness_20260709` only.",
+                "- This is a retry of the failed_partial 0010/0011 field/store witness with a different tactic.",
+                "- First prove `DistanceGradation.aex` module load for the exact 16bpc case path; do not begin with only the final coordinate-gated hooks.",
+                "- After module load is proven in the same AE session, capture case_0010 `(6,40)` and `(901,394)` field/pre-store/PF16/export values.",
+                "- If module load still fails, return the exact AE/CDB command, timeout/process state, and startup log tail.",
+                "- Package-local recomputation, Windows-implied store words, PNG residual direction, broad hit counts, or display bytes alone are failed_partial.",
+                "",
+            ]
+        )
+    if dg_0010_0011_writeback_follow:
+        lines.extend(
+            [
+                "Important: this package has one authoritative request.",
+                "",
+                "- Execute `olmdistancegradation_0010_0011_writeback_follow_witness_20260709` only.",
+                "- This supersedes the broad 0010/0011 field/store retry tactic.",
+                "- Module load is already proven reliable by the latest failed_partial return; the new target is the writeback path after `DistanceGradation+0x117051c`.",
+                "- Avoid resident breakpoints at `DistanceGradation+0x1170509`; both software and hardware variants failed before store samples.",
+                "- Continue from hardware-entry freeze past `DistanceGradation+0x117051c` into PF interleave/writeback.",
+                "- Minimum useful return: case_0010 `(6,40)` and `(901,394)` with same-run pre-store float, PF interleave context, PF16 store words, and true16 TIFF/EXR export tied to the same render.",
+                "- PNG/display bytes, package-local recomputation, Windows-implied store words, or broad hit counts are failed_partial.",
+                "",
+            ]
+        )
+    if dg_0010_0011_writeback_pointer_map:
+        lines.extend(
+            [
+                "Important: this package has one authoritative request.",
+                "",
+                "- Execute `olmdistancegradation_0010_0011_writeback_pointer_map_witness_20260709` only.",
+                "- This supersedes the 0010/0011 writeback-follow request.",
+                "- Previous evidence reached `DistanceGradation+0x117051c` and PF interleave, but did not bind the contract pixels.",
+                "- First derive output base pointer, rowbytes/stride, pixel size/channel layout, and exact addresses for case_0010 `(6,40)` and `(901,394)`.",
+                "- Then data-watch or conditionally log only PF interleave/writeback spans covering those target addresses.",
+                "- Avoid decorated `PF!PF_Interleave1to4<float>` CDB expressions; use wildcard/numeric/symbol-free logging.",
+                "- PNG/display bytes, package-local recomputation, Windows-implied store words, or broad PF hits without address mapping are failed_partial.",
+                "",
+            ]
+        )
+    if dg_0010_0011_compose_exact_address:
+        lines.extend(
+            [
+                "Important: this package has one authoritative request.",
+                "",
+                "- Execute `olmdistancegradation_0010_0011_compose_exact_address_witness_20260710` only.",
+                "- This supersedes the compose-input pointer request.",
+                "- Previous evidence proved `RCX` is field-world and `RDX` is source/shade, but the exact `(6,40)` and `(901,394)` pixels were not bound.",
+                "- Do not use `rbp=y`; the previous return proved that gate is not valid here.",
+                "- First derive field/source/output base pointers, rowbytes, pixel size, and any sub-rect offsets.",
+                "- Then bind `+0x117057d`, `+0x11705f1`, and final writer sites by exact address equality/range.",
+                "- Minimum useful return: address-bound same-run field words, source words, compose scalars, and PF16 store words for both target pixels.",
+                "- Broad `r9=x` hits, final writer only, PNG/display bytes, or package-local recomputation are failed_partial.",
+                "",
+            ]
+        )
+    if dg_0010_0011_field_world_pack_read:
+        lines.extend(
+            [
+                "Important: this package has one authoritative request.",
+                "",
+                "- Execute `olmdistancegradation_0010_0011_field_world_pack_read_witness_20260709` only.",
+                "- This supersedes the 0010/0011 writeback-pointer-map request.",
+                "- Previous evidence already binds final output address/PF16 words; do not spend time on broad PF writeback again.",
+                "- The local real-AEX fieldgen probe reproduces current Mac field floats, but Windows-required field words split floor/ceil by witness.",
+                "- Minimum useful return: for both primary case_0010 pixels, bind field float, field-world stored/read value, compose/pre-store float, and final PF16 output word.",
+                "- True16 TIFF/EXR export is useful as confirmation, but the core proof is field-world pack/read before `FUN_181170480`.",
+                "- Final PNG/display bytes, package-local recomputation, Windows-implied words, or the old pointer-map result alone are failed_partial.",
+                "",
+            ]
+        )
+    if dg_case0012_case0014_rounding:
+        lines.extend(
+            [
+                "Important: this package has one authoritative request.",
+                "",
+                "- Execute `olmdistancegradation_case0012_case0014_store_export_rounding_20260708` only.",
+                "- This is not a broad Layer-source retune request. Mac side already reduced case_0012 to max 2 and preserved case_0013/0014/0016 at 2/4/2.",
+                "- Minimum useful return: for one case_0012 pixel and one case_0014 pixel, bind pre-store float, PF_Pixel16 store word, and exported true16/TIFF/EXR value from the same run.",
+                "- Final PNG/display values alone, package-local recomputation, or broad hit counts are failed_partial.",
+                "",
+            ]
+        )
+    if radialblur_final_writeback:
+        lines.extend(
+            [
+                "Important: this package has one authoritative request.",
+                "",
+                "- Execute `olmradialblur_case0010_final_writeback_20260708` only.",
+                "- This is not a low-alpha, broad caller-collapse, or PNG tuning retry.",
+                "- Minimum useful return: the same-run typed values for `+0xf250.rgba`, `+0xf252`, collapsed `+0xe.rgba`, output-buffer RGBA, and exported byte for `case_0010` pixel `(1614,6)`, or the precise failed hook/watchpoint reason.",
+                "- Do not place this ahead of the active DistanceGradation depthgate quantization package unless the Mac side explicitly re-queues it.",
+                "",
+            ]
+        )
+    if radialblur_zoom_case0009_cells:
+        lines.extend(
+            [
+                "Important: this package has one authoritative request.",
+                "",
+                "- Execute `olmradialblur_zoom_case0009_final_plane_cells_20260709` only.",
+                "- This is not a broad PNG recapture and not a Tiny Rotation case_0010 request.",
+                "- Previous 2026-07-09 return was `failed_partial`: package-local candidate analysis is not enough.",
+                "- Do not answer with local candidate cells, inferred offsets, PNG residual direction, or wrapper hit counts.",
+                "- Prioritize `(7,0)`: the current local 4-cell set is all alpha 1.0, but Windows writes alpha 254.",
+                "- Minimum useful return: same-run final polar-plane cell ids/alphas for `(6,0)`, `(7,0)`, `(12,0)` plus at least four controls.",
+                "- Final PNG/display values alone or local-candidate restatement is failed_partial.",
+                "",
+            ]
+        )
+    if directionalblur_single_shot:
+        lines.extend(
+            [
+                "Important: this package has one authoritative request.",
+                "",
+                "- Execute `olmdirectionalblur_angle0_single_shot_witness_20260708` only.",
+                "- This is not a diagonal request and not a broad hit-storm retry.",
+                "- Minimum useful return: typed same-run witness records for `(494,169)` and `(579,169)`, including helper-local coverage, denominator, validity/alpha, accumulation/prewriteback, and final stored bytes, or the precise failed gate reason.",
+                "",
+            ]
+        )
     if live_followup:
         lines.extend(
             [
@@ -1905,6 +2848,44 @@ def build_readme(manifest: dict[str, Any]) -> str:
         ]
     )
     return "\n".join(lines)
+
+
+def build_package_snapshot(manifest: dict[str, Any], snapshot: dict[str, Any]) -> dict[str, Any]:
+    """Keep focused packages from carrying stale generic next-action guidance."""
+    if manifest.get("profile") in {
+        "distancegradation-case0023-final-source-ownership",
+        "distancegradation-depthgate-quantization-witness",
+        "distancegradation-depthgate-907-store-export-witness",
+        "distancegradation-case0012-case0014-store-export-rounding",
+        "distancegradation-case0014-layer-source-witness",
+        "distancegradation-0010-0011-field-store-witness",
+        "distancegradation-0010-0011-field-store-prewarm-witness",
+        "distancegradation-0010-0011-writeback-follow-witness",
+        "distancegradation-0010-0011-writeback-pointer-map-witness",
+        "distancegradation-0010-0011-field-world-pack-read-witness",
+        "distancegradation-0010-0011-rdx-producer-packsite-witness",
+        "distancegradation-0010-0011-compose-input-pointer-witness",
+        "distancegradation-0010-0011-compose-exact-address-witness",
+        "radialblur-case0010-final-writeback",
+        "radialblur-zoom-case0009-final-plane-cells",
+        "directionalblur-angle0-single-shot-witness",
+    }:
+        return {
+            "kind": "focused_runtime_trace_package_snapshot",
+            "schema": 1,
+            "profile": manifest.get("profile"),
+            "note": (
+                "This package is authoritative for only the runtime_actions below. "
+                "Ignore generic next_action guidance from older queue snapshots while answering it."
+            ),
+            "runtime_actions": manifest.get("runtime_actions", []),
+            "original_next_action_request_id": (
+                (snapshot.get("next_action") or {}).get("request_id")
+                if isinstance(snapshot.get("next_action"), dict)
+                else None
+            ),
+        }
+    return snapshot
 
 
 def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
@@ -2221,6 +3202,190 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 ],
             }
             summary = "Fill with OLMBlur residual pre-writeback/writeback and Legacy border trace facts."
+        elif request_id == "olmdistancegradation_case0023_final_source_ownership_20260707":
+            observations = {
+                "effect": "OLM Distance Gradation",
+                "module_base": "0x...",
+                "focus": (
+                    "Final/source ownership proof for the two remaining 16bpc case_0023 "
+                    "representative pixels after Mac-side source, field, shade, and store "
+                    "probes were bounded."
+                ),
+                "known_facts_to_preserve": [
+                    "Packaged/current Windows Software references are byte-identical for case_0023.",
+                    "Mac shade source matches the request input PNG under AE PF_Pixel16 promotion.",
+                    "Mac shade stores match the Mac PNG; PNG/export packing is not the Mac-side seam.",
+                    "The checked 3x3 neighborhoods disagree with Windows only at (1699,7) and (415,393).",
+                    "Do not use this request to justify broad field-helper, Both-merge, or compose retuning.",
+                ],
+                "case": {
+                    "case_id": "olmdistancegradation_extended__case_0023",
+                    "bit_depth": "16bpc",
+                    "renderer": "Windows AE Software",
+                    "params": {
+                        "in_out": "Both",
+                        "inside_threshold": 36,
+                        "outside_threshold": 0,
+                        "render_mode": "RGB",
+                        "use_background_color": "capture both existing bg_on reference and bg_off variant if feasible",
+                        "interpolation_mode": "Constant",
+                        "invert": 0,
+                    },
+                    "representative_pixels": [
+                        {
+                            "xy": [1698, 7],
+                            "role": "edge-family matching control before bad edge pixel",
+                            "mac_field_x": 0.0,
+                            "mac_source_rgba16": [47, 47, 47, 1799],
+                            "windows_bg_on_rgba16": [7195, 0, 61165, 65535],
+                            "mac_bg_on_rgba16": [7195, 0, 61165, 65535],
+                            "windows_bg_off_rgba16": [7195, 0, 61165, 65535],
+                            "mac_bg_off_rgba16": [7195, 0, 61165, 65535],
+                        },
+                        {
+                            "xy": [1699, 7],
+                            "role": "edge-family mismatch representative",
+                            "mac_field_x": 0.0,
+                            "mac_source_rgba16": [0, 0, 0, 257],
+                            "windows_bg_on_rgba16": [65535, 0, 0, 65535],
+                            "mac_bg_on_rgba16": [7195, 0, 61165, 65535],
+                            "windows_bg_off_rgba16": [0, 0, 0, 0],
+                            "mac_bg_off_rgba16": [7195, 0, 61165, 65535],
+                        },
+                        {
+                            "xy": [1700, 7],
+                            "role": "edge-family matching control after bad edge pixel",
+                            "mac_field_x": 1.0,
+                            "mac_source_rgba16": [0, 0, 0, 0],
+                            "windows_bg_on_rgba16": [65535, 0, 0, 65535],
+                            "mac_bg_on_rgba16": [65535, 0, 0, 65535],
+                            "windows_bg_off_rgba16": [0, 0, 0, 0],
+                            "mac_bg_off_rgba16": [0, 0, 0, 0],
+                        },
+                        {
+                            "xy": [414, 393],
+                            "role": "threshold-family matching control below bad threshold pixel",
+                            "mac_field_x": 0.0,
+                            "mac_source_rgba16": [65535, 0, 0, 65535],
+                            "windows_bg_on_rgba16": [7195, 0, 61165, 65535],
+                            "mac_bg_on_rgba16": [7195, 0, 61165, 65535],
+                            "windows_bg_off_rgba16": [7195, 0, 61165, 65535],
+                            "mac_bg_off_rgba16": [7195, 0, 61165, 65535],
+                        },
+                        {
+                            "xy": [415, 393],
+                            "role": "threshold-family mismatch representative",
+                            "mac_field_x": 1.0,
+                            "mac_source_rgba16": [65535, 0, 0, 65535],
+                            "windows_bg_on_rgba16": [7195, 0, 61165, 65535],
+                            "mac_bg_on_rgba16": [65535, 0, 0, 65535],
+                            "windows_bg_off_rgba16": [7195, 0, 61165, 65535],
+                            "mac_bg_off_rgba16": [0, 0, 0, 0],
+                        },
+                        {
+                            "xy": [415, 394],
+                            "role": "threshold-family matching control below bad threshold pixel",
+                            "mac_field_x": 1.0,
+                            "mac_source_rgba16": [65535, 0, 0, 65535],
+                            "windows_bg_on_rgba16": [65535, 0, 0, 65535],
+                            "mac_bg_on_rgba16": [65535, 0, 0, 65535],
+                            "windows_bg_off_rgba16": [0, 0, 0, 0],
+                            "mac_bg_off_rgba16": [0, 0, 0, 0],
+                        },
+                        {
+                            "xy": [416, 393],
+                            "role": "threshold-family matching control after bad threshold pixel",
+                            "mac_field_x": 1.0,
+                            "mac_source_rgba16": [65535, 0, 0, 65535],
+                            "windows_bg_on_rgba16": [65535, 0, 0, 65535],
+                            "mac_bg_on_rgba16": [65535, 0, 0, 65535],
+                            "windows_bg_off_rgba16": [0, 0, 0, 0],
+                            "mac_bg_off_rgba16": [0, 0, 0, 0],
+                        },
+                    ],
+                },
+                "requested_for_each_pixel": {
+                    "source_input_rgba16": [None, None, None, None],
+                    "source_alpha_or_mask_used_for_ownership": None,
+                    "binary_mask_value_before_distance_transform": None,
+                    "inside_distance_before_threshold": None,
+                    "outside_distance_before_threshold": None,
+                    "field_value_after_constant_threshold_before_compose": None,
+                    "field_value_consumed_by_final_compose_or_store": None,
+                    "fun_181170480_or_final_writeback_output_rgba_before_word_store": [None, None, None, None],
+                    "final_stored_rgba16": [None, None, None, None],
+                    "exported_rgba16": [None, None, None, None],
+                    "directly_observed_vs_inferred": {
+                        "directly_observed": [],
+                        "static_or_decomp_inferred": [],
+                        "not_isolated": [],
+                    },
+                },
+                "answer_classification": {
+                    "edge_family_1699_7": "windows-source-mask | final-compose/writeback | export-path-split | unresolved",
+                    "threshold_family_415_393": "windows-source-mask | final-compose/writeback | export-path-split | unresolved",
+                    "recommended_next_mac_action": None,
+                },
+            }
+            summary = "Fill with Windows final/source ownership facts for the two remaining DG case_0023 pixels."
+        elif request_id == "olmradialblur_case0010_final_writeback_20260708":
+            observations = {
+                "effect": "OLM RadialBlur",
+                "module_base": "0x...",
+                "aex_path_or_version": None,
+                "case_id": "case_0010",
+                "path": "tiny Rotation",
+                "witness": {
+                    "x": 1614,
+                    "y": 6,
+                    "reference_rgba": [255, 255, 255, 255],
+                    "mac_candidate_rgba": [0, 0, 0, 255],
+                    "local_inverse_sampler_xy": [1603.839558785, 844.317504883],
+                    "local_direct_e_rgba_float": [-0.004081939, -0.004081939, -0.004081939, 1.0],
+                    "local_direct_e_rgba8": [0, 0, 0, 255],
+                    "local_output_world_rgba8": [0, 0, 0, 0],
+                },
+                "same_run_values": {
+                    "final_inverse_sampler_xy": [None, None],
+                    "polar_cells": [
+                        {
+                            "cell_xy": [1603, 844],
+                            "f250_rgba_float": [None, None, None, None],
+                            "f252_validity_or_alpha": None,
+                            "collapsed_e_rgba_float": [None, None, None, None],
+                        },
+                        {
+                            "cell_xy": [1604, 844],
+                            "f250_rgba_float": [None, None, None, None],
+                            "f252_validity_or_alpha": None,
+                            "collapsed_e_rgba_float": [None, None, None, None],
+                        },
+                        {
+                            "cell_xy": [1603, 845],
+                            "f250_rgba_float": [None, None, None, None],
+                            "f252_validity_or_alpha": None,
+                            "collapsed_e_rgba_float": [None, None, None, None],
+                        },
+                        {
+                            "cell_xy": [1604, 845],
+                            "f250_rgba_float": [None, None, None, None],
+                            "f252_validity_or_alpha": None,
+                            "collapsed_e_rgba_float": [None, None, None, None],
+                        },
+                    ],
+                    "direct_inverse_sampler_result_rgba_float": [None, None, None, None],
+                    "pre_writeback_rgba_float_or_hex": [None, None, None, None],
+                    "output_buffer_rgba_after_writeback": [None, None, None, None],
+                    "exported_rgba8_or_png_byte": [None, None, None, None],
+                    "alternate_final_output_path_if_any": None,
+                },
+                "classification": (
+                    "cpu-rule-gap | final-writeback-export-split | stale-reference-or-aex-drift | "
+                    "answered_partial | failed_hook"
+                ),
+                "failed_breakpoint_or_watchpoint_reason": None,
+            }
+            summary = "Fill with same-run OLMRadialBlur case_0010 final writeback/provenance witness facts."
         elif request_id in {
             "olmblur_last1px_runtime_trace_20260629",
             "olmblur_final_word_witness_20260630",
@@ -3047,68 +4212,107 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
         elif request_id in {
             "olmdirectionalblur_angle0_diagonal_residual_witness_20260622",
             "olmdirectionalblur_helper_coverage_witness_20260630",
+            "olmdirectionalblur_angle0_single_shot_witness_20260708",
         }:
-            observations = {
-                "effect": "OLM DirectionalBlur",
-                "module_base": "0x...",
-                "residual_cluster_report": (
-                    "refs/reports/olmdirectionalblur_residual_clusters_20260622_022500/residual_clusters.md"
-                ),
-                "candidate_under_test": "rotated-aex-full-choreo",
-                "cases": [
-                    {
-                        "case_id": "case_0001",
-                        "path": "angle-0/front-only",
-                        "local_classification": "broad RGB residual; candidate misses red band while alpha matches",
-                        "witness": {
+            directionalblur_cases = [
+                {
+                    "case_id": "case_0001",
+                    "path": "angle-0/front-only",
+                    "local_classification": "broad RGB residual; candidate misses red band while alpha matches",
+                    "witness": {
+                        "x": 494,
+                        "y": 169,
+                        "reference_rgba": [164, 0, 0, 255],
+                        "mac_candidate_rgba": [0, 0, 0, 255],
+                        "signed_delta_candidate_minus_reference": [-164, 0, 0, 0],
+                    },
+                    "companion_witnesses": [
+                        {
+                            "x": 579,
+                            "y": 169,
+                            "role": "strip-right-endpoint",
+                        },
+                        {
+                            "x": 380,
+                            "y": 169,
+                            "role": "strip-left-endpoint-optional",
+                        },
+                    ],
+                    "aex_parameter_normalization": {
+                        "angle": None,
+                        "front_strength": None,
+                        "back_strength": None,
+                        "size_variation": None,
+                        "edge_fade": None,
+                        "sharp_tail": None,
+                        "noise": None,
+                    },
+                    "aex_output_to_ab_buffer_xy": None,
+                    "aex_per_pixel_witness_records": [
+                        {
                             "x": 494,
                             "y": 169,
-                            "reference_rgba": [164, 0, 0, 255],
-                            "mac_candidate_rgba": [0, 0, 0, 255],
-                            "signed_delta_candidate_minus_reference": [-164, 0, 0, 0],
+                            "role": "strip-interior-primary",
+                            "aex_output_buffer_identity": "A|B|rotated|unknown",
+                            "aex_output_to_ab_buffer_xy": [None, None],
+                            "aex_helper_local_source_xy": [None, None],
+                            "aex_helper_local_source_x_range": [None, None],
+                            "aex_alternate_path_explanation": None,
+                            "aex_touched_destination_x_range_on_row_169": [None, None],
+                            "aex_rowdriver_or_group_membership": None,
+                            "aex_validity_or_alpha_side_channel": None,
+                            "aex_accumulation_numerator_rgba_float_or_hex": [None, None, None, None],
+                            "aex_accumulation_denominator": None,
+                            "aex_pre_writeback_rgba_float_or_hex": [None, None, None, None],
+                            "aex_final_rgba_u8": [None, None, None, None],
                         },
-                        "companion_witnesses": [
-                            {
-                                "x": 579,
-                                "y": 169,
-                                "role": "strip-right-endpoint",
-                            },
-                            {
-                                "x": 380,
-                                "y": 169,
-                                "role": "strip-left-endpoint-optional",
-                            },
-                        ],
-                        "aex_parameter_normalization": {
-                            "angle": None,
-                            "front_strength": None,
-                            "back_strength": None,
-                            "size_variation": None,
-                            "edge_fade": None,
-                            "sharp_tail": None,
-                            "noise": None,
+                        {
+                            "x": 579,
+                            "y": 169,
+                            "role": "strip-right-endpoint-primary",
+                            "aex_output_buffer_identity": "A|B|rotated|unknown",
+                            "aex_output_to_ab_buffer_xy": [None, None],
+                            "aex_helper_local_source_xy": [None, None],
+                            "aex_helper_local_source_x_range": [None, None],
+                            "aex_alternate_path_explanation": None,
+                            "aex_touched_destination_x_range_on_row_169": [None, None],
+                            "aex_rowdriver_or_group_membership": None,
+                            "aex_validity_or_alpha_side_channel": None,
+                            "aex_accumulation_numerator_rgba_float_or_hex": [None, None, None, None],
+                            "aex_accumulation_denominator": None,
+                            "aex_pre_writeback_rgba_float_or_hex": [None, None, None, None],
+                            "aex_final_rgba_u8": [None, None, None, None],
                         },
-                        "aex_output_to_ab_buffer_xy": None,
-                        "aex_rowdriver_or_group_membership": None,
-                        "aex_validity_or_alpha_side_channel": None,
-                        "aex_helper_local_destination_coverage": {
-                            "source_xy": [None, None],
-                            "param_1": None,
-                            "param_3": None,
-                            "param_9_before_scale": None,
-                            "param_11": None,
-                            "param_9_after_scale_int": None,
-                            "left_edge_clip_applied": None,
-                            "effective_offset_start": None,
-                            "effective_offset_end_exclusive": None,
-                            "touched_destination_x_range_on_witness_row": [None, None],
-                        },
-                        "aex_accumulation_numerator_rgba_float_or_hex": [None, None, None, None],
-                        "aex_accumulation_denominator": None,
-                        "aex_pre_writeback_rgba_float_or_hex": [None, None, None, None],
-                        "aex_final_rgba_u8": [None, None, None, None],
-                        "classification": "helper-coverage | rowdriver-group | valid-alpha-side-channel | normalization | writeback | unresolved",
+                    ],
+                    "aex_rowdriver_or_group_membership": None,
+                    "aex_validity_or_alpha_side_channel": None,
+                    "aex_helper_local_destination_coverage": {
+                        "source_xy": [None, None],
+                        "param_1": None,
+                        "param_3": None,
+                        "param_9_before_scale": None,
+                        "param_11": None,
+                        "param_9_after_scale_int": None,
+                        "left_edge_clip_applied": None,
+                        "effective_offset_start": None,
+                        "effective_offset_end_exclusive": None,
+                        "touched_destination_x_range_on_witness_row": [None, None],
                     },
+                    "aex_accumulation_numerator_rgba_float_or_hex": [None, None, None, None],
+                    "aex_accumulation_denominator": None,
+                    "aex_pre_writeback_rgba_float_or_hex": [None, None, None, None],
+                    "aex_final_rgba_u8": [None, None, None, None],
+                    "failed_gate_details": {
+                        "failed_breakpoint_or_watchpoint": None,
+                        "failed_before_or_after_module_load": None,
+                        "qualifying_hit_count": None,
+                        "exact_cdb_condition_or_watch_expression": None,
+                    },
+                    "classification": "helper-coverage | rowdriver-group | valid-alpha-side-channel | normalization | writeback | unresolved",
+                }
+            ]
+            if request_id != "olmdirectionalblur_angle0_single_shot_witness_20260708":
+                directionalblur_cases.append(
                     {
                         "case_id": "case_0005",
                         "path": "diagonal rotate-path",
@@ -3138,11 +4342,22 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                         "aex_pre_writeback_rgba_float_or_hex": [None, None, None, None],
                         "aex_final_rgba_u8": [None, None, None, None],
                         "classification": "rotate-sampler | border-validity | group-size-opacity | normalization | writeback | unresolved",
-                    },
-                ],
+                    }
+                )
+            observations = {
+                "effect": "OLM DirectionalBlur",
+                "module_base": "0x...",
+                "residual_cluster_report": (
+                    "refs/reports/olmdirectionalblur_residual_clusters_20260622_022500/residual_clusters.md"
+                ),
+                "candidate_under_test": "rotated-aex-full-choreo",
+                "cases": directionalblur_cases,
                 "failed_breakpoint_or_watchpoint_reason": None,
             }
-            summary = "Fill with focused OLMDirectionalBlur helper-coverage/diagonal residual witness facts."
+            if request_id == "olmdirectionalblur_angle0_single_shot_witness_20260708":
+                summary = "Fill with OLMDirectionalBlur angle-0 single-shot rowdriver/valid-alpha witness facts only."
+            else:
+                summary = "Fill with focused OLMDirectionalBlur helper-coverage/diagonal residual witness facts."
         elif request_id == "olmsmoother2_no_key_grid_runtime_trace_20260619":
             observations = {
                 "effect": "OLM Smoother v2",
@@ -3598,6 +4813,86 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 },
             }
             summary = "Fill with OLMDistanceGradation 16bpc case_0026 field/X witness facts."
+        elif request_id == "olmdistancegradation_depthgate_quantization_witness_20260708":
+            observations = {
+                "effect": "OLM Distance Gradation",
+                "focus": "16bpc depth-gated max=1 near-miss: classify compose float vs PF16 store vs export quantization.",
+                "module_base": "0x...",
+                "primary_case": {
+                    "case_id": "olmdistancegradation_extended__case_0026",
+                    "params": {
+                        "invert": 1,
+                        "in_out": 3,
+                        "inside_threshold": 158,
+                        "outside_threshold": 13,
+                        "render_mode": 1,
+                        "use_background_color": 1,
+                        "interpolation_mode": 4,
+                        "power": 2.59740734100342,
+                        "blur_mode": 1,
+                        "blur_size": 0,
+                    },
+                    "witness_pixels": [
+                        {
+                            "xy": [907, 222],
+                            "windows_png_rgba8": [255, 0, 0, 255],
+                            "mac_png_rgba8": [255, 0, 1, 255],
+                            "mac_field_x": 0.121742934,
+                            "mac_output_float_rgba": [0.996250153, 0.0, 0.00393153122, 1.0],
+                            "mac_store_rgba16_partial": {"r": 32645, "b": 129},
+                        },
+                        {
+                            "xy": [395, 477],
+                            "windows_png_rgba8": [253, 0, 2, 255],
+                            "mac_png_rgba8": [254, 0, 2, 255],
+                            "mac_field_x": 0.161361381,
+                            "mac_output_float_rgba": [0.992204964, 0.0, 0.00817277841, 1.0],
+                            "mac_store_rgba16_partial": {"r": 32513, "b": 268},
+                        },
+                        {
+                            "xy": [1589, 579],
+                            "windows_png_rgba8": [134, 0, 126, 255],
+                            "mac_png_rgba8": [135, 0, 126, 255],
+                            "mac_field_x": 0.783686459,
+                            "mac_output_float_rgba": [0.52736038, 0.0, 0.495543033, 1.0],
+                            "mac_store_rgba16_partial": {"r": 17281, "b": 16238},
+                        },
+                        {
+                            "xy": [898, 670],
+                            "windows_png_rgba8": [88, 0, 175, 255],
+                            "mac_png_rgba8": [88, 0, 176, 255],
+                            "mac_field_x": 0.888987124,
+                            "mac_output_float_rgba": [0.344237924, 0.0, 0.687539339, 1.0],
+                            "mac_store_rgba16_partial": {"r": 11280, "b": 22529},
+                        },
+                    ],
+                },
+                "control_case_optional": {
+                    "case_id": "olmdistancegradation_extended__case_0027",
+                    "difference_from_primary": "Render Mode=2 control; same hook/watchpoint setup if cheap.",
+                    "witness_pixels": [[1234, 443], [410, 624], [906, 668], [533, 734]],
+                },
+                "requested_for_each_pixel": {
+                    "exact_hook_or_watchpoint": None,
+                    "source_input_rgba16_seen_by_effect": [None, None, None, None],
+                    "field_value_consumed_by_FUN_181170480": None,
+                    "x_before_invert": None,
+                    "x_after_invert": None,
+                    "x_after_power_interpolation": None,
+                    "render_mode_branch": "gradation-color | source-layer | other",
+                    "compose_colors_used": {
+                        "background_rgba": [None, None, None, None],
+                        "gradation_rgba": [None, None, None, None],
+                        "source_layer_rgba_if_render_mode_2": [None, None, None, None],
+                    },
+                    "output_rgba_float_before_pf16_conversion": [None, None, None, None],
+                    "pf_pixel16_words_after_store": [None, None, None, None],
+                    "same_run_exported_rgba16_or_png_bytes": [None, None, None, None],
+                    "classification": "compose-float | pf16-store | export-quantization | unresolved",
+                    "failed_hook_reason": None,
+                },
+            }
+            summary = "Fill with OLMDistanceGradation depth-gate case_0026/0027 quantization-stage witness facts."
         elif request_id == "olmdistancegradation_16bpc_layer_no_bg_source_ownership_20260629":
             observations = {
                 "effect": "OLM Distance Gradation",
@@ -4520,6 +5815,175 @@ def build_return_template(manifest: dict[str, Any]) -> dict[str, Any]:
                 "failure_if_any": None,
             }
             summary = "Fill with current-AEX f270/e170/e3a0 witness facts."
+        elif request_id == "olmdistancegradation_0010_0011_field_world_pack_read_witness_20260709":
+            observations = {
+                "effect": "OLM Distance Gradation",
+                "focus": "16bpc case_0010/0011 field-world pack/read boundary before FUN_181170480.",
+                "module_base": "0x...",
+                "known_local_facts": {
+                    "aex_fieldgen_probe_report": (
+                        "refs/conformance/olmdistancegradation_0010_0011_aex_fieldgen_probe_20260709.md"
+                    ),
+                    "fieldgen_helper_float_values": [
+                        {
+                            "case_id": "olmdistancegradation_extended__case_0010",
+                            "lane": "inside",
+                            "xy": [901, 394],
+                            "field_x": 0.6985931396484375,
+                            "field_x_times_32768": 22891.5,
+                            "windows_required_field_word": 22892,
+                        },
+                        {
+                            "case_id": "olmdistancegradation_extended__case_0010",
+                            "lane": "outside",
+                            "xy": [6, 40],
+                            "field_x": 0.9002838134765625,
+                            "field_x_times_32768": 29500.5,
+                            "windows_required_field_word": 29500,
+                        },
+                        {
+                            "case_id": "olmdistancegradation_extended__case_0011",
+                            "lane": "inside-control",
+                            "xy": [915, 392],
+                            "field_x": 0.1345367729663849,
+                            "field_x_times_32768": 4408.5009765625,
+                            "windows_required_field_word": 4409,
+                        },
+                    ],
+                    "final_output_pointer_map": {
+                        "rowbytes": "0x3c00",
+                        "pixel_size": 8,
+                        "formula": "out = base + y * 0x3c00 + x * 8",
+                    },
+                },
+                "primary_case": {
+                    "case_id": "olmdistancegradation_extended__case_0010",
+                    "params": {
+                        "invert": 0,
+                        "in_out": 3,
+                        "inside_threshold": 63,
+                        "outside_threshold": 82,
+                        "render_mode": 1,
+                        "use_background_color": 0,
+                        "interpolation_mode": 2,
+                        "blur_mode": 1,
+                        "blur_size": 0,
+                    },
+                    "witness_pixels": [
+                        {
+                            "xy": [6, 40],
+                            "lane": "outside",
+                            "windows_final_pf16_words": ["0x0cc4", "0x8000", "0x0000", "0x0000"],
+                            "required_field_word": 29500,
+                            "local_aex_field_word_float": 29500.5,
+                            "floor_or_ceil_needed": "floor",
+                        },
+                        {
+                            "xy": [901, 394],
+                            "lane": "inside",
+                            "windows_final_pf16_words": ["0x2694", "0x8000", "0x0000", "0x0000"],
+                            "required_field_word": 22892,
+                            "local_aex_field_word_float": 22891.5,
+                            "floor_or_ceil_needed": "ceil",
+                        },
+                    ],
+                },
+                "optional_control": {
+                    "case_id": "olmdistancegradation_extended__case_0011",
+                    "xy": [915, 392],
+                    "lane": "inside",
+                    "required_field_word": 4409,
+                    "local_aex_field_word_float": 4408.5009765625,
+                    "floor_or_ceil_needed": "ceil",
+                },
+                "requested_for_each_pixel": {
+                    "source_alpha_or_mask_value": None,
+                    "raw_distance_after_cvDistTransform": None,
+                    "threshold_clamped_value": None,
+                    "normalization_min": None,
+                    "normalization_max": None,
+                    "normalization_denominator": None,
+                    "field_float_before_pack": None,
+                    "field_world_pointer_rowbytes_dimensions": {
+                        "pointer": None,
+                        "rowbytes": None,
+                        "width": None,
+                        "height": None,
+                        "pixel_size": None,
+                        "channel_layout": None,
+                    },
+                    "field_world_stored_word_or_bytes": None,
+                    "field_value_read_by_FUN_181170480_before_invert": None,
+                    "compose_out_a_or_rgba_float_before_pf16": [None, None, None, None],
+                    "final_pf16_output_words": [None, None, None, None],
+                    "same_run_true16_tiff_or_exr_rgba": [None, None, None, None],
+                    "classification": "field-float | field-pack | field-read | compose | output-store | export | unresolved",
+                    "failed_hook_or_watchpoint_reason": None,
+                },
+            }
+            summary = "Fill with OLMDistanceGradation 0010/0011 live field-world pack/read witness facts."
+        elif request_id == "olmdistancegradation_0010_0011_compose_exact_address_witness_20260710":
+            observations = {
+                "effect": "OLM Distance Gradation",
+                "focus": "16bpc case_0010 exact-address compose input binding.",
+                "module_base": "0x...",
+                "known_previous_return": {
+                    "intake": (
+                        "refs/conformance/"
+                        "olmdistancegradation_0010_0011_compose_input_pointer_return_intake_20260710.md"
+                    ),
+                    "rcx_field_read_site": "DistanceGradation+0x117057d",
+                    "rdx_source_read_site": "DistanceGradation+0x11705f1",
+                    "invalid_gate": "r9=x and rbp=y",
+                },
+                "address_model": {
+                    "field_base": None,
+                    "field_rowbytes": None,
+                    "field_pixel_size": None,
+                    "field_channel_layout": None,
+                    "source_base": None,
+                    "source_rowbytes": None,
+                    "source_pixel_size": None,
+                    "source_channel_layout": None,
+                    "output_base": None,
+                    "output_rowbytes": None,
+                    "output_pixel_size": None,
+                    "output_channel_layout": None,
+                    "subrect_or_origin_terms": None,
+                },
+                "targets": [
+                    {
+                        "case_id": "olmdistancegradation_extended__case_0010",
+                        "xy": [6, 40],
+                        "field_addr": None,
+                        "source_addr": None,
+                        "output_addr": None,
+                        "rcx_field_words_at_0x117057d": None,
+                        "rdx_source_words_at_0x11705f1": None,
+                        "xmm1_after_field_read": None,
+                        "xmm2_after_field_transform": None,
+                        "final_writer_scalars": {},
+                        "final_pf16_words": None,
+                        "failed_hook_or_watchpoint_reason": None,
+                    },
+                    {
+                        "case_id": "olmdistancegradation_extended__case_0010",
+                        "xy": [901, 394],
+                        "field_addr": None,
+                        "source_addr": None,
+                        "output_addr": None,
+                        "rcx_field_words_at_0x117057d": None,
+                        "rdx_source_words_at_0x11705f1": None,
+                        "xmm1_after_field_read": None,
+                        "xmm2_after_field_transform": None,
+                        "final_writer_scalars": {},
+                        "final_pf16_words": None,
+                        "failed_hook_or_watchpoint_reason": None,
+                    },
+                ],
+                "classification": "answered | answered_partial | failed_partial",
+            }
+            summary = "Fill with OLMDistanceGradation 0010/0011 exact-address compose input witness facts."
         else:
             observations = {
                 "effect": action.get("plugin_area"),
@@ -4735,12 +6199,69 @@ def checked_files(root: Path, profile: str) -> list[Path]:
                 "olmkirakira_boxfilter_pass1_microprobe_20260624.json"
             ),
         ]
-    elif profile in {"radialblur-residual-witness", "radialblur-caller-collapse-witness", "radialblur-caller-collapse-followup", "radialblur-tiny-rotation-followup", "radialblur-tiny-rotation-backstep-followup", "radialblur-tiny-rotation-anchor-watch-followup", "radialblur-tiny-rotation-anchor-pointer-watch-followup"}:
+    elif profile in {
+        "radialblur-residual-witness",
+        "radialblur-caller-collapse-witness",
+        "radialblur-caller-collapse-followup",
+        "radialblur-tiny-rotation-followup",
+        "radialblur-tiny-rotation-backstep-followup",
+        "radialblur-tiny-rotation-anchor-watch-followup",
+        "radialblur-tiny-rotation-anchor-pointer-watch-followup",
+        "radialblur-case0010-final-writeback",
+        "radialblur-zoom-case0009-final-plane-cells",
+    }:
         files = [
             TRACE_NOTE,
             Path("notes/IR_OLMRadialBlur.md"),
             Path("notes/OLMRadialBlur_ASM_FACTS.md"),
             Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/conformance/olmradialblur_zoom_case0009_final_plane_cells_contract_20260709.md"),
+            Path("refs/conformance/olmradialblur_zoom_case0009_quantize_locus_20260709.md"),
+            Path("refs/conformance/olmradialblur_zoom_case0009_quantize_locus_20260709.json"),
+            Path("refs/conformance/olmradialblur_zoom_case0009_final_sample_float_sequence_20260709.md"),
+            Path("refs/conformance/olmradialblur_zoom_case0009_final_sample_float_sequence_20260709.json"),
+            Path("refs/conformance/olmradialblur_zoom_case0009_prefill_coordinate_probe_20260709.md"),
+            Path("refs/conformance/olmradialblur_zoom_case0009_prefill_coordinate_probe_20260709.json"),
+            Path("refs/conformance/olmradialblur_zoom_case0009_cellset_candidate_20260709.md"),
+            Path("refs/conformance/olmradialblur_zoom_case0009_cellset_candidate_20260709.json"),
+            Path("refs/conformance/olmradialblur_case0010_final_writeback_contract_20260708.md"),
+            Path("refs/conformance/olmradialblur_static_witness_plan_20260708.md"),
+            Path("refs/conformance/olmradialblur_static_witness_20260708.md"),
+            Path("refs/conformance/olmradialblur_static_witness_20260708.json"),
+            Path("refs/reference_requests/olmradialblur_case0010_gpu0_software_recapture_20260706.json"),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_single_radialblur_case_0010_probe_20260701/request_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_single_radialblur_case_0010_probe_20260701/reference_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_single_radialblur_case_0010_probe_20260701/input/case_0010_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_single_radialblur_case_0010_probe_20260701/expected/case_0010.png"
+            ),
+            Path("refs/win_references/20260604_olm/OLMRadialBlur/reference_manifest.json"),
+            Path("refs/win_references/20260604_olm/OLMRadialBlur/case_0009_before_effects.png"),
+            Path("refs/win_references/20260604_olm/OLMRadialBlur/case_0009.png"),
+            Path("refs/win_references/20260604_olm/OLMRadialBlur/case_0010_before_effects.png"),
+            Path("refs/win_references/20260604_olm/OLMRadialBlur/case_0010.png"),
+            Path("refs/win_references/olm_return_20260706/OLMRadialBlur/reference_manifest.json"),
+            Path("refs/win_references/olm_return_20260706/OLMRadialBlur/run_complete.json"),
+            Path(
+                "refs/win_references/olm_return_20260706/OLMRadialBlur/"
+                "olmradialblur_case0010_gpu0_software_recapture_20260706__software_8bpc__fr24__"
+                "olmradialblur__case_0010_gpu0_software_before_effects.png"
+            ),
+            Path(
+                "refs/win_references/olm_return_20260706/OLMRadialBlur/"
+                "olmradialblur_case0010_gpu0_software_recapture_20260706__software_8bpc__fr24__"
+                "olmradialblur__case_0010_gpu0_software.png"
+            ),
             Path("refs/conformance/olmradialblur_pending_narrow_proof_20260629.md"),
             Path("refs/conformance/olmradialblur_pending_narrow_proof_20260629.json"),
             Path("refs/conformance/olmradialblur_caller_collapse_plane_diag_20260701.md"),
@@ -4815,6 +6336,24 @@ def checked_files(root: Path, profile: str) -> list[Path]:
             Path("refs/conformance/olmdirectionalblur_witness_logging_prep_20260702.json"),
             Path("refs/conformance/olmdirectionalblur_angle0_helper_gate_retry_20260702.md"),
             Path("refs/conformance/smoother2_directionalblur_runtime_retry_contract_20260702.md"),
+        ]
+    elif profile == "directionalblur-angle0-single-shot-witness":
+        files = [
+            TRACE_NOTE,
+            *DIRECTIONALBLUR_SUPPORTING_NOTES,
+            Path("refs/reference_requests/directionalblur_context_scale_20260606.json"),
+            Path("refs/conformance/olmdirectionalblur_angle0_single_shot_witness_contract_20260708.md"),
+            Path("refs/conformance/olmdirectionalblur_angle0_helper_gate_return_acceptance_20260707.md"),
+            Path("refs/conformance/olmdirectionalblur_angle0_helper_gate_retry_20260702.md"),
+            Path("refs/conformance/olmdirectionalblur_angle0_local_static_review_20260707.md"),
+            Path("refs/conformance/olmdirectionalblur_lane_state_20260703.md"),
+            Path("refs/conformance/olmdirectionalblur_lane_state_20260703.json"),
+            Path("refs/conformance/olmdirectionalblur_hook_anchor_audit_20260701.md"),
+            Path("refs/conformance/olmdirectionalblur_hook_anchor_audit_20260701.json"),
+            Path("refs/conformance/olmdirectionalblur_witness_logging_prep_20260702.md"),
+            Path("refs/conformance/olmdirectionalblur_witness_logging_prep_20260702.json"),
+            Path("refs/reports/runtime_trace_comparisons/olmdirectionalblur_dense_sampler.md"),
+            Path("refs/reports/runtime_trace_comparisons/olmdirectionalblur_dense_sampler.json"),
         ]
     elif profile == "directionalblur-angle0-load-prewarm-retry":
         files = [
@@ -5060,6 +6599,68 @@ def checked_files(root: Path, profile: str) -> list[Path]:
                 "OLMSmootherv2/reference_manifest.json"
             ),
         ]
+    elif profile == "smoother2-current-aex-producer-bytes-20260708":
+        files = [
+            TRACE_NOTE,
+            Path("refs/conformance/olmsmoother2_current_aex_producer_bytes_contract_20260708.md"),
+            Path("refs/conformance/olmsmoother2_producer_branch_sweep_20260708.md"),
+            Path("refs/conformance/olmsmoother2_producer_branch_sweep_20260708.json"),
+            Path("tools/emulation/SMOOTHER2_PRODUCER_EMU_REPORT.md"),
+            Path("tools/emulation/test_smoother2_producer.py"),
+            Path("notes/OLMSmoother2_ASM_FACTS.md"),
+            Path("notes/IR_OLMSmoother2.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/conformance/olmsmoother2_legacy_lane_state_20260707.md"),
+            Path("refs/conformance/olmsmoother2_legacy_lane_state_20260707.json"),
+            Path("refs/conformance/olmsmoother2_producer_branch_table_20260707.md"),
+            Path("refs/conformance/olmsmoother2_producer_branch_table_20260707.json"),
+            Path("refs/conformance/olmsmoother2_current_aex_8bpc_decision.md"),
+            Path("refs/conformance/olmsmoother2_current_aex_8bpc_decision.json"),
+            Path("refs/reference_requests/smoother2_legacy_full_current_aex_recapture_20260621.json"),
+            Path(
+                "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/"
+                "OLMSmootherv2/reference_manifest.json"
+            ),
+            Path(
+                "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/"
+                "OLMSmootherv2/WINDOWS_RECAPTURE_SUMMARY.md"
+            ),
+        ]
+    elif profile == "smoother2-current-aex-0012-bind-then-read-20260708":
+        files = [
+            TRACE_NOTE,
+            Path("refs/conformance/olmsmoother2_current_aex_0012_bind_then_read_contract_20260708.md"),
+            Path("refs/conformance/olmsmoother2_current_aex_producer_bytes_contract_20260708.md"),
+            Path("refs/conformance/olmsmoother2_producer_branch_sweep_20260708.md"),
+            Path("refs/conformance/olmsmoother2_producer_branch_sweep_20260708.json"),
+            Path("tools/emulation/SMOOTHER2_PRODUCER_EMU_REPORT.md"),
+            Path("tools/emulation/test_smoother2_producer.py"),
+            Path("notes/OLMSmoother2_ASM_FACTS.md"),
+            Path("notes/IR_OLMSmoother2.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/conformance/olmsmoother2_legacy_lane_state_20260707.md"),
+            Path("refs/conformance/olmsmoother2_legacy_lane_state_20260707.json"),
+            Path("refs/conformance/olmsmoother2_producer_branch_table_20260707.md"),
+            Path("refs/conformance/olmsmoother2_producer_branch_table_20260707.json"),
+            Path("refs/conformance/olmsmoother2_current_aex_8bpc_decision.md"),
+            Path("refs/conformance/olmsmoother2_current_aex_8bpc_decision.json"),
+            Path("refs/reference_requests/smoother2_legacy_full_current_aex_recapture_20260621.json"),
+            Path(
+                "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/"
+                "OLMSmootherv2/reference_manifest.json"
+            ),
+            Path(
+                "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/"
+                "OLMSmootherv2/WINDOWS_RECAPTURE_SUMMARY.md"
+            ),
+        ]
+    elif profile == "smoother2-current-aex-0012-typed-bind-read-20260710":
+        files = [
+            TRACE_NOTE,
+            Path("refs/conformance/olmsmoother2_current_aex_0012_typed_bind_read_contract_20260710.md"),
+            Path("scripts/package_smoother2_current_aex_0012_typed_bind_read.py"),
+            Path("refs/scripts/smoke_smoother2_current_aex_0012_typed_bind_read.py"),
+        ]
     elif profile == "smoother2-current-aex-0004-writer-gate-retry":
         files = [
             TRACE_NOTE,
@@ -5130,6 +6731,548 @@ def checked_files(root: Path, profile: str) -> list[Path]:
                 "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
             ),
         ]
+    elif profile == "distancegradation-case0023-final-source-ownership":
+        files = [
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_final_source_ownership_contract_20260707.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_reference_export_audit_20260707.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_reference_export_audit_20260707.json"),
+            Path("refs/conformance/olmdistancegradation_case0023_mac_probe_result_20260707.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_mac_probe_result_20260707.json"),
+            Path("refs/conformance/olmdistancegradation_case0023_neighborhood_probe_result_20260707.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_neighborhood_probe_result_20260707.json"),
+            Path("refs/conformance/olmdistancegradation_case0023_lane_state_20260707.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_lane_state_20260707.json"),
+            Path("refs/conformance/olmdistancegradation_case0023_source_model_audit_20260707.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_source_model_audit_20260707.json"),
+            Path("refs/conformance/olmdistancegradation_case0023_compose_witness_20260707.md"),
+            Path("refs/conformance/olmdistancegradation_case0023_compose_witness_20260707.json"),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
+            ),
+        ]
+    elif profile == "distancegradation-depthgate-quantization-witness":
+        files = [
+            Path("refs/conformance/olmdistancegradation_depthgate_quantization_witness_contract_20260708.md"),
+            Path("refs/conformance/olmdistancegradation_depth_gate_result_20260708.md"),
+            Path("refs/conformance/olmdistancegradation_depthgate_nearmiss_family_20260708.md"),
+            Path("refs/conformance/olmdistancegradation_depthgate_nearmiss_witness_20260708.md"),
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/AE_PIXEL_VALIDATION_REQUEST.md"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/request_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0026_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0027_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0026.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0027.png"
+            ),
+        ]
+    elif profile == "distancegradation-depthgate-907-store-export-witness":
+        files = [
+            Path("refs/conformance/olmdistancegradation_depthgate_907_store_export_witness_contract_20260708.md"),
+            Path("refs/conformance/olmdistancegradation_depthgate_quantization_return_intake_20260708.md"),
+            Path("refs/conformance/olmdistancegradation_depthgate_quantization_witness_contract_20260708.md"),
+            Path("refs/conformance/olmdistancegradation_depth_gate_result_20260708.md"),
+            Path("refs/conformance/olmdistancegradation_depthgate_nearmiss_family_20260708.md"),
+            Path("refs/conformance/olmdistancegradation_depthgate_nearmiss_witness_20260708.md"),
+            Path("refs/reports/runtime_trace_comparisons/olmdistancegradation_depthgate_quantization_witness_20260708.md"),
+            Path("refs/reports/runtime_trace_comparisons/olmdistancegradation_depthgate_quantization_witness_20260708.json"),
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/AE_PIXEL_VALIDATION_REQUEST.md"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/request_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0026_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0026.png"
+            ),
+        ]
+    elif profile == "distancegradation-case0012-case0014-store-export-rounding":
+        files = [
+            Path("refs/conformance/olmdistancegradation_case0012_case0014_store_export_rounding_contract_20260708.md"),
+            Path("refs/conformance/olmdistancegradation_case0012_dominant_channel_closeout_20260708.md"),
+            Path("refs/conformance/olmdistancegradation_case0012_dominant_channel_closeout_20260708.json"),
+            Path("refs/conformance/olmdistancegradation_case0012_both_dominant150_patch_20260708.md"),
+            Path("refs/conformance/olmdistancegradation_case0012_both_dominant150_patch_20260708.json"),
+            Path("refs/conformance/olmdistancegradation_case0014_layer_source_return_intake_20260708.md"),
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/AE_PIXEL_VALIDATION_REQUEST.md"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/request_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0012_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0014_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0012.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0014.png"
+            ),
+        ]
+    elif profile == "distancegradation-case0014-layer-source-witness":
+        files = [
+            Path("refs/conformance/olmdistancegradation_case0014_layer_source_witness_contract_20260708.md"),
+            Path("refs/conformance/olmdistancegradation_depth_gate_result_20260708.md"),
+            Path("refs/conformance/olmdistancegradation_16bpc_powerfix_residual_families_20260629.md"),
+            Path("refs/conformance/olmdistancegradation_16bpc_powerfix_residual_families_20260629.json"),
+            Path("refs/conformance/olmdistancegradation_16bpc_layer_source_fix_case0012_20260629.md"),
+            Path("refs/conformance/olmdistancegradation_16bpc_layer_source_current_baseline_20260629.md"),
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/AE_PIXEL_VALIDATION_REQUEST.md"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/request_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0014_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0014.png"
+            ),
+        ]
+    elif profile == "distancegradation-0010-0011-field-store-witness":
+        files = [
+            Path("refs/conformance/olmdistancegradation_0010_0011_field_store_witness_contract_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_local_field_normalization_probe_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_ra_quantization_probe_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_true16_residual_family_audit_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_current_integrated_16bpc_batch_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_depthgate_true16_reverify_20260709.md"),
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/AE_PIXEL_VALIDATION_REQUEST.md"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/request_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0010_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0011_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0010.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0011.png"
+            ),
+        ]
+    elif profile == "distancegradation-0010-0011-field-store-prewarm-witness":
+        files = [
+            Path("refs/conformance/olmdistancegradation_0010_0011_field_store_prewarm_contract_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_field_store_witness_contract_20260709.md"),
+            Path("refs/reports/runtime_trace_comparisons/olmdistancegradation_0010_0011_field_store_witness_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_local_field_normalization_probe_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_ra_quantization_probe_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_true16_residual_family_audit_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_current_integrated_16bpc_batch_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_depthgate_true16_reverify_20260709.md"),
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/AE_PIXEL_VALIDATION_REQUEST.md"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/request_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0010_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0011_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0010.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0011.png"
+            ),
+        ]
+    elif profile == "distancegradation-0010-0011-writeback-follow-witness":
+        files = [
+            Path("refs/conformance/olmdistancegradation_0010_0011_writeback_follow_contract_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_field_store_return2_intake_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_field_store_prewarm_contract_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_field_store_witness_contract_20260709.md"),
+            Path("refs/reports/runtime_trace_comparisons/olmdistancegradation_0010_0011_field_store_witness_20260709.md"),
+            Path("refs/reports/runtime_trace_comparisons/olmdistancegradation_0010_0011_field_store_witness_20260709.json"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_local_field_normalization_probe_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_ra_quantization_probe_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_true16_residual_family_audit_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_current_integrated_16bpc_batch_20260709.md"),
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/AE_PIXEL_VALIDATION_REQUEST.md"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/request_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0010_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0011_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0010.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0011.png"
+            ),
+        ]
+    elif profile == "distancegradation-0010-0011-writeback-pointer-map-witness":
+        files = [
+            Path("refs/conformance/olmdistancegradation_0010_0011_writeback_pointer_map_contract_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_writeback_follow_return_intake_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_writeback_follow_contract_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_field_store_return2_intake_20260709.md"),
+            Path("refs/reports/runtime_trace_comparisons/olmdistancegradation_0010_0011_writeback_follow_witness_20260709.md"),
+            Path("refs/reports/runtime_trace_comparisons/olmdistancegradation_0010_0011_writeback_follow_witness_20260709.json"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_local_field_normalization_probe_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_ra_quantization_probe_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_true16_residual_family_audit_20260709.md"),
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/AE_PIXEL_VALIDATION_REQUEST.md"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/request_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0010_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0010.png"
+            ),
+        ]
+    elif profile == "distancegradation-0010-0011-field-world-pack-read-witness":
+        files = [
+            Path("refs/conformance/olmdistancegradation_0010_0011_field_world_pack_read_contract_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_aex_fieldgen_probe_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_aex_fieldgen_probe_20260709.json"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_opencv_field_prep_audit_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_opencv_field_prep_audit_20260709.json"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_writeback_pointer_map_return_intake_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_field_pack_read_audit_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_normalization_denominator_audit_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_local_field_normalization_probe_20260709.md"),
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/AE_PIXEL_VALIDATION_REQUEST.md"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/request_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0010_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0011_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0010.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0011.png"
+            ),
+        ]
+    elif profile == "distancegradation-0010-0011-rdx-producer-packsite-witness":
+        files = [
+            Path("refs/conformance/olmdistancegradation_0010_0011_rdx_producer_packsite_contract_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_field_world_pack_read_return_intake_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_field_world_pack_read_contract_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_writeback_pointer_map_return_intake_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_aex_fieldgen_probe_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_aex_fieldgen_probe_20260709.json"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_field_pack_read_audit_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_normalization_denominator_audit_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_opencv_field_prep_audit_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_opencv_field_prep_audit_20260709.json"),
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/AE_PIXEL_VALIDATION_REQUEST.md"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/request_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0010_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0010.png"
+            ),
+        ]
+    elif profile == "distancegradation-0010-0011-compose-input-pointer-witness":
+        files = [
+            Path("refs/conformance/olmdistancegradation_0010_0011_compose_input_pointer_contract_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_field_world_pack_read_return_intake_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_rdx_producer_return_intake_20260710.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_rdx_producer_packsite_contract_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_field_world_pack_read_contract_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_writeback_pointer_map_return_intake_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_aex_fieldgen_probe_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_aex_fieldgen_probe_20260709.json"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_field_pack_read_audit_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_normalization_denominator_audit_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_opencv_field_prep_audit_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_opencv_field_prep_audit_20260709.json"),
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/AE_PIXEL_VALIDATION_REQUEST.md"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/request_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0010_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0010.png"
+            ),
+        ]
+    elif profile == "distancegradation-0010-0011-compose-exact-address-witness":
+        files = [
+            Path("refs/conformance/olmdistancegradation_0010_0011_compose_exact_address_contract_20260710.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_compose_input_pointer_return_intake_20260710.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_compose_input_pointer_contract_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_rdx_producer_return_intake_20260710.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_field_world_pack_read_return_intake_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_writeback_pointer_map_return_intake_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_aex_fieldgen_probe_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_aex_fieldgen_probe_20260709.json"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_field_pack_read_audit_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_normalization_denominator_audit_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_opencv_field_prep_audit_20260709.md"),
+            Path("refs/conformance/olmdistancegradation_0010_0011_opencv_field_prep_audit_20260709.json"),
+            Path("notes/IR_OLMDistanceGradation.md"),
+            Path("notes/CONFORMANCE_LEDGER.md"),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/AE_PIXEL_VALIDATION_REQUEST.md"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/request_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0010_before_effects.png"
+            ),
+            Path(
+                "handoff/ae_pixel_validation_20260618/requests/"
+                "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/"
+                "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__"
+                "olmdistancegradation_extended__case_0010.png"
+            ),
+        ]
     elif profile in {"distancegradation-constant-case0023-witness", "distancegradation-case0023-threshold-followup", "distancegradation-case0023-triplet-xy-compose-followup", "distancegradation-case0023-output-word-triplet-followup", "distancegradation-case0023-refcon-wordmap-followup"}:
         files = [
             TRACE_NOTE,
@@ -5179,6 +7322,20 @@ def checked_files(root: Path, profile: str) -> list[Path]:
     return files
 
 
+def archive_support_file(archive: zipfile.ZipFile, root: Path, path: Path) -> None:
+    source = root / path
+    archive_name = path.as_posix()
+    if source.suffix.lower() in {".md", ".json", ".txt", ".py", ".jsx"}:
+        text = source.read_text(encoding="utf-8", errors="replace")
+        text = text.replace(str(root), "<repo-root>")
+        text = text.replace("/Volumes/onmk", "<shared-volume>")
+        text = text.replace("/private/tmp/", "<tmp>/")
+        text = text.replace("/tmp/", "<tmp>/")
+        archive.writestr(archive_name, text)
+        return
+    archive.write(source, archive_name)
+
+
 def main() -> int:
     args = parse_args()
     root = repo_root()
@@ -5204,9 +7361,12 @@ def main() -> int:
                 json.dumps(build_return_template(manifest), indent=2, sort_keys=True),
             )
             archive.writestr("runtime_trace_package_manifest.json", json.dumps(manifest, indent=2, sort_keys=True))
-            archive.writestr("next_reference_actions_snapshot.json", json.dumps(snapshot, indent=2, sort_keys=True))
+            archive.writestr(
+                "next_reference_actions_snapshot.json",
+                json.dumps(build_package_snapshot(manifest, snapshot), indent=2, sort_keys=True),
+            )
             for path in files:
-                archive.write(root / path, path.as_posix())
+                archive_support_file(archive, root, path)
     except Exception as exc:  # noqa: BLE001
         return fail(str(exc))
 

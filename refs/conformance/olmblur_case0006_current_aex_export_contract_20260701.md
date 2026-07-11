@@ -1,12 +1,36 @@
 # OLMBlur case_0006 Current-AEX Export Contract - 2026-07-01
 
+> **Evidence correction (2026-07-10):** the current-AEX export identity below
+> remains valid, but the accompanying claim that Windows and Mac agree on the
+> internal pre-store float and stored word is invalid. The debugger target was
+> never captured. Use
+> `refs/conformance/olmblur_case0006_unverified_windows_value_audit_20260710.md`
+> for the corrected boundary.
+
 This note defines the exact missing Windows artifact for the remaining
 `OLMBlur` 16bpc `case_0006` provenance lane.
 
 It is intentionally not a live implementation patch note. Its purpose is to
 make any future Windows follow-up precise and cheap.
 
-## Why this artifact is still needed
+## 2026-07-09 Return Status
+
+The requested current-AEX export has returned and matches Outcome A.
+
+- Imported manifest:
+  `refs/win_references/olmblur_case0006_current_aex_export_20260709/OLMBlur/reference_manifest.json`
+- Audit:
+  `refs/conformance/olmblur_case0006_current_aex_export_contract_audit_20260701.md`
+- Decision: `outcome-a-current-aex-matches-canonical`
+- Key identity: the Windows current-AEX export has SHA-256
+  `27d24c96a6f3c15d27d8884ede039e5fd97480d752324f04d8e3aa77acc8791f`,
+  byte-identical to the canonical 2026-06-25 Windows Software reference.
+
+Do not resend this request unchanged. The `case_0006` question is no longer
+"is the canonical Windows reference equivalent to the current Windows AEX
+export?" It is now a Mac export / AE-host run provenance question if reopened.
+
+## Why this artifact was needed
 
 The current repo now has three important facts at once:
 
@@ -24,7 +48,7 @@ That means the unresolved question is no longer "what does the OLMBlur math do
 here?" but "which exported PNG artifact is actually equivalent to the canonical
 2026-06-25 Windows Software reference?"
 
-## Exact missing artifact
+## Exact requested artifact
 
 A same-run Windows current-AEX exported PNG for:
 
@@ -38,6 +62,20 @@ A same-run Windows current-AEX exported PNG for:
   - `Number of Repeat=10`
   - `Bias Direction=1`
   - `Legacy=0`
+
+## Prepared Request Package
+
+2026-07-09: the one-case Windows reference request is materialized as:
+
+- request JSON:
+  `refs/reference_requests/olmblur_case0006_current_aex_export_20260709.json`
+- handoff zip:
+  `handoffs/windows_batch/olm_windows_reference_request_olmblur_case0006_current_aex_export_20260709.zip`
+
+This is a reference/export-provenance request, not a runtime trace request. Do
+not overwrite an active `/Volumes/onmk/olm_pr/new` runtime-trace exchange with
+this package; send it after the currently staged runtime request has returned or
+after the exchange folder is intentionally cleared.
 
 ## Minimum return payload
 
@@ -54,7 +92,7 @@ To count as actionable, the return should include all of:
 
 ## Witness points to compare immediately
 
-When the artifact lands, compare these 16-bit points first:
+The 2026-07-09 return compares these 16-bit points as follows:
 
 | XY | canonical ref | single-case Mac export | 2026-06-26 batch candidate | why it matters |
 | --- | --- | --- | --- | --- |
@@ -66,6 +104,8 @@ When the artifact lands, compare these 16-bit points first:
 ## Decision outcomes
 
 ### Outcome A: current-AEX export matches canonical reference
+
+Status: matched on 2026-07-09.
 
 Interpretation:
 
@@ -104,10 +144,11 @@ Next step:
 - compare against the exact witness-run metadata and source frame before
   considering any source changes
 
-## Forbidden moves until this artifact exists
+## Forbidden moves after this artifact
 
 - no global 16bpc writer swap
 - no helper surgery from `case_0006` alone
-- no treating the canonical reference as equivalent to current-AEX export
-  without proof
+- no treating the Mac single-case export as the Windows current-AEX behavior
 - no collapsing this lane into `case_0007` Legacy work
+- no resending this same reference/export request unless a newer Windows AEX or
+  changed AE render setup invalidates the 2026-07-09 proof

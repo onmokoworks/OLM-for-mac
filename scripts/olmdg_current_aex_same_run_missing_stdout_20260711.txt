@@ -1,0 +1,8 @@
+OLMDG_ENTRY run_id=dg-synthetic-missing case_id=case_0010 case_tag=10 inside_threshold=63 outside_threshold=82 x=6 y=40 module_base=0x180000000 output_base=0x41000000 param_block=0x10001000
+OLMDG_FIELD run_id=dg-synthetic-missing case_id=case_0010 x=6 y=40 rcx=0x21068030 rcx_plus2_word=29500 field_base=0x21000000 field_header=0x21000010 field_rowbytes=15360 field_pixel_size=8
+OLMDG_SOURCE run_id=dg-synthetic-missing case_id=case_0010 x=6 y=40 rdx=0x20096030 rdx_plus2_word=0
+OLMDG_COMPOSE run_id=dg-synthetic-missing case_id=case_0010 x=6 y=40
+xmm1=00000000000000003f666000
+xmm2=00000000000000003dcc8000
+xmm4=000000000000000000000000
+xmm5=000000000000000000000000

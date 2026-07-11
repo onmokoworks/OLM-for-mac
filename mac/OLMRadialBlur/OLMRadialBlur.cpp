@@ -719,23 +719,25 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	if (!use_fft_convolution) {
 		for (A_long ai = 0; ai < angular_count; ++ai) {
 			for (A_long ri = 0; ri < radius_count; ++ri) {
-				double weighted_rgb[3] = {0.0, 0.0, 0.0};
-				double weighted_alpha = 0.0;
-				double accum_alpha = 0.0;
+				double accum_w_double = 0.0;
+				float weighted_rgb[3] = {0.0f, 0.0f, 0.0f};
+				float weighted_alpha = 0.0f;
+				float accum_alpha = 0.0f;
 				const A_long limit = std::min<A_long>((A_long)weights.size(), ri + 1);
 				for (A_long k = 0; k < limit; ++k) {
 					const size_t src_idx = ((size_t)ai * radius_count + (ri - k)) * 4;
-					const double alpha = polar.rgba[src_idx + 3];
-					const double weight = weights[(size_t)k];
+					const float alpha = polar.rgba[src_idx + 3];
+					const float weight = weights[(size_t)k];
 					for (int c = 0; c < 3; ++c) weighted_rgb[c] += polar.rgba[src_idx + c] * alpha * weight;
 					weighted_alpha += alpha * weight;
 					accum_alpha += alpha * weight;
+					accum_w_double += (double)weight;
 				}
 				const size_t dst = ((size_t)ai * radius_count + ri) * 4;
-				if (weighted_alpha > 1.0e-8) {
-					for (int c = 0; c < 3; ++c) blurred.rgba[dst + c] = (float)(weighted_rgb[c] / weighted_alpha);
+				if (weighted_alpha > 1.0e-8f) {
+					for (int c = 0; c < 3; ++c) blurred.rgba[dst + c] = weighted_rgb[c] / weighted_alpha;
 				}
-				blurred.rgba[dst + 3] = ClampFloat((float)accum_alpha, 0.0f, 1.0f);
+				blurred.rgba[dst + 3] = ClampFloat(accum_alpha / (float)accum_w_double, 0.0f, 1.0f);
 			}
 		}
 	} else {
@@ -743,6 +745,10 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		std::vector<double> values((size_t)radius_count);
 		std::vector<double> alpha_conv;
 		std::vector<double> rgb_conv[3];
+		std::vector<double> weight_sum_conv;
+		std::vector<double> ones((size_t)radius_count, 1.0);
+		convolver.Convolve(ones, weight_sum_conv);
+		
 		for (A_long ai = 0; ai < angular_count; ++ai) {
 			for (A_long ri = 0; ri < radius_count; ++ri) {
 				const size_t src_idx = ((size_t)ai * radius_count + ri) * 4;
@@ -767,7 +773,7 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						blurred.rgba[dst + c] = (float)(rgb_conv[c][(size_t)ri] / weighted_alpha);
 					}
 				}
-				blurred.rgba[dst + 3] = ClampFloat((float)weighted_alpha, 0.0f, 1.0f);
+				blurred.rgba[dst + 3] = ClampFloat((float)(weighted_alpha / weight_sum_conv[(size_t)ri]), 0.0f, 1.0f);
 			}
 		}
 	}

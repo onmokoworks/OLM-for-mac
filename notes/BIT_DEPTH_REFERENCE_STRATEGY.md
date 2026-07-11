@@ -43,7 +43,8 @@ Windows AE:
 
 Current machine decision:
 
-- `reference-covered-compare-pending`
+- 16bpc has covered exact slices for `OLMColorKey` and `OLMToonDilate`; other
+  plug-ins remain on their own proof lanes.
 
 Included feature groups are only the ones with normalized 8bpc Software exact
 evidence in `refs/reports/software_reference_canonicalization_8bpc.json`:
@@ -83,7 +84,8 @@ The Windows return was imported on 2026-06-25:
 - PNG format spot check:
   sampled output is `16-bit/color RGBA`.
 
-The Mac AE 16bpc comparison has now been run. It is not `AE exact`.
+The Mac AE 16bpc comparison has now been run. It is not globally `AE exact`,
+but some covered slices are exact and should be preserved as such.
 
 Mac AE validation packages were generated on 2026-06-25:
 
@@ -104,8 +106,8 @@ manifest parameters that provided `path` / `match_name` but no `path_full`.
 After fixing `scripts/ae_pixel_validation_render.jsx`, native 16bit comparison
 against the Windows Software references produced 15/45 exact. Rerendering after
 the binary-grounded ColorKey `Force Lower Precision` epsilon fix and the
-DistanceGradation Inside/all-opaque no-source rule improved the current slice
-to 17/45 exact:
+DistanceGradation Inside/all-opaque no-source rule improved that historical
+slice to 17/45 exact:
 
 - Result ledger:
   `refs/conformance/bitdepth_16bpc_mac_ae_validation_20260626_distancegradation_inside_no_source.md`
@@ -142,6 +144,16 @@ By plug-in slice:
 | `OLMDistanceGradation blur` | 0/1 | 1 |
 | `OLMDistanceGradation extended` | 1/16 | 15 |
 
+Later covered-slice materialization supersedes that historical ColorKey state
+for the declared covered cases:
+
+- `refs/conformance/bitdepth_16bpc_exact_manifest_20260703.md` records
+  `OLMColorKey` 9/9 and `OLMToonDilate` 3/3 as live Mac AE `AE exact` against
+  imported Windows Software 16bpc references.
+- This is narrow covered-slice evidence, not whole-project 16bpc completion.
+- `OLMBlur`, `OLMDistanceGradation`, and unresolved hard plug-ins still need
+  their separate 16bpc proof lanes.
+
 2026-06-28 OLMBlur follow-up audit:
 `refs/conformance/olmblur_16bpc_word_delta_audit_20260628.md` re-read the
 same PNGs with the fixed 16bpc path and inferred the OLMBlur near-1LSB family
@@ -155,21 +167,27 @@ currently reports the project-local runtime trace package
 `olm_runtime_trace_olmdistancegradation_16bpc_case0026_x_witness_20260628.zip`
 as the highest-value next action.
 
-## 2026-06-28 32bpc Probe Preview
+## 2026-06-28 / 2026-07-03 32bpc Probe State
 
-The request generator can now produce a `32bpc` probe request, but the generated
-request is deliberately kept out of `refs/reference_requests/` so it does not
-preempt the active 16bpc binary-proof wait.
+The request generator can produce `32bpc` probe requests. The early preview
+state below has since advanced: 2026-07-03 focused and broad 32bpc requests were
+sent and imported, but the returns were PNG-only/non-float-preserving. They are
+therefore `probe-only-png-return`, not `AE exact` evidence.
+
+Current authority:
+
+- `refs/conformance/bitdepth_32bpc_probe_status_20260703.md`
+- `refs/conformance/bitdepth_32bpc_compare_policy_20260703.md`
 
 - Preview:
   `refs/reports/bit_depth_32bpc_probe_plan_20260628/request_preview.json`
 - Notes:
   `refs/reports/bit_depth_32bpc_probe_plan_20260628/README.md`
 
-This preview is not completion evidence. It is a way to ask the Windows helper
-whether an `EXR`-first float-preserving output path is available for the 45
-normalized 8bpc-exact cases. Move it into `refs/reference_requests/` only when
-32bpc probing is intentionally scheduled.
+This preview was not completion evidence. The later 2026-07-03 returns prove
+request coverage, but because they came back PNG-only they still cannot support
+any 32bpc exact claim. The next useful 32bpc action is a truly
+float-preserving EXR/TIFF/HDR return.
 
 A focused variant now also exists for the already-strong ColorKey slice:
 

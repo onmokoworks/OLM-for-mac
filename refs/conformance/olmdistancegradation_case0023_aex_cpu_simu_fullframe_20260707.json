@@ -1,0 +1,131 @@
+{
+  "aex": "plugins_2025/DistanceGradation.aex",
+  "combine": "cvAdd/saturating add modeled as min(inside+outside,1) at sampled binary outputs",
+  "date": "2026-07-07",
+  "inside_run": "tools/emulation/run_outputs/dg_fieldgen_case0023_fullframe_alpha_inside_20260707.json",
+  "inside_threshold": 36,
+  "kind": "olmdistancegradation_case0023_aex_cpu_simu_fullframe",
+  "mask_channel": "alpha",
+  "outside_run": "tools/emulation/run_outputs/dg_fieldgen_case0023_fullframe_alpha_outside_20260707.json",
+  "outside_threshold": 0,
+  "param8": "1 / INTERP_CONSTANT selector",
+  "reading": [
+    "Full-frame AEX CPU helper output gives both_add_saturate_field=0 at (1699,7).",
+    "With DistanceGradation compose/invert semantics, field 0 maps to the blue Gradation endpoint for this case, matching current Mac-side field/debug behavior while the current Windows final endpoint remains the unresolved ownership split.",
+    "This does not by itself prove Mac AE final exact, but it strengthens the reference-path split classification for the 65px edge family."
+  ],
+  "samples": [
+    {
+      "both_add_saturate_field": 0.0,
+      "inside_field": 0.0,
+      "inside_mask": 255,
+      "outside_field": 0.0,
+      "outside_mask": 0,
+      "xy": [
+        1698,
+        7
+      ]
+    },
+    {
+      "both_add_saturate_field": 0.0,
+      "inside_field": 0.0,
+      "inside_mask": 255,
+      "outside_field": 0.0,
+      "outside_mask": 0,
+      "xy": [
+        1699,
+        7
+      ]
+    },
+    {
+      "both_add_saturate_field": 1.0,
+      "inside_field": 0.0,
+      "inside_mask": 0,
+      "outside_field": 1.0,
+      "outside_mask": 255,
+      "xy": [
+        1700,
+        7
+      ]
+    },
+    {
+      "both_add_saturate_field": 1.0,
+      "inside_field": 0.0,
+      "inside_mask": 0,
+      "outside_field": 1.0,
+      "outside_mask": 255,
+      "xy": [
+        1699,
+        6
+      ]
+    },
+    {
+      "both_add_saturate_field": 0.0,
+      "inside_field": 0.0,
+      "inside_mask": 255,
+      "outside_field": 0.0,
+      "outside_mask": 0,
+      "xy": [
+        1699,
+        8
+      ]
+    },
+    {
+      "both_add_saturate_field": 0.0,
+      "inside_field": 0.0,
+      "inside_mask": 255,
+      "outside_field": 0.0,
+      "outside_mask": 0,
+      "xy": [
+        414,
+        393
+      ]
+    },
+    {
+      "both_add_saturate_field": 1.0,
+      "inside_field": 1.0,
+      "inside_mask": 255,
+      "outside_field": 0.0,
+      "outside_mask": 0,
+      "xy": [
+        415,
+        393
+      ]
+    },
+    {
+      "both_add_saturate_field": 1.0,
+      "inside_field": 1.0,
+      "inside_mask": 255,
+      "outside_field": 0.0,
+      "outside_mask": 0,
+      "xy": [
+        416,
+        393
+      ]
+    },
+    {
+      "both_add_saturate_field": 0.0,
+      "inside_field": 0.0,
+      "inside_mask": 255,
+      "outside_field": 0.0,
+      "outside_mask": 0,
+      "xy": [
+        415,
+        392
+      ]
+    },
+    {
+      "both_add_saturate_field": 1.0,
+      "inside_field": 1.0,
+      "inside_mask": 255,
+      "outside_field": 0.0,
+      "outside_mask": 0,
+      "xy": [
+        415,
+        394
+      ]
+    }
+  ],
+  "source_png": "refs/win_references/olm_return_20260706/DistanceGradation/olmdistancegradation_case0023_current_aex_recapture_20260702__software_16bpc__fr24__olmdistancegradation_extended__case_0023_current_aex_before_effects.png",
+  "status": "diagnostic_binary_grounded_field_witness"
+}

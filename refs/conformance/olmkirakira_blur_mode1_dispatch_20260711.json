@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "date": "2026-07-11",
+  "effect": "OLMKiraKira",
+  "scope": "blur_mode_pass_dispatch",
+  "mapping": {
+    "mode_1": 1,
+    "mode_2": 3,
+    "mode_3_current_behavior": 3,
+    "mode_4_current_behavior": 3
+  },
+  "implementation_claims": {
+    "mode_1_grounded": true,
+    "mode_2_grounded": true,
+    "mode_3_implemented": false,
+    "mode_4_implemented": false,
+    "explicit_cli_falloff_override_preserved": true,
+    "hotspot_compose_changed": false,
+    "gain_changed": false,
+    "quantization_changed": false
+  },
+  "verification": [
+    {
+      "command": "refs/scripts/build_olmkirakira_cli.sh",
+      "exit_code": 0,
+      "result": "cli/OLMKiraKira/olmkirakira_cli built without compiler diagnostics"
+    },
+    {
+      "command": "python3 refs/scripts/smoke_olmkirakira_blur_mode_dispatch.py",
+      "exit_code": 0,
+      "assertions_passed": 7,
+      "mode_2_output_preservation_basis": "implicit Mode 2 output is byte-identical to explicit box3 output"
+    },
+    {
+      "command": "xcodebuild -project mac/OLMKiraKira/Mac/OLMKiraKira.xcodeproj -scheme OLMKiraKira -configuration Debug build CODE_SIGNING_ALLOWED=NO",
+      "exit_code": 0,
+      "result": "BUILD SUCCEEDED",
+      "warnings": "existing SDK pragma-pack, Carbon Resources, and traditional-headermap warnings"
+    }
+  ],
+  "retained_reference_measurement": {
+    "mode_1_cases_found": 3,
+    "measured_for_exactness": false,
+    "reason": "retained random cases vary other controls and do not isolate blur-mode dispatch"
+  },
+  "ae_exact_claim": false
+}

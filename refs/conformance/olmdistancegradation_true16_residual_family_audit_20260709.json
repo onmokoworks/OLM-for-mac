@@ -1,0 +1,3500 @@
+{
+  "date": "2026-07-09",
+  "candidate_dir": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_validation_batch_olmdistancegradation_16bpc_both_rule_20260709/results/bitdepth16_olmdistancegradation_extended_exact",
+  "request_dir": "/Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625",
+  "verifier_report": "refs/reports/ae_validation_batch_olmdistancegradation_16bpc_both_rule_20260709/reverify_current_20260709/reports/ae_pixel_16bpc_extended_exact.csv",
+  "families": [
+    {
+      "family": "exact",
+      "cases": [
+        "0008",
+        "0020",
+        "0021",
+        "0022",
+        "0023"
+      ],
+      "max": 0,
+      "nonzero_px_sum": 0,
+      "notes": "current AE exact slice"
+    },
+    {
+      "family": "sparse_ra_quantization",
+      "cases": [
+        "0010",
+        "0011"
+      ],
+      "max": 2,
+      "nonzero_px_sum": 852,
+      "notes": "R and A only, abs delta 2; resembles 16bpc quantization/rounding boundary"
+    },
+    {
+      "family": "layer_no_bg_rounding",
+      "cases": [
+        "0012",
+        "0013",
+        "0014",
+        "0016"
+      ],
+      "max": 4,
+      "nonzero_px_sum": 26957,
+      "notes": "mostly abs delta 2; case_0014 has a small abs delta 4 RGB subfamily"
+    },
+    {
+      "family": "field_export_true16",
+      "cases": [
+        "0024",
+        "0025",
+        "0026",
+        "0027",
+        "0028"
+      ],
+      "max": 3080,
+      "nonzero_px_sum": 3721420,
+      "notes": "broad true16 residual hidden by byte-view/PIL compare; case_0028 is the outlier max family"
+    }
+  ],
+  "cases": [
+    {
+      "case": "0008",
+      "max": 0,
+      "nonzero_px": 0,
+      "mean_abs": 0.0,
+      "channels": [
+        {
+          "channel": "R",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "G",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "B",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "A",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        }
+      ],
+      "samples": []
+    },
+    {
+      "case": "0010",
+      "max": 2,
+      "nonzero_px": 351,
+      "mean_abs": 0.00016927083333333334,
+      "channels": [
+        {
+          "channel": "R",
+          "nz_samples": 351,
+          "max_abs": 2,
+          "positive": 344,
+          "negative": 7,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 351
+            }
+          ]
+        },
+        {
+          "channel": "G",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "B",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "A",
+          "nz_samples": 351,
+          "max_abs": 2,
+          "positive": 344,
+          "negative": 7,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 351
+            }
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "x": 6,
+          "y": 40,
+          "ref": [
+            6535,
+            0,
+            0,
+            6535
+          ],
+          "candidate": [
+            6533,
+            0,
+            0,
+            6533
+          ],
+          "delta": [
+            -2,
+            0,
+            0,
+            -2
+          ]
+        },
+        {
+          "x": 1919,
+          "y": 134,
+          "ref": [
+            6535,
+            0,
+            0,
+            6535
+          ],
+          "candidate": [
+            6533,
+            0,
+            0,
+            6533
+          ],
+          "delta": [
+            -2,
+            0,
+            0,
+            -2
+          ]
+        },
+        {
+          "x": 1910,
+          "y": 135,
+          "ref": [
+            6535,
+            0,
+            0,
+            6535
+          ],
+          "candidate": [
+            6533,
+            0,
+            0,
+            6533
+          ],
+          "delta": [
+            -2,
+            0,
+            0,
+            -2
+          ]
+        },
+        {
+          "x": 1913,
+          "y": 385,
+          "ref": [
+            6535,
+            0,
+            0,
+            6535
+          ],
+          "candidate": [
+            6533,
+            0,
+            0,
+            6533
+          ],
+          "delta": [
+            -2,
+            0,
+            0,
+            -2
+          ]
+        },
+        {
+          "x": 901,
+          "y": 394,
+          "ref": [
+            19751,
+            0,
+            0,
+            19751
+          ],
+          "candidate": [
+            19753,
+            0,
+            0,
+            19753
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 1018,
+          "y": 394,
+          "ref": [
+            19751,
+            0,
+            0,
+            19751
+          ],
+          "candidate": [
+            19753,
+            0,
+            0,
+            19753
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 904,
+          "y": 396,
+          "ref": [
+            16631,
+            0,
+            0,
+            16631
+          ],
+          "candidate": [
+            16633,
+            0,
+            0,
+            16633
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 1015,
+          "y": 396,
+          "ref": [
+            16631,
+            0,
+            0,
+            16631
+          ],
+          "candidate": [
+            16633,
+            0,
+            0,
+            16633
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 894,
+          "y": 397,
+          "ref": [
+            19751,
+            0,
+            0,
+            19751
+          ],
+          "candidate": [
+            19753,
+            0,
+            0,
+            19753
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 1025,
+          "y": 397,
+          "ref": [
+            19751,
+            0,
+            0,
+            19751
+          ],
+          "candidate": [
+            19753,
+            0,
+            0,
+            19753
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "case": "0011",
+      "max": 2,
+      "nonzero_px": 501,
+      "mean_abs": 0.0002416087962962963,
+      "channels": [
+        {
+          "channel": "R",
+          "nz_samples": 501,
+          "max_abs": 2,
+          "positive": 501,
+          "negative": 0,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 501
+            }
+          ]
+        },
+        {
+          "channel": "G",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "B",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "A",
+          "nz_samples": 501,
+          "max_abs": 2,
+          "positive": 501,
+          "negative": 0,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 501
+            }
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "x": 915,
+          "y": 392,
+          "ref": [
+            56717,
+            0,
+            0,
+            56717
+          ],
+          "candidate": [
+            56719,
+            0,
+            0,
+            56719
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 1004,
+          "y": 392,
+          "ref": [
+            56717,
+            0,
+            0,
+            56717
+          ],
+          "candidate": [
+            56719,
+            0,
+            0,
+            56719
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 912,
+          "y": 393,
+          "ref": [
+            56717,
+            0,
+            0,
+            56717
+          ],
+          "candidate": [
+            56719,
+            0,
+            0,
+            56719
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 1007,
+          "y": 393,
+          "ref": [
+            56717,
+            0,
+            0,
+            56717
+          ],
+          "candidate": [
+            56719,
+            0,
+            0,
+            56719
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 909,
+          "y": 394,
+          "ref": [
+            56717,
+            0,
+            0,
+            56717
+          ],
+          "candidate": [
+            56719,
+            0,
+            0,
+            56719
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 1010,
+          "y": 394,
+          "ref": [
+            56717,
+            0,
+            0,
+            56717
+          ],
+          "candidate": [
+            56719,
+            0,
+            0,
+            56719
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 906,
+          "y": 395,
+          "ref": [
+            56717,
+            0,
+            0,
+            56717
+          ],
+          "candidate": [
+            56719,
+            0,
+            0,
+            56719
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 1013,
+          "y": 395,
+          "ref": [
+            56717,
+            0,
+            0,
+            56717
+          ],
+          "candidate": [
+            56719,
+            0,
+            0,
+            56719
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 901,
+          "y": 397,
+          "ref": [
+            56717,
+            0,
+            0,
+            56717
+          ],
+          "candidate": [
+            56719,
+            0,
+            0,
+            56719
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 1018,
+          "y": 397,
+          "ref": [
+            56717,
+            0,
+            0,
+            56717
+          ],
+          "candidate": [
+            56719,
+            0,
+            0,
+            56719
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "case": "0012",
+      "max": 2,
+      "nonzero_px": 2948,
+      "mean_abs": 0.0019904996141975307,
+      "channels": [
+        {
+          "channel": "R",
+          "nz_samples": 2907,
+          "max_abs": 2,
+          "positive": 16,
+          "negative": 2891,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 2907
+            }
+          ]
+        },
+        {
+          "channel": "G",
+          "nz_samples": 2596,
+          "max_abs": 2,
+          "positive": 0,
+          "negative": 2596,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 2596
+            }
+          ]
+        },
+        {
+          "channel": "B",
+          "nz_samples": 2597,
+          "max_abs": 2,
+          "positive": 1,
+          "negative": 2596,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 2597
+            }
+          ]
+        },
+        {
+          "channel": "A",
+          "nz_samples": 155,
+          "max_abs": 2,
+          "positive": 24,
+          "negative": 131,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 155
+            }
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "x": 438,
+          "y": 0,
+          "ref": [
+            42309,
+            42309,
+            42309,
+            64997
+          ],
+          "candidate": [
+            42307,
+            42307,
+            42307,
+            64997
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 657,
+          "y": 0,
+          "ref": [
+            60153,
+            60153,
+            60153,
+            64997
+          ],
+          "candidate": [
+            60151,
+            60151,
+            60151,
+            64997
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 625,
+          "y": 1,
+          "ref": [
+            51995,
+            51995,
+            51995,
+            64997
+          ],
+          "candidate": [
+            51993,
+            51993,
+            51993,
+            64997
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 1034,
+          "y": 1,
+          "ref": [
+            55121,
+            55121,
+            55121,
+            64775
+          ],
+          "candidate": [
+            55119,
+            55119,
+            55119,
+            64775
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 1035,
+          "y": 1,
+          "ref": [
+            54105,
+            54105,
+            54105,
+            64775
+          ],
+          "candidate": [
+            54103,
+            54103,
+            54103,
+            64775
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 1033,
+          "y": 2,
+          "ref": [
+            38487,
+            38487,
+            38487,
+            64997
+          ],
+          "candidate": [
+            38485,
+            38485,
+            38485,
+            64997
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 1652,
+          "y": 2,
+          "ref": [
+            43585,
+            43585,
+            43585,
+            64997
+          ],
+          "candidate": [
+            43583,
+            43583,
+            43583,
+            64997
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 1792,
+          "y": 2,
+          "ref": [
+            57915,
+            57915,
+            57915,
+            64775
+          ],
+          "candidate": [
+            57913,
+            57913,
+            57913,
+            64775
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 1793,
+          "y": 2,
+          "ref": [
+            59947,
+            59947,
+            59947,
+            64775
+          ],
+          "candidate": [
+            59945,
+            59945,
+            59945,
+            64775
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 1034,
+          "y": 3,
+          "ref": [
+            51819,
+            51819,
+            51819,
+            64775
+          ],
+          "candidate": [
+            51817,
+            51817,
+            51817,
+            64775
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case": "0013",
+      "max": 2,
+      "nonzero_px": 9006,
+      "mean_abs": 0.005261622299382716,
+      "channels": [
+        {
+          "channel": "R",
+          "nz_samples": 5811,
+          "max_abs": 2,
+          "positive": 1413,
+          "negative": 4398,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 5811
+            }
+          ]
+        },
+        {
+          "channel": "G",
+          "nz_samples": 5308,
+          "max_abs": 2,
+          "positive": 1217,
+          "negative": 4091,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 5308
+            }
+          ]
+        },
+        {
+          "channel": "B",
+          "nz_samples": 5308,
+          "max_abs": 2,
+          "positive": 1217,
+          "negative": 4091,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 5308
+            }
+          ]
+        },
+        {
+          "channel": "A",
+          "nz_samples": 5394,
+          "max_abs": 2,
+          "positive": 5394,
+          "negative": 0,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 5394
+            }
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "x": 15,
+          "y": 0,
+          "ref": [
+            7311,
+            7311,
+            7311,
+            21683
+          ],
+          "candidate": [
+            7309,
+            7309,
+            7309,
+            21683
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 16,
+          "y": 0,
+          "ref": [
+            11109,
+            11109,
+            11109,
+            26727
+          ],
+          "candidate": [
+            11107,
+            11107,
+            11107,
+            26727
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 17,
+          "y": 0,
+          "ref": [
+            3211,
+            3211,
+            3211,
+            14371
+          ],
+          "candidate": [
+            3211,
+            3211,
+            3211,
+            14373
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 438,
+          "y": 0,
+          "ref": [
+            27245,
+            27245,
+            27245,
+            41855
+          ],
+          "candidate": [
+            27245,
+            27245,
+            27245,
+            41857
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 439,
+          "y": 0,
+          "ref": [
+            62567,
+            62567,
+            62567,
+            62813
+          ],
+          "candidate": [
+            62569,
+            62569,
+            62569,
+            62815
+          ],
+          "delta": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "x": 440,
+          "y": 0,
+          "ref": [
+            53709,
+            53709,
+            53709,
+            58531
+          ],
+          "candidate": [
+            53711,
+            53711,
+            53711,
+            58533
+          ],
+          "delta": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "x": 441,
+          "y": 0,
+          "ref": [
+            10693,
+            10693,
+            10693,
+            26221
+          ],
+          "candidate": [
+            10693,
+            10693,
+            10693,
+            26223
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 447,
+          "y": 0,
+          "ref": [
+            14957,
+            14957,
+            14957,
+            31013
+          ],
+          "candidate": [
+            14959,
+            14959,
+            14959,
+            31015
+          ],
+          "delta": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "x": 448,
+          "y": 0,
+          "ref": [
+            19657,
+            19657,
+            19657,
+            35553
+          ],
+          "candidate": [
+            19655,
+            19655,
+            19655,
+            35553
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 656,
+          "y": 0,
+          "ref": [
+            7143,
+            7143,
+            7143,
+            21431
+          ],
+          "candidate": [
+            7143,
+            7143,
+            7143,
+            21433
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "case": "0014",
+      "max": 4,
+      "nonzero_px": 9630,
+      "mean_abs": 0.005750385802469136,
+      "channels": [
+        {
+          "channel": "R",
+          "nz_samples": 6376,
+          "max_abs": 4,
+          "positive": 1536,
+          "negative": 4840,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 6328
+            },
+            {
+              "abs": 4,
+              "count": 48
+            }
+          ]
+        },
+        {
+          "channel": "G",
+          "nz_samples": 5765,
+          "max_abs": 4,
+          "positive": 1271,
+          "negative": 4494,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 5720
+            },
+            {
+              "abs": 4,
+              "count": 45
+            }
+          ]
+        },
+        {
+          "channel": "B",
+          "nz_samples": 5765,
+          "max_abs": 4,
+          "positive": 1271,
+          "negative": 4494,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 5720
+            },
+            {
+              "abs": 4,
+              "count": 45
+            }
+          ]
+        },
+        {
+          "channel": "A",
+          "nz_samples": 5804,
+          "max_abs": 2,
+          "positive": 5804,
+          "negative": 0,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 5804
+            }
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "x": 15,
+          "y": 0,
+          "ref": [
+            7435,
+            7435,
+            7435,
+            22049
+          ],
+          "candidate": [
+            7433,
+            7433,
+            7433,
+            22049
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 16,
+          "y": 0,
+          "ref": [
+            11295,
+            11295,
+            11295,
+            27175
+          ],
+          "candidate": [
+            11293,
+            11293,
+            11293,
+            27177
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            2
+          ]
+        },
+        {
+          "x": 17,
+          "y": 0,
+          "ref": [
+            3265,
+            3265,
+            3265,
+            14613
+          ],
+          "candidate": [
+            3265,
+            3265,
+            3265,
+            14615
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 438,
+          "y": 0,
+          "ref": [
+            27703,
+            27703,
+            27703,
+            42559
+          ],
+          "candidate": [
+            27703,
+            27703,
+            27703,
+            42561
+          ],
+          "delta": [
+            0,
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "x": 439,
+          "y": 0,
+          "ref": [
+            64715,
+            64715,
+            64715,
+            64969
+          ],
+          "candidate": [
+            64717,
+            64717,
+            64717,
+            64971
+          ],
+          "delta": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "x": 440,
+          "y": 0,
+          "ref": [
+            54997,
+            54997,
+            54997,
+            59935
+          ],
+          "candidate": [
+            54999,
+            54999,
+            54999,
+            59937
+          ],
+          "delta": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "x": 441,
+          "y": 0,
+          "ref": [
+            10873,
+            10873,
+            10873,
+            26663
+          ],
+          "candidate": [
+            10871,
+            10871,
+            10871,
+            26663
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 447,
+          "y": 0,
+          "ref": [
+            15209,
+            15209,
+            15209,
+            31535
+          ],
+          "candidate": [
+            15211,
+            15211,
+            15211,
+            31537
+          ],
+          "delta": [
+            2,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "x": 448,
+          "y": 0,
+          "ref": [
+            19989,
+            19989,
+            19989,
+            36151
+          ],
+          "candidate": [
+            19985,
+            19985,
+            19985,
+            36151
+          ],
+          "delta": [
+            -4,
+            -4,
+            -4,
+            0
+          ]
+        },
+        {
+          "x": 657,
+          "y": 0,
+          "ref": [
+            55997,
+            55997,
+            55997,
+            60507
+          ],
+          "candidate": [
+            55995,
+            55995,
+            55995,
+            60507
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case": "0016",
+      "max": 2,
+      "nonzero_px": 5373,
+      "mean_abs": 0.0037005690586419753,
+      "channels": [
+        {
+          "channel": "R",
+          "nz_samples": 5371,
+          "max_abs": 2,
+          "positive": 0,
+          "negative": 5371,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 5371
+            }
+          ]
+        },
+        {
+          "channel": "G",
+          "nz_samples": 4988,
+          "max_abs": 2,
+          "positive": 0,
+          "negative": 4988,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 4988
+            }
+          ]
+        },
+        {
+          "channel": "B",
+          "nz_samples": 4988,
+          "max_abs": 2,
+          "positive": 0,
+          "negative": 4988,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 4988
+            }
+          ]
+        },
+        {
+          "channel": "A",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        }
+      ],
+      "samples": [
+        {
+          "x": 15,
+          "y": 0,
+          "ref": [
+            7451,
+            7451,
+            7451,
+            22101
+          ],
+          "candidate": [
+            7449,
+            7449,
+            7449,
+            22101
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 17,
+          "y": 0,
+          "ref": [
+            3273,
+            3273,
+            3273,
+            14649
+          ],
+          "candidate": [
+            3271,
+            3271,
+            3271,
+            14649
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 441,
+          "y": 0,
+          "ref": [
+            10899,
+            10899,
+            10899,
+            26727
+          ],
+          "candidate": [
+            10897,
+            10897,
+            10897,
+            26727
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 448,
+          "y": 0,
+          "ref": [
+            20035,
+            20035,
+            20035,
+            36237
+          ],
+          "candidate": [
+            20033,
+            20033,
+            20033,
+            36237
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 1653,
+          "y": 0,
+          "ref": [
+            8715,
+            8715,
+            8715,
+            23901
+          ],
+          "candidate": [
+            8713,
+            8713,
+            8713,
+            23901
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 1654,
+          "y": 0,
+          "ref": [
+            8903,
+            8903,
+            8903,
+            24157
+          ],
+          "candidate": [
+            8901,
+            8901,
+            8901,
+            24157
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 440,
+          "y": 1,
+          "ref": [
+            6775,
+            6775,
+            6775,
+            21073
+          ],
+          "candidate": [
+            6773,
+            6773,
+            6773,
+            21073
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 626,
+          "y": 1,
+          "ref": [
+            18367,
+            18367,
+            18367,
+            34695
+          ],
+          "candidate": [
+            18365,
+            18365,
+            18365,
+            34695
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 1033,
+          "y": 1,
+          "ref": [
+            9095,
+            9095,
+            9095,
+            24415
+          ],
+          "candidate": [
+            9093,
+            9093,
+            9093,
+            24415
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        },
+        {
+          "x": 1034,
+          "y": 1,
+          "ref": [
+            47457,
+            47457,
+            47457,
+            55769
+          ],
+          "candidate": [
+            47455,
+            47455,
+            47455,
+            55769
+          ],
+          "delta": [
+            -2,
+            -2,
+            -2,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case": "0020",
+      "max": 0,
+      "nonzero_px": 0,
+      "mean_abs": 0.0,
+      "channels": [
+        {
+          "channel": "R",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "G",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "B",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "A",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        }
+      ],
+      "samples": []
+    },
+    {
+      "case": "0021",
+      "max": 0,
+      "nonzero_px": 0,
+      "mean_abs": 0.0,
+      "channels": [
+        {
+          "channel": "R",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "G",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "B",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "A",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        }
+      ],
+      "samples": []
+    },
+    {
+      "case": "0022",
+      "max": 0,
+      "nonzero_px": 0,
+      "mean_abs": 0.0,
+      "channels": [
+        {
+          "channel": "R",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "G",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "B",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "A",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        }
+      ],
+      "samples": []
+    },
+    {
+      "case": "0023",
+      "max": 0,
+      "nonzero_px": 0,
+      "mean_abs": 0.0,
+      "channels": [
+        {
+          "channel": "R",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "G",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "B",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "A",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        }
+      ],
+      "samples": []
+    },
+    {
+      "case": "0024",
+      "max": 20,
+      "nonzero_px": 1051915,
+      "mean_abs": 0.3274211516203704,
+      "channels": [
+        {
+          "channel": "R",
+          "nz_samples": 682394,
+          "max_abs": 20,
+          "positive": 670849,
+          "negative": 11545,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 648912
+            },
+            {
+              "abs": 4,
+              "count": 26077
+            },
+            {
+              "abs": 6,
+              "count": 4706
+            },
+            {
+              "abs": 8,
+              "count": 2304
+            },
+            {
+              "abs": 10,
+              "count": 179
+            },
+            {
+              "abs": 12,
+              "count": 84
+            },
+            {
+              "abs": 18,
+              "count": 45
+            },
+            {
+              "abs": 20,
+              "count": 33
+            }
+          ]
+        },
+        {
+          "channel": "G",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "B",
+          "nz_samples": 602191,
+          "max_abs": 20,
+          "positive": 580159,
+          "negative": 22032,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 581962
+            },
+            {
+              "abs": 4,
+              "count": 15548
+            },
+            {
+              "abs": 8,
+              "count": 2576
+            },
+            {
+              "abs": 6,
+              "count": 1800
+            },
+            {
+              "abs": 10,
+              "count": 93
+            },
+            {
+              "abs": 14,
+              "count": 68
+            },
+            {
+              "abs": 18,
+              "count": 57
+            },
+            {
+              "abs": 20,
+              "count": 44
+            }
+          ]
+        },
+        {
+          "channel": "A",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        }
+      ],
+      "samples": [
+        {
+          "x": 1,
+          "y": 0,
+          "ref": [
+            32439,
+            0,
+            34697,
+            65535
+          ],
+          "candidate": [
+            32441,
+            0,
+            34697,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "ref": [
+            24209,
+            0,
+            43325,
+            65535
+          ],
+          "candidate": [
+            24211,
+            0,
+            43325,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 4,
+          "y": 0,
+          "ref": [
+            21053,
+            0,
+            46633,
+            65535
+          ],
+          "candidate": [
+            21055,
+            0,
+            46635,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 5,
+          "y": 0,
+          "ref": [
+            18355,
+            0,
+            49463,
+            65535
+          ],
+          "candidate": [
+            18357,
+            0,
+            49465,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 6,
+          "y": 0,
+          "ref": [
+            16041,
+            0,
+            51889,
+            65535
+          ],
+          "candidate": [
+            16041,
+            0,
+            51891,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 7,
+          "y": 0,
+          "ref": [
+            14057,
+            0,
+            53969,
+            65535
+          ],
+          "candidate": [
+            14059,
+            0,
+            53969,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 8,
+          "y": 0,
+          "ref": [
+            12369,
+            0,
+            55739,
+            65535
+          ],
+          "candidate": [
+            12371,
+            0,
+            55739,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 10,
+          "y": 0,
+          "ref": [
+            9775,
+            0,
+            58459,
+            65535
+          ],
+          "candidate": [
+            9775,
+            0,
+            58461,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 11,
+          "y": 0,
+          "ref": [
+            8833,
+            0,
+            59447,
+            65535
+          ],
+          "candidate": [
+            8833,
+            0,
+            59449,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 12,
+          "y": 0,
+          "ref": [
+            8109,
+            0,
+            60205,
+            65535
+          ],
+          "candidate": [
+            8111,
+            0,
+            60205,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case": "0025",
+      "max": 6,
+      "nonzero_px": 860084,
+      "mean_abs": 0.28962311921296297,
+      "channels": [
+        {
+          "channel": "R",
+          "nz_samples": 488757,
+          "max_abs": 6,
+          "positive": 458531,
+          "negative": 30226,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 438156
+            },
+            {
+              "abs": 4,
+              "count": 35640
+            },
+            {
+              "abs": 6,
+              "count": 14961
+            }
+          ]
+        },
+        {
+          "channel": "G",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "B",
+          "nz_samples": 599672,
+          "max_abs": 6,
+          "positive": 579844,
+          "negative": 19828,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 570817
+            },
+            {
+              "abs": 6,
+              "count": 18279
+            },
+            {
+              "abs": 4,
+              "count": 10576
+            }
+          ]
+        },
+        {
+          "channel": "A",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        }
+      ],
+      "samples": [
+        {
+          "x": 3,
+          "y": 0,
+          "ref": [
+            7367,
+            0,
+            60983,
+            65535
+          ],
+          "candidate": [
+            7367,
+            0,
+            60985,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 5,
+          "y": 0,
+          "ref": [
+            8769,
+            0,
+            59513,
+            65535
+          ],
+          "candidate": [
+            8769,
+            0,
+            59515,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 6,
+          "y": 0,
+          "ref": [
+            10025,
+            0,
+            58197,
+            65535
+          ],
+          "candidate": [
+            10025,
+            0,
+            58199,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 7,
+          "y": 0,
+          "ref": [
+            11681,
+            0,
+            56459,
+            65535
+          ],
+          "candidate": [
+            11683,
+            0,
+            56461,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 8,
+          "y": 0,
+          "ref": [
+            13779,
+            0,
+            54261,
+            65535
+          ],
+          "candidate": [
+            13781,
+            0,
+            54261,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 9,
+          "y": 0,
+          "ref": [
+            16373,
+            0,
+            51541,
+            65535
+          ],
+          "candidate": [
+            16375,
+            0,
+            51541,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 10,
+          "y": 0,
+          "ref": [
+            19549,
+            0,
+            48211,
+            65535
+          ],
+          "candidate": [
+            19549,
+            0,
+            48213,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 11,
+          "y": 0,
+          "ref": [
+            23437,
+            0,
+            44135,
+            65535
+          ],
+          "candidate": [
+            23437,
+            0,
+            44137,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 13,
+          "y": 0,
+          "ref": [
+            34443,
+            0,
+            32595,
+            65535
+          ],
+          "candidate": [
+            34443,
+            0,
+            32597,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 14,
+          "y": 0,
+          "ref": [
+            43093,
+            0,
+            23525,
+            65535
+          ],
+          "candidate": [
+            43097,
+            0,
+            23525,
+            65535
+          ],
+          "delta": [
+            4,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case": "0026",
+      "max": 4,
+      "nonzero_px": 900709,
+      "mean_abs": 0.26815574363425926,
+      "channels": [
+        {
+          "channel": "R",
+          "nz_samples": 530560,
+          "max_abs": 4,
+          "positive": 527144,
+          "negative": 3416,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 516349
+            },
+            {
+              "abs": 4,
+              "count": 14211
+            }
+          ]
+        },
+        {
+          "channel": "G",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        },
+        {
+          "channel": "B",
+          "nz_samples": 550389,
+          "max_abs": 4,
+          "positive": 533741,
+          "negative": 16648,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 530929
+            },
+            {
+              "abs": 4,
+              "count": 17777
+            },
+            {
+              "abs": 1,
+              "count": 1683
+            }
+          ]
+        },
+        {
+          "channel": "A",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        }
+      ],
+      "samples": [
+        {
+          "x": 3,
+          "y": 0,
+          "ref": [
+            18147,
+            0,
+            49681,
+            65535
+          ],
+          "candidate": [
+            18147,
+            0,
+            49685,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            4,
+            0
+          ]
+        },
+        {
+          "x": 4,
+          "y": 0,
+          "ref": [
+            27731,
+            0,
+            39633,
+            65535
+          ],
+          "candidate": [
+            27733,
+            0,
+            39633,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 5,
+          "y": 0,
+          "ref": [
+            36021,
+            0,
+            30941,
+            65535
+          ],
+          "candidate": [
+            36023,
+            0,
+            30941,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 6,
+          "y": 0,
+          "ref": [
+            43085,
+            0,
+            23533,
+            65535
+          ],
+          "candidate": [
+            43089,
+            0,
+            23533,
+            65535
+          ],
+          "delta": [
+            4,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 7,
+          "y": 0,
+          "ref": [
+            49003,
+            0,
+            17331,
+            65535
+          ],
+          "candidate": [
+            49005,
+            0,
+            17331,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 8,
+          "y": 0,
+          "ref": [
+            53849,
+            0,
+            12249,
+            65535
+          ],
+          "candidate": [
+            53849,
+            0,
+            12251,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 9,
+          "y": 0,
+          "ref": [
+            57703,
+            0,
+            8209,
+            65535
+          ],
+          "candidate": [
+            57705,
+            0,
+            8209,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 10,
+          "y": 0,
+          "ref": [
+            60657,
+            0,
+            5111,
+            65535
+          ],
+          "candidate": [
+            60659,
+            0,
+            5111,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 11,
+          "y": 0,
+          "ref": [
+            62803,
+            0,
+            2861,
+            65535
+          ],
+          "candidate": [
+            62803,
+            0,
+            2863,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            2,
+            0
+          ]
+        },
+        {
+          "x": 13,
+          "y": 0,
+          "ref": [
+            65083,
+            0,
+            471,
+            65535
+          ],
+          "candidate": [
+            65083,
+            0,
+            473,
+            65535
+          ],
+          "delta": [
+            0,
+            0,
+            2,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case": "0027",
+      "max": 4,
+      "nonzero_px": 451535,
+      "mean_abs": 0.11760971257716049,
+      "channels": [
+        {
+          "channel": "R",
+          "nz_samples": 430193,
+          "max_abs": 4,
+          "positive": 426053,
+          "negative": 4140,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 406934
+            },
+            {
+              "abs": 4,
+              "count": 23259
+            }
+          ]
+        },
+        {
+          "channel": "G",
+          "nz_samples": 16054,
+          "max_abs": 4,
+          "positive": 16044,
+          "negative": 10,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 13891
+            },
+            {
+              "abs": 1,
+              "count": 2143
+            },
+            {
+              "abs": 4,
+              "count": 20
+            }
+          ]
+        },
+        {
+          "channel": "B",
+          "nz_samples": 20573,
+          "max_abs": 4,
+          "positive": 20563,
+          "negative": 10,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 17960
+            },
+            {
+              "abs": 1,
+              "count": 2593
+            },
+            {
+              "abs": 4,
+              "count": 20
+            }
+          ]
+        },
+        {
+          "channel": "A",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        }
+      ],
+      "samples": [
+        {
+          "x": 4,
+          "y": 0,
+          "ref": [
+            23067,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            23069,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 5,
+          "y": 0,
+          "ref": [
+            32381,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            32383,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 6,
+          "y": 0,
+          "ref": [
+            40317,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            40319,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 7,
+          "y": 0,
+          "ref": [
+            46963,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            46965,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 9,
+          "y": 0,
+          "ref": [
+            56737,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            56739,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 11,
+          "y": 0,
+          "ref": [
+            62465,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            62467,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 15,
+          "y": 0,
+          "ref": [
+            65533,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 16,
+          "y": 0,
+          "ref": [
+            65533,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 17,
+          "y": 0,
+          "ref": [
+            65533,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            65535,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 21,
+          "y": 0,
+          "ref": [
+            62465,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            62467,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "case": "0028",
+      "max": 3080,
+      "nonzero_px": 457177,
+      "mean_abs": 7.260353250385802,
+      "channels": [
+        {
+          "channel": "R",
+          "nz_samples": 437924,
+          "max_abs": 3078,
+          "positive": 418252,
+          "negative": 19672,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 417487
+            },
+            {
+              "abs": 4,
+              "count": 6232
+            },
+            {
+              "abs": 2162,
+              "count": 443
+            },
+            {
+              "abs": 2154,
+              "count": 137
+            },
+            {
+              "abs": 1996,
+              "count": 134
+            },
+            {
+              "abs": 1824,
+              "count": 127
+            },
+            {
+              "abs": 2160,
+              "count": 121
+            },
+            {
+              "abs": 2144,
+              "count": 118
+            }
+          ]
+        },
+        {
+          "channel": "G",
+          "nz_samples": 31998,
+          "max_abs": 3080,
+          "positive": 15397,
+          "negative": 16601,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 15523
+            },
+            {
+              "abs": 4,
+              "count": 2593
+            },
+            {
+              "abs": 6,
+              "count": 900
+            },
+            {
+              "abs": 2156,
+              "count": 377
+            },
+            {
+              "abs": 2152,
+              "count": 219
+            },
+            {
+              "abs": 2154,
+              "count": 151
+            },
+            {
+              "abs": 1844,
+              "count": 120
+            },
+            {
+              "abs": 2084,
+              "count": 117
+            }
+          ]
+        },
+        {
+          "channel": "B",
+          "nz_samples": 36952,
+          "max_abs": 3080,
+          "positive": 22072,
+          "negative": 14880,
+          "unique_abs_top": [
+            {
+              "abs": 2,
+              "count": 22966
+            },
+            {
+              "abs": 4,
+              "count": 570
+            },
+            {
+              "abs": 6,
+              "count": 434
+            },
+            {
+              "abs": 2156,
+              "count": 377
+            },
+            {
+              "abs": 2152,
+              "count": 219
+            },
+            {
+              "abs": 2154,
+              "count": 151
+            },
+            {
+              "abs": 1844,
+              "count": 120
+            },
+            {
+              "abs": 2084,
+              "count": 117
+            }
+          ]
+        },
+        {
+          "channel": "A",
+          "nz_samples": 0,
+          "max_abs": 0,
+          "positive": 0,
+          "negative": 0,
+          "unique_abs_top": []
+        }
+      ],
+      "samples": [
+        {
+          "x": 4,
+          "y": 0,
+          "ref": [
+            4235,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            4237,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 5,
+          "y": 0,
+          "ref": [
+            6529,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            6531,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 6,
+          "y": 0,
+          "ref": [
+            8965,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            8967,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 7,
+          "y": 0,
+          "ref": [
+            11569,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            11571,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 9,
+          "y": 0,
+          "ref": [
+            17437,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            17439,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 14,
+          "y": 0,
+          "ref": [
+            42051,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            42053,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "x": 15,
+          "y": 0,
+          "ref": [
+            59811,
+            2911,
+            2911,
+            65535
+          ],
+          "candidate": [
+            57875,
+            981,
+            981,
+            65535
+          ],
+          "delta": [
+            -1936,
+            -1930,
+            -1930,
+            0
+          ]
+        },
+        {
+          "x": 16,
+          "y": 0,
+          "ref": [
+            60487,
+            3587,
+            3587,
+            65535
+          ],
+          "candidate": [
+            58385,
+            1493,
+            1493,
+            65535
+          ],
+          "delta": [
+            -2102,
+            -2094,
+            -2094,
+            0
+          ]
+        },
+        {
+          "x": 17,
+          "y": 0,
+          "ref": [
+            58829,
+            1929,
+            1929,
+            65535
+          ],
+          "candidate": [
+            57323,
+            431,
+            431,
+            65535
+          ],
+          "delta": [
+            -1506,
+            -1498,
+            -1498,
+            0
+          ]
+        },
+        {
+          "x": 18,
+          "y": 0,
+          "ref": [
+            42051,
+            0,
+            0,
+            65535
+          ],
+          "candidate": [
+            42053,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}

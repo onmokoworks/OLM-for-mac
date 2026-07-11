@@ -1,0 +1,9 @@
+{
+  "id": "thin_odd",
+  "width": 3,
+  "height": 3,
+  "angle": 0.125,
+  "source_sha256": "914340f99ecdba8e7ddc08f9c34c376c1592f56aea9e6075ed415e1f4dd1600f",
+  "expected_sha256": "bcf1d259f7129c3fc2cfff20998cf6c5bfaa04a257d94c6d3fbc77c895802446",
+  "destination_poison_hex": "a5b1c2d3"
+}

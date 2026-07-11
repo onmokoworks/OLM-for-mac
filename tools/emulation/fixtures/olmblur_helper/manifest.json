@@ -1,0 +1,240 @@
+{
+  "binary_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "cases": [
+    {
+      "direction": "horizontal",
+      "files": {
+        "expected": {
+          "bytes": 60,
+          "path": "basic/expected.bin",
+          "sha256": "f50a3f769ab5fabeb1157e6bfa4752ba4a1b99d3721ef85f3e927d5001250e40"
+        },
+        "flags": {
+          "bytes": 5,
+          "path": "basic/flags.bin",
+          "sha256": "377a23f52c6b357696238c3318f677a082dd3430bb6691042bd550a5cda28ebb"
+        },
+        "src": {
+          "bytes": 60,
+          "path": "basic/src.bin",
+          "sha256": "d91d9b8915c62f2e0ec1b0b40581bee70d0605330ac0e346bf4a2d065b429213"
+        },
+        "weights": {
+          "bytes": 12,
+          "path": "basic/weights.bin",
+          "sha256": "98b66ed3a65c144123d14c66e0b58328973a449be28abfea8dc2a8618f315307"
+        }
+      },
+      "flags": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "height": 1,
+      "id": "basic",
+      "offset": 0,
+      "passes": 1,
+      "radius": 2,
+      "width": 5
+    },
+    {
+      "direction": "horizontal",
+      "files": {
+        "expected": {
+          "bytes": 36,
+          "path": "inactive_copy/expected.bin",
+          "sha256": "574ea771852d0b8b704e802f3d8fa17584b9b356b6f286675741618414dc854b"
+        },
+        "flags": {
+          "bytes": 3,
+          "path": "inactive_copy/flags.bin",
+          "sha256": "85f90dfea1d8027e1463e5ca971a250110a20df0119d204a74220bc63516d15b"
+        },
+        "src": {
+          "bytes": 36,
+          "path": "inactive_copy/src.bin",
+          "sha256": "574ea771852d0b8b704e802f3d8fa17584b9b356b6f286675741618414dc854b"
+        },
+        "weights": {
+          "bytes": 8,
+          "path": "inactive_copy/weights.bin",
+          "sha256": "b9c80b5adeca450753a16950c3cc655d271f7bef7a485bc83f112b72fef21d37"
+        }
+      },
+      "flags": [
+        1,
+        0,
+        1
+      ],
+      "height": 1,
+      "id": "inactive_copy",
+      "offset": 0,
+      "passes": 1,
+      "radius": 1,
+      "width": 3
+    },
+    {
+      "direction": "horizontal",
+      "files": {
+        "expected": {
+          "bytes": 60,
+          "path": "direction_break/expected.bin",
+          "sha256": "a5218fac8c3acae41d7f1d7f72d3f9f39e2b809efc4fa724cf6f003dce7752fb"
+        },
+        "flags": {
+          "bytes": 5,
+          "path": "direction_break/flags.bin",
+          "sha256": "913bd73e697f1a9c2f897b07bd01de9412b22efcd6284b7dfed85c39cfa7ab3b"
+        },
+        "src": {
+          "bytes": 60,
+          "path": "direction_break/src.bin",
+          "sha256": "d91d9b8915c62f2e0ec1b0b40581bee70d0605330ac0e346bf4a2d065b429213"
+        },
+        "weights": {
+          "bytes": 12,
+          "path": "direction_break/weights.bin",
+          "sha256": "98b66ed3a65c144123d14c66e0b58328973a449be28abfea8dc2a8618f315307"
+        }
+      },
+      "flags": [
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "height": 1,
+      "id": "direction_break",
+      "offset": 0,
+      "passes": 1,
+      "radius": 2,
+      "width": 5
+    },
+    {
+      "direction": "horizontal",
+      "files": {
+        "expected": {
+          "bytes": 24,
+          "path": "edge_radius_clamp/expected.bin",
+          "sha256": "537328620ee21fbe264a6ff9da0d9c37e390fde313b5e1dc05a947501ff9ad6f"
+        },
+        "flags": {
+          "bytes": 2,
+          "path": "edge_radius_clamp/flags.bin",
+          "sha256": "9dcf97a184f32623d11a73124ceb99a5709b083721e878a16d78f596718ba7b2"
+        },
+        "src": {
+          "bytes": 24,
+          "path": "edge_radius_clamp/src.bin",
+          "sha256": "c2600e1170a6c8870bfa1db230512017ce5569d52a67906d2bd8c70edf57d4ed"
+        },
+        "weights": {
+          "bytes": 20,
+          "path": "edge_radius_clamp/weights.bin",
+          "sha256": "aa298b36c58b1ce29dc4f1d0c7ae0ea58953c626bdac0125a827cce8d3076908"
+        }
+      },
+      "flags": [
+        1,
+        1
+      ],
+      "height": 1,
+      "id": "edge_radius_clamp",
+      "offset": 0,
+      "passes": 1,
+      "radius": 4,
+      "width": 2
+    },
+    {
+      "direction": "horizontal",
+      "files": {
+        "expected": {
+          "bytes": 36,
+          "path": "zero_denominator/expected.bin",
+          "sha256": "6db65fd59fd356f6729140571b5bcd6bb3b83492a16e1bf0a3884442fc3c8a0e"
+        },
+        "flags": {
+          "bytes": 3,
+          "path": "zero_denominator/flags.bin",
+          "sha256": "75c8fd04ad916aec3e3d5cb76a452b116b3d4d0912a0a485e9fb8e3d240e210c"
+        },
+        "src": {
+          "bytes": 36,
+          "path": "zero_denominator/src.bin",
+          "sha256": "574ea771852d0b8b704e802f3d8fa17584b9b356b6f286675741618414dc854b"
+        },
+        "weights": {
+          "bytes": 8,
+          "path": "zero_denominator/weights.bin",
+          "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+        }
+      },
+      "flags": [
+        1,
+        1,
+        1
+      ],
+      "height": 1,
+      "id": "zero_denominator",
+      "offset": 0,
+      "passes": 1,
+      "radius": 1,
+      "width": 3
+    },
+    {
+      "direction": "vertical",
+      "files": {
+        "expected": {
+          "bytes": 180,
+          "path": "nonzero_offset/expected.bin",
+          "sha256": "6b124f5bd7e8c38ddb12f2d1928de76b7176fb5c2aa0a6dc32008525d20cd253"
+        },
+        "flags": {
+          "bytes": 15,
+          "path": "nonzero_offset/flags.bin",
+          "sha256": "69801b353a8f248b5399788172cf8a7758625782651ae1e8b733fd3f5cd875a8"
+        },
+        "src": {
+          "bytes": 180,
+          "path": "nonzero_offset/src.bin",
+          "sha256": "87420dfe5b8a11ccd409fa57604e098f48d49d0fb1936bdd5148bd21850c7db4"
+        },
+        "weights": {
+          "bytes": 12,
+          "path": "nonzero_offset/weights.bin",
+          "sha256": "98b66ed3a65c144123d14c66e0b58328973a449be28abfea8dc2a8618f315307"
+        }
+      },
+      "flags": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "height": 5,
+      "id": "nonzero_offset",
+      "offset": 1,
+      "passes": 2,
+      "radius": 2,
+      "width": 3
+    }
+  ],
+  "claim": "Actual AEX helper fixture only; not full-entry or AE exact.",
+  "plugin": "OLMBlur",
+  "schema": "olm.aex.cpu-fixture/1",
+  "scope": "function"
+}

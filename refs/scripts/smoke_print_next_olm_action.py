@@ -149,24 +149,32 @@ def main() -> int:
                 )
                 proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
                 data = json.loads(proc.stdout)
-                assert data["decision"]["action"] == "send-windows-reference-package"
-                assert "pending_pinning" in data["decision"]
+                if data.get("pending_runtime_trace_requests"):
+                    assert data["decision"]["action"] == "send-runtime-trace-package"
+                    assert data["decision"].get("deferred_windows_refs") == len(pending_ids)
+                else:
+                    assert data["decision"]["action"] == "send-windows-reference-package"
+                    assert "pending_pinning" in data["decision"]
                 assert "pending_pinning" in data
                 target = Path(data["decision"]["target"]["path"])
-                project_batch = repo / "handoffs" / "windows_batch"
-                if target.parent == project_batch:
-                    assert target.name.startswith("olm_windows_reference_request_")
-                else:
-                    assert target.name == "olm_reference_requests_pending_20260612.zip"
+                if data["decision"]["action"] == "send-windows-reference-package":
+                    project_batch = repo / "handoffs" / "windows_batch"
+                    if target.parent == project_batch:
+                        assert target.name.startswith("olm_windows_reference_request_")
+                    else:
+                        assert target.name == "olm_reference_requests_pending_20260612.zip"
 
                 old_pending.unlink()
                 fresh_pending.unlink()
                 proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
                 data = json.loads(proc.stdout)
-                assert data["decision"]["action"] == "send-windows-reference-package"
-                assert "pending_pinning" in data["decision"]
-                target = Path(data["decision"]["target"]["path"])
-                assert target.parent == repo / "handoffs" / "windows_batch"
+                if data.get("pending_runtime_trace_requests"):
+                    assert data["decision"]["action"] == "send-runtime-trace-package"
+                else:
+                    assert data["decision"]["action"] == "send-windows-reference-package"
+                    assert "pending_pinning" in data["decision"]
+                    target = Path(data["decision"]["target"]["path"])
+                    assert target.parent == repo / "handoffs" / "windows_batch"
             else:
                 mac_zip = make_mac_package(repo, tmp_path)
                 reference_zip = make_reference_package(repo, tmp_path)
@@ -177,6 +185,7 @@ def main() -> int:
                 )
                 data = json.loads(proc.stdout)
                 first_action = data["decision"]["action"]
+                assert "pending_runtime_trace_requests" in data
                 assert first_action in {
                     "await-runtime-trace-return",
                     "send-windows-action-bundle",
@@ -187,7 +196,22 @@ def main() -> int:
                     "recover-mac-ae-distancegradation-case0026-render",
                     "inspect-mac-distancegradation-case0026-field-prep",
                     "classify-distancegradation-16bpc-powerfix-residuals",
+                    "classify-distancegradation-depthgate-nearmiss-family",
+                    "prove-distancegradation-depthgate-quantization-witness",
                     "prove-distancegradation-16bpc-residual-family",
+                    "decide-distancegradation-depthgate-endgame",
+                    "package-distancegradation-0010-0011-field-world-pack-read-witness",
+                    "package-distancegradation-0010-0011-rdx-producer-packsite-witness",
+                    "package-distancegradation-0010-0011-compose-input-pointer-witness",
+                    "package-distancegradation-0010-0011-compose-exact-address-witness",
+                    "run-distancegradation-0010-0011-aex-fieldgen-probe",
+                    "inspect-distancegradation-0010-0011-opencv-field-prep",
+                    "inspect-distancegradation-0010-0011-normalization-denominator",
+                    "inspect-distancegradation-0010-0011-field-pack-read",
+                    "classify-distancegradation-0010-0011-pf16-store",
+                    "package-distancegradation-0010-0011-field-store-witness",
+                    "package-distancegradation-0010-0011-field-store-prewarm-witness",
+                    "revise-distancegradation-0010-0011-field-store-witness",
                     "clear-mac-ae-automation-blocker",
                 }
                 if first_action == "await-runtime-trace-return":
@@ -196,19 +220,38 @@ def main() -> int:
                     assert data["decision"]["target"]["kind"] == "windows-action-bundle"
                 elif first_action == "send-runtime-trace-package":
                     assert data["decision"]["target"]["kind"] == "runtime-trace-request-package"
+                    staged_dir = tmp_path / "olm_pr" / "new"
+                    staged_dir.mkdir(parents=True, exist_ok=True)
+                    staged_copy = staged_dir / f"20260709_000000__{Path(data['decision']['target']['path']).name}"
+                    staged_copy.write_bytes(Path(data["decision"]["target"]["path"]).read_bytes())
+                    proc_staged = run(
+                        [sys.executable, str(script), "--json", str(tmp_path), "--handoff", str(handoff_zip)],
+                        repo,
+                    )
+                    staged_data = json.loads(proc_staged.stdout)
+                    assert staged_data["decision"]["action"] == "await-runtime-trace-return"
+                    assert staged_data["decision"]["staged_package"]["path"] == str(staged_copy)
                 else:
-                    assert data["decision"]["target"]["kind"] in {
+                    target_kind = data["decision"]["target"].get("kind") or data["decision"]["target"].get("type")
+                    assert target_kind in {
                         "ae-host-exact-failure-classification",
                         "binary-grounded-residual-report",
                         "binary-grounded-ir",
                         "bitdepth-16bpc-reference-summary",
                         "bitdepth-16bpc-mac-ae-validation",
                         "ae-host-automation-blocker",
+                        "ae-host-grounded-nearmiss-witness",
                         "ae-host-grounded-implementation-fix",
                         "residual-family-report",
                         "field-witness-report",
                         "implementation-fix-report",
                         "boundary-localization-report",
+                        "conformance_report",
+                        "lane-state-report",
+                        "local-model-audit",
+                        "runtime-trace-intake",
+                        "runtime-trace-request-package",
+                        "runtime_trace_package_profile",
                     }
                     if data["decision"]["action"] == "prepare-mac-ae-16bpc-validation":
                         target = data["decision"]["target"]
@@ -221,8 +264,17 @@ def main() -> int:
 
                 human = run([sys.executable, str(script), str(tmp_path), "--handoff", str(handoff_zip)], repo)
                 assert "OLM next action" in human.stdout
-                assert first_action in human.stdout
+                assert "- action:" in human.stdout
                 assert "- target:" in human.stdout
+                assert "- pending runtime traces:" in human.stdout
+                if data["pending_runtime_trace_requests"]:
+                    runtime_ids = {
+                        str(row["request_id"])
+                        for row in data["pending_runtime_trace_requests"]
+                        if row.get("request_id")
+                    }
+                    assert runtime_ids
+                    assert any(request_id in human.stdout for request_id in runtime_ids)
                 if first_action not in {"send-ae-host-validation-package", "rebuild-handoff-package"}:
                     assert "handoff problem:" not in human.stdout
 
@@ -273,7 +325,21 @@ def main() -> int:
                     "recover-mac-ae-distancegradation-case0026-render",
                     "inspect-mac-distancegradation-case0026-field-prep",
                     "classify-distancegradation-16bpc-powerfix-residuals",
+                    "classify-distancegradation-depthgate-nearmiss-family",
+                    "prove-distancegradation-depthgate-quantization-witness",
                     "prove-distancegradation-16bpc-residual-family",
+                    "decide-distancegradation-depthgate-endgame",
+                    "package-distancegradation-0010-0011-field-world-pack-read-witness",
+                    "package-distancegradation-0010-0011-rdx-producer-packsite-witness",
+                    "package-distancegradation-0010-0011-compose-input-pointer-witness",
+                    "package-distancegradation-0010-0011-compose-exact-address-witness",
+                    "run-distancegradation-0010-0011-aex-fieldgen-probe",
+                    "inspect-distancegradation-0010-0011-opencv-field-prep",
+                    "inspect-distancegradation-0010-0011-normalization-denominator",
+                    "inspect-distancegradation-0010-0011-field-pack-read",
+                    "classify-distancegradation-0010-0011-pf16-store",
+                    "package-distancegradation-0010-0011-field-store-witness",
+                    "revise-distancegradation-0010-0011-field-store-witness",
                     "clear-mac-ae-automation-blocker",
                 }
                 if data["decision"]["action"] == "await-runtime-trace-return":
@@ -285,18 +351,26 @@ def main() -> int:
                 elif data["decision"]["action"] == "dispatch-runtime-trace-followup":
                     assert data["decision"]["target"]["kind"] == "runtime-trace-summary"
                 else:
-                    assert data["decision"]["target"]["kind"] in {
+                    target_kind = data["decision"]["target"].get("kind") or data["decision"]["target"].get("type")
+                    assert target_kind in {
                         "ae-host-exact-failure-classification",
                         "binary-grounded-residual-report",
                         "binary-grounded-ir",
                         "bitdepth-16bpc-reference-summary",
                         "bitdepth-16bpc-mac-ae-validation",
                         "ae-host-automation-blocker",
+                        "ae-host-grounded-nearmiss-witness",
                         "ae-host-grounded-implementation-fix",
                         "residual-family-report",
                         "field-witness-report",
                         "implementation-fix-report",
                         "boundary-localization-report",
+                        "conformance_report",
+                        "lane-state-report",
+                        "local-model-audit",
+                        "runtime-trace-intake",
+                        "runtime-trace-request-package",
+                        "runtime_trace_package_profile",
                     }
                     if data["decision"]["action"] == "prepare-mac-ae-16bpc-validation":
                         target = data["decision"]["target"]

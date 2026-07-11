@@ -191,6 +191,10 @@ def main() -> int:
                             "observations": {
                                 "effect": "OLM Blur",
                                 "case_id": "olmblur__case_0006",
+                                "windows_witness_provenance": {
+                                    "kind": "cdb",
+                                    "target_block_captured": True,
+                                },
                                 "witnesses": [
                                     {
                                         "x": 314,
@@ -264,6 +268,52 @@ def main() -> int:
         markdown = output_md.read_text(encoding="utf-8")
         if "Case 0006 Narrow Analysis" not in markdown:
             print("[FAIL] narrow analysis section missing from Markdown")
+            return 1
+
+        unverified = json.loads(summary.read_text(encoding="utf-8"))
+        observations = unverified["results"][0]["observations"]
+        observations.pop("windows_witness_provenance", None)
+        observations["debugger_attempts"] = [
+            {"result": "No TARGET_OLMBLUR_CASE0006_* block was captured."}
+        ]
+        for witness in observations["witnesses"]:
+            witness["windows_writer_or_store_contract"] = (
+                "AE debug dump populated values; exact CDB bind still missed"
+            )
+        summary.write_text(json.dumps(unverified, indent=2), encoding="utf-8")
+        proc = subprocess.run(
+            [
+                py,
+                "scripts/compare_olmblur_trace.py",
+                "--runtime-summary-json",
+                str(summary),
+                "--local-baseline-dir",
+                str(baseline),
+                "--output-json",
+                str(output_json),
+                "--output-md",
+                str(output_md),
+            ],
+            cwd=repo,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        print(proc.stdout, end="" if proc.stdout.endswith("\n") else "\n")
+        if proc.returncode != 0:
+            return proc.returncode
+        comparison = json.loads(output_json.read_text(encoding="utf-8"))
+        if comparison.get("likely_next_focus") != "case0006-windows-values-unverified":
+            print("[FAIL] unbound numeric fields must not become Windows evidence")
+            return 1
+        narrow = comparison.get("case0006_narrow_analysis") or {}
+        verdicts = {
+            row.get("verdict")
+            for row in narrow.get("results", [])
+            if isinstance(row, dict)
+        }
+        if verdicts != {"unverified-windows-values"}:
+            print("[FAIL] expected unverified Windows value verdicts")
             return 1
     print("[OK] OLMBlur trace comparison smoke")
     return 0

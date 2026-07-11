@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import subprocess
 import sys
@@ -273,6 +274,77 @@ def runtime_trace_summary(root: Path) -> dict[str, Any] | None:
         "answered_request_ids": sorted(set(answered_ids)),
         "superseded_request_ids": sorted(superseded),
     }
+
+
+def runtime_trace_request_statuses(root: Path, request_id: str) -> list[str]:
+    """Return observed statuses for a runtime-trace request from summary files."""
+    statuses: list[str] = []
+    report_dir = root / "refs" / "reports"
+    summary_paths = sorted(report_dir.glob("**/runtime_trace_summary*.json")) if report_dir.exists() else []
+    for summary_path in summary_paths:
+        try:
+            data = json.loads(summary_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if not isinstance(data, dict) or data.get("kind") != "olm_runtime_trace_return_summary":
+            continue
+        for row in data.get("required", []):
+            if not isinstance(row, dict) or row.get("request_id") != request_id:
+                continue
+            row_statuses = row.get("statuses", [])
+            if isinstance(row_statuses, list):
+                statuses.extend(str(status).lower() for status in row_statuses if status)
+        for row in data.get("results", []):
+            if not isinstance(row, dict) or row.get("request_id") != request_id:
+                continue
+            status = row.get("status")
+            if status:
+                statuses.append(str(status).lower())
+    return sorted(set(statuses))
+
+
+def runtime_trace_request_latest_mtime(root: Path, request_id: str) -> float:
+    """Return latest summary mtime that mentions a runtime-trace request."""
+    latest = 0.0
+    report_dir = root / "refs" / "reports"
+    summary_paths = sorted(report_dir.glob("**/runtime_trace_summary*.json")) if report_dir.exists() else []
+    for summary_path in summary_paths:
+        try:
+            data = json.loads(summary_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if not isinstance(data, dict) or data.get("kind") != "olm_runtime_trace_return_summary":
+            continue
+        mentioned = False
+        for row in data.get("required", []):
+            if isinstance(row, dict) and row.get("request_id") == request_id:
+                mentioned = True
+        for row in data.get("results", []):
+            if isinstance(row, dict) and row.get("request_id") == request_id:
+                mentioned = True
+        if mentioned:
+            try:
+                latest = max(latest, summary_path.stat().st_mtime)
+            except OSError:
+                continue
+    return latest
+
+
+def zip_contains_text(path: Path, needle: str) -> bool:
+    try:
+        with zipfile.ZipFile(path) as archive:
+            for name in archive.namelist():
+                if name.endswith("/"):
+                    continue
+                try:
+                    text = archive.read(name).decode("utf-8", "ignore")
+                except (KeyError, UnicodeDecodeError):
+                    continue
+                if needle in text:
+                    return True
+    except (OSError, zipfile.BadZipFile):
+        return False
+    return False
 
 
 def runtime_trace_superseded(root: Path) -> set[str]:
@@ -591,21 +663,94 @@ def runtime_trace_package_manifest(path: Path) -> dict[str, Any] | None:
     return None
 
 
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as fh:
+        for chunk in iter(lambda: fh.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def staged_runtime_trace_package(
+    runtime_package: dict[str, Any],
+    rows: list[dict[str, Any]],
+) -> dict[str, Any] | None:
+    target_path = Path(str(runtime_package.get("path", "")))
+    if not target_path.is_file():
+        return None
+    try:
+        target_hash = file_sha256(target_path)
+        target_resolved = target_path.resolve()
+    except OSError:
+        return None
+    target_ids = set()
+    listed_ids = runtime_package.get("request_ids")
+    if isinstance(listed_ids, list):
+        target_ids.update(request_id for request_id in listed_ids if isinstance(request_id, str))
+    target_manifest = runtime_trace_package_manifest(target_path)
+    if isinstance(target_manifest, dict):
+        for action in target_manifest.get("runtime_actions", []):
+            if isinstance(action, dict) and isinstance(action.get("request_id"), str):
+                target_ids.add(action["request_id"])
+    for row in rows:
+        if row.get("kind") != "runtime-trace-request-package":
+            continue
+        row_path = Path(str(row.get("path", "")))
+        if not row_path.is_file():
+            continue
+        # Project-local packages and stale /tmp copies are preparation
+        # artifacts, not active Windows exchanges. The current workflow treats
+        # only olm_pr/new as staged.
+        parts = set(row_path.parts)
+        if not ("olm_pr" in parts and "new" in parts):
+            continue
+        try:
+            if row_path.resolve() == target_resolved:
+                continue
+            row_hash = file_sha256(row_path)
+        except OSError:
+            continue
+        row_manifest = runtime_trace_package_manifest(row_path)
+        row_ids = set()
+        if isinstance(row_manifest, dict):
+            for action in row_manifest.get("runtime_actions", []):
+                if isinstance(action, dict) and isinstance(action.get("request_id"), str):
+                    row_ids.add(action["request_id"])
+        if row_hash != target_hash and not (target_ids and row_ids and target_ids & row_ids):
+            continue
+        staged = dict(row)
+        staged["sha256"] = target_hash
+        staged["staged_sha256"] = row_hash
+        staged["matched_request_ids"] = sorted(target_ids & row_ids)
+        return staged
+    return None
+
+
 def runtime_trace_acceptance_note(request_ids: list[str]) -> str:
     mapping = {
+        "olmradialblur_case0010_final_writeback_20260708": "refs/conformance/olmradialblur_case0010_final_writeback_contract_20260708.md",
         "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702": "refs/conformance/olmradialblur_tiny_rotation_anchor_context_watch_return_acceptance_20260702.md",
         "olmradialblur_tiny_rotation_anchor_pointer_watch_followup_20260702": "refs/conformance/olmradialblur_tiny_rotation_anchor_pointer_watch_return_acceptance_20260702.md",
         "olmradialblur_tiny_rotation_anchor_watch_followup_20260701": "refs/conformance/olmradialblur_tiny_rotation_anchor_watch_return_acceptance_20260701.md",
         "olmradialblur_tiny_rotation_inverse_sampler_backstep_followup_20260701": "refs/conformance/olmradialblur_tiny_rotation_backstep_return_acceptance_20260701.md",
         "olmradialblur_tiny_rotation_substitute_path_followup_20260701": "refs/conformance/olmradialblur_tiny_rotation_return_acceptance_20260701.md",
         "olmradialblur_caller_collapse_followup_20260701": "refs/conformance/olmradialblur_outer_return_acceptance_20260701.md",
+        "olmdirectionalblur_angle0_single_shot_witness_20260708": "refs/conformance/olmdirectionalblur_angle0_single_shot_witness_contract_20260708.md",
         "olmdistancegradation_case0023_refcon_stack_wordmap_followup_20260702": "refs/conformance/olmdistancegradation_case0023_refcon_stack_wordmap_return_acceptance_20260702.md",
         "olmdistancegradation_case0023_refcon_wordmap_followup_20260702": "refs/conformance/olmdistancegradation_case0023_refcon_wordmap_return_acceptance_20260702.md",
+        "olmdistancegradation_depthgate_907_store_export_witness_20260708": "refs/conformance/olmdistancegradation_depthgate_907_store_export_witness_contract_20260708.md",
+        "olmdistancegradation_case0012_case0014_store_export_rounding_20260708": "refs/conformance/olmdistancegradation_case0012_case0014_store_export_rounding_contract_20260708.md",
+        "olmdistancegradation_case0014_layer_source_witness_20260708": "refs/conformance/olmdistancegradation_case0014_layer_source_witness_contract_20260708.md",
         "olmdistancegradation_case0023_output_word_triplet_followup_20260701": "refs/conformance/olmdistancegradation_case0023_output_word_triplet_return_acceptance_20260701.md",
         "olmdistancegradation_case0023_triplet_xy_compose_hook_followup_20260701": "refs/conformance/olmdistancegradation_case0023_triplet_xy_compose_return_acceptance_20260701.md",
         "olmdistancegradation_case0023_threshold_family_followup_20260701": "refs/conformance/olmdistancegradation_case0023_threshold_return_acceptance_20260701.md",
+        "olmdistancegradation_case0023_final_source_ownership_20260707": "refs/conformance/olmdistancegradation_case0023_final_source_ownership_contract_20260707.md",
+        "olmdistancegradation_0010_0011_compose_exact_address_witness_20260710": "refs/conformance/olmdistancegradation_0010_0011_compose_exact_address_contract_20260710.md",
+        "olmdistancegradation_0010_0011_compose_input_pointer_witness_20260709": "refs/conformance/olmdistancegradation_0010_0011_compose_input_pointer_contract_20260709.md",
+        "olmdistancegradation_0010_0011_rdx_producer_packsite_witness_20260709": "refs/conformance/olmdistancegradation_0010_0011_rdx_producer_packsite_contract_20260709.md",
         "olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630": "refs/conformance/olmdistancegradation_case0023_return_acceptance_20260701.md",
         "olmblur_case0006_helper_prestore_witness_20260630": "refs/conformance/olmblur_case0006_reference_provenance_20260701.md",
+        "olmsmoother2_current_aex_producer_bytes_20260708": "refs/conformance/olmsmoother2_current_aex_producer_bytes_contract_20260708.md",
     }
     for request_id in request_ids:
         note = mapping.get(request_id)
@@ -652,6 +797,9 @@ def project_runtime_trace_packages(
     if not package_dir.exists():
         return []
     pending_priorities = pending_runtime_trace_priorities(root)
+    pending_report = root / "refs" / "reports" / "pending_runtime_trace_packages.json"
+    if pending_report.exists() and not pending_priorities:
+        return []
     answered = set(trace_summary.get("answered_request_ids", [])) if trace_summary else set()
     answered.update(trace_summary.get("superseded_request_ids", []) if trace_summary else [])
     stale_request_ids = {
@@ -678,6 +826,8 @@ def project_runtime_trace_packages(
             for action in actions
             if isinstance(action.get("request_id"), str)
         ]
+        if request_ids and all(request_id.startswith("windows_ae_") for request_id in request_ids):
+            continue
         if request_ids and all(request_id in stale_request_ids for request_id in request_ids):
             continue
         profile = str(manifest.get("profile", ""))
@@ -714,7 +864,10 @@ def project_runtime_trace_packages(
         "kirakira-boxfilter-pass1-microprobe",
         "directionalblur-helper-coverage-witness",
         "directionalblur-residual-witness",
+        "directionalblur-angle0-single-shot-witness",
         "kirakira-compose-writeback-witness",
+        "distancegradation-depthgate-907-store-export-witness",
+        "distancegradation-case0014-layer-source-witness",
         "radialblur",
         "kirakira",
         "directionalblur",
@@ -818,7 +971,13 @@ def handoff_summary(root: Path, handoff: Path | None) -> dict[str, Any]:
 
 
 def candidate_rows(paths: list[Path]) -> list[dict[str, Any]]:
-    roots = paths or [Path.home() / "Downloads", Path("/tmp")]
+    share_new = Path("/Volumes/onmk/olm_pr/new")
+    roots = paths or [share_new, Path.home() / "Downloads", Path("/tmp")]
+    if paths:
+        expanded = {path.expanduser() for path in paths}
+        default_scan_roots = {Path.home() / "Downloads", Path("/tmp")}
+        if expanded & default_scan_roots:
+            roots = [share_new, *roots]
     candidates: list[Path] = []
     for root in roots:
         root = root.expanduser()
@@ -876,6 +1035,45 @@ def reference_request_package(root: Path, rows: list[dict[str, Any]], pending: l
     if pending_named:
         return max(pending_named, key=lambda row: float(row.get("mtime", 0)))
     return max(matches, key=lambda row: float(row.get("mtime", 0)))
+
+
+def staged_reference_request_package(
+    request_pkg: dict[str, Any],
+    rows: list[dict[str, Any]],
+) -> dict[str, Any] | None:
+    target_path = Path(str(request_pkg.get("path", "")))
+    if not target_path.is_file():
+        return None
+    try:
+        target_hash = file_sha256(target_path)
+        target_resolved = target_path.resolve()
+        target_ids = set(packaged_request_ids(target_resolved))
+    except Exception:
+        return None
+    for row in rows:
+        if row.get("kind") != "reference-request-package":
+            continue
+        row_path = Path(str(row.get("path", "")))
+        if not row_path.is_file():
+            continue
+        parts = set(row_path.parts)
+        if not ("olm_pr" in parts and "new" in parts):
+            continue
+        try:
+            if row_path.resolve() == target_resolved:
+                continue
+            row_hash = file_sha256(row_path)
+            row_ids = set(packaged_request_ids(row_path.resolve()))
+        except Exception:
+            continue
+        if row_hash != target_hash and not (target_ids and row_ids and target_ids == row_ids):
+            continue
+        staged = dict(row)
+        staged["sha256"] = target_hash
+        staged["staged_sha256"] = row_hash
+        staged["matched_request_ids"] = sorted(target_ids & row_ids)
+        return staged
+    return None
 
 
 def win_reference_return_intake_command(pending: list[str]) -> str:
@@ -968,6 +1166,21 @@ def actionable_win_reference_rows(rows: list[dict[str, Any]], requests: list[dic
     return sorted(actionable, key=lambda row: float(row.get("mtime", 0)), reverse=True)
 
 
+def staged_exchange_runtime_requests(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    staged: list[dict[str, Any]] = []
+    for row in rows:
+        if row.get("kind") != "runtime-trace-request-package":
+            continue
+        path_text = str(row.get("path", ""))
+        if not path_text:
+            continue
+        path = Path(path_text)
+        parts = set(path.parts)
+        if "olm_pr" in parts and "new" in parts:
+            staged.append(row)
+    return sorted(staged, key=lambda row: float(row.get("mtime", 0)), reverse=True)
+
+
 def decide(
     root: Path,
     rows: list[dict[str, Any]],
@@ -1028,11 +1241,78 @@ def decide(
             "command": blocker_command,
         }
 
+    staged_runtime_requests = staged_exchange_runtime_requests(rows)
+    if staged_runtime_requests:
+        staged = staged_runtime_requests[0]
+        return {
+            "action": "await-runtime-trace-return",
+            "reason": (
+                "A runtime trace request package is already staged in the Windows "
+                "exchange folder; wait for or import its return before sending "
+                "additional Windows reference requests."
+            ),
+            "target": staged,
+            "staged_package": staged,
+            "command": "wait for the Windows CDB/runtime trace return; do not overwrite the staged request",
+            "acceptance_note": staged.get("acceptance_note", ""),
+            "pending_windows_refs": len(status.get("pending", [])),
+            "pending_runtime_traces": len(runtime_trace_actions(next_actions, trace_summary)),
+        }
+
+    project_runtime_packages = project_runtime_trace_packages(root, trace_summary)
+    for runtime_package in project_runtime_packages:
+        staged_package = staged_runtime_trace_package(runtime_package, rows)
+        if staged_package:
+            return {
+                "action": "await-runtime-trace-return",
+                "reason": (
+                    "A runtime trace request package is already staged in the Windows "
+                    "exchange folder; wait for or import its return before sending "
+                    "additional Windows reference requests."
+                ),
+                "target": runtime_package,
+                "staged_package": staged_package,
+                "command": "wait for the Windows CDB/runtime trace return; do not overwrite the staged request",
+                "acceptance_note": runtime_package.get("acceptance_note", ""),
+                "pending_windows_refs": len(status.get("pending", [])),
+                "pending_runtime_traces": len(runtime_trace_actions(next_actions, trace_summary)),
+            }
+
     pending = status["pending"]
+    if pending and project_runtime_packages:
+        runtime_package = project_runtime_packages[0]
+        request_ids = runtime_package.get("request_ids", [])
+        request_text = ", ".join(request_ids) if request_ids else Path(str(runtime_package.get("path", ""))).stem
+        return {
+            "action": "send-runtime-trace-package",
+            "reason": (
+                "A binary-proof runtime trace is pending on the critical path; "
+                "send it before the broader Windows PNG reference queue."
+            ),
+            "target": runtime_package,
+            "command": f"send this runtime trace package to the Windows debugger/helper ({request_text})",
+            "acceptance_note": runtime_package.get("acceptance_note", ""),
+            "deferred_windows_refs": len(pending),
+        }
     if pending:
         pinning = pending_pinning_summary(status)
         request_pkg = reference_request_package(root, rows, pending)
         if request_pkg:
+            staged_package = staged_reference_request_package(request_pkg, rows)
+            if staged_package:
+                return {
+                    "action": "await-windows-reference-return",
+                    "reason": (
+                        "A Windows reference request package is already staged in the "
+                        "Windows exchange folder; wait for or import its rendered return "
+                        "before publishing another request."
+                    ),
+                    "target": request_pkg,
+                    "staged_package": staged_package,
+                    "command": "wait for the Windows AE reference return; do not overwrite the staged request",
+                    "return_intake_command": win_reference_return_intake_command(pending),
+                    "pending_pinning": pinning,
+                }
             return {
                 "action": "send-windows-reference-package",
                 "reason": "All difficult implementation paths are stopped at pending Windows references.",
@@ -1049,7 +1329,6 @@ def decide(
             "pending_pinning": pinning,
         }
 
-    project_runtime_packages = project_runtime_trace_packages(root, trace_summary)
     if project_runtime_packages:
         runtime_package = project_runtime_packages[0]
         action_bundle = latest_windows_action_bundle(root, rows)
@@ -1095,6 +1374,22 @@ def decide(
             }
         request_ids = runtime_package.get("request_ids", [])
         request_text = ", ".join(request_ids) if request_ids else Path(str(runtime_package.get("path", ""))).stem
+        staged_package = staged_runtime_trace_package(runtime_package, rows)
+        if staged_package:
+            return {
+                "action": "await-runtime-trace-return",
+                "reason": (
+                    "The highest-value unresolved runtime trace package is already staged "
+                    "in the scanned Windows exchange folder; wait for or import its return."
+                ),
+                "target": runtime_package,
+                "staged_package": staged_package,
+                "command": (
+                    "wait for the Windows CDB/runtime trace return for "
+                    f"{request_text}; do not resend unless the staged package is removed or stale"
+                ),
+                "acceptance_note": runtime_package.get("acceptance_note", ""),
+            }
         return {
             "action": "send-runtime-trace-package",
             "reason": "No Windows PNG requests are pending; the highest-value unresolved proof is a project-local runtime trace package.",
@@ -1147,7 +1442,864 @@ def decide(
                 / "conformance"
                 / "olmdistancegradation_16bpc_powerfix_residual_families_20260629.md"
             )
-            if residual_families.exists():
+            depth_gate_result = (
+                root
+                / "refs"
+                / "conformance"
+                / "olmdistancegradation_depth_gate_result_20260708.md"
+            )
+            if depth_gate_result.exists():
+                current_integrated_16bpc = (
+                    root
+                    / "refs"
+                    / "conformance"
+                    / "olmdistancegradation_current_integrated_16bpc_batch_20260709.md"
+                )
+                if current_integrated_16bpc.exists():
+                    layer_disabled_ab = (
+                        root
+                        / "refs"
+                        / "conformance"
+                        / "olmdistancegradation_layer_changes_disabled_ab_20260709.md"
+                    )
+                    if layer_disabled_ab.exists():
+                        old_mask_rejected = (
+                            root
+                            / "refs"
+                            / "conformance"
+                            / "olmdistancegradation_source_mask_old_rule_ab_rejected_20260709.md"
+                        )
+                        if old_mask_rejected.exists():
+                            true16_reverify = (
+                                root
+                                / "refs"
+                                / "conformance"
+                                / "olmdistancegradation_depthgate_true16_reverify_20260709.md"
+                            )
+                            if true16_reverify.exists():
+                                true16_family_audit = (
+                                    root
+                                    / "refs"
+                                    / "conformance"
+                                    / "olmdistancegradation_true16_residual_family_audit_20260709.md"
+                                )
+                                if true16_family_audit.exists():
+                                    ra_quant_probe = (
+                                        root
+                                        / "refs"
+                                        / "conformance"
+                                        / "olmdistancegradation_0010_0011_ra_quantization_probe_20260709.md"
+                                    )
+                                    if ra_quant_probe.exists():
+                                        local_field_probe = (
+                                            root
+                                            / "refs"
+                                            / "conformance"
+                                            / "olmdistancegradation_0010_0011_local_field_normalization_probe_20260709.md"
+                                        )
+                                        if local_field_probe.exists():
+                                            pointer_map_return = (
+                                                root
+                                                / "refs"
+                                                / "conformance"
+                                                / "olmdistancegradation_0010_0011_writeback_pointer_map_return_intake_20260709.md"
+                                            )
+                                            if pointer_map_return.exists():
+                                                pf16_classification = (
+                                                    root
+                                                    / "refs"
+                                                    / "conformance"
+                                                    / "olmdistancegradation_0010_0011_pf16_store_classification_20260709.md"
+                                                )
+                                                if pf16_classification.exists():
+                                                    field_pack_audit = (
+                                                        root
+                                                        / "refs"
+                                                        / "conformance"
+                                                        / "olmdistancegradation_0010_0011_field_pack_read_audit_20260709.md"
+                                                    )
+                                                    if field_pack_audit.exists():
+                                                        norm_denom_audit = (
+                                                            root
+                                                            / "refs"
+                                                            / "conformance"
+                                                            / "olmdistancegradation_0010_0011_normalization_denominator_audit_20260709.md"
+                                                        )
+                                                        if norm_denom_audit.exists():
+                                                            field_prep_audit = (
+                                                                root
+                                                                / "refs"
+                                                                / "conformance"
+                                                                / "olmdistancegradation_0010_0011_opencv_field_prep_audit_20260709.md"
+                                                            )
+                                                            if field_prep_audit.exists():
+                                                                aex_fieldgen_probe = (
+                                                                    root
+                                                                    / "refs"
+                                                                    / "conformance"
+                                                                    / "olmdistancegradation_0010_0011_aex_fieldgen_probe_20260709.md"
+                                                                )
+                                                                if aex_fieldgen_probe.exists():
+                                                                    field_world_return_intake = (
+                                                                        root
+                                                                        / "refs"
+                                                                        / "conformance"
+                                                                        / "olmdistancegradation_0010_0011_field_world_pack_read_return_intake_20260709.md"
+                                                                    )
+                                                                    if field_world_return_intake.exists():
+                                                                        compose_input_contract = (
+                                                                            root
+                                                                            / "refs"
+                                                                            / "conformance"
+                                                                            / "olmdistancegradation_0010_0011_compose_input_pointer_contract_20260709.md"
+                                                                        )
+                                                                        if compose_input_contract.exists():
+                                                                            compose_input_return_intake = (
+                                                                                root
+                                                                                / "refs"
+                                                                                / "conformance"
+                                                                                / (
+                                                                                    "olmdistancegradation_0010_0011_"
+                                                                                    "compose_input_pointer_return_intake_20260710.md"
+                                                                                )
+                                                                            )
+                                                                            if compose_input_return_intake.exists():
+                                                                                compose_exact_address_contract = (
+                                                                                    root
+                                                                                    / "refs"
+                                                                                    / "conformance"
+                                                                                    / (
+                                                                                        "olmdistancegradation_0010_0011_"
+                                                                                        "compose_exact_address_contract_20260710.md"
+                                                                                    )
+                                                                                )
+                                                                                return {
+                                                                                    "action": (
+                                                                                        "package-distancegradation-0010-0011-compose-exact-address-witness"
+                                                                                    ),
+                                                                                    "reason": (
+                                                                                        "The compose-input return confirms the register roles "
+                                                                                        "(`RCX` field-world at `+0x117057d`, `RDX` source/"
+                                                                                        "shade at `+0x11705f1`) but missed exact `(6,40)` "
+                                                                                        "and `(901,394)` because `rbp=y` is not a reliable "
+                                                                                        "discriminator. The next proof should derive field/"
+                                                                                        "source/output addresses from base + rowbytes + pixel "
+                                                                                        "size and gate the same sites by address."
+                                                                                    ),
+                                                                                    "target": {
+                                                                                        "type": "conformance_report",
+                                                                                        "path": str(compose_exact_address_contract),
+                                                                                        "request_id": (
+                                                                                            "olmdistancegradation_0010_0011_"
+                                                                                            "compose_exact_address_witness_20260710"
+                                                                                        ),
+                                                                                    },
+                                                                                    "pending_windows_refs": len(status.get("pending", [])),
+                                                                                    "pending_runtime_traces": len(status.get("runtime_pending", [])),
+                                                                                }
+                                                                            return {
+                                                                                "action": (
+                                                                                    "package-distancegradation-0010-0011-compose-input-pointer-witness"
+                                                                                ),
+                                                                                "reason": (
+                                                                                    "Static asm corrects the previous late-`rdx` "
+                                                                                    "interpretation: at `DistanceGradation+0x1170814`, "
+                                                                                    "`rdx` is source/shade input, while the field-world "
+                                                                                    "read is built in `RCX` and consumed earlier around "
+                                                                                    "`+0x117057d`. The next proof should bind both "
+                                                                                    "`RCX` field-world and `RDX` source/shade inputs for "
+                                                                                    "the two sparse 16bpc witnesses."
+                                                                                ),
+                                                                                "target": {
+                                                                                    "type": "conformance_report",
+                                                                                    "path": str(compose_input_contract),
+                                                                                    "request_id": (
+                                                                                        "olmdistancegradation_0010_0011_compose_input_pointer_witness_20260709"
+                                                                                    ),
+                                                                                },
+                                                                                "pending_windows_refs": len(status.get("pending", [])),
+                                                                                "pending_runtime_traces": len(status.get("runtime_pending", [])),
+                                                                            }
+                                                                        rdx_producer_contract = (
+                                                                            root
+                                                                            / "refs"
+                                                                            / "conformance"
+                                                                            / "olmdistancegradation_0010_0011_rdx_producer_packsite_contract_20260709.md"
+                                                                        )
+                                                                        return {
+                                                                            "action": (
+                                                                                "package-distancegradation-0010-0011-rdx-producer-packsite-witness"
+                                                                            ),
+                                                                            "reason": (
+                                                                                "The Windows field-world pack/read return is useful but "
+                                                                                "partial: it captured the final-writer read-side `rdx` "
+                                                                                "candidate and the retained-run relation `rdx = rdi - "
+                                                                                "0xfe0000`, but not the upstream producer/pack site. The "
+                                                                                "next proof should watch writes to the derived `rdx` "
+                                                                                "addresses before `DistanceGradation+0x1170814`, not repeat "
+                                                                                "final PF interleave or the same boundary stop."
+                                                                            ),
+                                                                            "target": {
+                                                                                "type": "conformance_report",
+                                                                                "path": str(rdx_producer_contract),
+                                                                                "request_id": (
+                                                                                    "olmdistancegradation_0010_0011_rdx_producer_packsite_witness_20260709"
+                                                                                ),
+                                                                            },
+                                                                            "pending_windows_refs": len(status.get("pending", [])),
+                                                                            "pending_runtime_traces": len(status.get("runtime_pending", [])),
+                                                                        }
+                                                                    return {
+                                                                        "action": (
+                                                                            "package-distancegradation-0010-0011-field-world-pack-read-witness"
+                                                                        ),
+                                                                        "reason": (
+                                                                            "The local real-AEX fieldgen probe reproduces current "
+                                                                            "Mac field floats for case_0010/0011, but the Windows-required "
+                                                                            "field-word relation sign-flips: outside (6,40) matches floor, "
+                                                                            "while inside (901,394) and (915,392) require ceil. The next "
+                                                                            "proof is no longer fieldgen/helper or final-writer tuning; "
+                                                                            "Windows should bind the real field-world pack/read boundary "
+                                                                            "for those exact pixels, with true16 TIFF/EXR only as export "
+                                                                            "confirmation."
+                                                                        ),
+                                                                        "target": {
+                                                                            "type": "conformance_report",
+                                                                            "path": str(aex_fieldgen_probe),
+                                                                            "request_id": (
+                                                                                "olmdistancegradation_0010_0011_aex_fieldgen_probe_20260709"
+                                                                            ),
+                                                                        },
+                                                                        "pending_windows_refs": len(status.get("pending", [])),
+                                                                        "pending_runtime_traces": len(status.get("runtime_pending", [])),
+                                                                    }
+                                                                return {
+                                                                    "action": (
+                                                                        "run-distancegradation-0010-0011-aex-fieldgen-probe"
+                                                                    ),
+                                                                    "reason": (
+                                                                        "OLMDistanceGradation case_0010/0011 now has writer/output "
+                                                                        "mapping and an OpenCV field-prep source-shape audit. The "
+                                                                        "remaining local discriminator is a case-bound AEX CPU "
+                                                                        "fieldgen probe at (6,40), (901,394), and (915,392), with "
+                                                                        "threshold/dist_transform/resize_same_shape/normalize_minmax "
+                                                                        "detours registered. If it reproduces the Windows-required "
+                                                                        "field words, patch Mac field-prep; if it reproduces current "
+                                                                        "Mac values, ask Windows for the narrower primitive max/normalize/"
+                                                                        "field-world trace or true16 TIFF/EXR same-run export."
+                                                                    ),
+                                                                    "target": {
+                                                                        "type": "conformance_report",
+                                                                        "path": str(field_prep_audit),
+                                                                        "request_id": (
+                                                                            "olmdistancegradation_0010_0011_opencv_field_prep_audit_20260709"
+                                                                        ),
+                                                                    },
+                                                                    "pending_windows_refs": len(status.get("pending", [])),
+                                                                    "pending_runtime_traces": len(status.get("runtime_pending", [])),
+                                                                }
+                                                            return {
+                                                                "action": (
+                                                                    "inspect-distancegradation-0010-0011-opencv-field-prep"
+                                                                ),
+                                                                "reason": (
+                                                                    "OLMDistanceGradation case_0010/0011 denominator audit "
+                                                                    "shows a mixed actual-max/threshold half-boundary family: "
+                                                                    "(6,40) is normalized by the outside field's actual max, "
+                                                                    "while (901,394) and (915,392) are threshold-limited inside "
+                                                                    "witnesses. The next local proof is the AEX/OpenCV field-prep "
+                                                                    "detail that measures/clamps max and packs the PF16 field world "
+                                                                    "before FUN_181170480 consumes it."
+                                                                ),
+                                                                "target": {
+                                                                    "type": "conformance_report",
+                                                                    "path": str(norm_denom_audit),
+                                                                    "request_id": (
+                                                                        "olmdistancegradation_0010_0011_normalization_denominator_audit_20260709"
+                                                                    ),
+                                                                },
+                                                                "pending_windows_refs": len(status.get("pending", [])),
+                                                                "pending_runtime_traces": len(runtime_actions),
+                                                            }
+                                                        return {
+                                                            "action": (
+                                                                "inspect-distancegradation-0010-0011-normalization-denominator"
+                                                            ),
+                                                            "reason": (
+                                                                "OLMDistanceGradation case_0010/0011 field-pack/read "
+                                                                "audit shows the AEX-shaped PF16 field-world read is the "
+                                                                "right boundary to inspect, but simply packing the current "
+                                                                "Mac float field with floor/ceil/round cannot match all "
+                                                                "sign-flipped witnesses. The next local proof is the "
+                                                                "raw-distance / normalization-denominator / OpenCV field-pack "
+                                                                "boundary, not final clamp16() and not another broad Windows "
+                                                                "request."
+                                                            ),
+                                                            "target": {
+                                                                "type": "conformance_report",
+                                                                "path": str(field_pack_audit),
+                                                                "request_id": (
+                                                                    "olmdistancegradation_0010_0011_field_pack_read_audit_20260709"
+                                                                ),
+                                                            },
+                                                            "pending_windows_refs": len(status.get("pending", [])),
+                                                            "pending_runtime_traces": len(runtime_actions),
+                                                        }
+                                                    return {
+                                                        "action": "inspect-distancegradation-0010-0011-field-pack-read",
+                                                        "reason": (
+                                                            "OLMDistanceGradation case_0010/0011 is now classified "
+                                                            "past final rounding: Windows `xmm2_alpha` is already close "
+                                                            "to PF16 store words 3268 and 9876 before the writer, while "
+                                                            "a global Mac clamp16 truncation/rounding swap would only help "
+                                                            "one of the two sign-flipped witnesses. Inspect the 16bpc "
+                                                            "field-world pack/read path consumed by FUN_181170480 before "
+                                                            "asking Windows for another export-only proof."
+                                                        ),
+                                                        "target": {
+                                                            "type": "conformance_report",
+                                                            "path": str(pf16_classification),
+                                                            "request_id": (
+                                                                "olmdistancegradation_0010_0011_pf16_store_classification_20260709"
+                                                            ),
+                                                        },
+                                                        "pending_windows_refs": len(status.get("pending", [])),
+                                                        "pending_runtime_traces": len(runtime_actions),
+                                                    }
+                                                return {
+                                                    "action": "classify-distancegradation-0010-0011-pf16-store",
+                                                    "reason": (
+                                                        "OLMDistanceGradation case_0010/0011 pointer-map evidence "
+                                                        "has returned partial_success_missing_true16_export. It binds "
+                                                        "case_0010 (6,40) and (901,394) to the Windows output formula "
+                                                        "`out = base + y * 0x3c00 + x * 8` and same-run PF16 final "
+                                                        "words 3268 and 9876. Do not resend the same debugger package; "
+                                                        "classify the Mac field/compose/float-to-PF16/store/export "
+                                                        "split against those words first."
+                                                    ),
+                                                    "target": {
+                                                        "type": "conformance_report",
+                                                        "path": str(pointer_map_return),
+                                                        "request_id": (
+                                                            "olmdistancegradation_0010_0011_writeback_pointer_map_witness_20260709"
+                                                        ),
+                                                    },
+                                                    "pending_windows_refs": len(status.get("pending", [])),
+                                                    "pending_runtime_traces": len(runtime_actions),
+                                                }
+                                            request_id = (
+                                                "olmdistancegradation_0010_0011_field_store_witness_20260709"
+                                            )
+                                            package_path = (
+                                                root
+                                                / "refs"
+                                                / "runtime_trace_packages"
+                                                / "olm_runtime_trace_olmdistancegradation_0010_0011_field_store_witness_20260709.zip"
+                                            )
+                                            if package_path.exists():
+                                                runtime_package = list_olm_return_candidates.build_row(package_path)
+                                                runtime_package["kind"] = "runtime-trace-request-package"
+                                                runtime_package["request_ids"] = [request_id]
+                                                staged_package = staged_runtime_trace_package(runtime_package, rows)
+                                                request_statuses = runtime_trace_request_statuses(root, request_id)
+                                                latest_status_mtime = runtime_trace_request_latest_mtime(root, request_id)
+                                                staged_mtime = 0.0
+                                                staged_retry_after_failed_partial = False
+                                                if staged_package and staged_package.get("path"):
+                                                    staged_path = Path(staged_package["path"])
+                                                    try:
+                                                        staged_mtime = staged_path.stat().st_mtime
+                                                    except OSError:
+                                                        staged_mtime = 0.0
+                                                    staged_retry_after_failed_partial = zip_contains_text(
+                                                        staged_path,
+                                                        "The first Windows return for this request is `failed_partial`.",
+                                                    )
+                                                if (
+                                                    ("failed_partial" in request_statuses or "failed" in request_statuses)
+                                                    and staged_mtime <= latest_status_mtime
+                                                    and not staged_retry_after_failed_partial
+                                                ):
+                                                    revised_request_id = (
+                                                        "olmdistancegradation_0010_0011_field_store_prewarm_witness_20260709"
+                                                    )
+                                                    revised_package_path = (
+                                                        root
+                                                        / "refs"
+                                                        / "runtime_trace_packages"
+                                                        / "olm_runtime_trace_olmdistancegradation_0010_0011_field_store_prewarm_witness_20260709.zip"
+                                                    )
+                                                    revised_contract = (
+                                                        "refs/conformance/"
+                                                        "olmdistancegradation_0010_0011_field_store_prewarm_contract_20260709.md"
+                                                    )
+                                                    revised_target: dict[str, Any]
+                                                    if revised_package_path.exists():
+                                                        revised_target = list_olm_return_candidates.build_row(
+                                                            revised_package_path
+                                                        )
+                                                        revised_target["kind"] = "runtime-trace-request-package"
+                                                        revised_target["request_ids"] = [revised_request_id]
+                                                    else:
+                                                        revised_target = {
+                                                            "type": "runtime_trace_package_profile",
+                                                            "path": str(root / revised_contract),
+                                                            "request_id": revised_request_id,
+                                                        }
+                                                    return {
+                                                        "action": (
+                                                            "package-distancegradation-0010-0011-field-store-prewarm-witness"
+                                                        ),
+                                                        "reason": (
+                                                            "The OLMDistanceGradation case_0010/0011 field/store "
+                                                            "witness package has already returned failed_partial. "
+                                                            "It narrowed the residual to sign-flipping one-word "
+                                                            "PF16 alpha-store differences, but did not include the "
+                                                            "required same-run Windows source/field/pre-store/PF16/"
+                                                            "export facts because the retained attempt never reached "
+                                                            "the DistanceGradation.aex module-load stop. Use the "
+                                                            "prewarm retry package so module load is proven before "
+                                                            "binding final pixel hooks."
+                                                        ),
+                                                        "target": revised_target,
+                                                        "request_statuses": request_statuses,
+                                                        "command": (
+                                                            "python3 scripts/package_runtime_trace_requests.py "
+                                                            "--profile distancegradation-0010-0011-field-store-prewarm-witness "
+                                                            "--output refs/runtime_trace_packages/"
+                                                            "olm_runtime_trace_olmdistancegradation_0010_0011_field_store_prewarm_witness_20260709.zip"
+                                                        ),
+                                                        "acceptance_note": revised_contract,
+                                                        "pending_windows_refs": len(status.get("pending", [])),
+                                                        "pending_runtime_traces": len(runtime_actions),
+                                                    }
+                                                if staged_package:
+                                                    return {
+                                                        "action": "await-runtime-trace-return",
+                                                        "reason": (
+                                                            "A revised OLMDistanceGradation case_0010/0011 field/store "
+                                                            "witness package is staged in the Windows exchange folder; "
+                                                            "wait for or import its return."
+                                                        ),
+                                                        "target": runtime_package,
+                                                        "staged_package": staged_package,
+                                                        "command": (
+                                                            "wait for the Windows CDB/runtime trace return for "
+                                                            "olmdistancegradation_0010_0011_field_store_witness_20260709; "
+                                                            "do not resend unless the staged package is removed or stale"
+                                                        ),
+                                                        "acceptance_note": (
+                                                            "refs/conformance/"
+                                                            "olmdistancegradation_0010_0011_field_store_witness_contract_20260709.md"
+                                                        ),
+                                                        "pending_windows_refs": len(status.get("pending", [])),
+                                                        "pending_runtime_traces": len(runtime_actions),
+                                                    }
+                                            return {
+                                                "action": "package-distancegradation-0010-0011-field-store-witness",
+                                                "reason": (
+                                                    "OLMDistanceGradation case_0010/0011 are narrowed to sign-flipping "
+                                                    "one-word PF16 alpha-store differences exposed as R/A ±2. Local "
+                                                    "Mac evidence now shows Mac Meijster EDT and the repository "
+                                                    "OpenCV-compatible EDT are bit-identical at the target fields, "
+                                                    "and simple field-pack/store simulations are not a safe broad fix. "
+                                                    "The next useful proof is a narrow Windows same-run witness for "
+                                                    "one Mac-low/Windows-high point and one Mac-high/Windows-low point."
+                                                ),
+                                                "target": {
+                                                    "type": "runtime_trace_package_profile",
+                                                    "path": str(local_field_probe),
+                                                    "request_id": "olmdistancegradation_0010_0011_field_store_witness_20260709",
+                                                },
+                                                "run": (
+                                                    "python3 scripts/package_runtime_trace_requests.py "
+                                                    "--profile distancegradation-0010-0011-field-store-witness "
+                                                    "--output refs/runtime_trace_packages/"
+                                                    "olm_runtime_trace_olmdistancegradation_0010_0011_field_store_witness_20260709.zip"
+                                                ),
+                                                "pending_windows_refs": len(status.get("pending", [])),
+                                                "pending_runtime_traces": len(runtime_actions),
+                                            }
+                                        return {
+                                            "action": "prove-distancegradation-0010-0011-field-normalization",
+                                            "reason": (
+                                                "OLMDistanceGradation case_0010/0011 are now narrowed to one-word "
+                                                "PF16 alpha-store differences exposed as R/A ±2 in the PNG. The "
+                                                "debug witnesses show Render Mode=Gradation Color/no-bg stores full "
+                                                "red while visible red follows alpha; the sign flips by point, so a "
+                                                "global clamp16 rounding toggle is not justified. The next bounded "
+                                                "local proof is the exact distance-field normalization/field-packing "
+                                                "rule for the recorded raw distances."
+                                            ),
+                                            "target": {
+                                                "type": "conformance_report",
+                                                "path": str(ra_quant_probe),
+                                                "request_id": "olmdistancegradation_0010_0011_ra_quantization_probe_20260709",
+                                            },
+                                            "run": (
+                                                "compare the witness raw distances and normalized field_x/store_a "
+                                                "against the OpenCV/AEX float path; if local evidence is insufficient, "
+                                                "prepare a two-point Windows same-run field/store witness"
+                                            ),
+                                            "pending_windows_refs": len(status.get("pending", [])),
+                                            "pending_runtime_traces": len(runtime_actions),
+                                        }
+                                    return {
+                                        "action": "close-distancegradation-0010-0011-ra-quantization",
+                                        "reason": (
+                                            "OLMDistanceGradation's true16 residual families are now classified. "
+                                            "The smallest live family is case_0010/0011: only R and A differ, all "
+                                            "nonzero deltas are abs=2, and the family totals 852 pixels. This is a "
+                                            "better next target than the broader Layer/no-bg or field/export families "
+                                            "because it can be tested as a narrow PF16 store/export or quantization "
+                                            "rule without touching distance-field topology."
+                                        ),
+                                        "target": {
+                                            "type": "conformance_report",
+                                            "path": str(true16_family_audit),
+                                            "request_id": "olmdistancegradation_true16_residual_family_audit_20260709",
+                                        },
+                                        "run": (
+                                            "probe case_0010/0011 representative R/A pixels with canonical 16bpc "
+                                            "arrays and Mac AE debug store logs; only prepare a Windows witness if "
+                                            "local PF16 store/export evidence cannot decide the rounding rule"
+                                        ),
+                                        "pending_windows_refs": len(status.get("pending", [])),
+                                        "pending_runtime_traces": len(runtime_actions),
+                                    }
+                                return {
+                                    "action": "classify-distancegradation-true16-residual-families",
+                                    "reason": (
+                                        "OLMDistanceGradation's old 7/16 depthgate count has been superseded: "
+                                        "re-verifying /tmp/olmdg_16ext_depthgate2 with the canonical 16bpc verifier "
+                                        "also gives 5/16. The depth-gated source mask remains necessary because "
+                                        "global alpha>0 reopens case_0023 and drops the batch to 1/16, but there is "
+                                        "no longer a live current-vs-depthgate provenance delta to chase. The next "
+                                        "bounded task is to classify and close the real true16 residual families: "
+                                        "sparse case_0010/0011, Layer/no-bg case_0012/0013/0014/0016, and "
+                                        "case_0024..0028."
+                                    ),
+                                    "target": {
+                                        "type": "conformance_report",
+                                        "path": str(true16_reverify),
+                                        "request_id": "olmdistancegradation_depthgate_true16_reverify_20260709",
+                                    },
+                                    "run": (
+                                        "use the canonical 16bpc verifier only; do not use PIL/8-bit comparison for "
+                                        "16bpc verdicts. Build a per-family true16 residual audit before changing "
+                                        "Mac source."
+                                    ),
+                                    "pending_windows_refs": len(status.get("pending", [])),
+                                    "pending_runtime_traces": len(runtime_actions),
+                                }
+                            return {
+                                "action": "isolate-distancegradation-depthgate-provenance-delta",
+                                "reason": (
+                                    "OLMDistanceGradation's current integrated 16bpc canonical batch is 5/16 exact, "
+                                    "while the 2026-07-08 depthgate checkpoint was 7/16. Two local A/Bs narrowed the "
+                                    "split: disabling Layer/no-bg compose/inheritance does not recover the RGB/use-bg "
+                                    "cases, and reverting source_mask_owns_alpha() to global alpha>0 is much worse "
+                                    "(1/16, case_0023 reopened). The depth-gated mask is necessary, so the next bounded "
+                                    "task is to find the remaining provenance or mode-specific delta between the "
+                                    "depthgate checkpoint and current integrated build."
+                                ),
+                                "target": {
+                                    "type": "conformance_report",
+                                    "path": str(old_mask_rejected),
+                                    "request_id": "olmdistancegradation_source_mask_old_rule_ab_rejected_20260709",
+                                },
+                                "run": (
+                                    "compare current source/build against the depthgate checkpoint assumptions; check "
+                                    "whether depthgate applies too broadly by mode without replacing it globally, and "
+                                    "validate every candidate with the canonical 16bpc batch"
+                                ),
+                                "pending_windows_refs": len(status.get("pending", [])),
+                                "pending_runtime_traces": len(runtime_actions),
+                            }
+                        return {
+                            "action": "ab-distancegradation-source-mask-scope",
+                            "reason": (
+                                "OLMDistanceGradation's current integrated 16bpc canonical batch is 5/16 exact, "
+                                "while the 2026-07-08 depthgate checkpoint was 7/16. Disabling the Layer/no-bg "
+                                "compose/inheritance changes did not recover case_0010/0011/0024..0028, so the "
+                                "next bounded task is to A/B the global 16bpc source_mask_owns_alpha rule or "
+                                "limit that depth-gated mask to the binary-grounded mode family while preserving "
+                                "case_0023 and the Layer/no-bg improvements."
+                            ),
+                            "target": {
+                                "type": "conformance_report",
+                                "path": str(layer_disabled_ab),
+                                "request_id": "olmdistancegradation_layer_changes_disabled_ab_20260709",
+                            },
+                            "run": (
+                                "test alpha>0 vs alpha>1.5/255 source-mask ownership under the canonical 16bpc "
+                                "batch, then try the narrowest mode-specific depthgate rule that keeps case_0023 "
+                                "exact without regressing RGB/use-bg cases"
+                            ),
+                            "pending_windows_refs": len(status.get("pending", [])),
+                            "pending_runtime_traces": len(runtime_actions),
+                        }
+                    return {
+                        "action": "isolate-distancegradation-16bpc-integration-split",
+                        "reason": (
+                            "OLMDistanceGradation's current integrated 16bpc canonical batch is 5/16 exact, "
+                            "while the 2026-07-08 depthgate checkpoint was 7/16. Later Layer/no-bg work "
+                            "greatly improves case_0012/0013/0014/0016, but the current build is worse than "
+                            "the depthgate baseline for case_0010/0011/0024..0028. The next bounded task is "
+                            "to isolate which post-depthgate change moved RGB/use-bg and near-miss families, "
+                            "then keep the Layer improvements without losing the depthgate baseline."
+                        ),
+                        "target": {
+                            "type": "conformance_report",
+                            "path": str(current_integrated_16bpc),
+                            "request_id": "olmdistancegradation_current_integrated_16bpc_batch_20260709",
+                        },
+                        "run": (
+                            "bisect the post-depthgate DG changes with the canonical 16bpc batch; do not "
+                            "call the current build 7/16 and do not request more Windows data for the old "
+                            "case_0024..0027 max=1 family until the Mac build is back to that shape"
+                        ),
+                        "pending_windows_refs": len(status.get("pending", [])),
+                        "pending_runtime_traces": len(runtime_actions),
+                    }
+                nearmiss_witness = (
+                    root
+                    / "refs"
+                    / "conformance"
+                    / "olmdistancegradation_depthgate_nearmiss_witness_20260708.md"
+                )
+                quantization_intake = (
+                    root
+                    / "refs"
+                    / "conformance"
+                    / "olmdistancegradation_depthgate_quantization_return_intake_20260708.md"
+                )
+                layer_both_lowalpha = (
+                    root
+                    / "refs"
+                    / "conformance"
+                    / "olmdistancegradation_layer_both_lowalpha_20260708.md"
+                )
+                layer_case0012_pointdebug = (
+                    root
+                    / "refs"
+                    / "conformance"
+                    / "olmdistancegradation_case0012_pointdebug_20260708.md"
+                )
+                layer_case0012_closeout = (
+                    root
+                    / "refs"
+                    / "conformance"
+                    / "olmdistancegradation_case0012_dominant_channel_closeout_20260708.md"
+                )
+                layer_lowalpha_final = (
+                    root
+                    / "refs"
+                    / "conformance"
+                    / "olmdistancegradation_layer_lowalpha_final_20260708.md"
+                )
+                layer_straight_patch = (
+                    root
+                    / "refs"
+                    / "conformance"
+                    / "olmdistancegradation_layer_straight_patch_20260708.md"
+                )
+                if layer_case0012_closeout.exists():
+                    return {
+                        "action": "continue-distancegradation-16bpc-export-rounding-closeout",
+                        "reason": (
+                            "OLMDistanceGradation 16bpc Layer/no-bg source ownership is now narrowed: "
+                            "the dominant-channel Both mask rule reduces case_0012 from true16 max 28 "
+                            "to max 2 and preserves case_0013/0014/0016 at 2/4/2. The remaining family "
+                            "is shared 16bpc export/rounding, not broad Layer-source topology."
+                        ),
+                        "target": {
+                            "type": "conformance_report",
+                            "path": str(layer_case0012_closeout),
+                            "request_id": "olmdistancegradation_case0012_dominant_channel_closeout_20260708",
+                        },
+                        "run": (
+                            "classify the remaining max 2/4 true16 residual as AE export rounding, "
+                            "PF16 store rounding, or Windows store/export behavior; preserve the "
+                            "dominant-channel 150/255 guard and do not broaden it without proof"
+                        ),
+                        "pending_windows_refs": len(status.get("pending", [])),
+                        "pending_runtime_traces": len(runtime_actions),
+                    }
+                if layer_case0012_pointdebug.exists():
+                    return {
+                        "action": "continue-distancegradation-layer-source-closeout",
+                        "reason": (
+                            "OLMDistanceGradation 16bpc case_0012 is now isolated to a uniform "
+                            "Layer/no-bg Both low-alpha store/export-scaling band: sampled max-delta "
+                            "points share source [195,195,195,3597], field_x 0.00819672085, "
+                            "and Mac pre-export store [1785,1785,1785,32499], while the true16 "
+                            "PNG comparison remains candidate [3539,3539,3539,64997] vs Windows "
+                            "[3567,3567,3567,64997]."
+                        ),
+                        "target": {
+                            "type": "conformance_report",
+                            "path": str(layer_case0012_pointdebug),
+                            "request_id": "olmdistancegradation_case0012_pointdebug_20260708",
+                        },
+                        "run": (
+                            "bind the PF16 store values to exported true16 PNG values and decide "
+                            "whether the missing +28 RGB is pre-store rounding, AE export scaling, "
+                            "or Windows store/export behavior; do not broaden the low-alpha rule"
+                        ),
+                        "pending_windows_refs": len(status.get("pending", [])),
+                        "pending_runtime_traces": len(runtime_actions),
+                    }
+                if layer_both_lowalpha.exists():
+                    return {
+                        "action": "continue-distancegradation-layer-source-closeout",
+                        "reason": (
+                            "The OLMDistanceGradation 16bpc Layer/no-bg Both low-alpha channel-mask "
+                            "rule keeps case_0013/0014/0016 at true16 max 2/4/2 and reduces case_0012 "
+                            "from max 90 to max 28. This is now a narrow case_0012 low-alpha "
+                            "quantization/source-word lane, not a broad Layer-source rewrite lane."
+                        ),
+                        "target": {
+                            "type": "conformance_report",
+                            "path": str(layer_both_lowalpha),
+                            "request_id": "olmdistancegradation_layer_both_lowalpha_20260708",
+                        },
+                        "run": (
+                            "focus OLMDistanceGradation case_0012 remaining low-alpha word/rounding "
+                            "residual around source alpha 3597; preserve the 8bpc Layer/no-bg path, "
+                            "the 16bpc straight-source RGB rule, and the Both-only low-alpha channel-mask rule"
+                        ),
+                        "pending_windows_refs": len(status.get("pending", [])),
+                        "pending_runtime_traces": len(runtime_actions),
+                    }
+                if layer_lowalpha_final.exists():
+                    return {
+                        "action": "continue-distancegradation-layer-source-closeout",
+                        "reason": (
+                            "The OLMDistanceGradation 16bpc Layer/no-bg low-alpha hidden-color patch "
+                            "keeps case_0013/0014/0016 at true16 max 2/4/2 and reduces case_0012 "
+                            "from max 251 to max 90. This is now a narrower case_0012 low-alpha "
+                            "fringe/quantization lane, not a broad Layer-source rewrite lane."
+                        ),
+                        "target": {
+                            "type": "conformance_report",
+                            "path": str(layer_lowalpha_final),
+                            "request_id": "olmdistancegradation_layer_lowalpha_final_20260708",
+                        },
+                        "run": (
+                            "focus OLMDistanceGradation case_0012 remaining low-alpha premultiplied "
+                            "source-fringe pixels and true16 quantization; preserve the 8bpc Layer/no-bg "
+                            "path, the 16bpc straight-source RGB rule, and the current narrow hidden-color rule"
+                        ),
+                        "pending_windows_refs": len(status.get("pending", [])),
+                        "pending_runtime_traces": len(runtime_actions),
+                    }
+                if layer_straight_patch.exists():
+                    return {
+                        "action": "continue-distancegradation-layer-source-closeout",
+                        "reason": (
+                            "The OLMDistanceGradation 16bpc Layer/no-bg straight-source RGB patch "
+                            "reduced case_0013/0014/0016 to true16 max 2/4/2 and leaves case_0012 "
+                            "as the only substantial Layer-source residual (true16 max 251). This is "
+                            "now a narrower local closeout lane than the old broad Layer-source family."
+                        ),
+                        "target": {
+                            "path": str(layer_straight_patch),
+                            "kind": "ae-host-grounded-layer-source-rerun",
+                            "request_id": "olmdistancegradation_layer_straight_patch_20260708",
+                        },
+                        "command": (
+                            "focus OLMDistanceGradation case_0012 low-alpha source-fringe/background "
+                            "ownership and the remaining true16 quantization rule; preserve the 8bpc "
+                            "Layer/no-bg path and do not reapply final-alpha RGB scaling for 16bpc"
+                        ),
+                    }
+                if (
+                    "olmdistancegradation_depthgate_quantization_witness_20260708" in trace_ids
+                    and quantization_intake.exists()
+                ):
+                    return {
+                        "action": "decide-distancegradation-depthgate-endgame",
+                        "reason": (
+                            "The OLMDistanceGradation depth-gate quantization witness has returned. "
+                            "Three of four clean case_0026 representatives classify as "
+                            "16bpc-to-export quantization, and only `(907,222)` remains unresolved. "
+                            "Do not repeat broad field/source/compose tuning from this near-miss family."
+                        ),
+                        "target": {
+                            "path": str(quantization_intake),
+                            "kind": "runtime-trace-intake",
+                            "request_id": "olmdistancegradation_depthgate_quantization_witness_20260708",
+                        },
+                        "command": (
+                            "either close `(907,222)` with one direct Windows PF16 store/export stop, "
+                            "or move OLMDistanceGradation attention to the separate broad Layer-source "
+                            "family `case_0012/0013/0014`"
+                        ),
+                    }
+                if nearmiss_witness.exists():
+                    return {
+                        "action": "prove-distancegradation-depthgate-quantization-witness",
+                        "reason": (
+                            "OLMDistanceGradation depth-gate follow-up has classified case_0024..0027 "
+                            "as a coherent max=1 near-miss family. Mac AE debug witnesses for the clean "
+                            "case_0026/case_0027 pair point at compose/interpolation/store/export "
+                            "quantization rather than distance-field topology. The next bounded proof is "
+                            "a Windows or local AEX-level pre-store/export witness for selected case_0026 "
+                            "points, not a field/source-mask retune."
+                        ),
+                        "target": {
+                            "path": str(nearmiss_witness),
+                            "kind": "ae-host-grounded-nearmiss-witness",
+                            "request_id": "olmdistancegradation_depthgate_nearmiss_20260708",
+                        },
+                        "command": (
+                            "use case_0026 points (907,222), (395,477), (1589,579), (898,670) "
+                            "with case_0027 as Render Mode control; prove whether Windows differs at "
+                            "interpolation output float, PF_Pixel16 store rounding/clamp, or AE PNG export"
+                        ),
+                    }
+                return {
+                    "action": "classify-distancegradation-depthgate-nearmiss-family",
+                    "reason": (
+                        "The current primary OLMDistanceGradation evidence is the 2026-07-08 "
+                        "depth-gated source-mask result. It closes 16bpc case_0023, improves "
+                        "the 16bpc extended batch to 7/16 AE exact, preserves the 8bpc code path "
+                        "as HEAD-equivalent by using alpha > 0 for PF_Pixel8, and records why "
+                        "run_ae_single_case.py must not be used as an 8bpc verdict runner. The "
+                        "next bounded DG lane is the new max=1 near-miss family case_0024..0027, "
+                        "not another case_0023 ownership proof."
+                    ),
+                    "target": {
+                        "path": str(depth_gate_result),
+                        "kind": "ae-host-grounded-depth-gate-result",
+                        "request_id": "olmdistancegradation_depth_gate_20260708",
+                    },
+                    "command": (
+                        "classify /tmp/olmdg_16ext_depthgate2 case_0024..0027 diff positions "
+                        "and parameter correlations; keep case_0012/0013/0014 as the separate "
+                        "Layer-source family and do not use CLI reimplementation as Windows truth"
+                    ),
+                }
+            case0023_alpha_threshold_result = (
+                root
+                / "refs"
+                / "conformance"
+                / "olmdistancegradation_case0023_alpha_threshold_mac_ae_result_20260707.md"
+            )
+            if residual_families.exists() and not case0023_alpha_threshold_result.exists():
+                case0023_lane_state = (
+                    root
+                    / "refs"
+                    / "conformance"
+                    / "olmdistancegradation_case0023_lane_state_20260707.md"
+                )
+                both_add_overlap = (
+                    root
+                    / "refs"
+                    / "conformance"
+                    / "olmdistancegradation_both_add_overlap_audit_20260707.md"
+                )
                 case0020_field = (
                     root
                     / "refs"
@@ -1167,7 +2319,11 @@ def decide(
                     / "olmdistancegradation_16bpc_constant_remaining_boundary_20260629.md"
                 )
                 target_for_distancegradation = (
-                    constant_boundary
+                    case0023_lane_state
+                    if case0023_lane_state.exists()
+                    else both_add_overlap
+                    if both_add_overlap.exists()
+                    else constant_boundary
                     if constant_boundary.exists()
                     else constant_binary_fix
                     if constant_binary_fix.exists()
@@ -1176,7 +2332,14 @@ def decide(
                     else residual_families
                 )
                 target_kind = "residual-family-report"
-                if constant_boundary.exists():
+                target_request_id = "olmdistancegradation_16bpc_case0026_x_witness_20260628"
+                if case0023_lane_state.exists():
+                    target_kind = "lane-state-report"
+                    target_request_id = "olmdistancegradation_case0023_final_source_ownership_20260707"
+                elif both_add_overlap.exists():
+                    target_kind = "local-model-audit"
+                    target_request_id = "olmdistancegradation_both_add_overlap_audit_20260707"
+                elif constant_boundary.exists():
                     target_kind = "boundary-localization-report"
                 elif constant_binary_fix.exists():
                     target_kind = "implementation-fix-report"
@@ -1187,20 +2350,41 @@ def decide(
                     "reason": (
                         "The 16bpc DistanceGradation Power-value bug is fixed and the remaining "
                         "extended failures are split into residual families. Constant mode now uses "
-                        "the binary threshold path grounded in FUN_181174760. The remaining Constant "
-                        "pixels are localized to 1px threshold-boundary decisions, and direct "
-                        "Layer/no-bg unpremultiply was tested and rejected. The remaining work is "
-                        "narrow binary/runtime proof, not broad PNG tuning."
+                        "the binary threshold path grounded in FUN_181174760. The active case_0023 "
+                        "lane is now bounded by a 2026-07-07 reference export audit: the packaged "
+                        "2026-06-25 16bpc Windows reference is byte-identical to the 2026-07-03 and "
+                        "2026-07-06 current-AEX Windows recaptures. The 2026-07-07 AEX CPU helper witness also "
+                        "shows the Both add-saturate helper already produces the live edge zero. "
+                        "The 2026-07-07 Mac source-model audit matches those AEX helper samples, and "
+                        "the compose witness executes FUN_181170480 locally as a recorded field-to-color "
+                        "mapping check. The Mac-only bg_on/bg_off probe then shows "
+                        "identical debug fields in both modes while the exported PNGs still differ from "
+                        "Windows by 73px. The same probe now also captures source RGBA, x_row/a_row, "
+                        "compose floats, and 16bpc stores; those stores match the Mac PNG after "
+                        "transparent-RGB zeroing. The neighborhood probe then shows the sampled 3x3 "
+                        "neighborhoods differ only at (1699,7) and (415,393), and logged shade source "
+                        "matches the request input PNG under AE PF_Pixel16 promotion. The 2026-07-07 "
+                        "final/source ownership return is answered: (1699,7) is a Windows source/mask "
+                        "ownership lane, and (415,393) is an export/path split lane. This closes the "
+                        "send-first runtime trace request without justifying stale-reference, broad "
+                        "field-helper, Both-merge, compose, or source-input tuning."
                     ),
                     "target": {
                         "path": str(target_for_distancegradation),
                         "kind": target_kind,
-                        "request_id": "olmdistancegradation_16bpc_case0026_x_witness_20260628",
+                        "request_id": target_request_id,
                     },
                     "command": (
-                        "obtain a narrow Constant distanceTransform boundary witness or binary/runtime "
-                        "proof for case_0012 Layer/no-bg source ownership; preserve the Power and "
-                        "Constant binary-threshold fixes"
+                        "use refs/conformance/olmdistancegradation_case0023_lane_state_20260707.md "
+                        "as the live DG lane; preserve the Power and Constant binary-threshold fixes, "
+                        "keep the packaged/current Windows reference exactness, Both-mode cv::add, the "
+                        "source-model/AEX-helper sampled equivalence, and the compose/writeback mapping "
+                        "witness, refs/conformance/olmdistancegradation_case0023_mac_probe_result_20260707.md "
+                        "as IR facts, refs/conformance/olmdistancegradation_case0023_neighborhood_probe_result_20260707.md "
+                        "as the bounded neighborhood/source-input fact, and "
+                        "refs/reports/runtime_trace_comparisons/olmdistancegradation_case0023_final_source_ownership_20260707.md "
+                        "as the answered final/source ownership proof; next DG work must be narrow "
+                        "Mac-side source/mask/output ownership closeout, not a resend or broad retune"
                     ),
                 }
             if power_fix.exists():
@@ -1380,6 +2564,7 @@ def main() -> int:
     bitdepth16_pending = bitdepth16_compare_pending(root)
     ae_automation_blocker = ae_host_automation_blocker(root)
     pending_request_defs = pending_requests(root, status["pending"])
+    pending_runtime_rows = pending_runtime_trace_rows(root)
     handoff_path = args.handoff
     if handoff_path is None:
         latest_handoff = newest(interesting, "olm-handoff-package")
@@ -1405,6 +2590,15 @@ def main() -> int:
     output = {
         "decision": decision,
         "pending_requests": status["pending"],
+        "pending_runtime_trace_requests": [
+            {
+                "request_id": row.get("request_id"),
+                "package": row.get("package"),
+                "priority": row.get("priority"),
+                "acceptance_note": row.get("acceptance_note"),
+            }
+            for row in pending_runtime_rows
+        ],
         "pending_pinning": pending_pinning_summary(status),
         "covered_requests": status["covered"],
         "runtime_trace_actions": [
@@ -1441,6 +2635,16 @@ def main() -> int:
     print(f"- pending Windows refs: {len(status['pending'])}")
     if status["pending"]:
         print("  " + ", ".join(status["pending"]))
+    print(f"- pending runtime traces: {len(pending_runtime_rows)}")
+    if pending_runtime_rows:
+        print(
+            "  "
+            + ", ".join(
+                str(row.get("request_id") or "")
+                for row in pending_runtime_rows
+                if row.get("request_id")
+            )
+        )
     pinning = decision.get("pending_pinning") or output.get("pending_pinning")
     if isinstance(pinning, dict):
         print(

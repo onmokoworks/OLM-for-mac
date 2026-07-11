@@ -1,0 +1,122 @@
+{
+  "kind": "olmdistancegradation_source_mask_old_rule_ab_20260709",
+  "schema": 1,
+  "date": "2026-07-09",
+  "decision": "Rejected. Reverting 16bpc source_mask_owns_alpha() to alpha>0 makes the canonical 16bpc batch much worse (1/16 exact) and reopens case_0023 (73px/max 61165). The depth-gated source mask is necessary; the current-vs-depthgate split must come from another changed path or validation/provenance delta, not simply from using alpha>0 globally.",
+  "source_restored": true,
+  "result_root": "refs/reports/ae_validation_batch_olmdistancegradation_16bpc_mask_old_ab_20260709",
+  "rows": [
+    {
+      "case_id": "0008",
+      "max": 0,
+      "nonzero_px": 0,
+      "mean": 0.0,
+      "pass": true
+    },
+    {
+      "case_id": "0010",
+      "max": 1440,
+      "nonzero_px": 11228,
+      "mean": 1.213882137345679,
+      "pass": false
+    },
+    {
+      "case_id": "0011",
+      "max": 65347,
+      "nonzero_px": 4290,
+      "mean": 1.0476169463734568,
+      "pass": false
+    },
+    {
+      "case_id": "0012",
+      "max": 1440,
+      "nonzero_px": 14114,
+      "mean": 0.6209196566358025,
+      "pass": false
+    },
+    {
+      "case_id": "0013",
+      "max": 734,
+      "nonzero_px": 12079,
+      "mean": 0.1446416859567901,
+      "pass": false
+    },
+    {
+      "case_id": "0014",
+      "max": 92,
+      "nonzero_px": 13307,
+      "mean": 0.02542751736111111,
+      "pass": false
+    },
+    {
+      "case_id": "0016",
+      "max": 257,
+      "nonzero_px": 5438,
+      "mean": 0.0057145785108024694,
+      "pass": false
+    },
+    {
+      "case_id": "0020",
+      "max": 61165,
+      "nonzero_px": 1,
+      "mean": 0.014407913773148148,
+      "pass": false
+    },
+    {
+      "case_id": "0021",
+      "max": 61165,
+      "nonzero_px": 1,
+      "mean": 0.014407913773148148,
+      "pass": false
+    },
+    {
+      "case_id": "0022",
+      "max": 61165,
+      "nonzero_px": 192,
+      "mean": 2.7663194444444446,
+      "pass": false
+    },
+    {
+      "case_id": "0023",
+      "max": 61165,
+      "nonzero_px": 73,
+      "mean": 1.0517777054398147,
+      "pass": false
+    },
+    {
+      "case_id": "0024",
+      "max": 20669,
+      "nonzero_px": 1054204,
+      "mean": 2.4805602575231482,
+      "pass": false
+    },
+    {
+      "case_id": "0025",
+      "max": 16656,
+      "nonzero_px": 862157,
+      "mean": 1.9855242091049383,
+      "pass": false
+    },
+    {
+      "case_id": "0026",
+      "max": 11480,
+      "nonzero_px": 902747,
+      "mean": 2.9253721788194444,
+      "pass": false
+    },
+    {
+      "case_id": "0027",
+      "max": 12301,
+      "nonzero_px": 454039,
+      "mean": 1.5705589313271604,
+      "pass": false
+    },
+    {
+      "case_id": "0028",
+      "max": 14750,
+      "nonzero_px": 459649,
+      "mean": 8.190497685185186,
+      "pass": false
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "primitive": "FUN_180001ec0",
+  "pixel_layout": "float32 RGBA",
+  "cases": [
+    {
+      "id": "even_angle0",
+      "width": 6,
+      "height": 4,
+      "angle": 0.0,
+      "source_sha256": "f59e5fc9f82249fce3e326a0ff8545ff620a2c5d7333be7524905e067b33dca1",
+      "expected_sha256": "a46e31467921e49136d890bfc5e7d7497b145bb7e748bdfee90d48325562a91f",
+      "destination_poison_hex": "a0b1c2d3"
+    },
+    {
+      "id": "odd_positive",
+      "width": 5,
+      "height": 3,
+      "angle": 0.37,
+      "source_sha256": "d17b101c72c8aafa007e4cb0f75739311e11c206dc915b91ca5727a231bb9969",
+      "expected_sha256": "5e75381424f441b962c651d36a785c1f1202714b3302fc9e4d7e1a4d3a9a824d",
+      "destination_poison_hex": "a1b1c2d3"
+    },
+    {
+      "id": "odd_negative",
+      "width": 3,
+      "height": 5,
+      "angle": -0.61,
+      "source_sha256": "49d6bd7ffba818392f57fc99757ba3e911b43718844bd1f25989ec7430a501bb",
+      "expected_sha256": "2029d9640527faedbe3098d92d1888a96eb2a8307e0d120af116bbc7223249b8",
+      "destination_poison_hex": "a2b1c2d3"
+    },
+    {
+      "id": "alpha_boundary",
+      "width": 7,
+      "height": 6,
+      "angle": 1.0,
+      "source_sha256": "7dd26c82d6156eca31345f7f555f8430886a3d3afb86bef5fe25a7e9a2777adc",
+      "expected_sha256": "e847de3bd09447c51ff5015003f82397d899881ac1e3484731da8daee6cae2d5",
+      "destination_poison_hex": "a3b1c2d3"
+    },
+    {
+      "id": "thin_even",
+      "width": 4,
+      "height": 2,
+      "angle": -0.25,
+      "source_sha256": "01047e8b5fc979edb612ce98337486ce8382801fd4dd4bdd8872425c7ed094df",
+      "expected_sha256": "3afe4268026dc944a90323dd07cdea7b788771f4c05553d676d4049840d1e7c6",
+      "destination_poison_hex": "a4b1c2d3"
+    },
+    {
+      "id": "thin_odd",
+      "width": 3,
+      "height": 3,
+      "angle": 0.125,
+      "source_sha256": "914340f99ecdba8e7ddc08f9c34c376c1592f56aea9e6075ed415e1f4dd1600f",
+      "expected_sha256": "bcf1d259f7129c3fc2cfff20998cf6c5bfaa04a257d94c6d3fbc77c895802446",
+      "destination_poison_hex": "a5b1c2d3"
+    }
+  ]
+}

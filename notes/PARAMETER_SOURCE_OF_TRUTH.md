@@ -1,6 +1,6 @@
 # OLM Parameter Source of Truth
 
-Updated: 2026-06-29
+Updated: 2026-07-03
 
 ## Purpose
 
@@ -26,6 +26,8 @@ capture as the source of truth for:
 Primary anchor:
 
 - [refs/win_references/20260629_202911__olm_fresh_instance_defaults_20260629_windows_return/OLMmulti-effectdefaultcapture/reference_manifest.json:1](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/win_references/20260629_202911__olm_fresh_instance_defaults_20260629_windows_return/OLMmulti-effectdefaultcapture/reference_manifest.json:1)
+- Committed parity note:
+  [refs/conformance/windows_fresh_param_parity_20260703.md:1](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/conformance/windows_fresh_param_parity_20260703.md:1)
 - Audit summary:
   [refs/reports/windows_fresh_defaults_audit_20260629.md:1](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/reports/windows_fresh_defaults_audit_20260629.md:1)
 
@@ -47,6 +49,8 @@ range capture as the source of truth for:
 Primary anchor:
 
 - [refs/win_references/olm_fresh_instance_ranges_20260629/OLMmulti-effectrangecapture/reference_manifest.json:1](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/win_references/olm_fresh_instance_ranges_20260629/OLMmulti-effectrangecapture/reference_manifest.json:1)
+- Committed parity note:
+  [refs/conformance/windows_fresh_param_parity_20260703.md:1](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/conformance/windows_fresh_param_parity_20260703.md:1)
 - Audit summary:
   [refs/reports/windows_fresh_ranges_audit_20260629.md:1](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/reports/windows_fresh_ranges_audit_20260629.md:1)
 
@@ -133,6 +137,7 @@ disagreements. Those defaults have now been patched in the Mac source for:
 
 Current audit truth should be checked in:
 
+- [refs/conformance/windows_fresh_param_parity_20260703.md:1](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/conformance/windows_fresh_param_parity_20260703.md:1)
 - [refs/reports/windows_fresh_defaults_audit_20260629.md:1](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/reports/windows_fresh_defaults_audit_20260629.md:1)
 - [refs/reports/windows_fresh_ranges_audit_20260629.md:1](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/reports/windows_fresh_ranges_audit_20260629.md:1)
 - [refs/reports/windows_fresh_param_parity_summary_20260630.md:1](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/reports/windows_fresh_param_parity_summary_20260630.md:1)
@@ -145,6 +150,7 @@ tracked as schema work rather than algorithm drift.
 
 For a quick per-plug-in host-parity snapshot, use the generated summary:
 
+- [refs/conformance/windows_fresh_param_parity_20260703.md:1](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/conformance/windows_fresh_param_parity_20260703.md:1)
 - [refs/reports/windows_fresh_param_parity_summary_20260630.md:1](/Users/onmk/Documents/Projects/Personal/OLM%20as/refs/reports/windows_fresh_param_parity_summary_20260630.md:1)
 
 This report compresses the defaults audit plus range audit into:
@@ -155,6 +161,12 @@ This report compresses the defaults audit plus range audit into:
 
 for each plug-in, and lists the next schema/UI gap that still blocks a clean
 Windows-fresh host-parity claim.
+
+To regenerate the committed snapshot from the imported Windows manifests:
+
+```sh
+python3 scripts/materialize_windows_fresh_param_parity.py --stamp 20260703
+```
 
 2026-06-29 first-pass host-range alignment has already landed for:
 
@@ -322,6 +334,13 @@ When in doubt, the code link above is the canonical source.
 - Fade Out: default `0`
 - Diagonal2 Color: default white
 - Diagonal2 Use Ramp: default `off`
+- UI/schema caution:
+  Windows fresh-instance captures expose per-direction topic labels such as
+  `Vertical Color Ramp` and `Highlight Color Ramp`, but the actual child
+  checkbox inside each topic still appears as `Use Ramp`. Treat those topic
+  labels and child labels as separate schema facts; do not "fix" the child
+  checkbox by renaming it to the topic title unless a fresh Windows capture
+  also changes the child label itself.
 
 ### OLMDistanceGradation
 

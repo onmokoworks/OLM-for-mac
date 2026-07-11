@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "kind": "dblur_rowdriver_exact_microfixture",
+  "aex": "plugins_2025/OLMDirectionalBlur.aex",
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "fixture": "case_0001",
+  "leaf": {
+    "width": 9,
+    "source_sha256": "a494b000da8beafe326864242aaf7b1296b4a7891603c05a3a89c8014215ff36",
+    "prepass_output_sha256": "0e42586f5c9368f316c10c8ab239bec0fda29343f0b0a42ad4ea5151933151f3",
+    "scatter_output_sha256": "ab1ebbe0311c5a006070c261fbf1edd0348a4ab41aeb1127e844381896f0e10a",
+    "prepass_raw_len": 144
+  },
+  "rowdriver": {
+    "width": 5,
+    "rows": [
+      0,
+      1
+    ],
+    "instructions": 1506,
+    "output_sha256": "7369de39733663d571b626f9ad17b56d0c005591145baaa9cf6686b98aeec172",
+    "denom_sha256": "539b08c51dbd2e56287b3ef4594d1dd4e7542ebe007ce317ab0dd4e2e3415b77",
+    "av_sha256": "539b08c51dbd2e56287b3ef4594d1dd4e7542ebe007ce317ab0dd4e2e3415b77"
+  },
+  "files": {
+    "leaf_back_weights.bin": "6f79b7b907cae32bfa809c836213e55d5e37e96404e35582ace8f81e2e38fbe1",
+    "leaf_front_weights.bin": "f886279fe50220ff59135895f6616ee38904828ec361bfbb962036efe2b15e4d",
+    "leaf_initial_av.bin": "6db65fd59fd356f6729140571b5bcd6bb3b83492a16e1bf0a3884442fc3c8a0e",
+    "leaf_initial_denom.bin": "6db65fd59fd356f6729140571b5bcd6bb3b83492a16e1bf0a3884442fc3c8a0e",
+    "leaf_initial_prepass.bin": "81c611f35bff79491538b2f7cf201c7597a661a5c549633541c62bdc8af1613f",
+    "leaf_initial_scatter_av.bin": "a5af2fbc354ae4630b2bfc57d3eab7739659ba1b8602260de248064844d1b443",
+    "leaf_initial_scatter_denom.bin": "2cc40913694b7595787babd9c5ebddc740e68ca437224446e3aaf9ea60d1151c",
+    "leaf_initial_scatter_output.bin": "68b7491676821e622615c31bde6699df32ff663bff44f0d7becf3bacc9bd6a58",
+    "leaf_source.bin": "a494b000da8beafe326864242aaf7b1296b4a7891603c05a3a89c8014215ff36",
+    "prepass_av.bin": "1e74705c44b0fb291b7f4bff60d1b0cdc593ce5c2a285a6ec2e5e126da3c0756",
+    "prepass_denom.bin": "1e74705c44b0fb291b7f4bff60d1b0cdc593ce5c2a285a6ec2e5e126da3c0756",
+    "prepass_output.bin": "0e42586f5c9368f316c10c8ab239bec0fda29343f0b0a42ad4ea5151933151f3",
+    "rowdriver_av.bin": "539b08c51dbd2e56287b3ef4594d1dd4e7542ebe007ce317ab0dd4e2e3415b77",
+    "rowdriver_denom.bin": "539b08c51dbd2e56287b3ef4594d1dd4e7542ebe007ce317ab0dd4e2e3415b77",
+    "rowdriver_output.bin": "7369de39733663d571b626f9ad17b56d0c005591145baaa9cf6686b98aeec172",
+    "rowdriver_params_input.bin": "4ba6441ee8be02f4dbb772a0079b6efcf9587ad7ffff5e68332c4fc217d185c0",
+    "rowdriver_source.bin": "67072ed63aab44d1cd54d648d5c8a7b86db4e6877c3aa2240c729748e869afd9",
+    "scatter_av.bin": "a5af2fbc354ae4630b2bfc57d3eab7739659ba1b8602260de248064844d1b443",
+    "scatter_denom.bin": "ba52d97675735e7a9d2e80d6fe625167fabb6d7c847d7f04ed0c439c71872551",
+    "scatter_output.bin": "ab1ebbe0311c5a006070c261fbf1edd0348a4ab41aeb1127e844381896f0e10a"
+  },
+  "exact_policy": "byte equality only; no tolerance"
+}

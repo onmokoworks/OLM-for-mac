@@ -1,0 +1,3 @@
+$$ At +5e68 RCX/RDX/R8/R9 and stack interpolation values are helper arguments.
+bp /w "(@ebx == 7 || @ebx == 8 || @ebx == 24) && @r13d == 0" OLMRadialBlur+0x5e68 ".echo === SAMPLER_ARGS_CALL ===; .printf \"xy=(%u,%u) rcx_pool=%p rdx_cell=%p r8=%u r9=%u\\n\", @ebx,@r13d,@rcx,@rdx,@r8d,@r9d; r; dd @rsp+28 L2; dq @rdx L8; dq @rcx L4; gc"
+bp /w "(@ebx == 7 || @ebx == 8 || @ebx == 24) && @r13d == 0" OLMRadialBlur+0x5e6d ".echo === SAMPLER_ARGS_RETURN ===; .printf \"xy=(%u,%u) rdi_cell=%p\\n\", @ebx,@r13d,@rdi; r; dq @rdi L8; gc"

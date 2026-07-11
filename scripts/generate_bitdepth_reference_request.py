@@ -195,6 +195,19 @@ def build_request(args: argparse.Namespace) -> dict[str, Any]:
             "32bpc EXR-first float-output probe for a normalized 8bpc Software exact case. "
             "This is not AE exact evidence unless the return includes float-preserving output."
         )
+        compare_policy = {
+            "path": "refs/conformance/bitdepth_32bpc_compare_policy_20260703.md",
+            "mode": "float-preserving-required",
+            "png_only_classification": "probe-only",
+        }
+        output_requirements = {
+            "preferred_formats": ["exr"],
+            "acceptable_float_preserving_fallbacks": ["tiff", "tif", "hdr", "raw-float-rgba"],
+            "png_only_allowed": True,
+            "png_only_classification": "probe-only",
+            "float_preserving_required_for_ae_exact": True,
+            "record_exact_format_used": True,
+        }
         why = [
             "The listed feature groups are normalized 8bpc Windows Software exact and need 32bpc output-format probing before 32bpc exactness can be claimed.",
             "This request asks the Windows helper to render a 32bpc project and return EXR output by default.",
@@ -226,6 +239,17 @@ def build_request(args: argparse.Namespace) -> dict[str, Any]:
             "16bpc expansion of a normalized 8bpc Software exact case. "
             "Do not use this to retune 8bpc legacy drift."
         )
+        compare_policy = {
+            "path": "refs/conformance/bitdepth_16bpc_exact_manifest_20260703.md",
+            "mode": "bitdepth-aware-integer-exact",
+        }
+        output_requirements = {
+            "preferred_formats": ["png"],
+            "acceptable_float_preserving_fallbacks": [],
+            "png_only_allowed": True,
+            "float_preserving_required_for_ae_exact": False,
+            "record_exact_format_used": True,
+        }
         why = [
             "The listed feature groups are normalized 8bpc Windows Software exact and need the next declared bit-depth proof.",
             "This request deliberately starts with 16bpc only; 32bpc waits until the float comparison policy is fixed.",
@@ -334,6 +358,8 @@ def build_request(args: argparse.Namespace) -> dict[str, Any]:
         ],
         "inputs": list(inputs.values()),
         "cases": cases,
+        "compare_policy": compare_policy,
+        "output_requirements": output_requirements,
         "manifest_requirements": manifest_requirements,
         "mac_follow_up": mac_follow_up,
         "stop_lines": stop_lines,

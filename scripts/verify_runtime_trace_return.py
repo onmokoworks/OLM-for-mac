@@ -27,7 +27,10 @@ def parse_args() -> argparse.Namespace:
         "--package",
         type=Path,
         default=None,
-        help="Runtime trace request package zip. If omitted, uses the newest refs/runtime_trace_packages/*.zip.",
+        help=(
+            "Runtime trace request package zip. If omitted, uses the newest "
+            "refs/runtime_trace_packages/*.zip. Pass `none` to disable package matching."
+        ),
     )
     parser.add_argument(
         "--require-all",
@@ -73,7 +76,22 @@ def extract_if_zip(source: Path, dest: Path) -> Path:
     if not source.exists() or not zipfile.is_zipfile(source):
         raise ValueError(f"source is neither a directory, JSON, nor zip: {source}")
     with zipfile.ZipFile(source) as archive:
-        archive.extractall(dest)
+        for member in archive.infolist():
+            normalized = member.filename.replace("\\", "/")
+            parts = [
+                part
+                for part in normalized.split("/")
+                if part and part not in {".", ".."} and not part.startswith("._")
+            ]
+            if not parts or "__MACOSX" in parts:
+                continue
+            target = dest.joinpath(*parts)
+            if member.is_dir() or normalized.endswith("/"):
+                target.mkdir(parents=True, exist_ok=True)
+                continue
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with archive.open(member) as src, target.open("wb") as dst:
+                dst.write(src.read())
     visible = [
         child
         for child in dest.iterdir()
@@ -154,6 +172,15 @@ def read_answer_summary(source_root: Path, manifest_path: str | None) -> str:
         return f"answer file unreadable: {manifest_path}: {exc}"
 
 
+def normalize_result_status(status: Any, observations: Any) -> str:
+    normalized = str(status or "answered").lower()
+    if normalized == "answered" and isinstance(observations, dict):
+        classification = observations.get("classification")
+        if isinstance(classification, str) and classification.lower() == "answered_partial":
+            return "answered_partial"
+    return normalized
+
+
 def normalize_results(
     data: dict[str, Any],
     source_path: Path,
@@ -169,7 +196,7 @@ def normalize_results(
         return [
             {
                 "request_id": str(data["request_id"]),
-                "status": str(data.get("status", "answered")).lower(),
+                "status": normalize_result_status(data.get("status", "answered"), observations),
                 "summary": str(data.get("summary") or data.get("answer") or data.get("notes") or ""),
                 "observations": observations,
                 "source_file": archive_relative_path(source_root, source_path),
@@ -211,8 +238,9 @@ def normalize_results(
         request_id = row.get("request_id") or data.get("request_id") or default_request_id
         if not request_id:
             raise ValueError(f"{source_path}: result #{index} missing request_id")
-        status = str(row.get("status", data.get("status", "answered"))).lower()
-        summary = row.get("summary") or row.get("answer") or row.get("notes") or ""
+        request_id = str(request_id)
+        if default_request_id and request_id == f"olm_runtime_trace_{default_request_id}":
+            request_id = default_request_id
         observations = row.get("observations", row.get("values", row.get("fact")))
         if observations is None:
             observations = {
@@ -220,6 +248,8 @@ def normalize_results(
                 for key, value in row.items()
                 if key not in {"request_id", "status", "summary", "answer", "notes"}
             }
+        status = normalize_result_status(row.get("status", data.get("status", "answered")), observations)
+        summary = row.get("summary") or row.get("answer") or row.get("notes") or ""
         normalized.append(
             {
                 "request_id": str(request_id),
@@ -341,9 +371,12 @@ def main() -> int:
     if not args.source.exists():
         return fail(f"source not found: {args.source}", 2)
     package = args.package
-    if package is None:
+    package_explicitly_disabled = package is not None and str(package).lower() in {"none", "-"}
+    if package_explicitly_disabled:
+        package = None
+    if package is None and not package_explicitly_disabled:
         package = latest_package(root)
-    elif not package.is_absolute():
+    elif package is not None and not package.is_absolute():
         package = root / package
 
     with tempfile.TemporaryDirectory(prefix="olm_runtime_trace_return_") as tmp:

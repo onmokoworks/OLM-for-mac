@@ -1,0 +1,143 @@
+{
+  "kind": "olmradialblur_case0010_static_witness",
+  "case_id": "case_0010",
+  "witness_pixel": [
+    1614,
+    6
+  ],
+  "source_artifacts": {
+    "m4_report": "tools/emulation/M4_REPORT.md",
+    "m5_json": "tools/emulation/M5_CELL_WRITES.json"
+  },
+  "buffers": {
+    "f250": "0x268e4800",
+    "f252": "0x28737000",
+    "e0e": "0x28ecba00"
+  },
+  "render_facts": {
+    "angular_cols": 1800,
+    "quality_recip": 0.20000000298023224,
+    "m5_elapsed_seconds": 114.59271669387817
+  },
+  "final_sampler": {
+    "sample_x": 1603.839558785,
+    "sample_y": 844.317504883,
+    "direct_inverse_sample": {
+      "radius": 844.317504883,
+      "angle": 5.598455906,
+      "angle_scale": 286.478912354,
+      "radius_base": 0,
+      "sample_x": 1603.839558785,
+      "sample_y": 844.317504883,
+      "e0e_rgba_float": [
+        -0.004081939,
+        -0.004081939,
+        -0.004081939,
+        1.0
+      ],
+      "u8": [
+        0,
+        0,
+        0,
+        255
+      ]
+    },
+    "output_witness": {
+      "argb_bytes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rgba_bytes": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "witness_neighborhood_cells": [
+    {
+      "cell": "row844_col1603",
+      "role": "witness southwest",
+      "f250_rgba": [
+        -0.025617070496082306,
+        -0.025617070496082306,
+        -0.025617070496082306,
+        1.7418659925460815
+      ],
+      "f252_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "e0e_rgba": [
+        -0.014706682413816452,
+        -0.014706682413816452,
+        -0.014706682413816452,
+        1.0
+      ]
+    },
+    {
+      "cell": "row844_col1604",
+      "role": "witness southeast",
+      "f250_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.741865993
+      ],
+      "e0e_rgba_bits": [
+        "00000000",
+        "00000000",
+        "00000000",
+        "3f800000"
+      ]
+    },
+    {
+      "cell": "row845_col1603",
+      "role": "witness northwest",
+      "f250_rgba": [
+        -0.0845475047826767,
+        -0.0845475047826767,
+        -0.0845475047826767,
+        1.7418659925460815
+      ],
+      "f252_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "e0e_rgba": [
+        -0.048538465052843094,
+        -0.048538465052843094,
+        -0.048538465052843094,
+        1.0
+      ]
+    },
+    {
+      "cell": "row845_col1604",
+      "role": "witness northeast",
+      "f250_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.741865993
+      ],
+      "e0e_rgba_bits": [
+        "00000000",
+        "00000000",
+        "00000000",
+        "3f800000"
+      ]
+    }
+  ],
+  "limitations": [
+    "This report reuses existing M4/M5 artifacts and does not perform a fresh emulation run.",
+    "The current local artifacts do not include +0xf252 for row844/1604 or row845/1604.",
+    "The current local output witness is the mocked output-world byte state plus a direct +0xe sampler probe; it is not a Windows final-writeback capture."
+  ]
+}

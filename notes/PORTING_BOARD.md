@@ -2,6 +2,10 @@
 
 Updated: 2026-06-06 (historical board; see current conformance notes)
 
+> Historical only. Do not select current work from this file. Use
+> `notes/PORTING_ROADMAP.md`, then `notes/CONFORMANCE_LEDGER.md`, then
+> `refs/reports/pending_runtime_trace_packages.md`.
+
 > 2026-06-18: Current correctness tracking moved to
 > `notes/CONFORMANCE_LEDGER.md`; terms are defined in
 > `notes/AE_EXACT_CONFORMANCE.md`. Final completion means `AE exact`: Mac AE

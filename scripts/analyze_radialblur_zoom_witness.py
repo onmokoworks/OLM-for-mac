@@ -128,11 +128,15 @@ def compute_zoom_sample(rb: Any, image: Image.Image, params: dict[str, Any], pay
     weighted_rgb = rb.linear_scatter_sum(polar[..., :3] * alpha[..., None], weights, "forward")
     weighted_alpha = rb.linear_scatter_sum(alpha, weights, "forward")
     accum_alpha = rb.linear_scatter_sum(alpha, weights, "forward")
+    
+    # NEW LOGIC: Normalize alpha by the sum of weights (using float32 precision for sum, double for weights)
+    ones = np.ones_like(alpha)
+    weight_sum = rb.linear_scatter_sum(ones, weights, "forward")
 
     blurred = np.zeros_like(polar)
     nz = weighted_alpha > 1e-8
     blurred[..., :3][nz] = weighted_rgb[nz] / weighted_alpha[nz, None]
-    blurred[..., 3] = np.clip(accum_alpha, 0.0, 1.0)
+    blurred[..., 3] = np.clip((accum_alpha / weight_sum).astype(np.float32), 0.0, 1.0)
 
     dx = float(x) - cx
     dy = float(y) - cy

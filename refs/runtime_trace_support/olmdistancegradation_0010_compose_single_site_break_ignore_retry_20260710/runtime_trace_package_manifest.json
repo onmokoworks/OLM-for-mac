@@ -1,0 +1,16 @@
+{
+  "kind": "olm_runtime_trace_request_package",
+  "schema": 1,
+  "profile": "distancegradation-0010-compose-single-site-break-ignore-retry",
+  "entrypoint": "refs/conformance/olmdistancegradation_0010_compose_single_site_followup_contract_20260710.md",
+  "repo_root_name": "OLM as",
+  "runtime_actions": [
+    {
+      "request_id": "olmdistancegradation_0010_compose_single_site_break_ignore_retry_20260710",
+      "plugin_area": "OLMDistanceGradation 16bpc case_0010 single-site compose witness, break-ignore retry",
+      "mode": "external-trace",
+      "command": "Run the included launcher separately for field and source at (6,40). It must contain `sxi 80000003` so the first-chance break observed in the prior return cannot terminate the trace before the selected downstream site.",
+      "stop_condition": "Satisfactory: exact RDI==target_output stop with typed RCX field words or RDX source words. Partial: selected site is reached but the equality gate misses and both live RDI and target are logged. Failure: the run again ends at first-chance 80000003, no entry witness, multiple sites in one run, or no typed downstream evidence."
+    }
+  ]
+}

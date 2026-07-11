@@ -1,0 +1,5433 @@
+{
+  "build_output_tail": [
+    "/Users/onmk/Documents/Projects/Personal/OLM as/cli/OLMRadialBlur/olmradialblur_cli"
+  ],
+  "case_id": "case_0009",
+  "default_alpha_off_by_one_details": [
+    {
+      "aex_repeat": {
+        "alpha": 1,
+        "alpha_u8": 255,
+        "angle_index": 1047.557495,
+        "candidate": [
+          20,
+          3,
+          3,
+          255
+        ],
+        "cell_alpha": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "fx": null,
+        "fy": null,
+        "radius_index": 1096.228027,
+        "sample_u8": [
+          20,
+          3,
+          3,
+          255
+        ]
+      },
+      "default": {
+        "alpha": 1,
+        "alpha_u8": 255,
+        "angle_index": 1047.557495,
+        "candidate": [
+          20,
+          3,
+          3,
+          255
+        ],
+        "cell_alpha": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "fx": null,
+        "fy": null,
+        "radius_index": 1096.228027,
+        "sample_u8": [
+          20,
+          3,
+          3,
+          255
+        ]
+      },
+      "polar_alpha": {
+        "alpha": 0.9999999924,
+        "alpha_u8": 255,
+        "angle_index": 1047.557495,
+        "candidate": [
+          20,
+          3,
+          3,
+          255
+        ],
+        "cell_alpha": [
+          1,
+          1,
+          1,
+          0.9999999404
+        ],
+        "fx": null,
+        "fy": null,
+        "radius_index": 1096.228027,
+        "sample_u8": [
+          20,
+          3,
+          3,
+          255
+        ]
+      },
+      "polar_alpha_truncate": {
+        "alpha": 0.9999999924,
+        "alpha_u8": 254,
+        "angle_index": 1047.557495,
+        "candidate": [
+          20,
+          3,
+          3,
+          254
+        ],
+        "cell_alpha": [
+          1,
+          1,
+          1,
+          0.9999999404
+        ],
+        "fx": null,
+        "fy": null,
+        "radius_index": 1096.228027,
+        "sample_u8": [
+          20,
+          3,
+          3,
+          254
+        ]
+      },
+      "reference": [
+        20,
+        3,
+        3,
+        254
+      ],
+      "x": 6
+    },
+    {
+      "aex_repeat": {
+        "alpha": 1,
+        "alpha_u8": 255,
+        "angle_index": 1047.686279,
+        "candidate": [
+          21,
+          3,
+          3,
+          255
+        ],
+        "cell_alpha": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "fx": null,
+        "fy": null,
+        "radius_index": 1095.35791,
+        "sample_u8": [
+          21,
+          3,
+          3,
+          255
+        ]
+      },
+      "default": {
+        "alpha": 1,
+        "alpha_u8": 255,
+        "angle_index": 1047.686279,
+        "candidate": [
+          21,
+          3,
+          3,
+          255
+        ],
+        "cell_alpha": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "fx": null,
+        "fy": null,
+        "radius_index": 1095.35791,
+        "sample_u8": [
+          21,
+          3,
+          3,
+          255
+        ]
+      },
+      "polar_alpha": {
+        "alpha": 1,
+        "alpha_u8": 255,
+        "angle_index": 1047.686279,
+        "candidate": [
+          21,
+          3,
+          3,
+          255
+        ],
+        "cell_alpha": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "fx": null,
+        "fy": null,
+        "radius_index": 1095.35791,
+        "sample_u8": [
+          21,
+          3,
+          3,
+          255
+        ]
+      },
+      "polar_alpha_truncate": {
+        "alpha": 1,
+        "alpha_u8": 255,
+        "angle_index": 1047.686279,
+        "candidate": [
+          21,
+          3,
+          3,
+          255
+        ],
+        "cell_alpha": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "fx": null,
+        "fy": null,
+        "radius_index": 1095.35791,
+        "sample_u8": [
+          21,
+          3,
+          3,
+          255
+        ]
+      },
+      "reference": [
+        21,
+        3,
+        3,
+        254
+      ],
+      "x": 7
+    },
+    {
+      "aex_repeat": {
+        "alpha": 1,
+        "alpha_u8": 255,
+        "angle_index": 1048.333618,
+        "candidate": [
+          21,
+          4,
+          4,
+          255
+        ],
+        "cell_alpha": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "fx": null,
+        "fy": null,
+        "radius_index": 1091.010498,
+        "sample_u8": [
+          21,
+          4,
+          4,
+          255
+        ]
+      },
+      "default": {
+        "alpha": 1,
+        "alpha_u8": 255,
+        "angle_index": 1048.333618,
+        "candidate": [
+          21,
+          4,
+          4,
+          255
+        ],
+        "cell_alpha": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "fx": null,
+        "fy": null,
+        "radius_index": 1091.010498,
+        "sample_u8": [
+          21,
+          4,
+          4,
+          255
+        ]
+      },
+      "polar_alpha": {
+        "alpha": 0.9999999803,
+        "alpha_u8": 255,
+        "angle_index": 1048.333618,
+        "candidate": [
+          21,
+          4,
+          4,
+          255
+        ],
+        "cell_alpha": [
+          1,
+          1,
+          0.9999999404,
+          1
+        ],
+        "fx": null,
+        "fy": null,
+        "radius_index": 1091.010498,
+        "sample_u8": [
+          21,
+          4,
+          4,
+          255
+        ]
+      },
+      "polar_alpha_truncate": {
+        "alpha": 0.9999999803,
+        "alpha_u8": 254,
+        "angle_index": 1048.333618,
+        "candidate": [
+          21,
+          4,
+          4,
+          254
+        ],
+        "cell_alpha": [
+          1,
+          1,
+          0.9999999404,
+          1
+        ],
+        "fx": null,
+        "fy": null,
+        "radius_index": 1091.010498,
+        "sample_u8": [
+          21,
+          4,
+          4,
+          254
+        ]
+      },
+      "reference": [
+        21,
+        4,
+        4,
+        254
+      ],
+      "x": 12
+    }
+  ],
+  "default_alpha_off_by_one_x": [
+    6,
+    7,
+    12
+  ],
+  "interpretation": "The 254/255 witness can be reproduced locally only by applying a global alpha truncate to the polar-alpha candidate, but that variant remains broad at full-frame diff scale.  Therefore the live proof target is the final-polar cell/plane contents or coordinate sequence that makes only the AEX-relevant cells land just below 1.0, not a late output-byte conversion change.",
+  "kind": "olmradialblur_zoom_case0009_quantize_locus",
+  "polar_alpha_truncate_matches_reference_x": [
+    0,
+    6,
+    8,
+    10,
+    12,
+    14,
+    17,
+    21,
+    22,
+    23,
+    24,
+    28,
+    29,
+    30
+  ],
+  "reference_alpha254_x": [
+    6,
+    7,
+    12
+  ],
+  "reference_witness_pixel": [
+    20,
+    3,
+    3,
+    254
+  ],
+  "row_range": [
+    0,
+    30
+  ],
+  "row_y": 0,
+  "schema": 1,
+  "variants": {
+    "aex_repeat": {
+      "max_diff": 1,
+      "nonzero_px": 31097,
+      "row": [
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1046.788818,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "radius_index": 1101.453613,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0,
+          "validity_alpha_u8": 0,
+          "x": 0
+        },
+        {
+          "alpha_float": 1.000000015,
+          "alpha_u8": 255,
+          "angle_index": 1046.916382,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "radius_index": 1100.582153,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0.3829071075,
+          "validity_alpha_u8": 97,
+          "x": 1
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.044189,
+          "candidate": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1099.710815,
+          "reference": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.9558105469,
+          "validity_alpha_u8": 243,
+          "x": 2
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.172241,
+          "candidate": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1098.839844,
+          "reference": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.8277587891,
+          "validity_alpha_u8": 211,
+          "x": 3
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.300415,
+          "candidate": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1097.968994,
+          "reference": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.6995849609,
+          "validity_alpha_u8": 178,
+          "x": 4
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.428833,
+          "candidate": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1097.098389,
+          "reference": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.5711669922,
+          "validity_alpha_u8": 145,
+          "x": 5
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.557495,
+          "candidate": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1096.228027,
+          "reference": [
+            20,
+            3,
+            3,
+            254
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.4425048828,
+          "validity_alpha_u8": 112,
+          "x": 6
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.686279,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1095.35791,
+          "reference": [
+            21,
+            3,
+            3,
+            254
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.3137207031,
+          "validity_alpha_u8": 79,
+          "x": 7
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.815308,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1094.488037,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.1846923828,
+          "validity_alpha_u8": 47,
+          "x": 8
+        },
+        {
+          "alpha_float": 0.9999999702,
+          "alpha_u8": 255,
+          "angle_index": 1047.94458,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "radius_index": 1093.618286,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.4159792364,
+          "validity_alpha_u8": 106,
+          "x": 9
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.074097,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1092.748779,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.9259033203,
+          "validity_alpha_u8": 236,
+          "x": 10
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.203735,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1091.879517,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.7962646484,
+          "validity_alpha_u8": 203,
+          "x": 11
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.333618,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1091.010498,
+          "reference": [
+            21,
+            4,
+            4,
+            254
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.6663818359,
+          "validity_alpha_u8": 169,
+          "x": 12
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.463623,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1090.141724,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.5363769531,
+          "validity_alpha_u8": 136,
+          "x": 13
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.593872,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1089.273193,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.4061279297,
+          "validity_alpha_u8": 103,
+          "x": 14
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.724365,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1088.404785,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.2756347656,
+          "validity_alpha_u8": 70,
+          "x": 15
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.855103,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1087.536621,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.1448974609,
+          "validity_alpha_u8": 36,
+          "x": 16
+        },
+        {
+          "alpha_float": 1.000000015,
+          "alpha_u8": 255,
+          "angle_index": 1048.985962,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "radius_index": 1086.668823,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.340565756,
+          "validity_alpha_u8": 86,
+          "x": 17
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.117065,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1085.801147,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.8829345703,
+          "validity_alpha_u8": 225,
+          "x": 18
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.248413,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1084.933594,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.7515869141,
+          "validity_alpha_u8": 191,
+          "x": 19
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.380005,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1084.066406,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.6199951172,
+          "validity_alpha_u8": 158,
+          "x": 20
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.511719,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1083.199463,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.48828125,
+          "validity_alpha_u8": 124,
+          "x": 21
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.643677,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1082.332642,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.3563232422,
+          "validity_alpha_u8": 90,
+          "x": 22
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.775879,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1081.466187,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.2241210938,
+          "validity_alpha_u8": 57,
+          "x": 23
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.908203,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "radius_index": 1080.599854,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.4552111626,
+          "validity_alpha_u8": 116,
+          "x": 24
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1050.040771,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1079.733765,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.9592285156,
+          "validity_alpha_u8": 244,
+          "x": 25
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1050.173584,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1078.86792,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.8264160156,
+          "validity_alpha_u8": 210,
+          "x": 26
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1050.306641,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1078.002319,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.693359375,
+          "validity_alpha_u8": 176,
+          "x": 27
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1050.439819,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1077.136963,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0.5601806641,
+          "validity_alpha_u8": 142,
+          "x": 28
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1050.573242,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1076.271851,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0.4267578125,
+          "validity_alpha_u8": 108,
+          "x": 29
+        },
+        {
+          "alpha_float": 1.000000015,
+          "alpha_u8": 255,
+          "angle_index": 1050.706909,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1075.40686,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0.2930908203,
+          "validity_alpha_u8": 74,
+          "x": 30
+        }
+      ],
+      "stdout_tail": [
+        "wrote: /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmradialblur_zoom_locus_hrps_qpr/aex_repeat.png (experimental zoom C++ slice)"
+      ],
+      "witness_pixel": [
+        20,
+        3,
+        3,
+        255
+      ],
+      "witness_probe": {
+        "alpha": 1,
+        "alpha_u8": 255,
+        "angle_index": 1047.557495,
+        "cell_alpha": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "cell_valid": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "radius_index": 1096.228027,
+        "sample_rgba": [
+          0.08224086463,
+          0.01413018536,
+          0.01413018536,
+          1
+        ],
+        "sample_u8": [
+          20,
+          3,
+          3,
+          255
+        ],
+        "validity_alpha": 0.4425048828,
+        "validity_alpha_u8": 112,
+        "xy": [
+          6,
+          0
+        ]
+      }
+    },
+    "default": {
+      "max_diff": 1,
+      "nonzero_px": 31119,
+      "row": [
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1046.788818,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "radius_index": 1101.453613,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0,
+          "validity_alpha_u8": 0,
+          "x": 0
+        },
+        {
+          "alpha_float": 1.000000015,
+          "alpha_u8": 255,
+          "angle_index": 1046.916382,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "radius_index": 1100.582153,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0.3829071075,
+          "validity_alpha_u8": 97,
+          "x": 1
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.044189,
+          "candidate": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1099.710815,
+          "reference": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.9558105469,
+          "validity_alpha_u8": 243,
+          "x": 2
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.172241,
+          "candidate": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1098.839844,
+          "reference": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.8277587891,
+          "validity_alpha_u8": 211,
+          "x": 3
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.300415,
+          "candidate": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1097.968994,
+          "reference": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.6995849609,
+          "validity_alpha_u8": 178,
+          "x": 4
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.428833,
+          "candidate": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1097.098389,
+          "reference": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.5711669922,
+          "validity_alpha_u8": 145,
+          "x": 5
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.557495,
+          "candidate": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1096.228027,
+          "reference": [
+            20,
+            3,
+            3,
+            254
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.4425048828,
+          "validity_alpha_u8": 112,
+          "x": 6
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.686279,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1095.35791,
+          "reference": [
+            21,
+            3,
+            3,
+            254
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.3137207031,
+          "validity_alpha_u8": 79,
+          "x": 7
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.815308,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1094.488037,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.1846923828,
+          "validity_alpha_u8": 47,
+          "x": 8
+        },
+        {
+          "alpha_float": 0.9999999702,
+          "alpha_u8": 255,
+          "angle_index": 1047.94458,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "radius_index": 1093.618286,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.4159792364,
+          "validity_alpha_u8": 106,
+          "x": 9
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.074097,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1092.748779,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.9259033203,
+          "validity_alpha_u8": 236,
+          "x": 10
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.203735,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1091.879517,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.7962646484,
+          "validity_alpha_u8": 203,
+          "x": 11
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.333618,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1091.010498,
+          "reference": [
+            21,
+            4,
+            4,
+            254
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.6663818359,
+          "validity_alpha_u8": 169,
+          "x": 12
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.463623,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1090.141724,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.5363769531,
+          "validity_alpha_u8": 136,
+          "x": 13
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.593872,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1089.273193,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.4061279297,
+          "validity_alpha_u8": 103,
+          "x": 14
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.724365,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1088.404785,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.2756347656,
+          "validity_alpha_u8": 70,
+          "x": 15
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.855103,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1087.536621,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.1448974609,
+          "validity_alpha_u8": 36,
+          "x": 16
+        },
+        {
+          "alpha_float": 1.000000015,
+          "alpha_u8": 255,
+          "angle_index": 1048.985962,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "radius_index": 1086.668823,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.340565756,
+          "validity_alpha_u8": 86,
+          "x": 17
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.117065,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1085.801147,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.8829345703,
+          "validity_alpha_u8": 225,
+          "x": 18
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.248413,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1084.933594,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.7515869141,
+          "validity_alpha_u8": 191,
+          "x": 19
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.380005,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1084.066406,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.6199951172,
+          "validity_alpha_u8": 158,
+          "x": 20
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.511719,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1083.199463,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.48828125,
+          "validity_alpha_u8": 124,
+          "x": 21
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.643677,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1082.332642,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.3563232422,
+          "validity_alpha_u8": 90,
+          "x": 22
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.775879,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1081.466187,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.2241210938,
+          "validity_alpha_u8": 57,
+          "x": 23
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.908203,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1080.599854,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.091796875,
+          "validity_alpha_u8": 23,
+          "x": 24
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1050.040771,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "radius_index": 1079.733765,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.2553805411,
+          "validity_alpha_u8": 65,
+          "x": 25
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1050.173584,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1078.86792,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.8264160156,
+          "validity_alpha_u8": 210,
+          "x": 26
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1050.306641,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1078.002319,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.693359375,
+          "validity_alpha_u8": 176,
+          "x": 27
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1050.439819,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1077.136963,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0.5601806641,
+          "validity_alpha_u8": 142,
+          "x": 28
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1050.573242,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1076.271851,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0.4267578125,
+          "validity_alpha_u8": 108,
+          "x": 29
+        },
+        {
+          "alpha_float": 1.000000015,
+          "alpha_u8": 255,
+          "angle_index": 1050.706909,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1075.40686,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0.2930908203,
+          "validity_alpha_u8": 74,
+          "x": 30
+        }
+      ],
+      "stdout_tail": [
+        "wrote: /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmradialblur_zoom_locus_hrps_qpr/default.png (experimental zoom C++ slice)"
+      ],
+      "witness_pixel": [
+        20,
+        3,
+        3,
+        255
+      ],
+      "witness_probe": {
+        "alpha": 1,
+        "alpha_u8": 255,
+        "angle_index": 1047.557495,
+        "cell_alpha": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "cell_valid": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "radius_index": 1096.228027,
+        "sample_rgba": [
+          0.08224068582,
+          0.01413018722,
+          0.01413018722,
+          1
+        ],
+        "sample_u8": [
+          20,
+          3,
+          3,
+          255
+        ],
+        "validity_alpha": 0.4425048828,
+        "validity_alpha_u8": 112,
+        "xy": [
+          6,
+          0
+        ]
+      }
+    },
+    "polar_alpha": {
+      "max_diff": 1,
+      "nonzero_px": 31097,
+      "row": [
+        {
+          "alpha_float": 1.000000017,
+          "alpha_u8": 255,
+          "angle_index": 1046.788818,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            1.000000119
+          ],
+          "cell_valid": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "radius_index": 1101.453613,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0,
+          "validity_alpha_u8": 0,
+          "x": 0
+        },
+        {
+          "alpha_float": 0.9999999831,
+          "alpha_u8": 255,
+          "angle_index": 1046.916382,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "radius_index": 1100.582153,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0.3829071075,
+          "validity_alpha_u8": 97,
+          "x": 1
+        },
+        {
+          "alpha_float": 0.9999999974,
+          "alpha_u8": 255,
+          "angle_index": 1047.044189,
+          "candidate": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1099.710815,
+          "reference": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.9558105469,
+          "validity_alpha_u8": 243,
+          "x": 2
+        },
+        {
+          "alpha_float": 0.9999999914,
+          "alpha_u8": 255,
+          "angle_index": 1047.172241,
+          "candidate": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1098.839844,
+          "reference": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.8277587891,
+          "validity_alpha_u8": 211,
+          "x": 3
+        },
+        {
+          "alpha_float": 0.9999999994,
+          "alpha_u8": 255,
+          "angle_index": 1047.300415,
+          "candidate": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1097.968994,
+          "reference": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.6995849609,
+          "validity_alpha_u8": 178,
+          "x": 4
+        },
+        {
+          "alpha_float": 0.999999977,
+          "alpha_u8": 255,
+          "angle_index": 1047.428833,
+          "candidate": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1097.098389,
+          "reference": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.5711669922,
+          "validity_alpha_u8": 145,
+          "x": 5
+        },
+        {
+          "alpha_float": 0.9999999924,
+          "alpha_u8": 255,
+          "angle_index": 1047.557495,
+          "candidate": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1096.228027,
+          "reference": [
+            20,
+            3,
+            3,
+            254
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.4425048828,
+          "validity_alpha_u8": 112,
+          "x": 6
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.686279,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1095.35791,
+          "reference": [
+            21,
+            3,
+            3,
+            254
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.3137207031,
+          "validity_alpha_u8": 79,
+          "x": 7
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.815308,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1094.488037,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.1846923828,
+          "validity_alpha_u8": 47,
+          "x": 8
+        },
+        {
+          "alpha_float": 0.9999999702,
+          "alpha_u8": 255,
+          "angle_index": 1047.94458,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "radius_index": 1093.618286,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.4159792364,
+          "validity_alpha_u8": 106,
+          "x": 9
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.074097,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1092.748779,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.9259033203,
+          "validity_alpha_u8": 236,
+          "x": 10
+        },
+        {
+          "alpha_float": 0.9999999985,
+          "alpha_u8": 255,
+          "angle_index": 1048.203735,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1091.879517,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.7962646484,
+          "validity_alpha_u8": 203,
+          "x": 11
+        },
+        {
+          "alpha_float": 0.9999999803,
+          "alpha_u8": 255,
+          "angle_index": 1048.333618,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1091.010498,
+          "reference": [
+            21,
+            4,
+            4,
+            254
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.6663818359,
+          "validity_alpha_u8": 169,
+          "x": 12
+        },
+        {
+          "alpha_float": 0.9999999961,
+          "alpha_u8": 255,
+          "angle_index": 1048.463623,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1090.141724,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.5363769531,
+          "validity_alpha_u8": 136,
+          "x": 13
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.593872,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1089.273193,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.4061279297,
+          "validity_alpha_u8": 103,
+          "x": 14
+        },
+        {
+          "alpha_float": 0.9999999743,
+          "alpha_u8": 255,
+          "angle_index": 1048.724365,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1088.404785,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.2756347656,
+          "validity_alpha_u8": 70,
+          "x": 15
+        },
+        {
+          "alpha_float": 0.9999999726,
+          "alpha_u8": 255,
+          "angle_index": 1048.855103,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1087.536621,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.1448974609,
+          "validity_alpha_u8": 36,
+          "x": 16
+        },
+        {
+          "alpha_float": 1.000000015,
+          "alpha_u8": 255,
+          "angle_index": 1048.985962,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "radius_index": 1086.668823,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.340565756,
+          "validity_alpha_u8": 86,
+          "x": 17
+        },
+        {
+          "alpha_float": 0.9999999986,
+          "alpha_u8": 255,
+          "angle_index": 1049.117065,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1085.801147,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.8829345703,
+          "validity_alpha_u8": 225,
+          "x": 18
+        },
+        {
+          "alpha_float": 0.9999999862,
+          "alpha_u8": 255,
+          "angle_index": 1049.248413,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1084.933594,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.7515869141,
+          "validity_alpha_u8": 191,
+          "x": 19
+        },
+        {
+          "alpha_float": 0.9999999985,
+          "alpha_u8": 255,
+          "angle_index": 1049.380005,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1084.066406,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.6199951172,
+          "validity_alpha_u8": 158,
+          "x": 20
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.511719,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1083.199463,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.48828125,
+          "validity_alpha_u8": 124,
+          "x": 21
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.643677,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1082.332642,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.3563232422,
+          "validity_alpha_u8": 90,
+          "x": 22
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.775879,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1081.466187,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.2241210938,
+          "validity_alpha_u8": 57,
+          "x": 23
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.908203,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "radius_index": 1080.599854,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.4552111626,
+          "validity_alpha_u8": 116,
+          "x": 24
+        },
+        {
+          "alpha_float": 0.9999999994,
+          "alpha_u8": 255,
+          "angle_index": 1050.040771,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1079.733765,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.9592285156,
+          "validity_alpha_u8": 244,
+          "x": 25
+        },
+        {
+          "alpha_float": 0.999999991,
+          "alpha_u8": 255,
+          "angle_index": 1050.173584,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1078.86792,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.8264160156,
+          "validity_alpha_u8": 210,
+          "x": 26
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1050.306641,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1078.002319,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.693359375,
+          "validity_alpha_u8": 176,
+          "x": 27
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1050.439819,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1077.136963,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0.5601806641,
+          "validity_alpha_u8": 142,
+          "x": 28
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1050.573242,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1076.271851,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0.4267578125,
+          "validity_alpha_u8": 108,
+          "x": 29
+        },
+        {
+          "alpha_float": 1.000000015,
+          "alpha_u8": 255,
+          "angle_index": 1050.706909,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1075.40686,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0.2930908203,
+          "validity_alpha_u8": 74,
+          "x": 30
+        }
+      ],
+      "stdout_tail": [
+        "wrote: /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmradialblur_zoom_locus_hrps_qpr/polar_alpha.png (experimental zoom C++ slice)"
+      ],
+      "witness_pixel": [
+        20,
+        3,
+        3,
+        255
+      ],
+      "witness_probe": {
+        "alpha": 0.9999999924,
+        "alpha_u8": 255,
+        "angle_index": 1047.557495,
+        "cell_alpha": [
+          1,
+          1,
+          1,
+          0.9999999404
+        ],
+        "cell_valid": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "radius_index": 1096.228027,
+        "sample_rgba": [
+          0.08224086463,
+          0.01413018536,
+          0.01413018536,
+          1
+        ],
+        "sample_u8": [
+          20,
+          3,
+          3,
+          255
+        ],
+        "validity_alpha": 0.4425048828,
+        "validity_alpha_u8": 112,
+        "xy": [
+          6,
+          0
+        ]
+      }
+    },
+    "polar_alpha_truncate": {
+      "max_diff": 1,
+      "nonzero_px": 567071,
+      "row": [
+        {
+          "alpha_float": 1.000000017,
+          "alpha_u8": 255,
+          "angle_index": 1046.788818,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            1.000000119
+          ],
+          "cell_valid": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "radius_index": 1101.453613,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0,
+          "validity_alpha_u8": 0,
+          "x": 0
+        },
+        {
+          "alpha_float": 0.9999999831,
+          "alpha_u8": 254,
+          "angle_index": 1046.916382,
+          "candidate": [
+            20,
+            2,
+            2,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "radius_index": 1100.582153,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            254
+          ],
+          "validity_alpha": 0.3829071075,
+          "validity_alpha_u8": 97,
+          "x": 1
+        },
+        {
+          "alpha_float": 0.9999999974,
+          "alpha_u8": 254,
+          "angle_index": 1047.044189,
+          "candidate": [
+            20,
+            3,
+            3,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1099.710815,
+          "reference": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            254
+          ],
+          "validity_alpha": 0.9558105469,
+          "validity_alpha_u8": 243,
+          "x": 2
+        },
+        {
+          "alpha_float": 0.9999999914,
+          "alpha_u8": 254,
+          "angle_index": 1047.172241,
+          "candidate": [
+            20,
+            3,
+            3,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1098.839844,
+          "reference": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            254
+          ],
+          "validity_alpha": 0.8277587891,
+          "validity_alpha_u8": 211,
+          "x": 3
+        },
+        {
+          "alpha_float": 0.9999999994,
+          "alpha_u8": 254,
+          "angle_index": 1047.300415,
+          "candidate": [
+            20,
+            3,
+            3,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1097.968994,
+          "reference": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            254
+          ],
+          "validity_alpha": 0.6995849609,
+          "validity_alpha_u8": 178,
+          "x": 4
+        },
+        {
+          "alpha_float": 0.999999977,
+          "alpha_u8": 254,
+          "angle_index": 1047.428833,
+          "candidate": [
+            20,
+            3,
+            3,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1097.098389,
+          "reference": [
+            20,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            254
+          ],
+          "validity_alpha": 0.5711669922,
+          "validity_alpha_u8": 145,
+          "x": 5
+        },
+        {
+          "alpha_float": 0.9999999924,
+          "alpha_u8": 254,
+          "angle_index": 1047.557495,
+          "candidate": [
+            20,
+            3,
+            3,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1096.228027,
+          "reference": [
+            20,
+            3,
+            3,
+            254
+          ],
+          "sample_u8": [
+            20,
+            3,
+            3,
+            254
+          ],
+          "validity_alpha": 0.4425048828,
+          "validity_alpha_u8": 112,
+          "x": 6
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.686279,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1095.35791,
+          "reference": [
+            21,
+            3,
+            3,
+            254
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.3137207031,
+          "validity_alpha_u8": 79,
+          "x": 7
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1047.815308,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1094.488037,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.1846923828,
+          "validity_alpha_u8": 47,
+          "x": 8
+        },
+        {
+          "alpha_float": 0.9999999702,
+          "alpha_u8": 254,
+          "angle_index": 1047.94458,
+          "candidate": [
+            21,
+            4,
+            4,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "radius_index": 1093.618286,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            254
+          ],
+          "validity_alpha": 0.4159792364,
+          "validity_alpha_u8": 106,
+          "x": 9
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.074097,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1092.748779,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.9259033203,
+          "validity_alpha_u8": 236,
+          "x": 10
+        },
+        {
+          "alpha_float": 0.9999999985,
+          "alpha_u8": 254,
+          "angle_index": 1048.203735,
+          "candidate": [
+            21,
+            4,
+            4,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1091.879517,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            254
+          ],
+          "validity_alpha": 0.7962646484,
+          "validity_alpha_u8": 203,
+          "x": 11
+        },
+        {
+          "alpha_float": 0.9999999803,
+          "alpha_u8": 254,
+          "angle_index": 1048.333618,
+          "candidate": [
+            21,
+            4,
+            4,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1091.010498,
+          "reference": [
+            21,
+            4,
+            4,
+            254
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            254
+          ],
+          "validity_alpha": 0.6663818359,
+          "validity_alpha_u8": 169,
+          "x": 12
+        },
+        {
+          "alpha_float": 0.9999999961,
+          "alpha_u8": 254,
+          "angle_index": 1048.463623,
+          "candidate": [
+            21,
+            4,
+            4,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1090.141724,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            254
+          ],
+          "validity_alpha": 0.5363769531,
+          "validity_alpha_u8": 136,
+          "x": 13
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1048.593872,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1089.273193,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.4061279297,
+          "validity_alpha_u8": 103,
+          "x": 14
+        },
+        {
+          "alpha_float": 0.9999999743,
+          "alpha_u8": 254,
+          "angle_index": 1048.724365,
+          "candidate": [
+            21,
+            4,
+            4,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1088.404785,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            254
+          ],
+          "validity_alpha": 0.2756347656,
+          "validity_alpha_u8": 70,
+          "x": 15
+        },
+        {
+          "alpha_float": 0.9999999726,
+          "alpha_u8": 254,
+          "angle_index": 1048.855103,
+          "candidate": [
+            21,
+            4,
+            4,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1087.536621,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            254
+          ],
+          "validity_alpha": 0.1448974609,
+          "validity_alpha_u8": 36,
+          "x": 16
+        },
+        {
+          "alpha_float": 1.000000015,
+          "alpha_u8": 255,
+          "angle_index": 1048.985962,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "radius_index": 1086.668823,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.340565756,
+          "validity_alpha_u8": 86,
+          "x": 17
+        },
+        {
+          "alpha_float": 0.9999999986,
+          "alpha_u8": 254,
+          "angle_index": 1049.117065,
+          "candidate": [
+            21,
+            3,
+            3,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1085.801147,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            254
+          ],
+          "validity_alpha": 0.8829345703,
+          "validity_alpha_u8": 225,
+          "x": 18
+        },
+        {
+          "alpha_float": 0.9999999862,
+          "alpha_u8": 254,
+          "angle_index": 1049.248413,
+          "candidate": [
+            21,
+            3,
+            3,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1084.933594,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            254
+          ],
+          "validity_alpha": 0.7515869141,
+          "validity_alpha_u8": 191,
+          "x": 19
+        },
+        {
+          "alpha_float": 0.9999999985,
+          "alpha_u8": 254,
+          "angle_index": 1049.380005,
+          "candidate": [
+            21,
+            3,
+            3,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1084.066406,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            254
+          ],
+          "validity_alpha": 0.6199951172,
+          "validity_alpha_u8": 158,
+          "x": 20
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.511719,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1083.199463,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.48828125,
+          "validity_alpha_u8": 124,
+          "x": 21
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.643677,
+          "candidate": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1082.332642,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "validity_alpha": 0.3563232422,
+          "validity_alpha_u8": 90,
+          "x": 22
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.775879,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1081.466187,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.2241210938,
+          "validity_alpha_u8": 57,
+          "x": 23
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1049.908203,
+          "candidate": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "radius_index": 1080.599854,
+          "reference": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "sample_u8": [
+            21,
+            4,
+            4,
+            255
+          ],
+          "validity_alpha": 0.4552111626,
+          "validity_alpha_u8": 116,
+          "x": 24
+        },
+        {
+          "alpha_float": 0.9999999994,
+          "alpha_u8": 254,
+          "angle_index": 1050.040771,
+          "candidate": [
+            21,
+            3,
+            3,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            0.9999999404,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1079.733765,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            254
+          ],
+          "validity_alpha": 0.9592285156,
+          "validity_alpha_u8": 244,
+          "x": 25
+        },
+        {
+          "alpha_float": 0.999999991,
+          "alpha_u8": 254,
+          "angle_index": 1050.173584,
+          "candidate": [
+            21,
+            3,
+            3,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1078.86792,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            254
+          ],
+          "validity_alpha": 0.8264160156,
+          "validity_alpha_u8": 210,
+          "x": 26
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 254,
+          "angle_index": 1050.306641,
+          "candidate": [
+            21,
+            3,
+            3,
+            254
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            0.9999999404
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1078.002319,
+          "reference": [
+            21,
+            3,
+            3,
+            255
+          ],
+          "sample_u8": [
+            21,
+            3,
+            3,
+            254
+          ],
+          "validity_alpha": 0.693359375,
+          "validity_alpha_u8": 176,
+          "x": 27
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1050.439819,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1077.136963,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0.5601806641,
+          "validity_alpha_u8": 142,
+          "x": 28
+        },
+        {
+          "alpha_float": 1,
+          "alpha_u8": 255,
+          "angle_index": 1050.573242,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1076.271851,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0.4267578125,
+          "validity_alpha_u8": 108,
+          "x": 29
+        },
+        {
+          "alpha_float": 1.000000015,
+          "alpha_u8": 255,
+          "angle_index": 1050.706909,
+          "candidate": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "cell_alpha": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "cell_valid": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "radius_index": 1075.40686,
+          "reference": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "sample_u8": [
+            20,
+            2,
+            2,
+            255
+          ],
+          "validity_alpha": 0.2930908203,
+          "validity_alpha_u8": 74,
+          "x": 30
+        }
+      ],
+      "stdout_tail": [
+        "wrote: /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmradialblur_zoom_locus_hrps_qpr/polar_alpha_truncate.png (experimental zoom C++ slice)"
+      ],
+      "witness_pixel": [
+        20,
+        3,
+        3,
+        254
+      ],
+      "witness_probe": {
+        "alpha": 0.9999999924,
+        "alpha_u8": 254,
+        "angle_index": 1047.557495,
+        "cell_alpha": [
+          1,
+          1,
+          1,
+          0.9999999404
+        ],
+        "cell_valid": [
+          1,
+          1,
+          0,
+          0
+        ],
+        "radius_index": 1096.228027,
+        "sample_rgba": [
+          0.08224086463,
+          0.01413018536,
+          0.01413018536,
+          1
+        ],
+        "sample_u8": [
+          20,
+          3,
+          3,
+          254
+        ],
+        "validity_alpha": 0.4425048828,
+        "validity_alpha_u8": 112,
+        "xy": [
+          6,
+          0
+        ]
+      }
+    }
+  },
+  "witness_xy": [
+    6,
+    0
+  ]
+}

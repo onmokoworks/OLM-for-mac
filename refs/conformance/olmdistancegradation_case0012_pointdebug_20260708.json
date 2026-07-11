@@ -1,0 +1,572 @@
+{
+  "kind": "olmdistancegradation_case0012_pointdebug_20260708",
+  "schema": 1,
+  "ae_run": "refs/reports/ae_single_case_olmdistancegradation_case0012_pointdebug_20260708",
+  "case_id": "olmdistancegradation_extended__case_0012",
+  "debug_points": [
+    [
+      518,
+      90
+    ],
+    [
+      1343,
+      130
+    ],
+    [
+      1424,
+      184
+    ],
+    [
+      905,
+      186
+    ],
+    [
+      941,
+      189
+    ],
+    [
+      1163,
+      189
+    ],
+    [
+      392,
+      190
+    ],
+    [
+      1836,
+      385
+    ],
+    [
+      1477,
+      389
+    ],
+    [
+      324,
+      931
+    ]
+  ],
+  "shade_rows": [
+    {
+      "x": 518,
+      "y": 90,
+      "pixel_size": 8,
+      "use_bg": 0,
+      "render_mode": 2,
+      "src_a": 0.054901123,
+      "src_r": 0.00299072266,
+      "src_g": 0.00299072266,
+      "src_b": 0.00299072266,
+      "field_x": 0.00819672085,
+      "d_alpha": 1.0,
+      "out_a": 0.991803288,
+      "out_r": 0.0544747077,
+      "out_g": 0.0544747077,
+      "out_b": 0.0544747077,
+      "store_a": 32499,
+      "store_r": 1785,
+      "store_g": 1785,
+      "store_b": 1785
+    },
+    {
+      "x": 1343,
+      "y": 130,
+      "pixel_size": 8,
+      "use_bg": 0,
+      "render_mode": 2,
+      "src_a": 0.054901123,
+      "src_r": 0.00299072266,
+      "src_g": 0.00299072266,
+      "src_b": 0.00299072266,
+      "field_x": 0.00819672085,
+      "d_alpha": 1.0,
+      "out_a": 0.991803288,
+      "out_r": 0.0544747077,
+      "out_g": 0.0544747077,
+      "out_b": 0.0544747077,
+      "store_a": 32499,
+      "store_r": 1785,
+      "store_g": 1785,
+      "store_b": 1785
+    },
+    {
+      "x": 1424,
+      "y": 184,
+      "pixel_size": 8,
+      "use_bg": 0,
+      "render_mode": 2,
+      "src_a": 0.054901123,
+      "src_r": 0.00299072266,
+      "src_g": 0.00299072266,
+      "src_b": 0.00299072266,
+      "field_x": 0.00819672085,
+      "d_alpha": 1.0,
+      "out_a": 0.991803288,
+      "out_r": 0.0544747077,
+      "out_g": 0.0544747077,
+      "out_b": 0.0544747077,
+      "store_a": 32499,
+      "store_r": 1785,
+      "store_g": 1785,
+      "store_b": 1785
+    },
+    {
+      "x": 905,
+      "y": 186,
+      "pixel_size": 8,
+      "use_bg": 0,
+      "render_mode": 2,
+      "src_a": 0.054901123,
+      "src_r": 0.00299072266,
+      "src_g": 0.00299072266,
+      "src_b": 0.00299072266,
+      "field_x": 0.00819672085,
+      "d_alpha": 1.0,
+      "out_a": 0.991803288,
+      "out_r": 0.0544747077,
+      "out_g": 0.0544747077,
+      "out_b": 0.0544747077,
+      "store_a": 32499,
+      "store_r": 1785,
+      "store_g": 1785,
+      "store_b": 1785
+    },
+    {
+      "x": 941,
+      "y": 189,
+      "pixel_size": 8,
+      "use_bg": 0,
+      "render_mode": 2,
+      "src_a": 0.054901123,
+      "src_r": 0.00299072266,
+      "src_g": 0.00299072266,
+      "src_b": 0.00299072266,
+      "field_x": 0.00819672085,
+      "d_alpha": 1.0,
+      "out_a": 0.991803288,
+      "out_r": 0.0544747077,
+      "out_g": 0.0544747077,
+      "out_b": 0.0544747077,
+      "store_a": 32499,
+      "store_r": 1785,
+      "store_g": 1785,
+      "store_b": 1785
+    },
+    {
+      "x": 1163,
+      "y": 189,
+      "pixel_size": 8,
+      "use_bg": 0,
+      "render_mode": 2,
+      "src_a": 0.054901123,
+      "src_r": 0.00299072266,
+      "src_g": 0.00299072266,
+      "src_b": 0.00299072266,
+      "field_x": 0.00819672085,
+      "d_alpha": 1.0,
+      "out_a": 0.991803288,
+      "out_r": 0.0544747077,
+      "out_g": 0.0544747077,
+      "out_b": 0.0544747077,
+      "store_a": 32499,
+      "store_r": 1785,
+      "store_g": 1785,
+      "store_b": 1785
+    },
+    {
+      "x": 392,
+      "y": 190,
+      "pixel_size": 8,
+      "use_bg": 0,
+      "render_mode": 2,
+      "src_a": 0.054901123,
+      "src_r": 0.00299072266,
+      "src_g": 0.00299072266,
+      "src_b": 0.00299072266,
+      "field_x": 0.00819672085,
+      "d_alpha": 1.0,
+      "out_a": 0.991803288,
+      "out_r": 0.0544747077,
+      "out_g": 0.0544747077,
+      "out_b": 0.0544747077,
+      "store_a": 32499,
+      "store_r": 1785,
+      "store_g": 1785,
+      "store_b": 1785
+    },
+    {
+      "x": 1836,
+      "y": 385,
+      "pixel_size": 8,
+      "use_bg": 0,
+      "render_mode": 2,
+      "src_a": 0.054901123,
+      "src_r": 0.00299072266,
+      "src_g": 0.00299072266,
+      "src_b": 0.00299072266,
+      "field_x": 0.00819672085,
+      "d_alpha": 1.0,
+      "out_a": 0.991803288,
+      "out_r": 0.0544747077,
+      "out_g": 0.0544747077,
+      "out_b": 0.0544747077,
+      "store_a": 32499,
+      "store_r": 1785,
+      "store_g": 1785,
+      "store_b": 1785
+    },
+    {
+      "x": 1477,
+      "y": 389,
+      "pixel_size": 8,
+      "use_bg": 0,
+      "render_mode": 2,
+      "src_a": 0.054901123,
+      "src_r": 0.00299072266,
+      "src_g": 0.00299072266,
+      "src_b": 0.00299072266,
+      "field_x": 0.00819672085,
+      "d_alpha": 1.0,
+      "out_a": 0.991803288,
+      "out_r": 0.0544747077,
+      "out_g": 0.0544747077,
+      "out_b": 0.0544747077,
+      "store_a": 32499,
+      "store_r": 1785,
+      "store_g": 1785,
+      "store_b": 1785
+    },
+    {
+      "x": 324,
+      "y": 931,
+      "pixel_size": 8,
+      "use_bg": 0,
+      "render_mode": 2,
+      "src_a": 0.054901123,
+      "src_r": 0.00299072266,
+      "src_g": 0.00299072266,
+      "src_b": 0.00299072266,
+      "field_x": 0.00819672085,
+      "d_alpha": 1.0,
+      "out_a": 0.991803288,
+      "out_r": 0.0544747077,
+      "out_g": 0.0544747077,
+      "out_b": 0.0544747077,
+      "store_a": 32499,
+      "store_r": 1785,
+      "store_g": 1785,
+      "store_b": 1785
+    }
+  ],
+  "true16_examples": [
+    {
+      "xy": [
+        1477,
+        389
+      ],
+      "source_rgba16": [
+        195,
+        195,
+        195,
+        3597
+      ],
+      "candidate_rgba16": [
+        3539,
+        3539,
+        3539,
+        64997
+      ],
+      "reference_rgba16": [
+        3567,
+        3567,
+        3567,
+        64997
+      ],
+      "candidate_minus_reference": [
+        -28,
+        -28,
+        -28,
+        0
+      ]
+    },
+    {
+      "xy": [
+        518,
+        90
+      ],
+      "source_rgba16": [
+        195,
+        195,
+        195,
+        3597
+      ],
+      "candidate_rgba16": [
+        3539,
+        3539,
+        3539,
+        64997
+      ],
+      "reference_rgba16": [
+        3567,
+        3567,
+        3567,
+        64997
+      ],
+      "candidate_minus_reference": [
+        -28,
+        -28,
+        -28,
+        0
+      ]
+    },
+    {
+      "xy": [
+        324,
+        931
+      ],
+      "source_rgba16": [
+        195,
+        195,
+        195,
+        3597
+      ],
+      "candidate_rgba16": [
+        3539,
+        3539,
+        3539,
+        64997
+      ],
+      "reference_rgba16": [
+        3567,
+        3567,
+        3567,
+        64997
+      ],
+      "candidate_minus_reference": [
+        -28,
+        -28,
+        -28,
+        0
+      ]
+    },
+    {
+      "xy": [
+        392,
+        190
+      ],
+      "source_rgba16": [
+        195,
+        195,
+        195,
+        3597
+      ],
+      "candidate_rgba16": [
+        3539,
+        3539,
+        3539,
+        64997
+      ],
+      "reference_rgba16": [
+        3567,
+        3567,
+        3567,
+        64997
+      ],
+      "candidate_minus_reference": [
+        -28,
+        -28,
+        -28,
+        0
+      ]
+    },
+    {
+      "xy": [
+        1163,
+        189
+      ],
+      "source_rgba16": [
+        195,
+        195,
+        195,
+        3597
+      ],
+      "candidate_rgba16": [
+        3539,
+        3539,
+        3539,
+        64997
+      ],
+      "reference_rgba16": [
+        3567,
+        3567,
+        3567,
+        64997
+      ],
+      "candidate_minus_reference": [
+        -28,
+        -28,
+        -28,
+        0
+      ]
+    },
+    {
+      "xy": [
+        941,
+        189
+      ],
+      "source_rgba16": [
+        195,
+        195,
+        195,
+        3597
+      ],
+      "candidate_rgba16": [
+        3539,
+        3539,
+        3539,
+        64997
+      ],
+      "reference_rgba16": [
+        3567,
+        3567,
+        3567,
+        64997
+      ],
+      "candidate_minus_reference": [
+        -28,
+        -28,
+        -28,
+        0
+      ]
+    },
+    {
+      "xy": [
+        1343,
+        130
+      ],
+      "source_rgba16": [
+        195,
+        195,
+        195,
+        3597
+      ],
+      "candidate_rgba16": [
+        3539,
+        3539,
+        3539,
+        64997
+      ],
+      "reference_rgba16": [
+        3567,
+        3567,
+        3567,
+        64997
+      ],
+      "candidate_minus_reference": [
+        -28,
+        -28,
+        -28,
+        0
+      ]
+    },
+    {
+      "xy": [
+        905,
+        186
+      ],
+      "source_rgba16": [
+        195,
+        195,
+        195,
+        3597
+      ],
+      "candidate_rgba16": [
+        3539,
+        3539,
+        3539,
+        64997
+      ],
+      "reference_rgba16": [
+        3567,
+        3567,
+        3567,
+        64997
+      ],
+      "candidate_minus_reference": [
+        -28,
+        -28,
+        -28,
+        0
+      ]
+    },
+    {
+      "xy": [
+        1424,
+        184
+      ],
+      "source_rgba16": [
+        195,
+        195,
+        195,
+        3597
+      ],
+      "candidate_rgba16": [
+        3539,
+        3539,
+        3539,
+        64997
+      ],
+      "reference_rgba16": [
+        3567,
+        3567,
+        3567,
+        64997
+      ],
+      "candidate_minus_reference": [
+        -28,
+        -28,
+        -28,
+        0
+      ]
+    },
+    {
+      "xy": [
+        1836,
+        385
+      ],
+      "source_rgba16": [
+        195,
+        195,
+        195,
+        3597
+      ],
+      "candidate_rgba16": [
+        3539,
+        3539,
+        3539,
+        64997
+      ],
+      "reference_rgba16": [
+        3567,
+        3567,
+        3567,
+        64997
+      ],
+      "candidate_minus_reference": [
+        -28,
+        -28,
+        -28,
+        0
+      ]
+    }
+  ],
+  "classification": "layer-no-bg-both-low-alpha-store-export-scaling-band",
+  "facts": [
+    "All sampled max-delta representatives share source_rgba16=[195,195,195,3597] and candidate-reference delta [-28,-28,-28,0].",
+    "Mac shade debug reports identical src_a=0.054901123, src_rgb=0.00299072266, field_x=0.00819672085, out_a=0.991803288, out_rgb=0.0544747077 for every sampled point.",
+    "Mac shade debug store values are store_rgb=1785 and store_a=32499 for every sampled point before AE/export PNG encoding."
+  ],
+  "inference": [
+    "The remaining max28 family is not distance-topology or per-coordinate behavior; it is a uniform Layer/no-bg Both low-alpha source/store/export scaling lane.",
+    "The next proof should bind PF_Pixel16 store values to exported true16 PNG values and decide whether the missing +28 RGB comes from pre-store rounding, AE 16bpc export scaling, or the Windows store/export path."
+  ]
+}

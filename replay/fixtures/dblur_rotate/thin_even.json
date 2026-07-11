@@ -1,0 +1,9 @@
+{
+  "id": "thin_even",
+  "width": 4,
+  "height": 2,
+  "angle": -0.25,
+  "source_sha256": "01047e8b5fc979edb612ce98337486ce8382801fd4dd4bdd8872425c7ed094df",
+  "expected_sha256": "3afe4268026dc944a90323dd07cdea7b788771f4c05553d676d4049840d1e7c6",
+  "destination_poison_hex": "a4b1c2d3"
+}

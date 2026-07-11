@@ -1,0 +1,5 @@
+$$ One-shot raw liveness probes. No coordinate predicate belongs in this file.
+bp /1 OLMRadialBlur+0x5e5b ".echo === RAW_OFFSET_5E5B ===; r; dq @rsp L8; gc"
+bp /1 OLMRadialBlur+0x5e6d ".echo === RAW_OFFSET_5E6D ===; r; dq @rsp L8; gc"
+bp /1 OLMRadialBlur+0x7404 ".echo === RAW_OFFSET_7404 ===; r; dq @rsp L8; gc"
+bp /1 OLMRadialBlur+0x7409 ".echo === RAW_OFFSET_7409 ===; r; dq @rsp L8; gc"

@@ -1,0 +1,17 @@
+{
+  "kind": "olm_runtime_trace_result",
+  "schema": 1,
+  "results": [{
+    "request_id": "olmradialblur_zoom_case0009_hook_liveness_20260710",
+    "status": "answered_partial",
+    "summary": "Fill with same-run raw-hook liveness facts.",
+    "observations": {
+      "effect": "OLM RadialBlur",
+      "case_id": "case_0009",
+      "raw_offset_hits": [],
+      "ae_result_artifact": null,
+      "console_artifact": null,
+      "failed_reason": null
+    }
+  }]
+}

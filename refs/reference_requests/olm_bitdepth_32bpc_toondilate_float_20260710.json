@@ -1,0 +1,271 @@
+{
+  "request_id": "olm_bitdepth_32bpc_toondilate_float_20260710",
+  "scope": {
+    "bit_depth": "32bpc",
+    "plugin_filters": [
+      "OLMToonDilate"
+    ],
+    "feature_filters": [],
+    "plugin_count": 1,
+    "case_count": 3
+  },
+  "effect": {
+    "name": "OLM bit-depth conformance batch",
+    "match_name": "mixed",
+    "contains_mixed_effects": true
+  },
+  "why": [
+    "The listed feature group is the normalized 8bpc Windows Software exact case set and needs a 32bpc float-preserving reference probe.",
+    "Windows After Effects SOFTWARE rendering at 32bpc is required; CUDA/GPU rendering is outside this request.",
+    "EXR is the first-choice return. Typed TIFF/TIF, HDR, or raw-float RGBA are acceptable only as explicitly recorded float-preserving fallbacks.",
+    "PNG-only output remains probe material and cannot support an AE exact claim."
+  ],
+  "render_sets": [
+    {
+      "id": "software_32bpc",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "bit_depth": "32bpc",
+      "bits_per_channel": 32,
+      "required": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "olmtoondilate_case_0001_source",
+      "description": "Use the same source image as normalized 8bpc OLMToonDilate case_0001. Recorded before_effects_frame: case_0001_before_effects.png",
+      "source_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMToonDilate/reference_manifest.json",
+      "source_case_id": "case_0001",
+      "before_effects_frame": "case_0001_before_effects.png"
+    },
+    {
+      "id": "olmtoondilate_case_0002_source",
+      "description": "Use the same source image as normalized 8bpc OLMToonDilate case_0002. Recorded before_effects_frame: case_0002_before_effects.png",
+      "source_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMToonDilate/reference_manifest.json",
+      "source_case_id": "case_0002",
+      "before_effects_frame": "case_0002_before_effects.png"
+    },
+    {
+      "id": "olmtoondilate_case_0003_source",
+      "description": "Use the same source image as normalized 8bpc OLMToonDilate case_0003. Recorded before_effects_frame: case_0003_before_effects.png",
+      "source_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMToonDilate/reference_manifest.json",
+      "source_case_id": "case_0003",
+      "before_effects_frame": "case_0003_before_effects.png"
+    }
+  ],
+  "cases": [
+    {
+      "id": "olmtoondilate__case_0001",
+      "feature": "OLMToonDilate",
+      "plugin": "OLMToonDilate",
+      "source_case_id": "case_0001",
+      "input": "olmtoondilate_case_0001_source",
+      "reason": "32bpc EXR-first float-output probe for a normalized 8bpc Windows Software exact case. This is not AE exact evidence unless the return includes typed float-preserving output with hashes and header metadata.",
+      "effect": {
+        "name": "OLM Toon Dilate",
+        "match_name": "ADBE OLMToonDilate"
+      },
+      "params": {
+        "Search Radius": 13,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "params_full": [
+        {
+          "name": "Search Radius",
+          "match_name": "ADBE OLMToonDilate-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 13
+        },
+        {
+          "name": "Effect Opacity",
+          "match_name": "ADBE Effect Mask Opacity",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "GPU Rendering",
+          "match_name": "ADBE Force CPU GPU",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "olmtoondilate__case_0002",
+      "feature": "OLMToonDilate",
+      "plugin": "OLMToonDilate",
+      "source_case_id": "case_0002",
+      "input": "olmtoondilate_case_0002_source",
+      "reason": "32bpc EXR-first float-output probe for a normalized 8bpc Windows Software exact case. This is not AE exact evidence unless the return includes typed float-preserving output with hashes and header metadata.",
+      "effect": {
+        "name": "OLM Toon Dilate",
+        "match_name": "ADBE OLMToonDilate"
+      },
+      "params": {
+        "Search Radius": 13,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "params_full": [
+        {
+          "name": "Search Radius",
+          "match_name": "ADBE OLMToonDilate-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 13
+        },
+        {
+          "name": "Effect Opacity",
+          "match_name": "ADBE Effect Mask Opacity",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "GPU Rendering",
+          "match_name": "ADBE Force CPU GPU",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "olmtoondilate__case_0003",
+      "feature": "OLMToonDilate",
+      "plugin": "OLMToonDilate",
+      "source_case_id": "case_0003",
+      "input": "olmtoondilate_case_0003_source",
+      "reason": "32bpc EXR-first float-output probe for a normalized 8bpc Windows Software exact case. This is not AE exact evidence unless the return includes typed float-preserving output with hashes and header metadata.",
+      "effect": {
+        "name": "OLM Toon Dilate",
+        "match_name": "ADBE OLMToonDilate"
+      },
+      "params": {
+        "Search Radius": 27,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "params_full": [
+        {
+          "name": "Search Radius",
+          "match_name": "ADBE OLMToonDilate-0001",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 27
+        },
+        {
+          "name": "Effect Opacity",
+          "match_name": "ADBE Effect Mask Opacity",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "GPU Rendering",
+          "match_name": "ADBE Force CPU GPU",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 1
+        }
+      ]
+    }
+  ],
+  "manifest_requirements": [
+    "AE version",
+    "project_gpu_accel_type.current_name and raw value; current_name must be SOFTWARE",
+    "project bit depth / bits per channel; must be 32bpc / 32",
+    "project color management settings",
+    "before_effects_frame PNG or float-preserving input snapshot for every case",
+    "effect output in EXR by default; if that is impossible, return typed float-preserving TIFF/TIF, HDR, or raw-float RGBA and record the exact format",
+    "output header metadata: container format, channel order/count, sample type, bits per channel, dimensions, color space, alpha mode, and endianness when applicable",
+    "SHA-256 for every before/effect artifact, any raw-float payload, and the returned manifest",
+    "if only PNG output is possible, record output_format=png and float_preserving=false",
+    "all effect property names, match_names, indices, values, enabled/active state"
+  ],
+  "mac_follow_up": [
+    "Import with scripts/intake_olm_return.py path/to/returned_reference.zip --quick.",
+    "Verify SHA-256 values and recorded header metadata before comparison.",
+    "Do not claim 32bpc exact unless the return preserves float samples and a 32bpc comparator verifies exact float equality or a documented exception profile.",
+    "For future 32bpc requests, treat EXR as the default output format."
+  ],
+  "stop_lines": [
+    "Do not render CUDA/GPU as the conformance target for this request.",
+    "Do not use PNG-only 32bpc returns as AE exact evidence.",
+    "Do not accept an untyped TIFF/TIF, HDR, or raw-float fallback as float-preserving evidence.",
+    "Do not mix legacy 20260604/20260605 drift references into this bit-depth batch."
+  ],
+  "compare_policy": {
+    "path": "refs/conformance/bitdepth_32bpc_compare_policy_20260703.md",
+    "mode": "float-preserving-required",
+    "png_only_classification": "probe-only"
+  },
+  "output_requirements": {
+    "preferred_formats": [
+      "exr"
+    ],
+    "acceptable_float_preserving_fallbacks": [
+      "tiff",
+      "tif",
+      "hdr",
+      "raw-float-rgba"
+    ],
+    "png_only_allowed": true,
+    "png_only_classification": "probe-only",
+    "float_preserving_required_for_ae_exact": true,
+    "record_exact_format_used": true,
+    "artifact_integrity": {
+      "sha256_required": true,
+      "sha256_scope": [
+        "before_effects_frame",
+        "effect_output",
+        "raw_float_payload_when_used",
+        "manifest"
+      ],
+      "header_metadata_required": true,
+      "header_metadata_scope": [
+        "container_format",
+        "channel_order",
+        "channel_count",
+        "sample_type",
+        "bits_per_channel",
+        "width",
+        "height",
+        "color_space",
+        "alpha_mode",
+        "endianness_when_applicable"
+      ],
+      "typed_fallbacks": [
+        {
+          "format": "tiff",
+          "required_sample_type": "float32 or float64",
+          "required_bits_per_channel": 32
+        },
+        {
+          "format": "tif",
+          "required_sample_type": "float32 or float64",
+          "required_bits_per_channel": 32
+        },
+        {
+          "format": "hdr",
+          "required_sample_type": "float32",
+          "required_bits_per_channel": 32
+        },
+        {
+          "format": "raw-float-rgba",
+          "required_sample_type": "IEEE-754 float32",
+          "required_bits_per_channel": 32,
+          "required_metadata": [
+            "width",
+            "height",
+            "channel_order",
+            "endianness"
+          ]
+        }
+      ]
+    }
+  }
+}

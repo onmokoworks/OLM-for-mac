@@ -1,0 +1,9 @@
+{
+  "id": "odd_positive",
+  "width": 5,
+  "height": 3,
+  "angle": 0.37,
+  "source_sha256": "d17b101c72c8aafa007e4cb0f75739311e11c206dc915b91ca5727a231bb9969",
+  "expected_sha256": "5e75381424f441b962c651d36a785c1f1202714b3302fc9e4d7e1a4d3a9a824d",
+  "destination_poison_hex": "a1b1c2d3"
+}

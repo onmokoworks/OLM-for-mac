@@ -1,0 +1,885 @@
+{
+  "kind": "olmdistancegradation_case0023_mac_probe_result",
+  "materialized_at": "2026-07-07T14:49:40Z",
+  "case_id": "olmdistancegradation_extended__case_0023",
+  "probe_dir": "refs/reports/ae_single_case_distancegradation_case0023_alpha_threshold_20260707",
+  "debug_reports": {
+    "bg_on": "refs/reports/ae_single_case_distancegradation_case0023_alpha_threshold_20260707/bg_on/field_debug_report.json",
+    "bg_off": "refs/reports/ae_single_case_distancegradation_case0023_alpha_threshold_20260707/bg_off/field_debug_report.json"
+  },
+  "shade_debug_logs": {
+    "bg_on": "refs/reports/ae_single_case_distancegradation_case0023_alpha_threshold_20260707/bg_on/shade_debug.txt",
+    "bg_off": "refs/reports/ae_single_case_distancegradation_case0023_alpha_threshold_20260707/bg_off/shade_debug.txt"
+  },
+  "png_outputs": {
+    "mac_bg_on": "refs/reports/ae_single_case_distancegradation_case0023_alpha_threshold_20260707/bg_on/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+    "mac_bg_off": "refs/reports/ae_single_case_distancegradation_case0023_alpha_threshold_20260707/bg_off/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+    "win_bg_on": "refs/win_references/olm_return_20260706/DistanceGradation/olmdistancegradation_case0023_current_aex_recapture_20260702__software_16bpc__fr24__olmdistancegradation_extended__case_0023_current_aex.png",
+    "win_bg_off": "refs/win_references/olmdistancegradation_16bpc_bg_compose_variants_20260626/DistanceGradation/renders/olmdistancegradation_16bpc_bg_compose_variants_20260626__software_16bpc__fr24__olmdistancegradation_case_0023_bg_off_variant.png"
+  },
+  "debug_points_match_between_bg_modes": true,
+  "shade_store_matches_mac_png": true,
+  "debug_points": [
+    {
+      "xy": [
+        1698,
+        7
+      ],
+      "bg_on": {
+        "alpha": 0.0274658203,
+        "d_alpha": 1.0,
+        "field_x": 0.0,
+        "raw_inside": 1.0,
+        "raw_outside": 0.0,
+        "inside_x": 0.0,
+        "outside_x": 0.0,
+        "both_x": 0.0,
+        "compose_input_x": 0.0,
+        "inside_constant_binary": 0,
+        "outside_constant_binary": 0
+      },
+      "bg_off": {
+        "alpha": 0.0274658203,
+        "d_alpha": 1.0,
+        "field_x": 0.0,
+        "raw_inside": 1.0,
+        "raw_outside": 0.0,
+        "inside_x": 0.0,
+        "outside_x": 0.0,
+        "both_x": 0.0,
+        "compose_input_x": 0.0,
+        "inside_constant_binary": 0,
+        "outside_constant_binary": 0
+      },
+      "match": true
+    },
+    {
+      "xy": [
+        1699,
+        7
+      ],
+      "bg_on": {
+        "alpha": 0.00393676758,
+        "d_alpha": 0.0,
+        "field_x": 1.0,
+        "raw_inside": 0.0,
+        "raw_outside": 1.0,
+        "inside_x": 0.0,
+        "outside_x": 1.0,
+        "both_x": 1.0,
+        "compose_input_x": 1.0,
+        "inside_constant_binary": 0,
+        "outside_constant_binary": 1
+      },
+      "bg_off": {
+        "alpha": 0.00393676758,
+        "d_alpha": 0.0,
+        "field_x": 1.0,
+        "raw_inside": 0.0,
+        "raw_outside": 1.0,
+        "inside_x": 0.0,
+        "outside_x": 1.0,
+        "both_x": 1.0,
+        "compose_input_x": 1.0,
+        "inside_constant_binary": 0,
+        "outside_constant_binary": 1
+      },
+      "match": true
+    },
+    {
+      "xy": [
+        1700,
+        7
+      ],
+      "bg_on": {
+        "alpha": 0.0,
+        "d_alpha": 0.0,
+        "field_x": 1.0,
+        "raw_inside": 0.0,
+        "raw_outside": 1.0,
+        "inside_x": 0.0,
+        "outside_x": 1.0,
+        "both_x": 1.0,
+        "compose_input_x": 1.0,
+        "inside_constant_binary": 0,
+        "outside_constant_binary": 1
+      },
+      "bg_off": {
+        "alpha": 0.0,
+        "d_alpha": 0.0,
+        "field_x": 1.0,
+        "raw_inside": 0.0,
+        "raw_outside": 1.0,
+        "inside_x": 0.0,
+        "outside_x": 1.0,
+        "both_x": 1.0,
+        "compose_input_x": 1.0,
+        "inside_constant_binary": 0,
+        "outside_constant_binary": 1
+      },
+      "match": true
+    },
+    {
+      "xy": [
+        414,
+        393
+      ],
+      "bg_on": {
+        "alpha": 1.0,
+        "d_alpha": 1.0,
+        "field_x": 0.0,
+        "raw_inside": 34.9284973,
+        "raw_outside": 0.0,
+        "inside_x": 0.0,
+        "outside_x": 0.0,
+        "both_x": 0.0,
+        "compose_input_x": 0.0,
+        "inside_constant_binary": 0,
+        "outside_constant_binary": 0
+      },
+      "bg_off": {
+        "alpha": 1.0,
+        "d_alpha": 1.0,
+        "field_x": 0.0,
+        "raw_inside": 34.9284973,
+        "raw_outside": 0.0,
+        "inside_x": 0.0,
+        "outside_x": 0.0,
+        "both_x": 0.0,
+        "compose_input_x": 0.0,
+        "inside_constant_binary": 0,
+        "outside_constant_binary": 0
+      },
+      "match": true
+    },
+    {
+      "xy": [
+        415,
+        393
+      ],
+      "bg_on": {
+        "alpha": 1.0,
+        "d_alpha": 1.0,
+        "field_x": 0.0,
+        "raw_inside": 35.9026451,
+        "raw_outside": 0.0,
+        "inside_x": 0.0,
+        "outside_x": 0.0,
+        "both_x": 0.0,
+        "compose_input_x": 0.0,
+        "inside_constant_binary": 0,
+        "outside_constant_binary": 0
+      },
+      "bg_off": {
+        "alpha": 1.0,
+        "d_alpha": 1.0,
+        "field_x": 0.0,
+        "raw_inside": 35.9026451,
+        "raw_outside": 0.0,
+        "inside_x": 0.0,
+        "outside_x": 0.0,
+        "both_x": 0.0,
+        "compose_input_x": 0.0,
+        "inside_constant_binary": 0,
+        "outside_constant_binary": 0
+      },
+      "match": true
+    },
+    {
+      "xy": [
+        416,
+        393
+      ],
+      "bg_on": {
+        "alpha": 1.0,
+        "d_alpha": 1.0,
+        "field_x": 1.0,
+        "raw_inside": 36.8781776,
+        "raw_outside": 0.0,
+        "inside_x": 1.0,
+        "outside_x": 0.0,
+        "both_x": 1.0,
+        "compose_input_x": 1.0,
+        "inside_constant_binary": 1,
+        "outside_constant_binary": 0
+      },
+      "bg_off": {
+        "alpha": 1.0,
+        "d_alpha": 1.0,
+        "field_x": 1.0,
+        "raw_inside": 36.8781776,
+        "raw_outside": 0.0,
+        "inside_x": 1.0,
+        "outside_x": 0.0,
+        "both_x": 1.0,
+        "compose_input_x": 1.0,
+        "inside_constant_binary": 1,
+        "outside_constant_binary": 0
+      },
+      "match": true
+    }
+  ],
+  "shade_points": {
+    "bg_on": [
+      {
+        "xy": [
+          1698,
+          7
+        ],
+        "src_a": 0.0274658203,
+        "field_x": 0.0,
+        "d_alpha": 1.0,
+        "out_rgba_float": [
+          0.109804153,
+          0.0,
+          0.933333397,
+          1.0
+        ],
+        "store_agrb16": [
+          32768,
+          3598,
+          0,
+          30583
+        ],
+        "promoted_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "mac_png_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "store_matches_mac_png": true
+      },
+      {
+        "xy": [
+          1699,
+          7
+        ],
+        "src_a": 0.00393676758,
+        "field_x": 1.0,
+        "d_alpha": 0.0,
+        "out_rgba_float": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "store_agrb16": [
+          32768,
+          32768,
+          0,
+          0
+        ],
+        "promoted_rgba16": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "mac_png_rgba16": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "store_matches_mac_png": true
+      },
+      {
+        "xy": [
+          1700,
+          7
+        ],
+        "src_a": 0.0,
+        "field_x": 1.0,
+        "d_alpha": 0.0,
+        "out_rgba_float": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "store_agrb16": [
+          32768,
+          32768,
+          0,
+          0
+        ],
+        "promoted_rgba16": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "mac_png_rgba16": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "store_matches_mac_png": true
+      },
+      {
+        "xy": [
+          414,
+          393
+        ],
+        "src_a": 1.0,
+        "field_x": 0.0,
+        "d_alpha": 1.0,
+        "out_rgba_float": [
+          0.109804153,
+          0.0,
+          0.933333397,
+          1.0
+        ],
+        "store_agrb16": [
+          32768,
+          3598,
+          0,
+          30583
+        ],
+        "promoted_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "mac_png_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "store_matches_mac_png": true
+      },
+      {
+        "xy": [
+          415,
+          393
+        ],
+        "src_a": 1.0,
+        "field_x": 0.0,
+        "d_alpha": 1.0,
+        "out_rgba_float": [
+          0.109804153,
+          0.0,
+          0.933333397,
+          1.0
+        ],
+        "store_agrb16": [
+          32768,
+          3598,
+          0,
+          30583
+        ],
+        "promoted_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "mac_png_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "store_matches_mac_png": true
+      },
+      {
+        "xy": [
+          416,
+          393
+        ],
+        "src_a": 1.0,
+        "field_x": 1.0,
+        "d_alpha": 1.0,
+        "out_rgba_float": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "store_agrb16": [
+          32768,
+          32768,
+          0,
+          0
+        ],
+        "promoted_rgba16": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "mac_png_rgba16": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "store_matches_mac_png": true
+      }
+    ],
+    "bg_off": [
+      {
+        "xy": [
+          1698,
+          7
+        ],
+        "src_a": 0.0274658203,
+        "field_x": 0.0,
+        "d_alpha": 1.0,
+        "out_rgba_float": [
+          0.109804153,
+          0.0,
+          0.933333397,
+          1.0
+        ],
+        "store_agrb16": [
+          32768,
+          3598,
+          0,
+          30583
+        ],
+        "promoted_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "mac_png_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "store_matches_mac_png": true
+      },
+      {
+        "xy": [
+          1699,
+          7
+        ],
+        "src_a": 0.00393676758,
+        "field_x": 1.0,
+        "d_alpha": 0.0,
+        "out_rgba_float": [
+          0.109804153,
+          0.0,
+          0.933333397,
+          0.0
+        ],
+        "store_agrb16": [
+          0,
+          3598,
+          0,
+          30583
+        ],
+        "promoted_rgba16": [
+          7195,
+          0,
+          61165,
+          0
+        ],
+        "mac_png_rgba16": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "store_matches_mac_png": true
+      },
+      {
+        "xy": [
+          1700,
+          7
+        ],
+        "src_a": 0.0,
+        "field_x": 1.0,
+        "d_alpha": 0.0,
+        "out_rgba_float": [
+          0.109804153,
+          0.0,
+          0.933333397,
+          0.0
+        ],
+        "store_agrb16": [
+          0,
+          3598,
+          0,
+          30583
+        ],
+        "promoted_rgba16": [
+          7195,
+          0,
+          61165,
+          0
+        ],
+        "mac_png_rgba16": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "store_matches_mac_png": true
+      },
+      {
+        "xy": [
+          414,
+          393
+        ],
+        "src_a": 1.0,
+        "field_x": 0.0,
+        "d_alpha": 1.0,
+        "out_rgba_float": [
+          0.109804153,
+          0.0,
+          0.933333397,
+          1.0
+        ],
+        "store_agrb16": [
+          32768,
+          3598,
+          0,
+          30583
+        ],
+        "promoted_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "mac_png_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "store_matches_mac_png": true
+      },
+      {
+        "xy": [
+          415,
+          393
+        ],
+        "src_a": 1.0,
+        "field_x": 0.0,
+        "d_alpha": 1.0,
+        "out_rgba_float": [
+          0.109804153,
+          0.0,
+          0.933333397,
+          1.0
+        ],
+        "store_agrb16": [
+          32768,
+          3598,
+          0,
+          30583
+        ],
+        "promoted_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "mac_png_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "store_matches_mac_png": true
+      },
+      {
+        "xy": [
+          416,
+          393
+        ],
+        "src_a": 1.0,
+        "field_x": 1.0,
+        "d_alpha": 1.0,
+        "out_rgba_float": [
+          0.109804153,
+          0.0,
+          0.933333397,
+          0.0
+        ],
+        "store_agrb16": [
+          0,
+          3598,
+          0,
+          30583
+        ],
+        "promoted_rgba16": [
+          7195,
+          0,
+          61165,
+          0
+        ],
+        "mac_png_rgba16": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "store_matches_mac_png": true
+      }
+    ]
+  },
+  "comparisons": {
+    "win_bg_on_vs_mac_bg_on": {
+      "status": "compared",
+      "nonzero_px": 0,
+      "max_diff": 0,
+      "mean_diff": 0.0
+    },
+    "win_bg_off_vs_mac_bg_off": {
+      "status": "compared",
+      "nonzero_px": 0,
+      "max_diff": 0,
+      "mean_diff": 0.0
+    }
+  },
+  "sample_pixels": {
+    "bg_on": [
+      {
+        "xy": [
+          1698,
+          7
+        ],
+        "reference_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "mac_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "match": true
+      },
+      {
+        "xy": [
+          1699,
+          7
+        ],
+        "reference_rgba16": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "mac_rgba16": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "match": true
+      },
+      {
+        "xy": [
+          1700,
+          7
+        ],
+        "reference_rgba16": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "mac_rgba16": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "match": true
+      },
+      {
+        "xy": [
+          414,
+          393
+        ],
+        "reference_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "mac_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "match": true
+      },
+      {
+        "xy": [
+          415,
+          393
+        ],
+        "reference_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "mac_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "match": true
+      },
+      {
+        "xy": [
+          416,
+          393
+        ],
+        "reference_rgba16": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "mac_rgba16": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "match": true
+      }
+    ],
+    "bg_off": [
+      {
+        "xy": [
+          1698,
+          7
+        ],
+        "reference_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "mac_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "match": true
+      },
+      {
+        "xy": [
+          1699,
+          7
+        ],
+        "reference_rgba16": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "mac_rgba16": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "match": true
+      },
+      {
+        "xy": [
+          1700,
+          7
+        ],
+        "reference_rgba16": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "mac_rgba16": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "match": true
+      },
+      {
+        "xy": [
+          414,
+          393
+        ],
+        "reference_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "mac_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "match": true
+      },
+      {
+        "xy": [
+          415,
+          393
+        ],
+        "reference_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "mac_rgba16": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "match": true
+      },
+      {
+        "xy": [
+          416,
+          393
+        ],
+        "reference_rgba16": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "mac_rgba16": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "match": true
+      }
+    ]
+  },
+  "safe_claim": "Mac AE bg_on and bg_off probe runs match the corresponding Windows Software references exactly (nonzero_px=0, max_diff=0), and the shade stores match the Mac PNG values at the witness points. For this probe, the low-alpha source-mask ownership seam is closed; do not reopen broad field-helper, compose, or writeback tuning from case_0023 without a new contradictory witness."
+}

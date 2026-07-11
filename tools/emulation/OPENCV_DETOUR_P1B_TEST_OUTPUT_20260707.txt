@@ -1,0 +1,92 @@
+AEX: /Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex
+cvThreshold @ 0x1812b6a40
+
+cvDistTransform @ 0x1812b15a0
+
+[PASS] bridge round-trip: bridge round-trip ok (uint8/uint16/float32 + 3ch)
+[PASS] detour float32/BINARY       thr=0.3 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour float32/BINARY_INV   thr=0.3 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour float32/TRUNC        thr=0.3 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour float32/TOZERO       thr=0.3 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour float32/TOZERO_INV   thr=0.3 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/BINARY         thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/BINARY_INV     thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TRUNC          thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TOZERO         thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TOZERO_INV     thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/BINARY         thr=300 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/BINARY         thr=-10 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/BINARY         thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/BINARY         thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/BINARY         thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint16/BINARY        thr=70000 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint16/BINARY        thr=-10 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour int16/BINARY         thr=-40000 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour int16/BINARY         thr=40000 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour int16/BINARY         thr=-5.5 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour float32/BINARY NaN   thr=0.5 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour float32/BINARY       thr=0.1 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/BINARY_INV     thr=300 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/BINARY_INV     thr=-10 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/BINARY_INV     thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/BINARY_INV     thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/BINARY_INV     thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint16/BINARY_INV    thr=70000 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint16/BINARY_INV    thr=-10 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour int16/BINARY_INV     thr=-40000 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour int16/BINARY_INV     thr=40000 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour int16/BINARY_INV     thr=-5.5 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour float32/BINARY_INV NaN thr=0.5 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour float32/BINARY_INV   thr=0.1 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TRUNC          thr=300 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TRUNC          thr=-10 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TRUNC          thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TRUNC          thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TRUNC          thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint16/TRUNC         thr=70000 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint16/TRUNC         thr=-10 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour int16/TRUNC          thr=-40000 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour int16/TRUNC          thr=40000 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour int16/TRUNC          thr=-5.5 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour float32/TRUNC NaN    thr=0.5 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour float32/TRUNC        thr=0.1 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TOZERO         thr=300 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TOZERO         thr=-10 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TOZERO         thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TOZERO         thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TOZERO         thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint16/TOZERO        thr=70000 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint16/TOZERO        thr=-10 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour int16/TOZERO         thr=-40000 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour int16/TOZERO         thr=40000 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour int16/TOZERO         thr=-5.5 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour float32/TOZERO NaN   thr=0.5 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour float32/TOZERO       thr=0.1 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TOZERO_INV     thr=300 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TOZERO_INV     thr=-10 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TOZERO_INV     thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TOZERO_INV     thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint8/TOZERO_INV     thr=100 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint16/TOZERO_INV    thr=70000 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour uint16/TOZERO_INV    thr=-10 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour int16/TOZERO_INV     thr=-40000 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour int16/TOZERO_INV     thr=40000 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour int16/TOZERO_INV     thr=-5.5 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour float32/TOZERO_INV NaN thr=0.5 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+[PASS] detour float32/TOZERO_INV   thr=0.1 instr=3 bypassed=True written=True header_intact=True bit_exact=True ret_exact=True
+
+[PASS] detour dist_transform/single_zero  instr=3 bypassed=True written=True header_intact=True native_exact=True cv455_exact=True max_abs=0 align_step=4
+[PASS] detour dist_transform/cross        instr=3 bypassed=True written=True header_intact=True native_exact=True cv455_exact=True max_abs=0 align_step=4
+[PASS] detour dist_transform/box          instr=3 bypassed=True written=True header_intact=True native_exact=True cv455_exact=True max_abs=0 align_step=4
+[PASS] detour dist_transform/diagonal     instr=3 bypassed=True written=True header_intact=True native_exact=True cv455_exact=True max_abs=0 align_step=4
+[PASS] detour dist_transform/all_nonzero  instr=3 bypassed=True written=True header_intact=True native_exact=True cv455_exact=True max_abs=0 align_step=16
+[PASS] detour dist_transform/all_zero     instr=3 bypassed=True written=True header_intact=True native_exact=True cv455_exact=True max_abs=0 align_step=4
+[PASS] detour dist_transform/one_by_one_zero instr=3 bypassed=True written=True header_intact=True native_exact=True cv455_exact=True max_abs=0 align_step=4
+[PASS] detour dist_transform/one_by_one_nonzero instr=3 bypassed=True written=True header_intact=True native_exact=True cv455_exact=True max_abs=0 align_step=4
+[PASS] detour dist_transform/one_by_n     instr=3 bypassed=True written=True header_intact=True native_exact=True cv455_exact=True max_abs=0 align_step=16
+[PASS] detour dist_transform/n_by_one     instr=3 bypassed=True written=True header_intact=True native_exact=True cv455_exact=True max_abs=0 align_step=16
+
+[GATE C BLOCKED] emulated-equivalence: emulated path faults at RIP=0x181187e41 (OpenCV static-init not scaffolded)
+            (expected: exact-reference GATE B is authoritative for threshold; GATE C is the gold gate reserved for float ops / P3)
+
+RESULT: all detour + bridge gates PASS (GATE A+B). GATE C blocked as documented.

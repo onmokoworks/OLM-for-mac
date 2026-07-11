@@ -14,8 +14,13 @@ SOURCE_CPP = ROOT / "mac/OLMDistanceGradation/OLMDistanceGradation.cpp"
 THRESHOLD_AUDIT_JSON = ROOT / "refs/conformance/olmdistancegradation_case0023_threshold_family_audit_20260701.json"
 PROVENANCE_JSON = ROOT / "refs/conformance/olmdistancegradation_case0023_reference_provenance_20260702.json"
 BGOFF_PROBE_JSON = ROOT / "refs/conformance/olmdistancegradation_case0023_bgoff_current_probe_20260702.json"
+AEX_CPU_SIMU_JSON = ROOT / "refs/conformance/olmdistancegradation_case0023_aex_cpu_simu_fullframe_20260707.json"
 OUT_JSON = ROOT / "refs/conformance/olmdistancegradation_case0023_source_candidates_audit_20260701.json"
 OUT_MD = ROOT / "refs/conformance/olmdistancegradation_case0023_source_candidates_audit_20260701.md"
+BOTH_MERGE_NEEDLES = [
+    "df.x[i] = std::max(inside[i], outside[i]);",
+    "df.x[i] = std::min(inside[i] + outside[i], 1.0f);",
+]
 
 
 def parse_args() -> argparse.Namespace:
@@ -24,6 +29,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--threshold-audit-json", type=Path, default=THRESHOLD_AUDIT_JSON)
     parser.add_argument("--provenance-json", type=Path, default=PROVENANCE_JSON)
     parser.add_argument("--bgoff-probe-json", type=Path, default=BGOFF_PROBE_JSON)
+    parser.add_argument("--aex-cpu-simu-json", type=Path, default=AEX_CPU_SIMU_JSON)
     parser.add_argument("--output-json", type=Path, default=OUT_JSON)
     parser.add_argument("--output-md", type=Path, default=OUT_MD)
     return parser.parse_args()
@@ -40,20 +46,30 @@ def find_line(lines: list[str], needle: str) -> int:
     raise KeyError(f"missing source needle: {needle}")
 
 
+def find_first_line(lines: list[str], needles: list[str]) -> int:
+    missing = []
+    for needle in needles:
+        try:
+            return find_line(lines, needle)
+        except KeyError:
+            missing.append(needle)
+    raise KeyError(f"missing source needles: {missing}")
+
+
 def build_edge_candidate_sites(lines: list[str]) -> list[dict[str, Any]]:
     return [
         {
             "rank": 1,
             "family": "edge",
-            "site": "build_distance_field_both_ownership",
+            "site": "build_distance_field_both_merge",
             "function": "build_distance_field",
-            "line": find_line(lines, "df.x[i] = std::max(inside[i], outside[i]);"),
+            "line": find_first_line(lines, BOTH_MERGE_NEEDLES),
             "why_still_live": (
-                "The surviving bg_off mismatch at (1699,7) keeps the case_0023 lane upstream of the final "
-                "background blend. Neighboring edge witnesses already match, so the remaining live suspicion "
-                "is the Both-mode ownership handoff for a narrow subset of pixels."
+                "The 2026-07-07 AEX CPU simu shows the helper's full-frame Both field can already produce "
+                "the decisive zero at the live edge pixel. This source site therefore remains the first audit "
+                "anchor for provenance/output-binding contradictions, not a license to retune the merge."
             ),
-            "allowed_change_shape": "Both-mode ownership only; no broad field rewrite",
+            "allowed_change_shape": "Both-mode field merge only after final-output/export proof contradicts the CPU-helper evidence",
         },
         {
             "rank": 2,
@@ -69,7 +85,6 @@ def build_edge_candidate_sites(lines: list[str]) -> list[dict[str, Any]]:
             "allowed_change_shape": "helper-stage threshold ownership / plateau membership only",
         },
         {
-            "rank": 2,
             "rank": 3,
             "family": "edge",
             "site": "compose_pixel_constant_endpoint",
@@ -131,9 +146,14 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     threshold_audit = read_json(args.threshold_audit_json)
     provenance = read_json(args.provenance_json)
     bgoff_probe = read_json(args.bgoff_probe_json)
+    aex_cpu_simu = read_json(args.aex_cpu_simu_json)
     lines = args.source_cpp.read_text(encoding="utf-8").splitlines()
     edge_sites = build_edge_candidate_sites(lines)
     threshold_sites = build_threshold_candidate_sites(lines)
+    historical_followup = dict(threshold_audit["pending_windows_followup"])
+    historical_followup["status"] = "superseded_by_local_aex_cpu_simu"
+    historical_followup["superseded_by"] = str(args.aex_cpu_simu_json.relative_to(ROOT))
+    historical_followup["active_send_target"] = False
 
     report = {
         "kind": "olmdistancegradation_case0023_source_candidates_audit",
@@ -166,6 +186,17 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
                 "important_split": bgoff_probe["decision"]["important_split"],
             },
         },
+        "aex_cpu_simu_evidence": {
+            "path": str(args.aex_cpu_simu_json.relative_to(ROOT)),
+            "kind": aex_cpu_simu.get("kind"),
+            "status": aex_cpu_simu.get("status"),
+            "summary": (
+                "Binary-grounded helper evidence only: this proves the emulated AEX helper can produce the "
+                "case_0023 live edge zero, but it is not whole-plugin AE exact."
+            ),
+            "reading": aex_cpu_simu.get("reading", {}),
+            "samples": aex_cpu_simu.get("samples", {}),
+        },
         "source_candidates": edge_sites + threshold_sites,
         "edge_family_candidates": edge_sites,
         "threshold_family_candidates": threshold_sites,
@@ -177,7 +208,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             },
             {
                 "step": 2,
-                "condition": "If the question is about the surviving edge-family pixel and Windows says field/ownership is already wrong before compose",
+                "condition": "If the question is about the surviving edge-family pixel and Windows final-output/export proof contradicts the CPU-helper zero",
                 "action": "Constrain changes to build_distance_field() and dt_to_normalized()",
             },
             {
@@ -191,8 +222,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "Do not retune generic 16bpc writeback from this lane.",
             "Do not reopen broad color-mix tuning while the field-first witness still stands.",
             "Do not treat the packaged expected PNG as equivalent to current Windows output for the threshold-family slice without proof.",
+            "Do not retune the Both-mode saturating-add field merge while AEX CPU simu evidence says the helper already produces the live edge zero.",
         ],
-        "pending_windows_followup": threshold_audit["pending_windows_followup"],
+        "pending_windows_followup": historical_followup,
         "windows_requirement": threshold_audit["decision"]["next_windows_requirement"],
         "provenance_reference_request": {
             "request_id": "olmdistancegradation_case0023_current_aex_recapture_20260702",
@@ -231,6 +263,18 @@ def render_md(report: dict[str, Any]) -> str:
         lines.append(
             f"| `{row['role']}` | `({row['x']},{row['y']})` | `{row['field_x']}` | `{row['raw_inside']}` |"
         )
+
+    aex = report["aex_cpu_simu_evidence"]
+    lines.extend(
+        [
+            "",
+            "## AEX CPU Simu Evidence",
+            "",
+            f"- Path: `{aex['path']}`",
+            f"- Status: `{aex['status']}`",
+            f"- Summary: {aex['summary']}",
+        ]
+    )
 
     lines.extend(
         [

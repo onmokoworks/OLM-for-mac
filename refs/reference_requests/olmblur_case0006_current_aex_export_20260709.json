@@ -1,0 +1,254 @@
+{
+  "request_id": "olmblur_case0006_current_aex_export_20260709",
+  "effect": {
+    "name": "OLM Blur",
+    "match_name": "OLM OLM Blur"
+  },
+  "why": "Provenance-only current-AEX export request for OLMBlur 16bpc case_0006. Windows and Mac already agree on the traced helper/pre-store internal words; the remaining question is whether the canonical 2026-06-25 Windows Software PNG matches a same-run current Windows AEX export. Do not use this request for kernel tuning.",
+  "scope": {
+    "plugin": "OLMBlur",
+    "case_id": "olmblur__case_0006",
+    "bit_depth": "16bpc",
+    "bits_per_channel": 16,
+    "renderer": "SOFTWARE",
+    "lane": "current-aex-export-provenance",
+    "contract": "refs/conformance/olmblur_case0006_current_aex_export_contract_20260701.md",
+    "audit": "refs/conformance/olmblur_case0006_current_aex_export_contract_audit_20260701.md"
+  },
+  "render_sets": [
+    {
+      "id": "software_16bpc_current_aex_export",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "bit_depth": "16bpc",
+      "bits_per_channel": 16,
+      "required": true,
+      "current_aex_required": true,
+      "same_render_class_as_witness_required": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "olmblur_case_0006_source",
+      "description": "Use the same source image as normalized 8bpc OLMBlur case_0006. Recorded before_effects_frame: case_0006_before_effects.png",
+      "source_manifest": "refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMBlur/reference_manifest.json",
+      "source_case_id": "case_0006",
+      "before_effects_frame": "case_0006_before_effects.png"
+    }
+  ],
+  "cases": [
+    {
+      "id": "olmblur__case_0006",
+      "feature": "OLMBlur",
+      "plugin": "OLMBlur",
+      "source_case_id": "case_0006",
+      "input": "olmblur_case_0006_source",
+      "reason": "Same-run Windows current-AEX export provenance for OLMBlur case_0006. Compare first at (314,14), (29,71), (601,598), and (378,487).",
+      "effect": {
+        "name": "OLM Blur",
+        "match_name": "OLM OLM Blur"
+      },
+      "params": {
+        "Blur Amount": 5,
+        "Blur Smoothness": 100,
+        "Number of Repeat": 10,
+        "Bias Direction": 1,
+        "Legacy": 0,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "params_full": [
+        {
+          "name": "Blur Amount",
+          "match_name": "OLM OLM Blur-0005",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 5
+        },
+        {
+          "name": "Blur Smoothness",
+          "match_name": "OLM OLM Blur-0006",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Number of Repeat",
+          "match_name": "OLM OLM Blur-0003",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 10
+        },
+        {
+          "name": "Bias Direction",
+          "match_name": "OLM OLM Blur-0004",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Legacy",
+          "match_name": "OLM OLM Blur-0007",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Effect Opacity",
+          "match_name": "ADBE Effect Mask Opacity",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "GPU Rendering",
+          "match_name": "ADBE Force CPU GPU",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 1
+        }
+      ],
+      "render_set": "software_16bpc_current_aex_export",
+      "output_name_hint": "olmblur_case0006_current_aex_export_20260709.png"
+    }
+  ],
+  "output_requirements": {
+    "preferred_formats": [
+      "png"
+    ],
+    "record_exact_format_used": true,
+    "float_preserving_required_for_ae_exact": false,
+    "include_before_effects_frame": true,
+    "include_effect_output": true,
+    "include_reference_manifest": true
+  },
+  "manifest_requirements": [
+    "AE version",
+    "project_gpu_accel_type.current_name and raw value; must be SOFTWARE / raw 1816 or explain any difference",
+    "project bit depth / bits per channel; must be 16bpc",
+    "project color management settings",
+    "absolute plugin path/build identity for the Windows current AEX used in this render",
+    "explicit statement whether this export uses the same current AEX build/path as the helper/pre-store witness run",
+    "explicit statement whether this export uses the same comp/render setup as the canonical 2026-06-25 reference family",
+    "before_effects_frame PNG for the case",
+    "effect output PNG preserving 16bpc data if the runner can export it",
+    "all effect property names, match_names, indices, values, enabled/active state"
+  ],
+  "witness_points": [
+    {
+      "xy": [
+        314,
+        14
+      ],
+      "canonical_ref": [
+        2201,
+        2201,
+        2201,
+        65535
+      ],
+      "mac_single_export": [
+        2199,
+        2199,
+        2199,
+        65535
+      ],
+      "mac_batch_export": [
+        2201,
+        2201,
+        2201,
+        65535
+      ],
+      "reason": "lane-defining witness A"
+    },
+    {
+      "xy": [
+        29,
+        71
+      ],
+      "canonical_ref": [
+        725,
+        725,
+        725,
+        65535
+      ],
+      "mac_single_export": [
+        727,
+        727,
+        727,
+        65535
+      ],
+      "mac_batch_export": [
+        727,
+        727,
+        727,
+        65535
+      ],
+      "reason": "lane-defining witness B"
+    },
+    {
+      "xy": [
+        601,
+        598
+      ],
+      "canonical_ref": [
+        4609,
+        4609,
+        4637,
+        65535
+      ],
+      "mac_single_export": [
+        4607,
+        4607,
+        4637,
+        65535
+      ],
+      "mac_batch_export": [
+        4609,
+        4609,
+        4637,
+        65535
+      ],
+      "reason": "batch-aligned support point"
+    },
+    {
+      "xy": [
+        378,
+        487
+      ],
+      "canonical_ref": [
+        64767,
+        35,
+        35,
+        65535
+      ],
+      "mac_single_export": [
+        64767,
+        35,
+        35,
+        65535
+      ],
+      "mac_batch_export": [
+        64769,
+        35,
+        35,
+        65535
+      ],
+      "reason": "single-case-aligned support point"
+    }
+  ],
+  "mac_follow_up": [
+    "Import with scripts/intake_olm_return.py path/to/returned_reference.zip --quick.",
+    "Run scripts/analyze_olmblur_case0006_current_aex_export_contract.py after import.",
+    "Do not change mac/OLMBlur source from this request unless the audit outcome explicitly contradicts the provenance gate."
+  ],
+  "stop_lines": [
+    "Do not render CUDA/GPU as the conformance target for this request.",
+    "Do not include 8bpc or 32bpc in this request.",
+    "Do not answer with helper/pre-store trace only; that lane is already answered.",
+    "Do not retune OLMBlur kernel/writeback from this request; it is export provenance only."
+  ],
+  "compare_policy": {
+    "mode": "bitdepth-aware-integer-exact",
+    "completion_label": "provenance-classification-only",
+    "ae_exact_requires": "After import, run scripts/analyze_olmblur_case0006_current_aex_export_contract.py and compare the four witness points to canonical_ref / mac_single_export / mac_batch_export. This request alone does not authorize an implementation change."
+  }
+}

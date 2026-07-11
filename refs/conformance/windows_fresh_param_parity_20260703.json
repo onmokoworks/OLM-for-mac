@@ -1,0 +1,132 @@
+{
+  "kind": "windows_fresh_param_parity_summary",
+  "defaults_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/win_references/olm_fresh_instance_defaults_20260629/OLMmulti-effectdefaultcapture/reference_manifest.json",
+  "ranges_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/win_references/olm_fresh_instance_ranges_20260629/OLMmulti-effectrangecapture/reference_manifest.json",
+  "plugins": [
+    {
+      "plugin": "OLMBlur",
+      "defaults_status": "fixed",
+      "ranges_status": "mostly-fixed",
+      "overall_status": "mostly-fixed",
+      "defaults_reasons": [
+        "all compared Windows defaults matched current Mac schema"
+      ],
+      "ranges_reasons": [
+        "source-no-range 1"
+      ],
+      "next_gap": "OLMBlur: no immediate fresh-instance schema blocker"
+    },
+    {
+      "plugin": "OLMColorKey",
+      "defaults_status": "mostly-fixed",
+      "ranges_status": "mostly-fixed",
+      "overall_status": "mostly-fixed",
+      "defaults_reasons": [
+        "source-empty 2",
+        "symbolic defaults 25"
+      ],
+      "ranges_reasons": [
+        "symbolic range 1",
+        "source-no-range 105",
+        "windows-no-range 2"
+      ],
+      "next_gap": "Use Color 1: symbolic_examples"
+    },
+    {
+      "plugin": "OLMDirectionalBlur",
+      "defaults_status": "mostly-fixed",
+      "ranges_status": "mostly-fixed",
+      "overall_status": "mostly-fixed",
+      "defaults_reasons": [
+        "source-empty 2"
+      ],
+      "ranges_reasons": [
+        "windows-no-range 5"
+      ],
+      "next_gap": "OLMDirectionalBlur: no immediate fresh-instance schema blocker"
+    },
+    {
+      "plugin": "OLMDistanceGradation",
+      "defaults_status": "mostly-fixed",
+      "ranges_status": "mostly-fixed",
+      "overall_status": "mostly-fixed",
+      "defaults_reasons": [
+        "symbolic defaults 4"
+      ],
+      "ranges_reasons": [
+        "source-no-range 4"
+      ],
+      "next_gap": "Blur Mode: symbolic_examples"
+    },
+    {
+      "plugin": "OLMKiraKira",
+      "defaults_status": "fixed",
+      "ranges_status": "mostly-fixed",
+      "overall_status": "mostly-fixed",
+      "defaults_reasons": [
+        "all compared Windows defaults matched current Mac schema"
+      ],
+      "ranges_reasons": [
+        "source-no-range 11",
+        "windows-no-range 1"
+      ],
+      "next_gap": "OLMKiraKira: no immediate fresh-instance schema blocker"
+    },
+    {
+      "plugin": "OLMRadialBlur",
+      "defaults_status": "mostly-fixed",
+      "ranges_status": "mostly-fixed",
+      "overall_status": "mostly-fixed",
+      "defaults_reasons": [
+        "source-empty 5"
+      ],
+      "ranges_reasons": [
+        "source-no-range 1",
+        "windows-no-range 8"
+      ],
+      "next_gap": "OLMRadialBlur: no immediate fresh-instance schema blocker"
+    },
+    {
+      "plugin": "OLMSmoother",
+      "defaults_status": "fixed",
+      "ranges_status": "mostly-fixed",
+      "overall_status": "mostly-fixed",
+      "defaults_reasons": [
+        "all compared Windows defaults matched current Mac schema"
+      ],
+      "ranges_reasons": [
+        "source-no-range 2"
+      ],
+      "next_gap": "Smooth Length Tolerance: source_only_examples"
+    },
+    {
+      "plugin": "OLMSmoother2",
+      "defaults_status": "mostly-fixed",
+      "ranges_status": "mostly-fixed",
+      "overall_status": "mostly-fixed",
+      "defaults_reasons": [
+        "symbolic defaults 2"
+      ],
+      "ranges_reasons": [
+        "symbolic range 1",
+        "source-no-range 8"
+      ],
+      "next_gap": "Gamma Color 2: source_only_examples"
+    },
+    {
+      "plugin": "OLMToonDilate",
+      "defaults_status": "fixed",
+      "ranges_status": "fixed",
+      "overall_status": "fixed",
+      "defaults_reasons": [
+        "all compared Windows defaults matched current Mac schema"
+      ],
+      "ranges_reasons": [
+        "all Windows-exposed ranges matched current Mac hard min/max"
+      ],
+      "next_gap": "OLMToonDilate: no immediate fresh-instance schema blocker"
+    }
+  ],
+  "materialized_at": "2026-07-03T10:23:56Z",
+  "schema_snapshot": "refs/reports/mac_plugin_param_schema_20260629.json"
+}

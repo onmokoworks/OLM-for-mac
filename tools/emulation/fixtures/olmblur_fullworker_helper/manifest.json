@@ -1,0 +1,161 @@
+{
+  "schema": "olm.aex.cpu-fixture/2",
+  "plugin": "OLMBlur",
+  "binary_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "functions": {
+    "horizontal": "0x1800014f0",
+    "vertical": "0x180001ea0"
+  },
+  "cases": [
+    {
+      "id": "horizontal_basic",
+      "direction": "horizontal",
+      "width": 7,
+      "height": 4,
+      "columns": 5,
+      "rows": 2,
+      "offset": 1,
+      "radius": 3,
+      "breaks": [],
+      "instructions": 2647,
+      "expected_sha256": "d48bdefcbd1eb6a7a574ecdc64b4975da132a152efc68220b8117c2d68ebebf0"
+    },
+    {
+      "id": "horizontal_flag_break",
+      "direction": "horizontal",
+      "width": 9,
+      "height": 5,
+      "columns": 7,
+      "rows": 3,
+      "offset": 1,
+      "radius": 2,
+      "breaks": [
+        11,
+        13,
+        31
+      ],
+      "instructions": 3571,
+      "expected_sha256": "e5724df35917eeada510b9f8c1d60a7bc0e9e12bb6eb43194c85836e15920379"
+    },
+    {
+      "id": "horizontal_large_radius",
+      "direction": "horizontal",
+      "width": 13,
+      "height": 7,
+      "columns": 10,
+      "rows": 3,
+      "offset": 2,
+      "radius": 5,
+      "breaks": [
+        28,
+        31,
+        45,
+        72
+      ],
+      "instructions": 8500,
+      "expected_sha256": "eb66948f01c42dbfc431436f4dc364a28ef40bbbee60df7c7c0b4a0d54d6400e"
+    },
+    {
+      "id": "horizontal_all_same_center_copy",
+      "direction": "horizontal",
+      "width": 4,
+      "height": 2,
+      "columns": 4,
+      "rows": 2,
+      "offset": 0,
+      "radius": 1,
+      "breaks": [],
+      "witness": [
+        0,
+        1
+      ],
+      "carry_rgb": [
+        37.25,
+        83.5,
+        129.75
+      ],
+      "center_rgb": [
+        211.5,
+        17.25,
+        64.75
+      ],
+      "instructions": 1342,
+      "expected_sha256": "771811a5e446feed2f0eb8445bd33f412efb631c5760eef88ccb7ded3fa807bc"
+    },
+    {
+      "id": "vertical_basic",
+      "direction": "vertical",
+      "width": 6,
+      "height": 8,
+      "columns": 3,
+      "rows": 6,
+      "offset": 1,
+      "radius": 2,
+      "breaks": [],
+      "instructions": 4228,
+      "expected_sha256": "d3e390a0a9c79fadd69beec42e0a6a855768da53fbe37ae4e4cdb6074944fdf7"
+    },
+    {
+      "id": "vertical_flag_break",
+      "direction": "vertical",
+      "width": 8,
+      "height": 9,
+      "columns": 5,
+      "rows": 7,
+      "offset": 2,
+      "radius": 3,
+      "breaks": [
+        18,
+        26,
+        51
+      ],
+      "instructions": 8660,
+      "expected_sha256": "c998660f9382632c3392c6b3e94c4aaba262e240996d16fe2808fb0e534c4bdd"
+    },
+    {
+      "id": "vertical_large_radius",
+      "direction": "vertical",
+      "width": 11,
+      "height": 14,
+      "columns": 6,
+      "rows": 10,
+      "offset": 2,
+      "radius": 5,
+      "breaks": [
+        24,
+        35,
+        69,
+        112
+      ],
+      "instructions": 21444,
+      "expected_sha256": "8f790b42bff22a3a405a9e125adc642624d82075dbaea70f82b08a4970923196"
+    },
+    {
+      "id": "vertical_all_same_center_copy",
+      "direction": "vertical",
+      "width": 3,
+      "height": 3,
+      "columns": 2,
+      "rows": 3,
+      "offset": 0,
+      "radius": 1,
+      "breaks": [],
+      "witness": [
+        1,
+        0
+      ],
+      "carry_rgb": [
+        37.25,
+        83.5,
+        129.75
+      ],
+      "center_rgb": [
+        211.5,
+        17.25,
+        64.75
+      ],
+      "instructions": 1009,
+      "expected_sha256": "c7d08be0c45a4359b687b94dc73afa3cfb21fc3a96d8210ccb41f46d24776ed4"
+    }
+  ]
+}

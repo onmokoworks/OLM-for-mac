@@ -1,8 +1,16 @@
 #include "OLMBlur.h"
+#include "olmblur_worker_orchestration.h"
+#include "olmblur_worker16_nonlegacy.h"
+#include "olmblur_worker16_legacy.h"
+#include "olmblur_worker32_nonlegacy.h"
+#include "olmblur_worker32_legacy.h"
+#include "olmblur_worker8_legacy.h"
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
+#include <new>
 #include <stdio.h>
+#include <stdint.h>
 #include <vector>
 
 static PF_Err
@@ -702,6 +710,348 @@ static void storeFloat(PF_EffectWorld *dst, const float *rgb)
 }
 
 static PF_Err
+render_8bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
+	                       float blur_amount, float blur_smoothness,
+	                       A_long repeat, A_long bias_dir)
+{
+	const size_t width = (size_t)input->width;
+	const size_t height = (size_t)input->height;
+	if (height != 0 && width > ((size_t)-1) / height) return PF_Err_OUT_OF_MEMORY;
+	const size_t pixels = width * height;
+	if (pixels > ((size_t)-1) / 4) return PF_Err_OUT_OF_MEMORY;
+
+	try {
+		std::vector<std::uint8_t> source_argb(pixels * 4);
+		std::vector<std::uint8_t> destination_argb(pixels * 4);
+
+		for (size_t y = 0; y < height; ++y) {
+			const PF_Pixel8 *source_row = (const PF_Pixel8*)((const char*)input->data + y * (size_t)input->rowbytes);
+			for (size_t x = 0; x < width; ++x) {
+				const PF_Pixel8 &pixel = source_row[x];
+				std::uint8_t *packed = source_argb.data() + (y * width + x) * 4;
+				packed[0] = pixel.alpha;
+				packed[1] = pixel.red;
+				packed[2] = pixel.green;
+				packed[3] = pixel.blue;
+			}
+		}
+
+		olm::blur::worker8_legacy::Params params = {
+			blur_amount,
+			blur_smoothness,
+			(size_t)(repeat > 0 ? repeat : 0),
+			(size_t)(bias_dir > 0 ? bias_dir : 0),
+			1.0f
+		};
+		olm::blur::worker8_legacy::render(
+			source_argb.data(), destination_argb.data(), width, height, params);
+
+		for (size_t y = 0; y < height; ++y) {
+			const PF_Pixel8 *source_row = (const PF_Pixel8*)((const char*)input->data + y * (size_t)input->rowbytes);
+			PF_Pixel8 *output_row = (PF_Pixel8*)((char*)output->data + y * (size_t)output->rowbytes);
+			for (size_t x = 0; x < width; ++x) {
+				const std::uint8_t *packed = destination_argb.data() + (y * width + x) * 4;
+				PF_Pixel8 &pixel = output_row[x];
+				pixel.alpha = source_row[x].alpha;
+				pixel.red = packed[1];
+				pixel.green = packed[2];
+				pixel.blue = packed[3];
+			}
+		}
+	} catch (const std::bad_alloc &) {
+		return PF_Err_OUT_OF_MEMORY;
+	}
+
+	return PF_Err_NONE;
+}
+
+static PF_Err
+render_16bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
+	                           float blur_amount, float blur_smoothness,
+	                           A_long repeat, A_long bias_dir)
+{
+	const size_t width = (size_t)input->width;
+	const size_t height = (size_t)input->height;
+	if (height != 0 && width > ((size_t)-1) / height) return PF_Err_OUT_OF_MEMORY;
+	const size_t pixels = width * height;
+	if (pixels > ((size_t)-1) / 4) return PF_Err_OUT_OF_MEMORY;
+
+	try {
+		std::vector<std::uint16_t> source_argb16(pixels * 4);
+		std::vector<std::uint16_t> destination_argb16(pixels * 4);
+
+		for (size_t y = 0; y < height; ++y) {
+			const PF_Pixel16 *source_row = (const PF_Pixel16*)((const char*)input->data + y * (size_t)input->rowbytes);
+			for (size_t x = 0; x < width; ++x) {
+				const PF_Pixel16 &pixel = source_row[x];
+				std::uint16_t *packed = source_argb16.data() + (y * width + x) * 4;
+				packed[0] = pixel.alpha;
+				packed[1] = pixel.red;
+				packed[2] = pixel.green;
+				packed[3] = pixel.blue;
+			}
+		}
+
+		olm::blur::worker16::Params params = {
+			blur_amount,
+			blur_smoothness,
+			(size_t)(repeat > 0 ? repeat : 0),
+			(size_t)(bias_dir > 0 ? bias_dir : 0)
+		};
+		olm::blur::worker16::render_nonlegacy(
+			(const std::uint8_t*)source_argb16.data(), (std::uint8_t*)destination_argb16.data(),
+			width, height, params);
+
+		for (size_t y = 0; y < height; ++y) {
+			const PF_Pixel16 *source_row = (const PF_Pixel16*)((const char*)input->data + y * (size_t)input->rowbytes);
+			PF_Pixel16 *output_row = (PF_Pixel16*)((char*)output->data + y * (size_t)output->rowbytes);
+			for (size_t x = 0; x < width; ++x) {
+				const std::uint16_t *packed = destination_argb16.data() + (y * width + x) * 4;
+				PF_Pixel16 &pixel = output_row[x];
+				pixel.alpha = source_row[x].alpha;
+				pixel.red = packed[1];
+				pixel.green = packed[2];
+				pixel.blue = packed[3];
+			}
+		}
+	} catch (const std::bad_alloc &) {
+		return PF_Err_OUT_OF_MEMORY;
+	}
+
+	return PF_Err_NONE;
+}
+
+static PF_Err
+render_16bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
+	                       float blur_amount, float blur_smoothness,
+	                       A_long repeat, A_long bias_dir)
+{
+	const size_t width = (size_t)input->width;
+	const size_t height = (size_t)input->height;
+	if (height != 0 && width > ((size_t)-1) / height) return PF_Err_OUT_OF_MEMORY;
+	const size_t pixels = width * height;
+	if (pixels > ((size_t)-1) / 4) return PF_Err_OUT_OF_MEMORY;
+
+	try {
+		std::vector<std::uint16_t> source_argb16(pixels * 4);
+		std::vector<std::uint16_t> destination_argb16(pixels * 4);
+
+		for (size_t y = 0; y < height; ++y) {
+			const PF_Pixel16 *source_row = (const PF_Pixel16*)((const char*)input->data + y * (size_t)input->rowbytes);
+			for (size_t x = 0; x < width; ++x) {
+				const PF_Pixel16 &pixel = source_row[x];
+				std::uint16_t *packed = source_argb16.data() + (y * width + x) * 4;
+				packed[0] = pixel.alpha;
+				packed[1] = pixel.red;
+				packed[2] = pixel.green;
+				packed[3] = pixel.blue;
+			}
+		}
+
+		olm::blur::worker16_legacy::Params params = {
+			blur_amount,
+			blur_smoothness,
+			(size_t)(repeat > 0 ? repeat : 0),
+			(size_t)(bias_dir > 0 ? bias_dir : 0),
+			1.0f
+		};
+		olm::blur::worker16_legacy::render(
+			(const std::uint8_t*)source_argb16.data(), (std::uint8_t*)destination_argb16.data(),
+			width, height, params);
+
+		for (size_t y = 0; y < height; ++y) {
+			const PF_Pixel16 *source_row = (const PF_Pixel16*)((const char*)input->data + y * (size_t)input->rowbytes);
+			PF_Pixel16 *output_row = (PF_Pixel16*)((char*)output->data + y * (size_t)output->rowbytes);
+			for (size_t x = 0; x < width; ++x) {
+				const std::uint16_t *packed = destination_argb16.data() + (y * width + x) * 4;
+				PF_Pixel16 &pixel = output_row[x];
+				pixel.alpha = source_row[x].alpha;
+				pixel.red = packed[1];
+				pixel.green = packed[2];
+				pixel.blue = packed[3];
+			}
+		}
+	} catch (const std::bad_alloc &) {
+		return PF_Err_OUT_OF_MEMORY;
+	}
+
+	return PF_Err_NONE;
+}
+
+static PF_Err
+render_8bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
+	                          float blur_amount, float blur_smoothness,
+	                          A_long repeat, A_long bias_dir)
+{
+	const size_t width = (size_t)input->width;
+	const size_t height = (size_t)input->height;
+	if (height != 0 && width > ((size_t)-1) / height) return PF_Err_OUT_OF_MEMORY;
+	const size_t pixels = width * height;
+	if (pixels > ((size_t)-1) / 4) return PF_Err_OUT_OF_MEMORY;
+
+	const size_t bytes = pixels * 4;
+	u_char *source_argb = (u_char*)malloc(bytes);
+	u_char *destination_argb = (u_char*)malloc(bytes);
+	if (!source_argb || !destination_argb) {
+		free(source_argb);
+		free(destination_argb);
+		return PF_Err_OUT_OF_MEMORY;
+	}
+
+	for (size_t y = 0; y < height; ++y) {
+		const PF_Pixel8 *source_row = (const PF_Pixel8*)((const char*)input->data + y * (size_t)input->rowbytes);
+		for (size_t x = 0; x < width; ++x) {
+			const PF_Pixel8 &pixel = source_row[x];
+			u_char *packed = source_argb + (y * width + x) * 4;
+			packed[0] = pixel.alpha;
+			packed[1] = pixel.red;
+			packed[2] = pixel.green;
+			packed[3] = pixel.blue;
+		}
+	}
+
+	olm::blur::worker::Params params = {
+		blur_amount,
+		blur_smoothness,
+		(size_t)(repeat > 0 ? repeat : 0),
+		(size_t)(bias_dir > 0 ? bias_dir : 0)
+	};
+	try {
+		olm::blur::worker::render_8bpc_nonlegacy(
+			source_argb, destination_argb, width, height, params);
+	} catch (const std::bad_alloc &) {
+		free(source_argb);
+		free(destination_argb);
+		return PF_Err_OUT_OF_MEMORY;
+	}
+
+	for (size_t y = 0; y < height; ++y) {
+		PF_Pixel8 *output_row = (PF_Pixel8*)((char*)output->data + y * (size_t)output->rowbytes);
+		for (size_t x = 0; x < width; ++x) {
+			const u_char *packed = destination_argb + (y * width + x) * 4;
+			PF_Pixel8 &pixel = output_row[x];
+			pixel.alpha = packed[0];
+			pixel.red = packed[1];
+			pixel.green = packed[2];
+			pixel.blue = packed[3];
+		}
+	}
+
+	free(source_argb);
+	free(destination_argb);
+	return PF_Err_NONE;
+}
+
+static PF_Err
+render_32bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
+	                           float blur_amount, float blur_smoothness,
+	                           A_long repeat, A_long bias_dir)
+{
+	const size_t width = (size_t)input->width;
+	const size_t height = (size_t)input->height;
+	if (height != 0 && width > ((size_t)-1) / height) return PF_Err_OUT_OF_MEMORY;
+	const size_t pixels = width * height;
+	if (pixels > ((size_t)-1) / 4) return PF_Err_OUT_OF_MEMORY;
+
+	try {
+		std::vector<float> source_argb(pixels * 4);
+		std::vector<float> destination_argb(pixels * 4);
+
+		for (size_t y = 0; y < height; ++y) {
+			const PF_PixelFloat *source_row = (const PF_PixelFloat*)((const char*)input->data + y * (size_t)input->rowbytes);
+			for (size_t x = 0; x < width; ++x) {
+				const PF_PixelFloat &pixel = source_row[x];
+				float *packed = source_argb.data() + (y * width + x) * 4;
+				packed[0] = pixel.alpha;
+				packed[1] = pixel.red;
+				packed[2] = pixel.green;
+				packed[3] = pixel.blue;
+			}
+		}
+
+		olm::blur::worker32::Params params = {
+			blur_amount,
+			blur_smoothness,
+			(size_t)(repeat > 0 ? repeat : 0),
+			(size_t)(bias_dir > 0 ? bias_dir : 0)
+		};
+		olm::blur::worker32::render_nonlegacy(
+			source_argb.data(), destination_argb.data(), width, height, params);
+
+		for (size_t y = 0; y < height; ++y) {
+			PF_PixelFloat *output_row = (PF_PixelFloat*)((char*)output->data + y * (size_t)output->rowbytes);
+			for (size_t x = 0; x < width; ++x) {
+				const float *packed = destination_argb.data() + (y * width + x) * 4;
+				PF_PixelFloat &pixel = output_row[x];
+				pixel.alpha = packed[0];
+				pixel.red = packed[1];
+				pixel.green = packed[2];
+				pixel.blue = packed[3];
+			}
+		}
+	} catch (const std::bad_alloc &) {
+		return PF_Err_OUT_OF_MEMORY;
+	}
+
+	return PF_Err_NONE;
+}
+
+static PF_Err
+render_32bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
+	                       float blur_amount, float blur_smoothness,
+	                       A_long repeat, A_long bias_dir)
+{
+	const size_t width = (size_t)input->width;
+	const size_t height = (size_t)input->height;
+	if (height != 0 && width > ((size_t)-1) / height) return PF_Err_OUT_OF_MEMORY;
+	const size_t pixels = width * height;
+	if (pixels > ((size_t)-1) / 4) return PF_Err_OUT_OF_MEMORY;
+
+	try {
+		std::vector<float> source_argb(pixels * 4);
+		std::vector<float> destination_argb(pixels * 4);
+
+		for (size_t y = 0; y < height; ++y) {
+			const PF_PixelFloat *source_row = (const PF_PixelFloat*)((const char*)input->data + y * (size_t)input->rowbytes);
+			for (size_t x = 0; x < width; ++x) {
+				const PF_PixelFloat &pixel = source_row[x];
+				float *packed = source_argb.data() + (y * width + x) * 4;
+				packed[0] = pixel.alpha;
+				packed[1] = pixel.red;
+				packed[2] = pixel.green;
+				packed[3] = pixel.blue;
+			}
+		}
+
+		olm::blur::worker32_legacy::Params params = {
+			blur_amount,
+			blur_smoothness,
+			(size_t)(repeat > 0 ? repeat : 0),
+			(size_t)(bias_dir > 0 ? bias_dir : 0),
+			1.0f
+		};
+		olm::blur::worker32_legacy::render(
+			source_argb.data(), destination_argb.data(), width, height, params);
+
+		for (size_t y = 0; y < height; ++y) {
+			PF_PixelFloat *output_row = (PF_PixelFloat*)((char*)output->data + y * (size_t)output->rowbytes);
+			for (size_t x = 0; x < width; ++x) {
+				const float *packed = destination_argb.data() + (y * width + x) * 4;
+				PF_PixelFloat &pixel = output_row[x];
+				pixel.alpha = packed[0];
+				pixel.red = packed[1];
+				pixel.green = packed[2];
+				pixel.blue = packed[3];
+			}
+		}
+	} catch (const std::bad_alloc &) {
+		return PF_Err_OUT_OF_MEMORY;
+	}
+
+	return PF_Err_NONE;
+}
+
+static PF_Err
 BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
            short bpc, const BlurParams *bp)
 {
@@ -713,6 +1063,36 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 	blur_amount *= ((float)in_data->downsample_x.num / (float)in_data->downsample_x.den);
 	if (blur_amount <= 0) {
 		return PF_COPY(input, output, NULL, NULL);
+	}
+	if (bpc == 8 && bp->legacy) {
+		return render_8bpc_legacy_adapter(
+			input, output, blur_amount, bp->blur_smoothness,
+			bp->repeat, bp->bias_dir);
+	}
+	if (bpc == 8 && !bp->legacy) {
+		return render_8bpc_nonlegacy_adapter(
+			input, output, blur_amount, bp->blur_smoothness,
+			bp->repeat, bp->bias_dir);
+	}
+	if (bpc == 16 && !bp->legacy) {
+		return render_16bpc_nonlegacy_adapter(
+			input, output, blur_amount, bp->blur_smoothness,
+			bp->repeat, bp->bias_dir);
+	}
+	if (bpc == 16 && bp->legacy) {
+		return render_16bpc_legacy_adapter(
+			input, output, blur_amount, bp->blur_smoothness,
+			bp->repeat, bp->bias_dir);
+	}
+	if (bpc == 32 && !bp->legacy) {
+		return render_32bpc_nonlegacy_adapter(
+			input, output, blur_amount, bp->blur_smoothness,
+			bp->repeat, bp->bias_dir);
+	}
+	if (bpc == 32 && bp->legacy) {
+		return render_32bpc_legacy_adapter(
+			input, output, blur_amount, bp->blur_smoothness,
+			bp->repeat, bp->bias_dir);
 	}
 
 	size_t npix = (size_t)w * h;

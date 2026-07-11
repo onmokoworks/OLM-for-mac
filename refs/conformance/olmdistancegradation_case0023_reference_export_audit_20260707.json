@@ -1,0 +1,452 @@
+{
+  "kind": "olmdistancegradation_case0023_reference_export_audit",
+  "materialized_at": "2026-07-11T12:16:11Z",
+  "case_id": "olmdistancegradation_extended__case_0023",
+  "sample_points": [
+    [
+      1698,
+      7
+    ],
+    [
+      1699,
+      7
+    ],
+    [
+      1700,
+      7
+    ],
+    [
+      414,
+      393
+    ],
+    [
+      415,
+      393
+    ],
+    [
+      416,
+      393
+    ]
+  ],
+  "missing": {},
+  "images": {
+    "packaged_16bpc": {
+      "path": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+      "sha256": "4ffcbd0015557e076067969ce364625e9aad12ffb8c96756a97d7dc6d8ad4910",
+      "shape": [
+        1080,
+        1920,
+        4
+      ],
+      "dtype": ">u2",
+      "samples": {
+        "1698,7": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "1699,7": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "1700,7": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "414,393": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "415,393": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "416,393": [
+          65535,
+          0,
+          0,
+          65535
+        ]
+      }
+    },
+    "current_win_20260703": {
+      "path": "refs/win_references/olm_reference_return_windows_20260703_combined/DistanceGradation/olmdistancegradation_case0023_current_aex_recapture_20260702__software_16bpc__fr24__olmdistancegradation_extended__case_0023_current_aex.png",
+      "sha256": "4ffcbd0015557e076067969ce364625e9aad12ffb8c96756a97d7dc6d8ad4910",
+      "shape": [
+        1080,
+        1920,
+        4
+      ],
+      "dtype": ">u2",
+      "samples": {
+        "1698,7": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "1699,7": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "1700,7": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "414,393": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "415,393": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "416,393": [
+          65535,
+          0,
+          0,
+          65535
+        ]
+      }
+    },
+    "current_win_20260706": {
+      "path": "refs/win_references/olm_return_20260706/DistanceGradation/olmdistancegradation_case0023_current_aex_recapture_20260702__software_16bpc__fr24__olmdistancegradation_extended__case_0023_current_aex.png",
+      "sha256": "4ffcbd0015557e076067969ce364625e9aad12ffb8c96756a97d7dc6d8ad4910",
+      "shape": [
+        1080,
+        1920,
+        4
+      ],
+      "dtype": ">u2",
+      "samples": {
+        "1698,7": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "1699,7": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "1700,7": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "414,393": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "415,393": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "416,393": [
+          65535,
+          0,
+          0,
+          65535
+        ]
+      }
+    },
+    "mac_live_bg_on_20260703": {
+      "path": "refs/reports/ae_single_case_distancegradation_case0023_live_20260703_bg_on/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+      "sha256": "cc68fbe4645a6711ba1ea253885b8d84b2f55c09e30389f43d9ae48da95a4d67",
+      "shape": [
+        1080,
+        1920,
+        4
+      ],
+      "dtype": ">u2",
+      "samples": {
+        "1698,7": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "1699,7": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "1700,7": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "414,393": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "415,393": [
+          65535,
+          0,
+          0,
+          65535
+        ],
+        "416,393": [
+          65535,
+          0,
+          0,
+          65535
+        ]
+      }
+    },
+    "win_bg_off": {
+      "path": "refs/win_references/olmdistancegradation_16bpc_bg_compose_variants_20260626/DistanceGradation/renders/olmdistancegradation_16bpc_bg_compose_variants_20260626__software_16bpc__fr24__olmdistancegradation_case_0023_bg_off_variant.png",
+      "sha256": "933ea782e5781556b95cfb739abcfb8f0dfa021ff63d99a784ca2497262dbf64",
+      "shape": [
+        1080,
+        1920,
+        4
+      ],
+      "dtype": ">u2",
+      "samples": {
+        "1698,7": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "1699,7": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "1700,7": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "414,393": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "415,393": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "416,393": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "mac_bg_off_20260703": {
+      "path": "refs/reports/ae_single_case_distancegradation_case0023_live_20260703_bg_off/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+      "sha256": "28b2b3a99766f30665c5efe646cfbcb50cfba1bc614079140d38df3221cf5391",
+      "shape": [
+        1080,
+        1920,
+        4
+      ],
+      "dtype": ">u2",
+      "samples": {
+        "1698,7": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "1699,7": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "1700,7": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "414,393": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "415,393": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "416,393": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "mac_bg_off_refresh": {
+      "path": "refs/reports/ae_single_case_distancegradation_case0023_live_refresh_bg_off/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0023.png",
+      "sha256": "28b2b3a99766f30665c5efe646cfbcb50cfba1bc614079140d38df3221cf5391",
+      "shape": [
+        1080,
+        1920,
+        4
+      ],
+      "dtype": ">u2",
+      "samples": {
+        "1698,7": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "1699,7": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "1700,7": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "414,393": [
+          7195,
+          0,
+          61165,
+          65535
+        ],
+        "415,393": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "416,393": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  },
+  "comparisons": {
+    "packaged_vs_current_win_20260703": {
+      "status": "compared",
+      "shape": [
+        1080,
+        1920,
+        4
+      ],
+      "dtype_a": ">u2",
+      "dtype_b": ">u2",
+      "nonzero_px": 0,
+      "max_diff": 0,
+      "mean_diff": 0.0
+    },
+    "packaged_vs_current_win_20260706": {
+      "status": "compared",
+      "shape": [
+        1080,
+        1920,
+        4
+      ],
+      "dtype_a": ">u2",
+      "dtype_b": ">u2",
+      "nonzero_px": 0,
+      "max_diff": 0,
+      "mean_diff": 0.0
+    },
+    "current_win_20260703_vs_20260706": {
+      "status": "compared",
+      "shape": [
+        1080,
+        1920,
+        4
+      ],
+      "dtype_a": ">u2",
+      "dtype_b": ">u2",
+      "nonzero_px": 0,
+      "max_diff": 0,
+      "mean_diff": 0.0
+    },
+    "current_win_20260706_vs_mac_live_bg_on_20260703": {
+      "status": "compared",
+      "shape": [
+        1080,
+        1920,
+        4
+      ],
+      "dtype_a": ">u2",
+      "dtype_b": ">u2",
+      "nonzero_px": 73,
+      "max_diff": 61165,
+      "mean_diff": 1.0517777054398147
+    },
+    "win_bg_off_vs_mac_bg_off_20260703": {
+      "status": "compared",
+      "shape": [
+        1080,
+        1920,
+        4
+      ],
+      "dtype_a": ">u2",
+      "dtype_b": ">u2",
+      "nonzero_px": 73,
+      "max_diff": 65535,
+      "mean_diff": 1.1784258053626544
+    },
+    "win_bg_off_vs_mac_bg_off_refresh": {
+      "status": "compared",
+      "shape": [
+        1080,
+        1920,
+        4
+      ],
+      "dtype_a": ">u2",
+      "dtype_b": ">u2",
+      "nonzero_px": 73,
+      "max_diff": 65535,
+      "mean_diff": 1.1784258053626544
+    }
+  },
+  "reference_exact": true,
+  "safe_claim": "The packaged 2026-06-25 16bpc Windows Software reference is byte-identical to the 2026-07-03 and 2026-07-06 current-AEX Windows recaptures for case_0023. The old packaged-stale explanation is therefore not valid for the current files in this worktree."
+}

@@ -1,5 +1,12 @@
 # Active Pending Implementation Map - 2026-07-01
 
+> **Historical correction (2026-07-10):** the OLMBlur `answered` reading in
+> section 1 is invalid. No `TARGET_OLMBLUR_CASE0006_*` CDB block was captured,
+> and the later numeric `windows_*` fields have no independent Windows runtime
+> provenance. Use
+> `refs/conformance/olmblur_case0006_unverified_windows_value_audit_20260710.md`
+> and the current conformance ledger instead.
+
 This note converts the live Windows runtime-trace wait, plus the just-answered
 OLMBlur witness, into concrete
 Mac-side implementation decision points.

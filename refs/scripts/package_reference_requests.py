@@ -164,8 +164,14 @@ def request_summary(data: dict) -> str:
         lines.append(f"- Optional render set(s): {', '.join(optional_sets)}")
 
     why = data.get("why", [])
-    if why:
-        lines.append("- Why: " + str(why[0]))
+    if isinstance(why, str):
+        why_text = why
+    elif isinstance(why, list) and why:
+        why_text = str(why[0])
+    else:
+        why_text = ""
+    if why_text:
+        lines.append("- Why: " + why_text)
 
     cases = data.get("cases", [])
     if cases:
@@ -184,8 +190,117 @@ def request_summary(data: dict) -> str:
     return "\n".join(lines)
 
 
+FORMAT_DISPLAY_NAMES = {
+    "exr": "EXR",
+    "tiff": "TIFF",
+    "tif": "TIF",
+    "hdr": "HDR",
+    "raw-float-rgba": "raw-float-RGBA",
+    "png": "PNG",
+}
+
+
+def display_format_name(name: str) -> str:
+    return FORMAT_DISPLAY_NAMES.get(name, name)
+
+
+def ordered_unique_strings(values: list[str]) -> list[str]:
+    ordered: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        if not isinstance(value, str) or not value or value in seen:
+            continue
+        seen.add(value)
+        ordered.append(value)
+    return ordered
+
+
+def collect_float_handoff_requirements(validated: list[tuple[Path, dict]]) -> dict | None:
+    request_ids: list[str] = []
+    preferred_formats: list[str] = []
+    fallback_formats: list[str] = []
+    png_only_classifications: list[str] = []
+    sha256_scope: list[str] = []
+    header_scope: list[str] = []
+    typed_fallbacks: list[dict] = []
+    typed_fallback_formats: set[str] = set()
+
+    for _path, data in validated:
+        compare_policy = data.get("compare_policy")
+        output_requirements = data.get("output_requirements")
+        if not isinstance(compare_policy, dict) or not isinstance(output_requirements, dict):
+            continue
+        if compare_policy.get("mode") != "float-preserving-required":
+            continue
+
+        request_id = data.get("request_id")
+        if isinstance(request_id, str) and request_id:
+            request_ids.append(request_id)
+
+        preferred_formats.extend(output_requirements.get("preferred_formats", []))
+        fallback_formats.extend(output_requirements.get("acceptable_float_preserving_fallbacks", []))
+
+        png_only_classification = output_requirements.get("png_only_classification")
+        if isinstance(png_only_classification, str) and png_only_classification:
+            png_only_classifications.append(png_only_classification)
+
+        artifact_integrity = output_requirements.get("artifact_integrity")
+        if not isinstance(artifact_integrity, dict):
+            continue
+
+        sha256_scope.extend(artifact_integrity.get("sha256_scope", []))
+        header_scope.extend(artifact_integrity.get("header_metadata_scope", []))
+
+        for typed_fallback in artifact_integrity.get("typed_fallbacks", []):
+            if not isinstance(typed_fallback, dict):
+                continue
+            fallback_format = typed_fallback.get("format")
+            if not isinstance(fallback_format, str) or not fallback_format or fallback_format in typed_fallback_formats:
+                continue
+            typed_fallback_formats.add(fallback_format)
+            typed_fallbacks.append(typed_fallback)
+
+    if not request_ids:
+        return None
+
+    return {
+        "request_ids": request_ids,
+        "preferred_formats": ordered_unique_strings(preferred_formats),
+        "fallback_formats": ordered_unique_strings(fallback_formats),
+        "png_only_classifications": ordered_unique_strings(png_only_classifications),
+        "sha256_scope": ordered_unique_strings(sha256_scope),
+        "header_scope": ordered_unique_strings(header_scope),
+        "typed_fallbacks": typed_fallbacks,
+    }
+
+
+def format_format_list(names: list[str]) -> str:
+    return ", ".join(f"`{display_format_name(name)}`" for name in names)
+
+
+def format_typed_fallbacks(typed_fallbacks: list[dict]) -> str:
+    parts: list[str] = []
+    for item in typed_fallbacks:
+        fallback_format = item.get("format")
+        if not isinstance(fallback_format, str) or not fallback_format:
+            continue
+        details = [display_format_name(fallback_format)]
+        sample_type = item.get("required_sample_type")
+        if isinstance(sample_type, str) and sample_type:
+            details.append(sample_type)
+        bits = item.get("required_bits_per_channel")
+        if isinstance(bits, int):
+            details.append(f"{bits} bits/channel")
+        required_metadata = ordered_unique_strings(item.get("required_metadata", []))
+        if required_metadata:
+            details.append("metadata: " + ", ".join(required_metadata))
+        parts.append(" ".join(details))
+    return "; ".join(parts)
+
+
 def build_handoff(validated: list[tuple[Path, dict]]) -> str:
     total_cases = sum(len(data["cases"]) for _path, data in validated)
+    float_requirements = collect_float_handoff_requirements(validated)
     lines = [
         "# Windows Codex Handoff: OLM Reference Requests",
         "",
@@ -200,24 +315,54 @@ def build_handoff(validated: list[tuple[Path, dict]]) -> str:
         "- You do not need the Mac OLM worktree to render these references.",
         "  You do need Windows After Effects with the original OLM Tools AEX",
         "  plug-ins installed and an AE script/runner that can read these JSON",
-        "  request specs, set the listed effect properties, render PNGs, and",
-        "  write the return manifest.",
-        "- Prefer `project_gpu_accel_type.current_name = SOFTWARE` first.",
-        "- CUDA renders are useful but optional unless a request marks them required.",
-        "- Record `project_gpu_accel_type.current_name` and raw value in the manifest.",
-        "- Keep `ADBE Force CPU GPU` / hidden GPU Rendering as reference-only metadata.",
-        "- Save `before_effects_frame` and the effect output PNG for every case.",
-        "- Record all selected effect property names, match_names, indices, values,",
-        "  and enabled/active state.",
-        "- If a request asks for instrumentation that AE scripting cannot access,",
-        "  record that limitation explicitly rather than inventing a value.",
-        "",
-        f"Selected requests: {len(validated)}",
-        f"Total requested cases before render-set multiplication: {total_cases}",
-        "",
-        "## Request Summaries",
-        "",
+        "  request specs, set the listed effect properties,",
     ]
+    if float_requirements is None:
+        lines.extend(
+            [
+                "  render PNGs, and write the return manifest.",
+                "- Save `before_effects_frame` and the effect output PNG for every case.",
+            ]
+        )
+    else:
+        preferred_formats = format_format_list(float_requirements["preferred_formats"])
+        fallback_formats = format_format_list(float_requirements["fallback_formats"])
+        typed_fallbacks = format_typed_fallbacks(float_requirements["typed_fallbacks"])
+        png_only_text = ", ".join(float_requirements["png_only_classifications"]) or "probe-only"
+        sha256_scope = ", ".join(f"`{item}`" for item in float_requirements["sha256_scope"])
+        header_scope = ", ".join(f"`{item}`" for item in float_requirements["header_scope"])
+        lines.extend(
+            [
+                "  render the requested float-preserving outputs, any required PNG",
+                "  companions, and write the return manifest.",
+                "- Save `before_effects_frame` for every case and keep PNG output from",
+                "  float-preserving requests only as companion/probe artifacts.",
+                f"- For float-preserving requests in this package, return {preferred_formats} first.",
+                f"- If the preferred format is impossible, use only typed float-preserving fallbacks: {fallback_formats}.",
+                f"- Typed fallback requirements from the selected requests: {typed_fallbacks}.",
+                f"- PNG-only output is `{png_only_text}` for these requests and cannot stand in for the float-preserving return.",
+                f"- Record SHA-256 for every required artifact: {sha256_scope}.",
+                f"- Record header/sample metadata for each float-preserving artifact: {header_scope}.",
+            ]
+        )
+    lines.extend(
+        [
+            "- Prefer `project_gpu_accel_type.current_name = SOFTWARE` first.",
+            "- CUDA renders are useful but optional unless a request marks them required.",
+            "- Record `project_gpu_accel_type.current_name` and raw value in the manifest.",
+            "- Keep `ADBE Force CPU GPU` / hidden GPU Rendering as reference-only metadata.",
+            "- Record all selected effect property names, match_names, indices, values,",
+            "  and enabled/active state.",
+            "- If a request asks for instrumentation that AE scripting cannot access,",
+            "  record that limitation explicitly rather than inventing a value.",
+            "",
+            f"Selected requests: {len(validated)}",
+            f"Total requested cases before render-set multiplication: {total_cases}",
+            "",
+            "## Request Summaries",
+            "",
+        ]
+    )
     for _path, data in validated:
         lines.append(request_summary(data))
         lines.append("")
@@ -233,17 +378,58 @@ def build_handoff(validated: list[tuple[Path, dict]]) -> str:
             "- Use the JSON files under `refs/reference_requests/` as render specs.",
             "- If no existing AE runner is available, create a minimal ExtendScript",
             "  or Windows Codex helper that reads these specs, applies the requested",
-            "  OLM effect parameters, saves `before_effects_frame` PNGs, renders the",
-            "  effect PNGs, and writes the manifest described below.",
+            "  OLM effect parameters,",
+        ]
+    )
+    if float_requirements is None:
+        lines.extend(
+            [
+                "  saves `before_effects_frame` PNGs, renders the effect PNGs, and",
+                "  writes the manifest described below.",
+            ]
+        )
+    else:
+        lines.extend(
+            [
+                "  saves `before_effects_frame` artifacts, renders EXR-first float",
+                "  outputs plus any PNG probe companions, and writes the manifest",
+                "  described below.",
+            ]
+        )
+    lines.extend(
+        [
             "- The Mac-side commands in this README are for after the returned zip is",
             "  copied back to the Mac repository; do not run them on the Windows box",
             "  unless that repository also exists there.",
             "",
             "Return one zip containing:",
             "",
-            "- Rendered PNG outputs.",
-            "- Matching `before_effects_frame` PNGs.",
-            "- A manifest JSON with render-set metadata and all effect parameters.",
+        ]
+    )
+    if float_requirements is None:
+        lines.extend(
+            [
+                "- Rendered PNG outputs.",
+                "- Matching `before_effects_frame` PNGs.",
+                "- A manifest JSON with render-set metadata and all effect parameters.",
+            ]
+        )
+    else:
+        preferred_formats = format_format_list(float_requirements["preferred_formats"])
+        fallback_formats = format_format_list(float_requirements["fallback_formats"])
+        lines.extend(
+            [
+                f"- Float-preserving effect outputs in {preferred_formats} first,",
+                f"  or recorded typed fallbacks in {fallback_formats} when needed.",
+                "- PNG companion/probe outputs only when the request emitted them.",
+                "- Matching `before_effects_frame` PNGs or float-preserving input",
+                "  snapshots as required by the selected request JSONs.",
+                "- A manifest JSON with render-set metadata, all effect parameters,",
+                "  SHA-256 values, exact output-format records, and header/sample metadata.",
+            ]
+        )
+    lines.extend(
+        [
             "- Any AE script/log output or error screenshots if a case fails.",
             "",
             "The Mac side will import the result with:",
