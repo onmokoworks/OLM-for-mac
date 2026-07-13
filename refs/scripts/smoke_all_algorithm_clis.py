@@ -127,6 +127,7 @@ def main() -> int:
         Smoke("OLMBlur 8bpc worker orchestration", [py, "refs/scripts/smoke_olmblur_worker_orchestration.py"]),
         Smoke("OLMBlur 32bpc Non-Legacy worker", [py, "refs/scripts/smoke_olmblur_worker32_nonlegacy.py"]),
         Smoke("OLMBlur 16bpc Non-Legacy worker", [py, "refs/scripts/smoke_olmblur_worker16_nonlegacy.py"]),
+        Smoke("OLMBlur case_0006 actual-AEX dependency-cone evidence", [py, "refs/scripts/smoke_olmblur_case0006_actual_aex_fullworker.py"]),
         Smoke("OLMBlur 8bpc Legacy worker", [py, "refs/scripts/smoke_olmblur_worker8_legacy.py"]),
         Smoke("OLMBlur 16bpc Legacy worker", [py, "refs/scripts/smoke_olmblur_worker16_legacy.py"]),
         Smoke("OLMBlur 32bpc Legacy worker", [py, "refs/scripts/smoke_olmblur_worker32_legacy.py"]),
