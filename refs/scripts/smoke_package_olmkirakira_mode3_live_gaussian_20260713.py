@@ -179,6 +179,15 @@ def verify_ps1_fail_closed(runner_text: str, manifest: dict[str, Any]) -> None:
         "interactive desktop, not SSH session 0",
         "[IO.Path]::IsPathRooted($WorkRoot)",
         "all cross-process paths must be absolute",
+        "Get-CimInstance Win32_Process",
+        "ExecutablePath",
+        "SessionId",
+        "Get-AfterFxProcessState",
+        "Wait-ForAfterFxMarker",
+        "Wait-ForAfterFxExit",
+        "New-ProcessDiagnostics",
+        "process_diagnostics",
+        "observed_pids",
         "ae_jsx_ready_preflight.jsx",
         "-ArgumentList @('-m','-r',$preflightLaunch)",
         "-ArgumentList @('-m','-r',$jsxLaunch)",
@@ -186,6 +195,8 @@ def verify_ps1_fail_closed(runner_text: str, manifest: dict[str, Any]) -> None:
         "argument_vector=@('-m','-r',$jsxLaunch)",
         "cdb_trace.log",
         "cdb_stdout.txt",
+        "minimal JSX wrote ready but AfterFX path/session candidate did not exit after app.quit",
+        "AfterFX ready marker was emitted but no live AfterFX process matched executable path and session",
     ):
         expect(token in runner_text, f"runner token missing: {token}")
 
@@ -194,6 +205,8 @@ def verify_ps1_fail_closed(runner_text: str, manifest: dict[str, Any]) -> None:
     expect("$u32=for($i=0;$i -lt 21;$i++)" in runner_text, "runner does not decode 21 returned words")
     expect("preflight=@{status='ready'" in runner_text, "answered return omits successful preflight provenance")
     expect("-ArgumentList ('-m -r '+$jsxLaunch)" not in runner_text, "runner retained ambiguous single-string AE arguments")
+    expect("while((Get-Date)-lt $deadline -and !(Test-Path -LiteralPath $preflightReady) -and !$preflight.HasExited)" not in runner_text, "preflight wait still terminates on launcher exit")
+    expect("-p '+$ae.Id" not in runner_text, "CDB attach still uses launcher PID instead of tracked AE PID")
 
 
 def verify_preflight_jsx(preflight_text: str) -> None:
