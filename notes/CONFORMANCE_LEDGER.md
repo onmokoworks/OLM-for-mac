@@ -1,5 +1,18 @@
 # OLM Conformance Ledger
 
+- 2026-07-14 `common Windows CDB launcher gate`: the previous four-plugin
+  batch was fail-closed at `cdb_launch` for every plugin: AfterFX was observed
+  by process enumeration, but no CDB detach or queue binding marker was
+  produced. The common runner was changed to launch `AfterFX.exe -r <queue>`
+  directly under CDB, keep the initial breakpoint enabled, write an explicit
+  initial-break marker, and detach with `qd`; the `cmd.exe` child wrapper and
+  `ld:AfterFX.exe` filter are removed. Local common tests are 19/19 and all six
+  current witness-package smokes pass. A DG case0026 launch-only package was
+  sent for real-Windows validation; it is a launcher gate only and must not
+  change any plugin correctness status until `cdb_bootstrap_exit`, the initial
+  break marker, and `queue_bootstrap.log` are all returned. Evidence:
+  `refs/conformance/windows_witness_return_batch_20260714.md`.
+
 - 2026-07-13 `Windows one-click witness batch`: the reusable
   `tools/windows_witness` compiler, six current common-core witness specs,
   outer serial dispatcher, and fail-closed batch intake are ready. The batch
