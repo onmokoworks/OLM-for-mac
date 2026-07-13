@@ -1,0 +1,16 @@
+.logopen /t __TRACE__
+.symfix
+.effmach amd64
+.expr /s masm
+sxi e06d7363
+r @$t0=0
+r @$t1=0
+r @$t2=0
+.echo KK_RUN_START request_id=olmkirakira_mode3_live_gaussian_20260713 run_id=__RUN_ID__ case_id=final_random10_olm_kira_kira_03
+.echo KK_MODULE run_id=__RUN_ID__ module=OLMKiraKira.aex module_base=__BASE__ sha256=60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7 size=25781248
+bp __WRAPPER__ ".printf \"KK_WRAPPER run_id=__RUN_ID__ module_base=__BASE__ wrapper=__WRAPPER__ rcx=%p rdx=%p r8=%p r9=%p\n\", @rcx,@rdx,@r8,@r9; gc"
+bp __CREATE__ ".printf \"KK_CREATE run_id=__RUN_ID__ module_base=__BASE__ create=__CREATE__ rcx=%p rdx=%p r8=%p r9=%p\n\", @rcx,@rdx,@r8,@r9; gc"
+bp __KERNEL__ ".if (@$t0==0) { r @$t0=1; r @$t1=@r9; .printf \"KK_KERNEL_ENTRY run_id=__RUN_ID__ module_base=__BASE__ getKernel=__KERNEL__ ecx=%u xmm1=%g r8=%u output_mat=%p return_address=%p\n\", @ecx,@xmm1,@r8d,@r9,poi(@rsp); bp poi(@rsp) \".if (@$t0==1) { .if (@$t2==0) { r @$t2=1; r @$t3=poi(@$t1+0x10); .printf \\\"KK_KERNEL_RETURN run_id=__RUN_ID__ module_base=__BASE__ getKernel=__KERNEL__ output_mat=%p data=%p word_count=21 source=cv_Mat_data_after_return\\n\\\", @$t1, @$t3; .writemem \\\"__WORDS__\\\" @$t3 @$t3+0x53; .echo KK_CAPTURE_END; q } .else { gc } } .else { gc }\"; } .else { gc }"
+.echo KK_BREAKPOINTS_READY run_id=__RUN_ID__ module_base=__BASE__ wrapper=__WRAPPER__ create=__CREATE__ getKernel=__KERNEL__
+g
+q

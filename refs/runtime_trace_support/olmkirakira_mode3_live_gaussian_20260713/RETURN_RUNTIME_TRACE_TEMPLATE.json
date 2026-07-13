@@ -1,0 +1,79 @@
+{
+  "schema": "olmkirakira-mode3-live-gaussian-return-v1",
+  "request_id": "olmkirakira_mode3_live_gaussian_20260713",
+  "status": "answered | exact_bind_failure",
+  "run": {
+    "run_id": null,
+    "case_id": "final_random10_olm_kira_kira_03",
+    "renderer": "software",
+    "bits_per_channel": 32,
+    "module": "OLMKiraKira.aex",
+    "module_base": null,
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "aex_size": 25781248
+  },
+  "binding": {
+    "wrapper_rva": "0x1272ec0",
+    "create_rva": "0x1266730",
+    "getKernel_rva": "0x12754a0",
+    "wrapper": null,
+    "create": null,
+    "getKernel": null
+  },
+  "case": {
+    "blur_mode_manifest": 3,
+    "case_id": "final_random10_olm_kira_kira_03",
+    "overrides_match_name": {
+      "OLM OLM Kira Kira-0003": 5,
+      "OLM OLM Kira Kira-0004": 0,
+      "OLM OLM Kira Kira-0005": 0,
+      "OLM OLM Kira Kira-0026": 0
+    },
+    "expected_first_kernel": {
+      "ecx": 21,
+      "xmm1": 2.5,
+      "r8": 5
+    }
+  },
+  "observation": {
+    "wrapper_args": null,
+    "create_seen": false,
+    "first_getKernel": {
+      "ecx": null,
+      "xmm1": null,
+      "r8": null,
+      "output_mat": null
+    },
+    "return_data": null,
+    "raw_words_u32": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "raw_bytes": 84
+  },
+  "failure": {
+    "stage": null,
+    "reason": null,
+    "missing": [],
+    "same_run": null
+  }
+}

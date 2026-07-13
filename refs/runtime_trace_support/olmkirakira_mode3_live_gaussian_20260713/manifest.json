@@ -1,0 +1,62 @@
+{
+  "kind": "olm_windows_live_gaussian_capture_request",
+  "package": "olmkirakira_mode3_live_gaussian_20260713",
+  "request_id": "olmkirakira_mode3_live_gaussian_20260713",
+  "schema": "olmkirakira-mode3-live-gaussian-return-v1",
+  "plugin": "OLMKiraKira",
+  "case_id": "final_random10_olm_kira_kira_03",
+  "case_selection": {
+    "source": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMKiraKira/reference_manifest.json",
+    "manifest_blur_mode": 3
+  },
+  "parameter_overrides": {
+    "match_name": {
+      "OLM OLM Kira Kira-0003": 5,
+      "OLM OLM Kira Kira-0004": 0,
+      "OLM OLM Kira Kira-0005": 0,
+      "OLM OLM Kira Kira-0026": 0
+    },
+    "expected": {
+      "Vertical Length": 5,
+      "Horizontal Length": 0,
+      "Diagonal Length": 0,
+      "Diagonal 2 length": 0
+    }
+  },
+  "aex_pin": {
+    "path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\OLMKiraKira.aex",
+    "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "size": 25781248
+  },
+  "rva": {
+    "wrapper": "0x1272ec0",
+    "create": "0x1266730",
+    "getKernel": "0x12754a0"
+  },
+  "capture": {
+    "first_getKernel": {
+      "ecx": 21,
+      "xmm1": 2.5,
+      "r8": 5
+    },
+    "words": 21,
+    "element": "float32",
+    "encoding": "raw little-endian words",
+    "source": "cv::Mat.data after getKernel return"
+  },
+  "required_markers": [
+    "AE_READY",
+    "MODULE",
+    "BREAKPOINTS_READY",
+    "KK_WRAPPER",
+    "KK_CREATE",
+    "KK_KERNEL_ENTRY",
+    "KK_KERNEL_RETURN"
+  ],
+  "failure_status": "exact_bind_failure",
+  "forbidden_statuses": [
+    "answered_partial",
+    "partial",
+    "unknown"
+  ]
+}

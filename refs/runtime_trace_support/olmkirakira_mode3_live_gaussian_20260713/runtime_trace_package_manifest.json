@@ -1,0 +1,19 @@
+{
+  "kind": "olm_runtime_trace_request_package",
+  "schema": 1,
+  "profile": "olmkirakira_mode3_live_gaussian_20260713",
+  "effect": "OLMKiraKira",
+  "runtime_actions": [
+    {
+      "request_id": "olmkirakira_mode3_live_gaussian_20260713",
+      "action": "run one fresh AE 26.3 Software 32bpc case_03 render and capture the first 21-tap Gaussian kernel in the same process run",
+      "stop_condition": "answer only when AE ready, hash-pinned live module, absolute base+RVA hooks, first kernel args, return data pointer, 21 raw words, and one run id are all present",
+      "forbidden": [
+        "module-name breakpoints",
+        "pre-load attach",
+        "surrogate coefficient arrays",
+        "answered_partial"
+      ]
+    }
+  ]
+}
