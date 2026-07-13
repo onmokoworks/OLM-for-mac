@@ -28,10 +28,12 @@ def parse_fixture(path: Path) -> bool:
         return False
     return all(
         rows[rva].get("run_id") == "dglive-fixture"
+        and rows[rva].get("ae_pid") == "4242"
+        and rows[rva].get("module_base") == "0x7ff600000000"
         and rows[rva].get("aex_sha256") == HASH
         and rows[rva].get("hit_count", "").isdigit()
         for rva in RVAS
-    )
+    ) and int(rows["1170870"]["hit_count"]) > 0 and int(rows["1170c90"]["hit_count"]) == 0
 
 
 def main() -> int:
@@ -61,9 +63,13 @@ def main() -> int:
             print("[FAIL] zip/directory drift")
             return 1
         manifest = json.loads(archive.read("runtime_trace_package_manifest.json"))
+        template = json.loads(archive.read("RETURN_RUNTIME_TRACE_TEMPLATE.json"))
     action = manifest["runtime_actions"][0]
     if manifest.get("submission_status") != "ready" or manifest.get("sendable") is not True or set(action["rvas"]) != RVAS:
         print("[FAIL] liveness manifest is not runnable or has the wrong RVA set")
+        return 1
+    if "ae_pid" not in template or "module_base" not in template or template.get("project_bits_per_channel") != 8:
+        print("[FAIL] return template does not bind the AE process/module/depth identity")
         return 1
     if not parse_fixture(package_dir / "fixtures/complete_cdb_stdout.txt"):
         print("[FAIL] complete liveness fixture rejected")
@@ -72,7 +78,7 @@ def main() -> int:
         print("[FAIL] missing-RVA liveness fixture accepted")
         return 1
     runner = RUNNER.read_text(encoding="utf-8")
-    for needle in ("-ParseOnly", "DG8_DEPTH_HIT", "DG8_DEPTH_SUMMARY", "Get-FileHash", "sxe ld:DistanceGradation.aex"):
+    for needle in ("-ParseOnly", "DG8_DEPTH_HIT", "DG8_DEPTH_SUMMARY", "Get-FileHash", "DG8_DEPTH_BREAKPOINTS_ARMED"):
         if needle not in runner:
             print(f"[FAIL] liveness runner missing {needle}")
             return 1
@@ -86,14 +92,50 @@ def main() -> int:
         print("[FAIL] CDB pseudo-registers are not protected from PowerShell expansion")
         return 1
     for needle in (
+        "Start-Process -FilePath $AfterFxPath -ArgumentList ('-m -r \"' + $queue + '\"')",
+        "OLM_AE_PAUSE_BEFORE_RENDER = '1'",
+        "OLM_AE_READY_MARKER = $readyMarker",
+        "effect_loaded=1",
+        "parameters_applied=1",
+        "Get-Process -Name AfterFX",
+        ".Modules | Where-Object { $_.FileName -ieq $AexPath }",
+        "loaded module hash differs from pre-launch pin",
+        "ArgumentList ('-cf \"' + $cdbScript + '\" -p ' + $aePid)",
+        "Set-Content -LiteralPath $continueMarker -Value 'continue'",
+        "Stop-Process -Id $cdb.Id -Force",
+        "if ($launchStarted) { foreach ($candidate in @(MatchingAfterFX))",
+        "candidate_afterfx=@($candidates)",
+        "$work = (Get-Item -LiteralPath $work).FullName",
         "project_bits_per_channel -ne 8",
         "AE did not render the requested 8bpc case",
-        "bp DistanceGradation+0x1170870",
-        "bp DistanceGradation+0x1170c90",
+        "$baseValue + 0x1170870",
+        "$baseValue + 0x1170c90",
+        "PF8_hit_count_gt_0",
+        "PF32_hit_count_eq_0",
     ):
         if needle not in runner:
             print(f"[FAIL] depth-control runner missing {needle}")
             return 1
+    if "sxe ld:DistanceGradation" in runner or "$afterFx,'-r',$queue" in runner:
+        print("[FAIL] depth-control runner still launches AE as the CDB debuggee")
+        return 1
+    if re.search(r"while\s*\([^\r\n]*readyMarker[^\r\n]*launch\.HasExited", runner):
+        print("[FAIL] ready-marker wait is incorrectly cut short by launcher PID exit")
+        return 1
+    ordered = (
+        "Start-Process -FilePath $AfterFxPath",
+        "$readyText = Get-Content -LiteralPath $readyMarker -Raw",
+        ".Modules | Where-Object { $_.FileName -ieq $AexPath }",
+        "Start-Process -FilePath $CdbPath",
+        "if ((Test-Path -LiteralPath $trace) -and ((Get-Content -LiteralPath $trace -Raw) -match 'DG8_DEPTH_BREAKPOINTS_ARMED'))",
+        "Set-Content -LiteralPath $continueMarker -Value 'continue'",
+        "project_bits_per_channel -ne 8",
+        "$parsed = Parse $trace",
+    )
+    positions = [runner.find(needle) for needle in ordered]
+    if any(position < 0 for position in positions) or positions != sorted(positions):
+        print("[FAIL] normal-launch/ready/attach/arm/continue/depth/parse order regressed")
+        return 1
     embedded_renderer = (package_dir / "scripts/ae_render_single_case.jsx").read_text(encoding="utf-8")
     if "referenceManifest.comp && referenceManifest.comp.bpc" not in embedded_renderer:
         print("[FAIL] embedded AE runner ignores comp.bpc and can silently inherit 32bpc")
