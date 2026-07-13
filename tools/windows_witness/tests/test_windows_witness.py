@@ -240,7 +240,7 @@ class CompilerTests(unittest.TestCase):
         self.assertNotIn("'-cf', $bootstrapCdbScript, '--', $AfterFxPath", source)
         self.assertNotIn("$env:ComSpec, '/d', '/s', '/c', $launchWrapper", source)
         self.assertNotIn("'-o', '-pd', '-g', '-G'", source)
-        self.assertIn("$launchArguments = Join-WindowsCommandLine $launchArgumentValues", source)
+        self.assertIn("$launchArguments = '-m -r \"' + $normalizedQueuePath + '\"'", source)
         self.assertIn("-FilePath $CdbPath", source)
         self.assertIn("-ArgumentList $launchArguments", source)
         self.assertNotIn("$observedCommandLine.IndexOf($normalizedQueuePath", source)

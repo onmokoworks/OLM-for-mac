@@ -285,7 +285,7 @@ def main() -> int:
             "function ConvertTo-WindowsCommandLineArgument",
             "$launchArgumentValues = @('-m -r \"' + $normalizedQueuePath + '\"')",
             "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m', '-r', $normalizedQueuePath)",
-            "$launchArguments = Join-WindowsCommandLine $launchArgumentValues",
+            "$launchArguments = '-m -r \"' + $normalizedQueuePath + '\"'",
             "Read-QueueBootstrapBinding $queueBootstrap",
             "'queue_binding'",
             "$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'",

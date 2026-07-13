@@ -266,7 +266,7 @@ $env:WINDOWS_WITNESS_QUEUE_SHA256 = $queueHash
 $afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m', '-r', $normalizedQueuePath)
 @('@echo off', $afterFxCommandLine, 'exit /b %ERRORLEVEL%') | Set-Content -LiteralPath $launchWrapper -Encoding ASCII
 $launchArgumentValues = @('-m -r "' + $normalizedQueuePath + '"')
-$launchArguments = Join-WindowsCommandLine $launchArgumentValues
+$launchArguments = '-m -r "' + $normalizedQueuePath + '"'
 $launch = Start-Process -FilePath $AfterFxPath -ArgumentList $launchArguments -RedirectStandardOutput $launchOut -RedirectStandardError $launchErr -NoNewWindow -PassThru
 $launchStarted = $true
 $deadline = (Get-Date).AddSeconds(180)
