@@ -62,17 +62,17 @@ def main() -> int:
         assert 'runId + "\n"' not in queue
         assert "-ArgumentList @('-m', '-r', $queuePath)" not in launcher
         assert "function ConvertTo-WindowsCommandLineArgument" in launcher
-        assert "$launchArgumentValues = @('-m -r \"' + $normalizedQueuePath + '\"')" in launcher
+        assert "$launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)" in launcher
         assert "'-cf', $bootstrapCdbScript, '--', $AfterFxPath" not in launcher
-        assert "$env:ComSpec, '/d', '/s', '/c', $launchWrapper" not in launcher
+        assert "$env:ComSpec -ArgumentList $launchArguments" in launcher
         assert "'-o', '-pd', '-g', '-G'" not in launcher
         assert "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m', '-r', $normalizedQueuePath)" in launcher
-        assert "$launchArguments = '-m -r \"' + $normalizedQueuePath + '\"'" in launcher
+        assert "$launchArguments = Join-WindowsCommandLine $launchArgumentValues" in launcher
         assert "$observedCommandLine.IndexOf($normalizedQueuePath" not in launcher
         assert "'jsx_command_line_preflight'" not in launcher
         assert "('OLMWitness\\w_' + $shortId)" in launcher
         assert "$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'" in launcher
-        assert "Start-Process -FilePath $AfterFxPath -ArgumentList $launchArguments" in launcher
+        assert "Start-Process -FilePath $env:ComSpec -ArgumentList $launchArguments" in launcher
         assert "ld:AfterFX.exe" not in launcher
         assert "WITNESS_CDB_PLUGIN_LOADED" not in launcher
         assert "sxi ibp" not in launcher

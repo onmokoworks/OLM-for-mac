@@ -265,9 +265,9 @@ $queueHash = (Get-FileHash -LiteralPath $queueLaunch -Algorithm SHA256).Hash.ToL
 $env:WINDOWS_WITNESS_QUEUE_SHA256 = $queueHash
 $afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m', '-r', $normalizedQueuePath)
 @('@echo off', $afterFxCommandLine, 'exit /b %ERRORLEVEL%') | Set-Content -LiteralPath $launchWrapper -Encoding ASCII
-$launchArgumentValues = @('-m -r "' + $normalizedQueuePath + '"')
-$launchArguments = '-m -r "' + $normalizedQueuePath + '"'
-$launch = Start-Process -FilePath $AfterFxPath -ArgumentList $launchArguments -RedirectStandardOutput $launchOut -RedirectStandardError $launchErr -NoNewWindow -PassThru
+$launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)
+$launchArguments = Join-WindowsCommandLine $launchArgumentValues
+$launch = Start-Process -FilePath $env:ComSpec -ArgumentList $launchArguments -RedirectStandardOutput $launchOut -RedirectStandardError $launchErr -NoNewWindow -PassThru
 $launchStarted = $true
 $deadline = (Get-Date).AddSeconds(180)
 while ((Get-Date) -lt $deadline -and !(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) { Start-Sleep -Milliseconds 250 }
