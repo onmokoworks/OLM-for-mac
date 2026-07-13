@@ -249,25 +249,46 @@ static std::vector<float> DirectionBoxBlur(
 	return src;
 }
 
-static float SampleBilinearZero(const std::vector<float> &input, A_long width, A_long height, double x, double y)
+// OLMKIRAKIRA_FORWARD_WARP_HELPERS_BEGIN
+static A_long FloorShiftRight(A_long value, A_long shift)
 {
-	A_long x0 = (A_long)std::floor(x);
-	A_long y0 = (A_long)std::floor(y);
-	A_long x1 = x0 + 1;
-	A_long y1 = y0 + 1;
-	double tx = x - (double)x0;
-	double ty = y - (double)y0;
+	if (value >= 0) return value >> shift;
+	const A_long magnitude = -value;
+	return -((magnitude + (((A_long)1 << shift) - 1)) >> shift);
+}
+
+static float SampleBilinearZero(
+	const std::vector<float> &input,
+	A_long width,
+	A_long height,
+	A_long x_fixed,
+	A_long y_fixed)
+{
+#if defined(__clang__)
+#pragma clang fp contract(off)
+#endif
+	constexpr A_long kInterBits = 5;
+	constexpr A_long kInterTabSize = 1 << kInterBits;
+	const A_long x_fraction = FloorShiftRight(x_fixed, kInterBits);
+	const A_long y_fraction = FloorShiftRight(y_fixed, kInterBits);
+	const A_long x0 = FloorShiftRight(x_fraction, kInterBits);
+	const A_long y0 = FloorShiftRight(y_fraction, kInterBits);
+	const A_long fx = x_fraction & (kInterTabSize - 1);
+	const A_long fy = y_fraction & (kInterTabSize - 1);
 	auto sample_zero = [&](A_long sx, A_long sy) -> float {
 		if (sx < 0 || sy < 0 || sx >= width || sy >= height) return 0.0f;
 		return input[(size_t)sy * width + sx];
 	};
-	float v00 = sample_zero(x0, y0);
-	float v10 = sample_zero(x1, y0);
-	float v01 = sample_zero(x0, y1);
-	float v11 = sample_zero(x1, y1);
-	double a = v00 * (1.0 - tx) + v10 * tx;
-	double b = v01 * (1.0 - tx) + v11 * tx;
-	return (float)(a * (1.0 - ty) + b * ty);
+	const float scale = 1.0f / (float)(kInterTabSize * kInterTabSize);
+	const float w00 = (float)((kInterTabSize - fx) * (kInterTabSize - fy)) * scale;
+	const float w10 = (float)(fx * (kInterTabSize - fy)) * scale;
+	const float w01 = (float)((kInterTabSize - fx) * fy) * scale;
+	const float w11 = (float)(fx * fy) * scale;
+	float value = sample_zero(x0 + 1, y0) * w10;
+	value += sample_zero(x0, y0) * w00;
+	value += sample_zero(x0, y0 + 1) * w01;
+	value += sample_zero(x0 + 1, y0 + 1) * w11;
+	return value;
 }
 
 static std::vector<float> WarpGetRotDirect(
@@ -291,18 +312,28 @@ static std::vector<float> WarpGetRotDirect(
 	const double m11 = alpha;
 	const double m12 = beta * center_x + (1.0 - alpha) * center_y;
 	const double det = m00 * m11 - m01 * m10;
+	const double inv_m00 = m11 / det;
+	const double inv_m01 = -m01 / det;
+	const double inv_m02 = (m01 * m12 - m11 * m02) / det;
+	const double inv_m10 = -m10 / det;
+	const double inv_m11 = m00 / det;
+	const double inv_m12 = (m10 * m02 - m00 * m12) / det;
+	constexpr A_long kAbScale = 1 << 10;
+	constexpr A_long kRoundDelta = 1 << 4;
 	std::vector<float> output((size_t)dst_width * dst_height);
 	for (A_long y = 0; y < dst_height; ++y) {
+		const A_long base_x = (A_long)std::lrint((inv_m01 * (double)y + inv_m02) * kAbScale) + kRoundDelta;
+		const A_long base_y = (A_long)std::lrint((inv_m11 * (double)y + inv_m12) * kAbScale) + kRoundDelta;
 		for (A_long x = 0; x < dst_width; ++x) {
-			const double dx = (double)x - m02;
-			const double dy = (double)y - m12;
-			const double sx = (m11 * dx - m01 * dy) / det;
-			const double sy = (-m10 * dx + m00 * dy) / det;
-			output[(size_t)y * dst_width + x] = SampleBilinearZero(input, src_width, src_height, sx, sy);
+			const A_long x_fixed = base_x + (A_long)std::lrint(inv_m00 * (double)x * kAbScale);
+			const A_long y_fixed = base_y + (A_long)std::lrint(inv_m10 * (double)x * kAbScale);
+			output[(size_t)y * dst_width + x] = SampleBilinearZero(
+				input, src_width, src_height, x_fixed, y_fixed);
 		}
 	}
 	return output;
 }
+// OLMKIRAKIRA_FORWARD_WARP_HELPERS_END
 
 static std::vector<float> CopyCenteredRoi(
 	const std::vector<float> &input,
