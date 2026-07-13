@@ -211,6 +211,9 @@ function Render-Cdb([object]$case, [string]$trace, [Int64]$baseValue, [string]$h
     $address = '0x{0:x}' -f ($baseValue + $rva)
     $text = $text.Replace('{{ADDRESS:' + $property.Name + '}}', $address)
   }
+  # CDB's `/t` suffixes the requested path with a timestamp. The runner watches
+  # the exact path, so stale-trace protection comes from the fresh work dir.
+  $text = $text.Replace('.logopen /t ', '.logopen ')
   if ($text -match '\{\{[^{}]+\}\}') { throw "unresolved CDB placeholder: $($Matches[0])" }
   return $text
 }
