@@ -107,6 +107,9 @@ def _normalized_contract(spec: dict[str, Any]) -> dict[str, Any]:
     core_logs = [
         "afterfx_launcher_stdout.txt",
         "afterfx_launcher_stderr.txt",
+        "afterfx_process_diagnostics.json",
+        "afterfx_bootstrap.cdb",
+        "afterfx_bootstrap_cdb_trace.txt",
         "queue_bootstrap.log",
         "queue.log",
         "combined_cdb_trace.txt",

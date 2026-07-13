@@ -59,7 +59,12 @@ def main() -> int:
         assert 'runId + "\\n"' in queue
         assert 'runId + "\n"' not in queue
         assert "-ArgumentList @('-m', '-r', $queuePath)" not in launcher
-        assert "$aeArgs = '-m -r \"' + $queueLaunch + '\"'" in launcher
+        assert "$launchArguments = '-cf \"' + $bootstrapCdbScript + '\" \"' + $AfterFxPath + '\" -r \"' + $queueLaunch + '\"'" in launcher
+        assert "-FilePath $CdbPath" in launcher
+        assert "$dispatchArguments" not in launcher
+        assert "afterfx_process_diagnostics.json" in launcher
+        assert "'cdb_bootstrap_exit'" in launcher
+        assert "'jsx_launch'" in launcher
         assert launcher.index("if ($code -eq 0) { Stop-WitnessProcesses }") > launcher.index("& py -3 $runtimePath bundle")
         for template in (package_a / "cdb").glob("*.cdb.in"):
             assert '.logopen /t "{{TRACE_PATH}}"' in template.read_text(encoding="ascii")

@@ -1,0 +1,21 @@
+{
+  "kind": "olmradialblur_case0009_production_a850_f32_mac_ae",
+  "schema": 1,
+  "case_id": "case_0009",
+  "classification": "binary-grounded-known-red",
+  "plugin_binary_sha256": "58fddbca28fd7fa0b352365e1faba7b554bdf59e5c7ccf2cb6a6b1dac4c34059",
+  "reference_png_sha256": "3156f1365a20cb35b9d090dfb5f4dfbf0398e8acaea6aeaed5cd35bfec659f6d",
+  "candidate_png_sha256": "ecbf8e45b49ddf5831044dc581ca9948f691e31e23fbec9c4c1c52dd3fdb53d0",
+  "raw_a850": {
+    "production_exact_points": 32,
+    "candidate_exact_points": 32,
+    "point_count": 32
+  },
+  "pixel_diff": {
+    "max_diff": 1,
+    "nonzero_pixels": 12876,
+    "mean_absolute_sample_diff": 0.00000975317
+  },
+  "scope": "Mac AE 8bpc case_0009 after promoting the actual-AEX per-operation float32 coordinate order to production",
+  "next_boundary": "semantic full-frame downstream index/cell/inverse-sampling host context"
+}

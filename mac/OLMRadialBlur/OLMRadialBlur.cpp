@@ -4,7 +4,9 @@
 #include <cmath>
 #include <cstdlib>
 #include <complex>
+#include <cstdint>
 #include <cstdio>
+#include <cstring>
 #include <map>
 #include <vector>
 
@@ -44,6 +46,104 @@ static float RadialF32Div(float lhs, float rhs)
 {
 	volatile float result = lhs / rhs;
 	return result;
+}
+
+static float RadialF32Sub(float lhs, float rhs)
+{
+	volatile float result = lhs - rhs;
+	return result;
+}
+
+static float RadialF32Sqrt(float value)
+{
+	volatile float result = std::sqrt(value);
+	return result;
+}
+
+static float RadialF32Atan2(float y, float x)
+{
+	volatile float result = std::atan2(y, x);
+	return result;
+}
+
+#ifndef NDEBUG
+static uint32_t RadialF32Bits(float value)
+{
+	uint32_t bits = 0;
+	std::memcpy(&bits, &value, sizeof(bits));
+	return bits;
+}
+#endif
+
+struct RadialBlurAEXCoordinateCandidate {
+	float dx = 0.0f;
+	float dy = 0.0f;
+	float cos_dy = 0.0f;
+	float sin_dx = 0.0f;
+	float ey_numerator = 0.0f;
+	float ey = 0.0f;
+	float sin_dy = 0.0f;
+	float cos_dx = 0.0f;
+	float ex = 0.0f;
+	float ex_squared = 0.0f;
+	float ey_squared = 0.0f;
+	float radius_squared = 0.0f;
+	float radius_raw = 0.0f;
+	float angle_raw = 0.0f;
+	float radius_index = 0.0f;
+	float angle_index = 0.0f;
+	float radius_fraction = 0.0f;
+	float angle_fraction = 0.0f;
+	A_long radius0 = 0;
+	A_long radius1 = 0;
+	A_long angle0 = 0;
+	A_long angle1 = 0;
+};
+
+static RadialBlurAEXCoordinateCandidate ComputeRadialBlurAEXCoordinateCandidate(
+	A_long x,
+	A_long y,
+	float center_x,
+	float center_y,
+	float cos_angle,
+	float sin_angle,
+	float ratio,
+	float angle_step,
+	A_long min_radius,
+	A_long radius_count,
+	A_long angle_count)
+{
+	RadialBlurAEXCoordinateCandidate state;
+	state.dy = RadialF32Sub((float)y, center_y);
+	state.dx = RadialF32Sub((float)x, center_x);
+	state.cos_dy = RadialF32Mul(cos_angle, state.dy);
+	state.sin_dx = RadialF32Mul(sin_angle, state.dx);
+	state.ey_numerator = RadialF32Sub(state.cos_dy, state.sin_dx);
+	state.ey = RadialF32Div(state.ey_numerator, ratio);
+	state.sin_dy = RadialF32Mul(sin_angle, state.dy);
+	state.cos_dx = RadialF32Mul(cos_angle, state.dx);
+	state.ex = RadialF32Add(state.sin_dy, state.cos_dx);
+	state.ex_squared = RadialF32Mul(state.ex, state.ex);
+	state.ey_squared = RadialF32Mul(state.ey, state.ey);
+	state.radius_squared = RadialF32Add(state.ey_squared, state.ex_squared);
+	state.radius_raw = RadialF32Sqrt(state.radius_squared);
+	state.angle_raw = RadialF32Atan2(state.ey, state.ex);
+	if (state.angle_raw < 0.0f) {
+		state.angle_raw = (float)((double)state.angle_raw + kPi * 2.0);
+	}
+	state.angle_index = state.angle_raw < 0.0f ? 0.0f : RadialF32Div(state.angle_raw, angle_step);
+	if (state.angle_index >= (float)angle_count) {
+		state.angle_index = RadialF32Sub(state.angle_index, (float)angle_count);
+	}
+	state.radius_index = RadialF32Sub(state.radius_raw, (float)min_radius);
+	state.angle0 = (A_long)state.angle_index;
+	state.angle1 = state.angle0 == angle_count - 1 ? 0 : state.angle0 + 1;
+	state.radius0 = (A_long)state.radius_index;
+	state.radius1 = state.radius0 + 1;
+	state.angle_fraction = RadialF32Sub(state.angle_index, (float)state.angle0);
+	state.radius_fraction = RadialF32Sub(state.radius_index, (float)state.radius0);
+	(void)radius_count;
+	return state;
 }
 
 static std::vector<RadialBlurDebugPoint> ParseRadialBlurDebugPoints(const char *spec)
@@ -229,6 +329,100 @@ static void DumpRadialBlurDebugPoint(
 		src_cell_rgba[3][0], src_cell_rgba[3][1], src_cell_rgba[3][2], src_cell_rgba[3][3]);
 	std::fclose(fp);
 }
+
+#ifndef NDEBUG
+template<typename SampleFn>
+static void DumpRadialBlurCoordinateRawBits(
+	const RadialBlurDebugConfig &debug,
+	A_long width,
+	A_long height,
+	A_long x,
+	A_long y,
+	float production_radius_raw,
+	float production_angle_raw,
+	float production_radius_index,
+	float production_angle_index,
+	float production_radius_fraction,
+	float production_angle_fraction,
+	A_long production_radius0,
+	A_long production_radius1,
+	A_long production_angle0,
+	A_long production_angle1,
+	const RadialBlurAEXCoordinateCandidate &candidate,
+	A_long radius_count,
+	A_long angle_count,
+	const SampleFn &sample)
+{
+	if (!debug.dump_path || y != 0 || x < 0 || x > 31 || !RadialBlurDebugHasPoint(debug, x, y)) return;
+	FILE *fp = std::fopen(debug.dump_path, "a");
+	if (!fp) return;
+	std::fprintf(fp,
+		"OLMRADIALBLUR_DEBUG_COORD_RAW {\"kind\":\"zoom\",\"width\":%d,\"height\":%d,\"x\":%d,\"y\":%d,"
+		"\"production\":{\"radius_raw_bits\":\"0x%08x\",\"angle_raw_bits\":\"0x%08x\","
+		"\"radius_index_bits\":\"0x%08x\",\"angle_index_bits\":\"0x%08x\","
+		"\"radius_fraction_bits\":\"0x%08x\",\"angle_fraction_bits\":\"0x%08x\","
+		"\"radius_indices\":[%d,%d],\"angle_indices\":[%d,%d],\"cell_indices\":[[%d,%d],[%d,%d],[%d,%d],[%d,%d]],\"cell_rgba_bits\":[",
+		(int)width, (int)height, (int)x, (int)y,
+		(unsigned int)RadialF32Bits(production_radius_raw), (unsigned int)RadialF32Bits(production_angle_raw),
+		(unsigned int)RadialF32Bits(production_radius_index), (unsigned int)RadialF32Bits(production_angle_index),
+		(unsigned int)RadialF32Bits(production_radius_fraction), (unsigned int)RadialF32Bits(production_angle_fraction),
+		(int)production_radius0, (int)production_radius1, (int)production_angle0, (int)production_angle1,
+		(int)production_angle0, (int)production_radius0, (int)production_angle0, (int)production_radius1,
+		(int)production_angle1, (int)production_radius0, (int)production_angle1, (int)production_radius1);
+	const A_long production_cells[4][2] = {
+		{production_radius0, production_angle0}, {production_radius1, production_angle0},
+		{production_radius0, production_angle1}, {production_radius1, production_angle1}
+	};
+	for (int cell = 0; cell < 4; ++cell) {
+		if (cell) std::fputc(',', fp);
+		std::fprintf(fp, "[\"0x%08x\",\"0x%08x\",\"0x%08x\",\"0x%08x\"]",
+			(unsigned int)RadialF32Bits(sample(production_cells[cell][0], production_cells[cell][1], 0)),
+			(unsigned int)RadialF32Bits(sample(production_cells[cell][0], production_cells[cell][1], 1)),
+			(unsigned int)RadialF32Bits(sample(production_cells[cell][0], production_cells[cell][1], 2)),
+			(unsigned int)RadialF32Bits(sample(production_cells[cell][0], production_cells[cell][1], 3)));
+	}
+	std::fprintf(fp,
+		"]},\"aex_f32_candidate\":{\"operation_bits\":{"
+		"\"dy\":\"0x%08x\",\"dx\":\"0x%08x\",\"cos_dy\":\"0x%08x\",\"sin_dx\":\"0x%08x\","
+		"\"ey_numerator\":\"0x%08x\",\"ey\":\"0x%08x\",\"sin_dy\":\"0x%08x\",\"cos_dx\":\"0x%08x\","
+		"\"ex\":\"0x%08x\",\"ex_squared\":\"0x%08x\",\"ey_squared\":\"0x%08x\",\"radius_squared\":\"0x%08x\"},"
+		"\"radius_raw_bits\":\"0x%08x\",\"angle_raw_bits\":\"0x%08x\","
+		"\"radius_index_bits\":\"0x%08x\",\"angle_index_bits\":\"0x%08x\","
+		"\"radius_fraction_bits\":\"0x%08x\",\"angle_fraction_bits\":\"0x%08x\","
+		"\"radius_indices\":[%d,%d],\"angle_indices\":[%d,%d],\"cell_indices\":[[%d,%d],[%d,%d],[%d,%d],[%d,%d]],",
+		(unsigned int)RadialF32Bits(candidate.dy), (unsigned int)RadialF32Bits(candidate.dx),
+		(unsigned int)RadialF32Bits(candidate.cos_dy), (unsigned int)RadialF32Bits(candidate.sin_dx),
+		(unsigned int)RadialF32Bits(candidate.ey_numerator), (unsigned int)RadialF32Bits(candidate.ey),
+		(unsigned int)RadialF32Bits(candidate.sin_dy), (unsigned int)RadialF32Bits(candidate.cos_dx),
+		(unsigned int)RadialF32Bits(candidate.ex), (unsigned int)RadialF32Bits(candidate.ex_squared),
+		(unsigned int)RadialF32Bits(candidate.ey_squared), (unsigned int)RadialF32Bits(candidate.radius_squared),
+		(unsigned int)RadialF32Bits(candidate.radius_raw), (unsigned int)RadialF32Bits(candidate.angle_raw),
+		(unsigned int)RadialF32Bits(candidate.radius_index), (unsigned int)RadialF32Bits(candidate.angle_index),
+		(unsigned int)RadialF32Bits(candidate.radius_fraction), (unsigned int)RadialF32Bits(candidate.angle_fraction),
+		(int)candidate.radius0, (int)candidate.radius1, (int)candidate.angle0, (int)candidate.angle1,
+		(int)candidate.angle0, (int)candidate.radius0, (int)candidate.angle0, (int)candidate.radius1,
+		(int)candidate.angle1, (int)candidate.radius0, (int)candidate.angle1, (int)candidate.radius1);
+	const bool candidate_cells_available = candidate.radius0 >= 0 && candidate.radius1 < radius_count &&
+		candidate.angle0 >= 0 && candidate.angle0 < angle_count && candidate.angle1 >= 0 && candidate.angle1 < angle_count;
+	std::fprintf(fp, "\"cell_values_available\":%s,\"cell_rgba_bits\":[", candidate_cells_available ? "true" : "false");
+	if (candidate_cells_available) {
+		const A_long candidate_cells[4][2] = {
+			{candidate.radius0, candidate.angle0}, {candidate.radius1, candidate.angle0},
+			{candidate.radius0, candidate.angle1}, {candidate.radius1, candidate.angle1}
+		};
+		for (int cell = 0; cell < 4; ++cell) {
+			if (cell) std::fputc(',', fp);
+			std::fprintf(fp, "[\"0x%08x\",\"0x%08x\",\"0x%08x\",\"0x%08x\"]",
+				(unsigned int)RadialF32Bits(sample(candidate_cells[cell][0], candidate_cells[cell][1], 0)),
+				(unsigned int)RadialF32Bits(sample(candidate_cells[cell][0], candidate_cells[cell][1], 1)),
+				(unsigned int)RadialF32Bits(sample(candidate_cells[cell][0], candidate_cells[cell][1], 2)),
+				(unsigned int)RadialF32Bits(sample(candidate_cells[cell][0], candidate_cells[cell][1], 3)));
+		}
+	}
+	std::fprintf(fp, "]}}\n");
+	std::fclose(fp);
+}
+#endif
 
 static void UnionLRect(const PF_LRect *src, PF_LRect *dst)
 {
@@ -812,19 +1006,18 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	const double alpha_quantize_epsilon = 0.0;
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
-			const double dx = (double)x - cx;
-			const double dy = (double)y - cy;
-			const double ex = cos_a * dx + sin_a * dy;
-			const double ey = (cos_a * dy - sin_a * dx) / ratio;
-			const double radius = std::sqrt(ex * ex + ey * ey);
-			double angle = std::atan2(ey, ex);
-			if (angle < 0.0) angle += kPi * 2.0;
-			const float radius_index = (float)(radius - min_r);
-			const float angle_index = (float)(angle / step_rad);
+			const RadialBlurAEXCoordinateCandidate coordinate_candidate =
+				ComputeRadialBlurAEXCoordinateCandidate(
+					x, y, (float)cx, (float)cy, (float)cos_a, (float)sin_a,
+					(float)ratio, (float)step_rad, min_r, radius_count, angular_count);
+			const float radius_index = coordinate_candidate.radius_index;
+			const float angle_index = coordinate_candidate.angle_index;
+			// Raw polar coordinates are AEX-ordered float32. Keep the existing
+			// floor-based index boundary until negative-index behavior is witnessed.
 			const A_long xi_raw = (A_long)std::floor(radius_index);
 			const A_long yi = (A_long)std::floor(angle_index);
-			const float fx = radius_index - (float)xi_raw;
-			const float fy = angle_index - (float)yi;
+			const float fx = RadialF32Sub(radius_index, (float)xi_raw);
+			const float fy = RadialF32Sub(angle_index, (float)yi);
 			const A_long xi = std::max<A_long>(0, std::min<A_long>(xi_raw, radius_count - 1));
 			const A_long x1 = std::max<A_long>(0, std::min<A_long>(xi_raw + 1, radius_count - 1));
 			const A_long y0 = ((yi % angular_count) + angular_count) % angular_count;
@@ -888,6 +1081,12 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					{sample_source(xi, y1, 0), sample_source(xi, y1, 1), sample_source(xi, y1, 2), sample_source(xi, y1, 3)},
 					{sample_source(x1, y1, 0), sample_source(x1, y1, 1), sample_source(x1, y1, 2), sample_source(x1, y1, 3)}
 				};
+#ifndef NDEBUG
+				DumpRadialBlurCoordinateRawBits(
+					debug, w, h, x, y, coordinate_candidate.radius_raw, coordinate_candidate.angle_raw,
+					radius_index, angle_index, fx, fy, xi, x1, y0, y1,
+					coordinate_candidate, radius_count, angular_count, sample);
+#endif
 				DumpRadialBlurDebugPoint(
 					debug, "zoom", w, h, x, y,
 					radius_index, angle_index, fx, fy,

@@ -1,0 +1,1250 @@
+{
+  "case_id": "case_0009",
+  "classifications": {
+    "aex_f32_candidate": "blocked-nonsemantic-reduced-geometry-reference",
+    "production": "blocked-nonsemantic-reduced-geometry-reference"
+  },
+  "first_differences": {
+    "aex_f32_candidate": null,
+    "production": null
+  },
+  "index_cell_classification": "blocked-nonsemantic-reduced-geometry-reference",
+  "index_cell_semantic": false,
+  "kind": "olmradialblur_case0009_mac_a850_coordinate_comparison",
+  "match_counts": {
+    "aex_f32_candidate": 0,
+    "production": 0
+  },
+  "point_count": 32,
+  "points": [
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        0,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        1,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        2,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        3,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        4,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        5,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        6,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        7,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        8,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        9,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        10,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        11,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        12,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        13,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        14,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        15,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        16,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        17,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        18,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        19,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        20,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        21,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        22,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        23,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        24,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        25,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        26,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        27,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        28,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        29,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        30,
+        0
+      ]
+    },
+    {
+      "lanes": {
+        "aex_f32_candidate": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        },
+        "production": {
+          "detail": {
+            "debug_size": "32x32",
+            "input_size": [
+              1920,
+              1080
+            ],
+            "quality_step_override_degrees": 90.0
+          },
+          "first_differing_field": null,
+          "raw_a850_detail": null,
+          "raw_a850_first_differing_field": null,
+          "raw_a850_status": "match",
+          "status": "blocked-nonsemantic-reference"
+        }
+      },
+      "xy": [
+        31,
+        0
+      ]
+    }
+  ],
+  "raw_a850_classifications": {
+    "aex_f32_candidate": "raw-a850-exact",
+    "production": "raw-a850-exact"
+  },
+  "raw_a850_first_differences": {
+    "aex_f32_candidate": null,
+    "production": null
+  },
+  "raw_a850_match_counts": {
+    "aex_f32_candidate": 32,
+    "production": 32
+  },
+  "schema": 1
+}

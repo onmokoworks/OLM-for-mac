@@ -37,11 +37,15 @@ $identityPath = Join-Path $work 'runtime_identity.json'
 $statusPath = Join-Path $work 'validation_status.json'
 $launchOut = Join-Path $work 'afterfx_launcher_stdout.txt'
 $launchErr = Join-Path $work 'afterfx_launcher_stderr.txt'
+$processDiagnostics = Join-Path $work 'afterfx_process_diagnostics.json'
+$bootstrapCdbScript = Join-Path $work 'afterfx_bootstrap.cdb'
+$bootstrapCdbTrace = Join-Path $work 'afterfx_bootstrap_cdb_trace.txt'
 $queuePath = Join-Path $PackageRoot ([string]$contract.queue).Replace('/', '\')
 $sessionId = (Get-Process -Id $PID).SessionId
 $launch = $null
 $cdb = $null
 $launchStarted = $false
+$launchArguments = $null
 $boundPid = $null
 $boundBase = $null
 $launchDir = $null
@@ -76,6 +80,7 @@ function Stop-WitnessProcesses {
     }
   }
   if ($cdb -and !$cdb.HasExited) { Stop-Process -Id $cdb.Id -Force -ErrorAction SilentlyContinue }
+  if ($launch -and !$launch.HasExited) { Stop-Process -Id $launch.Id -Force -ErrorAction SilentlyContinue }
   if ($launchStarted) {
     foreach ($state in @(Get-AfterFxState)) {
       Stop-Process -Id $state.pid -Force -ErrorAction SilentlyContinue
@@ -85,6 +90,12 @@ function Stop-WitnessProcesses {
 }
 
 function Finish([object]$body, [int]$code) {
+  [ordered]@{
+    launch_pid = $(if ($launch) { [int]$launch.Id } else { $null })
+    launch_arguments = $launchArguments
+    session_id = [int]$sessionId
+    observed_afterfx = @(Get-AfterFxState)
+  } | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath $processDiagnostics -Encoding UTF8 -ErrorAction SilentlyContinue
   if ($code -ne 0) { Stop-WitnessProcesses }
   if ($queueBootstrap -and (Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) {
     Copy-Item -LiteralPath $queueBootstrap -Destination (Join-Path $work 'queue_bootstrap.log') -Force -ErrorAction SilentlyContinue
@@ -155,9 +166,46 @@ $queueLaunch = Join-Path $launchDir 'queue.jsx'
 $queueBootstrap = Join-Path $launchDir 'queue_bootstrap.log'
 Copy-Item -LiteralPath $queuePath -Destination $queueLaunch -Force
 if ($queueLaunch -match '\s') { Finish (Failure 'path_preflight' 'short JSX launch path contains whitespace' @('no_space_queue_path') $queueLaunch) 2 }
-$aeArgs = '-m -r "' + $queueLaunch + '"'
-$launch = Start-Process -FilePath $AfterFxPath -ArgumentList $aeArgs -RedirectStandardOutput $launchOut -RedirectStandardError $launchErr -PassThru
+$moduleName = [IO.Path]::GetFileName($AexPath)
+$bootstrapText = @"
+.effmach amd64
+.expr /s masm
+sxe ld:$moduleName
+.logopen /t "$bootstrapCdbTrace"
+.echo WITNESS_CDB_BOOTSTRAP_ARMED
+g
+.logclose
+.detach
+q
+"@
+$bootstrapText | Set-Content -LiteralPath $bootstrapCdbScript -Encoding ASCII
+$launchArguments = '-cf "' + $bootstrapCdbScript + '" "' + $AfterFxPath + '" -r "' + $queueLaunch + '"'
+$launch = Start-Process -FilePath $CdbPath -ArgumentList $launchArguments -RedirectStandardOutput $launchOut -RedirectStandardError $launchErr -NoNewWindow -PassThru
 $launchStarted = $true
+$deadline = (Get-Date).AddSeconds(60)
+$desktopState = @()
+while ((Get-Date) -lt $deadline) {
+  $desktopState = @(Get-AfterFxState)
+  if ($desktopState.Count -eq 1) { break }
+  $launch.Refresh()
+  if ($launch.HasExited) { break }
+  Start-Sleep -Milliseconds 250
+}
+if ($desktopState.Count -ne 1) {
+  Finish (Failure 'cdb_launch' 'CDB-launched After Effects instance did not become uniquely observable' @('one_desktop_AfterFX_process', 'cdb_bootstrap') "matches=$($desktopState.Count)") 2
+}
+$deadline = (Get-Date).AddSeconds(60)
+while ((Get-Date) -lt $deadline) {
+  $launch.Refresh()
+  if ($launch.HasExited) { break }
+  Start-Sleep -Milliseconds 250
+}
+if (!$launch.HasExited) {
+  Finish (Failure 'cdb_launch' 'CDB bootstrap did not detach from the launched After Effects process' @('cdb_bootstrap_exit') '') 2
+}
+if (!(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) {
+  Finish (Failure 'jsx_launch' 'CDB-launched After Effects process did not execute the queue JSX' @('queue_bootstrap.log') '') 2
+}
 
 foreach ($case in @($contract.cases | Sort-Object order)) {
   $caseId = [string]$case.id

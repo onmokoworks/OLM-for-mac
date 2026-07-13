@@ -16,6 +16,8 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
+from PIL import Image
+
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import probe_radialblur_a850_downstream_actual_aex_20260713 as base  # noqa: E402
@@ -75,6 +77,7 @@ def compact_point(item: dict[str, Any]) -> dict[str, Any]:
         "actual_d80_rgba_f32": sample.get("rgba_f32"),
         "actual_vs_mirror": item.get("actual_vs_mirror"),
         "render_fault": item.get("base_render_fault"),
+        "geometry": item.get("geometry"),
     }
 
 
@@ -85,8 +88,9 @@ def render_markdown(report: dict[str, Any]) -> str:
         "## Scope",
         "",
         "- Local 2025 Windows AEX executed through the existing Unicorn harness on Mac.",
-        "- Records `FUN_18000A850` f32 coordinates, downstream indices, four D80 cells, and direct D80 output for the complete top row.",
-        "- Prefill and normalized-plane arithmetic are opaque inputs to this probe; neither is reconstructed or retuned here.",
+        "- Records `FUN_18000A850` f32 coordinates from an actual-AEX reduced-geometry harness.",
+        "- The `32x32` geometry and `90` degree quality-step override make downstream indices, cells, and D80 output non-semantic for the 1920x1080 AE case.",
+        "- Only the raw A850 radius/angle values may be compared with the full-frame Mac render.",
         "",
         f"- Points: `{len(report['points'])}`; target Windows alpha-254 x: `{TARGET_ALPHA_254_X}`.",
         f"- Actual-AEX entry reached: `{sum(bool(p['entry_reached']) for p in report['points'])}/{len(report['points'])}`.",
@@ -112,21 +116,17 @@ def render_markdown(report: dict[str, Any]) -> str:
         "",
         "## Classification",
         "",
-        "The table is the actual-AEX coordinate/cell input witness for the remaining Mac-side lane. "
-        "If a Mac implementation selects a different four-cell set or produces different raw "
-        "A850 coordinates at the same x, the residual is before D80. Equal selections and exact "
-        "D80 outputs move the remaining difference beyond this local coordinate handoff. "
-        "This evidence does not establish full-frame pixel conformance by itself. The useful "
-        "negative result is that x=7 and x=12 remain alpha 1.0 in direct D80 even though "
-        "Windows stores 254 there; do not promote a direct-D80 alpha or writer change from this probe.",
+        "Raw A850 radius/angle values are actual-AEX evidence. Downstream indices, selected "
+        "cells, and D80 values are reduced-geometry diagnostics only because the harness replaces "
+        "the 1920x1080 geometry with 32x32 and overwrites the quality step with 90 degrees. "
+        "They must not be compared with a full-frame Mac AE render or used to tune production code.",
         "",
         "## Audit Finding",
         "",
         f"- Verified: actual-AEX entry reached `{sum(bool(p['entry_reached']) for p in report['points'])}/{len(report['points'])}` top-row points.",
         f"- Verified: direct D80 alpha stays `1.0` at Windows target x `{report['target_x_direct_d80_alpha_one']}`.",
-        "- Not established: that coordinate/cell selection input is itself the residual source.",
-        "- Basis: this probe records the Windows actual-AEX coordinate/cell handoff and direct D80 output only; it does not include a same-point Mac coordinate/cell witness.",
-        "- Basis: the direct D80 output matches the existing mirror at every sampled point, so this artifact does not isolate the remaining residual to D80-local coordinate/cell selection.",
+        "- Valid comparison scope: raw A850 radius/angle only.",
+        "- Invalid comparison scope: radius/angle indices, cell selection, cell values, and D80 output versus full-frame AE.",
         "",
     ])
     return "\n".join(lines)
@@ -140,6 +140,9 @@ def main() -> int:
         temp_dir = Path(temp)
         results = [base.run_point(args, point, temp_dir) for point in points]
     compact = [compact_point(item) for item in results]
+    with Image.open(args.input_png) as input_image:
+        input_size = [int(input_image.width), int(input_image.height)]
+    quality_step_override = (compact[0].get("geometry") or {}).get("quality_step") if compact else None
     direct_d80_subunit_alpha_x = [
         point["xy"][0]
         for point in compact
@@ -157,19 +160,22 @@ def main() -> int:
         "case_id": args.case_id,
         "aex": base.display_path(args.aex_path),
         "input_png": base.display_path(args.input_png),
+        "input_size": input_size,
         "debug_size": args.debug_size,
-        "scope": "actual-AEX A850 coordinates and D80 four-cell selection; opaque prefill",
+        "quality_step_override_degrees": quality_step_override,
+        "index_cell_semantic": False,
+        "scope": "actual-AEX A850 raw coordinates; reduced-geometry downstream indices/cells are non-semantic",
         "prefill_scope": "opaque actual-AEX prerequisite; no reconstruction or comparison",
         "target_windows_alpha_254_x": TARGET_ALPHA_254_X,
         "direct_d80_subunit_alpha_x": direct_d80_subunit_alpha_x,
         "target_x_direct_d80_alpha_one": target_x_direct_d80_alpha_one,
-        "audit_verdict": "not_proven_coordinate_or_cell_selection_residual_source",
+        "audit_verdict": "a850-raw-valid-index-cell-nonsemantic-reduced-geometry",
         "audit_basis": [
             "actual-AEX entry reached all 32 sampled top-row points",
-            "direct D80 alpha remains 1.0 at target x=7 and x=12",
-            "probe captures Windows actual-AEX coordinate/cell handoff and direct D80 output only",
-            "probe does not provide same-point Mac coordinate/cell evidence",
-            "actual D80 output matches the existing mirror at every sampled point",
+            "raw A850 radius and angle remain actual-AEX outputs",
+            "harness replaces 1920x1080 input geometry with 32x32",
+            "harness overwrites work quality step with 90 degrees",
+            "base harness explicitly classifies reduced-geometry sampled color/alpha as non-semantic",
         ],
         "points_spec": args.points,
         "points": compact,

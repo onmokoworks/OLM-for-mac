@@ -3,8 +3,9 @@
 ## Scope
 
 - Local 2025 Windows AEX executed through the existing Unicorn harness on Mac.
-- Records `FUN_18000A850` f32 coordinates, downstream indices, four D80 cells, and direct D80 output for the complete top row.
-- Prefill and normalized-plane arithmetic are opaque inputs to this probe; neither is reconstructed or retuned here.
+- Records `FUN_18000A850` f32 coordinates from an actual-AEX reduced-geometry harness.
+- The `32x32` geometry and `90` degree quality-step override make downstream indices, cells, and D80 output non-semantic for the 1920x1080 AE case.
+- Only the raw A850 radius/angle values may be compared with the full-frame Mac render.
 
 - Points: `32`; target Windows alpha-254 x: `[6, 7, 12]`.
 - Actual-AEX entry reached: `32/32`.
@@ -50,12 +51,10 @@
 
 ## Classification
 
-The table is the actual-AEX coordinate/cell input witness for the remaining Mac-side lane. If a Mac implementation selects a different four-cell set or produces different raw A850 coordinates at the same x, the residual is before D80. Equal selections and exact D80 outputs move the remaining difference beyond this local coordinate handoff. This evidence does not establish full-frame pixel conformance by itself. The useful negative result is that x=7 and x=12 remain alpha 1.0 in direct D80 even though Windows stores 254 there; do not promote a direct-D80 alpha or writer change from this probe.
+Raw A850 radius/angle values are actual-AEX evidence. Downstream indices, selected cells, and D80 values are reduced-geometry diagnostics only because the harness replaces the 1920x1080 geometry with 32x32 and overwrites the quality step with 90 degrees. They must not be compared with a full-frame Mac AE render or used to tune production code.
 
 ## Audit Finding
 
 - Verified: actual-AEX entry reached `32/32` top-row points.
-- Verified: direct D80 alpha stays `1.0` at Windows target x `[7, 12]`.
-- Not established: that coordinate/cell selection input is itself the residual source.
-- Basis: this probe records the Windows actual-AEX coordinate/cell handoff and direct D80 output only; it does not include a same-point Mac coordinate/cell witness.
-- Basis: the direct D80 output matches the existing mirror at every sampled point, so this artifact does not isolate the remaining residual to D80-local coordinate/cell selection.
+- Valid comparison scope: raw A850 radius/angle only.
+- Invalid comparison scope: radius/angle indices, cell selection, cell values, and D80 output versus full-frame AE.

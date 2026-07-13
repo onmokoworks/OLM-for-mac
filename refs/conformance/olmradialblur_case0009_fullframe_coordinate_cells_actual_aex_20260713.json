@@ -2,21 +2,28 @@
   "aex": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
   "audit_basis": [
     "actual-AEX entry reached all 32 sampled top-row points",
-    "direct D80 alpha remains 1.0 at target x=7 and x=12",
-    "probe captures Windows actual-AEX coordinate/cell handoff and direct D80 output only",
-    "probe does not provide same-point Mac coordinate/cell evidence",
-    "actual D80 output matches the existing mirror at every sampled point"
+    "raw A850 radius and angle remain actual-AEX outputs",
+    "harness replaces 1920x1080 input geometry with 32x32",
+    "harness overwrites work quality step with 90 degrees",
+    "base harness classifies reduced-geometry sampled color and alpha as non-semantic"
   ],
-  "audit_verdict": "not_proven_coordinate_or_cell_selection_residual_source",
+  "audit_verdict": "a850-raw-valid-index-cell-nonsemantic-reduced-geometry",
   "case_id": "case_0009",
   "debug_size": "32x32",
+  "index_cell_semantic": false,
   "direct_d80_subunit_alpha_x": [
     6,
     10,
     13
   ],
   "input_png": "refs/win_references/20260604_olm/OLMRadialBlur/case_0009_before_effects.png",
+  "input_size": [
+    1920,
+    1080
+  ],
   "kind": "olmradialblur_case0009_fullframe_coordinate_cells_actual_aex_probe",
+  "quality_step_override_degrees": 90.0,
+  "scope": "actual-AEX A850 raw coordinates; reduced-geometry downstream indices/cells are non-semantic",
   "points": [
     {
       "a850": {

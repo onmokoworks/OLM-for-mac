@@ -24,12 +24,22 @@
   bootstrap string and therefore failed JSX parsing before it could write
   `queue_bootstrap.log`. The compiler now emits `\\n`; 16 unit tests, the
   synthetic witness smoke, an independent review, and a generated-JSX syntax
-  check pass. The current one-lane DG 8bpc launch-gate request SHA-256 is
-  `0d14ac26d7bdf1cb0c6197e4bbf103f02c6aba8448336384984f9aec2fdbd769`.
-  This is request readiness, not live evidence or AE exact. Run this one-lane
-  gate from the interactive Windows desktop; do not send the full six-lane
-  batch or superseded individual variants until the gate writes its bootstrap
-  and ready markers.
+  check pass. The corrected queue still did not bootstrap when AE was launched
+  once with `-m -r`; this matches the observed surviving AE command line and
+  Adobe's documented behavior that `-r` dispatches to an existing instance.
+  A live two-phase retry then started fresh AE with `-m` as PID `12792` and
+  dispatched `-r <queue.jsx>` as PID `51764`, but AE 25 still produced no
+  bootstrap. The returned diagnostics bind both invocations and prove that
+  neither one-shot nor existing-instance `-r` dispatch is reliable in this
+  environment. The next runner must use the repository's previously successful
+  CDB-launched AfterFX-plus-JSX path and retain fail-closed bootstrap/process
+  diagnostics. The replacement one-lane DG 8bpc CDB launch gate is staged at
+  `/Volumes/onmk/olm_pr/new/olm_windows_witness_launch_gate_dg8_cdb_sameprocess_ae25_20260713_205007.zip`,
+  SHA-256
+  `c6f326c8407745cf7f737b29068f0147de39cc8b2a47292a528fdf22843df8ff`.
+  Windows PowerShell 5.1 parses every included PS1. This is request readiness,
+  not algorithm evidence or AE exact. Do not send the full six-lane batch or
+  superseded variants until this gate writes its bootstrap and ready markers.
 
 - 2026-07-13 `OLMSmoother2 case0012 live config request`: a focused,
   fail-closed Windows package now binds one fresh current-AEX run at `(91,841)`
@@ -48,14 +58,24 @@
   accumulation and is now changed to explicit per-operation float32; universal
   Debug build passes. Mac AE case0009 A/B with the grounded float32 order and
   pure truncate improves `31,119 -> 21,429` differing pixels (`max=1`) but is
-  not exact. A 32-point actual-AEX sweep reaches all points and confirms direct
-  D80 alpha `1.0` at residual points x=7/12, while x=6/10/13 are sub-unit.
-  This excludes direct D80 arithmetic and writer epsilon at x=7/12, but does
-  not by itself prove the remaining producer/coordinate locus because the Mac
-  side has no matching full-frame coordinate/cell witness yet. Evidence:
+  not exact. A same-point Mac Debug capture proves the AEX-order float32
+  candidate's raw A850 radius/angle bits exact at all 32 top-row points. That
+  operation order is now promoted to production and a fresh Mac AE run proves
+  production raw A850 exact at 32/32. The PNG residual improves again to
+  `12876` nonzero pixels with `max=1`, so this is binary-grounded progress but
+  not `AE exact`. The older actual-AEX probe used `32x32` geometry and a forced `90`
+  degree quality step, so its downstream indices, selected cells, and D80
+  values are non-semantic for the 1920x1080 AE render. The comparator permits
+  the raw-A850 candidate proof while its exactness gate fails closed if that
+  artifact is used to claim full index/cell exactness. A follow-up attempt to
+  make negative-angle `+2pi` a float32 add was rejected: raw A850 fell from
+  `32/32` to `0/32` and the PNG residual rose to `20868`; retain the observed
+  double-add-then-float behavior. Evidence:
   `refs/conformance/olmradialblur_a850_downstream_actual_aex_20260713.md` and
   `refs/conformance/olmradialblur_a850_d80_f32_mac_ae_ab_20260713.md` and
-  `refs/conformance/olmradialblur_case0009_fullframe_coordinate_cells_actual_aex_20260713.md`.
+  `refs/conformance/olmradialblur_case0009_fullframe_coordinate_cells_actual_aex_20260713.md` and
+  `refs/conformance/olmradialblur_case0009_mac_a850_coordinate_comparison_20260713.md` and
+  `refs/conformance/olmradialblur_case0009_production_a850_f32_mac_ae_20260713.md`.
 
 - 2026-07-13 `OLMDirectionalBlur row755 nested-CDB retry`: the latest return is
   still `exact_bind_failure`, but closes AE launch/pause, exact AEX hash,
@@ -1536,7 +1556,7 @@ runtime-captured or binary-built block, then replay the same portable core.
 | OLMSmoother2 no-key | 8bpc `AE exact` | `host-debuggable` | `ae-validate` | Preserve no-key exact behavior; use only bounded regression checks. | Spend Windows/runtime trips on no-key tuning. |
 | OLMSmoother2 legacy/key/gamma | `guarded`; exercised c280/helper/cce0 entries and Gamma Colors mode are locally binary-grounded | `host-debuggable` | `binary-proof` | Preserve the Smooth Range, a9c0 version-gate, direct PF float-slider fetch, parameter-surface, and macOS deployment-target fixes. Latest correctly reloaded Mac AE run is still known-red (`max=115`, mean `0.1616552`); live `(91,841)` is Windows `[0,0,0,0]`, Mac `[32,32,32,91]`. The 2026-07-12 local actual-AEX replay now binds the exact logged 5x5 class/setup neighborhood, but the old fixed-scale/mode-0 scaffold yields weight `0.4999996` instead of live `0.3563218`; therefore neighborhood data alone is insufficient. Next capture the typed live c280/cce0 config bytes and mode at this pixel, then replay that exact block; keep `0004/0012` separate. | Global fallback, alpha, index, curve-index, or `f270` changes; treat `[65536,65536]` or mode 0 as the live config; claim synthetic/CLI replay as Windows AE truth or AE exact; use an installed bundle without touching its root/rechecking Plugin Loading.log; repeat raw-100/raw-65536 or v2 re-encode mistakes; request final writer bytes again. |
 | OLMDirectionalBlur | front-only/no-variation/no-fade/no-tail/no-back/no-noise 8bpc slice is `AE exact` for 2/2 declared cases; Front Alpha Fade is `binary-grounded / known-red` against a hash-pinned current-2025-AEX reference (`max=3`, 226 pixels after the UCRT fix); other feature families remain `blocked` | `host-debuggable` | `binary-proof` | Preserve `core/dblur_frontonly.cpp`, exact host transforms, and the accepted double-exp-then-float Gaussian model (`336/336` UCRT words). Local actual-AEX rowdriver, normalization, zero-fraction rotate-back, PF8 packing, and schedule coverage are closed for internal row 755. After the active RadialBlur exchange, capture only the in-situ full-render row-755 destination/denominator/alpha state using `olmdirectionalblur_alpha_fade_fullrender_row755_20260712.zip`. Keep Size Variation, Sharp Tail, Back, and Noise as independent lanes. | Re-request UCRT tables; use the superseded June 19 PNG; bake host conversion, a channel bias, or a case-specific lookup into the plug-in; reopen the exact front-only core or closed rowdriver stages; broad PNG tuning; or apply the front-only shortcut to variation/tail modes. |
-| OLMRadialBlur | `guarded` / `blocked`; bounded actual-AEX producer and normalized final-plane semantics are binary-grounded but full-frame case_0009 remains open | `host-debuggable` | `binary-proof` | Treat lanes separately. The 2026-07-13 crop fix produces nonzero typed cells. A nonuniform `(1504,864,32,32)` full-plane differential then proves actual AEX and Python-prefill final/denom/valid raw hashes identical across all 196 cells; only pre-normalization accum scale differs and cancels exactly. Move the live lane downstream to full-frame coordinate formation/inverse sampling/host context. Re-scope Windows confirmation to those typed values at `(7,0)/(8,0)/(24,0)` rather than recapturing normalized polar planes. | AE visual matching, blind alpha tuning, resending the failed normalized-plane hook, reopening the now-equal bounded prefill/final plane, or changing production Mac source before downstream full-frame typed evidence. |
+| OLMRadialBlur | `guarded` / `blocked`; bounded producer/final-plane semantics and production raw A850 coordinates are binary-grounded, but case_0009 downstream indexing/cells remain open | `host-debuggable` | `binary-proof` | Treat lanes separately. Preserve the crop fix and promoted per-operation float32 A850 order. A fresh Mac AE capture matches actual-AEX raw A850 bits at 32/32; the remaining Windows PNG residual is `12876` pixels, `max=1`, so it is not AE exact. Do not compare full-frame indices/cells against the old `32x32`, quality-step-90 probe; it is explicitly non-semantic and the exactness gate fails closed. Obtain a semantic full-frame downstream index/cell/host-context witness at `(7,0)/(8,0)/(24,0)`. | AE visual matching, blind alpha tuning, using reduced-geometry indices/cells as full-frame truth, reopening raw A850 or bounded normalized planes, or changing downstream sampling before a semantic witness. |
 | OLMKiraKira | `binary-grounded` Mode 1/2 control slices and Mode 3 warp/Gaussian call contract; Gaussian execution path still guarded | `host-smoke` | `binary-proof` | Preserve the hotspot compose witness and Mode 1/2 dispatch. Mode 3 has actual-AEX `CV_32FC1`, raw Size `[0,1]`, `sigmaX=length*0.5`, a corrected 5-degree affine, and OpenCV 4.5.5 post-warp `63/63` word proof. The portable Gaussian is `85/85` against pinned arm64 OpenCV, but the locally completed embedded-AEX Gaussian differs at all 63 words under a synthetic TLS/CPU-dispatch scaffold. A live desktop run reached the exact first kernel entry and grounded the pinned return RVA `0x126685c`, but captured no return words. The v4 retry exposed a PowerShell 5.1 split-argument launch loss; run the explicitly quoted v5 package. Only its accepted hash-pinned 21 raw coefficient words may decide production integration. Keep Mode 4 and other controls independent. | Tune production to the unvalidated 63-word Unicorn output, retune luma/gain/compose from broad PNGs, revive the missing-libm/zero-warp artifact, treat the entry-only live run as coefficient proof, reuse the split `Start-Process` argument form, call the Mode 3/4 three-pass placeholders compatible, or infer AE exactness from helper probes. |
 
 Current priority order:
