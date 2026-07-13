@@ -80,6 +80,9 @@ def main() -> int:
         if manifest["kind"] != "olm_runtime_trace_request_package" or len(manifest["runtime_actions"]) != 1:
             print("[FAIL] manifest kind/action contract mismatch")
             return 1
+        if manifest.get("submission_status") != "pending" or manifest.get("sendable") is not False or manifest["runtime_actions"][0].get("status") != "pending":
+            print("[FAIL] typed-boundary package is not explicitly pending/non-sendable")
+            return 1
     if not parse_fixture(package_dir / "fixtures/complete_cdb_stdout.txt"):
         print("[FAIL] complete fixture does not satisfy typed-boundary acceptance")
         return 1
@@ -91,7 +94,21 @@ def main() -> int:
         if needle not in text:
             print(f"[FAIL] runner missing fail-closed contract term: {needle}")
             return 1
-    print("[OK] DG 8bpc current-AEX typed-boundary package, zip, and fail-closed fixtures")
+    pre_load = text.split(".logopen", 1)[0]
+    if "bp " in pre_load or "bu " in pre_load:
+        print("[FAIL] runner arms an AEX breakpoint before the load stop")
+        return 1
+    if "OLM_DG8_REQUEST_DIR" in text:
+        print("[FAIL] runner uses the stale request-dir environment name")
+        return 1
+    queue_text = (package_dir / "scripts/ae_render_olmdistancegradation_8bpc_queue.jsx").read_text(encoding="utf-8")
+    if "OLM_DG_REQUEST_DIR" not in queue_text or "OLM_DG8_WORK_ROOT" not in queue_text or "OLM_AE_REQUEST_DIR" not in queue_text:
+        print("[FAIL] queue does not bind the package request root to the single-case renderer")
+        return 1
+    if "OLM_AE_KEEP_OPEN" not in queue_text or "cases.length - 1" not in queue_text:
+        print("[FAIL] queue does not preserve one AE process across the serial cases")
+        return 1
+    print("[OK] DG 8bpc typed-boundary package is explicitly pending/non-sendable")
     return 0
 
 
