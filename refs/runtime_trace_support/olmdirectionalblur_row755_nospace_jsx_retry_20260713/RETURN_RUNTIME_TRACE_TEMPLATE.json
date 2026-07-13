@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "request_id": "olmdirectionalblur_alpha_fade_fullrender_row755_20260712",
+  "status": "answered | exact_bind_failure",
+  "run_id": "uuid",
+  "pid": 0,
+  "aex": {"path": "repository-relative or Windows runtime path", "sha256": "d3e5...", "size": 56832},
+  "call_schedule": {"worker_entry": "0x...", "rowdriver_entry": "0x...", "params": "0x...", "row_start": 0, "row_end": 2206, "rowdriver_calls": 0},
+  "stage": {"module": "OLMDirectionalBlur.aex", "offset": "0x5554", "identity": "first instruction of internal normalization loop", "before_normalization": true},
+  "address_provenance": {
+    "params": "0x...",
+    "destination": {"base": "0x...", "source": "params+0x8090", "row0": 0, "col0": 0, "stride": 2206, "row": 755, "x_start": 747, "x_end": 1080},
+    "denominator": {"base": "0x...", "source": "params+0x8080", "row": 755, "x_start": 747, "x_end": 1080},
+    "alpha_valid": {"base": "0x...", "source": "params+0x8088", "row": 755, "x_start": 747, "x_end": 1080}
+  },
+  "artifacts": {
+    "destination_rgba_f32_words": {"path": "row755_destination_rgba_f32_le.bin", "words": 1336, "bytes": 5344, "sha256": "..."},
+    "denominator_f32_words": {"path": "row755_denominator_f32_le.bin", "words": 334, "bytes": 1336, "sha256": "..."},
+    "alpha_valid_f32_words": {"path": "row755_alpha_valid_f32_le.bin", "words": 334, "bytes": 1336, "sha256": "..."}
+  },
+  "failure": null
+}

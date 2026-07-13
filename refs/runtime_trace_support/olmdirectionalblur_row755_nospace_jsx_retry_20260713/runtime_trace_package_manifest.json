@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "kind": "olm_runtime_trace_request_package",
+  "request_id": "olmdirectionalblur_alpha_fade_fullrender_row755_20260712",
+  "profile": "olmdirectionalblur-2025-alpha-fade-fullrender-row755-pre-normalization-chunked-capture-nospace-jsx-nested-cdb-retry",
+  "effect": "OLMDirectionalBlur",
+  "case_id": "db_angle0_alpha_fade_hard_edges",
+  "input_alpha_mode": "PREMULTIPLIED",
+  "bit_depth": "8bpc",
+  "aex": {
+    "filename": "OLMDirectionalBlur.aex",
+    "size": 56832,
+    "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+  },
+  "geometry": {
+    "host_width": 1920,
+    "host_height": 1080,
+    "work_width": 2206,
+    "work_height": 2206,
+    "row": 755,
+    "focus_x": [747, 1080],
+    "focus_width": 334,
+    "row_stride_bytes": {"destination": 16, "scalar": 4},
+    "capture": "focused row segment x=747..1080 inclusive; capture in 16-pixel chunks and combine only after exact-size checks"
+  },
+  "stages": {
+    "worker_entry": {"offset": "0x4d84", "identity": "DirectionalBlur worker loop"},
+    "rowdriver": {"offset": "0x38d0", "identity": "FUN_1800038d0", "binding": "all scheduled rowdriver ranges complete before normalization"},
+    "pre_normalization": {"offset": "0x5554", "identity": "first instruction of internal normalization loop", "stop": "before executing normalization"},
+    "destination": {"base_from": "params+0x8090", "row0_from": "params+0x8098", "col0_from": "params+0x809c", "stride_from": "params+0x80a0", "element": "RGBA float32, 16 bytes"},
+    "denominator": {"base_from": "params+0x8080", "element": "float32, 4 bytes"},
+    "alpha_valid": {"base_from": "params+0x8088", "element": "float32, 4 bytes"}
+  },
+  "binding": {
+    "runner": "run_alpha_fade_row755.ps1 exactly as supplied; AE must be closed first; JSX launches from a fixed no-space Public path; pause-after-effect-add, hash-pinned live module lookup, absolute-base CDB attach, and nested capture_at_5554.cdb execution are mandatory",
+    "run_id": "must be identical in every trace record and return JSON",
+    "pid": "one AE PID only",
+    "params": "same refcon pointer at worker, rowdriver, and normalization records",
+    "row": "normalization tile must contain global row 755 and global x 747..1080; typed addresses subtract row0/col0 from global coordinates",
+    "stage": "normalization offset must be exactly 0x5554; no post-normalization capture accepted",
+    "address_provenance": "all three plane bases and row/column/stride fields must be emitted from the same params pointer",
+    "chunk_capture": "21 chunks per plane, 16 pixels per chunk except the final 14-pixel chunk; partial chunks are rejected"
+  },
+  "runtime_actions": [
+    {
+      "request_id": "olmdirectionalblur_alpha_fade_fullrender_row755_20260712",
+      "action": "run the supplied case once under the exact AEX and stop at the first pre-normalization hook after the real worker schedule",
+      "forbidden": ["RadialBlur", "per-pixel callbacks", "normalization execution", "answered_partial promotion", "module-name breakpoint expressions", "pre-load attach", "unresolved module-relative breakpoints"]
+    }
+  ]
+}

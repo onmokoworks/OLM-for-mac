@@ -1,0 +1,80 @@
+{
+  "kind": "olm_runtime_trace_return_summary",
+  "schema": 1,
+  "source_root": "runtime-trace-return",
+  "package": "refs/runtime_trace_packages/olmdirectionalblur_alpha_fade_fullrender_row755_chunked_capture_20260712.zip",
+  "required": [
+    {
+      "request_id": "olmdirectionalblur_alpha_fade_fullrender_row755_20260712",
+      "count": 3,
+      "answered": false,
+      "statuses": [
+        "exact_bind_failure"
+      ]
+    }
+  ],
+  "extra_request_ids": [],
+  "results": [
+    {
+      "request_id": "olmdirectionalblur_alpha_fade_fullrender_row755_20260712",
+      "status": "exact_bind_failure",
+      "summary": "",
+      "observations": {
+        "schema": 1,
+        "run_id": "dblur-row755-294e8b9aacf24dfaaea3bcdda8441856",
+        "aex": {
+          "path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\OLMDirectionalBlur.aex",
+          "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+          "size": 56832
+        },
+        "failure": {
+          "stage": "ae_pause",
+          "reason": "The quoted-JSX retry still never wrote `ae_ready.marker`. The AE script did not reach its pause handshake, so module lookup, CDB attach, chunk capture, and chunk combine never started.",
+          "details": {
+            "missing_artifacts": [
+              "ae_ready.marker",
+              "ae_render.log",
+              "ae_render_result.json",
+              "cdb_output.txt",
+              "cdb_stderr.txt",
+              "row755_destination_rgba_f32_le.bin",
+              "row755_denominator_f32_le.bin",
+              "row755_alpha_valid_f32_le.bin"
+            ],
+            "run_listing": "artifacts/run_listing.json",
+            "attempt_trace": "artifacts/attempt_RETURN_RUNTIME_TRACE.json"
+          }
+        }
+      },
+      "source_file": "RETURN_RUNTIME_TRACE.json"
+    },
+    {
+      "request_id": "olmdirectionalblur_alpha_fade_fullrender_row755_20260712",
+      "status": "exact_bind_failure",
+      "summary": "",
+      "observations": {
+        "schema": 1,
+        "run_id": "dblur-row755-294e8b9aacf24dfaaea3bcdda8441856",
+        "failure": {
+          "stage": "ae_pause",
+          "reason": "ready marker not written"
+        }
+      },
+      "source_file": "artifacts/attempt_RETURN_RUNTIME_TRACE.json"
+    },
+    {
+      "request_id": "olmdirectionalblur_alpha_fade_fullrender_row755_20260712",
+      "status": "exact_bind_failure",
+      "summary": "",
+      "observations": {
+        "schema": 1,
+        "run_id": "dblur-row755-294e8b9aacf24dfaaea3bcdda8441856",
+        "failure": {
+          "stage": "ae_pause",
+          "reason": "quoted-jsx retry still never reached pause handshake"
+        }
+      },
+      "source_file": "run_summary.json"
+    }
+  ]
+}
