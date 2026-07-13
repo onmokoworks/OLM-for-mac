@@ -98,3 +98,11 @@ The minimal gate package sent to Windows is
 `703253f6507e68654a1984884ff81e3b40115cc6f455989b0ccc11ddf84c61d1`.
 It reuses only the DG case0026 package as a launch vehicle; no DG algorithm
 claim is made from this gate.
+
+The subsequent Windows retry was stale: its `afterfx_process_diagnostics.json`
+still records the old `--` argument. It is archived as host-tooling noise and
+must not be used to judge the fix. The no-double-dash package was copied to
+the explicit Windows path
+`C:\\olm_short\\incoming_20260714_direct_dg_case0026_no_double_dash\\REQUEST.zip`;
+the extracted launcher was independently checked to contain no `--` in
+`$launchArgumentValues`.
