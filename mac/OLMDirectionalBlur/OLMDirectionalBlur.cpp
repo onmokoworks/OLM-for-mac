@@ -1,6 +1,7 @@
 #include "OLMDirectionalBlur.h"
 
 #include "../../core/dblur_frontonly.h"
+#include "../../core/dblur_gaussian.h"
 
 #include <algorithm>
 #include <cmath>
@@ -198,9 +199,8 @@ static std::vector<float> DirectionalGaussianWeights(A_long length)
 {
 	length = std::max<A_long>(length, 1);
 	std::vector<float> weights((size_t)length, 1.0f);
-	const float denom = 2.0f * ((float)length / 3.0f) * ((float)length / 3.0f) + 1.0e-5f;
 	for (A_long i = 0; i < length; ++i) {
-		weights[(size_t)i] = std::exp(-((float)(i * i)) / denom);
+		weights[(size_t)i] = olm::dblur::gaussian_weight((int)length, (int)i);
 	}
 	return weights;
 }

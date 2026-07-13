@@ -1,4 +1,5 @@
 #include "dblur_frontonly.h"
+#include "dblur_gaussian.h"
 
 #include "dblur_rotate.h"
 #include "dblur_rowdriver.h"
@@ -21,13 +22,9 @@ inline std::size_t rgba_index(int width, int x, int y) {
 
 std::vector<float> gaussian_weights(int count) {
     std::vector<float> weights(static_cast<std::size_t>(count), 1.0f);
-    const float ratio = static_cast<float>(count) / 3.0f;
-    const float denominator = static_cast<float>(
-        2.0 * static_cast<double>(ratio) * static_cast<double>(ratio) + 1.0e-5);
     for (int index = 0; index < count; ++index) {
-        const float numerator = static_cast<float>(index * index);
         weights[static_cast<std::size_t>(index)] =
-            std::exp(-numerator / denominator);
+            olm::dblur::gaussian_weight(count, index);
     }
     return weights;
 }

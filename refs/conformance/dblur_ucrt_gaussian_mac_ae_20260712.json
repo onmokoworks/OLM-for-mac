@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "kind": "olmdirectionalblur_ucrt_gaussian_mac_ae_result",
+  "date": "2026-07-12",
+  "case_id": "db_angle0_alpha_fade_hard_edges",
+  "ae_version": "26.3x87",
+  "renderer": "Software",
+  "bit_depth": "8bpc",
+  "input_alpha_mode": "PREMULTIPLIED",
+  "reference_kind": "hash-pinned current-2025-AEX Windows AE Software",
+  "reference_png_sha256": "552a055bfaca2472d32eafb5d60d4d47f909c2808106344bf1b16cdb2a8ff8d4",
+  "comparison": {
+    "max_diff": 3,
+    "mean_diff": 0.0000617283950617284,
+    "differing_pixels": 226,
+    "total_pixels": 2073600,
+    "differing_pixels_percent": 0.01089891975308642
+  },
+  "previous_comparison": {
+    "max_diff": 3,
+    "differing_pixels": 563
+  },
+  "classification": "binary-grounded-known-red",
+  "next_boundary": "first divergent prepass, rowdriver/scatter, or rotate-back intermediate at x=1308"
+}

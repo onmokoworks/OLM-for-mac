@@ -1,109 +1,159 @@
-# DirectionalBlur Alpha Fade host-boundary closeout
+# DirectionalBlur Alpha Fade host-boundary proof
 
 ## Verdict
 
-Current evidence makes further Alpha Fade kernel tuning unjustified pending a
-Windows boundary capture. The 2025 AEX choreography is grounded through the
-complete raw callback, while the retained June 19 AE reference does not
-identify the AEX generation or retain the exact input world seen by that AEX.
-The case therefore remains `blocked-reference-provenance`, not `AE exact` and
-not permission to tune PNGs. Host/provenance ownership is a strong inference,
-not final proof until the requested PF worlds return.
+The requested same-run Windows capture is accepted. It proves the exact 2025
+AEX identity, complete 8bpc PF input/output worlds, and AE host conversion on
+both sides of the plug-in. The retained June 19 PNG is not output from this
+current binary and is no longer a valid oracle for this case.
 
-## Measured facts
+Against the new hash-pinned reference, the current Mac AE render remains
+`known-red`: `max_diff=3`, `980` channel values and `563` pixels differ. The
+portable Alpha Fade path is still `binary-grounded`, but this feature is not
+`AE exact`.
 
-- The Mac callback input for the retained premultiplied PNG is exactly
-  `round(premultiplied_rgb * 255 / alpha)`. Its packed RGBA8 SHA-256 is
-  `abd939d253b6b955f2912f8ace74cb4c1fe19b44029479fb30bb095082c63ed8`.
-- The Mac portable core output is byte-identical to the bytes written into the
-  Mac PF output world. The callback ARGB8 SHA-256 is
-  `cb1c843b9bcbcee8e37bfdf54208578888c70b11ed2de157e1a7c76d11df815c`.
-- The resulting Mac AE PNG differs from the retained Windows PNG by RGB-only
-  `max_diff=1`, `234049` channel bytes and `183121` pixels. Alpha is exact.
-- Reconstructing the input with integer floor unpremultiplication reduces the
-  modeled 2025-AEX/Windows-PNG residual to RGB-only `max_diff=1`, `22993`
-  channel bytes. The complete actual-AEX wrapper consumed `557498777`
-  instructions and produced raw ARGB8 SHA-256
-  `7f64aa7caef89cbdf2bb86eee5f6b87f063fb2927e85e10e8abbce2d2fcd5bd9`.
-- A real Mac AE render with the same floor-reconstructed input leaves `23053`
-  channel bytes across `21778` pixels. The small 60-byte delta is consistent
-  with the measured architecture-sensitive raw boundary; it does not explain
-  the original 234049-byte family.
-- Compiling the same portable source for arm64 and macOS x86_64 changes raw
-  output at only `2055` channel bytes / `1646` pixels on the straight-palette
-  probe. On the floor-input probe, the complete actual AEX and Mac callback
-  differ at only `78` raw channel bytes.
-- A 64-group floor/nearest input sensitivity sweep can overfit the retained
-  image down to `12621` differing channel bytes, but no single arithmetic rule
-  becomes exact. This is diagnostic only and must not become plug-in code.
-- The June 19 manifest records AE `26.2x49`, Software renderer, parameters and
-  timestamps, but no loaded AEX path, size, version or SHA-256. The official
-  bundle contains distinct 2024 and 2025 DirectionalBlur binaries.
+Current classification:
 
-## Runner correction
+- `correctness_status`: `binary-grounded / known-red`
+- `host_status`: `host-debuggable`
+- `work_lane`: `binary-proof`
 
-`scripts/run_ae_single_case.py` now clears volatile AE environment keys before
-applying the current run's values. Without this reset, a preceding
-`OLM_AE_DISABLE_EFFECT=1` no-effect control can leak into the next rapidly
-started AE process and silently invalidate that render.
+## Accepted Windows run
 
-A debug build compiled with `OLM_DBLUR_ENABLE_BOUNDARY_CAPTURE=1` can use
-`OLM_DBLUR_CAPTURE_PREFIX=/tmp/name` for Mac raw boundary capture. It writes
-tightly packed input RGBA8, core output RGBA8, callback output ARGB8 and world
-metadata. Normal builds contain no environment-triggered capture path.
+- Request: `olmdirectionalblur_front_alpha_host_boundary_2025_20260711`
+- Status: `answered`
+- Case: `db_angle0_alpha_fade_hard_edges`
+- AE input alpha mode: `PREMULTIPLIED`
+- Loaded path:
+  `C:\Program Files\Adobe\Common\Plug-ins\7.0\MediaCore\OLM\OLMDirectionalBlur.aex`
+- Loaded AEX SHA-256:
+  `d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e`
+- File size: `56832`
+- PE image size: `77824`
+- Both worlds: `1920x1080`, rowbytes `7680`, origin `(0,0)`, full extent
+- Both worlds share invocation `00000088bb4f3110` and context
+  `00000088bb4f4050`.
+- Input ARGB8 SHA-256:
+  `671ae54fcf5eaca65986389034c63ce47c0bce9b842b193a652a87e195d05dcd`
+- Output ARGB8 SHA-256:
+  `1c53bb46bde66355ac77059b29be237e4c800ddd3931e9db4d0181b25af644b1`
 
-## Required Windows proof
+The accepted return is archived under `refs/returns/windows` locally and under
+the NAS `old` queue. A convenient ignored local reference set is
+`refs/win_references/20260711_directionalblur_front_alpha_current_2025_aex`.
 
-Executable request package:
-`refs/runtime_trace_packages/olmdirectionalblur_front_alpha_host_boundary_2025_20260711.zip`.
-It hash-gates the loaded module, binds the two worlds by PID/RBP/RBX/output
-world, validates readable PF structures and buffers, and creates the return ZIP
-automatically.
+## Host arithmetic
 
-Use one same-run capture of `db_angle0_alpha_fade_hard_edges`:
+The captured worlds close both host transforms byte-for-byte:
 
-1. Record the loaded `OLMDirectionalBlur.aex` path, file size, version and
-   SHA-256. The known 2025 target is
-   `d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e`.
-2. For that hash only, capture the complete PF input world at
-   `OLMDirectionalBlur+0x5267`, before the populate callback at `+0x6980`.
-3. Capture the complete PF output world at `OLMDirectionalBlur+0x566a`, after
-   the output Iterate8 callback at `+0x6b30` and before AE export.
-4. Return rowbytes, width, height, extent/origin metadata and both row-stripped
-   ARGB8 files. Both worlds must be `1920x1080`, 8bpc and from the same run.
+1. PNG to PF input world uses straight RGB reconstructed from the premultiplied
+   PNG with integer half-up unpremultiplication:
+   `rgb_straight = (rgb_premult * 255 + alpha / 2) / alpha`, with integer
+   division and zero RGB when alpha is zero. Modeled versus captured PF input:
+   `max_diff=0`, `differing_values=0`.
+2. PF output world to returned PNG uses integer half-up premultiplication:
+   `rgb_png = (rgb_straight * alpha + 127) / 255`. Modeled versus returned PNG:
+   `max_diff=0`, `differing_values=0`.
 
-If the loaded hash differs, do not install offset breakpoints. Return
-`binary_identity_mismatch` with path/hash/version instead. A hash-pinned
-current-AEX recapture is then the next action.
+This proves the host boundary. Neither transform belongs inside the plug-in
+kernel.
+
+## Reference correction
+
+The current hash-pinned Windows render has PNG SHA-256
+`552a055bfaca2472d32eafb5d60d4d47f909c2808106344bf1b16cdb2a8ff8d4`.
+The retained June 19 PNG has SHA-256
+`d7ed7ea80324961d59a9fe3d2c841b6efea47136debbeca6d8685e8337c111bc`.
+They differ at `max_diff=3`, `234845` channel values and `183482` pixels,
+including `30` alpha values. The old manifest did not record its loaded AEX;
+the new same-run proof demonstrates that it is not current-2025-AEX truth.
+
+The current Mac candidate compared with the new Windows render is much closer,
+but not exact:
+
+| Comparison | max | Values | Pixels | A | R | G | B |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Mac AE PNG vs current Windows PNG | 3 | 980 | 563 | 30 | 218 | 394 | 338 |
+| Mac arm64 raw vs Windows raw | 4 | 1030 | 587 | 30 | 231 | 421 | 348 |
+| Mac x86_64 raw vs Windows raw | 4 | 468 | 226 | 30 | 129 | 174 | 135 |
+| Mac arm64 raw vs Mac x86_64 raw | 1 | 562 | 361 | 0 | 102 | 247 | 213 |
+
+A fresh Mac AE `26.3x87` Software render using the corrected one-case request
+reproduces the PNG row exactly: `max=3`, mean `0.0001263503`, `563/2073600`
+pixels. Its exact-check report is
+`refs/reports/ae_single_case_dblur_front_alpha_current_2025_aex_20260711/reports/current_mac_exact.json`.
+
+The x86_64-versus-Windows residual is confined to column `x=1308`, rows
+`y=184..517`. The broader arm64-versus-x86_64 residual spans other locations.
+
+## Architecture split
+
+The current Gaussian table builder calls `std::exp(float)`. Rebuilding the
+same source so that the float argument is evaluated with double `exp` and then
+cast back to float makes the arm64 raw output byte-identical to the macOS
+x86_64 output:
+
+- arm64 current raw SHA-256:
+  `cb1c843b9bcbcee8e37bfdf54208578888c70b11ed2de157e1a7c76d11df815c`
+- macOS x86_64 raw SHA-256:
+  `65e79246d482eb7f0ad01c72fe5c367b39b0fe0dbe6ab47032ef21fe982ce21f`
+- arm64 double-exp probe SHA-256:
+  `65e79246d482eb7f0ad01c72fe5c367b39b0fe0dbe6ab47032ef21fe982ce21f`
+
+This proves that the broad Mac architecture split comes from platform `expf`
+behavior. It does not prove that double-exp matches Windows: the remaining
+`468` raw values on one column still differ from the Windows UCRT build.
+
+The AEX imports `expf` from the Universal CRT. `FUN_180001830` constructs the
+Gaussian tables with float arithmetic, a double-width `+1e-5` denominator
+step, a float cast, and then `expf`. The live Alpha Fade case uses table sizes
+`96` for the prepass and `240` for the scatter stage.
+
+## Next proof
+
+The narrow next action is to capture the exact UCRT `expf` result bits for all
+Gaussian arguments used by the `n=96` and `n=240` tables. This can be done on
+Windows without AE. Replay those exact table words locally and compare the
+single residual column.
+
+Prepared request:
+`refs/runtime_trace_packages/olm_runtime_trace_olmdirectionalblur_ucrt_expf_gaussian_tables_20260711.zip`
+(SHA-256
+`2d89928c03b0d131acc07fb0c4f1e31f5ce61184f4a232c2f4c50aa9b9849b6e`).
+It requires 64-bit x64 PowerShell, records the exact `ucrtbase.dll` identity,
+and returns 336 rows without launching AE.
+
+`scripts/intake_latest_windows_return_from_share.py` automatically runs
+`scripts/analyze_dblur_ucrt_expf_return.py` for this request before archiving
+the return. Invalid architecture, missing rows, argument-bit drift or artifact
+hash mismatch leaves the ZIP in `new` and fails closed. A validated return also
+emits a provenance-only table JSON for deterministic replay.
+
+If the UCRT table closes the residual, replace the platform-libm dependency
+with a deterministic, binary-grounded table generator and rerun Mac AE. If it
+does not, capture the first affected prepass/scatter call and compare its
+destination, denominator and alpha buffers. The current boundary capture does
+not contain those intermediate buffers, so it cannot yet distinguish the
+`n=96` prepass from the `n=240` scatter table.
 
 ## Forbidden fixes
 
-- Do not bake floor unpremultiplication into the released plug-in from this one
-  lossy replay.
-- Do not add a channel bias, subtract-one rule, spatial lookup or PNG-fit table.
-- Do not call the Alpha Fade case `AE exact` from a modeled host transform.
-- Do not treat the June 19 PNG as current-2025-AEX proof until binary identity
-  or a hash-pinned recapture exists.
+- Do not use the June 19 PNG as current-AEX truth.
+- Do not add channel bias, subtract-one, spatial lookup or case-specific pixel
+  patches.
+- Do not bake host unpremultiplication or premultiplication into the kernel.
+- Do not promote double-exp merely because it removes the Mac architecture
+  split; Windows exactness is still unproven.
+- Do not call Alpha Fade `AE exact` while any value differs.
 
-## Post-hardening verification
+## Verification
 
-- Normal Universal `arm64/x86_64` plug-in build: passed. The installed binary
-  SHA-256 is
-  `afb83a83a4dcdeb3d6bef3fc4fe72e08035e7dbad24267bf3dffe7f598f9cc56`
-  and contains none of the capture-environment or capture-filename strings.
-- Instrumented Universal build with
-  `OLM_DBLUR_ENABLE_BOUNDARY_CAPTURE=1`: passed in a separate `/tmp` build root.
-- Mac AE 26.3 Software regression `db_angle0_strength_sweep_small`: `max_diff=0`,
-  `differing_bytes=0`, output/reference PNG SHA-256 both
-  `bd1e82f2648cdf2f5f3c814608498b71fc4dba3ed518f4b3c52fb00320a96f9b`.
-- Windows request ZIP integrity/static contract/pending-priority/staging smokes:
-  passed. Request ZIP SHA-256 is
-  `08465290715f7cdd766a1e374d39174c5f984028d71b48c17f3f62f8184ee66a`.
-
-## Reproduction commands
-
-```text
-python3 scripts/run_ae_single_case.py --request-dir refs/reports/ae_single_case_dblur_frontonly_current_20260711/request --case-id db_angle0_alpha_fade_hard_edges --output-dir refs/reports/ae_single_case_dblur_frontonly_current_20260711/candidate_alpha_fade_premult_fixed --ae-env OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT=1 --ae-env OLM_AE_FORCE_NEW_PROJECT=1 --ae-env OLM_AE_FORCE_SOFTWARE=1 --ae-env OLM_AE_INPUT_ALPHA_MODE=PREMULTIPLIED --ae-env OLM_DBLUR_CAPTURE_PREFIX=/tmp/dblur_mac_callback_alpha_premult_fixed_20260711
-
-python3 tools/emulation/dblur_fullrender_host_fixture_20260711.py --source /tmp/dblur_alpha_floor_request_20260711/input/directionalblur_context_scale_20260606__software__fr24__db_angle0_alpha_fade_hard_edges_before_effects.png --expected refs/reports/ae_single_case_dblur_frontonly_current_20260711/request/expected/directionalblur_context_scale_20260606__software__fr24__db_angle0_alpha_fade_hard_edges.png --output /tmp/dblur_alpha_floor_actualaex_20260711.json --host-output-raw /tmp/dblur_alpha_floor_actualaex_20260711.argb --downsample-num 1 --downsample-den 1 --angle 0 --brightness-gain 1 --size-variation 0 --front-strength 240 --front-alpha-fade 96 --front-sharp-tail 0 --back-strength 0 --back-alpha-fade 0 --back-sharp-tail 0 --noise-variation 0 --noise-type 1 --seed 1 --noise-offset 0 --thickness 10 --detour-rotate --detour-rowdriver --max-instructions 1500000000
-```
+- Runtime-return verifier: one answered request, hash and same-run world gates
+  passed.
+- Input half-up reconstruction versus captured PF input: exact.
+- Output half-up premultiplication versus returned PNG: exact.
+- Current Mac AE versus current Windows AE: known-red as tabulated above.
+- Fresh corrected-reference Mac AE exact verifier: expected failure, one case,
+  `max=3`, `nonzero_px=563`.
+- `python3 refs/scripts/smoke_list_olm_return_candidates.py`: passed after
+  adding portable `RETURN_RUNTIME_TRACE.json` coverage.

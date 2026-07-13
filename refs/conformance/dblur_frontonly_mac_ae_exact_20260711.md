@@ -66,11 +66,14 @@ following are true:
   Noise Variation are zero
 - input and output worlds have identical dimensions
 
-Front Alpha Fade now reaches the same complete shared core and is raw-grounded,
-but it is not promoted by this closeout. Its retained semi-transparent fixture
-does not record the loaded Windows AEX hash or exact Windows PF input world;
-see `refs/conformance/dblur_alpha_host_boundary_20260711.md`. Size Variation,
-Sharp Tail, Back, Noise, 16bpc, and 32bpc remain separate proof lanes.
+Front Alpha Fade now reaches the same complete shared core, and its current
+2025-AEX PF input/output boundary is hash-pinned. It is still not promoted by
+this closeout: the corrected Windows reference leaves the current Mac render
+at `max_diff=3`, `980` differing values / `563` pixels. The broad Mac
+architecture split is proven to come from platform `expf`; exact UCRT table
+words are the next proof. See
+`refs/conformance/dblur_alpha_host_boundary_20260711.md`. Size Variation, Sharp
+Tail, Back, Noise, 16bpc, and 32bpc remain separate proof lanes.
 
 ## Verification commands
 

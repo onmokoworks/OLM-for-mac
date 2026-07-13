@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 MAC_SOURCE = ROOT / "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"
 CLI_SOURCE = ROOT / "cli/OLMDirectionalBlur/main.cpp"
+CORE_HEADER = ROOT / "core/dblur_gaussian.h"
 
 
 def require_contains(path: Path, needle: str) -> None:
@@ -28,9 +29,14 @@ def require_not_contains_near_function(path: Path, function_name: str, forbidden
 
 
 def main() -> int:
-    require_contains(MAC_SOURCE, "const float denom = 2.0f * ((float)length / 3.0f) * ((float)length / 3.0f) + 1.0e-5f;")
+    require_contains(CORE_HEADER, "inline float gaussian_weight(int count, int index)")
+    require_contains(MAC_SOURCE, '#include "../../core/dblur_gaussian.h"')
+    require_contains(CLI_SOURCE, '#include "../../core/dblur_gaussian.h"')
+    require_contains(MAC_SOURCE, "olm::dblur::gaussian_weight((int)length, (int)i)")
+    require_contains(CLI_SOURCE, "olm::dblur::gaussian_weight(length, i)")
+    require_not_contains_near_function(MAC_SOURCE, "DirectionalGaussianWeights", "const float denom =")
     require_not_contains_near_function(MAC_SOURCE, "DirectionalGaussianWeights", "/ 0.5f")
-    require_contains(CLI_SOURCE, "const float ratio = static_cast<float>(length) / 3.0f;")
+    require_not_contains_near_function(CLI_SOURCE, "gaussian_weights", "const float ratio =")
     require_not_contains_near_function(CLI_SOURCE, "gaussian_weights", "/ 0.5f")
     print("[OK] OLMDirectionalBlur Gaussian divisor source smoke passed")
     return 0

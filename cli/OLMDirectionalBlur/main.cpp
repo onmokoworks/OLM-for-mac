@@ -15,6 +15,8 @@
 #include <string>
 #include <vector>
 
+#include "../../core/dblur_gaussian.h"
+
 namespace {
 
 struct Image {
@@ -531,10 +533,8 @@ std::vector<float> gaussian_weights(int length) {
     //   w[i] = expf(-(i*i) / den)
     // The earlier CLI divisor of 0.5 made den ~36x too large, flattening the
     // gaussian and over-weighting far samples (over-accumulated alpha + RGB).
-    const float ratio = static_cast<float>(length) / 3.0f;
-    const double den = 2.0 * static_cast<double>(ratio) * static_cast<double>(ratio) + 1.0e-5;
     for (int i = 0; i < length; ++i)
-        weights[static_cast<size_t>(i)] = std::exp(-(static_cast<float>(i * i)) / static_cast<float>(den));
+        weights[static_cast<size_t>(i)] = olm::dblur::gaussian_weight(length, i);
     return weights;
 }
 

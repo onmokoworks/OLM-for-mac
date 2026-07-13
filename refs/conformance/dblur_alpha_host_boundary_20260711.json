@@ -1,46 +1,114 @@
 {
-  "schema": 1,
-  "kind": "dblur_alpha_host_boundary_closeout",
+  "schema": 2,
+  "kind": "dblur_alpha_host_boundary_proof",
   "case_id": "db_angle0_alpha_fade_hard_edges",
-  "status": "blocked-reference-provenance",
-  "mac_premultiplied_replay": {
-    "input_rgba8_sha256": "abd939d253b6b955f2912f8ace74cb4c1fe19b44029479fb30bb095082c63ed8",
-    "callback_argb8_sha256": "cb1c843b9bcbcee8e37bfdf54208578888c70b11ed2de157e1a7c76d11df815c",
-    "max_diff": 1,
-    "differing_bytes": 234049,
-    "differing_pixels": 183121,
-    "alpha_differing_bytes": 0,
-    "input_unpremultiply": "floor((premultiplied_rgb * 255 + floor(alpha / 2)) / alpha)"
+  "request_id": "olmdirectionalblur_front_alpha_host_boundary_2025_20260711",
+  "status": "binary-grounded-current-reference-known-red",
+  "correctness_status": "binary-grounded / known-red",
+  "host_status": "host-debuggable",
+  "work_lane": "binary-proof",
+  "windows_run": {
+    "status": "answered",
+    "loaded_path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\OLMDirectionalBlur.aex",
+    "loaded_aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "file_size": 56832,
+    "pe_image_size": 77824,
+    "width": 1920,
+    "height": 1080,
+    "rowbytes": 7680,
+    "invocation": "00000088bb4f3110",
+    "context": "00000088bb4f4050",
+    "input_argb8_sha256": "671ae54fcf5eaca65986389034c63ce47c0bce9b842b193a652a87e195d05dcd",
+    "output_argb8_sha256": "1c53bb46bde66355ac77059b29be237e4c800ddd3931e9db4d0181b25af644b1",
+    "render_png_sha256": "552a055bfaca2472d32eafb5d60d4d47f909c2808106344bf1b16cdb2a8ff8d4"
   },
-  "floor_input_probe": {
-    "actual_aex_raw_argb8_sha256": "7f64aa7caef89cbdf2bb86eee5f6b87f063fb2927e85e10e8abbce2d2fcd5bd9",
-    "actual_aex_instructions": 557498777,
-    "modeled_nearest_premultiply": {
-      "max_diff": 1,
-      "differing_bytes": 22993
+  "host_boundary": {
+    "input_formula": "alpha == 0 ? 0 : (premultiplied_rgb * 255 + floor(alpha / 2)) / alpha",
+    "input_formula_max_diff": 0,
+    "input_formula_differing_values": 0,
+    "output_formula": "(straight_rgb * alpha + 127) / 255",
+    "output_formula_max_diff": 0,
+    "output_formula_differing_values": 0
+  },
+  "reference_correction": {
+    "old_june19_png_sha256": "d7ed7ea80324961d59a9fe3d2c841b6efea47136debbeca6d8685e8337c111bc",
+    "old_vs_current_windows": {
+      "max_diff": 3,
+      "differing_values": 234845,
+      "differing_pixels": 183482,
+      "per_channel_differing_values_rgba": [
+        21735,
+        54226,
+        158854,
+        30
+      ]
     },
-    "mac_ae": {
-      "max_diff": 1,
-      "differing_bytes": 23053,
-      "differing_pixels": 21778,
-      "alpha_differing_bytes": 0
+    "old_reference_is_current_aex_oracle": false
+  },
+  "current_mac_vs_current_windows": {
+    "png": {
+      "mac_ae_version": "26.3x87",
+      "renderer": "Software",
+      "formal_report": "refs/reports/ae_single_case_dblur_front_alpha_current_2025_aex_20260711/reports/current_mac_exact.json",
+      "max_diff": 3,
+      "differing_values": 980,
+      "differing_pixels": 563,
+      "per_channel_differing_values_rgba": [
+        218,
+        394,
+        338,
+        30
+      ],
+      "mean_abs_diff": 0.00012635030864197532
+    },
+    "arm64_raw": {
+      "sha256": "cb1c843b9bcbcee8e37bfdf54208578888c70b11ed2de157e1a7c76d11df815c",
+      "max_diff": 4,
+      "differing_values": 1030,
+      "differing_pixels": 587,
+      "per_channel_differing_values_argb": [
+        30,
+        231,
+        421,
+        348
+      ]
+    },
+    "macos_x86_64_raw": {
+      "sha256": "65e79246d482eb7f0ad01c72fe5c367b39b0fe0dbe6ab47032ef21fe982ce21f",
+      "max_diff": 4,
+      "differing_values": 468,
+      "differing_pixels": 226,
+      "per_channel_differing_values_argb": [
+        30,
+        129,
+        174,
+        135
+      ],
+      "residual_bbox_xy": [
+        1308,
+        184,
+        1308,
+        517
+      ]
     }
   },
   "architecture_probe": {
-    "straight_input_raw_differing_bytes": 2055,
-    "straight_input_raw_differing_pixels": 1646,
-    "floor_input_actual_aex_vs_mac_raw_differing_bytes": 78,
-    "max_diff": 1
+    "arm64_vs_macos_x86_64": {
+      "max_diff": 1,
+      "differing_values": 562,
+      "differing_pixels": 361
+    },
+    "arm64_double_exp_sha256": "65e79246d482eb7f0ad01c72fe5c367b39b0fe0dbe6ab47032ef21fe982ce21f",
+    "arm64_double_exp_vs_macos_x86_64_differing_values": 0,
+    "conclusion": "platform expf explains the broad Mac architecture split but does not yet close Windows UCRT output"
   },
-  "input_formula_search": {
-    "ambiguous_groups": 64,
-    "best_case_specific_local_search_differing_bytes": 12621,
-    "production_eligible": false
-  },
-  "reference_provenance": {
-    "windows_ae_version": "26.2x49",
-    "loaded_aex_sha256_recorded": false,
-    "expected_2025_aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
-  },
-  "next_required_evidence": "same-run Windows loaded-binary identity plus complete PF input/output ARGB8 worlds"
+  "next_required_evidence": "exact Windows UCRT expf float result bits for the n=96 and n=240 Gaussian tables, followed by same-input replay; if still red, typed prepass/scatter intermediate buffers",
+  "prepared_request": {
+    "path": "refs/runtime_trace_packages/olm_runtime_trace_olmdirectionalblur_ucrt_expf_gaussian_tables_20260711.zip",
+    "sha256": "2d89928c03b0d131acc07fb0c4f1e31f5ce61184f4a232c2f4c50aa9b9849b6e",
+    "requires_ae": false,
+    "required_process_architecture": "X64",
+    "fail_closed_analyzer": "scripts/analyze_dblur_ucrt_expf_return.py",
+    "auto_intake": "scripts/intake_latest_windows_return_from_share.py"
+  }
 }
