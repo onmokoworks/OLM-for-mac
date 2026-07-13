@@ -57,8 +57,8 @@ def complete_trace(*, capture_pid: int = 7550, capture_params: str = "0x000001f0
                 "destination_base=0x000001f010000000 denominator_base=0x000001f020000000 "
                 "alpha_valid_base=0x000001f030000000 row0=0 col0=0 stride=2206 row=755 "
                 "x_start=747 x_end=1080 destination_bytes=5344 denominator_bytes=1336 "
-                "alpha_valid_bytes=1336 destination_address=0x000001f010196b30 "
-                "denominator_address=0x000001f020065acc alpha_valid_address=0x000001f030065acc"
+                "alpha_valid_bytes=1336 destination_address=0x000001f01196ce50 "
+                "denominator_address=0x000001f02065b394 alpha_valid_address=0x000001f03065b394"
             ),
         ]
     ) + "\n"
@@ -150,6 +150,21 @@ def main() -> int:
         "params_drift": complete_trace(capture_params="0x000001f000009000"),
         "wrong_stage": complete_trace().replace("stage_rva=5554", "stage_rva=5555"),
         "wrong_bytes": complete_trace().replace("destination_bytes=5344", "destination_bytes=5343"),
+        "bogus_destination_address": complete_trace().replace(
+            "destination_address=0x000001f01196ce50", "destination_address=0x000001f01196ce40"
+        ),
+        "bogus_denominator_address": complete_trace().replace(
+            "denominator_address=0x000001f02065b394", "denominator_address=0x000001f02065b390"
+        ),
+        "bogus_alpha_address": complete_trace().replace(
+            "alpha_valid_address=0x000001f03065b394", "alpha_valid_address=0x000001f03065b390"
+        ),
+        "bogus_base": complete_trace().replace(
+            "destination_base=0x000001f010000000", "destination_base=0x000001f010000010"
+        ),
+        "bogus_row": complete_trace().replace("row=755 ", "row=756 "),
+        "bogus_col": complete_trace().replace("col0=0 ", "col0=1 "),
+        "bogus_stride": complete_trace().replace("stride=2206 ", "stride=2207 "),
         "missing_rows": "\n".join(
             line for line in complete_trace().splitlines() if not line.startswith("DBR_ROW_RANGE ")
         ) + "\n",
@@ -171,8 +186,29 @@ def main() -> int:
             assert archive.read(f"request/expected/{IMAGE_NAME}") == (SOURCE / "expected" / IMAGE_NAME).read_bytes()
         contract = json.loads((package_a / "witness-contract.json").read_text(encoding="utf-8"))
         launcher = (package_a / "artifacts/run_witness.ps1").read_text(encoding="utf-8")
-        for token in ("Get-Process -Name AfterFX", "effect_loaded=1", "parameters_applied=1", "OLM_AE_FORCE_SOFTWARE", "same_run_identity"):
+        for token in (
+            "Get-Process -Name AfterFX",
+            "effect_loaded=1",
+            "parameters_applied=1",
+            "OLM_AE_FORCE_SOFTWARE",
+            "same_run_identity",
+            "function ConvertTo-WindowsCommandLineArgument",
+            "$launchArgumentValues = @('-o', '-g', '-G', '-cf', $bootstrapCdbScript, $env:ComSpec, '/d', '/s', '/c', $launchWrapper)",
+            "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
+            "$launchArguments = Join-WindowsCommandLine $launchArgumentValues",
+            "$observedCommandLine.IndexOf($normalizedQueuePath, [StringComparison]::OrdinalIgnoreCase)",
+            "'jsx_command_line_preflight'",
+            "$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'",
+            "WITNESS_CDB_BOOTSTRAP_ARMED",
+            "WITNESS_CDB_TARGET_MODULE_LOADED",
+            "sxe -c \".echo WITNESS_CDB_TARGET_MODULE_LOADED;",
+            "sxi ibp",
+            "'cdb_child_tracking'",
+            "afterfx_launch_wrapper.cmd",
+            "launched_queue.jsx",
+        ):
             assert token in launcher
+        assert "$launchArgumentValues = @('-cf', $bootstrapCdbScript, $AfterFxPath, '-r'" not in launcher
 
         work_a = temp / "work-a"
         work_b = temp / "work-b"

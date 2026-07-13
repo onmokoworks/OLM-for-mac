@@ -23,6 +23,8 @@ GENERATOR = ROOT / "scripts/package_windows_witness_olmblur_case0006_20260713.py
 SPEC_ROOT = ROOT / "refs/windows_witness_specs/olmblur_case0006_same_run_20260713"
 SPEC = SPEC_ROOT / "witness-spec.json"
 CANONICAL = ROOT / "refs/runtime_trace_packages/olm_runtime_trace_olmblur_case0006_same_run_internal_20260713"
+GENERATED_PACKAGE = ROOT / "refs/runtime_trace_packages/windows_witness_olmblur_case0006_20260713"
+GENERATED_ZIP = GENERATED_PACKAGE.with_suffix(".zip")
 HASH = "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
 CASE_ID = "olmblur__case_0006"
 WITNESS_ID = "olmblur-case0006-rgb16-common-core-v1"
@@ -145,6 +147,11 @@ def main() -> int:
         package_a, zip_a = compile_package(temp, "package-a")
         package_b, zip_b = compile_package(temp, "package-b")
         assert zip_a.read_bytes() == zip_b.read_bytes()
+        assert GENERATED_PACKAGE.is_dir()
+        assert GENERATED_ZIP.is_file()
+        assert GENERATED_ZIP.read_bytes() == zip_a.read_bytes()
+        launcher = (GENERATED_PACKAGE / "artifacts/run_witness.ps1").read_text(encoding="utf-8")
+        assert launcher == (package_a / "artifacts/run_witness.ps1").read_text(encoding="utf-8")
         package_manifest = json.loads((package_a / "package-manifest.json").read_text(encoding="utf-8"))
         assert package_manifest["kind"] == "windows_witness_generated_package"
         assert package_manifest["entrypoint"] == "artifacts/run_witness.ps1"
@@ -154,21 +161,55 @@ def main() -> int:
             assert all(info.date_time == FIXED_ZIP_TIME for info in archive.infolist())
             assert package_manifest["entrypoint"] in archive.namelist()
             assert archive.read("request/input/case_0006_before_effects.png") == input_png.read_bytes()
-        launcher = (package_a / "artifacts/run_witness.ps1").read_text(encoding="utf-8")
-        for term in ("Get-Process -Name AfterFX", "effect_loaded=1", "parameters_applied=1", "OLM_AE_FORCE_SOFTWARE", "Get-FileHash", "Render-Cdb", "bundle --contract"):
+        for term in (
+            "Get-Process -Name AfterFX",
+            "effect_loaded=1",
+            "parameters_applied=1",
+            "OLM_AE_FORCE_SOFTWARE",
+            "Get-FileHash",
+            "Render-Cdb",
+            "bundle --contract",
+            "function ConvertTo-WindowsCommandLineArgument",
+            "$launchArgumentValues = @('-o', '-g', '-G', '-cf', $bootstrapCdbScript, $env:ComSpec, '/d', '/s', '/c', $launchWrapper)",
+            "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
+            "$launchArguments = Join-WindowsCommandLine $launchArgumentValues",
+            "$observedCommandLine.IndexOf($normalizedQueuePath, [StringComparison]::OrdinalIgnoreCase)",
+            "'jsx_command_line_preflight'",
+            "$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'",
+            "WITNESS_CDB_BOOTSTRAP_ARMED",
+            "WITNESS_CDB_TARGET_MODULE_LOADED",
+            "sxe -c \".echo WITNESS_CDB_TARGET_MODULE_LOADED;",
+            "sxi ibp",
+            "'cdb_child_tracking'",
+            "-FilePath $CdbPath",
+            "queue_bootstrap.log",
+            "afterfx_bootstrap.cdb",
+            "afterfx_bootstrap_cdb_trace.txt",
+            "afterfx_launch_wrapper.cmd",
+            "launched_queue.jsx",
+        ):
             assert term in launcher
+        assert "Start-Process -FilePath $AfterFxPath -ArgumentList $aeArgs" not in launcher
+        assert "$launchArgumentValues = @('-cf', $bootstrapCdbScript, $AfterFxPath, '-r'" not in launcher
         contract = json.loads((package_a / "witness-contract.json").read_text(encoding="utf-8"))
         assert contract["queue"] == "scripts/ae_witness_queue.jsx"
         assert contract["renderer"]["package_path"] == "scripts/renderer.jsx"
         export_path = temp / "work/exports" / CASE_ID / "case_0006.png"
         export_path.parent.mkdir(parents=True)
-        export_bytes = b"actual-png16-export-bytes\x00\xff"
+        export_bytes = input_png.read_bytes()
         export_path.write_bytes(export_bytes)
         bundled, returned_zip = bundle_return(contract, copy.deepcopy(accepted), temp / "work")
         assert bundled["status"] == "answered"
         assert bundled["artifacts"] == [{"case_id": CASE_ID, "archive_path": "return/exported_case_0006.png", "sha256": hashlib.sha256(export_bytes).hexdigest(), "size_bytes": len(export_bytes)}]
         with zipfile.ZipFile(returned_zip) as archive:
             assert archive.read("return/exported_case_0006.png") == export_bytes
+        assert_png16(export_path)
+        missing_export, missing_zip = bundle_return(contract, copy.deepcopy(accepted), temp / "missing-work")
+        assert missing_export["status"] == "exact_bind_failure"
+        assert missing_export["failure"]["stage"] == "artifact_collection"
+        with zipfile.ZipFile(missing_zip) as archive:
+            assert "return/exported_case_0006.png" not in archive.namelist()
+            assert contract["return_bundle"]["json_name"] in archive.namelist()
 
     print("[OK] real common-core OLMBlur case_0006 witness package is deterministic and fail-closed")
     return 0

@@ -142,7 +142,45 @@
           "destination_address": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
           "denominator_address": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
           "alpha_valid_address": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"}
-        }
+        },
+        "field_relations": [
+          {
+            "type": "address_arithmetic",
+            "address_field": "destination_address",
+            "base_field": "destination_base",
+            "row_field": "row",
+            "row_origin_field": "row0",
+            "column_field": "x_start",
+            "column_origin_field": "col0",
+            "stride_field": "stride",
+            "element_size": 16,
+            "channel_offset": 0
+          },
+          {
+            "type": "address_arithmetic",
+            "address_field": "denominator_address",
+            "base_field": "denominator_base",
+            "row_field": "row",
+            "row_origin_field": "row0",
+            "column_field": "x_start",
+            "column_origin_field": "col0",
+            "stride_field": "stride",
+            "element_size": 4,
+            "channel_offset": 0
+          },
+          {
+            "type": "address_arithmetic",
+            "address_field": "alpha_valid_address",
+            "base_field": "alpha_valid_base",
+            "row_field": "row",
+            "row_origin_field": "row0",
+            "column_field": "x_start",
+            "column_origin_field": "col0",
+            "stride_field": "stride",
+            "element_size": 4,
+            "channel_offset": 0
+          }
+        ]
       }
     ]
   },

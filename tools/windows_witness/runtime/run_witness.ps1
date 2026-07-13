@@ -38,18 +38,29 @@ $statusPath = Join-Path $work 'validation_status.json'
 $launchOut = Join-Path $work 'afterfx_launcher_stdout.txt'
 $launchErr = Join-Path $work 'afterfx_launcher_stderr.txt'
 $processDiagnostics = Join-Path $work 'afterfx_process_diagnostics.json'
-$bootstrapCdbScript = Join-Path $work 'afterfx_bootstrap.cdb'
-$bootstrapCdbTrace = Join-Path $work 'afterfx_bootstrap_cdb_trace.txt'
+$bootstrapCdbScriptEvidence = Join-Path $work 'afterfx_bootstrap.cdb'
+$bootstrapCdbTraceEvidence = Join-Path $work 'afterfx_bootstrap_cdb_trace.txt'
+$launchWrapperEvidence = Join-Path $work 'afterfx_launch_wrapper.cmd'
+$queueLaunchEvidence = Join-Path $work 'launched_queue.jsx'
 $queuePath = Join-Path $PackageRoot ([string]$contract.queue).Replace('/', '\')
 $sessionId = (Get-Process -Id $PID).SessionId
 $launch = $null
 $cdb = $null
 $launchStarted = $false
 $launchArguments = $null
+$launchArgumentValues = @()
 $boundPid = $null
 $boundBase = $null
 $launchDir = $null
 $queueBootstrap = $null
+$queueLaunch = $null
+$bootstrapCdbScript = $null
+$bootstrapCdbTrace = $null
+$launchWrapper = $null
+$normalizedQueuePath = $null
+$observedCommandLine = $null
+$activeCdbTrace = $null
+$activeCdbTraceEvidence = $null
 
 function Failure([string]$stage, [string]$reason, [object[]]$missing, [string]$last) {
   [ordered]@{
@@ -58,6 +69,32 @@ function Failure([string]$stage, [string]$reason, [object[]]$missing, [string]$l
     request_id = [string]$contract.request_id
     failure = [ordered]@{stage=$stage; reason=$reason; missing_fields=@($missing); last_observation=$last}
   }
+}
+
+function ConvertTo-WindowsCommandLineArgument([string]$value) {
+  if ($null -eq $value) { throw 'Windows command-line arguments may not be null' }
+  if ($value.Length -gt 0 -and $value -notmatch '[\s"]') { return $value }
+  $builder = New-Object System.Text.StringBuilder
+  [void]$builder.Append('"')
+  $backslashes = 0
+  foreach ($character in $value.ToCharArray()) {
+    if ($character -eq '\') { $backslashes++; continue }
+    if ($character -eq '"') {
+      [void]$builder.Append(('\' * (($backslashes * 2) + 1)))
+      [void]$builder.Append('"')
+      $backslashes = 0
+      continue
+    }
+    if ($backslashes -gt 0) { [void]$builder.Append(('\' * $backslashes)); $backslashes = 0 }
+    [void]$builder.Append($character)
+  }
+  if ($backslashes -gt 0) { [void]$builder.Append(('\' * ($backslashes * 2))) }
+  [void]$builder.Append('"')
+  return $builder.ToString()
+}
+
+function Join-WindowsCommandLine([object[]]$values) {
+  return (($values | ForEach-Object { ConvertTo-WindowsCommandLineArgument ([string]$_) }) -join ' ')
 }
 
 function Get-AfterFxState {
@@ -89,17 +126,33 @@ function Stop-WitnessProcesses {
   }
 }
 
+function Copy-WitnessLaunchEvidence {
+  foreach ($pair in @(
+    [pscustomobject]@{Source=$bootstrapCdbScript; Destination=$bootstrapCdbScriptEvidence}
+    [pscustomobject]@{Source=$bootstrapCdbTrace; Destination=$bootstrapCdbTraceEvidence}
+    [pscustomobject]@{Source=$launchWrapper; Destination=$launchWrapperEvidence}
+    [pscustomobject]@{Source=$queueLaunch; Destination=$queueLaunchEvidence}
+    [pscustomobject]@{Source=$queueBootstrap; Destination=(Join-Path $work 'queue_bootstrap.log')}
+    [pscustomobject]@{Source=$activeCdbTrace; Destination=$activeCdbTraceEvidence}
+  )) {
+    if ($pair.Source -and $pair.Destination -and (Test-Path -LiteralPath $pair.Source -PathType Leaf)) {
+      Copy-Item -LiteralPath $pair.Source -Destination $pair.Destination -Force -ErrorAction SilentlyContinue
+    }
+  }
+}
+
 function Finish([object]$body, [int]$code) {
   [ordered]@{
     launch_pid = $(if ($launch) { [int]$launch.Id } else { $null })
     launch_arguments = $launchArguments
+    launch_argument_values = @($launchArgumentValues)
+    normalized_queue_path = $normalizedQueuePath
+    observed_afterfx_command_line = $observedCommandLine
     session_id = [int]$sessionId
     observed_afterfx = @(Get-AfterFxState)
   } | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath $processDiagnostics -Encoding UTF8 -ErrorAction SilentlyContinue
   if ($code -ne 0) { Stop-WitnessProcesses }
-  if ($queueBootstrap -and (Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) {
-    Copy-Item -LiteralPath $queueBootstrap -Destination (Join-Path $work 'queue_bootstrap.log') -Force -ErrorAction SilentlyContinue
-  }
+  Copy-WitnessLaunchEvidence
   $body | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath $statusPath -Encoding UTF8
   & py -3 $runtimePath bundle --contract $contractPath --status $statusPath --work $work
   $bundleCode = $LASTEXITCODE
@@ -159,27 +212,33 @@ $env:OLM_AE_FORCE_SOFTWARE = '1'
 foreach ($property in $contract.project.environment.psobject.Properties) {
   [Environment]::SetEnvironmentVariable($property.Name, [string]$property.Value, 'Process')
 }
-$launchDir = Join-Path $env:PUBLIC ('OLMWitness\' + $runId)
+$shortId = [guid]::NewGuid().ToString('N').Substring(0, 12)
+$launchDir = Join-Path $env:PUBLIC ('OLMWitness\w_' + $shortId)
 New-Item -ItemType Directory -Force -Path $launchDir | Out-Null
 $launchDir = (Get-Item -LiteralPath $launchDir).FullName
 $queueLaunch = Join-Path $launchDir 'queue.jsx'
 $queueBootstrap = Join-Path $launchDir 'queue_bootstrap.log'
+$bootstrapCdbScript = Join-Path $launchDir 'boot.cdb'
+$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'
+$launchWrapper = Join-Path $launchDir 'launch.cmd'
 Copy-Item -LiteralPath $queuePath -Destination $queueLaunch -Force
 if ($queueLaunch -match '\s') { Finish (Failure 'path_preflight' 'short JSX launch path contains whitespace' @('no_space_queue_path') $queueLaunch) 2 }
+$normalizedQueuePath = [IO.Path]::GetFullPath($queueLaunch)
 $moduleName = [IO.Path]::GetFileName($AexPath)
+$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)
+@('@echo off', $afterFxCommandLine, 'exit /b %ERRORLEVEL%') | Set-Content -LiteralPath $launchWrapper -Encoding ASCII
 $bootstrapText = @"
 .effmach amd64
 .expr /s masm
-sxe ld:$moduleName
 .logopen /t "$bootstrapCdbTrace"
 .echo WITNESS_CDB_BOOTSTRAP_ARMED
+sxi ibp
+sxe -c ".echo WITNESS_CDB_TARGET_MODULE_LOADED; .logclose; .detach; q" ld:$moduleName
 g
-.logclose
-.detach
-q
 "@
 $bootstrapText | Set-Content -LiteralPath $bootstrapCdbScript -Encoding ASCII
-$launchArguments = '-cf "' + $bootstrapCdbScript + '" "' + $AfterFxPath + '" -r "' + $queueLaunch + '"'
+$launchArgumentValues = @('-o', '-g', '-G', '-cf', $bootstrapCdbScript, $env:ComSpec, '/d', '/s', '/c', $launchWrapper)
+$launchArguments = Join-WindowsCommandLine $launchArgumentValues
 $launch = Start-Process -FilePath $CdbPath -ArgumentList $launchArguments -RedirectStandardOutput $launchOut -RedirectStandardError $launchErr -NoNewWindow -PassThru
 $launchStarted = $true
 $deadline = (Get-Date).AddSeconds(60)
@@ -194,6 +253,11 @@ while ((Get-Date) -lt $deadline) {
 if ($desktopState.Count -ne 1) {
   Finish (Failure 'cdb_launch' 'CDB-launched After Effects instance did not become uniquely observable' @('one_desktop_AfterFX_process', 'cdb_bootstrap') "matches=$($desktopState.Count)") 2
 }
+$observedCommandLine = [string]$desktopState[0].command_line
+if ($observedCommandLine -notmatch '(?i)(?:^|\s)-r(?:\s|$)' -or
+    $observedCommandLine.IndexOf($normalizedQueuePath, [StringComparison]::OrdinalIgnoreCase) -lt 0) {
+  Finish (Failure 'jsx_command_line_preflight' 'observed After Effects command line does not preserve -r and the normalized queue path' @('afterfx_command_line:-r', 'afterfx_command_line:normalized_queue_path') $observedCommandLine) 2
+}
 $deadline = (Get-Date).AddSeconds(60)
 while ((Get-Date) -lt $deadline) {
   $launch.Refresh()
@@ -202,6 +266,10 @@ while ((Get-Date) -lt $deadline) {
 }
 if (!$launch.HasExited) {
   Finish (Failure 'cdb_launch' 'CDB bootstrap did not detach from the launched After Effects process' @('cdb_bootstrap_exit') '') 2
+}
+$bootstrapTraceText = $(if (Test-Path -LiteralPath $bootstrapCdbTrace -PathType Leaf) { Get-Content -LiteralPath $bootstrapCdbTrace -Raw } else { '' })
+if ($bootstrapTraceText -notmatch 'WITNESS_CDB_BOOTSTRAP_ARMED' -or $bootstrapTraceText -notmatch 'WITNESS_CDB_TARGET_MODULE_LOADED') {
+  Finish (Failure 'cdb_child_tracking' 'CDB did not observe the target AEX load in its tracked After Effects child' @('WITNESS_CDB_BOOTSTRAP_ARMED', 'WITNESS_CDB_TARGET_MODULE_LOADED') $bootstrapTraceText) 2
 }
 if (!(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) {
   Finish (Failure 'jsx_launch' 'CDB-launched After Effects process did not execute the queue JSX' @('queue_bootstrap.log') '') 2
@@ -216,6 +284,11 @@ foreach ($case in @($contract.cases | Sort-Object order)) {
   $stdout = Join-Path $work ("cdb_stdout_$caseId.txt")
   $stderr = Join-Path $work ("cdb_stderr_$caseId.txt")
   $script = Join-Path $work ("probe_$caseId.cdb")
+  $caseToken = '{0:D3}' -f ([int]$case.order)
+  $shortTrace = Join-Path $launchDir ("c_$caseToken.log")
+  $shortScript = Join-Path $launchDir ("c_$caseToken.cdb")
+  $activeCdbTrace = $shortTrace
+  $activeCdbTraceEvidence = $trace
 
   $deadline = (Get-Date).AddSeconds(180)
   while ((Get-Date) -lt $deadline -and !(Test-Path -LiteralPath $ready)) { Start-Sleep -Milliseconds 250 }
@@ -248,22 +321,29 @@ foreach ($case in @($contract.cases | Sort-Object order)) {
     Finish (Failure 'same_run_identity' 'AE PID or module base changed between cases' @('shared_ae_pid', 'shared_module_base') "pid=$($ae.Id) base=$base") 2
   }
 
-  try { Render-Cdb $case $trace $module.BaseAddress.ToInt64() $hash | Set-Content -LiteralPath $script -Encoding ASCII }
+  try {
+    Render-Cdb $case $shortTrace $module.BaseAddress.ToInt64() $hash | Set-Content -LiteralPath $shortScript -Encoding ASCII
+    Copy-Item -LiteralPath $shortScript -Destination $script -Force
+  }
   catch { Finish (Failure 'cdb_template' $_.Exception.Message @('resolved_cdb_template') '') 2 }
-  $cdb = Start-Process -FilePath $CdbPath -ArgumentList ('-cf "' + $script + '" -p ' + $boundPid) -RedirectStandardOutput $stdout -RedirectStandardError $stderr -NoNewWindow -PassThru
+  $cdbArguments = Join-WindowsCommandLine @('-cf', $shortScript, '-p', [string]$boundPid)
+  $cdb = Start-Process -FilePath $CdbPath -ArgumentList $cdbArguments -RedirectStandardOutput $stdout -RedirectStandardError $stderr -NoNewWindow -PassThru
   $deadline = (Get-Date).AddSeconds([int]$contract.cdb.arm_timeout_seconds)
   while ((Get-Date) -lt $deadline) {
-    if ((Test-Path -LiteralPath $trace) -and (Get-Content -LiteralPath $trace -Raw) -match [regex]::Escape([string]$contract.cdb.armed_marker)) { break }
+    if ((Test-Path -LiteralPath $shortTrace) -and (Get-Content -LiteralPath $shortTrace -Raw) -match [regex]::Escape([string]$contract.cdb.armed_marker)) { break }
     $cdb.Refresh(); if ($cdb.HasExited) { break }; Start-Sleep -Milliseconds 250
   }
-  if (!(Test-Path -LiteralPath $trace) -or (Get-Content -LiteralPath $trace -Raw) -notmatch [regex]::Escape([string]$contract.cdb.armed_marker)) {
+  if (!(Test-Path -LiteralPath $shortTrace) -or (Get-Content -LiteralPath $shortTrace -Raw) -notmatch [regex]::Escape([string]$contract.cdb.armed_marker)) {
     Finish (Failure 'cdb_arm' "CDB did not arm for $caseId" @([string]$contract.cdb.armed_marker) '') 2
   }
   Set-Content -LiteralPath $continue -Value 'continue' -Encoding ASCII
   $deadline = (Get-Date).AddSeconds([int]$contract.cdb.capture_timeout_seconds)
   while ((Get-Date) -lt $deadline -and !$cdb.HasExited) { Start-Sleep -Milliseconds 250; $cdb.Refresh() }
   if (!$cdb.HasExited) { Finish (Failure 'cdb_capture' "CDB did not complete for $caseId" @('cdb_exit') '') 2 }
-  if (Test-Path -LiteralPath $trace) { Get-Content -LiteralPath $trace | Add-Content -LiteralPath $combinedTrace }
+  if (Test-Path -LiteralPath $shortTrace) {
+    Copy-Item -LiteralPath $shortTrace -Destination $trace -Force
+    Get-Content -LiteralPath $shortTrace | Add-Content -LiteralPath $combinedTrace
+  }
 
   $deadline = (Get-Date).AddSeconds(180)
   while ((Get-Date) -lt $deadline -and !(Test-Path -LiteralPath $result)) { Start-Sleep -Milliseconds 250 }

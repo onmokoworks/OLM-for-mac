@@ -107,6 +107,7 @@ def main() -> int:
             return fail("serial case order changed")
         queue = (package_a / "scripts/ae_witness_queue.jsx").read_text(encoding="utf-8")
         renderer = (package_a / "scripts/renderer.jsx").read_text(encoding="utf-8")
+        launcher = (package_a / "artifacts/run_witness.ps1").read_text(encoding="utf-8")
         if (
             "effect_loaded=1" not in renderer
             or "parameters_applied=1" not in renderer
@@ -114,9 +115,31 @@ def main() -> int:
             or 'i === 0 ? "1" : "0"' not in queue
         ):
             return fail("fresh-process serial readiness contract is missing")
+        for token in (
+            "function ConvertTo-WindowsCommandLineArgument",
+            "$launchArgumentValues = @('-o', '-g', '-G', '-cf', $bootstrapCdbScript, $env:ComSpec, '/d', '/s', '/c', $launchWrapper)",
+            "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
+            "$observedCommandLine.IndexOf($normalizedQueuePath, [StringComparison]::OrdinalIgnoreCase)",
+            "'jsx_command_line_preflight'",
+            "('OLMWitness\\w_' + $shortId)",
+            "$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'",
+            "WITNESS_CDB_TARGET_MODULE_LOADED",
+            "sxi ibp",
+            "'cdb_child_tracking'",
+            "$shortTrace = Join-Path $launchDir",
+            "Copy-WitnessLaunchEvidence",
+        ):
+            if token not in launcher:
+                return fail(f"launcher is missing CDB/AfterFX transport guard: {token}")
         required_logs = {
             "afterfx_launcher_stdout.txt",
             "afterfx_launcher_stderr.txt",
+            "afterfx_process_diagnostics.json",
+            "afterfx_bootstrap.cdb",
+            "afterfx_bootstrap_cdb_trace.txt",
+            "afterfx_launch_wrapper.cmd",
+            "launched_queue.jsx",
+            "queue_bootstrap.log",
             "queue.log",
             "combined_cdb_trace.txt",
             "runtime_identity.json",

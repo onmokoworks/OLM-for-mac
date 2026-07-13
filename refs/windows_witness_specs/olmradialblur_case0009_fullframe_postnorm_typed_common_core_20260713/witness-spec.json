@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "description": "Common-core Windows OLMRadialBlur case_0009 full-frame post-normalization typed witness.",
+  "request_id": "olmradialblur_case0009_fullframe_postnorm_typed_common_core_20260713",
+  "run_id_prefix": "rb9fulltyped",
+  "plugin": {
+    "name": "OLM RadialBlur",
+    "module_filename": "OLMRadialBlur.aex",
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "default_aex_path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLMRadialBlur.aex"
+  },
+  "host": {
+    "afterfx_path": "C:\\Program Files\\Adobe\\Adobe After Effects 2025\\Support Files\\AfterFX.exe",
+    "cdb_path": "C:\\Program Files (x86)\\Windows Kits\\10\\Debuggers\\x64\\cdb.exe"
+  },
+  "project": {
+    "bits_per_channel": 8,
+    "renderer": "Software",
+    "environment": {
+      "OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT": "1"
+    }
+  },
+  "renderer": {"source": "renderer.jsx"},
+  "request_assets": {"source": "request"},
+  "cdb": {
+    "armed_marker": "RB9_FULLFRAME_TYPED_BREAKPOINTS_ARMED",
+    "arm_timeout_seconds": 60,
+    "capture_timeout_seconds": 300
+  },
+  "cases": [
+    {
+      "id": "case_0009",
+      "cdb_template": "fullframe_postnorm_typed.cdb.in",
+      "template_values": {
+        "witness_id": "olmradialblur-case0009-fullframe-postnorm-common-core-v1",
+        "width": "1920",
+        "height": "1080",
+        "bits_per_channel": "8",
+        "renderer": "Software",
+        "points": "7,0;8,0;24,0",
+        "render_class": "png_rgba8_full_frame",
+        "reference_png_path": "request/expected/case_0009.png",
+        "reference_png_sha256": "3156f1365a20cb35b9d090dfb5f4dfbf0398e8acaea6aeaed5cd35bfec659f6d"
+      },
+      "addresses": {
+        "postnorm": "0x5d99",
+        "sample_call": "0x5e0b",
+        "sample_return": "0x5e5b",
+        "sample_value": "0x5e68",
+        "sample_final": "0x5e6d",
+        "producer_b150": "0xb150",
+        "sampler_weights": "0x9dd4",
+        "sampler_row0": "0x9e1c",
+        "sampler_row1": "0x9ec4"
+      },
+      "exports": [
+        {
+          "source": "exports/{case_id}/case_0009.png",
+          "archive_path": "return/exported_case_0009.png",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "identity_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id"],
+    "events": [
+      {
+        "name": "producer_b150",
+        "prefix": "RB9_B150_PRODUCER",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "hook", "width", "height", "row_start", "row_end", "context", "source_rgba", "source_scalar", "scale_plane", "accum_plane", "alpha_plane", "outer_span", "inner_span", "scale_a1047_r1095_1097_f32", "scale_a1048_r1095_1097_f32", "source_alpha_a1047_r1095_1097_f32", "source_alpha_a1048_r1095_1097_f32"],
+        "field_constraints": {"witness_id": {"equals": "olmradialblur-case0009-fullframe-postnorm-common-core-v1"}, "hook": {"equals": "0xb150"}, "width": {"equals": "1920"}, "height": {"equals": "1080"}, "row_start": {"equals": "1047"}, "row_end": {"equals": "1048"}}
+      },
+      {
+        "name": "postnorm_liveness",
+        "prefix": "RB9_POSTNORM_LIVE",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "hook", "hit_count"],
+        "field_constraints": {"hook": {"equals": "0x5d99"}, "hit_count": {"equals": "1"}}
+      },
+      {
+        "name": "sample_point",
+        "prefix": "RB9_POINT_TYPED",
+        "cardinality": {"scope": "per_case", "min": 3, "max": 3},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "hook", "x", "y", "raw_coords", "inverse_coords", "radius_index", "angle_index", "cell00_id", "cell10_id", "cell01_id", "cell11_id", "cell00_addr", "cell10_addr", "cell01_addr", "cell11_addr", "cell00_accum_rgba", "cell10_accum_rgba", "cell01_accum_rgba", "cell11_accum_rgba", "cell00_denom", "cell10_denom", "cell01_denom", "cell11_denom", "cell00_valid", "cell10_valid", "cell01_valid", "cell11_valid", "cell00_final_rgba", "cell10_final_rgba", "cell01_final_rgba", "cell11_final_rgba", "bilinear_weights", "final_rgba", "final_alpha_sum", "pre_byte_alpha", "run_identity"],
+        "field_constraints": {"hook": {"equals": "0x5e0b/0x5e5b/0x5e68/0x5e6d"}, "x": {"pattern": "^(7|8|24)$"}, "y": {"equals": "0"}, "run_identity": {"equals": "same-run"}}
+      },
+      {
+        "name": "hook_liveness",
+        "prefix": "RB9_HOOK_LIVE",
+        "cardinality": {"scope": "global", "min": 5, "max": 5},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "hook", "hit_count"],
+        "field_constraints": {"hit_count": {"equals": "1"}}
+      }
+    ]
+  },
+  "return_bundle": {
+    "json_name": "RETURN_OLMRADIALBLUR_CASE0009_FULLFRAME_TYPED.json",
+    "zip_name": "RETURN_OLMRADIALBLUR_CASE0009_FULLFRAME_TYPED.zip",
+    "include_logs": []
+  }
+}

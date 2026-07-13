@@ -22,8 +22,6 @@ from tools.windows_witness.runtime import bundle_return, validate_trace  # noqa:
 GENERATOR = ROOT / "scripts/package_windows_witness_olmsmoother2_case0012_20260713.py"
 SPEC_ROOT = ROOT / "refs/windows_witness_specs/olmsmoother2_case0012_current_aex_20260713"
 SPEC_PATH = SPEC_ROOT / "witness-spec.json"
-LEGACY_TYPED = ROOT / "scripts/package_smoother2_current_aex_0012_typed_bind_read.py"
-LEGACY_CONFIG = ROOT / "scripts/package_olmsmoother2_case0012_live_config_binding_20260713.py"
 REFERENCE_ROOT = ROOT / "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/OLMSmootherv2"
 CASE_ID = "legacy_case_0012_gamma5_red_blue_current_aex"
 HASH = "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
@@ -61,7 +59,7 @@ def main() -> int:
     assert case["addresses"] == {
         "writer_anchor": "0x3370",
         "final_writer": "0x3610",
-        "c280": "0xc280",
+        "c2bb": "0xc2bb",
         "cce0": "0xcce0",
         "e170": "0xe170",
         "e3a0": "0xe3a0",
@@ -77,25 +75,23 @@ def main() -> int:
         ("S2_E170", {"scope": "per_case", "min": 1, "max": 1}),
         ("S2_F270", {"scope": "per_case", "min": 1, "max": 1}),
         ("S2_E3A0", {"scope": "per_case", "min": 1, "max": 1}),
-        ("S2_C280", {"scope": "per_case", "min": 1, "max": 1}),
         ("S2_CCE0", {"scope": "per_case", "min": 1, "max": 1}),
+        ("S2_C2BB", {"scope": "per_case", "min": 1, "max": 1}),
         ("S2_WRITER", {"scope": "per_case", "min": 1, "max": 1}),
     ]
 
-    typed_source = LEGACY_TYPED.read_text(encoding="utf-8")
-    config_source = LEGACY_CONFIG.read_text(encoding="utf-8")
     template = (SPEC_ROOT / "probe.cdb.in").read_text(encoding="ascii")
     assert '.logopen /t "{{TRACE_PATH}}"' in template
-    for rva in ("0x3370", "0x3610", "0xc280", "0xcce0", "0xe170", "0xe3a0", "0xf270"):
-        assert rva in typed_source or rva in config_source
     for semantic in (
-        "center_b0", "prev_b0", "left_b1", "e170_c", "polygon_count",
-        "output_rgba_float", "config_raw_bytes", "scale_fixed", "mode_byte", "rgba_u8",
+        "center_b0", "prev_b0", "left_b1", "e170_c",
+        "fifth_argument_config_pointer", "config_pointer_source",
+        "saved_config_pointer", "current_config_pointer", "pointer_identity",
+        "config_raw_bytes", "raw_smoothness", "raw_extra_smooth", "rgba_u8",
     ):
         assert semantic in template
     for placeholder in ("RUN_ID", "AE_PID", "MODULE_BASE", "AEX_SHA256", "PROJECT_BPC", "RENDERER", "CASE_ID", "TRACE_PATH"):
         assert "{{" + placeholder + "}}" in template
-    assert template.count("bp {{ADDRESS:c280}}") == 1
+    assert template.count("bp {{ADDRESS:c2bb}}") == 1
     assert template.count("bp {{ADDRESS:cce0}}") == 1
     assert ".detach;q" in template
 
@@ -117,11 +113,13 @@ def main() -> int:
     assert accepted["status"] == "answered" and len(accepted["events"]) == 7
     variants = {
         "missing_fixture": missing,
-        "duplicate": complete + next(line for line in complete.splitlines(True) if line.startswith("S2_C280 ")),
+        "duplicate": complete + next(line for line in complete.splitlines(True) if line.startswith("S2_C2BB ")),
         "pid_drift": complete.replace("ae_pid=7312", "ae_pid=9999", 1),
         "descriptor_drift": complete.replace("descriptor=91,841,1,91,843,5", "descriptor=91,841,1,91,842,5", 1),
-        "bad_mode": complete.replace("mode_byte=3", "mode_byte=2", 1),
-        "bad_raw_span": complete.replace("01,02,03,04,05,06,03", "01,02,03,04,05,03", 1),
+        "pointer_mismatch": complete.replace("pointer_identity=1", "pointer_identity=0", 1),
+        "missing_config_field": complete.replace(" raw_extra_smooth=40", "", 1),
+        "bad_raw_smoothness": complete.replace("raw_smoothness=100", "raw_smoothness=65536", 1),
+        "bad_raw_extra": complete.replace("raw_extra_smooth=40", "raw_extra_smooth=65536", 1),
     }
     for name, trace in variants.items():
         rejected = validate_trace(spec, trace, identity)
@@ -141,8 +139,23 @@ def main() -> int:
         for term in (
             "Get-Process -Name AfterFX", "effect_loaded=1", "parameters_applied=1",
             "shared_ae_pid", "shared_module_base", "Get-FileHash", "OLM_AE_FORCE_SOFTWARE",
+            "function ConvertTo-WindowsCommandLineArgument",
+            "$launchArgumentValues = @('-o', '-g', '-G', '-cf', $bootstrapCdbScript, $env:ComSpec, '/d', '/s', '/c', $launchWrapper)",
+            "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
+            "$launchArguments = Join-WindowsCommandLine $launchArgumentValues",
+            "$observedCommandLine.IndexOf($normalizedQueuePath, [StringComparison]::OrdinalIgnoreCase)",
+            "'jsx_command_line_preflight'",
+            "$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'",
+            "WITNESS_CDB_BOOTSTRAP_ARMED",
+            "WITNESS_CDB_TARGET_MODULE_LOADED",
+            "sxe -c \".echo WITNESS_CDB_TARGET_MODULE_LOADED;",
+            "sxi ibp",
+            "'cdb_child_tracking'",
+            "afterfx_launch_wrapper.cmd",
+            "launched_queue.jsx",
         ):
             assert term in launcher
+        assert "$launchArgumentValues = @('-cf', $bootstrapCdbScript, $AfterFxPath, '-r'" not in launcher
         contract = json.loads((package_a / "witness-contract.json").read_text(encoding="utf-8"))
         export_path = temp / "work/exports" / CASE_ID / "case_0012.png"
         export_path.parent.mkdir(parents=True)

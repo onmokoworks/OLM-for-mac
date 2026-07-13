@@ -110,6 +110,8 @@ def _normalized_contract(spec: dict[str, Any]) -> dict[str, Any]:
         "afterfx_process_diagnostics.json",
         "afterfx_bootstrap.cdb",
         "afterfx_bootstrap_cdb_trace.txt",
+        "afterfx_launch_wrapper.cmd",
+        "launched_queue.jsx",
         "queue_bootstrap.log",
         "queue.log",
         "combined_cdb_trace.txt",

@@ -19,6 +19,8 @@ from typing import Any
 PAIR_RE = re.compile(r"(?P<key>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<value>[^\s]+)")
 FIXED_ZIP_TIME = (2026, 1, 1, 0, 0, 0)
 DRIVE_PATH_RE = re.compile(r"^[A-Za-z]:")
+HEX_INTEGER_RE = re.compile(r"^(?:0x)?[0-9a-fA-F]+$")
+DECIMAL_INTEGER_RE = re.compile(r"^[0-9]+$")
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -95,6 +97,43 @@ def _expected_identity(contract: dict[str, Any], runtime_identity: dict[str, Any
     return expected
 
 
+def _pointer_integer(value: str) -> int | None:
+    normalized = value.replace("`", "")
+    if HEX_INTEGER_RE.fullmatch(normalized) is None:
+        return None
+    return int(normalized.removeprefix("0x").removeprefix("0X"), 16)
+
+
+def _decimal_integer(value: str) -> int | None:
+    if DECIMAL_INTEGER_RE.fullmatch(value) is None:
+        return None
+    return int(value, 10)
+
+
+def _address_relation_issue(fields: dict[str, str], relation: dict[str, Any]) -> str | None:
+    pointer_keys = ("address_field", "base_field")
+    decimal_keys = (
+        "row_field", "row_origin_field", "column_field", "column_origin_field", "stride_field",
+    )
+    pointers = {key: _pointer_integer(fields.get(str(relation.get(key, "")), "")) for key in pointer_keys}
+    decimals = {key: _decimal_integer(fields.get(str(relation.get(key, "")), "")) for key in decimal_keys}
+    if any(value is None for value in (*pointers.values(), *decimals.values())):
+        return "unparseable_field"
+
+    row_delta = decimals["row_field"] - decimals["row_origin_field"]
+    column_delta = decimals["column_field"] - decimals["column_origin_field"]
+    if row_delta < 0 or column_delta < 0:
+        return "negative_coordinate_delta"
+    expected = (
+        pointers["base_field"]
+        + (row_delta * decimals["stride_field"] + column_delta) * relation["element_size"]
+        + relation["channel_offset"]
+    )
+    if pointers["address_field"] != expected:
+        return f"expected:0x{expected:x}"
+    return None
+
+
 def validate_trace(contract: dict[str, Any], trace_text: str, runtime_identity: dict[str, Any]) -> dict[str, Any]:
     """Validate event cardinality, fields, constraints, and shared run identity."""
 
@@ -150,6 +189,14 @@ def validate_trace(contract: dict[str, Any], trace_text: str, runtime_identity: 
                         missing.append(f"{label}[{row_index}]:{field}=expected:{constraint['equals']}")
                     if "pattern" in constraint and re.fullmatch(constraint["pattern"], value) is None:
                         missing.append(f"{label}[{row_index}]:{field}=pattern")
+                for relation_index, relation in enumerate(event.get("field_relations", [])):
+                    if relation.get("type") != "address_arithmetic":
+                        missing.append(f"{label}[{row_index}]:relation[{relation_index}]=unsupported")
+                        continue
+                    issue = _address_relation_issue(fields, relation)
+                    if issue is not None:
+                        target = relation.get("address_field", "unknown")
+                        missing.append(f"{label}[{row_index}]:relation:{target}={issue}")
 
     for row_index, row in enumerate(records):
         fields = row["fields"]

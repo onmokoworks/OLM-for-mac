@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "One fresh AE Software 16bpc OLMDistanceGradation case_0026 live field/source and writer witness with actual output bytes.",
+  "description": "One fresh AE Software 16bpc OLMDistanceGradation case_0026 live field/source and PF16 return-store witness plus a required same-run AE-exported 1920x1080 RGBA16 PNG decoded at four points.",
   "request_id": "windows_witness_olmdistancegradation_case0026_16bpc_livefield_20260713",
   "run_id_prefix": "olmdg16-case0026-livefield",
   "plugin": {
@@ -293,7 +293,8 @@
           "x",
           "y",
           "output",
-          "post_output_words_agrb"
+          "post_output_words_agrb",
+          "pf16_final_store_words_agrb"
         ],
         "field_constraints": {
           "witness_id": {
@@ -312,6 +313,9 @@
             "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
           },
           "post_output_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          },
+          "pf16_final_store_words_agrb": {
             "pattern": "^[0-9]+(?:,[0-9]+){3}$"
           }
         }
@@ -545,7 +549,8 @@
           "x",
           "y",
           "output",
-          "post_output_words_agrb"
+          "post_output_words_agrb",
+          "pf16_final_store_words_agrb"
         ],
         "field_constraints": {
           "witness_id": {
@@ -564,6 +569,9 @@
             "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
           },
           "post_output_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          },
+          "pf16_final_store_words_agrb": {
             "pattern": "^[0-9]+(?:,[0-9]+){3}$"
           }
         }
@@ -797,7 +805,8 @@
           "x",
           "y",
           "output",
-          "post_output_words_agrb"
+          "post_output_words_agrb",
+          "pf16_final_store_words_agrb"
         ],
         "field_constraints": {
           "witness_id": {
@@ -816,6 +825,9 @@
             "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
           },
           "post_output_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          },
+          "pf16_final_store_words_agrb": {
             "pattern": "^[0-9]+(?:,[0-9]+){3}$"
           }
         }
@@ -1049,7 +1061,8 @@
           "x",
           "y",
           "output",
-          "post_output_words_agrb"
+          "post_output_words_agrb",
+          "pf16_final_store_words_agrb"
         ],
         "field_constraints": {
           "witness_id": {
@@ -1068,6 +1081,9 @@
             "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
           },
           "post_output_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          },
+          "pf16_final_store_words_agrb": {
             "pattern": "^[0-9]+(?:,[0-9]+){3}$"
           }
         }

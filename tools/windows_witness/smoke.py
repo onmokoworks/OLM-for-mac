@@ -59,7 +59,19 @@ def main() -> int:
         assert 'runId + "\\n"' in queue
         assert 'runId + "\n"' not in queue
         assert "-ArgumentList @('-m', '-r', $queuePath)" not in launcher
-        assert "$launchArguments = '-cf \"' + $bootstrapCdbScript + '\" \"' + $AfterFxPath + '\" -r \"' + $queueLaunch + '\"'" in launcher
+        assert "function ConvertTo-WindowsCommandLineArgument" in launcher
+        assert "$launchArgumentValues = @('-o', '-g', '-G', '-cf', $bootstrapCdbScript, $env:ComSpec, '/d', '/s', '/c', $launchWrapper)" in launcher
+        assert "$launchArgumentValues = @('-cf', $bootstrapCdbScript, $AfterFxPath, '-r'" not in launcher
+        assert "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)" in launcher
+        assert "$launchArguments = Join-WindowsCommandLine $launchArgumentValues" in launcher
+        assert "$observedCommandLine.IndexOf($normalizedQueuePath, [StringComparison]::OrdinalIgnoreCase)" in launcher
+        assert "'jsx_command_line_preflight'" in launcher
+        assert "('OLMWitness\\w_' + $shortId)" in launcher
+        assert "$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'" in launcher
+        assert "WITNESS_CDB_TARGET_MODULE_LOADED" in launcher
+        assert "sxi ibp" in launcher
+        assert "'cdb_child_tracking'" in launcher
+        assert "Copy-WitnessLaunchEvidence" in launcher
         assert "-FilePath $CdbPath" in launcher
         assert "$dispatchArguments" not in launcher
         assert "afterfx_process_diagnostics.json" in launcher

@@ -127,6 +127,25 @@
       "type": "object", "additionalProperties": false, "minProperties": 1,
       "properties": {"equals": {"type": ["string", "number", "boolean"]}, "pattern": {"type": "string"}}
     },
+    "fieldRelation": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "type", "address_field", "base_field", "row_field", "row_origin_field",
+        "column_field", "column_origin_field", "stride_field", "element_size", "channel_offset"
+      ],
+      "properties": {
+        "type": {"const": "address_arithmetic"},
+        "address_field": {"$ref": "#/$defs/id"},
+        "base_field": {"$ref": "#/$defs/id"},
+        "row_field": {"$ref": "#/$defs/id"},
+        "row_origin_field": {"$ref": "#/$defs/id"},
+        "column_field": {"$ref": "#/$defs/id"},
+        "column_origin_field": {"$ref": "#/$defs/id"},
+        "stride_field": {"$ref": "#/$defs/id"},
+        "element_size": {"type": "integer", "minimum": 1},
+        "channel_offset": {"type": "integer", "minimum": 0}
+      }
+    },
     "event": {
       "type": "object", "additionalProperties": false,
       "required": ["name", "prefix", "cardinality", "required_fields"],
@@ -138,7 +157,8 @@
           "properties": {"scope": {"enum": ["per_case", "global"]}, "min": {"type": "integer", "minimum": 0}, "max": {"type": "integer", "minimum": 0}}
         },
         "required_fields": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
-        "field_constraints": {"type": "object", "additionalProperties": {"$ref": "#/$defs/constraint"}}
+        "field_constraints": {"type": "object", "additionalProperties": {"$ref": "#/$defs/constraint"}},
+        "field_relations": {"type": "array", "items": {"$ref": "#/$defs/fieldRelation"}}
       }
     }
   }

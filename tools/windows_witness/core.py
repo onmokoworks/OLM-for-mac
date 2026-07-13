@@ -194,7 +194,7 @@ def validate_spec(spec: dict[str, Any], base_dir: Path | None = None) -> None:
     for index, event in enumerate(events):
         where = f"validation.events[{index}]"
         _keys(event, {"name", "prefix", "cardinality", "required_fields"},
-              {"name", "prefix", "cardinality", "required_fields", "field_constraints"}, where)
+              {"name", "prefix", "cardinality", "required_fields", "field_constraints", "field_relations"}, where)
         _need(ID_RE.fullmatch(event["name"]) is not None, f"{where}.name is invalid")
         _need(re.fullmatch(r"[A-Z][A-Z0-9_]*", event["prefix"]) is not None, f"{where}.prefix is invalid")
         _need(event["prefix"] not in seen_prefixes, f"duplicate event prefix: {event['prefix']}")
@@ -217,6 +217,31 @@ def validate_spec(spec: dict[str, Any], base_dir: Path | None = None) -> None:
                     re.compile(constraint["pattern"])
                 except re.error as exc:
                     raise SpecError(f"{where}.field_constraints.{field}.pattern is invalid: {exc}") from exc
+        relations = event.get("field_relations", [])
+        _need(isinstance(relations, list), f"{where}.field_relations must be an array")
+        relation_fields = {
+            "address_field", "base_field", "row_field", "row_origin_field",
+            "column_field", "column_origin_field", "stride_field",
+        }
+        seen_relation_targets: set[str] = set()
+        for relation_index, relation in enumerate(relations):
+            relation_where = f"{where}.field_relations[{relation_index}]"
+            required = {"type", *relation_fields, "element_size", "channel_offset"}
+            _keys(relation, required, required, relation_where)
+            _need(relation["type"] == "address_arithmetic", f"{relation_where}.type is invalid")
+            for key in relation_fields:
+                field = relation[key]
+                _need(isinstance(field, str) and ID_RE.fullmatch(field) is not None,
+                      f"{relation_where}.{key} is invalid")
+                _need(field in fields, f"{relation_where}.{key} must name a required field")
+            target = relation["address_field"]
+            _need(target not in seen_relation_targets,
+                  f"{relation_where}.address_field duplicates relation target {target}")
+            seen_relation_targets.add(target)
+            _need(type(relation["element_size"]) is int and relation["element_size"] > 0,
+                  f"{relation_where}.element_size must be a positive integer")
+            _need(type(relation["channel_offset"]) is int and relation["channel_offset"] >= 0,
+                  f"{relation_where}.channel_offset must be a nonnegative integer")
 
     bundle = spec["return_bundle"]
     _keys(bundle, {"json_name", "zip_name"}, {"json_name", "zip_name", "include_logs"}, "return_bundle")

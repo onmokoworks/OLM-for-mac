@@ -34,6 +34,30 @@ def complete_trace(contract: dict, *, duplicate: bool = False, pid_drift: bool =
     return "\n".join(lines) + "\n"
 
 
+def address_relation_contract(contract: dict) -> dict:
+    related = copy.deepcopy(contract)
+    event = related["validation"]["events"][0]
+    event["required_fields"].extend(["address", "base", "row", "row0", "col", "col0", "stride"])
+    event["field_relations"] = [{
+        "type": "address_arithmetic",
+        "address_field": "address",
+        "base_field": "base",
+        "row_field": "row",
+        "row_origin_field": "row0",
+        "column_field": "col",
+        "column_origin_field": "col0",
+        "stride_field": "stride",
+        "element_size": 4,
+        "channel_offset": 8,
+    }]
+    return related
+
+
+def trace_with_address_fields(contract: dict) -> str:
+    fields = "base=0000`0000`00001000 row=3 row0=1 col=7 col0=2 stride=10 address=0x106c"
+    return complete_trace(contract).replace(" value=", f" {fields} value=")
+
+
 class CompilerTests(unittest.TestCase):
     def test_compile_is_deterministic_and_complete(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -48,6 +72,8 @@ class CompilerTests(unittest.TestCase):
             self.assertIn("cdb_trace_case_0002.txt", contract["return_bundle"]["include_logs"])
             self.assertIn("afterfx_bootstrap.cdb", contract["return_bundle"]["include_logs"])
             self.assertIn("afterfx_bootstrap_cdb_trace.txt", contract["return_bundle"]["include_logs"])
+            self.assertIn("afterfx_launch_wrapper.cmd", contract["return_bundle"]["include_logs"])
+            self.assertIn("launched_queue.jsx", contract["return_bundle"]["include_logs"])
             queue = (package_a / "scripts" / "ae_witness_queue.jsx").read_text(encoding="utf-8")
             self.assertIn('" root=" + root + "\\n", false);', queue)
             self.assertNotIn('" root=" + root + "\n", false);', queue)
@@ -89,6 +115,26 @@ class CompilerTests(unittest.TestCase):
             path.write_text(json.dumps(spec), encoding="utf-8")
             with self.assertRaisesRegex(SpecError, "common run identity"):
                 load_spec(path)
+
+    def test_address_relation_spec_validation_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            for name, mutate, message in (
+                ("unknown_field", lambda relation: relation.__setitem__("row_field", "not_required"), "required field"),
+                ("bad_element_size", lambda relation: relation.__setitem__("element_size", 0), "positive integer"),
+                ("boolean_element_size", lambda relation: relation.__setitem__("element_size", True), "positive integer"),
+                ("bad_channel_offset", lambda relation: relation.__setitem__("channel_offset", -1), "nonnegative integer"),
+                ("unknown_type", lambda relation: relation.__setitem__("type", "expression"), "type is invalid"),
+            ):
+                with self.subTest(name=name):
+                    fixture = Path(temp) / name
+                    shutil.copytree(EXAMPLE, fixture)
+                    path = fixture / "witness-spec.json"
+                    spec = json.loads(path.read_text(encoding="utf-8"))
+                    spec = address_relation_contract(spec)
+                    mutate(spec["validation"]["events"][0]["field_relations"][0])
+                    path.write_text(json.dumps(spec), encoding="utf-8")
+                    with self.assertRaisesRegex(SpecError, message):
+                        load_spec(path)
 
     def test_rejects_archive_path_collisions_in_spec(self) -> None:
         def mutated_spec(name: str) -> tuple[Path, dict]:
@@ -176,12 +222,23 @@ class CompilerTests(unittest.TestCase):
         self.assertNotIn("-ArgumentList @('-m', '-r', $queuePath)", source)
         self.assertIn("$launchDir = Join-Path $env:PUBLIC", source)
         self.assertIn("Copy-Item -LiteralPath $queuePath -Destination $queueLaunch", source)
-        self.assertIn("$launchArguments = '-cf \"' + $bootstrapCdbScript + '\" \"' + $AfterFxPath + '\" -r \"' + $queueLaunch + '\"'", source)
+        self.assertIn("function ConvertTo-WindowsCommandLineArgument", source)
+        self.assertIn("$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)", source)
+        self.assertIn("$launchArgumentValues = @('-o', '-g', '-G', '-cf', $bootstrapCdbScript, $env:ComSpec, '/d', '/s', '/c', $launchWrapper)", source)
+        self.assertNotIn("$launchArgumentValues = @('-cf', $bootstrapCdbScript, $AfterFxPath, '-r'", source)
+        self.assertIn("$launchArguments = Join-WindowsCommandLine $launchArgumentValues", source)
         self.assertIn("-FilePath $CdbPath", source)
         self.assertIn("-ArgumentList $launchArguments", source)
+        self.assertIn("$observedCommandLine.IndexOf($normalizedQueuePath, [StringComparison]::OrdinalIgnoreCase)", source)
+        self.assertIn("'jsx_command_line_preflight'", source)
+        self.assertIn("('OLMWitness\\w_' + $shortId)", source)
+        self.assertIn("$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'", source)
+        self.assertIn("Copy-WitnessLaunchEvidence", source)
         self.assertNotIn("$dispatchArguments", source)
         self.assertNotIn("'jsx_dispatch'", source)
-        self.assertIn("sxe ld:$moduleName", source)
+        self.assertIn('sxe -c ".echo WITNESS_CDB_TARGET_MODULE_LOADED;', source)
+        self.assertIn("sxi ibp", source)
+        self.assertIn("'cdb_child_tracking'", source)
         self.assertIn("'cdb_bootstrap_exit'", source)
         self.assertIn("'jsx_launch'", source)
         self.assertIn("afterfx_process_diagnostics.json", source)
@@ -219,6 +276,30 @@ class RuntimeTests(unittest.TestCase):
         result = validate_trace(self.contract, trace, self.identity)
         self.assertEqual(result["status"], "exact_bind_failure")
         self.assertIn("capture:duplicate_field:sample", result["failure"]["missing_fields"])
+
+    def test_address_arithmetic_relation_accepts_matching_cdb_pointers(self) -> None:
+        contract = address_relation_contract(self.contract)
+        result = validate_trace(contract, trace_with_address_fields(contract), self.identity)
+        self.assertEqual(result["status"], "answered")
+
+    def test_address_arithmetic_relation_rejects_bogus_inputs(self) -> None:
+        contract = address_relation_contract(self.contract)
+        valid = trace_with_address_fields(contract)
+        variants = {
+            "address": valid.replace("address=0x106c", "address=0x1068"),
+            "base": valid.replace("base=0000`0000`00001000", "base=0000`0000`00001004"),
+            "row": valid.replace("row=3 ", "row=4 "),
+            "row_origin": valid.replace("row0=1 ", "row0=2 "),
+            "column": valid.replace("col=7 ", "col=8 "),
+            "column_origin": valid.replace("col0=2 ", "col0=3 "),
+            "stride": valid.replace("stride=10 ", "stride=11 "),
+            "unparseable": valid.replace("row=3 ", "row=0x3 "),
+        }
+        for name, trace in variants.items():
+            with self.subTest(name=name):
+                result = validate_trace(contract, trace, self.identity)
+                self.assertEqual(result["status"], "exact_bind_failure")
+                self.assertTrue(any(":relation:address=" in item for item in result["failure"]["missing_fields"]))
 
     def _make_work(self, root: Path) -> Path:
         for case in self.contract["cases"]:

@@ -174,6 +174,8 @@
     var readyMarkerPath = getenv("OLM_AE_READY_MARKER");
     var continueMarkerPath = getenv("OLM_AE_CONTINUE_MARKER");
     var pauseTimeoutSeconds = Number(getenv("OLM_AE_PAUSE_TIMEOUT_SECONDS") || 300);
+    var witnessRunId = getenv("WINDOWS_WITNESS_RUN_ID");
+    var witnessId = "olmdistancegradation-case0026-16bpc-livefield-v1";
 
     if (!requestDir) {
         requestDir = File($.fileName).parent.parent.fsName +
@@ -198,6 +200,8 @@
 
     var summary = {
         kind: "olm_ae_single_case_result",
+        witness_run_id: witnessRunId,
+        witness_id: witnessId,
         ae_version: app.version,
         request_dir: requestDir,
         case_id: caseId,
@@ -508,6 +512,8 @@
         resultJson,
         "{\n" +
             "  \"kind\": \"" + esc(summary.kind) + "\",\n" +
+            "  \"witness_run_id\": \"" + esc(summary.witness_run_id) + "\",\n" +
+            "  \"witness_id\": \"" + esc(summary.witness_id) + "\",\n" +
             "  \"ae_version\": \"" + esc(summary.ae_version) + "\",\n" +
             "  \"request_dir\": \"" + esc(summary.request_dir) + "\",\n" +
             "  \"case_id\": \"" + esc(summary.case_id) + "\",\n" +
