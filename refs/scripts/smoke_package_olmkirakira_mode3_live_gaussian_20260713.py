@@ -171,6 +171,10 @@ def verify_ps1_fail_closed(runner_text: str, manifest: dict[str, Any]) -> None:
         "no-space JSX launch path invariant failed",
         "size or SHA256 mismatch",
         "After Effects must be fully closed before this run",
+        "SkipPowerShell51Relay",
+        "interactive desktop, not SSH session 0",
+        "cdb_trace.log",
+        "cdb_stdout.txt",
     ):
         expect(token in runner_text, f"runner token missing: {token}")
 
