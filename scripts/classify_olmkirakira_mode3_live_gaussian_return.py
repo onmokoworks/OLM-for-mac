@@ -20,10 +20,16 @@ def load_return(path: Path) -> dict:
     if path.suffix.lower() != ".zip":
         return json.loads(path.read_text(encoding="utf-8-sig"))
     with zipfile.ZipFile(path) as archive:
-        names = [name for name in archive.namelist()
-                 if name.endswith("RETURN_RUNTIME_TRACE.json")]
+        result_names = {
+            "RETURN_RUNTIME_TRACE.json",
+            "AE_RUNTIME_TRACE_RESULT.json",
+        }
+        names = [
+            name for name in archive.namelist()
+            if name.replace("\\", "/").rsplit("/", 1)[-1] in result_names
+        ]
         if len(names) != 1:
-            raise ValueError(f"expected one RETURN_RUNTIME_TRACE.json, found {len(names)}")
+            raise ValueError(f"expected one runtime trace result JSON, found {len(names)}")
         return json.loads(archive.read(names[0]).decode("utf-8-sig"))
 
 

@@ -113,9 +113,20 @@ def runtime_action_ids(package: Path | None) -> list[str]:
     if not package.exists() or not zipfile.is_zipfile(package):
         raise ValueError(f"runtime trace package not found or not zip: {package}")
     with zipfile.ZipFile(package) as archive:
-        data = json.loads(archive.read("runtime_trace_package_manifest.json").decode("utf-8"))
+        names = [
+            name
+            for name in archive.namelist()
+            if name.replace("\\", "/").split("/")[-1] == "runtime_trace_package_manifest.json"
+            and "__MACOSX" not in name.split("/")
+            and not name.split("/")[-1].startswith("._")
+        ]
+        if len(names) != 1:
+            raise ValueError(f"expected exactly one runtime trace package manifest, found {len(names)}")
+        data = json.loads(archive.read(names[0]).decode("utf-8-sig"))
     actions = data.get("runtime_actions", [])
     ids = [str(action.get("request_id")) for action in actions if isinstance(action, dict) and action.get("request_id")]
+    if not ids and isinstance(data.get("request_id"), str):
+        ids = [str(data["request_id"])]
     return ids or list(DEFAULT_REQUIRED_IDS)
 
 
@@ -127,6 +138,22 @@ def is_trace_result(data: Any) -> bool:
     if data.get("request_id") and data.get("status"):
         return True
     return isinstance(data.get("runtime_trace_results"), list) or isinstance(data.get("results"), list)
+
+
+def is_named_failure_result(path: Path, data: Any) -> bool:
+    """Recognize fail-closed single-request returns that omit request_id."""
+    result_names = {
+        "RETURN_RUNTIME_TRACE.json",
+        "RETURN_RUNTIME_TRACE_RESULT.json",
+        "AE_RUNTIME_TRACE_RESULT.json",
+    }
+    basename = path.name.replace("\\", "/").rsplit("/", 1)[-1]
+    return (
+        basename in result_names
+        and isinstance(data, dict)
+        and bool(data.get("status"))
+        and isinstance(data.get("failure"), dict)
+    )
 
 
 def find_result_jsons(root: Path) -> list[Path]:
@@ -145,7 +172,7 @@ def find_result_jsons(root: Path) -> list[Path]:
             data = load_json(path)
         except Exception:
             continue
-        if is_trace_result(data):
+        if is_trace_result(data) or is_named_failure_result(path, data):
             candidates.append(path)
     return candidates
 
@@ -187,6 +214,22 @@ def normalize_results(
     source_root: Path,
     default_request_id: str | None = None,
 ) -> list[dict[str, Any]]:
+    if (
+        default_request_id
+        and data.get("status")
+        and isinstance(data.get("failure"), dict)
+        and not data.get("request_id")
+    ):
+        return [
+            {
+                "request_id": default_request_id,
+                "status": normalize_result_status(data["status"], data),
+                "summary": str(data.get("summary") or data["failure"].get("reason") or ""),
+                "observations": data,
+                "source_file": archive_relative_path(source_root, source_path),
+            }
+        ]
+
     if data.get("request_id") and data.get("status") and "results" not in data and "runtime_trace_results" not in data:
         observations = {
             key: value
