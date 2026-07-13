@@ -1,0 +1,17 @@
+.effmach amd64
+.expr /s masm
+sxi 80000003
+.logopen /t "{{TRACE_PATH}}"
+r @$t0={{MODULE_BASE}}
+r @$t1=0
+r @$t2=0
+r @$t3=0
+r @$t4=0n2147483647
+r @$t5=0
+r @$t6=0
+r @$t7=0
+bp {{ADDRESS:worker_entry}} "r @$t1=@$t1+1;.if (@$t1==1) {r @$t3=@rbx};.if (@rbx!=@$t3) {r @$t7=1};.printf \"DBR_WORKER_ENTRY run_id={{RUN_ID}} ae_pid={{AE_PID}} module_base={{MODULE_BASE}} aex_sha256={{AEX_SHA256}} project_bpc={{PROJECT_BPC}} renderer={{RENDERER}} case_id={{CASE_ID}} witness_id={{CASE_VALUE:witness_id}} params=%p stage=worker_entry entry_rva=4d84 worker_hit=%u\\n\",@rbx,@$t1;gc"
+bp {{ADDRESS:rowdriver_entry}} "r @$t2=@$t2+1;r @$t8=poi(@rsp+0x38);.if (@$t3==0) {r @$t3=@$t8};.if (@$t8!=@$t3) {r @$t7=1};.if (@rcx<@$t4) {r @$t4=@rcx};.if (@rdx>@$t5) {r @$t5=@rdx};.if (@rcx<=0n755) {.if (@rdx>0n755) {r @$t6=1}};.printf \"DBR_ROW_RANGE run_id={{RUN_ID}} ae_pid={{AE_PID}} module_base={{MODULE_BASE}} aex_sha256={{AEX_SHA256}} project_bpc={{PROJECT_BPC}} renderer={{RENDERER}} case_id={{CASE_ID}} witness_id={{CASE_VALUE:witness_id}} params=%p stage=rowdriver entry_rva=38d0 call=%u start=%u end=%u row755_covered=%u\\n\",@$t8,@$t2,@rcx,@rdx,@$t6;gc"
+bp {{ADDRESS:pre_normalization}} ".if (@$t1>0) {.if (@$t2>0) {.if (@$t6==1) {.if (@$t7==0) {.if (@rbx==@$t3) {.if (dwo(@rbx+0x8098)<=0n755) {.if (dwo(@rbx+0x809c)<=0n747) {.if (dwo(@rbx+0x80a0)==0n2206) {r @$t8=poi(@rbx+0x8090)+(((0n755-dwo(@rbx+0x8098))*dwo(@rbx+0x80a0)+0n747-dwo(@rbx+0x809c))*0n16);r @$t9=poi(@rbx+0x8080)+(((0n755-dwo(@rbx+0x8098))*dwo(@rbx+0x80a0)+0n747-dwo(@rbx+0x809c))*4);r @$t10=poi(@rbx+0x8088)+(((0n755-dwo(@rbx+0x8098))*dwo(@rbx+0x80a0)+0n747-dwo(@rbx+0x809c))*4);r @$t14=@$t8+0n5343;r @$t15=@$t9+0n1335;r @$t16=@$t10+0n1335;.writemem \"{{TRACE_PATH}}.destination_rgba_f32_le.bin\" @$t8 @$t14;.writemem \"{{TRACE_PATH}}.denominator_f32_le.bin\" @$t9 @$t15;.writemem \"{{TRACE_PATH}}.alpha_valid_f32_le.bin\" @$t10 @$t16;.printf \"DBR_PRE_NORMALIZATION_CAPTURE run_id={{RUN_ID}} ae_pid={{AE_PID}} module_base={{MODULE_BASE}} aex_sha256={{AEX_SHA256}} project_bpc={{PROJECT_BPC}} renderer={{RENDERER}} case_id={{CASE_ID}} witness_id={{CASE_VALUE:witness_id}} params=%p stage=pre_normalization stage_rva=5554 before_normalization=1 worker_hits=%u rowdriver_calls=%u row_start=%u row_end=%u row755_covered=%u params_mismatch=%u destination_base=%p denominator_base=%p alpha_valid_base=%p row0=%u col0=%u stride=%u row=755 x_start=747 x_end=1080 destination_bytes=5344 denominator_bytes=1336 alpha_valid_bytes=1336 destination_address=%p denominator_address=%p alpha_valid_address=%p\\n\",@rbx,@$t1,@$t2,@$t4,@$t5,@$t6,@$t7,poi(@rbx+0x8090),poi(@rbx+0x8080),poi(@rbx+0x8088),dwo(@rbx+0x8098),dwo(@rbx+0x809c),dwo(@rbx+0x80a0),@$t8,@$t9,@$t10;.detach;q}}}}}}}};.printf \"DBR_BIND_FAILURE run_id={{RUN_ID}} ae_pid={{AE_PID}} case_id={{CASE_ID}} worker_hits=%u rowdriver_calls=%u row755_covered=%u params_mismatch=%u params=%p expected_params=%p row0=%u col0=%u stride=%u\\n\",@$t1,@$t2,@$t6,@$t7,@rbx,@$t3,dwo(@rbx+0x8098),dwo(@rbx+0x809c),dwo(@rbx+0x80a0);.detach;q"
+.echo DBR_BREAKPOINTS_READY
+g

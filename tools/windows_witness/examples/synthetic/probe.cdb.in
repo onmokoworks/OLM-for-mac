@@ -1,0 +1,7 @@
+.effmach amd64
+.expr /s masm
+sxi 80000003
+.logopen /t "{{TRACE_PATH}}"
+bp {{ADDRESS:entry}} ".printf \"SYNTH_CAPTURE run_id={{RUN_ID}} ae_pid={{AE_PID}} module_base={{MODULE_BASE}} aex_sha256={{AEX_SHA256}} project_bpc={{PROJECT_BPC}} renderer={{RENDERER}} case_id={{CASE_ID}} sample={{CASE_VALUE:sample}} value=%u\\n\",@eax;.detach;q"
+.echo SYNTH_BREAKPOINT_ARMED
+g

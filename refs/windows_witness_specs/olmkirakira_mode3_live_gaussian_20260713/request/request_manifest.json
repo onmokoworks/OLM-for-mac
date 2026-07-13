@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "request_id": "olmkirakira_mode3_live_gaussian_20260713",
+  "reference_manifest": "reference_manifest.json",
+  "input_dir": "input",
+  "effect_name": "OLM Kira Kira",
+  "effect_match_name": "OLM OLM Kira Kira",
+  "cases": [
+    {
+      "id": "final_random10_olm_kira_kira_03",
+      "before_effects_frame": "case_03_before_effects.png",
+      "frame": "case_03.png"
+    }
+  ]
+}

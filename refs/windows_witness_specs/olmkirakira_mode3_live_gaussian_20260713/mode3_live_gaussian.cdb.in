@@ -1,0 +1,16 @@
+.logopen /t "{{TRACE_PATH}}"
+.symfix
+.effmach amd64
+.expr /s masm
+sxi e06d7363
+r @$t0=0
+r @$t1=0
+r @$t2=0
+r @$t4=0
+bp {{ADDRESS:wrapper}} ".if (@$t0==0) { r @$t0=1; .printf \"KK_WRAPPER run_id={{RUN_ID}} ae_pid={{AE_PID}} module_base={{MODULE_BASE}} aex_sha256={{AEX_SHA256}} project_bpc={{PROJECT_BPC}} renderer={{RENDERER}} case_id={{CASE_ID}} witness_id={{CASE_VALUE:witness_id}} stage=gaussian_wrapper wrapper_rva=1272ec0 rcx=%p rdx=%p r8=%p r9=%p\\n\", @rcx,@rdx,@r8,@r9; gc } .else { gc }"
+bp {{ADDRESS:create}} ".if (@$t1==0) { r @$t1=1; .printf \"KK_CREATE run_id={{RUN_ID}} ae_pid={{AE_PID}} module_base={{MODULE_BASE}} aex_sha256={{AEX_SHA256}} project_bpc={{PROJECT_BPC}} renderer={{RENDERER}} case_id={{CASE_ID}} witness_id={{CASE_VALUE:witness_id}} stage=gaussian_create create_rva=1266730 rcx=%p rdx=%p r8=%p r9=%p\\n\", @rcx,@rdx,@r8,@r9; gc } .else { gc }"
+bp {{ADDRESS:getKernel}} ".if (@$t2==0) { r @$t2=1; r @$t3=@r9; .printf \"KK_KERNEL_ENTRY run_id={{RUN_ID}} ae_pid={{AE_PID}} module_base={{MODULE_BASE}} aex_sha256={{AEX_SHA256}} project_bpc={{PROJECT_BPC}} renderer={{RENDERER}} case_id={{CASE_ID}} witness_id={{CASE_VALUE:witness_id}} stage=first_getKernel_entry getKernel_rva=12754a0 ecx=%u xmm1=%g r8=%u output_mat=%p return_address=%p\\n\", @ecx,@xmm1,@r8d,@r9,poi(@rsp); gc } .else { gc }"
+bp {{ADDRESS:getKernelReturn}} ".if (@$t2==1) { .if (@$t4==0) { r @$t4=1; r @$t5=poi(@$t3+0x10); .printf \"KK_KERNEL_RETURN run_id={{RUN_ID}} ae_pid={{AE_PID}} module_base={{MODULE_BASE}} aex_sha256={{AEX_SHA256}} project_bpc={{PROJECT_BPC}} renderer={{RENDERER}} case_id={{CASE_ID}} witness_id={{CASE_VALUE:witness_id}} stage=first_getKernel_return getKernel_rva=12754a0 getKernelReturn_rva=126685c output_mat=%p data=%p word_count=21 raw_bytes=84 element=float32 encoding=raw_little_endian_words source=cv_Mat_data_after_return\\n\", @$t3,@$t5; .writemem \"{{TRACE_PATH}}.gaussian_kernel_21_f32_le.bin\" @$t5 @$t5+0x53; .detach; q } .else { gc } } .else { gc }"
+.echo KK_BREAKPOINTS_READY
+g
+q

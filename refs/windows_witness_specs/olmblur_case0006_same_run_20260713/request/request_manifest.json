@@ -1,0 +1,31 @@
+{
+  "candidate_dir_hint": "candidate",
+  "cases": [
+    {
+      "id": "olmblur__case_0006",
+      "before_effects_frame": "case_0006_before_effects.png",
+      "frame": "case_0006.png"
+    }
+  ],
+  "created_at": "2026-06-25T13:13:56Z",
+  "effect_match_name": "OLM OLM Blur",
+  "effect_name": "OLM Blur",
+  "expected_dir": "expected",
+  "gate_kind": "host_smoke_pixel_tolerance",
+  "input_dir": "input",
+  "kind": "olm_ae_pixel_validation_request",
+  "reference_manifest": "reference_manifest.json",
+  "reference_profile": "legacy",
+  "request_id": "olmblur_case0006_same_run_20260713",
+  "threshold_groups": [
+    {
+      "case_ids": [
+        "olmblur__case_0006"
+      ],
+      "max_diff": 0,
+      "mean_diff": 0.0,
+      "name": "16bpc_all_exact",
+      "nonzero_px_percent": 0.0
+    }
+  ]
+}

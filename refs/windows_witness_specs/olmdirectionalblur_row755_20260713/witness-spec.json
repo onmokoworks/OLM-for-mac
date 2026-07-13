@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "description": "Current-AEX OLMDirectionalBlur alpha-fade row 755 pre-normalization byte witness migrated from the 2026-07-13 no-space JSX retry.",
+  "request_id": "olmdirectionalblur_row755_20260713",
+  "run_id_prefix": "dblur-row755",
+  "plugin": {
+    "name": "OLM DirectionalBlur",
+    "module_filename": "OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "default_aex_path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\OLMDirectionalBlur.aex"
+  },
+  "host": {
+    "afterfx_path": "C:\\Program Files\\Adobe\\Adobe After Effects 2025\\Support Files\\AfterFX.exe",
+    "cdb_path": "C:\\Program Files (x86)\\Windows Kits\\10\\Debuggers\\x64\\cdb.exe"
+  },
+  "project": {
+    "bits_per_channel": 8,
+    "renderer": "Software",
+    "environment": {
+      "OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT": "1",
+      "OLM_AE_INPUT_ALPHA_MODE": "PREMULTIPLIED"
+    }
+  },
+  "renderer": {
+    "source": "renderer.jsx"
+  },
+  "request_assets": {
+    "source": "request"
+  },
+  "cdb": {
+    "armed_marker": "DBR_BREAKPOINTS_READY",
+    "arm_timeout_seconds": 60,
+    "capture_timeout_seconds": 300
+  },
+  "cases": [
+    {
+      "id": "db_angle0_alpha_fade_hard_edges",
+      "cdb_template": "probe.cdb.in",
+      "template_values": {
+        "witness_id": "olmdirectionalblur-row755-common-core-v1"
+      },
+      "addresses": {
+        "worker_entry": "0x4d84",
+        "rowdriver_entry": "0x38d0",
+        "pre_normalization": "0x5554"
+      },
+      "exports": [
+        {
+          "source": "cdb_trace_{case_id}.txt.destination_rgba_f32_le.bin",
+          "archive_path": "return/row755_destination_rgba_f32_le.bin",
+          "required": true
+        },
+        {
+          "source": "cdb_trace_{case_id}.txt.denominator_f32_le.bin",
+          "archive_path": "return/row755_denominator_f32_le.bin",
+          "required": true
+        },
+        {
+          "source": "cdb_trace_{case_id}.txt.alpha_valid_f32_le.bin",
+          "archive_path": "return/row755_alpha_valid_f32_le.bin",
+          "required": true
+        },
+        {
+          "source": "exports/{case_id}/directionalblur_context_scale_20260606__software__fr24__db_angle0_alpha_fade_hard_edges.png",
+          "archive_path": "return/rendered_db_angle0_alpha_fade_hard_edges.png",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "identity_fields": [
+      "run_id",
+      "ae_pid",
+      "module_base",
+      "aex_sha256",
+      "project_bpc",
+      "renderer",
+      "case_id",
+      "witness_id",
+      "params"
+    ],
+    "events": [
+      {
+        "name": "worker_entry",
+        "prefix": "DBR_WORKER_ENTRY",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 2206},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "params", "stage", "entry_rva", "worker_hit"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmdirectionalblur-row755-common-core-v1"},
+          "params": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "stage": {"equals": "worker_entry"},
+          "entry_rva": {"equals": "4d84"},
+          "worker_hit": {"pattern": "^[1-9][0-9]*$"}
+        }
+      },
+      {
+        "name": "rowdriver_range",
+        "prefix": "DBR_ROW_RANGE",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 2206},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "params", "stage", "entry_rva", "call", "start", "end", "row755_covered"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmdirectionalblur-row755-common-core-v1"},
+          "params": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "stage": {"equals": "rowdriver"},
+          "entry_rva": {"equals": "38d0"},
+          "call": {"pattern": "^[1-9][0-9]*$"},
+          "start": {"pattern": "^[0-9]+$"},
+          "end": {"pattern": "^[1-9][0-9]*$"},
+          "row755_covered": {"pattern": "^[01]$"}
+        }
+      },
+      {
+        "name": "pre_normalization_capture",
+        "prefix": "DBR_PRE_NORMALIZATION_CAPTURE",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "params", "stage", "stage_rva", "before_normalization", "worker_hits", "rowdriver_calls", "row_start", "row_end", "row755_covered", "params_mismatch", "destination_base", "denominator_base", "alpha_valid_base", "row0", "col0", "stride", "row", "x_start", "x_end", "destination_bytes", "denominator_bytes", "alpha_valid_bytes", "destination_address", "denominator_address", "alpha_valid_address"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmdirectionalblur-row755-common-core-v1"},
+          "params": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "stage": {"equals": "pre_normalization"},
+          "stage_rva": {"equals": "5554"},
+          "before_normalization": {"equals": "1"},
+          "worker_hits": {"pattern": "^[1-9][0-9]*$"},
+          "rowdriver_calls": {"pattern": "^[1-9][0-9]*$"},
+          "row_start": {"equals": "0"},
+          "row_end": {"equals": "2206"},
+          "row755_covered": {"equals": "1"},
+          "params_mismatch": {"equals": "0"},
+          "destination_base": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "denominator_base": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "alpha_valid_base": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "row0": {"pattern": "^[0-9]+$"},
+          "col0": {"pattern": "^[0-9]+$"},
+          "stride": {"equals": "2206"},
+          "row": {"equals": "755"},
+          "x_start": {"equals": "747"},
+          "x_end": {"equals": "1080"},
+          "destination_bytes": {"equals": "5344"},
+          "denominator_bytes": {"equals": "1336"},
+          "alpha_valid_bytes": {"equals": "1336"},
+          "destination_address": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "denominator_address": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "alpha_valid_address": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"}
+        }
+      }
+    ]
+  },
+  "return_bundle": {
+    "json_name": "RETURN_OLMDIRECTIONALBLUR_ROW755.json",
+    "zip_name": "RETURN_OLMDIRECTIONALBLUR_ROW755.zip",
+    "include_logs": []
+  }
+}

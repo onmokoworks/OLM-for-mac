@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "description": "One fresh AE Software 32bpc OLMKiraKira Mode 3 live Gaussian wrapper, setup, first-kernel, return-word, and rendered-output witness.",
+  "request_id": "olmkirakira_mode3_live_gaussian_20260713",
+  "run_id_prefix": "kk-mode3",
+  "plugin": {
+    "name": "OLMKiraKira",
+    "module_filename": "OLMKiraKira.aex",
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "default_aex_path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\OLMKiraKira.aex"
+  },
+  "host": {
+    "afterfx_path": "C:\\Program Files\\Adobe\\Adobe After Effects 2025\\Support Files\\AfterFX.exe",
+    "cdb_path": "C:\\Program Files (x86)\\Windows Kits\\10\\Debuggers\\x64\\cdb.exe"
+  },
+  "project": {
+    "bits_per_channel": 32,
+    "renderer": "Software",
+    "environment": {
+      "OLM_AE_PARAM_OVERRIDES_JSON": "{\"OLM OLM Kira Kira-0003\":5,\"OLM OLM Kira Kira-0004\":0,\"OLM OLM Kira Kira-0005\":0,\"OLM OLM Kira Kira-0026\":0}"
+    }
+  },
+  "renderer": {
+    "source": "renderer.jsx"
+  },
+  "request_assets": {
+    "source": "request"
+  },
+  "cdb": {
+    "armed_marker": "KK_BREAKPOINTS_READY",
+    "arm_timeout_seconds": 60,
+    "capture_timeout_seconds": 300
+  },
+  "cases": [
+    {
+      "id": "final_random10_olm_kira_kira_03",
+      "cdb_template": "mode3_live_gaussian.cdb.in",
+      "template_values": {
+        "witness_id": "olmkirakira-mode3-live-gaussian-common-core-v1"
+      },
+      "addresses": {
+        "wrapper": "0x1272ec0",
+        "create": "0x1266730",
+        "getKernel": "0x12754a0",
+        "getKernelReturn": "0x126685c"
+      },
+      "exports": [
+        {
+          "source": "cdb_trace_{case_id}.txt.gaussian_kernel_21_f32_le.bin",
+          "archive_path": "return/gaussian_kernel_21_f32_le.bin",
+          "required": true
+        },
+        {
+          "source": "exports/{case_id}/case_03.png",
+          "archive_path": "return/case_03.png",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "identity_fields": [
+      "run_id",
+      "ae_pid",
+      "module_base",
+      "aex_sha256",
+      "project_bpc",
+      "renderer",
+      "case_id",
+      "witness_id"
+    ],
+    "events": [
+      {
+        "name": "live_gaussian_wrapper",
+        "prefix": "KK_WRAPPER",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "wrapper_rva", "rcx", "rdx", "r8", "r9"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmkirakira-mode3-live-gaussian-common-core-v1"},
+          "stage": {"equals": "gaussian_wrapper"},
+          "wrapper_rva": {"equals": "1272ec0"},
+          "rcx": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "rdx": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "r8": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "r9": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"}
+        }
+      },
+      {
+        "name": "live_gaussian_create",
+        "prefix": "KK_CREATE",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "create_rva", "rcx", "rdx", "r8", "r9"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmkirakira-mode3-live-gaussian-common-core-v1"},
+          "stage": {"equals": "gaussian_create"},
+          "create_rva": {"equals": "1266730"},
+          "rcx": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "rdx": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "r8": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "r9": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"}
+        }
+      },
+      {
+        "name": "live_gaussian_kernel_entry",
+        "prefix": "KK_KERNEL_ENTRY",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "getKernel_rva", "ecx", "xmm1", "r8", "output_mat", "return_address"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmkirakira-mode3-live-gaussian-common-core-v1"},
+          "stage": {"equals": "first_getKernel_entry"},
+          "getKernel_rva": {"equals": "12754a0"},
+          "ecx": {"equals": "21"},
+          "xmm1": {"equals": "2.5"},
+          "r8": {"equals": "5"},
+          "output_mat": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "return_address": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"}
+        }
+      },
+      {
+        "name": "live_gaussian_kernel_return",
+        "prefix": "KK_KERNEL_RETURN",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "getKernel_rva", "getKernelReturn_rva", "output_mat", "data", "word_count", "raw_bytes", "element", "encoding", "source"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmkirakira-mode3-live-gaussian-common-core-v1"},
+          "stage": {"equals": "first_getKernel_return"},
+          "getKernel_rva": {"equals": "12754a0"},
+          "getKernelReturn_rva": {"equals": "126685c"},
+          "output_mat": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "data": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "word_count": {"equals": "21"},
+          "raw_bytes": {"equals": "84"},
+          "element": {"equals": "float32"},
+          "encoding": {"equals": "raw_little_endian_words"},
+          "source": {"equals": "cv_Mat_data_after_return"}
+        }
+      }
+    ]
+  },
+  "return_bundle": {
+    "json_name": "RETURN_WINDOWS_WITNESS.json",
+    "zip_name": "RETURN_WINDOWS_WITNESS.zip"
+  }
+}

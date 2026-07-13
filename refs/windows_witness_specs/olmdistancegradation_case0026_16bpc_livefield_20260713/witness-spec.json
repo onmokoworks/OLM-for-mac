@@ -1,0 +1,1082 @@
+{
+  "schema_version": 1,
+  "description": "One fresh AE Software 16bpc OLMDistanceGradation case_0026 live field/source and writer witness with actual output bytes.",
+  "request_id": "windows_witness_olmdistancegradation_case0026_16bpc_livefield_20260713",
+  "run_id_prefix": "olmdg16-case0026-livefield",
+  "plugin": {
+    "name": "OLM Distance Gradation",
+    "module_filename": "DistanceGradation.aex",
+    "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "default_aex_path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\DistanceGradation.aex"
+  },
+  "host": {
+    "afterfx_path": "C:\\Program Files\\Adobe\\Adobe After Effects 2025\\Support Files\\AfterFX.exe",
+    "cdb_path": "C:\\Program Files (x86)\\Windows Kits\\10\\Debuggers\\x64\\cdb.exe"
+  },
+  "project": {
+    "bits_per_channel": 16,
+    "renderer": "Software",
+    "environment": {
+      "OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT": "1"
+    }
+  },
+  "renderer": {
+    "source": "renderer.jsx"
+  },
+  "request_assets": {
+    "source": "request"
+  },
+  "cdb": {
+    "armed_marker": "OLMDG_LFS_BREAKPOINTS_ARMED",
+    "arm_timeout_seconds": 60,
+    "capture_timeout_seconds": 300
+  },
+  "cases": [
+    {
+      "id": "olmdistancegradation_extended__case_0026",
+      "cdb_template": "livefield_source.cdb.in",
+      "template_values": {
+        "witness_id": "olmdistancegradation-case0026-16bpc-livefield-v1"
+      },
+      "addresses": {
+        "entry": "0x1170480",
+        "field": "0x117057d",
+        "source": "0x11705f1"
+      },
+      "exports": [
+        {
+          "source": "exports/{case_id}/case_0026.png",
+          "archive_path": "return/actual_case_0026.png",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "identity_fields": [
+      "run_id",
+      "ae_pid",
+      "module_base",
+      "aex_sha256",
+      "project_bpc",
+      "renderer",
+      "case_id",
+      "witness_id"
+    ],
+    "events": [
+      {
+        "name": "entry_907_222",
+        "prefix": "OLMDG_LFS_ENTRY_907_222",
+        "cardinality": {
+          "scope": "per_case",
+          "min": 1,
+          "max": 1
+        },
+        "required_fields": [
+          "run_id",
+          "ae_pid",
+          "module_base",
+          "aex_sha256",
+          "project_bpc",
+          "renderer",
+          "case_id",
+          "witness_id",
+          "hook_rva",
+          "x",
+          "y",
+          "output",
+          "pre_output_words_agrb",
+          "in_out",
+          "inside_threshold",
+          "outside_threshold",
+          "use_bg",
+          "invert",
+          "render_mode",
+          "interp_mode",
+          "power_bits",
+          "grad_r_bits",
+          "grad_g_bits",
+          "grad_b_bits",
+          "bg_r_bits",
+          "bg_g_bits",
+          "bg_b_bits"
+        ],
+        "field_constraints": {
+          "witness_id": {
+            "equals": "olmdistancegradation-case0026-16bpc-livefield-v1"
+          },
+          "x": {
+            "equals": "907"
+          },
+          "y": {
+            "equals": "222"
+          },
+          "hook_rva": {
+            "equals": "1170480"
+          },
+          "output": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "pre_output_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          },
+          "in_out": {
+            "equals": "3"
+          },
+          "inside_threshold": {
+            "equals": "158"
+          },
+          "outside_threshold": {
+            "equals": "13"
+          },
+          "use_bg": {
+            "equals": "1"
+          },
+          "invert": {
+            "equals": "1"
+          },
+          "render_mode": {
+            "equals": "1"
+          },
+          "interp_mode": {
+            "equals": "4"
+          },
+          "power_bits": {
+            "equals": "0x40263bec"
+          },
+          "grad_r_bits": {
+            "equals": "0x3de0e0ff"
+          },
+          "grad_g_bits": {
+            "equals": "0x00000000"
+          },
+          "grad_b_bits": {
+            "equals": "0x3f6eeeef"
+          },
+          "bg_r_bits": {
+            "equals": "0x3f800000"
+          },
+          "bg_g_bits": {
+            "equals": "0x00000000"
+          },
+          "bg_b_bits": {
+            "equals": "0x00000000"
+          }
+        }
+      },
+      {
+        "name": "field_907_222",
+        "prefix": "OLMDG_LFS_FIELD_907_222",
+        "cardinality": {
+          "scope": "per_case",
+          "min": 1,
+          "max": 1
+        },
+        "required_fields": [
+          "run_id",
+          "ae_pid",
+          "module_base",
+          "aex_sha256",
+          "project_bpc",
+          "renderer",
+          "case_id",
+          "witness_id",
+          "hook_rva",
+          "x",
+          "y",
+          "rcx",
+          "rcx_plus2_word",
+          "field_words_agrb",
+          "field_base",
+          "field_header",
+          "field_rowbytes",
+          "field_pixel_size"
+        ],
+        "field_constraints": {
+          "witness_id": {
+            "equals": "olmdistancegradation-case0026-16bpc-livefield-v1"
+          },
+          "x": {
+            "equals": "907"
+          },
+          "y": {
+            "equals": "222"
+          },
+          "hook_rva": {
+            "equals": "117057d"
+          },
+          "rcx": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "rcx_plus2_word": {
+            "pattern": "^[0-9]+$"
+          },
+          "field_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          },
+          "field_base": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "field_header": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "field_rowbytes": {
+            "equals": "15360"
+          },
+          "field_pixel_size": {
+            "equals": "8"
+          }
+        }
+      },
+      {
+        "name": "source_907_222",
+        "prefix": "OLMDG_LFS_SOURCE_907_222",
+        "cardinality": {
+          "scope": "per_case",
+          "min": 1,
+          "max": 1
+        },
+        "required_fields": [
+          "run_id",
+          "ae_pid",
+          "module_base",
+          "aex_sha256",
+          "project_bpc",
+          "renderer",
+          "case_id",
+          "witness_id",
+          "hook_rva",
+          "x",
+          "y",
+          "rdx",
+          "source_words_agrb"
+        ],
+        "field_constraints": {
+          "witness_id": {
+            "equals": "olmdistancegradation-case0026-16bpc-livefield-v1"
+          },
+          "x": {
+            "equals": "907"
+          },
+          "y": {
+            "equals": "222"
+          },
+          "hook_rva": {
+            "equals": "11705f1"
+          },
+          "rdx": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "source_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          }
+        }
+      },
+      {
+        "name": "return_907_222",
+        "prefix": "OLMDG_LFS_RETURN_907_222",
+        "cardinality": {
+          "scope": "per_case",
+          "min": 1,
+          "max": 1
+        },
+        "required_fields": [
+          "run_id",
+          "ae_pid",
+          "module_base",
+          "aex_sha256",
+          "project_bpc",
+          "renderer",
+          "case_id",
+          "witness_id",
+          "hook_rva",
+          "x",
+          "y",
+          "output",
+          "post_output_words_agrb"
+        ],
+        "field_constraints": {
+          "witness_id": {
+            "equals": "olmdistancegradation-case0026-16bpc-livefield-v1"
+          },
+          "x": {
+            "equals": "907"
+          },
+          "y": {
+            "equals": "222"
+          },
+          "hook_rva": {
+            "equals": "1170480"
+          },
+          "output": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "post_output_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          }
+        }
+      },
+      {
+        "name": "entry_395_477",
+        "prefix": "OLMDG_LFS_ENTRY_395_477",
+        "cardinality": {
+          "scope": "per_case",
+          "min": 1,
+          "max": 1
+        },
+        "required_fields": [
+          "run_id",
+          "ae_pid",
+          "module_base",
+          "aex_sha256",
+          "project_bpc",
+          "renderer",
+          "case_id",
+          "witness_id",
+          "hook_rva",
+          "x",
+          "y",
+          "output",
+          "pre_output_words_agrb",
+          "in_out",
+          "inside_threshold",
+          "outside_threshold",
+          "use_bg",
+          "invert",
+          "render_mode",
+          "interp_mode",
+          "power_bits",
+          "grad_r_bits",
+          "grad_g_bits",
+          "grad_b_bits",
+          "bg_r_bits",
+          "bg_g_bits",
+          "bg_b_bits"
+        ],
+        "field_constraints": {
+          "witness_id": {
+            "equals": "olmdistancegradation-case0026-16bpc-livefield-v1"
+          },
+          "x": {
+            "equals": "395"
+          },
+          "y": {
+            "equals": "477"
+          },
+          "hook_rva": {
+            "equals": "1170480"
+          },
+          "output": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "pre_output_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          },
+          "in_out": {
+            "equals": "3"
+          },
+          "inside_threshold": {
+            "equals": "158"
+          },
+          "outside_threshold": {
+            "equals": "13"
+          },
+          "use_bg": {
+            "equals": "1"
+          },
+          "invert": {
+            "equals": "1"
+          },
+          "render_mode": {
+            "equals": "1"
+          },
+          "interp_mode": {
+            "equals": "4"
+          },
+          "power_bits": {
+            "equals": "0x40263bec"
+          },
+          "grad_r_bits": {
+            "equals": "0x3de0e0ff"
+          },
+          "grad_g_bits": {
+            "equals": "0x00000000"
+          },
+          "grad_b_bits": {
+            "equals": "0x3f6eeeef"
+          },
+          "bg_r_bits": {
+            "equals": "0x3f800000"
+          },
+          "bg_g_bits": {
+            "equals": "0x00000000"
+          },
+          "bg_b_bits": {
+            "equals": "0x00000000"
+          }
+        }
+      },
+      {
+        "name": "field_395_477",
+        "prefix": "OLMDG_LFS_FIELD_395_477",
+        "cardinality": {
+          "scope": "per_case",
+          "min": 1,
+          "max": 1
+        },
+        "required_fields": [
+          "run_id",
+          "ae_pid",
+          "module_base",
+          "aex_sha256",
+          "project_bpc",
+          "renderer",
+          "case_id",
+          "witness_id",
+          "hook_rva",
+          "x",
+          "y",
+          "rcx",
+          "rcx_plus2_word",
+          "field_words_agrb",
+          "field_base",
+          "field_header",
+          "field_rowbytes",
+          "field_pixel_size"
+        ],
+        "field_constraints": {
+          "witness_id": {
+            "equals": "olmdistancegradation-case0026-16bpc-livefield-v1"
+          },
+          "x": {
+            "equals": "395"
+          },
+          "y": {
+            "equals": "477"
+          },
+          "hook_rva": {
+            "equals": "117057d"
+          },
+          "rcx": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "rcx_plus2_word": {
+            "pattern": "^[0-9]+$"
+          },
+          "field_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          },
+          "field_base": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "field_header": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "field_rowbytes": {
+            "equals": "15360"
+          },
+          "field_pixel_size": {
+            "equals": "8"
+          }
+        }
+      },
+      {
+        "name": "source_395_477",
+        "prefix": "OLMDG_LFS_SOURCE_395_477",
+        "cardinality": {
+          "scope": "per_case",
+          "min": 1,
+          "max": 1
+        },
+        "required_fields": [
+          "run_id",
+          "ae_pid",
+          "module_base",
+          "aex_sha256",
+          "project_bpc",
+          "renderer",
+          "case_id",
+          "witness_id",
+          "hook_rva",
+          "x",
+          "y",
+          "rdx",
+          "source_words_agrb"
+        ],
+        "field_constraints": {
+          "witness_id": {
+            "equals": "olmdistancegradation-case0026-16bpc-livefield-v1"
+          },
+          "x": {
+            "equals": "395"
+          },
+          "y": {
+            "equals": "477"
+          },
+          "hook_rva": {
+            "equals": "11705f1"
+          },
+          "rdx": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "source_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          }
+        }
+      },
+      {
+        "name": "return_395_477",
+        "prefix": "OLMDG_LFS_RETURN_395_477",
+        "cardinality": {
+          "scope": "per_case",
+          "min": 1,
+          "max": 1
+        },
+        "required_fields": [
+          "run_id",
+          "ae_pid",
+          "module_base",
+          "aex_sha256",
+          "project_bpc",
+          "renderer",
+          "case_id",
+          "witness_id",
+          "hook_rva",
+          "x",
+          "y",
+          "output",
+          "post_output_words_agrb"
+        ],
+        "field_constraints": {
+          "witness_id": {
+            "equals": "olmdistancegradation-case0026-16bpc-livefield-v1"
+          },
+          "x": {
+            "equals": "395"
+          },
+          "y": {
+            "equals": "477"
+          },
+          "hook_rva": {
+            "equals": "1170480"
+          },
+          "output": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "post_output_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          }
+        }
+      },
+      {
+        "name": "entry_1589_579",
+        "prefix": "OLMDG_LFS_ENTRY_1589_579",
+        "cardinality": {
+          "scope": "per_case",
+          "min": 1,
+          "max": 1
+        },
+        "required_fields": [
+          "run_id",
+          "ae_pid",
+          "module_base",
+          "aex_sha256",
+          "project_bpc",
+          "renderer",
+          "case_id",
+          "witness_id",
+          "hook_rva",
+          "x",
+          "y",
+          "output",
+          "pre_output_words_agrb",
+          "in_out",
+          "inside_threshold",
+          "outside_threshold",
+          "use_bg",
+          "invert",
+          "render_mode",
+          "interp_mode",
+          "power_bits",
+          "grad_r_bits",
+          "grad_g_bits",
+          "grad_b_bits",
+          "bg_r_bits",
+          "bg_g_bits",
+          "bg_b_bits"
+        ],
+        "field_constraints": {
+          "witness_id": {
+            "equals": "olmdistancegradation-case0026-16bpc-livefield-v1"
+          },
+          "x": {
+            "equals": "1589"
+          },
+          "y": {
+            "equals": "579"
+          },
+          "hook_rva": {
+            "equals": "1170480"
+          },
+          "output": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "pre_output_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          },
+          "in_out": {
+            "equals": "3"
+          },
+          "inside_threshold": {
+            "equals": "158"
+          },
+          "outside_threshold": {
+            "equals": "13"
+          },
+          "use_bg": {
+            "equals": "1"
+          },
+          "invert": {
+            "equals": "1"
+          },
+          "render_mode": {
+            "equals": "1"
+          },
+          "interp_mode": {
+            "equals": "4"
+          },
+          "power_bits": {
+            "equals": "0x40263bec"
+          },
+          "grad_r_bits": {
+            "equals": "0x3de0e0ff"
+          },
+          "grad_g_bits": {
+            "equals": "0x00000000"
+          },
+          "grad_b_bits": {
+            "equals": "0x3f6eeeef"
+          },
+          "bg_r_bits": {
+            "equals": "0x3f800000"
+          },
+          "bg_g_bits": {
+            "equals": "0x00000000"
+          },
+          "bg_b_bits": {
+            "equals": "0x00000000"
+          }
+        }
+      },
+      {
+        "name": "field_1589_579",
+        "prefix": "OLMDG_LFS_FIELD_1589_579",
+        "cardinality": {
+          "scope": "per_case",
+          "min": 1,
+          "max": 1
+        },
+        "required_fields": [
+          "run_id",
+          "ae_pid",
+          "module_base",
+          "aex_sha256",
+          "project_bpc",
+          "renderer",
+          "case_id",
+          "witness_id",
+          "hook_rva",
+          "x",
+          "y",
+          "rcx",
+          "rcx_plus2_word",
+          "field_words_agrb",
+          "field_base",
+          "field_header",
+          "field_rowbytes",
+          "field_pixel_size"
+        ],
+        "field_constraints": {
+          "witness_id": {
+            "equals": "olmdistancegradation-case0026-16bpc-livefield-v1"
+          },
+          "x": {
+            "equals": "1589"
+          },
+          "y": {
+            "equals": "579"
+          },
+          "hook_rva": {
+            "equals": "117057d"
+          },
+          "rcx": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "rcx_plus2_word": {
+            "pattern": "^[0-9]+$"
+          },
+          "field_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          },
+          "field_base": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "field_header": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "field_rowbytes": {
+            "equals": "15360"
+          },
+          "field_pixel_size": {
+            "equals": "8"
+          }
+        }
+      },
+      {
+        "name": "source_1589_579",
+        "prefix": "OLMDG_LFS_SOURCE_1589_579",
+        "cardinality": {
+          "scope": "per_case",
+          "min": 1,
+          "max": 1
+        },
+        "required_fields": [
+          "run_id",
+          "ae_pid",
+          "module_base",
+          "aex_sha256",
+          "project_bpc",
+          "renderer",
+          "case_id",
+          "witness_id",
+          "hook_rva",
+          "x",
+          "y",
+          "rdx",
+          "source_words_agrb"
+        ],
+        "field_constraints": {
+          "witness_id": {
+            "equals": "olmdistancegradation-case0026-16bpc-livefield-v1"
+          },
+          "x": {
+            "equals": "1589"
+          },
+          "y": {
+            "equals": "579"
+          },
+          "hook_rva": {
+            "equals": "11705f1"
+          },
+          "rdx": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "source_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          }
+        }
+      },
+      {
+        "name": "return_1589_579",
+        "prefix": "OLMDG_LFS_RETURN_1589_579",
+        "cardinality": {
+          "scope": "per_case",
+          "min": 1,
+          "max": 1
+        },
+        "required_fields": [
+          "run_id",
+          "ae_pid",
+          "module_base",
+          "aex_sha256",
+          "project_bpc",
+          "renderer",
+          "case_id",
+          "witness_id",
+          "hook_rva",
+          "x",
+          "y",
+          "output",
+          "post_output_words_agrb"
+        ],
+        "field_constraints": {
+          "witness_id": {
+            "equals": "olmdistancegradation-case0026-16bpc-livefield-v1"
+          },
+          "x": {
+            "equals": "1589"
+          },
+          "y": {
+            "equals": "579"
+          },
+          "hook_rva": {
+            "equals": "1170480"
+          },
+          "output": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "post_output_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          }
+        }
+      },
+      {
+        "name": "entry_898_670",
+        "prefix": "OLMDG_LFS_ENTRY_898_670",
+        "cardinality": {
+          "scope": "per_case",
+          "min": 1,
+          "max": 1
+        },
+        "required_fields": [
+          "run_id",
+          "ae_pid",
+          "module_base",
+          "aex_sha256",
+          "project_bpc",
+          "renderer",
+          "case_id",
+          "witness_id",
+          "hook_rva",
+          "x",
+          "y",
+          "output",
+          "pre_output_words_agrb",
+          "in_out",
+          "inside_threshold",
+          "outside_threshold",
+          "use_bg",
+          "invert",
+          "render_mode",
+          "interp_mode",
+          "power_bits",
+          "grad_r_bits",
+          "grad_g_bits",
+          "grad_b_bits",
+          "bg_r_bits",
+          "bg_g_bits",
+          "bg_b_bits"
+        ],
+        "field_constraints": {
+          "witness_id": {
+            "equals": "olmdistancegradation-case0026-16bpc-livefield-v1"
+          },
+          "x": {
+            "equals": "898"
+          },
+          "y": {
+            "equals": "670"
+          },
+          "hook_rva": {
+            "equals": "1170480"
+          },
+          "output": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "pre_output_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          },
+          "in_out": {
+            "equals": "3"
+          },
+          "inside_threshold": {
+            "equals": "158"
+          },
+          "outside_threshold": {
+            "equals": "13"
+          },
+          "use_bg": {
+            "equals": "1"
+          },
+          "invert": {
+            "equals": "1"
+          },
+          "render_mode": {
+            "equals": "1"
+          },
+          "interp_mode": {
+            "equals": "4"
+          },
+          "power_bits": {
+            "equals": "0x40263bec"
+          },
+          "grad_r_bits": {
+            "equals": "0x3de0e0ff"
+          },
+          "grad_g_bits": {
+            "equals": "0x00000000"
+          },
+          "grad_b_bits": {
+            "equals": "0x3f6eeeef"
+          },
+          "bg_r_bits": {
+            "equals": "0x3f800000"
+          },
+          "bg_g_bits": {
+            "equals": "0x00000000"
+          },
+          "bg_b_bits": {
+            "equals": "0x00000000"
+          }
+        }
+      },
+      {
+        "name": "field_898_670",
+        "prefix": "OLMDG_LFS_FIELD_898_670",
+        "cardinality": {
+          "scope": "per_case",
+          "min": 1,
+          "max": 1
+        },
+        "required_fields": [
+          "run_id",
+          "ae_pid",
+          "module_base",
+          "aex_sha256",
+          "project_bpc",
+          "renderer",
+          "case_id",
+          "witness_id",
+          "hook_rva",
+          "x",
+          "y",
+          "rcx",
+          "rcx_plus2_word",
+          "field_words_agrb",
+          "field_base",
+          "field_header",
+          "field_rowbytes",
+          "field_pixel_size"
+        ],
+        "field_constraints": {
+          "witness_id": {
+            "equals": "olmdistancegradation-case0026-16bpc-livefield-v1"
+          },
+          "x": {
+            "equals": "898"
+          },
+          "y": {
+            "equals": "670"
+          },
+          "hook_rva": {
+            "equals": "117057d"
+          },
+          "rcx": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "rcx_plus2_word": {
+            "pattern": "^[0-9]+$"
+          },
+          "field_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          },
+          "field_base": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "field_header": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "field_rowbytes": {
+            "equals": "15360"
+          },
+          "field_pixel_size": {
+            "equals": "8"
+          }
+        }
+      },
+      {
+        "name": "source_898_670",
+        "prefix": "OLMDG_LFS_SOURCE_898_670",
+        "cardinality": {
+          "scope": "per_case",
+          "min": 1,
+          "max": 1
+        },
+        "required_fields": [
+          "run_id",
+          "ae_pid",
+          "module_base",
+          "aex_sha256",
+          "project_bpc",
+          "renderer",
+          "case_id",
+          "witness_id",
+          "hook_rva",
+          "x",
+          "y",
+          "rdx",
+          "source_words_agrb"
+        ],
+        "field_constraints": {
+          "witness_id": {
+            "equals": "olmdistancegradation-case0026-16bpc-livefield-v1"
+          },
+          "x": {
+            "equals": "898"
+          },
+          "y": {
+            "equals": "670"
+          },
+          "hook_rva": {
+            "equals": "11705f1"
+          },
+          "rdx": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "source_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          }
+        }
+      },
+      {
+        "name": "return_898_670",
+        "prefix": "OLMDG_LFS_RETURN_898_670",
+        "cardinality": {
+          "scope": "per_case",
+          "min": 1,
+          "max": 1
+        },
+        "required_fields": [
+          "run_id",
+          "ae_pid",
+          "module_base",
+          "aex_sha256",
+          "project_bpc",
+          "renderer",
+          "case_id",
+          "witness_id",
+          "hook_rva",
+          "x",
+          "y",
+          "output",
+          "post_output_words_agrb"
+        ],
+        "field_constraints": {
+          "witness_id": {
+            "equals": "olmdistancegradation-case0026-16bpc-livefield-v1"
+          },
+          "x": {
+            "equals": "898"
+          },
+          "y": {
+            "equals": "670"
+          },
+          "hook_rva": {
+            "equals": "1170480"
+          },
+          "output": {
+            "pattern": "^(?:0x)?[0-9a-fA-F`]+$"
+          },
+          "post_output_words_agrb": {
+            "pattern": "^[0-9]+(?:,[0-9]+){3}$"
+          }
+        }
+      }
+    ]
+  },
+  "return_bundle": {
+    "json_name": "RETURN_OLMDISTANCEGRADATION_CASE0026_16BPC_LIVEFIELD.json",
+    "zip_name": "RETURN_OLMDISTANCEGRADATION_CASE0026_16BPC_LIVEFIELD.zip",
+    "include_logs": []
+  }
+}

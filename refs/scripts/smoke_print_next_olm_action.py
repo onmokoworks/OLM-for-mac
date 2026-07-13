@@ -3,11 +3,14 @@
 
 from __future__ import annotations
 
+import hashlib
+import io
 import json
 import os
 import subprocess
 import sys
 import tempfile
+from unittest import mock
 import zipfile
 from pathlib import Path
 
@@ -37,6 +40,86 @@ def write_zip(path: Path, files: dict[str, str]) -> None:
     with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as archive:
         for name, text in files.items():
             archive.writestr(name, text)
+
+
+def zip_bytes(files: dict[str, bytes | str]) -> bytes:
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as archive:
+        for name, value in files.items():
+            archive.writestr(name, value if isinstance(value, bytes) else value)
+    return buffer.getvalue()
+
+
+def make_windows_witness_batch_request(
+    path: Path,
+    *,
+    batch_id: str = "synthetic_windows_witness_batch_selftest_20260713",
+    valid: bool,
+    satisfies_request_ids: list[str] | None = None,
+    member_separator: str = "/",
+) -> None:
+    job_bytes = zip_bytes(
+        {
+            "job/package-manifest.json": json.dumps(
+                {
+                    "request_id": "synthetic_batch_job",
+                    "contract": "witness-contract.json",
+                }
+            ),
+            "job/witness-contract.json": json.dumps({"request_id": "synthetic_batch_job"}),
+        }
+    )
+    package_sha = hashlib.sha256(job_bytes).hexdigest()
+    if not valid:
+        package_sha = "0" * 64
+    manifest = {
+        "batch_id": batch_id,
+        "jobs": [
+            {
+                "id": "synthetic_batch_job",
+                "order": 1,
+                "archive_path": "jobs/001_synthetic_batch_job.zip",
+                "package_sha256": package_sha,
+                "request_id": "synthetic_batch_job",
+                **(
+                    {"satisfies_request_ids": satisfies_request_ids}
+                    if satisfies_request_ids is not None
+                    else {}
+                ),
+                "return_json_name": "RETURN_SYNTHETIC_BATCH_JOB.json",
+                "return_zip_name": "RETURN_SYNTHETIC_BATCH_JOB.zip",
+                "size_bytes": len(job_bytes),
+            }
+        ],
+        "kind": "windows_witness_batch_request",
+        "launcher": "run_windows_witness_batch.ps1",
+        "one_click_launcher": "RUN_WINDOWS_WITNESS_BATCH.cmd",
+        "readme": "README.txt",
+        "schema_version": 1,
+        "success_status": "answered",
+        "failure_status": "partial_success",
+    }
+    prefix = f"{batch_id}/"
+    files = {
+        prefix + "batch-manifest.json": json.dumps(manifest, sort_keys=True),
+        prefix + "README.txt": "synthetic batch request\n",
+        prefix + "run_windows_witness_batch.ps1": "Write-Host 'synthetic'\n",
+        prefix + "RUN_WINDOWS_WITNESS_BATCH.cmd": "@echo off\r\n",
+        prefix + "jobs/001_synthetic_batch_job.zip": job_bytes,
+    }
+    with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as archive:
+        for name, value in files.items():
+            archive.writestr(name.replace("/", member_separator), value if isinstance(value, bytes) else value)
+
+
+def load_subject(repo: Path):
+    scripts_dir = repo / "scripts"
+    sys.path.insert(0, str(scripts_dir))
+    try:
+        import print_next_olm_action as subject  # type: ignore
+    finally:
+        sys.path.pop(0)
+    return subject
 
 
 def package_pending_requests(repo: Path, output: Path) -> None:
@@ -107,11 +190,103 @@ def pending_request_ids(repo: Path) -> list[str]:
 
 def main() -> int:
     repo = repo_root()
+    subject = load_subject(repo)
     script = repo / "scripts" / "print_next_olm_action.py"
     summary_json = repo / "refs" / "reports" / "runtime_trace_summary.json"
     summary_md = repo / "refs" / "reports" / "runtime_trace_summary.md"
     old_summary_json = summary_json.read_text(encoding="utf-8") if summary_json.exists() else None
     old_summary_md = summary_md.read_text(encoding="utf-8") if summary_md.exists() else None
+    with tempfile.TemporaryDirectory(prefix="olm_next_action_batch_smoke_") as focused_tmp:
+        focused_path = Path(focused_tmp)
+        staged_dir = focused_path / "olm_pr" / "new"
+        staged_dir.mkdir(parents=True, exist_ok=True)
+        invalid_batch = staged_dir / "20260713_unified_request_invalid.zip"
+        make_windows_witness_batch_request(invalid_batch, valid=False)
+        invalid_rows = subject.candidate_rows([focused_path])
+        assert all(Path(row["path"]) != invalid_batch for row in invalid_rows)
+
+        valid_batch = staged_dir / "20260713_unified_request.zip"
+        make_windows_witness_batch_request(valid_batch, valid=True)
+        batch_rows = subject.candidate_rows([focused_path])
+        assert all(Path(row["path"]) != valid_batch for row in batch_rows)
+
+        invalid_alias_batch = staged_dir / "20260713_unified_request_invalid_alias.zip"
+        make_windows_witness_batch_request(
+            invalid_alias_batch,
+            valid=True,
+            satisfies_request_ids=["legacy_queue_alias_20260713"],
+        )
+        invalid_alias_rows = subject.candidate_rows([focused_path])
+        assert all(Path(row["path"]) != invalid_alias_batch for row in invalid_alias_rows)
+
+    with tempfile.TemporaryDirectory(prefix="olm_next_action_canonical_batch_smoke_") as canonical_tmp:
+        canonical_path = repo / "refs" / "runtime_trace_packages" / "windows_witness_batch_20260713.zip"
+        canonical_stage_root = Path(canonical_tmp)
+        canonical_staged_dir = canonical_stage_root / "olm_pr" / "new"
+        canonical_staged_dir.mkdir(parents=True, exist_ok=True)
+        canonical_staged_batch = canonical_staged_dir / "20260713_unified_request_canonical.zip"
+        canonical_staged_batch.write_bytes(canonical_path.read_bytes())
+        subject.staged_windows_witness_batch_metadata.cache_clear()
+        canonical_rows = subject.candidate_rows([canonical_stage_root])
+        canonical_row = next(row for row in canonical_rows if Path(row["path"]) == canonical_staged_batch)
+        assert canonical_row["canonical_request_match"] is True
+        assert canonical_row["canonical_request_path"] == str(canonical_path)
+        assert canonical_row["canonical_request_sha256"] == hashlib.sha256(canonical_path.read_bytes()).hexdigest()
+
+        mismatch_batch = canonical_staged_dir / "20260713_unified_request_mismatch.zip"
+        make_windows_witness_batch_request(
+            mismatch_batch,
+            batch_id="windows_witness_batch_20260713",
+            valid=True,
+            member_separator="\\",
+        )
+        subject.staged_windows_witness_batch_metadata.cache_clear()
+        mismatch_rows = subject.candidate_rows([canonical_stage_root])
+        mismatch_row = next(row for row in mismatch_rows if Path(row["path"]) == mismatch_batch)
+        assert mismatch_row["canonical_request_match"] is False
+        assert mismatch_row["canonical_request_mismatch"] is True
+        assert mismatch_row["canonical_request_path"] == str(canonical_path)
+        assert mismatch_row["canonical_request_sha256"] == hashlib.sha256(canonical_path.read_bytes()).hexdigest()
+
+        fake_runtime = {
+            "path": str(canonical_stage_root / "older_runtime_trace.zip"),
+            "kind": "runtime-trace-request-package",
+            "mtime": mismatch_batch.stat().st_mtime - 10,
+            "request_ids": ["synthetic_runtime_trace_request"],
+            "acceptance_note": "",
+        }
+        decide_kwargs = {
+            "root": repo,
+            "status": {"pending": [], "covered": [], "rows": []},
+            "handoff": {"path": "", "valid": True},
+            "pending_request_defs": [],
+            "next_actions": {"covered_actions": []},
+            "trace_summary": None,
+            "ae_exact_summary": None,
+            "ae_failure_classification": None,
+            "binary_followup_report": None,
+            "bitdepth16_mac_result": None,
+            "bitdepth16_pending": None,
+            "ae_automation_blocker": None,
+        }
+        with (
+            mock.patch.object(subject, "project_runtime_trace_packages", return_value=[fake_runtime]),
+            mock.patch.object(subject, "latest_windows_action_bundle", return_value=None),
+            mock.patch.object(subject, "latest_ae_pixel_validation_return", return_value=None),
+            mock.patch.object(subject, "staged_runtime_trace_package", return_value=None),
+        ):
+            await_decision = subject.decide(rows=canonical_rows, **decide_kwargs)
+            assert await_decision["action"] == "await-windows-witness-batch-return"
+            assert await_decision["target"]["path"] == str(canonical_staged_batch)
+            replace_decision = subject.decide(rows=mismatch_rows, **decide_kwargs)
+            assert replace_decision["action"] == "replace-staged-windows-witness-batch"
+            assert replace_decision["target"]["path"] == str(canonical_path)
+            assert replace_decision["staged_package"]["path"] == str(mismatch_batch)
+            assert replace_decision["target"]["sha256"] == mismatch_row["canonical_request_sha256"]
+            assert replace_decision["staged_package"]["sha256"] == mismatch_row["staged_sha256"]
+            assert str(mismatch_batch) in replace_decision["command"]
+            assert str(canonical_path) in replace_decision["command"]
+
     with tempfile.TemporaryDirectory(prefix="olm_next_action_smoke_") as tmp:
         try:
             tmp_path = Path(tmp)

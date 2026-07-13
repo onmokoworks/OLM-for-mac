@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "description": "Two-case synthetic contract used by unit and smoke tests.",
+  "request_id": "synthetic_two_case_witness",
+  "run_id_prefix": "synth",
+  "plugin": {
+    "name": "SyntheticEffect",
+    "module_filename": "SyntheticEffect.aex",
+    "aex_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "default_aex_path": "C:\\Program Files\\Adobe\\Adobe After Effects 2026\\Support Files\\Plug-ins\\Effects\\SyntheticEffect.aex"
+  },
+  "host": {
+    "afterfx_path": "C:\\Program Files\\Adobe\\Adobe After Effects 2026\\Support Files\\AfterFX.exe",
+    "cdb_path": "C:\\Program Files (x86)\\Windows Kits\\10\\Debuggers\\x64\\cdb.exe"
+  },
+  "project": {
+    "bits_per_channel": 16,
+    "renderer": "Software",
+    "environment": {
+      "OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT": "1"
+    }
+  },
+  "renderer": {"source": "renderer.jsx"},
+  "request_assets": {"source": "request"},
+  "cdb": {
+    "armed_marker": "SYNTH_BREAKPOINT_ARMED",
+    "arm_timeout_seconds": 30,
+    "capture_timeout_seconds": 60
+  },
+  "cases": [
+    {
+      "id": "case_0001",
+      "cdb_template": "probe.cdb.in",
+      "template_values": {"sample": "left"},
+      "addresses": {"entry": "0x2280"},
+      "exports": [{"source": "exports/{case_id}/{case_id}.png", "archive_path": "exports/{case_id}.png", "required": true}]
+    },
+    {
+      "id": "case_0002",
+      "cdb_template": "probe.cdb.in",
+      "template_values": {"sample": "right"},
+      "addresses": {"entry": "0x2280"},
+      "exports": [{"source": "exports/{case_id}/{case_id}.png", "archive_path": "exports/{case_id}.png", "required": true}]
+    }
+  ],
+  "validation": {
+    "identity_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id"],
+    "events": [
+      {
+        "name": "capture",
+        "prefix": "SYNTH_CAPTURE",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "sample", "value"],
+        "field_constraints": {
+          "value": {"pattern": "^[0-9]+$"}
+        }
+      }
+    ]
+  },
+  "return_bundle": {
+    "json_name": "RETURN_SYNTHETIC.json",
+    "zip_name": "RETURN_SYNTHETIC.zip",
+    "include_logs": []
+  }
+}

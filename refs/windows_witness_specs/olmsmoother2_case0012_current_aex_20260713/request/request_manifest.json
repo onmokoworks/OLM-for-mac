@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "request_id": "olmsmoother2_case0012_current_aex_20260713",
+  "reference_manifest": "reference_manifest.json",
+  "input_dir": "input",
+  "effect_name": "OLM Smoother v2",
+  "effect_match_name": "OLM Smoother v2",
+  "cases": [
+    {
+      "id": "legacy_case_0012_gamma5_red_blue_current_aex",
+      "before_effects_frame": "case_0012_before_effects.png",
+      "frame": "case_0012.png"
+    }
+  ]
+}

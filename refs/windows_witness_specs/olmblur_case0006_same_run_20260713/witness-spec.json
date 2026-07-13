@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "description": "One-run OLMBlur case_0006 RGB16 worker, pre-store, stored-value, and exported-PNG witness.",
+  "request_id": "olmblur_case0006_same_run_20260713",
+  "run_id_prefix": "olmblur16-case0006",
+  "plugin": {
+    "name": "OLM Blur",
+    "module_filename": "OLMBlur.aex",
+    "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+    "default_aex_path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\OLMBlur.aex"
+  },
+  "host": {
+    "afterfx_path": "C:\\Program Files\\Adobe\\Adobe After Effects 2025\\Support Files\\AfterFX.exe",
+    "cdb_path": "C:\\Program Files (x86)\\Windows Kits\\10\\Debuggers\\x64\\cdb.exe"
+  },
+  "project": {
+    "bits_per_channel": 16,
+    "renderer": "Software",
+    "environment": {
+      "OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT": "1"
+    }
+  },
+  "renderer": {
+    "source": "renderer.jsx"
+  },
+  "request_assets": {
+    "source": "request"
+  },
+  "cdb": {
+    "armed_marker": "BLUR16_WORKER_ENTRY_BREAKPOINT_ARMED",
+    "arm_timeout_seconds": 60,
+    "capture_timeout_seconds": 300
+  },
+  "cases": [
+    {
+      "id": "olmblur__case_0006",
+      "cdb_template": "probe.cdb.in",
+      "template_values": {
+        "witness_id": "olmblur-case0006-rgb16-common-core-v1"
+      },
+      "addresses": {
+        "worker_entry": "0x2280",
+        "final_pre_store": "0x2ff1",
+        "stored_rgb16": "0x3032"
+      },
+      "exports": [
+        {
+          "source": "exports/{case_id}/case_0006.png",
+          "archive_path": "return/exported_case_0006.png",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "identity_fields": [
+      "run_id",
+      "ae_pid",
+      "module_base",
+      "aex_sha256",
+      "project_bpc",
+      "renderer",
+      "case_id",
+      "witness_id"
+    ],
+    "events": [
+      {
+        "name": "worker_entry",
+        "prefix": "BLUR16_WORKER_ENTRY",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "entry_rva", "source_base", "source_rowbytes", "output_base", "output_rowbytes", "width", "height", "pixel_size"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmblur-case0006-rgb16-common-core-v1"},
+          "stage": {"equals": "worker_entry"},
+          "entry_rva": {"equals": "2280"},
+          "source_base": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "source_rowbytes": {"pattern": "^[1-9][0-9]*$"},
+          "output_base": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "output_rowbytes": {"pattern": "^[1-9][0-9]*$"},
+          "width": {"equals": "1920"},
+          "height": {"equals": "1080"},
+          "pixel_size": {"equals": "8"}
+        }
+      },
+      {
+        "name": "control_pre_store",
+        "prefix": "BLUR16_CONTROL_PRE_STORE",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "x", "y", "role", "address_match", "output_addr", "expected_output_addr", "plane_addr", "rgb_f32_bits"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmblur-case0006-rgb16-common-core-v1"},
+          "stage": {"equals": "pre_store"},
+          "x": {"equals": "314"},
+          "y": {"equals": "14"},
+          "role": {"equals": "control"},
+          "address_match": {"equals": "1"},
+          "output_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "expected_output_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "plane_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "rgb_f32_bits": {"pattern": "^0x[0-9a-fA-F]{8},0x[0-9a-fA-F]{8},0x[0-9a-fA-F]{8}$"}
+        }
+      },
+      {
+        "name": "capture_pre_store",
+        "prefix": "BLUR16_CAPTURE_PRE_STORE",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "x", "y", "role", "address_match", "output_addr", "expected_output_addr", "plane_addr", "rgb_f32_bits"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmblur-case0006-rgb16-common-core-v1"},
+          "stage": {"equals": "pre_store"},
+          "x": {"equals": "29"},
+          "y": {"equals": "71"},
+          "role": {"equals": "capture"},
+          "address_match": {"equals": "1"},
+          "output_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "expected_output_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "plane_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "rgb_f32_bits": {"pattern": "^0x[0-9a-fA-F]{8},0x[0-9a-fA-F]{8},0x[0-9a-fA-F]{8}$"}
+        }
+      },
+      {
+        "name": "control_stored",
+        "prefix": "BLUR16_CONTROL_STORED_RGB16",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "x", "y", "role", "address_match", "output_addr", "expected_output_addr", "rgb16"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmblur-case0006-rgb16-common-core-v1"},
+          "stage": {"equals": "stored"},
+          "x": {"equals": "314"},
+          "y": {"equals": "14"},
+          "role": {"equals": "control"},
+          "address_match": {"equals": "1"},
+          "output_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "expected_output_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "rgb16": {"pattern": "^[0-9]+,[0-9]+,[0-9]+$"}
+        }
+      },
+      {
+        "name": "capture_stored",
+        "prefix": "BLUR16_CAPTURE_STORED_RGB16",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "x", "y", "role", "address_match", "output_addr", "expected_output_addr", "rgb16"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmblur-case0006-rgb16-common-core-v1"},
+          "stage": {"equals": "stored"},
+          "x": {"equals": "29"},
+          "y": {"equals": "71"},
+          "role": {"equals": "capture"},
+          "address_match": {"equals": "1"},
+          "output_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "expected_output_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "rgb16": {"pattern": "^[0-9]+,[0-9]+,[0-9]+$"}
+        }
+      }
+    ]
+  },
+  "return_bundle": {
+    "json_name": "RETURN_OLMBLUR_CASE0006.json",
+    "zip_name": "RETURN_OLMBLUR_CASE0006.zip",
+    "include_logs": []
+  }
+}

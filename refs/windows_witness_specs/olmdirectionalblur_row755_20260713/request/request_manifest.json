@@ -1,0 +1,14 @@
+{
+  "kind": "olm_ae_pixel_validation_request",
+  "request_id": "olmdirectionalblur_row755_20260713",
+  "effect_name": "OLM DirectionalBlur",
+  "effect_match_name": "OLM Directional Blur",
+  "input_dir": "input",
+  "expected_dir": "expected",
+  "reference_manifest": "reference_manifest.json",
+  "cases": [{
+    "id": "db_angle0_alpha_fade_hard_edges",
+    "before_effects_frame": "directionalblur_context_scale_20260606__software__fr24__db_angle0_alpha_fade_hard_edges_before_effects.png",
+    "frame": "directionalblur_context_scale_20260606__software__fr24__db_angle0_alpha_fade_hard_edges.png"
+  }]
+}

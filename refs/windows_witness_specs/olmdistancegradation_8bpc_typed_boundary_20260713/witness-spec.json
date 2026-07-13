@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "description": "Real three-case OLMDistanceGradation PF8 typed field, compose, and host-store boundary witness.",
+  "request_id": "windows_witness_olmdistancegradation_8bpc_typed_boundary_20260713",
+  "run_id_prefix": "dg8typed",
+  "plugin": {
+    "name": "OLM Distance Gradation",
+    "module_filename": "DistanceGradation.aex",
+    "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "default_aex_path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\DistanceGradation.aex"
+  },
+  "host": {
+    "afterfx_path": "C:\\Program Files\\Adobe\\Adobe After Effects 2025\\Support Files\\AfterFX.exe",
+    "cdb_path": "C:\\Program Files (x86)\\Windows Kits\\10\\Debuggers\\x64\\cdb.exe"
+  },
+  "project": {
+    "bits_per_channel": 8,
+    "renderer": "Software",
+    "environment": {
+      "OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT": "1"
+    }
+  },
+  "renderer": {
+    "source": "renderer.jsx"
+  },
+  "request_assets": {
+    "source": "request"
+  },
+  "cdb": {
+    "armed_marker": "DG8_DEPTH_BREAKPOINTS_ARMED",
+    "arm_timeout_seconds": 60,
+    "capture_timeout_seconds": 240
+  },
+  "cases": [
+    {
+      "id": "case_0001",
+      "cdb_template": "typed_boundary.cdb.in",
+      "addresses": {
+        "pf8": "0x1170870",
+        "pf32": "0x1170c90",
+        "field_out": "0x117098f",
+        "compose_in": "0x1170a09",
+        "compose_out": "0x1170c11",
+        "host_store": "0x1170c40"
+      },
+      "exports": [
+        {
+          "source": "exports/{case_id}/{case_id}.png",
+          "archive_path": "exports/{case_id}.png",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "case_0015",
+      "cdb_template": "typed_boundary.cdb.in",
+      "addresses": {
+        "pf8": "0x1170870",
+        "pf32": "0x1170c90",
+        "field_out": "0x117098f",
+        "compose_in": "0x1170a09",
+        "compose_out": "0x1170c11",
+        "host_store": "0x1170c40"
+      },
+      "exports": [
+        {
+          "source": "exports/{case_id}/{case_id}.png",
+          "archive_path": "exports/{case_id}.png",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "case_0029",
+      "cdb_template": "typed_boundary.cdb.in",
+      "addresses": {
+        "pf8": "0x1170870",
+        "pf32": "0x1170c90",
+        "field_out": "0x117098f",
+        "compose_in": "0x1170a09",
+        "compose_out": "0x1170c11",
+        "host_store": "0x1170c40"
+      },
+      "exports": [
+        {
+          "source": "exports/{case_id}/{case_id}.png",
+          "archive_path": "exports/{case_id}.png",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "identity_fields": [
+      "run_id",
+      "ae_pid",
+      "module_base",
+      "aex_sha256",
+      "project_bpc",
+      "renderer",
+      "case_id"
+    ],
+    "events": [
+      {
+        "name": "field_in",
+        "prefix": "DG8_FIELD_IN",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "x", "y", "output_addr", "field_base", "field_rowbytes", "field_addr", "pixel_size", "address_formula", "typed_rgba"],
+        "field_constraints": {
+          "x": {"equals": 397},
+          "y": {"equals": 281},
+          "pixel_size": {"equals": 4},
+          "address_formula": {"equals": "base+y*rowbytes+x*4"},
+          "typed_rgba": {"pattern": "^[0-9a-fA-F]{2}(?:,[0-9a-fA-F]{2}){3}$"}
+        }
+      },
+      {
+        "name": "field_out",
+        "prefix": "DG8_FIELD_OUT",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "x", "y", "output_addr", "field_base", "field_rowbytes", "field_addr", "pixel_size", "address_formula", "typed_rgba"],
+        "field_constraints": {
+          "x": {"equals": 397},
+          "y": {"equals": 281},
+          "pixel_size": {"equals": 4},
+          "address_formula": {"equals": "base+y*rowbytes+x*4"},
+          "typed_rgba": {"pattern": "^[0-9a-fA-F]{2}(?:,[0-9a-fA-F]{2}){3}$"}
+        }
+      },
+      {
+        "name": "compose_in",
+        "prefix": "DG8_COMPOSE_IN",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "x", "y", "output_addr", "source_base", "source_rowbytes", "source_addr", "pixel_size", "address_formula", "field_green", "x_before_invert", "x_after_invert", "typed_rgba"],
+        "field_constraints": {
+          "x": {"equals": 397},
+          "y": {"equals": 281},
+          "pixel_size": {"equals": 4},
+          "address_formula": {"equals": "base+y*rowbytes+x*4"},
+          "field_green": {"pattern": "^[0-9a-fA-F]{2}$"},
+          "x_before_invert": {"pattern": "^-?[0-9]+(?:\\.[0-9]+)?$"},
+          "x_after_invert": {"pattern": "^-?[0-9]+(?:\\.[0-9]+)?$"},
+          "typed_rgba": {"pattern": "^[0-9a-fA-F]{2}(?:,[0-9a-fA-F]{2}){3}$"}
+        }
+      },
+      {
+        "name": "compose_out",
+        "prefix": "DG8_COMPOSE_OUT",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "x", "y", "output_addr", "pre_store_rgba_float", "typed_rgba"],
+        "field_constraints": {
+          "x": {"equals": 397},
+          "y": {"equals": 281},
+          "pre_store_rgba_float": {"pattern": "^[^,]+(?:,[^,]+){3}$"},
+          "typed_rgba": {"pattern": "^[^,]+(?:,[^,]+){3}$"}
+        }
+      },
+      {
+        "name": "host_store",
+        "prefix": "DG8_HOST_STORE",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "x", "y", "output_addr", "typed_rgba"],
+        "field_constraints": {
+          "x": {"equals": 397},
+          "y": {"equals": 281},
+          "typed_rgba": {"pattern": "^[0-9a-fA-F]{2}(?:,[0-9a-fA-F]{2}){3}$"}
+        }
+      },
+      {
+        "name": "pf8_depth",
+        "prefix": "DG8_PF8_DEPTH",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "rva", "hit_count"],
+        "field_constraints": {
+          "rva": {"equals": "1170870"},
+          "hit_count": {"pattern": "^[1-9][0-9]*$"}
+        }
+      },
+      {
+        "name": "pf32_depth",
+        "prefix": "DG8_PF32_DEPTH",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "rva", "hit_count"],
+        "field_constraints": {
+          "rva": {"equals": "1170c90"},
+          "hit_count": {"equals": 0}
+        }
+      }
+    ]
+  },
+  "return_bundle": {
+    "json_name": "RETURN_OLMDISTANCEGRADATION_8BPC_TYPED_BOUNDARY.json",
+    "zip_name": "RETURN_OLMDISTANCEGRADATION_8BPC_TYPED_BOUNDARY.zip",
+    "include_logs": []
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "description": "One fresh current-AEX OLMSmoother2 case_0012 render combining typed bind/read and live config binding evidence.",
+  "request_id": "olmsmoother2_case0012_current_aex_20260713",
+  "run_id_prefix": "smoother2-case0012",
+  "plugin": {
+    "name": "OLM Smoother v2",
+    "module_filename": "OLMSmoother2.aex",
+    "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "default_aex_path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\OLMSmoother2.aex"
+  },
+  "host": {
+    "afterfx_path": "C:\\Program Files\\Adobe\\Adobe After Effects 2025\\Support Files\\AfterFX.exe",
+    "cdb_path": "C:\\Program Files (x86)\\Windows Kits\\10\\Debuggers\\x64\\cdb.exe"
+  },
+  "project": {
+    "bits_per_channel": 8,
+    "renderer": "Software",
+    "environment": {
+      "OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT": "1"
+    }
+  },
+  "renderer": {
+    "source": "renderer.jsx"
+  },
+  "request_assets": {
+    "source": "request"
+  },
+  "cdb": {
+    "armed_marker": "S2_UNIFIED_BREAKPOINTS_ARMED",
+    "arm_timeout_seconds": 60,
+    "capture_timeout_seconds": 300
+  },
+  "cases": [
+    {
+      "id": "legacy_case_0012_gamma5_red_blue_current_aex",
+      "cdb_template": "probe.cdb.in",
+      "template_values": {
+        "witness_id": "olmsmoother2-case0012-unified-current-aex-v1"
+      },
+      "addresses": {
+        "writer_anchor": "0x3370",
+        "final_writer": "0x3610",
+        "c280": "0xc280",
+        "cce0": "0xcce0",
+        "e170": "0xe170",
+        "e3a0": "0xe3a0",
+        "f270": "0xf270"
+      },
+      "exports": [
+        {
+          "source": "exports/{case_id}/case_0012.png",
+          "archive_path": "return/exported_case_0012.png",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "identity_fields": [
+      "run_id",
+      "ae_pid",
+      "module_base",
+      "aex_sha256",
+      "project_bpc",
+      "renderer",
+      "case_id",
+      "witness_id"
+    ],
+    "events": [
+      {
+        "name": "bind",
+        "prefix": "S2_BIND",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "x", "y", "idx", "descriptor", "writer_hook_rva", "c280_hook_rva", "cce0_hook_rva", "binding_expression", "pointer_context", "class_base", "center_addr", "prev_addr", "left_addr"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmsmoother2-case0012-unified-current-aex-v1"},
+          "stage": {"equals": "bind"},
+          "x": {"equals": "91"},
+          "y": {"equals": "841"},
+          "idx": {"equals": "105"},
+          "descriptor": {"equals": "91,841,1,91,843,5"},
+          "writer_hook_rva": {"equals": "3370"},
+          "c280_hook_rva": {"equals": "c280"},
+          "cce0_hook_rva": {"equals": "cce0"},
+          "binding_expression": {"equals": "writer_xy_anchor_then_typed_and_config_reads"},
+          "pointer_context": {"equals": "rsp+0x34_x_rsp+0x38_y"},
+          "class_base": {"equals": "rcx"},
+          "center_addr": {"equals": "rcx"},
+          "prev_addr": {"equals": "rcx-1"},
+          "left_addr": {"equals": "rcx+1"}
+        }
+      },
+      {
+        "name": "e170_typed_read",
+        "prefix": "S2_E170",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "hook_rva", "center_b0", "prev_b0", "left_b1", "e170_c"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmsmoother2-case0012-unified-current-aex-v1"},
+          "stage": {"equals": "e170"},
+          "hook_rva": {"equals": "e170"},
+          "center_b0": {"pattern": "^(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"},
+          "prev_b0": {"pattern": "^(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"},
+          "left_b1": {"pattern": "^(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"},
+          "e170_c": {"pattern": "^[0-9]+$"}
+        }
+      },
+      {
+        "name": "f270_typed_read",
+        "prefix": "S2_F270",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "hook_rva", "append", "source_xy", "weight"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmsmoother2-case0012-unified-current-aex-v1"},
+          "stage": {"equals": "f270"},
+          "hook_rva": {"equals": "f270"},
+          "append": {"pattern": "^[01]$"},
+          "source_xy": {"pattern": "^[0-9]+,[0-9]+$"},
+          "weight": {"pattern": "^-?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[eE][+-]?[0-9]+)?$"}
+        }
+      },
+      {
+        "name": "e3a0_typed_read",
+        "prefix": "S2_E3A0",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "hook_rva", "append", "source_xy", "weight"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmsmoother2-case0012-unified-current-aex-v1"},
+          "stage": {"equals": "e3a0"},
+          "hook_rva": {"equals": "e3a0"},
+          "append": {"pattern": "^[01]$"},
+          "source_xy": {"pattern": "^[0-9]+,[0-9]+$"},
+          "weight": {"pattern": "^-?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[eE][+-]?[0-9]+)?$"}
+        }
+      },
+      {
+        "name": "c280_typed_and_config",
+        "prefix": "S2_C280",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "hook_rva", "polygon_count", "config_pointer", "config_pointer_arithmetic", "config_raw_bytes", "scale_fixed"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmsmoother2-case0012-unified-current-aex-v1"},
+          "stage": {"equals": "c280"},
+          "hook_rva": {"equals": "c280"},
+          "polygon_count": {"pattern": "^[0-9]+$"},
+          "config_pointer": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "config_pointer_arithmetic": {"equals": "rax+0x20_scale_fixed_words"},
+          "config_raw_bytes": {"pattern": "^[0-9a-fA-F]{2}(?:,[0-9a-fA-F]{2}){7}$"},
+          "scale_fixed": {"pattern": "^[0-9]+,[0-9]+$"}
+        }
+      },
+      {
+        "name": "cce0_typed_and_config",
+        "prefix": "S2_CCE0",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "hook_rva", "output_rgba_float", "output_rgba_hex", "config_pointer", "config_pointer_arithmetic", "config_raw_bytes", "mode_byte"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmsmoother2-case0012-unified-current-aex-v1"},
+          "stage": {"equals": "cce0"},
+          "hook_rva": {"equals": "cce0"},
+          "output_rgba_float": {"pattern": "^-?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[eE][+-]?[0-9]+)?(?:,-?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[eE][+-]?[0-9]+)?){3}$"},
+          "output_rgba_hex": {"pattern": "^0x[0-9a-fA-F]{8}(?:,0x[0-9a-fA-F]{8}){3}$"},
+          "config_pointer": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "config_pointer_arithmetic": {"equals": "poi(rsp+0x28)_gamma_context"},
+          "config_raw_bytes": {"pattern": "^[0-9a-fA-F]{2}(?:,[0-9a-fA-F]{2}){6}$"},
+          "mode_byte": {"pattern": "^(?:0|1|3)$"}
+        }
+      },
+      {
+        "name": "final_writer",
+        "prefix": "S2_WRITER",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "hook_rva", "writer_site", "rgba_u8", "rgba_float"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmsmoother2-case0012-unified-current-aex-v1"},
+          "stage": {"equals": "final_writer"},
+          "hook_rva": {"equals": "3610"},
+          "writer_site": {"equals": "OLMSmoother2+0x3610"},
+          "rgba_u8": {"pattern": "^(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(?:,(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])){3}$"},
+          "rgba_float": {"pattern": "^-?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[eE][+-]?[0-9]+)?(?:,-?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[eE][+-]?[0-9]+)?){3}$"}
+        }
+      }
+    ]
+  },
+  "return_bundle": {
+    "json_name": "RETURN_OLMSMOOTHER2_CASE0012.json",
+    "zip_name": "RETURN_OLMSMOOTHER2_CASE0012.zip",
+    "include_logs": []
+  }
+}

@@ -4,12 +4,16 @@
 from __future__ import annotations
 
 import argparse
+from functools import lru_cache
 import hashlib
+import io
 import json
+import re
+import shlex
 import subprocess
 import sys
 import zipfile
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 import list_olm_return_candidates
@@ -75,10 +79,315 @@ OLM_SCAN_NAME_TOKENS = {
     "reference_request",
 }
 
+WINDOWS_WITNESS_BATCH_KIND = "windows-witness-batch-request-package"
+WINDOWS_WITNESS_BATCH_MANIFEST_KIND = "windows_witness_batch_request"
+WINDOWS_WITNESS_BATCH_MANIFEST_NAME = "batch-manifest.json"
+WINDOWS_WITNESS_BATCH_ONE_CLICK = "RUN_WINDOWS_WITNESS_BATCH.cmd"
+WINDOWS_WITNESS_BATCH_LAUNCHER = "run_windows_witness_batch.ps1"
+WINDOWS_WITNESS_BATCH_README = "README.txt"
+SHA256_HEX_RE = re.compile(r"^[0-9a-f]{64}$")
+SAFE_REQUEST_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,255}$")
+
 
 def likely_olm_scan_candidate(path: Path) -> bool:
     name = path.name.lower()
     return any(token in name for token in OLM_SCAN_NAME_TOKENS)
+
+
+def is_staged_windows_exchange_path(path: Path) -> bool:
+    parts = set(path.parts)
+    return "olm_pr" in parts and "new" in parts
+
+
+def staged_windows_exchange_dirs(root: Path) -> list[Path]:
+    if not root.is_dir():
+        return []
+    candidates = [root] if is_staged_windows_exchange_path(root) else []
+    direct_child = root / "olm_pr" / "new"
+    if direct_child.is_dir():
+        candidates.append(direct_child)
+    if root.name == "olm_pr":
+        nested_new = root / "new"
+        if nested_new.is_dir():
+            candidates.append(nested_new)
+    unique: list[Path] = []
+    seen: set[Path] = set()
+    for candidate in candidates:
+        resolved = candidate.resolve()
+        if resolved in seen:
+            continue
+        seen.add(resolved)
+        unique.append(candidate)
+    return unique
+
+
+def clean_zip_member_name(name: str) -> str | None:
+    if not name:
+        return None
+    normalized = name.replace("\\", "/")
+    if normalized.startswith("/"):
+        return None
+    path = PurePosixPath(normalized)
+    if any(part in ("", ".", "..") for part in path.parts):
+        return None
+    if path.parts and ":" in path.parts[0]:
+        return None
+    return path.as_posix()
+
+
+def safe_request_id(value: object) -> str | None:
+    if not isinstance(value, str) or not value or SAFE_REQUEST_ID_RE.fullmatch(value) is None:
+        return None
+    return value
+
+
+def zip_member_by_basename(files: dict[str, bytes], basename: str) -> tuple[str, bytes] | None:
+    matches = [(name, data) for name, data in files.items() if PurePosixPath(name).name == basename]
+    if len(matches) != 1:
+        return None
+    return matches[0]
+
+
+def load_json_bytes(data: bytes) -> dict[str, Any] | None:
+    try:
+        value = json.loads(data.decode("utf-8-sig"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return None
+    return value if isinstance(value, dict) else None
+
+
+def safe_zip_member_bytes(archive: zipfile.ZipFile) -> dict[str, bytes] | None:
+    files: dict[str, bytes] = {}
+    folded: set[str] = set()
+    for info in archive.infolist():
+        if info.is_dir():
+            continue
+        clean_name = clean_zip_member_name(info.filename)
+        if clean_name is None or clean_name.casefold() in folded:
+            return None
+        folded.add(clean_name.casefold())
+        files[clean_name] = archive.read(info)
+    return files
+
+
+def inner_witness_job_request_id(job_bytes: bytes) -> str | None:
+    try:
+        with zipfile.ZipFile(io.BytesIO(job_bytes)) as archive:
+            files = safe_zip_member_bytes(archive)
+    except zipfile.BadZipFile:
+        return None
+    if files is None:
+        return None
+    manifest_entry = zip_member_by_basename(files, "package-manifest.json")
+    contract_entry = zip_member_by_basename(files, "witness-contract.json")
+    if not manifest_entry or not contract_entry:
+        return None
+    manifest_name, manifest_bytes = manifest_entry
+    contract_name, contract_bytes = contract_entry
+    manifest = load_json_bytes(manifest_bytes)
+    contract = load_json_bytes(contract_bytes)
+    if manifest is None or contract is None:
+        return None
+    request_id = safe_request_id(manifest.get("request_id"))
+    contract_request_id = contract.get("request_id")
+    if contract_request_id != request_id:
+        return None
+    contract_value = manifest.get("contract", "witness-contract.json")
+    if not isinstance(contract_value, str) or not contract_value:
+        return None
+    relative_contract = clean_zip_member_name(contract_value)
+    if relative_contract is None:
+        return None
+    expected_contract = (PurePosixPath(manifest_name).parent / relative_contract).as_posix()
+    if expected_contract.casefold() != contract_name.casefold():
+        return None
+    return request_id
+
+
+def normalize_satisfied_request_ids(value: object, request_id: str) -> list[str] | None:
+    if value is None:
+        return [request_id]
+    if not isinstance(value, list) or not value:
+        return None
+    normalized: list[str] = []
+    seen: set[str] = set()
+    for item in value:
+        item_id = safe_request_id(item)
+        if item_id is None:
+            return None
+        folded = item_id.casefold()
+        if folded in seen:
+            return None
+        seen.add(folded)
+        normalized.append(item_id)
+    if request_id.casefold() not in seen:
+        return None
+    return normalized
+
+
+@lru_cache(maxsize=128)
+def staged_windows_witness_batch_metadata(path_text: str) -> dict[str, Any] | None:
+    path = Path(path_text)
+    if path.suffix.lower() != ".zip" or not path.is_file() or not is_staged_windows_exchange_path(path):
+        return None
+    try:
+        with zipfile.ZipFile(path) as archive:
+            files = safe_zip_member_bytes(archive)
+    except (OSError, zipfile.BadZipFile):
+        return None
+    if files is None:
+        return None
+
+    manifest_entry = zip_member_by_basename(files, WINDOWS_WITNESS_BATCH_MANIFEST_NAME)
+    one_click_entry = zip_member_by_basename(files, WINDOWS_WITNESS_BATCH_ONE_CLICK)
+    launcher_entry = zip_member_by_basename(files, WINDOWS_WITNESS_BATCH_LAUNCHER)
+    readme_entry = zip_member_by_basename(files, WINDOWS_WITNESS_BATCH_README)
+    if not manifest_entry or not one_click_entry or not launcher_entry or not readme_entry:
+        return None
+    manifest_name, manifest_bytes = manifest_entry
+    try:
+        manifest = json.loads(manifest_bytes.decode("utf-8-sig"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return None
+    if not isinstance(manifest, dict):
+        return None
+    if manifest.get("kind") != WINDOWS_WITNESS_BATCH_MANIFEST_KIND or manifest.get("schema_version") != 1:
+        return None
+    if manifest.get("one_click_launcher") != WINDOWS_WITNESS_BATCH_ONE_CLICK:
+        return None
+    if manifest.get("launcher") != WINDOWS_WITNESS_BATCH_LAUNCHER:
+        return None
+    if manifest.get("readme") != WINDOWS_WITNESS_BATCH_README:
+        return None
+    batch_id = manifest.get("batch_id")
+    if not isinstance(batch_id, str) or not batch_id:
+        return None
+    batch_root = PurePosixPath(manifest_name).parent
+    jobs = manifest.get("jobs")
+    if not isinstance(jobs, list) or not jobs:
+        return None
+    seen_job_ids: set[str] = set()
+    seen_request_ids: set[str] = set()
+    request_ids: list[str] = []
+    satisfied_request_ids: list[str] = []
+    seen_satisfied_request_ids: set[str] = set()
+    for expected_order, job in enumerate(jobs, start=1):
+        if not isinstance(job, dict):
+            return None
+        order = job.get("order")
+        if not isinstance(order, int) or isinstance(order, bool) or order != expected_order:
+            return None
+        job_id = safe_request_id(job.get("id"))
+        if job_id is None or job_id.casefold() in seen_job_ids:
+            return None
+        seen_job_ids.add(job_id.casefold())
+        archive_path_value = job.get("archive_path")
+        if not isinstance(archive_path_value, str):
+            return None
+        archive_path = clean_zip_member_name(archive_path_value)
+        if archive_path is None or not archive_path.startswith("jobs/") or not archive_path.lower().endswith(".zip"):
+            return None
+        package_member = (batch_root / archive_path).as_posix()
+        package_bytes = files.get(package_member)
+        if package_bytes is None:
+            return None
+        package_sha = job.get("package_sha256")
+        if not isinstance(package_sha, str) or SHA256_HEX_RE.fullmatch(package_sha) is None:
+            return None
+        if hashlib.sha256(package_bytes).hexdigest() != package_sha:
+            return None
+        size_bytes = job.get("size_bytes")
+        if not isinstance(size_bytes, int) or isinstance(size_bytes, bool) or len(package_bytes) != size_bytes:
+            return None
+        inner_request_id = inner_witness_job_request_id(package_bytes)
+        if inner_request_id is None:
+            return None
+        for name_field in ("return_json_name", "return_zip_name"):
+            value = job.get(name_field)
+            if not isinstance(value, str) or not value:
+                return None
+        request_id = safe_request_id(job.get("request_id"))
+        if request_id is None:
+            return None
+        if request_id != inner_request_id:
+            return None
+        if request_id.casefold() in seen_request_ids:
+            return None
+        seen_request_ids.add(request_id.casefold())
+        request_ids.append(request_id)
+        job_satisfied_request_ids = normalize_satisfied_request_ids(job.get("satisfies_request_ids"), request_id)
+        if job_satisfied_request_ids is None:
+            return None
+        for satisfied_request_id in job_satisfied_request_ids:
+            folded = satisfied_request_id.casefold()
+            if folded in seen_satisfied_request_ids:
+                continue
+            seen_satisfied_request_ids.add(folded)
+            satisfied_request_ids.append(satisfied_request_id)
+    try:
+        staged_sha256 = file_sha256(path)
+    except OSError:
+        return None
+    canonical_request = canonical_windows_witness_batch_request(batch_id)
+    if canonical_request is None:
+        return None
+    canonical_request_match = canonical_request["sha256"] == staged_sha256
+    if canonical_request_match:
+        suggested_command = (
+            "execute RUN_WINDOWS_WITNESS_BATCH.cmd once from the staged batch, or import its return with "
+            "python3 scripts/intake_windows_witness_batch.py "
+            f"path/to/windows_witness_batch_return.zip --request-batch {shlex.quote(str(path))}"
+        )
+    else:
+        suggested_command = (
+            "replace the staged batch "
+            f"{shlex.quote(str(path))} (sha256={staged_sha256}) with the canonical request "
+            f"{shlex.quote(canonical_request['path'])} (sha256={canonical_request['sha256']}) "
+            "before executing RUN_WINDOWS_WITNESS_BATCH.cmd or importing any return"
+        )
+    metadata = {
+        "kind": WINDOWS_WITNESS_BATCH_KIND,
+        "batch_id": batch_id,
+        "job_count": len(jobs),
+        "request_ids": request_ids,
+        "satisfied_request_ids": satisfied_request_ids,
+        "staged_sha256": staged_sha256,
+        "canonical_request_match": canonical_request_match,
+        "hints": [f"{manifest_name}: {WINDOWS_WITNESS_BATCH_MANIFEST_KIND}", f"jobs={len(jobs)}"],
+        "return_intake_command": (
+            "python3 scripts/intake_windows_witness_batch.py "
+            f"path/to/windows_witness_batch_return.zip --request-batch {shlex.quote(str(path))}"
+        ),
+        "suggested_command": suggested_command,
+    }
+    if canonical_request is not None:
+        metadata["canonical_request_path"] = canonical_request["path"]
+        metadata["canonical_request_sha256"] = canonical_request["sha256"]
+        metadata["canonical_request_mismatch"] = not canonical_request_match
+    return metadata
+
+
+def staged_windows_witness_batch_row(path: Path) -> dict[str, Any] | None:
+    metadata = staged_windows_witness_batch_metadata(str(path))
+    if metadata is None:
+        return None
+    row = list_olm_return_candidates.build_row(path)
+    row.update(metadata)
+    return row
+
+
+def canonical_windows_witness_batch_request(batch_id: str) -> dict[str, str] | None:
+    canonical_path = repo_root() / "refs" / "runtime_trace_packages" / f"{batch_id}.zip"
+    if not canonical_path.is_file():
+        return None
+    try:
+        canonical_sha256 = file_sha256(canonical_path)
+    except OSError:
+        return None
+    return {
+        "path": str(canonical_path),
+        "sha256": canonical_sha256,
+    }
 
 
 def request_status(root: Path) -> dict[str, Any]:
@@ -701,8 +1010,7 @@ def staged_runtime_trace_package(
         # Project-local packages and stale /tmp copies are preparation
         # artifacts, not active Windows exchanges. The current workflow treats
         # only olm_pr/new as staged.
-        parts = set(row_path.parts)
-        if not ("olm_pr" in parts and "new" in parts):
+        if not is_staged_windows_exchange_path(row_path):
             continue
         try:
             if row_path.resolve() == target_resolved:
@@ -989,12 +1297,20 @@ def candidate_rows(paths: list[Path]) -> list[dict[str, Any]]:
         candidates.extend(
             path
             for path in list_olm_return_candidates.candidate_paths([root])
-            if likely_olm_scan_candidate(path)
+            if likely_olm_scan_candidate(path) or staged_windows_witness_batch_metadata(str(path)) is not None
         )
-    return [
-        list_olm_return_candidates.build_row(path)
-        for path in sorted(set(candidates), key=lambda path: path.stat().st_mtime, reverse=True)
-    ]
+        for staged_dir in staged_windows_exchange_dirs(root):
+            candidates.extend(
+                path
+                for path in staged_dir.iterdir()
+                if path.is_file()
+                and path.suffix.lower() == ".zip"
+                and staged_windows_witness_batch_metadata(str(path)) is not None
+            )
+    rows: list[dict[str, Any]] = []
+    for path in sorted(set(candidates), key=lambda path: path.stat().st_mtime, reverse=True):
+        rows.append(staged_windows_witness_batch_row(path) or list_olm_return_candidates.build_row(path))
+    return rows
 
 
 def newest(rows: list[dict[str, Any]], kind: str) -> dict[str, Any] | None:
@@ -1056,8 +1372,7 @@ def staged_reference_request_package(
         row_path = Path(str(row.get("path", "")))
         if not row_path.is_file():
             continue
-        parts = set(row_path.parts)
-        if not ("olm_pr" in parts and "new" in parts):
+        if not is_staged_windows_exchange_path(row_path):
             continue
         try:
             if row_path.resolve() == target_resolved:
@@ -1175,8 +1490,33 @@ def staged_exchange_runtime_requests(rows: list[dict[str, Any]]) -> list[dict[st
         if not path_text:
             continue
         path = Path(path_text)
-        parts = set(path.parts)
-        if "olm_pr" in parts and "new" in parts:
+        if is_staged_windows_exchange_path(path):
+            staged.append(row)
+    return sorted(staged, key=lambda row: float(row.get("mtime", 0)), reverse=True)
+
+
+def staged_windows_witness_batch_requests(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    staged: list[dict[str, Any]] = []
+    for row in rows:
+        if row.get("kind") != WINDOWS_WITNESS_BATCH_KIND:
+            continue
+        if row.get("canonical_request_match") is False:
+            continue
+        path_text = str(row.get("path", ""))
+        if path_text and is_staged_windows_exchange_path(Path(path_text)):
+            staged.append(row)
+    return sorted(staged, key=lambda row: float(row.get("mtime", 0)), reverse=True)
+
+
+def mismatched_staged_windows_witness_batches(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    staged: list[dict[str, Any]] = []
+    for row in rows:
+        if row.get("kind") != WINDOWS_WITNESS_BATCH_KIND:
+            continue
+        if row.get("canonical_request_match") is not False:
+            continue
+        path_text = str(row.get("path", ""))
+        if path_text and is_staged_windows_exchange_path(Path(path_text)):
             staged.append(row)
     return sorted(staged, key=lambda row: float(row.get("mtime", 0)), reverse=True)
 
@@ -1239,6 +1579,57 @@ def decide(
             ),
             "target": ae_automation_blocker,
             "command": blocker_command,
+        }
+
+    mismatched_witness_batches = mismatched_staged_windows_witness_batches(rows)
+    if mismatched_witness_batches:
+        batch = mismatched_witness_batches[0]
+        staged_path = str(batch.get("path", ""))
+        staged_sha256 = str(batch.get("staged_sha256", ""))
+        canonical_path = str(batch.get("canonical_request_path", ""))
+        canonical_sha256 = str(batch.get("canonical_request_sha256", ""))
+        canonical_target = {
+            "path": canonical_path,
+            "sha256": canonical_sha256,
+            "kind": WINDOWS_WITNESS_BATCH_KIND,
+            "batch_id": batch.get("batch_id", ""),
+        }
+        staged_target = dict(batch)
+        staged_target["sha256"] = staged_sha256
+        return {
+            "action": "replace-staged-windows-witness-batch",
+            "reason": (
+                "The staged unified Windows witness batch does not match the repo-built canonical "
+                f"request for batch_id {batch.get('batch_id', '')}. Replace the staged ZIP before "
+                "waiting for or importing any Windows witness batch return."
+            ),
+            "target": canonical_target,
+            "staged_package": staged_target,
+            "canonical_package": canonical_target,
+            "command": (
+                f"replace staged batch {shlex.quote(staged_path)} (sha256={staged_sha256}) with canonical "
+                f"{shlex.quote(canonical_path)} (sha256={canonical_sha256}), then execute "
+                "RUN_WINDOWS_WITNESS_BATCH.cmd once from the canonical batch or import its return"
+            ),
+            "pending_windows_refs": len(status.get("pending", [])),
+            "pending_runtime_traces": len(runtime_trace_actions(next_actions, trace_summary)),
+        }
+
+    staged_witness_batches = staged_windows_witness_batch_requests(rows)
+    if staged_witness_batches:
+        batch = staged_witness_batches[0]
+        return {
+            "action": "await-windows-witness-batch-return",
+            "reason": (
+                "A unified Windows witness batch is already staged in the Windows "
+                "exchange folder; execute it once or import its return before "
+                "recommending any individual runtime trace or PNG package."
+            ),
+            "target": batch,
+            "command": batch.get("suggested_command", ""),
+            "return_intake_command": batch.get("return_intake_command", ""),
+            "pending_windows_refs": len(status.get("pending", [])),
+            "pending_runtime_traces": len(runtime_trace_actions(next_actions, trace_summary)),
         }
 
     staged_runtime_requests = staged_exchange_runtime_requests(rows)
@@ -2626,6 +3017,17 @@ def main() -> int:
     target = decision.get("target")
     if isinstance(target, dict) and target.get("path"):
         print(f"- target: {target['path']}")
+    staged_package = decision.get("staged_package")
+    if (
+        decision.get("action") == "replace-staged-windows-witness-batch"
+        and isinstance(staged_package, dict)
+        and staged_package.get("path")
+    ):
+        print(f"- staged batch: {staged_package['path']}")
+        if staged_package.get("sha256"):
+            print(f"- staged sha256: {staged_package['sha256']}")
+        if isinstance(target, dict) and target.get("sha256"):
+            print(f"- canonical sha256: {target['sha256']}")
     if decision.get("command"):
         print(f"- run/do: {decision['command']}")
     if decision.get("acceptance_note"):

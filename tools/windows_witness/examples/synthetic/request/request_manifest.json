@@ -1,0 +1,7 @@
+{
+  "request_id": "synthetic_two_case_witness",
+  "cases": [
+    {"id": "case_0001", "frame": "case_0001.png"},
+    {"id": "case_0002", "frame": "case_0002.png"}
+  ]
+}

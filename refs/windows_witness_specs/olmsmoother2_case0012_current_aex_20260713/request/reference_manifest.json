@@ -1,0 +1,5473 @@
+{
+  "schema": 2,
+  "kind": "ae_effect_reference_manifest",
+  "created_at": "2026-06-21T16:10:47+09:00",
+  "platform": "windows",
+  "ae_version": "26.2x49",
+  "project": {
+    "path": null,
+    "name": null
+  },
+  "request_package": {
+    "request_dir": "refs/reference_requests"
+  },
+  "requests": [
+    {
+      "request_id": "smoother2_legacy_full_current_aex_recapture_20260621",
+      "effect": {
+        "name": "OLM Smoother v2",
+        "match_name": "OLM Smoother v2"
+      },
+      "why": [
+        "The old 20260605_extra OLMSmoother2 legacy PNGs are no longer trusted as correctness targets.",
+        "A current Windows AE 2026 Software recapture of old legacy case_0001 produced [106,106,106,135] at witness pixel (712,406), matching the Windows runtime trace and Mac CLI direct-source output.",
+        "The old case_0001 PNG produced [207,207,207,207] at the same witness, so the remaining old legacy cases must be recaptured with the current AEX before more tuning."
+      ],
+      "manifest_requirements": [
+        "Record AE version, project_gpu_accel_type.current_name and raw value.",
+        "Record all OLM Smoother v2 property names, match_names, property_index, values, enabled/active state, and selected effect path.",
+        "Keep ADBE Force CPU GPU / GPU Rendering as reference-only metadata, not as the execution-path label.",
+        "Save both before_effects_frame and effect output PNG for every case.",
+        "Record sampled RGBA values at pixel (712,406) for before_effects_frame and output.",
+        "Include the original source input PNG in the return package; do not rely only on AE saveFrameToPng before_effects frames because they may be premultiplied.",
+        "Do not reuse old 20260605_extra rendered PNGs as outputs; this request is specifically for current installed AEX output provenance."
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "legacy_case_0001_current_aex",
+      "request_id": "smoother2_legacy_full_current_aex_recapture_20260621",
+      "render_set_id": "software",
+      "frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0001_current_aex.png",
+      "before_effects_frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0001_current_aex_before_effects.png",
+      "before_effects_scope": "selected_layer_all_effects_disabled",
+      "time": 0,
+      "time_display": "00:00:00:00",
+      "recorded_at": "2026-06-21T16:10:49+09:00",
+      "selected_layer_effect_count": 1,
+      "case_reason": "Recapture old case_0001 with the current installed Windows AEX. This duplicates the 20260621 witness case intentionally so the full legacy set has one coherent provenance.",
+      "input_id": "current_olm_cells",
+      "project_gpu_accel_type": {
+        "current_name": "SOFTWARE",
+        "raw": 1816
+      },
+      "comp": {
+        "name": "legacy_case_0001_current_aex_software_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "layer": {
+        "name": "Source Layer",
+        "index": 1,
+        "source_name": "current_olm_cells.png"
+      },
+      "effects": [
+        {
+          "name": "OLM Smoother v2",
+          "match_name": "OLM Smoother v2",
+          "property_index": 1,
+          "enabled": true,
+          "active": true,
+          "params": [
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Enable Color Key"
+              ],
+              "path_full": [],
+              "name": "Enable Color Key",
+              "match_name": "OLM Smoother v2-0001",
+              "property_index": 1,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Color Key"
+              ],
+              "path_full": [],
+              "name": "Color Key",
+              "match_name": "OLM Smoother v2-0002",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Invert Color Key"
+              ],
+              "path_full": [],
+              "name": "Invert Color Key",
+              "match_name": "OLM Smoother v2-0015",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoothness"
+              ],
+              "path_full": [],
+              "name": "Smoothness",
+              "match_name": "OLM Smoother v2-0003",
+              "property_index": 4,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Extra Smooth"
+              ],
+              "path_full": [],
+              "name": "Extra Smooth",
+              "match_name": "OLM Smoother v2-0004",
+              "property_index": 5,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smooth Range"
+              ],
+              "path_full": [],
+              "name": "Smooth Range",
+              "match_name": "OLM Smoother v2-0005",
+              "property_index": 6,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoother Version"
+              ],
+              "path_full": [],
+              "name": "Smoother Version",
+              "match_name": "OLM Smoother v2-0006",
+              "property_index": 7,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Correction"
+              ],
+              "path_full": [],
+              "name": "Gamma Correction",
+              "match_name": "OLM Smoother v2-0007",
+              "property_index": 8,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Value"
+              ],
+              "path_full": [],
+              "name": "Gamma Value",
+              "match_name": "OLM Smoother v2-0008",
+              "property_index": 9,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2.40000009536743,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Number of Gamma Colors"
+              ],
+              "path_full": [],
+              "name": "Number of Gamma Colors",
+              "match_name": "OLM Smoother v2-0009",
+              "property_index": 10,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0010",
+              "property_index": 11,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0011",
+              "property_index": 12,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0012",
+              "property_index": 13,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0013",
+              "property_index": 14,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0014",
+              "property_index": 15,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "Effect Opacity"
+              ],
+              "path_full": [],
+              "name": "Effect Opacity",
+              "match_name": "ADBE Effect Mask Opacity",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "GPU Rendering"
+              ],
+              "path_full": [],
+              "name": "GPU Rendering",
+              "match_name": "ADBE Force CPU GPU",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            }
+          ]
+        }
+      ],
+      "instrumentation_notes": [
+        "ctx+0x11c / ctx+0x120 are not accessible from AE scripting; recorded comp/frame/gpu metadata only."
+      ],
+      "sampled_pixels": [
+        {
+          "coordinate": [
+            712,
+            406
+          ],
+          "source_input_rgba": [
+            207,
+            207,
+            207,
+            207
+          ],
+          "source_input_sha256": "9D96A359D987774A398EC27E224650FDA83FA00AE3C14BD04B87E2402EA34265",
+          "before_effects_frame_rgba": [
+            168,
+            168,
+            168,
+            207
+          ],
+          "before_effects_frame_sha256": "C58D244C327486B689A4A06500C2BC3217216B652AEFEEA11C1FBCFCEE26C520",
+          "output_rgba": [
+            106,
+            106,
+            106,
+            135
+          ],
+          "output_sha256": "5A65E3895B9768ADBCF98778BEDBE48C5FB9C523968A60877B84356A5B00E607",
+          "decoder": "Pillow RGBA"
+        }
+      ]
+    },
+    {
+      "id": "legacy_case_0002_current_aex",
+      "request_id": "smoother2_legacy_full_current_aex_recapture_20260621",
+      "render_set_id": "software",
+      "frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0002_current_aex.png",
+      "before_effects_frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0002_current_aex_before_effects.png",
+      "before_effects_scope": "selected_layer_all_effects_disabled",
+      "time": 0,
+      "time_display": "00:00:00:00",
+      "recorded_at": "2026-06-21T16:10:49+09:00",
+      "selected_layer_effect_count": 1,
+      "case_reason": "Old case_0002 current-AEX recapture: Color Key enabled, inverted key.",
+      "input_id": "current_olm_cells",
+      "project_gpu_accel_type": {
+        "current_name": "SOFTWARE",
+        "raw": 1816
+      },
+      "comp": {
+        "name": "legacy_case_0002_current_aex_software_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "layer": {
+        "name": "Source Layer",
+        "index": 1,
+        "source_name": "current_olm_cells.png"
+      },
+      "effects": [
+        {
+          "name": "OLM Smoother v2",
+          "match_name": "OLM Smoother v2",
+          "property_index": 1,
+          "enabled": true,
+          "active": true,
+          "params": [
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Enable Color Key"
+              ],
+              "path_full": [],
+              "name": "Enable Color Key",
+              "match_name": "OLM Smoother v2-0001",
+              "property_index": 1,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Color Key"
+              ],
+              "path_full": [],
+              "name": "Color Key",
+              "match_name": "OLM Smoother v2-0002",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Invert Color Key"
+              ],
+              "path_full": [],
+              "name": "Invert Color Key",
+              "match_name": "OLM Smoother v2-0015",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoothness"
+              ],
+              "path_full": [],
+              "name": "Smoothness",
+              "match_name": "OLM Smoother v2-0003",
+              "property_index": 4,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Extra Smooth"
+              ],
+              "path_full": [],
+              "name": "Extra Smooth",
+              "match_name": "OLM Smoother v2-0004",
+              "property_index": 5,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smooth Range"
+              ],
+              "path_full": [],
+              "name": "Smooth Range",
+              "match_name": "OLM Smoother v2-0005",
+              "property_index": 6,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoother Version"
+              ],
+              "path_full": [],
+              "name": "Smoother Version",
+              "match_name": "OLM Smoother v2-0006",
+              "property_index": 7,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Correction"
+              ],
+              "path_full": [],
+              "name": "Gamma Correction",
+              "match_name": "OLM Smoother v2-0007",
+              "property_index": 8,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Value"
+              ],
+              "path_full": [],
+              "name": "Gamma Value",
+              "match_name": "OLM Smoother v2-0008",
+              "property_index": 9,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2.40000009536743,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Number of Gamma Colors"
+              ],
+              "path_full": [],
+              "name": "Number of Gamma Colors",
+              "match_name": "OLM Smoother v2-0009",
+              "property_index": 10,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0010",
+              "property_index": 11,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0011",
+              "property_index": 12,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0012",
+              "property_index": 13,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0013",
+              "property_index": 14,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0014",
+              "property_index": 15,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "Effect Opacity"
+              ],
+              "path_full": [],
+              "name": "Effect Opacity",
+              "match_name": "ADBE Effect Mask Opacity",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "GPU Rendering"
+              ],
+              "path_full": [],
+              "name": "GPU Rendering",
+              "match_name": "ADBE Force CPU GPU",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            }
+          ]
+        }
+      ],
+      "instrumentation_notes": [
+        "ctx+0x11c / ctx+0x120 are not accessible from AE scripting; recorded comp/frame/gpu metadata only."
+      ],
+      "sampled_pixels": [
+        {
+          "coordinate": [
+            712,
+            406
+          ],
+          "source_input_rgba": [
+            207,
+            207,
+            207,
+            207
+          ],
+          "source_input_sha256": "9D96A359D987774A398EC27E224650FDA83FA00AE3C14BD04B87E2402EA34265",
+          "before_effects_frame_rgba": [
+            168,
+            168,
+            168,
+            207
+          ],
+          "before_effects_frame_sha256": "C58D244C327486B689A4A06500C2BC3217216B652AEFEEA11C1FBCFCEE26C520",
+          "output_rgba": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "output_sha256": "227B5690DFD6ED2AE8D6CB4230F0ECEC3E8B039F7A00316EEF0C99EC474199FA",
+          "decoder": "Pillow RGBA"
+        }
+      ]
+    },
+    {
+      "id": "legacy_case_0003_current_aex",
+      "request_id": "smoother2_legacy_full_current_aex_recapture_20260621",
+      "render_set_id": "software",
+      "frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0003_current_aex.png",
+      "before_effects_frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0003_current_aex_before_effects.png",
+      "before_effects_scope": "selected_layer_all_effects_disabled",
+      "time": 0,
+      "time_display": "00:00:00:00",
+      "recorded_at": "2026-06-21T16:10:50+09:00",
+      "selected_layer_effect_count": 1,
+      "case_reason": "Old case_0003 current-AEX recapture: Color Key enabled, Smoothness 0 control.",
+      "input_id": "current_olm_cells",
+      "project_gpu_accel_type": {
+        "current_name": "SOFTWARE",
+        "raw": 1816
+      },
+      "comp": {
+        "name": "legacy_case_0003_current_aex_software_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "layer": {
+        "name": "Source Layer",
+        "index": 1,
+        "source_name": "current_olm_cells.png"
+      },
+      "effects": [
+        {
+          "name": "OLM Smoother v2",
+          "match_name": "OLM Smoother v2",
+          "property_index": 1,
+          "enabled": true,
+          "active": true,
+          "params": [
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Enable Color Key"
+              ],
+              "path_full": [],
+              "name": "Enable Color Key",
+              "match_name": "OLM Smoother v2-0001",
+              "property_index": 1,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Color Key"
+              ],
+              "path_full": [],
+              "name": "Color Key",
+              "match_name": "OLM Smoother v2-0002",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Invert Color Key"
+              ],
+              "path_full": [],
+              "name": "Invert Color Key",
+              "match_name": "OLM Smoother v2-0015",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoothness"
+              ],
+              "path_full": [],
+              "name": "Smoothness",
+              "match_name": "OLM Smoother v2-0003",
+              "property_index": 4,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Extra Smooth"
+              ],
+              "path_full": [],
+              "name": "Extra Smooth",
+              "match_name": "OLM Smoother v2-0004",
+              "property_index": 5,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smooth Range"
+              ],
+              "path_full": [],
+              "name": "Smooth Range",
+              "match_name": "OLM Smoother v2-0005",
+              "property_index": 6,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoother Version"
+              ],
+              "path_full": [],
+              "name": "Smoother Version",
+              "match_name": "OLM Smoother v2-0006",
+              "property_index": 7,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Correction"
+              ],
+              "path_full": [],
+              "name": "Gamma Correction",
+              "match_name": "OLM Smoother v2-0007",
+              "property_index": 8,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Value"
+              ],
+              "path_full": [],
+              "name": "Gamma Value",
+              "match_name": "OLM Smoother v2-0008",
+              "property_index": 9,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2.40000009536743,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Number of Gamma Colors"
+              ],
+              "path_full": [],
+              "name": "Number of Gamma Colors",
+              "match_name": "OLM Smoother v2-0009",
+              "property_index": 10,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0010",
+              "property_index": 11,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0011",
+              "property_index": 12,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0012",
+              "property_index": 13,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0013",
+              "property_index": 14,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0014",
+              "property_index": 15,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "Effect Opacity"
+              ],
+              "path_full": [],
+              "name": "Effect Opacity",
+              "match_name": "ADBE Effect Mask Opacity",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "GPU Rendering"
+              ],
+              "path_full": [],
+              "name": "GPU Rendering",
+              "match_name": "ADBE Force CPU GPU",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            }
+          ]
+        }
+      ],
+      "instrumentation_notes": [
+        "ctx+0x11c / ctx+0x120 are not accessible from AE scripting; recorded comp/frame/gpu metadata only."
+      ],
+      "sampled_pixels": [
+        {
+          "coordinate": [
+            712,
+            406
+          ],
+          "source_input_rgba": [
+            207,
+            207,
+            207,
+            207
+          ],
+          "source_input_sha256": "9D96A359D987774A398EC27E224650FDA83FA00AE3C14BD04B87E2402EA34265",
+          "before_effects_frame_rgba": [
+            168,
+            168,
+            168,
+            207
+          ],
+          "before_effects_frame_sha256": "C58D244C327486B689A4A06500C2BC3217216B652AEFEEA11C1FBCFCEE26C520",
+          "output_rgba": [
+            168,
+            168,
+            168,
+            207
+          ],
+          "output_sha256": "A8A03D22BA399026767A0C2368736DB4AA108577E7417BC5F18693F01C527FCB",
+          "decoder": "Pillow RGBA"
+        }
+      ]
+    },
+    {
+      "id": "legacy_case_0004_current_aex",
+      "request_id": "smoother2_legacy_full_current_aex_recapture_20260621",
+      "render_set_id": "software",
+      "frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0004_current_aex.png",
+      "before_effects_frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0004_current_aex_before_effects.png",
+      "before_effects_scope": "selected_layer_all_effects_disabled",
+      "time": 0,
+      "time_display": "00:00:00:00",
+      "recorded_at": "2026-06-21T16:10:50+09:00",
+      "selected_layer_effect_count": 1,
+      "case_reason": "Old case_0004 current-AEX recapture: Extra Smooth 100.",
+      "input_id": "current_olm_cells",
+      "project_gpu_accel_type": {
+        "current_name": "SOFTWARE",
+        "raw": 1816
+      },
+      "comp": {
+        "name": "legacy_case_0004_current_aex_software_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "layer": {
+        "name": "Source Layer",
+        "index": 1,
+        "source_name": "current_olm_cells.png"
+      },
+      "effects": [
+        {
+          "name": "OLM Smoother v2",
+          "match_name": "OLM Smoother v2",
+          "property_index": 1,
+          "enabled": true,
+          "active": true,
+          "params": [
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Enable Color Key"
+              ],
+              "path_full": [],
+              "name": "Enable Color Key",
+              "match_name": "OLM Smoother v2-0001",
+              "property_index": 1,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Color Key"
+              ],
+              "path_full": [],
+              "name": "Color Key",
+              "match_name": "OLM Smoother v2-0002",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Invert Color Key"
+              ],
+              "path_full": [],
+              "name": "Invert Color Key",
+              "match_name": "OLM Smoother v2-0015",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoothness"
+              ],
+              "path_full": [],
+              "name": "Smoothness",
+              "match_name": "OLM Smoother v2-0003",
+              "property_index": 4,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Extra Smooth"
+              ],
+              "path_full": [],
+              "name": "Extra Smooth",
+              "match_name": "OLM Smoother v2-0004",
+              "property_index": 5,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smooth Range"
+              ],
+              "path_full": [],
+              "name": "Smooth Range",
+              "match_name": "OLM Smoother v2-0005",
+              "property_index": 6,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoother Version"
+              ],
+              "path_full": [],
+              "name": "Smoother Version",
+              "match_name": "OLM Smoother v2-0006",
+              "property_index": 7,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Correction"
+              ],
+              "path_full": [],
+              "name": "Gamma Correction",
+              "match_name": "OLM Smoother v2-0007",
+              "property_index": 8,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Value"
+              ],
+              "path_full": [],
+              "name": "Gamma Value",
+              "match_name": "OLM Smoother v2-0008",
+              "property_index": 9,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2.40000009536743,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Number of Gamma Colors"
+              ],
+              "path_full": [],
+              "name": "Number of Gamma Colors",
+              "match_name": "OLM Smoother v2-0009",
+              "property_index": 10,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0010",
+              "property_index": 11,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0011",
+              "property_index": 12,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0012",
+              "property_index": 13,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0013",
+              "property_index": 14,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0014",
+              "property_index": 15,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "Effect Opacity"
+              ],
+              "path_full": [],
+              "name": "Effect Opacity",
+              "match_name": "ADBE Effect Mask Opacity",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "GPU Rendering"
+              ],
+              "path_full": [],
+              "name": "GPU Rendering",
+              "match_name": "ADBE Force CPU GPU",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            }
+          ]
+        }
+      ],
+      "instrumentation_notes": [
+        "ctx+0x11c / ctx+0x120 are not accessible from AE scripting; recorded comp/frame/gpu metadata only."
+      ],
+      "sampled_pixels": [
+        {
+          "coordinate": [
+            712,
+            406
+          ],
+          "source_input_rgba": [
+            207,
+            207,
+            207,
+            207
+          ],
+          "source_input_sha256": "9D96A359D987774A398EC27E224650FDA83FA00AE3C14BD04B87E2402EA34265",
+          "before_effects_frame_rgba": [
+            168,
+            168,
+            168,
+            207
+          ],
+          "before_effects_frame_sha256": "C58D244C327486B689A4A06500C2BC3217216B652AEFEEA11C1FBCFCEE26C520",
+          "output_rgba": [
+            106,
+            106,
+            106,
+            135
+          ],
+          "output_sha256": "E90E108A008D883EB84D096E43B4F3C8B41ED2E1D57F4CE21FACB439643C3996",
+          "decoder": "Pillow RGBA"
+        }
+      ]
+    },
+    {
+      "id": "legacy_case_0005_current_aex",
+      "request_id": "smoother2_legacy_full_current_aex_recapture_20260621",
+      "render_set_id": "software",
+      "frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0005_current_aex.png",
+      "before_effects_frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0005_current_aex_before_effects.png",
+      "before_effects_scope": "selected_layer_all_effects_disabled",
+      "time": 0,
+      "time_display": "00:00:00:00",
+      "recorded_at": "2026-06-21T16:10:50+09:00",
+      "selected_layer_effect_count": 1,
+      "case_reason": "Old case_0005 current-AEX recapture: Extra Smooth 100, Smooth Range 100.",
+      "input_id": "current_olm_cells",
+      "project_gpu_accel_type": {
+        "current_name": "SOFTWARE",
+        "raw": 1816
+      },
+      "comp": {
+        "name": "legacy_case_0005_current_aex_software_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "layer": {
+        "name": "Source Layer",
+        "index": 1,
+        "source_name": "current_olm_cells.png"
+      },
+      "effects": [
+        {
+          "name": "OLM Smoother v2",
+          "match_name": "OLM Smoother v2",
+          "property_index": 1,
+          "enabled": true,
+          "active": true,
+          "params": [
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Enable Color Key"
+              ],
+              "path_full": [],
+              "name": "Enable Color Key",
+              "match_name": "OLM Smoother v2-0001",
+              "property_index": 1,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Color Key"
+              ],
+              "path_full": [],
+              "name": "Color Key",
+              "match_name": "OLM Smoother v2-0002",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Invert Color Key"
+              ],
+              "path_full": [],
+              "name": "Invert Color Key",
+              "match_name": "OLM Smoother v2-0015",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoothness"
+              ],
+              "path_full": [],
+              "name": "Smoothness",
+              "match_name": "OLM Smoother v2-0003",
+              "property_index": 4,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Extra Smooth"
+              ],
+              "path_full": [],
+              "name": "Extra Smooth",
+              "match_name": "OLM Smoother v2-0004",
+              "property_index": 5,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smooth Range"
+              ],
+              "path_full": [],
+              "name": "Smooth Range",
+              "match_name": "OLM Smoother v2-0005",
+              "property_index": 6,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoother Version"
+              ],
+              "path_full": [],
+              "name": "Smoother Version",
+              "match_name": "OLM Smoother v2-0006",
+              "property_index": 7,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Correction"
+              ],
+              "path_full": [],
+              "name": "Gamma Correction",
+              "match_name": "OLM Smoother v2-0007",
+              "property_index": 8,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Value"
+              ],
+              "path_full": [],
+              "name": "Gamma Value",
+              "match_name": "OLM Smoother v2-0008",
+              "property_index": 9,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2.40000009536743,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Number of Gamma Colors"
+              ],
+              "path_full": [],
+              "name": "Number of Gamma Colors",
+              "match_name": "OLM Smoother v2-0009",
+              "property_index": 10,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0010",
+              "property_index": 11,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0011",
+              "property_index": 12,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0012",
+              "property_index": 13,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0013",
+              "property_index": 14,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0014",
+              "property_index": 15,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "Effect Opacity"
+              ],
+              "path_full": [],
+              "name": "Effect Opacity",
+              "match_name": "ADBE Effect Mask Opacity",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "GPU Rendering"
+              ],
+              "path_full": [],
+              "name": "GPU Rendering",
+              "match_name": "ADBE Force CPU GPU",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            }
+          ]
+        }
+      ],
+      "instrumentation_notes": [
+        "ctx+0x11c / ctx+0x120 are not accessible from AE scripting; recorded comp/frame/gpu metadata only."
+      ],
+      "sampled_pixels": [
+        {
+          "coordinate": [
+            712,
+            406
+          ],
+          "source_input_rgba": [
+            207,
+            207,
+            207,
+            207
+          ],
+          "source_input_sha256": "9D96A359D987774A398EC27E224650FDA83FA00AE3C14BD04B87E2402EA34265",
+          "before_effects_frame_rgba": [
+            168,
+            168,
+            168,
+            207
+          ],
+          "before_effects_frame_sha256": "C58D244C327486B689A4A06500C2BC3217216B652AEFEEA11C1FBCFCEE26C520",
+          "output_rgba": [
+            98,
+            98,
+            98,
+            121
+          ],
+          "output_sha256": "1D12B62D35A43B03F3DB26B1A87DBF21572BFC5EC754F7C52860780A8A448266",
+          "decoder": "Pillow RGBA"
+        }
+      ]
+    },
+    {
+      "id": "legacy_case_0006_current_aex",
+      "request_id": "smoother2_legacy_full_current_aex_recapture_20260621",
+      "render_set_id": "software",
+      "frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0006_current_aex.png",
+      "before_effects_frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0006_current_aex_before_effects.png",
+      "before_effects_scope": "selected_layer_all_effects_disabled",
+      "time": 0,
+      "time_display": "00:00:00:00",
+      "recorded_at": "2026-06-21T16:10:51+09:00",
+      "selected_layer_effect_count": 1,
+      "case_reason": "Old case_0006 current-AEX recapture: Extra Smooth 100, Smooth Range 0.",
+      "input_id": "current_olm_cells",
+      "project_gpu_accel_type": {
+        "current_name": "SOFTWARE",
+        "raw": 1816
+      },
+      "comp": {
+        "name": "legacy_case_0006_current_aex_software_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "layer": {
+        "name": "Source Layer",
+        "index": 1,
+        "source_name": "current_olm_cells.png"
+      },
+      "effects": [
+        {
+          "name": "OLM Smoother v2",
+          "match_name": "OLM Smoother v2",
+          "property_index": 1,
+          "enabled": true,
+          "active": true,
+          "params": [
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Enable Color Key"
+              ],
+              "path_full": [],
+              "name": "Enable Color Key",
+              "match_name": "OLM Smoother v2-0001",
+              "property_index": 1,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Color Key"
+              ],
+              "path_full": [],
+              "name": "Color Key",
+              "match_name": "OLM Smoother v2-0002",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Invert Color Key"
+              ],
+              "path_full": [],
+              "name": "Invert Color Key",
+              "match_name": "OLM Smoother v2-0015",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoothness"
+              ],
+              "path_full": [],
+              "name": "Smoothness",
+              "match_name": "OLM Smoother v2-0003",
+              "property_index": 4,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Extra Smooth"
+              ],
+              "path_full": [],
+              "name": "Extra Smooth",
+              "match_name": "OLM Smoother v2-0004",
+              "property_index": 5,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smooth Range"
+              ],
+              "path_full": [],
+              "name": "Smooth Range",
+              "match_name": "OLM Smoother v2-0005",
+              "property_index": 6,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoother Version"
+              ],
+              "path_full": [],
+              "name": "Smoother Version",
+              "match_name": "OLM Smoother v2-0006",
+              "property_index": 7,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Correction"
+              ],
+              "path_full": [],
+              "name": "Gamma Correction",
+              "match_name": "OLM Smoother v2-0007",
+              "property_index": 8,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Value"
+              ],
+              "path_full": [],
+              "name": "Gamma Value",
+              "match_name": "OLM Smoother v2-0008",
+              "property_index": 9,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2.40000009536743,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Number of Gamma Colors"
+              ],
+              "path_full": [],
+              "name": "Number of Gamma Colors",
+              "match_name": "OLM Smoother v2-0009",
+              "property_index": 10,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0010",
+              "property_index": 11,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0011",
+              "property_index": 12,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0012",
+              "property_index": 13,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0013",
+              "property_index": 14,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0014",
+              "property_index": 15,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "Effect Opacity"
+              ],
+              "path_full": [],
+              "name": "Effect Opacity",
+              "match_name": "ADBE Effect Mask Opacity",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "GPU Rendering"
+              ],
+              "path_full": [],
+              "name": "GPU Rendering",
+              "match_name": "ADBE Force CPU GPU",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            }
+          ]
+        }
+      ],
+      "instrumentation_notes": [
+        "ctx+0x11c / ctx+0x120 are not accessible from AE scripting; recorded comp/frame/gpu metadata only."
+      ],
+      "sampled_pixels": [
+        {
+          "coordinate": [
+            712,
+            406
+          ],
+          "source_input_rgba": [
+            207,
+            207,
+            207,
+            207
+          ],
+          "source_input_sha256": "9D96A359D987774A398EC27E224650FDA83FA00AE3C14BD04B87E2402EA34265",
+          "before_effects_frame_rgba": [
+            168,
+            168,
+            168,
+            207
+          ],
+          "before_effects_frame_sha256": "C58D244C327486B689A4A06500C2BC3217216B652AEFEEA11C1FBCFCEE26C520",
+          "output_rgba": [
+            106,
+            106,
+            106,
+            135
+          ],
+          "output_sha256": "414462F0C4E041D7643B0A2AC1082EA1EF9A78366DDFE5F4FD3BB2001755FCC8",
+          "decoder": "Pillow RGBA"
+        }
+      ]
+    },
+    {
+      "id": "legacy_case_0007_current_aex",
+      "request_id": "smoother2_legacy_full_current_aex_recapture_20260621",
+      "render_set_id": "software",
+      "frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0007_current_aex.png",
+      "before_effects_frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0007_current_aex_before_effects.png",
+      "before_effects_scope": "selected_layer_all_effects_disabled",
+      "time": 0,
+      "time_display": "00:00:00:00",
+      "recorded_at": "2026-06-21T16:10:51+09:00",
+      "selected_layer_effect_count": 1,
+      "case_reason": "Old case_0007 current-AEX recapture: Extra Smooth 40, Smooth Range 26.",
+      "input_id": "current_olm_cells",
+      "project_gpu_accel_type": {
+        "current_name": "SOFTWARE",
+        "raw": 1816
+      },
+      "comp": {
+        "name": "legacy_case_0007_current_aex_software_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "layer": {
+        "name": "Source Layer",
+        "index": 1,
+        "source_name": "current_olm_cells.png"
+      },
+      "effects": [
+        {
+          "name": "OLM Smoother v2",
+          "match_name": "OLM Smoother v2",
+          "property_index": 1,
+          "enabled": true,
+          "active": true,
+          "params": [
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Enable Color Key"
+              ],
+              "path_full": [],
+              "name": "Enable Color Key",
+              "match_name": "OLM Smoother v2-0001",
+              "property_index": 1,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Color Key"
+              ],
+              "path_full": [],
+              "name": "Color Key",
+              "match_name": "OLM Smoother v2-0002",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Invert Color Key"
+              ],
+              "path_full": [],
+              "name": "Invert Color Key",
+              "match_name": "OLM Smoother v2-0015",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoothness"
+              ],
+              "path_full": [],
+              "name": "Smoothness",
+              "match_name": "OLM Smoother v2-0003",
+              "property_index": 4,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Extra Smooth"
+              ],
+              "path_full": [],
+              "name": "Extra Smooth",
+              "match_name": "OLM Smoother v2-0004",
+              "property_index": 5,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 40,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smooth Range"
+              ],
+              "path_full": [],
+              "name": "Smooth Range",
+              "match_name": "OLM Smoother v2-0005",
+              "property_index": 6,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 26,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoother Version"
+              ],
+              "path_full": [],
+              "name": "Smoother Version",
+              "match_name": "OLM Smoother v2-0006",
+              "property_index": 7,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Correction"
+              ],
+              "path_full": [],
+              "name": "Gamma Correction",
+              "match_name": "OLM Smoother v2-0007",
+              "property_index": 8,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Value"
+              ],
+              "path_full": [],
+              "name": "Gamma Value",
+              "match_name": "OLM Smoother v2-0008",
+              "property_index": 9,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2.40000009536743,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Number of Gamma Colors"
+              ],
+              "path_full": [],
+              "name": "Number of Gamma Colors",
+              "match_name": "OLM Smoother v2-0009",
+              "property_index": 10,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0010",
+              "property_index": 11,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0011",
+              "property_index": 12,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0012",
+              "property_index": 13,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0013",
+              "property_index": 14,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0014",
+              "property_index": 15,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "Effect Opacity"
+              ],
+              "path_full": [],
+              "name": "Effect Opacity",
+              "match_name": "ADBE Effect Mask Opacity",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "GPU Rendering"
+              ],
+              "path_full": [],
+              "name": "GPU Rendering",
+              "match_name": "ADBE Force CPU GPU",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            }
+          ]
+        }
+      ],
+      "instrumentation_notes": [
+        "ctx+0x11c / ctx+0x120 are not accessible from AE scripting; recorded comp/frame/gpu metadata only."
+      ],
+      "sampled_pixels": [
+        {
+          "coordinate": [
+            712,
+            406
+          ],
+          "source_input_rgba": [
+            207,
+            207,
+            207,
+            207
+          ],
+          "source_input_sha256": "9D96A359D987774A398EC27E224650FDA83FA00AE3C14BD04B87E2402EA34265",
+          "before_effects_frame_rgba": [
+            168,
+            168,
+            168,
+            207
+          ],
+          "before_effects_frame_sha256": "C58D244C327486B689A4A06500C2BC3217216B652AEFEEA11C1FBCFCEE26C520",
+          "output_rgba": [
+            140,
+            140,
+            140,
+            173
+          ],
+          "output_sha256": "60976286AEEA411115DBE966FF3FDF7E4A4C6CB3759E8D3ED8E3EEDAAA93EC91",
+          "decoder": "Pillow RGBA"
+        }
+      ]
+    },
+    {
+      "id": "legacy_case_0008_current_aex",
+      "request_id": "smoother2_legacy_full_current_aex_recapture_20260621",
+      "render_set_id": "software",
+      "frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0008_current_aex.png",
+      "before_effects_frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0008_current_aex_before_effects.png",
+      "before_effects_scope": "selected_layer_all_effects_disabled",
+      "time": 0,
+      "time_display": "00:00:00:00",
+      "recorded_at": "2026-06-21T16:10:51+09:00",
+      "selected_layer_effect_count": 1,
+      "case_reason": "Old case_0008 current-AEX recapture: Smoothness 29.",
+      "input_id": "current_olm_cells",
+      "project_gpu_accel_type": {
+        "current_name": "SOFTWARE",
+        "raw": 1816
+      },
+      "comp": {
+        "name": "legacy_case_0008_current_aex_software_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "layer": {
+        "name": "Source Layer",
+        "index": 1,
+        "source_name": "current_olm_cells.png"
+      },
+      "effects": [
+        {
+          "name": "OLM Smoother v2",
+          "match_name": "OLM Smoother v2",
+          "property_index": 1,
+          "enabled": true,
+          "active": true,
+          "params": [
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Enable Color Key"
+              ],
+              "path_full": [],
+              "name": "Enable Color Key",
+              "match_name": "OLM Smoother v2-0001",
+              "property_index": 1,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Color Key"
+              ],
+              "path_full": [],
+              "name": "Color Key",
+              "match_name": "OLM Smoother v2-0002",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Invert Color Key"
+              ],
+              "path_full": [],
+              "name": "Invert Color Key",
+              "match_name": "OLM Smoother v2-0015",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoothness"
+              ],
+              "path_full": [],
+              "name": "Smoothness",
+              "match_name": "OLM Smoother v2-0003",
+              "property_index": 4,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 29,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Extra Smooth"
+              ],
+              "path_full": [],
+              "name": "Extra Smooth",
+              "match_name": "OLM Smoother v2-0004",
+              "property_index": 5,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 40,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smooth Range"
+              ],
+              "path_full": [],
+              "name": "Smooth Range",
+              "match_name": "OLM Smoother v2-0005",
+              "property_index": 6,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 26,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoother Version"
+              ],
+              "path_full": [],
+              "name": "Smoother Version",
+              "match_name": "OLM Smoother v2-0006",
+              "property_index": 7,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Correction"
+              ],
+              "path_full": [],
+              "name": "Gamma Correction",
+              "match_name": "OLM Smoother v2-0007",
+              "property_index": 8,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Value"
+              ],
+              "path_full": [],
+              "name": "Gamma Value",
+              "match_name": "OLM Smoother v2-0008",
+              "property_index": 9,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2.40000009536743,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Number of Gamma Colors"
+              ],
+              "path_full": [],
+              "name": "Number of Gamma Colors",
+              "match_name": "OLM Smoother v2-0009",
+              "property_index": 10,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0010",
+              "property_index": 11,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0011",
+              "property_index": 12,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0012",
+              "property_index": 13,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0013",
+              "property_index": 14,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0014",
+              "property_index": 15,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "Effect Opacity"
+              ],
+              "path_full": [],
+              "name": "Effect Opacity",
+              "match_name": "ADBE Effect Mask Opacity",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "GPU Rendering"
+              ],
+              "path_full": [],
+              "name": "GPU Rendering",
+              "match_name": "ADBE Force CPU GPU",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            }
+          ]
+        }
+      ],
+      "instrumentation_notes": [
+        "ctx+0x11c / ctx+0x120 are not accessible from AE scripting; recorded comp/frame/gpu metadata only."
+      ],
+      "sampled_pixels": [
+        {
+          "coordinate": [
+            712,
+            406
+          ],
+          "source_input_rgba": [
+            207,
+            207,
+            207,
+            207
+          ],
+          "source_input_sha256": "9D96A359D987774A398EC27E224650FDA83FA00AE3C14BD04B87E2402EA34265",
+          "before_effects_frame_rgba": [
+            168,
+            168,
+            168,
+            207
+          ],
+          "before_effects_frame_sha256": "C58D244C327486B689A4A06500C2BC3217216B652AEFEEA11C1FBCFCEE26C520",
+          "output_rgba": [
+            166,
+            166,
+            166,
+            204
+          ],
+          "output_sha256": "AB91995319E3D9EBA4A1DF21A1897DEE8888E8FA42E25D5695B2C2D9A9EEA3D3",
+          "decoder": "Pillow RGBA"
+        }
+      ]
+    },
+    {
+      "id": "legacy_case_0009_v1mode_current_aex",
+      "request_id": "smoother2_legacy_full_current_aex_recapture_20260621",
+      "render_set_id": "software",
+      "frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0009_v1mode_current_aex.png",
+      "before_effects_frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0009_v1mode_current_aex_before_effects.png",
+      "before_effects_scope": "selected_layer_all_effects_disabled",
+      "time": 0,
+      "time_display": "00:00:00:00",
+      "recorded_at": "2026-06-21T16:10:52+09:00",
+      "selected_layer_effect_count": 1,
+      "case_reason": "Old case_0009 current-AEX recapture: Smoother Version 1 compatibility mode.",
+      "input_id": "current_olm_cells",
+      "project_gpu_accel_type": {
+        "current_name": "SOFTWARE",
+        "raw": 1816
+      },
+      "comp": {
+        "name": "legacy_case_0009_v1mode_current_aex_software_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "layer": {
+        "name": "Source Layer",
+        "index": 1,
+        "source_name": "current_olm_cells.png"
+      },
+      "effects": [
+        {
+          "name": "OLM Smoother v2",
+          "match_name": "OLM Smoother v2",
+          "property_index": 1,
+          "enabled": true,
+          "active": true,
+          "params": [
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Enable Color Key"
+              ],
+              "path_full": [],
+              "name": "Enable Color Key",
+              "match_name": "OLM Smoother v2-0001",
+              "property_index": 1,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Color Key"
+              ],
+              "path_full": [],
+              "name": "Color Key",
+              "match_name": "OLM Smoother v2-0002",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Invert Color Key"
+              ],
+              "path_full": [],
+              "name": "Invert Color Key",
+              "match_name": "OLM Smoother v2-0015",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoothness"
+              ],
+              "path_full": [],
+              "name": "Smoothness",
+              "match_name": "OLM Smoother v2-0003",
+              "property_index": 4,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Extra Smooth"
+              ],
+              "path_full": [],
+              "name": "Extra Smooth",
+              "match_name": "OLM Smoother v2-0004",
+              "property_index": 5,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 40,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smooth Range"
+              ],
+              "path_full": [],
+              "name": "Smooth Range",
+              "match_name": "OLM Smoother v2-0005",
+              "property_index": 6,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 26,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoother Version"
+              ],
+              "path_full": [],
+              "name": "Smoother Version",
+              "match_name": "OLM Smoother v2-0006",
+              "property_index": 7,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Correction"
+              ],
+              "path_full": [],
+              "name": "Gamma Correction",
+              "match_name": "OLM Smoother v2-0007",
+              "property_index": 8,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Value"
+              ],
+              "path_full": [],
+              "name": "Gamma Value",
+              "match_name": "OLM Smoother v2-0008",
+              "property_index": 9,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2.40000009536743,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Number of Gamma Colors"
+              ],
+              "path_full": [],
+              "name": "Number of Gamma Colors",
+              "match_name": "OLM Smoother v2-0009",
+              "property_index": 10,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0010",
+              "property_index": 11,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0011",
+              "property_index": 12,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0012",
+              "property_index": 13,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0013",
+              "property_index": 14,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0014",
+              "property_index": 15,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "Effect Opacity"
+              ],
+              "path_full": [],
+              "name": "Effect Opacity",
+              "match_name": "ADBE Effect Mask Opacity",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "GPU Rendering"
+              ],
+              "path_full": [],
+              "name": "GPU Rendering",
+              "match_name": "ADBE Force CPU GPU",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            }
+          ]
+        }
+      ],
+      "instrumentation_notes": [
+        "ctx+0x11c / ctx+0x120 are not accessible from AE scripting; recorded comp/frame/gpu metadata only."
+      ],
+      "sampled_pixels": [
+        {
+          "coordinate": [
+            712,
+            406
+          ],
+          "source_input_rgba": [
+            207,
+            207,
+            207,
+            207
+          ],
+          "source_input_sha256": "9D96A359D987774A398EC27E224650FDA83FA00AE3C14BD04B87E2402EA34265",
+          "before_effects_frame_rgba": [
+            168,
+            168,
+            168,
+            207
+          ],
+          "before_effects_frame_sha256": "C58D244C327486B689A4A06500C2BC3217216B652AEFEEA11C1FBCFCEE26C520",
+          "output_rgba": [
+            140,
+            140,
+            140,
+            173
+          ],
+          "output_sha256": "654DE711017BF8CC268A9B5EC9B9B90FB7A30F56452D383E377E14081130FFE2",
+          "decoder": "Pillow RGBA"
+        }
+      ]
+    },
+    {
+      "id": "legacy_case_0010_gamma3_current_aex",
+      "request_id": "smoother2_legacy_full_current_aex_recapture_20260621",
+      "render_set_id": "software",
+      "frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0010_gamma3_current_aex.png",
+      "before_effects_frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0010_gamma3_current_aex_before_effects.png",
+      "before_effects_scope": "selected_layer_all_effects_disabled",
+      "time": 0,
+      "time_display": "00:00:00:00",
+      "recorded_at": "2026-06-21T16:10:52+09:00",
+      "selected_layer_effect_count": 1,
+      "case_reason": "Old case_0010 current-AEX recapture: Gamma Correction 2 with three gamma colors.",
+      "input_id": "current_olm_cells",
+      "project_gpu_accel_type": {
+        "current_name": "SOFTWARE",
+        "raw": 1816
+      },
+      "comp": {
+        "name": "legacy_case_0010_gamma3_current_aex_software_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "layer": {
+        "name": "Source Layer",
+        "index": 1,
+        "source_name": "current_olm_cells.png"
+      },
+      "effects": [
+        {
+          "name": "OLM Smoother v2",
+          "match_name": "OLM Smoother v2",
+          "property_index": 1,
+          "enabled": true,
+          "active": true,
+          "params": [
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Enable Color Key"
+              ],
+              "path_full": [],
+              "name": "Enable Color Key",
+              "match_name": "OLM Smoother v2-0001",
+              "property_index": 1,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Color Key"
+              ],
+              "path_full": [],
+              "name": "Color Key",
+              "match_name": "OLM Smoother v2-0002",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Invert Color Key"
+              ],
+              "path_full": [],
+              "name": "Invert Color Key",
+              "match_name": "OLM Smoother v2-0015",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoothness"
+              ],
+              "path_full": [],
+              "name": "Smoothness",
+              "match_name": "OLM Smoother v2-0003",
+              "property_index": 4,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Extra Smooth"
+              ],
+              "path_full": [],
+              "name": "Extra Smooth",
+              "match_name": "OLM Smoother v2-0004",
+              "property_index": 5,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 40,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smooth Range"
+              ],
+              "path_full": [],
+              "name": "Smooth Range",
+              "match_name": "OLM Smoother v2-0005",
+              "property_index": 6,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 22,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoother Version"
+              ],
+              "path_full": [],
+              "name": "Smoother Version",
+              "match_name": "OLM Smoother v2-0006",
+              "property_index": 7,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Correction"
+              ],
+              "path_full": [],
+              "name": "Gamma Correction",
+              "match_name": "OLM Smoother v2-0007",
+              "property_index": 8,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Value"
+              ],
+              "path_full": [],
+              "name": "Gamma Value",
+              "match_name": "OLM Smoother v2-0008",
+              "property_index": 9,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1.36872434616089,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Number of Gamma Colors"
+              ],
+              "path_full": [],
+              "name": "Number of Gamma Colors",
+              "match_name": "OLM Smoother v2-0009",
+              "property_index": 10,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 3,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0010",
+              "property_index": 11,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0011",
+              "property_index": 12,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0012",
+              "property_index": 13,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0013",
+              "property_index": 14,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0014",
+              "property_index": 15,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "Effect Opacity"
+              ],
+              "path_full": [],
+              "name": "Effect Opacity",
+              "match_name": "ADBE Effect Mask Opacity",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "GPU Rendering"
+              ],
+              "path_full": [],
+              "name": "GPU Rendering",
+              "match_name": "ADBE Force CPU GPU",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            }
+          ]
+        }
+      ],
+      "instrumentation_notes": [
+        "ctx+0x11c / ctx+0x120 are not accessible from AE scripting; recorded comp/frame/gpu metadata only."
+      ],
+      "sampled_pixels": [
+        {
+          "coordinate": [
+            712,
+            406
+          ],
+          "source_input_rgba": [
+            207,
+            207,
+            207,
+            207
+          ],
+          "source_input_sha256": "9D96A359D987774A398EC27E224650FDA83FA00AE3C14BD04B87E2402EA34265",
+          "before_effects_frame_rgba": [
+            168,
+            168,
+            168,
+            207
+          ],
+          "before_effects_frame_sha256": "C58D244C327486B689A4A06500C2BC3217216B652AEFEEA11C1FBCFCEE26C520",
+          "output_rgba": [
+            140,
+            140,
+            140,
+            173
+          ],
+          "output_sha256": "A7A2757EEF123F41EB54630BD33FD788B2A67ED9EF6CEA9C90024AD2CDC2AF5C",
+          "decoder": "Pillow RGBA"
+        }
+      ]
+    },
+    {
+      "id": "legacy_case_0011_gamma5_blue_current_aex",
+      "request_id": "smoother2_legacy_full_current_aex_recapture_20260621",
+      "render_set_id": "software",
+      "frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0011_gamma5_blue_current_aex.png",
+      "before_effects_frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0011_gamma5_blue_current_aex_before_effects.png",
+      "before_effects_scope": "selected_layer_all_effects_disabled",
+      "time": 0,
+      "time_display": "00:00:00:00",
+      "recorded_at": "2026-06-21T16:10:52+09:00",
+      "selected_layer_effect_count": 1,
+      "case_reason": "Old case_0011 current-AEX recapture: Gamma Correction 2 with fifth gamma color blue.",
+      "input_id": "current_olm_cells",
+      "project_gpu_accel_type": {
+        "current_name": "SOFTWARE",
+        "raw": 1816
+      },
+      "comp": {
+        "name": "legacy_case_0011_gamma5_blue_current_aex_software_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "layer": {
+        "name": "Source Layer",
+        "index": 1,
+        "source_name": "current_olm_cells.png"
+      },
+      "effects": [
+        {
+          "name": "OLM Smoother v2",
+          "match_name": "OLM Smoother v2",
+          "property_index": 1,
+          "enabled": true,
+          "active": true,
+          "params": [
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Enable Color Key"
+              ],
+              "path_full": [],
+              "name": "Enable Color Key",
+              "match_name": "OLM Smoother v2-0001",
+              "property_index": 1,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Color Key"
+              ],
+              "path_full": [],
+              "name": "Color Key",
+              "match_name": "OLM Smoother v2-0002",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Invert Color Key"
+              ],
+              "path_full": [],
+              "name": "Invert Color Key",
+              "match_name": "OLM Smoother v2-0015",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoothness"
+              ],
+              "path_full": [],
+              "name": "Smoothness",
+              "match_name": "OLM Smoother v2-0003",
+              "property_index": 4,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Extra Smooth"
+              ],
+              "path_full": [],
+              "name": "Extra Smooth",
+              "match_name": "OLM Smoother v2-0004",
+              "property_index": 5,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 40,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smooth Range"
+              ],
+              "path_full": [],
+              "name": "Smooth Range",
+              "match_name": "OLM Smoother v2-0005",
+              "property_index": 6,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 22,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoother Version"
+              ],
+              "path_full": [],
+              "name": "Smoother Version",
+              "match_name": "OLM Smoother v2-0006",
+              "property_index": 7,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Correction"
+              ],
+              "path_full": [],
+              "name": "Gamma Correction",
+              "match_name": "OLM Smoother v2-0007",
+              "property_index": 8,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Value"
+              ],
+              "path_full": [],
+              "name": "Gamma Value",
+              "match_name": "OLM Smoother v2-0008",
+              "property_index": 9,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2.16954731941223,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Number of Gamma Colors"
+              ],
+              "path_full": [],
+              "name": "Number of Gamma Colors",
+              "match_name": "OLM Smoother v2-0009",
+              "property_index": 10,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 5,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0010",
+              "property_index": 11,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0011",
+              "property_index": 12,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0012",
+              "property_index": 13,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0013",
+              "property_index": 14,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0014",
+              "property_index": 15,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                1,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "Effect Opacity"
+              ],
+              "path_full": [],
+              "name": "Effect Opacity",
+              "match_name": "ADBE Effect Mask Opacity",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "GPU Rendering"
+              ],
+              "path_full": [],
+              "name": "GPU Rendering",
+              "match_name": "ADBE Force CPU GPU",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            }
+          ]
+        }
+      ],
+      "instrumentation_notes": [
+        "ctx+0x11c / ctx+0x120 are not accessible from AE scripting; recorded comp/frame/gpu metadata only."
+      ],
+      "sampled_pixels": [
+        {
+          "coordinate": [
+            712,
+            406
+          ],
+          "source_input_rgba": [
+            207,
+            207,
+            207,
+            207
+          ],
+          "source_input_sha256": "9D96A359D987774A398EC27E224650FDA83FA00AE3C14BD04B87E2402EA34265",
+          "before_effects_frame_rgba": [
+            168,
+            168,
+            168,
+            207
+          ],
+          "before_effects_frame_sha256": "C58D244C327486B689A4A06500C2BC3217216B652AEFEEA11C1FBCFCEE26C520",
+          "output_rgba": [
+            140,
+            140,
+            140,
+            173
+          ],
+          "output_sha256": "1DE0F3F2D0827ABED2D00DC9863D956BC23D270424B7C08FF6BDFCBA3786F277",
+          "decoder": "Pillow RGBA"
+        }
+      ]
+    },
+    {
+      "id": "legacy_case_0012_gamma5_red_blue_current_aex",
+      "request_id": "smoother2_legacy_full_current_aex_recapture_20260621",
+      "render_set_id": "software",
+      "frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0012_gamma5_red_blue_current_aex.png",
+      "before_effects_frame": "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0012_gamma5_red_blue_current_aex_before_effects.png",
+      "before_effects_scope": "selected_layer_all_effects_disabled",
+      "time": 0,
+      "time_display": "00:00:00:00",
+      "recorded_at": "2026-06-21T16:10:53+09:00",
+      "selected_layer_effect_count": 1,
+      "case_reason": "Old case_0012 current-AEX recapture: Gamma Correction 2 with red/blue gamma colors and Smooth Range 88.",
+      "input_id": "current_olm_cells",
+      "project_gpu_accel_type": {
+        "current_name": "SOFTWARE",
+        "raw": 1816
+      },
+      "comp": {
+        "name": "legacy_case_0012_gamma5_red_blue_current_aex_software_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "layer": {
+        "name": "Source Layer",
+        "index": 1,
+        "source_name": "current_olm_cells.png"
+      },
+      "effects": [
+        {
+          "name": "OLM Smoother v2",
+          "match_name": "OLM Smoother v2",
+          "property_index": 1,
+          "enabled": true,
+          "active": true,
+          "params": [
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Enable Color Key"
+              ],
+              "path_full": [],
+              "name": "Enable Color Key",
+              "match_name": "OLM Smoother v2-0001",
+              "property_index": 1,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Color Key"
+              ],
+              "path_full": [],
+              "name": "Color Key",
+              "match_name": "OLM Smoother v2-0002",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Invert Color Key"
+              ],
+              "path_full": [],
+              "name": "Invert Color Key",
+              "match_name": "OLM Smoother v2-0015",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoothness"
+              ],
+              "path_full": [],
+              "name": "Smoothness",
+              "match_name": "OLM Smoother v2-0003",
+              "property_index": 4,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Extra Smooth"
+              ],
+              "path_full": [],
+              "name": "Extra Smooth",
+              "match_name": "OLM Smoother v2-0004",
+              "property_index": 5,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 40,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smooth Range"
+              ],
+              "path_full": [],
+              "name": "Smooth Range",
+              "match_name": "OLM Smoother v2-0005",
+              "property_index": 6,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 88,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Smoother Version"
+              ],
+              "path_full": [],
+              "name": "Smoother Version",
+              "match_name": "OLM Smoother v2-0006",
+              "property_index": 7,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Correction"
+              ],
+              "path_full": [],
+              "name": "Gamma Correction",
+              "match_name": "OLM Smoother v2-0007",
+              "property_index": 8,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Value"
+              ],
+              "path_full": [],
+              "name": "Gamma Value",
+              "match_name": "OLM Smoother v2-0008",
+              "property_index": 9,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2.16954731941223,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Number of Gamma Colors"
+              ],
+              "path_full": [],
+              "name": "Number of Gamma Colors",
+              "match_name": "OLM Smoother v2-0009",
+              "property_index": 10,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 5,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0010",
+              "property_index": 11,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                1,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0011",
+              "property_index": 12,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0012",
+              "property_index": 13,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0013",
+              "property_index": 14,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Gamma Color"
+              ],
+              "path_full": [],
+              "name": "Gamma Color",
+              "match_name": "OLM Smoother v2-0014",
+              "property_index": 15,
+              "property_type": "6212",
+              "property_value_type": "6418",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                1,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "Effect Opacity"
+              ],
+              "path_full": [],
+              "name": "Effect Opacity",
+              "match_name": "ADBE Effect Mask Opacity",
+              "property_index": 2,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM Smoother v2",
+                "Compositing Options",
+                "GPU Rendering"
+              ],
+              "path_full": [],
+              "name": "GPU Rendering",
+              "match_name": "ADBE Force CPU GPU",
+              "property_index": 3,
+              "property_type": "6212",
+              "property_value_type": "6417",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            }
+          ]
+        }
+      ],
+      "instrumentation_notes": [
+        "ctx+0x11c / ctx+0x120 are not accessible from AE scripting; recorded comp/frame/gpu metadata only."
+      ],
+      "sampled_pixels": [
+        {
+          "coordinate": [
+            712,
+            406
+          ],
+          "source_input_rgba": [
+            207,
+            207,
+            207,
+            207
+          ],
+          "source_input_sha256": "9D96A359D987774A398EC27E224650FDA83FA00AE3C14BD04B87E2402EA34265",
+          "before_effects_frame_rgba": [
+            168,
+            168,
+            168,
+            207
+          ],
+          "before_effects_frame_sha256": "C58D244C327486B689A4A06500C2BC3217216B652AEFEEA11C1FBCFCEE26C520",
+          "output_rgba": [
+            114,
+            114,
+            114,
+            140
+          ],
+          "output_sha256": "A90079741C9E065F762274D79BBBE81976DA06D18682AF1EAC3073C5F61F60D7",
+          "decoder": "Pillow RGBA"
+        }
+      ]
+    }
+  ],
+  "skipped_render_sets": [],
+  "source_inputs": [
+    {
+      "id": "current_olm_cells",
+      "file": "input/current_olm_cells.png",
+      "source_file": "input/case_0012_before_effects.png",
+      "sha256": "9D96A359D987774A398EC27E224650FDA83FA00AE3C14BD04B87E2402EA34265",
+      "sample_pixel_712_406_rgba": [
+        207,
+        207,
+        207,
+        207
+      ],
+      "note": "Copied from legacy case_0001_before_effects.png before invoking AE runner. Use this source PNG for Mac CLI comparison; AE saveFrameToPng before frames are premultiplied."
+    }
+  ],
+  "external_png_validation": {
+    "expected_png_count": 24,
+    "actual_png_count": 24,
+    "validated_by": "PowerShell/Python after AE exit",
+    "note": "AE-side File.exists was disabled for this run because it can underreport long PNG paths even when saveFrameToPng has written the files."
+  }
+}
