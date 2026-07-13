@@ -263,7 +263,7 @@ if ($queueLaunch -match '\s') { Finish (Failure 'path_preflight' 'short JSX laun
 $normalizedQueuePath = [IO.Path]::GetFullPath($queueLaunch)
 $queueHash = (Get-FileHash -LiteralPath $queueLaunch -Algorithm SHA256).Hash.ToLowerInvariant()
 $env:WINDOWS_WITNESS_QUEUE_SHA256 = $queueHash
-$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m', '-r', $normalizedQueuePath)
+$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m')
 @('@echo off', $afterFxCommandLine, 'exit /b %ERRORLEVEL%') | Set-Content -LiteralPath $launchWrapper -Encoding ASCII
 $bootstrapText = @"
 .effmach amd64
@@ -273,7 +273,7 @@ $bootstrapText = @"
 qd
 "@
 $bootstrapText | Set-Content -LiteralPath $bootstrapCdbScript -Encoding ASCII
-$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, $AfterFxPath, '-m', '-r', $normalizedQueuePath)
+$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, $AfterFxPath, '-m')
 $launchArguments = Join-WindowsCommandLine $launchArgumentValues
 $launch = Start-Process -FilePath $CdbPath -ArgumentList $launchArguments -RedirectStandardOutput $launchOut -RedirectStandardError $launchErr -NoNewWindow -PassThru
 $launchStarted = $true
@@ -305,15 +305,10 @@ if ($bootstrapTraceText -notmatch 'WITNESS_CDB_BOOTSTRAP_ARMED' -or !$bootstrapO
 }
 $deadline = (Get-Date).AddSeconds(180)
 $queueRetryOneAt = (Get-Date).AddSeconds(20)
-$queueRetryTwoAt = (Get-Date).AddSeconds(60)
 while ((Get-Date) -lt $deadline -and !(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) {
   $now = Get-Date
   if ($now -ge $queueRetryOneAt -and @($queueRetryProcesses).Count -eq 0) {
     $retryArgs = Join-WindowsCommandLine @('-r', $normalizedQueuePath)
-    $queueRetryProcesses += Start-Process -FilePath $AfterFxPath -ArgumentList $retryArgs -NoNewWindow -PassThru -ErrorAction SilentlyContinue
-  }
-  if ($now -ge $queueRetryTwoAt -and @($queueRetryProcesses).Count -eq 1) {
-    $retryArgs = Join-WindowsCommandLine @('-m', '-r', $normalizedQueuePath)
     $queueRetryProcesses += Start-Process -FilePath $AfterFxPath -ArgumentList $retryArgs -NoNewWindow -PassThru -ErrorAction SilentlyContinue
   }
   Start-Sleep -Milliseconds 250
