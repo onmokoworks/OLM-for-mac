@@ -62,18 +62,20 @@ def main() -> int:
         assert 'runId + "\n"' not in queue
         assert "-ArgumentList @('-m', '-r', $queuePath)" not in launcher
         assert "function ConvertTo-WindowsCommandLineArgument" in launcher
-        assert "$launchArgumentValues = @('-o', '-pd', '-g', '-G', '-cf', $bootstrapCdbScript, $env:ComSpec, '/d', '/s', '/c', $launchWrapper)" in launcher
-        assert "$launchArgumentValues = @('-cf', $bootstrapCdbScript, $AfterFxPath, '-r'" not in launcher
+        assert "$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, '--', $AfterFxPath, '-r', $normalizedQueuePath)" in launcher
+        assert "$env:ComSpec, '/d', '/s', '/c', $launchWrapper" not in launcher
+        assert "'-o', '-pd', '-g', '-G'" not in launcher
         assert "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)" in launcher
         assert "$launchArguments = Join-WindowsCommandLine $launchArgumentValues" in launcher
         assert "$observedCommandLine.IndexOf($normalizedQueuePath" not in launcher
         assert "'jsx_command_line_preflight'" not in launcher
         assert "('OLMWitness\\w_' + $shortId)" in launcher
         assert "$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'" in launcher
-        assert 'WITNESS_CDB_AFTERFX_IMAGE_LOADED; .logclose; qd" ld:AfterFX.exe' in launcher
+        assert ".echo WITNESS_CDB_AFTERFX_INITIAL_BREAK" in launcher
+        assert "ld:AfterFX.exe" not in launcher
         assert "WITNESS_CDB_TARGET_MODULE_LOADED" not in launcher
-        assert "sxi ibp" in launcher
-        assert "'cdb_child_tracking'" in launcher
+        assert "sxi ibp" not in launcher
+        assert "'cdb_bootstrap'" in launcher
         assert "Copy-WitnessLaunchEvidence" in launcher
         assert "-FilePath $CdbPath" in launcher
         assert "$dispatchArguments" not in launcher

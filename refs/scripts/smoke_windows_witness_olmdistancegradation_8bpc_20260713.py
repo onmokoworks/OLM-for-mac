@@ -117,15 +117,15 @@ def main() -> int:
             return fail("fresh-process serial readiness contract is missing")
         for token in (
             "function ConvertTo-WindowsCommandLineArgument",
-            "$launchArgumentValues = @('-o', '-g', '-G', '-cf', $bootstrapCdbScript, $env:ComSpec, '/d', '/s', '/c', $launchWrapper)",
+            "$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, '--', $AfterFxPath, '-r', $normalizedQueuePath)",
             "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
-            "$observedCommandLine.IndexOf($normalizedQueuePath, [StringComparison]::OrdinalIgnoreCase)",
-            "'jsx_command_line_preflight'",
+            "Read-QueueBootstrapBinding $queueBootstrap",
+            "'queue_binding'",
             "('OLMWitness\\w_' + $shortId)",
             "$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'",
-            "WITNESS_CDB_TARGET_MODULE_LOADED",
-            "sxi ibp",
-            "'cdb_child_tracking'",
+            "WITNESS_CDB_AFTERFX_INITIAL_BREAK",
+            ".echo WITNESS_CDB_AFTERFX_INITIAL_BREAK",
+            "'cdb_bootstrap'",
             "$shortTrace = Join-Path $launchDir",
             "Copy-WitnessLaunchEvidence",
         ):

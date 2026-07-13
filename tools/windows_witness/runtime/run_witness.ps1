@@ -169,7 +169,7 @@ function Finish([object]$body, [int]$code) {
     launch_argument_values = @($launchArgumentValues)
     normalized_queue_path = $normalizedQueuePath
     observed_afterfx_command_line = $observedCommandLine
-    bootstrap_scope = 'AfterFX.exe image load only'
+    bootstrap_scope = 'direct AfterFX.exe initial breakpoint'
     bootstrap_host_image_marker_observed = [bool]$bootstrapObservedMarker
     bootstrap_plugin_load_claimed = [bool]$bootstrapPluginLoadClaimed
     queue_bootstrap_marker_observed = [bool]$queueBootstrapObserved
@@ -259,14 +259,12 @@ $afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQ
 $bootstrapText = @"
 .effmach amd64
 .expr /s masm
-.logopen /t "$bootstrapCdbTrace"
 .echo WITNESS_CDB_BOOTSTRAP_ARMED
-sxi ibp
-sxe -c ".echo WITNESS_CDB_AFTERFX_IMAGE_LOADED; .logclose; qd" ld:AfterFX.exe
-g
+.echo WITNESS_CDB_AFTERFX_INITIAL_BREAK
+qd
 "@
 $bootstrapText | Set-Content -LiteralPath $bootstrapCdbScript -Encoding ASCII
-$launchArgumentValues = @('-o', '-pd', '-g', '-G', '-cf', $bootstrapCdbScript, $env:ComSpec, '/d', '/s', '/c', $launchWrapper)
+$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, '--', $AfterFxPath, '-r', $normalizedQueuePath)
 $launchArguments = Join-WindowsCommandLine $launchArgumentValues
 $launch = Start-Process -FilePath $CdbPath -ArgumentList $launchArguments -RedirectStandardOutput $launchOut -RedirectStandardError $launchErr -NoNewWindow -PassThru
 $launchStarted = $true
@@ -292,9 +290,9 @@ if (!$launch.HasExited) {
   Finish (Failure 'cdb_launch' 'CDB bootstrap did not detach from the launched After Effects process' @('cdb_bootstrap_exit') '') 2
 }
 $bootstrapTraceText = $(if (Test-Path -LiteralPath $bootstrapCdbTrace -PathType Leaf) { Get-Content -LiteralPath $bootstrapCdbTrace -Raw } else { '' })
-$bootstrapObservedMarker = $bootstrapTraceText -match 'WITNESS_CDB_AFTERFX_IMAGE_LOADED'
+$bootstrapObservedMarker = $bootstrapTraceText -match 'WITNESS_CDB_AFTERFX_INITIAL_BREAK'
 if ($bootstrapTraceText -notmatch 'WITNESS_CDB_BOOTSTRAP_ARMED' -or !$bootstrapObservedMarker) {
-  Finish (Failure 'cdb_child_tracking' 'CDB did not observe the AfterFX.exe image load in its tracked child' @('WITNESS_CDB_BOOTSTRAP_ARMED', 'WITNESS_CDB_AFTERFX_IMAGE_LOADED') $bootstrapTraceText) 2
+  Finish (Failure 'cdb_bootstrap' 'CDB did not reach the directly launched AfterFX.exe initial breakpoint' @('WITNESS_CDB_BOOTSTRAP_ARMED', 'WITNESS_CDB_AFTERFX_INITIAL_BREAK') $bootstrapTraceText) 2
 }
 $deadline = (Get-Date).AddSeconds(60)
 while ((Get-Date) -lt $deadline -and !(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) { Start-Sleep -Milliseconds 250 }
