@@ -381,7 +381,7 @@ static std::vector<float> MakeSeed(PF_EffectWorld *input, const OLMKiraKiraInfo 
 			if (info.channel == 1) {
 				v = (float)std::pow(p.a, exponent);
 			} else if (info.channel == 2) {
-				float luma = p.r * 0.299f + p.g * 0.587f + p.b * 0.114f;
+				float luma = p.r * 0.2126f + p.g * 0.7152f + p.b * 0.0722f;
 				v = (float)std::pow(luma, exponent) * p.a;
 			} else if (info.channel == 4) {
 				v = (float)std::pow(std::max({p.r, p.g, p.b}), exponent) * p.a;
@@ -396,6 +396,26 @@ static std::vector<float> MakeSeed(PF_EffectWorld *input, const OLMKiraKiraInfo 
 		}
 	}
 	return seed;
+}
+
+static A_long BlurModePasses(A_long blur_mode)
+{
+	// Binary-grounded dispatch boundary:
+	// 1 -> one cv::boxFilter call; 2 -> three cv::boxFilter calls.
+    // Mode 3 targets FUN_181272ec0 (GaussianBlur) with CV_32FC1 input/output,
+    // Size(0,1), and
+	// sigmaX = length * 0.5. Its forward warp is grounded against OpenCV 4.5.5;
+	// the portable Gaussian primitive is being integrated separately. Mode 4 is
+	// an inline recursive/separable body whose recurrence and writeback order
+    // remain incomplete. Keep the placeholders explicit until integration;
+    // do not substitute PNG-tuned math here.
+	switch (blur_mode) {
+		case 1: return 1;
+		case 2: return 3;
+		case 3:
+		case 4:
+		default: return 3;
+	}
 }
 
 template <typename PixelT>
@@ -413,9 +433,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	};
 
 	std::vector<float> seed = MakeSeed<PixelT>(input, info);
-	// Windows Blur Mode 1 uses one box-filter pass. Keep the existing
-	// three-pass behavior for Mode 2 and the currently unimplemented modes.
-	const A_long passes = info.blur_mode == 1 ? 1 : 3;
+	const A_long passes = BlurModePasses(info.blur_mode);
 	const double glow_rotation = info.glow_rotation;
 	const std::vector<float> zero_ray((size_t)w * h, 0.0f);
 	auto make_ray = [&](A_long raw_len, double angle) -> std::vector<float> {

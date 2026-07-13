@@ -45,7 +45,7 @@
 | Glow Rotation | Adds to diagonal/axis ray angles and temp-canvas rotation. | helper audit |
 | Blur Mode 1 | One horizontal `boxFilter` call through `FUN_181280bc0`; branch `0x181150958 -> 0x18115122e`, call at `0x181151290`. | static binary dispatch |
 | Blur Mode 2 | Three-pass horizontal `boxFilter` helper path; calls at `0x18115116f`, `0x1811511c2`, `0x181151215`. | static binary dispatch |
-| Blur Mode 3 | One call to `FUN_181272ec0`, the recovered GaussianBlur wrapper; branch `0x18115096a -> 0x1811510a9`. | static binary dispatch |
+| Blur Mode 3 | One call to `FUN_181272ec0`, the recovered GaussianBlur wrapper; branch `0x18115096a -> 0x1811510a9`. The actual-AEX boundary is `_InputArray(CV_32FC1)`, `_OutputArray(CV_32FC1)`, `Size(0,1)`, `sigmaX = length * 0.5`; `0.5` is the binary `double` at `0x18148d670`. | static binary + actual-AEX boundary |
 | Blur Mode 4 | Inline recursive/separable accumulation body at `0x181150979..0x181150f3a`; no subordinate filter call. The UI label “Exponential” is semantic metadata, not derived from the body alone. | static binary dispatch/body |
 | Merge Mode 1/2 | `param_15==1` selects `FUN_18114fd90`; `==2` selects `FUN_18114ffd0`. | static vtable dispatch |
 | Channel | Seed function; current traced `Channel=2` vtable normalize byte returns `1`. | vtable / refs |
@@ -77,8 +77,10 @@ Windows behavior.
     it does not branch on the UI Merge Mode control yet
 - `Blur Mode`
   - current Mac source now exposes the Windows four-choice host surface, but
-    the render path still hardwires the Blur Mode 2 three-box-filter path and
-    does not dispatch on `info->blur_mode`
+    only Modes 1 and 2 have grounded render dispatch
+  - Modes 3 and 4 still deliberately use the Mode 2 three-box scaffold; the
+    Mode 3 warp/Gaussian contract is grounded and its portable Gaussian
+    primitive is now the remaining implementation boundary
 - `Highlight Color` and the five `Use Ramp` toggles
   - current Mac source reads them into `OLMKiraKiraInfo`, but the render path
     does not consume them yet
@@ -93,10 +95,25 @@ Windows behavior.
      formula;
    - center-copy the source seed into the first temp ROI;
    - forward-rotate through OpenCV `warpAffine` semantics;
-   - dispatch Blur Mode: one box filter (1), three box filters (2), Gaussian
-     wrapper (3), or the inline recursive accumulation body (4);
+   - dispatch Blur Mode: one box filter (1), three box filters (2), horizontal
+     Gaussian with `Size(0,1)` and `sigmaX = length * 0.5` (3), or the inline
+     recursive accumulation body (4);
    - rotate back through OpenCV `warpAffine` semantics;
    - center-copy back to the final ray buffer.
+
+The Mode 3 synthetic actual-AEX witness records 59 nonzero float cells after
+the ROI copy and 63 after the forward warp. The corrected 5-degree matrix is
+`[cos, sin, tx; -sin, cos, ty]`; OpenCV 4.5.5 reproduces all 63 post-warp
+float32 words exactly. An earlier all-zero artifact came from omitted libm
+imports in the emulator and is not admissible evidence.
+
+The same corrected harness now runs the embedded Gaussian body to caller
+return `0x181151105` and records all 63 CV_32FC1 output words. Those words do
+not match pinned OpenCV 4.5.5 or the portable primitive at any position. Since
+the harness supplies synthetic TLS and a zero-initialized CPU-dispatch table,
+the completed local path is not yet a live-Windows oracle. Validate dispatch
+selection or capture the bounded output in a live Windows process before
+using those words to change production behavior.
 3. Aggregate five ray buffers with `FUN_18114fd90` shape:
    - skip `ray <= 0.001`;
    - `alpha = clamp(ray * brightness)`;
@@ -245,6 +262,11 @@ Windows behavior.
   The first-pass witness deltas from the Windows return are explained by this
   luma correction: center `+0.00765902`, ray-length-up `+0.00722808`, and
   ray-length-right `+0.00512671`.
+- 2026-07-12 implementation audit found that the C++ CLI and Mac plug-in had
+  retained the old BT.601 constants even though the Python witness path and
+  this IR were already corrected. Both production C++ paths now use the
+  runtime-proven BT.709 coefficients. This closes only Channel 2 seed luma;
+  compose/writeback and the remaining blur/merge modes stay unresolved.
 
 ## Rejected / Low-Value Next Moves
 

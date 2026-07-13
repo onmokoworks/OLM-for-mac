@@ -521,7 +521,7 @@ std::vector<float> make_seed(const Image &input, const KiraKiraParams &params, c
             } else if (params.channel == 1) {
                 v = std::pow(a, std::max(1.0e-6, params.strength_multiplier));
             } else if (params.channel == 2) {
-                float luma = r * 0.299f + g * 0.587f + b * 0.114f;
+                float luma = r * 0.2126f + g * 0.7152f + b * 0.0722f;
                 v = std::pow(luma, std::max(1.0e-6, params.strength_multiplier)) * a;
             } else if (params.channel == 4) {
                 v = std::pow(std::max({r, g, b}), std::max(1.0e-6, params.strength_multiplier)) * a;
@@ -1581,6 +1581,25 @@ FloatImage aggregate_fd90_exact(
     return glow;
 }
 
+int blur_mode_passes(int blur_mode) {
+    // Binary-grounded dispatch boundary:
+    // 1 -> one cv::boxFilter call; 2 -> three cv::boxFilter calls.
+    // Mode 3 targets FUN_181272ec0 (GaussianBlur) with CV_32FC1 input/output,
+    // Size(0,1), and
+    // sigmaX = length * 0.5. Its forward warp is grounded against OpenCV 4.5.5;
+    // the portable Gaussian primitive is being integrated separately. Mode 4
+    // is an inline recursive/separable body whose recurrence and writeback
+    // order remain incomplete. Keep the placeholders explicit until integration;
+    // do not substitute PNG-tuned math here.
+    switch (blur_mode) {
+        case 1: return 1;
+        case 2: return 3;
+        case 3:
+        case 4:
+        default: return 3;
+    }
+}
+
 Image render_kirakira(const Image &input, const KiraKiraParams &params, const Options &options) {
     const int w = input.width;
     const int h = input.height;
@@ -1595,7 +1614,7 @@ Image render_kirakira(const Image &input, const KiraKiraParams &params, const Op
     };
     const int passes = options.has_falloff_override
         ? (options.falloff == "box3" ? 3 : 1)
-        : (params.blur_mode == 1 ? 1 : 3);
+        : blur_mode_passes(params.blur_mode);
     bool axis_fast_path = options.axis_fast_path;
     if (options.axis_fast_path_mode == "strength-nonzero") {
         axis_fast_path = params.strength_multiplier > 1.0e-6;

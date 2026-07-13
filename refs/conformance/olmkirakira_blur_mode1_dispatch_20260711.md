@@ -63,6 +63,12 @@ Result: exit 0, `** BUILD SUCCEEDED **`. The arm64 plugin linked at Xcode's
 DerivedData product path. Existing SDK `#pragma pack`, Carbon Resources, and
 traditional-headermap warnings remain.
 
+The independently rebuilt arm64 candidate was installed as the sole
+`OLMKiraKira.plugin` in MediaCore while AE was closed. Binary SHA-256:
+`421f670fdf26cc61170028e4b65709c8232358f4a63a04f46b498b6dd4b96b0a`.
+The previous installed bundle is retained outside MediaCore at
+`/tmp/OLMKiraKira.plugin.pre_blur_mode1_20260711`.
+
 ## Reference Boundary
 
 The retained Windows corpus has three OLMKiraKira random cases whose manifests

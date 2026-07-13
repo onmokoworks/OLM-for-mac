@@ -43,5 +43,10 @@
     "measured_for_exactness": false,
     "reason": "retained random cases vary other controls and do not isolate blur-mode dispatch"
   },
-  "ae_exact_claim": false
+  "ae_exact_claim": false,
+  "installed_candidate": {
+    "architecture": "arm64",
+    "sha256": "421f670fdf26cc61170028e4b65709c8232358f4a63a04f46b498b6dd4b96b0a",
+    "media_core_duplicate_count": 1
+  }
 }
