@@ -59,6 +59,11 @@ $bootstrapCdbTrace = $null
 $launchWrapper = $null
 $normalizedQueuePath = $null
 $observedCommandLine = $null
+$bootstrapObservedMarker = $false
+$bootstrapPluginLoadClaimed = $false
+$queueBootstrapObserved = $false
+$queueBootstrapBinding = $null
+$bootstrapAePid = $null
 $activeCdbTrace = $null
 $activeCdbTraceEvidence = $null
 
@@ -95,6 +100,22 @@ function ConvertTo-WindowsCommandLineArgument([string]$value) {
 
 function Join-WindowsCommandLine([object[]]$values) {
   return (($values | ForEach-Object { ConvertTo-WindowsCommandLineArgument ([string]$_) }) -join ' ')
+}
+
+function Read-QueueBootstrapBinding([string]$path) {
+  $lines = @(Get-Content -LiteralPath $path)
+  if (@($lines | Where-Object { $_ -ceq 'WITNESS_QUEUE_BOOTSTRAP' }).Count -ne 1) {
+    throw 'queue bootstrap marker header is missing or duplicated'
+  }
+  $values = [ordered]@{}
+  foreach ($line in $lines) {
+    if ($line -ceq 'WITNESS_QUEUE_BOOTSTRAP') { continue }
+    if ($line -notmatch '^([^=]+)=(.*)$') { throw "malformed queue bootstrap marker line: $line" }
+    $key = [string]$Matches[1]
+    if ($values.Contains($key)) { throw "duplicate queue bootstrap marker field: $key" }
+    $values[$key] = [string]$Matches[2]
+  }
+  return [pscustomobject]$values
 }
 
 function Get-AfterFxState {
@@ -148,6 +169,11 @@ function Finish([object]$body, [int]$code) {
     launch_argument_values = @($launchArgumentValues)
     normalized_queue_path = $normalizedQueuePath
     observed_afterfx_command_line = $observedCommandLine
+    bootstrap_scope = 'AfterFX.exe image load only'
+    bootstrap_host_image_marker_observed = [bool]$bootstrapObservedMarker
+    bootstrap_plugin_load_claimed = [bool]$bootstrapPluginLoadClaimed
+    queue_bootstrap_marker_observed = [bool]$queueBootstrapObserved
+    queue_bootstrap_binding = $queueBootstrapBinding
     session_id = [int]$sessionId
     observed_afterfx = @(Get-AfterFxState)
   } | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath $processDiagnostics -Encoding UTF8 -ErrorAction SilentlyContinue
@@ -198,6 +224,7 @@ if (Get-Process -Name AfterFX -ErrorAction SilentlyContinue) {
 $AexPath = (Get-Item -LiteralPath $AexPath).FullName
 $AfterFxPath = (Get-Item -LiteralPath $AfterFxPath).FullName
 $CdbPath = (Get-Item -LiteralPath $CdbPath).FullName
+$PackageRoot = (Get-Item -LiteralPath $PackageRoot).FullName
 $hash = (Get-FileHash -LiteralPath $AexPath -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($hash -ne [string]$contract.plugin.aex_sha256) {
   Finish (Failure 'module_hash' 'AEX hash does not match the witness contract' @('expected_aex_sha256') "actual=$hash") 2
@@ -222,9 +249,11 @@ $bootstrapCdbScript = Join-Path $launchDir 'boot.cdb'
 $bootstrapCdbTrace = Join-Path $launchDir 'boot.log'
 $launchWrapper = Join-Path $launchDir 'launch.cmd'
 Copy-Item -LiteralPath $queuePath -Destination $queueLaunch -Force
+Remove-Item -LiteralPath $queueBootstrap -Force -ErrorAction SilentlyContinue
 if ($queueLaunch -match '\s') { Finish (Failure 'path_preflight' 'short JSX launch path contains whitespace' @('no_space_queue_path') $queueLaunch) 2 }
 $normalizedQueuePath = [IO.Path]::GetFullPath($queueLaunch)
-$moduleName = [IO.Path]::GetFileName($AexPath)
+$queueHash = (Get-FileHash -LiteralPath $queueLaunch -Algorithm SHA256).Hash.ToLowerInvariant()
+$env:WINDOWS_WITNESS_QUEUE_SHA256 = $queueHash
 $afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)
 @('@echo off', $afterFxCommandLine, 'exit /b %ERRORLEVEL%') | Set-Content -LiteralPath $launchWrapper -Encoding ASCII
 $bootstrapText = @"
@@ -233,11 +262,11 @@ $bootstrapText = @"
 .logopen /t "$bootstrapCdbTrace"
 .echo WITNESS_CDB_BOOTSTRAP_ARMED
 sxi ibp
-sxe -c ".echo WITNESS_CDB_TARGET_MODULE_LOADED; .logclose; .detach; q" ld:$moduleName
+sxe -c ".echo WITNESS_CDB_AFTERFX_IMAGE_LOADED; .logclose; qd" ld:AfterFX.exe
 g
 "@
 $bootstrapText | Set-Content -LiteralPath $bootstrapCdbScript -Encoding ASCII
-$launchArgumentValues = @('-o', '-g', '-G', '-cf', $bootstrapCdbScript, $env:ComSpec, '/d', '/s', '/c', $launchWrapper)
+$launchArgumentValues = @('-o', '-pd', '-g', '-G', '-cf', $bootstrapCdbScript, $env:ComSpec, '/d', '/s', '/c', $launchWrapper)
 $launchArguments = Join-WindowsCommandLine $launchArgumentValues
 $launch = Start-Process -FilePath $CdbPath -ArgumentList $launchArguments -RedirectStandardOutput $launchOut -RedirectStandardError $launchErr -NoNewWindow -PassThru
 $launchStarted = $true
@@ -246,18 +275,13 @@ $desktopState = @()
 while ((Get-Date) -lt $deadline) {
   $desktopState = @(Get-AfterFxState)
   if ($desktopState.Count -eq 1) { break }
-  $launch.Refresh()
-  if ($launch.HasExited) { break }
   Start-Sleep -Milliseconds 250
 }
 if ($desktopState.Count -ne 1) {
   Finish (Failure 'cdb_launch' 'CDB-launched After Effects instance did not become uniquely observable' @('one_desktop_AfterFX_process', 'cdb_bootstrap') "matches=$($desktopState.Count)") 2
 }
+$bootstrapAePid = [int]$desktopState[0].pid
 $observedCommandLine = [string]$desktopState[0].command_line
-if ($observedCommandLine -notmatch '(?i)(?:^|\s)-r(?:\s|$)' -or
-    $observedCommandLine.IndexOf($normalizedQueuePath, [StringComparison]::OrdinalIgnoreCase) -lt 0) {
-  Finish (Failure 'jsx_command_line_preflight' 'observed After Effects command line does not preserve -r and the normalized queue path' @('afterfx_command_line:-r', 'afterfx_command_line:normalized_queue_path') $observedCommandLine) 2
-}
 $deadline = (Get-Date).AddSeconds(60)
 while ((Get-Date) -lt $deadline) {
   $launch.Refresh()
@@ -268,12 +292,34 @@ if (!$launch.HasExited) {
   Finish (Failure 'cdb_launch' 'CDB bootstrap did not detach from the launched After Effects process' @('cdb_bootstrap_exit') '') 2
 }
 $bootstrapTraceText = $(if (Test-Path -LiteralPath $bootstrapCdbTrace -PathType Leaf) { Get-Content -LiteralPath $bootstrapCdbTrace -Raw } else { '' })
-if ($bootstrapTraceText -notmatch 'WITNESS_CDB_BOOTSTRAP_ARMED' -or $bootstrapTraceText -notmatch 'WITNESS_CDB_TARGET_MODULE_LOADED') {
-  Finish (Failure 'cdb_child_tracking' 'CDB did not observe the target AEX load in its tracked After Effects child' @('WITNESS_CDB_BOOTSTRAP_ARMED', 'WITNESS_CDB_TARGET_MODULE_LOADED') $bootstrapTraceText) 2
+$bootstrapObservedMarker = $bootstrapTraceText -match 'WITNESS_CDB_AFTERFX_IMAGE_LOADED'
+if ($bootstrapTraceText -notmatch 'WITNESS_CDB_BOOTSTRAP_ARMED' -or !$bootstrapObservedMarker) {
+  Finish (Failure 'cdb_child_tracking' 'CDB did not observe the AfterFX.exe image load in its tracked child' @('WITNESS_CDB_BOOTSTRAP_ARMED', 'WITNESS_CDB_AFTERFX_IMAGE_LOADED') $bootstrapTraceText) 2
 }
+$deadline = (Get-Date).AddSeconds(60)
+while ((Get-Date) -lt $deadline -and !(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) { Start-Sleep -Milliseconds 250 }
 if (!(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) {
   Finish (Failure 'jsx_launch' 'CDB-launched After Effects process did not execute the queue JSX' @('queue_bootstrap.log') '') 2
 }
+$queueBootstrapObserved = $true
+try { $queueBootstrapBinding = Read-QueueBootstrapBinding $queueBootstrap }
+catch { Finish (Failure 'queue_binding' $_.Exception.Message @('queue_bootstrap_binding') '') 2 }
+foreach ($field in @('run_id', 'work', 'root', 'queue_sha256')) {
+  if ($null -eq $queueBootstrapBinding.$field) {
+    Finish (Failure 'queue_binding' "queue bootstrap marker is missing $field" @("queue_bootstrap:$field") '') 2
+  }
+}
+if ([string]$queueBootstrapBinding.run_id -cne $runId -or
+    ![string]::Equals([string]$queueBootstrapBinding.work, $work, [StringComparison]::OrdinalIgnoreCase) -or
+    ![string]::Equals([string]$queueBootstrapBinding.root, $PackageRoot, [StringComparison]::OrdinalIgnoreCase) -or
+    [string]$queueBootstrapBinding.queue_sha256 -cne $queueHash) {
+  Finish (Failure 'queue_binding' 'queue bootstrap marker does not match this run/package/script' @('queue_bootstrap:run_id', 'queue_bootstrap:work', 'queue_bootstrap:root', 'queue_bootstrap:queue_sha256') ($queueBootstrapBinding | ConvertTo-Json -Compress)) 2
+}
+$postBootstrapState = @(Get-AfterFxState)
+if ($postBootstrapState.Count -ne 1 -or [int]$postBootstrapState[0].pid -ne $bootstrapAePid) {
+  Finish (Failure 'queue_binding' 'queue bootstrap marker is not bound to the launched After Effects process' @('same_afterfx_pid', 'same_afterfx_session', 'same_afterfx_path') "launched_pid=$bootstrapAePid matches=$($postBootstrapState.Count)") 2
+}
+$boundPid = $bootstrapAePid
 
 foreach ($case in @($contract.cases | Sort-Object order)) {
   $caseId = [string]$case.id
@@ -316,8 +362,11 @@ foreach ($case in @($contract.cases | Sort-Object order)) {
   $loadedHash = (Get-FileHash -LiteralPath $module.FileName -Algorithm SHA256).Hash.ToLowerInvariant()
   $base = '0x{0:x}' -f $module.BaseAddress.ToInt64()
   if ($loadedHash -ne $hash) { Finish (Failure 'module_hash' 'loaded module hash mismatch' @('loaded_aex_sha256') "actual=$loadedHash") 2 }
-  if ($null -eq $boundPid) { $boundPid = [int]$ae.Id; $boundBase = $base }
-  elseif ([int]$ae.Id -ne $boundPid -or $base -ne $boundBase) {
+  if ([int]$ae.Id -ne $boundPid) {
+    Finish (Failure 'same_run_identity' 'AE PID changed after queue bootstrap' @('shared_ae_pid') "pid=$($ae.Id) expected=$boundPid") 2
+  }
+  if ($null -eq $boundBase) { $boundBase = $base }
+  elseif ($base -ne $boundBase) {
     Finish (Failure 'same_run_identity' 'AE PID or module base changed between cases' @('shared_ae_pid', 'shared_module_base') "pid=$($ae.Id) base=$base") 2
   }
 

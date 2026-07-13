@@ -34,12 +34,20 @@ def _queue_source(contract: dict[str, Any]) -> str:
     var work = env("WINDOWS_WITNESS_WORK_ROOT");
     var runId = env("WINDOWS_WITNESS_RUN_ID");
     var root = env("WINDOWS_WITNESS_PACKAGE_ROOT") || File($.fileName).parent.parent.fsName;
-    write(bootstrapPath, "WITNESS_QUEUE_BOOTSTRAP run_bound=" + (runId ? "1" : "0") +
-        " work_bound=" + (work ? "1" : "0") + " root=" + root + "\\n", false);
+    var queueSha256 = env("WINDOWS_WITNESS_QUEUE_SHA256");
+    var bootstrapTempPath = bootstrapPath + ".tmp";
+    write(bootstrapTempPath, "WITNESS_QUEUE_BOOTSTRAP\\n" +
+        "run_id=" + runId + "\\n" +
+        "work=" + work + "\\n" +
+        "root=" + root + "\\n" +
+        "queue_sha256=" + queueSha256 + "\\n", false);
+    if (!(new File(bootstrapTempPath)).rename("queue_bootstrap.log")) {{
+        throw new Error("could not publish queue bootstrap marker");
+    }}
     var requestDir = root + "/request";
     var cases = {case_ids};
     var extraEnvironment = {environment};
-    if (!work || !runId) {{ throw new Error("WINDOWS_WITNESS work/run binding is required"); }}
+    if (!work || !runId || !root || !queueSha256) {{ throw new Error("WINDOWS_WITNESS queue binding is required"); }}
     var queueLog = work + "/queue.log";
     write(queueLog, "WITNESS_QUEUE_START run_id=" + runId + "\\n", false);
     for (var i = 0; i < cases.length; i++) {{

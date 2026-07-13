@@ -75,8 +75,10 @@ class CompilerTests(unittest.TestCase):
             self.assertIn("afterfx_launch_wrapper.cmd", contract["return_bundle"]["include_logs"])
             self.assertIn("launched_queue.jsx", contract["return_bundle"]["include_logs"])
             queue = (package_a / "scripts" / "ae_witness_queue.jsx").read_text(encoding="utf-8")
-            self.assertIn('" root=" + root + "\\n", false);', queue)
-            self.assertNotIn('" root=" + root + "\n", false);', queue)
+            self.assertIn('"root=" + root + "\\n" +', queue)
+            self.assertIn('"queue_sha256=" + queueSha256 + "\\n", false);', queue)
+            self.assertIn('env("WINDOWS_WITNESS_QUEUE_SHA256")', queue)
+            self.assertIn('rename("queue_bootstrap.log")', queue)
             self.assertIn('runId + "\\n"', queue)
             self.assertNotIn('runId + "\n"', queue)
             with zipfile.ZipFile(zip_a) as archive:
@@ -219,28 +221,47 @@ class CompilerTests(unittest.TestCase):
 
     def test_launcher_source_guards_known_windows_failures(self) -> None:
         source = LAUNCHER.read_text(encoding="utf-8")
+        exact_bootstrap_exit_failure = {
+            "status": "exact_bind_failure",
+            "failure": {
+                "stage": "cdb_launch",
+                "reason": "CDB bootstrap did not detach from the launched After Effects process",
+                "missing_fields": ["cdb_bootstrap_exit"],
+            },
+        }
+        self.assertEqual(exact_bootstrap_exit_failure["failure"]["missing_fields"], ["cdb_bootstrap_exit"])
         self.assertNotIn("-ArgumentList @('-m', '-r', $queuePath)", source)
         self.assertIn("$launchDir = Join-Path $env:PUBLIC", source)
         self.assertIn("Copy-Item -LiteralPath $queuePath -Destination $queueLaunch", source)
         self.assertIn("function ConvertTo-WindowsCommandLineArgument", source)
         self.assertIn("$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)", source)
-        self.assertIn("$launchArgumentValues = @('-o', '-g', '-G', '-cf', $bootstrapCdbScript, $env:ComSpec, '/d', '/s', '/c', $launchWrapper)", source)
+        self.assertIn("$launchArgumentValues = @('-o', '-pd', '-g', '-G', '-cf', $bootstrapCdbScript, $env:ComSpec, '/d', '/s', '/c', $launchWrapper)", source)
         self.assertNotIn("$launchArgumentValues = @('-cf', $bootstrapCdbScript, $AfterFxPath, '-r'", source)
         self.assertIn("$launchArguments = Join-WindowsCommandLine $launchArgumentValues", source)
         self.assertIn("-FilePath $CdbPath", source)
         self.assertIn("-ArgumentList $launchArguments", source)
-        self.assertIn("$observedCommandLine.IndexOf($normalizedQueuePath, [StringComparison]::OrdinalIgnoreCase)", source)
-        self.assertIn("'jsx_command_line_preflight'", source)
+        self.assertNotIn("$observedCommandLine.IndexOf($normalizedQueuePath", source)
+        self.assertNotIn("'jsx_command_line_preflight'", source)
         self.assertIn("('OLMWitness\\w_' + $shortId)", source)
         self.assertIn("$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'", source)
         self.assertIn("Copy-WitnessLaunchEvidence", source)
         self.assertNotIn("$dispatchArguments", source)
         self.assertNotIn("'jsx_dispatch'", source)
-        self.assertIn('sxe -c ".echo WITNESS_CDB_TARGET_MODULE_LOADED;', source)
+        self.assertIn('sxe -c ".echo WITNESS_CDB_AFTERFX_IMAGE_LOADED; .logclose; qd" ld:AfterFX.exe', source)
+        self.assertNotIn("WITNESS_CDB_TARGET_MODULE_LOADED", source)
         self.assertIn("sxi ibp", source)
         self.assertIn("'cdb_child_tracking'", source)
         self.assertIn("'cdb_bootstrap_exit'", source)
         self.assertIn("'jsx_launch'", source)
+        self.assertIn("while ((Get-Date) -lt $deadline -and !(Test-Path -LiteralPath $queueBootstrap -PathType Leaf))", source)
+        self.assertIn("Remove-Item -LiteralPath $queueBootstrap -Force", source)
+        self.assertIn("Read-QueueBootstrapBinding $queueBootstrap", source)
+        self.assertIn("'queue_binding'", source)
+        self.assertIn("[string]$queueBootstrapBinding.run_id -cne $runId", source)
+        self.assertIn("[string]$queueBootstrapBinding.queue_sha256 -cne $queueHash", source)
+        self.assertIn("[int]$postBootstrapState[0].pid -ne $bootstrapAePid", source)
+        self.assertIn("bootstrap_plugin_load_claimed = [bool]$bootstrapPluginLoadClaimed", source)
+        self.assertIn("queue_bootstrap_marker_observed = [bool]$queueBootstrapObserved", source)
         self.assertIn("afterfx_process_diagnostics.json", source)
         bundle_at = source.index("& py -3 $runtimePath bundle")
         success_cleanup_at = source.index("if ($code -eq 0) { Stop-WitnessProcesses }")

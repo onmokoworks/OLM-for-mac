@@ -54,21 +54,24 @@ def main() -> int:
         assert return_a.read_bytes() == return_b.read_bytes(), "return ZIP is not deterministic"
         launcher = (package_a / "artifacts" / "run_witness.ps1").read_text(encoding="utf-8")
         queue = (package_a / "scripts" / "ae_witness_queue.jsx").read_text(encoding="utf-8")
-        assert '" root=" + root + "\\n", false);' in queue
-        assert '" root=" + root + "\n", false);' not in queue
+        assert '"root=" + root + "\\n" +' in queue
+        assert '"queue_sha256=" + queueSha256 + "\\n", false);' in queue
+        assert 'env("WINDOWS_WITNESS_QUEUE_SHA256")' in queue
+        assert 'rename("queue_bootstrap.log")' in queue
         assert 'runId + "\\n"' in queue
         assert 'runId + "\n"' not in queue
         assert "-ArgumentList @('-m', '-r', $queuePath)" not in launcher
         assert "function ConvertTo-WindowsCommandLineArgument" in launcher
-        assert "$launchArgumentValues = @('-o', '-g', '-G', '-cf', $bootstrapCdbScript, $env:ComSpec, '/d', '/s', '/c', $launchWrapper)" in launcher
+        assert "$launchArgumentValues = @('-o', '-pd', '-g', '-G', '-cf', $bootstrapCdbScript, $env:ComSpec, '/d', '/s', '/c', $launchWrapper)" in launcher
         assert "$launchArgumentValues = @('-cf', $bootstrapCdbScript, $AfterFxPath, '-r'" not in launcher
         assert "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)" in launcher
         assert "$launchArguments = Join-WindowsCommandLine $launchArgumentValues" in launcher
-        assert "$observedCommandLine.IndexOf($normalizedQueuePath, [StringComparison]::OrdinalIgnoreCase)" in launcher
-        assert "'jsx_command_line_preflight'" in launcher
+        assert "$observedCommandLine.IndexOf($normalizedQueuePath" not in launcher
+        assert "'jsx_command_line_preflight'" not in launcher
         assert "('OLMWitness\\w_' + $shortId)" in launcher
         assert "$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'" in launcher
-        assert "WITNESS_CDB_TARGET_MODULE_LOADED" in launcher
+        assert 'WITNESS_CDB_AFTERFX_IMAGE_LOADED; .logclose; qd" ld:AfterFX.exe' in launcher
+        assert "WITNESS_CDB_TARGET_MODULE_LOADED" not in launcher
         assert "sxi ibp" in launcher
         assert "'cdb_child_tracking'" in launcher
         assert "Copy-WitnessLaunchEvidence" in launcher
@@ -77,6 +80,9 @@ def main() -> int:
         assert "afterfx_process_diagnostics.json" in launcher
         assert "'cdb_bootstrap_exit'" in launcher
         assert "'jsx_launch'" in launcher
+        assert "Read-QueueBootstrapBinding $queueBootstrap" in launcher
+        assert "[string]$queueBootstrapBinding.queue_sha256 -cne $queueHash" in launcher
+        assert "bootstrap_plugin_load_claimed = [bool]$bootstrapPluginLoadClaimed" in launcher
         assert launcher.index("if ($code -eq 0) { Stop-WitnessProcesses }") > launcher.index("& py -3 $runtimePath bundle")
         for template in (package_a / "cdb").glob("*.cdb.in"):
             assert '.logopen /t "{{TRACE_PATH}}"' in template.read_text(encoding="ascii")
