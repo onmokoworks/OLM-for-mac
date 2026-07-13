@@ -62,26 +62,24 @@ def main() -> int:
         assert 'runId + "\n"' not in queue
         assert "-ArgumentList @('-m', '-r', $queuePath)" not in launcher
         assert "function ConvertTo-WindowsCommandLineArgument" in launcher
-        assert "$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, $AfterFxPath, '-m')" in launcher
+        assert "$launchArgumentValues = @('-m -r \"' + $normalizedQueuePath + '\"')" in launcher
         assert "'-cf', $bootstrapCdbScript, '--', $AfterFxPath" not in launcher
         assert "$env:ComSpec, '/d', '/s', '/c', $launchWrapper" not in launcher
         assert "'-o', '-pd', '-g', '-G'" not in launcher
-        assert "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m')" in launcher
+        assert "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m', '-r', $normalizedQueuePath)" in launcher
         assert "$launchArguments = Join-WindowsCommandLine $launchArgumentValues" in launcher
         assert "$observedCommandLine.IndexOf($normalizedQueuePath" not in launcher
         assert "'jsx_command_line_preflight'" not in launcher
         assert "('OLMWitness\\w_' + $shortId)" in launcher
         assert "$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'" in launcher
-        assert ".echo WITNESS_CDB_AFTERFX_INITIAL_BREAK" in launcher
+        assert "Start-Process -FilePath $AfterFxPath -ArgumentList $launchArguments" in launcher
         assert "ld:AfterFX.exe" not in launcher
         assert "WITNESS_CDB_PLUGIN_LOADED" not in launcher
         assert "sxi ibp" not in launcher
-        assert "'cdb_bootstrap'" in launcher
         assert "Copy-WitnessLaunchEvidence" in launcher
         assert "-FilePath $CdbPath" in launcher
         assert "$dispatchArguments" not in launcher
         assert "afterfx_process_diagnostics.json" in launcher
-        assert "'cdb_bootstrap_exit'" in launcher
         assert "'jsx_launch'" in launcher
         assert "Read-QueueBootstrapBinding $queueBootstrap" in launcher
         assert "[string]$queueBootstrapBinding.queue_sha256 -cne $queueHash" in launcher

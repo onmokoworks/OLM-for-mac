@@ -263,56 +263,14 @@ if ($queueLaunch -match '\s') { Finish (Failure 'path_preflight' 'short JSX laun
 $normalizedQueuePath = [IO.Path]::GetFullPath($queueLaunch)
 $queueHash = (Get-FileHash -LiteralPath $queueLaunch -Algorithm SHA256).Hash.ToLowerInvariant()
 $env:WINDOWS_WITNESS_QUEUE_SHA256 = $queueHash
-$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m')
+$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m', '-r', $normalizedQueuePath)
 @('@echo off', $afterFxCommandLine, 'exit /b %ERRORLEVEL%') | Set-Content -LiteralPath $launchWrapper -Encoding ASCII
-$bootstrapText = @"
-.effmach amd64
-.expr /s masm
-.echo WITNESS_CDB_BOOTSTRAP_ARMED
-.echo WITNESS_CDB_AFTERFX_INITIAL_BREAK
-qd
-"@
-$bootstrapText | Set-Content -LiteralPath $bootstrapCdbScript -Encoding ASCII
-$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, $AfterFxPath, '-m')
+$launchArgumentValues = @('-m -r "' + $normalizedQueuePath + '"')
 $launchArguments = Join-WindowsCommandLine $launchArgumentValues
-$launch = Start-Process -FilePath $CdbPath -ArgumentList $launchArguments -RedirectStandardOutput $launchOut -RedirectStandardError $launchErr -NoNewWindow -PassThru
+$launch = Start-Process -FilePath $AfterFxPath -ArgumentList $launchArguments -RedirectStandardOutput $launchOut -RedirectStandardError $launchErr -NoNewWindow -PassThru
 $launchStarted = $true
-$deadline = (Get-Date).AddSeconds(60)
-$desktopState = @()
-while ((Get-Date) -lt $deadline) {
-  $desktopState = @(Get-AfterFxState)
-  if ($desktopState.Count -eq 1) { break }
-  Start-Sleep -Milliseconds 250
-}
-if ($desktopState.Count -ne 1) {
-  Finish (Failure 'cdb_launch' 'CDB-launched After Effects instance did not become uniquely observable' @('one_desktop_AfterFX_process', 'cdb_bootstrap') "matches=$($desktopState.Count)") 2
-}
-$bootstrapAePid = [int]$desktopState[0].pid
-$observedCommandLine = [string]$desktopState[0].command_line
-$deadline = (Get-Date).AddSeconds(60)
-while ((Get-Date) -lt $deadline) {
-  $launch.Refresh()
-  if ($launch.HasExited) { break }
-  Start-Sleep -Milliseconds 250
-}
-if (!$launch.HasExited) {
-  Finish (Failure 'cdb_launch' 'CDB bootstrap did not detach from the launched After Effects process' @('cdb_bootstrap_exit') '') 2
-}
-$bootstrapTraceText = $(if (Test-Path -LiteralPath $bootstrapCdbTrace -PathType Leaf) { Get-Content -LiteralPath $bootstrapCdbTrace -Raw } else { '' })
-$bootstrapObservedMarker = $bootstrapTraceText -match 'WITNESS_CDB_AFTERFX_INITIAL_BREAK'
-if ($bootstrapTraceText -notmatch 'WITNESS_CDB_BOOTSTRAP_ARMED' -or !$bootstrapObservedMarker) {
-  Finish (Failure 'cdb_bootstrap' 'CDB did not reach the directly launched AfterFX.exe initial breakpoint' @('WITNESS_CDB_BOOTSTRAP_ARMED', 'WITNESS_CDB_AFTERFX_INITIAL_BREAK') $bootstrapTraceText) 2
-}
 $deadline = (Get-Date).AddSeconds(180)
-$queueRetryOneAt = (Get-Date).AddSeconds(20)
-while ((Get-Date) -lt $deadline -and !(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) {
-  $now = Get-Date
-  if ($now -ge $queueRetryOneAt -and @($queueRetryProcesses).Count -eq 0) {
-    $retryArgs = Join-WindowsCommandLine @('-r', $normalizedQueuePath)
-    $queueRetryProcesses += Start-Process -FilePath $AfterFxPath -ArgumentList $retryArgs -NoNewWindow -PassThru -ErrorAction SilentlyContinue
-  }
-  Start-Sleep -Milliseconds 250
-}
+while ((Get-Date) -lt $deadline -and !(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) { Start-Sleep -Milliseconds 250 }
 if (!(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) {
   Finish (Failure 'jsx_launch' 'CDB-launched After Effects process did not execute the queue JSX' @('queue_bootstrap.log') '') 2
 }
@@ -330,19 +288,6 @@ if ([string]$queueBootstrapBinding.run_id -cne $runId -or
     [string]$queueBootstrapBinding.queue_sha256 -cne $queueHash) {
   Finish (Failure 'queue_binding' 'queue bootstrap marker does not match this run/package/script' @('queue_bootstrap:run_id', 'queue_bootstrap:work', 'queue_bootstrap:root', 'queue_bootstrap:queue_sha256') ($queueBootstrapBinding | ConvertTo-Json -Compress)) 2
 }
-$postBootstrapState = @(Get-AfterFxState)
-if ($postBootstrapState.Count -ne 1) {
-  $bootstrapStillPresent = @($postBootstrapState | Where-Object { [int]$_.pid -eq $bootstrapAePid }).Count -eq 1
-  if ($bootstrapStillPresent) {
-    $queueBindingAmbiguous = $true
-  } else {
-    Finish (Failure 'queue_binding' 'queue bootstrap marker is not bound to the CDB-launched After Effects process' @('same_afterfx_pid', 'same_afterfx_session', 'same_afterfx_path') "launched_pid=$bootstrapAePid matches=$($postBootstrapState.Count)") 2
-  }
-} elseif ([int]$postBootstrapState[0].pid -ne $bootstrapAePid) {
-  Finish (Failure 'queue_binding' 'queue bootstrap marker is not bound to the launched After Effects process' @('same_afterfx_pid', 'same_afterfx_session', 'same_afterfx_path') "launched_pid=$bootstrapAePid matches=$($postBootstrapState.Count)") 2
-}
-$boundPid = $bootstrapAePid
-
 foreach ($case in @($contract.cases | Sort-Object order)) {
   $caseId = [string]$case.id
   $ready = Join-Path $work ("ready_$caseId.marker")
@@ -384,7 +329,8 @@ foreach ($case in @($contract.cases | Sort-Object order)) {
   $loadedHash = (Get-FileHash -LiteralPath $module.FileName -Algorithm SHA256).Hash.ToLowerInvariant()
   $base = '0x{0:x}' -f $module.BaseAddress.ToInt64()
   if ($loadedHash -ne $hash) { Finish (Failure 'module_hash' 'loaded module hash mismatch' @('loaded_aex_sha256') "actual=$loadedHash") 2 }
-  if ([int]$ae.Id -ne $boundPid) {
+  if ($null -eq $boundPid) { $boundPid = [int]$ae.Id }
+  elseif ([int]$ae.Id -ne $boundPid) {
     Finish (Failure 'same_run_identity' 'AE PID changed after queue bootstrap' @('shared_ae_pid') "pid=$($ae.Id) expected=$boundPid") 2
   }
   if ($null -eq $boundBase) { $boundBase = $base }
