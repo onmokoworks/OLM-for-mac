@@ -34,6 +34,14 @@ def main() -> int:
         assert all(data["pointers"].values())
         assert data["plane_stats"]["informative_cell_count"] > 0
         assert data["worker_execution"]["post_prepass_snapshot"]["informative_cell_count"] > 0
+        captures = data["b150_input_capture"]
+        assert len(captures) == 1
+        first = captures[0]
+        assert first["abi"]["width"] == 49
+        assert first["abi"]["row_start"] == 0
+        assert first["abi"]["row_end"] == 5
+        assert first["rows"]
+        assert set(first["rows"][0]) >= {"source_rgba_f32", "scalar_a_f32", "scalar_b_f32"}
         assert [row["xy"] for row in data["bounded_output_samples"]] == [[7, 0], [8, 0], [24, 0]]
         assert all(row["status"] == "sampled" for row in data["bounded_output_samples"])
     print("[OK] RadialBlur small post-normalization plane-layout probe passed")

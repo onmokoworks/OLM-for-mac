@@ -66,11 +66,11 @@ sxi e06d7363
 sxi 000006ba
 sxi 887a0004
 sxi 80000003
-sxe ld:RadialBlur.aex
-sxe ld:RadialBlur
+sxe ld:OLMRadialBlur.aex
+sxe ld:OLMRadialBlur
 g
 .echo === MODULE_LOAD_RadialBlur ===
-lm m RadialBlur
+lm m OLMRadialBlur
 .echo === FINAL_PLANE_HOOK_FRAGMENT_BEGIN ===
 '@
 $epilogue = @'

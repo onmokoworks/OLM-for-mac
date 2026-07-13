@@ -21,12 +21,30 @@ struct RadialBlurDebugConfig {
 };
 
 struct RadialBlurOuterSampleState {
-	double alpha = 0.0;
-	double validity_alpha = 0.0;
-	double accum_rgb[3] = {0.0, 0.0, 0.0};
-	double normalized_rgb[3] = {0.0, 0.0, 0.0};
-	double final_rgb[3] = {0.0, 0.0, 0.0};
+	float alpha = 0.0f;
+	float validity_alpha = 0.0f;
+	float accum_rgb[3] = {0.0f, 0.0f, 0.0f};
+	float normalized_rgb[3] = {0.0f, 0.0f, 0.0f};
+	float final_rgb[3] = {0.0f, 0.0f, 0.0f};
 };
+
+static float RadialF32Mul(float lhs, float rhs)
+{
+	volatile float result = lhs * rhs;
+	return result;
+}
+
+static float RadialF32Add(float lhs, float rhs)
+{
+	volatile float result = lhs + rhs;
+	return result;
+}
+
+static float RadialF32Div(float lhs, float rhs)
+{
+	volatile float result = lhs / rhs;
+	return result;
+}
 
 static std::vector<RadialBlurDebugPoint> ParseRadialBlurDebugPoints(const char *spec)
 {
@@ -90,27 +108,39 @@ static RadialBlurOuterSampleState ComputeRadialBlurOuterSampleState(
 	const SampleValidFn &sample_valid,
 	float brightness_gain)
 {
-	const double w00 = (1.0 - fx) * (1.0 - fy);
-	const double w10 = fx * (1.0 - fy);
-	const double w01 = (1.0 - fx) * fy;
-	const double w11 = fx * fy;
-	const double a00 = sample(x0, y0, 3) * w00;
-	const double a10 = sample(x1, y0, 3) * w10;
-	const double a01 = sample(x0, y1, 3) * w01;
-	const double a11 = sample(x1, y1, 3) * w11;
+	const float one_minus_fx = 1.0f - fx;
+	const float one_minus_fy = 1.0f - fy;
+	const float w00 = RadialF32Mul(one_minus_fx, one_minus_fy);
+	const float w10 = RadialF32Mul(one_minus_fy, fx);
+	const float w01 = RadialF32Mul(one_minus_fx, fy);
+	const float w11 = RadialF32Mul(fy, fx);
+	const float a00 = RadialF32Mul(sample(x0, y0, 3), w00);
+	const float a10 = RadialF32Mul(sample(x1, y0, 3), w10);
+	const float a01 = RadialF32Mul(sample(x0, y1, 3), w01);
+	const float a11 = RadialF32Mul(sample(x1, y1, 3), w11);
 
 	RadialBlurOuterSampleState state;
-	state.alpha = a00 + a10 + a01 + a11;
-	state.validity_alpha =
-		sample_valid(x0, y0) * w00 + sample_valid(x1, y0) * w10 +
-		sample_valid(x0, y1) * w01 + sample_valid(x1, y1) * w11;
+	state.alpha = RadialF32Add(RadialF32Add(RadialF32Add(a00, a10), a01), a11);
+	state.validity_alpha = RadialF32Add(
+		RadialF32Add(
+			RadialF32Add(
+				RadialF32Mul(sample_valid(x0, y0), w00),
+				RadialF32Mul(sample_valid(x1, y0), w10)),
+			RadialF32Mul(sample_valid(x0, y1), w01)),
+		RadialF32Mul(sample_valid(x1, y1), w11));
 
-	if (state.alpha > 1.0e-8) {
+	if (state.alpha > 1.0e-8f) {
+		const float reciprocal_alpha = RadialF32Div(1.0f, state.alpha);
 		for (int c = 0; c < 3; ++c) {
-			state.accum_rgb[c] = sample(x0, y0, c) * a00 + sample(x1, y0, c) * a10 +
-			                     sample(x0, y1, c) * a01 + sample(x1, y1, c) * a11;
-			state.normalized_rgb[c] = state.accum_rgb[c] / state.alpha;
-			state.final_rgb[c] = state.normalized_rgb[c] * brightness_gain;
+			state.accum_rgb[c] = RadialF32Add(
+				RadialF32Add(
+					RadialF32Add(
+						RadialF32Mul(sample(x0, y0, c), a00),
+						RadialF32Mul(sample(x1, y0, c), a10)),
+					RadialF32Mul(sample(x0, y1, c), a01)),
+				RadialF32Mul(sample(x1, y1, c), a11));
+			state.normalized_rgb[c] = RadialF32Mul(state.accum_rgb[c], reciprocal_alpha);
+			state.final_rgb[c] = RadialF32Mul(state.normalized_rgb[c], brightness_gain);
 		}
 	}
 
@@ -779,7 +809,7 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	}
 
 	const double rgb_quantize_epsilon = use_fft_convolution ? 0.0 : 1.0e-4;
-	const double alpha_quantize_epsilon = 1.0e-4;
+	const double alpha_quantize_epsilon = 0.0;
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
 			const double dx = (double)x - cx;

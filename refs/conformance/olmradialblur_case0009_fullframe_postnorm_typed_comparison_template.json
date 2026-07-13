@@ -1,0 +1,15 @@
+{
+  "kind": "olmradialblur_case0009_fullframe_postnorm_typed_local_model",
+  "schema": 1,
+  "model": {
+    "effect": "OLM RadialBlur",
+    "case_id": "case_0009",
+    "geometry": {"width": 1920, "height": 1080, "mode": "full-frame"},
+    "points": [
+      {"xy": [7, 0], "inverse_sample_xy": null, "cells": []},
+      {"xy": [8, 0], "inverse_sample_xy": null, "cells": []},
+      {"xy": [24, 0], "inverse_sample_xy": null, "cells": []}
+    ]
+  },
+  "note": "Template only. Populate from the current local model; do not fill from a Windows return or invent typed values. The comparator rejects incomplete models and returns."
+}

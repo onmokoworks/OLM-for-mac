@@ -10,6 +10,7 @@ object.  It does not replace prefill or worker calls with synthetic data.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import struct
 import sys
@@ -106,7 +107,11 @@ def main() -> int:
         })
 
     from PIL import Image
-    from unicorn.x86_const import UC_X86_REG_R12, UC_X86_REG_RDI, UC_X86_REG_RIP, UC_X86_REG_R15, UC_X86_REG_RSI
+    from unicorn.x86_const import (
+        UC_X86_REG_R12, UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_RCX,
+        UC_X86_REG_RDI, UC_X86_REG_RDX, UC_X86_REG_RIP, UC_X86_REG_R15,
+        UC_X86_REG_RSI, UC_X86_REG_RSP,
+    )
 
     params = load_case_params(options.manifest, options.case_id)
     image = Image.open(options.input_png).convert("RGBA")
@@ -143,7 +148,7 @@ def main() -> int:
         "hook_hits": 0, "work": 0, "param": 0, "rdi_at_hook": 0, "rsi_at_hook": 0,
         "angle_count": 0, "radial_count": 0, "prefill": None,
         "prepass_calls": 0, "scatter_calls": 0, "prepass_detours": 0, "scatter_detours": 0,
-        "worker_snapshot": None,
+        "worker_snapshot": None, "b150_records": [],
     }
 
     def after_normalization(ld: AexLoader, address: int, size: int) -> None:
@@ -158,7 +163,7 @@ def main() -> int:
 
     loader.add_code_hook(NORMALIZATION_AFTER, after_normalization)
     direct_context = prepare_direct_zoom_context(
-        loader, param_ctx, render_ctx, input_world, output_world, image,
+        loader, param_ctx, render_ctx, input_world, output_world, source,
         (options.width, options.height)
     )
     work = loader.bump_alloc(0x4300, align=64)
@@ -221,7 +226,61 @@ def main() -> int:
         return 0
 
     loader.add_code_hook(FUN_180005A00, prefill_and_skip)
-    loader.add_code_hook(FUN_18000B150, lambda _ld, _address, _size: state.__setitem__("prepass_calls", state["prepass_calls"] + 1))
+    def capture_b150_inputs(ld: AexLoader, address: int, size: int) -> None:
+        state["prepass_calls"] += 1
+        if len(state["b150_records"]) >= 4:
+            return
+
+        # FUN_18000b150 uses the Windows x64 ABI: RCX..R9 are arguments 1..4,
+        # followed by six integer/pointer arguments at RSP+0x28..0x50.
+        rsp = int(ld.uc.reg_read(UC_X86_REG_RSP))
+        args = [
+            int(ld.uc.reg_read(UC_X86_REG_RCX)),
+            int(ld.uc.reg_read(UC_X86_REG_RDX)),
+            int(ld.uc.reg_read(UC_X86_REG_R8)),
+            int(ld.uc.reg_read(UC_X86_REG_R9)),
+        ]
+        args.extend(u64(ld, rsp + offset) for offset in (0x28, 0x30, 0x38, 0x40, 0x48, 0x50))
+        context, source, scalar_a, scalar_b = args[:4]
+        width, row_limit, row_start, row_end, output_rgba, output_scalar = args[4:]
+
+        record: dict[str, Any] = {
+            "call_index": len(state["b150_records"]),
+            "abi": {
+                "context": context, "source_rgba": source,
+                "scalar_a": scalar_a, "scalar_b": scalar_b,
+                "width": width, "row_limit": row_limit,
+                "row_start": row_start, "row_end": row_end,
+                "output_rgba": output_rgba, "output_scalar": output_scalar,
+            },
+            "context_fields": {},
+            "rows": [],
+        }
+        try:
+            record["context_fields"] = {
+                "left_span_i32": struct.unpack("<i", ld.read_bytes(context + 0x4200, 4))[0],
+                "right_span_i32": struct.unpack("<i", ld.read_bytes(context + 0x4204, 4))[0],
+                "left_table": u64(ld, context + 0x3ee0),
+                "right_table": u64(ld, context + 0x4070),
+            }
+            base_index = width * row_start
+            # Capture the first four work pixels of this call. This keeps the
+            # report small while retaining exact source/scalar words for replay.
+            for i in range(min(width, 4)):
+                src_ptr = source + (base_index + i) * 16
+                a_ptr = scalar_a + (base_index + i) * 4
+                b_ptr = scalar_b + (base_index + i) * 4
+                record["rows"].append({
+                    "index": base_index + i,
+                    "source_rgba_f32": [read_f32(ld, src_ptr + 4 * channel) for channel in range(4)],
+                    "scalar_a_f32": read_f32(ld, a_ptr),
+                    "scalar_b_f32": read_f32(ld, b_ptr),
+                })
+        except Exception as exc:
+            record["read_error"] = str(exc)
+        state["b150_records"].append(record)
+
+    loader.add_code_hook(FUN_18000B150, capture_b150_inputs)
 
     def snapshot_worker_outputs(ld: AexLoader, address: int, size: int) -> None:
         state["scatter_calls"] += 1
@@ -316,6 +375,12 @@ def main() -> int:
             "nonzero_valid_count": sum(row["valid_f32"] != 0.0 for row in all_records),
             "nonzero_accum_count": sum(any(value != 0.0 for value in row["accum_rgba_f32"]) for row in all_records),
         }
+        plane_hashes = {
+            "final_rgba_f32": hashlib.sha256(loader.read_bytes(final, radial * angle_count * 16)).hexdigest(),
+            "accum_rgba_f32": hashlib.sha256(loader.read_bytes(accum, radial * angle_count * 16)).hexdigest(),
+            "denom_f32": hashlib.sha256(loader.read_bytes(denom, radial * angle_count * 4)).hexdigest(),
+            "valid_f32": hashlib.sha256(loader.read_bytes(valid, radial * angle_count * 4)).hexdigest(),
+        }
         output_samples = []
         for output_x, output_y in ((7, 0), (8, 0), (24, 0)):
             radius_raw, angle_raw = call_zoom_inverse(loader, work, float(output_x), float(output_y))
@@ -382,8 +447,10 @@ def main() -> int:
             "warning": "Not mapped to case_0009 output coordinates; this proves small-plane ownership/layout only.",
         },
         "records": records,
+        "b150_input_capture": state["b150_records"],
         "bounded_output_samples": output_samples,
         "plane_stats": plane_stats,
+        "plane_sha256": plane_hashes,
         "hook_registers": {"rdi": state["rdi_at_hook"]},
         "direct_context": direct_context,
         "prefill": state["prefill"],

@@ -1,5 +1,17 @@
 # OLMRadialBlur case_0009 Full-Frame Post-Normalization Typed Witness
 
+## Producer Addendum (2026-07-12)
+
+The same run must stop at `OLMRadialBlur+0xb150` (`FUN_18000b150`) for the
+partition containing polar rows `1047/1048`. Record the ABI-bound context,
+source RGBA, source scalar, per-cell scale plane, accumulation plane, alpha
+plane, row range, width, and outer/inner spans. Return float32 words from the
+scale plane and source alpha for radii `1095..1097` on both rows. This is
+mandatory because Mac AE A/B rejected forward-sampler, FFT precision,
+fixed-span float accumulation, coordinate-offset, and final-writer
+explanations. Final-plane cells without producer inputs are
+`answered_partial`.
+
 ## Purpose
 
 This is the one focused Windows confirmation for the latest bounded nonzero

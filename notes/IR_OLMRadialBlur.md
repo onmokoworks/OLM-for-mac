@@ -10,6 +10,16 @@
   - `refs/win_references/20260605_extra/OLMRadialBlur_img2`
   - `refs/win_references/olm_reference_return_windows_20260617_radialblur_inner_full_software`
 - Current status:
+  - 2026-07-13 actual-AEX `FUN_18000A850 -> FUN_180009D80` replay is raw
+    float32 exact at `(6,0)/(7,0)/(8,0)/(24,0)` after preserving the AEX input
+    float32 quantization and `SUBSS/MULSS/ADDSS` order. The previous `(6,0)`
+    one-ULP alpha gap was a double-precision mirror artifact. The Mac outer
+    sample helper has been changed from double accumulation to explicit
+    operation-by-operation float32 and builds universally. Mac AE A/B with the
+    grounded pure-truncate writer improves `case_0009` from 31,119 to 21,429
+    differing pixels (`max=1`) but does not close it. Evidence:
+    `refs/conformance/olmradialblur_a850_downstream_actual_aex_20260713.md` and
+    `refs/conformance/olmradialblur_a850_d80_f32_mac_ae_ab_20260713.md`.
   - Zoom no-inner/no-noise: guarded near-exact, not `AE exact`
   - tiny Rotation: guarded mean-only near-match, high max residual remains
   - Inner: binary-grounded in plane ownership and selected helper spans, but
@@ -995,6 +1005,18 @@ Expected useful classifications:
   `refs/reports/runtime_trace_comparisons/olmradialblur_residual_witness_20260624.md`.
   Use this over the older generic `olmradialblur_residual_witness.md` report
   when deciding the next RadialBlur change.
+
+### 2026-07-13 full-frame coordinate-cell audit
+
+The actual-AEX sweep in
+`refs/conformance/olmradialblur_case0009_fullframe_coordinate_cells_actual_aex_20260713.md`
+reaches all 32 row-zero points. Direct D80 alpha is sub-unit only at
+`x={6,10,13}` and is exactly `1.0f` at the retained residual points `x=7` and
+`x=12`. This rules out direct D80 accumulation and final truncation as the
+source of those two residuals. It does **not** yet prove a coordinate/cell
+selection bug: the probe has no same-point Mac full-frame handoff witness.
+The next bounded comparison must capture the Mac producer-to-D80 coordinate,
+cell index, and source float alongside the Windows actual-AEX values.
 
 ## Reference Provenance
 

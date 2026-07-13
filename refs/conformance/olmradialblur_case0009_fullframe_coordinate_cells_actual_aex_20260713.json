@@ -1,0 +1,2371 @@
+{
+  "aex": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+  "audit_basis": [
+    "actual-AEX entry reached all 32 sampled top-row points",
+    "direct D80 alpha remains 1.0 at target x=7 and x=12",
+    "probe captures Windows actual-AEX coordinate/cell handoff and direct D80 output only",
+    "probe does not provide same-point Mac coordinate/cell evidence",
+    "actual D80 output matches the existing mirror at every sampled point"
+  ],
+  "audit_verdict": "not_proven_coordinate_or_cell_selection_residual_source",
+  "case_id": "case_0009",
+  "debug_size": "32x32",
+  "direct_d80_subunit_alpha_x": [
+    6,
+    10,
+    13
+  ],
+  "input_png": "refs/win_references/20260604_olm/OLMRadialBlur/case_0009_before_effects.png",
+  "kind": "olmradialblur_case0009_fullframe_coordinate_cells_actual_aex_probe",
+  "points": [
+    {
+      "a850": {
+        "angle_raw_f32": 3.653982162475586,
+        "input_xy_f32": [
+          0.0,
+          0.0
+        ],
+        "radius_raw_f32": 1101.45361328125
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          2,
+          3
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          46,
+          47
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 2.7887897384944154,
+        "angle_int": 2,
+        "radius_index": 46.45361328125,
+        "radius_int": 46
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        0,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.6544275283813477,
+        "input_xy_f32": [
+          1.0,
+          0.0
+        ],
+        "radius_raw_f32": 1100.5821533203125
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          2,
+          3
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          45,
+          46
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 2.9163776731786584,
+        "angle_int": 2,
+        "radius_index": 45.5821533203125,
+        "radius_int": 45
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        1,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.6548736095428467,
+        "input_xy_f32": [
+          2.0,
+          0.0
+        ],
+        "radius_raw_f32": 1099.7108154296875
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          3,
+          0
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          44,
+          45
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 3.044170513539484,
+        "angle_int": 3,
+        "radius_index": 44.7108154296875,
+        "radius_int": 44
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        2,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.655320644378662,
+        "input_xy_f32": [
+          3.0,
+          0.0
+        ],
+        "radius_raw_f32": 1098.83984375
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          3,
+          0
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          43,
+          44
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 3.17223656146939,
+        "angle_int": 3,
+        "radius_index": 43.83984375,
+        "radius_int": 43
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        3,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.6557681560516357,
+        "input_xy_f32": [
+          4.0,
+          0.0
+        ],
+        "radius_raw_f32": 1097.968994140625
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          3,
+          0
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          42,
+          43
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 3.3004392131836084,
+        "angle_int": 3,
+        "radius_index": 42.968994140625,
+        "radius_int": 42
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        4,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.6562163829803467,
+        "input_xy_f32": [
+          5.0,
+          0.0
+        ],
+        "radius_raw_f32": 1097.098388671875
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          3,
+          0
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          42,
+          43
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 3.4288467705744097,
+        "angle_int": 3,
+        "radius_index": 42.098388671875,
+        "radius_int": 42
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        5,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.656665325164795,
+        "input_xy_f32": [
+          6.0,
+          0.0
+        ],
+        "radius_raw_f32": 1096.22802734375
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        0.9999999403953552
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          3,
+          0
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          41,
+          42
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 3.557459233642021,
+        "angle_int": 3,
+        "radius_index": 41.22802734375,
+        "radius_int": 41
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        6,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.6571152210235596,
+        "input_xy_f32": [
+          7.0,
+          0.0
+        ],
+        "radius_raw_f32": 1095.35791015625
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          3,
+          0
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          40,
+          41
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 3.6863449042787124,
+        "angle_int": 3,
+        "radius_index": 40.35791015625,
+        "radius_int": 40
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        7,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.6575655937194824,
+        "input_xy_f32": [
+          8.0,
+          0.0
+        ],
+        "radius_raw_f32": 1094.488037109375
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          3,
+          0
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          39,
+          40
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 3.8153671786997165,
+        "angle_int": 3,
+        "radius_index": 39.488037109375,
+        "radius_int": 39
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        8,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.6580166816711426,
+        "input_xy_f32": [
+          9.0,
+          0.0
+        ],
+        "radius_raw_f32": 1093.6182861328125
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          3,
+          0
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          38,
+          39
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 3.9445943587973034,
+        "angle_int": 3,
+        "radius_index": 38.6182861328125,
+        "radius_int": 38
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        9,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.65846848487854,
+        "input_xy_f32": [
+          10.0,
+          0.0
+        ],
+        "radius_raw_f32": 1092.748779296875
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        0.9999999403953552
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          0,
+          1
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          37,
+          38
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 0.07402644457170027,
+        "angle_int": 0,
+        "radius_index": 37.748779296875,
+        "radius_int": 37
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        10,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.658921241760254,
+        "input_xy_f32": [
+          11.0,
+          0.0
+        ],
+        "radius_raw_f32": 1091.8795166015625
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          0,
+          1
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          36,
+          37
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 0.20373173791494992,
+        "angle_int": 0,
+        "radius_index": 36.8795166015625,
+        "radius_int": 36
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        11,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.659374475479126,
+        "input_xy_f32": [
+          12.0,
+          0.0
+        ],
+        "radius_raw_f32": 1091.010498046875
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          0,
+          1
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          36,
+          37
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 0.3335736350427396,
+        "angle_int": 0,
+        "radius_index": 36.010498046875,
+        "radius_int": 36
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        12,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.6598284244537354,
+        "input_xy_f32": [
+          13.0,
+          0.0
+        ],
+        "radius_raw_f32": 1090.1417236328125
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        0.9999999403953552
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          0,
+          1
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          35,
+          36
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 0.46362043784711204,
+        "angle_int": 0,
+        "radius_index": 35.1417236328125,
+        "radius_int": 35
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        13,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.660283327102661,
+        "input_xy_f32": [
+          14.0,
+          0.0
+        ],
+        "radius_raw_f32": 1089.273193359375
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          0,
+          1
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          34,
+          35
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 0.5939404482205646,
+        "angle_int": 0,
+        "radius_index": 34.273193359375,
+        "radius_int": 34
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        14,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.660738706588745,
+        "input_xy_f32": [
+          15.0,
+          0.0
+        ],
+        "radius_raw_f32": 1088.40478515625
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          0,
+          1
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          33,
+          34
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 0.7243970623783298,
+        "angle_int": 0,
+        "radius_index": 33.40478515625,
+        "radius_int": 33
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        15,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.6611948013305664,
+        "input_xy_f32": [
+          16.0,
+          0.0
+        ],
+        "radius_raw_f32": 1087.53662109375
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          0,
+          1
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          32,
+          33
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 0.8550585822129051,
+        "angle_int": 0,
+        "radius_index": 32.53662109375,
+        "radius_int": 32
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        16,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.661651849746704,
+        "input_xy_f32": [
+          17.0,
+          0.0
+        ],
+        "radius_raw_f32": 1086.6688232421875
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          0,
+          1
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          31,
+          32
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 0.9859933096161058,
+        "angle_int": 0,
+        "radius_index": 31.6688232421875,
+        "radius_int": 31
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        17,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.662109613418579,
+        "input_xy_f32": [
+          18.0,
+          0.0
+        ],
+        "radius_raw_f32": 1085.8011474609375
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          1,
+          2
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          30,
+          31
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 1.117132942696344,
+        "angle_int": 1,
+        "radius_index": 30.8011474609375,
+        "radius_int": 30
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        18,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.6625678539276123,
+        "input_xy_f32": [
+          19.0,
+          0.0
+        ],
+        "radius_raw_f32": 1084.93359375
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          1,
+          2
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          29,
+          30
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 1.2484091795608947,
+        "angle_int": 1,
+        "radius_index": 29.93359375,
+        "radius_int": 29
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        19,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.663027048110962,
+        "input_xy_f32": [
+          20.0,
+          0.0
+        ],
+        "radius_raw_f32": 1084.06640625
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          1,
+          2
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          29,
+          30
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 1.3799586239942983,
+        "angle_int": 1,
+        "radius_index": 29.06640625,
+        "radius_int": 29
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        20,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.663486957550049,
+        "input_xy_f32": [
+          21.0,
+          0.0
+        ],
+        "radius_raw_f32": 1083.199462890625
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          1,
+          2
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          28,
+          29
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 1.5117129741045119,
+        "angle_int": 1,
+        "radius_index": 28.199462890625,
+        "radius_int": 28
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        21,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.663947582244873,
+        "input_xy_f32": [
+          22.0,
+          0.0
+        ],
+        "radius_raw_f32": 1082.3326416015625
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          1,
+          2
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          27,
+          28
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 1.6436722298913082,
+        "angle_int": 1,
+        "radius_index": 27.3326416015625,
+        "radius_int": 27
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        22,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.6644089221954346,
+        "input_xy_f32": [
+          23.0,
+          0.0
+        ],
+        "radius_raw_f32": 1081.4661865234375
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          1,
+          2
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          26,
+          27
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 1.7758363913549147,
+        "angle_int": 1,
+        "radius_index": 26.4661865234375,
+        "radius_int": 26
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        23,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.6648709774017334,
+        "input_xy_f32": [
+          24.0,
+          0.0
+        ],
+        "radius_raw_f32": 1080.599853515625
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          1,
+          2
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          25,
+          26
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 1.9082054584951038,
+        "angle_int": 1,
+        "radius_index": 25.599853515625,
+        "radius_int": 25
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        24,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.6653337478637695,
+        "input_xy_f32": [
+          25.0,
+          0.0
+        ],
+        "radius_raw_f32": 1079.7337646484375
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          2,
+          3
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          24,
+          25
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 2.040779431312103,
+        "angle_int": 2,
+        "radius_index": 24.7337646484375,
+        "radius_int": 24
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        25,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.665797233581543,
+        "input_xy_f32": [
+          26.0,
+          0.0
+        ],
+        "radius_raw_f32": 1078.867919921875
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          2,
+          3
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          23,
+          24
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 2.173558309805685,
+        "angle_int": 2,
+        "radius_index": 23.867919921875,
+        "radius_int": 23
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        26,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.666261672973633,
+        "input_xy_f32": [
+          27.0,
+          0.0
+        ],
+        "radius_raw_f32": 1078.0023193359375
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          2,
+          3
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          23,
+          24
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 2.3066103958681197,
+        "angle_int": 2,
+        "radius_index": 23.0023193359375,
+        "radius_int": 23
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        27,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.666726589202881,
+        "input_xy_f32": [
+          28.0,
+          0.0
+        ],
+        "radius_raw_f32": 1077.136962890625
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          2,
+          3
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          22,
+          23
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 2.4397990857150944,
+        "angle_int": 2,
+        "radius_index": 22.136962890625,
+        "radius_int": 22
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        28,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.6671924591064453,
+        "input_xy_f32": [
+          29.0,
+          0.0
+        ],
+        "radius_raw_f32": 1076.2718505859375
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          2,
+          3
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          21,
+          22
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 2.573260983130922,
+        "angle_int": 2,
+        "radius_index": 21.2718505859375,
+        "radius_int": 21
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        29,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.667659044265747,
+        "input_xy_f32": [
+          30.0,
+          0.0
+        ],
+        "radius_raw_f32": 1075.4068603515625
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          2,
+          3
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          20,
+          21
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 2.7069277862235595,
+        "angle_int": 2,
+        "radius_index": 20.4068603515625,
+        "radius_int": 20
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        30,
+        0
+      ]
+    },
+    {
+      "a850": {
+        "angle_raw_f32": 3.668126344680786,
+        "input_xy_f32": [
+          31.0,
+          0.0
+        ],
+        "radius_raw_f32": 1074.542236328125
+      },
+      "actual_d80_rgba_f32": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "actual_vs_mirror": {
+        "exact_f32": true,
+        "rgba_abs_delta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "cell_selection": {
+        "angle_indices": [
+          2,
+          3
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          19,
+          20
+        ]
+      },
+      "entry_reached": true,
+      "indices": {
+        "angle_index": 2.8407994949927797,
+        "angle_int": 2,
+        "radius_index": 19.542236328125,
+        "radius_int": 19
+      },
+      "render_fault": "emulation faulted at RIP=0x180009e35: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+      "xy": [
+        31,
+        0
+      ]
+    }
+  ],
+  "points_spec": "0:0,1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0,13:0,14:0,15:0,16:0,17:0,18:0,19:0,20:0,21:0,22:0,23:0,24:0,25:0,26:0,27:0,28:0,29:0,30:0,31:0",
+  "prefill_scope": "opaque actual-AEX prerequisite; no reconstruction or comparison",
+  "schema": 1,
+  "scope": "actual-AEX A850 coordinates and D80 four-cell selection; opaque prefill",
+  "target_windows_alpha_254_x": [
+    6,
+    7,
+    12
+  ],
+  "target_x_direct_d80_alpha_one": [
+    7,
+    12
+  ]
+}

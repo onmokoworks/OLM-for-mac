@@ -484,36 +484,43 @@ def sample_final_plane(
 ) -> dict[str, Any]:
     # Mirrors FUN_180009d80: rows are angle, columns are radius. Angle wraps at
     # the last row; radius uses the current integer cell and +1 neighbor.
+    radius_index = f32(radius_index)
+    angle_index = f32(angle_index)
     ai0 = int(angle_index)
     ai1 = ai0 + 1
     if ai0 == angle_count - 1:
         ai1 = 0
     ri0 = int(radius_index)
     ri1 = ri0 + 1
-    af = angle_index - ai0
-    rf = radius_index - ri0
-    w00 = (1.0 - rf) * (1.0 - af)
-    w10 = rf * (1.0 - af)
-    w01 = (1.0 - rf) * af
-    w11 = rf * af
+    # FUN_180009d80 uses scalar float32 SUBSS/MULSS/ADDSS throughout. Keep
+    # every intermediate rounded to float32 and preserve its cell-add order.
+    af = f32(angle_index - ai0)
+    rf = f32(radius_index - ri0)
+    one_minus_af = f32(1.0 - af)
+    one_minus_rf = f32(1.0 - rf)
+    w00 = f32(one_minus_rf * one_minus_af)
+    w10 = f32(one_minus_af * rf)
+    w01 = f32(one_minus_rf * af)
+    w11 = f32(af * rf)
     cells = {
         "a0_r0": read_rgba_cell(loader, plane, radial_count, ai0, ri0),
         "a0_r1": read_rgba_cell(loader, plane, radial_count, ai0, ri1),
         "a1_r0": read_rgba_cell(loader, plane, radial_count, ai1, ri0),
         "a1_r1": read_rgba_cell(loader, plane, radial_count, ai1, ri1),
     }
-    out = [0.0, 0.0, 0.0, 0.0]
+    out = [f32(0.0), f32(0.0), f32(0.0), f32(0.0)]
     for key, weight in (("a0_r0", w00), ("a0_r1", w10), ("a1_r0", w01), ("a1_r1", w11)):
         cell = cells[key]
-        alpha_weight = weight * cell[3]
-        out[3] += alpha_weight
-        out[0] += alpha_weight * cell[0]
-        out[1] += alpha_weight * cell[1]
-        out[2] += alpha_weight * cell[2]
+        alpha_weight = f32(weight * cell[3])
+        out[3] = f32(out[3] + alpha_weight)
+        out[0] = f32(out[0] + f32(alpha_weight * cell[0]))
+        out[1] = f32(out[1] + f32(alpha_weight * cell[1]))
+        out[2] = f32(out[2] + f32(alpha_weight * cell[2]))
     if out[3] != 0.0:
-        out[0] /= out[3]
-        out[1] /= out[3]
-        out[2] /= out[3]
+        reciprocal = f32(1.0 / out[3])
+        out[0] = f32(out[0] * reciprocal)
+        out[1] = f32(out[1] * reciprocal)
+        out[2] = f32(out[2] * reciprocal)
     return {
         "angle_indices": [ai0, ai1],
         "radius_indices": [ri0, ri1],

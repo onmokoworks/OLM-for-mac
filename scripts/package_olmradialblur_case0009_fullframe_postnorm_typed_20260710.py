@@ -74,6 +74,13 @@ def return_template() -> dict:
                     point("control", [24, 0], [21, 3, 3, 255]),
                 ],
                 "same_run": True,
+                "producer_b150": {
+                    "hook_offset": "0xb150", "row_range": [None, None], "width": None,
+                    "context": None, "source_rgba": None, "source_scalar": None,
+                    "scale_plane": None, "accum_rgba": None, "alpha_plane": None,
+                    "outer_span": None, "inner_span": None,
+                    "target_scale_f32": {}, "target_source_alpha_f32": {},
+                },
                 "console_artifact": None,
                 "failed_reason": None,
             },
@@ -105,8 +112,8 @@ def main() -> int:
             "request_id": REQUEST,
             "plugin_area": "OLMRadialBlur Zoom case_0009 full-frame post-normalization typed witness",
             "mode": "external-trace",
-            "command": "Run exactly one Windows AE Software full-frame case_0009 render under CDB; at 0x180005d99 compute actual inverse coordinates and capture ordered four-cell accum/denom/valid/final typed values for (7,0), (8,0), and (24,0).",
-            "stop_condition": "answered only when all three complete rows and hook liveness are from the same run; otherwise return the exact failure reason and artifact.",
+            "command": "Run exactly one Windows AE Software full-frame case_0009 render under CDB; capture the target-row FUN_18000b150 producer inputs at +0xb150 and the post-normalization cells at +0x5d99/+0x5e5b/+0x5e6d for (7,0), (8,0), and (24,0).",
+            "stop_condition": "answered only when the +0xb150 scale/source-alpha producer values and all three final-plane rows are complete and bound to the same run; otherwise return the exact failure reason and artifact.",
         }],
     }
     output.parent.mkdir(parents=True, exist_ok=True)

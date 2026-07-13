@@ -1,0 +1,507 @@
+{
+  "b150_input_capture": [
+    {
+      "abi": {
+        "context": 553500672,
+        "output_rgba": 553517824,
+        "output_scalar": 553520960,
+        "row_end": 5,
+        "row_limit": 4,
+        "row_start": 0,
+        "scalar_a": 553526592,
+        "scalar_b": 553525760,
+        "source_rgba": 553521792,
+        "width": 49
+      },
+      "call_index": 0,
+      "context_fields": {
+        "left_span_i32": 0,
+        "left_table": 0,
+        "right_span_i32": 0,
+        "right_table": 0
+      },
+      "rows": [
+        {
+          "index": 0,
+          "scalar_a_f32": 0.0,
+          "scalar_b_f32": 1.0,
+          "source_rgba_f32": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "index": 1,
+          "scalar_a_f32": 0.0,
+          "scalar_b_f32": 1.0,
+          "source_rgba_f32": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "index": 2,
+          "scalar_a_f32": 0.0,
+          "scalar_b_f32": 1.0,
+          "source_rgba_f32": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "index": 3,
+          "scalar_a_f32": 0.0,
+          "scalar_b_f32": 1.0,
+          "source_rgba_f32": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    }
+  ],
+  "bounded_output_samples": [
+    {
+      "angle_index": 3.6863449042787124,
+      "angle_raw": 3.6571152210235596,
+      "radius_index": 40.35791015625,
+      "radius_raw": 1095.35791015625,
+      "sample": {
+        "angle_indices": [
+          3,
+          0
+        ],
+        "cells": {
+          "a0_r0": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          40,
+          41
+        ],
+        "round_u8": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "sample_float": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "trunc_u8": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "weights": [
+          0.20139475140307284,
+          0.11226034431821474,
+          0.44069509234692716,
+          0.24564981193178526
+        ]
+      },
+      "status": "sampled",
+      "xy": [
+        7,
+        0
+      ]
+    },
+    {
+      "angle_index": 3.8153671786997165,
+      "angle_raw": 3.6575655937194824,
+      "radius_index": 39.488037109375,
+      "radius_raw": 1094.488037109375,
+      "sample": {
+        "angle_indices": [
+          3,
+          0
+        ],
+        "cells": {
+          "a0_r0": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          39,
+          40
+        ],
+        "round_u8": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "sample_float": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "trunc_u8": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "weights": [
+          0.0945251528971422,
+          0.09010766840314127,
+          0.4174377377278578,
+          0.39792944097185873
+        ]
+      },
+      "status": "sampled",
+      "xy": [
+        8,
+        0
+      ]
+    },
+    {
+      "angle_index": 1.9082054584951038,
+      "angle_raw": 3.6648709774017334,
+      "radius_index": 25.599853515625,
+      "radius_raw": 1080.599853515625,
+      "sample": {
+        "angle_indices": [
+          1,
+          2
+        ],
+        "cells": {
+          "a0_r0": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          25,
+          26
+        ],
+        "round_u8": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "sample_float": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "trunc_u8": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "weights": [
+          0.03673126306799923,
+          0.055063278436896956,
+          0.36341522130700077,
+          0.544790237188103
+        ]
+      },
+      "status": "sampled",
+      "xy": [
+        24,
+        0
+      ]
+    }
+  ],
+  "case_id": "case_0009",
+  "classification": "aex-normalization-boundary-small-witness",
+  "direct_context": {
+    "geometry_height": 32,
+    "geometry_ptr_0x08": 1073743104,
+    "geometry_width": 32,
+    "output_plane_0xa0": 553484288,
+    "rgba_plane_0x98": 553459712,
+    "scalar_ones_0x88_0x90": 553476096,
+    "scalar_zeros": 553480192
+  },
+  "elapsed_seconds": 0.09525227546691895,
+  "fault": "",
+  "geometry": {
+    "angle_count": 4,
+    "height": 32,
+    "radial_count": 49,
+    "source": "live_r15_r12_at_prefill_boundary",
+    "width": 32
+  },
+  "harness_fixups": {
+    "min_radius": null
+  },
+  "hook_registers": {
+    "rdi": 784
+  },
+  "instructions": 109038,
+  "kind": "olmradialblur_final_plane_small_probe",
+  "normalization_hook": "0x180005d99_after_0x180005d96_normalization_boundary",
+  "plane_stats": {
+    "cell_count": 196,
+    "informative_cell_count": 196,
+    "nonzero_accum_count": 196,
+    "nonzero_denom_count": 196,
+    "nonzero_valid_count": 196
+  },
+  "plane_types": {
+    "accum": "rgba_f32",
+    "denom": "f32",
+    "final": "rgba_f32",
+    "valid": "f32"
+  },
+  "pointers": {
+    "accum_param_1_0x842": 553517824,
+    "denom_param_1_0x843": 553520960,
+    "final_param_1_7": 553521792,
+    "valid_param_1_10": 553526592,
+    "work": 553500672
+  },
+  "prefill": null,
+  "prefill_mode": "actual-aex",
+  "records": [
+    {
+      "accum_rgba_f32": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "angle_idx": 0,
+      "cell": 0,
+      "denom_f32": 1.0,
+      "final_rgba_f32": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "radius_idx": 0,
+      "valid_f32": 1.0
+    },
+    {
+      "accum_rgba_f32": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "angle_idx": 0,
+      "cell": 1,
+      "denom_f32": 1.0,
+      "final_rgba_f32": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "radius_idx": 1,
+      "valid_f32": 1.0
+    },
+    {
+      "accum_rgba_f32": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "angle_idx": 0,
+      "cell": 2,
+      "denom_f32": 1.0,
+      "final_rgba_f32": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "radius_idx": 2,
+      "valid_f32": 1.0
+    },
+    {
+      "accum_rgba_f32": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "angle_idx": 0,
+      "cell": 3,
+      "denom_f32": 1.0,
+      "final_rgba_f32": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "radius_idx": 3,
+      "valid_f32": 1.0
+    }
+  ],
+  "sample_geometry": {
+    "cells": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "selection": "first-informative-polar-cells",
+    "warning": "Not mapped to case_0009 output coordinates; this proves small-plane ownership/layout only."
+  },
+  "schema": 1,
+  "source_crop_xywh": [
+    416,
+    288,
+    32,
+    32
+  ],
+  "status": "ok",
+  "worker_execution": {
+    "post_prepass_snapshot": {
+      "informative_cell_count": 4,
+      "records": [
+        {
+          "accum_rgba_f32": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "angle_idx": 0,
+          "denom_f32": 1.0,
+          "radius_idx": 0,
+          "valid_f32": 1.0
+        },
+        {
+          "accum_rgba_f32": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "angle_idx": 0,
+          "denom_f32": 1.0,
+          "radius_idx": 1,
+          "valid_f32": 1.0
+        },
+        {
+          "accum_rgba_f32": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "angle_idx": 0,
+          "denom_f32": 1.0,
+          "radius_idx": 2,
+          "valid_f32": 1.0
+        },
+        {
+          "accum_rgba_f32": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "angle_idx": 0,
+          "denom_f32": 1.0,
+          "radius_idx": 3,
+          "valid_f32": 1.0
+        }
+      ],
+      "stage": "at-scatter-entry-after-prepass"
+    },
+    "prepass": "actual-aex",
+    "prepass_calls": 1,
+    "prepass_detour_calls": 0,
+    "scatter": "actual-aex",
+    "scatter_calls": 1,
+    "scatter_detour_calls": 0
+  }
+}
