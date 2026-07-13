@@ -46,6 +46,24 @@ This is a host precondition failure, not plugin or algorithm evidence. The
 request and return were archived together under
 `/Volumes/onmk/olm_pr/old/20260714_002900__intake_direct_gate_afterfx_already_running/`.
 The gate must be retried only after After Effects is fully closed.
+
+## Direct launcher gate retry 2
+
+The retry started CDB, but no uniquely observable desktop `AfterFX.exe` was
+created. The returned bootstrap trace contains only the CDB log-open line; it
+does not contain either explicit initial-break marker.
+
+- Return SHA-256: `d256616828358291a69258ddcb2449b8e53c80cac56081415eef6588541211bc`
+- Status: `exact_bind_failure`
+- Stage: `cdb_launch`
+- Missing fields: `one_desktop_AfterFX_process`, `cdb_bootstrap`
+- `bootstrap_host_image_marker_observed=false`
+- `queue_bootstrap_marker_observed=false`
+- Typed artifacts: none
+
+This is still a launcher/host failure, not plugin evidence. Do not resend the
+full witness batch until the direct launch can produce a visible AfterFX
+process and both bootstrap markers.
 - No returned artifact was produced.
 - The same failure appears across four different plugins, so this batch cannot
   distinguish plugin behavior.
