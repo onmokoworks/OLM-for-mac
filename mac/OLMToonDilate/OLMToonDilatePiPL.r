@@ -25,7 +25,7 @@ resource 'PiPL' (16000) {
 		AE_Effect_Version { 559104 /* PF_VERSION(1, 1, 1, PF_Stage_DEVELOP, 0) = 0x88800 */ },
 		AE_Effect_Info_Flags { 0 },
 		AE_Effect_Global_OutFlags { 0x02000040 },
-		AE_Effect_Global_OutFlags_2 { 0x08001400 },
+		AE_Effect_Global_OutFlags_2 { 0x00801400 },
 		AE_Effect_Match_Name { "ADBE OLMToonDilate" },
 		AE_Reserved_Info { 0 },
 		AE_Effect_Support_URL { "https://olm.co.jp/" }

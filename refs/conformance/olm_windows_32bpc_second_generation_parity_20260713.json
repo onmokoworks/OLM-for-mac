@@ -1,0 +1,42 @@
+{
+  "schema": "olm.windows-32bpc-second-generation-analysis/1",
+  "source": "refs/windows_returns/20260713/20260713_085820__RETURN__olm_windows_32bpc_second_generation_parity_20260713.zip",
+  "source_sha256": "8c1e7df52c4917a9b2872cd52e41a0ad4dac86032d008498499e9d9227d4174f",
+  "status": "accepted_plugin_delta_exact",
+  "host_gates": {
+    "kind": true,
+    "rendered": true,
+    "ae_version": true,
+    "renderer": true,
+    "depth": true,
+    "linear_light": true,
+    "template": true
+  },
+  "cases": {
+    "olmcolorkey__case_0002": {
+      "row_contracts_pass": true,
+      "effect_vs_no_effect": {
+        "width": 1920,
+        "height": 1080,
+        "mismatched_values": 0,
+        "max_raw_u32_delta": 0
+      },
+      "plugin_delta_exact": true,
+      "effect_sha256": "c9350957d5c29a33a1af06de320bcfce8ee3d15dd16d02ae785c5f3df13c4ba8",
+      "control_sha256": "f949d2a62e8899496fc6aff3894c55b55f459ece1e6f6d3ce5bf0b6752fb32bc"
+    },
+    "olmtoondilate__case_0001": {
+      "row_contracts_pass": true,
+      "effect_vs_no_effect": {
+        "width": 1920,
+        "height": 1080,
+        "mismatched_values": 0,
+        "max_raw_u32_delta": 0
+      },
+      "plugin_delta_exact": true,
+      "effect_sha256": "39f65dc55665d869e114b43f70bf4f87a8d5fbe416de19e5033391839c289e52",
+      "control_sha256": "97c719725143141d031b3fab00f2c981df6a65a2123a0e2288c62e6ead9defcc"
+    }
+  },
+  "scope": "Windows effect delta only; cross-host AE exact requires Windows-control versus Mac-control equality"
+}

@@ -1,0 +1,248 @@
+{
+  "kind": "olm_32bpc_typed_procedural_render_record",
+  "schema": 1,
+  "platform": "macos",
+  "record_role": "reference",
+  "required_ae_major_minor": "26.3",
+  "ae_version": "",
+  "output_template": "OLM EXR 32 Float",
+  "fixture_jsx_sha256": "85129d1cc50be9b8ad9b6945e0c7cc07c49fdafe3b99c49f323b49d364ec4ca8",
+  "cases": [
+    {
+      "id": "olmcolorkey_typed_procedural_64x64",
+      "effect": "OLM Color Key",
+      "plugin": {
+        "name": "OLMColorKey.aex",
+        "path": "",
+        "sha256": ""
+      },
+      "fixture_contract": {
+        "manifest_kind": "olm_32bpc_typed_procedural_fixture",
+        "project_bits_per_channel": 32,
+        "working_space": "None",
+        "linear_blending": false,
+        "dimensions": [
+          64,
+          64
+        ],
+        "frame": 0,
+        "source_policy": "AE-generated solids only; no footage imported",
+        "render_policy": "same comp, only branch enabled state changes",
+        "source_layers": [
+          {
+            "name": "solid_background",
+            "kind": "solid",
+            "bounds": [
+              0,
+              0,
+              64,
+              64
+            ],
+            "rgb": [
+              0,
+              0,
+              0
+            ],
+            "alpha": 1.0
+          },
+          {
+            "name": "rect_integer_a25",
+            "kind": "solid",
+            "bounds": [
+              4,
+              4,
+              20,
+              16
+            ],
+            "rgb": [
+              1,
+              0,
+              0
+            ],
+            "alpha": 0.25
+          },
+          {
+            "name": "rect_integer_a50",
+            "kind": "solid",
+            "bounds": [
+              28,
+              4,
+              20,
+              16
+            ],
+            "rgb": [
+              0,
+              1,
+              0
+            ],
+            "alpha": 0.5
+          },
+          {
+            "name": "rect_integer_a75",
+            "kind": "solid",
+            "bounds": [
+              4,
+              28,
+              20,
+              16
+            ],
+            "rgb": [
+              0,
+              0,
+              1
+            ],
+            "alpha": 0.75
+          },
+          {
+            "name": "rect_integer_a100",
+            "kind": "solid",
+            "bounds": [
+              28,
+              28,
+              20,
+              16
+            ],
+            "rgb": [
+              1,
+              1,
+              1
+            ],
+            "alpha": 1.0
+          }
+        ],
+        "output_names": {
+          "no_effect": "effect_no_effect_00000.exr",
+          "effect_on": "effect_effect_on_00000.exr"
+        }
+      },
+      "outputs": {
+        "no_effect": {
+          "path": "",
+          "sha256": ""
+        },
+        "effect_on": {
+          "path": "",
+          "sha256": ""
+        }
+      }
+    },
+    {
+      "id": "olmtoondilate_typed_procedural_64x64",
+      "effect": "OLM Toon Dilate",
+      "plugin": {
+        "name": "OLMToonDilate.aex",
+        "path": "",
+        "sha256": ""
+      },
+      "fixture_contract": {
+        "manifest_kind": "olm_32bpc_typed_procedural_fixture",
+        "project_bits_per_channel": 32,
+        "working_space": "None",
+        "linear_blending": false,
+        "dimensions": [
+          64,
+          64
+        ],
+        "frame": 0,
+        "source_policy": "AE-generated solids only; no footage imported",
+        "render_policy": "same comp, only branch enabled state changes",
+        "source_layers": [
+          {
+            "name": "solid_background",
+            "kind": "solid",
+            "bounds": [
+              0,
+              0,
+              64,
+              64
+            ],
+            "rgb": [
+              0,
+              0,
+              0
+            ],
+            "alpha": 1.0
+          },
+          {
+            "name": "rect_integer_a25",
+            "kind": "solid",
+            "bounds": [
+              4,
+              4,
+              20,
+              16
+            ],
+            "rgb": [
+              1,
+              0,
+              0
+            ],
+            "alpha": 0.25
+          },
+          {
+            "name": "rect_integer_a50",
+            "kind": "solid",
+            "bounds": [
+              28,
+              4,
+              20,
+              16
+            ],
+            "rgb": [
+              0,
+              1,
+              0
+            ],
+            "alpha": 0.5
+          },
+          {
+            "name": "rect_integer_a75",
+            "kind": "solid",
+            "bounds": [
+              4,
+              28,
+              20,
+              16
+            ],
+            "rgb": [
+              0,
+              0,
+              1
+            ],
+            "alpha": 0.75
+          },
+          {
+            "name": "rect_integer_a100",
+            "kind": "solid",
+            "bounds": [
+              28,
+              28,
+              20,
+              16
+            ],
+            "rgb": [
+              1,
+              1,
+              1
+            ],
+            "alpha": 1.0
+          }
+        ],
+        "output_names": {
+          "no_effect": "effect_no_effect_00000.exr",
+          "effect_on": "effect_effect_on_00000.exr"
+        }
+      },
+      "outputs": {
+        "no_effect": {
+          "path": "",
+          "sha256": ""
+        },
+        "effect_on": {
+          "path": "",
+          "sha256": ""
+        }
+      }
+    }
+  ]
+}
