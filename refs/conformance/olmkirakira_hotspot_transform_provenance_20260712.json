@@ -1,0 +1,174 @@
+{
+  "kind": "olmkirakira_hotspot_transform_provenance",
+  "schema": 1,
+  "case_id": "kk_vertical_len50_brightness1_strength100",
+  "hotspot_xy": [
+    934,
+    118
+  ],
+  "inputs": {
+    "mac_witness": "refs/conformance/olmkirakira_compose_boundary_mac_witness_20260630.json",
+    "windows_trace": "refs/reports/runtime_trace_comparisons/olmkirakira_hotspot_compose_writeback_witness_20260701.json",
+    "candidate_png": "refs/reports/olmkirakira_remeasure_20260624_bt709_software/candidate/kirakira_single_ray_20260606__software__fr24__kk_vertical_len50_brightness1_strength100.png",
+    "reference_png": "refs/reports/olmkirakira_remeasure_20260624_bt709_software/reference/kirakira_single_ray_20260606__software__fr24__kk_vertical_len50_brightness1_strength100.png",
+    "reference_manifest": "refs/win_references/olm_reference_return_windows_20260614/OLMKiraKira/reference_manifest.json"
+  },
+  "observed": {
+    "source_rgb": 0.117647059,
+    "source_alpha": 1.0,
+    "glow_rgb": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "glow_alpha": 0.507505655,
+    "windows_traced_compose_float": 0.5654461661764706,
+    "windows_traced_u8": [
+      144,
+      144,
+      144,
+      255
+    ],
+    "candidate_u8": [
+      145,
+      145,
+      145,
+      255
+    ],
+    "canonical_reference_u8": [
+      131,
+      131,
+      131,
+      255
+    ],
+    "reference_manifest_context": {
+      "platform": "windows",
+      "ae_version": "26.2x49",
+      "render_set_id": "software",
+      "project_gpu_accel_type": {
+        "current_name": "SOFTWARE",
+        "raw": 1816
+      },
+      "comp": {
+        "name": "kk_vertical_len50_brightness1_strength100_software_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "frame": "kirakira_single_ray_20260606__software__fr24__kk_vertical_len50_brightness1_strength100.png"
+    }
+  },
+  "hypotheses": {
+    "premultiply_unpremultiply": {
+      "source_alpha": 1.0,
+      "premultiply_then_unpremultiply_rgb": 0.117647059,
+      "result": "identity_at_opaque_source_alpha",
+      "target_explained": false
+    },
+    "color_management": {
+      "srgb_domain_screen_u8": 144,
+      "decode_blend_encode_srgb_u8": 190,
+      "target_u8": 131,
+      "result": "standard_srgb_linearization_does_not_map_144_to_131",
+      "target_explained": false
+    },
+    "coordinate_placement": {
+      "radius": 2,
+      "candidate_r_channel": [
+        [
+          251,
+          251,
+          252,
+          252,
+          252
+        ],
+        [
+          180,
+          189,
+          199,
+          199,
+          199
+        ],
+        [
+          107,
+          126,
+          145,
+          145,
+          145
+        ],
+        [
+          105,
+          125,
+          145,
+          145,
+          145
+        ],
+        [
+          103,
+          124,
+          144,
+          144,
+          144
+        ]
+      ],
+      "reference_r_channel": [
+        [
+          250,
+          250,
+          251,
+          251,
+          251
+        ],
+        [
+          180,
+          186,
+          191,
+          191,
+          191
+        ],
+        [
+          109,
+          121,
+          131,
+          131,
+          131
+        ],
+        [
+          108,
+          121,
+          131,
+          131,
+          131
+        ],
+        [
+          107,
+          120,
+          131,
+          131,
+          131
+        ]
+      ],
+      "result": "reference_has_131_plateau_at_requested_coordinate;_candidate_has_no_131_in_5x5",
+      "target_explained": "not_decidable_from_png_neighborhood_alone"
+    },
+    "same_screen_compose_with_implied_alpha": {
+      "target_alpha": 0.4488888887786666,
+      "traced_alpha": 0.507505655,
+      "alpha_delta": -0.05861676622133338,
+      "result": "requires_upstream_or_witness_path_difference",
+      "target_explained": false
+    }
+  },
+  "decision": {
+    "status": "no_host_transform_proven",
+    "fact": "The accepted Windows trace and current Mac compose witness agree at opaque source alpha, glow alpha 0.507505655, compose float about 0.565446, and u8 144; the canonical Windows PNG is 131.",
+    "inference": "Premultiply/unpremultiply cannot explain the delta at this opaque witness. Standard sRGB decode/blend/encode moves the result toward 190, not 131. Coordinate placement remains a provenance possibility, but the PNG neighborhood alone cannot prove a placement error.",
+    "boundary": "Do not tune Kira math or claim AE exact. The remaining bounded lane is same-run reference/export provenance, witness placement, or an unobserved host/endgame path."
+  }
+}
