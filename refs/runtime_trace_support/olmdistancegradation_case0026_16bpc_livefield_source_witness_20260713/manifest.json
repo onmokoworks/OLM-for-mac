@@ -1,0 +1,95 @@
+{
+  "kind": "olm_windows_livefield_source_witness_request",
+  "package": "olmdistancegradation_case0026_16bpc_livefield_source_witness_20260713",
+  "request_id": "olmdistancegradation_case0026_16bpc_livefield_source_witness_20260713",
+  "schema": "olmdistancegradation_case0026_16bpc_livefield_source_witness_return_v1",
+  "plugin": "OLMDistanceGradation",
+  "variant": "current-AEX",
+  "case_id": "olmdistancegradation_extended__case_0026",
+  "case_short_id": "case_0026",
+  "target_points": [
+    [
+      907,
+      222
+    ],
+    [
+      395,
+      477
+    ],
+    [
+      1589,
+      579
+    ],
+    [
+      898,
+      670
+    ]
+  ],
+  "run_policy": "one_fresh_windows_run_for_all_four_points",
+  "contract": "refs/conformance/olmdistancegradation_case0026_16bpc_livefield_source_witness_contract_20260713.md",
+  "aex_pin": {
+    "path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\DistanceGradation.aex",
+    "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "size": 26289664
+  },
+  "ae_host_contract": {
+    "renderer": "software",
+    "bits_per_channel": 16
+  },
+  "required_fields": [
+    "run.run_id",
+    "run.case_id",
+    "run.renderer",
+    "run.bits_per_channel",
+    "run.current_aex.sha256",
+    "points[].xy",
+    "points[].case_tuple",
+    "points[].source_addr",
+    "points[].source_raw_words_agrb",
+    "points[].field_addr",
+    "points[].field_raw_words_agrb",
+    "points[].field_word_at_rcx_plus_2",
+    "points[].pre_output_words_agrb",
+    "points[].post_output_words_agrb"
+  ],
+  "failure_status": "exact_bind_failure",
+  "forbidden_statuses": [
+    "answered_partial",
+    "partial",
+    "unknown"
+  ],
+  "runner": {
+    "entrypoint": "olmdistancegradation_case0026_16bpc_livefield_source_witness_20260713/run_olmdistancegradation_case0026_16bpc_livefield_source_witness_20260713.ps1",
+    "cdb_template": "olmdistancegradation_case0026_16bpc_livefield_source_witness_20260713/case0026_livefield_source_witness.cdb.in",
+    "jsx": "olmdistancegradation_case0026_16bpc_livefield_source_witness_20260713/case/ae_render_single_case.jsx"
+  },
+  "case_tuple_expected": {
+    "in_out": 3,
+    "inside_threshold": 158,
+    "outside_threshold": 13,
+    "use_background_color": 1,
+    "invert": 1,
+    "render_mode": 1,
+    "interp_mode": 4,
+    "power": 2.59740734100342,
+    "gradation_rgba": [
+      0.1098041459918,
+      0.0,
+      0.93333333730698,
+      1.0
+    ],
+    "background_rgba": [
+      1.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "power_bits": "0x40263bec",
+    "grad_r_bits": "0x3de0e0ff",
+    "grad_g_bits": "0x00000000",
+    "grad_b_bits": "0x3f6eeeef",
+    "bg_r_bits": "0x3f800000",
+    "bg_g_bits": "0x00000000",
+    "bg_b_bits": "0x00000000"
+  }
+}

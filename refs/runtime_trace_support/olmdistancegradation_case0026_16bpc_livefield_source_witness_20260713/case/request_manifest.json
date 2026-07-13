@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "request_id": "olmdistancegradation_case0026_16bpc_livefield_source_witness_20260713",
+  "reference_manifest": "reference_manifest.json",
+  "input_dir": "input",
+  "effect_name": "Distance Gradation",
+  "effect_match_name": "OLM Distance Gradation",
+  "cases": [
+    {
+      "id": "olmdistancegradation_extended__case_0026",
+      "before_effects_frame": "case_0026_before_effects.png",
+      "frame": "case_0026.png"
+    }
+  ]
+}

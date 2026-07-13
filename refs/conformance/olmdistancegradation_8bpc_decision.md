@@ -1,5 +1,10 @@
 # OLMDistanceGradation Decision Matrix
 
+> Superseded for current-binary status on 2026-07-11. The historical candidate
+> images remain exact, but they do not record the loaded Mac plug-in hash. A
+> fresh depth-correct current-binary batch is `0/29` exact. Use
+> `refs/conformance/olmdistancegradation_opencv_pf16_boundary_20260711.md`.
+
 - Decision: `preserve-normalized-ae-exact`
 - Recommended action: Do not tune DistanceGradation from legacy-only drift or AE-free CLI residuals. Preserve normalized 8bpc AE exact behavior; 16bpc Windows references are covered and now need Mac AE comparison.
 

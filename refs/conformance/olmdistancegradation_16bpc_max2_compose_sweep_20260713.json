@@ -1,0 +1,186 @@
+{
+  "schema": 1,
+  "kind": "olmdistancegradation_pf16_max2_actual_aex_compose_sweep",
+  "generated_at": "2026-07-13T03:41:04Z",
+  "status": "pass_bounded_actual_aex",
+  "scope": "four FUN_181170480 calls; representative PF16 field-word inputs for 0024..0027",
+  "binary": {
+    "path": "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex",
+    "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "function": "0x181170480",
+    "calls": 4,
+    "max_instructions_per_call": 200000,
+    "instructions_total": 653
+  },
+  "address_contract": {
+    "reused_witness": "tools/emulation/olmdg_compose_exact_address_witness_20260710.py",
+    "field": "field_base + y * field_rowbytes + x * field_pixel_size",
+    "source": "source_base + y * source_rowbytes + x * source_pixel_size",
+    "field_read": "field_addr + 0x2",
+    "rowbytes": 15360,
+    "pixel_size": 8,
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "existing_exact_address_points": [
+      [
+        6,
+        40
+      ],
+      [
+        901,
+        394
+      ]
+    ],
+    "local_addresses_are_not_windows_addresses": true
+  },
+  "input_provenance": {
+    "field_words_are_windows_live_values": false,
+    "basis": "retained case_0026/case_0027 field-X samples converted to PF16 words; 0024/0025 are representative branch-shape inputs",
+    "source": "refs/conformance/olmdistancegradation_depthgate_nearmiss_witness_20260708.md",
+    "case_parameters": "refs/conformance/olmdistancegradation_depthgate_nearmiss_family_20260708.md"
+  },
+  "points": [
+    {
+      "case_id": "case_0024",
+      "xy": [
+        6,
+        40
+      ],
+      "field_word": 3989,
+      "invert": 0,
+      "render_mode": 1,
+      "interp_mode": 3,
+      "power": 1.0,
+      "field_addr": "0x20096030",
+      "source_addr": "0x21068030",
+      "output_addr": "0x21fa4000",
+      "field_words_agrb": [
+        0,
+        3989,
+        0,
+        0
+      ],
+      "source_words_agrb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "field_scalar_x": 0.121734619140625,
+      "aex_output_words_agrb": [
+        32768,
+        0,
+        5431,
+        28661
+      ],
+      "instructions": 167
+    },
+    {
+      "case_id": "case_0025",
+      "xy": [
+        901,
+        394
+      ],
+      "field_word": 7774,
+      "invert": 1,
+      "render_mode": 1,
+      "interp_mode": 3,
+      "power": 1.0,
+      "field_addr": "0x205c7428",
+      "source_addr": "0x21599428",
+      "output_addr": "0x21fa4010",
+      "field_words_agrb": [
+        0,
+        7774,
+        0,
+        0
+      ],
+      "source_words_agrb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "field_scalar_x": 0.23724365234375,
+      "aex_output_words_agrb": [
+        32768,
+        0,
+        18560,
+        14896
+      ],
+      "instructions": 167
+    },
+    {
+      "case_id": "case_0026",
+      "xy": [
+        907,
+        222
+      ],
+      "field_word": 25680,
+      "invert": 1,
+      "render_mode": 1,
+      "interp_mode": 4,
+      "power": 2.59740734100342,
+      "field_addr": "0x20342458",
+      "source_addr": "0x21314458",
+      "output_addr": "0x21fa4020",
+      "field_words_agrb": [
+        0,
+        25680,
+        0,
+        0
+      ],
+      "source_words_agrb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "field_scalar_x": 0.78369140625,
+      "aex_output_words_agrb": [
+        32768,
+        0,
+        9907,
+        23968
+      ],
+      "instructions": 159
+    },
+    {
+      "case_id": "case_0027",
+      "xy": [
+        1234,
+        443
+      ],
+      "field_word": 30473,
+      "invert": 1,
+      "render_mode": 2,
+      "interp_mode": 4,
+      "power": 2.59740734100342,
+      "field_addr": "0x2067fa90",
+      "source_addr": "0x21651a90",
+      "output_addr": "0x21fa4030",
+      "field_words_agrb": [
+        0,
+        30473,
+        0,
+        0
+      ],
+      "source_words_agrb": [
+        32768,
+        0,
+        32768,
+        0
+      ],
+      "field_scalar_x": 0.929962158203125,
+      "aex_output_words_agrb": [
+        32768,
+        0,
+        32768,
+        0
+      ],
+      "instructions": 160
+    }
+  ]
+}

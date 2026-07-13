@@ -1,0 +1,18 @@
+.logopen /t WORKDIR\cdb_trace.log
+.symfix
+.effmach amd64
+.expr /s masm
+sxi e06d7363
+.echo OLMDG_LFS_RUN_START request_id=olmdistancegradation_case0026_16bpc_livefield_source_witness_20260713 run_id=RUN_ID case_id=case_0026
+r @$t0 = 0
+r @$t1 = 0
+r @$t2 = 0
+r @$t6 = 0
+r @$t7 = 0
+bu DistanceGradation+0x1170480 ".block { r @$t0=0; r @$t1=0; r @$t2=0; r @$t6=@edx; r @$t7=@r8; .if (dwo(@rbx+0x94)==3 && dwo(@rbx+0xb8)==158 && dwo(@rbx+0xbc)==13 && by(@rbx+0xc0)==1 && by(@rbx+0xc1)==1 && dwo(@rbx+0xc8)==1 && dwo(@rbx+0xcc)==4 && dwo(@rbx+0xd0)==0x40263bec && dwo(@rbx+0xa0)==0x3de0e0ff && dwo(@rbx+0x9c)==0x0 && dwo(@rbx+0xa4)==0x3f6eeeef && dwo(@rbx+0xb0)==0x3f800000 && dwo(@rbx+0xac)==0x0 && dwo(@rbx+0xb4)==0x0) { .if ((@edx==907 && @r8==222) || (@edx==395 && @r8==477) || (@edx==1589 && @r8==579) || (@edx==898 && @r8==670)) { r @$t0=1; r @$t1=poi(@rsp+0x28); r @$t2=poi(@rsp); .printf \"OLMDG_LFS_ENTRY run_id=RUN_ID case_id=case_0026 x=%u y=%u module_base=%p output=%p pre_output_words_agrb=%hu,%hu,%hu,%hu in_out=%u inside_threshold=%u outside_threshold=%u use_bg=%u invert=%u render_mode=%u interp_mode=%u power_bits=0x%08x grad_r_bits=0x%08x grad_g_bits=0x%08x grad_b_bits=0x%08x bg_r_bits=0x%08x bg_g_bits=0x%08x bg_b_bits=0x%08x\n\", @$t6, @$t7, @rip-0x1170480, @$t1, poi(@$t1), poi(@$t1+2), poi(@$t1+4), poi(@$t1+6), dwo(@rbx+0x94), dwo(@rbx+0xb8), dwo(@rbx+0xbc), by(@rbx+0xc0), by(@rbx+0xc1), dwo(@rbx+0xc8), dwo(@rbx+0xcc), dwo(@rbx+0xd0), dwo(@rbx+0xa0), dwo(@rbx+0x9c), dwo(@rbx+0xa4), dwo(@rbx+0xb0), dwo(@rbx+0xac), dwo(@rbx+0xb4); bp /1 @$t2 \".printf \\\"OLMDG_LFS_RETURN run_id=RUN_ID case_id=case_0026 x=%u y=%u output=%p post_output_words_agrb=%hu,%hu,%hu,%hu\\\\n\\\", @$t6, @$t7, @$t1, poi(@$t1), poi(@$t1+2), poi(@$t1+4), poi(@$t1+6); r @$t0=0; r @$t1=0; r @$t2=0; gc\"; } }; gc }"
+bu DistanceGradation+0x117057d ".if (@$t0==1) { .printf \"OLMDG_LFS_FIELD run_id=RUN_ID case_id=case_0026 x=%u y=%u rcx=%p rcx_plus2_word=%hu field_words_agrb=%hu,%hu,%hu,%hu field_base=%p field_header=%p field_rowbytes=15360 field_pixel_size=8\n\", @$t6, @$t7, @rcx, poi(@rcx+2), poi(@rcx), poi(@rcx+2), poi(@rcx+4), poi(@rcx+6), @r10+0x18, @r10; }; gc"
+bu DistanceGradation+0x11705f1 ".if (@$t0==1) { .printf \"OLMDG_LFS_SOURCE run_id=RUN_ID case_id=case_0026 x=%u y=%u rdx=%p source_words_agrb=%hu,%hu,%hu,%hu\n\", @$t6, @$t7, @rdx, poi(@rdx), poi(@rdx+2), poi(@rdx+4), poi(@rdx+6); }; gc"
+g
+.echo OLMDG_LFS_RUN_END request_id=olmdistancegradation_case0026_16bpc_livefield_source_witness_20260713 run_id=RUN_ID
+.logclose
+q

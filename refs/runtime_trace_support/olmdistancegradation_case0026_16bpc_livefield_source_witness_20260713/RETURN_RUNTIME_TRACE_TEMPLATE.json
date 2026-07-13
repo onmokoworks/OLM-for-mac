@@ -1,0 +1,308 @@
+{
+  "schema": "olmdistancegradation_case0026_16bpc_livefield_source_witness_return_v1",
+  "request_id": "olmdistancegradation_case0026_16bpc_livefield_source_witness_20260713",
+  "status": "answered | exact_bind_failure",
+  "run": {
+    "run_id": null,
+    "case_id": "olmdistancegradation_extended__case_0026",
+    "renderer": "software",
+    "bits_per_channel": 16,
+    "current_aex": {
+      "module": "DistanceGradation.aex",
+      "path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\DistanceGradation.aex",
+      "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+      "size": 26289664,
+      "module_base": null
+    }
+  },
+  "points": [
+    {
+      "xy": [
+        907,
+        222
+      ],
+      "case_tuple": {
+        "in_out": 3,
+        "inside_threshold": 158,
+        "outside_threshold": 13,
+        "use_background_color": 1,
+        "invert": 1,
+        "render_mode": 1,
+        "interp_mode": 4,
+        "power": 2.59740734100342,
+        "gradation_rgba": [
+          0.1098041459918,
+          0.0,
+          0.93333333730698,
+          1.0
+        ],
+        "background_rgba": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "power_bits": "0x40263bec",
+        "grad_r_bits": "0x3de0e0ff",
+        "grad_g_bits": "0x00000000",
+        "grad_b_bits": "0x3f6eeeef",
+        "bg_r_bits": "0x3f800000",
+        "bg_g_bits": "0x00000000",
+        "bg_b_bits": "0x00000000"
+      },
+      "field_world": {
+        "base": null,
+        "header": null,
+        "rowbytes": 15360,
+        "pixel_size": 8,
+        "channel_layout": "PF_Pixel16 / 4xuint16 (A,G,R,B words)"
+      },
+      "field_addr": null,
+      "field_raw_words_agrb": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "field_word_at_rcx_plus_2": null,
+      "source_addr": null,
+      "source_raw_words_agrb": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "output_addr": null,
+      "pre_output_words_agrb": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "post_output_words_agrb": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "xy": [
+        395,
+        477
+      ],
+      "case_tuple": {
+        "in_out": 3,
+        "inside_threshold": 158,
+        "outside_threshold": 13,
+        "use_background_color": 1,
+        "invert": 1,
+        "render_mode": 1,
+        "interp_mode": 4,
+        "power": 2.59740734100342,
+        "gradation_rgba": [
+          0.1098041459918,
+          0.0,
+          0.93333333730698,
+          1.0
+        ],
+        "background_rgba": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "power_bits": "0x40263bec",
+        "grad_r_bits": "0x3de0e0ff",
+        "grad_g_bits": "0x00000000",
+        "grad_b_bits": "0x3f6eeeef",
+        "bg_r_bits": "0x3f800000",
+        "bg_g_bits": "0x00000000",
+        "bg_b_bits": "0x00000000"
+      },
+      "field_world": {
+        "base": null,
+        "header": null,
+        "rowbytes": 15360,
+        "pixel_size": 8,
+        "channel_layout": "PF_Pixel16 / 4xuint16 (A,G,R,B words)"
+      },
+      "field_addr": null,
+      "field_raw_words_agrb": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "field_word_at_rcx_plus_2": null,
+      "source_addr": null,
+      "source_raw_words_agrb": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "output_addr": null,
+      "pre_output_words_agrb": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "post_output_words_agrb": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "xy": [
+        1589,
+        579
+      ],
+      "case_tuple": {
+        "in_out": 3,
+        "inside_threshold": 158,
+        "outside_threshold": 13,
+        "use_background_color": 1,
+        "invert": 1,
+        "render_mode": 1,
+        "interp_mode": 4,
+        "power": 2.59740734100342,
+        "gradation_rgba": [
+          0.1098041459918,
+          0.0,
+          0.93333333730698,
+          1.0
+        ],
+        "background_rgba": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "power_bits": "0x40263bec",
+        "grad_r_bits": "0x3de0e0ff",
+        "grad_g_bits": "0x00000000",
+        "grad_b_bits": "0x3f6eeeef",
+        "bg_r_bits": "0x3f800000",
+        "bg_g_bits": "0x00000000",
+        "bg_b_bits": "0x00000000"
+      },
+      "field_world": {
+        "base": null,
+        "header": null,
+        "rowbytes": 15360,
+        "pixel_size": 8,
+        "channel_layout": "PF_Pixel16 / 4xuint16 (A,G,R,B words)"
+      },
+      "field_addr": null,
+      "field_raw_words_agrb": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "field_word_at_rcx_plus_2": null,
+      "source_addr": null,
+      "source_raw_words_agrb": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "output_addr": null,
+      "pre_output_words_agrb": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "post_output_words_agrb": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "xy": [
+        898,
+        670
+      ],
+      "case_tuple": {
+        "in_out": 3,
+        "inside_threshold": 158,
+        "outside_threshold": 13,
+        "use_background_color": 1,
+        "invert": 1,
+        "render_mode": 1,
+        "interp_mode": 4,
+        "power": 2.59740734100342,
+        "gradation_rgba": [
+          0.1098041459918,
+          0.0,
+          0.93333333730698,
+          1.0
+        ],
+        "background_rgba": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "power_bits": "0x40263bec",
+        "grad_r_bits": "0x3de0e0ff",
+        "grad_g_bits": "0x00000000",
+        "grad_b_bits": "0x3f6eeeef",
+        "bg_r_bits": "0x3f800000",
+        "bg_g_bits": "0x00000000",
+        "bg_b_bits": "0x00000000"
+      },
+      "field_world": {
+        "base": null,
+        "header": null,
+        "rowbytes": 15360,
+        "pixel_size": 8,
+        "channel_layout": "PF_Pixel16 / 4xuint16 (A,G,R,B words)"
+      },
+      "field_addr": null,
+      "field_raw_words_agrb": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "field_word_at_rcx_plus_2": null,
+      "source_addr": null,
+      "source_raw_words_agrb": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "output_addr": null,
+      "pre_output_words_agrb": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "post_output_words_agrb": [
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  ],
+  "failure": {
+    "stage": null,
+    "reason": null,
+    "run_id": null,
+    "case_id": "olmdistancegradation_extended__case_0026",
+    "missing": [],
+    "last_observation": null
+  }
+}

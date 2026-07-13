@@ -76,7 +76,7 @@ def build_edge_candidate_sites(lines: list[str]) -> list[dict[str, Any]]:
             "family": "edge",
             "site": "dt_to_normalized_constant_threshold",
             "function": "dt_to_normalized",
-            "line": find_line(lines, "out[i] = (out[i] > t) ? 1.0f : 0.0f;"),
+            "line": find_line(lines, "(void)olm::distancegradation::distance_to_normalized_u8("),
             "why_still_live": (
                 "The edge-family mismatch still lives in Constant mode with Outside Threshold=0, so the "
                 "binary threshold helper stays relevant if Windows current export later says the decisive "
@@ -119,7 +119,7 @@ def build_threshold_candidate_sites(lines: list[str]) -> list[dict[str, Any]]:
             "family": "threshold",
             "site": "dt_to_normalized_constant_threshold",
             "function": "dt_to_normalized",
-            "line": find_line(lines, "out[i] = (out[i] > t) ? 1.0f : 0.0f;"),
+            "line": find_line(lines, "(void)olm::distancegradation::distance_to_normalized_u8("),
             "why_still_live": (
                 "Keep this as the first implementation reopen site only if a current Windows export or a "
                 "future typed witness contradicts the current provenance split and says the threshold family "

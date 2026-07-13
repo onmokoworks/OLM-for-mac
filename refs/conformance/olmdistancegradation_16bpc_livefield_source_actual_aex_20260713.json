@@ -1,0 +1,466 @@
+{
+  "schema": "olmdistancegradation-livefield-source-actual-aex/1",
+  "generated_at": "2026-07-13T01:23:56Z",
+  "status": "no_exact_livefield_replays",
+  "scope": "OLMDistanceGradation 16bpc max=2 family case_0024..case_0027 live field/source replay manifest",
+  "binary": {
+    "path": "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex",
+    "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "function": "0x181170480"
+  },
+  "evidence_sources": [
+    "refs/reports/runtime_trace_comparisons/olmdistancegradation_depthgate_quantization_witness_20260708.json",
+    "refs/reports/runtime_trace_comparisons/olmdistancegradation_depthgate_907_store_export_witness_20260708.json",
+    "refs/reports/runtime_trace_comparisons/olmdistancegradation_16bpc_case0026_x_witness_20260629.json"
+  ],
+  "rules": {
+    "exact_replay_requires": [
+      "coordinate-bound source raw words",
+      "coordinate-bound field raw words",
+      "case parameter tuple"
+    ],
+    "forbidden": [
+      "derive missing field words from PNGs",
+      "promote rounded float X values into claimed raw words"
+    ]
+  },
+  "family_summary": [
+    {
+      "case_id": "case_0024",
+      "located_live_trace_points": 0,
+      "exact_replayable_points": 0,
+      "status": "no_return_trace_point_with_livefield_source_words_located",
+      "missing_for_exact_replay": [
+        "live coordinate-bound source input witness",
+        "live field raw words"
+      ]
+    },
+    {
+      "case_id": "case_0025",
+      "located_live_trace_points": 0,
+      "exact_replayable_points": 0,
+      "status": "no_return_trace_point_with_livefield_source_words_located",
+      "missing_for_exact_replay": [
+        "live coordinate-bound source input witness",
+        "live field raw words"
+      ]
+    },
+    {
+      "case_id": "case_0026",
+      "located_live_trace_points": 4,
+      "exact_replayable_points": 0,
+      "status": "partial_evidence_only",
+      "missing_for_exact_replay": [
+        "field_raw_words_agrb",
+        "field_word_at_rcx_plus_2"
+      ]
+    },
+    {
+      "case_id": "case_0027",
+      "located_live_trace_points": 0,
+      "exact_replayable_points": 0,
+      "status": "no_return_trace_point_with_livefield_source_words_located",
+      "missing_for_exact_replay": [
+        "live coordinate-bound source input witness",
+        "live field raw words"
+      ]
+    }
+  ],
+  "point_candidates": [
+    {
+      "case_id": "case_0026",
+      "xy": [
+        907,
+        222
+      ],
+      "params": {
+        "invert": 1,
+        "in_out": 3,
+        "inside_threshold": 158,
+        "outside_threshold": 13,
+        "render_mode": 1,
+        "use_background_color": 1,
+        "interp_mode": 4,
+        "power": 2.59740734100342,
+        "gradation_rgba": [
+          0.1098041459918,
+          0.0,
+          0.93333333730698,
+          1.0
+        ],
+        "background_rgba": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "trace_sources": [
+        "refs/reports/runtime_trace_comparisons/olmdistancegradation_depthgate_quantization_witness_20260708.json",
+        "refs/reports/runtime_trace_comparisons/olmdistancegradation_depthgate_907_store_export_witness_20260708.json"
+      ],
+      "source_rgba16_seen_by_effect": [
+        0,
+        65535,
+        10794,
+        65535
+      ],
+      "source_raw_words_agrb_exact": [
+        65535,
+        65535,
+        0,
+        10794
+      ],
+      "field_value_consumed_by_fun_181170480": 0.121742934,
+      "field_raw_words_agrb": null,
+      "field_word_at_rcx_plus_2": null,
+      "x_after_power_interpolation": 0.121742934,
+      "pre_pf16_output_rgba_float": [
+        0.996250153,
+        0.0,
+        0.00393153122,
+        1.0
+      ],
+      "carried_pf_pixel16_words_after_store": [
+        32645,
+        0,
+        129,
+        65535
+      ],
+      "carried_exported_rgba8": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "classification": "unresolved",
+      "exact_replay_ready": false,
+      "missing_for_exact_replay": [
+        "field_raw_words_agrb",
+        "field_word_at_rcx_plus_2"
+      ],
+      "notes": [
+        "source raw words are recoverable exactly from traced RGBA16 plus known A,G,R,B world layout",
+        "field raw words were not returned by the located Windows traces"
+      ],
+      "followup_907_return": {
+        "status": "carried_values_only",
+        "source_rgba8": [
+          0,
+          255,
+          42,
+          255
+        ],
+        "pre_writeback_rgba_float_hex": [
+          0.996250153,
+          0.0,
+          0.00393153122,
+          1.0
+        ]
+      }
+    },
+    {
+      "case_id": "case_0026",
+      "xy": [
+        395,
+        477
+      ],
+      "params": {
+        "invert": 1,
+        "in_out": 3,
+        "inside_threshold": 158,
+        "outside_threshold": 13,
+        "render_mode": 1,
+        "use_background_color": 1,
+        "interp_mode": 4,
+        "power": 2.59740734100342,
+        "gradation_rgba": [
+          0.1098041459918,
+          0.0,
+          0.93333333730698,
+          1.0
+        ],
+        "background_rgba": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "trace_sources": [
+        "refs/reports/runtime_trace_comparisons/olmdistancegradation_depthgate_quantization_witness_20260708.json"
+      ],
+      "source_rgba16_seen_by_effect": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "source_raw_words_agrb_exact": [
+        65535,
+        0,
+        65535,
+        0
+      ],
+      "field_value_consumed_by_fun_181170480": 0.161361381,
+      "field_raw_words_agrb": null,
+      "field_word_at_rcx_plus_2": null,
+      "x_after_power_interpolation": 0.161361381,
+      "pre_pf16_output_rgba_float": [
+        0.992204964,
+        0.0,
+        0.00817277841,
+        1.0
+      ],
+      "carried_pf_pixel16_words_after_store": [
+        32513,
+        0,
+        268,
+        65535
+      ],
+      "carried_exported_rgba8": [
+        253,
+        0,
+        2,
+        255
+      ],
+      "classification": "export-quantization",
+      "exact_replay_ready": false,
+      "missing_for_exact_replay": [
+        "field_raw_words_agrb",
+        "field_word_at_rcx_plus_2"
+      ],
+      "notes": [
+        "source raw words are recoverable exactly from traced RGBA16 plus known A,G,R,B world layout",
+        "field raw words were not returned by the located Windows traces"
+      ]
+    },
+    {
+      "case_id": "case_0026",
+      "xy": [
+        1589,
+        579
+      ],
+      "params": {
+        "invert": 1,
+        "in_out": 3,
+        "inside_threshold": 158,
+        "outside_threshold": 13,
+        "render_mode": 1,
+        "use_background_color": 1,
+        "interp_mode": 4,
+        "power": 2.59740734100342,
+        "gradation_rgba": [
+          0.1098041459918,
+          0.0,
+          0.93333333730698,
+          1.0
+        ],
+        "background_rgba": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "trace_sources": [
+        "refs/reports/runtime_trace_comparisons/olmdistancegradation_depthgate_quantization_witness_20260708.json"
+      ],
+      "source_rgba16_seen_by_effect": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "source_raw_words_agrb_exact": [
+        65535,
+        0,
+        65535,
+        0
+      ],
+      "field_value_consumed_by_fun_181170480": 0.783686459,
+      "field_raw_words_agrb": null,
+      "field_word_at_rcx_plus_2": null,
+      "x_after_power_interpolation": 0.783686459,
+      "pre_pf16_output_rgba_float": [
+        0.52736038,
+        0.0,
+        0.495543033,
+        1.0
+      ],
+      "carried_pf_pixel16_words_after_store": [
+        17281,
+        0,
+        16238,
+        65535
+      ],
+      "carried_exported_rgba8": [
+        134,
+        0,
+        126,
+        255
+      ],
+      "classification": "export-quantization",
+      "exact_replay_ready": false,
+      "missing_for_exact_replay": [
+        "field_raw_words_agrb",
+        "field_word_at_rcx_plus_2"
+      ],
+      "notes": [
+        "source raw words are recoverable exactly from traced RGBA16 plus known A,G,R,B world layout",
+        "field raw words were not returned by the located Windows traces"
+      ]
+    },
+    {
+      "case_id": "case_0026",
+      "xy": [
+        898,
+        670
+      ],
+      "params": {
+        "invert": 1,
+        "in_out": 3,
+        "inside_threshold": 158,
+        "outside_threshold": 13,
+        "render_mode": 1,
+        "use_background_color": 1,
+        "interp_mode": 4,
+        "power": 2.59740734100342,
+        "gradation_rgba": [
+          0.1098041459918,
+          0.0,
+          0.93333333730698,
+          1.0
+        ],
+        "background_rgba": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "trace_sources": [
+        "refs/reports/runtime_trace_comparisons/olmdistancegradation_depthgate_quantization_witness_20260708.json"
+      ],
+      "source_rgba16_seen_by_effect": [
+        0,
+        0,
+        0,
+        65535
+      ],
+      "source_raw_words_agrb_exact": [
+        65535,
+        0,
+        0,
+        0
+      ],
+      "field_value_consumed_by_fun_181170480": 0.888987124,
+      "field_raw_words_agrb": null,
+      "field_word_at_rcx_plus_2": null,
+      "x_after_power_interpolation": 0.888987124,
+      "pre_pf16_output_rgba_float": [
+        0.344237924,
+        0.0,
+        0.687539339,
+        1.0
+      ],
+      "carried_pf_pixel16_words_after_store": [
+        11280,
+        0,
+        22529,
+        65535
+      ],
+      "carried_exported_rgba8": [
+        88,
+        0,
+        175,
+        255
+      ],
+      "classification": "export-quantization",
+      "exact_replay_ready": false,
+      "missing_for_exact_replay": [
+        "field_raw_words_agrb",
+        "field_word_at_rcx_plus_2"
+      ],
+      "notes": [
+        "source raw words are recoverable exactly from traced RGBA16 plus known A,G,R,B world layout",
+        "field raw words were not returned by the located Windows traces"
+      ]
+    }
+  ],
+  "supplemental_trace_only": {
+    "case_0026_row0_ramp": {
+      "case_id": "case_0026",
+      "trace_source": "refs/reports/runtime_trace_comparisons/olmdistancegradation_16bpc_case0026_x_witness_20260629.json",
+      "y": 0,
+      "x_range": [
+        0,
+        14
+      ],
+      "source_rgba16_seen_by_effect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "x_before_invert": [
+        1.0,
+        1.0,
+        1.0,
+        0.923065186,
+        0.846160889,
+        0.769226074,
+        0.692321777,
+        0.615386963,
+        0.538452148,
+        0.461547852,
+        0.384613037,
+        0.307678223,
+        0.230773926,
+        0.153839111,
+        0.076934814
+      ],
+      "x_after_invert": [
+        1.0,
+        1.0,
+        1.0,
+        0.923065186,
+        0.846160889,
+        0.769226074,
+        0.692321777,
+        0.615386963,
+        0.538452148,
+        0.461547852,
+        0.384613037,
+        0.307678223,
+        0.230773926,
+        0.153839111,
+        0.076934814
+      ],
+      "x_after_power_interpolation": [
+        1.0,
+        1.0,
+        1.0,
+        0.812258577,
+        0.647986194,
+        0.505866378,
+        0.384782054,
+        0.283355877,
+        0.20029935,
+        0.134225206,
+        0.083586915,
+        0.046814325,
+        0.022178724,
+        0.007735373,
+        0.001278814
+      ],
+      "missing": [
+        "field_raw_words_agrb",
+        "field_word_at_rcx_plus_2",
+        "per-pixel source raw words beyond semantic zero RGBA16",
+        "post-call exact output words"
+      ]
+    }
+  },
+  "replays": []
+}

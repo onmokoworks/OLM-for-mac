@@ -4,40 +4,46 @@
 
 - Plug-in: Distance Gradation
 - Feature/path: alpha-mask distance gradation, interpolation, optional blur
-- Bit depth: 8bpc, 16bpc, and 32bpc policy are tracked separately. 8bpc is
-  canonical-batch exact; 16bpc has a depth-gated source-mask rule; 32bpc still
-  needs float-preserving references.
+- Bit depth: 8bpc, 16bpc, and 32bpc policy are tracked separately. The current
+  8bpc Mac binary is known-red; 16bpc has a depth-gated source-mask rule and a
+  binary-grounded PF16 field-world boundary; 32bpc still needs
+  float-preserving references.
 - Reference set: `refs/win_references/20260605_extra/OLMDistanceGradation`
-- Current status: packaged 8bpc Mac AE validation is `AE exact` for the
-  basic/extended/blur request sets. The 2026-07-08 depth-gated source-mask rule
-  closes 16bpc `case_0023`, but the old `7/16` depthgate exact count is
-  superseded: canonical true16 reverify of `/tmp/olmdg_16ext_depthgate2` gives
-  `5/16`, matching the current integrated verifier count. The live 16bpc
-  problem is the actual true16 residual set: sparse `0010/0011`, Layer/no-bg
-  `0012/0013/0014/0016`, and `0024..0028`. The AE-free CLI is not a
-  Windows-reference verdict.
-- 2026-06-22 reference provenance audit confirms all 29 packaged AE-host
-  candidates match the 20260618 normalized Software references exactly. The
-  visible residuals against `refs/win_references/20260605_extra` are
-  reference-generation differences, not current AE-host failures.
-- Cross-feature canonicalization audit:
+- Current status: `refs/conformance/olmdistancegradation_opencv_pf16_boundary_20260711.md`
+  is the current authority. The OpenCV reciprocal-scale plus PF16
+  round-to-nearest-even boundary closes 16bpc `case_0010/0011` and makes the
+  canonical extended batch `7/16 AE exact`. The remaining true16 families are
+  Layer/no-bg `0012/0013/0014/0016`, max-2 `0024..0027`, and the separate
+  `0028` outlier. A fresh depth-correct canonical 8bpc run measures the current
+  binary at `0/29` exact. The AE-free CLI is not a Windows-reference verdict.
+- 2026-06-22 reference provenance audit confirms all 29 historical candidate
+  images match the 20260618 normalized Software references exactly. Those
+  artifacts do not record the loaded Mac plug-in path/hash; two retained June
+  18 binaries fail a fresh canonical rerun. Treat the `29/29` artifact as
+  unbound historical evidence, not current-binary conformance.
+- Historical cross-feature canonicalization audit:
   `refs/reports/software_reference_canonicalization_8bpc.md` classifies all
-  three DistanceGradation groups as `normalized-software-exact`:
+  three unbound candidate groups as `normalized-software-exact`:
   basic 12/12, extended 16/16, and blur 1/1. Legacy drift remains only in the
   older 20260605 extra references.
-- 2026-06-24 decision matrix:
+- Historical 2026-06-24 decision matrix (superseded for current-binary status):
   `refs/reports/olmdistancegradation_decision_matrix_20260624/decision_matrix.md`
   consolidates provenance, canonicalization, and the latest trace comparison.
   It classifies normalized 8bpc as `29/29 exact`, legacy drift as 7 old-ref
   cases, and the current runtime trace as `not-actionable` (`await-windows-trace`).
-  Preserve normalized AE-exact behavior; do not tune DistanceGradation from
-  legacy-only drift or AE-free CLI residuals.
+  Its reference-family split remains useful, but its current `29/29` claim is
+  superseded by the 2026-07-11 depth-correct rerun.
 - 2026-07-08 depth-gate rule:
   `source_mask_owns_alpha(alpha, pixel_size)` keeps PF_Pixel8 inclusive
   (`alpha > 0`) and uses `alpha > 1.5/255.0` for PF_Pixel16 and deeper. This
   matches the observed Windows 16bpc source-mask staging while preserving the
   8bpc HEAD behavior by construction. Do not use `scripts/run_ae_single_case.py`
   as an 8bpc verdict runner; use the canonical 8bpc batch flow for that.
+- 2026-07-11 depth-correct runner and current-binary correction: both AE JSX
+  runners now fall back to `reference_manifest.comp.bpc` when
+  `project.bits_per_channel` is absent. The canonical 8bpc batch explicitly
+  logs `bits_per_channel 8 source=comp.bpc`; the current plug-in is `0/29`
+  exact. This supersedes using the unbound 2026-06-19 output as current status.
 
 ## Source Evidence
 
@@ -55,6 +61,8 @@
 | 8bpc compose reads the distance field from the green byte of the field pixel and applies invert/interpolation in `FUN_181170870`. | `decomp/DistanceGradation.aex.c.txt` `FUN_181170870`: `_X = field_pixel[green] / 255`, then optional `1 - X`, Sphere/Power, and final RGBA byte cast. | binary-grounded |
 | 8bpc compose is an AE iterate callback over a prebuilt field world. | `FUN_181170380` requests `PF Iterate8 Suite` and passes callback `FUN_181170870` with user data `param_4 + 0x2c`; `FUN_181170870` then reads the field world through `param_1[1]`. | binary-grounded |
 | 16bpc and float compose use sibling iterate callbacks. | `FUN_181170280` requests `PF iterate16 Suite` and passes `FUN_181170480`; float path stores callback `FUN_181170c90`. | binary-grounded |
+| OpenCV `NORM_MINMAX` field normalization uses one float32 reciprocal scale followed by multiplication; it is not per-element division by the maximum. | Actual-AEX fieldgen fixtures plus the OpenCV 4.5.5 sidecar and `refs/conformance/olmdistancegradation_opencv_pf16_boundary_20260711.md`. | binary-grounded / independently reproduced |
+| Before `FUN_181170480` consumes the 16bpc field world, OpenCV converts the normalized float field to PF16 with round-to-nearest-even. Focused scaled values `22891.5`, `29500.5`, `4408.5009765625`, `1.5`, `2.5`, `3.5` become `22892`, `29500`, `4409`, `2`, `2`, `4`. | OpenCV 4.5.5 sidecar `CV_16U` conversion, actual-AEX field values, Mac AE `case_0010/0011` exact result, and the focused core regression. | binary-grounded + AE-host-validated |
 | 16bpc compose scales by `32768.0`, reads pixels with `1/32768`, and appears to write via `CVTTSS2SI`. This is a binary fact, but it is not yet adopted as the Mac output rule. | `FUN_181170480` uses `DAT_181504a80 = 1/32768`, `DAT_181504ac4 = 32768`, then `CVTTSS2SI` before storing 16-bit ARGB words. A 2026-06-26 Mac AE experiment that globally switched the port to truncation kept the exact count flat and worsened several 16bpc residuals, so the current port keeps round-to-nearest while source/field packing is unresolved. | binary-grounded / implementation-rejected-for-now |
 | 16bpc compose's color-selection shape matches the current Mac implementation: `render_mode==1` selects Gradation Color, `render_mode==2` selects source-layer RGB, and `use_bg!=0` mixes `BG*(1-X) + inner*X` while `use_bg==0` keeps `inner` RGB and uses `alpha = d_alpha * X`. | `FUN_181170480` around `181170720..1811707f4`. | binary-grounded |
 | OpenCV border names including `BORDER_REFLECT_101` are present in the AEX. | `decomp/DistanceGradation.aex.c.txt` contains `cv::copyMakeBorder` and border-name table strings. | binary-grounded for availability, not final blur branch proof |
@@ -172,8 +180,10 @@ Current port model:
 - Distance primitive: exact Euclidean distance transform equivalent to OpenCV
   `DIST_L2`, precise mask.
 - Threshold: truncate distances to threshold before normalization.
-- Normalization: divide by actual maximum after truncation, with denominator at
-  least `1.0`.
+- Normalization: compute one float32 reciprocal of the actual maximum after
+  truncation (with denominator at least `1.0`), then multiply each value.
+- 16bpc field-world boundary: convert normalized values to PF16 with
+  round-to-nearest-even, then read the quantized words back for compose.
 - Blur boundary: Reflect101/mirror.
 
 These rules are plausible and guarded, but the remaining residual means exact
@@ -476,16 +486,17 @@ is `1 - X`.
 
 | Case group | Bit depth | Expected status | Current result | Next evidence |
 | --- | --- | --- | --- | --- |
-| basic 12-case AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: 12/12 `max_diff=0`; decision matrix preserves normalized exact behavior | 16/32bpc references; binary-ground field prep only if closing CLI residuals |
-| extended non-blur 16-case AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: 16/16 `max_diff=0`; decision matrix preserves normalized exact behavior | 16/32bpc references; binary-ground Constant/render-mode only if closing CLI residuals |
-| blur `case_0029` AE package | 8bpc | `AE exact` | 2026-06-19 AE pixel return: `max_diff=0`; normalized and legacy refs both exact | 16/32bpc references; trace OpenCV blur only if closing CLI residuals |
+| basic 12-case AE package | 8bpc | `known-red` current binary | 2026-07-11 depth-correct canonical rerun: `0/12` exact, worst max `64`. Historical `12/12` candidates have no loaded plug-in hash. | Reconstruct field/compose rules from binary evidence; do not use the unbound historical output as an implementation oracle. |
+| extended non-blur 16-case AE package | 8bpc | `known-red` current binary | 2026-07-11 depth-correct canonical rerun: `0/16` exact, worst max `254`. Historical `16/16` candidates have no loaded plug-in hash. | Split by field/compose family before source changes; preserve the grounded 16bpc boundary independently. |
+| blur `case_0029` AE package | 8bpc | `known-red` current binary | 2026-07-11 depth-correct canonical rerun: `max=23`, not exact. | Ground OpenCV Gaussian/field boundary before tuning. |
 | basic all-opaque Inside `case_0001..0006` | 16bpc | partial AE exact | 2026-06-26 Mac AE: Inside/no-source rule keeps `case_0001/0003/0004/0005/0006` exact and promotes `case_0002` to exact. Basic slice is now 8/12; DistanceGradation total is 9/29 | Static/runtime proof for the no-source branch; continue with non-all-opaque 16bpc residuals |
 | basic remaining `case_0015/0017/0018/0019` | 16bpc | not exact / compose-path diagnostic | 2026-06-26 local rerun reproduces the same four failures. `case_0015/0017` are `Render Mode=2` + `Use Background Color=0`; `case_0018/0019` are `Render Mode=1` + `Use Background Color=1` with colored ramps/backgrounds | Ground 16bpc render-mode/background compose path before changing distance field math |
-| current integrated exact slice `case_0008/0020/0021/0022/0023` | 16bpc | `AE exact` | 2026-07-09 canonical batch on the current integrated build: `5/16` extended cases exact. `case_0023` stays closed by the depth-gated source-mask rule; older `73px` notes are historical narrowing context. See `refs/conformance/olmdistancegradation_current_integrated_16bpc_batch_20260709.md`. | Preserve the Power fix, Constant binary threshold, and depth-gated source mask; classify `case_0010/0011/0024..0028` as true16 residuals, not depthgate regressions. |
+| current exact slice `case_0008/0010/0011/0020/0021/0022/0023` | 16bpc | `AE exact` | 2026-07-11 canonical batch on the OpenCV/PF16-boundary build: `7/16` extended cases exact. `case_0010/0011` are newly exact; the previous five remain exact. See `refs/conformance/olmdistancegradation_opencv_pf16_boundary_20260711.md`. | Preserve reciprocal-multiply normalization, PF16 nearest-even field roundtrip, Power/Constant fixes, and the depth-gated source mask. |
 | depthgate true16 reverify | 16bpc | measurement correction | The old `/tmp/olmdg_16ext_depthgate2` artifacts verify at `5/16` with the canonical 16bpc verifier. `case_0010/0011/0024..0028` were not true16 exact there either. See `refs/conformance/olmdistancegradation_depthgate_true16_reverify_20260709.md`. | Do not chase a current-vs-depthgate provenance delta unless a new canonical verifier result contradicts this. |
-| sparse R/A quantization `case_0010/0011` | 16bpc | not exact / smallest true16 family | Current canonical verifier: `case_0010 max=2 nonzero=351`, `case_0011 max=2 nonzero=501`. The audit shows only R and A move, with abs delta `2`. `refs/conformance/olmdistancegradation_0010_0011_ra_quantization_probe_20260709.md` then shows the symptom is a one-word alpha-store difference exposed through AE export, and `refs/conformance/olmdistancegradation_0010_0011_local_field_normalization_probe_20260709.md` rejects local EDT replacement / broad field-pack toggles as proof. | Await the pointer-map Windows request; accept only if it binds output addresses and captures same-run field/pre-store/PF16/export values for `case_0010 (6,40)` and `(901,394)`, plus optional `case_0011 (915,392)`. |
+| sparse R/A quantization `case_0010/0011` | 16bpc | `AE exact` | Closed 2026-07-11 by reproducing OpenCV reciprocal-multiply normalization and PF16 round-to-nearest-even field-world conversion. Both canonical outputs have `max_diff=0`. | Preserve the binary-grounded boundary; cancel the superseded broad exact-address retry for this family. |
 | Layer/no-bg source family `case_0012/0013/0014/0016` | 16bpc | not exact / narrowed export-rounding family | 2026-07-08 Layer/no-bg straight-source RGB plus focused low-alpha hidden-color/Both dominant-channel patches reduce the family to true16 residuals: `case_0012 nonzero=2948 max=2`, `case_0013 nonzero=9006 max=2`, `case_0014 nonzero=9630 max=4`, `case_0016 nonzero=5373 max=2`. The 2026-07-09 audit `refs/conformance/olmdistancegradation_16bpc_export_rounding_residual_audit_20260709.md` confirms every nonzero delta in the four focused cases is even-valued; `case_0014` is the only focused case with RGB abs delta `4` and has retained target examples. The all-modes dominant-channel probe reduced `case_0014` to max `2` but is deferred/not-adopted because it is PNG/AE-host diagnostic evidence only and still non-exact; see `refs/conformance/olmdistancegradation_dominant_channel_all_modes_probe_rejected_20260709.md`. | Do not return to broad straight-vs-premultiplied tuning, broad low-alpha ratio rules, or all-mode dominant-channel promotion without binary proof or canonical batch validation. Next proof is a store/export-boundary witness for one representative `case_0012` +/-2 pixel and one `case_0014` -4 RGB pixel, or a Mac AE debug export proving whether the PF16 store already contains the Windows word. |
-| `case_0024..0028` true16 residual family | 16bpc | not exact / field-export family | Canonical verifier reports `case_0024 max=20`, `case_0025 max=6`, `case_0026 max=4`, `case_0027 max=4`, and `case_0028 max=3080` for both current integrated output and the depthgate `/tmp` artifacts. The old max=1 byte-view classification is not a true16 closeout. | Build a true16 residual audit from the verifier outputs before requesting more Windows data for `(907,222)` or changing field/source rules. |
+| `case_0024..0027` true16 residual family | 16bpc | not exact / max-2 field-export family | The PF16-boundary build reduces all four cases to `max=2`, but they remain broad and non-exact. | Classify sign/channel distribution before requesting a typed store/export witness; no global rounding toggle. |
+| `case_0028` true16 residual | 16bpc | not exact / separate outlier | PF16-boundary build remains `max=3080`, `nonzero_pixels=461476`. | Keep separate from the max-2 family and ground its parameter-specific field/compose branch. |
 | smaller residuals `case_0016` plus `case_0028` | 16bpc | not exact / separate small families | Current integrated canonical batch: `case_0016 nonzero=5373 max=2`; `case_0028 nonzero=457177 max=3080`. | Classify after `0010/0011` and the Layer/no-bg residual unless a parameter correlation ties them together. |
 | AE-free basic 12-case smoke | 8bpc | guarded | 2026-06-19 rerun passes current guard: worst `case_0007/0009 max=7 mean=0.0909`; residual remains | binary-ground distance normalization and compare against normalized Software refs |
 | AE-free extended non-blur 16-case smoke | 8bpc | guarded | 2026-06-19 rerun passes current loose guard, but with large non-exact residuals: `case_0008 max=254`, `case_0011 max=254`, `case_0012 max=251`, `case_0020..0023 max=238` | binary-ground interpolation, Constant field-prep, and render-mode branch details before tuning |

@@ -1,0 +1,24 @@
+{
+  "kind": "olm_runtime_trace_request_package",
+  "schema": 1,
+  "profile": "olmdistancegradation_case0026_16bpc_livefield_source_witness_20260713",
+  "repo_root_name": "OLM as",
+  "entrypoint": "refs/conformance/olmdistancegradation_case0026_16bpc_livefield_source_witness_contract_20260713.md",
+  "effect": "OLMDistanceGradation",
+  "runtime_actions": [
+    {
+      "request_id": "olmdistancegradation_case0026_16bpc_livefield_source_witness_20260713",
+      "request_schema": "olmdistancegradation_case0026_16bpc_livefield_source_witness_return_v1",
+      "plugin_area": "OLMDistanceGradation case0026 live field/source exact replay witness",
+      "mode": "external-trace",
+      "command": "Run one fresh current-AEX Software 16bpc render for case_0026 and capture all four witness points in the same AE/CDB run.",
+      "stop_condition": "Return one run id shared by all four target coordinates, with live case tuple, source raw A/G/R/B words, field raw A/G/R/B words, [RCX+2], and pre/post FUN_181170480 output words; otherwise exact_bind_failure.",
+      "forbidden": [
+        "answered_partial",
+        "promote prior carry-store evidence as live field words",
+        "derive raw words from PNGs",
+        "Start-Process argument arrays in the packaged PS 5.1 runner"
+      ]
+    }
+  ]
+}

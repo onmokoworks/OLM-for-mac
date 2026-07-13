@@ -1,0 +1,269 @@
+{
+  "bit_depth": 16,
+  "compose_status_observed": "local_actual_aex_bounded_witness",
+  "current_exact_cases": [
+    "0008",
+    "0010",
+    "0011",
+    "0020",
+    "0021",
+    "0022",
+    "0023"
+  ],
+  "families": [
+    {
+      "binary_evidence": [
+        {
+          "claim": "The bounded actual-AEX compose witness validates the 16bpc callback shape for the 0010/0011 control lane; it is local evidence, not a Windows live return.",
+          "kind": "binary",
+          "path": "refs/conformance/olmdg_compose_exact_address_witness_20260710.json",
+          "status": "present"
+        }
+      ],
+      "cases": [
+        "0008",
+        "0010",
+        "0011",
+        "0020",
+        "0021",
+        "0022",
+        "0023"
+      ],
+      "classification": "ae-exact-control",
+      "id": "exact",
+      "measured": {
+        "0008": {
+          "case_id": "case_0008",
+          "max_diff": 0,
+          "nonzero_pixels": 0
+        },
+        "0010": {
+          "case_id": "case_0010",
+          "max_diff": 0,
+          "nonzero_pixels": 0
+        },
+        "0011": {
+          "case_id": "case_0011",
+          "max_diff": 0,
+          "nonzero_pixels": 0
+        },
+        "0020": {
+          "case_id": "case_0020",
+          "max_diff": 0,
+          "nonzero_pixels": 0
+        },
+        "0021": {
+          "case_id": "case_0021",
+          "max_diff": 0,
+          "nonzero_pixels": 0
+        },
+        "0022": {
+          "case_id": "case_0022",
+          "max_diff": 0,
+          "nonzero_pixels": 0
+        },
+        "0023": {
+          "case_id": "case_0023",
+          "max_diff": 0,
+          "nonzero_pixels": 0
+        }
+      },
+      "next_evidence": "Preserve these seven cases as controls while closing the three unresolved families.",
+      "next_missing_boundary": "none-for-this-control-slice",
+      "typed_evidence": [
+        {
+          "claim": "Current Mac AE 16bpc result reports max=0 and nonzero_pixels=0 for all seven cases.",
+          "kind": "typed",
+          "path": "refs/conformance/olmdistancegradation_opencv_pf16_boundary_20260711.json",
+          "status": "present"
+        }
+      ]
+    },
+    {
+      "binary_evidence": [
+        {
+          "claim": "The rejected Layer unpremultiply experiment rules out a broad ownership change from the existing evidence.",
+          "kind": "binary",
+          "path": "refs/conformance/olmdistancegradation_16bpc_rejected_layer_unpremultiply_20260629.md",
+          "status": "present"
+        }
+      ],
+      "cases": [
+        "0012",
+        "0013",
+        "0014",
+        "0016"
+      ],
+      "classification": "residual-max-2-with-case-0014-max-4",
+      "id": "layer-no-bg",
+      "measured": {
+        "0012": {
+          "case_id": "case_0012",
+          "max_diff": 2,
+          "nonzero_pixels": 2793
+        },
+        "0013": {
+          "case_id": "case_0013",
+          "max_diff": 2,
+          "nonzero_pixels": 10135
+        },
+        "0014": {
+          "case_id": "case_0014",
+          "max_diff": 4,
+          "nonzero_pixels": 10664
+        },
+        "0016": {
+          "case_id": "case_0016",
+          "max_diff": 2,
+          "nonzero_pixels": 5373
+        }
+      },
+      "next_evidence": "One same-run typed witness at case_0012 (438,0) and case_0014 (448,0), with all six stages bound.",
+      "next_missing_boundary": "Windows source RGBA16 -> normalized source -> composed RGBA float -> PF16 store words -> same-run true16 export",
+      "typed_evidence": [
+        {
+          "claim": "Current AE rows are small even-valued residuals: 0012/0013/0016 max=2 and 0014 max=4.",
+          "kind": "typed",
+          "path": "refs/conformance/olmdistancegradation_opencv_pf16_boundary_20260711.json",
+          "status": "present"
+        },
+        {
+          "claim": "Existing samples show the Layer/no-bg residual at the exported true16 words, including the 0012 +/-2 and 0014 -4 RGB witnesses.",
+          "kind": "typed",
+          "path": "refs/conformance/olmdistancegradation_16bpc_export_rounding_residual_audit_20260709.json",
+          "status": "present"
+        },
+        {
+          "claim": "Local audit keeps both cases open and records the representative store/export values without claiming Windows pre-store values.",
+          "kind": "typed",
+          "path": "refs/conformance/olmdistancegradation_0012_0014_store_export_local_audit_20260710.md",
+          "status": "present"
+        }
+      ]
+    },
+    {
+      "binary_evidence": [
+        {
+          "claim": "AEX facts identify FUN_181174760, FUN_18117ca50, and FUN_181170480 plus the OpenCV 4.5.5 round-to-nearest-even PF16 boundary.",
+          "kind": "binary",
+          "path": "refs/conformance/olmdistancegradation_opencv_pf16_boundary_20260711.json",
+          "status": "present"
+        },
+        {
+          "claim": "Disassembly-grounded field generation and threshold facts exist, but no case-specific Windows live field value is present for 0024..0027.",
+          "kind": "binary",
+          "path": "tools/emulation/DG_FIELD_GEN_REPORT.md",
+          "status": "present"
+        }
+      ],
+      "cases": [
+        "0024",
+        "0025",
+        "0026",
+        "0027"
+      ],
+      "classification": "broad-field-export-residual-max-2",
+      "id": "max-2",
+      "measured": {
+        "0024": {
+          "case_id": "case_0024",
+          "max_diff": 2,
+          "nonzero_pixels": 991667
+        },
+        "0025": {
+          "case_id": "case_0025",
+          "max_diff": 2,
+          "nonzero_pixels": 808516
+        },
+        "0026": {
+          "case_id": "case_0026",
+          "max_diff": 2,
+          "nonzero_pixels": 819532
+        },
+        "0027": {
+          "case_id": "case_0027",
+          "max_diff": 2,
+          "nonzero_pixels": 505602
+        }
+      },
+      "next_evidence": "A paired typed witness for 0026/0027 should bind field value, interpolation output, render-mode branch, PF16 store, and same-run true16 export; do not reuse the stale max=1 classification as proof.",
+      "next_missing_boundary": "case-0024..0027 Windows field-world value -> compose input -> PF16 store/export true16 binding",
+      "typed_evidence": [
+        {
+          "claim": "Current AE rows report max=2 for each case; the family remains non-exact despite the PF16 boundary improvement.",
+          "kind": "typed",
+          "path": "refs/conformance/olmdistancegradation_opencv_pf16_boundary_20260711.json",
+          "status": "present"
+        },
+        {
+          "claim": "Earlier max=1 byte-view/depthgate witnesses identify contour-region controls, but are not promoted over the canonical true16 result.",
+          "kind": "typed",
+          "path": "refs/conformance/olmdistancegradation_depthgate_nearmiss_family_20260708.md",
+          "status": "present"
+        }
+      ]
+    },
+    {
+      "binary_evidence": [
+        {
+          "claim": "The IR records the binary-backed field, source-mask, and compose stages relevant to separating field shape from source/premultiply ownership.",
+          "kind": "binary",
+          "path": "notes/IR_OLMDistanceGradation.md",
+          "status": "present"
+        },
+        {
+          "claim": "Binary field-generation facts constrain the next probe without supplying an invented Windows value for 0028.",
+          "kind": "binary",
+          "path": "tools/emulation/DG_FIELD_GEN_REPORT.md",
+          "status": "present"
+        }
+      ],
+      "cases": [
+        "0028"
+      ],
+      "classification": "separate-large-field-source-or-premultiply-residual",
+      "id": "outlier-0028",
+      "measured": {
+        "0028": {
+          "case_id": "case_0028",
+          "max_diff": 3080,
+          "nonzero_pixels": 461476
+        }
+      },
+      "next_evidence": "One 0028 witness must bind source alpha/RGB, field X, composed RGBA float, PF16 store, and true16 export in one run before choosing source or field ownership.",
+      "next_missing_boundary": "case-0028 Windows source/premultiply ownership versus field-X shape at composed RGBA float",
+      "typed_evidence": [
+        {
+          "claim": "Current AE row reports max=3080 and 461476 nonzero pixels, separating 0028 from the max-2 family.",
+          "kind": "typed",
+          "path": "refs/conformance/olmdistancegradation_opencv_pf16_boundary_20260711.json",
+          "status": "present"
+        },
+        {
+          "claim": "Existing neighboring power/layer analysis identifies source-zero and background contribution witnesses, but does not close 0028.",
+          "kind": "typed",
+          "path": "refs/conformance/olmdistancegradation_16bpc_case0027_analysis_20260628.md",
+          "status": "present"
+        }
+      ]
+    }
+  ],
+  "guardrails": [
+    "No PNG-only tuning or production edits are part of this classifier.",
+    "A local AEX/binary witness is labeled binary evidence and is never promoted to a Windows live value.",
+    "Missing boundaries are named explicitly; no Windows values are invented."
+  ],
+  "kind": "olmdistancegradation_16bpc_residual_family_classifier",
+  "schema": 1,
+  "scope": "bounded residual-family audit using existing reports/results only",
+  "source_results": {
+    "compose_witness": "refs/conformance/olmdg_compose_exact_address_witness_20260710.json",
+    "current_boundary_report": "refs/conformance/olmdistancegradation_opencv_pf16_boundary_20260711.json",
+    "rounding_report": "refs/conformance/olmdistancegradation_16bpc_export_rounding_residual_audit_20260709.json"
+  },
+  "unresolved_family_ids": [
+    "layer-no-bg",
+    "max-2",
+    "outlier-0028"
+  ]
+}
