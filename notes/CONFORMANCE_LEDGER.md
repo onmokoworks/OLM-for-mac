@@ -1,5 +1,14 @@
 # OLM Conformance Ledger
 
+- 2026-07-14 `OLMKiraKira Mode 3 forward warp`: the Mac helper now mirrors
+  the observed OpenCV 4.5.5 `INTER_LINEAR` fixed-point coordinate and weight
+  quantization for the grounded forward-warp call. A source-extracted C++
+  fixture matches the captured AEX/OpenCV output at `63/63` float32 words;
+  the arm64 Debug plug-in build succeeds. This closes only the forward-warp
+  primitive boundary. Inverse warp, Gaussian live coefficients, ray
+  aggregation, and AE-host output remain unproven and are not `AE exact`.
+  Evidence: `refs/scripts/smoke_olmkirakira_mode3_forward_warp_contract_actual_aex_20260713.py`.
+
 - 2026-07-14 `common Windows CDB launcher gate`: the previous four-plugin
   batch was fail-closed at `cdb_launch` for every plugin: AfterFX was observed
   by process enumeration, but no CDB detach or queue binding marker was
