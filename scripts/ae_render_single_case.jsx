@@ -169,6 +169,11 @@
     var forceNewProject = getenv("OLM_AE_FORCE_NEW_PROJECT") === "1";
     var forceSoftware = getenv("OLM_AE_FORCE_SOFTWARE") === "1";
     var inputAlphaMode = String(getenv("OLM_AE_INPUT_ALPHA_MODE") || "").toUpperCase();
+    var inputFileOverride = getenv("OLM_AE_INPUT_FILE_OVERRIDE");
+    var pauseBeforeRender = getenv("OLM_AE_PAUSE_BEFORE_RENDER") === "1";
+    var readyMarkerPath = getenv("OLM_AE_READY_MARKER");
+    var continueMarkerPath = getenv("OLM_AE_CONTINUE_MARKER");
+    var pauseTimeoutSeconds = Number(getenv("OLM_AE_PAUSE_TIMEOUT_SECONDS") || 300);
 
     if (!requestDir) {
         requestDir = File($.fileName).parent.parent.fsName +
@@ -213,6 +218,16 @@
         appendText(logPath, "load request manifests\n");
         var requestManifest = parseJson(requestDir + "/request_manifest.json");
         var referenceManifest = parseJson(requestDir + "/" + requestManifest.reference_manifest);
+        if (!inputAlphaMode) {
+            var captureInfo = referenceManifest.current_reference_capture || {};
+            inputAlphaMode = String(
+                captureInfo.input_alpha_mode || referenceManifest.input_alpha_mode || ""
+            ).toUpperCase();
+            if (inputAlphaMode) {
+                summary.input_alpha_mode = inputAlphaMode;
+                appendText(logPath, "inputAlphaMode.manifest=" + inputAlphaMode + "\n");
+            }
+        }
         var caseRef = findCase(referenceManifest, caseId);
         if (!caseRef) {
             throw new Error("missing case in reference manifest: " + caseId);
@@ -283,7 +298,9 @@
             summary.warnings.push("bitsPerChannel: " + bitsError.toString());
         }
 
-        var inputPath = requestDir + "/" + requestManifest.input_dir + "/" + requestCase.before_effects_frame;
+        var inputFilename = inputFileOverride || requestCase.before_effects_frame;
+        var inputPath = requestDir + "/" + requestManifest.input_dir + "/" + inputFilename;
+        appendText(logPath, "inputFilename=" + inputFilename + (inputFileOverride ? " source=override\n" : " source=before_effects_frame\n"));
         appendText(logPath, "import " + inputPath + "\n");
         var footage = importFootage(inputPath);
         if (inputAlphaMode) {
@@ -418,6 +435,29 @@
             }
                 appendText(logPath, "set.ok index=" + p + " match=" + (leaf.match_name || prop.name) + "\n");
             }
+        }
+
+        if (pauseBeforeRender) {
+            if (!readyMarkerPath || !continueMarkerPath) {
+                throw new Error("pause handshake requires OLM_AE_READY_MARKER and OLM_AE_CONTINUE_MARKER");
+            }
+            var continueMarker = new File(continueMarkerPath);
+            if (continueMarker.exists) {
+                continueMarker.remove();
+            }
+            writeText(
+                readyMarkerPath,
+                "ready case_id=" + caseId + " pid_host=AfterFX effect_loaded=1 parameters_applied=1\n"
+            );
+            appendText(logPath, "pause.ready marker=" + readyMarkerPath + "\n");
+            var pauseDeadline = (new Date()).getTime() + Math.max(1, pauseTimeoutSeconds) * 1000;
+            while (!continueMarker.exists && (new Date()).getTime() < pauseDeadline) {
+                $.sleep(100);
+            }
+            if (!continueMarker.exists) {
+                throw new Error("pause handshake timed out waiting for " + continueMarkerPath);
+            }
+            appendText(logPath, "pause.continue marker=" + continueMarkerPath + "\n");
         }
 
         if (outputMode === "exr_render_queue") {

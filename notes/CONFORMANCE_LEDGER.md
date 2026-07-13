@@ -468,8 +468,13 @@ treating a mismatch as algorithm drift.
   `refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_8bpc_current_aex_same_run_typed_boundary_20260712.zip`.
   Its 2026-07-13 Windows return is fail-closed: CDB emitted none of the three
   required `(397,281)` typed markers and supplied no shared run/AEX identity.
-  This is runner/hook evidence only, not an algorithm observation. Add a
-  liveness gate before retrying; do not tune the 8bpc port from this return.
+  The subsequent liveness probe returned five zero counts, but its AE result
+  proves the nominal 8bpc request actually rendered at 32bpc because the
+  packaged runner ignored `comp.bpc`. Use
+  `refs/conformance/olmdistancegradation_8bpc_hook_liveness_depth_mismatch_20260713.md`.
+  A replacement request now requires AE-reported 8bpc and compares only the
+  PF8 callback against a PF32 negative control. Do not tune the 8bpc port
+  until that depth gate is positive.
 
 - 2026-07-12 `OLMDistanceGradation 16bpc residual families`: use
   `refs/conformance/olmdistancegradation_16bpc_residual_family_classifier_20260712.md`.
