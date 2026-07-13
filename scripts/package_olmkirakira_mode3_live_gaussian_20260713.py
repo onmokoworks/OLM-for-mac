@@ -83,7 +83,12 @@ def package_manifest(case: dict[str, Any]) -> dict[str, Any]:
             "encoding": "raw little-endian words",
             "source": "cv::Mat.data after getKernel return",
         },
-        "required_markers": ["AE_READY", "MODULE", "BREAKPOINTS_READY", "KK_WRAPPER", "KK_CREATE", "KK_KERNEL_ENTRY", "KK_KERNEL_RETURN"],
+        "preflight": {
+            "script": "ae_jsx_ready_preflight.jsx",
+            "marker": "ae_jsx_preflight_ready.marker",
+            "scope": "AfterFX -r launch and inherited absolute marker path only; no AEX, case, render, CDB, or algorithm claim",
+        },
+        "required_markers": ["AE_JSX_PREFLIGHT_READY", "AE_READY", "MODULE", "BREAKPOINTS_READY", "KK_WRAPPER", "KK_CREATE", "KK_KERNEL_ENTRY", "KK_KERNEL_RETURN"],
         "failure_status": "exact_bind_failure",
         "forbidden_statuses": ["answered_partial", "partial", "unknown"],
     }
@@ -109,6 +114,7 @@ def return_template() -> dict[str, Any]:
         "schema": SCHEMA,
         "request_id": REQUEST_ID,
         "status": "answered | exact_bind_failure",
+        "preflight": {"status": None, "marker": None, "ae_pid": None, "powershell": None, "work_root": None},
         "run": {"run_id": None, "case_id": CASE_ID, "renderer": "software", "bits_per_channel": 32, "module": "OLMKiraKira.aex", "module_base": None, "aex_sha256": AEX_SHA256, "aex_size": AEX_SIZE},
         "binding": {"wrapper_rva": "0x1272ec0", "create_rva": "0x1266730", "getKernel_rva": "0x12754a0", "wrapper": None, "create": None, "getKernel": None},
         "case": {"blur_mode_manifest": 3, "case_id": CASE_ID, "overrides_match_name": OVERRIDES, "expected_first_kernel": {"ecx": 21, "xmm1": 2.5, "r8": 5}},
@@ -125,7 +131,10 @@ def readme() -> str:
         f"overrides {json.dumps(OVERRIDES, sort_keys=True)} so the first Gaussian "
         "setup is expected to be kernel size 21, sigma 2.5, type 5.\n\n"
         "The runner relays through Windows PowerShell 5.1, requires an interactive "
-        "desktop session, and inherits the pause marker, fixed no-space JSX launch path, live "
+        "desktop session, canonicalizes every work/marker path to an absolute path, and first "
+        "runs a minimal AE JSX launch/ready preflight with no case, AEX, CDB, render, or algorithm "
+        "claim. Only after that marker is observed and the preflight AE exits does it run the "
+        "pause marker, fixed no-space JSX launch path, live "
         "hash-pinned module lookup, absolute base-plus-RVA breakpoints, and "
         "fail-closed marker policy from the 2026-07-13 retry harness. It captures "
         "the first getKernel output cv::Mat.data pointer after return and writes "
@@ -155,6 +164,38 @@ q
 """
 
 
+def preflight_jsx() -> str:
+    return r'''(function () {
+    var markerPath = "";
+    try {
+        markerPath = $.getenv("OLM_AE_PREFLIGHT_READY_MARKER") || "";
+        if (!markerPath || !/^(?:[A-Za-z]:[\\\/]|\\\\)/.test(markerPath)) {
+            throw new Error("OLM_AE_PREFLIGHT_READY_MARKER must be absolute");
+        }
+        var marker = new File(markerPath);
+        marker.encoding = "UTF-8";
+        if (!marker.open("w")) {
+            throw new Error("could not open preflight marker");
+        }
+        marker.write("AE_JSX_PREFLIGHT_READY ae_version=" + app.version + " jsx=" + File($.fileName).fsName + "\n");
+        marker.close();
+    } catch (error) {
+        try {
+            if (markerPath) {
+                var failure = new File(markerPath + ".error.txt");
+                failure.encoding = "UTF-8";
+                if (failure.open("w")) {
+                    failure.write(error.toString() + "\n");
+                    failure.close();
+                }
+            }
+        } catch (_) {}
+    }
+    try { app.quit(); } catch (_) {}
+}());
+'''
+
+
 def runner_ps1() -> str:
     return r'''[CmdletBinding()]
 param(
@@ -167,32 +208,35 @@ param(
 )
 $ErrorActionPreference='Stop'
 $requestId='olmkirakira_mode3_live_gaussian_20260713'; $caseId='final_random10_olm_kira_kira_03'; $expectedHash='60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7'; $expectedSize=25781248L
-$runId='kk-mode3-'+[guid]::NewGuid().ToString('N'); $work=Join-Path $WorkRoot $runId; New-Item -ItemType Directory -Force -Path $work | Out-Null
+if(![IO.Path]::IsPathRooted($WorkRoot)){$WorkRoot=Join-Path ([Environment]::CurrentDirectory) $WorkRoot}; $WorkRoot=[IO.Path]::GetFullPath($WorkRoot)
+$runId='kk-mode3-'+[guid]::NewGuid().ToString('N'); $work=Join-Path $WorkRoot $runId; New-Item -ItemType Directory -Force -Path $work | Out-Null; $work=(Get-Item -LiteralPath $work).FullName
 function Finish([string]$status,[hashtable]$extra,[int]$code){$body=[ordered]@{schema='olmkirakira-mode3-live-gaussian-return-v1';request_id=$requestId;status=$status;run_id=$runId}; foreach($x in $extra.GetEnumerator()){$body[$x.Key]=$x.Value}; $json=$body|ConvertTo-Json -Depth 20; $json|Set-Content -LiteralPath (Join-Path $work 'RETURN_RUNTIME_TRACE.json') -Encoding UTF8; $json; exit $code}
 if(-not $SkipPowerShell51Relay -and ($PSVersionTable.PSEdition -ne 'Desktop' -or $PSVersionTable.PSVersion.Major -ne 5)){
   if(!(Test-Path -LiteralPath $PowerShell51 -PathType Leaf)){Finish 'exact_bind_failure' @{failure=@{stage='interactive_desktop';reason='Windows PowerShell 5.1 relay missing';path=$PowerShell51}} 3}
-  $relayArgs='-NoProfile -ExecutionPolicy Bypass -File "'+$PSCommandPath+'" -AexPath "'+$AexPath+'" -CdbPath "'+$CdbPath+'" -AfterFxPath "'+$AfterFxPath+'" -WorkRoot "'+$WorkRoot+'" -PowerShell51 "'+$PowerShell51+'" -SkipPowerShell51Relay'
-  $relay=Start-Process -FilePath $PowerShell51 -ArgumentList $relayArgs -NoNewWindow -PassThru -Wait
-  exit $relay.ExitCode
+  & $PowerShell51 -NoProfile -ExecutionPolicy Bypass -File $PSCommandPath -AexPath $AexPath -CdbPath $CdbPath -AfterFxPath $AfterFxPath -WorkRoot $WorkRoot -PowerShell51 $PowerShell51 -SkipPowerShell51Relay
+  exit $LASTEXITCODE
 }
 $sessionId=(Get-Process -Id $PID -ErrorAction Stop).SessionId
 if($sessionId -eq 0){Finish 'exact_bind_failure' @{failure=@{stage='interactive_desktop';reason='runner must be launched from the logged-in interactive desktop, not SSH session 0';session_id=$sessionId}} 4}
 if(!(Test-Path -LiteralPath $AexPath -PathType Leaf)){Finish 'exact_bind_failure' @{failure=@{stage='preflight';reason='AEX absent'}} 2}
 $aex=Get-Item -LiteralPath $AexPath; $hash=(Get-FileHash -Algorithm SHA256 -LiteralPath $aex.FullName).Hash.ToLowerInvariant(); if($aex.Length -ne $expectedSize -or $hash -ne $expectedHash){Finish 'exact_bind_failure' @{failure=@{stage='aex_identity';reason='size or SHA256 mismatch';sha256=$hash;size=$aex.Length}} 2}
 foreach($x in @($CdbPath,$AfterFxPath)){if(!(Test-Path -LiteralPath $x -PathType Leaf)){Finish 'exact_bind_failure' @{failure=@{stage='preflight';reason='required executable absent';path=$x}} 2}}
+$CdbPath=(Get-Item -LiteralPath $CdbPath).FullName; $AfterFxPath=(Get-Item -LiteralPath $AfterFxPath).FullName
 if(Get-Process -Name AfterFX -ErrorAction SilentlyContinue){Finish 'exact_bind_failure' @{failure=@{stage='preflight';reason='After Effects must be fully closed before this run'}} 2}
-$caseRoot=Join-Path $PSScriptRoot 'case'; $jsx=Join-Path $caseRoot 'ae_render_single_case.jsx'; $templatePath=Join-Path $PSScriptRoot 'mode3_live_gaussian.cdb.in'; $trace=Join-Path $work 'cdb_trace.log'; $stdout=Join-Path $work 'cdb_stdout.txt'; $stderr=Join-Path $work 'cdb_stderr.txt'; $ready=Join-Path $work 'ae_ready.marker'; $continue=Join-Path $work 'ae_continue.marker'; $words=Join-Path $work 'gaussian_kernel_21_f32_le.bin'
-foreach($x in @($jsx,$templatePath,(Join-Path $caseRoot 'request_manifest.json'),(Join-Path $caseRoot 'reference_manifest.json'),(Join-Path $caseRoot 'input\case_03_before_effects.png'))){if(!(Test-Path -LiteralPath $x -PathType Leaf)){Finish 'exact_bind_failure' @{failure=@{stage='package';reason='required package asset missing';path=$x}} 3}}
+$caseRoot=(Get-Item -LiteralPath (Join-Path $PSScriptRoot 'case')).FullName; $jsx=Join-Path $caseRoot 'ae_render_single_case.jsx'; $preflightJsx=Join-Path $PSScriptRoot 'ae_jsx_ready_preflight.jsx'; $templatePath=Join-Path $PSScriptRoot 'mode3_live_gaussian.cdb.in'; $trace=Join-Path $work 'cdb_trace.log'; $stdout=Join-Path $work 'cdb_stdout.txt'; $stderr=Join-Path $work 'cdb_stderr.txt'; $ready=Join-Path $work 'ae_ready.marker'; $continue=Join-Path $work 'ae_continue.marker'; $words=Join-Path $work 'gaussian_kernel_21_f32_le.bin'; $preflightReady=Join-Path $work 'ae_jsx_preflight_ready.marker'
+foreach($x in @($jsx,$preflightJsx,$templatePath,(Join-Path $caseRoot 'request_manifest.json'),(Join-Path $caseRoot 'reference_manifest.json'),(Join-Path $caseRoot 'input\case_03_before_effects.png'))){if(!(Test-Path -LiteralPath $x -PathType Leaf)){Finish 'exact_bind_failure' @{failure=@{stage='package';reason='required package asset missing';path=$x}} 3}}
+$absolutePaths=@($WorkRoot,$work,$caseRoot,$preflightReady,$ready,$continue,$trace,$stdout,$stderr,$words); if($absolutePaths|Where-Object{![IO.Path]::IsPathRooted($_)}){Finish 'exact_bind_failure' @{failure=@{stage='path_preflight';reason='all cross-process paths must be absolute';paths=$absolutePaths}} 3}
+$launchDir=Join-Path $env:PUBLIC ('OLMTrace\'+$runId); New-Item -ItemType Directory -Force -Path $launchDir | Out-Null; $launchDir=(Get-Item -LiteralPath $launchDir).FullName; $jsxLaunch=Join-Path $launchDir 'runner.jsx'; $preflightLaunch=Join-Path $launchDir 'preflight.jsx'; Copy-Item -LiteralPath $jsx -Destination $jsxLaunch -Force; Copy-Item -LiteralPath $preflightJsx -Destination $preflightLaunch -Force; if(($jsxLaunch,$preflightLaunch)|Where-Object{$_ -match '\s'}){Finish 'exact_bind_failure' @{failure=@{stage='path_preflight';reason='no-space JSX launch path invariant failed';paths=@($jsxLaunch,$preflightLaunch)}} 3}
+$env:OLM_AE_PREFLIGHT_READY_MARKER=$preflightReady; $preflight=Start-Process -FilePath $AfterFxPath -ArgumentList @('-m','-r',$preflightLaunch) -PassThru; $deadline=(Get-Date).AddSeconds(120); while((Get-Date)-lt $deadline -and !(Test-Path -LiteralPath $preflightReady) -and !$preflight.HasExited){Start-Sleep -Milliseconds 250; $preflight.Refresh()}; if(!(Test-Path -LiteralPath $preflightReady)){Finish 'exact_bind_failure' @{failure=@{stage='ae_jsx_preflight';reason='minimal AfterFX -r JSX did not emit ready marker';pid=$preflight.Id;process_exited=$preflight.HasExited;exit_code=$(if($preflight.HasExited){$preflight.ExitCode}else{$null});marker=$preflightReady;marker_error=$(if(Test-Path -LiteralPath ($preflightReady+'.error.txt')){Get-Content -LiteralPath ($preflightReady+'.error.txt') -Raw}else{$null});launch=$preflightLaunch;argument_vector=@('-m','-r',$preflightLaunch);powershell=$PSVersionTable.PSVersion.ToString();work_root=$WorkRoot}} 4}; $preflight|Wait-Process -Timeout 60 -ErrorAction SilentlyContinue; if(!$preflight.HasExited){Finish 'exact_bind_failure' @{failure=@{stage='ae_jsx_preflight';reason='minimal JSX wrote ready but AfterFX did not exit';pid=$preflight.Id;marker=$preflightReady}} 4}; Remove-Item Env:OLM_AE_PREFLIGHT_READY_MARKER -ErrorAction SilentlyContinue
 $env:OLM_AE_REQUEST_DIR=($caseRoot -replace '\\','/'); $env:OLM_AE_CASE_ID=$caseId; $env:OLM_AE_OUTPUT_DIR=Join-Path $work 'render'; $env:OLM_AE_LOG_PATH=Join-Path $work 'ae_render.log'; $env:OLM_AE_RESULT_JSON=Join-Path $work 'ae_render_result.json'; $env:OLM_AE_PARAM_OVERRIDES_JSON='{"OLM OLM Kira Kira-0003":5,"OLM OLM Kira Kira-0004":0,"OLM OLM Kira Kira-0005":0,"OLM OLM Kira Kira-0026":0}'; $env:OLM_AE_FORCE_SOFTWARE='1'; $env:OLM_AE_FORCE_NEW_PROJECT='1'; $env:OLM_AE_KEEP_OPEN='0'; $env:OLM_AE_PAUSE_BEFORE_RENDER='1'; $env:OLM_AE_READY_MARKER=$ready; $env:OLM_AE_CONTINUE_MARKER=$continue; New-Item -ItemType Directory -Force -Path $env:OLM_AE_OUTPUT_DIR | Out-Null
-$launchDir=Join-Path $env:PUBLIC ('OLMTrace\'+$runId); New-Item -ItemType Directory -Force -Path $launchDir | Out-Null; $jsxLaunch=Join-Path $launchDir 'runner.jsx'; Copy-Item -LiteralPath $jsx -Destination $jsxLaunch -Force; if($jsxLaunch -match '\s'){Finish 'exact_bind_failure' @{failure=@{stage='preflight';reason='no-space JSX launch path invariant failed';path=$jsxLaunch}} 3}
-$ae=Start-Process -FilePath $AfterFxPath -ArgumentList ('-m -r '+$jsxLaunch) -PassThru; $deadline=(Get-Date).AddSeconds(180); while((Get-Date)-lt $deadline -and !(Test-Path -LiteralPath $ready)){Start-Sleep -Milliseconds 250}; if(!(Test-Path -LiteralPath $ready)){Finish 'exact_bind_failure' @{failure=@{stage='ae_ready';reason='ready marker missing'}} 4}
+$ae=Start-Process -FilePath $AfterFxPath -ArgumentList @('-m','-r',$jsxLaunch) -PassThru; $deadline=(Get-Date).AddSeconds(180); while((Get-Date)-lt $deadline -and !(Test-Path -LiteralPath $ready) -and !$ae.HasExited){Start-Sleep -Milliseconds 250; $ae.Refresh()}; if(!(Test-Path -LiteralPath $ready)){Finish 'exact_bind_failure' @{failure=@{stage='ae_ready';reason='full case JSX did not emit ready after minimal JSX preflight passed';preflight_marker=(Get-Content -LiteralPath $preflightReady -Raw);pid=$ae.Id;process_exited=$ae.HasExited;exit_code=$(if($ae.HasExited){$ae.ExitCode}else{$null});ae_log=$(if(Test-Path -LiteralPath $env:OLM_AE_LOG_PATH){Get-Content -LiteralPath $env:OLM_AE_LOG_PATH -Raw}else{$null});ae_result=$(if(Test-Path -LiteralPath $env:OLM_AE_RESULT_JSON){Get-Content -LiteralPath $env:OLM_AE_RESULT_JSON -Raw}else{$null});ready=$ready;request_dir=$env:OLM_AE_REQUEST_DIR;argument_vector=@('-m','-r',$jsxLaunch)}} 4}
 $module=$null; $deadline=(Get-Date).AddSeconds(30); while((Get-Date)-lt $deadline -and $null -eq $module){try{$module=(Get-Process -Id $ae.Id -ErrorAction Stop).Modules|Where-Object{$_.FileName -ieq $aex.FullName}|Select-Object -First 1}catch{}; if($null -eq $module){Start-Sleep -Milliseconds 250}}; if($null -eq $module){Finish 'exact_bind_failure' @{failure=@{stage='module_lookup';reason='hash-pinned AEX not loaded at ready marker';pid=$ae.Id}} 4}
 $base=('0x{0:x}' -f $module.BaseAddress.ToInt64()); $wrapper=('0x{0:x}' -f ($module.BaseAddress.ToInt64()+0x1272ec0)); $create=('0x{0:x}' -f ($module.BaseAddress.ToInt64()+0x1266730)); $kernel=('0x{0:x}' -f ($module.BaseAddress.ToInt64()+0x12754a0)); $cdb=Join-Path $work 'mode3_live_gaussian.cdb'; $text=(Get-Content -LiteralPath $templatePath -Raw).Replace('__TRACE__',$trace).Replace('__RUN_ID__',$runId).Replace('__BASE__',$base).Replace('__WRAPPER__',$wrapper).Replace('__CREATE__',$create).Replace('__KERNEL__',$kernel).Replace('__WORDS__',$words); if(($cdb,$words)|Where-Object{$_ -match '\s'}){Finish 'exact_bind_failure' @{failure=@{stage='preflight';reason='CDB artifact path contains whitespace'}} 3}; $text|Set-Content -LiteralPath $cdb -Encoding ASCII
 $proc=Start-Process -FilePath $CdbPath -ArgumentList ('-cf "'+$cdb+'" -p '+$ae.Id) -RedirectStandardOutput $stdout -RedirectStandardError $stderr -NoNewWindow -PassThru; $deadline=(Get-Date).AddSeconds(60); while((Get-Date)-lt $deadline){if((Test-Path $trace)-and((Get-Content $trace -Raw)-match 'KK_BREAKPOINTS_READY')){break}; Start-Sleep -Milliseconds 250}; if(!(Test-Path $trace)-or -not((Get-Content $trace -Raw)-match 'KK_BREAKPOINTS_READY')){Finish 'exact_bind_failure' @{failure=@{stage='hook_install';reason='absolute base+RVA breakpoints not armed';base=$base}} 4}; Set-Content -LiteralPath $continue -Value continue -Encoding ASCII; $proc|Wait-Process; $lines=if(Test-Path $trace){@(Get-Content -LiteralPath $trace)}else{@()}; $joined=$lines -join [Environment]::NewLine
 function Marker([string]$n){$lines|Where-Object{$_ -match "^$n\s"}|Select-Object -Last 1}; function Field([string]$l,[string]$k){$m=[regex]::Match($l,"(?:^|\s)$k=([^\s]+)");if($m.Success){$m.Groups[1].Value}}
 $start=Marker 'KK_RUN_START'; $mod=Marker 'KK_MODULE'; $wrap=Marker 'KK_WRAPPER'; $cr=Marker 'KK_CREATE'; $ke=Marker 'KK_KERNEL_ENTRY'; $kr=Marker 'KK_KERNEL_RETURN'; $missing=New-Object System.Collections.Generic.List[string]; foreach($p in @(@('run_start',$start),@('module',$mod),@('wrapper',$wrap),@('create',$cr),@('kernel_entry',$ke),@('kernel_return',$kr))){if(!$p[1]){[void]$missing.Add($p[0])}}
 if(!$ke -or (Field $ke 'ecx') -ne '21'){[void]$missing.Add('kernel_ecx_21')}; if(!$ke -or (Field $ke 'r8') -ne '5'){[void]$missing.Add('kernel_r8_5')}; if(!$ke -or [double](Field $ke 'xmm1') -ne 2.5){[void]$missing.Add('kernel_xmm1_2.5')}; if(!$kr -or (Field $kr 'word_count') -ne '21'){[void]$missing.Add('word_count_21')}; if(!(Test-Path -LiteralPath $words)){[void]$missing.Add('raw_words_file')}; elseif((Get-Item -LiteralPath $words).Length -ne 84){[void]$missing.Add('raw_words_size_84')}; $ids=@($lines|ForEach-Object{if($_ -match '^KK_\S+.*run_id=([^\s]+)'){$Matches[1]}}|Sort-Object -Unique); if($ids.Count -ne 1){[void]$missing.Add('same_run_identity')}; if(!$start -or (Field $start 'case_id') -ne $caseId){[void]$missing.Add('case_identity')}; if($missing.Count){Finish 'exact_bind_failure' @{failure=@{stage='binding';reason='required live markers or exact first-kernel fields missing';missing=@($missing);same_run_ids=$ids;trace=$joined}} 4}
-$raw=[IO.File]::ReadAllBytes($words); $u32=for($i=0;$i -lt 21;$i++){[BitConverter]::ToUInt32($raw,$i*4).ToString('x8')}; Finish 'answered' @{run=@{run_id=$ids[0];case_id=$caseId;module='OLMKiraKira.aex';module_base=$base;aex_sha256=$hash;aex_size=$aex.Length};binding=@{wrapper_rva='0x1272ec0';create_rva='0x1266730';getKernel_rva='0x12754a0';wrapper=$wrapper;create=$create;getKernel=$kernel};case=@{blur_mode_manifest=3;overrides_match_name=@{'OLM OLM Kira Kira-0003'=5;'OLM OLM Kira Kira-0004'=0;'OLM OLM Kira Kira-0005'=0;'OLM OLM Kira Kira-0026'=0}};observation=@{module_marker=$mod;wrapper_marker=$wrap;create_marker=$cr;first_getKernel=@{ecx=[int](Field $ke 'ecx');xmm1=[double](Field $ke 'xmm1');r8=[int](Field $ke 'r8');output_mat=(Field $ke 'output_mat')};return_data=(Field $kr 'data');raw_words_u32=$u32;raw_bytes=84};trace=$joined} 0
+$raw=[IO.File]::ReadAllBytes($words); $u32=for($i=0;$i -lt 21;$i++){[BitConverter]::ToUInt32($raw,$i*4).ToString('x8')}; Finish 'answered' @{preflight=@{status='ready';marker=(Get-Content -LiteralPath $preflightReady -Raw);ae_pid=$preflight.Id;powershell=$PSVersionTable.PSVersion.ToString();work_root=$WorkRoot};run=@{run_id=$ids[0];case_id=$caseId;module='OLMKiraKira.aex';module_base=$base;aex_sha256=$hash;aex_size=$aex.Length};binding=@{wrapper_rva='0x1272ec0';create_rva='0x1266730';getKernel_rva='0x12754a0';wrapper=$wrapper;create=$create;getKernel=$kernel};case=@{blur_mode_manifest=3;overrides_match_name=@{'OLM OLM Kira Kira-0003'=5;'OLM OLM Kira Kira-0004'=0;'OLM OLM Kira Kira-0005'=0;'OLM OLM Kira Kira-0026'=0}};observation=@{module_marker=$mod;wrapper_marker=$wrap;create_marker=$cr;first_getKernel=@{ecx=[int](Field $ke 'ecx');xmm1=[double](Field $ke 'xmm1');r8=[int](Field $ke 'r8');output_mat=(Field $ke 'output_mat')};return_data=(Field $kr 'data');raw_words_u32=$u32;raw_bytes=84};trace=$joined} 0
 '''
 
 
@@ -204,6 +248,7 @@ def materialize(repo: Path, support: Path, output: Path) -> None:
         support / "runtime_trace_package_manifest.json": (json.dumps(runtime_manifest(), indent=2) + "\n").encode(),
         support / "RETURN_RUNTIME_TRACE_TEMPLATE.json": (json.dumps(return_template(), indent=2) + "\n").encode(),
         support / "mode3_live_gaussian.cdb.in": cdb_template().encode(),
+        support / "ae_jsx_ready_preflight.jsx": preflight_jsx().encode(),
         support / "run_olmkirakira_mode3_live_gaussian_20260713.ps1": runner_ps1().encode(),
         support / "case" / "request_manifest.json": (json.dumps(request_manifest(case), indent=2) + "\n").encode(),
         support / "case" / "reference_manifest.json": (json.dumps(reference, indent=2) + "\n").encode(),

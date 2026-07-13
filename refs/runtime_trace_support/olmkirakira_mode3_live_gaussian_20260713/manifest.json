@@ -44,7 +44,13 @@
     "encoding": "raw little-endian words",
     "source": "cv::Mat.data after getKernel return"
   },
+  "preflight": {
+    "script": "ae_jsx_ready_preflight.jsx",
+    "marker": "ae_jsx_preflight_ready.marker",
+    "scope": "AfterFX -r launch and inherited absolute marker path only; no AEX, case, render, CDB, or algorithm claim"
+  },
   "required_markers": [
+    "AE_JSX_PREFLIGHT_READY",
     "AE_READY",
     "MODULE",
     "BREAKPOINTS_READY",

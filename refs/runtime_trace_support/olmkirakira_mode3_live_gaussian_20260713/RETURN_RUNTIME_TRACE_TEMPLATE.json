@@ -2,6 +2,13 @@
   "schema": "olmkirakira-mode3-live-gaussian-return-v1",
   "request_id": "olmkirakira_mode3_live_gaussian_20260713",
   "status": "answered | exact_bind_failure",
+  "preflight": {
+    "status": null,
+    "marker": null,
+    "ae_pid": null,
+    "powershell": null,
+    "work_root": null
+  },
   "run": {
     "run_id": null,
     "case_id": "final_random10_olm_kira_kira_03",

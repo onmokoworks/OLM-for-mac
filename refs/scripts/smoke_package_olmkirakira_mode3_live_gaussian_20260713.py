@@ -56,6 +56,7 @@ def expected_members() -> set[str]:
     return {
         prefix + "README.md",
         prefix + "RETURN_RUNTIME_TRACE_TEMPLATE.json",
+        prefix + "ae_jsx_ready_preflight.jsx",
         prefix + "case/ae_render_single_case.jsx",
         prefix + "case/input/case_03_before_effects.png",
         prefix + "case/reference_manifest.json",
@@ -101,6 +102,8 @@ def verify_manifest_contracts(
     }, "RVA map mismatch")
     expect(manifest["capture"]["first_getKernel"] == {"ecx": 21, "xmm1": 2.5, "r8": 5}, "first-kernel contract mismatch")
     expect(manifest["capture"]["words"] == 21, "word-count contract mismatch")
+    expect(manifest["preflight"]["script"] == "ae_jsx_ready_preflight.jsx", "preflight script contract mismatch")
+    expect("no AEX" in manifest["preflight"]["scope"], "preflight scope must forbid an AEX claim")
 
     expect(request["cases"] == [{
         "id": CASE_ID,
@@ -142,7 +145,8 @@ def verify_zip(package: Path, support_dir: Path, runner_text: str, cdb_text: str
 
 def verify_ps1_fail_closed(runner_text: str, manifest: dict[str, Any]) -> None:
     marker_requirements = {
-        "AE_READY": "ready marker missing",
+        "AE_JSX_PREFLIGHT_READY": "minimal AfterFX -r JSX did not emit ready marker",
+        "AE_READY": "full case JSX did not emit ready after minimal JSX preflight passed",
         "MODULE": "Marker 'KK_MODULE'",
         "BREAKPOINTS_READY": "KK_BREAKPOINTS_READY",
         "KK_WRAPPER": "Marker 'KK_WRAPPER'",
@@ -173,6 +177,13 @@ def verify_ps1_fail_closed(runner_text: str, manifest: dict[str, Any]) -> None:
         "After Effects must be fully closed before this run",
         "SkipPowerShell51Relay",
         "interactive desktop, not SSH session 0",
+        "[IO.Path]::IsPathRooted($WorkRoot)",
+        "all cross-process paths must be absolute",
+        "ae_jsx_ready_preflight.jsx",
+        "-ArgumentList @('-m','-r',$preflightLaunch)",
+        "-ArgumentList @('-m','-r',$jsxLaunch)",
+        "full case JSX did not emit ready after minimal JSX preflight passed",
+        "argument_vector=@('-m','-r',$jsxLaunch)",
         "cdb_trace.log",
         "cdb_stdout.txt",
     ):
@@ -181,6 +192,20 @@ def verify_ps1_fail_closed(runner_text: str, manifest: dict[str, Any]) -> None:
     expect("$ids.Count -ne 1" in runner_text, "runner does not fail closed on multi-run identity")
     expect("if($missing.Count){Finish 'exact_bind_failure'" in runner_text, "runner does not fail closed on missing markers")
     expect("$u32=for($i=0;$i -lt 21;$i++)" in runner_text, "runner does not decode 21 returned words")
+    expect("preflight=@{status='ready'" in runner_text, "answered return omits successful preflight provenance")
+    expect("-ArgumentList ('-m -r '+$jsxLaunch)" not in runner_text, "runner retained ambiguous single-string AE arguments")
+
+
+def verify_preflight_jsx(preflight_text: str) -> None:
+    for token in (
+        'OLM_AE_PREFLIGHT_READY_MARKER',
+        'AE_JSX_PREFLIGHT_READY',
+        'marker.open("w")',
+        'app.quit()',
+    ):
+        expect(token in preflight_text, f"preflight JSX token missing: {token}")
+    for forbidden in ("request_manifest", "OLMKiraKira", "CDB", "renderQueue", "saveFrameToPng"):
+        expect(forbidden not in preflight_text, f"preflight JSX exceeds launch/ready scope: {forbidden}")
 
 
 def verify_cdb_template(cdb_text: str) -> None:
@@ -247,11 +272,13 @@ def main() -> int:
         support_reference = load_json(support_dir / "case/reference_manifest.json")
         runner_text = (support_dir / "run_olmkirakira_mode3_live_gaussian_20260713.ps1").read_text(encoding="utf-8")
         cdb_text = (support_dir / "mode3_live_gaussian.cdb.in").read_text(encoding="utf-8")
+        preflight_text = (support_dir / "ae_jsx_ready_preflight.jsx").read_text(encoding="utf-8")
 
         expect(reference == support_reference, "packaged support reference manifest drifted from source reference")
         verify_manifest_contracts(support_manifest, support_runtime, support_template, support_request, case)
         verify_zip(package, support_dir, runner_text, cdb_text)
         verify_ps1_fail_closed(runner_text, support_manifest)
+        verify_preflight_jsx(preflight_text)
         verify_cdb_template(cdb_text)
         verify_regeneration(generator, package)
     except AssertionError as exc:
