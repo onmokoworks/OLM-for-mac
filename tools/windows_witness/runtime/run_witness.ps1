@@ -288,7 +288,7 @@ $launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)
 $launchArguments = Join-WindowsCommandLine $launchArgumentValues
 $scheduledTaskName = '\OLM_Witness_' + ($runId -replace '[^A-Za-z0-9_-]', '_')
 $taskStart = (Get-Date).AddMinutes(1)
-$taskDate = $taskStart.ToString('MM/dd/yyyy', [Globalization.CultureInfo]::InvariantCulture)
+$taskDate = $taskStart.ToString('yyyy/MM/dd', [Globalization.CultureInfo]::InvariantCulture)
 $taskTime = $taskStart.ToString('HH:mm', [Globalization.CultureInfo]::InvariantCulture)
 $taskOutput = & schtasks.exe /Create /TN $scheduledTaskName /TR $launchWrapper /SC ONCE /SD $taskDate /ST $taskTime /IT /F 2>&1
 if ($LASTEXITCODE -ne 0) {
