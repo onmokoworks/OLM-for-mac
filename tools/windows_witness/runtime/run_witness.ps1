@@ -257,7 +257,7 @@ if ($queueLaunch -match '\s') { Finish (Failure 'path_preflight' 'short JSX laun
 $normalizedQueuePath = [IO.Path]::GetFullPath($queueLaunch)
 $queueHash = (Get-FileHash -LiteralPath $queueLaunch -Algorithm SHA256).Hash.ToLowerInvariant()
 $env:WINDOWS_WITNESS_QUEUE_SHA256 = $queueHash
-$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)
+$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m', '-r', $normalizedQueuePath)
 @('@echo off', $afterFxCommandLine, 'exit /b %ERRORLEVEL%') | Set-Content -LiteralPath $launchWrapper -Encoding ASCII
 $bootstrapText = @"
 .effmach amd64
@@ -267,7 +267,7 @@ $bootstrapText = @"
 qd
 "@
 $bootstrapText | Set-Content -LiteralPath $bootstrapCdbScript -Encoding ASCII
-$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, $AfterFxPath, '-r', $normalizedQueuePath)
+$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, $AfterFxPath, '-m', '-r', $normalizedQueuePath)
 $launchArguments = Join-WindowsCommandLine $launchArgumentValues
 $launch = Start-Process -FilePath $CdbPath -ArgumentList $launchArguments -RedirectStandardOutput $launchOut -RedirectStandardError $launchErr -NoNewWindow -PassThru
 $launchStarted = $true
