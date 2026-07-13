@@ -64,6 +64,7 @@ $bootstrapPluginLoadClaimed = $false
 $queueBootstrapObserved = $false
 $queueBootstrapBinding = $null
 $queueRetryProcesses = @()
+$queueBindingAmbiguous = $false
 $bootstrapAePid = $null
 $activeCdbTrace = $null
 $activeCdbTraceEvidence = $null
@@ -178,6 +179,7 @@ function Finish([object]$body, [int]$code) {
     bootstrap_plugin_load_claimed = [bool]$bootstrapPluginLoadClaimed
     queue_bootstrap_marker_observed = [bool]$queueBootstrapObserved
     queue_bootstrap_binding = $queueBootstrapBinding
+    queue_binding_ambiguous = [bool]$queueBindingAmbiguous
     session_id = [int]$sessionId
     observed_afterfx = @(Get-AfterFxState)
   } | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath $processDiagnostics -Encoding UTF8 -ErrorAction SilentlyContinue
@@ -334,7 +336,14 @@ if ([string]$queueBootstrapBinding.run_id -cne $runId -or
   Finish (Failure 'queue_binding' 'queue bootstrap marker does not match this run/package/script' @('queue_bootstrap:run_id', 'queue_bootstrap:work', 'queue_bootstrap:root', 'queue_bootstrap:queue_sha256') ($queueBootstrapBinding | ConvertTo-Json -Compress)) 2
 }
 $postBootstrapState = @(Get-AfterFxState)
-if ($postBootstrapState.Count -ne 1 -or [int]$postBootstrapState[0].pid -ne $bootstrapAePid) {
+if ($postBootstrapState.Count -ne 1) {
+  $bootstrapStillPresent = @($postBootstrapState | Where-Object { [int]$_.pid -eq $bootstrapAePid }).Count -eq 1
+  if ($bootstrapStillPresent) {
+    $queueBindingAmbiguous = $true
+  } else {
+    Finish (Failure 'queue_binding' 'queue bootstrap marker is not bound to the CDB-launched After Effects process' @('same_afterfx_pid', 'same_afterfx_session', 'same_afterfx_path') "launched_pid=$bootstrapAePid matches=$($postBootstrapState.Count)") 2
+  }
+} elseif ([int]$postBootstrapState[0].pid -ne $bootstrapAePid) {
   Finish (Failure 'queue_binding' 'queue bootstrap marker is not bound to the launched After Effects process' @('same_afterfx_pid', 'same_afterfx_session', 'same_afterfx_path') "launched_pid=$bootstrapAePid matches=$($postBootstrapState.Count)") 2
 }
 $boundPid = $bootstrapAePid
