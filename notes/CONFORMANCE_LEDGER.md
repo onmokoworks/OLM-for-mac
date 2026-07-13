@@ -437,6 +437,10 @@ treating a mismatch as algorithm drift.
   recursive/separable branch, but does not recover their complete parameter or
   recurrence contracts. Both stay explicitly on the existing Mode 2 scaffold
   until those facts land; this is a guarded placeholder, not compatibility.
+  The 2026-07-13 live-Gaussian return stopped at the AE-ready preflight before
+  CDB started, so it contains zero kernel words and does not classify the
+  Gaussian implementation. Repair the desktop readiness handshake before
+  repeating the same 21-word witness.
 
 - 2026-07-12 `OLMKiraKira hotspot transform provenance`: use
   `refs/conformance/olmkirakira_hotspot_transform_provenance_20260712.md`.
@@ -462,6 +466,10 @@ treating a mismatch as algorithm drift.
   excluded. A narrow hash-pinned same-run field/compose/store witness request
   is prepared at
   `refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_8bpc_current_aex_same_run_typed_boundary_20260712.zip`.
+  Its 2026-07-13 Windows return is fail-closed: CDB emitted none of the three
+  required `(397,281)` typed markers and supplied no shared run/AEX identity.
+  This is runner/hook evidence only, not an algorithm observation. Add a
+  liveness gate before retrying; do not tune the 8bpc port from this return.
 
 - 2026-07-12 `OLMDistanceGradation 16bpc residual families`: use
   `refs/conformance/olmdistancegradation_16bpc_residual_family_classifier_20260712.md`.
