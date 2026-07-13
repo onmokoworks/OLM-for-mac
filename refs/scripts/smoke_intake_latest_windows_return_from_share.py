@@ -44,8 +44,21 @@ def write_runtime_request_zip(path: Path, request_id: str) -> None:
         archive.writestr("README_RUNTIME_TRACE.md", "synthetic runtime request\n")
 
 
-def write_runtime_return_zip(path: Path, request_id: str) -> None:
+def write_runtime_return_zip(path: Path, request_id: str, *, portable: bool = False) -> None:
     with zipfile.ZipFile(path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        if portable:
+            archive.writestr(
+                "RETURN_RUNTIME_TRACE.json",
+                b"\xef\xbb\xbf"
+                + (
+                    "{\n"
+                    f'  "request_id": "{request_id}",\n'
+                    '  "status": "answered",\n'
+                    '  "run_id": "portable-return-smoke"\n'
+                    "}\n"
+                ).encode("utf-8"),
+            )
+            return
         archive.writestr(
             "RETURN_RUNTIME_TRACE_RESULT.json",
             (
@@ -166,6 +179,7 @@ def main() -> int:
 
         package = tmp_root / "runtime_request.zip"
         run([py, "scripts/package_runtime_trace_requests.py", "--output", str(package)], root)
+        shutil.copyfile(package, new_dir / f"20260711_230000__{package.name}")
 
         returned = new_dir / "runtime_trace_return.zip"
         make_return_zip(returned)
@@ -233,7 +247,7 @@ def main() -> int:
         shutil.copyfile(newer_request, new_repo_pkg)
         try:
             mismatched_return = new_dir / "mismatched_runtime_trace_return.zip"
-            write_runtime_return_zip(mismatched_return, "older_request_id")
+            write_runtime_return_zip(mismatched_return, "older_request_id", portable=True)
             dry_runtime = run(
                 [
                     py,
@@ -421,12 +435,16 @@ def main() -> int:
         winref_old.mkdir(parents=True)
         winref_build = tmp_root / "winref_build"
         winref_build.mkdir(parents=True)
-        winref_zip, _, _ = make_windows_ref_return(winref_build)
+        winref_zip, winref_requests_dir, winref_request_path = make_windows_ref_return(winref_build)
         shared_winref_zip = winref_new / "synthetic_win_reference_return.zip"
         shutil.copyfile(winref_zip, shared_winref_zip)
         (winref_new / "synthetic_win_reference_return__README.txt").write_text("reference return\n", encoding="utf-8")
+        winref_dest_root = tmp_root / "winref_imported_refs"
+        winref_set_id = "synthetic_win_reference_return_smoke"
+        winref_summary_json = tmp_root / "winref_summary.json"
+        winref_summary_md = tmp_root / "winref_summary.md"
 
-        winref_proc = run(
+        winref_dry = run(
             [
                 py,
                 str(helper),
@@ -434,14 +452,63 @@ def main() -> int:
                 str(winref_share_root),
                 "--kind",
                 "win-reference-return",
+                "--dry-run",
             ],
             root,
         )
-        if "[INFO] win-reference quality:" not in winref_proc.stdout:
-            print("[FAIL] helper did not print win-reference quality summary")
+        if "win-reference-return" not in winref_dry.stdout:
+            print("[FAIL] dry-run did not choose win-reference-return")
             return 1
-        if "win_reference_summary_json=" not in winref_proc.stdout:
-            print("[FAIL] helper did not emit win-reference summary output paths")
+        if "--quick --dispatch-dir /tmp/olm_reference_dispatch" not in winref_dry.stdout:
+            print("[FAIL] helper did not emit the expected win-reference intake command")
+            return 1
+
+        winref_proc = run(
+            [
+                py,
+                "scripts/intake_olm_return.py",
+                str(shared_winref_zip),
+                "--set-id",
+                winref_set_id,
+                "--dest-root",
+                str(winref_dest_root),
+                "--requests-dir",
+                str(winref_requests_dir),
+                "--request",
+                str(winref_request_path),
+                "--no-next-actions",
+            ],
+            root,
+        )
+        if "[INFO] detected return kind: win-reference" not in winref_proc.stdout:
+            print("[FAIL] win-reference intake did not detect the expected return kind")
+            return 1
+        if "reference_manifest.json" not in winref_proc.stdout:
+            print("[FAIL] win-reference intake did not report the imported manifest")
+            return 1
+
+        winref_summary_proc = run(
+            [
+                py,
+                "scripts/summarize_win_reference_return.py",
+                str(shared_winref_zip),
+                "--imported-set-dir",
+                str(winref_dest_root / winref_set_id),
+                "--output-json",
+                str(winref_summary_json),
+                "--output-md",
+                str(winref_summary_md),
+            ],
+            root,
+        )
+        if "win_reference_summary_json=" not in winref_summary_proc.stdout:
+            print("[FAIL] win-reference summary did not emit output paths")
+            return 1
+        if not (winref_dest_root / winref_set_id / "SyntheticEffect" / "reference_manifest.json").exists():
+            print("[FAIL] helper did not import win-reference return into the isolated destination")
+            return 1
+        if not winref_summary_json.exists() or not winref_summary_md.exists():
+            print("[FAIL] win-reference summary did not create output files")
             return 1
 
     print("[OK] intake latest Windows return from share smoke")

@@ -24,7 +24,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("source", type=Path, help="Returned zip/folder from AE host or Windows reference renderer.")
     parser.add_argument(
         "--kind",
-        choices=("auto", "ae-host", "ae-pixel-validation", "win-reference", "runtime-trace"),
+        choices=("auto", "ae-host", "ae-pixel-validation", "win-reference", "runtime-trace", "32bpc-secondgen"),
         default="auto",
         help="Artifact kind. auto detects from JSON contents.",
     )
@@ -352,6 +352,8 @@ def detect_kind(root: Path) -> str | None:
         data = load_json(path)
         if not data:
             continue
+        if data.get("kind") == "olm_32bpc_second_generation_return":
+            return "32bpc-secondgen"
         if data.get("kind") in {"olm_runtime_trace_result", "olm_runtime_trace_return"}:
             return "runtime-trace"
         if isinstance(data.get("runtime_trace_results"), list):
@@ -451,13 +453,29 @@ def run_fresh_default_audits(args: argparse.Namespace, root: Path) -> int:
     return 1 if failures else 0
 
 
-def runtime_package_manifest(path: Path) -> dict | None:
+def _runtime_package_manifest_from_archive(archive: zipfile.ZipFile) -> dict | None:
+    names = [
+        name
+        for name in archive.namelist()
+        if name.replace("\\", "/").split("/")[-1] == "runtime_trace_package_manifest.json"
+        and "__MACOSX" not in name.split("/")
+        and not name.split("/")[-1].startswith("._")
+    ]
+    if len(names) != 1:
+        return None
     try:
-        with zipfile.ZipFile(path) as archive:
-            data = json.loads(archive.read("runtime_trace_package_manifest.json").decode("utf-8-sig"))
+        data = json.loads(archive.read(names[0]).decode("utf-8-sig"))
     except Exception:
         return None
     return data if isinstance(data, dict) else None
+
+
+def runtime_package_manifest(path: Path) -> dict | None:
+    try:
+        with zipfile.ZipFile(path) as archive:
+            return _runtime_package_manifest_from_archive(archive)
+    except Exception:
+        return None
 
 
 def runtime_report_slug(package: Path | None) -> str:
@@ -535,12 +553,13 @@ def request_id_from_zip(path: Path) -> str | None:
 
 
 def runtime_package_manifest_request_ids(path: Path) -> set[str]:
-    try:
-        with zipfile.ZipFile(path) as archive:
-            data = json.loads(archive.read("runtime_trace_package_manifest.json").decode("utf-8"))
-    except Exception:
+    data = runtime_package_manifest(path)
+    if data is None:
         return set()
     ids: set[str] = set()
+    direct = data.get("request_id")
+    if isinstance(direct, str):
+        ids.add(direct)
     for action in data.get("runtime_actions", []):
         if isinstance(action, dict) and isinstance(action.get("request_id"), str):
             ids.add(str(action["request_id"]))
@@ -604,15 +623,8 @@ def find_matching_runtime_package(root: Path, source: Path) -> Path | None:
         request_id = matched
     candidates = sorted(package_dir.glob("*.zip"), key=lambda path: (path.stat().st_mtime, path.name), reverse=True)
     for package in candidates:
-        try:
-            with zipfile.ZipFile(package) as archive:
-                data = json.loads(archive.read("runtime_trace_package_manifest.json").decode("utf-8"))
-        except Exception:
-            continue
-        actions = data.get("runtime_actions", [])
-        for action in actions:
-            if isinstance(action, dict) and action.get("request_id") == request_id:
-                return package
+        if request_id in runtime_package_manifest_request_ids(package):
+            return package
     return None
 
 
@@ -909,6 +921,11 @@ def main() -> int:
         return run_win_reference(args, root)
     if kind == "runtime-trace":
         return run_runtime_trace(args, root)
+    if kind == "32bpc-secondgen":
+        return run(
+            [sys.executable, "scripts/analyze_windows_32bpc_second_generation_return.py", str(args.source.resolve())],
+            root,
+        )
     return fail(f"unsupported kind: {kind}", 2)
 
 

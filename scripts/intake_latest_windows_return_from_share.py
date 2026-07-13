@@ -23,7 +23,11 @@ RETURN_KINDS = {
     "windows-action-bundle-return",
     "olmblur-standalone-witness",
 }
-
+RUNTIME_RESULT_FILENAMES = {
+    "RETURN_RUNTIME_TRACE_RESULT.json",
+    "RETURN_RUNTIME_TRACE.json",
+    "AE_RUNTIME_TRACE_RESULT.json",
+}
 
 def repo_root() -> Path:
     return Path(__file__).resolve().parents[1]
@@ -247,6 +251,8 @@ def load_request_id_from_return(path: Path) -> str | None:
         return None
     if not isinstance(data, dict):
         return None
+    if isinstance(data.get("request_id"), str):
+        return str(data["request_id"])
     for key in ("results", "runtime_trace_results"):
         rows = data.get(key)
         if not isinstance(rows, list):
@@ -266,6 +272,10 @@ def collect_request_ids_from_return(path: Path) -> list[str]:
         return []
     request_ids: list[str] = []
     seen: set[str] = set()
+    direct_request_id = data.get("request_id")
+    if isinstance(direct_request_id, str):
+        seen.add(direct_request_id)
+        request_ids.append(direct_request_id)
     for key in ("results", "runtime_trace_results"):
         rows = data.get(key)
         if not isinstance(rows, list):
@@ -300,7 +310,11 @@ def find_repo_runtime_package(root: Path, request_id: str) -> Path | None:
 def resolve_runtime_package_for_return(root: Path, source: Path) -> Path | None:
     with tempfile.TemporaryDirectory(prefix="olm_return_pkg_resolve_") as tmp:
         extracted = extract_if_zip(source, Path(tmp) / "return")
-        result_jsons = sorted(extracted.rglob("RETURN_RUNTIME_TRACE_RESULT.json"))
+        result_jsons = sorted(
+            path
+            for path in extracted.rglob("*.json")
+            if path.name in RUNTIME_RESULT_FILENAMES
+        )
         if not result_jsons:
             return None
         request_ids: list[str] = []
@@ -320,9 +334,12 @@ def nested_folder_bundle_return_pairs(root: Path, bundle_root: Path) -> list[tup
     for child in sorted(bundle_root.iterdir()):
         if not child.is_dir():
             continue
-        result_json = child / "RETURN_RUNTIME_TRACE_RESULT.json"
+        result_json = next(
+            (path for path in child.iterdir() if path.name in RUNTIME_RESULT_FILENAMES),
+            None,
+        )
         manifest_json = child / "request_package" / "runtime_trace_package_manifest.json"
-        if not result_json.is_file() or not manifest_json.is_file():
+        if result_json is None or not manifest_json.is_file():
             continue
         request_id = load_request_id_from_manifest(manifest_json) or load_request_id_from_return(result_json)
         if not request_id:
@@ -466,7 +483,6 @@ def main() -> int:
             print(summary_proc.stdout, end="" if summary_proc.stdout.endswith("\n") else "\n")
             if summary_proc.returncode != 0:
                 return summary_proc.returncode
-
     if chosen.get("kind") == "ae-host-return":
         output_json, output_md = default_report_paths(root, "ae-host-return", Path(str(chosen["path"])))
         summary_cmd = [
@@ -542,7 +558,31 @@ def main() -> int:
                 print(f"[INFO] win-reference quality reason: {reason}")
 
     if not args.no_archive:
-        archived = archive_paths(archive_targets_for_chosen(new_dir, Path(str(chosen["path"]))), old_dir)
+        archive_targets = archive_targets_for_chosen(new_dir, Path(str(chosen["path"])))
+        if chosen.get("kind") == "runtime-trace-return":
+            runtime_package_arg = extract_flag_value(cmd, "--runtime-package")
+            if runtime_package_arg:
+                request_ids: set[str] = set()
+                with tempfile.TemporaryDirectory(prefix="olm_return_ids_") as tmp:
+                    extracted = extract_if_zip(Path(str(chosen["path"])), Path(tmp) / "return")
+                    for result_json in extracted.rglob("*.json"):
+                        if result_json.name in RUNTIME_RESULT_FILENAMES:
+                            request_ids.update(collect_request_ids_from_return(result_json))
+                package_name = Path(runtime_package_arg).name
+                for staged_request in sorted(new_dir.glob("*.zip")):
+                    manifest = package_manifest(staged_request)
+                    staged_ids = {
+                        str(action["request_id"])
+                        for action in (manifest or {}).get("runtime_actions", [])
+                        if isinstance(action, dict) and isinstance(action.get("request_id"), str)
+                    }
+                    if (
+                        staged_request.name == package_name
+                        or staged_request.name.endswith(f"__{package_name}")
+                        or request_ids.intersection(staged_ids)
+                    ):
+                        archive_targets.append(staged_request)
+        archived = archive_paths(archive_targets, old_dir)
         for path in archived:
             print(f"[INFO] archived after intake: {path}")
     return 0

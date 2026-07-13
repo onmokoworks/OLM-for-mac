@@ -49,6 +49,8 @@ def main() -> int:
         runtime_return = tmp_path / "runtime_return.zip"
         runtime_return_with_source_request = tmp_path / "runtime_return_with_source_request.zip"
         bare_runtime_return = tmp_path / "bare_runtime_return.zip"
+        portable_runtime_return = tmp_path / "portable_runtime_return.zip"
+        ae_runtime_return = tmp_path / "ae_runtime_return.zip"
         ae_pixel_request = tmp_path / "ae_pixel_request.zip"
         ae_pixel_bundle = tmp_path / "ae_pixel_bundle.zip"
         olmblur_standalone_witness = tmp_path / "olmblur_standalone_witness.zip"
@@ -240,6 +242,23 @@ def main() -> int:
                 )
             },
         )
+        with zipfile.ZipFile(portable_runtime_return, "w", zipfile.ZIP_DEFLATED) as archive:
+            archive.writestr(
+                "RETURN_RUNTIME_TRACE.json",
+                b"\xef\xbb\xbf"
+                + json.dumps(
+                    {
+                        "request_id": "olmdirectionalblur_front_alpha_host_boundary_2025_20260711",
+                        "status": "answered",
+                        "run_id": "portable-return-smoke",
+                    }
+                ).encode("utf-8"),
+            )
+        with zipfile.ZipFile(ae_runtime_return, "w", zipfile.ZIP_DEFLATED) as archive:
+            archive.writestr(
+                "AE_RUNTIME_TRACE_RESULT.json",
+                json.dumps({"request_id": "ae-runtime-compat", "status": "answered"}).encode("utf-8"),
+            )
         write_zip(
             ae_pixel_request,
             {
@@ -297,6 +316,8 @@ def main() -> int:
         assert kinds["runtime_return.zip"] == "runtime-trace-return"
         assert kinds["runtime_return_with_source_request.zip"] == "runtime-trace-return"
         assert kinds["bare_runtime_return.zip"] == "runtime-trace-return"
+        assert kinds["portable_runtime_return.zip"] == "runtime-trace-return"
+        assert kinds["ae_runtime_return.zip"] == "runtime-trace-return"
         assert kinds["ae_pixel_request.zip"] == "ae-pixel-validation-request"
         assert kinds["ae_pixel_bundle.zip"] == "ae-pixel-validation-bundle"
         assert kinds["olmblur_standalone_witness.zip"] == "olmblur-standalone-witness"
@@ -319,6 +340,7 @@ def main() -> int:
         assert "--runtime-summary-json" in commands["bare_runtime_return.zip"]
         assert "--runtime-summary-md" in commands["bare_runtime_return.zip"]
         assert "--runtime-comparison-dir" in commands["bare_runtime_return.zip"]
+        assert "--runtime-summary-json" in commands["portable_runtime_return.zip"]
         assert "AE host" in commands["ae_pixel_request.zip"]
         assert "AE host" in commands["ae_pixel_bundle.zip"]
         assert "intake_olmblur_standalone_witness_zip.py" in commands["olmblur_standalone_witness.zip"]

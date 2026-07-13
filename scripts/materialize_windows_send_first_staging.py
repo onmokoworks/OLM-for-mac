@@ -56,11 +56,16 @@ def clean_staging_dir(path: Path) -> None:
 
 def build_readme(row: dict[str, Any], package_path: Path, package_hash: str) -> str:
     request_id = str(row.get("request_id") or "")
-    hard_note = str(row.get("hard_lane_note") or "")
+    context_value = row.get("hard_lane_context")
+    if isinstance(context_value, dict):
+        context = str(context_value.get("summary") or "")
+        hard_note = str(context_value.get("note") or row.get("hard_lane_note") or "")
+    else:
+        context = str(context_value or "")
+        hard_note = str(row.get("hard_lane_note") or "")
     acceptance = str(row.get("acceptance_note") or "")
     stop_condition = str(row.get("stop_condition") or "")
-    why = str(row.get("why_needed") or "")
-    context = str(row.get("hard_lane_context") or "")
+    why = str(row.get("why_needed") or row.get("plugin_area") or "")
     lines = [
         "# Windows Send First",
         "",

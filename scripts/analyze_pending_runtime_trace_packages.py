@@ -10,9 +10,16 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+RUNTIME_RESULT_FILENAMES = {
+    "RETURN_RUNTIME_TRACE_RESULT.json",
+    "RETURN_RUNTIME_TRACE.json",
+    "AE_RUNTIME_TRACE_RESULT.json",
+}
 
 PRIORITY_PROFILES = {
     "olmdirectionalblur-2025-front-alpha-host-boundary": 1,
+    "olmdirectionalblur-2025-alpha-fade-fullrender-row755-pre-normalization": 3,
+    "distancegradation-8bpc-current-aex-same-run-typed-boundary": 23,
     "radialblur-tiny-rotation-anchor-context-watch-followup": 3,
     "radialblur-tiny-rotation-anchor-pointer-watch-followup": 4,
     "radialblur-tiny-rotation-anchor-watch-followup": 5,
@@ -270,6 +277,8 @@ COMPARISON_COMMANDS = [
 ]
 
 ACCEPTANCE_NOTES = {
+    "olmdirectionalblur_alpha_fade_fullrender_row755_20260712": "refs/runtime_trace_packages/olmdirectionalblur_alpha_fade_fullrender_row755_20260712/README.md",
+    "olmdistancegradation_8bpc_current_aex_same_run_typed_boundary_20260712": "refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_8bpc_current_aex_same_run_typed_boundary_20260712/README_RUNTIME_TRACE.md",
     "olmdirectionalblur_front_alpha_host_boundary_2025_20260711": "refs/conformance/dblur_alpha_host_boundary_20260711.md",
     "olmdistancegradation_0010_compose_source_901_394_tile_retry_20260710": "refs/conformance/olmdistancegradation_0010_compose_single_site_followup_contract_20260710.md",
     "olmdistancegradation_0010_compose_single_site_break_ignore_retry_20260710": "refs/conformance/olmdistancegradation_0010_compose_single_site_followup_contract_20260710.md",
@@ -539,7 +548,7 @@ def latest_result_rows(root: Path) -> dict[str, dict[str, Any]]:
             source_file = str(row.get("source_file") or "")
             status = str(row.get("status") or "").lower()
             priority = 0
-            if source_file.endswith("RETURN_RUNTIME_TRACE_RESULT.json"):
+            if Path(source_file).name in RUNTIME_RESULT_FILENAMES:
                 priority += 4
             if status in {"failed_partial", "answered_partial", "answered", "ok", "complete"}:
                 priority += 2
@@ -607,7 +616,8 @@ def latest_return_archives(root: Path) -> dict[str, str]:
                     (
                         member
                         for member in archive.namelist()
-                        if member.replace("\\", "/").endswith("RETURN_RUNTIME_TRACE_RESULT.json")
+                        if Path(member.replace("\\", "/")).name
+                        in RUNTIME_RESULT_FILENAMES
                     ),
                     None,
                 )
