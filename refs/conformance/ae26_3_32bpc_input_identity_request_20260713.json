@@ -1,0 +1,35 @@
+{
+  "kind": "ae26_3_32bpc_input_identity_request_record",
+  "schema": 3,
+  "request_script": "scripts/package_ae26_3_32bpc_input_identity_request_20260713.py",
+  "smoke": "refs/scripts/smoke_package_ae26_3_32bpc_input_identity_request.py",
+  "capture_case": "olmcolorkey__case_0002",
+  "entry_buffer": {
+    "pixel_type": "PF_PixelFloat",
+    "channel_order": ["alpha", "red", "green", "blue"],
+    "scalar": "float32",
+    "endianness": "little",
+    "pixel_stride_bytes": 16,
+    "compare": "raw-float32-bits"
+  },
+  "status": "standalone-executable-capture-request",
+  "macos": {
+    "method": "env-gated-plugin-instrumentation",
+    "source": "mac/OLMColorKey/OLMColorKey.cpp",
+    "capture_point": "SmartRender.after_checkout_layer_pixels.before_checkout_output",
+    "plugin_identity": "runner pins SHA-256 before launch; instrumentation records dladdr loaded-image path; validator independently hashes that exact file",
+    "fail_closed": true
+  },
+  "windows": {
+    "method": "hash-pinned-cdb-rva-hook",
+    "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "float_render_entry_rva": "0x9960",
+    "input_world_register": "r8",
+    "world_offsets": {"data": "0x08", "rowbytes": "0x10", "width": "0x24", "height": "0x28"},
+    "process_binding": "fresh AfterFX only; nonce/case/fixture/PID ready marker; launcher ancestry, command line, and session proof",
+    "trace_binding": ["nonce", "case", "pid", "aex_sha256", "rva", "input_world", "data", "rowbytes", "width", "height"],
+    "runtime_execution_status": "not-run-on-this-macos-workspace"
+  },
+  "rejected_legacy_boundary": "OLM_PF_PIXELFLOAT_ENTRY_CAPTURE_COMMAND",
+  "package": "refs/runtime_trace_packages/olm_ae26_3_32bpc_input_identity_request_20260713.zip"
+}
