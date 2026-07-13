@@ -1,0 +1,1469 @@
+{
+  "schema": 2,
+  "kind": "ae_effect_reference_manifest",
+  "created_at": "2026-06-05T21:44:09.363+09:00",
+  "platform": "windows",
+  "ae_version": "25.2x131",
+  "project": {
+    "path": "C:\\Users\\optim\\Desktop\\OLM\\OLM test.aep",
+    "name": "OLM%20test.aep"
+  },
+  "comp": {
+    "name": "Comp 1",
+    "width": 1920,
+    "height": 1080,
+    "frame_rate": 24,
+    "duration": 6.16666666666667,
+    "bpc": 8
+  },
+  "layer": {
+    "name": "Adjustment Layer 1",
+    "index": 1,
+    "source_name": "Solid 1920x1080"
+  },
+  "cases": [
+    {
+      "id": "case_0001",
+      "frame": "case_0001.png",
+      "time": 0,
+      "time_display": "00:00:00:00",
+      "recorded_at": "2026-06-05T21:44:09.363+09:00",
+      "selected_layer_effect_count": 1,
+      "effects": [
+        {
+          "name": "Distance Gradation",
+          "match_name": "OLM Distance Gradation",
+          "property_index": 1,
+          "enabled": true,
+          "active": true,
+          "params": [
+            {
+              "path": [
+                "Distance Gradation",
+                "Invert"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Invert",
+                  "match_name": "OLM Distance Gradation-0001",
+                  "property_index": 1
+                }
+              ],
+              "name": "Invert",
+              "match_name": "OLM Distance Gradation-0001",
+              "property_index": 1,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "In/Out"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "In/Out",
+                  "match_name": "OLM Distance Gradation-0002",
+                  "property_index": 2
+                }
+              ],
+              "name": "In/Out",
+              "match_name": "OLM Distance Gradation-0002",
+              "property_index": 2,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Inside Threshold"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Inside Threshold",
+                  "match_name": "OLM Distance Gradation-0003",
+                  "property_index": 3
+                }
+              ],
+              "name": "Inside Threshold",
+              "match_name": "OLM Distance Gradation-0003",
+              "property_index": 3,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 128,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Outside Threshold"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Outside Threshold",
+                  "match_name": "OLM Distance Gradation-0004",
+                  "property_index": 4
+                }
+              ],
+              "name": "Outside Threshold",
+              "match_name": "OLM Distance Gradation-0004",
+              "property_index": 4,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 128,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Render Mode"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Render Mode",
+                  "match_name": "OLM Distance Gradation-0005",
+                  "property_index": 5
+                }
+              ],
+              "name": "Render Mode",
+              "match_name": "OLM Distance Gradation-0005",
+              "property_index": 5,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Use Background Color"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Use Background Color",
+                  "match_name": "OLM Distance Gradation-0006",
+                  "property_index": 6
+                }
+              ],
+              "name": "Use Background Color",
+              "match_name": "OLM Distance Gradation-0006",
+              "property_index": 6,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Gradation Color"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Gradation Color",
+                  "match_name": "OLM Distance Gradation-0007",
+                  "property_index": 7
+                }
+              ],
+              "name": "Gradation Color",
+              "match_name": "OLM Distance Gradation-0007",
+              "property_index": 7,
+              "property_type": "PROPERTY",
+              "property_value_type": "COLOR",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                1,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "BG Color "
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "BG Color ",
+                  "match_name": "OLM Distance Gradation-0008",
+                  "property_index": 8
+                }
+              ],
+              "name": "BG Color ",
+              "match_name": "OLM Distance Gradation-0008",
+              "property_index": 8,
+              "property_type": "PROPERTY",
+              "property_value_type": "COLOR",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Interpolation Mode"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Interpolation Mode",
+                  "match_name": "OLM Distance Gradation-0009",
+                  "property_index": 9
+                }
+              ],
+              "name": "Interpolation Mode",
+              "match_name": "OLM Distance Gradation-0009",
+              "property_index": 9,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Power"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Power",
+                  "match_name": "OLM Distance Gradation-0010",
+                  "property_index": 10
+                }
+              ],
+              "name": "Power",
+              "match_name": "OLM Distance Gradation-0010",
+              "property_index": 10,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Blur Mode"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Blur Mode",
+                  "match_name": "OLM Distance Gradation-0011",
+                  "property_index": 11
+                }
+              ],
+              "name": "Blur Mode",
+              "match_name": "OLM Distance Gradation-0011",
+              "property_index": 11,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Blur Size"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Blur Size",
+                  "match_name": "OLM Distance Gradation-0012",
+                  "property_index": 12
+                }
+              ],
+              "name": "Blur Size",
+              "match_name": "OLM Distance Gradation-0012",
+              "property_index": 12,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Compositing Options",
+                "Effect Opacity"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Compositing Options",
+                  "match_name": "ADBE Effect Built In Params",
+                  "property_index": 13
+                },
+                {
+                  "name": "Effect Opacity",
+                  "match_name": "ADBE Effect Mask Opacity",
+                  "property_index": 2
+                }
+              ],
+              "name": "Effect Opacity",
+              "match_name": "ADBE Effect Mask Opacity",
+              "property_index": 2,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Compositing Options",
+                "GPU Rendering"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Compositing Options",
+                  "match_name": "ADBE Effect Built In Params",
+                  "property_index": 13
+                },
+                {
+                  "name": "GPU Rendering",
+                  "match_name": "ADBE Force CPU GPU",
+                  "property_index": 3
+                }
+              ],
+              "name": "GPU Rendering",
+              "match_name": "ADBE Force CPU GPU",
+              "property_index": 3,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            }
+          ]
+        }
+      ],
+      "before_effects_frame": "case_0001_before_effects.png",
+      "before_effects_scope": "selected_layer_all_effects_disabled",
+      "render_resolution_factor": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "case_0015",
+      "frame": "case_0015.png",
+      "time": 0,
+      "time_display": "00:00:00:00",
+      "recorded_at": "2026-06-05T21:45:10.196+09:00",
+      "selected_layer_effect_count": 1,
+      "effects": [
+        {
+          "name": "Distance Gradation",
+          "match_name": "OLM Distance Gradation",
+          "property_index": 1,
+          "enabled": true,
+          "active": true,
+          "params": [
+            {
+              "path": [
+                "Distance Gradation",
+                "Invert"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Invert",
+                  "match_name": "OLM Distance Gradation-0001",
+                  "property_index": 1
+                }
+              ],
+              "name": "Invert",
+              "match_name": "OLM Distance Gradation-0001",
+              "property_index": 1,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "In/Out"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "In/Out",
+                  "match_name": "OLM Distance Gradation-0002",
+                  "property_index": 2
+                }
+              ],
+              "name": "In/Out",
+              "match_name": "OLM Distance Gradation-0002",
+              "property_index": 2,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Inside Threshold"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Inside Threshold",
+                  "match_name": "OLM Distance Gradation-0003",
+                  "property_index": 3
+                }
+              ],
+              "name": "Inside Threshold",
+              "match_name": "OLM Distance Gradation-0003",
+              "property_index": 3,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 424,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Outside Threshold"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Outside Threshold",
+                  "match_name": "OLM Distance Gradation-0004",
+                  "property_index": 4
+                }
+              ],
+              "name": "Outside Threshold",
+              "match_name": "OLM Distance Gradation-0004",
+              "property_index": 4,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 204,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Render Mode"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Render Mode",
+                  "match_name": "OLM Distance Gradation-0005",
+                  "property_index": 5
+                }
+              ],
+              "name": "Render Mode",
+              "match_name": "OLM Distance Gradation-0005",
+              "property_index": 5,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Use Background Color"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Use Background Color",
+                  "match_name": "OLM Distance Gradation-0006",
+                  "property_index": 6
+                }
+              ],
+              "name": "Use Background Color",
+              "match_name": "OLM Distance Gradation-0006",
+              "property_index": 6,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Gradation Color"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Gradation Color",
+                  "match_name": "OLM Distance Gradation-0007",
+                  "property_index": 7
+                }
+              ],
+              "name": "Gradation Color",
+              "match_name": "OLM Distance Gradation-0007",
+              "property_index": 7,
+              "property_type": "PROPERTY",
+              "property_value_type": "COLOR",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                1,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "BG Color "
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "BG Color ",
+                  "match_name": "OLM Distance Gradation-0008",
+                  "property_index": 8
+                }
+              ],
+              "name": "BG Color ",
+              "match_name": "OLM Distance Gradation-0008",
+              "property_index": 8,
+              "property_type": "PROPERTY",
+              "property_value_type": "COLOR",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Interpolation Mode"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Interpolation Mode",
+                  "match_name": "OLM Distance Gradation-0009",
+                  "property_index": 9
+                }
+              ],
+              "name": "Interpolation Mode",
+              "match_name": "OLM Distance Gradation-0009",
+              "property_index": 9,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Power"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Power",
+                  "match_name": "OLM Distance Gradation-0010",
+                  "property_index": 10
+                }
+              ],
+              "name": "Power",
+              "match_name": "OLM Distance Gradation-0010",
+              "property_index": 10,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Blur Mode"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Blur Mode",
+                  "match_name": "OLM Distance Gradation-0011",
+                  "property_index": 11
+                }
+              ],
+              "name": "Blur Mode",
+              "match_name": "OLM Distance Gradation-0011",
+              "property_index": 11,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Blur Size"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Blur Size",
+                  "match_name": "OLM Distance Gradation-0012",
+                  "property_index": 12
+                }
+              ],
+              "name": "Blur Size",
+              "match_name": "OLM Distance Gradation-0012",
+              "property_index": 12,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Compositing Options",
+                "Effect Opacity"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Compositing Options",
+                  "match_name": "ADBE Effect Built In Params",
+                  "property_index": 13
+                },
+                {
+                  "name": "Effect Opacity",
+                  "match_name": "ADBE Effect Mask Opacity",
+                  "property_index": 2
+                }
+              ],
+              "name": "Effect Opacity",
+              "match_name": "ADBE Effect Mask Opacity",
+              "property_index": 2,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Compositing Options",
+                "GPU Rendering"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Compositing Options",
+                  "match_name": "ADBE Effect Built In Params",
+                  "property_index": 13
+                },
+                {
+                  "name": "GPU Rendering",
+                  "match_name": "ADBE Force CPU GPU",
+                  "property_index": 3
+                }
+              ],
+              "name": "GPU Rendering",
+              "match_name": "ADBE Force CPU GPU",
+              "property_index": 3,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            }
+          ]
+        }
+      ],
+      "before_effects_frame": "case_0015_before_effects.png",
+      "before_effects_scope": "selected_layer_all_effects_disabled",
+      "render_resolution_factor": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "case_0029",
+      "frame": "case_0029.png",
+      "time": 0,
+      "time_display": "00:00:00:00",
+      "recorded_at": "2026-06-05T21:47:26.775+09:00",
+      "selected_layer_effect_count": 1,
+      "effects": [
+        {
+          "name": "Distance Gradation",
+          "match_name": "OLM Distance Gradation",
+          "property_index": 1,
+          "enabled": true,
+          "active": true,
+          "params": [
+            {
+              "path": [
+                "Distance Gradation",
+                "Invert"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Invert",
+                  "match_name": "OLM Distance Gradation-0001",
+                  "property_index": 1
+                }
+              ],
+              "name": "Invert",
+              "match_name": "OLM Distance Gradation-0001",
+              "property_index": 1,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "In/Out"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "In/Out",
+                  "match_name": "OLM Distance Gradation-0002",
+                  "property_index": 2
+                }
+              ],
+              "name": "In/Out",
+              "match_name": "OLM Distance Gradation-0002",
+              "property_index": 2,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Inside Threshold"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Inside Threshold",
+                  "match_name": "OLM Distance Gradation-0003",
+                  "property_index": 3
+                }
+              ],
+              "name": "Inside Threshold",
+              "match_name": "OLM Distance Gradation-0003",
+              "property_index": 3,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 158,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Outside Threshold"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Outside Threshold",
+                  "match_name": "OLM Distance Gradation-0004",
+                  "property_index": 4
+                }
+              ],
+              "name": "Outside Threshold",
+              "match_name": "OLM Distance Gradation-0004",
+              "property_index": 4,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 13,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Render Mode"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Render Mode",
+                  "match_name": "OLM Distance Gradation-0005",
+                  "property_index": 5
+                }
+              ],
+              "name": "Render Mode",
+              "match_name": "OLM Distance Gradation-0005",
+              "property_index": 5,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Use Background Color"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Use Background Color",
+                  "match_name": "OLM Distance Gradation-0006",
+                  "property_index": 6
+                }
+              ],
+              "name": "Use Background Color",
+              "match_name": "OLM Distance Gradation-0006",
+              "property_index": 6,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Gradation Color"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Gradation Color",
+                  "match_name": "OLM Distance Gradation-0007",
+                  "property_index": 7
+                }
+              ],
+              "name": "Gradation Color",
+              "match_name": "OLM Distance Gradation-0007",
+              "property_index": 7,
+              "property_type": "PROPERTY",
+              "property_value_type": "COLOR",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                0.1098041459918,
+                0,
+                0.93333333730698,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "BG Color "
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "BG Color ",
+                  "match_name": "OLM Distance Gradation-0008",
+                  "property_index": 8
+                }
+              ],
+              "name": "BG Color ",
+              "match_name": "OLM Distance Gradation-0008",
+              "property_index": 8,
+              "property_type": "PROPERTY",
+              "property_value_type": "COLOR",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                1,
+                0,
+                0,
+                1
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Interpolation Mode"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Interpolation Mode",
+                  "match_name": "OLM Distance Gradation-0009",
+                  "property_index": 9
+                }
+              ],
+              "name": "Interpolation Mode",
+              "match_name": "OLM Distance Gradation-0009",
+              "property_index": 9,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Power"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Power",
+                  "match_name": "OLM Distance Gradation-0010",
+                  "property_index": 10
+                }
+              ],
+              "name": "Power",
+              "match_name": "OLM Distance Gradation-0010",
+              "property_index": 10,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0.00999999977648,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Blur Mode"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Blur Mode",
+                  "match_name": "OLM Distance Gradation-0011",
+                  "property_index": 11
+                }
+              ],
+              "name": "Blur Mode",
+              "match_name": "OLM Distance Gradation-0011",
+              "property_index": 11,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 2,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Blur Size"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Blur Size",
+                  "match_name": "OLM Distance Gradation-0012",
+                  "property_index": 12
+                }
+              ],
+              "name": "Blur Size",
+              "match_name": "OLM Distance Gradation-0012",
+              "property_index": 12,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 30,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Compositing Options",
+                "Effect Opacity"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Compositing Options",
+                  "match_name": "ADBE Effect Built In Params",
+                  "property_index": 13
+                },
+                {
+                  "name": "Effect Opacity",
+                  "match_name": "ADBE Effect Mask Opacity",
+                  "property_index": 2
+                }
+              ],
+              "name": "Effect Opacity",
+              "match_name": "ADBE Effect Mask Opacity",
+              "property_index": 2,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "Distance Gradation",
+                "Compositing Options",
+                "GPU Rendering"
+              ],
+              "path_full": [
+                {
+                  "name": "Distance Gradation",
+                  "match_name": "OLM Distance Gradation",
+                  "property_index": 1
+                },
+                {
+                  "name": "Compositing Options",
+                  "match_name": "ADBE Effect Built In Params",
+                  "property_index": 13
+                },
+                {
+                  "name": "GPU Rendering",
+                  "match_name": "ADBE Force CPU GPU",
+                  "property_index": 3
+                }
+              ],
+              "name": "GPU Rendering",
+              "match_name": "ADBE Force CPU GPU",
+              "property_index": 3,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            }
+          ]
+        }
+      ],
+      "before_effects_frame": "case_0029_before_effects.png",
+      "before_effects_scope": "selected_layer_all_effects_disabled",
+      "render_resolution_factor": [
+        1,
+        1
+      ]
+    }
+  ]
+}

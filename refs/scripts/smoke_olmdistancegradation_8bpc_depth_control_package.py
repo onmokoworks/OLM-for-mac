@@ -49,6 +49,7 @@ def main() -> int:
         "scripts/ae_render_single_case.jsx",
         "fixtures/complete_cdb_stdout.txt",
         "fixtures/missing_rva_cdb_stdout.txt",
+        "fixtures/latest_ae_ready_missing_failure.json",
     }
     if not package_dir.is_dir() or not package_zip.is_file():
         print("[FAIL] liveness package directory or zip is missing")
@@ -64,6 +65,7 @@ def main() -> int:
             return 1
         manifest = json.loads(archive.read("runtime_trace_package_manifest.json"))
         template = json.loads(archive.read("RETURN_RUNTIME_TRACE_TEMPLATE.json"))
+        latest_failure = json.loads(archive.read("fixtures/latest_ae_ready_missing_failure.json"))
     action = manifest["runtime_actions"][0]
     if manifest.get("submission_status") != "ready" or manifest.get("sendable") is not True or set(action["rvas"]) != RVAS:
         print("[FAIL] liveness manifest is not runnable or has the wrong RVA set")
@@ -77,6 +79,19 @@ def main() -> int:
     if parse_fixture(package_dir / "fixtures/missing_rva_cdb_stdout.txt"):
         print("[FAIL] missing-RVA liveness fixture accepted")
         return 1
+    failure = latest_failure["failure"]
+    observation = failure["last_observation"]
+    diagnostics = failure["runtime_diagnostics"]
+    if latest_failure.get("status") != "exact_bind_failure" or failure["reason"] != "AE pause ready marker missing":
+        print("[FAIL] latest ready-marker failure fixture is not fail-closed")
+        return 1
+    if observation.get("launch_pid") != 12708 or observation.get("launcher_exited") is not True or observation.get("candidate_afterfx") != [] or observation.get("ae_log") is not None:
+        print("[FAIL] latest ready-marker failure observation drifted")
+        return 1
+    for key in ("launcher_exit_code", "launcher_stderr", "ae_result", "process_diagnostics"):
+        if key not in observation and key not in diagnostics:
+            print(f"[FAIL] latest failure omits diagnostic key {key}")
+            return 1
     runner = RUNNER.read_text(encoding="utf-8")
     for needle in ("-ParseOnly", "DG8_DEPTH_HIT", "DG8_DEPTH_SUMMARY", "Get-FileHash", "DG8_DEPTH_BREAKPOINTS_ARMED"):
         if needle not in runner:
@@ -92,19 +107,20 @@ def main() -> int:
         print("[FAIL] CDB pseudo-registers are not protected from PowerShell expansion")
         return 1
     for needle in (
-        "Start-Process -FilePath $AfterFxPath -ArgumentList ('-m -r \"' + $queue + '\"')",
+        "Start-Process -FilePath $AfterFxPath -ArgumentList @('-m','-r',$queue)",
         "OLM_AE_PAUSE_BEFORE_RENDER = '1'",
         "OLM_AE_READY_MARKER = $readyMarker",
         "effect_loaded=1",
         "parameters_applied=1",
-        "Get-Process -Name AfterFX",
+        "Get-CimInstance Win32_Process",
+        "SessionId",
         ".Modules | Where-Object { $_.FileName -ieq $AexPath }",
         "loaded module hash differs from pre-launch pin",
         "ArgumentList ('-cf \"' + $cdbScript + '\" -p ' + $aePid)",
         "Set-Content -LiteralPath $continueMarker -Value 'continue'",
         "Stop-Process -Id $cdb.Id -Force",
         "if ($launchStarted) { foreach ($candidate in @(MatchingAfterFX))",
-        "candidate_afterfx=@($candidates)",
+        "candidate_afterfx=@(Get-AfterFxState)",
         "$work = (Get-Item -LiteralPath $work).FullName",
         "project_bits_per_channel -ne 8",
         "AE did not render the requested 8bpc case",
@@ -112,6 +128,12 @@ def main() -> int:
         "$baseValue + 0x1170c90",
         "PF8_hit_count_gt_0",
         "PF32_hit_count_eq_0",
+        "launcher_exit_code",
+        "launcher_stderr",
+        "ae_result",
+        "process_diagnostics",
+        "runtime_diagnostics",
+        "Get-AfterFxState",
     ):
         if needle not in runner:
             print(f"[FAIL] depth-control runner missing {needle}")

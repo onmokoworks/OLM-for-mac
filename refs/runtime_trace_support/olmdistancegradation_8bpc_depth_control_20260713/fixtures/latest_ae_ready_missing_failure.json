@@ -1,0 +1,32 @@
+{
+  "status": "exact_bind_failure",
+  "kind": "depth_control",
+  "request_id": "olmdistancegradation_8bpc_current_aex_depth_control_20260713",
+  "failure": {
+    "stage": "depth_control",
+    "reason": "AE pause ready marker missing",
+    "missing_fields": [
+      "ae_ready.marker"
+    ],
+    "last_observation": {
+      "launch_pid": 12708,
+      "launcher_exited": true,
+      "launcher_exit_code": null,
+      "candidate_afterfx": [],
+      "ae_log": null
+    },
+    "runtime_diagnostics": {
+      "launcher": {
+        "pid": 12708,
+        "launcher_exited": true,
+        "launcher_exit_code": null
+      },
+      "launcher_stderr": null,
+      "ae_log": null,
+      "ae_result": null,
+      "process_diagnostics": {
+        "candidate_afterfx": []
+      }
+    }
+  }
+}

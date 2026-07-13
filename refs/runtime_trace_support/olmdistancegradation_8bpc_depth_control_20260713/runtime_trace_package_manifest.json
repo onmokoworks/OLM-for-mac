@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "kind": "olm_runtime_trace_request_package",
+  "profile": "distancegradation-8bpc-current-aex-depth-control",
+  "request_id": "olmdistancegradation_8bpc_current_aex_depth_control_20260713",
+  "submission_status": "ready",
+  "sendable": true,
+  "runtime_actions": [
+    {
+      "request_id": "olmdistancegradation_8bpc_current_aex_depth_control_20260713",
+      "status": "ready",
+      "mode": "external-trace",
+      "plugin_area": "OLMDistanceGradation PF8/PF32 callback depth control",
+      "rvas": [
+        "1170870",
+        "1170c90"
+      ],
+      "stop_condition": "Require AE result project_bits_per_channel=8, then return one shared run_id/AEX hash and PF8/PF32 hit counts. Expected PF8>0 and PF32=0. No algorithm proof."
+    }
+  ]
+}

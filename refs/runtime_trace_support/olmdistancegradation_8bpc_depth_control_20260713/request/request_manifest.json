@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "kind": "olm_ae_windows_runtime_trace_request",
+  "reference_manifest": "reference_manifest.json",
+  "input_dir": "input",
+  "cases": [
+    {
+      "id": "case_0001",
+      "before_effects_frame": "case_0001_before_effects.png",
+      "frame": "case_0001.png"
+    },
+    {
+      "id": "case_0015",
+      "before_effects_frame": "case_0015_before_effects.png",
+      "frame": "case_0015.png"
+    },
+    {
+      "id": "case_0029",
+      "before_effects_frame": "case_0029_before_effects.png",
+      "frame": "case_0029.png"
+    }
+  ]
+}

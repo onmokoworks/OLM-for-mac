@@ -1,0 +1,21 @@
+{
+  "schema": "olmdg_8bpc_depth_control_v1",
+  "kind": "olm_runtime_trace_result",
+  "status": "answered | exact_bind_failure",
+  "request_id": "olmdistancegradation_8bpc_current_aex_depth_control_20260713",
+  "run_id": null,
+  "ae_pid": null,
+  "module_base": null,
+  "aex_sha256": null,
+  "project_bits_per_channel": 8,
+  "rvas": [
+    {
+      "rva": "1170870",
+      "hit_count": null
+    },
+    {
+      "rva": "1170c90",
+      "hit_count": null
+    }
+  ]
+}
