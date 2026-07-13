@@ -99,6 +99,7 @@ def verify_manifest_contracts(
         "wrapper": "0x1272ec0",
         "create": "0x1266730",
         "getKernel": "0x12754a0",
+        "getKernelReturn": "0x126685c",
     }, "RVA map mismatch")
     expect(manifest["capture"]["first_getKernel"] == {"ecx": 21, "xmm1": 2.5, "r8": 5}, "first-kernel contract mismatch")
     expect(manifest["capture"]["words"] == 21, "word-count contract mismatch")
@@ -115,9 +116,11 @@ def verify_manifest_contracts(
         "wrapper_rva": "0x1272ec0",
         "create_rva": "0x1266730",
         "getKernel_rva": "0x12754a0",
+        "getKernelReturn_rva": "0x126685c",
         "wrapper": None,
         "create": None,
         "getKernel": None,
+        "getKernelReturn": None,
     }, "return template binding placeholders mismatch")
     expect(template["case"]["blur_mode_manifest"] == 3, "return template blur mode mismatch")
     expect(template["case"]["overrides_match_name"] == OVERRIDES, "return template override mismatch")
@@ -229,11 +232,13 @@ def verify_cdb_template(cdb_text: str) -> None:
         "__WRAPPER__",
         "__CREATE__",
         "__KERNEL__",
+        "__RETURN__",
         "__WORDS__",
         ".echo KK_MODULE run_id=__RUN_ID__ module=OLMKiraKira.aex module_base=__BASE__",
         "bp __WRAPPER__",
         "bp __CREATE__",
         "bp __KERNEL__",
+        "bp __RETURN__",
         "word_count=21",
         ".writemem",
         "__WORDS__",
@@ -244,6 +249,15 @@ def verify_cdb_template(cdb_text: str) -> None:
         expect(token in cdb_text, f"CDB token missing: {token}")
 
     expect("0x180" not in cdb_text, "CDB template should keep live-base placeholders instead of hard-coded module addresses")
+    expect(".logopen /t" not in cdb_text, "timestamped CDB log path breaks exact runner lookup")
+    expect("bp poi(@rsp)" not in cdb_text, "dynamic nested return breakpoint is not parse-safe")
+
+
+def verify_runner_path_guards(runner_text: str) -> None:
+    expect(
+        "if(($cdb,$trace,$words)|Where-Object{$_ -match '\\s'})" in runner_text,
+        "runner must reject whitespace in every path interpolated into CDB commands",
+    )
 
 
 def verify_regeneration(generator: Path, committed_zip: Path) -> None:
@@ -293,6 +307,7 @@ def main() -> int:
         verify_ps1_fail_closed(runner_text, support_manifest)
         verify_preflight_jsx(preflight_text)
         verify_cdb_template(cdb_text)
+        verify_runner_path_guards(runner_text)
         verify_regeneration(generator, package)
     except AssertionError as exc:
         return fail(str(exc))

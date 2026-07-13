@@ -73,6 +73,16 @@
   population or full effect output. Evidence:
   `refs/conformance/olmkirakira_mode3_actual_aex_20260713.md`.
 
+- 2026-07-13 `OLMKiraKira Mode 3 live desktop entry`: the latest hash-pinned
+  AE 2026 desktop run reached the wrapper, create call, and first Gaussian
+  kernel entry in one run with `ecx=21`, `xmm1=2.5`, and `r8=5`. Its return
+  address fixes this pinned callsite at module RVA `0x126685c`. The returned
+  archive remains `exact_bind_failure` because no return marker or 21-word
+  payload was captured. The v4 runner removes CDB's timestamped log filename
+  and pre-arms the fixed return breakpoint. Only an accepted v4 payload may
+  classify the live Gaussian coefficients. Evidence:
+  `refs/conformance/olmkirakira_mode3_live_gaussian_entry_and_runner_fix_20260713.md`.
+
 - 2026-07-13 `OLMKiraKira Mode 3 sigma/ray witnesses`: four independent
   actual-AEX runs at lengths `1/2/5/9` keep the raw Size words `[0,1]` and
   capture sigmaX `0.5/1.0/2.5/4.5`. The callsite multiply and `.rdata` bytes
@@ -437,10 +447,11 @@ treating a mismatch as algorithm drift.
   recursive/separable branch, but does not recover their complete parameter or
   recurrence contracts. Both stay explicitly on the existing Mode 2 scaffold
   until those facts land; this is a guarded placeholder, not compatibility.
-  The 2026-07-13 live-Gaussian return stopped at the AE-ready preflight before
-  CDB started, so it contains zero kernel words and does not classify the
-  Gaussian implementation. Repair the desktop readiness handshake before
-  repeating the same 21-word witness.
+  The first 2026-07-13 live-Gaussian returns stopped at AE readiness. A later
+  desktop run reached the live first kernel entry with the requested arguments,
+  but a timestamped CDB log path and nested dynamic return breakpoint prevented
+  the return capture. The fixed v4 package pre-arms the pinned callsite return;
+  it still must return all 21 words before classifying the implementation.
 
 - 2026-07-12 `OLMKiraKira hotspot transform provenance`: use
   `refs/conformance/olmkirakira_hotspot_transform_provenance_20260712.md`.
@@ -1451,7 +1462,7 @@ runtime-captured or binary-built block, then replay the same portable core.
 | OLMSmoother2 legacy/key/gamma | `guarded`; exercised c280/helper/cce0 entries and Gamma Colors mode are locally binary-grounded | `host-debuggable` | `binary-proof` | Preserve the Smooth Range, a9c0 version-gate, direct PF float-slider fetch, parameter-surface, and macOS deployment-target fixes. Latest correctly reloaded Mac AE run is still known-red (`max=115`, mean `0.1616552`); live `(91,841)` is Windows `[0,0,0,0]`, Mac `[32,32,32,91]`. The 2026-07-12 local actual-AEX replay now binds the exact logged 5x5 class/setup neighborhood, but the old fixed-scale/mode-0 scaffold yields weight `0.4999996` instead of live `0.3563218`; therefore neighborhood data alone is insufficient. Next capture the typed live c280/cce0 config bytes and mode at this pixel, then replay that exact block; keep `0004/0012` separate. | Global fallback, alpha, index, curve-index, or `f270` changes; treat `[65536,65536]` or mode 0 as the live config; claim synthetic/CLI replay as Windows AE truth or AE exact; use an installed bundle without touching its root/rechecking Plugin Loading.log; repeat raw-100/raw-65536 or v2 re-encode mistakes; request final writer bytes again. |
 | OLMDirectionalBlur | front-only/no-variation/no-fade/no-tail/no-back/no-noise 8bpc slice is `AE exact` for 2/2 declared cases; Front Alpha Fade is `binary-grounded / known-red` against a hash-pinned current-2025-AEX reference (`max=3`, 226 pixels after the UCRT fix); other feature families remain `blocked` | `host-debuggable` | `binary-proof` | Preserve `core/dblur_frontonly.cpp`, exact host transforms, and the accepted double-exp-then-float Gaussian model (`336/336` UCRT words). Local actual-AEX rowdriver, normalization, zero-fraction rotate-back, PF8 packing, and schedule coverage are closed for internal row 755. After the active RadialBlur exchange, capture only the in-situ full-render row-755 destination/denominator/alpha state using `olmdirectionalblur_alpha_fade_fullrender_row755_20260712.zip`. Keep Size Variation, Sharp Tail, Back, and Noise as independent lanes. | Re-request UCRT tables; use the superseded June 19 PNG; bake host conversion, a channel bias, or a case-specific lookup into the plug-in; reopen the exact front-only core or closed rowdriver stages; broad PNG tuning; or apply the front-only shortcut to variation/tail modes. |
 | OLMRadialBlur | `guarded` / `blocked`; bounded actual-AEX producer and normalized final-plane semantics are binary-grounded but full-frame case_0009 remains open | `host-debuggable` | `binary-proof` | Treat lanes separately. The 2026-07-13 crop fix produces nonzero typed cells. A nonuniform `(1504,864,32,32)` full-plane differential then proves actual AEX and Python-prefill final/denom/valid raw hashes identical across all 196 cells; only pre-normalization accum scale differs and cancels exactly. Move the live lane downstream to full-frame coordinate formation/inverse sampling/host context. Re-scope Windows confirmation to those typed values at `(7,0)/(8,0)/(24,0)` rather than recapturing normalized polar planes. | AE visual matching, blind alpha tuning, resending the failed normalized-plane hook, reopening the now-equal bounded prefill/final plane, or changing production Mac source before downstream full-frame typed evidence. |
-| OLMKiraKira | `binary-grounded` Mode 1/2 control slices and Mode 3 warp/Gaussian call contract; Gaussian execution path still guarded | `host-smoke` | `binary-proof` | Preserve the hotspot compose witness and Mode 1/2 dispatch. Mode 3 has actual-AEX `CV_32FC1`, raw Size `[0,1]`, `sigmaX=length*0.5`, a corrected 5-degree affine, and OpenCV 4.5.5 post-warp `63/63` word proof. The portable Gaussian is `85/85` against pinned arm64 OpenCV, but the locally completed embedded-AEX Gaussian differs at all 63 words under a synthetic TLS/CPU-dispatch scaffold. Run the staged desktop-required `olmkirakira_mode3_live_gaussian_20260713` same-run capture; only its hash-pinned 21 raw coefficient words may decide production integration. Keep Mode 4 and other controls independent. | Tune production to the unvalidated 63-word Unicorn output, retune luma/gain/compose from broad PNGs, revive the missing-libm/zero-warp artifact, call the Mode 3/4 three-pass placeholders compatible, or infer AE exactness from helper probes. |
+| OLMKiraKira | `binary-grounded` Mode 1/2 control slices and Mode 3 warp/Gaussian call contract; Gaussian execution path still guarded | `host-smoke` | `binary-proof` | Preserve the hotspot compose witness and Mode 1/2 dispatch. Mode 3 has actual-AEX `CV_32FC1`, raw Size `[0,1]`, `sigmaX=length*0.5`, a corrected 5-degree affine, and OpenCV 4.5.5 post-warp `63/63` word proof. The portable Gaussian is `85/85` against pinned arm64 OpenCV, but the locally completed embedded-AEX Gaussian differs at all 63 words under a synthetic TLS/CPU-dispatch scaffold. The latest live desktop run reached the exact first kernel entry and grounded the pinned return RVA `0x126685c`, but captured no return words. Run the fixed v4 same-run package; only its accepted hash-pinned 21 raw coefficient words may decide production integration. Keep Mode 4 and other controls independent. | Tune production to the unvalidated 63-word Unicorn output, retune luma/gain/compose from broad PNGs, revive the missing-libm/zero-warp artifact, treat the entry-only live run as coefficient proof, call the Mode 3/4 three-pass placeholders compatible, or infer AE exactness from helper probes. |
 
 Current priority order:
 

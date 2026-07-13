@@ -2,7 +2,8 @@
 
 ## Decision
 
-All six returned archives are retained, but none is promoted to runtime or
+All eight returned archives are retained, but none is promoted to completed
+runtime or
 algorithm proof. Each return explicitly reports a bind/launch failure and is
 therefore classified fail-closed.
 
@@ -16,14 +17,18 @@ therefore classified fail-closed.
 | OLMDistanceGradation 8bpc typed boundary | `exact_bind_failure` | `typed_boundary`: no marker at `(397,281)` for cases 0001/0015/0029 and no shared run/AEX identity | `e3e42ba54f2f4aac0771b9c72ee796a5364c0623c58f3092f950de38addb4d9d` |
 | OLMKiraKira Mode 3 live Gaussian | `exact_bind_failure` | `ae_ready`: ready marker timed out before CDB started | `0ea9380047ed7dd1e5d154b0f1f8fa35d76ae14976cdb0e9e5b4d826bf03b1f7` |
 | OLMKiraKira Mode 3 live Gaussian PS5.1 retry | `exact_bind_failure` | `ae_ready`: interactive PS5.1 relay ran, but the full case emitted no ready marker and returned no AE log | `f0cbb66845530f20089e37c1e15ae31bb196e2214f0a4fcb540c4567119c8bc3` |
+| OLMDistanceGradation 8bpc depth control desktop retry | `exact_bind_failure` | `depth_control`: launcher exited before `ae_ready.marker`; no AE process candidate or AE log | `984f0efea8a2f8cdd60054940805fec9a3586ddae834450b508878856ecc0ca2` |
+| OLMKiraKira Mode 3 live Gaussian desktop retry | `exact_bind_failure` | returned as `hook_install`; retained CDB log reached the first kernel entry but not its return or 21-word payload | `61115f8e195df4968b0a891110d6daa9439354912d730cfd5128e5a059e743fd` |
 
 The retained archives are under `refs/windows_returns/20260713/` with their
 original returned filenames. These failures contain no pixel or intermediate
 value that may be used to tune production code.
 
-The two later returns are currently retained in the NAS exchange area. The
-hashes above are the stable intake identity; moving an archive between `new`
-and `old` does not change its classification.
+The hashes above are the stable intake identity; moving an archive between the
+NAS `new` and `old` directories does not change its classification. The latest
+KiraKira CDB entry marker is useful runner-debug evidence, but it is not the
+requested Gaussian coefficient proof; see
+`refs/conformance/olmkirakira_mode3_live_gaussian_entry_and_runner_fix_20260713.md`.
 
 ## Next action
 

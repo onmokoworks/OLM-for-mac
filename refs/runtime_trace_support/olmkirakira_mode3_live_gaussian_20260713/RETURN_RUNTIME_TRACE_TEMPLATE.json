@@ -23,9 +23,11 @@
     "wrapper_rva": "0x1272ec0",
     "create_rva": "0x1266730",
     "getKernel_rva": "0x12754a0",
+    "getKernelReturn_rva": "0x126685c",
     "wrapper": null,
     "create": null,
-    "getKernel": null
+    "getKernel": null,
+    "getKernelReturn": null
   },
   "case": {
     "blur_mode_manifest": 3,

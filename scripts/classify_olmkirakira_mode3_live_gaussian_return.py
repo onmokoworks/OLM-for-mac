@@ -22,6 +22,7 @@ EXPECTED_RVAS = {
     "wrapper": 0x1272EC0,
     "create": 0x1266730,
     "getKernel": 0x12754A0,
+    "getKernelReturn": 0x126685C,
 }
 REQUIRED_TRACE_MARKERS = (
     "KK_RUN_START",

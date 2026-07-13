@@ -31,7 +31,8 @@
   "rva": {
     "wrapper": "0x1272ec0",
     "create": "0x1266730",
-    "getKernel": "0x12754a0"
+    "getKernel": "0x12754a0",
+    "getKernelReturn": "0x126685c"
   },
   "capture": {
     "first_getKernel": {
