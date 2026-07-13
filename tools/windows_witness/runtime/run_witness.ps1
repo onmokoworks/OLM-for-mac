@@ -63,6 +63,7 @@ $bootstrapObservedMarker = $false
 $bootstrapPluginLoadClaimed = $false
 $queueBootstrapObserved = $false
 $queueBootstrapBinding = $null
+$queueRetryProcesses = @()
 $bootstrapAePid = $null
 $activeCdbTrace = $null
 $activeCdbTraceEvidence = $null
@@ -139,6 +140,9 @@ function Stop-WitnessProcesses {
   }
   if ($cdb -and !$cdb.HasExited) { Stop-Process -Id $cdb.Id -Force -ErrorAction SilentlyContinue }
   if ($launch -and !$launch.HasExited) { Stop-Process -Id $launch.Id -Force -ErrorAction SilentlyContinue }
+  foreach ($retry in @($queueRetryProcesses)) {
+    if ($retry -and !$retry.HasExited) { Stop-Process -Id $retry.Id -Force -ErrorAction SilentlyContinue }
+  }
   if ($launchStarted) {
     foreach ($state in @(Get-AfterFxState)) {
       Stop-Process -Id $state.pid -Force -ErrorAction SilentlyContinue
@@ -297,8 +301,21 @@ $bootstrapObservedMarker = $bootstrapTraceText -match 'WITNESS_CDB_AFTERFX_INITI
 if ($bootstrapTraceText -notmatch 'WITNESS_CDB_BOOTSTRAP_ARMED' -or !$bootstrapObservedMarker) {
   Finish (Failure 'cdb_bootstrap' 'CDB did not reach the directly launched AfterFX.exe initial breakpoint' @('WITNESS_CDB_BOOTSTRAP_ARMED', 'WITNESS_CDB_AFTERFX_INITIAL_BREAK') $bootstrapTraceText) 2
 }
-$deadline = (Get-Date).AddSeconds(60)
-while ((Get-Date) -lt $deadline -and !(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) { Start-Sleep -Milliseconds 250 }
+$deadline = (Get-Date).AddSeconds(180)
+$queueRetryOneAt = (Get-Date).AddSeconds(20)
+$queueRetryTwoAt = (Get-Date).AddSeconds(60)
+while ((Get-Date) -lt $deadline -and !(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) {
+  $now = Get-Date
+  if ($now -ge $queueRetryOneAt -and @($queueRetryProcesses).Count -eq 0) {
+    $retryArgs = Join-WindowsCommandLine @('-r', $normalizedQueuePath)
+    $queueRetryProcesses += Start-Process -FilePath $AfterFxPath -ArgumentList $retryArgs -NoNewWindow -PassThru -ErrorAction SilentlyContinue
+  }
+  if ($now -ge $queueRetryTwoAt -and @($queueRetryProcesses).Count -eq 1) {
+    $retryArgs = Join-WindowsCommandLine @('-m', '-r', $normalizedQueuePath)
+    $queueRetryProcesses += Start-Process -FilePath $AfterFxPath -ArgumentList $retryArgs -NoNewWindow -PassThru -ErrorAction SilentlyContinue
+  }
+  Start-Sleep -Milliseconds 250
+}
 if (!(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) {
   Finish (Failure 'jsx_launch' 'CDB-launched After Effects process did not execute the queue JSX' @('queue_bootstrap.log') '') 2
 }
