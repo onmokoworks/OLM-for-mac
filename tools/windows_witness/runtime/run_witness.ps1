@@ -125,7 +125,7 @@ function Read-QueueBootstrapBinding([string]$path) {
 function Get-AfterFxState {
   @(Get-CimInstance Win32_Process -Filter "Name='AfterFX.exe'" -ErrorAction SilentlyContinue |
     Where-Object {
-      $_.SessionId -eq $sessionId -and $_.ExecutablePath -and
+      $_.ExecutablePath -and
       [IO.Path]::GetFullPath($_.ExecutablePath) -ieq $AfterFxPath
     } |
     ForEach-Object {
