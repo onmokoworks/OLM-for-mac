@@ -34,9 +34,15 @@ def main() -> int:
         assert report["source_candidates"][0]["site"] == "store16_nonlegacy_writer_boundary"
         assert report["source_candidates"][1]["site"] == "nonlegacy_helper_accumulation"
         assert report["source_candidates"][2]["site"] == "legacy_carry_prev_horizontal_vertical"
-        assert report["source_candidates"][0]["line"] == 451
-        assert report["source_candidates"][1]["line"] == 113
-        assert report["source_candidates"][2]["line"] == 254
+        source_lines = (root / report["source_cpp"]).read_text(encoding="utf-8").splitlines()
+        expected_needles = (
+            "return legacy ? floorf(v + 0.5f) : nearbyintf(v);",
+            "static void blur_1d_horizontal(",
+            "float carryPrevR = -1.0f, carryPrevG = -1.0f, carryPrevB = -1.0f;",
+        )
+        for row, needle in zip(report["source_candidates"], expected_needles, strict=True):
+            assert row["line"] > 0
+            assert needle in source_lines[row["line"] - 1]
         md = out_md.read_text(encoding="utf-8")
         for needle in (
             "OLMBlur Source-Candidates Audit",

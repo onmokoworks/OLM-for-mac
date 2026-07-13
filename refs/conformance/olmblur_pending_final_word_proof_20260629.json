@@ -25,7 +25,7 @@
   "date": "2026-06-29",
   "decision_boundary": "Decide whether the remaining OLMBlur residuals come from slightly different pre-store floats/helper ordering at the two sign-mixed non-Legacy witnesses, or from a true last-step writer rule mismatch that would justify changing the non-Legacy 16bpc writer.",
   "kind": "olmblur_pending_final_word_proof",
-  "latest_runtime_summary": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/runtime_trace_bundle/olm_windows_action_bundle_20260629_232710_priority4_runtime_return_windows/runtime_trace_summary_olmblur_repeat_threshold_20260629_235638.json",
+  "latest_runtime_summary": "refs/reports/runtime_trace_bundle/olm_windows_action_bundle_20260629_232710_priority4_runtime_return_windows/runtime_trace_summary_olmblur_repeat_threshold_20260629_235638.json",
   "not_actionable_if": [
     "It only reports final PNG values or final RGBA16 words.",
     "It revisits the retired old Legacy (0,0) spill or reopens the already-grounded 16bpc Legacy (345,672) witness instead of answering case_0006.",
@@ -36,7 +36,12 @@
     "Do not spend this package on the already-grounded 16bpc Legacy (345,672) point unless it is only being used as a debugger control sample.",
     "Only revisit old normalized 8bpc (488,941) if the same debugger setup can return it almost for free after answering the two case_0006 witnesses."
   ],
-  "runtime_package_context": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/runtime_trace_packages/olm_runtime_trace_olmblur_case0006_helper_prestore_witness_20260630.zip",
+  "runtime_package_context": "refs/runtime_trace_packages/olm_runtime_trace_olmblur_case0006_helper_prestore_witness_20260630.zip",
+  "status": "historical-superseded-by-closeout-gate",
+  "superseded_by": {
+    "reason": "The remaining OLMBlur work is no longer one live final-word lane. case_0006 is now provenance/export-first, normalized 16bpc Legacy case_0007 is closed as a Windows pre-store float delta, and only old normalized 8bpc case_0007 remains reopenable.",
+    "report": "refs/conformance/olmblur_closeout_gate_audit_20260701.md"
+  },
   "why_global_swap_is_forbidden_now": [
     "The current Mac source uses `nearbyintf(v)` for non-legacy 16bpc store16, while Windows standard 16bpc asm is `+0.5 -> helper -> CVTTSS2SI -> word store`.",
     "This is a real source-vs-asm contract mismatch at the writer boundary.",

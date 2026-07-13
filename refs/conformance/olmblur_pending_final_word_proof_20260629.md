@@ -1,7 +1,11 @@
 # OLMBlur Pending Final-Word Proof
 
-- Runtime package context: `/Users/onmk/Documents/Projects/Personal/OLM as/refs/runtime_trace_packages/olm_runtime_trace_olmblur_case0006_helper_prestore_witness_20260630.zip`
-- Latest runtime summary: `/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/runtime_trace_bundle/olm_windows_action_bundle_20260629_232710_priority4_runtime_return_windows/runtime_trace_summary_olmblur_repeat_threshold_20260629_235638.json`
+- Historical status: `historical-superseded-by-closeout-gate`
+- Superseded by: `refs/conformance/olmblur_closeout_gate_audit_20260701.md`
+- Why superseded: The remaining OLMBlur work is no longer one live final-word lane. case_0006 is now provenance/export-first, normalized 16bpc Legacy case_0007 is closed as a Windows pre-store float delta, and only old normalized 8bpc case_0007 remains reopenable.
+
+- Runtime package context: `refs/runtime_trace_packages/olm_runtime_trace_olmblur_case0006_helper_prestore_witness_20260630.zip`
+- Latest runtime summary: `refs/reports/runtime_trace_bundle/olm_windows_action_bundle_20260629_232710_priority4_runtime_return_windows/runtime_trace_summary_olmblur_repeat_threshold_20260629_235638.json`
 
 ## Decision Boundary
 

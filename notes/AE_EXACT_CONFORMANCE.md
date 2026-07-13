@@ -89,13 +89,13 @@ Keep host usability separate from correctness:
 Use these host-side labels when discussing whether AE hands-on testing is worth
 doing yet:
 
-| Host status | Meaning | When AE manual testing is useful |
+| Host status | Meaning | AEで今やってよいこと |
 | --- | --- | --- |
-| `host-blocked` | Plug-in fails to load, add, set basic params, or render a frame reliably. | Only for host integration debugging. Not for visual tuning. |
-| `host-smoke` | Plug-in loads and can render a minimal frame, but output is not yet trusted. | Only for parameter wiring and crash checks. |
-| `host-debuggable` | Plug-in can be manipulated in AE without obvious host failure, but algorithm output is still not trusted. | For bounded witness checks, not freeform look-matching. |
-| `host-visual-tuning-ready` | Binary/CLI evidence is strong enough that AE visual comparison can safely refine residuals. | Yes, for narrow residual tuning. |
-| `host-stable` | Manual use is stable across the currently supported feature slice. | Safe for broader hands-on validation. |
+| `host-blocked` | Plug-in fails to load, add, set basic params, or render a frame reliably. | 読み込み・追加・クラッシュだけを直す。見た目合わせはしない。 |
+| `host-smoke` | Plug-in loads and can render a minimal frame, but output is not yet trusted. | UI配線、パラメータ反映、クラッシュだけを確認する。 |
+| `host-debuggable` | Plug-in can be manipulated in AE without obvious host failure, but algorithm output is still not trusted. | 指定したwitnessピクセルや分岐だけを確認する。自由な見た目合わせはしない。 |
+| `host-visual-tuning-ready` | Binary/CLI evidence is strong enough that AE visual comparison can safely refine residuals. | 狭い残差の確認・修正に使える。 |
+| `host-stable` | Manual use is stable across the currently supported feature slice. | 対応済みsliceの広めの回帰確認に使える。 |
 
 Use these `work_lane` labels to choose the next action:
 
