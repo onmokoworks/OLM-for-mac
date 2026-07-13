@@ -1,0 +1,247 @@
+{
+  "FACT": [
+    "Each sweep point replays the actual AEX helper path separately and records the captured FUN_181272ec0 boundary rather than reusing a cached hit.",
+    "The decomp callsite multiplies integer length by DAT_18148d670 before calling FUN_181272ec0.",
+    "The disassembly callsite at 0x1811510d5 loads the same DAT_18148d670 qword into mulsd before the Gaussian wrapper call.",
+    "The raw .rdata bytes at virtual address 0x18148d670 decode to IEEE-754 little-endian double 0.5."
+  ],
+  "INFERENCE": [
+    "The size field is reported exactly as the captured low/high 32-bit unpack of R8 (0x100000000 -> [0, 1]); this report does not rename those words into semantic width/height beyond that raw decode.",
+    "Agreement between observed sigmaX and length * 0.5 is evidence for the helper-side multiplier contract, not a claim about deeper OpenCV internals.",
+    "If any point misses the Gaussian hook, that case remains in the report and weakens the sweep verdict instead of being silently dropped."
+  ],
+  "aex": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+  "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+  "cases": [
+    {
+      "expected_sigma_x_f64": 0.5,
+      "finished_at_utc": "2026-07-13T02:12:41.386341Z",
+      "helper_result": {
+        "instructions": 193071,
+        "xmm0_f32": 0.6048942804336548
+      },
+      "input_wrapper_flags": "0x1010000",
+      "length": 1,
+      "output_wrapper_flags": "0x2010000",
+      "sigma_matches_expected": true,
+      "sigma_x_f64": 0.5,
+      "size": [
+        0,
+        1
+      ],
+      "size_packed": "0x100000000",
+      "started_at_utc": "2026-07-13T02:12:41.156464Z",
+      "status": "captured",
+      "target_hit_count": 1
+    },
+    {
+      "expected_sigma_x_f64": 1.0,
+      "finished_at_utc": "2026-07-13T02:12:41.599112Z",
+      "helper_result": {
+        "instructions": 192747,
+        "xmm0_f32": 0.5613511204719543
+      },
+      "input_wrapper_flags": "0x1010000",
+      "length": 2,
+      "output_wrapper_flags": "0x2010000",
+      "sigma_matches_expected": true,
+      "sigma_x_f64": 1.0,
+      "size": [
+        0,
+        1
+      ],
+      "size_packed": "0x100000000",
+      "started_at_utc": "2026-07-13T02:12:41.386375Z",
+      "status": "captured",
+      "target_hit_count": 1
+    },
+    {
+      "expected_sigma_x_f64": 2.5,
+      "finished_at_utc": "2026-07-13T02:12:41.808069Z",
+      "helper_result": {
+        "instructions": 193053,
+        "xmm0_f32": 0.45582491159439087
+      },
+      "input_wrapper_flags": "0x1010000",
+      "length": 5,
+      "output_wrapper_flags": "0x2010000",
+      "sigma_matches_expected": true,
+      "sigma_x_f64": 2.5,
+      "size": [
+        0,
+        1
+      ],
+      "size_packed": "0x100000000",
+      "started_at_utc": "2026-07-13T02:12:41.599132Z",
+      "status": "captured",
+      "target_hit_count": 1
+    },
+    {
+      "expected_sigma_x_f64": 4.5,
+      "finished_at_utc": "2026-07-13T02:12:42.080122Z",
+      "helper_result": {
+        "instructions": 193053,
+        "xmm0_f32": 0.29124540090560913
+      },
+      "input_wrapper_flags": "0x1010000",
+      "length": 9,
+      "output_wrapper_flags": "0x2010000",
+      "sigma_matches_expected": true,
+      "sigma_x_f64": 4.5,
+      "size": [
+        0,
+        1
+      ],
+      "size_packed": "0x100000000",
+      "started_at_utc": "2026-07-13T02:12:41.808087Z",
+      "status": "captured",
+      "target_hit_count": 1
+    }
+  ],
+  "dat_18148d670": {
+    "data": {
+      "f64": 0.5,
+      "file_offset": "0x148c870",
+      "image_base": "0x180000000",
+      "next_f64": 1.0,
+      "raw_hex_le_16": "000000000000e03f000000000000f03f",
+      "raw_hex_le_8": "000000000000e03f",
+      "rva": "0x148d670",
+      "section": {
+        "name": ".rdata",
+        "raw_ptr": "0x1484200",
+        "raw_size": "0x39c600",
+        "virtual_address": "0x1485000",
+        "virtual_size": "0x39c4c8"
+      },
+      "virtual_address": "0x18148d670"
+    },
+    "decomp_additional_usage_snippet": [
+      "  local_468 = local_458;",
+      "  local_560 = param_4;",
+      "  if (0x408 < local_460) {",
+      "    local_468 = (undefined1 *)thunk_FUN_18132b27c();",
+      "  }",
+      "  puVar3 = local_468;",
+      "  uVar2 = DAT_18148d670;",
+      "  local_5b8 = local_468;",
+      "  local_5b0 = local_468 + lVar14 * 4;",
+      "  puVar1 = local_5b0 + (longlong)param_8 * 4;",
+      "  local_550 = puVar1 + (longlong)(param_7 * 2) * 4;",
+      "  iVar11 = 0;",
+      "  if (0 < lVar14) {"
+    ],
+    "decomp_callsite_snippet": [
+      "    local_218[0] = 0x1010000;",
+      "    local_230 = 4;",
+      "    local_238 = 0;",
+      "    local_210 = param_3;",
+      "    FUN_181272ec0(local_218,local_200,0x100000000,(double)(int)param_7 * DAT_18148d670);",
+      "  }",
+      "  else if (param_8 == 4) {",
+      "    iVar1 = param_7 + 1;",
+      "    fVar18 = (float)(int)param_7 / (float)iVar1;"
+    ],
+    "disasm": {
+      "callsite_lines": [
+        "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex:\tfile format coff-x86-64",
+        "Disassembly of section .text:",
+        "0000000180001000 <.text>:",
+        "1811510c0: c7 44 24 40 00 00 01 01     \tmov\tdword ptr [rsp + 0x40], 0x1010000",
+        "1811510c8: 4c 89 74 24 48              \tmov\tqword ptr [rsp + 0x48], r14",
+        "1811510cd: 66 0f 6e de                 \tmovd\txmm3, esi",
+        "1811510d1: f3 0f e6 db                 \tcvtdq2pd\txmm3, xmm3",
+        "1811510d5: f2 0f 59 1d 93 c5 33 00     \tmulsd\txmm3, qword ptr [rip + 0x33c593] # 0x18148d670",
+        "1811510dd: 49 b8 00 00 00 00 01 00 00 00       \tmovabs\tr8, 0x100000000",
+        "1811510e7: c7 44 24 28 04 00 00 00     \tmov\tdword ptr [rsp + 0x28], 0x4",
+        "1811510ef: f2 44 0f 11 44 24 20        \tmovsd\tqword ptr [rsp + 0x20], xmm8",
+        "1811510f6: 48 8d 54 24 58              \tlea\trdx, [rsp + 0x58]",
+        "1811510fb: 48 8d 4c 24 40              \tlea\trcx, [rsp + 0x40]",
+        "181151100: e8 bb 1d 12 00              \tcall\t0x181272ec0 <entry_point+0x11cfa0>",
+        "181151105: e9 33 fe ff ff              \tjmp\t0x181150f3d <.text+0x114ff3d>"
+      ],
+      "command": "objdump -d -M intel --start-address=0x1811510c0 --stop-address=0x181151108 /Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex"
+    }
+  },
+  "execution_log": [
+    {
+      "expected_sigma_x_f64": 0.5,
+      "instructions": 193071,
+      "length": 1,
+      "sigma_x_f64": 0.5,
+      "size": [
+        0,
+        1
+      ],
+      "status": "captured",
+      "target_hit_count": 1
+    },
+    {
+      "expected_sigma_x_f64": 1.0,
+      "instructions": 192747,
+      "length": 2,
+      "sigma_x_f64": 1.0,
+      "size": [
+        0,
+        1
+      ],
+      "status": "captured",
+      "target_hit_count": 1
+    },
+    {
+      "expected_sigma_x_f64": 2.5,
+      "instructions": 193053,
+      "length": 5,
+      "sigma_x_f64": 2.5,
+      "size": [
+        0,
+        1
+      ],
+      "status": "captured",
+      "target_hit_count": 1
+    },
+    {
+      "expected_sigma_x_f64": 4.5,
+      "instructions": 193053,
+      "length": 9,
+      "sigma_x_f64": 4.5,
+      "size": [
+        0,
+        1
+      ],
+      "status": "captured",
+      "target_hit_count": 1
+    }
+  ],
+  "generated_at_utc": "2026-07-13T02:12:39.777263Z",
+  "input": {
+    "blur_mode": 3,
+    "height": 7,
+    "lengths": [
+      1,
+      2,
+      5,
+      9
+    ],
+    "sigma_argument": 0.0,
+    "type": "CV_32FC1",
+    "width": 9
+  },
+  "schema": "olmkirakira-mode3-sigma-sweep-actual-aex/1",
+  "single_probe_sha256": "5756f878ee7bfe7383a5b80afa6c1d0c27ad61cc9b41a78cb5c64b299430028c",
+  "single_probe_source": "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/probe_olmkirakira_mode3_actual_aex.py",
+  "status": "captured",
+  "summary": {
+    "all_points_captured": true,
+    "dat_18148d670_f64": 0.5,
+    "length_count": 4,
+    "observed_size_set": [
+      [
+        0,
+        1
+      ]
+    ],
+    "sigma_matches_length_times_dat": true,
+    "size_is_invariant": true
+  }
+}
