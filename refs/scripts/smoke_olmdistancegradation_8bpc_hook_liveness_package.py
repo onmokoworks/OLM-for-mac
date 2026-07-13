@@ -82,6 +82,9 @@ def main() -> int:
     if "hit_count=%u\\\\n" in runner:
         print("[FAIL] liveness summary uses a double-escaped CDB newline")
         return 1
+    if "@`$t0" not in runner or ", @\n" in runner:
+        print("[FAIL] CDB pseudo-registers are not protected from PowerShell expansion")
+        return 1
     readme = (package_dir / "README_RUNTIME_TRACE.md").read_text(encoding="utf-8").lower()
     if "does not" not in readme or "algorithm proof" not in readme:
         print("[FAIL] liveness README does not bound the claim")

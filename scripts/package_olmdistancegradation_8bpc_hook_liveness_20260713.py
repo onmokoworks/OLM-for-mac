@@ -96,22 +96,22 @@ sxe ld:DistanceGradation
 g
 .echo DG8_LIVE_MODULE_LOADED
 lm m DistanceGradation
-r `@$t0 = 0
-r `@$t1 = 0
-r `@$t2 = 0
-r `@$t3 = 0
-r `@$t4 = 0
-bp DistanceGradation+0x1170870 ".printf \"DG8_LIVE_HIT run_id=$runId rva=1170870 aex_sha256=$aexSha256 hit_count=%u\n\", `@$t0; r `@$t0 = `@$t0 + 1; gc"
-bp DistanceGradation+0x117057d ".printf \"DG8_LIVE_HIT run_id=$runId rva=117057d aex_sha256=$aexSha256 hit_count=%u\n\", `@$t1; r `@$t1 = `@$t1 + 1; gc"
-bp DistanceGradation+0x11705f1 ".printf \"DG8_LIVE_HIT run_id=$runId rva=11705f1 aex_sha256=$aexSha256 hit_count=%u\n\", `@$t2; r `@$t2 = `@$t2 + 1; gc"
-bp DistanceGradation+0x1170808 ".printf \"DG8_LIVE_HIT run_id=$runId rva=1170808 aex_sha256=$aexSha256 hit_count=%u\n\", `@$t3; r `@$t3 = `@$t3 + 1; gc"
-bp DistanceGradation+0x1170814 ".printf \"DG8_LIVE_HIT run_id=$runId rva=1170814 aex_sha256=$aexSha256 hit_count=%u\n\", `@$t4; r `@$t4 = `@$t4 + 1; gc"
+r @`$t0 = 0
+r @`$t1 = 0
+r @`$t2 = 0
+r @`$t3 = 0
+r @`$t4 = 0
+bp DistanceGradation+0x1170870 ".printf \"DG8_LIVE_HIT run_id=$runId rva=1170870 aex_sha256=$aexSha256 hit_count=%u\n\", @`$t0; r @`$t0 = @`$t0 + 1; gc"
+bp DistanceGradation+0x117057d ".printf \"DG8_LIVE_HIT run_id=$runId rva=117057d aex_sha256=$aexSha256 hit_count=%u\n\", @`$t1; r @`$t1 = @`$t1 + 1; gc"
+bp DistanceGradation+0x11705f1 ".printf \"DG8_LIVE_HIT run_id=$runId rva=11705f1 aex_sha256=$aexSha256 hit_count=%u\n\", @`$t2; r @`$t2 = @`$t2 + 1; gc"
+bp DistanceGradation+0x1170808 ".printf \"DG8_LIVE_HIT run_id=$runId rva=1170808 aex_sha256=$aexSha256 hit_count=%u\n\", @`$t3; r @`$t3 = @`$t3 + 1; gc"
+bp DistanceGradation+0x1170814 ".printf \"DG8_LIVE_HIT run_id=$runId rva=1170814 aex_sha256=$aexSha256 hit_count=%u\n\", @`$t4; r @`$t4 = @`$t4 + 1; gc"
 g
-.printf "DG8_LIVE_SUMMARY run_id=$runId rva=1170870 aex_sha256=$aexSha256 hit_count=%u\n", `@$t0
-.printf "DG8_LIVE_SUMMARY run_id=$runId rva=117057d aex_sha256=$aexSha256 hit_count=%u\n", `@$t1
-.printf "DG8_LIVE_SUMMARY run_id=$runId rva=11705f1 aex_sha256=$aexSha256 hit_count=%u\n", `@$t2
-.printf "DG8_LIVE_SUMMARY run_id=$runId rva=1170808 aex_sha256=$aexSha256 hit_count=%u\n", `@$t3
-.printf "DG8_LIVE_SUMMARY run_id=$runId rva=1170814 aex_sha256=$aexSha256 hit_count=%u\n", `@$t4
+.printf "DG8_LIVE_SUMMARY run_id=$runId rva=1170870 aex_sha256=$aexSha256 hit_count=%u\n", @`$t0
+.printf "DG8_LIVE_SUMMARY run_id=$runId rva=117057d aex_sha256=$aexSha256 hit_count=%u\n", @`$t1
+.printf "DG8_LIVE_SUMMARY run_id=$runId rva=11705f1 aex_sha256=$aexSha256 hit_count=%u\n", @`$t2
+.printf "DG8_LIVE_SUMMARY run_id=$runId rva=1170808 aex_sha256=$aexSha256 hit_count=%u\n", @`$t3
+.printf "DG8_LIVE_SUMMARY run_id=$runId rva=1170814 aex_sha256=$aexSha256 hit_count=%u\n", @`$t4
 .logclose
 q
 "@
