@@ -39,10 +39,11 @@ def main() -> int:
         summary = manifest["summary"]
         assert manifest["kind"] == "olm_conformance_manifest"
         assert summary["total_cases"] == 70
-        assert summary["counts"]["AE exact"] == 62
+        assert summary["counts"]["AE exact"] == 33
         assert summary["counts"].get("AE residual", 0) == 0
         assert summary["counts"]["reference-generation split"] == 1
-        assert summary["counts"]["known-red"] == 7
+        assert summary["counts"]["known-red"] == 33
+        assert summary["counts"]["off-by-1 candidate"] == 3
         assert summary["by_plugin"]["OLMBlur"]["AE exact"] == 7
         blur_suite = next(row for row in manifest["suites"] if row["plugin"] == "OLMBlur")
         assert blur_suite["evidence_status"] == "AE exact but CLI unexplained"
@@ -50,9 +51,16 @@ def main() -> int:
         assert summary["by_plugin"]["OLMColorKey"]["reference-generation split"] == 1
         assert summary["by_plugin"]["OLMSmoother2"]["AE exact"] == 12
         assert summary["by_plugin"]["OLMSmoother2"]["known-red"] == 7
+        assert summary["by_plugin"]["OLMDistanceGradation"] == {
+            "known-red": 26,
+            "off-by-1 candidate": 3,
+            "total": 29,
+        }
+        dg_suites = [row for row in manifest["suites"] if row["plugin"] == "OLMDistanceGradation"]
+        assert all(row["evidence_status"] == "current-binary depth-correct AE measurement" for row in dg_suites)
         assert all(row["reference_kind"] for row in manifest["cases"])
         assert all(row["runner_kind"] for row in manifest["cases"])
-        assert summary_report["summary"]["counts"]["AE exact"] == 62
+        assert summary_report["summary"]["counts"]["AE exact"] == 33
         supp16 = summary_report["supplemental_16bpc_exact"]
         assert supp16["counts"]["AE exact"] == 12
         assert supp16["by_plugin"]["OLMColorKey"]["AE exact"] == 9

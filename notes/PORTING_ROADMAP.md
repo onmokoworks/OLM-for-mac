@@ -50,31 +50,29 @@ allowed only at the release gate below.
 ## Critical path and parallel work
 
 The critical correctness lane is 8bpc hard-path closure and regression
-preservation. The already-pending DistanceGradation 16bpc witness is the one
-explicit exception below: finish it because it is an active proof obligation,
-not because 16bpc expansion has priority over unresolved 8bpc hard paths.
+preservation. The former DistanceGradation 16bpc exact-address exception is
+closed locally by the 2026-07-11 OpenCV/PF16 boundary proof; do not keep a
+superseded Windows request alive after its decision has been answered.
 
-1. Finish the pending `OLMDistanceGradation` 16bpc exact-address witness only
-   through its acceptance contract. The break-ignore return proved the entry
-   software breakpoint works, but first entered at `(0,90)` and never visited
-   target `(6,40)` before AE's PNG/export failure. The active package is now
-   the source-only tile-aware retry at the second grounded residual:
-   `refs/runtime_trace_packages/olmdistancegradation_0010_compose_source_901_394_tile_retry_windows_20260710.zip`
-   and
-   `refs/conformance/olmdistancegradation_0010_compose_single_site_followup_contract_20260710.md`.
-   It is staged at `/Volumes/onmk/olm_pr/new`. The earlier multi-site and both
-   `(6,40)` single-site returns are `answered_partial`; retain their grounded
-   address/tile facts, but do not resend those old shapes.
+1. Preserve the `OLMDistanceGradation` OpenCV/PF16 boundary proven in
+   `refs/conformance/olmdistancegradation_opencv_pf16_boundary_20260711.md`.
+   The current 16bpc extended batch is `7/16 AE exact`, with `0010/0011`
+   closed. Split its remaining 16bpc work into Layer/no-bg
+   `0012/0013/0014/0016`, max-2 `0024..0027`, and outlier `0028`. Separately,
+   the depth-correct current 8bpc batch is known-red `0/29`; reconstruct that
+   lane from current binary-grounded field/compose rules rather than the
+   historical unbound `29/29` candidate images.
 2. Close `OLMDirectionalBlur` with separate angle-0 and diagonal witnesses;
    do not combine their proof or tune from broad PNGs.
 3. Keep `OLMRadialBlur` Zoom, tiny Rotation, and Inner as separate lanes;
    require sampler/prepass/writeback proof before visual tuning.
 4. Complete the bounded upstream producer proof for `OLMSmoother2` legacy;
    preserve exact no-key behavior and the Smooth Range fix.
-5. Validate narrow `OLMBlur` 16bpc host/export provenance, then expand the
-   already strong `OLMColorKey` and `OLMToonDilate` slices.
-6. Keep `OLMKiraKira` parked until provenance/witness placement or its explicit
-   endgame controls become the highest-value work.
+5. Preserve the now-exact `OLMBlur` 16bpc cell, then expand the already strong
+   `OLMColorKey` and `OLMToonDilate` slices.
+6. Keep `OLMKiraKira` parked after the narrow Mode 1/2 dispatch fix until
+   provenance/witness placement or the independently scoped Mode 3, Mode 4,
+   Merge 2, and other endgame controls become the highest-value work.
 
 When the 8bpc critical lane is waiting on a Windows return, a missing binary
 fact, or an accepted host artifact, use the wait only for independent
@@ -108,10 +106,11 @@ authoritative in `refs/reports/pending_runtime_trace_packages.md`.
 Every status-changing result updates the ledger row, evidence link, and date in
 the same change. Older reports remain historical, but must be marked or treated
 as stale when a later canonical reference, verifier, intake, or acceptance
-note supersedes them. Never revive an old count, reference, case-number
-mapping, or runtime package by citation alone. If documents disagree, use the
-newest accepted evidence and add a short supersession note; do not silently
-rewrite history.
+note supersedes them. An exact image set without the loaded Mac plug-in hash is
+not current-binary conformance. Never revive an old count, reference,
+case-number mapping, or runtime package by citation alone. If documents
+disagree, use the newest accepted evidence and add a short supersession note;
+do not silently rewrite history.
 
 ## Ownership and orchestration
 

@@ -43,23 +43,32 @@ SUITES = [
     {
         "plugin": "OLMDistanceGradation",
         "feature": "OLMDistanceGradation basic packaged slices",
-        "report": "refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmdistancegradation_basic_exact_20260619/reports/ae_pixel_basic_exact.json",
-        "result_on_diff": "AE residual",
-        "notes": "12/12 packaged 8bpc Mac AE exact.",
+        "report": "refs/conformance/olmdistancegradation_opencv_pf16_boundary_20260711.json",
+        "report_section": "ae_8bpc.cases",
+        "group": "basic",
+        "result_on_diff": "known-red",
+        "notes": "Depth-correct current-binary 8bpc measurement: 0/12 exact; historical exact candidates have unbound loaded-plugin provenance.",
+        "evidence_status": "current-binary depth-correct AE measurement",
     },
     {
         "plugin": "OLMDistanceGradation",
         "feature": "OLMDistanceGradation extended packaged slices",
-        "report": "refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmdistancegradation_extended_exact_20260619/reports/ae_pixel_extended_exact.json",
-        "result_on_diff": "AE residual",
-        "notes": "16/16 packaged 8bpc Mac AE exact.",
+        "report": "refs/conformance/olmdistancegradation_opencv_pf16_boundary_20260711.json",
+        "report_section": "ae_8bpc.cases",
+        "group": "extended",
+        "result_on_diff": "known-red",
+        "notes": "Depth-correct current-binary 8bpc measurement: 0/16 exact; historical exact candidates have unbound loaded-plugin provenance.",
+        "evidence_status": "current-binary depth-correct AE measurement",
     },
     {
         "plugin": "OLMDistanceGradation",
         "feature": "OLMDistanceGradation blur packaged slice",
-        "report": "refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmdistancegradation_blur_exact_20260619/reports/ae_pixel_blur_exact.json",
-        "result_on_diff": "AE residual",
-        "notes": "1/1 packaged 8bpc Mac AE exact.",
+        "report": "refs/conformance/olmdistancegradation_opencv_pf16_boundary_20260711.json",
+        "report_section": "ae_8bpc.cases",
+        "group": "blur",
+        "result_on_diff": "known-red",
+        "notes": "Depth-correct current-binary 8bpc measurement: case_0029 max=23; historical exact candidate has unbound loaded-plugin provenance.",
+        "evidence_status": "current-binary depth-correct AE measurement",
     },
     {
         "plugin": "OLMSmoother",
@@ -191,13 +200,42 @@ def candidate_path(report_path: Path, frame: Any) -> Path | None:
     return path if path.exists() else None
 
 
+def report_rows(report: dict[str, Any], suite: dict[str, Any]) -> list[dict[str, Any]]:
+    if suite.get("report_section") != "ae_8bpc.cases":
+        return [row for row in report.get("cases", []) if isinstance(row, dict)]
+
+    rows = report.get("ae_8bpc", {}).get("cases", [])
+    group = suite.get("group")
+    normalized: list[dict[str, Any]] = []
+    for row in rows:
+        if not isinstance(row, dict) or row.get("group") != group:
+            continue
+        case_id = str(row.get("case_id") or "")
+        nonzero_px = row.get("nonzero_px")
+        nonzero_px_percent = None
+        if isinstance(nonzero_px, int):
+            nonzero_px_percent = nonzero_px * 100.0 / (1920 * 1080)
+        normalized.append(
+            {
+                "id": case_id,
+                "frame": f"{case_id}.png",
+                "status": "compared",
+                "max_diff": row.get("max_diff"),
+                "mean_diff": row.get("mean_diff"),
+                "nonzero_px": nonzero_px,
+                "nonzero_px_percent": nonzero_px_percent,
+            }
+        )
+    return normalized
+
+
 def build_manifest() -> dict[str, Any]:
     cases: list[dict[str, Any]] = []
     suites_out: list[dict[str, Any]] = []
     for suite in SUITES:
         report_path = ROOT / suite["report"]
         report = load_json(report_path)
-        rows = [row for row in report.get("cases", []) if isinstance(row, dict)]
+        rows = report_rows(report, suite)
         suite_counts = Counter()
         for row in rows:
             status = result_status(row, suite)
