@@ -28,6 +28,24 @@ change any plugin correctness status.
 - The observed AfterFX command line is `AfterFX.exe -r queue.jsx`.
 - `bootstrap_host_image_marker_observed=false`.
 - `queue_bootstrap_marker_observed=false`.
+
+## Direct launcher gate retry
+
+The direct-AfterFX gate was executed on Windows, but it failed before CDB
+bootstrap because an existing After Effects process was still running:
+
+- Return: `RETURN_OLMDISTANCEGRADATION_CASE0026_16BPC_LIVEFIELD_direct_gate_20260714.zip`
+- SHA-256: `d362f42485ba88d4ca98c5f9454ba3b0c392d25f1ca8ab20a15517caa1876356`
+- Status: `exact_bind_failure`
+- Stage: `desktop_launch`
+- Missing field: `fresh_AfterFX_process`
+- `bootstrap_host_image_marker_observed=false`
+- `queue_bootstrap_marker_observed=false`
+
+This is a host precondition failure, not plugin or algorithm evidence. The
+request and return were archived together under
+`/Volumes/onmk/olm_pr/old/20260714_002900__intake_direct_gate_afterfx_already_running/`.
+The gate must be retried only after After Effects is fully closed.
 - No returned artifact was produced.
 - The same failure appears across four different plugins, so this batch cannot
   distinguish plugin behavior.
