@@ -106,3 +106,21 @@ the explicit Windows path
 `C:\\olm_short\\incoming_20260714_direct_dg_case0026_no_double_dash\\REQUEST.zip`;
 the extracted launcher was independently checked to contain no `--` in
 `$launchArgumentValues`.
+
+## Current `-m -r` retry
+
+The current package was then executed after terminating the existing
+AfterFX/CDB processes. This run did reach both CDB initial-break markers, but
+it still failed before queue execution:
+
+- Return SHA-256: `64c51c3a30aa7e7c1cd99fbf2b5d31bcb7bcf466ba6921464a52526d6adbe848`
+- Status: `exact_bind_failure`
+- Stage: `jsx_launch`
+- Missing field: `queue_bootstrap.log`
+- `bootstrap_host_image_marker_observed=true`
+- `queue_bootstrap_marker_observed=false`
+- Typed records: `0`
+
+This confirms the CDB initial-break portion of the launcher fix, but does not
+validate queue dispatch or any OLM plugin behavior. The next debugging target
+is AfterFX queue execution and process binding, not the Mac algorithm.
