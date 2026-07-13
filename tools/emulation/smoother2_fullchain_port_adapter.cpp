@@ -39,13 +39,13 @@ int classifier_index(const uint8_t *cp, int w, int h, int x, int y) {
 }  // namespace
 
 int smoother2_fullchain_port_adapter_main(int argc, char **argv) {
-  if (argc != 2) return 2;
+  if (argc < 2 || argc > 4) return 2;
   const bool suppress = std::atoi(argv[1]) != 0;
   constexpr int w = 16, h = 16, x = 5, y = 6;
   std::vector<FPix> pixels((size_t)w * h, FPix{0, 0, 0, 0});
   std::vector<uint8_t> classes((size_t)w * h * 4, 0);
-  pixels[(size_t)(y - 1) * w + x] = {0.99106717f, 0.99106717f, 0.99106717f, 0.99607843f};
-  pixels[(size_t)y * w + x] = {1, 1, 1, 0};
+  pixels[(size_t)(y - 1) * w + x] = {0.8f, 0.1f, 0.1f, 0.99607843f};
+  pixels[(size_t)y * w + x] = {1, 1, 1, 1};
   // Additional independent classifier bytes make c280's index exactly 0x69.
   classes[((size_t)y * w + x) * 4 + 1] = 1;
   classes[((size_t)y * w + x) * 4 + 3] = 1;
@@ -77,8 +77,30 @@ int smoother2_fullchain_port_adapter_main(int argc, char **argv) {
   const int before_normalize = chained.count;
   win_FUN_18000cc70_normalize(chained);
 
+  SMParams params{};
+  params.w = w;
+  params.h = h;
+  params.class_plane = classes.data();
+  params.smoothness_raw = argc > 2 ? std::atoi(argv[2]) : 100;
+  params.extra_smooth_raw = argc > 3 ? std::atoi(argv[3]) : 100;
+  SmootherPolygon builder{};
+  build_polygon(builder, plane, x, y, params);
+  FPix builder_orchestrated{};
+  win_FUN_18000cce0_orchestrate(builder_orchestrated, plane, plane, x, y, params);
+  SMParams gamma_params = params;
+  gamma_params.version = 2;
+  gamma_params.gamma_mode = GAMMA_COLORS_ONLY;
+  gamma_params.gamma_value = 2.1695473f;
+  gamma_params.num_gamma_colors = 1;
+  gamma_params.gamma_colors[0].red = 0.8f;
+  gamma_params.gamma_colors[0].green = 0.1f;
+  gamma_params.gamma_colors[0].blue = 0.1f;
+  gamma_params.gamma_colors[0].alpha = 1.0f;
+  FPix builder_gamma_colors{};
+  win_FUN_18000cce0_orchestrate(builder_gamma_colors, plane, plane, x, y, gamma_params);
+
   FPix final{};
-  composite(final, pixels[(size_t)y * w + x], direct);
+  composite(final, pixels[(size_t)y * w + x], chained);
   std::printf("{\"fixture\":\"%s\",\"idx\":%d,\"descriptor\":[5,6,1,5,8,5],"
               "\"c\":%d,\"append\":%s,", suppress ? "c4_control" : "c2_witness",
               classifier_index(classes.data(), w, h, x, y), c, appended ? "true" : "false");
@@ -89,6 +111,14 @@ int smoother2_fullchain_port_adapter_main(int argc, char **argv) {
               generated_desc[0], generated_desc[1], generated_desc[2], generated_desc[3],
               generated_desc[4], generated_desc[5]);
   print_vertices(chained, "chain");
+  std::putchar(',');
+  print_vertices(builder, "builder");
+  std::printf(",\"builder_orchestrated_float\":[%.9g,%.9g,%.9g,%.9g]",
+              builder_orchestrated.r, builder_orchestrated.g,
+              builder_orchestrated.b, builder_orchestrated.a);
+  std::printf(",\"builder_gamma_colors_float\":[%.9g,%.9g,%.9g,%.9g]",
+              builder_gamma_colors.r, builder_gamma_colors.g,
+              builder_gamma_colors.b, builder_gamma_colors.a);
   std::printf(",\"port_composite_float\":[%.9g,%.9g,%.9g,%.9g]}\n",
               final.r, final.g, final.b, final.a);
   return 0;

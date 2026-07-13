@@ -1,0 +1,23 @@
+{
+  "kind": "olm_runtime_trace_request_package",
+  "schema": 1,
+  "profile": "olmsmoother2_case0012_live_config_binding_20260713",
+  "repo_root_name": "OLM as",
+  "entrypoint": "refs/conformance/olmsmoother2_case0012_live_config_contract_20260712.md",
+  "effect": "OLMSmoother2",
+  "runtime_actions": [
+    {
+      "request_id": "olmsmoother2_case0012_live_config_binding_20260713",
+      "request_schema": "olmsmoother2_case0012_live_config_binding_return_v1",
+      "plugin_area": "OLMSmoother2 case0012 live c280/cce0 config binding",
+      "mode": "external-trace",
+      "command": "Run one fresh current-AEX Software render for case0012 and capture the live c280 scale words plus cce0 gamma-context bytes/mode from the same witness-local call chain.",
+      "stop_condition": "Return c280/cce0 raw config bytes, decoded fields, and final writer corroboration for one run id; otherwise exact_bind_failure.",
+      "forbidden": [
+        "broad ungated +0xc280/+0xcce0 reruns",
+        "local replay scaffold promoted as Windows truth",
+        "partial status without exact failure context"
+      ]
+    }
+  ]
+}

@@ -109,7 +109,7 @@ FetchParams(PF_InData *in_data, PF_ParamDef *params[], SMParams *p)
 	p->smooth_range     = params[SM_SMOOTH_RANGE]->u.sd.value;
 	p->version          = params[SM_VERSION]->u.pd.value;      // 1 or 2
 	p->gamma_mode       = params[SM_GAMMA_MODE]->u.pd.value;   // 1/2/3
-	p->gamma_value      = (float)FIX_2_FLOAT(params[SM_GAMMA_VALUE]->u.fs_d.value);
+	p->gamma_value      = (float)params[SM_GAMMA_VALUE]->u.fs_d.value;
 	p->num_gamma_colors = params[SM_NUM_GAMMA_COLORS]->u.sd.value;
 	// Re-premul only when we un-premul'd at the frame-setup stage (mirrors Win
 	// symmetric unpremul/repremul bracket gated on enable_key).  Otherwise the

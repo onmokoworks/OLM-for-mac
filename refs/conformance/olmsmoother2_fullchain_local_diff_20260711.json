@@ -1,14 +1,47 @@
 {
   "blockers": {
-    "c280": "AEX FUN_18000c280 requires the live five-argument host/config binding; this fixture does not fabricate the opaque parameter object.",
-    "cce0_final_float": "AEX FUN_18000cce0 requires gamma/key/config state beyond the identical polygon fixture; only the port composite float is reported, not compared."
+    "c280": "The actual AEX FUN_18000c280 entry is executed with source/class descriptors from the identical fixture and fixed-point scale 65536/65536. Live Windows class bytes are still required before mapping this synthetic fixture to case_0012.",
+    "cce0_final_float": "The AEX entry still requires gamma/key/config state beyond the identical polygon fixture; the grounded accumulation lane is replayed independently from the AEX/port normalized vertices, while AEX entry execution and host writeback remain unclaimed."
   },
+  "chain": "c280 classifier/dispatch -> producer helpers -> cc70 normalization -> independent cce0 accumulation",
   "facts": [
     {
       "aex": {
         "after_125c0_count": 0,
         "append": true,
         "c": 2,
+        "c280_entry": {
+          "count": 1,
+          "output_pointer": 536876608,
+          "returned_pointer": 536876608,
+          "scale_fixed": [
+            65536,
+            65536
+          ],
+          "vertices": [
+            {
+              "rgba": [
+                0.800000011920929,
+                0.10000000149011612,
+                0.10000000149011612,
+                0.9960784316062927
+              ],
+              "weight": 0.4999988377094269
+            }
+          ]
+        },
+        "c280_equiv_helper_before_normalize": 1,
+        "c280_equiv_helper_vertices": [
+          {
+            "rgba": [
+              0.800000011920929,
+              0.10000000149011612,
+              0.10000000149011612,
+              0.9960784316062927
+            ],
+            "weight": 0.4999988377094269
+          }
+        ],
         "cardinal6_descriptor": [
           5,
           6,
@@ -17,14 +50,66 @@
           6,
           0
         ],
+        "cce0_entry": {
+          "bb10_after": [
+            {
+              "apply": 0,
+              "gamma": 1.401298464324817e-45
+            }
+          ],
+          "config": {
+            "gamma_mode_byte": 0,
+            "scale_fixed": [
+              65536,
+              65536
+            ]
+          },
+          "output_pointer": 536876976,
+          "returned_pointer": 536876976,
+          "rgba": [
+            0.9001967310905457,
+            0.5508851408958435,
+            0.5508851408958435,
+            0.9980392456054688
+          ]
+        },
+        "cce0_gamma_colors_entry": {
+          "bb10_after": [
+            {
+              "apply": 1,
+              "gamma": 2.1695473194122314
+            }
+          ],
+          "config": {
+            "gamma_mode_byte": 3,
+            "scale_fixed": [
+              65536,
+              65536
+            ]
+          },
+          "output_pointer": 536877184,
+          "returned_pointer": 536877184,
+          "rgba": [
+            0.8971925377845764,
+            0.4243943989276886,
+            0.4243943989276886,
+            0.9980392456054688
+          ]
+        },
+        "cce0_replay_float": [
+          0.9357142903975078,
+          0.7107142900249788,
+          0.7107142900249788,
+          0.9987394958901472
+        ],
         "chain_before_normalize": 1,
         "chain_count": 1,
         "chain_vertices": [
           {
             "rgba": [
-              0.9910671710968018,
-              0.9910671710968018,
-              0.9910671710968018,
+              0.800000011920929,
+              0.10000000149011612,
+              0.10000000149011612,
               0.9960784316062927
             ],
             "weight": 0.3214285671710968
@@ -42,9 +127,9 @@
         "direct_vertices": [
           {
             "rgba": [
-              0.9910671710968018,
-              0.9910671710968018,
-              0.9910671710968018,
+              0.800000011920929,
+              0.10000000149011612,
+              0.10000000149011612,
               0.9960784316062927
             ],
             "weight": 0.4281609058380127
@@ -56,8 +141,13 @@
       "comparison": {
         "all_replayed_boundaries_equal": true,
         "append_equal": true,
+        "c280_entry_vs_production_builder_equal_1e-6": true,
+        "c280_equiv_helpers_vs_production_builder_equal_1e-6": true,
         "c_equal": true,
         "cardinal6_descriptor_equal": true,
+        "cce0_accumulation_equal_1e-6": true,
+        "cce0_entry_vs_production_orchestrator_equal_1e-6": true,
+        "cce0_gamma_colors_vs_production_orchestrator_equal_1e-6": true,
         "chain_count_equal": true,
         "chain_vertices_weights_equal_1e-6": true,
         "descriptor_direct_equal": true,
@@ -65,6 +155,30 @@
       },
       "port": {
         "append": true,
+        "builder_count": 1,
+        "builder_gamma_colors_float": [
+          0.897192419,
+          0.424394399,
+          0.424394399,
+          0.998039246
+        ],
+        "builder_orchestrated_float": [
+          0.900196671,
+          0.550885141,
+          0.550885141,
+          0.998039246
+        ],
+        "builder_vertices": [
+          {
+            "rgba": [
+              0.800000012,
+              0.100000001,
+              0.100000001,
+              0.996078432
+            ],
+            "weight": 0.499998838
+          }
+        ],
         "c": 2,
         "cardinal6_descriptor": [
           5,
@@ -79,9 +193,9 @@
         "chain_vertices": [
           {
             "rgba": [
-              0.991067171,
-              0.991067171,
-              0.991067171,
+              0.800000012,
+              0.100000001,
+              0.100000001,
               0.996078432
             ],
             "weight": 0.321428567
@@ -99,9 +213,9 @@
         "direct_vertices": [
           {
             "rgba": [
-              0.991067171,
-              0.991067171,
-              0.991067171,
+              0.800000012,
+              0.100000001,
+              0.100000001,
               0.996078432
             ],
             "weight": 0.428160906
@@ -110,10 +224,10 @@
         "fixture": "c2_witness",
         "idx": 105,
         "port_composite_float": [
-          0.996175289,
-          0.996175289,
-          0.996175289,
-          0.426481843
+          0.935714304,
+          0.71071434,
+          0.71071434,
+          0.998739541
         ],
         "pre125c0_append": false
       }
@@ -123,6 +237,18 @@
         "after_125c0_count": 0,
         "append": false,
         "c": 4,
+        "c280_entry": {
+          "count": 0,
+          "output_pointer": 536876608,
+          "returned_pointer": 536876608,
+          "scale_fixed": [
+            65536,
+            65536
+          ],
+          "vertices": []
+        },
+        "c280_equiv_helper_before_normalize": 0,
+        "c280_equiv_helper_vertices": [],
         "cardinal6_descriptor": [
           5,
           6,
@@ -130,6 +256,48 @@
           5,
           6,
           0
+        ],
+        "cce0_entry": {
+          "bb10_after": [],
+          "config": {
+            "gamma_mode_byte": 0,
+            "scale_fixed": [
+              65536,
+              65536
+            ]
+          },
+          "output_pointer": 536876976,
+          "returned_pointer": 536876976,
+          "rgba": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "cce0_gamma_colors_entry": {
+          "bb10_after": [],
+          "config": {
+            "gamma_mode_byte": 3,
+            "scale_fixed": [
+              65536,
+              65536
+            ]
+          },
+          "output_pointer": 536877184,
+          "returned_pointer": 536877184,
+          "rgba": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "cce0_replay_float": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
         ],
         "chain_before_normalize": 0,
         "chain_count": 0,
@@ -150,8 +318,13 @@
       "comparison": {
         "all_replayed_boundaries_equal": true,
         "append_equal": true,
+        "c280_entry_vs_production_builder_equal_1e-6": true,
+        "c280_equiv_helpers_vs_production_builder_equal_1e-6": true,
         "c_equal": true,
         "cardinal6_descriptor_equal": true,
+        "cce0_accumulation_equal_1e-6": true,
+        "cce0_entry_vs_production_orchestrator_equal_1e-6": true,
+        "cce0_gamma_colors_vs_production_orchestrator_equal_1e-6": true,
         "chain_count_equal": true,
         "chain_vertices_weights_equal_1e-6": true,
         "descriptor_direct_equal": true,
@@ -159,6 +332,20 @@
       },
       "port": {
         "append": false,
+        "builder_count": 0,
+        "builder_gamma_colors_float": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "builder_orchestrated_float": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "builder_vertices": [],
         "c": 4,
         "cardinal6_descriptor": [
           5,
@@ -187,7 +374,7 @@
           1,
           1,
           1,
-          0
+          1
         ],
         "pre125c0_append": false
       }

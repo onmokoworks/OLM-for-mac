@@ -1,0 +1,96 @@
+{
+  "schema": "olmsmoother2_case0012_live_config_binding_return_v1",
+  "request_id": "olmsmoother2_case0012_live_config_binding_20260713",
+  "status": "answered | exact_bind_failure",
+  "run": {
+    "run_id": null,
+    "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+    "pixel": [
+      91,
+      841
+    ],
+    "module": null,
+    "module_base": null
+  },
+  "bind": {
+    "writer_hook": null,
+    "c280_hook": null,
+    "cce0_hook": null,
+    "binding_expression": null,
+    "pointer_context": null
+  },
+  "observations": {
+    "idx": 105,
+    "descriptor": [
+      91,
+      841,
+      1,
+      91,
+      843,
+      5
+    ],
+    "c280": {
+      "config_pointer": null,
+      "config_pointer_arithmetic": null,
+      "config_raw_bytes": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "scale_fixed": [
+        null,
+        null
+      ]
+    },
+    "cce0": {
+      "config_pointer": null,
+      "config_pointer_arithmetic": null,
+      "config_raw_bytes": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "mode_byte": null,
+      "mode_name": null
+    },
+    "final_writer": {
+      "site": null,
+      "rgba_u8": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "rgba_float": [
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  },
+  "failure": {
+    "stage": null,
+    "reason": null,
+    "module": null,
+    "hook": null,
+    "run_id": null,
+    "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+    "pixel": [
+      91,
+      841
+    ],
+    "pointer_context": null,
+    "last_observation": null,
+    "missing": []
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "kind": "olm_windows_live_config_binding_request",
+  "package": "olmsmoother2_case0012_live_config_binding_20260713",
+  "request_id": "olmsmoother2_case0012_live_config_binding_20260713",
+  "schema": "olmsmoother2_case0012_live_config_binding_return_v1",
+  "plugin": "OLMSmoother2",
+  "variant": "current-AEX",
+  "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+  "pixel": [
+    91,
+    841
+  ],
+  "idx": 105,
+  "descriptor": [
+    91,
+    841,
+    1,
+    91,
+    843,
+    5
+  ],
+  "run_policy": "one_fresh_windows_run_for_bind_and_all_reads",
+  "contract": "refs/conformance/olmsmoother2_case0012_live_config_contract_20260712.md",
+  "required_fields": [
+    "run.run_id",
+    "run.case_id",
+    "run.pixel",
+    "run.module",
+    "run.module_base",
+    "bind.writer_hook",
+    "bind.c280_hook",
+    "bind.cce0_hook",
+    "bind.binding_expression",
+    "bind.pointer_context",
+    "observations.c280.config_pointer",
+    "observations.c280.config_pointer_arithmetic",
+    "observations.c280.config_raw_bytes",
+    "observations.c280.scale_fixed",
+    "observations.cce0.config_pointer",
+    "observations.cce0.config_pointer_arithmetic",
+    "observations.cce0.config_raw_bytes",
+    "observations.cce0.mode_byte",
+    "observations.cce0.mode_name",
+    "observations.final_writer.site",
+    "observations.final_writer.rgba_u8",
+    "observations.final_writer.rgba_float"
+  ],
+  "failure_status": "exact_bind_failure",
+  "forbidden_statuses": [
+    "answered_partial",
+    "partial",
+    "unknown"
+  ],
+  "transport": "project_local_only",
+  "runner": {
+    "entrypoint": "olmsmoother2_case0012_live_config_binding_20260713/run_olmsmoother2_case0012_live_config_binding_20260713.ps1",
+    "cdb_template": "olmsmoother2_case0012_live_config_binding_20260713/case0012_live_config_binding.cdb.in",
+    "jsx": "olmsmoother2_case0012_live_config_binding_20260713/case/ae_render_single_case.jsx"
+  },
+  "local_replay_not_truth": {
+    "c280_scale_fixed": [
+      65536,
+      65536
+    ],
+    "cce0_mode_byte": 0,
+    "claim": "schema evidence only; never Windows expected values"
+  }
+}

@@ -1,39 +1,4 @@
-#!/usr/bin/env python3
-from __future__ import annotations
-
-import subprocess
-from pathlib import Path
-
-ROOT = Path(__file__).resolve().parents[2]
-BUILD = Path("/tmp/olmsmoother2_fullchain_diff")
-ADAPTER = BUILD / "port_adapter"
-RESULT = ROOT / "refs/conformance/olmsmoother2_fullchain_local_diff_20260711.json"
-REPORT = ROOT / "refs/conformance/olmsmoother2_c280_cce0_replay_20260712.md"
-
-BUILD.mkdir(parents=True, exist_ok=True)
-compile_cmd = [
-    "clang++", "-std=c++17", "-O2", "-Wall", "-Wextra",
-    f"-I{ROOT / 'cli/OLMSmoother2/shim'}",
-    f"-I{ROOT / 'mac/OLMSmoother2/Mac'}",
-    str(ROOT / "tools/emulation/smoother2_fullchain_port_adapter.cpp"),
-    "-o", str(ADAPTER),
-]
-subprocess.run(compile_cmd, check=True, cwd=ROOT)
-run = subprocess.run([
-    "python3", str(ROOT / "tools/emulation/test_smoother2_fullchain_diff.py"),
-    "--adapter", str(ADAPTER), "--output", str(RESULT),
-], check=False, cwd=ROOT)
-result = __import__("json").loads(RESULT.read_text())
-comparisons = [row["comparison"] for row in result["facts"]]
-assert run.returncode == 0, run.returncode
-assert all(row["c280_entry_vs_production_builder_equal_1e-6"] for row in comparisons)
-assert all(row["c280_equiv_helpers_vs_production_builder_equal_1e-6"] for row in comparisons)
-assert all(row["cce0_entry_vs_production_orchestrator_equal_1e-6"] for row in comparisons)
-assert all(row["cce0_gamma_colors_vs_production_orchestrator_equal_1e-6"] for row in comparisons)
-assert result["facts"][0]["aex"]["cce0_entry"]["rgba"] != result["facts"][0]["aex"]["cce0_gamma_colors_entry"]["rgba"]
-assert all(row["cce0_accumulation_equal_1e-6"] for row in comparisons)
-REPORT.write_text(
-    f"""# OLMSmoother2 c280 -> cce0 Differential Replay
+# OLMSmoother2 c280 -> cce0 Differential Replay
 
 Date: 2026-07-12
 
@@ -72,8 +37,3 @@ python3 refs/scripts/smoke_smoother2_fullchain_diff.py
 ```
 
 Result: `PASS smoother2 fullchain local differential`.
-"""
-)
-print("PASS smoother2 fullchain local differential")
-print(f"result={RESULT}")
-print(f"report={REPORT}")

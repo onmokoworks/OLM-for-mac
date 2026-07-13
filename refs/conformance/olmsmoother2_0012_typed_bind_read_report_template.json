@@ -1,0 +1,22 @@
+{
+  "schema": "olmsmoother2_0012_typed_bind_read_audit_v1",
+  "scope": "Smoother2 current-AEX 0012 only",
+  "verdict": "BLOCKED_MISSING_LIVE_TYPED_BINDING",
+  "evidence_labels": {
+    "FACT": "Directly present in the package, return, or local artifact.",
+    "INFERENCE": "Interpretation supported by facts; never a substitute for a live typed value."
+  },
+  "required_live_return": {
+    "status": "answered",
+    "same_run": ["run.run_id", "run.case_id", "run.pixel", "run.module_base", "bind.hook", "bind.held_xy", "bind.pointer_arithmetic"],
+    "fifth_argument_config": ["bind.fifth_argument or bind.config_pointer or bind.config_object", "bind.binding_expression", "bind.pointer_arithmetic"],
+    "gamma_key_context": "gamma_key_context",
+    "typed_stages": ["observations.class_bytes", "observations.e170", "observations.f270", "observations.e3a0", "observations.polygon_count", "observations.cce0", "observations.final_writer"]
+  },
+  "comparison_policy": {
+    "local_typed_witness": "Compare only when every Windows field is present; local AEX evidence is not Windows truth.",
+    "c280_cce0_replay": "Compare exercised local boundaries only; do not claim live five-argument c280 or gamma/key readiness.",
+    "missing_or_mixed_run": "BLOCKED"
+  },
+  "production_or_ledger_edits": false
+}

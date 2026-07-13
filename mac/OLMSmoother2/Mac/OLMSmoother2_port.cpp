@@ -202,7 +202,7 @@ FetchParams(PF_InData *in_data, PF_ParamDef *params[], SMParams *p)
 	p->smooth_range     = params[SM_SMOOTH_RANGE]->u.sd.value;
 	p->version          = params[SM_VERSION]->u.pd.value;      // 1 or 2
 	p->gamma_mode       = params[SM_GAMMA_MODE]->u.pd.value;   // 1/2/3
-	p->gamma_value      = (float)FIX_2_FLOAT(params[SM_GAMMA_VALUE]->u.fs_d.value);
+	p->gamma_value      = (float)params[SM_GAMMA_VALUE]->u.fs_d.value;
 	p->num_gamma_colors = params[SM_NUM_GAMMA_COLORS]->u.sd.value;
 	// Win writeback checks byte param_8+0x19, independent of the Color Key UI
 	// gate. The Windows PNG refs are premultiplied at low alpha even in no-key
@@ -3637,10 +3637,13 @@ static float win_FUN_18000bb10_adaptive_gamma(const FPix &center,
 
 	// Win internal mode 3 — key-color test against the Gamma Color list.
 	// UI "Gamma Colors" maps here. FUN_18000a9c0 compares RGB only using
-	// DAT_18002268c; for v2 inputs the candidate is first encoded back to sRGB.
+	// DAT_18002268c; only the zero-valued internal config uses output transfer.
 	if (win_gamma_mode == 3 && p.num_gamma_colors > 0) {
 		auto matches_gamma_color = [&](float r, float g, float b) -> bool {
-			if (p.version != SMOOTHER_V1) {
+			// FUN_18000a9c0 converts through the output transfer only when the
+			// low 32-bit version/config field is zero. Normal v1/v2 values are
+			// already in the comparison space and must not be re-encoded.
+			if (p.version == 0) {
 				r = (float)win_FUN_180004d70_literal(r);
 				g = (float)win_FUN_180004d70_literal(g);
 				b = (float)win_FUN_180004d70_literal(b);
@@ -4189,17 +4192,17 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_Smoothness_Param_Name),
-	              0, 1000, 0, 200, 100,
+	              0, 100, 0, 100, 100,
 	              SMOOTHNESS_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_ExtraSmooth_Param_Name),
-	              0, 1000, 0, 200, 0,
+	              0, 100, 0, 100, 0,
 	              EXTRA_SMOOTH_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_SmoothRange_Param_Name),
-	              1, 32, 1, 16, 2,
+	              0, 255, 0, 255, 2,
 	              SMOOTH_RANGE_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
@@ -4216,7 +4219,7 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_GammaValue_Param_Name),
-	                     0.1, 10.0, 0.1, 5.0, 2.2,
+	                     1.0, 2.4, 1.0, 2.4, 2.4,
 	                     PF_Precision_HUNDREDTHS, 0, 0,
 	                     GAMMA_VALUE_DISK_ID);
 

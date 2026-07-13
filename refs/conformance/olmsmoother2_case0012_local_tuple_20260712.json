@@ -1,0 +1,575 @@
+{
+  "claims_not_made": [
+    "No Windows AEX host binding is established.",
+    "No After Effects render, pixel packing, or production-plugin truth is established.",
+    "No claim is made that the local translated fixture is the live case_0012 memory tuple."
+  ],
+  "grounding": {
+    "abi": "AexLoader/SmootherStruct plus c280/cce0 descriptor/config scaffolding reused from test_smoother2_fullchain_diff.py",
+    "aex": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
+    "c280_scale_fixed": [
+      65536,
+      65536
+    ],
+    "cce0_mode": "no-gamma entry mode 0; logged gamma metadata is reported but not promoted into an ungrounded ABI claim",
+    "coordinate_mapping": "offset-preserving translation only; no host-image address or frame claim",
+    "fixture": "exact 5x5 class/setup neighborhood parsed from the supplied log",
+    "host_coordinates": [
+      91,
+      841
+    ],
+    "local_coordinates": [
+      8,
+      8
+    ]
+  },
+  "input_tuple": {
+    "gamma_mode_logged": 2,
+    "neighbors": [
+      {
+        "class": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "offset": [
+          -2,
+          -2
+        ],
+        "setup": [
+          0.0125784483,
+          0.0125784483,
+          0.0125784483,
+          0.101960786
+        ]
+      },
+      {
+        "class": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "offset": [
+          -1,
+          -2
+        ],
+        "setup": [
+          0.130109593,
+          0.130109593,
+          0.130109593,
+          0.396078438
+        ]
+      },
+      {
+        "class": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "offset": [
+          0,
+          -2
+        ],
+        "setup": [
+          0.124447636,
+          0.124447636,
+          0.124447636,
+          0.384313732
+        ]
+      },
+      {
+        "class": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "offset": [
+          1,
+          -2
+        ],
+        "setup": [
+          0.00445438223,
+          0.00445438223,
+          0.00445438223,
+          0.0705882385
+        ]
+      },
+      {
+        "class": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "offset": [
+          2,
+          -2
+        ],
+        "setup": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "class": [
+          255,
+          255,
+          255,
+          0
+        ],
+        "offset": [
+          -2,
+          -1
+        ],
+        "setup": [
+          0.468602419,
+          0.468602419,
+          0.468602419,
+          0.713725507
+        ]
+      },
+      {
+        "class": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "offset": [
+          -1,
+          -1
+        ],
+        "setup": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ]
+      },
+      {
+        "class": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "offset": [
+          0,
+          -1
+        ],
+        "setup": [
+          0.991067171,
+          0.991067171,
+          0.991067171,
+          0.996078432
+        ]
+      },
+      {
+        "class": [
+          0,
+          255,
+          0,
+          255
+        ],
+        "offset": [
+          1,
+          -1
+        ],
+        "setup": [
+          0.425413191,
+          0.425413191,
+          0.425413191,
+          0.68235296
+        ]
+      },
+      {
+        "class": [
+          255,
+          0,
+          0,
+          0
+        ],
+        "offset": [
+          2,
+          -1
+        ],
+        "setup": [
+          0.00515566859,
+          0.00515566859,
+          0.00515566859,
+          0.0627451017
+        ]
+      },
+      {
+        "class": [
+          255,
+          255,
+          255,
+          0
+        ],
+        "offset": [
+          -2,
+          0
+        ],
+        "setup": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ]
+      },
+      {
+        "class": [
+          0,
+          0,
+          255,
+          255
+        ],
+        "offset": [
+          -1,
+          0
+        ],
+        "setup": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ]
+      },
+      {
+        "class": [
+          0,
+          255,
+          0,
+          255
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "setup": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ]
+      },
+      {
+        "class": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "offset": [
+          1,
+          0
+        ],
+        "setup": [
+          0.973131657,
+          0.973131657,
+          0.973131657,
+          0.988235295
+        ]
+      },
+      {
+        "class": [
+          255,
+          0,
+          0,
+          0
+        ],
+        "offset": [
+          2,
+          0
+        ],
+        "setup": [
+          0.114301436,
+          0.114301436,
+          0.114301436,
+          0.368627459
+        ]
+      },
+      {
+        "class": [
+          255,
+          0,
+          255,
+          0
+        ],
+        "offset": [
+          -2,
+          1
+        ],
+        "setup": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ]
+      },
+      {
+        "class": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "offset": [
+          -1,
+          1
+        ],
+        "setup": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ]
+      },
+      {
+        "class": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "offset": [
+          0,
+          1
+        ],
+        "setup": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ]
+      },
+      {
+        "class": [
+          255,
+          0,
+          255,
+          255
+        ],
+        "offset": [
+          1,
+          1
+        ],
+        "setup": [
+          0.982110977,
+          0.982110977,
+          0.982110977,
+          0.992156863
+        ]
+      },
+      {
+        "class": [
+          255,
+          0,
+          255,
+          0
+        ],
+        "offset": [
+          2,
+          1
+        ],
+        "setup": [
+          0.111801602,
+          0.111801602,
+          0.111801602,
+          0.372549027
+        ]
+      },
+      {
+        "class": [
+          255,
+          255,
+          0,
+          255
+        ],
+        "offset": [
+          -2,
+          2
+        ],
+        "setup": [
+          0.483412504,
+          0.483412504,
+          0.483412504,
+          0.725490212
+        ]
+      },
+      {
+        "class": [
+          255,
+          0,
+          0,
+          0
+        ],
+        "offset": [
+          -1,
+          2
+        ],
+        "setup": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ]
+      },
+      {
+        "class": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "offset": [
+          0,
+          2
+        ],
+        "setup": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ]
+      },
+      {
+        "class": [
+          255,
+          0,
+          255,
+          0
+        ],
+        "offset": [
+          1,
+          2
+        ],
+        "setup": [
+          0.430393398,
+          0.430393398,
+          0.430393398,
+          0.690196097
+        ]
+      },
+      {
+        "class": [
+          255,
+          0,
+          255,
+          0
+        ],
+        "offset": [
+          2,
+          2
+        ],
+        "setup": [
+          0.00445438223,
+          0.00445438223,
+          0.00445438223,
+          0.0705882385
+        ]
+      }
+    ],
+    "params": {
+      "extra": 40.0,
+      "gamma0": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "gamma_count": 5,
+      "gamma_value": 2.16954732,
+      "smoothness": 100.0
+    },
+    "pixel_bytes": 4,
+    "range": 88,
+    "source": "refs/conformance/olmsmoother2_case0012_class_neighborhood_20260712.log",
+    "target_class": [
+      0,
+      255,
+      0,
+      255
+    ],
+    "target_raw": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "target_setup": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ],
+    "target_xy": [
+      91,
+      841
+    ],
+    "version": 2
+  },
+  "replay": {
+    "aex_path": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
+    "c280": {
+      "count": 1,
+      "output_pointer": 536876544,
+      "returned_pointer": 536876544,
+      "scale_fixed": [
+        65536,
+        65536
+      ],
+      "vertices": [
+        {
+          "rgba": [
+            0.9910671710968018,
+            0.9910671710968018,
+            0.9910671710968018,
+            0.9960784316062927
+          ],
+          "weight": 0.49999961256980896
+        }
+      ]
+    },
+    "cce0_no_gamma_entry": {
+      "bb10_after": [
+        {
+          "apply": 0,
+          "gamma": 1.401298464324817e-45
+        }
+      ],
+      "config": {
+        "gamma_mode_byte": 0,
+        "scale_fixed": [
+          65536,
+          65536
+        ]
+      },
+      "output_pointer": 536876912,
+      "returned_pointer": 536876912,
+      "rgba": [
+        0.9910671710968018,
+        0.9910671710968018,
+        0.9910671710968018,
+        0.4980388283729553
+      ]
+    },
+    "entries_executed": [
+      "0x18000c280",
+      "0x18000cce0"
+    ],
+    "local_origin": [
+      8,
+      8
+    ]
+  },
+  "scope": "bounded local AEX binary-semantic evidence only; never Windows/AE truth",
+  "verdict": "PASS_LOCAL_ACTUAL_AEX_TUPLE_REPLAY"
+}
