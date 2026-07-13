@@ -410,6 +410,12 @@ class AexLoader:
                 return 0
             return impl
 
+        def _d2(fn):
+            def impl(uc, args):
+                self.write_xmm_f64(0, fn(self.read_xmm_f64(0), self.read_xmm_f64(1)))
+                return 0
+            return impl
+
         def _atan2f(uc, args):
             y = self.read_xmm_f32(0)
             x = self.read_xmm_f32(1)
@@ -419,6 +425,7 @@ class AexLoader:
         self.import_impls.update({
             "cos": _d1(math.cos),
             "sin": _d1(math.sin),
+            "pow": _d2(math.pow),
             "expf": _f1(math.exp),
             "log2f": _f1(math.log2),
             "atan2f": _atan2f,

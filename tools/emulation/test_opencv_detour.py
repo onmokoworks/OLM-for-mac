@@ -43,6 +43,7 @@ from __future__ import annotations
 
 import struct
 import sys
+import argparse
 from pathlib import Path
 
 import numpy as np
@@ -260,20 +261,81 @@ def run_dist_transform_contract_case():
     good_out = cvb.read_ipl(ld, good_dst_ipl)
     good_ok = good["instructions"] < 100 and good_out.dtype == np.float32
 
-    bad_msg = ""
-    try:
-        ld.call_function(
-            CVDISTTRANSFORM,
-            int_args=[src_ipl, bad_dst_ipl, ocv.CV_DIST_L2, ocv.CV_DIST_MASK_PRECISE, 0, 0, 0],
-            max_instructions=200_000,
-        )
-    except Exception as exc:  # RuntimeError wrapper carries the Python ValueError text
-        bad_msg = str(exc)
+    def call_and_capture(dst_ptr, args):
+        try:
+            ld.call_function(CVDISTTRANSFORM, int_args=[src_ipl, dst_ptr, *args], max_instructions=200_000)
+        except Exception as exc:  # RuntimeError wrapper carries the Python ValueError text
+            return str(exc)
+        return "<none>"
 
-    rejected_bad_dst = "cvDistTransform dst mismatch" in bad_msg
-    ok = good_ok and rejected_bad_dst
-    detail = (f"good_path={good_ok} rejected_bad_dst={rejected_bad_dst} "
-              f"bad_msg={bad_msg or '<none>'}")
+    bad_dst_msg = call_and_capture(
+        bad_dst_ipl, [ocv.CV_DIST_L2, ocv.CV_DIST_MASK_PRECISE, 0, 0, 0]
+    )
+    bad_dist_msg = call_and_capture(
+        good_dst_ipl, [3, ocv.CV_DIST_MASK_PRECISE, 0, 0, 0]
+    )
+    bad_mask_size_msg = call_and_capture(
+        good_dst_ipl, [ocv.CV_DIST_L2, 3, 0, 0, 0]
+    )
+    bad_mask_msg = call_and_capture(
+        good_dst_ipl, [ocv.CV_DIST_L2, ocv.CV_DIST_MASK_PRECISE, 0x1234, 0, 0]
+    )
+    bad_labels_msg = call_and_capture(
+        good_dst_ipl, [ocv.CV_DIST_L2, ocv.CV_DIST_MASK_PRECISE, 0, 0x1234, 0]
+    )
+    bad_label_type_msg = call_and_capture(
+        good_dst_ipl, [ocv.CV_DIST_L2, ocv.CV_DIST_MASK_PRECISE, 0, 0, 1]
+    )
+
+    rejected = {
+        "bad_dst": "cvDistTransform dst mismatch" in bad_dst_msg,
+        "dist_type": "only supports DIST_L2/PRECISE" in bad_dist_msg,
+        "mask_size": "only supports DIST_L2/PRECISE" in bad_mask_size_msg,
+        "mask": "does not support mask/labels/labelType" in bad_mask_msg,
+        "labels": "does not support mask/labels/labelType" in bad_labels_msg,
+        "label_type": "does not support mask/labels/labelType" in bad_label_type_msg,
+    }
+    ok = good_ok and all(rejected.values())
+    detail = (f"good_path={good_ok} rejected="
+              f"{','.join(name for name, value in rejected.items() if value)}/6")
+    return "PASS" if ok else "FAIL", detail
+
+
+def run_dist_transform_random_case(seed: int, shape: tuple[int, int], zero_probability: float):
+    """P1 regression against sidecar on a deterministic non-geometric mask."""
+    ld = _fresh_loader()
+    ocv.register_opencv_impls(ld, "DistanceGradation", ops=["dist_transform"])
+    rng = np.random.default_rng(seed)
+    src = np.where(rng.random(shape) < zero_probability, 0, 255).astype(np.uint8)
+    # Keep both source classes present so this checks the general two-pass path.
+    src[0, 0] = 0
+    src[-1, -1] = 255
+    poison = np.full(shape, -999.0, dtype=np.float32)
+    src_ipl = cvb.build_ipl(ld, src, align_step=16)
+    dst_ipl = cvb.build_ipl(ld, poison, align_step=16)
+    hdr_before = ld.read_bytes(dst_ipl, cvb.IPL_SIZE)
+    res = ld.call_function(
+        CVDISTTRANSFORM,
+        int_args=[src_ipl, dst_ipl, ocv.CV_DIST_L2, ocv.CV_DIST_MASK_PRECISE, 0, 0, 0],
+        max_instructions=200_000,
+    )
+    out = cvb.read_ipl(ld, dst_ipl)
+    hdr_after = ld.read_bytes(dst_ipl, cvb.IPL_SIZE)
+    data = run_sidecar_oracle({
+        "op": np.array(["distance_transform_l2_precise"]),
+        "src": src,
+    })
+    ref = data["dst"]
+    ok = (
+        res["instructions"] < 100
+        and hdr_before == hdr_after
+        and _bits_equal(out, ocv.cvdisttransform_l2_precise_native(src))
+        and _bits_equal(out, ref)
+    )
+    detail = (f"instr={res['instructions']} header_intact={hdr_before == hdr_after} "
+              f"native_exact={_bits_equal(out, ocv.cvdisttransform_l2_precise_native(src))} "
+              f"cv455_exact={_bits_equal(out, ref)} max_abs="
+              f"{float(np.max(np.abs(out.astype(np.float64) - ref.astype(np.float64)))):g}")
     return "PASS" if ok else "FAIL", detail
 
 
@@ -440,7 +502,41 @@ def probe_gate_c():
         return "BLOCKED", f"emulated path faults at RIP={rip} (OpenCV static-init not scaffolded)"
 
 
+def run_p1_only() -> int:
+    """Run only the P1 EDT oracle/ABI gates for focused conformance capture."""
+    print(f"AEX: {AEX}")
+    print(f"cvDistTransform @ 0x{CVDISTTRANSFORM:x}")
+    failures = 0
+    for kind in (
+        "single_zero", "cross", "box", "diagonal", "all_nonzero", "all_zero",
+        "one_by_one_zero", "one_by_one_nonzero", "one_by_n", "n_by_one",
+    ):
+        status, detail = run_dist_transform_case(kind)
+        print(f"[{status:4}] detour dist_transform/{kind:16} {detail}")
+        failures += status == "FAIL"
+    for seed, shape, probability in (
+        (4101, (2, 2), 0.25),
+        (4102, (5, 7), 0.50),
+        (4103, (31, 29), 0.10),
+        (4104, (3, 64), 0.75),
+        (4105, (64, 3), 0.35),
+    ):
+        status, detail = run_dist_transform_random_case(seed, shape, probability)
+        print(f"[{status:4}] detour dist_transform/random_{seed} shape={shape} {detail}")
+        failures += status == "FAIL"
+    status, detail = run_dist_transform_contract_case()
+    print(f"[{status:4}] detour dist_transform/contract       {detail}")
+    failures += status == "FAIL"
+    print(f"RESULT: {'P1 FAIL' if failures else 'P1 native EDT + cv455 oracle PASS'}")
+    return int(bool(failures))
+
+
 def main():
+    parser = argparse.ArgumentParser(description="Validate the OpenCV detour layer")
+    parser.add_argument("--p1-only", action="store_true", help="run only cvDistTransform P1 gates")
+    args = parser.parse_args()
+    if args.p1_only:
+        return run_p1_only()
     print(f"AEX: {AEX}")
     print(f"cvThreshold @ 0x{CVTHRESHOLD:x}\n")
     print(f"cvDistTransform @ 0x{CVDISTTRANSFORM:x}\n")
