@@ -193,7 +193,7 @@ def main() -> int:
             "OLM_AE_FORCE_SOFTWARE",
             "same_run_identity",
             "function ConvertTo-WindowsCommandLineArgument",
-            "$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, '--', $AfterFxPath, '-r', $normalizedQueuePath)",
+            "$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, $AfterFxPath, '-r', $normalizedQueuePath)",
             "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
             "$launchArguments = Join-WindowsCommandLine $launchArgumentValues",
             "Read-QueueBootstrapBinding $queueBootstrap",

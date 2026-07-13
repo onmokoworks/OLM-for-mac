@@ -64,6 +64,17 @@ does not contain either explicit initial-break marker.
 This is still a launcher/host failure, not plugin evidence. Do not resend the
 full witness batch until the direct launch can produce a visible AfterFX
 process and both bootstrap markers.
+
+## Root cause found in CDB argument contract
+
+The Windows machine's `cdb.exe -?` output shows that `--` is not a generic
+argument separator. It is an alias for `-G -g -o -p -1 -d -pd`; in particular,
+`-g` suppresses the initial debuggee breakpoint. The direct launcher therefore
+contradicted its own initial-break gate while still carrying `--` in the
+argument vector. The launcher and its contract smokes now omit `--` entirely,
+leaving the executable path as the first positional CDB target. Local witness
+smoke and all 19 unit tests pass after this change. No Windows algorithm claim
+is made until a fresh gate return contains both initial-break markers.
 - No returned artifact was produced.
 - The same failure appears across four different plugins, so this batch cannot
   distinguish plugin behavior.

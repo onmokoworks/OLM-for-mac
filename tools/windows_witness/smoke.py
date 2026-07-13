@@ -62,7 +62,8 @@ def main() -> int:
         assert 'runId + "\n"' not in queue
         assert "-ArgumentList @('-m', '-r', $queuePath)" not in launcher
         assert "function ConvertTo-WindowsCommandLineArgument" in launcher
-        assert "$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, '--', $AfterFxPath, '-r', $normalizedQueuePath)" in launcher
+        assert "$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, $AfterFxPath, '-r', $normalizedQueuePath)" in launcher
+        assert "'-cf', $bootstrapCdbScript, '--', $AfterFxPath" not in launcher
         assert "$env:ComSpec, '/d', '/s', '/c', $launchWrapper" not in launcher
         assert "'-o', '-pd', '-g', '-G'" not in launcher
         assert "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)" in launcher

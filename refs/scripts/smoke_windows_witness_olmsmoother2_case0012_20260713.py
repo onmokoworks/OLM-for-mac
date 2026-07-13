@@ -140,7 +140,7 @@ def main() -> int:
             "Get-Process -Name AfterFX", "effect_loaded=1", "parameters_applied=1",
             "shared_ae_pid", "shared_module_base", "Get-FileHash", "OLM_AE_FORCE_SOFTWARE",
             "function ConvertTo-WindowsCommandLineArgument",
-            "$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, '--', $AfterFxPath, '-r', $normalizedQueuePath)",
+            "$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, $AfterFxPath, '-r', $normalizedQueuePath)",
             "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
             "$launchArguments = Join-WindowsCommandLine $launchArgumentValues",
             "Read-QueueBootstrapBinding $queueBootstrap",

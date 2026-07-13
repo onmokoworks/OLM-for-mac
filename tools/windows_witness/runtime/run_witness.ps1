@@ -264,7 +264,7 @@ $bootstrapText = @"
 qd
 "@
 $bootstrapText | Set-Content -LiteralPath $bootstrapCdbScript -Encoding ASCII
-$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, '--', $AfterFxPath, '-r', $normalizedQueuePath)
+$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, $AfterFxPath, '-r', $normalizedQueuePath)
 $launchArguments = Join-WindowsCommandLine $launchArgumentValues
 $launch = Start-Process -FilePath $CdbPath -ArgumentList $launchArguments -RedirectStandardOutput $launchOut -RedirectStandardError $launchErr -NoNewWindow -PassThru
 $launchStarted = $true
