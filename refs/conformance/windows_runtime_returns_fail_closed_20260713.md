@@ -2,10 +2,10 @@
 
 ## Decision
 
-All eight returned archives are retained, but none is promoted to completed
+Nine of the ten returned archives are retained without completed
 runtime or
-algorithm proof. Each return explicitly reports a bind/launch failure and is
-therefore classified fail-closed.
+algorithm proof. The latest DistanceGradation depth-control return is accepted
+only as callback-dispatch control evidence; it contains no pixel proof.
 
 ## Returns
 
@@ -19,6 +19,8 @@ therefore classified fail-closed.
 | OLMKiraKira Mode 3 live Gaussian PS5.1 retry | `exact_bind_failure` | `ae_ready`: interactive PS5.1 relay ran, but the full case emitted no ready marker and returned no AE log | `f0cbb66845530f20089e37c1e15ae31bb196e2214f0a4fcb540c4567119c8bc3` |
 | OLMDistanceGradation 8bpc depth control desktop retry | `exact_bind_failure` | `depth_control`: launcher exited before `ae_ready.marker`; no AE process candidate or AE log | `984f0efea8a2f8cdd60054940805fec9a3586ddae834450b508878856ecc0ca2` |
 | OLMKiraKira Mode 3 live Gaussian desktop retry | `exact_bind_failure` | returned as `hook_install`; retained CDB log reached the first kernel entry but not its return or 21-word payload | `61115f8e195df4968b0a891110d6daa9439354912d730cfd5128e5a059e743fd` |
+| OLMKiraKira Mode 3 live Gaussian v4 | `exact_bind_failure` | `ae_jsx_preflight`: observed AfterFX command line contained only `-m`; no marker or AEX binding | `02865cdbd3e68c7cbecadcd2b80cf2f91d534743deb47df3523148709e32613a` |
+| OLMDistanceGradation 8bpc depth control v4 | `answered` | accepted callback control: PF8 `24377`, PF32 `0`, one 8bpc run/PID/base/hash; no pixel evidence | `5403e85433f93f9bd011589935979721c4e6f124bb04317c577b401ac83e5bc2` |
 
 The retained archives are under `refs/windows_returns/20260713/` with their
 original returned filenames. These failures contain no pixel or intermediate

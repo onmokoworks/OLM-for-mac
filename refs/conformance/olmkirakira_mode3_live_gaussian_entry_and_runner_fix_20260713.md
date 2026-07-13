@@ -48,10 +48,22 @@ no answered binding and no 21-word payload.
    `poi(@rsp)`. The retained command stream reached kernel entry but did not
    continue through the dynamic return capture.
 
+## V4 desktop retry
+
+The v4 return (SHA-256
+`02865cdbd3e68c7cbecadcd2b80cf2f91d534743deb47df3523148709e32613a`)
+failed at `ae_jsx_preflight`. PowerShell reported the intended argument vector
+as `-m`, `-r`, and the no-space JSX path, while the observed AfterFX command
+line contained only `-m`. No preflight marker, AEX binding, or coefficient word
+was produced. This is direct evidence that the split `Start-Process
+-ArgumentList` form is not reliable under the active PowerShell 5.1 host.
+
 ## Replacement package
 
-The v4 package:
+The v5 package:
 
+- passes `-m -r "<jsx>"` as one explicitly quoted argument string for both
+  the minimal preflight and the full render;
 - uses `.logopen` without `/t`, so CDB and PowerShell share one exact log path;
 - pre-arms a fixed return breakpoint at module base plus `0x126685c`;
 - keeps the first entry breakpoint limited to recording the output `cv::Mat`;

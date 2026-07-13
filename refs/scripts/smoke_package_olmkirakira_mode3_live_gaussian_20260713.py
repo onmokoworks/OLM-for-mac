@@ -192,10 +192,12 @@ def verify_ps1_fail_closed(runner_text: str, manifest: dict[str, Any]) -> None:
         "process_diagnostics",
         "observed_pids",
         "ae_jsx_ready_preflight.jsx",
-        "-ArgumentList @('-m','-r',$preflightLaunch)",
-        "-ArgumentList @('-m','-r',$jsxLaunch)",
+        "$preflightArgs=('-m -r \"' + $preflightLaunch + '\"')",
+        "-ArgumentList $preflightArgs",
+        "$aeArgs=('-m -r \"' + $jsxLaunch + '\"')",
+        "-ArgumentList $aeArgs",
         "full case JSX did not emit ready after minimal JSX preflight passed",
-        "argument_vector=@('-m','-r',$jsxLaunch)",
+        "argument_string=$aeArgs",
         "cdb_trace.log",
         "cdb_stdout.txt",
         "minimal JSX wrote ready but AfterFX path/session candidate did not exit after app.quit",
@@ -207,7 +209,7 @@ def verify_ps1_fail_closed(runner_text: str, manifest: dict[str, Any]) -> None:
     expect("if($missing.Count){Finish 'exact_bind_failure'" in runner_text, "runner does not fail closed on missing markers")
     expect("$u32=for($i=0;$i -lt 21;$i++)" in runner_text, "runner does not decode 21 returned words")
     expect("preflight=@{status='ready'" in runner_text, "answered return omits successful preflight provenance")
-    expect("-ArgumentList ('-m -r '+$jsxLaunch)" not in runner_text, "runner retained ambiguous single-string AE arguments")
+    expect("-ArgumentList @('-m','-r'" not in runner_text, "PowerShell 5.1 may drop split Start-Process arguments")
     expect("while((Get-Date)-lt $deadline -and !(Test-Path -LiteralPath $preflightReady) -and !$preflight.HasExited)" not in runner_text, "preflight wait still terminates on launcher exit")
     expect("-p '+$ae.Id" not in runner_text, "CDB attach still uses launcher PID instead of tracked AE PID")
 

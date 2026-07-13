@@ -1,16 +1,16 @@
 {
   "schema": 1,
   "kind": "olmdistancegradation_pf16_max2_actual_aex_compose_sweep",
-  "generated_at": "2026-07-13T03:41:04Z",
+  "generated_at": "2026-07-13T06:37:29Z",
   "status": "pass_bounded_actual_aex",
-  "scope": "four FUN_181170480 calls; representative PF16 field-word inputs for 0024..0027",
+  "scope": "twelve FUN_181170480 calls; representative PF16 field-word inputs at n-1/n/n+1 for 0024..0027",
   "binary": {
     "path": "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex",
     "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
     "function": "0x181170480",
-    "calls": 4,
+    "calls": 12,
     "max_instructions_per_call": 200000,
-    "instructions_total": 653
+    "instructions_total": 1959
   },
   "address_contract": {
     "reused_witness": "tools/emulation/olmdg_compose_exact_address_witness_20260710.py",
@@ -41,6 +41,12 @@
     "source": "refs/conformance/olmdistancegradation_depthgate_nearmiss_witness_20260708.md",
     "case_parameters": "refs/conformance/olmdistancegradation_depthgate_nearmiss_family_20260708.md"
   },
+  "claims_boundary": {
+    "windows_live_field_values": false,
+    "ae_exact": false,
+    "broad_png_tuning": false,
+    "production_source_changed": false
+  },
   "points": [
     {
       "case_id": "case_0024",
@@ -49,33 +55,116 @@
         40
       ],
       "field_word": 3989,
+      "inside_threshold": 158,
+      "outside_threshold": 17,
       "invert": 0,
       "render_mode": 1,
       "interp_mode": 3,
       "power": 1.0,
-      "field_addr": "0x20096030",
-      "source_addr": "0x21068030",
-      "output_addr": "0x21fa4000",
-      "field_words_agrb": [
+      "neighborhood": [
+        {
+          "offset_from_n": -1,
+          "field_word": 3988,
+          "field_addr": "0x20096030",
+          "source_addr": "0x21068030",
+          "output_addr": "0x21fa4000",
+          "field_words_agrb": [
+            0,
+            3988,
+            0,
+            0
+          ],
+          "source_words_agrb": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "field_scalar_x": 0.1217041015625,
+          "aex_output_words_agrb": [
+            32768,
+            0,
+            5430,
+            28662
+          ],
+          "instructions": 167
+        },
+        {
+          "offset_from_n": 0,
+          "field_word": 3989,
+          "field_addr": "0x20096030",
+          "source_addr": "0x21068030",
+          "output_addr": "0x21fa4010",
+          "field_words_agrb": [
+            0,
+            3989,
+            0,
+            0
+          ],
+          "source_words_agrb": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "field_scalar_x": 0.121734619140625,
+          "aex_output_words_agrb": [
+            32768,
+            0,
+            5431,
+            28661
+          ],
+          "instructions": 167
+        },
+        {
+          "offset_from_n": 1,
+          "field_word": 3990,
+          "field_addr": "0x20096030",
+          "source_addr": "0x21068030",
+          "output_addr": "0x21fa4020",
+          "field_words_agrb": [
+            0,
+            3990,
+            0,
+            0
+          ],
+          "source_words_agrb": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "field_scalar_x": 0.12176513671875,
+          "aex_output_words_agrb": [
+            32768,
+            0,
+            5431,
+            28661
+          ],
+          "instructions": 167
+        }
+      ],
+      "output_transition_n_minus_1_to_n": [
         0,
-        3989,
+        0,
+        1,
+        -1
+      ],
+      "output_transition_n_to_n_plus_1": [
+        0,
+        0,
         0,
         0
       ],
-      "source_words_agrb": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "field_scalar_x": 0.121734619140625,
-      "aex_output_words_agrb": [
-        32768,
-        0,
-        5431,
-        28661
-      ],
-      "instructions": 167
+      "threshold_crossing": {
+        "ui_thresholds": {
+          "inside": 158,
+          "outside": 17
+        },
+        "field_word_units_available": false,
+        "observed_output_word_transition": true,
+        "note": "UI threshold values are distance-domain parameters, not PF16 field-word thresholds; this records the actual AEX output transition across n-1/n/n+1 without inventing a unit conversion."
+      }
     },
     {
       "case_id": "case_0025",
@@ -84,33 +173,116 @@
         394
       ],
       "field_word": 7774,
+      "inside_threshold": 158,
+      "outside_threshold": 13,
       "invert": 1,
       "render_mode": 1,
       "interp_mode": 3,
       "power": 1.0,
-      "field_addr": "0x205c7428",
-      "source_addr": "0x21599428",
-      "output_addr": "0x21fa4010",
-      "field_words_agrb": [
-        0,
-        7774,
-        0,
-        0
+      "neighborhood": [
+        {
+          "offset_from_n": -1,
+          "field_word": 7773,
+          "field_addr": "0x205c7428",
+          "source_addr": "0x21599428",
+          "output_addr": "0x21fa4030",
+          "field_words_agrb": [
+            0,
+            7773,
+            0,
+            0
+          ],
+          "source_words_agrb": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "field_scalar_x": 0.237213134765625,
+          "aex_output_words_agrb": [
+            32768,
+            0,
+            18560,
+            14895
+          ],
+          "instructions": 167
+        },
+        {
+          "offset_from_n": 0,
+          "field_word": 7774,
+          "field_addr": "0x205c7428",
+          "source_addr": "0x21599428",
+          "output_addr": "0x21fa4040",
+          "field_words_agrb": [
+            0,
+            7774,
+            0,
+            0
+          ],
+          "source_words_agrb": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "field_scalar_x": 0.23724365234375,
+          "aex_output_words_agrb": [
+            32768,
+            0,
+            18560,
+            14896
+          ],
+          "instructions": 167
+        },
+        {
+          "offset_from_n": 1,
+          "field_word": 7775,
+          "field_addr": "0x205c7428",
+          "source_addr": "0x21599428",
+          "output_addr": "0x21fa4050",
+          "field_words_agrb": [
+            0,
+            7775,
+            0,
+            0
+          ],
+          "source_words_agrb": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "field_scalar_x": 0.237274169921875,
+          "aex_output_words_agrb": [
+            32768,
+            0,
+            18559,
+            14897
+          ],
+          "instructions": 167
+        }
       ],
-      "source_words_agrb": [
+      "output_transition_n_minus_1_to_n": [
         0,
         0,
         0,
-        0
+        1
       ],
-      "field_scalar_x": 0.23724365234375,
-      "aex_output_words_agrb": [
-        32768,
+      "output_transition_n_to_n_plus_1": [
         0,
-        18560,
-        14896
+        0,
+        -1,
+        1
       ],
-      "instructions": 167
+      "threshold_crossing": {
+        "ui_thresholds": {
+          "inside": 158,
+          "outside": 13
+        },
+        "field_word_units_available": false,
+        "observed_output_word_transition": true,
+        "note": "UI threshold values are distance-domain parameters, not PF16 field-word thresholds; this records the actual AEX output transition across n-1/n/n+1 without inventing a unit conversion."
+      }
     },
     {
       "case_id": "case_0026",
@@ -119,33 +291,116 @@
         222
       ],
       "field_word": 25680,
+      "inside_threshold": 158,
+      "outside_threshold": 13,
       "invert": 1,
       "render_mode": 1,
       "interp_mode": 4,
       "power": 2.59740734100342,
-      "field_addr": "0x20342458",
-      "source_addr": "0x21314458",
-      "output_addr": "0x21fa4020",
-      "field_words_agrb": [
+      "neighborhood": [
+        {
+          "offset_from_n": -1,
+          "field_word": 25679,
+          "field_addr": "0x20342458",
+          "source_addr": "0x21314458",
+          "output_addr": "0x21fa4060",
+          "field_words_agrb": [
+            0,
+            25679,
+            0,
+            0
+          ],
+          "source_words_agrb": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "field_scalar_x": 0.783660888671875,
+          "aex_output_words_agrb": [
+            32768,
+            0,
+            9908,
+            23967
+          ],
+          "instructions": 159
+        },
+        {
+          "offset_from_n": 0,
+          "field_word": 25680,
+          "field_addr": "0x20342458",
+          "source_addr": "0x21314458",
+          "output_addr": "0x21fa4070",
+          "field_words_agrb": [
+            0,
+            25680,
+            0,
+            0
+          ],
+          "source_words_agrb": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "field_scalar_x": 0.78369140625,
+          "aex_output_words_agrb": [
+            32768,
+            0,
+            9907,
+            23968
+          ],
+          "instructions": 159
+        },
+        {
+          "offset_from_n": 1,
+          "field_word": 25681,
+          "field_addr": "0x20342458",
+          "source_addr": "0x21314458",
+          "output_addr": "0x21fa4080",
+          "field_words_agrb": [
+            0,
+            25681,
+            0,
+            0
+          ],
+          "source_words_agrb": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "field_scalar_x": 0.783721923828125,
+          "aex_output_words_agrb": [
+            32768,
+            0,
+            9906,
+            23968
+          ],
+          "instructions": 159
+        }
+      ],
+      "output_transition_n_minus_1_to_n": [
         0,
-        25680,
         0,
+        -1,
+        1
+      ],
+      "output_transition_n_to_n_plus_1": [
+        0,
+        0,
+        -1,
         0
       ],
-      "source_words_agrb": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "field_scalar_x": 0.78369140625,
-      "aex_output_words_agrb": [
-        32768,
-        0,
-        9907,
-        23968
-      ],
-      "instructions": 159
+      "threshold_crossing": {
+        "ui_thresholds": {
+          "inside": 158,
+          "outside": 13
+        },
+        "field_word_units_available": false,
+        "observed_output_word_transition": true,
+        "note": "UI threshold values are distance-domain parameters, not PF16 field-word thresholds; this records the actual AEX output transition across n-1/n/n+1 without inventing a unit conversion."
+      }
     },
     {
       "case_id": "case_0027",
@@ -154,33 +409,338 @@
         443
       ],
       "field_word": 30473,
+      "inside_threshold": 158,
+      "outside_threshold": 13,
       "invert": 1,
       "render_mode": 2,
       "interp_mode": 4,
       "power": 2.59740734100342,
-      "field_addr": "0x2067fa90",
-      "source_addr": "0x21651a90",
-      "output_addr": "0x21fa4030",
-      "field_words_agrb": [
+      "neighborhood": [
+        {
+          "offset_from_n": -1,
+          "field_word": 30472,
+          "field_addr": "0x2067fa90",
+          "source_addr": "0x21651a90",
+          "output_addr": "0x21fa4090",
+          "field_words_agrb": [
+            0,
+            30472,
+            0,
+            0
+          ],
+          "source_words_agrb": [
+            32768,
+            0,
+            32768,
+            0
+          ],
+          "field_scalar_x": 0.929931640625,
+          "aex_output_words_agrb": [
+            32768,
+            0,
+            32768,
+            0
+          ],
+          "instructions": 160
+        },
+        {
+          "offset_from_n": 0,
+          "field_word": 30473,
+          "field_addr": "0x2067fa90",
+          "source_addr": "0x21651a90",
+          "output_addr": "0x21fa40a0",
+          "field_words_agrb": [
+            0,
+            30473,
+            0,
+            0
+          ],
+          "source_words_agrb": [
+            32768,
+            0,
+            32768,
+            0
+          ],
+          "field_scalar_x": 0.929962158203125,
+          "aex_output_words_agrb": [
+            32768,
+            0,
+            32768,
+            0
+          ],
+          "instructions": 160
+        },
+        {
+          "offset_from_n": 1,
+          "field_word": 30474,
+          "field_addr": "0x2067fa90",
+          "source_addr": "0x21651a90",
+          "output_addr": "0x21fa40b0",
+          "field_words_agrb": [
+            0,
+            30474,
+            0,
+            0
+          ],
+          "source_words_agrb": [
+            32768,
+            0,
+            32768,
+            0
+          ],
+          "field_scalar_x": 0.92999267578125,
+          "aex_output_words_agrb": [
+            32768,
+            0,
+            32768,
+            0
+          ],
+          "instructions": 160
+        }
+      ],
+      "output_transition_n_minus_1_to_n": [
         0,
-        30473,
+        0,
         0,
         0
       ],
-      "source_words_agrb": [
-        32768,
+      "output_transition_n_to_n_plus_1": [
         0,
-        32768,
+        0,
+        0,
         0
       ],
-      "field_scalar_x": 0.929962158203125,
-      "aex_output_words_agrb": [
-        32768,
-        0,
-        32768,
-        0
-      ],
-      "instructions": 160
+      "threshold_crossing": {
+        "ui_thresholds": {
+          "inside": 158,
+          "outside": 13
+        },
+        "field_word_units_available": false,
+        "observed_output_word_transition": false,
+        "note": "UI threshold values are distance-domain parameters, not PF16 field-word thresholds; this records the actual AEX output transition across n-1/n/n+1 without inventing a unit conversion."
+      }
     }
-  ]
+  ],
+  "case0026_store_export_recalculation": {
+    "source": "refs/reports/runtime_trace_comparisons/olmdistancegradation_depthgate_quantization_witness_20260708.json",
+    "scope": "four retained case_0026 Mac PF16 store witnesses; RGB channels compared to retained Windows RGBA8 observations",
+    "formulae": {
+      "floor_word_times_255_over_32768": "floor(word * 255 / 32768)",
+      "round_word_over_128": "round-half-up(word / 128)",
+      "truncate_word_over_128": "truncate(word / 128)"
+    },
+    "classified_count": 3,
+    "unresolved_count": 1,
+    "classified_points": [
+      [
+        395,
+        477
+      ],
+      [
+        1589,
+        579
+      ],
+      [
+        898,
+        670
+      ]
+    ],
+    "unresolved_points": [
+      [
+        907,
+        222
+      ]
+    ],
+    "fact_3_of_4_classified_and_only_907_222_unresolved": true,
+    "witnesses": [
+      {
+        "xy": [
+          907,
+          222
+        ],
+        "source_classification": "unresolved",
+        "mac_pf16_store_words_rgba": [
+          32645,
+          0,
+          129,
+          65535
+        ],
+        "windows_observed_rgba8": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "predictions_rgb": {
+          "floor_word_times_255_over_32768": [
+            254,
+            0,
+            1
+          ],
+          "round_word_over_128": [
+            255,
+            0,
+            1
+          ],
+          "truncate_word_over_128": [
+            255,
+            0,
+            1
+          ]
+        },
+        "matches_windows_rgb": {
+          "floor_word_times_255_over_32768": false,
+          "round_word_over_128": false,
+          "truncate_word_over_128": false
+        },
+        "matching_rgb_channels": {
+          "floor_word_times_255_over_32768": 1,
+          "round_word_over_128": 2,
+          "truncate_word_over_128": 2
+        },
+        "classification_basis": "retained witness classification; formula comparison is mechanical and does not promote AE exactness"
+      },
+      {
+        "xy": [
+          395,
+          477
+        ],
+        "source_classification": "export-quantization",
+        "mac_pf16_store_words_rgba": [
+          32513,
+          0,
+          268,
+          65535
+        ],
+        "windows_observed_rgba8": [
+          253,
+          0,
+          2,
+          255
+        ],
+        "predictions_rgb": {
+          "floor_word_times_255_over_32768": [
+            253,
+            0,
+            2
+          ],
+          "round_word_over_128": [
+            254,
+            0,
+            2
+          ],
+          "truncate_word_over_128": [
+            254,
+            0,
+            2
+          ]
+        },
+        "matches_windows_rgb": {
+          "floor_word_times_255_over_32768": true,
+          "round_word_over_128": false,
+          "truncate_word_over_128": false
+        },
+        "matching_rgb_channels": {
+          "floor_word_times_255_over_32768": 3,
+          "round_word_over_128": 2,
+          "truncate_word_over_128": 2
+        },
+        "classification_basis": "retained witness classification; formula comparison is mechanical and does not promote AE exactness"
+      },
+      {
+        "xy": [
+          1589,
+          579
+        ],
+        "source_classification": "export-quantization",
+        "mac_pf16_store_words_rgba": [
+          17281,
+          0,
+          16238,
+          65535
+        ],
+        "windows_observed_rgba8": [
+          134,
+          0,
+          126,
+          255
+        ],
+        "predictions_rgb": {
+          "floor_word_times_255_over_32768": [
+            134,
+            0,
+            126
+          ],
+          "round_word_over_128": [
+            135,
+            0,
+            127
+          ],
+          "truncate_word_over_128": [
+            135,
+            0,
+            126
+          ]
+        },
+        "matches_windows_rgb": {
+          "floor_word_times_255_over_32768": true,
+          "round_word_over_128": false,
+          "truncate_word_over_128": false
+        },
+        "matching_rgb_channels": {
+          "floor_word_times_255_over_32768": 3,
+          "round_word_over_128": 1,
+          "truncate_word_over_128": 2
+        },
+        "classification_basis": "retained witness classification; formula comparison is mechanical and does not promote AE exactness"
+      },
+      {
+        "xy": [
+          898,
+          670
+        ],
+        "source_classification": "export-quantization",
+        "mac_pf16_store_words_rgba": [
+          11280,
+          0,
+          22529,
+          65535
+        ],
+        "windows_observed_rgba8": [
+          88,
+          0,
+          175,
+          255
+        ],
+        "predictions_rgb": {
+          "floor_word_times_255_over_32768": [
+            87,
+            0,
+            175
+          ],
+          "round_word_over_128": [
+            88,
+            0,
+            176
+          ],
+          "truncate_word_over_128": [
+            88,
+            0,
+            176
+          ]
+        },
+        "matches_windows_rgb": {
+          "floor_word_times_255_over_32768": false,
+          "round_word_over_128": false,
+          "truncate_word_over_128": false
+        },
+        "matching_rgb_channels": {
+          "floor_word_times_255_over_32768": 2,
+          "round_word_over_128": 2,
+          "truncate_word_over_128": 2
+        },
+        "classification_basis": "retained witness classification; formula comparison is mechanical and does not promote AE exactness"
+      }
+    ]
+  }
 }

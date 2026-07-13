@@ -33,3 +33,24 @@ An answered return still requires all of the original depth-control evidence:
 
 This package controls the active callback depth only. It does not classify the
 8bpc field/compose algorithm or promote any case to AE exact.
+
+## Accepted desktop return
+
+The diagnostic v4 returned an accepted same-run control:
+
+- Return SHA-256:
+  `5403e85433f93f9bd011589935979721c4e6f124bb04317c577b401ac83e5bc2`
+- Run ID: `dglive-983b62b4192243a68411e60f11faab6d`
+- AE PID: `5936`
+- Module base: `0x7fffcd660000`
+- AEX SHA-256:
+  `a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae`
+- Project depth: 8bpc
+- PF8 callback `+0x1170870`: `24377` hits
+- PF32 callback `+0x1170c90`: `0` hits
+
+The fail-closed classifier labels this
+`pf8_live_pf32_negative_control_exact`. This proves the active 8bpc callback
+dispatch and removes the depth-control prerequisite. It does not prove any
+pixel value. The next permitted request is the same-run typed boundary at
+`(397,281)` for cases `0001`, `0015`, and `0029`.
