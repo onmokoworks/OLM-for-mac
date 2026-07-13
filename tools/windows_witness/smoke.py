@@ -64,7 +64,7 @@ def main() -> int:
         assert "function ConvertTo-WindowsCommandLineArgument" in launcher
         assert "$launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)" in launcher
         assert "'-cf', $bootstrapCdbScript, '--', $AfterFxPath" not in launcher
-        assert "$env:ComSpec -ArgumentList $launchArguments" in launcher
+        assert "schtasks.exe /Create /TN $scheduledTaskName" in launcher
         assert "'-o', '-pd', '-g', '-G'" not in launcher
         assert "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m', '-r', $normalizedQueuePath)" in launcher
         assert "$launchArguments = Join-WindowsCommandLine $launchArgumentValues" in launcher
@@ -72,7 +72,7 @@ def main() -> int:
         assert "'jsx_command_line_preflight'" not in launcher
         assert "('OLMWitness\\w_' + $shortId)" in launcher
         assert "$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'" in launcher
-        assert "Start-Process -FilePath $env:ComSpec -ArgumentList $launchArguments" in launcher
+        assert "schtasks.exe /Run /TN $scheduledTaskName" in launcher
         assert "ld:AfterFX.exe" not in launcher
         assert "WITNESS_CDB_PLUGIN_LOADED" not in launcher
         assert "sxi ibp" not in launcher

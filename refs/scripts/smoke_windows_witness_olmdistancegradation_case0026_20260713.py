@@ -289,7 +289,8 @@ def main() -> int:
             "Read-QueueBootstrapBinding $queueBootstrap",
             "'queue_binding'",
             "$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'",
-            "Start-Process -FilePath $env:ComSpec -ArgumentList $launchArguments",
+            "schtasks.exe /Create /TN $scheduledTaskName",
+            "schtasks.exe /Run /TN $scheduledTaskName",
             "afterfx_launch_wrapper.cmd",
             "launched_queue.jsx",
         ):

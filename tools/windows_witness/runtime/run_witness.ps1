@@ -57,6 +57,8 @@ $queueLaunch = $null
 $bootstrapCdbScript = $null
 $bootstrapCdbTrace = $null
 $launchWrapper = $null
+$scheduledTaskName = $null
+$scheduledTaskCreated = $false
 $normalizedQueuePath = $null
 $observedCommandLine = $null
 $bootstrapObservedMarker = $false
@@ -149,6 +151,9 @@ function Stop-WitnessProcesses {
       Stop-Process -Id $state.pid -Force -ErrorAction SilentlyContinue
       Wait-Process -Id $state.pid -Timeout 10 -ErrorAction SilentlyContinue
     }
+  }
+  if ($scheduledTaskCreated -and $scheduledTaskName) {
+    & schtasks.exe /Delete /TN $scheduledTaskName /F *> $null
   }
 }
 
@@ -264,11 +269,38 @@ $normalizedQueuePath = [IO.Path]::GetFullPath($queueLaunch)
 $queueHash = (Get-FileHash -LiteralPath $queueLaunch -Algorithm SHA256).Hash.ToLowerInvariant()
 $env:WINDOWS_WITNESS_QUEUE_SHA256 = $queueHash
 $afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m', '-r', $normalizedQueuePath)
-@('@echo off', $afterFxCommandLine, 'exit /b %ERRORLEVEL%') | Set-Content -LiteralPath $launchWrapper -Encoding ASCII
+$wrapperLines = @(
+  '@echo off',
+  ('set "WINDOWS_WITNESS_WORK_ROOT=' + $work + '"'),
+  ('set "WINDOWS_WITNESS_RUN_ID=' + $runId + '"'),
+  ('set "WINDOWS_WITNESS_PACKAGE_ROOT=' + $PackageRoot + '"'),
+  ('set "WINDOWS_WITNESS_QUEUE_SHA256=' + $queueHash + '"'),
+  'set "OLM_AE_PAUSE_BEFORE_RENDER=1"',
+  'set "OLM_AE_PAUSE_TIMEOUT_SECONDS=300"',
+  'set "OLM_AE_FORCE_SOFTWARE=1"'
+)
+foreach ($property in $contract.project.environment.psobject.Properties) {
+  $wrapperLines += ('set "' + $property.Name + '=' + [string]$property.Value + '"')
+}
+$wrapperLines += @($afterFxCommandLine, 'exit /b %ERRORLEVEL%')
+$wrapperLines | Set-Content -LiteralPath $launchWrapper -Encoding ASCII
 $launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)
 $launchArguments = Join-WindowsCommandLine $launchArgumentValues
-$launch = Start-Process -FilePath $env:ComSpec -ArgumentList $launchArguments -RedirectStandardOutput $launchOut -RedirectStandardError $launchErr -NoNewWindow -PassThru
+$scheduledTaskName = '\OLM_Witness_' + ($runId -replace '[^A-Za-z0-9_-]', '_')
+$taskStart = (Get-Date).AddMinutes(1)
+$taskDate = $taskStart.ToString('MM/dd/yyyy', [Globalization.CultureInfo]::InvariantCulture)
+$taskTime = $taskStart.ToString('HH:mm', [Globalization.CultureInfo]::InvariantCulture)
+$taskOutput = & schtasks.exe /Create /TN $scheduledTaskName /TR $launchWrapper /SC ONCE /SD $taskDate /ST $taskTime /IT /F 2>&1
+if ($LASTEXITCODE -ne 0) {
+  Finish (Failure 'interactive_task' 'Could not create the interactive Windows task for AfterFX' @('interactive_task_created') ([string]::Join("`n", @($taskOutput)))) 2
+}
+$scheduledTaskCreated = $true
+$taskOutput = & schtasks.exe /Run /TN $scheduledTaskName 2>&1
+if ($LASTEXITCODE -ne 0) {
+  Finish (Failure 'interactive_task' 'Could not run the interactive Windows task for AfterFX' @('interactive_task_started') ([string]::Join("`n", @($taskOutput)))) 2
+}
 $launchStarted = $true
+$launch = $null
 $deadline = (Get-Date).AddSeconds(180)
 while ((Get-Date) -lt $deadline -and !(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) { Start-Sleep -Milliseconds 250 }
 if (!(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) {
