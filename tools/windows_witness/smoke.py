@@ -84,7 +84,9 @@ def main() -> int:
         assert "Read-QueueBootstrapBinding $queueBootstrap" in launcher
         assert "[string]$queueBootstrapBinding.queue_sha256 -cne $queueHash" in launcher
         assert "bootstrap_plugin_load_claimed = [bool]$bootstrapPluginLoadClaimed" in launcher
-        assert launcher.index("if ($code -eq 0) { Stop-WitnessProcesses }") > launcher.index("& py -3 $runtimePath bundle")
+        assert launcher.index("Stop-WitnessProcesses\n  $captureDiagnostics") < launcher.index("& py -3 $runtimePath bundle")
+        assert "capture_diagnostics.json" in launcher
+        assert "cdb_alive_after_cleanup" in launcher
         for template in (package_a / "cdb").glob("*.cdb.in"):
             assert '.logopen /t "{{TRACE_PATH}}"' in template.read_text(encoding="ascii")
     print("[OK] windows_witness synthetic smoke")

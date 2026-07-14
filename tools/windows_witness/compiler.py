@@ -123,6 +123,7 @@ def _normalized_contract(spec: dict[str, Any]) -> dict[str, Any]:
         "queue_bootstrap.log",
         "queue.log",
         "combined_cdb_trace.txt",
+        "capture_diagnostics.json",
         "runtime_identity.json",
         "validation_status.json",
     ]

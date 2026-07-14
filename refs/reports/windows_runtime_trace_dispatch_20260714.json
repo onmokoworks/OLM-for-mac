@@ -1,0 +1,40 @@
+{
+  "schema": "olm.windows_runtime_trace_dispatch.v1",
+  "generated_at": "2026-07-14",
+  "source_report": "refs/reports/pending_runtime_trace_packages.md",
+  "pending_count": 8,
+  "bundle_decision": {
+    "whole_pending_list_bundleable": false,
+    "reason": "The pending list contains incompatible legacy contracts, and the checked-in witness batch archive is not a valid outer batch. Regenerate an outer batch before combining jobs.",
+    "selected_pending_count": 1,
+    "excluded_pending_count": 7,
+    "future_bundle_candidate": {
+      "script": "scripts/package_windows_witness_batch_20260713.py",
+      "compatible_pending_requests": 7,
+      "requires_regeneration": true,
+      "angle0_request_incompatible": true
+    }
+  },
+  "next_windows_send": {
+    "package": "refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_8bpc_current_aex_same_run_typed_boundary_20260712.zip",
+    "kind": "olm_runtime_trace_request_package",
+    "sha256": "8017e17f2010778d032a68d8cb23785395ef5141ce306b2fc90b79e8e5a3deae",
+    "send_status": "ready_existing_archive",
+    "run_policy": "sequential isolated jobs; no concurrent AfterFX or CDB processes",
+    "acceptance_policy": "answered only when the job contract passes; otherwise retain exact_bind_failure or partial diagnostics"
+  },
+  "acceptance_gate": "One shared AE/CDB run with hash-pinned DistanceGradation.aex, 8bpc Software result, all three cases, typed field/compose/host-store observations, and required exports; fail closed on any missing bind.",
+  "excluded_requests": [
+    "olmdirectionalblur_angle0_single_shot_witness_20260708",
+    "olmdirectionalblur_alpha_fade_fullrender_row755_20260712",
+    "olmdistancegradation_8bpc_current_aex_depth_control_20260713",
+    "olmdistancegradation_case0026_16bpc_livefield_source_witness_20260713",
+    "olmkirakira_mode3_live_gaussian_20260713",
+    "olmsmoother2_case0012_live_config_binding_20260713",
+    "olmsmoother2_current_aex_0012_typed_bind_read_20260710"
+  ],
+  "validation": {
+    "windows_execution_performed": false,
+    "plugin_changes_performed": false
+  }
+}

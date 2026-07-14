@@ -70,14 +70,17 @@ $queueBindingAmbiguous = $false
 $bootstrapAePid = $null
 $activeCdbTrace = $null
 $activeCdbTraceEvidence = $null
+$captureDiagnostics = @()
 
-function Failure([string]$stage, [string]$reason, [object[]]$missing, [string]$last) {
-  [ordered]@{
+function Failure([string]$stage, [string]$reason, [object[]]$missing, [string]$last, [object]$diagnostics = $null) {
+  $body = [ordered]@{
     schema_version = 1
     status = 'exact_bind_failure'
     request_id = [string]$contract.request_id
     failure = [ordered]@{stage=$stage; reason=$reason; missing_fields=@($missing); last_observation=$last}
   }
+  if ($null -ne $diagnostics) { $body.failure['capture_diagnostics'] = $diagnostics }
+  return $body
 }
 
 function ConvertTo-WindowsCommandLineArgument([string]$value) {
@@ -141,7 +144,7 @@ function Stop-WitnessProcesses {
       Set-Content -LiteralPath $continue -Value 'abort' -Encoding ASCII -ErrorAction SilentlyContinue
     }
   }
-  if ($cdb -and !$cdb.HasExited) { Stop-Process -Id $cdb.Id -Force -ErrorAction SilentlyContinue }
+  Stop-CdbCapture
   if ($launch -and !$launch.HasExited) { Stop-Process -Id $launch.Id -Force -ErrorAction SilentlyContinue }
   foreach ($retry in @($queueRetryProcesses)) {
     if ($retry -and !$retry.HasExited) { Stop-Process -Id $retry.Id -Force -ErrorAction SilentlyContinue }
@@ -154,6 +157,38 @@ function Stop-WitnessProcesses {
   }
   if ($scheduledTaskCreated -and $scheduledTaskName) {
     & schtasks.exe /Delete /TN $scheduledTaskName /F *> $null
+  }
+}
+
+function Stop-CdbCapture {
+  if ($cdb -and !$cdb.HasExited) {
+    Stop-Process -Id $cdb.Id -Force -ErrorAction SilentlyContinue
+  }
+  if ($cdb) { Wait-Process -Id $cdb.Id -Timeout 10 -ErrorAction SilentlyContinue }
+}
+
+function Get-TypedHitCount([string]$path) {
+  if (!(Test-Path -LiteralPath $path -PathType Leaf)) { return 0 }
+  $prefixes = @($contract.validation.events | ForEach-Object { [string]$_.prefix })
+  return @(
+    Get-Content -LiteralPath $path -ErrorAction SilentlyContinue |
+      Where-Object {
+        $prefix = (([string]$_).TrimStart() -split '\s+', 2)[0]
+        $prefixes -contains $prefix
+      }
+  ).Count
+}
+
+function New-CaptureDiagnostics([string]$caseId, [string]$tracePath, [bool]$timedOut) {
+  $typedHitCount = Get-TypedHitCount $tracePath
+  [ordered]@{
+    case_id = $caseId
+    typed_hit_count = [int]$typedHitCount
+    no_hit_reason = $(if ($typedHitCount -eq 0) {
+        if ($timedOut) { 'cdb_capture_timeout_without_typed_hit' } else { 'cdb_exited_without_typed_hit' }
+      } else { $null })
+    cdb_capture_timed_out = $timedOut
+    cdb_cleanup = $(if ($timedOut) { 'terminated_after_capture_timeout' } else { 'detached_or_exited' })
   }
 }
 
@@ -173,6 +208,8 @@ function Copy-WitnessLaunchEvidence {
 }
 
 function Finish([object]$body, [int]$code) {
+  Stop-WitnessProcesses
+  $captureDiagnostics | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath (Join-Path $work 'capture_diagnostics.json') -Encoding UTF8 -ErrorAction SilentlyContinue
   [ordered]@{
     launch_pid = $(if ($launch) { [int]$launch.Id } else { $null })
     launch_arguments = $launchArguments
@@ -187,15 +224,14 @@ function Finish([object]$body, [int]$code) {
     queue_binding_ambiguous = [bool]$queueBindingAmbiguous
     session_id = [int]$sessionId
     observed_afterfx = @(Get-AfterFxState)
+    cdb_alive_after_cleanup = [bool]($cdb -and !$cdb.HasExited)
   } | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath $processDiagnostics -Encoding UTF8 -ErrorAction SilentlyContinue
-  if ($code -ne 0) { Stop-WitnessProcesses }
   Copy-WitnessLaunchEvidence
   $body | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath $statusPath -Encoding UTF8
   & py -3 $runtimePath bundle --contract $contractPath --status $statusPath --work $work
   $bundleCode = $LASTEXITCODE
   $returnJson = Join-Path $work ([string]$contract.return_bundle.json_name)
   $returnZip = Join-Path $work ([string]$contract.return_bundle.zip_name)
-  if ($code -eq 0) { Stop-WitnessProcesses }
   if ($launchDir) { Remove-Item -LiteralPath $launchDir -Recurse -Force -ErrorAction SilentlyContinue }
   if (Test-Path -LiteralPath $returnJson) { Get-Content -LiteralPath $returnJson -Raw }
   Write-Host "work_directory=$work"
@@ -388,7 +424,13 @@ foreach ($case in @($contract.cases | Sort-Object order)) {
   Set-Content -LiteralPath $continue -Value 'continue' -Encoding ASCII
   $deadline = (Get-Date).AddSeconds([int]$contract.cdb.capture_timeout_seconds)
   while ((Get-Date) -lt $deadline -and !$cdb.HasExited) { Start-Sleep -Milliseconds 250; $cdb.Refresh() }
-  if (!$cdb.HasExited) { Finish (Failure 'cdb_capture' "CDB did not complete for $caseId" @('cdb_exit') '') 2 }
+  if (!$cdb.HasExited) {
+    $capture = New-CaptureDiagnostics $caseId $shortTrace $true
+    $captureDiagnostics += $capture
+    Stop-CdbCapture
+    Finish (Failure 'cdb_capture' "CDB did not complete for $caseId; CDB was terminated and AfterFX was stopped" @('cdb_exit') ("typed_hit_count=" + $capture.typed_hit_count) $capture) 2
+  }
+  $captureDiagnostics += (New-CaptureDiagnostics $caseId $shortTrace $false)
   if (Test-Path -LiteralPath $shortTrace) {
     Copy-Item -LiteralPath $shortTrace -Destination $trace -Force
     Get-Content -LiteralPath $shortTrace | Add-Content -LiteralPath $combinedTrace
@@ -409,4 +451,7 @@ $identity | ConvertTo-Json | Set-Content -LiteralPath $identityPath -Encoding UT
 $validateCode = $LASTEXITCODE
 if (!(Test-Path -LiteralPath $statusPath -PathType Leaf)) { Finish (Failure 'trace_validation' 'validator did not produce status JSON' @('validation_status.json') '') 2 }
 $validated = Get-Content -LiteralPath $statusPath -Raw | ConvertFrom-Json
+if ($validated -is [pscustomobject]) {
+  $validated | Add-Member -NotePropertyName capture_diagnostics -NotePropertyValue @($captureDiagnostics) -Force
+}
 Finish $validated $(if ($validateCode -eq 0 -and $validated.status -eq 'answered') { 0 } else { 2 })

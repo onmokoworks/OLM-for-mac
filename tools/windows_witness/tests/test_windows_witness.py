@@ -74,6 +74,7 @@ class CompilerTests(unittest.TestCase):
             self.assertIn("afterfx_bootstrap_cdb_trace.txt", contract["return_bundle"]["include_logs"])
             self.assertIn("afterfx_launch_wrapper.cmd", contract["return_bundle"]["include_logs"])
             self.assertIn("launched_queue.jsx", contract["return_bundle"]["include_logs"])
+            self.assertIn("capture_diagnostics.json", contract["return_bundle"]["include_logs"])
             queue = (package_a / "scripts" / "ae_witness_queue.jsx").read_text(encoding="utf-8")
             self.assertIn('"root=" + root + "\\n" +', queue)
             self.assertIn('"queue_sha256=" + queueSha256 + "\\n", false);', queue)
@@ -265,8 +266,19 @@ class CompilerTests(unittest.TestCase):
         self.assertIn("queue_bootstrap_marker_observed = [bool]$queueBootstrapObserved", source)
         self.assertIn("afterfx_process_diagnostics.json", source)
         bundle_at = source.index("& py -3 $runtimePath bundle")
-        success_cleanup_at = source.index("if ($code -eq 0) { Stop-WitnessProcesses }")
-        self.assertGreater(success_cleanup_at, bundle_at)
+        cleanup_at = source.index("Stop-WitnessProcesses\n  $captureDiagnostics")
+        self.assertLess(cleanup_at, bundle_at)
+
+    def test_launcher_records_typed_hits_and_terminates_capture_timeout(self) -> None:
+        source = LAUNCHER.read_text(encoding="utf-8")
+        self.assertIn("function Get-TypedHitCount", source)
+        self.assertIn("typed_hit_count", source)
+        self.assertIn("cdb_capture_timeout_without_typed_hit", source)
+        self.assertIn("terminated_after_capture_timeout", source)
+        self.assertIn("function Stop-CdbCapture", source)
+        self.assertIn("Stop-CdbCapture\n    Finish (Failure 'cdb_capture'", source)
+        self.assertIn("CDB was terminated and AfterFX was stopped", source)
+        self.assertIn("cdb_alive_after_cleanup", source)
 
 
 class RuntimeTests(unittest.TestCase):
