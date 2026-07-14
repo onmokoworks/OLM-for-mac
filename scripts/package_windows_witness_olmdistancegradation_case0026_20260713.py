@@ -23,6 +23,9 @@ PACKAGE = ROOT / "refs/runtime_trace_packages/windows_witness_olmdistancegradati
 ARCHIVE = PACKAGE.with_suffix(".zip")
 
 LAUNCHER_OLD = """$validated = Get-Content -LiteralPath $statusPath -Raw | ConvertFrom-Json
+if ($validated -is [pscustomobject]) {
+  $validated | Add-Member -NotePropertyName capture_diagnostics -NotePropertyValue @($captureDiagnostics) -Force
+}
 Finish $validated $(if ($validateCode -eq 0 -and $validated.status -eq 'answered') { 0 } else { 2 })
 """
 LAUNCHER_NEW = """$validated = Get-Content -LiteralPath $statusPath -Raw | ConvertFrom-Json
@@ -38,6 +41,9 @@ if ($validateCode -eq 0 -and $validated.status -eq 'answered') {
   }
 } else {
   $exportCode = 2
+}
+if ($validated -is [pscustomobject]) {
+  $validated | Add-Member -NotePropertyName capture_diagnostics -NotePropertyValue @($captureDiagnostics) -Force
 }
 Finish $validated $(if ($validateCode -eq 0 -and $exportCode -eq 0 -and $validated.status -eq 'answered' -and $validated.exported_png) { 0 } else { 2 })
 """
