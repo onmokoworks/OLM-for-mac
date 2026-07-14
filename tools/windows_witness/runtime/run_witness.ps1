@@ -322,7 +322,12 @@ if ($queueLaunch -match '\s') { Finish (Failure 'path_preflight' 'short JSX laun
 $normalizedQueuePath = [IO.Path]::GetFullPath($queueLaunch)
 $queueHash = (Get-FileHash -LiteralPath $queueLaunch -Algorithm SHA256).Hash.ToLowerInvariant()
 $env:WINDOWS_WITNESS_QUEUE_SHA256 = $queueHash
-$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m')
+$directQueueLaunch = [string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1'
+$afterFxCommandLine = if ($directQueueLaunch) {
+  Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)
+} else {
+  Join-WindowsCommandLine @($AfterFxPath, '-m')
+}
 $queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)
 $wrapperLines = @(
   '@echo off',
@@ -373,17 +378,20 @@ if (!$launch) {
   Finish (Failure 'desktop_process_discovery' 'After Effects process disappeared before queue dispatch' @('stable_AfterFX_process') '') 2
 }
 $mainAePid = [int]$launch.Id
-$dispatchLines = @('@echo off', $queueDispatchCommandLine, 'exit /b %ERRORLEVEL%')
-$dispatchLines | Set-Content -LiteralPath $dispatchWrapper -Encoding ASCII
-$dispatchScheduledTaskName = '\OLM_Witness_Dispatch_' + ($runId -replace '[^A-Za-z0-9_-]', '_')
-$dispatchTaskOutput = & schtasks.exe /Create /TN $dispatchScheduledTaskName /TR $dispatchWrapper /SC ONCE /SD $taskDate /ST $taskTime /IT /F 2>&1
-if ($LASTEXITCODE -ne 0) {
-  Finish (Failure 'jsx_dispatch' 'Could not create the interactive queue dispatch task' @('queue_dispatch_task_created') ([string]::Join("`n", @($dispatchTaskOutput)))) 2
-}
-$dispatchScheduledTaskCreated = $true
-$dispatchTaskOutput = & schtasks.exe /Run /TN $dispatchScheduledTaskName 2>&1
-if ($LASTEXITCODE -ne 0) {
-  Finish (Failure 'jsx_dispatch' 'Could not run the interactive queue dispatch task' @('queue_dispatch_task_started') ([string]::Join("`n", @($dispatchTaskOutput)))) 2
+$dispatchTaskOutput = @()
+if (!$directQueueLaunch) {
+  $dispatchLines = @('@echo off', $queueDispatchCommandLine, 'exit /b %ERRORLEVEL%')
+  $dispatchLines | Set-Content -LiteralPath $dispatchWrapper -Encoding ASCII
+  $dispatchScheduledTaskName = '\OLM_Witness_Dispatch_' + ($runId -replace '[^A-Za-z0-9_-]', '_')
+  $dispatchTaskOutput = & schtasks.exe /Create /TN $dispatchScheduledTaskName /TR $dispatchWrapper /SC ONCE /SD $taskDate /ST $taskTime /IT /F 2>&1
+  if ($LASTEXITCODE -ne 0) {
+    Finish (Failure 'jsx_dispatch' 'Could not create the interactive queue dispatch task' @('queue_dispatch_task_created') ([string]::Join("`n", @($dispatchTaskOutput)))) 2
+  }
+  $dispatchScheduledTaskCreated = $true
+  $dispatchTaskOutput = & schtasks.exe /Run /TN $dispatchScheduledTaskName 2>&1
+  if ($LASTEXITCODE -ne 0) {
+    Finish (Failure 'jsx_dispatch' 'Could not run the interactive queue dispatch task' @('queue_dispatch_task_started') ([string]::Join("`n", @($dispatchTaskOutput)))) 2
+  }
 }
 $postDispatchStates = @(Get-AfterFxState)
 if (!(@($postDispatchStates | Where-Object { [int]$_.pid -eq $mainAePid }).Count -eq 1)) {

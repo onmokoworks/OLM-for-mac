@@ -18,7 +18,8 @@
     "renderer": "Software",
     "environment": {
       "OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT": "1",
-      "OLM_AE_INPUT_ALPHA_MODE": "PREMULTIPLIED"
+      "OLM_AE_INPUT_ALPHA_MODE": "PREMULTIPLIED",
+      "WINDOWS_WITNESS_DIRECT_R": "1"
     }
   },
   "renderer": {

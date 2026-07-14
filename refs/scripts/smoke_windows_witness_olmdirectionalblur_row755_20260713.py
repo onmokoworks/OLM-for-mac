@@ -76,6 +76,8 @@ def compile_package(temp: Path, name: str) -> tuple[Path, Path]:
     )
     result = json.loads(completed.stdout)
     assert result["status"] == "ok"
+    contract = json.loads((package / "witness-contract.json").read_text(encoding="utf-8"))
+    assert contract["project"]["environment"]["WINDOWS_WITNESS_DIRECT_R"] == "1"
     return package, archive
 
 
@@ -108,6 +110,7 @@ def main() -> int:
         "environment": {
             "OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT": "1",
             "OLM_AE_INPUT_ALPHA_MODE": "PREMULTIPLIED",
+            "WINDOWS_WITNESS_DIRECT_R": "1",
         },
     }
     assert spec["validation"]["identity_fields"][-2:] == ["witness_id", "params"]
@@ -194,7 +197,9 @@ def main() -> int:
             "same_run_identity",
             "function ConvertTo-WindowsCommandLineArgument",
             "$launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)",
-            "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m')",
+            "$directQueueLaunch = [string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1'",
+            "Join-WindowsCommandLine @($AfterFxPath, '-m')",
+            "Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
             "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
             "$launchArguments = Join-WindowsCommandLine $launchArgumentValues",
             "Read-QueueBootstrapBinding $queueBootstrap",
