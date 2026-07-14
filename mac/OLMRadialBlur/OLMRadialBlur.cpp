@@ -20,6 +20,7 @@ struct RadialBlurDebugPoint {
 struct RadialBlurDebugConfig {
 	const char *dump_path = nullptr;
 	std::vector<RadialBlurDebugPoint> points;
+	bool force_scalar_producer = false;
 };
 
 struct RadialBlurOuterSampleState {
@@ -171,6 +172,8 @@ static RadialBlurDebugConfig LoadRadialBlurDebugConfig()
 	RadialBlurDebugConfig config;
 	config.dump_path = std::getenv("OLMRADIALBLUR_DEBUG_DUMP_PATH");
 	config.points = ParseRadialBlurDebugPoints(std::getenv("OLMRADIALBLUR_DEBUG_POINTS"));
+	const char *force_scalar = std::getenv("OLMRADIALBLUR_FORCE_SCALAR_PRODUCER");
+	config.force_scalar_producer = force_scalar && (*force_scalar == '1' || *force_scalar == 'y' || *force_scalar == 'Y');
 	if (!config.dump_path || !*config.dump_path || config.points.empty()) {
 		config.dump_path = nullptr;
 		config.points.clear();
@@ -935,7 +938,7 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	}
 
 	const std::vector<float> weights = ZoomGaussianWeights(ZoomEffectiveLength(info));
-	const bool use_fft_convolution = weights.size() > 512;
+	const bool use_fft_convolution = weights.size() > 512 && !debug.force_scalar_producer;
 	FloatImage blurred;
 	blurred.width = radius_count;
 	blurred.height = angular_count;
@@ -944,6 +947,7 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		for (A_long ai = 0; ai < angular_count; ++ai) {
 			for (A_long ri = 0; ri < radius_count; ++ri) {
 				double accum_w_double = 0.0;
+				float accum_w_float = 0.0f;
 				float weighted_rgb[3] = {0.0f, 0.0f, 0.0f};
 				float weighted_alpha = 0.0f;
 				float accum_alpha = 0.0f;
@@ -952,16 +956,29 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					const size_t src_idx = ((size_t)ai * radius_count + (ri - k)) * 4;
 					const float alpha = polar.rgba[src_idx + 3];
 					const float weight = weights[(size_t)k];
-					for (int c = 0; c < 3; ++c) weighted_rgb[c] += polar.rgba[src_idx + c] * alpha * weight;
-					weighted_alpha += alpha * weight;
-					accum_alpha += alpha * weight;
-					accum_w_double += (double)weight;
+					if (debug.force_scalar_producer) {
+						const float alpha_weight = RadialF32Mul(alpha, weight);
+						for (int c = 0; c < 3; ++c) {
+							weighted_rgb[c] = RadialF32Add(
+								weighted_rgb[c],
+								RadialF32Mul(polar.rgba[src_idx + c], alpha_weight));
+						}
+						weighted_alpha = RadialF32Add(weighted_alpha, alpha_weight);
+						accum_alpha = RadialF32Add(accum_alpha, alpha_weight);
+						accum_w_float = RadialF32Add(accum_w_float, weight);
+					} else {
+						for (int c = 0; c < 3; ++c) weighted_rgb[c] += polar.rgba[src_idx + c] * alpha * weight;
+						weighted_alpha += alpha * weight;
+						accum_alpha += alpha * weight;
+						accum_w_double += (double)weight;
+					}
 				}
 				const size_t dst = ((size_t)ai * radius_count + ri) * 4;
 				if (weighted_alpha > 1.0e-8f) {
 					for (int c = 0; c < 3; ++c) blurred.rgba[dst + c] = weighted_rgb[c] / weighted_alpha;
 				}
-				blurred.rgba[dst + 3] = ClampFloat(accum_alpha / (float)accum_w_double, 0.0f, 1.0f);
+				const float weight_sum = debug.force_scalar_producer ? accum_w_float : (float)accum_w_double;
+				blurred.rgba[dst + 3] = ClampFloat(accum_alpha / weight_sum, 0.0f, 1.0f);
 			}
 		}
 	} else {
