@@ -170,16 +170,16 @@ def main() -> int:
             "Render-Cdb",
             "bundle --contract",
             "function ConvertTo-WindowsCommandLineArgument",
-            "$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, $AfterFxPath, '-r', $normalizedQueuePath)",
-            "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
+            "$launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)",
+            "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m')",
+            "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
             "$launchArguments = Join-WindowsCommandLine $launchArgumentValues",
             "Read-QueueBootstrapBinding $queueBootstrap",
             "'queue_binding'",
             "$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'",
-            "WITNESS_CDB_BOOTSTRAP_ARMED",
-            "WITNESS_CDB_AFTERFX_INITIAL_BREAK",
-            ".echo WITNESS_CDB_AFTERFX_INITIAL_BREAK",
-            "'cdb_bootstrap'",
+            "$dispatchScheduledTaskName = '\\OLM_Witness_Dispatch_'",
+            "schtasks.exe /Create /TN $dispatchScheduledTaskName",
+            "schtasks.exe /Run /TN $dispatchScheduledTaskName",
             "-FilePath $CdbPath",
             "queue_bootstrap.log",
             "afterfx_bootstrap.cdb",
@@ -189,7 +189,7 @@ def main() -> int:
         ):
             assert term in launcher
         assert "Start-Process -FilePath $AfterFxPath -ArgumentList $aeArgs" not in launcher
-        assert "$launchArgumentValues = @('-cf', $bootstrapCdbScript, $AfterFxPath, '-r'" not in launcher
+        assert "$launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)" in launcher
         contract = json.loads((package_a / "witness-contract.json").read_text(encoding="utf-8"))
         assert contract["queue"] == "scripts/ae_witness_queue.jsx"
         assert contract["renderer"]["package_path"] == "scripts/renderer.jsx"

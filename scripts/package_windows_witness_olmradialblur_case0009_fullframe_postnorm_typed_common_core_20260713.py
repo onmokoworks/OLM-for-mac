@@ -28,6 +28,9 @@ def install_radial_return_binding(package: Path, archive: Path) -> None:
     launcher_path = package / "artifacts" / "run_witness.ps1"
     launcher = launcher_path.read_text(encoding="utf-8")
     old = """$validated = Get-Content -LiteralPath $statusPath -Raw | ConvertFrom-Json
+if ($validated -is [pscustomobject]) {
+  $validated | Add-Member -NotePropertyName capture_diagnostics -NotePropertyValue @($captureDiagnostics) -Force
+}
 Finish $validated $(if ($validateCode -eq 0 -and $validated.status -eq 'answered') { 0 } else { 2 })
 """
     new = """$validated = Get-Content -LiteralPath $statusPath -Raw | ConvertFrom-Json

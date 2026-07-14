@@ -117,15 +117,16 @@ def main() -> int:
             return fail("fresh-process serial readiness contract is missing")
         for token in (
             "function ConvertTo-WindowsCommandLineArgument",
-            "$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, $AfterFxPath, '-r', $normalizedQueuePath)",
-            "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
+            "$launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)",
+            "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m')",
+            "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
             "Read-QueueBootstrapBinding $queueBootstrap",
             "'queue_binding'",
             "('OLMWitness\\w_' + $shortId)",
             "$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'",
-            "WITNESS_CDB_AFTERFX_INITIAL_BREAK",
-            ".echo WITNESS_CDB_AFTERFX_INITIAL_BREAK",
-            "'cdb_bootstrap'",
+            "$dispatchScheduledTaskName = '\\OLM_Witness_Dispatch_'",
+            "schtasks.exe /Create /TN $dispatchScheduledTaskName",
+            "schtasks.exe /Run /TN $dispatchScheduledTaskName",
             "$shortTrace = Join-Path $launchDir",
             "Copy-WitnessLaunchEvidence",
         ):

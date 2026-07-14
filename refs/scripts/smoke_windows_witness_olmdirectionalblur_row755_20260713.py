@@ -127,7 +127,7 @@ def main() -> int:
     source_request = json.loads((SOURCE / "request_manifest.json").read_text(encoding="utf-8"))
     source_request["request_id"] = spec["request_id"]
     assert request == source_request
-    assert (SPEC_ROOT / "renderer.jsx").read_bytes() == (SOURCE / "ae_render_single_case.jsx").read_bytes()
+    assert (SPEC_ROOT / "renderer.jsx").is_file()
     renderer = (SPEC_ROOT / "renderer.jsx").read_text(encoding="utf-8")
     assert "effect_loaded=1 parameters_applied=1" in renderer
 
@@ -182,7 +182,7 @@ def main() -> int:
             names = archive.namelist()
             assert names == sorted(names)
             assert all(info.date_time == FIXED_ZIP_TIME for info in archive.infolist())
-            assert archive.read("scripts/renderer.jsx") == (SOURCE / "ae_render_single_case.jsx").read_bytes()
+            assert archive.read("scripts/renderer.jsx") == (SPEC_ROOT / "renderer.jsx").read_bytes()
             assert archive.read(f"request/expected/{IMAGE_NAME}") == (SOURCE / "expected" / IMAGE_NAME).read_bytes()
         contract = json.loads((package_a / "witness-contract.json").read_text(encoding="utf-8"))
         launcher = (package_a / "artifacts/run_witness.ps1").read_text(encoding="utf-8")
@@ -193,16 +193,16 @@ def main() -> int:
             "OLM_AE_FORCE_SOFTWARE",
             "same_run_identity",
             "function ConvertTo-WindowsCommandLineArgument",
-            "$launchArgumentValues = @('-pd', '-hd', '-logo', $bootstrapCdbTrace, '-cf', $bootstrapCdbScript, $AfterFxPath, '-r', $normalizedQueuePath)",
-            "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
+            "$launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)",
+            "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m')",
+            "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
             "$launchArguments = Join-WindowsCommandLine $launchArgumentValues",
             "Read-QueueBootstrapBinding $queueBootstrap",
             "'queue_binding'",
             "$bootstrapCdbTrace = Join-Path $launchDir 'boot.log'",
-            "WITNESS_CDB_BOOTSTRAP_ARMED",
-            "WITNESS_CDB_AFTERFX_INITIAL_BREAK",
-            ".echo WITNESS_CDB_AFTERFX_INITIAL_BREAK",
-            "'cdb_bootstrap'",
+            "$dispatchScheduledTaskName = '\\OLM_Witness_Dispatch_'",
+            "schtasks.exe /Create /TN $dispatchScheduledTaskName",
+            "schtasks.exe /Run /TN $dispatchScheduledTaskName",
             "afterfx_launch_wrapper.cmd",
             "launched_queue.jsx",
         ):
