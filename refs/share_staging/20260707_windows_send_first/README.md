@@ -11,30 +11,26 @@ This project-local staging folder is generated from
 
 ## Package
 
-- Request: `olmdirectionalblur_front_alpha_host_boundary_2025_20260711`
-- File: `olmdirectionalblur_front_alpha_host_boundary_2025_20260711.zip`
-- Source: `refs/runtime_trace_packages/olmdirectionalblur_front_alpha_host_boundary_2025_20260711.zip`
-- SHA-256: `08465290715f7cdd766a1e374d39174c5f984028d71b48c17f3f62f8184ee66a`
+- Request: `olmdistancegradation_8bpc_current_aex_same_run_typed_boundary_20260712`
+- File: `olm_runtime_trace_olmdistancegradation_8bpc_current_aex_same_run_typed_boundary_20260712.zip`
+- Source: `refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_8bpc_current_aex_same_run_typed_boundary_20260712.zip`
+- SHA-256: `8017e17f2010778d032a68d8cb23785395ef5141ce306b2fc90b79e8e5a3deae`
 
 ## Why This One
 
-- 
-
-## Hard Lane Context
-
-{'note': 'refs/conformance/dblur_alpha_host_boundary_20260711.md', 'summary': 'The front-alpha kernel is binary-grounded, but the retained June19 reference omitted loaded-AEX identity and the exact PF input world. This one hash-gated invocation-bound capture decides host input, AEX generation, and output/export ownership without PNG tuning.'}
+- OLMDistanceGradation current-AEX 8bpc field staging, compose, and host store
 
 ## Acceptance
 
-- `refs/conformance/dblur_alpha_host_boundary_20260711.md`
+- `refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_8bpc_current_aex_same_run_typed_boundary_20260712/README_RUNTIME_TRACE.md`
 
 ## Stop Condition
 
-Accept only status=answered with the exact 2025 SHA256, one input and one output hit bound by PID/RBP/RBX/output-world token, valid 1920x1080 PF worlds, and two 8294400-byte tight ARGB8 dumps.
+PENDING: do not send or classify this package as answered. The current runner is retained only as a historical failed attempt until a separate typed-boundary implementation is reviewed.
 
 ## Share Check
 
 ```bash
-test -f /Volumes/onmk/olm_pr/new/olmdirectionalblur_front_alpha_host_boundary_2025_20260711.zip \
-  && shasum -a 256 /Volumes/onmk/olm_pr/new/olmdirectionalblur_front_alpha_host_boundary_2025_20260711.zip
+test -f /Volumes/onmk/olm_pr/new/olm_runtime_trace_olmdistancegradation_8bpc_current_aex_same_run_typed_boundary_20260712.zip \
+  && shasum -a 256 /Volumes/onmk/olm_pr/new/olm_runtime_trace_olmdistancegradation_8bpc_current_aex_same_run_typed_boundary_20260712.zip
 ```

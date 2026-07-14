@@ -1,6 +1,6 @@
 {
   "kind": "olmdistancegradation_case0023_neighborhood_probe_result",
-  "materialized_at": "2026-07-13T02:45:51Z",
+  "materialized_at": "2026-07-13T16:18:45Z",
   "case_id": "olmdistancegradation_extended__case_0023",
   "probe_dir": "refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707",
   "points_count": 18,

@@ -18,6 +18,9 @@ SUPPORT = ROOT / "refs/runtime_trace_support/olmdistancegradation_8bpc_depth_con
 OUTPUT = PACKAGE.with_suffix(".zip")
 REQUEST_ID = "olmdistancegradation_8bpc_current_aex_depth_control_20260713"
 RVA = ("1170870", "1170c90")
+EXPECTED_CURRENT_AEX_SHA256 = json.loads(
+    (TYPED / "runtime_trace_package_manifest.json").read_text(encoding="utf-8")
+)["accepted_depth_control"]["aex_sha256"].lower()
 
 
 README = f"""# OLMDistanceGradation 8bpc Current-AEX Depth Control
@@ -44,7 +47,7 @@ Use `-ParseOnly -TracePath` for the included parser fixtures.
 """
 
 
-RUNNER = r'''param(
+RUNNER_TEMPLATE = r'''param(
   [string]$PackageRoot = (Split-Path -Parent $PSScriptRoot),
   [string]$WorkRoot = (Join-Path (Split-Path -Parent $PSScriptRoot) 'work'),
   [switch]$ParseOnly,
@@ -57,6 +60,7 @@ RUNNER = r'''param(
 $ErrorActionPreference = 'Stop'
 $requestId = 'olmdistancegradation_8bpc_current_aex_depth_control_20260713'
 $rvas = @('1170870','1170c90')
+$expectedHash = '__EXPECTED_HASH__'
 $runId = 'dglive-' + ([guid]::NewGuid().ToString('N'))
 
 function Failure([string]$reason, [object[]]$missing, [string]$last, [object]$diagnostics=$null) {
@@ -87,11 +91,12 @@ function Parse([string]$path) {
   $runIds = @($rows.Values | ForEach-Object { $_['run_id'] } | Select-Object -Unique)
   $pids = @($rows.Values | ForEach-Object { $_['ae_pid'] } | Select-Object -Unique)
   $bases = @($rows.Values | ForEach-Object { $_['module_base'] } | Select-Object -Unique)
-  $hashes = @($rows.Values | ForEach-Object { $_['aex_sha256'] } | Select-Object -Unique)
+  $hashes = @($rows.Values | ForEach-Object { ([string]$_['aex_sha256']).ToLowerInvariant() } | Select-Object -Unique)
   if ($runIds.Count -ne 1) { $missing += 'shared_run_id' }
   if ($pids.Count -ne 1 -or $pids[0] -notmatch '^\d+$') { $missing += 'shared_ae_pid' }
   if ($bases.Count -ne 1 -or $bases[0] -notmatch '^0x[0-9a-fA-F]+$') { $missing += 'shared_module_base' }
   if ($hashes.Count -ne 1 -or $hashes[0] -notmatch '^[0-9a-fA-F]{64}$') { $missing += 'shared_aex_sha256' }
+  if ($hashes.Count -ne 1 -or $hashes[0] -ne $expectedHash) { $missing += 'shared_expected_aex_sha256' }
   if ($rows.ContainsKey('1170870') -and $rows['1170870']['hit_count'] -match '^\d+$' -and [int]$rows['1170870']['hit_count'] -le 0) { $missing += 'PF8_hit_count_gt_0' }
   if ($rows.ContainsKey('1170c90') -and $rows['1170c90']['hit_count'] -match '^\d+$' -and [int]$rows['1170c90']['hit_count'] -ne 0) { $missing += 'PF32_hit_count_eq_0' }
   if ($missing.Count) { return Failure 'PF8/PF32 summaries are not hash/run complete' $missing $last }
@@ -150,6 +155,7 @@ if (Get-Process -Name AfterFX -ErrorAction SilentlyContinue) { Finish (Failure '
 $AexPath = (Get-Item -LiteralPath $AexPath).FullName; $AfterFxPath = (Get-Item -LiteralPath $AfterFxPath).FullName; $CdbPath = (Get-Item -LiteralPath $CdbPath).FullName
 $aexSha256 = (Get-FileHash -LiteralPath $AexPath -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($aexSha256 -notmatch '^[0-9a-f]{64}$') { Finish (Failure 'DistanceGradation.aex SHA-256 unavailable' @('aex_sha256') $AexPath) 2 }
+if ($aexSha256 -ne $expectedHash) { Finish (Failure 'DistanceGradation.aex is not the accepted current binary' @('expected_aex_sha256') "expected=$expectedHash actual=$aexSha256 path=$AexPath") 2 }
 $env:OLM_DG_LIVE_REQUEST_DIR = Join-Path $PackageRoot 'request'
 $env:OLM_DG_LIVE_WORK_ROOT = $work
 $env:OLM_DG_LIVE_RUN_ID = $runId
@@ -181,7 +187,7 @@ while ((Get-Date) -lt $deadline -and $loaded.Count -ne 1) {
 if ($loaded.Count -ne 1) { Finish (Failure 'exactly one AE process with hash-pinned DistanceGradation.aex was not found' @('actual_ae_process_module') "matches=$($loaded.Count)") 2 }
 $ae = $loaded[0].Process; $module = $loaded[0].Module
 $loadedSha256 = (Get-FileHash -LiteralPath $module.FileName -Algorithm SHA256).Hash.ToLowerInvariant()
-if ($loadedSha256 -ne $aexSha256) { Finish (Failure 'loaded module hash differs from pre-launch pin' @('loaded_aex_sha256') "expected=$aexSha256 actual=$loadedSha256") 2 }
+if ($loadedSha256 -ne $expectedHash) { Finish (Failure 'loaded module hash does not match the accepted current binary' @('loaded_aex_sha256') "expected=$expectedHash actual=$loadedSha256") 2 }
 $baseValue = $module.BaseAddress.ToInt64(); $base = ('0x{0:x}' -f $baseValue); $pf8 = ('0x{0:x}' -f ($baseValue + 0x1170870)); $pf32 = ('0x{0:x}' -f ($baseValue + 0x1170c90)); $aePid = $ae.Id
 $cdbText = @"
 .effmach amd64
@@ -222,6 +228,8 @@ if ($parsed.status -eq 'answered' -and ($parsed.aex_sha256 -ne $aexSha256 -or $p
 Finish $parsed $(if ($parsed.status -eq 'answered') { 0 } else { 2 })
 '''
 
+RUNNER = RUNNER_TEMPLATE.replace("__EXPECTED_HASH__", EXPECTED_CURRENT_AEX_SHA256)
+
 
 QUEUE = r'''(function () {
     function env(name) { try { return $.getenv(name) || ""; } catch (e) { return ""; } }
@@ -244,12 +252,13 @@ QUEUE = r'''(function () {
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=OUTPUT)
+    parser.add_argument("--skip-support-sync", action="store_true")
     args = parser.parse_args()
     if not TYPED.is_dir() or not CURRENT_RENDERER.is_file():
         raise FileNotFoundError(TYPED)
     if PACKAGE.exists():
         shutil.rmtree(PACKAGE)
-    if SUPPORT.exists():
+    if not args.skip_support_sync and SUPPORT.exists():
         shutil.rmtree(SUPPORT)
     (PACKAGE / "artifacts").mkdir(parents=True)
     (PACKAGE / "scripts").mkdir(parents=True)
@@ -263,6 +272,11 @@ def main() -> int:
     (PACKAGE / "runtime_trace_package_manifest.json").write_text(json.dumps({
         "schema": 1, "kind": "olm_runtime_trace_request_package", "profile": "distancegradation-8bpc-current-aex-depth-control",
         "request_id": REQUEST_ID, "submission_status": "ready", "sendable": True,
+        "accepted_current_aex": {
+            "module": "DistanceGradation.aex",
+            "path": r"C:\Program Files\Adobe\Adobe After Effects 2026\Support Files\Plug-ins\Effects\DistanceGradation.aex",
+            "sha256": EXPECTED_CURRENT_AEX_SHA256,
+        },
         "runtime_actions": [{"request_id": REQUEST_ID, "status": "ready", "mode": "external-trace",
             "plugin_area": "OLMDistanceGradation PF8/PF32 callback depth control", "rvas": list(RVA),
             "stop_condition": "Require AE result project_bits_per_channel=8, then return one shared run_id/AEX hash and PF8/PF32 hit counts. Expected PF8>0 and PF32=0. No algorithm proof."}]
@@ -270,14 +284,18 @@ def main() -> int:
     (PACKAGE / "RETURN_RUNTIME_TRACE_TEMPLATE.json").write_text(json.dumps({
         "schema": "olmdg_8bpc_depth_control_v1", "kind": "olm_runtime_trace_result", "status": "answered | exact_bind_failure",
         "request_id": REQUEST_ID, "run_id": None, "ae_pid": None, "module_base": None,
+        "expected_current_aex_sha256": EXPECTED_CURRENT_AEX_SHA256,
         "aex_sha256": None, "project_bits_per_channel": 8,
         "rvas": [{"rva": rva, "hit_count": None} for rva in RVA]
     }, indent=2) + "\n", encoding="utf-8")
     counts = {"1170870": 3, "1170c90": 0}
-    complete = "\n".join(f"DG8_DEPTH_SUMMARY run_id=dglive-fixture ae_pid=4242 module_base=0x7ff600000000 rva={rva} aex_sha256={'a'*64} hit_count={counts[rva]}" for rva in RVA) + "\n"
-    missing = "\n".join(f"DG8_DEPTH_SUMMARY run_id=dglive-fixture ae_pid=4242 module_base=0x7ff600000000 rva={rva} aex_sha256={'a'*64} hit_count=0" for rva in RVA[:-1]) + "\n"
+    wrong_hash = ("0" if EXPECTED_CURRENT_AEX_SHA256[0] != "0" else "1") + EXPECTED_CURRENT_AEX_SHA256[1:]
+    complete = "\n".join(f"DG8_DEPTH_SUMMARY run_id=dglive-fixture ae_pid=4242 module_base=0x7ff600000000 rva={rva} aex_sha256={EXPECTED_CURRENT_AEX_SHA256} hit_count={counts[rva]}" for rva in RVA) + "\n"
+    missing = "\n".join(f"DG8_DEPTH_SUMMARY run_id=dglive-fixture ae_pid=4242 module_base=0x7ff600000000 rva={rva} aex_sha256={EXPECTED_CURRENT_AEX_SHA256} hit_count=0" for rva in RVA[:-1]) + "\n"
+    adversarial = "\n".join(f"DG8_DEPTH_SUMMARY run_id=dglive-fixture ae_pid=4242 module_base=0x7ff600000000 rva={rva} aex_sha256={wrong_hash} hit_count={counts[rva]}" for rva in RVA) + "\n"
     (PACKAGE / "fixtures/complete_cdb_stdout.txt").write_text(complete, encoding="utf-8")
     (PACKAGE / "fixtures/missing_rva_cdb_stdout.txt").write_text(missing, encoding="utf-8")
+    (PACKAGE / "fixtures/adversarial_wrong_hash_cdb_stdout.txt").write_text(adversarial, encoding="utf-8")
     (PACKAGE / "fixtures/latest_ae_ready_missing_failure.json").write_text(json.dumps({
         "status": "exact_bind_failure", "kind": "depth_control", "request_id": REQUEST_ID,
         "failure": {"stage": "depth_control", "reason": "AE pause ready marker missing",
@@ -288,7 +306,8 @@ def main() -> int:
                 "launcher_exit_code": None}, "launcher_stderr": None, "ae_log": None,
                 "ae_result": None, "process_diagnostics": {"candidate_afterfx": []}}}},
         indent=2) + "\n", encoding="utf-8")
-    shutil.copytree(PACKAGE, SUPPORT)
+    if not args.skip_support_sync:
+        shutil.copytree(PACKAGE, SUPPORT)
     output = args.output if args.output.is_absolute() else ROOT / args.output
     output.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as archive:

@@ -5,6 +5,11 @@
   "request_id": "olmdistancegradation_8bpc_current_aex_depth_control_20260713",
   "submission_status": "ready",
   "sendable": true,
+  "accepted_current_aex": {
+    "module": "DistanceGradation.aex",
+    "path": "C:\\Program Files\\Adobe\\Adobe After Effects 2026\\Support Files\\Plug-ins\\Effects\\DistanceGradation.aex",
+    "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+  },
   "runtime_actions": [
     {
       "request_id": "olmdistancegradation_8bpc_current_aex_depth_control_20260713",

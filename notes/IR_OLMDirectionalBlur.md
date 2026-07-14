@@ -1015,27 +1015,36 @@ core, but its retained AE fixture has a separate host-boundary provenance gate.
 
 ## 2026-07-11 Alpha Fade host-boundary classification
 
-The Alpha Fade kernel must no longer be changed by broad PNG fitting. Complete
-actual-AEX and Mac callback captures establish a strong host/provenance
-hypothesis, pending the Windows PF-world capture:
+The hash-gated Windows PF-world request is answered. It loaded the expected
+2025 AEX SHA-256
+`d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e`
+and captured complete `1920x1080` ARGB8 input/output worlds from one invocation.
 
-- Mac AE PREMULTIPLIED import reconstructs the input RGB with half-up
-  `premultiplied_rgb * 255 / alpha` and preserves alpha exactly.
-- A floor-unpremultiplied input reduces the retained Windows-PNG residual from
-  `234049` to `22993` RGB channel bytes, both at `max_diff=1`.
-- The complete actual-AEX floor-input raw output is
-  `7f64aa7caef89cbdf2bb86eee5f6b87f063fb2927e85e10e8abbce2d2fcd5bd9`.
-  It differs from the Mac callback at only `78` raw bytes; this is far too small
-  to explain the original 234049-byte family by itself.
-- The June 19 manifest has no loaded AEX path/hash. It therefore cannot prove
-  that the reference came from the analyzed 2025 AEX rather than another
-  packaged generation.
+The capture proves these host rules byte-for-byte:
 
-The remaining proof is a same-run Windows boundary capture, not a new blur
-formula. For the exact 2025 AEX hash
-`d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e`,
-capture the PF input world before populate at `+0x5267` and the PF output world
-after output Iterate8 at `+0x566a`. A different loaded hash stops the offset
-trace and requires a hash-pinned recapture instead.
+- PREMULTIPLIED PNG import uses integer half-up unpremultiplication
+  `(rgb * 255 + alpha / 2) / alpha`.
+- AE export uses integer half-up premultiplication
+  `(rgb * alpha + 127) / 255`.
+
+The returned current-AEX PNG differs from the unbound June 19 PNG at
+`234845` values, so the old file is historical evidence rather than the
+current oracle. Against the corrected reference, current Mac AE is known-red
+at `max=3`, `980` values / `563` pixels.
+
+The raw residual splits by architecture:
+
+- arm64 versus Windows: 1030 values / 587 pixels, `max=4`.
+- macOS x86_64 versus Windows: 468 values / 226 pixels, `max=4`, all at
+  `x=1308`, `y=184..517`.
+- arm64 versus macOS x86_64: 562 values / 361 pixels, `max=1`.
+
+Evaluating each Gaussian float argument with double `exp` and casting back to
+float makes arm64 byte-identical to macOS x86_64. This grounds the broad Mac
+split in platform `expf`, but does not close the Windows UCRT result. The AEX
+uses `FUN_180001830` tables of `n=96` (prepass) and `n=240` (scatter). The next
+proof is the exact UCRT `expf` result bits for both tables, then local replay.
+If those words do not close the line, bind one affected prepass/scatter call
+and compare intermediate destination, denominator and alpha buffers.
 
 Source of truth: `refs/conformance/dblur_alpha_host_boundary_20260711.md`.

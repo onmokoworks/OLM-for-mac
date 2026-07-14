@@ -13,10 +13,9 @@ PACKAGE_DIR = Path("refs/runtime_trace_packages/olm_runtime_trace_olmdistancegra
 PACKAGE_ZIP = PACKAGE_DIR.with_suffix(".zip")
 RUNNER = PACKAGE_DIR / "artifacts/run_olmdistancegradation_8bpc_depth_control_20260713.ps1"
 RVAS = {"1170870", "1170c90"}
-HASH = "a" * 64
 
 
-def parse_fixture(path: Path) -> bool:
+def parse_fixture(path: Path, expected_hash: str) -> bool:
     rows = {}
     for line in path.read_text(encoding="utf-8").splitlines():
         match = re.match(r"^DG8_DEPTH_SUMMARY\s+(.+)$", line)
@@ -30,7 +29,7 @@ def parse_fixture(path: Path) -> bool:
         rows[rva].get("run_id") == "dglive-fixture"
         and rows[rva].get("ae_pid") == "4242"
         and rows[rva].get("module_base") == "0x7ff600000000"
-        and rows[rva].get("aex_sha256") == HASH
+        and rows[rva].get("aex_sha256") == expected_hash
         and rows[rva].get("hit_count", "").isdigit()
         for rva in RVAS
     ) and int(rows["1170870"]["hit_count"]) > 0 and int(rows["1170c90"]["hit_count"]) == 0
@@ -49,6 +48,7 @@ def main() -> int:
         "scripts/ae_render_single_case.jsx",
         "fixtures/complete_cdb_stdout.txt",
         "fixtures/missing_rva_cdb_stdout.txt",
+        "fixtures/adversarial_wrong_hash_cdb_stdout.txt",
         "fixtures/latest_ae_ready_missing_failure.json",
     }
     if not package_dir.is_dir() or not package_zip.is_file():
@@ -66,18 +66,31 @@ def main() -> int:
         manifest = json.loads(archive.read("runtime_trace_package_manifest.json"))
         template = json.loads(archive.read("RETURN_RUNTIME_TRACE_TEMPLATE.json"))
         latest_failure = json.loads(archive.read("fixtures/latest_ae_ready_missing_failure.json"))
+    accepted_aex = manifest.get("accepted_current_aex", {})
+    expected_hash = str(accepted_aex.get("sha256", "")).lower()
     action = manifest["runtime_actions"][0]
     if manifest.get("submission_status") != "ready" or manifest.get("sendable") is not True or set(action["rvas"]) != RVAS:
         print("[FAIL] liveness manifest is not runnable or has the wrong RVA set")
         return 1
-    if "ae_pid" not in template or "module_base" not in template or template.get("project_bits_per_channel") != 8:
+    if accepted_aex.get("module") != "DistanceGradation.aex" or not re.fullmatch(r"[0-9a-f]{64}", expected_hash):
+        print("[FAIL] manifest does not pin one accepted current DistanceGradation.aex SHA-256")
+        return 1
+    if (
+        "ae_pid" not in template
+        or "module_base" not in template
+        or template.get("project_bits_per_channel") != 8
+        or template.get("expected_current_aex_sha256") != expected_hash
+    ):
         print("[FAIL] return template does not bind the AE process/module/depth identity")
         return 1
-    if not parse_fixture(package_dir / "fixtures/complete_cdb_stdout.txt"):
+    if not parse_fixture(package_dir / "fixtures/complete_cdb_stdout.txt", expected_hash):
         print("[FAIL] complete liveness fixture rejected")
         return 1
-    if parse_fixture(package_dir / "fixtures/missing_rva_cdb_stdout.txt"):
+    if parse_fixture(package_dir / "fixtures/missing_rva_cdb_stdout.txt", expected_hash):
         print("[FAIL] missing-RVA liveness fixture accepted")
+        return 1
+    if parse_fixture(package_dir / "fixtures/adversarial_wrong_hash_cdb_stdout.txt", expected_hash):
+        print("[FAIL] adversarial wrong-hash liveness fixture accepted")
         return 1
     failure = latest_failure["failure"]
     observation = failure["last_observation"]
@@ -115,7 +128,10 @@ def main() -> int:
         "Get-CimInstance Win32_Process",
         "SessionId",
         ".Modules | Where-Object { $_.FileName -ieq $AexPath }",
-        "loaded module hash differs from pre-launch pin",
+        "$expectedHash = '" + expected_hash + "'",
+        "shared_expected_aex_sha256",
+        "DistanceGradation.aex is not the accepted current binary",
+        "loaded module hash does not match the accepted current binary",
         "ArgumentList ('-cf \"' + $cdbScript + '\" -p ' + $aePid)",
         "Set-Content -LiteralPath $continueMarker -Value 'continue'",
         "Stop-Process -Id $cdb.Id -Force",

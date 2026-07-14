@@ -6,6 +6,7 @@
   "run_id": null,
   "ae_pid": null,
   "module_base": null,
+  "expected_current_aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
   "aex_sha256": null,
   "project_bits_per_channel": 8,
   "rvas": [

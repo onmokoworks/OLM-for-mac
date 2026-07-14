@@ -308,7 +308,14 @@ def main() -> int:
         default=True,
         help="replace default-mode FUN_1800038d0 chunks with the bounded byte-exact candidate",
     )
+    parser.add_argument(
+        "--schedule-only-rowdriver",
+        action="store_true",
+        help="record AEX rowdriver scheduling, skip row work, and stop before normalization",
+    )
     args = parser.parse_args()
+    if args.schedule_only_rowdriver and not args.detour_rowdriver:
+        parser.error("--schedule-only-rowdriver requires --detour-rowdriver")
     width, height, source_rgba, source = load_argb(args.source)
     loader = AexLoader(str(args.aex), verbose=False, fast=not args.slow_trace)
     loader.register_libm_impls(max_threads=1)
@@ -523,7 +530,8 @@ def main() -> int:
     rowdriver_library = None
     rowdriver_cache: dict = {}
     if args.detour_rowdriver:
-        rowdriver_temp_dir, rowdriver_library, rowdriver_function = build_rowdriver_candidate()
+        if not args.schedule_only_rowdriver:
+            rowdriver_temp_dir, rowdriver_library, rowdriver_function = build_rowdriver_candidate()
 
         def make_float_array(blob: bytes):
             count = len(blob) // 4
@@ -552,6 +560,22 @@ def main() -> int:
                 raise RuntimeError("rowdriver source/destination alias is not covered")
             if not (0 <= row_start < row_end <= row_height and 0 < row_width <= 32768 and row_height <= 32768):
                 raise RuntimeError(f"invalid rowdriver range {row_start}:{row_end} for {row_width}x{row_height}")
+
+            if args.schedule_only_rowdriver:
+                observed["rowdriver_detours"].append({
+                    "call": len(observed["rowdriver_detours"]) + 1,
+                    "rows": [row_start, row_end],
+                    "width": row_width,
+                    "height": row_height,
+                    "source": hex(source_ptr),
+                    "destination": hex(destination_ptr),
+                    "params": hex(params),
+                    "mode": mode,
+                    "rsp": hex(rsp),
+                    "return_address": hex(u64(ld, rsp)),
+                    "execution_context": "single Unicorn thread; AEX worker-loop call order",
+                })
+                return 0
 
             key = (source_ptr, destination_ptr, row_width, row_height, params)
             if not rowdriver_cache:
@@ -685,6 +709,16 @@ def main() -> int:
             return 0
 
         loader.detour_function(ROWDRIVER, "DirectionalBlur.rowdriver.byte_exact", detour_rowdriver)
+
+    if args.schedule_only_rowdriver:
+        def stop_before_normalization(ld: AexLoader, _address: int, _size: int) -> None:
+            observed["checkpoints"]["schedule_complete"] = {
+                "stop": "0x180005554",
+                "rowdriver_calls": len(observed["rowdriver_detours"]),
+            }
+            ld.uc.emu_stop()
+
+        loader.add_code_hook(0x180005554, stop_before_normalization)
 
     def trace_rip(uc, address, _size, _user_data):
         observed["last_rips"].append(hex(address))
