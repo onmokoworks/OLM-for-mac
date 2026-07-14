@@ -67,9 +67,9 @@ def main() -> int:
         assert "schtasks.exe /Create /TN $scheduledTaskName" in launcher
         assert "'-o', '-pd', '-g', '-G'" not in launcher
         assert "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m')" in launcher
-        assert "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)" in launcher
-        assert "('start \"\" ' + $afterFxCommandLine)" in launcher
-        assert "'timeout /t 5 /nobreak >nul'" in launcher
+        assert "Start-Process -FilePath $AfterFxPath -ArgumentList @('-r', $normalizedQueuePath)" in launcher
+        assert "$mainAePid = [int]$launch.Id" in launcher
+        assert "'jsx_dispatch'" in launcher
         assert "$launchArguments = Join-WindowsCommandLine $launchArgumentValues" in launcher
         assert "$observedCommandLine.IndexOf($normalizedQueuePath" not in launcher
         assert "'jsx_command_line_preflight'" not in launcher

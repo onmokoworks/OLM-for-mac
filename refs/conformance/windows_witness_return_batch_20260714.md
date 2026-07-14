@@ -188,7 +188,7 @@ The Windows host was probed outside the plugin witness contract. The observed
 process behavior is that `AfterFX.exe -m -r <queue>` leaves an AfterFX process
 with `-m` only; the queue is not observable. A separate `AfterFX.exe -r
 <queue>` invocation can be dispatched while AE is already running in a clean
-minimal probe. The witness launcher was therefore changed to emit:
+minimal probe. The first launcher experiment therefore emitted:
 
 1. `start "" AfterFX.exe -m`
 2. `timeout /t 5 /nobreak >nul`
@@ -199,5 +199,8 @@ The first KiraKira retry using this launcher still produced no
 observed during the attempt, so this retry remains a host-launch failure and
 does not prove or disprove KiraKira behavior. The next useful check is a fresh
 AE session with any modal/plugin warning dismissed before the second dispatch;
-the Mac-side runner change is locally tested but not yet accepted as a real
-Windows witness result.
+the runner was subsequently tightened so the scheduled task launches only
+`AfterFX.exe -m`, the controlling PowerShell waits for exactly one AE process,
+then dispatches `AfterFX.exe -r <queue>` and verifies that the original PID
+survives. This PID-aware version is locally tested but not yet accepted as a
+real Windows witness result.

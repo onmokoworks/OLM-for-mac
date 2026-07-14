@@ -314,7 +314,6 @@ $normalizedQueuePath = [IO.Path]::GetFullPath($queueLaunch)
 $queueHash = (Get-FileHash -LiteralPath $queueLaunch -Algorithm SHA256).Hash.ToLowerInvariant()
 $env:WINDOWS_WITNESS_QUEUE_SHA256 = $queueHash
 $afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m')
-$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)
 $wrapperLines = @(
   '@echo off',
   ('set "WINDOWS_WITNESS_WORK_ROOT=' + $work + '"'),
@@ -328,12 +327,7 @@ $wrapperLines = @(
 foreach ($property in $contract.project.environment.psobject.Properties) {
   $wrapperLines += ('set "' + $property.Name + '=' + [string]$property.Value + '"')
 }
-$wrapperLines += @(
-  ('start "" ' + $afterFxCommandLine),
-  'timeout /t 5 /nobreak >nul',
-  $queueDispatchCommandLine,
-  'exit /b %ERRORLEVEL%'
-)
+$wrapperLines += @($afterFxCommandLine, 'exit /b %ERRORLEVEL%')
 $wrapperLines | Set-Content -LiteralPath $launchWrapper -Encoding ASCII
 $launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)
 $launchArguments = Join-WindowsCommandLine $launchArgumentValues
@@ -351,11 +345,45 @@ if ($LASTEXITCODE -ne 0) {
   Finish (Failure 'interactive_task' 'Could not run the interactive Windows task for AfterFX' @('interactive_task_started') ([string]::Join("`n", @($taskOutput)))) 2
 }
 $launchStarted = $true
-$launch = $null
+$deadline = (Get-Date).AddSeconds(180)
+$launchStates = @()
+while ((Get-Date) -lt $deadline) {
+  $launchStates = @(Get-AfterFxState)
+  if ($launchStates.Count -eq 1) { break }
+  if ($launchStates.Count -gt 1) {
+    Finish (Failure 'desktop_process_discovery' 'After Effects launch produced more than one candidate process before queue dispatch' @('one_desktop_AfterFX_process') ($launchStates | ConvertTo-Json -Compress)) 2
+  }
+  Start-Sleep -Milliseconds 250
+}
+if ($launchStates.Count -ne 1) {
+  Finish (Failure 'desktop_process_discovery' 'After Effects -m process did not become observable' @('one_desktop_AfterFX_process') '') 2
+}
+$launch = Get-Process -Id ([int]$launchStates[0].pid) -ErrorAction SilentlyContinue
+if (!$launch) {
+  Finish (Failure 'desktop_process_discovery' 'After Effects process disappeared before queue dispatch' @('stable_AfterFX_process') '') 2
+}
+$mainAePid = [int]$launch.Id
+$queueDispatchProcess = $null
+try {
+  $queueDispatchProcess = Start-Process -FilePath $AfterFxPath -ArgumentList @('-r', $normalizedQueuePath) -WindowStyle Normal -PassThru
+  $queueRetryProcesses += $queueDispatchProcess
+}
+catch {
+  Finish (Failure 'jsx_dispatch' 'Could not dispatch queue JSX to the existing After Effects instance' @('queue_dispatch_started') $_.Exception.Message) 2
+}
+$dispatchDeadline = (Get-Date).AddSeconds(60)
+while ((Get-Date) -lt $dispatchDeadline -and !$queueDispatchProcess.HasExited) { Start-Sleep -Milliseconds 250; $queueDispatchProcess.Refresh() }
+if (!$queueDispatchProcess.HasExited) {
+  Finish (Failure 'jsx_dispatch' 'AfterFX -r dispatch process did not exit' @('queue_dispatch_exit') ('pid=' + [string]$queueDispatchProcess.Id)) 2
+}
+$postDispatchStates = @(Get-AfterFxState)
+if (!(@($postDispatchStates | Where-Object { [int]$_.pid -eq $mainAePid }).Count -eq 1)) {
+  Finish (Failure 'same_run_identity' 'The original After Effects process disappeared during queue dispatch' @('shared_ae_pid') ($postDispatchStates | ConvertTo-Json -Compress)) 2
+}
 $deadline = (Get-Date).AddSeconds(180)
 while ((Get-Date) -lt $deadline -and !(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) { Start-Sleep -Milliseconds 250 }
 if (!(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) {
-  Finish (Failure 'jsx_launch' 'CDB-launched After Effects process did not execute the queue JSX' @('queue_bootstrap.log') '') 2
+  Finish (Failure 'jsx_launch' 'After Effects process did not execute the dispatched queue JSX' @('queue_bootstrap.log') ($postDispatchStates | ConvertTo-Json -Compress)) 2
 }
 $queueBootstrapObserved = $true
 try { $queueBootstrapBinding = Read-QueueBootstrapBinding $queueBootstrap }
