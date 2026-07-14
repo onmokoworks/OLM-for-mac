@@ -157,3 +157,27 @@ job's auxiliary `ae_result_*.json` has an empty `request_id` and is included in
 `returned_statuses`. This is a witness packaging/intake contract defect, not a
 plugin correctness result. Fix the contract and re-run intake before changing
 KiraKira source or promoting any status.
+
+## Individual retries after artifact-preservation fix (2026-07-14 17:15 JST)
+
+The local runner was changed to preserve files written beside a CDB short trace
+before deleting the temporary `C:\Users\Public\OLMWitness` directory. The
+KiraKira CDB template now writes the Gaussian coefficient dump through the
+dedicated `ARTIFACT_PATH` placeholder. Local package/compiler/unit smoke passed.
+
+The first Windows retry did not reach the witness:
+
+- Return: `refs/windows_returns/20260714/20260714_1715__RETURN__OLMKIRAKIRA_MODE3__artifact_preservation_retry.zip`
+- SHA-256: `dcbd455387d37651554a124f6282921fd3ecd8453ea5797797da59a84204e997`
+- Status: `exact_bind_failure`
+- Stage: `jsx_launch`
+- Missing field: `queue_bootstrap.log`
+- `bootstrap_host_image_marker_observed=false`
+- `queue_bootstrap_marker_observed=false`
+- Typed witness count: `0`
+- Returned artifacts: none
+
+This is a Windows AE launcher failure and provides no new KiraKira algorithm
+evidence. The artifact-preservation change remains unvalidated on real output;
+the next retry must first restore a successful queue bootstrap, then inspect
+the returned 84-byte coefficient file.

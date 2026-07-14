@@ -24,6 +24,7 @@ STATIC_PLACEHOLDERS = {
     "RENDERER",
     "CASE_ID",
     "TRACE_PATH",
+    "ARTIFACT_PATH",
 }
 DRIVE_PATH_RE = re.compile(r"^[A-Za-z]:")
 

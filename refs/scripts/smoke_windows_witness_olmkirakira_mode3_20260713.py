@@ -132,7 +132,7 @@ def main() -> int:
     template = (SPEC_ROOT / "mode3_live_gaussian.cdb.in").read_text(encoding="ascii")
     assert '.logopen /t "{{TRACE_PATH}}"' in template
     assert ".writemem" in template and "+0x53" in template
-    for placeholder in ("RUN_ID", "AE_PID", "MODULE_BASE", "AEX_SHA256", "PROJECT_BPC", "RENDERER", "CASE_ID", "TRACE_PATH"):
+    for placeholder in ("RUN_ID", "AE_PID", "MODULE_BASE", "AEX_SHA256", "PROJECT_BPC", "RENDERER", "CASE_ID", "TRACE_PATH", "ARTIFACT_PATH"):
         assert "{{" + placeholder + "}}" in template
     for name in ("wrapper", "create", "getKernel", "getKernelReturn"):
         assert "{{ADDRESS:" + name + "}}" in template

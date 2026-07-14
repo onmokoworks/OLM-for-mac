@@ -205,6 +205,15 @@ function Copy-WitnessLaunchEvidence {
       Copy-Item -LiteralPath $pair.Source -Destination $pair.Destination -Force -ErrorAction SilentlyContinue
     }
   }
+  # CDB artifacts such as .writemem outputs are written beside the short trace
+  # path. Preserve them before the temporary Public\OLMWitness directory is
+  # removed; the contract may refer to the corresponding work trace prefix.
+  if ($activeCdbTrace -and $activeCdbTraceEvidence) {
+    foreach ($artifact in @(Get-ChildItem -Path ($activeCdbTrace + '.*') -File -ErrorAction SilentlyContinue)) {
+      $suffix = $artifact.FullName.Substring($activeCdbTrace.Length)
+      Copy-Item -LiteralPath $artifact.FullName -Destination ($activeCdbTraceEvidence + $suffix) -Force -ErrorAction SilentlyContinue
+    }
+  }
 }
 
 function Finish([object]$body, [int]$code) {
@@ -246,7 +255,7 @@ function Render-Cdb([object]$case, [string]$trace, [Int64]$baseValue, [string]$h
   $fixed = [ordered]@{
     RUN_ID=$runId; AE_PID=[string]$boundPid; MODULE_BASE=$boundBase; AEX_SHA256=$hash
     PROJECT_BPC=[string]$contract.project.bits_per_channel; RENDERER=[string]$contract.project.renderer
-    CASE_ID=[string]$case.id; TRACE_PATH=$trace
+    CASE_ID=[string]$case.id; TRACE_PATH=$trace; ARTIFACT_PATH=$trace
   }
   foreach ($pair in $fixed.GetEnumerator()) { $text = $text.Replace('{{' + $pair.Key + '}}', [string]$pair.Value) }
   foreach ($property in $case.template_values.psobject.Properties) {
