@@ -181,3 +181,23 @@ This is a Windows AE launcher failure and provides no new KiraKira algorithm
 evidence. The artifact-preservation change remains unvalidated on real output;
 the next retry must first restore a successful queue bootstrap, then inspect
 the returned 84-byte coefficient file.
+
+## AfterFX 2025 two-stage dispatch experiment (2026-07-14)
+
+The Windows host was probed outside the plugin witness contract. The observed
+process behavior is that `AfterFX.exe -m -r <queue>` leaves an AfterFX process
+with `-m` only; the queue is not observable. A separate `AfterFX.exe -r
+<queue>` invocation can be dispatched while AE is already running in a clean
+minimal probe. The witness launcher was therefore changed to emit:
+
+1. `start "" AfterFX.exe -m`
+2. `timeout /t 5 /nobreak >nul`
+3. `AfterFX.exe -r <normalized queue>`
+
+The first KiraKira retry using this launcher still produced no
+`queue_bootstrap.log` on the Windows desktop. Two AfterFX processes were
+observed during the attempt, so this retry remains a host-launch failure and
+does not prove or disprove KiraKira behavior. The next useful check is a fresh
+AE session with any modal/plugin warning dismissed before the second dispatch;
+the Mac-side runner change is locally tested but not yet accepted as a real
+Windows witness result.

@@ -66,7 +66,10 @@ def main() -> int:
         assert "'-cf', $bootstrapCdbScript, '--', $AfterFxPath" not in launcher
         assert "schtasks.exe /Create /TN $scheduledTaskName" in launcher
         assert "'-o', '-pd', '-g', '-G'" not in launcher
-        assert "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m', '-r', $normalizedQueuePath)" in launcher
+        assert "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m')" in launcher
+        assert "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)" in launcher
+        assert "('start \"\" ' + $afterFxCommandLine)" in launcher
+        assert "'timeout /t 5 /nobreak >nul'" in launcher
         assert "$launchArguments = Join-WindowsCommandLine $launchArgumentValues" in launcher
         assert "$observedCommandLine.IndexOf($normalizedQueuePath" not in launcher
         assert "'jsx_command_line_preflight'" not in launcher

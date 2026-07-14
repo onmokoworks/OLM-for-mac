@@ -313,7 +313,8 @@ if ($queueLaunch -match '\s') { Finish (Failure 'path_preflight' 'short JSX laun
 $normalizedQueuePath = [IO.Path]::GetFullPath($queueLaunch)
 $queueHash = (Get-FileHash -LiteralPath $queueLaunch -Algorithm SHA256).Hash.ToLowerInvariant()
 $env:WINDOWS_WITNESS_QUEUE_SHA256 = $queueHash
-$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m', '-r', $normalizedQueuePath)
+$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m')
+$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)
 $wrapperLines = @(
   '@echo off',
   ('set "WINDOWS_WITNESS_WORK_ROOT=' + $work + '"'),
@@ -327,7 +328,12 @@ $wrapperLines = @(
 foreach ($property in $contract.project.environment.psobject.Properties) {
   $wrapperLines += ('set "' + $property.Name + '=' + [string]$property.Value + '"')
 }
-$wrapperLines += @($afterFxCommandLine, 'exit /b %ERRORLEVEL%')
+$wrapperLines += @(
+  ('start "" ' + $afterFxCommandLine),
+  'timeout /t 5 /nobreak >nul',
+  $queueDispatchCommandLine,
+  'exit /b %ERRORLEVEL%'
+)
 $wrapperLines | Set-Content -LiteralPath $launchWrapper -Encoding ASCII
 $launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)
 $launchArguments = Join-WindowsCommandLine $launchArgumentValues
