@@ -124,7 +124,7 @@
           "worker_hits": {"pattern": "^[1-9][0-9]*$"},
           "rowdriver_calls": {"pattern": "^[1-9][0-9]*$"},
           "row_start": {"equals": "0"},
-          "row_end": {"equals": "2206"},
+          "row_end": {"equals": "2176"},
           "row755_covered": {"equals": "1"},
           "params_mismatch": {"equals": "0"},
           "destination_base": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},

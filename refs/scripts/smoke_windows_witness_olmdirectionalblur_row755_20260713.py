@@ -48,12 +48,12 @@ def complete_trace(*, capture_pid: int = 7550, capture_params: str = "0x000001f0
     return "\n".join(
         [
             f"DBR_WORKER_ENTRY {common()} stage=worker_entry entry_rva=4d84 worker_hit=1",
-            f"DBR_ROW_RANGE {common()} stage=rowdriver entry_rva=38d0 call=1 start=0 end=1103 row755_covered=1",
-            f"DBR_ROW_RANGE {common()} stage=rowdriver entry_rva=38d0 call=2 start=1103 end=2206 row755_covered=1",
+            f"DBR_ROW_RANGE {common()} stage=rowdriver entry_rva=38d0 call=1 start=0 end=1088 row755_covered=1",
+            f"DBR_ROW_RANGE {common()} stage=rowdriver entry_rva=38d0 call=2 start=1088 end=2176 row755_covered=1",
             (
                 f"DBR_PRE_NORMALIZATION_CAPTURE {common(pid=capture_pid, params=capture_params)} "
                 "stage=pre_normalization stage_rva=5554 before_normalization=1 worker_hits=1 "
-                "rowdriver_calls=2 row_start=0 row_end=2206 row755_covered=1 params_mismatch=0 "
+                "rowdriver_calls=2 row_start=0 row_end=2176 row755_covered=1 params_mismatch=0 "
                 "destination_base=0x000001f010000000 denominator_base=0x000001f020000000 "
                 "alpha_valid_base=0x000001f030000000 row0=0 col0=0 stride=2206 row=755 "
                 "x_start=747 x_end=1080 destination_bytes=5344 denominator_bytes=1336 "
