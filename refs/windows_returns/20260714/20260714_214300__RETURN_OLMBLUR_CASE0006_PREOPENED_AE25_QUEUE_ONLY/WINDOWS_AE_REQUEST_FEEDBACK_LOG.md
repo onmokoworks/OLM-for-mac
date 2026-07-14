@@ -84,3 +84,27 @@ For future requests, include the dispatch strategy in the zip name, for example:
 
 - `REQUEST__OLMBLUR_CASE0006_PREOPENED_AE25_TINY_JSX_PROBE.zip`
 - `REQUEST__OLMBLUR_CASE0006_PREOPENED_AE25_QUEUE_AFTER_PROBE.zip`
+
+## Next operator procedure
+
+The next retry should be exercised on the Windows desktop, because the current
+unknown is JSX delivery into an already-open interactive After Effects process.
+SSH/session-0 execution is not a valid substitute for this check.
+
+1. Open exactly one copy of After Effects 2025 normally and leave it open.
+2. Extract the request ZIP and run the PowerShell runner from that interactive
+   Windows desktop session as the normal logged-in user.
+3. Confirm that the tiny JSX probe creates `ae_dispatch_probe.marker` and
+   `AE_DISPATCH_PROBE.log` in the run work directory.
+4. Only when the probe succeeds, inspect the OLMBlur queue result and CDB trace.
+
+Interpretation:
+
+- Probe marker missing: classify as JSX dispatch/host failure; do not tune the
+  OLMBlur algorithm and do not claim a Windows witness.
+- Probe marker present but `ae_ready.marker` missing: classify as queue JSX or
+  AE project setup failure.
+- Probe and queue markers present but CDB fields missing: classify as debugger
+  binding/hook failure.
+- CDB fields and same-run PNG present: only then pass the return package to the
+  OLMBlur classifier.
