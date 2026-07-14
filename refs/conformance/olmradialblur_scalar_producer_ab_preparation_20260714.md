@@ -37,3 +37,18 @@ Run the same Mac AE case_0009 with and without the environment switch and
 compare the complete output plus the existing four-point debug dump. A lower
 residual supports continuing in this producer lane; an unchanged result
 closes this numerical hypothesis without changing production behavior.
+
+## 2026-07-14 measurement result
+
+- Default build: completed through the Mac AE runner with
+  `max_diff=1`, `nonzero=12876`, `mean_abs_sample_diff=0.001876929012345679`.
+  This reproduced the existing baseline.
+- Scalar switch: AE returned `status=error` because the expected PNG was not
+  written. No comparison image or scalar residual was accepted. The likely
+  explanation is the unoptimized O(radius * angle * pixel) cost of forcing the
+  large-radius path, but that is an inference, not a confirmed crash cause.
+- The installed plug-in was restored to the pre-test version after the run.
+
+Decision: this A/B is a performance-failed diagnostic, not algorithm evidence.
+The scalar path must be redesigned around the AEX's scale plane and separate
+left/right ranges before another full-frame AE run.
