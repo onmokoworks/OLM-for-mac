@@ -39,6 +39,10 @@ Run from the interactive Windows desktop session:
 
 `artifacts/run_olmblur_case0006_same_run_internal_20260713.ps1`
 
+The defaults target the verified Windows installation: AE 2025 and the
+common MediaCore OLM folder. Override `-AexPath` or `-AfterFxPath` only when
+the same hash-pinned plug-in is installed elsewhere.
+
 The runner requires After Effects to be fully closed, launches it normally,
 waits for `effect_loaded=1` and `parameters_applied=1`, discovers exactly one
 matching process with the pinned module loaded, and only then attaches CDB.
@@ -123,8 +127,8 @@ RUNNER = rf'''param(
   [switch]$ParseOnly,
   [string]$TracePath = '',
   [string]$ExportPngPath = '',
-  [string]$AexPath = 'C:\Program Files\Adobe\Adobe After Effects 2026\Support Files\Plug-ins\Effects\OLMBlur.aex',
-  [string]$AfterFxPath = 'C:\Program Files\Adobe\Adobe After Effects 2026\Support Files\AfterFX.exe',
+  [string]$AexPath = 'C:\Program Files\Adobe\Common\Plug-ins\7.0\MediaCore\OLM\OLMBlur.aex',
+  [string]$AfterFxPath = 'C:\Program Files\Adobe\Adobe After Effects 2025\Support Files\AfterFX.exe',
   [string]$CdbPath = 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\cdb.exe'
 )
 $ErrorActionPreference='Stop'
