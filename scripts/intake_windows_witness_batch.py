@@ -94,6 +94,15 @@ def case_archive_path(value: str, case_id: str) -> str:
     return value.replace("{case_id}", case_id)
 
 
+def is_auxiliary_status(relative: str, value: dict[str, Any], authoritative_name: object) -> bool:
+    """Keep renderer/validator JSON out of the terminal-status contract."""
+
+    basename = PurePosixPath(relative).name.casefold()
+    if isinstance(authoritative_name, str) and basename != authoritative_name.casefold():
+        return True
+    return value.get("kind") == "olm_ae_single_case_result" or basename.startswith("ae_result_")
+
+
 def require_empty_list_field(row: dict[str, Any], field: str, label: str) -> None:
     require(field in row, f"{label} is missing")
     require(row[field] == [], f"{label} must be an empty array")
@@ -399,6 +408,7 @@ def validate_batch(files: dict[str, bytes], request_files: dict[str, bytes] | No
         require(isinstance(statuses, list), f"{job_id} returned_statuses is missing")
         answered_status_count = 0
         status_paths: set[str] = set()
+        authoritative_name = result.get("return_json_name") or request.get("return_json_name")
         for status_index, row in enumerate(statuses):
             require(isinstance(row, dict), f"{job_id} returned_statuses[{status_index}] is invalid")
             relative = safe_relative(row.get("path"), f"{job_id} returned_statuses[{status_index}].path")
@@ -408,6 +418,8 @@ def validate_batch(files: dict[str, bytes], request_files: dict[str, bytes] | No
             _, status_bytes = one_by_suffix(files, archive_path)
             require(digest(status_bytes) == row.get("sha256"), f"{job_id} status SHA mismatch: {relative}")
             status_json = load_json_bytes(status_bytes, f"{job_id}:{relative}")
+            if is_auxiliary_status(relative, status_json, authoritative_name):
+                continue
             actual_status = status_json.get("status")
             require(actual_status == row.get("status"), f"{job_id} status JSON mismatch: {relative}")
             status_request_id = optional_text(status_json.get("request_id"))

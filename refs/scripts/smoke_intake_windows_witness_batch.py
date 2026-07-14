@@ -216,15 +216,25 @@ def build_fixture(
             status_body = {"schema_version": 1, "status": "answered", "request_id": status_request_id}
             status_data = canonical(status_body)
             status_path = "package/work/validation_status.json"
+            auxiliary_path = f"package/work/ae_result_{case_id}.json"
+            auxiliary_data = canonical({
+                "kind": "olm_ae_single_case_result",
+                "case_id": case_id,
+                "status": "ok",
+                "request_id": "",
+            })
             return_files[prefix + inner_path] = inner
             return_files[prefix + status_path] = status_data
+            return_files[prefix + auxiliary_path] = auxiliary_data
             evidence.extend(
                 [
                     {"path": inner_path, "sha256": sha256(inner), "size_bytes": len(inner)},
                     {"path": status_path, "sha256": sha256(status_data), "size_bytes": len(status_data)},
+                    {"path": auxiliary_path, "sha256": sha256(auxiliary_data), "size_bytes": len(auxiliary_data)},
                 ]
             )
             statuses.append({"path": status_path, "status": "answered", "sha256": sha256(status_data)})
+            statuses.append({"path": auxiliary_path, "status": "ok", "sha256": sha256(auxiliary_data)})
         else:
             inner = inner_failure_return(request_id)
             inner_path = "package/work/RETURN.zip"

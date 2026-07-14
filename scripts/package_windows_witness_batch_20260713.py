@@ -395,7 +395,11 @@ try {
           }
           continue
         }
-        if ($body.PSObject.Properties.Name -contains 'status') {
+        # returned_statuses is reserved for terminal witness status JSON. AE
+        # helper results may expose a status field without carrying the batch
+        # request binding and must remain ordinary evidence instead.
+        if (($body.PSObject.Properties.Name -contains 'status') -and
+            ([string]$body.status -in @('answered', 'exact_bind_failure'))) {
           $statusRecords += [ordered]@{
             path = $relative
             request_id = [string]$body.request_id

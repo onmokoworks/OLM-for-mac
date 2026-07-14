@@ -124,3 +124,36 @@ it still failed before queue execution:
 This confirms the CDB initial-break portion of the launcher fix, but does not
 validate queue dispatch or any OLM plugin behavior. The next debugging target
 is AfterFX queue execution and process binding, not the Mac algorithm.
+
+## One-click six-job batch (2026-07-14 16:06 JST)
+
+This is a separate batch from the older launcher-failure returns above. The
+outer return was archived at
+`refs/windows_returns/20260714/20260714_160633__RETURN__windows_witness_batch_20260714.zip`
+with SHA-256
+`8e38b07439bad2e045eb881473683e2f2a6a6c8beea41f6f225cdc2e4615c825`.
+The transport result is `partial_success`; all six job return archives were
+created, but no job may be promoted to `AE exact` from this batch.
+
+### Facts
+
+- `OLMKiraKira` job006 reached `KK_WRAPPER`, `KK_CREATE`,
+  `KK_KERNEL_ENTRY`, and `KK_KERNEL_RETURN` in one run.
+- The live kernel entry recorded `ecx=21`, `xmm1=2.5`, and `r8=5`.
+- The return recorded `word_count=21`, `raw_bytes=84`, and `element=float32`.
+- The actual 84-byte coefficient artifact was not present in the returned ZIP;
+  therefore the Gaussian coefficient values remain unconfirmed.
+- OLMBlur case0006, DG 8bpc typed boundary, Smoother2 case0012, and DG case0026
+  each ended with `typed_hit_count=0` and `cdb_exited_without_typed_hit`.
+- DirectionalBlur row755 failed in the AE runner before rendering because its
+  input PNG path was not valid after batch extraction.
+- The batch launcher reported no remaining AfterFX/CDB processes after cleanup;
+  a late orphaned AfterFX tree was explicitly terminated and checked again.
+
+### Intake decision
+
+The fail-closed batch intake currently rejects this archive because the KiraKira
+job's auxiliary `ae_result_*.json` has an empty `request_id` and is included in
+`returned_statuses`. This is a witness packaging/intake contract defect, not a
+plugin correctness result. Fix the contract and re-run intake before changing
+KiraKira source or promoting any status.

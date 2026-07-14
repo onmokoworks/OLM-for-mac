@@ -1,0 +1,65 @@
+{
+  "batch_id": "windows_witness_batch_20260713",
+  "classification": "accepted_partial_evidence",
+  "job_count": 6,
+  "jobs": [
+    {
+      "evidence_files": 20,
+      "id": "olmblur_case0006_same_run_20260713",
+      "order": 1,
+      "request_id_bound": true,
+      "required": true,
+      "status": "failed",
+      "verified_inner_returns": 1
+    },
+    {
+      "evidence_files": 20,
+      "id": "windows_witness_olmdistancegradation_8bpc_typed_boundary_20260713",
+      "order": 2,
+      "request_id_bound": true,
+      "required": true,
+      "status": "failed",
+      "verified_inner_returns": 1
+    },
+    {
+      "evidence_files": 10,
+      "id": "olmsmoother2_case0012_current_aex_20260713",
+      "order": 3,
+      "request_id_bound": true,
+      "required": true,
+      "status": "failed",
+      "verified_inner_returns": 1
+    },
+    {
+      "evidence_files": 12,
+      "id": "windows_witness_olmdistancegradation_case0026_16bpc_livefield_20260713",
+      "order": 4,
+      "request_id_bound": true,
+      "required": true,
+      "status": "failed",
+      "verified_inner_returns": 1
+    },
+    {
+      "evidence_files": 14,
+      "id": "olmdirectionalblur_row755_20260713",
+      "order": 5,
+      "request_id_bound": true,
+      "required": true,
+      "status": "failed",
+      "verified_inner_returns": 1
+    },
+    {
+      "evidence_files": 22,
+      "id": "olmkirakira_mode3_live_gaussian_20260713",
+      "order": 6,
+      "request_id_bound": true,
+      "required": true,
+      "status": "failed",
+      "verified_inner_returns": 1
+    }
+  ],
+  "legacy_unbound_jobs": 0,
+  "required_failures": 6,
+  "schema_version": 1,
+  "status": "partial_success"
+}

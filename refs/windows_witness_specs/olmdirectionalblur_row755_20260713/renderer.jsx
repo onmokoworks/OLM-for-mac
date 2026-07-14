@@ -100,6 +100,7 @@
 
     function importFootage(path) {
         var file = new File(path);
+        file = new File(file.fsName);
         var options = new ImportOptions(file);
         return app.project.importFile(options);
     }

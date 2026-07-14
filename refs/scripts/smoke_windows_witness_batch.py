@@ -225,7 +225,14 @@ def main() -> int:
         foreign = tmp / "foreign.zip"
         stderr_ok = tmp / "stderr_ok.zip"
         timeout_job = tmp / "timeout.zip"
-        make_job(success, "success", "answered", code=0, manifest_request_id="success")
+        make_job(
+            success,
+            "success",
+            "answered",
+            code=0,
+            manifest_request_id="success",
+            extra_statuses=[{"request_id": "", "status": "ok"}],
+        )
         make_job(failure, "failure", "exact_bind_failure", code=2, manifest_request_id="failure")
         make_job(
             foreign,
@@ -387,6 +394,7 @@ def main() -> int:
         assert "Wait-Process -Id $pidValue -Timeout 10" in generator_source
         assert "[IO.Compression.ZipFile]::OpenRead" in generator_source
         assert "foreach ($record in @($result.evidence))" in generator_source
+        assert "[string]$body.status -in @('answered', 'exact_bind_failure')" in generator_source
         assert "Get-ChildItem -LiteralPath $WorkRoot | Copy-Item" not in generator_source
 
         bad_timeout = run_generator(

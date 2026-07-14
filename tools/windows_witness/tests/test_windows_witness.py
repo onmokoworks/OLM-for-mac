@@ -90,6 +90,22 @@ class CompilerTests(unittest.TestCase):
                 self.assertIn("cdb/000_case_0001.cdb.in", names)
                 self.assertTrue(all(info.date_time == (2026, 1, 1, 0, 0, 0) for info in archive.infolist()))
 
+    def test_generated_windows_queue_normalizes_package_paths(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package, _ = compile_witness(SPEC, Path(temp) / "package", Path(temp) / "package.zip")
+            queue = (package / "scripts" / "ae_witness_queue.jsx").read_text(encoding="utf-8")
+            self.assertIn("root = new Folder(root).fsName;", queue)
+            self.assertIn('var requestDir = new Folder(root + "/request").fsName;', queue)
+
+    def test_windows_renderers_normalize_import_paths_for_ae(self) -> None:
+        specs_root = Path(__file__).resolve().parents[3] / "refs" / "windows_witness_specs"
+        renderers = sorted(specs_root.glob("*/renderer.jsx"))
+        self.assertGreaterEqual(len(renderers), 1)
+        for renderer in renderers:
+            with self.subTest(renderer=renderer.parent.name):
+                source = renderer.read_text(encoding="utf-8")
+                self.assertIn("file = new File(file.fsName);", source)
+
     def test_rejects_non_truncating_cdb_log(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             fixture = Path(temp) / "fixture"
