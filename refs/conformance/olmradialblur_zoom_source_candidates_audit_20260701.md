@@ -19,9 +19,9 @@
 
 | Rank | Site | Function | Line | Why live | Allowed change shape |
 | --- | --- | --- | ---: | --- | --- |
-| 1 | `zoom_polar_population_and_validity_capture` | `RenderZoom8` | `709` | The remaining Zoom split is no longer RGB or final-byte broad drift; it is the caller-collapse state between sampler return and final alpha, so source-polar population and preserved-validity capture stay first. | typed caller-collapse input / preserved-validity capture only |
-| 2 | `zoom_alpha_accumulation_and_denominator_state` | `RenderZoom8` | `732` | Windows already truncates to the stored byte exactly, and the local propagated-validity probe is inert, so the live question is the alpha coverage denominator or equivalent normalization state before final inverse sampling. | alpha accumulation / denominator state only; no broad geometry rewrite |
-| 3 | `zoom_final_inverse_sample_and_u8_writeback` | `RenderZoom8` | `805` | This is second-order only. Reopen it only if a Windows typed witness proves upstream caller-collapse state already matches while the 254/255 split still appears at final sampling. | only with explicit Windows contradiction to the current caller-collapse reading |
+| 1 | `zoom_polar_population_and_validity_capture` | `RenderZoom8` | `936` | The remaining Zoom split is no longer RGB or final-byte broad drift; it is the caller-collapse state between sampler return and final alpha, so source-polar population and preserved-validity capture stay first. | typed caller-collapse input / preserved-validity capture only |
+| 2 | `zoom_alpha_accumulation_and_denominator_state` | `RenderZoom8` | `972` | Windows already truncates to the stored byte exactly, and the local propagated-validity probe is inert, so the live question is the alpha coverage denominator or equivalent normalization state before final inverse sampling. | alpha accumulation / denominator state only; no broad geometry rewrite |
+| 3 | `zoom_final_inverse_sample_and_u8_writeback` | `RenderZoom8` | `1051` | This is second-order only. Reopen it only if a Windows typed witness proves upstream caller-collapse state already matches while the 254/255 split still appears at final sampling. | only with explicit Windows contradiction to the current caller-collapse reading |
 
 ## Decision Ladder
 

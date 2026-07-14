@@ -55,7 +55,7 @@
     {
       "allowed_change_shape": "typed caller-collapse input / preserved-validity capture only",
       "function": "RenderZoom8",
-      "line": 709,
+      "line": 936,
       "rank": 1,
       "site": "zoom_polar_population_and_validity_capture",
       "why_still_live": "The remaining Zoom split is no longer RGB or final-byte broad drift; it is the caller-collapse state between sampler return and final alpha, so source-polar population and preserved-validity capture stay first."
@@ -63,7 +63,7 @@
     {
       "allowed_change_shape": "alpha accumulation / denominator state only; no broad geometry rewrite",
       "function": "RenderZoom8",
-      "line": 732,
+      "line": 972,
       "rank": 2,
       "site": "zoom_alpha_accumulation_and_denominator_state",
       "why_still_live": "Windows already truncates to the stored byte exactly, and the local propagated-validity probe is inert, so the live question is the alpha coverage denominator or equivalent normalization state before final inverse sampling."
@@ -71,7 +71,7 @@
     {
       "allowed_change_shape": "only with explicit Windows contradiction to the current caller-collapse reading",
       "function": "RenderZoom8",
-      "line": 805,
+      "line": 1051,
       "rank": 3,
       "site": "zoom_final_inverse_sample_and_u8_writeback",
       "why_still_live": "This is second-order only. Reopen it only if a Windows typed witness proves upstream caller-collapse state already matches while the 254/255 split still appears at final sampling."
