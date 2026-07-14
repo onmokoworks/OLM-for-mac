@@ -67,7 +67,10 @@ def main() -> int:
         assert "schtasks.exe /Create /TN $scheduledTaskName" in launcher
         assert "'-o', '-pd', '-g', '-G'" not in launcher
         assert "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m')" in launcher
-        assert "Start-Process -FilePath $AfterFxPath -ArgumentList @('-r', $normalizedQueuePath)" in launcher
+        assert "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)" in launcher
+        assert "$dispatchScheduledTaskName = '\\OLM_Witness_Dispatch_'" in launcher
+        assert "schtasks.exe /Create /TN $dispatchScheduledTaskName" in launcher
+        assert "schtasks.exe /Run /TN $dispatchScheduledTaskName" in launcher
         assert "$mainAePid = [int]$launch.Id" in launcher
         assert "'jsx_dispatch'" in launcher
         assert "$launchArguments = Join-WindowsCommandLine $launchArgumentValues" in launcher

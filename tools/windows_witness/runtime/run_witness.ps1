@@ -41,6 +41,7 @@ $processDiagnostics = Join-Path $work 'afterfx_process_diagnostics.json'
 $bootstrapCdbScriptEvidence = Join-Path $work 'afterfx_bootstrap.cdb'
 $bootstrapCdbTraceEvidence = Join-Path $work 'afterfx_bootstrap_cdb_trace.txt'
 $launchWrapperEvidence = Join-Path $work 'afterfx_launch_wrapper.cmd'
+$dispatchWrapperEvidence = Join-Path $work 'afterfx_dispatch_wrapper.cmd'
 $queueLaunchEvidence = Join-Path $work 'launched_queue.jsx'
 $queuePath = Join-Path $PackageRoot ([string]$contract.queue).Replace('/', '\')
 $sessionId = (Get-Process -Id $PID).SessionId
@@ -57,8 +58,11 @@ $queueLaunch = $null
 $bootstrapCdbScript = $null
 $bootstrapCdbTrace = $null
 $launchWrapper = $null
+$dispatchWrapper = $null
 $scheduledTaskName = $null
 $scheduledTaskCreated = $false
+$dispatchScheduledTaskName = $null
+$dispatchScheduledTaskCreated = $false
 $normalizedQueuePath = $null
 $observedCommandLine = $null
 $bootstrapObservedMarker = $false
@@ -158,6 +162,9 @@ function Stop-WitnessProcesses {
   if ($scheduledTaskCreated -and $scheduledTaskName) {
     & schtasks.exe /Delete /TN $scheduledTaskName /F *> $null
   }
+  if ($dispatchScheduledTaskCreated -and $dispatchScheduledTaskName) {
+    & schtasks.exe /Delete /TN $dispatchScheduledTaskName /F *> $null
+  }
 }
 
 function Stop-CdbCapture {
@@ -197,6 +204,7 @@ function Copy-WitnessLaunchEvidence {
     [pscustomobject]@{Source=$bootstrapCdbScript; Destination=$bootstrapCdbScriptEvidence}
     [pscustomobject]@{Source=$bootstrapCdbTrace; Destination=$bootstrapCdbTraceEvidence}
     [pscustomobject]@{Source=$launchWrapper; Destination=$launchWrapperEvidence}
+    [pscustomobject]@{Source=$dispatchWrapper; Destination=$dispatchWrapperEvidence}
     [pscustomobject]@{Source=$queueLaunch; Destination=$queueLaunchEvidence}
     [pscustomobject]@{Source=$queueBootstrap; Destination=(Join-Path $work 'queue_bootstrap.log')}
     [pscustomobject]@{Source=$activeCdbTrace; Destination=$activeCdbTraceEvidence}
@@ -307,6 +315,7 @@ $queueBootstrap = Join-Path $launchDir 'queue_bootstrap.log'
 $bootstrapCdbScript = Join-Path $launchDir 'boot.cdb'
 $bootstrapCdbTrace = Join-Path $launchDir 'boot.log'
 $launchWrapper = Join-Path $launchDir 'launch.cmd'
+$dispatchWrapper = Join-Path $launchDir 'dispatch.cmd'
 Copy-Item -LiteralPath $queuePath -Destination $queueLaunch -Force
 Remove-Item -LiteralPath $queueBootstrap -Force -ErrorAction SilentlyContinue
 if ($queueLaunch -match '\s') { Finish (Failure 'path_preflight' 'short JSX launch path contains whitespace' @('no_space_queue_path') $queueLaunch) 2 }
@@ -314,6 +323,7 @@ $normalizedQueuePath = [IO.Path]::GetFullPath($queueLaunch)
 $queueHash = (Get-FileHash -LiteralPath $queueLaunch -Algorithm SHA256).Hash.ToLowerInvariant()
 $env:WINDOWS_WITNESS_QUEUE_SHA256 = $queueHash
 $afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m')
+$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)
 $wrapperLines = @(
   '@echo off',
   ('set "WINDOWS_WITNESS_WORK_ROOT=' + $work + '"'),
@@ -363,18 +373,17 @@ if (!$launch) {
   Finish (Failure 'desktop_process_discovery' 'After Effects process disappeared before queue dispatch' @('stable_AfterFX_process') '') 2
 }
 $mainAePid = [int]$launch.Id
-$queueDispatchProcess = $null
-try {
-  $queueDispatchProcess = Start-Process -FilePath $AfterFxPath -ArgumentList @('-r', $normalizedQueuePath) -WindowStyle Normal -PassThru
-  $queueRetryProcesses += $queueDispatchProcess
+$dispatchLines = @('@echo off', $queueDispatchCommandLine, 'exit /b %ERRORLEVEL%')
+$dispatchLines | Set-Content -LiteralPath $dispatchWrapper -Encoding ASCII
+$dispatchScheduledTaskName = '\OLM_Witness_Dispatch_' + ($runId -replace '[^A-Za-z0-9_-]', '_')
+$dispatchTaskOutput = & schtasks.exe /Create /TN $dispatchScheduledTaskName /TR $dispatchWrapper /SC ONCE /SD $taskDate /ST $taskTime /IT /F 2>&1
+if ($LASTEXITCODE -ne 0) {
+  Finish (Failure 'jsx_dispatch' 'Could not create the interactive queue dispatch task' @('queue_dispatch_task_created') ([string]::Join("`n", @($dispatchTaskOutput)))) 2
 }
-catch {
-  Finish (Failure 'jsx_dispatch' 'Could not dispatch queue JSX to the existing After Effects instance' @('queue_dispatch_started') $_.Exception.Message) 2
-}
-$dispatchDeadline = (Get-Date).AddSeconds(60)
-while ((Get-Date) -lt $dispatchDeadline -and !$queueDispatchProcess.HasExited) { Start-Sleep -Milliseconds 250; $queueDispatchProcess.Refresh() }
-if (!$queueDispatchProcess.HasExited) {
-  Finish (Failure 'jsx_dispatch' 'AfterFX -r dispatch process did not exit' @('queue_dispatch_exit') ('pid=' + [string]$queueDispatchProcess.Id)) 2
+$dispatchScheduledTaskCreated = $true
+$dispatchTaskOutput = & schtasks.exe /Run /TN $dispatchScheduledTaskName 2>&1
+if ($LASTEXITCODE -ne 0) {
+  Finish (Failure 'jsx_dispatch' 'Could not run the interactive queue dispatch task' @('queue_dispatch_task_started') ([string]::Join("`n", @($dispatchTaskOutput)))) 2
 }
 $postDispatchStates = @(Get-AfterFxState)
 if (!(@($postDispatchStates | Where-Object { [int]$_.pid -eq $mainAePid }).Count -eq 1)) {
