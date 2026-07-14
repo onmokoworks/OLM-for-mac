@@ -75,10 +75,8 @@ def main() -> int:
     for name in ("missing_stage_cdb_trace.txt", "identity_drift_cdb_trace.txt", "role_drift_cdb_trace.txt"):
         if classify(PACKAGE / "fixtures" / name): return fail(f"adversarial fixture accepted: {name}")
     runner = (PACKAGE / "artifacts/run_olmblur_case0006_same_run_internal_20260713.ps1").read_text(encoding="utf-8")
-    for term in ("Get-CimInstance Win32_Process", "SessionId", "Get-FileHash", "effect_loaded=1", "parameters_applied=1", "Start-Process -FilePath $AfterFxPath", "Start-Process -FilePath $CdbPath", "0x2280", "0x2ff1", "0x3032", "BLUR16_WORKER_ENTRY", "BLUR16_FINAL_PRE_STORE", "BLUR16_STORED_RGB16", "Inspect-Png", "RETURN_OLMBLUR_CASE0006.json", "RETURN_OLMBLUR_CASE0006.zip", "return/exported_case_0006.png", "exact_bind_failure", "RawLogs"):
+    for term in ("Get-CimInstance Win32_Process", "SessionId", "Get-FileHash", "effect_loaded=1", "parameters_applied=1", "schtasks.exe /Create", "ae_dispatch_probe.jsx", "Start-Process -FilePath $CdbPath", "0x2280", "0x2ff1", "0x3032", "BLUR16_WORKER_ENTRY", "BLUR16_FINAL_PRE_STORE", "BLUR16_STORED_RGB16", "Inspect-Png", "RETURN_OLMBLUR_CASE0006.json", "RETURN_OLMBLUR_CASE0006.zip", "return/exported_case_0006.png", "exact_bind_failure", "RawLogs"):
         if term not in runner: return fail(f"runner missing: {term}")
-    if "$aeArgs=('-m -r \"' + $queue + '\"')" not in runner:
-        return fail("AfterFX JSX arguments are not passed as one quoted string")
     if "-ArgumentList @('-m','-r',$queue)" in runner:
         return fail("known-broken split AfterFX argument form remains")
     if '.logopen /t "$trace"' not in runner:
