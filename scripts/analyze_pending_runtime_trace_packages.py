@@ -21,6 +21,7 @@ PRIORITY_PROFILES = {
     "olmdirectionalblur-2025-alpha-fade-fullrender-row755-pre-normalization": 3,
     "olmdirectionalblur-row755-common-core": 3,
     "distancegradation-8bpc-current-aex-same-run-typed-boundary": 1,
+    "distancegradation-8bpc-coordinate-liveness-census": 1,
     "radialblur-tiny-rotation-anchor-context-watch-followup": 3,
     "radialblur-tiny-rotation-anchor-pointer-watch-followup": 4,
     "radialblur-tiny-rotation-anchor-watch-followup": 5,

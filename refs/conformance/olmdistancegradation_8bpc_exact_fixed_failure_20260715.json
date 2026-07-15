@@ -1,0 +1,89 @@
+{
+  "schema": "olmdg8-exact-fixed-failure-classification.v1",
+  "source": {
+    "path": "refs/windows_returns/20260715/20260715_184157__RETURN__OLMDISTANCEGRADATION_EXACT_FIXED_FAILURE.zip",
+    "sha256": "ccc11da41921d37edd529a29becdaf29eabdda14b6fbb74cbc92394a1dd9fbe5"
+  },
+  "status": "accepted_exact_bind_failure",
+  "classification": "target-coordinate-not-observed-and-aex-hash-unbound",
+  "algorithm_evidence": false,
+  "request_satisfied": false,
+  "target_xy": [
+    397,
+    281
+  ],
+  "callback": {
+    "pf8_rva": "0x1170870",
+    "pf32_rva": "0x1170c90",
+    "breakpoints_armed": true,
+    "target_hit_count": 0,
+    "aex_sha256_present": false
+  },
+  "cases": [
+    {
+      "case_id": "case_0001",
+      "ae_status": "ok",
+      "ae_version": "25.2x131",
+      "project": {
+        "bits_per_channel": 8,
+        "working_space": "None",
+        "linear_blending": false
+      },
+      "output_png": {
+        "width_height": [
+          1920,
+          1080
+        ],
+        "sha256": "7d8a37e51743efe9d9aa8dd8c70c220749039194c196828a5dc288885cd16f0f",
+        "size_bytes": 161475
+      }
+    },
+    {
+      "case_id": "case_0015",
+      "ae_status": "ok",
+      "ae_version": "25.2x131",
+      "project": {
+        "bits_per_channel": 8,
+        "working_space": "None",
+        "linear_blending": false
+      },
+      "output_png": {
+        "width_height": [
+          1920,
+          1080
+        ],
+        "sha256": "226fb67d4c527bc4aacc2f428cab9d6a8b1c5cb3c149f8abba21d20ab05c2ca7",
+        "size_bytes": 161040
+      }
+    },
+    {
+      "case_id": "case_0029",
+      "ae_status": "ok",
+      "ae_version": "25.2x131",
+      "project": {
+        "bits_per_channel": 8,
+        "working_space": "None",
+        "linear_blending": false
+      },
+      "output_png": {
+        "width_height": [
+          1920,
+          1080
+        ],
+        "sha256": "a47f26dc730fb37280656511ef9835f6165f1997fa544f39410255094f923a58",
+        "size_bytes": 66248
+      }
+    }
+  ],
+  "FACT": [
+    "AE 25.2 rendered all three named cases successfully at 8bpc with working space None and linear blending disabled.",
+    "CDB armed absolute PF8 and PF32 callback breakpoints and continued execution.",
+    "The PF8 entry condition EDX=397 and R8D=281 emitted no target marker.",
+    "The return does not retain an AEX SHA-256 or a complete typed field/compose/store chain."
+  ],
+  "INFERENCE": [
+    "Static callback ABI evidence identifies EDX/R8D as x/y at PF8 entry, but this return cannot decide whether AE skipped the target through its iterate ROI or whether host coordinate mapping differs.",
+    "A broad coordinate-liveness census is required before another exact-coordinate capture."
+  ],
+  "next_action": "run a hash-pinned PF8 coordinate-liveness census for the same three cases; collect total/min/max/first hits, target-neighborhood hits, output pointers, PF32 count, and same-run identity"
+}

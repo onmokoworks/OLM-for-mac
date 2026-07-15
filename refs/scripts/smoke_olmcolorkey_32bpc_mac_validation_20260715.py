@@ -39,6 +39,25 @@ def main() -> int:
             assert token in jsx, token
         subprocess.run([sys.executable, str(RUNNER), "--plugin-path", str(temp / "wrong.plugin"), "--support-dir", str(temp / "runner"), "--dump-js", str(dumped)], cwd=ROOT, check=False)
         assert not dumped.exists()
+        plugin = temp / "OLMColorKey.plugin"
+        plugin.write_bytes(b"smoke-only plugin identity\n")
+        runner_support = temp / "runner"
+        subprocess.run(
+            [
+                sys.executable,
+                str(RUNNER),
+                "--plugin-path",
+                str(plugin),
+                "--support-dir",
+                str(runner_support),
+                "--dump-js",
+                str(dumped),
+            ],
+            cwd=ROOT,
+            check=True,
+        )
+        assert dumped.exists()
+        assert not (runner_support / f"{MAC_REQUEST_ID}.zip").exists()
         with zipfile.ZipFile(archive) as z:
             names = set(z.namelist())
             assert "request_manifest.json" in names and "windows_reference_manifest.json" in names

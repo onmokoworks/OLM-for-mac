@@ -27,6 +27,7 @@ WINDOWS_WITNESS_BATCH_MANIFEST_NAME = "batch-manifest.json"
 WINDOWS_WITNESS_BATCH_README = "README.txt"
 WINDOWS_WITNESS_BATCH_ONE_CLICK = "RUN_WINDOWS_WITNESS_BATCH.cmd"
 WINDOWS_WITNESS_BATCH_LAUNCHER = "run_windows_witness_batch.ps1"
+EXCHANGE_SPLIT_SUBDIRS = ("mac_requests", "windows_processing", "mac_returns")
 
 
 def validate_safe_id(value: Any, label: str) -> str:
@@ -323,6 +324,21 @@ def parse_windows_witness_batch_return(path: Path) -> dict[str, Any] | None:
     return {"batch_id": manifest.get("batch_id"), "path": path, "status": returned.get("status")}
 
 
+def split_exchange_layout(staging_dir: Path) -> tuple[Path, ...] | None:
+    lanes = tuple(staging_dir / name for name in EXCHANGE_SPLIT_SUBDIRS if (staging_dir / name).is_dir())
+    return lanes or None
+
+
+def staging_zip_paths(staging_dir: Path) -> list[Path]:
+    split_lanes = split_exchange_layout(staging_dir)
+    if split_lanes is None:
+        return sorted(path for path in staging_dir.glob("*.zip") if path.is_file())
+    zip_paths: list[Path] = []
+    for lane in split_lanes:
+        zip_paths.extend(path for path in sorted(lane.glob("*.zip")) if path.is_file())
+    return zip_paths
+
+
 def validate_project_send_first(rows: list[dict[str, Any]], staging_dir: Path, repo: Path, readme_path: Path | None) -> tuple[bool, str]:
     send_first = rows[0]
     package_rel = Path(send_first["package"])
@@ -370,7 +386,7 @@ def validate_project_send_first(rows: list[dict[str, Any]], staging_dir: Path, r
 
 
 def validate_nas_staging(rows: list[dict[str, Any]], staging_dir: Path, repo: Path) -> tuple[bool, str]:
-    zip_paths = sorted(staging_dir.glob("*.zip"))
+    zip_paths = staging_zip_paths(staging_dir)
     staged_runtime_packages = []
     staged_batches = []
     staged_returns = []
@@ -637,6 +653,44 @@ def run_self_test() -> int:
             repo,
         )
         require(not ok and "invalid NAS unified batch" in message, f"unexpected failure mode: {message}")
+
+        split_staging = tmp / "split_staging"
+        for lane in EXCHANGE_SPLIT_SUBDIRS:
+            (split_staging / lane).mkdir(parents=True, exist_ok=True)
+        split_batch_id = "synthetic_windows_witness_batch_split_selftest_20260715"
+        split_batch = split_staging / "mac_requests" / "olm_windows_witness_batch_split_test.zip"
+        build_synthetic_batch(
+            split_batch,
+            "001_batch_pending_request.zip",
+            inner_bytes,
+            "batch_pending_request",
+            batch_id=split_batch_id,
+        )
+        split_canonical = canonical_dir / f"{split_batch_id}.zip"
+        split_canonical.write_bytes(split_batch.read_bytes())
+        split_return = split_staging / "mac_returns" / "olm_windows_witness_batch_split_test_RETURN.zip"
+        split_files = read_zip_members(split_batch)
+        split_manifest_entry = find_unique_by_basename(split_files, WINDOWS_WITNESS_BATCH_MANIFEST_NAME)
+        require(split_manifest_entry is not None, "split self-test request manifest missing")
+        _, split_manifest_bytes = split_manifest_entry
+        split_return_status = {
+            "schema_version": 1,
+            "kind": "windows_witness_batch_return",
+            "batch_id": split_batch_id,
+            "status": "partial_success",
+            "manifest_sha256": sha256_bytes(split_manifest_bytes),
+            "jobs": [{"order": 1, "id": "batch_pending_request", "status": "failed"}],
+        }
+        with zipfile.ZipFile(split_return, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
+            archive.writestr(WINDOWS_WITNESS_BATCH_MANIFEST_NAME, split_manifest_bytes)
+            archive.writestr("windows_witness_batch_launcher.log", b"done\n")
+            archive.writestr("windows_witness_batch_return.json", (json.dumps(split_return_status, sort_keys=True) + "\n").encode("ascii"))
+        ok, message = validate_nas_staging(
+            [{"package": "unused.zip", "priority": 5, "request_id": "batch_pending_request", "status": "pending"}],
+            split_staging,
+            repo,
+        )
+        require(ok, message)
     print("[OK] smoke_windows_send_first_staging self-test passed")
     return 0
 
@@ -666,7 +720,7 @@ def main(argv: list[str] | None = None) -> int:
     if not rows:
         stale_artifacts = []
         try:
-            for path in sorted(staging_dir.glob("*.zip")):
+            for path in staging_zip_paths(staging_dir):
                 returned_batch = parse_windows_witness_batch_return(path) if looks_like_windows_witness_batch(path) else None
                 if returned_batch is not None:
                     continue

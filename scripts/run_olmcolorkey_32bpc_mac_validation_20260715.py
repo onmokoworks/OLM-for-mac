@@ -7,11 +7,9 @@ import argparse
 import hashlib
 import json
 import os
-import shutil
 import subprocess
 import sys
 import tempfile
-import zipfile
 from pathlib import Path
 
 from package_olmcolorkey_32bpc_mac_validation_20260715 import REQUEST_INDEX, STEM, build
@@ -64,7 +62,11 @@ def main() -> int:
     support = args.support_dir or Path(tempfile.mkdtemp(prefix=STEM + "_"))
     output_dir = (args.output_dir or (support / "return")).resolve(); output_dir.mkdir(parents=True, exist_ok=True)
     result_json = (args.result_json or (output_dir / "mac_validation_return.json")).resolve()
-    build(Path(support / f"{STEM}.zip"), support)
+    # The package archive must live outside support.  Putting it below support
+    # makes build() discover the archive while it is being written and causes
+    # an unbounded self-containing ZIP.
+    with tempfile.TemporaryDirectory(prefix=STEM + "_package_") as raw_package_dir:
+        build(Path(raw_package_dir) / f"{STEM}.zip", support)
     if not REQUEST_INDEX.exists():
         print("[FAIL_CLOSED] Mac request index is missing", file=sys.stderr); return 1
     request = json.loads((support / "request_manifest.json").read_text(encoding="utf-8"))

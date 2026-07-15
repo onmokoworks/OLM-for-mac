@@ -144,6 +144,82 @@ def main() -> int:
         assert "req_01.zip" in new_files
         assert "req_02.zip" not in new_files
 
+    with tempfile.TemporaryDirectory(prefix="olm_publish_pending_runtime_split_smoke_") as tmp:
+        tmp_root = Path(tmp)
+        share_root = tmp_root / "olm_pr"
+        mac_requests = share_root / "new" / "mac_requests"
+        windows_processing = share_root / "new" / "windows_processing"
+        mac_returns = share_root / "new" / "mac_returns"
+        old_dir = share_root / "old"
+        mac_requests.mkdir(parents=True)
+        windows_processing.mkdir(parents=True)
+        mac_returns.mkdir(parents=True)
+        old_dir.mkdir(parents=True)
+
+        pkg_dir = tmp_root / "pkgs"
+        pkg_dir.mkdir()
+        pkg = pkg_dir / "req_split.zip"
+        write_zip(pkg, {"hello.txt": "split\n"})
+        (mac_requests / "stale_request.zip").write_text("old\n", encoding="utf-8")
+        timestamp = subprocess.run(
+            ["date", "+%Y%m%d_%H%M%S"],
+            check=True,
+            text=True,
+            stdout=subprocess.PIPE,
+        ).stdout.strip()
+        collision = old_dir / f"{timestamp}__stale_request.zip"
+        collision.write_text("keep existing archive\n", encoding="utf-8")
+        (windows_processing / "in_progress.zip").write_text("keep\n", encoding="utf-8")
+        (mac_returns / "returned.zip").write_text("keep\n", encoding="utf-8")
+
+        pending_json = tmp_root / "pending.json"
+        pending_json.write_text(
+            json.dumps(
+                {
+                    "kind": "pending_runtime_trace_packages",
+                    "schema": 1,
+                    "requests": [
+                        {
+                            "request_id": "req_split",
+                            "status": "pending",
+                            "priority": 1,
+                            "package": str(pkg),
+                            "plugin_area": "Split request",
+                            "stop_condition": "stop split",
+                        }
+                    ],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+
+        proc = run(
+            [
+                sys.executable,
+                str(script),
+                "--share-root",
+                str(share_root),
+                "--pending-json",
+                str(pending_json),
+            ],
+            root,
+        )
+        assert "[OK] published:" in proc.stdout
+        assert "new/mac_requests" in proc.stdout
+        request_files = sorted(path.name for path in mac_requests.iterdir() if path.is_file())
+        assert "req_split.zip" in request_files
+        readme_name = next(name for name in request_files if name.endswith("__README.txt"))
+        readme_text = (mac_requests / readme_name).read_text(encoding="utf-8")
+        assert "new/mac_returns" in readme_text
+        assert "/Volumes/" not in readme_text
+        archived = {path.name for path in old_dir.iterdir() if path.is_file()}
+        assert any(name.endswith("stale_request.zip") for name in archived)
+        assert collision.read_text(encoding="utf-8") == "keep existing archive\n"
+        assert len([name for name in archived if name.endswith("stale_request.zip")]) == 2
+        assert (windows_processing / "in_progress.zip").is_file()
+        assert (mac_returns / "returned.zip").is_file()
+
     print("[OK] publish pending runtime trace packages to share smoke")
     return 0
 

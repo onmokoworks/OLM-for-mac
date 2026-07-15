@@ -169,6 +169,27 @@ def main() -> int:
     helper = root / "scripts" / "intake_latest_windows_return_from_share.py"
     py = sys.executable
 
+    with tempfile.TemporaryDirectory(prefix="olm_share_split_intake_smoke_") as split_tmp:
+        split_root = Path(split_tmp) / "olm_pr"
+        mac_requests = split_root / "new" / "mac_requests"
+        windows_processing = split_root / "new" / "windows_processing"
+        mac_returns = split_root / "new" / "mac_returns"
+        for lane in (mac_requests, windows_processing, mac_returns, split_root / "old"):
+            lane.mkdir(parents=True)
+        make_return_zip(mac_returns / "runtime_trace_return.zip")
+        make_return_zip(windows_processing / "must_not_be_selected.zip")
+        (mac_requests / "must_not_be_selected.zip").write_text("request\n", encoding="utf-8")
+        split_dry = run(
+            [py, str(helper), "--share-root", str(split_root), "--dry-run"],
+            root,
+        )
+        if str(mac_returns / "runtime_trace_return.zip") not in split_dry.stdout:
+            print("[FAIL] split-layout intake did not select mac_returns")
+            return 1
+        if str(windows_processing / "must_not_be_selected.zip") in split_dry.stdout:
+            print("[FAIL] split-layout intake selected windows_processing")
+            return 1
+
     with tempfile.TemporaryDirectory(prefix="olm_share_intake_smoke_") as tmp:
         tmp_root = Path(tmp)
         share_root = tmp_root / "olm_pr"
@@ -390,6 +411,8 @@ def main() -> int:
         witness_zip = witness_new / "olmblur_case0007_16bpc_345_672_b_witness_windows_20260630.zip"
         write_olmblur_standalone_witness_zip(witness_zip)
         (witness_new / "still_pending_request.zip").write_text("pending\n", encoding="utf-8")
+        witness_output_json = tmp_root / "olmblur_standalone_witness_intake.json"
+        witness_output_md = tmp_root / "olmblur_standalone_witness_intake.md"
 
         witness_dry = run(
             [
@@ -413,11 +436,18 @@ def main() -> int:
                 str(witness_share_root),
                 "--kind",
                 "olmblur-standalone-witness",
+                "--intake-arg=--output-json",
+                f"--intake-arg={witness_output_json}",
+                "--intake-arg=--output-md",
+                f"--intake-arg={witness_output_md}",
             ],
             root,
         )
         if "output_json=" not in witness_proc.stdout or "output_md=" not in witness_proc.stdout:
             print("[FAIL] helper did not run standalone witness intake")
+            return 1
+        if not witness_output_json.exists() or not witness_output_md.exists():
+            print("[FAIL] helper did not write overridden standalone witness outputs")
             return 1
         witness_remaining = {path.name for path in witness_new.iterdir() if path.is_file()}
         if witness_remaining != {"still_pending_request.zip"}:

@@ -32,9 +32,74 @@ def run(cmd: list[str], root: Path) -> subprocess.CompletedProcess[str]:
     )
 
 
+def load_subject(repo: Path):
+    scripts_dir = repo / "scripts"
+    sys.path.insert(0, str(scripts_dir))
+    try:
+        import list_olm_return_candidates as subject  # type: ignore
+    finally:
+        sys.path.pop(0)
+    return subject
+
+
 def main() -> int:
     repo = repo_root()
+    subject = load_subject(repo)
     script = repo / "scripts" / "list_olm_return_candidates.py"
+    with tempfile.TemporaryDirectory(prefix="olm_return_candidates_share_layout_") as tmp:
+        tmp_path = Path(tmp)
+        legacy_share = tmp_path / "legacy" / "olm_pr"
+        legacy_new = legacy_share / "new"
+        legacy_new.mkdir(parents=True)
+        legacy_return = legacy_new / "legacy_return.zip"
+        write_zip(
+            legacy_return,
+            {
+                "RETURN_RUNTIME_TRACE_RESULT.json": json.dumps(
+                    {"kind": "olm_runtime_trace_result", "results": [{"request_id": "legacy", "status": "answered"}]}
+                )
+            },
+        )
+        assert subject.candidate_paths([legacy_share]) == [legacy_return]
+
+        split_share = tmp_path / "split" / "olm_pr"
+        mac_requests = split_share / "new" / "mac_requests"
+        windows_processing = split_share / "new" / "windows_processing"
+        mac_returns = split_share / "new" / "mac_returns"
+        mac_requests.mkdir(parents=True)
+        windows_processing.mkdir(parents=True)
+        mac_returns.mkdir(parents=True)
+        request_zip = mac_requests / "request.zip"
+        split_return = mac_returns / "split_return.zip"
+        processing_return = windows_processing / "processing_return.zip"
+        write_zip(
+            request_zip,
+            {
+                "runtime_trace_package_manifest.json": json.dumps(
+                    {"kind": "olm_runtime_trace_request_package", "runtime_actions": [{"request_id": "split_request"}]}
+                )
+            },
+        )
+        write_zip(
+            split_return,
+            {
+                "RETURN_RUNTIME_TRACE_RESULT.json": json.dumps(
+                    {"kind": "olm_runtime_trace_result", "results": [{"request_id": "split_return", "status": "answered"}]}
+                )
+            },
+        )
+        write_zip(
+            processing_return,
+            {
+                "RETURN_RUNTIME_TRACE_RESULT.json": json.dumps(
+                    {"kind": "olm_runtime_trace_result", "results": [{"request_id": "processing", "status": "answered"}]}
+                )
+            },
+        )
+        assert subject.candidate_paths([split_share]) == [split_return]
+        processing_row = subject.build_row(processing_return)
+        assert processing_row["kind"] == "unknown"
+
     with tempfile.TemporaryDirectory(prefix="olm_return_candidates_smoke_") as tmp:
         tmp_path = Path(tmp)
         win_ref = tmp_path / "returned_refs.zip"

@@ -95,21 +95,28 @@ def likely_olm_scan_candidate(path: Path) -> bool:
 
 
 def is_staged_windows_exchange_path(path: Path) -> bool:
-    parts = set(path.parts)
-    return "olm_pr" in parts and "new" in parts
+    role = list_olm_return_candidates.exchange_role(path)
+    return role in {"legacy_new", "mac_requests"}
 
 
 def staged_windows_exchange_dirs(root: Path) -> list[Path]:
     if not root.is_dir():
         return []
-    candidates = [root] if is_staged_windows_exchange_path(root) else []
-    direct_child = root / "olm_pr" / "new"
-    if direct_child.is_dir():
-        candidates.append(direct_child)
-    if root.name == "olm_pr":
-        nested_new = root / "new"
-        if nested_new.is_dir():
-            candidates.append(nested_new)
+    root = root.expanduser()
+    candidates: list[Path] = []
+    if is_staged_windows_exchange_path(root):
+        candidates.append(root)
+    exchange_new = list_olm_return_candidates.exchange_new_dir(root)
+    if exchange_new is not None:
+        request_dir = list_olm_return_candidates.exchange_request_dir(exchange_new.parent)
+        if request_dir.is_dir():
+            candidates.append(request_dir)
+    direct_share_root = root / "olm_pr"
+    nested_new = list_olm_return_candidates.exchange_new_dir(direct_share_root)
+    if nested_new is not None:
+        request_dir = list_olm_return_candidates.exchange_request_dir(direct_share_root)
+        if request_dir.is_dir():
+            candidates.append(request_dir)
     unique: list[Path] = []
     seen: set[Path] = set()
     for candidate in candidates:
@@ -1009,7 +1016,7 @@ def staged_runtime_trace_package(
             continue
         # Project-local packages and stale /tmp copies are preparation
         # artifacts, not active Windows exchanges. The current workflow treats
-        # only olm_pr/new as staged.
+        # only the active share request lane as staged.
         if not is_staged_windows_exchange_path(row_path):
             continue
         try:
@@ -1279,13 +1286,13 @@ def handoff_summary(root: Path, handoff: Path | None) -> dict[str, Any]:
 
 
 def candidate_rows(paths: list[Path]) -> list[dict[str, Any]]:
-    share_new = Path("/Volumes/onmk/olm_pr/new")
-    roots = paths or [share_new, Path.home() / "Downloads", Path("/tmp")]
+    share_root = list_olm_return_candidates.default_exchange_root()
+    roots = paths or [share_root, Path.home() / "Downloads", Path("/tmp")]
     if paths:
         expanded = {path.expanduser() for path in paths}
         default_scan_roots = {Path.home() / "Downloads", Path("/tmp")}
         if expanded & default_scan_roots:
-            roots = [share_new, *roots]
+            roots = [share_root, *roots]
     candidates: list[Path] = []
     for root in roots:
         root = root.expanduser()
@@ -1305,11 +1312,13 @@ def candidate_rows(paths: list[Path]) -> list[dict[str, Any]]:
                 for path in staged_dir.iterdir()
                 if path.is_file()
                 and path.suffix.lower() == ".zip"
-                and staged_windows_witness_batch_metadata(str(path)) is not None
             )
     rows: list[dict[str, Any]] = []
     for path in sorted(set(candidates), key=lambda path: path.stat().st_mtime, reverse=True):
-        rows.append(staged_windows_witness_batch_row(path) or list_olm_return_candidates.build_row(path))
+        row = staged_windows_witness_batch_row(path) or list_olm_return_candidates.build_row(path)
+        if row.get("kind") == "unknown":
+            continue
+        rows.append(row)
     return rows
 
 

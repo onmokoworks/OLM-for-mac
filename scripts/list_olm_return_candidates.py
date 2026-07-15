@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import zipfile
 from pathlib import Path
 from typing import Any
@@ -17,6 +18,15 @@ RUNTIME_RESULT_FILENAMES = {
     "RETURN_RUNTIME_TRACE_RESULT.json",
     "RETURN_RUNTIME_TRACE.json",
     "AE_RUNTIME_TRACE_RESULT.json",
+}
+EXCHANGE_SPLIT_SUBDIRS = ("mac_requests", "windows_processing", "mac_returns")
+RETURN_KINDS = {
+    "ae-host-return",
+    "ae-pixel-validation-return",
+    "olmblur-standalone-witness",
+    "runtime-trace-return",
+    "win-reference-return",
+    "windows-action-bundle-return",
 }
 
 
@@ -37,6 +47,97 @@ def repo_root() -> Path:
     return Path(__file__).resolve().parents[1]
 
 
+def default_exchange_root() -> Path:
+    configured = os.environ.get("OLM_PR_SHARE_ROOT")
+    if configured:
+        return Path(configured).expanduser()
+    volumes = Path("/Volumes")
+    mounted = sorted(path for path in volumes.glob("*/olm_pr") if path.is_dir())
+    if mounted:
+        return mounted[0]
+    return volumes / "olm_pr"
+
+
+def exchange_new_dir(path: Path) -> Path | None:
+    probe = path.expanduser()
+    if probe.parent.name == "new" and probe.parent.parent.name == "olm_pr":
+        return probe.parent
+    if probe.name == "new" and probe.parent.name == "olm_pr":
+        return probe
+    if probe.name == "olm_pr":
+        new_dir = probe / "new"
+        if new_dir.is_dir():
+            return new_dir
+    return None
+
+
+def has_split_exchange_layout(new_dir: Path | None) -> bool:
+    return bool(new_dir and any((new_dir / name).is_dir() for name in EXCHANGE_SPLIT_SUBDIRS))
+
+
+def exchange_role(path: Path) -> str | None:
+    probe = path.expanduser()
+    new_dir = exchange_new_dir(probe if probe.is_dir() else probe.parent)
+    if new_dir is None:
+        return None
+    target = probe if probe.is_dir() else probe.parent
+    if target == new_dir:
+        return None if has_split_exchange_layout(new_dir) else "legacy_new"
+    for name in EXCHANGE_SPLIT_SUBDIRS:
+        if target == new_dir / name:
+            return name
+    if not has_split_exchange_layout(new_dir):
+        return "legacy_new"
+    return None
+
+
+def exchange_request_dir(share_root: Path) -> Path:
+    probe = share_root.expanduser()
+    new_dir = exchange_new_dir(probe) or (probe / "new")
+    if has_split_exchange_layout(new_dir):
+        return new_dir / "mac_requests"
+    return new_dir
+
+
+def exchange_return_dir(share_root: Path) -> Path:
+    probe = share_root.expanduser()
+    new_dir = exchange_new_dir(probe) or (probe / "new")
+    if has_split_exchange_layout(new_dir):
+        return new_dir / "mac_returns"
+    return new_dir
+
+
+def exchange_request_label(share_root: Path) -> str:
+    path = exchange_request_dir(share_root)
+    if path.name == "mac_requests" and path.parent.name == "new":
+        return "new/mac_requests"
+    return "new"
+
+
+def exchange_return_label(share_root: Path) -> str:
+    path = exchange_return_dir(share_root)
+    if path.name == "mac_returns" and path.parent.name == "new":
+        return "new/mac_returns"
+    return "new"
+
+
+def candidate_scan_dirs(root: Path) -> list[Path]:
+    probe = root.expanduser()
+    if not probe.is_dir():
+        return []
+    new_dir = exchange_new_dir(probe)
+    if new_dir is None:
+        return [probe]
+    if has_split_exchange_layout(new_dir):
+        if probe == new_dir.parent or probe == new_dir:
+            mac_returns = new_dir / "mac_returns"
+            return [mac_returns] if mac_returns.is_dir() else []
+        return [probe]
+    if probe == new_dir.parent:
+        return [new_dir]
+    return [probe]
+
+
 def candidate_paths(paths: list[Path]) -> list[Path]:
     roots = paths or [Path.home() / "Downloads", Path("/tmp")]
     candidates: list[Path] = []
@@ -45,11 +146,14 @@ def candidate_paths(paths: list[Path]) -> list[Path]:
         if root.is_file():
             candidates.append(root)
         elif root.is_dir():
-            candidates.extend(
-                path
-                for path in root.iterdir()
-                if path.is_file() and path.suffix.lower() in RETURN_EXTENSIONS
-            )
+            for scan_dir in candidate_scan_dirs(root):
+                candidates.extend(
+                    path
+                    for path in scan_dir.iterdir()
+                    if path.is_file() and path.suffix.lower() in RETURN_EXTENSIONS
+                )
+        else:
+            continue
     return sorted(set(candidates), key=lambda path: path.stat().st_mtime, reverse=True)
 
 
@@ -344,6 +448,9 @@ def suggested_command(kind: str, path: Path) -> str:
 
 def build_row(path: Path) -> dict[str, Any]:
     kind, hints = classify_zip(path)
+    if exchange_role(path) == "windows_processing" and kind in RETURN_KINDS:
+        kind = "unknown"
+        hints = [*hints, "ignored windows_processing artifact"]
     return {
         "path": str(path),
         "kind": kind,

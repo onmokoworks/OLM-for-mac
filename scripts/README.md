@@ -18,7 +18,9 @@ Windows 実機との証拠収集、Mac AE 検証、比較、レポート更新�
 
 使いどころ:
 
-- `/Volumes/onmk/olm_pr/new` に request zip を置く
+- `$OLM_PR_SHARE_ROOT/new/mac_requests` に request zip を置く
+- Windows 側の作業中ログは `new/windows_processing`、完了返却は
+  `new/mac_returns` に分離する
 - repo 内 `refs/share_staging/...` に現在の Send First zip と README を再生成する
 - Windows 側から戻ってきた `*_return_windows.zip` を検出する
 - 戻り zip を repo に取り込み、比較レポートを更新する
@@ -135,14 +137,18 @@ python3 scripts/materialize_windows_send_first_staging.py
 返却候補を見る:
 
 ```sh
-python3 scripts/list_olm_return_candidates.py /Volumes/onmk/olm_pr/new /Volumes/onmk/olm_pr/old
+python3 scripts/list_olm_return_candidates.py "$OLM_PR_SHARE_ROOT" ~/Downloads
 ```
 
 最新返却を自動 intake:
 
 ```sh
-python3 scripts/intake_latest_windows_return_from_share.py --share-root /Volumes/onmk/olm_pr
+python3 scripts/intake_latest_windows_return_from_share.py --share-root "$OLM_PR_SHARE_ROOT"
 ```
+
+`OLM_PR_SHARE_ROOT` が未設定なら、スクリプトは `/Volumes/*/olm_pr` を自動検出します。
+split layout では返却候補を `mac_returns` だけから読み、`windows_processing`
+を intake 対象に混ぜません。取り込み済みファイルは `old` へ移動します。
 
 reference request zip の契約チェック:
 

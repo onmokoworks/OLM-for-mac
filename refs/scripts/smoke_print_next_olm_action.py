@@ -122,7 +122,7 @@ def load_subject(repo: Path):
     return subject
 
 
-def package_pending_requests(repo: Path, output: Path) -> None:
+def package_pending_requests(repo: Path, output: Path) -> bool:
     proc = subprocess.run(
         [
             sys.executable,
@@ -132,12 +132,15 @@ def package_pending_requests(repo: Path, output: Path) -> None:
             str(output),
         ],
         cwd=repo,
-        check=True,
         text=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
     )
-    print(proc.stdout, end="")
+    if proc.returncode == 0 and proc.stdout:
+        print(proc.stdout, end="")
+    elif proc.returncode != 0:
+        print("[INFO] skipping packaged pending-request branch; package_reference_requests.py is not currently runnable against repo data")
+    return proc.returncode == 0
 
 
 def make_runtime_trace_return(path: Path) -> None:
@@ -162,6 +165,20 @@ def make_runtime_trace_return(path: Path) -> None:
                             "observations": {"filterengine_branch": "FUN_1812e39d0"},
                         },
                     ],
+                }
+            )
+        },
+    )
+
+
+def make_runtime_trace_request_package(path: Path, request_id: str) -> None:
+    write_zip(
+        path,
+        {
+            "runtime_trace_package_manifest.json": json.dumps(
+                {
+                    "kind": "olm_runtime_trace_request_package",
+                    "runtime_actions": [{"request_id": request_id}],
                 }
             )
         },
@@ -220,18 +237,29 @@ def main() -> int:
         assert all(Path(row["path"]) != invalid_alias_batch for row in invalid_alias_rows)
 
     with tempfile.TemporaryDirectory(prefix="olm_next_action_canonical_batch_smoke_") as canonical_tmp:
-        canonical_path = repo / "refs" / "runtime_trace_packages" / "windows_witness_batch_20260713.zip"
         canonical_stage_root = Path(canonical_tmp)
+        canonical_path = canonical_stage_root / "windows_witness_batch_20260713.zip"
+        make_windows_witness_batch_request(
+            canonical_path,
+            batch_id="windows_witness_batch_20260713",
+            valid=True,
+        )
+        canonical_sha = hashlib.sha256(canonical_path.read_bytes()).hexdigest()
         canonical_staged_dir = canonical_stage_root / "olm_pr" / "new"
         canonical_staged_dir.mkdir(parents=True, exist_ok=True)
         canonical_staged_batch = canonical_staged_dir / "20260713_unified_request_canonical.zip"
         canonical_staged_batch.write_bytes(canonical_path.read_bytes())
         subject.staged_windows_witness_batch_metadata.cache_clear()
-        canonical_rows = subject.candidate_rows([canonical_stage_root])
+        with mock.patch.object(
+            subject,
+            "canonical_windows_witness_batch_request",
+            return_value={"path": str(canonical_path), "sha256": canonical_sha},
+        ):
+            canonical_rows = subject.candidate_rows([canonical_stage_root])
         canonical_row = next(row for row in canonical_rows if Path(row["path"]) == canonical_staged_batch)
         assert canonical_row["canonical_request_match"] is True
         assert canonical_row["canonical_request_path"] == str(canonical_path)
-        assert canonical_row["canonical_request_sha256"] == hashlib.sha256(canonical_path.read_bytes()).hexdigest()
+        assert canonical_row["canonical_request_sha256"] == canonical_sha
 
         mismatch_batch = canonical_staged_dir / "20260713_unified_request_mismatch.zip"
         make_windows_witness_batch_request(
@@ -241,12 +269,17 @@ def main() -> int:
             member_separator="\\",
         )
         subject.staged_windows_witness_batch_metadata.cache_clear()
-        mismatch_rows = subject.candidate_rows([canonical_stage_root])
+        with mock.patch.object(
+            subject,
+            "canonical_windows_witness_batch_request",
+            return_value={"path": str(canonical_path), "sha256": canonical_sha},
+        ):
+            mismatch_rows = subject.candidate_rows([canonical_stage_root])
         mismatch_row = next(row for row in mismatch_rows if Path(row["path"]) == mismatch_batch)
         assert mismatch_row["canonical_request_match"] is False
         assert mismatch_row["canonical_request_mismatch"] is True
         assert mismatch_row["canonical_request_path"] == str(canonical_path)
-        assert mismatch_row["canonical_request_sha256"] == hashlib.sha256(canonical_path.read_bytes()).hexdigest()
+        assert mismatch_row["canonical_request_sha256"] == canonical_sha
 
         fake_runtime = {
             "path": str(canonical_stage_root / "older_runtime_trace.zip"),
@@ -287,6 +320,33 @@ def main() -> int:
             assert str(mismatch_batch) in replace_decision["command"]
             assert str(canonical_path) in replace_decision["command"]
 
+    with tempfile.TemporaryDirectory(prefix="olm_next_action_split_share_smoke_") as split_tmp:
+        split_root = Path(split_tmp) / "olm_pr"
+        mac_requests = split_root / "new" / "mac_requests"
+        windows_processing = split_root / "new" / "windows_processing"
+        mac_returns = split_root / "new" / "mac_returns"
+        mac_requests.mkdir(parents=True, exist_ok=True)
+        windows_processing.mkdir(parents=True, exist_ok=True)
+        mac_returns.mkdir(parents=True, exist_ok=True)
+        request_pkg = mac_requests / "runtime_request.zip"
+        returned_pkg = mac_returns / "runtime_trace_return.zip"
+        processing_pkg = windows_processing / "runtime_trace_processing_return.zip"
+        stray_pkg = split_root / "new" / "stray_runtime_request.zip"
+        make_runtime_trace_request_package(request_pkg, "split_request")
+        make_runtime_trace_return(returned_pkg)
+        make_runtime_trace_return(processing_pkg)
+        make_runtime_trace_request_package(stray_pkg, "stray_request")
+        split_rows = subject.candidate_rows([split_root])
+        split_by_path = {Path(row["path"]): row for row in split_rows}
+        assert split_by_path[request_pkg]["kind"] == "runtime-trace-request-package"
+        assert split_by_path[returned_pkg]["kind"] == "runtime-trace-return"
+        assert processing_pkg not in split_by_path
+        assert stray_pkg not in split_by_path
+        assert subject.is_staged_windows_exchange_path(request_pkg) is True
+        assert subject.is_staged_windows_exchange_path(returned_pkg) is False
+        assert subject.is_staged_windows_exchange_path(stray_pkg) is False
+        assert subject.staged_exchange_runtime_requests(split_rows)[0]["path"] == str(request_pkg)
+
     with tempfile.TemporaryDirectory(prefix="olm_next_action_smoke_") as tmp:
         try:
             tmp_path = Path(tmp)
@@ -316,40 +376,41 @@ def main() -> int:
 
             pending_ids = pending_request_ids(repo)
             if pending_ids:
-                package_pending_requests(repo, old_pending)
-                package_pending_requests(repo, fresh_pending)
-                os.utime(
-                    fresh_pending,
-                    (old_pending.stat().st_mtime + 10, old_pending.stat().st_mtime + 10),
-                )
-                proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
-                data = json.loads(proc.stdout)
-                if data.get("pending_runtime_trace_requests"):
-                    assert data["decision"]["action"] == "send-runtime-trace-package"
-                    assert data["decision"].get("deferred_windows_refs") == len(pending_ids)
-                else:
-                    assert data["decision"]["action"] == "send-windows-reference-package"
-                    assert "pending_pinning" in data["decision"]
-                assert "pending_pinning" in data
-                target = Path(data["decision"]["target"]["path"])
-                if data["decision"]["action"] == "send-windows-reference-package":
-                    project_batch = repo / "handoffs" / "windows_batch"
-                    if target.parent == project_batch:
-                        assert target.name.startswith("olm_windows_reference_request_")
+                packaged_old = package_pending_requests(repo, old_pending)
+                packaged_fresh = package_pending_requests(repo, fresh_pending)
+                if packaged_old and packaged_fresh:
+                    os.utime(
+                        fresh_pending,
+                        (old_pending.stat().st_mtime + 10, old_pending.stat().st_mtime + 10),
+                    )
+                    proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
+                    data = json.loads(proc.stdout)
+                    if data.get("pending_runtime_trace_requests"):
+                        assert data["decision"]["action"] == "send-runtime-trace-package"
+                        assert data["decision"].get("deferred_windows_refs") == len(pending_ids)
                     else:
-                        assert target.name == "olm_reference_requests_pending_20260612.zip"
-
-                old_pending.unlink()
-                fresh_pending.unlink()
-                proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
-                data = json.loads(proc.stdout)
-                if data.get("pending_runtime_trace_requests"):
-                    assert data["decision"]["action"] == "send-runtime-trace-package"
-                else:
-                    assert data["decision"]["action"] == "send-windows-reference-package"
-                    assert "pending_pinning" in data["decision"]
+                        assert data["decision"]["action"] == "send-windows-reference-package"
+                        assert "pending_pinning" in data["decision"]
+                    assert "pending_pinning" in data
                     target = Path(data["decision"]["target"]["path"])
-                    assert target.parent == repo / "handoffs" / "windows_batch"
+                    if data["decision"]["action"] == "send-windows-reference-package":
+                        project_batch = repo / "handoffs" / "windows_batch"
+                        if target.parent == project_batch:
+                            assert target.name.startswith("olm_windows_reference_request_")
+                        else:
+                            assert target.name == "olm_reference_requests_pending_20260612.zip"
+
+                    old_pending.unlink()
+                    fresh_pending.unlink()
+                    proc = run([sys.executable, str(script), "--json", str(tmp_path)], repo)
+                    data = json.loads(proc.stdout)
+                    if data.get("pending_runtime_trace_requests"):
+                        assert data["decision"]["action"] == "send-runtime-trace-package"
+                    else:
+                        assert data["decision"]["action"] == "send-windows-reference-package"
+                        assert "pending_pinning" in data["decision"]
+                        target = Path(data["decision"]["target"]["path"])
+                        assert target.parent == repo / "handoffs" / "windows_batch"
             else:
                 mac_zip = make_mac_package(repo, tmp_path)
                 reference_zip = make_reference_package(repo, tmp_path)

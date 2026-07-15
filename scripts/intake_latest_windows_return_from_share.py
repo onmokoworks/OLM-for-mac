@@ -77,7 +77,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--no-archive",
         action="store_true",
-        help="Do not archive files from share/new into share/old after a successful intake.",
+        help="Do not archive files from the active return/request lanes into share/old after a successful intake.",
     )
     return parser.parse_args()
 
@@ -129,6 +129,10 @@ def archive_paths(paths: list[Path], old_dir: Path) -> list[Path]:
         if not path.is_file():
             continue
         target = old_dir / f"{timestamp}__{path.name}"
+        suffix = 2
+        while target.exists():
+            target = old_dir / f"{timestamp}__{suffix}__{path.name}"
+            suffix += 1
         shutil.move(str(path), str(target))
         archived.append(target)
     return archived
@@ -412,14 +416,15 @@ def main() -> int:
     args = parse_args()
     root = repo_root()
     share_root = args.share_root
-    new_dir = share_root / "new"
+    return_dir = list_olm_return_candidates.exchange_return_dir(share_root)
+    request_dir = list_olm_return_candidates.exchange_request_dir(share_root)
     old_dir = share_root / "old"
 
-    if not new_dir.is_dir():
-        raise SystemExit(f"share/new not available: {new_dir}")
+    if not return_dir.is_dir():
+        raise SystemExit(f"share return lane not available: {return_dir}")
     old_dir.mkdir(parents=True, exist_ok=True)
 
-    chosen = choose_return(new_dir, args.kind)
+    chosen = choose_return(return_dir, args.kind)
     cmd = build_intake_command(root, chosen, args.intake_arg)
     if chosen.get("kind") == "runtime-trace-return" and extract_flag_value(cmd, "--runtime-package") is None:
         resolved_package = resolve_runtime_package_for_return(root, Path(str(chosen["path"])))
@@ -444,7 +449,7 @@ def main() -> int:
         if rc != 0:
             return rc
         if not args.no_archive:
-            archived = archive_paths(archive_targets_for_chosen(new_dir, Path(str(chosen["path"]))), old_dir)
+            archived = archive_paths(archive_targets_for_chosen(return_dir, Path(str(chosen["path"]))), old_dir)
             for path in archived:
                 print(f"[INFO] archived after intake: {path}")
         return 0
@@ -558,7 +563,7 @@ def main() -> int:
                 print(f"[INFO] win-reference quality reason: {reason}")
 
     if not args.no_archive:
-        archive_targets = archive_targets_for_chosen(new_dir, Path(str(chosen["path"])))
+        archive_targets = archive_targets_for_chosen(return_dir, Path(str(chosen["path"])))
         if chosen.get("kind") == "runtime-trace-return":
             runtime_package_arg = extract_flag_value(cmd, "--runtime-package")
             if runtime_package_arg:
@@ -569,7 +574,7 @@ def main() -> int:
                         if result_json.name in RUNTIME_RESULT_FILENAMES:
                             request_ids.update(collect_request_ids_from_return(result_json))
                 package_name = Path(runtime_package_arg).name
-                for staged_request in sorted(new_dir.glob("*.zip")):
+                for staged_request in sorted(request_dir.glob("*.zip")):
                     manifest = package_manifest(staged_request)
                     staged_ids = {
                         str(action["request_id"])

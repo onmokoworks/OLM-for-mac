@@ -8,9 +8,11 @@ import json
 from pathlib import Path
 from typing import Any
 
+import list_olm_return_candidates
+
 
 ROOT = Path(__file__).resolve().parents[1]
-SHARE_NEW = Path("/Volumes/onmk/olm_pr/new")
+SHARE_ROOT = list_olm_return_candidates.default_exchange_root()
 KIRAKIRA_WITNESS_PATH_SPLIT_JSON = ROOT / "refs/conformance/olmkirakira_witness_path_split_20260703.json"
 KIRAKIRA_LIVE_PROBE_JSON = ROOT / "refs/conformance/olmkirakira_live_hotspot_probe_20260703.json"
 BITDEPTH_32BPC_PROBE_STATUS_JSON = ROOT / "refs/conformance/bitdepth_32bpc_probe_status_20260703.json"
@@ -51,9 +53,11 @@ def load_32bpc_status_map() -> dict[str, dict[str, Any]]:
 
 
 def in_share(filename: str) -> dict[str, Any]:
-    path = SHARE_NEW / filename
+    share_dir = list_olm_return_candidates.exchange_request_dir(SHARE_ROOT)
+    share_label = list_olm_return_candidates.exchange_request_label(SHARE_ROOT)
+    path = share_dir / filename
     return {
-        "path": path.as_posix(),
+        "path": f"{share_label}/{filename}",
         "exists": path.exists(),
     }
 
@@ -266,7 +270,7 @@ def build_report() -> dict[str, Any]:
     return {
         "kind": "olm_parallel_lane_report",
         "schema": 1,
-        "share_new": SHARE_NEW.as_posix(),
+        "share_new": list_olm_return_candidates.exchange_request_label(SHARE_ROOT),
         "bitdepth_lanes": bitdepth,
         "provenance_lanes": provenance,
     }

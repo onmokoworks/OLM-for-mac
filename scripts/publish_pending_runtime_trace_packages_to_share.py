@@ -5,11 +5,12 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
+import shutil
 import subprocess
-import sys
 import tempfile
 from pathlib import Path
+
+import list_olm_return_candidates
 
 
 def repo_root() -> Path:
@@ -56,7 +57,7 @@ def load_pending_rows(path: Path) -> list[dict]:
     return pending
 
 
-def build_queue_readme(rows: list[dict], generated_at: str) -> str:
+def build_queue_readme(rows: list[dict], generated_at: str, *, return_scan_root: str) -> str:
     lines = [
         "Pending runtime trace request queue",
         "",
@@ -76,13 +77,41 @@ def build_queue_readme(rows: list[dict], generated_at: str) -> str:
         )
     lines.extend(
         [
-            "Mac-side intake after return:",
-            "- python3 scripts/list_olm_return_candidates.py /Volumes/onmk/olm_pr/new ~/Downloads",
-            "- python3 scripts/intake_latest_windows_return_from_share.py --share-root /Volumes/onmk/olm_pr",
+            "Mac-side intake after return (replace <olm_pr> with the mounted exchange root):",
+            f"- python3 scripts/list_olm_return_candidates.py {return_scan_root} ~/Downloads",
+            "- python3 scripts/intake_latest_windows_return_from_share.py --share-root <olm_pr>",
             "",
         ]
     )
     return "\n".join(lines)
+
+
+def archive_existing_files(source_dir: Path, old_dir: Path, timestamp: str) -> list[Path]:
+    old_dir.mkdir(parents=True, exist_ok=True)
+    archived: list[Path] = []
+    for existing in sorted(source_dir.iterdir()):
+        if not existing.is_file():
+            continue
+        target = old_dir / f"{timestamp}__{existing.name}"
+        suffix = 2
+        while target.exists():
+            target = old_dir / f"{timestamp}__{suffix}__{existing.name}"
+            suffix += 1
+        shutil.move(str(existing), str(target))
+        archived.append(target)
+    return archived
+
+
+def publish_files(files: list[Path], destination_dir: Path) -> list[Path]:
+    destination_dir.mkdir(parents=True, exist_ok=True)
+    published: list[Path] = []
+    for src in files:
+        if not src.is_file():
+            raise SystemExit(f"missing file: {src}")
+        dest = destination_dir / src.name
+        shutil.copy2(src, dest)
+        published.append(dest)
+    return published
 
 
 def main() -> int:
@@ -121,36 +150,23 @@ def main() -> int:
         text=True,
         stdout=subprocess.PIPE,
     ).stdout.strip()
+    request_dir = list_olm_return_candidates.exchange_request_dir(args.share_root)
+    return_label = list_olm_return_candidates.exchange_return_label(args.share_root)
 
     with tempfile.TemporaryDirectory(prefix="olm_publish_pending_runtime_") as tmp:
         tmp_root = Path(tmp)
         readme = tmp_root / f"{timestamp}__olm_pending_runtime_trace_queue__README.txt"
-        readme.write_text(build_queue_readme(rows, timestamp), encoding="utf-8")
-
-        env = os.environ.copy()
-        env["OLM_PR_SHARE_ROOT"] = str(args.share_root)
-        path_entries = [
-            "/usr/bin",
-            "/bin",
-            "/usr/sbin",
-            "/sbin",
-            "/opt/homebrew/bin",
-            str(Path.home() / ".local/bin"),
-        ]
-        env["PATH"] = ":".join(path_entries)
-        cmd = [str(root / "scripts" / "publish_windows_request_to_share.sh")]
-        cmd.extend(str(package) for package in packages)
-        cmd.append(str(readme))
-        proc = subprocess.run(
-            cmd,
-            cwd=root,
-            check=True,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            env=env,
-        )
-        print(proc.stdout.rstrip())
+        readme.write_text(build_queue_readme(rows, timestamp, return_scan_root=return_label), encoding="utf-8")
+        archived = archive_existing_files(request_dir, args.share_root / "old", timestamp)
+        published = publish_files([*packages, readme], request_dir)
+        for archived_path in archived:
+            print(f"[INFO] archived old file: {archived_path}")
+        for published_path in published:
+            print(f"[OK] published: {published_path}")
+        print("")
+        print("Share state:")
+        print(f"- new: {request_dir}")
+        print(f"- old: {args.share_root / 'old'}")
     return 0
 
 

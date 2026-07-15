@@ -10,10 +10,13 @@ import shutil
 from pathlib import Path
 from typing import Any
 
+import list_olm_return_candidates
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_PENDING = ROOT / "refs" / "reports" / "pending_runtime_trace_packages.json"
 DEFAULT_STAGING_DIR = ROOT / "refs" / "share_staging" / "20260707_windows_send_first"
+DEFAULT_SHARE_ROOT = list_olm_return_candidates.default_exchange_root()
 
 
 def parse_args() -> argparse.Namespace:
@@ -54,6 +57,15 @@ def clean_staging_dir(path: Path) -> None:
             child.unlink()
 
 
+def display_source_path(path: Path) -> str:
+    if not path.is_absolute():
+        return path.as_posix()
+    try:
+        return path.relative_to(ROOT).as_posix()
+    except ValueError:
+        return path.name
+
+
 def build_readme(row: dict[str, Any], package_path: Path, package_hash: str) -> str:
     request_id = str(row.get("request_id") or "")
     context_value = row.get("hard_lane_context")
@@ -66,6 +78,7 @@ def build_readme(row: dict[str, Any], package_path: Path, package_hash: str) -> 
     acceptance = str(row.get("acceptance_note") or "")
     stop_condition = str(row.get("stop_condition") or "")
     why = str(row.get("why_needed") or row.get("plugin_area") or "")
+    share_target = list_olm_return_candidates.exchange_request_label(DEFAULT_SHARE_ROOT)
     lines = [
         "# Windows Send First",
         "",
@@ -82,7 +95,7 @@ def build_readme(row: dict[str, Any], package_path: Path, package_hash: str) -> 
         "",
         f"- Request: `{request_id}`",
         f"- File: `{package_path.name}`",
-        f"- Source: `{package_path.as_posix()}`",
+        f"- Source: `{display_source_path(package_path)}`",
         f"- SHA-256: `{package_hash}`",
         "",
         "## Why This One",
@@ -103,8 +116,8 @@ def build_readme(row: dict[str, Any], package_path: Path, package_hash: str) -> 
             "## Share Check",
             "",
             "```bash",
-            f"test -f /Volumes/onmk/olm_pr/new/{package_path.name} \\",
-            f"  && shasum -a 256 /Volumes/onmk/olm_pr/new/{package_path.name}",
+            f"test -f {share_target}/{package_path.name} \\",
+            f"  && shasum -a 256 {share_target}/{package_path.name}",
             "```",
             "",
         ]
