@@ -117,8 +117,9 @@ def main() -> int:
             return fail("fresh-process serial readiness contract is missing")
         for token in (
             "function ConvertTo-WindowsCommandLineArgument",
+            "$directQueueLaunch = [string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1'",
             "$launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)",
-            "$afterFxCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-m')",
+            "Join-WindowsCommandLine @($AfterFxPath, '-m')",
             "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
             "Read-QueueBootstrapBinding $queueBootstrap",
             "'queue_binding'",

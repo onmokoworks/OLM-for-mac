@@ -1431,6 +1431,9 @@ def install_postprocess(package: Path, archive: Path, effect_key: str) -> None:
     launcher_path = package / "artifacts" / "run_witness.ps1"
     launcher = launcher_path.read_text(encoding="utf-8")
     old = """$validated = Get-Content -LiteralPath $statusPath -Raw | ConvertFrom-Json
+if ($validated -is [pscustomobject]) {
+  $validated | Add-Member -NotePropertyName capture_diagnostics -NotePropertyValue @($captureDiagnostics) -Force
+}
 Finish $validated $(if ($validateCode -eq 0 -and $validated.status -eq 'answered') { 0 } else { 2 })
 """
     new = """$validated = Get-Content -LiteralPath $statusPath -Raw | ConvertFrom-Json
@@ -1439,6 +1442,9 @@ if ($validateCode -eq 0 -and $validated.status -eq 'answered') {
   & py -3 $typedValidator --contract $contractPath --status $statusPath --work $work
   $validateCode = $LASTEXITCODE
   $validated = Get-Content -LiteralPath $statusPath -Raw | ConvertFrom-Json
+}
+if ($validated -is [pscustomobject]) {
+  $validated | Add-Member -NotePropertyName capture_diagnostics -NotePropertyValue @($captureDiagnostics) -Force
 }
 Finish $validated $(if ($validateCode -eq 0 -and $validated.status -eq 'answered') { 0 } else { 2 })
 """
