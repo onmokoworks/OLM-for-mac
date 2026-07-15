@@ -1,0 +1,114 @@
+{
+  "schema": "olmdistancegradation.pf16-writer-active-path-census/1",
+  "generated_at": "2026-07-15T18:04:43Z",
+  "status": "inactive_for_fixture",
+  "classification": "bounded Mac-local Unicorn actual-AEX census; no AE-exact claim",
+  "binary": {
+    "path": "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex",
+    "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+  },
+  "fixture": {
+    "source": "tools/emulation/test_dg_compose.py case_0023 compose fixture",
+    "path_kind": "compose_to_final_output",
+    "compose_reached": true,
+    "final_output_reached": true,
+    "points": [
+      [
+        414,
+        393
+      ],
+      [
+        415,
+        393
+      ],
+      [
+        416,
+        393
+      ]
+    ],
+    "active_path_limit": "The fixture does not establish an AE host/full effect entry or a compose-to-writer dispatch callback."
+  },
+  "hooks": {
+    "FUN_181458030": "0x181458030",
+    "FUN_1814581a0": "0x1814581a0",
+    "FUN_181170480": "0x181170480",
+    "same_loader_session": true
+  },
+  "entry_log": [
+    {
+      "function": "0x181170480",
+      "rcx": "0x40000100",
+      "rdx": "0x19e",
+      "r8d": 393,
+      "return_address": "0x90000000"
+    },
+    {
+      "function": "0x181170480",
+      "rcx": "0x40000100",
+      "rdx": "0x19f",
+      "r8d": 393,
+      "return_address": "0x90000000"
+    },
+    {
+      "function": "0x181170480",
+      "rcx": "0x40000100",
+      "rdx": "0x1a0",
+      "r8d": 393,
+      "return_address": "0x90000000"
+    }
+  ],
+  "writer_hits": [],
+  "final_outputs": [
+    {
+      "xy": [
+        414,
+        393
+      ],
+      "output_address": "0x20290400",
+      "final_words_agrb": [
+        32768,
+        0,
+        3598,
+        30583
+      ],
+      "final_output_written": true
+    },
+    {
+      "xy": [
+        415,
+        393
+      ],
+      "output_address": "0x20290410",
+      "final_words_agrb": [
+        32768,
+        0,
+        32768,
+        0
+      ],
+      "final_output_written": true
+    },
+    {
+      "xy": [
+        416,
+        393
+      ],
+      "output_address": "0x20290420",
+      "final_words_agrb": [
+        32768,
+        0,
+        32768,
+        0
+      ],
+      "final_output_written": true
+    }
+  ],
+  "conclusion": {
+    "writer_leaf_hit_counts": {
+      "FUN_181458030": 0,
+      "FUN_1814581a0": 0
+    },
+    "interpretation": "Neither writer leaf hit on this runnable compose-to-final-output fixture; this is inactive_for_fixture, not a global dead-code conclusion.",
+    "ae_exact_claim": false,
+    "production_edits": false
+  }
+}

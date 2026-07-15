@@ -1,0 +1,70 @@
+{
+  "schema": "olmblur.current-head-build-provenance.v1",
+  "record_id": "olmblur_pf16_current_head_build_provenance_20260716",
+  "date": "2026-07-16",
+  "scope": "fresh no-install OLMBlur Debug build from repository HEAD",
+  "FACT": {
+    "git_head": "448e9f000e9b0e64582416d9b18f55d414b5068e",
+    "source": {
+      "primary_file": "mac/OLMBlur/OLMBlur.cpp",
+      "sha256": "d690adb9e6c4993caf50a16aed8d91b704f0a4622bc987601ddf630de4424346",
+      "git_blob_oid": "4163ec5fb816575b35befc97085a292ee1f9fda4",
+      "head_build_input_tree_listing_sha256": "9d7f6deaf33c9f7894dcf48917a3a6e0a979e0f145010fa4409c9e18700e0bc4"
+    },
+    "build": {
+      "project": "mac/OLMBlur/Mac/OLMBlur.xcodeproj",
+      "scheme": "OLMBlur",
+      "configuration": "Debug",
+      "transient_build_root_kind": "system temporary directory",
+      "command_template": "xcodebuild -project mac/OLMBlur/Mac/OLMBlur.xcodeproj -scheme OLMBlur -configuration Debug -derivedDataPath \"$TRANSIENT_DERIVED_DATA_DIR\" build CODE_SIGNING_ALLOWED=NO",
+      "exit_status": 0,
+      "result": "BUILD SUCCEEDED",
+      "transcript_sha256": "ba835660fe8ef85be534fa35f3b2cb19b98cb36c4c292a22b37b97b3e5c348ff",
+      "code_signing_allowed": false,
+      "transient_artifacts_removed_after_hashing": true
+    },
+    "candidate": {
+      "product_name": "OLMBlur.plugin",
+      "binary_relpath_within_bundle": "Contents/MacOS/OLMBlur",
+      "binary_sha256": "bdf2fae1d913f295fbbb696e26e4c1894db25e09e600993b567738fbfa7f5793",
+      "binary_size_bytes": 176040,
+      "bundle_size_kib_du": 184,
+      "architectures": [
+        "arm64"
+      ],
+      "uuid": "880AA676-F1B1-345E-B2B6-52D6B37B659F",
+      "bundle_identifier": "com.adobe.AfterEffects.OLMBlur",
+      "sdk": {
+        "sdkroot_name": "MacOSX26.2.sdk",
+        "minimum_os": "26.2"
+      },
+      "diagnostic_string_proof": {
+        "rounded_i32_and_packed_low16_format": true,
+        "store16_begin_marker": true,
+        "store16_end_marker": true,
+        "evidence": "A fresh strings pass over the transiently built binary found the OLMBLUR_DEBUG_POINT format with rounded_i32=(%d,%d,%d) and packed_low16=(%u,%u,%u), plus both OLMBLUR_DEBUG_STORE16_BEGIN and OLMBLUR_DEBUG_STORE16_END."
+      }
+    },
+    "stale_installed_reference": {
+      "sha256": "c6de66dab49a6a96852d6158780bfd8c52767cc699e2cef1fa2206e0fbadf206",
+      "fresh_build_sha256": "bdf2fae1d913f295fbbb696e26e4c1894db25e09e600993b567738fbfa7f5793",
+      "candidate_sha256_differs": true
+    },
+    "no_install_audit": {
+      "build_command_was_xcodebuild_only": true,
+      "derived_data_created_in_transient_system_temp_dir": true,
+      "candidate_copied_or_installed": false,
+      "ephemeral_artifacts_retained": false,
+      "cleanup": "The transient build directory and transcript were removed after metadata and hashes were recorded."
+    }
+  },
+  "INFERENCE": [
+    "A fresh current-HEAD Debug build succeeded locally, and its binary hash differs from the supplied installed-binary reference SHA-256 while still carrying the checked-out PF16 writer diagnostic strings.",
+    "This record establishes source/build/binary provenance only; it does not establish AE exactness, host loading, runtime behavior, or any exact claim against After Effects."
+  ],
+  "limitations": [
+    "No AE or Ghidra operation was run.",
+    "The install-side comparison is hash-only in this record; it does not assert a live install path, a current host state, or that the referenced installed binary is still present.",
+    "No tracked file outside this JSON/Markdown report pair was edited."
+  ]
+}

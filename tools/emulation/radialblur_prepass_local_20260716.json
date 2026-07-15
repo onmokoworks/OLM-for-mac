@@ -1,0 +1,1067 @@
+{
+  "addresses": {
+    "caller": "0x180004640/RadialBlur_rotation_render",
+    "prepass": "0x180002780/FUN_180002780",
+    "scatter": "0x1800024c0/FUN_1800024c0"
+  },
+  "aex": {
+    "path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+  },
+  "blocker": "The live scatter-entry capture proves angular_count=1, start_radius=0, end_radius=4, and four validity bytes. The current AEX projection still exposes only two RGBA cells and two scalar rows, so actual-AEX semantic comparison remains fail-closed until four RGBA cells, four scalar rows, and four validity bytes are captured. No values are padded or invented, and no mismatch or exactness is claimed.",
+  "claim_boundary": "bounded local evidence only; no AE-exact claim",
+  "comparison": {
+    "fail_closed": true,
+    "max_allowed_ulp": 1,
+    "result": "blocked_actual_capture_incomplete"
+  },
+  "fixture": {
+    "height": 2,
+    "repeat_border": [
+      0,
+      1
+    ],
+    "rgba_float": true,
+    "size_variation": "disabled",
+    "source": "tools/emulation/test_radialblur_caller_witness_20260716_followup.py",
+    "source_rgba": [
+      0.1,
+      0.2,
+      0.3,
+      0.8,
+      0.4,
+      0.5,
+      0.6,
+      0.4,
+      0.7,
+      0.8,
+      0.9,
+      0.2,
+      1.0,
+      0.9,
+      0.8,
+      0.6
+    ],
+    "source_sha256": "6ab8144b675be6c0e6b64bbae14af99bdf9981bb7464c615083b0101bf706d0b",
+    "width": 2
+  },
+  "kind": "radialblur_prepass_local_20260716",
+  "portable_cli_provenance": {
+    "adapter_binary_sha256": "406d41c7b54ebd6dd0230008664ce79af39922491332ab6c79fed7183374d241",
+    "adapter_source_sha256": "9745c47a33ab864076d947411c7de800da5b48a0f512ca45892e9c1873e2698a",
+    "command": [
+      "clang++",
+      "-std=c++17",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-pedantic",
+      "<adapter-source>",
+      "-I/opt/homebrew/opt/libpng/include/libpng16",
+      "-L/opt/homebrew/opt/libpng/lib",
+      "-lpng16",
+      "-o",
+      "<adapter-binary>"
+    ],
+    "production_source": "cli/OLMRadialBlur/main.cpp",
+    "production_source_sha256": "f1613bb0997e001d13eb5ef5b6f00695b82903779e0d58880e0455bf5b4c439c",
+    "returncode": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  "runs": [
+    {
+      "actual_aex": {
+        "final": {
+          "initial_byte_sampler_map_later_float_scalar_collapse_plane": [
+            [
+              0.6000000238418579
+            ],
+            [
+              0.0
+            ]
+          ],
+          "plus_0x38_initial_or_collapsed_rgba": [
+            [
+              1.0,
+              0.8999999761581421,
+              0.800000011920929,
+              0.6000000238418579
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "plus_0x38_rgba_accum": [
+            [
+              0.6000000238418579,
+              0.5400000214576721,
+              0.48000001907348633,
+              0.6000000238418579
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "plus_0x40_scalar_prepass": [
+            [
+              0.800000011920929
+            ],
+            [
+              0.0
+            ]
+          ],
+          "plus_0x48_scalar_scatter": [
+            [
+              0.6000000238418579
+            ],
+            [
+              0.0
+            ]
+          ],
+          "plus_0x50_source_alpha_or_variation_plane": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "inverse_sampler_calls": [
+          {
+            "destination": "0x40000330",
+            "entry": "0x180001000",
+            "row_stride": 4,
+            "source": "0x400004e0",
+            "width": 1,
+            "x": 2.2360680103302,
+            "y": 5.0
+          },
+          {
+            "destination": "0x40000340",
+            "entry": "0x180001000",
+            "row_stride": 4,
+            "source": "0x400004e0",
+            "width": 1,
+            "x": 2.0,
+            "y": 4.0
+          },
+          {
+            "destination": "0x40000350",
+            "entry": "0x180001000",
+            "row_stride": 4,
+            "source": "0x400004e0",
+            "width": 1,
+            "x": 1.0,
+            "y": 1.0
+          },
+          {
+            "destination": "0x40000360",
+            "entry": "0x180001000",
+            "row_stride": 4,
+            "source": "0x400004e0",
+            "width": 1,
+            "x": 0.0,
+            "y": 0.0
+          }
+        ],
+        "prepass_entry": {
+          "initial_byte_sampler_map_later_float_scalar_collapse_plane": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "plus_0x38_initial_or_collapsed_rgba": [
+            [
+              1.0,
+              0.9000000357627869,
+              0.800000011920929,
+              0.6000000238418579
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "plus_0x38_rgba_accum": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "plus_0x40_scalar_prepass": [
+            [
+              0.800000011920929
+            ],
+            [
+              0.0
+            ]
+          ],
+          "plus_0x48_scalar_scatter": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "plus_0x50_source_alpha_or_variation_plane": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "sampler_calls": [
+          {
+            "destination": "0x400004e0",
+            "entry": "0x180001270",
+            "height": 2,
+            "selected": "non-repeat",
+            "source": "0x400002f0",
+            "width": 2,
+            "x": 0.0,
+            "y": 0.0
+          },
+          {
+            "destination": "0x400004f0",
+            "entry": "0x180001270",
+            "height": 2,
+            "selected": "non-repeat",
+            "source": "0x400002f0",
+            "width": 2,
+            "x": 1.0,
+            "y": 0.0
+          },
+          {
+            "destination": "0x40000500",
+            "entry": "0x180001270",
+            "height": 2,
+            "selected": "non-repeat",
+            "source": "0x400002f0",
+            "width": 2,
+            "x": 1.0,
+            "y": 0.0
+          },
+          {
+            "destination": "0x40000510",
+            "entry": "0x180001270",
+            "height": 2,
+            "selected": "non-repeat",
+            "source": "0x400002f0",
+            "width": 2,
+            "x": 1.0,
+            "y": 0.0
+          }
+        ],
+        "scatter_entry": {
+          "initial_byte_sampler_map_later_float_scalar_collapse_plane": [
+            [
+              0.6000000238418579
+            ],
+            [
+              0.0
+            ]
+          ],
+          "plus_0x38_initial_or_collapsed_rgba": [
+            [
+              1.0,
+              0.9000000357627869,
+              0.800000011920929,
+              0.6000000238418579
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "plus_0x38_rgba_accum": [
+            [
+              0.6000000238418579,
+              0.5400000214576721,
+              0.48000001907348633,
+              0.6000000238418579
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "plus_0x40_scalar_prepass": [
+            [
+              0.800000011920929
+            ],
+            [
+              0.0
+            ]
+          ],
+          "plus_0x48_scalar_scatter": [
+            [
+              0.6000000238418579
+            ],
+            [
+              0.0
+            ]
+          ],
+          "plus_0x50_source_alpha_or_variation_plane": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "scatter_validity_capture": [
+          {
+            "abi": "windows_x64_entry",
+            "accum_rgba": "0x40000470",
+            "angular_count": 1,
+            "byte_count": 4,
+            "contract_proven": true,
+            "end_radius": 4,
+            "max_alpha": "0x400004c0",
+            "quality_or_rows_raw": "0x0000000000000004",
+            "stack_slots": {
+              "accum_rgba": "RSP+0x50",
+              "angular_count": "RSP+0x30",
+              "end_radius": "RSP+0x48",
+              "max_alpha": "RSP+0x58",
+              "quality_or_rows": "RSP+0x38",
+              "start_radius": "RSP+0x40",
+              "valid_mask": "RSP+0x28"
+            },
+            "start_radius": 0,
+            "valid_mask": "0x40000590",
+            "validity_bytes": [
+              1,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "stop": "return"
+      },
+      "differential": {
+        "earliest_divergence": null,
+        "pass": false,
+        "result": "blocked_actual_capture_incomplete",
+        "stages": [
+          {
+            "pass": true,
+            "stage": "injected_polar"
+          },
+          {
+            "pass": false,
+            "required": {
+              "rgba_cells": 4,
+              "scalar_rows": 4,
+              "validity_bytes": 4
+            },
+            "stage": "actual_capture_contract"
+          }
+        ]
+      },
+      "differential_result": "blocked_actual_capture_incomplete",
+      "geometry": {
+        "aex_source_plane": {
+          "angular_count": 1,
+          "inverse_coordinates": [
+            [
+              2.2360680103302,
+              5.0
+            ],
+            [
+              2.0,
+              4.0
+            ],
+            [
+              1.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "radius_rows": 4,
+          "row_stride": 4,
+          "width": 1
+        },
+        "dimensions_equivalent": false,
+        "portable_polar_plane": {
+          "height": null,
+          "indexed_cells_emitted": "not executed without four-cell actual capture",
+          "width": null
+        },
+        "typed_contract_equivalent": false
+      },
+      "max_ulp": null,
+      "portable_cli": {
+        "adapter_input_validation": {
+          "command": [
+            "radialblur_prepass_local_20260716_adapter",
+            "existing_2x2_rgba_f32.bin",
+            "aex_repeat0_typed_1x2_polar_rgba_f32.bin",
+            "--missing-validity",
+            "--validate-only",
+            "1",
+            "2",
+            "4"
+          ],
+          "payload": {
+            "implementation": "source-included-cli-main.cpp",
+            "input_validation_only": true,
+            "polar_words": [
+              "0x3f800000",
+              "0x3f666667",
+              "0x3f4ccccd",
+              "0x3f19999a",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000"
+            ],
+            "typed_input_geometry": {
+              "height": 2,
+              "row_stride": 4,
+              "width": 1
+            },
+            "validity_available": false,
+            "validity_bytes": []
+          },
+          "returncode": 0,
+          "shared_stage_executed": false,
+          "stderr": "",
+          "stdout": "{\"implementation\":\"source-included-cli-main.cpp\",\"input_validation_only\":true,\"typed_input_geometry\":{\"width\":1,\"height\":2,\"row_stride\":4},\"validity_available\":false,\"polar_words\":[\"0x3f800000\",\"0x3f666667\",\"0x3f4ccccd\",\"0x3f19999a\",\"0x00000000\",\"0x00000000\",\"0x00000000\",\"0x00000000\"],\"validity_bytes\":[]}\n"
+        },
+        "adapter_run": {
+          "executed": false,
+          "reason": "actual_aex_capture_incomplete"
+        },
+        "deepest_callable_boundary": "render_olmradialblur_rotation_float with RotationTypedPlanes",
+        "typed_prepass_scatter_collapse_planes": null
+      },
+      "repeat_border": 0,
+      "typed_input": {
+        "polar": {
+          "cells": [
+            [
+              1.0,
+              0.9000000357627869,
+              0.800000011920929,
+              0.6000000238418579
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "match_by_construction": true,
+          "raw_f32_words": [
+            "0x3f800000",
+            "0x3f666667",
+            "0x3f4ccccd",
+            "0x3f19999a",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000"
+          ],
+          "roundtrip_raw_f32_words": [
+            "0x3f800000",
+            "0x3f666667",
+            "0x3f4ccccd",
+            "0x3f19999a",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000"
+          ],
+          "serialized_sha256": "dd35b863fd0507ba579fc76ce885e8faa2767093b876c0cc77521b629acf2a86",
+          "source": "actual_aex.prepass_entry.plus_0x38_initial_or_collapsed_rgba"
+        },
+        "validity": {
+          "available": true,
+          "cells": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "reason": null
+        }
+      }
+    },
+    {
+      "actual_aex": {
+        "final": {
+          "initial_byte_sampler_map_later_float_scalar_collapse_plane": [
+            [
+              0.6000000238418579
+            ],
+            [
+              0.6000000238418579
+            ]
+          ],
+          "plus_0x38_initial_or_collapsed_rgba": [
+            [
+              1.0,
+              0.8999999761581421,
+              0.800000011920929,
+              0.6000000238418579
+            ],
+            [
+              1.0,
+              0.8999999761581421,
+              0.800000011920929,
+              0.6000000238418579
+            ]
+          ],
+          "plus_0x38_rgba_accum": [
+            [
+              0.6000000238418579,
+              0.5400000214576721,
+              0.48000001907348633,
+              0.6000000238418579
+            ],
+            [
+              0.6000000238418579,
+              0.5400000214576721,
+              0.48000001907348633,
+              0.6000000238418579
+            ]
+          ],
+          "plus_0x40_scalar_prepass": [
+            [
+              0.800000011920929
+            ],
+            [
+              0.800000011920929
+            ]
+          ],
+          "plus_0x48_scalar_scatter": [
+            [
+              0.6000000238418579
+            ],
+            [
+              0.6000000238418579
+            ]
+          ],
+          "plus_0x50_source_alpha_or_variation_plane": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "inverse_sampler_calls": [
+          {
+            "destination": "0x40000330",
+            "entry": "0x180001000",
+            "row_stride": 4,
+            "source": "0x400004e0",
+            "width": 1,
+            "x": 2.2360680103302,
+            "y": 5.0
+          },
+          {
+            "destination": "0x40000340",
+            "entry": "0x180001000",
+            "row_stride": 4,
+            "source": "0x400004e0",
+            "width": 1,
+            "x": 2.0,
+            "y": 4.0
+          },
+          {
+            "destination": "0x40000350",
+            "entry": "0x180001000",
+            "row_stride": 4,
+            "source": "0x400004e0",
+            "width": 1,
+            "x": 1.0,
+            "y": 1.0
+          },
+          {
+            "destination": "0x40000360",
+            "entry": "0x180001000",
+            "row_stride": 4,
+            "source": "0x400004e0",
+            "width": 1,
+            "x": 0.0,
+            "y": 0.0
+          }
+        ],
+        "prepass_entry": {
+          "initial_byte_sampler_map_later_float_scalar_collapse_plane": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "plus_0x38_initial_or_collapsed_rgba": [
+            [
+              1.0,
+              0.9000000357627869,
+              0.800000011920929,
+              0.6000000238418579
+            ],
+            [
+              1.0,
+              0.9000000357627869,
+              0.800000011920929,
+              0.6000000238418579
+            ]
+          ],
+          "plus_0x38_rgba_accum": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "plus_0x40_scalar_prepass": [
+            [
+              0.800000011920929
+            ],
+            [
+              0.800000011920929
+            ]
+          ],
+          "plus_0x48_scalar_scatter": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "plus_0x50_source_alpha_or_variation_plane": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "sampler_calls": [
+          {
+            "destination": "0x400004e0",
+            "entry": "0x180001520",
+            "height": 2,
+            "selected": "repeat-border",
+            "source": "0x400002f0",
+            "width": 2,
+            "x": 0.0,
+            "y": 0.0
+          },
+          {
+            "destination": "0x400004f0",
+            "entry": "0x180001520",
+            "height": 2,
+            "selected": "repeat-border",
+            "source": "0x400002f0",
+            "width": 2,
+            "x": 0.800000011920929,
+            "y": 0.0
+          },
+          {
+            "destination": "0x40000500",
+            "entry": "0x180001520",
+            "height": 2,
+            "selected": "repeat-border",
+            "source": "0x400002f0",
+            "width": 2,
+            "x": 0.800000011920929,
+            "y": 0.0
+          },
+          {
+            "destination": "0x40000510",
+            "entry": "0x180001520",
+            "height": 2,
+            "selected": "repeat-border",
+            "source": "0x400002f0",
+            "width": 2,
+            "x": 0.800000011920929,
+            "y": 0.0
+          }
+        ],
+        "scatter_entry": {
+          "initial_byte_sampler_map_later_float_scalar_collapse_plane": [
+            [
+              0.6000000238418579
+            ],
+            [
+              0.6000000238418579
+            ]
+          ],
+          "plus_0x38_initial_or_collapsed_rgba": [
+            [
+              1.0,
+              0.9000000357627869,
+              0.800000011920929,
+              0.6000000238418579
+            ],
+            [
+              1.0,
+              0.9000000357627869,
+              0.800000011920929,
+              0.6000000238418579
+            ]
+          ],
+          "plus_0x38_rgba_accum": [
+            [
+              0.6000000238418579,
+              0.5400000214576721,
+              0.48000001907348633,
+              0.6000000238418579
+            ],
+            [
+              0.6000000238418579,
+              0.5400000214576721,
+              0.48000001907348633,
+              0.6000000238418579
+            ]
+          ],
+          "plus_0x40_scalar_prepass": [
+            [
+              0.800000011920929
+            ],
+            [
+              0.800000011920929
+            ]
+          ],
+          "plus_0x48_scalar_scatter": [
+            [
+              0.6000000238418579
+            ],
+            [
+              0.6000000238418579
+            ]
+          ],
+          "plus_0x50_source_alpha_or_variation_plane": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "scatter_validity_capture": [
+          {
+            "abi": "windows_x64_entry",
+            "accum_rgba": "0x40000470",
+            "angular_count": 1,
+            "byte_count": 4,
+            "contract_proven": true,
+            "end_radius": 4,
+            "max_alpha": "0x400004c0",
+            "quality_or_rows_raw": "0x0000000000000004",
+            "stack_slots": {
+              "accum_rgba": "RSP+0x50",
+              "angular_count": "RSP+0x30",
+              "end_radius": "RSP+0x48",
+              "max_alpha": "RSP+0x58",
+              "quality_or_rows": "RSP+0x38",
+              "start_radius": "RSP+0x40",
+              "valid_mask": "RSP+0x28"
+            },
+            "start_radius": 0,
+            "valid_mask": "0x40000590",
+            "validity_bytes": [
+              1,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "stop": "return"
+      },
+      "differential": {
+        "earliest_divergence": null,
+        "pass": false,
+        "result": "blocked_actual_capture_incomplete",
+        "stages": [
+          {
+            "pass": true,
+            "stage": "injected_polar"
+          },
+          {
+            "pass": false,
+            "required": {
+              "rgba_cells": 4,
+              "scalar_rows": 4,
+              "validity_bytes": 4
+            },
+            "stage": "actual_capture_contract"
+          }
+        ]
+      },
+      "differential_result": "blocked_actual_capture_incomplete",
+      "geometry": {
+        "aex_source_plane": {
+          "angular_count": 1,
+          "inverse_coordinates": [
+            [
+              2.2360680103302,
+              5.0
+            ],
+            [
+              2.0,
+              4.0
+            ],
+            [
+              1.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "radius_rows": 4,
+          "row_stride": 4,
+          "width": 1
+        },
+        "dimensions_equivalent": false,
+        "portable_polar_plane": {
+          "height": null,
+          "indexed_cells_emitted": "not executed without four-cell actual capture",
+          "width": null
+        },
+        "typed_contract_equivalent": false
+      },
+      "max_ulp": null,
+      "portable_cli": {
+        "adapter_input_validation": {
+          "command": [
+            "radialblur_prepass_local_20260716_adapter",
+            "existing_2x2_rgba_f32.bin",
+            "aex_repeat1_typed_1x2_polar_rgba_f32.bin",
+            "--missing-validity",
+            "--validate-only",
+            "1",
+            "2",
+            "4"
+          ],
+          "payload": {
+            "implementation": "source-included-cli-main.cpp",
+            "input_validation_only": true,
+            "polar_words": [
+              "0x3f800000",
+              "0x3f666667",
+              "0x3f4ccccd",
+              "0x3f19999a",
+              "0x3f800000",
+              "0x3f666667",
+              "0x3f4ccccd",
+              "0x3f19999a"
+            ],
+            "typed_input_geometry": {
+              "height": 2,
+              "row_stride": 4,
+              "width": 1
+            },
+            "validity_available": false,
+            "validity_bytes": []
+          },
+          "returncode": 0,
+          "shared_stage_executed": false,
+          "stderr": "",
+          "stdout": "{\"implementation\":\"source-included-cli-main.cpp\",\"input_validation_only\":true,\"typed_input_geometry\":{\"width\":1,\"height\":2,\"row_stride\":4},\"validity_available\":false,\"polar_words\":[\"0x3f800000\",\"0x3f666667\",\"0x3f4ccccd\",\"0x3f19999a\",\"0x3f800000\",\"0x3f666667\",\"0x3f4ccccd\",\"0x3f19999a\"],\"validity_bytes\":[]}\n"
+        },
+        "adapter_run": {
+          "executed": false,
+          "reason": "actual_aex_capture_incomplete"
+        },
+        "deepest_callable_boundary": "render_olmradialblur_rotation_float with RotationTypedPlanes",
+        "typed_prepass_scatter_collapse_planes": null
+      },
+      "repeat_border": 1,
+      "typed_input": {
+        "polar": {
+          "cells": [
+            [
+              1.0,
+              0.9000000357627869,
+              0.800000011920929,
+              0.6000000238418579
+            ],
+            [
+              1.0,
+              0.9000000357627869,
+              0.800000011920929,
+              0.6000000238418579
+            ]
+          ],
+          "match_by_construction": true,
+          "raw_f32_words": [
+            "0x3f800000",
+            "0x3f666667",
+            "0x3f4ccccd",
+            "0x3f19999a",
+            "0x3f800000",
+            "0x3f666667",
+            "0x3f4ccccd",
+            "0x3f19999a"
+          ],
+          "roundtrip_raw_f32_words": [
+            "0x3f800000",
+            "0x3f666667",
+            "0x3f4ccccd",
+            "0x3f19999a",
+            "0x3f800000",
+            "0x3f666667",
+            "0x3f4ccccd",
+            "0x3f19999a"
+          ],
+          "serialized_sha256": "d18b2e9e4f8b51c941babca4147ec31817478d5caedada5ff893feef6d29c3f7",
+          "source": "actual_aex.prepass_entry.plus_0x38_initial_or_collapsed_rgba"
+        },
+        "validity": {
+          "available": true,
+          "cells": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "reason": null
+        }
+      }
+    }
+  ],
+  "schema": 5,
+  "status": "blocked",
+  "synthetic_geometry_gate": {
+    "geometry": {
+      "height": 4,
+      "row_stride": 4,
+      "width": 1
+    },
+    "passed": true,
+    "result": {
+      "command": [
+        "radialblur_prepass_local_20260716_adapter",
+        "existing_2x2_rgba_f32.bin",
+        "synthetic_1x4_polar_rgba_f32.bin",
+        "synthetic_1x4_valid_u8.bin",
+        "--validate-only",
+        "1",
+        "4",
+        "4"
+      ],
+      "payload": {
+        "implementation": "source-included-cli-main.cpp",
+        "input_validation_only": true,
+        "polar_words": [
+          "0x3e800000",
+          "0x3fa00000",
+          "0x40100000",
+          "0x40500000",
+          "0x40880000",
+          "0x40a80000",
+          "0x40c80000",
+          "0x40e80000",
+          "0x41040000",
+          "0x41140000",
+          "0x41240000",
+          "0x41340000",
+          "0x41440000",
+          "0x41540000",
+          "0x41640000",
+          "0x41740000"
+        ],
+        "typed_input_geometry": {
+          "height": 4,
+          "row_stride": 4,
+          "width": 1
+        },
+        "validity_available": true,
+        "validity_bytes": [
+          0,
+          1,
+          0,
+          1
+        ]
+      },
+      "returncode": 0,
+      "shared_stage_executed": false,
+      "stderr": "",
+      "stdout": "{\"implementation\":\"source-included-cli-main.cpp\",\"input_validation_only\":true,\"typed_input_geometry\":{\"width\":1,\"height\":4,\"row_stride\":4},\"validity_available\":true,\"polar_words\":[\"0x3e800000\",\"0x3fa00000\",\"0x40100000\",\"0x40500000\",\"0x40880000\",\"0x40a80000\",\"0x40c80000\",\"0x40e80000\",\"0x41040000\",\"0x41140000\",\"0x41240000\",\"0x41340000\",\"0x41440000\",\"0x41540000\",\"0x41640000\",\"0x41740000\"],\"validity_bytes\":[0,1,0,1]}\n"
+    },
+    "rgba_cells": 4,
+    "validity_bytes": 4
+  },
+  "typed_seam": {
+    "actual_aex_call_mapping": {
+      "accum_rgba": "ctx+0x3c940",
+      "angular_width": "iVar22 (1)",
+      "filtered_alpha": "ctx+0x48",
+      "max_alpha": "ctx+0x3c948",
+      "polar_rgba": "ctx+0x38",
+      "row_end": "floor(next*fVar35)",
+      "row_start": "floor(chunk*fVar35)",
+      "scatter_angular_count": "argument 6 at RSP+0x30",
+      "scatter_end_radius": "argument 9 at RSP+0x48",
+      "scatter_start_radius": "argument 8 at RSP+0x40",
+      "scatter_valid_mask": "argument 5 at RSP+0x28",
+      "span_factor": "ctx+0x50"
+    },
+    "export": "RotationTypedPlanes: polar, accum, prepass_alpha, scatter_alpha, source_alpha, collapsed",
+    "function": "render_olmradialblur_rotation_float",
+    "source_loci": {
+      "accumulator_local": "cli/OLMRadialBlur/main.cpp:1894",
+      "entry": "cli/OLMRadialBlur/main.cpp:1676",
+      "polar_locals": "cli/OLMRadialBlur/main.cpp:1697",
+      "prepass_alpha_local": "cli/OLMRadialBlur/main.cpp:1936",
+      "prepass_branch": "cli/OLMRadialBlur/main.cpp:1888",
+      "scatter_lambda": "cli/OLMRadialBlur/main.cpp:2029",
+      "span_gate_local": "cli/OLMRadialBlur/main.cpp:1707"
+    }
+  }
+}

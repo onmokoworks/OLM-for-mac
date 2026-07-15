@@ -336,7 +336,7 @@ static bool CanUseExactFrontOnly8(const PF_EffectWorld *input,
 {
 	return input && output && input->width == output->width &&
 	       input->height == output->height && info.front_strength > 0 &&
-	       info.size_variation == 0.0 && info.front_alpha_fade >= 0 &&
+	       info.size_variation == 0.0 && info.front_alpha_fade == 0 &&
 	       info.front_sharp_tail == 0.0 && info.back_strength == 0 &&
 	       info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
 	       info.noise_variation == 0.0 && info.render_scale_x == 1.0 &&
@@ -470,6 +470,24 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	}
 	return PF_Err_BAD_CALLBACK_PARAM;
 }
+
+#if defined(OLM_DBLUR_TEST_SEAM)
+// Test-only entrypoint: keep the boundary probe on the production dispatcher.
+extern "C" PF_Err OLMDirectionalBlurTestRenderWorld(
+	PF_EffectWorld *input,
+	PF_EffectWorld *output,
+	const OLMDirectionalBlurInfo *info,
+	short bitdepth,
+	int *used_exact_front_only8)
+{
+	if (!info || !used_exact_front_only8) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	*used_exact_front_only8 =
+		bitdepth == 8 && CanUseExactFrontOnly8(input, output, *info) ? 1 : 0;
+	return RenderWorld(input, output, *info, bitdepth);
+}
+#endif
 
 static OLMDirectionalBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong render_scale_x, PF_FpLong render_scale_y)
 {

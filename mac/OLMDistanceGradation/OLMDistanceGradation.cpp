@@ -322,7 +322,8 @@ template<> inline void load_rgba_norm<PF_PixelFloat>(const PF_PixelFloat *p, flo
 	a = p->alpha; r = p->red; g = p->green; b = p->blue;
 }
 
-static inline u_char clamp8(float v)   { v = v * 255.0f + 0.5f; return (v < 0) ? 0 : (v > 255.f ? 255 : (u_char)v); }
+// The actual-AEX PF8 boundary fixture stores fractional channel codes by truncation.
+static inline u_char clamp8(float v)   { v = v * 255.0f; return (v < 0) ? 0 : (v > 255.f ? 255 : (u_char)v); }
 static inline u_short clamp16(float v) { v = v * 32768.0f + 0.5f; return (v < 0) ? 0 : (v > 32768.f ? 32768 : (u_short)v); }
 
 static bool debug_point_selected(const char *points, long x, long y)

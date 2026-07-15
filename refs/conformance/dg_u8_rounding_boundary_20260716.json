@@ -1,0 +1,113 @@
+{
+  "aex": "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex",
+  "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "classification": "Mac-local Unicorn execution of checked-in Windows PE; not AE-host execution",
+  "conclusion": "Actual bytes are compared against truncation and round-nearest per the steered direct-cast scaled input; the normal-path pre-store lane is not reached by this minimal branch.",
+  "conversion_address": {
+    "post_store": "0x181170c40",
+    "pre_store": "0x181170c20"
+  },
+  "entry": "0x181170870",
+  "fixture": {
+    "field_channel": "green",
+    "height": 1,
+    "source": [
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "width": 2
+  },
+  "kind": "dg_u8_rounding_boundary_20260716",
+  "normal_path_probe": {
+    "pre_store_reached": false,
+    "reason": "The minimal degenerate/background branch returns after its direct byte casts; the normal-path marker at 0x181170c20 is not executed."
+  },
+  "rows": [
+    {
+      "actual_matches_round_nearest": true,
+      "actual_matches_truncate": true,
+      "actual_output_memory": [
+        255,
+        12,
+        12,
+        12
+      ],
+      "field_green_u8": 127,
+      "instructions": 29,
+      "models_by_lane": [
+        {
+          "round_nearest": 12,
+          "truncate": 12
+        },
+        {
+          "round_nearest": 12,
+          "truncate": 12
+        },
+        {
+          "round_nearest": 12,
+          "truncate": 12
+        },
+        {
+          "round_nearest": 255,
+          "truncate": 255
+        }
+      ],
+      "steered_scaled_inputs_agrb": [
+        255.0,
+        12.49,
+        12.49,
+        12.49
+      ],
+      "x": 0
+    },
+    {
+      "actual_matches_round_nearest": false,
+      "actual_matches_truncate": true,
+      "actual_output_memory": [
+        255,
+        12,
+        12,
+        12
+      ],
+      "field_green_u8": 128,
+      "instructions": 29,
+      "models_by_lane": [
+        {
+          "round_nearest": 13,
+          "truncate": 12
+        },
+        {
+          "round_nearest": 13,
+          "truncate": 12
+        },
+        {
+          "round_nearest": 13,
+          "truncate": 12
+        },
+        {
+          "round_nearest": 255,
+          "truncate": 255
+        }
+      ],
+      "steered_scaled_inputs_agrb": [
+        255.0,
+        12.51,
+        12.51,
+        12.51
+      ],
+      "x": 1
+    }
+  ],
+  "schema": 1,
+  "status": "executed_actual_aex"
+}

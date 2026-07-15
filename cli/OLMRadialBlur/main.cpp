@@ -793,6 +793,25 @@ struct FloatImage {
     std::vector<float> rgba;
 };
 
+struct RotationTypedPlanes {
+    FloatImage polar;
+    FloatImage accum;
+    FloatImage collapsed;
+    std::vector<float> prepass_alpha;
+    std::vector<float> scatter_alpha;
+    std::vector<float> source_alpha;
+    std::vector<std::array<float, 2>> polar_coordinates;
+    std::vector<uint8_t> polar_valid;
+};
+
+struct RotationTypedPolarInput {
+    int width = 0;
+    int height = 0;
+    int row_stride = 0;
+    std::vector<float> rgba;
+    std::vector<uint8_t> polar_valid;
+};
+
 float clamp_float(float v, float lo, float hi) {
     return std::max(lo, std::min(v, hi));
 }
@@ -1657,23 +1676,17 @@ Image render_olmradialblur_zoom(const Image &input, const RadialBlurParams &para
     return out;
 }
 
-Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &params) {
+Image render_olmradialblur_rotation_float(const FloatImage &src, const RadialBlurParams &params,
+                                          RotationTypedPlanes *typed_planes = nullptr,
+                                          int output_bit_depth = 8,
+                                          const RotationTypedPolarInput *typed_polar = nullptr) {
     if (params.blur_type != 2) throw std::runtime_error("C++ OLMRadialBlur rotation supports only Blur Type=2");
     if (params.noise_variation != 0.0) throw std::runtime_error("C++ OLMRadialBlur rotation currently does not support Noise Variation");
     const bool has_inner_input = params.inner_strength != 0 || params.inner_offset != 0;
     const bool force_inner_source_scatter_prepass = has_inner_input;
 
-    const int w = input.width;
-    const int h = input.height;
-    FloatImage src;
-    src.width = w;
-    src.height = h;
-    src.rgba.resize(static_cast<size_t>(w) * h * 4);
-    if (input.bit_depth == 16) {
-        for (size_t i = 0; i < input.rgba16.size(); ++i) src.rgba[i] = static_cast<float>(input.rgba16[i]) / 65535.0f;
-    } else {
-        for (size_t i = 0; i < input.rgba.size(); ++i) src.rgba[i] = static_cast<float>(input.rgba[i]) / 255.0f;
-    }
+    const int w = src.width;
+    const int h = src.height;
     const double scale_x = static_cast<double>(w) / params.comp_width;
     const double scale_y = static_cast<double>(h) / params.comp_height;
     const double cx = params.center_x * scale_x;
@@ -1684,15 +1697,29 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
     const double quality_span_scale = params.aex_quality_span_scale ? quality / 5.0 : 1.0;
     const double step_deg = 1.0 / quality;
     const double step_rad = step_deg * M_PI / 180.0;
-    const int angular_count = static_cast<int>(360.0 / step_deg);
+    int angular_count = static_cast<int>(360.0 / step_deg);
 
     const double left = std::max(0.0, -cx);
     const double right = std::max({0.0, cx - static_cast<double>(w), cx <= static_cast<double>(w) / 2.0 ? static_cast<double>(w) - cx : cx});
     const double top = std::max(0.0, -cy);
     const double bottom = std::max({0.0, cy - static_cast<double>(h), cy <= static_cast<double>(h) / 2.0 ? static_cast<double>(h) - cy : cy});
-    const int min_r = std::max(0, static_cast<int>(std::sqrt(left * left + top * top) / ratio) - 2);
+    int min_r = std::max(0, static_cast<int>(std::sqrt(left * left + top * top) / ratio) - 2);
     const int max_r = static_cast<int>(std::sqrt(std::max(left, right) * std::max(left, right) + std::max(top, bottom) * std::max(top, bottom))) + 2;
-    const int radius_count = max_r - min_r + 1;
+    int radius_count = max_r - min_r + 1;
+
+    if (typed_polar) {
+        if (typed_polar->width <= 0 || typed_polar->height <= 0 || typed_polar->row_stride <= 0 ||
+            static_cast<size_t>(typed_polar->row_stride) != static_cast<size_t>(typed_polar->width) * 4) {
+            throw std::runtime_error("typed polar input must have positive width/height and row_stride=width*4");
+        }
+        const size_t cell_count = static_cast<size_t>(typed_polar->width) * typed_polar->height;
+        if (typed_polar->rgba.size() != cell_count * 4 || typed_polar->polar_valid.size() != cell_count) {
+            throw std::runtime_error("typed polar input has non-exact RGBA or validity size");
+        }
+        angular_count = typed_polar->width;
+        radius_count = typed_polar->height;
+        min_r = 0;
+    }
 
     FloatImage polar;
     polar.width = angular_count;
@@ -1735,6 +1762,7 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
                 sy = static_cast<float>(cy + sin_a * sx0 + cos_a * sy0);
             }
             const size_t dst = (static_cast<size_t>(ri) * angular_count + ai) * 4;
+            if (typed_polar) continue;
             const bool use_aex_alpha_sample =
                 params.polar_sample_mode == "aex-alpha" ||
                 params.repeat_border ||
@@ -1758,6 +1786,11 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
                 polar_span_gate[cell] = size_factor;
             }
         }
+    }
+
+    if (typed_polar) {
+        polar.rgba = typed_polar->rgba;
+        polar_valid = typed_polar->polar_valid;
     }
 
     const int outer_strength_for_span = scale_aex_span_param(params.outer_strength, quality_span_scale);
@@ -1888,6 +1921,7 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
     const bool use_source_scatter_prepass =
         params.outer_source_scatter_prepass ||
         ((params.inner_source_scatter_prepass || force_inner_source_scatter_prepass) && has_inner);
+    std::vector<float> prepass_alpha_export;
 
     if (use_source_scatter_prepass) {
         InnerScatterStats scatter_stats;
@@ -2016,6 +2050,7 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
                     source_rgba.rgba[dst + 3] = alpha;
                 }
             }
+            prepass_alpha_export = prepass_alpha;
         }
 
         auto weights_for_span = [&](int span) -> const std::vector<float> & {
@@ -2137,6 +2172,12 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
                     blurred.rgba[dst + 3] = max_alpha[cell];
                 }
             }
+        }
+        if (typed_planes) {
+            typed_planes->accum = accum;
+            typed_planes->prepass_alpha = prepass_alpha_export;
+            typed_planes->scatter_alpha = max_alpha;
+            typed_planes->source_alpha = source_alpha;
         }
         write_inner_scatter_stats(params.inner_scatter_stats_path, scatter_stats);
     } else if (variable_offset) {
@@ -2327,10 +2368,33 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
         }
     }
 
+    if (typed_planes) {
+        typed_planes->polar = polar;
+        typed_planes->polar_coordinates.clear();
+        typed_planes->polar_valid = polar_valid;
+        typed_planes->polar_coordinates.reserve(static_cast<size_t>(radius_count) * angular_count);
+        for (int ri = 0; ri < radius_count; ++ri) {
+            const double r = static_cast<double>(min_r + ri) + radius_offset;
+            for (int ai = 0; ai < angular_count; ++ai) {
+                const double theta = (static_cast<double>(ai) + angle_offset_steps) * step_rad;
+                const double sx = cx + cos_a * (std::cos(theta) * r) - sin_a * (std::sin(theta) * r * ratio);
+                const double sy = cy + sin_a * (std::cos(theta) * r) + cos_a * (std::sin(theta) * r * ratio);
+                typed_planes->polar_coordinates.push_back({static_cast<float>(sx), static_cast<float>(sy)});
+            }
+        }
+        typed_planes->collapsed = blurred;
+        if (!use_source_scatter_prepass) {
+            typed_planes->accum = FloatImage{};
+            typed_planes->prepass_alpha.clear();
+            typed_planes->scatter_alpha.clear();
+            typed_planes->source_alpha.clear();
+        }
+    }
+
     Image out;
     out.width = w;
     out.height = h;
-    out.bit_depth = input.bit_depth;
+    out.bit_depth = output_bit_depth;
     if (out.bit_depth == 16) out.rgba16.resize(static_cast<size_t>(w) * h * 4);
     else out.rgba.resize(static_cast<size_t>(w) * h * 4);
     const float max_val = out.bit_depth == 16 ? 65535.0f : 255.0f;
@@ -2517,6 +2581,19 @@ Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &
     }
     maybe_write_witness_dump(params, witness);
     return out;
+}
+
+Image render_olmradialblur_rotation(const Image &input, const RadialBlurParams &params) {
+    FloatImage src;
+    src.width = input.width;
+    src.height = input.height;
+    src.rgba.resize(static_cast<size_t>(src.width) * src.height * 4);
+    if (input.bit_depth == 16) {
+        for (size_t i = 0; i < input.rgba16.size(); ++i) src.rgba[i] = static_cast<float>(input.rgba16[i]) / 65535.0f;
+    } else {
+        for (size_t i = 0; i < input.rgba.size(); ++i) src.rgba[i] = static_cast<float>(input.rgba[i]) / 255.0f;
+    }
+    return render_olmradialblur_rotation_float(src, params, nullptr, input.bit_depth);
 }
 
 struct Args {

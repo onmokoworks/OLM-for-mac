@@ -1,0 +1,185 @@
+{
+  "kind": "olmdirectionalblur_diagonal_actual_aex_port_differential",
+  "schema": 1,
+  "date": "2026-07-16",
+  "status": "pass",
+  "claim_scope": "bounded diagonal actual-AEX versus typed-rowdriver differential; not AE exact",
+  "contract": {
+    "case_id": "case_0005",
+    "primary_witness": [
+      507,
+      367
+    ],
+    "crop": [
+      499,
+      359,
+      515,
+      375
+    ],
+    "angle_degrees": 45,
+    "world_dimensions": [
+      16,
+      16
+    ],
+    "world_rowbytes": 76,
+    "world_area": [
+      2,
+      1,
+      14,
+      15
+    ],
+    "downsample": [
+      1,
+      2
+    ],
+    "front_strength": 48,
+    "zero_variations_fades_tails_back_noise": true,
+    "aex_rowdriver": "0x1800038d0",
+    "rotate": "0x180001ec0",
+    "rowdriver_return": "0x18000553b",
+    "normalization": "0x180005554"
+  },
+  "provenance": {
+    "aex": "plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "fixture": "tools/emulation/dblur_fullrender_host_fixture_20260711.py",
+    "source": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0005_before_effects.png"
+  },
+  "differential": {
+    "actual_status": "ok",
+    "typed_status": "ok",
+    "actual_output_sha256": "d1e80171e1b25e9153641121347caf93d0ac389d42479ec15d5ec034ce60a322",
+    "typed_output_sha256": "d1e80171e1b25e9153641121347caf93d0ac389d42479ec15d5ec034ce60a322",
+    "available_typed_state": {
+      "dimensions": [
+        26,
+        26
+      ],
+      "source": "0x2002ac88",
+      "destination": "0x2002d6c8",
+      "denominator": "0x20030108",
+      "alpha": "0x20030b98",
+      "comp_map": "0x20031628",
+      "mode": 1,
+      "mode_branch": "default",
+      "counts": {
+        "scatter_front": 24,
+        "prepass_front": 0,
+        "scatter_back": 0,
+        "prepass_back": 0
+      },
+      "table_sha256": {
+        "scatter_front": "3060142019d501841f376b1b9b6740b1441412ed68204c6ac92feb77dfe1c1a1",
+        "scatter_back": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "prepass_front": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "prepass_back": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "table_edge_values": {
+        "scatter_front": {
+          "first": 1.0,
+          "last": 0.016037717461586
+        },
+        "scatter_back": {
+          "first": null,
+          "last": null
+        },
+        "prepass_front": {
+          "first": null,
+          "last": null
+        },
+        "prepass_back": {
+          "first": null,
+          "last": null
+        }
+      },
+      "source_before_sha256": "986a055a2afdb18bd45751d82cb7ae239d47bd1a08b8e7f42d4d47c46923d2c3",
+      "destination_before_sha256": "986a055a2afdb18bd45751d82cb7ae239d47bd1a08b8e7f42d4d47c46923d2c3",
+      "denominator_before_sha256": "9dd75789e0f371d50efb6aaf2878d08ccf1374a4189a0941ae6057b11e487c02",
+      "alpha_before_sha256": "9dd75789e0f371d50efb6aaf2878d08ccf1374a4189a0941ae6057b11e487c02",
+      "comp_map_sha256": "24a6018839be6e9a83db01e85d75c30c7e88cb42f0460514f384e3fd092f10e2",
+      "complete": true,
+      "destination_after_sha256": "521887111e6a55f57b6ec02f9c0fbd5d31587d6f6dcb3a5493eef4e1aadf7eff",
+      "denominator_after_sha256": "eac52f432223e269a3a51cdb0bf038bea65a445a3cb44c533c1f99ecbdd92285",
+      "alpha_after_sha256": "bf6cf09e53cd2afc40c07b03b30dd348131cd8d4638f6b0e0ef141f226b064d8",
+      "calls": 26
+    },
+    "actual": {
+      "output_sha256": "d1e80171e1b25e9153641121347caf93d0ac389d42479ec15d5ec034ce60a322",
+      "iterate_calls": 2,
+      "rotate_calls": 2,
+      "rotate_dimensions": [
+        [
+          26,
+          26
+        ],
+        [
+          26,
+          26
+        ]
+      ],
+      "rotate_angle_bits": [
+        "0x4016cbe4",
+        "0xc016cbe4"
+      ],
+      "normalization": {
+        "after_rotateback": true
+      },
+      "typed_state": null
+    },
+    "typed": {
+      "output_sha256": "d1e80171e1b25e9153641121347caf93d0ac389d42479ec15d5ec034ce60a322",
+      "iterate_calls": 2,
+      "rotate_calls": 2,
+      "rotate_dimensions": [
+        [
+          26,
+          26
+        ],
+        [
+          26,
+          26
+        ]
+      ],
+      "rotate_angle_bits": [
+        "0x4016cbe4",
+        "0xc016cbe4"
+      ],
+      "normalization": {
+        "after_rotateback": true
+      },
+      "typed_state": {
+        "mode": 1,
+        "dimensions": [
+          26,
+          26
+        ],
+        "buffers": {
+          "source": "0x2002ac88",
+          "destination": "0x2002d6c8",
+          "denominator": "0x20030108",
+          "alpha": "0x20030b98",
+          "comp_map": "0x20031628"
+        },
+        "rowdriver_calls": 26,
+        "last_rows": [
+          25,
+          26
+        ]
+      }
+    },
+    "equal_output": true,
+    "schedule_probe": {
+      "status": "blocked",
+      "rowdriver_calls": 26,
+      "return_address": "0x18000553b",
+      "normalization_stop": "0x180005554",
+      "last_rows": [
+        25,
+        26
+      ]
+    }
+  },
+  "fail_closed": {
+    "production_integration_claimed": false
+  }
+}

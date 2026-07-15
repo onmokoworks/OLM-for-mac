@@ -1,0 +1,117 @@
+{
+  "aex_runtime": {
+    "entry": "0x1800094b0",
+    "error": "RuntimeError: emulation faulted at RIP=0x18000950a: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+    "events": [],
+    "fixture": {
+      "background": "opaque green",
+      "blur": {
+        "amount": 2,
+        "direction": "Around",
+        "distance": 2
+      },
+      "dimensions": [
+        5,
+        5
+      ],
+      "keyed_center": "opaque red",
+      "replacement": "opaque blue",
+      "thin": {
+        "amount": 1,
+        "distance": 2
+      }
+    },
+    "required_addresses": {
+      "blur_apply": "0x1800098cc",
+      "blur_boundary": "0x18000983c",
+      "replacement_write": "0x18000291a",
+      "thin_boundary": "0x180009625"
+    },
+    "status": "blocked"
+  },
+  "claim_boundary": "static binary control-flow proof plus Mac source/build guard; runtime host scaffold remains separate and no AE-exact claim is made",
+  "combined_off_requirement": "same edge hooks, no replacement_write",
+  "control_matrix": {
+    "replace_0_thin_0_blur_0": {
+      "reason": "full orchestrator did not reach stage hooks",
+      "status": "blocked"
+    },
+    "replace_1_thin_0_blur_0": {
+      "reason": "full orchestrator did not reach stage hooks",
+      "status": "blocked"
+    },
+    "replace_1_thin_1_blur_1": {
+      "reason": "full orchestrator did not reach stage hooks",
+      "status": "blocked"
+    }
+  },
+  "isolated_arm64_build": {
+    "command": [
+      "xcodebuild",
+      "-project",
+      "mac/OLMColorKey/Mac/OLMColorKey.xcodeproj",
+      "-scheme",
+      "OLMColorKey",
+      "-configuration",
+      "Release",
+      "-sdk",
+      "macosx",
+      "-derivedDataPath",
+      "$TRANSIENT_DERIVED_DATA",
+      "ARCHS=arm64",
+      "ONLY_ACTIVE_ARCH=YES",
+      "CODE_SIGNING_ALLOWED=NO",
+      "build"
+    ],
+    "result": "BUILD SUCCEEDED",
+    "returncode": 0,
+    "status": "pass"
+  },
+  "kind": "olmcolorkey_replace_edge_orchestration_20260716",
+  "required_combined_on_order": [
+    "replacement_write",
+    "thin_boundary",
+    "blur_boundary",
+    "blur_apply"
+  ],
+  "schema": 1,
+  "source_evidence": {
+    "blur_guard_present": false,
+    "replace_write_remains_in_pixel_stage": true,
+    "source": "mac/OLMColorKey/OLMColorKey.cpp",
+    "thin_guard_present": false
+  },
+  "static_aex_evidence": {
+    "binary_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "event_order": [
+      "0x1800095ff",
+      "0x180009625",
+      "0x18000983c",
+      "0x1800098cc"
+    ],
+    "gates": {
+      "binary_sha256": true,
+      "key_then_thin_then_blur_order": true,
+      "replace_flag_absent_from_edge_orchestrator": true,
+      "required_instructions": true
+    },
+    "parameter_reader": "ctx+0x4d at 0x18000a54e",
+    "replace_reads_in_edge_orchestrator": [],
+    "replace_tail_reads": [
+      "0x1800028e2",
+      "0x18000327e",
+      "0x1800040a2"
+    ],
+    "required_instruction_matches": {
+      "0x1800028e2": true,
+      "0x1800095ff": true,
+      "0x180009625": true,
+      "0x18000983c": true,
+      "0x1800098cc": true,
+      "0x18000a54e": true
+    },
+    "scope": "static AEX control-flow proof; no host or pixel-output claim",
+    "status": "pass"
+  },
+  "status": "pass_static_runtime_blocked"
+}

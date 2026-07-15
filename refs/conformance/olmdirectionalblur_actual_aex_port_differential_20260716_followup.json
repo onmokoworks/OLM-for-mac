@@ -1,0 +1,84 @@
+{
+  "kind": "olmdirectionalblur_actual_aex_port_differential_followup",
+  "schema": 1,
+  "date": "2026-07-16",
+  "status": "pass",
+  "claim_scope": "angle-0 local actual-AEX versus typed-port host-boundary differential; not AE exact",
+  "provenance": {
+    "aex": "plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "fixture": "tools/emulation/dblur_fullrender_host_fixture_20260711.py",
+    "fixture_sha256": "e3216aa5a213efaf2129dd11bf9c4a5e6e4a5c162d034c607df6e0bda1fba80a",
+    "source": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png"
+  },
+  "contract": {
+    "angle_degrees": 0,
+    "world_area": [
+      2,
+      1,
+      14,
+      15
+    ],
+    "rowbytes": 76,
+    "row_padding": 12
+  },
+  "differential": {
+    "actual_status": "ok",
+    "port_status": "ok",
+    "actual_output_sha256": "942a45b3a8eeb5da50f7badbfd6d68a4594b6af486b58be44d1d950cbf7e5ca5",
+    "port_output_sha256": "942a45b3a8eeb5da50f7badbfd6d68a4594b6af486b58be44d1d950cbf7e5ca5",
+    "equal_output": true,
+    "world": {
+      "iterate_calls": 2,
+      "areas": [
+        [
+          2,
+          1,
+          14,
+          15
+        ],
+        [
+          2,
+          1,
+          14,
+          15
+        ]
+      ],
+      "source_worlds": [
+        "0x400002f0"
+      ],
+      "destination_worlds": [
+        "0x400003f0"
+      ],
+      "rowbytes": 76
+    },
+    "typed_ownership": {
+      "mode": 1,
+      "dimensions": [
+        26,
+        26
+      ],
+      "typed_buffers": {
+        "source": "0x2002ac88",
+        "destination": "0x2002d6c8",
+        "denominator": "0x20030108",
+        "alpha_max": "0x20030b98",
+        "comp_map": "0x20031628"
+      },
+      "rowdriver_calls": 26,
+      "last_rows": [
+        25,
+        26
+      ]
+    }
+  },
+  "fail_closed": {
+    "status": "blocked",
+    "reason": "pre-render-return",
+    "exact_stop": "0x180005554",
+    "observed_stop": "0x180005554",
+    "rowdriver_return": "0x18000553b",
+    "rowdriver_calls": 26,
+    "production_integration_claimed": false
+  }
+}

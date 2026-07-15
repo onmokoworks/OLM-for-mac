@@ -721,16 +721,28 @@ float edge_blur_weight(bool inside, float dist, float amount, int direction) {
         return (std::sin((dist * (static_cast<float>(M_PI) / amount)) - static_cast<float>(M_PI / 2.0)) + 1.0f) * 0.5f;
     }
     if (direction == 2) {
+        if (dist == 0.0f) return 0.5f;
+        if (dist >= amount) return inside ? 1.0f : 0.0f;
+        float phase = dist * (static_cast<float>(M_PI / 2.0) / amount);
+        if (!inside) phase = -phase;
+        return (std::sin(phase) + 1.0f) * 0.5f;
+    }
+    if (direction == 3) {
         if (inside) return 1.0f;
         if (dist >= amount) return 0.0f;
         return (std::sin(static_cast<float>(M_PI / 2.0) - (dist * (static_cast<float>(M_PI) / amount))) + 1.0f) * 0.5f;
     }
-    if (direction == 3) {
-        if (!inside) return 0.0f;
-        if (dist >= amount) return 1.0f;
-        return (std::sin((dist * (static_cast<float>(M_PI) / amount)) - static_cast<float>(M_PI / 2.0)) + 1.0f) * 0.5f;
-    }
     return inside ? 1.0f : 0.0f;
+}
+
+unsigned char edge_blur_apply_channel(
+    unsigned char input_channel,
+    unsigned char output_channel,
+    bool inside,
+    float weight) {
+    const unsigned char source = (!inside && weight != 0.0f) ? input_channel : output_channel;
+    const int scaled = static_cast<int>(static_cast<float>(source) * weight);
+    return static_cast<unsigned char>(std::clamp(scaled, 0, 255));
 }
 
 std::vector<TracePixel> parse_trace_pixels_env() {
@@ -935,18 +947,10 @@ Image render_olmcolorkey(const Image &input, const ColorKeyParams &cfg) {
             const bool keep = keep_mask[i] != 0;
             const float weight = edge_blur_weight(keep, dist[static_cast<size_t>(i)], cfg.edge_blur_amount, cfg.edge_blur_direction);
             size_t p = static_cast<size_t>(i) * 4;
-            unsigned char src_r = ((!keep && weight != 0.0f) ? input.rgba[p + 0] : out.rgba[p + 0]);
-            unsigned char src_g = ((!keep && weight != 0.0f) ? input.rgba[p + 1] : out.rgba[p + 1]);
-            unsigned char src_b = ((!keep && weight != 0.0f) ? input.rgba[p + 2] : out.rgba[p + 2]);
-            unsigned char src_alpha = ((!keep && weight != 0.0f) ? input.rgba[p + 3] : out.rgba[p + 3]);
-            int red = static_cast<int>(static_cast<float>(src_r) * weight);
-            int green = static_cast<int>(static_cast<float>(src_g) * weight);
-            int blue = static_cast<int>(static_cast<float>(src_b) * weight);
-            int alpha = static_cast<int>(static_cast<float>(src_alpha) * weight);
-            out.rgba[p + 0] = static_cast<unsigned char>(std::clamp(red, 0, 255));
-            out.rgba[p + 1] = static_cast<unsigned char>(std::clamp(green, 0, 255));
-            out.rgba[p + 2] = static_cast<unsigned char>(std::clamp(blue, 0, 255));
-            out.rgba[p + 3] = static_cast<unsigned char>(std::clamp(alpha, 0, 255));
+            out.rgba[p + 0] = edge_blur_apply_channel(input.rgba[p + 0], out.rgba[p + 0], keep, weight);
+            out.rgba[p + 1] = edge_blur_apply_channel(input.rgba[p + 1], out.rgba[p + 1], keep, weight);
+            out.rgba[p + 2] = edge_blur_apply_channel(input.rgba[p + 2], out.rgba[p + 2], keep, weight);
+            out.rgba[p + 3] = edge_blur_apply_channel(input.rgba[p + 3], out.rgba[p + 3], keep, weight);
         }
         for (const TracePixel &pixel : trace_pixels) {
             if (0 <= pixel.x && pixel.x < w && 0 <= pixel.y && pixel.y < h) {

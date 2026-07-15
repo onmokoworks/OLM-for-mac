@@ -1,0 +1,517 @@
+{
+  "aex": "plugins_2025/DistanceGradation.aex",
+  "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "case_id": "dg_pf16_writer_boundary_20260716",
+  "classification": "Mac-local Unicorn execution of checked-in Windows 2025 AEX leaves; direct writer code-domain evidence only, not AE-host execution and not candidate production behavior",
+  "conclusion": {
+    "callback_needed": false,
+    "clamp_domain_observed": "writer output is bounded to 0..65535 before conversion; the 65536 sample produces 65535",
+    "direct_calls": "all requested writer leaves completed for the four bounded triplets",
+    "rounding_observation": "AEX uses CVTSS2SI/CVTPS2DQ under the emulated MXCSR; this is recorded as an observation, not replaced by the Mac half-up model",
+    "upstream_scale": "unproven"
+  },
+  "execution_assumptions": {
+    "calling_convention": "Windows x64: RCX, RDX, R8D",
+    "destination_initial_words": [
+      "a55a",
+      "a55a",
+      "a55a",
+      "a55a"
+    ],
+    "mxcsr": "AexLoader default Unicorn x86-64 MXCSR state; no runtime MXCSR mutation requested or observed",
+    "raw_input_storage": "little-endian IEEE-754 float32, with hex words retained"
+  },
+  "functions": {
+    "FUN_18144b820": {
+      "executed": false,
+      "reason": "writer leaves completed without host callback",
+      "va": "0x18144b820"
+    },
+    "FUN_181458030": {
+      "role": "three-word scalar PF16 writer",
+      "va": "0x181458030"
+    },
+    "FUN_1814581a0": {
+      "role": "RGBA-shaped writer; count is input-word count; fourth output word is preserved",
+      "va": "0x1814581a0"
+    }
+  },
+  "model_only": {
+    "formula": "clamp16(x / 32768.0) = saturate(floor(float32(float32(x / 32768.0) * 32768.0) + 0.5), 0, 32768)",
+    "name": "Mac clamp16 applied to code-domain input",
+    "results_by_sample": {
+      "0.499": 0,
+      "0.5": 1,
+      "0.501": 1,
+      "32766.5": 32767,
+      "32767.49": 32767,
+      "32767.5": 32768,
+      "32768.0": 32768,
+      "65534.49": 32768,
+      "65535.0": 32768,
+      "65536.0": 32768
+    },
+    "upstream_scale_assumption": "none proven; x/32768 is only the comparison-domain mapping"
+  },
+  "results": [
+    {
+      "case": "sub_1",
+      "rgb_leaf": {
+        "abi": "RCX=float32_input, RDX=uint16_output, R8D=count",
+        "callbacks": [],
+        "function": "0x181458030",
+        "imports": [],
+        "input_f32_hex": [
+          "ee7cff3e",
+          "0000003f",
+          "8941003f"
+        ],
+        "input_f32_raw": [
+          0.49900001287460327,
+          0.5,
+          0.5009999871253967
+        ],
+        "instructions": 66,
+        "mxcsr": "0x00000000",
+        "output_words_hex": [
+          "0000",
+          "0000",
+          "0001",
+          "a55a"
+        ],
+        "output_words_u16": [
+          0,
+          0,
+          1,
+          42330
+        ],
+        "preserved_fourth_word": true,
+        "writes_into_four_word_destination": [
+          {
+            "address_offset": 0,
+            "size": 2,
+            "value_hex": "0000",
+            "value_u16": 0
+          },
+          {
+            "address_offset": 2,
+            "size": 2,
+            "value_hex": "0000",
+            "value_u16": 0
+          },
+          {
+            "address_offset": 4,
+            "size": 2,
+            "value_hex": "0100",
+            "value_u16": 1
+          }
+        ]
+      },
+      "rgba_leaf": {
+        "abi": "RCX=float32_input, RDX=uint16_output, R8D=count",
+        "callbacks": [],
+        "function": "0x1814581a0",
+        "imports": [],
+        "input_f32_hex": [
+          "ee7cff3e",
+          "0000003f",
+          "8941003f",
+          "0080f642"
+        ],
+        "input_f32_raw": [
+          0.49900001287460327,
+          0.5,
+          0.5009999871253967,
+          123.25
+        ],
+        "instructions": 53,
+        "mxcsr": "0x00000000",
+        "output_words_hex": [
+          "0000",
+          "0000",
+          "0001",
+          "a55a"
+        ],
+        "output_words_u16": [
+          0,
+          0,
+          1,
+          42330
+        ],
+        "preserved_fourth_word": true,
+        "writes_into_four_word_destination": [
+          {
+            "address_offset": 0,
+            "size": 2,
+            "value_hex": "0000",
+            "value_u16": 0
+          },
+          {
+            "address_offset": 2,
+            "size": 2,
+            "value_hex": "0000",
+            "value_u16": 0
+          },
+          {
+            "address_offset": 4,
+            "size": 2,
+            "value_hex": "0100",
+            "value_u16": 1
+          }
+        ]
+      },
+      "samples": [
+        0.499,
+        0.5,
+        0.501
+      ]
+    },
+    {
+      "case": "code_ties",
+      "rgb_leaf": {
+        "abi": "RCX=float32_input, RDX=uint16_output, R8D=count",
+        "callbacks": [],
+        "function": "0x181458030",
+        "imports": [],
+        "input_f32_hex": [
+          "0000003f",
+          "00fdff46",
+          "00ffff46"
+        ],
+        "input_f32_raw": [
+          0.5,
+          32766.5,
+          32767.5
+        ],
+        "instructions": 66,
+        "mxcsr": "0x00000000",
+        "output_words_hex": [
+          "0000",
+          "7ffe",
+          "8000",
+          "a55a"
+        ],
+        "output_words_u16": [
+          0,
+          32766,
+          32768,
+          42330
+        ],
+        "preserved_fourth_word": true,
+        "writes_into_four_word_destination": [
+          {
+            "address_offset": 0,
+            "size": 2,
+            "value_hex": "0000",
+            "value_u16": 0
+          },
+          {
+            "address_offset": 2,
+            "size": 2,
+            "value_hex": "fe7f",
+            "value_u16": 32766
+          },
+          {
+            "address_offset": 4,
+            "size": 2,
+            "value_hex": "0080",
+            "value_u16": 32768
+          }
+        ]
+      },
+      "rgba_leaf": {
+        "abi": "RCX=float32_input, RDX=uint16_output, R8D=count",
+        "callbacks": [],
+        "function": "0x1814581a0",
+        "imports": [],
+        "input_f32_hex": [
+          "0000003f",
+          "00fdff46",
+          "00ffff46",
+          "0080f642"
+        ],
+        "input_f32_raw": [
+          0.5,
+          32766.5,
+          32767.5,
+          123.25
+        ],
+        "instructions": 53,
+        "mxcsr": "0x00000000",
+        "output_words_hex": [
+          "0000",
+          "7ffe",
+          "8000",
+          "a55a"
+        ],
+        "output_words_u16": [
+          0,
+          32766,
+          32768,
+          42330
+        ],
+        "preserved_fourth_word": true,
+        "writes_into_four_word_destination": [
+          {
+            "address_offset": 0,
+            "size": 2,
+            "value_hex": "0000",
+            "value_u16": 0
+          },
+          {
+            "address_offset": 2,
+            "size": 2,
+            "value_hex": "fe7f",
+            "value_u16": 32766
+          },
+          {
+            "address_offset": 4,
+            "size": 2,
+            "value_hex": "0080",
+            "value_u16": 32768
+          }
+        ]
+      },
+      "samples": [
+        0.5,
+        32766.5,
+        32767.5
+      ]
+    },
+    {
+      "case": "near_32768",
+      "rgb_leaf": {
+        "abi": "RCX=float32_input, RDX=uint16_output, R8D=count",
+        "callbacks": [],
+        "function": "0x181458030",
+        "imports": [],
+        "input_f32_hex": [
+          "fbfeff46",
+          "00ffff46",
+          "00000047"
+        ],
+        "input_f32_raw": [
+          32767.490234375,
+          32767.5,
+          32768.0
+        ],
+        "instructions": 66,
+        "mxcsr": "0x00000000",
+        "output_words_hex": [
+          "7fff",
+          "8000",
+          "8000",
+          "a55a"
+        ],
+        "output_words_u16": [
+          32767,
+          32768,
+          32768,
+          42330
+        ],
+        "preserved_fourth_word": true,
+        "writes_into_four_word_destination": [
+          {
+            "address_offset": 0,
+            "size": 2,
+            "value_hex": "ff7f",
+            "value_u16": 32767
+          },
+          {
+            "address_offset": 2,
+            "size": 2,
+            "value_hex": "0080",
+            "value_u16": 32768
+          },
+          {
+            "address_offset": 4,
+            "size": 2,
+            "value_hex": "0080",
+            "value_u16": 32768
+          }
+        ]
+      },
+      "rgba_leaf": {
+        "abi": "RCX=float32_input, RDX=uint16_output, R8D=count",
+        "callbacks": [],
+        "function": "0x1814581a0",
+        "imports": [],
+        "input_f32_hex": [
+          "fbfeff46",
+          "00ffff46",
+          "00000047",
+          "0080f642"
+        ],
+        "input_f32_raw": [
+          32767.490234375,
+          32767.5,
+          32768.0,
+          123.25
+        ],
+        "instructions": 53,
+        "mxcsr": "0x00000000",
+        "output_words_hex": [
+          "7fff",
+          "8000",
+          "8000",
+          "a55a"
+        ],
+        "output_words_u16": [
+          32767,
+          32768,
+          32768,
+          42330
+        ],
+        "preserved_fourth_word": true,
+        "writes_into_four_word_destination": [
+          {
+            "address_offset": 0,
+            "size": 2,
+            "value_hex": "ff7f",
+            "value_u16": 32767
+          },
+          {
+            "address_offset": 2,
+            "size": 2,
+            "value_hex": "0080",
+            "value_u16": 32768
+          },
+          {
+            "address_offset": 4,
+            "size": 2,
+            "value_hex": "0080",
+            "value_u16": 32768
+          }
+        ]
+      },
+      "samples": [
+        32767.49,
+        32767.5,
+        32768.0
+      ]
+    },
+    {
+      "case": "above_32768",
+      "rgb_leaf": {
+        "abi": "RCX=float32_input, RDX=uint16_output, R8D=count",
+        "callbacks": [],
+        "function": "0x181458030",
+        "imports": [],
+        "input_f32_hex": [
+          "7dfe7f47",
+          "00ff7f47",
+          "00008047"
+        ],
+        "input_f32_raw": [
+          65534.48828125,
+          65535.0,
+          65536.0
+        ],
+        "instructions": 66,
+        "mxcsr": "0x00000000",
+        "output_words_hex": [
+          "fffe",
+          "ffff",
+          "ffff",
+          "a55a"
+        ],
+        "output_words_u16": [
+          65534,
+          65535,
+          65535,
+          42330
+        ],
+        "preserved_fourth_word": true,
+        "writes_into_four_word_destination": [
+          {
+            "address_offset": 0,
+            "size": 2,
+            "value_hex": "feff",
+            "value_u16": 65534
+          },
+          {
+            "address_offset": 2,
+            "size": 2,
+            "value_hex": "ffff",
+            "value_u16": 65535
+          },
+          {
+            "address_offset": 4,
+            "size": 2,
+            "value_hex": "ffff",
+            "value_u16": 65535
+          }
+        ]
+      },
+      "rgba_leaf": {
+        "abi": "RCX=float32_input, RDX=uint16_output, R8D=count",
+        "callbacks": [],
+        "function": "0x1814581a0",
+        "imports": [],
+        "input_f32_hex": [
+          "7dfe7f47",
+          "00ff7f47",
+          "00008047",
+          "0080f642"
+        ],
+        "input_f32_raw": [
+          65534.48828125,
+          65535.0,
+          65536.0,
+          123.25
+        ],
+        "instructions": 53,
+        "mxcsr": "0x00000000",
+        "output_words_hex": [
+          "fffe",
+          "ffff",
+          "ffff",
+          "a55a"
+        ],
+        "output_words_u16": [
+          65534,
+          65535,
+          65535,
+          42330
+        ],
+        "preserved_fourth_word": true,
+        "writes_into_four_word_destination": [
+          {
+            "address_offset": 0,
+            "size": 2,
+            "value_hex": "feff",
+            "value_u16": 65534
+          },
+          {
+            "address_offset": 2,
+            "size": 2,
+            "value_hex": "ffff",
+            "value_u16": 65535
+          },
+          {
+            "address_offset": 4,
+            "size": 2,
+            "value_hex": "ffff",
+            "value_u16": 65535
+          }
+        ]
+      },
+      "samples": [
+        65534.49,
+        65535.0,
+        65536.0
+      ]
+    }
+  ],
+  "schema": "olm.distancegradation.pf16-writer-boundary/1",
+  "xref_and_upstream_audit": {
+    "direct_call_or_jmp_xrefs": {
+      "FUN_181458030": [],
+      "FUN_1814581a0": []
+    },
+    "leaf_static_input_contract": "RCX points at raw float32 words; the leaf prologues load them directly and do not apply an upstream scale",
+    "open_boundary": "identify the indirect function-pointer/table dispatch or full DistanceGradation caller that supplies RCX to these leaves, then capture RCX float words immediately before the call",
+    "upstream_capture": "not captured: no direct call/jmp xref was found, and indirect dispatch/caller state is not resolved by this harness",
+    "upstream_scale": "unproven"
+  }
+}

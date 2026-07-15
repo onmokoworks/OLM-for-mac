@@ -1,0 +1,43 @@
+{
+  "status": "pass",
+  "scope": "Mac-local source-executing OLMDirectionalBlur production host-adapter boundary; no AE exact promotion",
+  "production_source": "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
+  "production_source_sha256": "647243651f4e62ed4afef1af3a0e82b96a138f0e3e6c01bdddd4fd84fe6e3924",
+  "test": "tools/emulation/test_dblur_mac_host_adapter_20260716.py",
+  "test_sha256": "641d30f7d0c52e4d1b9afb5cea22e9b9a8b930bf73cf5936a8cea2681f874566",
+  "reference_path": "olm_dblur_frontonly_rgba8",
+  "world": {
+    "dimensions": [16, 16],
+    "rowbytes": 76,
+    "extent_hint": [2, 1, 14, 15],
+    "extent_semantics_verified": false,
+    "pixel_layout": "PF_Pixel8 A/R/G/B",
+    "input_padding": "0xa5",
+    "output_padding": "0xee"
+  },
+  "exact_cases": [
+    {"angle": 0.0, "used_exact": 1, "pixels_match": true, "input_unchanged": true, "input_padding_unchanged": true, "output_padding_unchanged": true, "output_digest": "8437a9db66de7189"},
+    {"angle": 45.0, "used_exact": 1, "pixels_match": true, "input_unchanged": true, "input_padding_unchanged": true, "output_padding_unchanged": true, "output_digest": "c87d02170b220f17"}
+  ],
+  "gate_matrix": [
+    "size_variation",
+    "front_alpha_fade_positive",
+    "back_alpha_fade",
+    "front_sharp_tail",
+    "back_strength",
+    "noise",
+    "downsample",
+    "dimension_mismatch"
+  ],
+  "gate_result": "all listed cases used_exact=0",
+  "dispatch_fix": "CanUseExactFrontOnly8 now requires front_alpha_fade == 0; positive Front Alpha Fade remains on fallback because that family is known-red and only no-fade is proven.",
+  "build": {
+    "plugin": "separate no-install xcodebuild produced an arm64 Mach-O bundle; codesign --verify --deep --strict passed",
+    "probe": "temporary source-including executable, clang++ arm64, -O2 -fno-fast-math -ffp-contract=off"
+  },
+  "limitations": [
+    "The probe sets a non-full extent_hint but the production exact path ignores extent_hint, so extent semantics are not verified.",
+    "The plugin bundle build/signature check was run separately from the focused source-including adapter probe.",
+    "No Mac AE render or AE-exact promotion is claimed."
+  ]
+}

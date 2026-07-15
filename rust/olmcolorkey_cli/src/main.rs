@@ -455,21 +455,26 @@ fn edge_blur_weight(inside: bool, dist: f32, amount: f32, direction: i32) -> f32
             }
         }
         2 => {
+            if dist == 0.0 {
+                0.5
+            } else if dist >= amount {
+                if inside {
+                    1.0
+                } else {
+                    0.0
+                }
+            } else {
+                let phase = dist * ((PI * 0.5) / amount);
+                ((if inside { phase } else { -phase }).sin() + 1.0) * 0.5
+            }
+        }
+        3 => {
             if inside {
                 1.0
             } else if dist >= amount {
                 0.0
             } else {
                 ((PI * 0.5 - dist * (PI / amount)).sin() + 1.0) * 0.5
-            }
-        }
-        3 => {
-            if !inside {
-                0.0
-            } else if dist >= amount {
-                1.0
-            } else {
-                ((dist * (PI / amount) - PI * 0.5).sin() + 1.0) * 0.5
             }
         }
         _ => {
@@ -479,6 +484,36 @@ fn edge_blur_weight(inside: bool, dist: f32, amount: f32, direction: i32) -> f32
                 0.0
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod edge_blur_tests {
+    use super::edge_blur_weight;
+
+    fn endpoint_sweep(direction: i32) -> [u8; 8] {
+        let inside = [true, true, true, true, false, false, false, false];
+        let distance = [0.0, 1.0, 3.0, 4.0, 0.0, 1.0, 3.0, 4.0];
+        let input = [17_u8, 53, 89, 125, 161, 197, 233, 255];
+        let matte = [255_u8, 255, 255, 255, 0, 0, 0, 0];
+        let mut output = [0_u8; 8];
+        for i in 0..output.len() {
+            let weight = edge_blur_weight(inside[i], distance[i], 4.0, direction);
+            let source = if !inside[i] && weight != 0.0 {
+                input[i]
+            } else {
+                matte[i]
+            };
+            output[i] = ((source as f32 * weight) as i32).clamp(0, 255) as u8;
+        }
+        output
+    }
+
+    #[test]
+    fn directions_match_grounded_endpoint_bytes() {
+        assert_eq!(endpoint_sweep(1), [0, 37, 217, 255, 0, 0, 0, 0]);
+        assert_eq!(endpoint_sweep(2), [127, 176, 245, 255, 80, 60, 8, 0]);
+        assert_eq!(endpoint_sweep(3), [255, 255, 255, 255, 161, 168, 34, 0]);
     }
 }
 

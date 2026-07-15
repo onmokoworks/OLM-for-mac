@@ -718,14 +718,16 @@ static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direct
 		return (std::sin((dist * (pi / amount)) - (pi * 0.5f)) + 1.0f) * 0.5f;
 	}
 	if (direction == 2) {
+		if (dist == 0.0f) return 0.5f;
+		if (dist >= amount) return inside ? 1.0f : 0.0f;
+		float phase = dist * ((pi * 0.5f) / amount);
+		if (!inside) phase = -phase;
+		return (std::sin(phase) + 1.0f) * 0.5f;
+	}
+	if (direction == 3) {
 		if (inside) return 1.0f;
 		if (dist >= amount) return 0.0f;
 		return (std::sin((pi * 0.5f) - (dist * (pi / amount))) + 1.0f) * 0.5f;
-	}
-	if (direction == 3) {
-		if (!inside) return 0.0f;
-		if (dist >= amount) return 1.0f;
-		return (std::sin((dist * (pi / amount)) - (pi * 0.5f)) + 1.0f) * 0.5f;
 	}
 	return inside ? 1.0f : 0.0f;
 }
@@ -974,18 +976,16 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			matched_index[idx] = hit_index;
 		}
 	}
-	if (!info.enable_replace) {
-		if (info.edge_thin_amount < 0.0) {
-			std::vector<u_char> nonmatch((size_t)w * (size_t)h, 0);
-			for (A_long i = 0; i < w * h; ++i) nonmatch[i] = matched[i] ? 0 : 1;
-			std::vector<float> dist = MatteDistanceTo(nonmatch, w, h, info.edge_thin_distance_type);
-			float limit = (float)std::fabs(info.edge_thin_amount) +
-			              ((info.edge_thin_distance_type == 0 || info.edge_thin_distance_type == 2) ? 1.0f : 0.0f);
-			for (A_long i = 0; i < w * h; ++i) matched[i] = (matched[i] && dist[i] > limit) ? 1 : 0;
-		} else if (info.edge_thin_amount > 0.0) {
-			std::vector<float> dist = MatteDistanceTo(matched, w, h, info.edge_thin_distance_type);
-			for (A_long i = 0; i < w * h; ++i) matched[i] = (matched[i] || dist[i] <= info.edge_thin_amount) ? 1 : 0;
-		}
+	if (info.edge_thin_amount < 0.0) {
+		std::vector<u_char> nonmatch((size_t)w * (size_t)h, 0);
+		for (A_long i = 0; i < w * h; ++i) nonmatch[i] = matched[i] ? 0 : 1;
+		std::vector<float> dist = MatteDistanceTo(nonmatch, w, h, info.edge_thin_distance_type);
+		float limit = (float)std::fabs(info.edge_thin_amount) +
+		              ((info.edge_thin_distance_type == 0 || info.edge_thin_distance_type == 2) ? 1.0f : 0.0f);
+		for (A_long i = 0; i < w * h; ++i) matched[i] = (matched[i] && dist[i] > limit) ? 1 : 0;
+	} else if (info.edge_thin_amount > 0.0) {
+		std::vector<float> dist = MatteDistanceTo(matched, w, h, info.edge_thin_distance_type);
+		for (A_long i = 0; i < w * h; ++i) matched[i] = (matched[i] || dist[i] <= info.edge_thin_amount) ? 1 : 0;
 	}
 
 	std::vector<u_char> keep_mask((size_t)w * (size_t)h, 0);
@@ -1008,7 +1008,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			}
 		}
 	}
-	if (info.edge_blur_amount != 0.0 && !info.enable_replace) {
+	if (info.edge_blur_amount != 0.0) {
 		std::vector<u_char> boundary = Boundary8(keep_mask, w, h);
 		std::vector<float> dist = EdgeBlurDistanceTo(boundary, w, h, info.edge_blur_distance_type);
 		for (A_long y = 0; y < h; ++y) {

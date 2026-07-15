@@ -1,0 +1,162 @@
+{
+  "status": "PASS_STAGE_BOUNDARY_CLASSIFIED",
+  "claim_boundary": "bounded actual-AEX PF16 worker-stage classification only; no production CLI or AE-exact claim",
+  "worker_entry": "0x1801a5a90",
+  "helper_entry": "0x1801ac8b0",
+  "gates": {
+    "worker_return_confirmed": true,
+    "one_helper_capture": true,
+    "pf_copy_callback_captured": true,
+    "pf_copy_resume_captured": true,
+    "callback_output_visible_equals_raw_input": true,
+    "helper_copies_exact_pf16_words": true,
+    "padding_sentinel_preserved": true,
+    "helper_source_and_destination_in_output_payload": true,
+    "alpha_matrix_only_32768_seed_or_propagate": true
+  },
+  "observations": {
+    "raw_host_input_pf16": [
+      [
+        16384,
+        24000,
+        8000,
+        4000
+      ],
+      [
+        32768,
+        1234,
+        2345,
+        3456
+      ]
+    ],
+    "helper_source_pf16": [
+      [
+        32768,
+        1234,
+        2345,
+        3456
+      ]
+    ],
+    "helper_destination_pf16": [
+      [
+        32768,
+        1234,
+        2345,
+        3456
+      ]
+    ],
+    "callback": {
+      "kind": "pf_copy_callback",
+      "abi": "5 args",
+      "args": [
+        "0x1234",
+        "0x20000020",
+        "0x200000a0",
+        "0x0",
+        "0x0"
+      ],
+      "return_address": "0x1801a5b61",
+      "source_world": "0x20000020",
+      "destination_world": "0x200000a0",
+      "source_payload": "0x20000000",
+      "destination_payload": "0x20000080",
+      "width": 2,
+      "height": 1,
+      "source_rowbytes": 20,
+      "destination_rowbytes": 20,
+      "visible_bytes_per_row": 16,
+      "copied_rows": [
+        {
+          "source": 536870912,
+          "destination": 536871040,
+          "bytes": 16
+        }
+      ]
+    },
+    "callback_resume": {
+      "address": "0x1801a5b61",
+      "input_visible_after_callback": [
+        0,
+        64,
+        192,
+        93,
+        64,
+        31,
+        160,
+        15,
+        0,
+        128,
+        210,
+        4,
+        41,
+        9,
+        128,
+        13
+      ],
+      "output_visible_after_callback": [
+        0,
+        64,
+        192,
+        93,
+        64,
+        31,
+        160,
+        15,
+        0,
+        128,
+        210,
+        4,
+        41,
+        9,
+        128,
+        13
+      ],
+      "output_padding_after_callback": [
+        165,
+        165,
+        165,
+        165
+      ],
+      "output_visible_equals_input": true
+    },
+    "pf16_alpha_matrix": [
+      {
+        "alpha": 1,
+        "seed_or_propagate_observed": false,
+        "callback_resume_confirmed": true,
+        "callback_output_equals_raw_input": true
+      },
+      {
+        "alpha": 16384,
+        "seed_or_propagate_observed": false,
+        "callback_resume_confirmed": true,
+        "callback_output_equals_raw_input": true
+      },
+      {
+        "alpha": 32767,
+        "seed_or_propagate_observed": false,
+        "callback_resume_confirmed": true,
+        "callback_output_equals_raw_input": true
+      },
+      {
+        "alpha": 32768,
+        "seed_or_propagate_observed": true,
+        "callback_resume_confirmed": true,
+        "callback_output_equals_raw_input": true
+      },
+      {
+        "alpha": 32769,
+        "seed_or_propagate_observed": false,
+        "callback_resume_confirmed": true,
+        "callback_output_equals_raw_input": true
+      },
+      {
+        "alpha": 65535,
+        "seed_or_propagate_observed": false,
+        "callback_resume_confirmed": true,
+        "callback_output_equals_raw_input": true
+      }
+    ]
+  },
+  "host_pf_copy_behavior": "bounded fixture inference from observed callback ABI and byte effects; not an AE-exact host contract"
+}
