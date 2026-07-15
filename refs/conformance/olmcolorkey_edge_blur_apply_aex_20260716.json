@@ -1,0 +1,245 @@
+{
+  "classification": "Mac-local Unicorn execution of checked-in Windows PE with a narrow PF Handle Suite shim; not AE-host execution and not AE-exact",
+  "cleanup_observed": true,
+  "destination_bytes": [
+    184,
+    204,
+    204,
+    204,
+    27,
+    204,
+    204,
+    204,
+    0,
+    204,
+    204,
+    204,
+    0,
+    204,
+    204,
+    204,
+    0,
+    204,
+    204,
+    204,
+    0,
+    204,
+    204,
+    204,
+    0,
+    204,
+    204,
+    204,
+    0,
+    204,
+    204,
+    204
+  ],
+  "direction": 1,
+  "independent_weight": {
+    "name": "FUN_1800049a0",
+    "va": "0x1800049a0"
+  },
+  "instructions": 1021,
+  "rax": "0x0",
+  "shim": {
+    "callbacks_seen": [
+      "PF_HandleSuite.acquire",
+      "PF_HandleSuite.acquire",
+      "PF_HandleSuite.new_handle",
+      "PF_HandleSuite.lock_handle",
+      "PF_HandleSuite.release_suite",
+      "PF_HandleSuite.acquire",
+      "PF_HandleSuite.unlock_handle",
+      "PF_HandleSuite.dispose_handle",
+      "PF_HandleSuite.release_suite",
+      "PF_HandleSuite.release_suite"
+    ],
+    "events": [
+      {
+        "args": [
+          "0x18001f2b0",
+          "0x2",
+          "0xf0fef08",
+          "0x20000020"
+        ],
+        "callback": "PF_HandleSuite.acquire"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0feed0",
+          "0x20000020"
+        ],
+        "callback": "PF_HandleSuite.acquire"
+      },
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x20000220",
+        "size": 32
+      },
+      {
+        "callback": "PF_HandleSuite.lock_handle",
+        "handle": "0x20000220"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0x82000030",
+          "0x20000020"
+        ],
+        "callback": "PF_HandleSuite.release_suite"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0feef8",
+          "0xf0fef18"
+        ],
+        "callback": "PF_HandleSuite.acquire"
+      },
+      {
+        "callback": "PF_HandleSuite.unlock_handle",
+        "handle": "0x20000220"
+      },
+      {
+        "callback": "PF_HandleSuite.dispose_handle",
+        "handle": "0x20000220"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0feef8",
+          "0xf0fef18"
+        ],
+        "callback": "PF_HandleSuite.release_suite"
+      },
+      {
+        "args": [
+          "0x18001f2b0",
+          "0x2",
+          "0xf0feef8",
+          "0xf0fef18"
+        ],
+        "callback": "PF_HandleSuite.release_suite"
+      }
+    ],
+    "suite": "0x20000200",
+    "vtable": "0x200001d0"
+  },
+  "status": "pass",
+  "target": {
+    "name": "FUN_1800085b0",
+    "va": "0x1800085b0"
+  },
+  "worlds": {
+    "boundary": {
+      "bytes": [
+        255,
+        0,
+        255,
+        0,
+        255,
+        255,
+        0,
+        255
+      ],
+      "payload": "0x20000080",
+      "ptr": "0x20000090"
+    },
+    "destination": {
+      "initial_bytes": [
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204,
+        204
+      ],
+      "payload": "0x20000180",
+      "ptr": "0x200001a0"
+    },
+    "distance": {
+      "payload": "0x200000c0",
+      "ptr": "0x20000140",
+      "values": [
+        0.0,
+        1.0,
+        2.0,
+        3.0,
+        1.0,
+        2.0,
+        3.0,
+        4.0
+      ]
+    },
+    "source": {
+      "bytes": [
+        255,
+        10,
+        20,
+        30,
+        255,
+        40,
+        50,
+        60,
+        255,
+        70,
+        80,
+        90,
+        255,
+        100,
+        110,
+        120,
+        255,
+        130,
+        140,
+        150,
+        255,
+        160,
+        170,
+        180,
+        255,
+        190,
+        200,
+        210,
+        255,
+        220,
+        230,
+        240
+      ],
+      "payload": "0x20000000",
+      "ptr": "0x20000020"
+    }
+  }
+}

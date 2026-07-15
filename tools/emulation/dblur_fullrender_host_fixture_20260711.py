@@ -174,17 +174,30 @@ def callback_model_check(loader: AexLoader, source: bytes, width: int) -> dict:
     return {"status": "pass" if all(item["match"] for item in checks) else "mismatch", "samples": checks, "disasm": {"populate": "0x180006980", "output": "0x180006b30", "channel_max": 255.0}}
 
 
-def build_world(loader: AexLoader, width: int, height: int, data: bytes) -> int:
+def build_world(loader: AexLoader, width: int, height: int, data: bytes,
+                rowbytes: int, area: tuple[int, int, int, int]) -> int:
     ptr = loader.bump_alloc(len(data), align=64)
     loader.write_bytes(ptr, data)
     world = loader.host_alloc(0x80)
     loader.write_bytes(world, b"\x00" * 0x80)
     loader.write_bytes(world + 0x18, struct.pack("<Q", ptr))
-    loader.write_bytes(world + 0x20, struct.pack("<I", width * 4))
+    loader.write_bytes(world + 0x20, struct.pack("<I", rowbytes))
     loader.write_bytes(world + 0x24, struct.pack("<I", width))
     loader.write_bytes(world + 0x28, struct.pack("<I", height))
-    loader.write_bytes(world + 0x2C, struct.pack("<4i", 0, 0, width, height))
+    loader.write_bytes(world + 0x2C, struct.pack("<4i", *area))
     return world
+
+
+def padded_world_bytes(pixels: bytes, width: int, height: int, rowbytes: int) -> bytes:
+    packed_rowbytes = width * 4
+    if len(pixels) != packed_rowbytes * height or rowbytes < packed_rowbytes:
+        raise ValueError("invalid PF_EffectWorld byte layout")
+    rows = bytearray(rowbytes * height)
+    for y in range(height):
+        source = y * packed_rowbytes
+        destination = y * rowbytes
+        rows[destination:destination + packed_rowbytes] = pixels[source:source + packed_rowbytes]
+    return bytes(rows)
 
 
 def build_rotate_candidate() -> tuple[tempfile.TemporaryDirectory, ctypes.CDLL, object]:
@@ -297,6 +310,13 @@ def main() -> int:
     parser.add_argument("--noise-offset", type=int, default=0)
     parser.add_argument("--thickness", type=float, default=10.0)
     parser.add_argument(
+        "--world-area", nargs=4, type=int, metavar=("LEFT", "TOP", "RIGHT", "BOTTOM"),
+        default=(0, 0, None, None),
+        help="PF_EffectWorld extent passed to PF_Iterate8; defaults to the full world",
+    )
+    parser.add_argument("--row-padding", type=int, default=0,
+                        help="extra bytes after each PF_EffectWorld row")
+    parser.add_argument(
         "--detour-rotate",
         action=argparse.BooleanOptionalAction,
         default=True,
@@ -317,6 +337,14 @@ def main() -> int:
     if args.schedule_only_rowdriver and not args.detour_rowdriver:
         parser.error("--schedule-only-rowdriver requires --detour-rowdriver")
     width, height, source_rgba, source = load_argb(args.source)
+    left, top, right, bottom = args.world_area
+    right = width if right is None else right
+    bottom = height if bottom is None else bottom
+    area = (left, top, right, bottom)
+    if args.row_padding < 0 or not (0 <= left <= right <= width and 0 <= top <= bottom <= height):
+        raise ValueError(f"invalid world mapping controls: area={area}, row_padding={args.row_padding}")
+    rowbytes = width * 4 + args.row_padding
+    source_world_bytes = padded_world_bytes(source, width, height, rowbytes)
     loader = AexLoader(str(args.aex), verbose=False, fast=not args.slow_trace)
     loader.register_libm_impls(max_threads=1)
 
@@ -451,13 +479,13 @@ def main() -> int:
     loader.write_bytes(in_data + 0xB0, struct.pack("<Q", dispatch))
     loader.write_bytes(in_data + 0xB8, struct.pack("<Q", loader.host_alloc(8)))
 
-    input_world = build_world(loader, width, height, source)
+    input_world = build_world(loader, width, height, source_world_bytes, rowbytes, area)
     render_desc = loader.host_alloc(0x80)
     loader.write_bytes(render_desc, b"\x00" * 0x80)
     loader.write_bytes(render_desc + 0x24, struct.pack("<I", width))
     loader.write_bytes(render_desc + 0x28, struct.pack("<I", height))
     output_bytes = bytearray(width * height * 4)
-    output_world = build_world(loader, width, height, bytes(output_bytes))
+    output_world = build_world(loader, width, height, bytes(rowbytes * height), rowbytes, area)
     output_data_ptr = u64(loader, output_world + 0x18)
     depth_descriptor = loader.host_alloc(0x40)
     loader.write_bytes(depth_descriptor, b"\x00" * 0x40)

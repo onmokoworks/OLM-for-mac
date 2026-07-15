@@ -1,0 +1,117 @@
+{
+  "abi": {
+    "boundary_seed": {
+      "args": "RCX=source_world, RDX=seed_world, R8D=8",
+      "va": "0x180008c90"
+    },
+    "context_offsets": {
+      "0x120": 255,
+      "0x128": 255
+    },
+    "distance_leaves": {
+      "args": "RCX=context, RDX=seed_world, R8=distance_world, XMM3=255.0"
+    },
+    "world_offsets": {
+      "0x18": "payload",
+      "0x20": "row_bytes",
+      "0x24": "width",
+      "0x28": "height"
+    }
+  },
+  "aex": "aex/OLMColorKey/Plugins/64/2025/OLMColorKey.aex",
+  "classification": "Mac-local Unicorn execution of checked-in Windows PE leaves; not AE-host execution and not AE-exact output",
+  "facts": {
+    "distance": {
+      "1": {
+        "first_float_grid": [
+          [
+            254.0,
+            254.0,
+            254.0,
+            254.0,
+            255.0
+          ],
+          [
+            255.0,
+            255.0,
+            255.0,
+            255.0,
+            255.0
+          ],
+          [
+            255.0,
+            255.0,
+            255.0,
+            255.0,
+            255.0
+          ]
+        ],
+        "imports": [],
+        "instructions": 2494,
+        "rax": "0x0",
+        "va": "0x180006e20"
+      },
+      "2": {
+        "first_float_grid": [
+          [
+            254.0,
+            254.0,
+            254.0,
+            254.0,
+            255.0
+          ],
+          [
+            255.0,
+            255.0,
+            255.0,
+            255.0,
+            255.0
+          ],
+          [
+            255.0,
+            255.0,
+            255.0,
+            255.0,
+            255.0
+          ]
+        ],
+        "imports": [],
+        "instructions": 1911,
+        "rax": "0x0",
+        "va": "0x180005d60"
+      }
+    },
+    "distance_type_3_next_blocker": "FUN_180007ec0 allocates an internal squared-distance buffer through ctx+0x180 AE handle suite; this witness does not emulate that host table.",
+    "seed_first_channel": [
+      [
+        255,
+        255,
+        255,
+        255,
+        255
+      ],
+      [
+        255,
+        255,
+        0,
+        255,
+        255
+      ],
+      [
+        255,
+        255,
+        255,
+        255,
+        255
+      ]
+    ],
+    "seed_rax": "0x0"
+  },
+  "inferences": [
+    "The boundary seed world is directly consumable by the type 1 and type 2 distance leaves without an AE import or allocator callback.",
+    "The next unresolved ABI is isolated to the type 3 Euclidean leaf's ctx+0x180 handle-suite allocation path, not the seed-to-distance plane contract for types 1 and 2.",
+    "This is an executable AEX/decomp differential witness, not an AE-exact claim."
+  ],
+  "kind": "olmcolorkey_boundary_to_distance_actual_aex_20260716",
+  "schema": 1
+}

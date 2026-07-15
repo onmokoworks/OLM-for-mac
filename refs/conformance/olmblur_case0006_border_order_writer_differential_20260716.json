@@ -1,0 +1,591 @@
+{
+  "schema": "olmblur.case0006-differential/1",
+  "scope": "bounded local actual-AEX versus portable candidates",
+  "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "entry": "0x180002280",
+  "cases": [
+    {
+      "id": "border_radius4_opaque",
+      "geometry": [
+        7,
+        5
+      ],
+      "parameters": {
+        "blur_amount": 4.0,
+        "repeat": 1,
+        "bias_direction": 1
+      },
+      "instructions": 20512,
+      "source_sha256": "5faee8f036157e787ab66a48553da63cc3d4b3bacd678c53ac12a9fe6ef0117b",
+      "actual_sha256": "d644ed25b46352400797efce2abaa29c7a50c20ad44a7eac4a3618f774ed424a",
+      "baseline_actual_like": {
+        "equal": false,
+        "different_words": 2,
+        "first_diffs": [
+          {
+            "pixel": 33,
+            "actual": [
+              32768,
+              4336,
+              32787,
+              2648
+            ],
+            "candidate": [
+              32768,
+              4336,
+              32768,
+              2648
+            ]
+          },
+          {
+            "pixel": 34,
+            "actual": [
+              32768,
+              4716,
+              32807,
+              2920
+            ],
+            "candidate": [
+              32768,
+              4716,
+              32768,
+              2920
+            ]
+          }
+        ]
+      },
+      "reverse_accumulation_order": {
+        "equal": false,
+        "different_words": 2,
+        "first_diffs": [
+          {
+            "pixel": 33,
+            "actual": [
+              32768,
+              4336,
+              32787,
+              2648
+            ],
+            "candidate": [
+              32768,
+              4336,
+              32768,
+              2648
+            ]
+          },
+          {
+            "pixel": 34,
+            "actual": [
+              32768,
+              4716,
+              32807,
+              2920
+            ],
+            "candidate": [
+              32768,
+              4716,
+              32768,
+              2920
+            ]
+          }
+        ]
+      },
+      "replicated_border": {
+        "equal": false,
+        "different_words": 102,
+        "first_diffs": [
+          {
+            "pixel": 0,
+            "actual": [
+              32768,
+              1558,
+              30659,
+              614
+            ],
+            "candidate": [
+              32768,
+              1363,
+              30428,
+              469
+            ]
+          },
+          {
+            "pixel": 1,
+            "actual": [
+              32768,
+              1938,
+              30679,
+              886
+            ],
+            "candidate": [
+              32768,
+              1818,
+              30452,
+              796
+            ]
+          },
+          {
+            "pixel": 2,
+            "actual": [
+              32768,
+              2476,
+              30708,
+              1272
+            ],
+            "candidate": [
+              32768,
+              2432,
+              30485,
+              1236
+            ]
+          },
+          {
+            "pixel": 3,
+            "actual": [
+              32768,
+              3116,
+              30742,
+              1732
+            ],
+            "candidate": [
+              32768,
+              3112,
+              30521,
+              1724
+            ]
+          },
+          {
+            "pixel": 4,
+            "actual": [
+              32768,
+              3756,
+              30775,
+              2191
+            ],
+            "candidate": [
+              32768,
+              3791,
+              30557,
+              2211
+            ]
+          },
+          {
+            "pixel": 5,
+            "actual": [
+              32768,
+              4295,
+              30804,
+              2577
+            ],
+            "candidate": [
+              32768,
+              4405,
+              30589,
+              2652
+            ]
+          },
+          {
+            "pixel": 6,
+            "actual": [
+              32768,
+              4674,
+              30824,
+              2849
+            ],
+            "candidate": [
+              32768,
+              4860,
+              30613,
+              2979
+            ]
+          },
+          {
+            "pixel": 7,
+            "actual": [
+              32768,
+              1567,
+              31087,
+              629
+            ],
+            "candidate": [
+              32768,
+              1374,
+              30953,
+              487
+            ]
+          }
+        ]
+      },
+      "nearest_even_writer": {
+        "equal": false,
+        "different_words": 2,
+        "first_diffs": [
+          {
+            "pixel": 33,
+            "actual": [
+              32768,
+              4336,
+              32787,
+              2648
+            ],
+            "candidate": [
+              32768,
+              4336,
+              32768,
+              2648
+            ]
+          },
+          {
+            "pixel": 34,
+            "actual": [
+              32768,
+              4716,
+              32807,
+              2920
+            ],
+            "candidate": [
+              32768,
+              4716,
+              32768,
+              2920
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "order_radius5_high_dynamic_range",
+      "geometry": [
+        9,
+        7
+      ],
+      "parameters": {
+        "blur_amount": 5.0,
+        "repeat": 2,
+        "bias_direction": 1
+      },
+      "instructions": 56205,
+      "source_sha256": "0965554848d1ab0ddd6d6ccad337658b2c5a6942b4ee169bdbbfe8e4767fbdd7",
+      "actual_sha256": "14e4b8314a4c6fc2c42f76d8e85e1ac1ef794399e67365f78982cc2e6090c716",
+      "baseline_actual_like": {
+        "equal": true,
+        "different_words": 0,
+        "first_diffs": []
+      },
+      "reverse_accumulation_order": {
+        "equal": true,
+        "different_words": 0,
+        "first_diffs": []
+      },
+      "replicated_border": {
+        "equal": false,
+        "different_words": 188,
+        "first_diffs": [
+          {
+            "pixel": 0,
+            "actual": [
+              32768,
+              14295,
+              25375,
+              16709
+            ],
+            "candidate": [
+              32768,
+              10475,
+              27355,
+              19216
+            ]
+          },
+          {
+            "pixel": 1,
+            "actual": [
+              32768,
+              15184,
+              25164,
+              16601
+            ],
+            "candidate": [
+              32768,
+              12550,
+              26869,
+              18270
+            ]
+          },
+          {
+            "pixel": 2,
+            "actual": [
+              32768,
+              16249,
+              24847,
+              16483
+            ],
+            "candidate": [
+              32768,
+              15013,
+              26178,
+              17309
+            ]
+          },
+          {
+            "pixel": 3,
+            "actual": [
+              32768,
+              16984,
+              24472,
+              16409
+            ],
+            "candidate": [
+              32768,
+              16815,
+              25414,
+              16737
+            ]
+          },
+          {
+            "pixel": 4,
+            "actual": [
+              32768,
+              17242,
+              24091,
+              16386
+            ],
+            "candidate": [
+              32768,
+              17662,
+              24650,
+              16563
+            ]
+          },
+          {
+            "pixel": 5,
+            "actual": [
+              32768,
+              17257,
+              23778,
+              16409
+            ],
+            "candidate": [
+              32768,
+              17983,
+              23954,
+              16737
+            ]
+          },
+          {
+            "pixel": 6,
+            "actual": [
+              32768,
+              17288,
+              23608,
+              16483
+            ],
+            "candidate": [
+              32768,
+              18389,
+              23395,
+              17309
+            ]
+          },
+          {
+            "pixel": 7,
+            "actual": [
+              32768,
+              17384,
+              23582,
+              16601
+            ],
+            "candidate": [
+              32768,
+              19078,
+              23003,
+              18270
+            ]
+          }
+        ]
+      },
+      "nearest_even_writer": {
+        "equal": true,
+        "different_words": 0,
+        "first_diffs": []
+      }
+    },
+    {
+      "id": "writer_near_half_inputs",
+      "geometry": [
+        5,
+        5
+      ],
+      "parameters": {
+        "blur_amount": 3.0,
+        "repeat": 1,
+        "bias_direction": 2
+      },
+      "instructions": 15468,
+      "source_sha256": "2567cea61423396d0ec5f4fcf54bbf868ae18d8a857a64ece220d60172020754",
+      "actual_sha256": "ae64ca208129d4d786ed88417ecaec6bcb7c3b07dc8b8fadf0e61683ac87cefb",
+      "baseline_actual_like": {
+        "equal": true,
+        "different_words": 0,
+        "first_diffs": []
+      },
+      "reverse_accumulation_order": {
+        "equal": true,
+        "different_words": 0,
+        "first_diffs": []
+      },
+      "replicated_border": {
+        "equal": false,
+        "different_words": 70,
+        "first_diffs": [
+          {
+            "pixel": 0,
+            "actual": [
+              32768,
+              32651,
+              4228,
+              16496
+            ],
+            "candidate": [
+              32768,
+              32684,
+              4188,
+              16462
+            ]
+          },
+          {
+            "pixel": 1,
+            "actual": [
+              32768,
+              32592,
+              4338,
+              16653
+            ],
+            "candidate": [
+              32768,
+              32616,
+              4315,
+              16642
+            ]
+          },
+          {
+            "pixel": 2,
+            "actual": [
+              32768,
+              32507,
+              4496,
+              16877
+            ],
+            "candidate": [
+              32768,
+              32525,
+              4485,
+              16883
+            ]
+          },
+          {
+            "pixel": 3,
+            "actual": [
+              32768,
+              32423,
+              4654,
+              17101
+            ],
+            "candidate": [
+              32768,
+              32434,
+              4654,
+              17124
+            ]
+          },
+          {
+            "pixel": 4,
+            "actual": [
+              32768,
+              32364,
+              4764,
+              17257
+            ],
+            "candidate": [
+              32768,
+              32366,
+              4781,
+              17304
+            ]
+          },
+          {
+            "pixel": 5,
+            "actual": [
+              32768,
+              32582,
+              4272,
+              16471
+            ],
+            "candidate": [
+              32768,
+              32605,
+              4239,
+              16434
+            ]
+          },
+          {
+            "pixel": 6,
+            "actual": [
+              32768,
+              32523,
+              4383,
+              16628
+            ],
+            "candidate": [
+              32768,
+              32537,
+              4366,
+              16614
+            ]
+          },
+          {
+            "pixel": 7,
+            "actual": [
+              32768,
+              32438,
+              4540,
+              16852
+            ],
+            "candidate": [
+              32768,
+              32446,
+              4536,
+              16854
+            ]
+          }
+        ]
+      },
+      "nearest_even_writer": {
+        "equal": false,
+        "different_words": 1,
+        "first_diffs": [
+          {
+            "pixel": 11,
+            "actual": [
+              32768,
+              32425,
+              4446,
+              16592
+            ],
+            "candidate": [
+              32768,
+              32424,
+              4446,
+              16592
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "conclusion": {
+    "border": "not excluded",
+    "accumulation_order": "not excluded by this bounded reversal probe",
+    "writer_rounding": "excluded as the final PF16 writer rule by the existing actual-AEX half-tie microtest and the near-half worker probe",
+    "ae_exact_claim": false
+  }
+}

@@ -1,0 +1,202 @@
+{
+  "schema": "olmblur.pf16-unclamped-pack-boundary/1",
+  "scope": "Mac-only local actual-AEX and portable boundary proof; no AE or Windows claim",
+  "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "static_writer_evidence": {
+    "writer_interval": [
+      "0x1800030e2",
+      "0x180003123"
+    ],
+    "sequence": [
+      "MOVSS",
+      "ADDSS 0.5f",
+      "floorf",
+      "CVTTSS2SI EAX",
+      "MOV word,AX"
+    ],
+    "clamp_or_range_branch_in_interval": false,
+    "packing": "low 16 bits of the converted signed 32-bit integer"
+  },
+  "actual_writer_microfixtures": [
+    {
+      "input_f32": [
+        32767.490234375,
+        32767.5,
+        32768.48828125
+      ],
+      "actual_argb16": [
+        32768,
+        32767,
+        32768,
+        32768
+      ],
+      "floor_add_half_low16_rgb": [
+        32767,
+        32768,
+        32768
+      ],
+      "instructions": 22,
+      "floorf_execution": "host-backed callback at the actual AEX import"
+    },
+    {
+      "input_f32": [
+        32786.66015625,
+        32806.6875,
+        65534.5
+      ],
+      "actual_argb16": [
+        32768,
+        32787,
+        32807,
+        65535
+      ],
+      "floor_add_half_low16_rgb": [
+        32787,
+        32807,
+        65535
+      ],
+      "instructions": 22,
+      "floorf_execution": "host-backed callback at the actual AEX import"
+    },
+    {
+      "input_f32": [
+        65535.48828125,
+        65535.5,
+        65536.4921875
+      ],
+      "actual_argb16": [
+        32768,
+        65535,
+        0,
+        0
+      ],
+      "floor_add_half_low16_rgb": [
+        65535,
+        0,
+        0
+      ],
+      "instructions": 22,
+      "floorf_execution": "host-backed callback at the actual AEX import"
+    },
+    {
+      "input_f32": [
+        -0.49000000953674316,
+        -0.5,
+        -0.5099999904632568
+      ],
+      "actual_argb16": [
+        32768,
+        0,
+        0,
+        65535
+      ],
+      "floor_add_half_low16_rgb": [
+        0,
+        0,
+        65535
+      ],
+      "instructions": 22,
+      "floorf_execution": "host-backed callback at the actual AEX import"
+    }
+  ],
+  "opaque_border_worker": {
+    "geometry": [
+      7,
+      5
+    ],
+    "parameters": {
+      "blur_amount": 4.0,
+      "repeat": 1,
+      "bias_direction": 1
+    },
+    "instructions": 20512,
+    "actual_sha256": "d644ed25b46352400797efce2abaa29c7a50c20ad44a7eac4a3618f774ed424a",
+    "unclamped_low16_sha256": "d644ed25b46352400797efce2abaa29c7a50c20ad44a7eac4a3618f774ed424a",
+    "unclamped_low16_mismatches": [],
+    "nominal_32768_clamp_mismatches": [
+      {
+        "pixel_index": 33,
+        "xy": [
+          5,
+          4
+        ],
+        "actual_argb16": [
+          32768,
+          4336,
+          32787,
+          2648
+        ],
+        "candidate_argb16": [
+          32768,
+          4336,
+          32768,
+          2648
+        ]
+      },
+      {
+        "pixel_index": 34,
+        "xy": [
+          6,
+          4
+        ],
+        "actual_argb16": [
+          32768,
+          4716,
+          32807,
+          2920
+        ],
+        "candidate_argb16": [
+          32768,
+          4716,
+          32768,
+          2920
+        ]
+      }
+    ],
+    "pre_store_witnesses": [
+      {
+        "pixel_index": 33,
+        "xy": [
+          5,
+          4
+        ],
+        "pre_store_rgb_f32": [
+          4336.3193359375,
+          32786.66015625,
+          2648.108154296875
+        ],
+        "actual_argb16": [
+          32768,
+          4336,
+          32787,
+          2648
+        ]
+      },
+      {
+        "pixel_index": 34,
+        "xy": [
+          6,
+          4
+        ],
+        "pre_store_rgb_f32": [
+          4715.76806640625,
+          32806.6875,
+          2920.37939453125
+        ],
+        "actual_argb16": [
+          32768,
+          4716,
+          32807,
+          2920
+        ]
+      }
+    ]
+  },
+  "conclusion": {
+    "earliest_divergence": "portable final writer nominal-range clamp",
+    "border_sampling_explains_observed_two_word_mismatch": false,
+    "exact_rule": "floorf(float32(value + 0.5f)); CVTTSS2SI to int32; store low uint16 word without saturation",
+    "remaining_case0006_residual_cause": "not decided by this local synthetic proof",
+    "ae_exact_claim": false
+  }
+}

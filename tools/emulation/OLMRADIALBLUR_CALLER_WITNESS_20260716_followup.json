@@ -1,0 +1,926 @@
+{
+  "binary": {
+    "entry": "0x180004640",
+    "path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+  },
+  "claim_boundary": "bounded actual-AEX caller witness only; no AE-exact claim",
+  "fixture": {
+    "height": 2,
+    "rgba_float": true,
+    "runs": [
+      0,
+      1
+    ],
+    "size_variation": "disabled",
+    "width": 2
+  },
+  "kind": "olmradialblur_caller_witness_20260716_followup",
+  "limits": [
+    "The host suite, worlds, and callback ABI are synthetic local emulation fixtures.",
+    "A partial run preserves the deepest typed hook/plane state and records the exact RIP error.",
+    "No AE-exact, Windows-host, or production behavior claim is made."
+  ],
+  "runs": [
+    {
+      "callbacks": [
+        "followup.handle_dispose",
+        "followup.handle_lock",
+        "followup.handle_new",
+        "followup.handle_unlock",
+        "followup.sp_acquire",
+        "followup.sp_release"
+      ],
+      "final_planes": {
+        "initial_byte_sampler_map_later_float_scalar_collapse_plane": {
+          "cells": [
+            [
+              0.6000000238418579
+            ],
+            [
+              0.0
+            ]
+          ],
+          "pointer": "0x400004c0"
+        },
+        "plus_0x38_initial_or_collapsed_rgba": {
+          "cells": [
+            [
+              1.0,
+              0.8999999761581421,
+              0.800000011920929,
+              0.6000000238418579
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "pointer": "0x400004e0"
+        },
+        "plus_0x38_rgba_accum": {
+          "cells": [
+            [
+              0.6000000238418579,
+              0.5400000214576721,
+              0.48000001907348633,
+              0.6000000238418579
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "pointer": "0x40000470"
+        },
+        "plus_0x40_scalar_prepass": {
+          "cells": [
+            [
+              0.800000011920929
+            ],
+            [
+              0.0
+            ]
+          ],
+          "pointer": "0x40000530"
+        },
+        "plus_0x48_scalar_scatter": {
+          "cells": [
+            [
+              0.6000000238418579
+            ],
+            [
+              0.0
+            ]
+          ],
+          "pointer": "0x40000550"
+        },
+        "source_alpha_or_variation_plane": {
+          "cells": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ],
+          "pointer": "0x40000570"
+        }
+      },
+      "imports": [
+        "atan2f",
+        "cos",
+        "expf",
+        "omp_get_max_threads",
+        "sin"
+      ],
+      "initial_planes": {
+        "initial_byte_sampler_map_later_float_scalar_collapse_plane": {
+          "cells": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "pointer": "0x400004c0"
+        },
+        "plus_0x38_initial_or_collapsed_rgba": {
+          "cells": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "pointer": "0x400004e0"
+        },
+        "plus_0x38_rgba_accum": {
+          "cells": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "pointer": "0x40000470"
+        },
+        "plus_0x40_scalar_prepass": {
+          "cells": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "pointer": "0x40000530"
+        },
+        "plus_0x48_scalar_scatter": {
+          "cells": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "pointer": "0x40000550"
+        },
+        "source_alpha_or_variation_plane": {
+          "cells": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "pointer": "0x40000570"
+        }
+      },
+      "instructions": 843770,
+      "inverse_output_world": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.9000000357627869,
+        0.800000011920929,
+        0.6000000238418579
+      ],
+      "inverse_sampler_calls": [
+        {
+          "destination": "0x40000330",
+          "entry": "0x180001000",
+          "row_stride": 4,
+          "source": "0x400004e0",
+          "width": 1,
+          "x": 2.2360680103302,
+          "y": 5.0
+        },
+        {
+          "destination": "0x40000340",
+          "entry": "0x180001000",
+          "row_stride": 4,
+          "source": "0x400004e0",
+          "width": 1,
+          "x": 2.0,
+          "y": 4.0
+        },
+        {
+          "destination": "0x40000350",
+          "entry": "0x180001000",
+          "row_stride": 4,
+          "source": "0x400004e0",
+          "width": 1,
+          "x": 1.0,
+          "y": 1.0
+        },
+        {
+          "destination": "0x40000360",
+          "entry": "0x180001000",
+          "row_stride": 4,
+          "source": "0x400004e0",
+          "width": 1,
+          "x": 0.0,
+          "y": 0.0
+        }
+      ],
+      "prepass": [
+        {
+          "entry": "0x180002780",
+          "planes": {
+            "initial_byte_sampler_map_later_float_scalar_collapse_plane": {
+              "cells": [
+                [
+                  0.0
+                ],
+                [
+                  0.0
+                ]
+              ],
+              "pointer": "0x400004c0"
+            },
+            "plus_0x38_initial_or_collapsed_rgba": {
+              "cells": [
+                [
+                  1.0,
+                  0.9000000357627869,
+                  0.800000011920929,
+                  0.6000000238418579
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              "pointer": "0x400004e0"
+            },
+            "plus_0x38_rgba_accum": {
+              "cells": [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              "pointer": "0x40000470"
+            },
+            "plus_0x40_scalar_prepass": {
+              "cells": [
+                [
+                  0.800000011920929
+                ],
+                [
+                  0.0
+                ]
+              ],
+              "pointer": "0x40000530"
+            },
+            "plus_0x48_scalar_scatter": {
+              "cells": [
+                [
+                  0.0
+                ],
+                [
+                  0.0
+                ]
+              ],
+              "pointer": "0x40000550"
+            },
+            "source_alpha_or_variation_plane": {
+              "cells": [
+                [
+                  1.0
+                ],
+                [
+                  1.0
+                ]
+              ],
+              "pointer": "0x40000570"
+            }
+          }
+        }
+      ],
+      "repeat_border": 0,
+      "sampler_calls": [
+        {
+          "destination": "0x400004e0",
+          "entry": "0x180001270",
+          "height": 2,
+          "selected": "non-repeat",
+          "source": "0x400002f0",
+          "width": 2,
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "destination": "0x400004f0",
+          "entry": "0x180001270",
+          "height": 2,
+          "selected": "non-repeat",
+          "source": "0x400002f0",
+          "width": 2,
+          "x": 1.0,
+          "y": 0.0
+        },
+        {
+          "destination": "0x40000500",
+          "entry": "0x180001270",
+          "height": 2,
+          "selected": "non-repeat",
+          "source": "0x400002f0",
+          "width": 2,
+          "x": 1.0,
+          "y": 0.0
+        },
+        {
+          "destination": "0x40000510",
+          "entry": "0x180001270",
+          "height": 2,
+          "selected": "non-repeat",
+          "source": "0x400002f0",
+          "width": 2,
+          "x": 1.0,
+          "y": 0.0
+        }
+      ],
+      "scatter": [
+        {
+          "entry": "0x1800024c0",
+          "planes": {
+            "initial_byte_sampler_map_later_float_scalar_collapse_plane": {
+              "cells": [
+                [
+                  0.6000000238418579
+                ],
+                [
+                  0.0
+                ]
+              ],
+              "pointer": "0x400004c0"
+            },
+            "plus_0x38_initial_or_collapsed_rgba": {
+              "cells": [
+                [
+                  1.0,
+                  0.9000000357627869,
+                  0.800000011920929,
+                  0.6000000238418579
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              "pointer": "0x400004e0"
+            },
+            "plus_0x38_rgba_accum": {
+              "cells": [
+                [
+                  0.6000000238418579,
+                  0.5400000214576721,
+                  0.48000001907348633,
+                  0.6000000238418579
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              "pointer": "0x40000470"
+            },
+            "plus_0x40_scalar_prepass": {
+              "cells": [
+                [
+                  0.800000011920929
+                ],
+                [
+                  0.0
+                ]
+              ],
+              "pointer": "0x40000530"
+            },
+            "plus_0x48_scalar_scatter": {
+              "cells": [
+                [
+                  0.6000000238418579
+                ],
+                [
+                  0.0
+                ]
+              ],
+              "pointer": "0x40000550"
+            },
+            "source_alpha_or_variation_plane": {
+              "cells": [
+                [
+                  1.0
+                ],
+                [
+                  1.0
+                ]
+              ],
+              "pointer": "0x40000570"
+            }
+          }
+        }
+      ],
+      "size_variation": "disabled",
+      "stop": "return"
+    },
+    {
+      "callbacks": [
+        "followup.handle_dispose",
+        "followup.handle_lock",
+        "followup.handle_new",
+        "followup.handle_unlock",
+        "followup.sp_acquire",
+        "followup.sp_release"
+      ],
+      "final_planes": {
+        "initial_byte_sampler_map_later_float_scalar_collapse_plane": {
+          "cells": [
+            [
+              0.6000000238418579
+            ],
+            [
+              0.6000000238418579
+            ]
+          ],
+          "pointer": "0x400004c0"
+        },
+        "plus_0x38_initial_or_collapsed_rgba": {
+          "cells": [
+            [
+              1.0,
+              0.8999999761581421,
+              0.800000011920929,
+              0.6000000238418579
+            ],
+            [
+              1.0,
+              0.8999999761581421,
+              0.800000011920929,
+              0.6000000238418579
+            ]
+          ],
+          "pointer": "0x400004e0"
+        },
+        "plus_0x38_rgba_accum": {
+          "cells": [
+            [
+              0.6000000238418579,
+              0.5400000214576721,
+              0.48000001907348633,
+              0.6000000238418579
+            ],
+            [
+              0.6000000238418579,
+              0.5400000214576721,
+              0.48000001907348633,
+              0.6000000238418579
+            ]
+          ],
+          "pointer": "0x40000470"
+        },
+        "plus_0x40_scalar_prepass": {
+          "cells": [
+            [
+              0.800000011920929
+            ],
+            [
+              0.800000011920929
+            ]
+          ],
+          "pointer": "0x40000530"
+        },
+        "plus_0x48_scalar_scatter": {
+          "cells": [
+            [
+              0.6000000238418579
+            ],
+            [
+              0.6000000238418579
+            ]
+          ],
+          "pointer": "0x40000550"
+        },
+        "source_alpha_or_variation_plane": {
+          "cells": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ],
+          "pointer": "0x40000570"
+        }
+      },
+      "imports": [
+        "atan2f",
+        "cos",
+        "expf",
+        "omp_get_max_threads",
+        "sin"
+      ],
+      "initial_planes": {
+        "initial_byte_sampler_map_later_float_scalar_collapse_plane": {
+          "cells": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "pointer": "0x400004c0"
+        },
+        "plus_0x38_initial_or_collapsed_rgba": {
+          "cells": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "pointer": "0x400004e0"
+        },
+        "plus_0x38_rgba_accum": {
+          "cells": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "pointer": "0x40000470"
+        },
+        "plus_0x40_scalar_prepass": {
+          "cells": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "pointer": "0x40000530"
+        },
+        "plus_0x48_scalar_scatter": {
+          "cells": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "pointer": "0x40000550"
+        },
+        "source_alpha_or_variation_plane": {
+          "cells": [
+            [
+              0.0
+            ],
+            [
+              0.0
+            ]
+          ],
+          "pointer": "0x40000570"
+        }
+      },
+      "instructions": 844667,
+      "inverse_output_world": [
+        1.0,
+        0.8999999165534973,
+        0.8000000715255737,
+        0.6000000238418579,
+        1.0,
+        0.9000000357627869,
+        0.800000011920929,
+        0.6000000238418579,
+        1.0,
+        0.9000000357627869,
+        0.800000011920929,
+        0.6000000238418579,
+        1.0,
+        0.9000000357627869,
+        0.800000011920929,
+        0.6000000238418579
+      ],
+      "inverse_sampler_calls": [
+        {
+          "destination": "0x40000330",
+          "entry": "0x180001000",
+          "row_stride": 4,
+          "source": "0x400004e0",
+          "width": 1,
+          "x": 2.2360680103302,
+          "y": 5.0
+        },
+        {
+          "destination": "0x40000340",
+          "entry": "0x180001000",
+          "row_stride": 4,
+          "source": "0x400004e0",
+          "width": 1,
+          "x": 2.0,
+          "y": 4.0
+        },
+        {
+          "destination": "0x40000350",
+          "entry": "0x180001000",
+          "row_stride": 4,
+          "source": "0x400004e0",
+          "width": 1,
+          "x": 1.0,
+          "y": 1.0
+        },
+        {
+          "destination": "0x40000360",
+          "entry": "0x180001000",
+          "row_stride": 4,
+          "source": "0x400004e0",
+          "width": 1,
+          "x": 0.0,
+          "y": 0.0
+        }
+      ],
+      "prepass": [
+        {
+          "entry": "0x180002780",
+          "planes": {
+            "initial_byte_sampler_map_later_float_scalar_collapse_plane": {
+              "cells": [
+                [
+                  0.0
+                ],
+                [
+                  0.0
+                ]
+              ],
+              "pointer": "0x400004c0"
+            },
+            "plus_0x38_initial_or_collapsed_rgba": {
+              "cells": [
+                [
+                  1.0,
+                  0.9000000357627869,
+                  0.800000011920929,
+                  0.6000000238418579
+                ],
+                [
+                  1.0,
+                  0.9000000357627869,
+                  0.800000011920929,
+                  0.6000000238418579
+                ]
+              ],
+              "pointer": "0x400004e0"
+            },
+            "plus_0x38_rgba_accum": {
+              "cells": [
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              "pointer": "0x40000470"
+            },
+            "plus_0x40_scalar_prepass": {
+              "cells": [
+                [
+                  0.800000011920929
+                ],
+                [
+                  0.800000011920929
+                ]
+              ],
+              "pointer": "0x40000530"
+            },
+            "plus_0x48_scalar_scatter": {
+              "cells": [
+                [
+                  0.0
+                ],
+                [
+                  0.0
+                ]
+              ],
+              "pointer": "0x40000550"
+            },
+            "source_alpha_or_variation_plane": {
+              "cells": [
+                [
+                  1.0
+                ],
+                [
+                  1.0
+                ]
+              ],
+              "pointer": "0x40000570"
+            }
+          }
+        }
+      ],
+      "repeat_border": 1,
+      "sampler_calls": [
+        {
+          "destination": "0x400004e0",
+          "entry": "0x180001520",
+          "height": 2,
+          "selected": "repeat-border",
+          "source": "0x400002f0",
+          "width": 2,
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "destination": "0x400004f0",
+          "entry": "0x180001520",
+          "height": 2,
+          "selected": "repeat-border",
+          "source": "0x400002f0",
+          "width": 2,
+          "x": 0.800000011920929,
+          "y": 0.0
+        },
+        {
+          "destination": "0x40000500",
+          "entry": "0x180001520",
+          "height": 2,
+          "selected": "repeat-border",
+          "source": "0x400002f0",
+          "width": 2,
+          "x": 0.800000011920929,
+          "y": 0.0
+        },
+        {
+          "destination": "0x40000510",
+          "entry": "0x180001520",
+          "height": 2,
+          "selected": "repeat-border",
+          "source": "0x400002f0",
+          "width": 2,
+          "x": 0.800000011920929,
+          "y": 0.0
+        }
+      ],
+      "scatter": [
+        {
+          "entry": "0x1800024c0",
+          "planes": {
+            "initial_byte_sampler_map_later_float_scalar_collapse_plane": {
+              "cells": [
+                [
+                  0.6000000238418579
+                ],
+                [
+                  0.6000000238418579
+                ]
+              ],
+              "pointer": "0x400004c0"
+            },
+            "plus_0x38_initial_or_collapsed_rgba": {
+              "cells": [
+                [
+                  1.0,
+                  0.9000000357627869,
+                  0.800000011920929,
+                  0.6000000238418579
+                ],
+                [
+                  1.0,
+                  0.9000000357627869,
+                  0.800000011920929,
+                  0.6000000238418579
+                ]
+              ],
+              "pointer": "0x400004e0"
+            },
+            "plus_0x38_rgba_accum": {
+              "cells": [
+                [
+                  0.6000000238418579,
+                  0.5400000214576721,
+                  0.48000001907348633,
+                  0.6000000238418579
+                ],
+                [
+                  0.6000000238418579,
+                  0.5400000214576721,
+                  0.48000001907348633,
+                  0.6000000238418579
+                ]
+              ],
+              "pointer": "0x40000470"
+            },
+            "plus_0x40_scalar_prepass": {
+              "cells": [
+                [
+                  0.800000011920929
+                ],
+                [
+                  0.800000011920929
+                ]
+              ],
+              "pointer": "0x40000530"
+            },
+            "plus_0x48_scalar_scatter": {
+              "cells": [
+                [
+                  0.6000000238418579
+                ],
+                [
+                  0.6000000238418579
+                ]
+              ],
+              "pointer": "0x40000550"
+            },
+            "source_alpha_or_variation_plane": {
+              "cells": [
+                [
+                  1.0
+                ],
+                [
+                  1.0
+                ]
+              ],
+              "pointer": "0x40000570"
+            }
+          }
+        }
+      ],
+      "size_variation": "disabled",
+      "stop": "return"
+    }
+  ],
+  "schema": 1,
+  "status": "pass"
+}

@@ -811,6 +811,7 @@ def run_win_reference(args: argparse.Namespace, root: Path) -> int:
 def run_runtime_trace(args: argparse.Namespace, root: Path) -> int:
     package = args.runtime_package
     exact_package_match = False
+    source_request_ids: set[str] = set()
     if package is None:
         package = find_matching_runtime_package(root, args.source.resolve())
         if package is None:
@@ -825,7 +826,6 @@ def run_runtime_trace(args: argparse.Namespace, root: Path) -> int:
                 materialized = extract_if_zip(args.source.resolve(), Path(tmp) / "source")
             except Exception:
                 materialized = None
-            source_request_ids: set[str] = set()
             if materialized is not None:
                 for path in sorted(materialized.rglob("*.json")) if materialized.is_dir() else [materialized]:
                     if "__MACOSX" in path.parts or path.name.startswith("._"):
@@ -878,8 +878,24 @@ def run_runtime_trace(args: argparse.Namespace, root: Path) -> int:
                 if summary_md:
                     summary_md.parent.mkdir(parents=True, exist_ok=True)
                     summary_md.write_text(render_runtime_summary_markdown(merged), encoding="utf-8")
+    census_request = "olmdistancegradation_8bpc_coordinate_liveness_census_20260715"
+    census_rc = 0
+    if census_request in source_request_ids:
+        classification_dir = comparison_dir or root / "refs" / "reports" / "runtime_trace_comparisons"
+        census_cmd = [
+            sys.executable,
+            "scripts/classify_olmdistancegradation_8bpc_coordinate_liveness_census_return.py",
+            str(args.source.resolve()),
+            "--output-json",
+            str(classification_dir / "olmdistancegradation_8bpc_coordinate_liveness_census_20260715.json"),
+            "--output-md",
+            str(classification_dir / "olmdistancegradation_8bpc_coordinate_liveness_census_20260715.md"),
+        ]
+        census_rc = run(census_cmd, root)
+    if rc != 0 or census_rc != 0:
+        return rc or census_rc
     if args.no_runtime_comparisons or summary_json is None:
-        return rc
+        return 0
     compare_cmd = [
         sys.executable,
         "scripts/compare_runtime_trace_summary.py",
@@ -889,9 +905,9 @@ def run_runtime_trace(args: argparse.Namespace, root: Path) -> int:
         str(comparison_dir),
     ]
     compare_rc = run(compare_cmd, root)
-    if rc != 0:
-        return rc
-    return compare_rc
+    if compare_rc != 0:
+        return compare_rc
+    return 0
 
 
 def main() -> int:

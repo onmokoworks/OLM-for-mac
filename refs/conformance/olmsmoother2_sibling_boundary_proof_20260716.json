@@ -1,0 +1,477 @@
+{
+  "claims_not_made": [
+    "No Windows execution, After Effects host binding, or AE-exact claim."
+  ],
+  "rows": [
+    {
+      "aex": {
+        "descriptor": [
+          2,
+          2,
+          1,
+          5,
+          5,
+          5
+        ],
+        "emitter_scale_h": 1.0,
+        "predicate": 1,
+        "predicate_return": 1,
+        "primary_scan": [
+          5,
+          5,
+          0
+        ],
+        "secondary_executed": false,
+        "secondary_scan": null,
+        "vertices": [
+          {
+            "rgba": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weight": 0.2844827473163605
+          }
+        ]
+      },
+      "comparison": {
+        "descriptor_equal": true,
+        "emission_equal_1e-6": true,
+        "predicate_equal": true,
+        "primary_scan_equal": true,
+        "scale_h_equal_1e-6": true,
+        "secondary_branch_equal": true,
+        "secondary_scan_equal": true
+      },
+      "leaf": "e4b0",
+      "portable": {
+        "descriptor": [
+          2,
+          2,
+          1,
+          5,
+          5,
+          5
+        ],
+        "emitted": true,
+        "emitted_count": 1,
+        "leaf": "e4b0",
+        "predicate": 1,
+        "primary_scan": [
+          5,
+          5,
+          0
+        ],
+        "scale_h": 1,
+        "scenario": 1,
+        "secondary_expected": false,
+        "secondary_scan": [
+          0,
+          0,
+          0
+        ],
+        "vertices": [
+          {
+            "weight": 0.284482747
+          }
+        ]
+      },
+      "scenario": 1
+    },
+    {
+      "aex": {
+        "descriptor": [
+          2,
+          2,
+          1,
+          5,
+          5,
+          5
+        ],
+        "emitter_scale_h": 0.5,
+        "predicate": 3,
+        "predicate_return": 3,
+        "primary_scan": [
+          5,
+          5,
+          0
+        ],
+        "secondary_executed": true,
+        "secondary_scan": [
+          5,
+          6,
+          0
+        ],
+        "vertices": [
+          {
+            "rgba": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weight": 0.14224137365818024
+          }
+        ]
+      },
+      "comparison": {
+        "descriptor_equal": true,
+        "emission_equal_1e-6": true,
+        "predicate_equal": true,
+        "primary_scan_equal": true,
+        "scale_h_equal_1e-6": true,
+        "secondary_branch_equal": true,
+        "secondary_scan_equal": true
+      },
+      "leaf": "e4b0",
+      "portable": {
+        "descriptor": [
+          2,
+          2,
+          1,
+          5,
+          5,
+          5
+        ],
+        "emitted": true,
+        "emitted_count": 1,
+        "leaf": "e4b0",
+        "predicate": 3,
+        "primary_scan": [
+          5,
+          5,
+          0
+        ],
+        "scale_h": 0.5,
+        "scenario": 3,
+        "secondary_expected": true,
+        "secondary_scan": [
+          5,
+          6,
+          0
+        ],
+        "vertices": [
+          {
+            "weight": 0.142241374
+          }
+        ]
+      },
+      "scenario": 3
+    },
+    {
+      "aex": {
+        "descriptor": [
+          5,
+          5,
+          1,
+          5,
+          5,
+          5
+        ],
+        "emitter_scale_h": 1.0,
+        "predicate": 1,
+        "predicate_return": 1,
+        "primary_scan": [
+          5,
+          5,
+          0
+        ],
+        "secondary_executed": false,
+        "secondary_scan": null,
+        "vertices": [
+          {
+            "rgba": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weight": 0.2844827473163605
+          }
+        ]
+      },
+      "comparison": {
+        "descriptor_equal": true,
+        "emission_equal_1e-6": true,
+        "predicate_equal": true,
+        "primary_scan_equal": true,
+        "scale_h_equal_1e-6": true,
+        "secondary_branch_equal": true,
+        "secondary_scan_equal": true
+      },
+      "leaf": "edb0",
+      "portable": {
+        "descriptor": [
+          5,
+          5,
+          1,
+          5,
+          5,
+          5
+        ],
+        "emitted": true,
+        "emitted_count": 1,
+        "leaf": "edb0",
+        "predicate": 1,
+        "primary_scan": [
+          5,
+          5,
+          0
+        ],
+        "scale_h": 1,
+        "scenario": 1,
+        "secondary_expected": false,
+        "secondary_scan": [
+          0,
+          0,
+          0
+        ],
+        "vertices": [
+          {
+            "weight": 0.284482747
+          }
+        ]
+      },
+      "scenario": 1
+    },
+    {
+      "aex": {
+        "descriptor": [
+          5,
+          5,
+          1,
+          5,
+          5,
+          5
+        ],
+        "emitter_scale_h": 0.5,
+        "predicate": 3,
+        "predicate_return": 3,
+        "primary_scan": [
+          5,
+          5,
+          0
+        ],
+        "secondary_executed": true,
+        "secondary_scan": [
+          5,
+          5,
+          0
+        ],
+        "vertices": [
+          {
+            "rgba": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weight": 0.14224137365818024
+          }
+        ]
+      },
+      "comparison": {
+        "descriptor_equal": true,
+        "emission_equal_1e-6": true,
+        "predicate_equal": true,
+        "primary_scan_equal": true,
+        "scale_h_equal_1e-6": true,
+        "secondary_branch_equal": true,
+        "secondary_scan_equal": true
+      },
+      "leaf": "edb0",
+      "portable": {
+        "descriptor": [
+          5,
+          5,
+          1,
+          5,
+          5,
+          5
+        ],
+        "emitted": true,
+        "emitted_count": 1,
+        "leaf": "edb0",
+        "predicate": 3,
+        "primary_scan": [
+          5,
+          5,
+          0
+        ],
+        "scale_h": 0.5,
+        "scenario": 3,
+        "secondary_expected": true,
+        "secondary_scan": [
+          5,
+          5,
+          0
+        ],
+        "vertices": [
+          {
+            "weight": 0.142241374
+          }
+        ]
+      },
+      "scenario": 3
+    },
+    {
+      "aex": {
+        "descriptor": [
+          2,
+          2,
+          1,
+          5,
+          5,
+          5
+        ],
+        "emitter_scale_h": 1.0,
+        "predicate": 1,
+        "predicate_return": 1,
+        "primary_scan": [
+          5,
+          5,
+          0
+        ],
+        "secondary_executed": false,
+        "secondary_scan": null,
+        "vertices": [
+          {
+            "rgba": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weight": 0.2844827473163605
+          }
+        ]
+      },
+      "comparison": {
+        "descriptor_equal": true,
+        "emission_equal_1e-6": true,
+        "predicate_equal": true,
+        "primary_scan_equal": true,
+        "scale_h_equal_1e-6": true,
+        "secondary_branch_equal": true,
+        "secondary_scan_equal": true
+      },
+      "leaf": "e7c0",
+      "portable": {
+        "descriptor": [
+          2,
+          2,
+          1,
+          5,
+          5,
+          5
+        ],
+        "emitted": true,
+        "emitted_count": 1,
+        "leaf": "e7c0",
+        "predicate": 1,
+        "primary_scan": [
+          5,
+          5,
+          0
+        ],
+        "scale_h": 1,
+        "scenario": 1,
+        "secondary_expected": false,
+        "secondary_scan": [
+          0,
+          0,
+          0
+        ],
+        "vertices": [
+          {
+            "weight": 0.284482747
+          }
+        ]
+      },
+      "scenario": 1
+    },
+    {
+      "aex": {
+        "descriptor": [
+          2,
+          2,
+          1,
+          5,
+          5,
+          5
+        ],
+        "emitter_scale_h": 0.5,
+        "predicate": 3,
+        "predicate_return": 3,
+        "primary_scan": [
+          5,
+          5,
+          0
+        ],
+        "secondary_executed": true,
+        "secondary_scan": [
+          5,
+          6,
+          0
+        ],
+        "vertices": [
+          {
+            "rgba": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weight": 0.14224137365818024
+          }
+        ]
+      },
+      "comparison": {
+        "descriptor_equal": true,
+        "emission_equal_1e-6": true,
+        "predicate_equal": true,
+        "primary_scan_equal": true,
+        "scale_h_equal_1e-6": true,
+        "secondary_branch_equal": true,
+        "secondary_scan_equal": true
+      },
+      "leaf": "e7c0",
+      "portable": {
+        "descriptor": [
+          2,
+          2,
+          1,
+          5,
+          5,
+          5
+        ],
+        "emitted": true,
+        "emitted_count": 1,
+        "leaf": "e7c0",
+        "predicate": 3,
+        "primary_scan": [
+          5,
+          5,
+          0
+        ],
+        "scale_h": 0.5,
+        "scenario": 3,
+        "secondary_expected": true,
+        "secondary_scan": [
+          5,
+          6,
+          0
+        ],
+        "vertices": [
+          {
+            "weight": 0.142241374
+          }
+        ]
+      },
+      "scenario": 3
+    }
+  ],
+  "scope": "Mac-only checked-in AEX emulation and portable production boundary; not Windows/AE exact",
+  "verdict": "PASS_LOCAL_AEX_PORTABLE_SIBLING_BOUNDARIES"
+}

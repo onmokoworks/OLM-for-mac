@@ -1,0 +1,73 @@
+{
+  "status": "DIAGNOSTIC_COMPLETE",
+  "aex": "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex",
+  "worker": "0x1801a6150",
+  "next_host_boundary": "0x1801adc8f",
+  "original_overlap": {
+    "layout": "original-overlap",
+    "context": "0x40000000",
+    "status_callback": "0x82000000",
+    "context_180": "0x82000000",
+    "calls": [
+      {
+        "kind": "status",
+        "args": [
+          "0x1234",
+          "0x400001b0",
+          "0x40000230",
+          "0x0"
+        ],
+        "return_address": "0x1801a6221"
+      }
+    ],
+    "context_180_target_first_byte": "0xc3",
+    "error": "emulation faulted at RIP=0xc3: Invalid memory fetch (UC_ERR_FETCH_UNMAPPED)",
+    "stop": "0xc3",
+    "imports": []
+  },
+  "corrected_layout": {
+    "layout": "corrected",
+    "context": "0x40000000",
+    "status_callback": "0x82000000",
+    "context_180": "0x40000270",
+    "calls": [
+      {
+        "kind": "status",
+        "args": [
+          "0x1234",
+          "0x40000290",
+          "0x40000310",
+          "0x0"
+        ],
+        "return_address": "0x1801a6221"
+      },
+      {
+        "kind": "suite",
+        "args": [
+          "0x180311f10",
+          "0x2",
+          "0xf0fecc8",
+          "0x20"
+        ]
+      }
+    ],
+    "context_180_target_first_byte": "0x10",
+    "error": "emulation faulted at RIP=0x1801adc8f: Unhandled CPU exception (UC_ERR_EXCEPTION)",
+    "stop": "0x1801adc8f",
+    "imports": [
+      "_CxxThrowException",
+      "_CxxThrowException"
+    ]
+  },
+  "facts": [
+    "The original layout aliases context+0x180 to the status vtable's +0x40 callback slot.",
+    "The callback's first byte is 0xc3, and the worker attempts an indirect call through that byte value.",
+    "With a non-overlapping context and a suite object at context+0x180, the status callback returns to 0x1801a6221 and execution reaches the suite callback.",
+    "The corrected run stops at 0x1801adc8f after the synthetic suite callback returns 1, at the local C++ exception boundary."
+  ],
+  "inferences": [
+    "The worker expects a host suite/object ABI at context+0x180; this harness does not establish the full suite contract.",
+    "The 0x1801adc8f stop is a loader/host emulation boundary, not evidence of AE behavior or pixel equivalence."
+  ],
+  "claim_boundary": "actual-AEX ABI stop-point diagnostic only; no AE-exact claim"
+}

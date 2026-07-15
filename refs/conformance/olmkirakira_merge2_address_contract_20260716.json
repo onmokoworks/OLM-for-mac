@@ -1,0 +1,64 @@
+{
+  "date": "2026-07-16",
+  "evidence_class": {
+    "ae_exact": false,
+    "model": "independent float32 replay of the decompiled operation order",
+    "static": "binary-grounded address/instruction evidence"
+  },
+  "facts": [
+    "The mode-2 vtable target is a distinct function at 0x18114ffd0.",
+    "Its output is zero-filled, then five ray layers are visited per pixel.",
+    "Active layers add selected RGB directly and add raw ray to alpha.",
+    "The four output channels are clamped independently through 0x181156740."
+  ],
+  "inputs": {
+    "clamp_target": "FUN_181156740 @ 0x181156740",
+    "decomp": "decomp/OLMKiraKira.aex.c.txt",
+    "disasm": "disasm/OLMKiraKira.aex.asm.txt",
+    "target": "FUN_18114ffd0 @ 0x18114ffd0"
+  },
+  "kind": "olmkirakira_merge2_address_contract",
+  "limits": [
+    "The proof does not establish the later source/glow compose formula for Merge Mode 2.",
+    "The proof does not execute the Windows AEX or establish AE exactness.",
+    "The model uses an explicit epsilon placeholder because DAT_181489990's numeric value is not resolved here."
+  ],
+  "model_checks": {
+    "epsilon_boundary_skips": true,
+    "positive_rays_add_rgb_and_alpha": true,
+    "rgb_and_alpha_clamp_independently": true,
+    "zero_rays_are_noop": true
+  },
+  "next_witness_design": {
+    "acceptance": "same-run target/hash/base, five-layer order, raw additive pre-clamp values, and four clamp returns; final PNG is non-authoritative",
+    "breakpoints": [
+      "0x18114ffd0 entry: bind module base and selected vtable slot",
+      "0x181150250 return: bind output RGBA float address and zero-fill",
+      "0x181150080: capture ray pointer, ray float, and selected color pointer for one pixel",
+      "0x181150112: capture pre-clamp RGBA float",
+      "0x181156740 entry/return: capture each channel clamp input/output"
+    ],
+    "cases": [
+      "one nonzero short ray",
+      "one zero-ray control",
+      "five active rays with RGB sum above 1"
+    ],
+    "host": "one Mac-prepared, Windows-executed AE Software witness only when available; do not infer from PNG"
+  },
+  "schema": 1,
+  "scope": "Mac-only static AEX/decomp and independent float32 model; no PNG tuning",
+  "static_checks": {
+    "asm_address": true,
+    "asm_direct_rgb_add": true,
+    "asm_four_clamp_calls": true,
+    "asm_raw_alpha_add": true,
+    "decomp_direct_rgb_add": true,
+    "decomp_epsilon_skip": true,
+    "decomp_five_layer_loop": true,
+    "decomp_function_address": true,
+    "decomp_per_channel_clamp": true,
+    "decomp_raw_alpha_add": true,
+    "decomp_zero_fill": true
+  },
+  "status": "pass"
+}

@@ -1,0 +1,29 @@
+{
+  "kind": "olmcolorkey_32bpc_mac_host_path_static_audit",
+  "schema": 1,
+  "status": "pass_static_contract",
+  "date": "2026-07-16",
+  "scope": "Mac OLMColorKey source and conformance evidence only",
+  "facts": {
+    "smart_render_reads_explicit_bitdepth": true,
+    "smart_render_captures_float_entry_at_bitdepth_32": true,
+    "smart_render_dispatches_explicit_bitdepth": true,
+    "render_world_has_float_branch": true,
+    "float_pixel_traits_are_native_float": true,
+    "float_color_aware_declared": true,
+    "smart_render_declared": true,
+    "mac_pair_is_host_conversion_blocked": true,
+    "mac_pair_not_ae_exact": true,
+    "existing_gate_remains_closed": true
+  },
+  "source_sha256": "71154319ac6f8582af99325ae7e72eac2cba58435f6dd55514dfc5b30e4a0d1f",
+  "evidence_inputs": [
+    "refs/conformance/olmcolorkey_32bpc_case0002_mac_pair_20260712.md",
+    "refs/conformance/olmcolorkey_bitdepth_evidence_audit_20260715.md"
+  ],
+  "inferences": [
+    "A 32bpc Mac execution is type-safe only when AE invokes SmartRender and supplies extra->input->bitdepth=32.",
+    "The legacy PF_Cmd_RENDER callback remains an 8/16bpc boundary and cannot promote a 32bpc result to exact evidence.",
+    "The current Mac pair remains blocked by host/input conversion, so no ColorKey algorithm change is justified from that residual."
+  ]
+}

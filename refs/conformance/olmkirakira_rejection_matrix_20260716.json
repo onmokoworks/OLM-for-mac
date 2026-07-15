@@ -1,0 +1,72 @@
+{
+  "FACT": [
+    "Mode 1 and Mode 2 dispatch are statically grounded and retained by the local dispatch regression.",
+    "Actual-AEX Mode 3 evidence grounds CV_32FC1, Size(0,1), and sigmaX=length*0.5.",
+    "The portable Gaussian replay is exact against the local Unicorn diagnostic words, not a live-Windows oracle.",
+    "The local merge-mode-1 compose and final 8bpc rounding invariant has one complete passing witness row."
+  ],
+  "INFERENCE": [
+    "No production Mode 3 Gaussian change is justified until a same-run live coefficient/output return is captured.",
+    "No Mode 4 recurrence, merge-mode-2 compose, or broad final-quantization rewrite is justified by the current evidence.",
+    "The strongest current advance is a fail-closed executable boundary that preserves grounded behavior and rejects unsupported promotions."
+  ],
+  "checks": [
+    {
+      "basis": "static audit marks Mode 1 as one boxFilter pass and the retained dispatch smoke passed",
+      "decision": "retain one-pass dispatch",
+      "name": "mode-1-dispatch-preserved",
+      "status": "PASS"
+    },
+    {
+      "basis": "static audit marks Mode 2 as three boxFilter passes and the retained dispatch smoke passed",
+      "decision": "retain three-pass dispatch",
+      "name": "mode-2-dispatch-preserved",
+      "status": "PASS"
+    },
+    {
+      "basis": "actual-AEX captures CV_32FC1, Size(0,1), and sigma length*0.5; the portable Gaussian exists but is not wired",
+      "decision": "accept only the call contract and keep replay diagnostic",
+      "name": "mode-3-aex-to-portable-replay",
+      "status": "PASS"
+    },
+    {
+      "basis": "live coefficient return is absent; retained dispatch audit labels its 63-word output emulation-only",
+      "decision": "reject production Gaussian promotion",
+      "name": "mode-3-live-gaussian-promotion",
+      "status": "REJECT"
+    },
+    {
+      "basis": "static dispatch is known, but recurrence ordering and edge/writeback semantics remain unobserved",
+      "decision": "reject inferred recursive/exponential implementation",
+      "name": "mode-4-implementation",
+      "status": "REJECT"
+    },
+    {
+      "basis": "merge-mode-2 target is statically identified, but its post-aggregation compose behavior is unwitnessed",
+      "decision": "reject compose-mode-2 production claim",
+      "name": "merge-mode-2-compose",
+      "status": "REJECT"
+    },
+    {
+      "basis": "local invariant report passes its complete witness row",
+      "decision": "retain screen RGB with source-alpha passthrough locally",
+      "name": "merge-mode-1-local-compose",
+      "status": "PASS"
+    },
+    {
+      "basis": "one complete local row passes; three rows are incomplete and no cross-host exactness is claimed",
+      "decision": "retain nearest 8bpc rounding only within the local witness scope",
+      "name": "final-quantization-scope",
+      "status": "REJECT"
+    }
+  ],
+  "date": "2026-07-16",
+  "kind": "olmkirakira-rejection-matrix",
+  "limits": [
+    "This matrix does not establish AE exactness or Windows/Mac equality.",
+    "It intentionally does not edit the shared conformance ledger or production KiraKira render behavior."
+  ],
+  "schema": 1,
+  "scope": "Mac-only KiraKira tools, source, and conformance evidence; no PNG tuning",
+  "status": "pass"
+}

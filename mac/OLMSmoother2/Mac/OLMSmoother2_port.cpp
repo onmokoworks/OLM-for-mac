@@ -2617,7 +2617,9 @@ static bool win_leaf_ead0(SmootherPolygon &poly, const int *p2) {  // T2: e050 +
 	int total_y = p2[4] - p2[1];
 	int cur_span = span_end_y - p2[1];
 	float fmul = poly.extra_n * K_DD8 + K_HALF;
-	float wsh  = K_HALF;
+	// AEX 0x18000eb56 initializes XMM6 to 1.0; the optional cce0 chase
+	// below is the only path that reduces this scale to 0.5.
+	float wsh  = K_ONE;
 	if (((c - 3) & ~4) == 0) {
 		int x = p2[0], y = p2[1];
 		while (true) {
@@ -2676,7 +2678,7 @@ static bool win_leaf_e4b0(SmootherPolygon &poly, const int *p2) {  // T8: de10 +
 	int span_y = p2[4] - s[1];
 	int total = p2[4] - p2[1];
 	float fmul = poly.extra_n * K_DD8 + K_HALF;
-	float wsh = K_HALF;
+	float wsh = K_ONE;
 	if (((c - 3) & ~4) == 0) {
 		int x = p2[3], y = p2[4];
 		while (true) {
@@ -2709,7 +2711,7 @@ static bool win_leaf_edb0(SmootherPolygon &poly, const int *p2) {
 	int span = s[1] - p2[1];
 	int total = p2[4] - p2[1];
 	float fmul = poly.extra_n * K_DD8 + K_HALF;
-	float wsh = K_HALF;
+	float wsh = K_ONE;
 	if (((c - 3) & ~4) == 0) {
 		int x = p2[0], y = p2[1];
 		while (true) {
@@ -2785,7 +2787,7 @@ static bool win_leaf_e7c0(SmootherPolygon &poly, const int *p2) {
 	int span = p2[4] - s[1];
 	int total = p2[4] - p2[1];
 	float fmul = poly.extra_n * K_DD8 + K_HALF;
-	float wsh = K_HALF;
+	float wsh = K_ONE;
 	if (((c - 3) & ~4) == 0) {
 		int x = p2[3], y = p2[4];
 		while (true) {

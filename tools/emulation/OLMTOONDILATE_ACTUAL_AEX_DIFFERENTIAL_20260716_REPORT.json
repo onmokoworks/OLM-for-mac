@@ -1,0 +1,188 @@
+{
+  "status": "BLOCKED",
+  "aex": "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex",
+  "worker": "0x1801a6150",
+  "cases": [
+    {
+      "case": "alpha_threshold_center",
+      "status": "BLOCKED",
+      "match": null,
+      "expected_argb": [
+        [
+          255,
+          31,
+          127,
+          223
+        ],
+        [
+          255,
+          31,
+          127,
+          223
+        ],
+        [
+          255,
+          31,
+          127,
+          223
+        ],
+        [
+          255,
+          31,
+          127,
+          223
+        ],
+        [
+          255,
+          31,
+          127,
+          223
+        ],
+        [
+          255,
+          31,
+          127,
+          223
+        ],
+        [
+          255,
+          31,
+          127,
+          223
+        ],
+        [
+          255,
+          31,
+          127,
+          223
+        ],
+        [
+          255,
+          31,
+          127,
+          223
+        ]
+      ],
+      "stop_rip": "0xc3",
+      "error": "emulation faulted at RIP=0xc3: Invalid memory fetch (UC_ERR_FETCH_UNMAPPED)",
+      "callback_calls": [
+        [
+          "0x1234",
+          "0x40000000",
+          "0x40000080",
+          "0x0"
+        ]
+      ],
+      "imports": []
+    },
+    {
+      "case": "boundary_corner",
+      "status": "BLOCKED",
+      "match": null,
+      "expected_argb": [
+        [
+          255,
+          31,
+          127,
+          223
+        ],
+        [
+          255,
+          31,
+          127,
+          223
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          31,
+          127,
+          223
+        ],
+        [
+          255,
+          31,
+          127,
+          223
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "stop_rip": "0xc3",
+      "error": "emulation faulted at RIP=0xc3: Invalid memory fetch (UC_ERR_FETCH_UNMAPPED)",
+      "callback_calls": [
+        [
+          "0x1234",
+          "0x40000000",
+          "0x40000080",
+          "0x0"
+        ]
+      ],
+      "imports": []
+    },
+    {
+      "case": "semi_alpha_quantization",
+      "status": "BLOCKED",
+      "match": null,
+      "expected_argb": [
+        [
+          128,
+          100,
+          50,
+          25
+        ],
+        [
+          255,
+          31,
+          127,
+          223
+        ],
+        [
+          255,
+          31,
+          127,
+          223
+        ]
+      ],
+      "stop_rip": "0xc3",
+      "error": "emulation faulted at RIP=0xc3: Invalid memory fetch (UC_ERR_FETCH_UNMAPPED)",
+      "callback_calls": [
+        [
+          "0x1234",
+          "0x40000000",
+          "0x40000080",
+          "0x0"
+        ]
+      ],
+      "imports": []
+    }
+  ],
+  "claim_boundary": "actual-AEX worker differential only; no AE-exact claim"
+}

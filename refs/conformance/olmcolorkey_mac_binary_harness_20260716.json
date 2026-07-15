@@ -1,0 +1,36 @@
+{
+  "binary": "cli/OLMColorKey/olmcolorkey_cli",
+  "binary_file": "./cli/OLMColorKey/olmcolorkey_cli: Mach-O 64-bit executable arm64",
+  "binary_sha256": "50b48fa509c1aafc0f0a0d0080f7cbff03b2df6e78966f08184863e317b8b7a3",
+  "classification": "Mac executable binary evidence only; not AE exact and not host execution",
+  "command": [
+    "cli/OLMColorKey/olmcolorkey_cli",
+    "--input",
+    "<temp>/input.png",
+    "--params",
+    "<temp>/params.json",
+    "--output",
+    "<temp>/output.png"
+  ],
+  "fixture": {
+    "height": 2,
+    "raw_rgba_bytes": 16,
+    "width": 2
+  },
+  "platform": "macOS-15.7.2-arm64-arm-64bit-Mach-O",
+  "plugin_boundary": {
+    "binary": "handoff/mac_plugin_backups/20260626_112301_OLMColorKey_force_lower_precision/OLMColorKey.plugin/Contents/MacOS/OLMColorKey",
+    "binary_file": "./handoff/mac_plugin_backups/20260626_112301_OLMColorKey_force_lower_precision/OLMColorKey.plugin/Contents/MacOS/OLMColorKey: Mach-O universal binary with 2 architectures: [x86_64:Mach-O 64-bit bundle x86_64] [arm64:Mach-O 64-bit bundle arm64]\n./handoff/mac_plugin_backups/20260626_112301_OLMColorKey_force_lower_precision/OLMColorKey.plugin/Contents/MacOS/OLMColorKey (for architecture x86_64):\tMach-O 64-bit bundle x86_64\n./handoff/mac_plugin_backups/20260626_112301_OLMColorKey_force_lower_precision/OLMColorKey.plugin/Contents/MacOS/OLMColorKey (for architecture arm64):\tMach-O 64-bit bundle arm64",
+    "blocker": "EffectMain requires AE PF_InData/PF_OutData/PF_ParamDef/PF_EffectWorld and host suites; no standalone worker ABI is exported.",
+    "exported_host_symbols": [
+      "000000000000075c T _EffectMain",
+      "00000000000006b4 T _PluginDataEntryFunction2"
+    ],
+    "minimal_next_harness": "Load the bundle with AE's host, or add a host-owned PF_EffectWorld/suite shim and call EffectMain(PF_Cmd_SMART_RENDER) with captured typed worlds.",
+    "standalone_worker_export": false
+  },
+  "raw_output_matches_expected": true,
+  "raw_output_sha256": "29eea4be2a9c06f0abde72109bd5ae2340352e0c213a8aaae85f9920c52bb108",
+  "status": "pass_mac_binary_fixture",
+  "stdout": "wrote: /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmcolorkey_mac_binary_20260716_24slyjxj/output.png"
+}

@@ -1,0 +1,185 @@
+{
+  "binary": {
+    "non_repeat_entry": "0x180001270",
+    "path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "repeat_border_entry": "0x180001520",
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+  },
+  "classification": "actual-aex-border-validity-alpha-split-proven",
+  "evidence_class": "bounded_actual_aex_helper_probe",
+  "facts": [
+    "The actual AEX non-repeat helper accepts the loose -2 < int(coord) border window and samples the in-bounds neighbor at -1.x.",
+    "The actual AEX repeat-border helper accepts the same loose-window coordinates but clamps border taps, producing different RGBA float32 words.",
+    "Both helpers agree on the interior control, so the split is boundary behavior rather than a general ABI mismatch."
+  ],
+  "fixture": {
+    "height": 2,
+    "plane_rgba_f32": [
+      0.1,
+      0.2,
+      0.3,
+      0.8,
+      0.4,
+      0.5,
+      0.6,
+      0.4,
+      0.7,
+      0.8,
+      0.9,
+      0.2,
+      1.0,
+      0.9,
+      0.8,
+      0.6
+    ],
+    "row_stride_floats": 8,
+    "width": 2
+  },
+  "inference": "A single final alpha plane cannot represent both the repeat-border raw accumulated alpha and the non-repeat validity return. The caller must preserve validity separately until its documented collapse point.",
+  "issues": [],
+  "kind": "olmradialblur_border_sampler_semantics_actual_aex_20260716",
+  "limitations": [
+    "Synthetic 2x2 helper input only.",
+    "No prepass/scatter invocation and no AE host execution.",
+    "Does not claim Mac/Windows or AE exactness and does not authorize production changes."
+  ],
+  "records": [
+    {
+      "name": "left_loose_window",
+      "non_repeat": {
+        "instructions": 127,
+        "return_rax": 1,
+        "rgba_f32": [
+          0.2199999988079071,
+          0.320000022649765,
+          0.42000001668930054,
+          0.5
+        ],
+        "rgba_f32_words": [
+          "0x3e6147ae",
+          "0x3ea3d70b",
+          "0x3ed70a3e",
+          "0x3f000000"
+        ],
+        "xy": [
+          -1.25,
+          0.5
+        ]
+      },
+      "repeat_border": {
+        "instructions": 179,
+        "return_rax": 1,
+        "rgba_f32": [
+          0.2200000286102295,
+          0.3200000524520874,
+          0.4200000762939453,
+          0.4999999701976776
+        ],
+        "rgba_f32_words": [
+          "0x3e6147b0",
+          "0x3ea3d70c",
+          "0x3ed70a40",
+          "0x3effffff"
+        ],
+        "xy": [
+          -1.25,
+          0.5
+        ]
+      },
+      "x": -1.25,
+      "y": 0.5
+    },
+    {
+      "name": "top_loose_window",
+      "non_repeat": {
+        "instructions": 117,
+        "return_rax": 1,
+        "rgba_f32": [
+          0.1428571492433548,
+          0.24285712838172913,
+          0.34285712242126465,
+          0.7000000476837158
+        ],
+        "rgba_f32_words": [
+          "0x3e124925",
+          "0x3e78af8a",
+          "0x3eaf8af8",
+          "0x3f333334"
+        ],
+        "xy": [
+          0.25,
+          -1.25
+        ]
+      },
+      "repeat_border": {
+        "instructions": 179,
+        "return_rax": 1,
+        "rgba_f32": [
+          0.1428571343421936,
+          0.24285712838172913,
+          0.34285712242126465,
+          0.7000000476837158
+        ],
+        "rgba_f32_words": [
+          "0x3e124924",
+          "0x3e78af8a",
+          "0x3eaf8af8",
+          "0x3f333334"
+        ],
+        "xy": [
+          0.25,
+          -1.25
+        ]
+      },
+      "x": 0.25,
+      "y": -1.25
+    },
+    {
+      "name": "interior_control",
+      "non_repeat": {
+        "instructions": 167,
+        "return_rax": 1,
+        "rgba_f32": [
+          0.35500001907348633,
+          0.42500001192092896,
+          0.4950000047683716,
+          0.5
+        ],
+        "rgba_f32_words": [
+          "0x3eb5c290",
+          "0x3ed9999a",
+          "0x3efd70a4",
+          "0x3f000000"
+        ],
+        "xy": [
+          0.25,
+          0.5
+        ]
+      },
+      "repeat_border": {
+        "instructions": 179,
+        "return_rax": 1,
+        "rgba_f32": [
+          0.35500001907348633,
+          0.42500001192092896,
+          0.4950000047683716,
+          0.5
+        ],
+        "rgba_f32_words": [
+          "0x3eb5c290",
+          "0x3ed9999a",
+          "0x3efd70a4",
+          "0x3f000000"
+        ],
+        "xy": [
+          0.25,
+          0.5
+        ]
+      },
+      "x": 0.25,
+      "y": 0.5
+    }
+  ],
+  "schema": 1,
+  "status": "pass"
+}

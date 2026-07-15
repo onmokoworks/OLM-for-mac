@@ -1,0 +1,58 @@
+{
+  "kind": "olmdirectionalblur_angle0_diagonal_schedule",
+  "schema": 1,
+  "date": "2026-07-16",
+  "status": "pass",
+  "claim_scope": "local actual-AEX schedule evidence; not Mac AE exact",
+  "provenance": {
+    "aex": "plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "fixture": "tools/emulation/dblur_fullrender_host_fixture_20260711.py",
+    "fixture_sha256": "e3216aa5a213efaf2129dd11bf9c4a5e6e4a5c162d034c607df6e0bda1fba80a",
+    "source": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png",
+    "source_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4"
+  },
+  "cases": {
+    "angle_0": {
+      "requested_angle_degrees": 0.0,
+      "materialized_angle_radians": 1.5707963705062866,
+      "materialized_angle_bits": "0x3fc90fdb",
+      "materialized_angle_degrees": 90.00000250447816,
+      "rotate_dimensions": [
+        26,
+        26
+      ],
+      "iterate_area": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "rowdriver_calls": 26,
+      "schedule_stop": "0x180005554",
+      "aex_rotate_source_sha256": "f0b6b56fdb3488cec3cee38520c01f0e62e01d99a442ee30920fa2690e46c6e1",
+      "aex_rotate_destination_after_sha256": "bbb861a7057e937c8d49f43f8e323392a858127ebfe91aeeed0e918c4a0ea265"
+    },
+    "angle_45": {
+      "requested_angle_degrees": 45.0,
+      "materialized_angle_radians": 2.356194496154785,
+      "materialized_angle_bits": "0x4016cbe4",
+      "materialized_angle_degrees": 135.00000034162267,
+      "rotate_dimensions": [
+        26,
+        26
+      ],
+      "iterate_area": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "rowdriver_calls": 26,
+      "schedule_stop": "0x180005554",
+      "aex_rotate_source_sha256": "f0b6b56fdb3488cec3cee38520c01f0e62e01d99a442ee30920fa2690e46c6e1",
+      "aex_rotate_destination_after_sha256": "d22a6ab2e59fd847e1cb75437a847e9bf04d8c1887b3b381d91ec3d4c445515f"
+    }
+  },
+  "conclusion": "angle 0 materializes pi/2 and follows the same rotate/schedule path as diagonal control; only the rotate angle differs in this bounded proof"
+}

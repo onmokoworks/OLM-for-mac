@@ -459,6 +459,25 @@ static inline float round_blur_value(float v, A_long legacy)
 	return legacy ? floorf(v + 0.5f) : nearbyintf(v);
 }
 
+static inline int32_t
+pf16_rounded_int32(float value)
+{
+	// Match the PF16 writer's float32 add-half/floor/CVTTSS2SI sequence while
+	// making the signed conversion range explicit before extracting the word.
+	float rounded = floorf(value + 0.5f);
+	if (!(rounded >= -2147483648.0f && rounded < 2147483648.0f)) {
+		return INT32_MIN;
+	}
+	return static_cast<int32_t>(rounded);
+}
+
+static inline uint16_t
+pack_pf16_value(float value)
+{
+	const int32_t rounded = pf16_rounded_int32(value);
+	return static_cast<uint16_t>(static_cast<uint32_t>(rounded));
+}
+
 struct BlurDebugPoint {
 	A_long x;
 	A_long y;
@@ -698,25 +717,23 @@ debug_dump_store16(const BlurDebugConfig *debug, const float *rgb, A_long legacy
 		float nearby_r = nearbyintf(raw_r);
 		float nearby_g = nearbyintf(raw_g);
 		float nearby_b = nearbyintf(raw_b);
-		float round_r = round_blur_value(raw_r, legacy);
-		float round_g = round_blur_value(raw_g, legacy);
-		float round_b = round_blur_value(raw_b, legacy);
-		float clamp_r = round_r < 0.0f ? 0.0f : (round_r > 32768.0f ? 32768.0f : round_r);
-		float clamp_g = round_g < 0.0f ? 0.0f : (round_g > 32768.0f ? 32768.0f : round_g);
-		float clamp_b = round_b < 0.0f ? 0.0f : (round_b > 32768.0f ? 32768.0f : round_b);
+		int32_t rounded_i32_r = pf16_rounded_int32(raw_r);
+		int32_t rounded_i32_g = pf16_rounded_int32(raw_g);
+		int32_t rounded_i32_b = pf16_rounded_int32(raw_b);
+		uint16_t packed_r = pack_pf16_value(raw_r);
+		uint16_t packed_g = pack_pf16_value(raw_g);
+		uint16_t packed_b = pack_pf16_value(raw_b);
 		fprintf(
 			fp,
-			"OLMBLUR_DEBUG_POINT x=%d y=%d raw=(%.9g,%.9g,%.9g) raw_hex=(%a,%a,%a) floor05=(%.9g,%.9g,%.9g) nearby=(%.9g,%.9g,%.9g) rounded=(%.9g,%.9g,%.9g) clamped=(%.9g,%.9g,%.9g) stored=(%u,%u,%u)\n",
+			"OLMBLUR_DEBUG_POINT x=%d y=%d raw=(%.9g,%.9g,%.9g) raw_hex=(%a,%a,%a) floor05=(%.9g,%.9g,%.9g) nearby=(%.9g,%.9g,%.9g) rounded_i32=(%d,%d,%d) packed_low16=(%u,%u,%u) stored=(%u,%u,%u)\n",
 			(int)x, (int)y,
 			raw_r, raw_g, raw_b,
 			(double)raw_r, (double)raw_g, (double)raw_b,
 			floor_r, floor_g, floor_b,
 			nearby_r, nearby_g, nearby_b,
-			round_r, round_g, round_b,
-			clamp_r, clamp_g, clamp_b,
-			(unsigned int)(u_short)clamp_r,
-			(unsigned int)(u_short)clamp_g,
-			(unsigned int)(u_short)clamp_b
+			(int)rounded_i32_r, (int)rounded_i32_g, (int)rounded_i32_b,
+			(unsigned int)packed_r, (unsigned int)packed_g, (unsigned int)packed_b,
+			(unsigned int)packed_r, (unsigned int)packed_g, (unsigned int)packed_b
 		);
 	}
 	fprintf(fp, "OLMBLUR_DEBUG_STORE16_END\n");
@@ -753,18 +770,15 @@ static void store16(PF_EffectWorld *dst, const float *rgb, A_long legacy,
 	for (A_long y = 0; y < h; ++y) {
 		PF_Pixel16 *row = (PF_Pixel16*)((char*)dst->data + y * rb);
 		for (A_long x = 0; x < w; ++x) {
-			float r = round_blur_value(rgb[(y*w + x)*3+0], legacy);
-			float g = round_blur_value(rgb[(y*w + x)*3+1], legacy);
-			float b = round_blur_value(rgb[(y*w + x)*3+2], legacy);
-			if (r < 0) r = 0; if (r > 32768) r = 32768;
-			if (g < 0) g = 0; if (g > 32768) g = 32768;
-			if (b < 0) b = 0; if (b > 32768) b = 32768;
-			row[x].red   = (u_short)r;
-			row[x].green = (u_short)g;
-			row[x].blue  = (u_short)b;
+			float raw_r = rgb[(y*w + x)*3+0];
+			float raw_g = rgb[(y*w + x)*3+1];
+			float raw_b = rgb[(y*w + x)*3+2];
+			row[x].red   = pack_pf16_value(raw_r);
+			row[x].green = pack_pf16_value(raw_g);
+			row[x].blue  = pack_pf16_value(raw_b);
 			if (x == 601 && y == 598) {
 				observe_blur_store16_pixel(observation, bp, w, h, x, y,
-					rgb[(y*w + x)*3+0], rgb[(y*w + x)*3+1], rgb[(y*w + x)*3+2],
+					raw_r, raw_g, raw_b,
 					row[x].red, row[x].green, row[x].blue, row[x].alpha);
 			}
 		}

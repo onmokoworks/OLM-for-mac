@@ -1,0 +1,34 @@
+{
+  "kind": "olmdirectionalblur_world_row_mapping_differential",
+  "schema": 1,
+  "date": "2026-07-16",
+  "status": "pass",
+  "production_dispatch_changed": false,
+  "windows_package_created_or_sent": false,
+  "world": {
+    "dimensions": [16, 16],
+    "pixel_layout": "PF_Pixel8 A/R/G/B",
+    "area_words": [2, 1, 14, 15],
+    "packed_rowbytes": 64,
+    "rowbytes": 76,
+    "row_padding": 12
+  },
+  "actual_aex": {
+    "aex": "plugins_2025/OLMDirectionalBlur.aex",
+    "iterate_areas": [[2, 1, 14, 15], [2, 1, 14, 15]],
+    "output_sha256": "942a45b3a8eeb5da50f7badbfd6d68a4594b6af486b58be44d1d950cbf7e5ca5"
+  },
+  "portable_rowdriver_detour": {
+    "iterate_areas": [[2, 1, 14, 15], [2, 1, 14, 15]],
+    "output_sha256": "942a45b3a8eeb5da50f7badbfd6d68a4594b6af486b58be44d1d950cbf7e5ca5",
+    "rowdriver_complete": true
+  },
+  "facts": [
+    "Actual AEX and detoured execution both accepted the nonzero PF Iterate8 rectangle and padded PF8 row stride.",
+    "Actual AEX and detoured complete host outputs were byte-identical."
+  ],
+  "inference": [
+    "PF Iterate8 area coordinates and rowbytes mapping are correctly modeled for this bounded host-world case.",
+    "This is not Mac AE exact evidence and does not authorize production integration."
+  ]
+}

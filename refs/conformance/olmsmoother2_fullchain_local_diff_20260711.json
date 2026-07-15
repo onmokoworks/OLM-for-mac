@@ -1,9 +1,13 @@
 {
   "blockers": {
-    "c280": "The actual AEX FUN_18000c280 entry is executed with source/class descriptors from the identical fixture and fixed-point scale 65536/65536. Live Windows class bytes are still required before mapping this synthetic fixture to case_0012.",
-    "cce0_final_float": "The AEX entry still requires gamma/key/config state beyond the identical polygon fixture; the grounded accumulation lane is replayed independently from the AEX/port normalized vertices, while AEX entry execution and host writeback remain unclaimed."
+    "helper_replay": "The standalone all-one helper replay emits one contribution while the actual c280 entry and production builder emit two. This is harness incompleteness, not a remaining production dispatch mismatch.",
+    "live_binding": "The actual AEX entries are executed with synthetic source/class descriptors and fixed-point scale 65536/65536. Live Windows class/config bytes are still required before mapping any row to case_0004 or case_0012."
   },
-  "chain": "c280 classifier/dispatch -> producer helpers -> cc70 normalization -> independent cce0 accumulation",
+  "branch_matrix": "c2 append, c4 suppress, classifier_one c=3, classifier_zero empty",
+  "chain": "c280 classifier/dispatch -> producer helpers -> cc70 normalization -> cce0 output selection",
+  "expected_helper_replay_gap_fixtures": [
+    "classifier_one"
+  ],
   "facts": [
     {
       "aex": {
@@ -139,6 +143,7 @@
         "pre125c0_ret": 0
       },
       "comparison": {
+        "all_production_boundaries_equal": true,
         "all_replayed_boundaries_equal": true,
         "append_equal": true,
         "c280_entry_vs_production_builder_equal_1e-6": true,
@@ -317,6 +322,7 @@
         "pre125c0_ret": 0
       },
       "comparison": {
+        "all_production_boundaries_equal": true,
         "all_replayed_boundaries_equal": true,
         "append_equal": true,
         "c280_entry_vs_production_builder_equal_1e-6": true,
@@ -377,6 +383,253 @@
           1,
           1,
           1
+        ],
+        "pre125c0_append": false
+      }
+    },
+    {
+      "aex": {
+        "after_125c0_count": 0,
+        "append": true,
+        "c": 3,
+        "c280_entry": {
+          "count": 2,
+          "output_pointer": 536876608,
+          "returned_pointer": 536876608,
+          "scale_fixed": [
+            65536,
+            65536
+          ],
+          "vertices": [
+            {
+              "rgba": [
+                0.800000011920929,
+                0.10000000149011612,
+                0.10000000149011612,
+                0.9960784316062927
+              ],
+              "weight": 0.499997079372406
+            },
+            {
+              "rgba": [
+                0.800000011920929,
+                0.10000000149011612,
+                0.10000000149011612,
+                0.9960784316062927
+              ],
+              "weight": 0.4999988377094269
+            }
+          ]
+        },
+        "c280_equiv_helper_before_normalize": 1,
+        "c280_equiv_helper_vertices": [
+          {
+            "rgba": [
+              0.800000011920929,
+              0.10000000149011612,
+              0.10000000149011612,
+              0.9960784316062927
+            ],
+            "weight": 0.4999988377094269
+          }
+        ],
+        "cardinal6_descriptor": [
+          5,
+          6,
+          1,
+          5,
+          6,
+          0
+        ],
+        "cce0_entry": {
+          "bb10_after": [
+            {
+              "apply": 0,
+              "gamma": 2.802596928649634e-45
+            }
+          ],
+          "config": {
+            "gamma_mode_byte": 0,
+            "scale_fixed": [
+              65536,
+              65536
+            ]
+          },
+          "output_pointer": 536876976,
+          "returned_pointer": 536876976,
+          "rgba": [
+            0.8000008463859558,
+            0.1000036671757698,
+            0.1000036671757698,
+            0.996078372001648
+          ]
+        },
+        "cce0_gamma_colors_entry": {
+          "bb10_after": [
+            {
+              "apply": 1,
+              "gamma": 2.1695473194122314
+            }
+          ],
+          "config": {
+            "gamma_mode_byte": 3,
+            "scale_fixed": [
+              65536,
+              65536
+            ]
+          },
+          "output_pointer": 536877184,
+          "returned_pointer": 536877184,
+          "rgba": [
+            0.8000009655952454,
+            0.10000166296958923,
+            0.10000166296958923,
+            0.996078372001648
+          ]
+        },
+        "cce0_replay_float": [
+          0.9357142903975078,
+          0.7107142900249788,
+          0.7107142900249788,
+          0.9987394958901472
+        ],
+        "chain_before_normalize": 1,
+        "chain_count": 1,
+        "chain_vertices": [
+          {
+            "rgba": [
+              0.800000011920929,
+              0.10000000149011612,
+              0.10000000149011612,
+              0.9960784316062927
+            ],
+            "weight": 0.3214285671710968
+          }
+        ],
+        "descriptor_direct": [
+          5,
+          6,
+          1,
+          5,
+          8,
+          5
+        ],
+        "direct_count": 1,
+        "direct_vertices": [
+          {
+            "rgba": [
+              0.800000011920929,
+              0.10000000149011612,
+              0.10000000149011612,
+              0.9960784316062927
+            ],
+            "weight": 0.4281609058380127
+          }
+        ],
+        "fixture": "classifier_one",
+        "pre125c0_ret": 0
+      },
+      "comparison": {
+        "all_production_boundaries_equal": true,
+        "all_replayed_boundaries_equal": false,
+        "append_equal": true,
+        "c280_entry_vs_production_builder_equal_1e-6": true,
+        "c280_equiv_helpers_vs_production_builder_equal_1e-6": false,
+        "c_equal": true,
+        "cardinal6_descriptor_equal": true,
+        "cce0_accumulation_equal_1e-6": true,
+        "cce0_entry_vs_production_orchestrator_equal_1e-6": true,
+        "cce0_gamma_colors_vs_production_orchestrator_equal_1e-6": true,
+        "chain_count_equal": true,
+        "chain_vertices_weights_equal_1e-6": true,
+        "classifier_index_equal": true,
+        "descriptor_direct_equal": true,
+        "direct_vertices_weights_equal_1e-6": true
+      },
+      "port": {
+        "append": true,
+        "builder_count": 2,
+        "builder_gamma_colors_float": [
+          0.800001085,
+          0.100001663,
+          0.100001663,
+          0.996078372
+        ],
+        "builder_orchestrated_float": [
+          0.800000906,
+          0.100003675,
+          0.100003675,
+          0.996078372
+        ],
+        "builder_vertices": [
+          {
+            "rgba": [
+              0.800000012,
+              0.100000001,
+              0.100000001,
+              0.996078432
+            ],
+            "weight": 0.499997079
+          },
+          {
+            "rgba": [
+              0.800000012,
+              0.100000001,
+              0.100000001,
+              0.996078432
+            ],
+            "weight": 0.499998838
+          }
+        ],
+        "c": 3,
+        "cardinal6_descriptor": [
+          5,
+          6,
+          1,
+          5,
+          6,
+          0
+        ],
+        "chain_before_normalize": 1,
+        "chain_count": 1,
+        "chain_vertices": [
+          {
+            "rgba": [
+              0.800000012,
+              0.100000001,
+              0.100000001,
+              0.996078432
+            ],
+            "weight": 0.321428567
+          }
+        ],
+        "descriptor": [
+          5,
+          6,
+          1,
+          5,
+          8,
+          5
+        ],
+        "direct_count": 1,
+        "direct_vertices": [
+          {
+            "rgba": [
+              0.800000012,
+              0.100000001,
+              0.100000001,
+              0.996078432
+            ],
+            "weight": 0.428160906
+          }
+        ],
+        "fixture": "classifier_one",
+        "idx": 64,
+        "port_composite_float": [
+          0.935714304,
+          0.71071434,
+          0.71071434,
+          0.998739541
         ],
         "pre125c0_append": false
       }
@@ -475,6 +728,7 @@
         "pre125c0_ret": 0
       },
       "comparison": {
+        "all_production_boundaries_equal": true,
         "all_replayed_boundaries_equal": true,
         "append_equal": true,
         "c280_entry_vs_production_builder_equal_1e-6": true,
@@ -550,5 +804,6 @@
       }
     }
   ],
-  "scope": "local binary-semantic evidence; not Windows AE truth"
+  "scope": "local binary-semantic evidence; not Windows AE truth",
+  "status": "pass_all_production_boundaries_with_expected_helper_replay_gap"
 }
