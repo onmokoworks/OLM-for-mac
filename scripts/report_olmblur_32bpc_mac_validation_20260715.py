@@ -17,6 +17,8 @@ def main() -> int:
     plugin=d.get("loaded_plugin",{}); p=plugin.get("path","")
     plugin_path=Path(p)
     if plugin.get("filename")!="OLMBlur.plugin" or len(plugin.get("sha256", ""))!=64 or not plugin_path.is_file() or plugin.get("sha256")!=digest(plugin_path): fail.append("loaded plugin hash missing or mismatched")
+    proof=d.get("loaded_plugin_proof",{})
+    if proof.get("method")!="vmmap_exact_path" or proof.get("module_path")!=p or proof.get("module_sha256")!=plugin.get("sha256") or proof.get("binary_predates_process_start") is not True or not isinstance(proof.get("pid"),int): fail.append("loaded plugin is not bound to the AE process mapping")
     cases=d.get("cases",[])
     if len(cases)!=1 or cases[0].get("id")!="olmblur__case_0001" or cases[0].get("no_effect_control_passed") is not True: fail.append("case/control missing")
     out=a.output_dir or a.return_json.parent; case=cases[0] if cases else {}; outputs=case.get("outputs",{})

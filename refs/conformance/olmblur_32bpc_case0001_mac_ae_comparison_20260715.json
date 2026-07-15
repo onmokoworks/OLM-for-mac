@@ -1,0 +1,227 @@
+{
+  "schema": "olmblur_32bpc_mac_candidate_audit.v1",
+  "focused_spec": "refs/reference_requests/olmblur_32bpc_mac_windows_float_focus_20260711.json",
+  "plugin": "OLMBlur",
+  "bit_depth": "32bpc",
+  "comparison": {
+    "mode": "exact_float_semantic_planes",
+    "tolerance": null,
+    "tolerance_used": false
+  },
+  "environment": {
+    "windows": {
+      "ae_version": "26.3x87",
+      "project": {
+        "path": null,
+        "name": null,
+        "bits_per_channel": 32,
+        "working_space": null,
+        "linearize_working_space": null,
+        "blend_colors_using_1_0_gamma": null,
+        "project_gpu_accel_type": {
+          "current_name": "SOFTWARE",
+          "raw": 1816
+        }
+      },
+      "output_capabilities": {
+        "output_format": "exr",
+        "float_preserving": true,
+        "output_template": "OLM EXR 32 Float",
+        "note": "This Windows AE runner uses the specified AE output module template via render queue."
+      }
+    },
+    "mac": {
+      "ae_version": "26.3x87",
+      "project": {
+        "bits_per_channel": 32,
+        "linear_blending": false,
+        "renderer": "SOFTWARE",
+        "working_space": "None"
+      },
+      "output_module": {
+        "capture_api": "OutputModule.getSettings(GetSettingsFormat.STRING)",
+        "intent": {
+          "channels": [
+            "A",
+            "B",
+            "G",
+            "R"
+          ],
+          "compression": "none",
+          "sample_type": "FLOAT"
+        },
+        "template_name": "OLM EXR 32 Float"
+      },
+      "input_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+      "plugin_binding": {
+        "method": "vmmap_exact_path",
+        "sha256": "c6de66dab49a6a96852d6158780bfd8c52767cc699e2cef1fa2206e0fbadf206",
+        "pid": 51698,
+        "module_path_matches_return": true,
+        "binary_predates_process_start": true
+      }
+    },
+    "contract_checks": {
+      "ae_version": true,
+      "bit_depth": true,
+      "software_renderer": true,
+      "working_space_none": false,
+      "linear_light_off": false,
+      "float_exr_template": true,
+      "windows_output_module_readback": false,
+      "mac_float_intent": true,
+      "mac_output_settings_pair": true
+    }
+  },
+  "provenance": {
+    "windows_aex_sha256": null,
+    "mac_effect_aex_sha256": "c6de66dab49a6a96852d6158780bfd8c52767cc699e2cef1fa2206e0fbadf206",
+    "mac_no_op_aex_sha256": "c6de66dab49a6a96852d6158780bfd8c52767cc699e2cef1fa2206e0fbadf206",
+    "mac_effect_no_op_identity_consistent": true,
+    "mac_loaded_module_bound": true,
+    "aex_hashes_present": false
+  },
+  "gates": {
+    "no_op_exact": true,
+    "effect_exact": false,
+    "parameter_identity": false,
+    "effect_comparison_valid": false,
+    "environment_identity": false,
+    "windows_aex_hash_present": false,
+    "mac_effect_aex_hash_present": true,
+    "mac_no_op_aex_hash_present": true,
+    "mac_effect_no_op_identity_consistent": true,
+    "mac_loaded_module_bound": true,
+    "aex_hashes_present": false,
+    "ae_exact": false,
+    "ae_exact_refused": true,
+    "refusal_reasons": [
+      "Windows/Mac effect parameter identity mismatch",
+      "AE/project/color/output environment mismatch",
+      "Windows AEX hash missing from provenance"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "olmblur__case_0001",
+      "windows": {
+        "effect": {
+          "path": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0001.exr",
+          "sha256": "fd2e2020720513e7590d32fadfbb1acb1a25fa551b11d0c440f6e3391ded38b6",
+          "size_bytes": 33195419
+        },
+        "no_op": {
+          "path": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0001_before_effects.exr",
+          "sha256": "d9d18cfac512f14f2f7eefcd0a6d12eede07a0105538c5dc61e2b70eeb26533d",
+          "size_bytes": 33195419
+        }
+      },
+      "mac": {
+        "effect": {
+          "path": "olmblur__case_0001__effect_on.exr",
+          "sha256": "3f6f2a15cdcd053c015bd82d547b918c9881447e7e6f03bc387edd1a75453803",
+          "size_bytes": 33195419
+        },
+        "no_op": {
+          "path": "olmblur__case_0001__no_effect.exr",
+          "sha256": "81b356bb6faa2fc2771b876aecb3183dc596d4a4cf92627855a09c0532852ef5",
+          "size_bytes": 33195419
+        }
+      },
+      "parameter_identity": {
+        "match": false,
+        "requested": {
+          "OLM OLM Blur-0005": 129.4,
+          "OLM OLM Blur-0006": 100,
+          "OLM OLM Blur-0003": 2,
+          "OLM OLM Blur-0004": 1,
+          "OLM OLM Blur-0007": 0
+        },
+        "windows_readback": {
+          "OLM OLM Blur-0005": 129.399993896484,
+          "OLM OLM Blur-0006": 100,
+          "OLM OLM Blur-0003": 1,
+          "OLM OLM Blur-0004": 1,
+          "OLM OLM Blur-0007": 0
+        },
+        "mac_readback": {
+          "OLM OLM Blur-0005": 129.399993896484,
+          "OLM OLM Blur-0006": 100,
+          "OLM OLM Blur-0003": 2,
+          "OLM OLM Blur-0004": 1,
+          "OLM OLM Blur-0007": 0
+        },
+        "windows_differences": [
+          {
+            "match_name": "OLM OLM Blur-0003",
+            "expected": 2,
+            "actual": 1,
+            "reason": "value_mismatch"
+          }
+        ],
+        "mac_differences": []
+      },
+      "no_op": {
+        "match": true,
+        "dimensions": {
+          "reference": [
+            1920,
+            1080
+          ],
+          "candidate": [
+            1920,
+            1080
+          ],
+          "match": true
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "alpha_mismatch": 0
+      },
+      "effect": {
+        "match": false,
+        "dimensions": {
+          "reference": [
+            1920,
+            1080
+          ],
+          "candidate": [
+            1920,
+            1080
+          ],
+          "match": true
+        },
+        "mismatched_values": 207108,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 207108
+        },
+        "max_raw_u32_delta": 929154906,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 929154906
+        },
+        "alpha_mismatch": 0
+      },
+      "effect_comparison_valid": false,
+      "effect_result_classification": "invalid_parameter_or_control_identity",
+      "effect_attributable": false
+    }
+  ]
+}
