@@ -49,7 +49,7 @@ reference queue.
 
 | Plug-in / lane | Contract | Local execution state |
 | --- | --- | --- |
-| `OLMBlur` 16bpc case_0006 observation | `refs/mac_validation_requests/olmblur_case0006_mac_observation_20260715.json` | Instrumented Debug build succeeds. The runner hashes the installed Mac binary before AE and currently rejects the older installed bundle. The worker observation now originates before `store_word`, not from already packed words. |
+| `OLMBlur` 16bpc current-plugin revalidation | `refs/conformance/olmblur_16bpc_current_plugin_revalidation_20260715.md` | Current-plugin AE revalidation is `5/7 exact`; plugin SHA-256 is `c6de66dab49a6a96852d6158780bfd8c52767cc699e2cef1fa2206e0fbadf206`. `case_0006` is exact and its output SHA-256 is `27d24c96a6f3c15d27d8884ede039e5fd97480d752324f04d8e3aa77acc8791f`. Cases `0003`/`0004` remain unlocalized before the final exported word; current evidence does not justify changing the writer or global rounding. |
 | `OLMBlur` 32bpc | `refs/mac_validation_requests/olmblur_32bpc_mac_validation_20260715.json` | Fail-closed runner/reporter smoke ready; Mac AE render pending. |
 | `OLMColorKey` 32bpc | `refs/mac_validation_requests/olmcolorkey_32bpc_mac_validation_20260715.json` | Historical Windows aliases are manifest-, artifact-, AE-, color-, and output-template-pinned; Mac AE render pending. |
 | `OLMToonDilate` 32bpc | `refs/conformance/olmtoondilate_mac_depth_contract_20260715.json` | Isolated typed-procedural runner/comparator smoke ready; Mac AE render pending. |
@@ -63,6 +63,7 @@ reference queue.
 
 | Plug-in | Current lane | Next useful action | Do not do |
 | --- | --- | --- | --- |
+| `OLMBlur` 16bpc | `current-plugin-revalidated` | Preserve the `5/7` exact result and capture same-run pre-store float bits, writer input, stored PF16 word, and exported word for cases `0003` and `0004`; case `0006` provenance/output is closed. | Change the worker, helper, writer, or global rounding from PNG/portable replay alone, or treat the old bundle language as current-plugin evidence. |
 | `OLMDistanceGradation` | `binary-proof` | Resend the canonical 8bpc typed-boundary package; the first attempt lacked `ae_result_case_0001.json` and is only `exact_bind_failure`. Locally, keep the shared field-generation result as a non-host invariant, not Windows truth. | Repeat depth-control, tune from PNGs, or use CLI/AEX fixture output as Windows AE truth. |
 | `OLMDirectionalBlur` | `binary-proof` | After the active DG return, run the corrected row755 package. It accepts production `row_end=2176` while requiring destination/denominator/alpha typed state. | Treat the 2026-07-14 row755 `exact_bind_failure` as algorithm evidence or broaden to diagonal/variation modes. |
 | `OLMRadialBlur` | `binary-proof` | Run the hardened semantic full-frame witness at `(7,0)`, `(8,0)`, `(24,0)` with live cell addresses and same-run export binding. | Use the old `32x32`, quality-step-90 probe as full-frame truth or tune visuals. |
@@ -107,9 +108,33 @@ reference queue.
 - `python3 refs/scripts/smoke_olmblur_worker16_nonlegacy.py` passed both
   actual-AEX complete-worker fixtures after adding the optional pre-store
   observation API.
+- `python3 refs/scripts/smoke_olmblur_16bpc_current_plugin_revalidation_20260715.py`
+  passed: current-plugin AE result `5/7 exact`, case0006 SHA pinned, and
+  cases0003/0004 recorded as the two unresolved residuals.
+- `python3 refs/scripts/smoke_analyze_olmblur_residual_locus_20260715.py`
+  passed both the historical `separate-lanes` branch and the identity-bound
+  current-plugin `ae-exact-observed` branch.
 - `xcodebuild -project mac/OLMBlur/Mac/OLMBlur.xcodeproj -configuration Debug -quiet`
   succeeded; the instrumented binary SHA-256 is
   `c6de66dab49a6a96852d6158780bfd8c52767cc699e2cef1fa2206e0fbadf206`.
+- AE PNG stable polling was validated for case0003: `stable waited_ms=41240`
+  and `size_bytes=6156`.
+- `tools/emulation/.venv-cv455/bin/python refs/scripts/smoke_kirakira_gaussian.py`
+  passed. The local pinned-AEX Unicorn scaffold returns 63/63 words matching
+  the portable uniform replay, but all 63 differ from OpenCV 4.5.5; this is an
+  emulation-path witness only and does not replace the live Windows request.
+- `python3 refs/scripts/smoke_smoother2_fullchain_diff.py` passed the local
+  actual-AEX/portable matrix for classifier `0x69` append/suppress and `0xff`;
+  classifier `0x40` remains an explicit local dispatch gap.
+- `python3 tools/emulation/run_radialblur_case0009_b150_differential.py`
+  passed: the actual AEX B150 worker changes its owned bounded RGBA/scalar
+  slice while the paired no-op detour does not. This remains reduced-geometry
+  binary evidence, not full-frame case0009 truth.
+- The six common-core Windows witness renderers were regenerated with bounded
+  PNG completion polling. Their focused witness smokes and all 22 common-core
+  unit tests pass; the case0026 source-support copy was also synchronized.
+- `olmblur_case0006_same_run_internal_20260713` is retired as `superseded`,
+  not answered, after the identity-bound current-plugin AE-exact result.
 - The no-AE Mac validation smokes for OLMBlur case_0006,
   DirectionalBlur 32bpc, RadialBlur 32bpc, KiraKira Mode 2 32bpc, and
   Smoother2 no-key 32bpc passed.

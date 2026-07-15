@@ -1,0 +1,66 @@
+{
+  "schema": "olmblur-current-plugin-revalidation.v1",
+  "record_id": "olmblur_16bpc_current_plugin_revalidation_20260715",
+  "immutable": true,
+  "date": "2026-07-15",
+  "scope": "just-completed current Mac OLMBlur 16bpc revalidation",
+  "FACT": [
+    "The verifier report contains seven compared OLMBlur 16bpc cases.",
+    "Five of seven cases are exact: case_0001, case_0002, case_0005, case_0006, and case_0007.",
+    "case_0003 has max_diff=2 across 20 reported samples.",
+    "case_0004 has max_diff=2 across 2 reported samples.",
+    "The current Mac OLMBlur plugin SHA-256 is c6de66dab49a6a96852d6158780bfd8c52767cc699e2cef1fa2206e0fbadf206.",
+    "The case_0006 candidate output SHA-256 equals the retained Windows canonical SHA-256 27d24c96a6f3c15d27d8884ede039e5fd97480d752324f04d8e3aa77acc8791f.",
+    "No conformance claim is made for unresolved case_0003 or case_0004."
+  ],
+  "INFERENCE": [
+    "This record is a bounded revalidation result for the named current Mac plugin instance, not a source or ledger change.",
+    "The exact count is 5/7 under the supplied integer verifier report; unresolved cases remain outside the exact set."
+  ],
+  "provenance": {
+    "candidate_set": {
+      "source_label": "olmblur_16bpc_candidates_c76c687c",
+      "retained": false,
+      "artifacts_copied": false
+    },
+    "verifier_report": {
+      "source_label": "ae_pixel_16bpc_all_exact.json",
+      "retained": true,
+      "path": "refs/conformance/olmblur_16bpc_current_plugin_verifier_report_20260715.json",
+      "sha256": "a56f6ba2bb85b75cd9333963efc6e980b431b7a5e2eceacc0fcb993e20d982e8"
+    },
+    "observation_report": {
+      "source_label": "OLMBLUR_CASE0006_OBSERVATION_REPORT.json",
+      "retained": true,
+      "path": "refs/conformance/olmblur_case0006_current_plugin_observation_report_20260715.json",
+      "sha256": "b7f1cb02326879e18cd21ad657cc305781793c69ea2733da7d48a161dc4b8df7"
+    },
+    "installed_plugin": {
+      "sha256": "c6de66dab49a6a96852d6158780bfd8c52767cc699e2cef1fa2206e0fbadf206",
+      "source": "current Mac OLMBlur.plugin resolved by the observation run"
+    },
+    "retained_repository_references": [
+      "refs/conformance/olmblur_case0006_reference_provenance_audit_20260701.json",
+      "refs/conformance/olmblur_case0006_worker_probe_return_20260715.md",
+      "refs/mac_validation_requests/olmblur_case0006_mac_observation_20260715.json"
+    ]
+  },
+  "verification": {
+    "mode": "integer",
+    "summary": {
+      "total": 7,
+      "exact": 5,
+      "unresolved": 2
+    },
+    "cases": [
+      {"case_id": "olmblur__case_0001", "status": "exact", "max_diff": 0, "nonzero_px": 0, "total_px": 518400, "candidate_sha256": "53f3b365b5048055dd85b3617a343599be2ad85f75f620edc193765561f4d36f", "canonical_windows_path": "handoff/archive/ae_pixel_validation_20260618_before_rerun_20260626_204944/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0001.png", "canonical_windows_sha256": "53f3b365b5048055dd85b3617a343599be2ad85f75f620edc193765561f4d36f"},
+      {"case_id": "olmblur__case_0002", "status": "exact", "max_diff": 0, "nonzero_px": 0, "total_px": 518400, "candidate_sha256": "340402d053e8dc628b4f6aebc57ac3502aa921b4f6ef4f4446265be57f30e19d", "canonical_windows_path": "handoff/archive/ae_pixel_validation_20260618_before_rerun_20260626_204944/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0002.png", "canonical_windows_sha256": "340402d053e8dc628b4f6aebc57ac3502aa921b4f6ef4f4446265be57f30e19d"},
+      {"case_id": "olmblur__case_0003", "status": "unresolved", "max_diff": 2, "reported_sample_count": 20, "total_px": 518400, "candidate_sha256": "542d58e16b96055bd462df1315f3e6b64d0ba53082c18df5a2e46393c4997f6f", "canonical_windows_path": "handoff/archive/ae_pixel_validation_20260618_before_rerun_20260626_204944/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0003.png", "canonical_windows_sha256": "ecd4ad9d746b65782fa7173f996cd58b3c45051984cd30e467f5e639164f90af"},
+      {"case_id": "olmblur__case_0004", "status": "unresolved", "max_diff": 2, "reported_sample_count": 2, "total_px": 518400, "candidate_sha256": "ec12690c2557f53bc2aa78a6547e013559409470b719b246db7aaa6cddf1a01e", "canonical_windows_path": "handoff/archive/ae_pixel_validation_20260618_before_rerun_20260626_204944/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0004.png", "canonical_windows_sha256": "7858aee7cd925a29b646513addfefa7845a56245cf07609ce3ac859cfc9892bf"},
+      {"case_id": "olmblur__case_0005", "status": "exact", "max_diff": 0, "nonzero_px": 0, "total_px": 2073600, "candidate_sha256": "114dc3ea17afeef6f38f9dcd75609fac9041b72f23d7ecd8912edbe528190cb3", "canonical_windows_path": "handoff/archive/ae_pixel_validation_20260618_before_rerun_20260626_204944/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0005.png", "canonical_windows_sha256": "114dc3ea17afeef6f38f9dcd75609fac9041b72f23d7ecd8912edbe528190cb3"},
+      {"case_id": "olmblur__case_0006", "status": "exact", "max_diff": 0, "nonzero_px": 0, "total_px": 2073600, "candidate_sha256": "27d24c96a6f3c15d27d8884ede039e5fd97480d752324f04d8e3aa77acc8791f", "canonical_windows_path": "handoff/archive/ae_pixel_validation_20260618_before_rerun_20260626_204944/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png", "canonical_windows_sha256": "27d24c96a6f3c15d27d8884ede039e5fd97480d752324f04d8e3aa77acc8791f"},
+      {"case_id": "olmblur__case_0007", "status": "exact", "max_diff": 0, "nonzero_px": 0, "total_px": 2073600, "candidate_sha256": "2b7f5f0990cd3009fc3690b7b1b4943b11c6bce67ec41cbcde98508ec6578f50", "canonical_windows_path": "handoff/archive/ae_pixel_validation_20260618_before_rerun_20260626_204944/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0007.png", "canonical_windows_sha256": "2b7f5f0990cd3009fc3690b7b1b4943b11c6bce67ec41cbcde98508ec6578f50"}
+    ]
+  },
+  "smoke": "refs/scripts/smoke_olmblur_16bpc_current_plugin_revalidation_20260715.py"
+}

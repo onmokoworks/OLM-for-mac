@@ -31,6 +31,32 @@ FCCE0 = 0x18000CCE0
 DESC = [5, 6, 1, 5, 8, 5]
 CENTER = [1.0, 1.0, 1.0, 1.0]
 
+FIXTURES = (
+    ("c2_witness", False),
+    ("c4_control", True),
+    ("classifier_zero", False),
+)
+EXPECTED_CLASSIFIER_INDEX = {
+    "c2_witness": 0x69,
+    "c4_control": 0x69,
+    "classifier_zero": 0xFF,
+}
+
+
+def setup_fixture(ss: SmootherStruct, fixture: str) -> None:
+    """Install one small class neighborhood used by both binary paths."""
+    x, y = 5, 6
+    if fixture in ("c2_witness", "c4_control"):
+        ss.set_class_pixel(x, y, 0, 1, 0, 1)
+        ss.set_class_pixel(x + 1, y, 1, 0, 0, 0)
+        ss.set_class_pixel(x + 1, y + 1, 0, 0, 1, 0)
+    elif fixture != "classifier_zero":
+        raise ValueError(fixture)
+    if fixture == "c4_control":
+        ss.set_class_pixel(x - 1, y, 0, 1, 0, 0)
+    else:
+        ss.set_class_pixel(x, y - 1, 1, 0, 0, 0)
+
 
 def call_c280_entry(loader: AexLoader, ss: SmootherStruct, x: int, y: int) -> dict:
     """Execute the actual five-argument builder with reconstructable host scale."""
@@ -123,7 +149,7 @@ def cce0_accumulate(center: list[float], samples: list[dict]) -> list[float]:
     return out
 
 
-def run_aex(suppress: bool) -> dict:
+def run_aex(fixture: str, suppress: bool) -> dict:
     loader = AexLoader(str(AEX_PATH), verbose=False, fast=True)
     loader.register_libm_impls()
     ss = SmootherStruct(loader, 16, 16)
@@ -133,14 +159,7 @@ def run_aex(suppress: bool) -> dict:
     ss.set_base_weight(0.4)
     ss.set_src_pixel(x, y - 1, (0.8, 0.1, 0.1, 0.99607843))
     ss.set_src_pixel(x, y, (1.0, 1.0, 1.0, 1.0))
-    # Independent c280 classifier bytes: low nibble 9 and high nibble 6.
-    ss.set_class_pixel(x, y, 0, 1, 0, 1)
-    ss.set_class_pixel(x + 1, y, 1, 0, 0, 0)
-    ss.set_class_pixel(x + 1, y + 1, 0, 0, 1, 0)
-    if suppress:
-        ss.set_class_pixel(x - 1, y, 0, 1, 0, 0)
-    else:
-        ss.set_class_pixel(x, y - 1, 1, 0, 0, 0)
+    setup_fixture(ss, fixture)
 
     c = call_e170(loader, ss, DESC)
     _, direct_count, direct_verts = call_f270(loader, ss, DESC, 1.0)
@@ -177,7 +196,7 @@ def run_aex(suppress: bool) -> dict:
     loader.call_function(FCC70, int_args=[ss.base], max_instructions=200_000)
     c280_equiv_vertices = vertices(ss)
     return {
-        "fixture": "c4_control" if suppress else "c2_witness",
+        "fixture": fixture,
         "descriptor_direct": DESC,
         "c": c,
         "append": direct_count != 0,
@@ -225,6 +244,7 @@ def compare(aex: dict, port: dict) -> dict:
     )
     return {
         "descriptor_direct_equal": aex["descriptor_direct"] == port["descriptor"],
+        "classifier_index_equal": port["idx"] == EXPECTED_CLASSIFIER_INDEX[aex["fixture"]],
         "c_equal": aex["c"] == port["c"],
         "append_equal": aex["append"] == port["append"],
         "direct_vertices_weights_equal_1e-6": vertex_match,
@@ -236,7 +256,7 @@ def compare(aex: dict, port: dict) -> dict:
         "cce0_entry_vs_production_orchestrator_equal_1e-6": cce0_entry_match,
         "cce0_gamma_colors_vs_production_orchestrator_equal_1e-6": cce0_gamma_match,
         "cce0_accumulation_equal_1e-6": cce0_match,
-        "all_replayed_boundaries_equal": aex["descriptor_direct"] == port["descriptor"] and aex["c"] == port["c"] and aex["append"] == port["append"] and vertex_match and aex["cardinal6_descriptor"] == port["cardinal6_descriptor"] and chain_vertex_match and c280_entry_match and c280_helper_match and cce0_entry_match and cce0_gamma_match and cce0_match,
+        "all_replayed_boundaries_equal": aex["descriptor_direct"] == port["descriptor"] and port["idx"] == EXPECTED_CLASSIFIER_INDEX[aex["fixture"]] and aex["c"] == port["c"] and aex["append"] == port["append"] and vertex_match and aex["cardinal6_descriptor"] == port["cardinal6_descriptor"] and chain_vertex_match and c280_entry_match and c280_helper_match and cce0_entry_match and cce0_gamma_match and cce0_match,
     }
 
 
@@ -246,9 +266,11 @@ def main() -> int:
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     rows = []
-    for suppress in (False, True):
-        aex = run_aex(suppress)
-        port = json.loads(subprocess.check_output([str(args.adapter), "1" if suppress else "0", "65536", "65536"], text=True))
+    for fixture, suppress in FIXTURES:
+        aex = run_aex(fixture, suppress)
+        port = json.loads(subprocess.check_output([
+            str(args.adapter), "1" if suppress else "0", "65536", "65536", fixture,
+        ], text=True))
         rows.append({"aex": aex, "port": port, "comparison": compare(aex, port)})
     result = {
         "scope": "local binary-semantic evidence; not Windows AE truth",

@@ -1,5 +1,32 @@
 # OLM Conformance Ledger
 
+- 2026-07-15 `OLMRadialBlur B150 worker differential`: a bounded local
+  actual-AEX run reaches and returns from `FUN_18000B150`; a paired no-op
+  detour keeps identical typed inputs/spans. The live worker changes only its
+  owned RGBA/scalar row slice (`9 -> 245` nonzero cells), while the detour
+  leaves it unchanged, and all retained float32 words pass raw-bit checks.
+  This grounds B150 output ownership in the local scaffold, not full-frame
+  case_0009 or Windows AE truth. Evidence:
+  `refs/conformance/olmradialblur_b150_live_noop_detour_differential_20260715.md`.
+
+- 2026-07-15 `OLMSmoother2 local c280-to-cce0 matrix`: local actual-AEX and
+  portable replay agree through classifier/producer/c280/cce0 boundaries for
+  the `c=2` append witness, `c=4` suppression control, and all-zero classifier
+  `0xff`. An all-one neighborhood reaching classifier `0x40` remains an
+  explicit portable-dispatch gap and is excluded from the pass gate. This is
+  local binary-semantic evidence only; the live case_0012 class/config bytes
+  and Windows AE result remain unbound. Evidence:
+  `refs/conformance/olmsmoother2_fullchain_matrix_20260715.md`.
+
+- 2026-07-15 `OLMKiraKira Mode 3 local Gaussian dispatch audit`: the pinned
+  AEX body executes once in the local Unicorn scaffold and returns 63 words.
+  Its allocated 21-word coefficient buffer is uniformly `0x3d430c31`; the
+  portable uniform replay is `63/63` word-exact, while OpenCV 4.5.5 differs at
+  all 63 words. This confirms the local emulation scaffold's behavior only.
+  No runtime indirect target executed, and no live Windows coefficient return
+  is bound, so production Gaussian changes remain forbidden. Evidence:
+  `refs/conformance/olmkirakira_mode3_gaussian_actual_aex_dispatch_audit_20260715.md`.
+
 - 2026-07-14 `OLMKiraKira Mode 3 forward warp`: the Mac helper now mirrors
   the observed OpenCV 4.5.5 `INTER_LINEAR` fixed-point coordinate and weight
   quantization for the grounded forward-warp call. A source-extracted C++
@@ -38,7 +65,8 @@
   backslash-named Windows ZIP only after binding its inner exports and identity
   to the exact request batch. Each job's
   `satisfies_request_ids` binds the new common-core request to the legacy queue;
-  the batch covers seven of the eight current pending runtime requests. The
+  the batch covered seven of the eight requests pending when that batch was
+  generated. This is historical cardinality, not the current queue count. The
   separate DirectionalBlur angle-0 single-shot request is intentionally not
   claimed. Two live six-lane attempts and the first one-lane launch gate
   returned no ready marker. The one-lane return proved that AfterFX started,
@@ -303,6 +331,26 @@ treating a mismatch as algorithm drift.
 
 ## Latest Overrides
 
+- 2026-07-15 `OLMBlur current-plugin 16bpc revalidation`: the installed
+  current plug-in SHA-256 is
+  `c6de66dab49a6a96852d6158780bfd8c52767cc699e2cef1fa2206e0fbadf206`.
+  Current-plugin 16bpc revalidation is `5/7 AE exact` for
+  `case_0001`, `case_0002`, `case_0005`, `case_0006`, and `case_0007`.
+  `case_0006` is `AE exact` with output PNG SHA-256
+  `27d24c96a6f3c15d27d8884ede039e5fd97480d752324f04d8e3aa77acc8791f`.
+  `case_0003` is Legacy, `max_diff=2` across 20 sign-mixed red samples.
+  `case_0004` is Non-Legacy,
+  `max_diff=2` across 2 red samples at `(411,258)` and `(458,314)`.
+  Both remain unlocalized before the final exported word; current evidence
+  does not justify a writer/global-rounding change. Next action is a same-run
+  typed pre-store arithmetic/writer/export proof for `case_0003`/`case_0004`.
+  Global rounding, writer, and kernel changes are forbidden; do not revive
+  old installed-bundle conclusions. Keep `AE exact` limited to the declared
+  exact cases above. The unanswered
+  `olmblur_case0006_same_run_internal_20260713` request is now `superseded`,
+  not `answered`: retain its failed evidence, but do not resend it after the
+  current-plugin AE-exact closeout.
+
 - 2026-07-15 `Mac depth-validation execution lanes`: use
   `refs/reports/plugin_orchestration_20260715.md` under "Prepared Mac
   validation lanes". Windows 32bpc FLOAT references now have fail-closed Mac
@@ -313,14 +361,20 @@ treating a mismatch as algorithm drift.
   fresh Mac AE effect/control pair binds the installed plug-in binary,
   AE/project/color/output identity, and raw FLOAT32 samples.
 
-- 2026-07-15 `OLMBlur case_0006 Mac observation correction`: the optional
-  `core/olmblur_worker16_nonlegacy` observation now records `plane_a` RGB
-  immediately before `store_word` and the resulting ARGB words for the same
-  pixel. The runner computes the installed Mac plug-in binary SHA-256 and
-  rejects identity drift before touching AE; a Windows AEX hash supplied by an
-  environment variable is no longer accepted as Mac load identity. Actual-AEX
-  worker fixtures remain exact and the Debug plug-in builds, but the current
-  installed bundle is older, so no Mac observation has been run or promoted.
+- 2026-07-15 `OLMBlur case_0006 current-plugin promotion`: the installed
+  current plug-in is SHA-256
+  `c6de66dab49a6a96852d6158780bfd8c52767cc699e2cef1fa2206e0fbadf206`.
+  The current-plugin 16bpc revalidation promotes `case_0006` to `AE exact`
+  with output SHA-256
+  `27d24c96a6f3c15d27d8884ede039e5fd97480d752324f04d8e3aa77acc8791f`.
+  The remaining 16bpc red cases are `case_0003` Legacy (`max_diff=2` across
+  20 sign-mixed red samples) and `case_0004` Non-Legacy
+  (`max_diff=2` across 2 red samples at `(411,258)` and `(458,314)`).
+  Both remain unlocalized before the final exported word; the next proof is a
+  same-run typed pre-store arithmetic/writer/export chain for those two cases.
+  Do not change global
+  rounding, the writer, or the kernel, and do not use old installed-bundle
+  conclusions.
 
 - 2026-07-15 `parallel witness hardening`: use
   `refs/reports/plugin_orchestration_20260715.md` for the ordered queue and
@@ -1634,14 +1688,14 @@ runtime-captured or binary-built block, then replay the same portable core.
 | --- | --- | --- | --- | --- | --- |
 | ColorKeep | `guarded` | `host-smoke` | `parked` | Keep as support/helper unless a real Windows Software reference is requested. | Treat synthetic helper output as OLM compatibility. |
 | OLMColorKey | 8bpc and 16bpc covered slices are `AE exact`; 32bpc has nine bound Windows Software FLOAT EXR effect/control pairs but no Mac cross-host comparison | `host-debuggable` | `bitdepth-expand` | Preserve the passing 8/16bpc behavior and repaired OutFlags2 declaration. Run the fail-closed Mac 32bpc nine-case pair with identical inputs, parameters, color state, output-module settings, and plug-in identity; compare raw FLOAT EXR samples against the audited Windows pairs before classifying any residual. | Visual/look tuning, broad algorithm changes, PNG-only 32bpc exact claims, compensating for host conversion in plug-in code, or promoting a cross-host effect delta when the no-effect control is not exact. |
-| OLMBlur | 8bpc packaged slice `AE exact`; Windows 16bpc case_0006 export is byte-identical to both retained Windows refs, while Mac differs at only `(601,598)` by `[1,1,0,0]`; internal ownership is unclassified | `host-debuggable` | `binary-proof` | Preserve the decomp-backed Legacy carry-prev rule and freeze kernel, source staging, helper, and store rewrites. Run the env-gated Mac observation-only case_0006 capture at `(601,598)` so the same render binds pre-store float words, stored PF16 words, PNG, case ID, render ID, and plug-in hash. Keep historical internal witnesses `(314,14)` and `(29,71)` separate because no coordinate transform is proven. | Calling the residual rounding/writeback before the same-run observation, broad rewrites, global rounding swaps, PNG-derived tuning, helper/source/store rewrites without typed proof, or kernel tuning that risks the passing 8bpc slice. |
+| OLMBlur | 8bpc packaged slice `AE exact`; installed current-plugin 16bpc revalidation is `5/7 AE exact` for `case_0001`, `case_0002`, `case_0005`, `case_0006`, and `case_0007`; `case_0006` is `AE exact` | `host-debuggable` | `binary-proof` | With installed current-plugin SHA-256 `c6de66dab49a6a96852d6158780bfd8c52767cc699e2cef1fa2206e0fbadf206` pinned, capture a same-run typed pre-store float/writer/export chain for `case_0003` Legacy (`max_diff=2` across 20 sign-mixed red samples) and `case_0004` Non-Legacy (`max_diff=2` at `(411,258)` and `(458,314)`). | Global rounding, writer, or kernel changes from PNG/portable replay alone; old installed-bundle conclusions; PNG-derived tuning or any `AE exact` claim beyond the five declared current-plugin 16bpc cases. |
 | OLMToonDilate | 8bpc `AE exact`; covered 16bpc slice is `AE exact`; 32bpc has a fail-closed typed-procedural FLOAT EXR contract but no accepted cross-host compare | `host-debuggable` | `bitdepth-expand` | Keep the exact 8/16bpc slice and repaired OutFlags2 stable. Run the isolated Mac 32bpc same-comp effect/control package, capture localized output-module settings, and compare its raw FLOAT EXR samples with the matching Windows typed-procedural pair. | Reopen the 8bpc two-pass dilation algorithm, promote PNG-only 32bpc evidence, attribute a control-world host split to ToonDilate, or claim PiPL repair/Mac no-op as cross-host conformance. |
 | OLMDistanceGradation | current 8bpc canonical batch is `known-red` (`0/29`); current 16bpc extended is `7/16 AE exact` | `host-debuggable` | `binary-proof` | Preserve reciprocal-multiply normalization, the PF16 nearest-even field-world roundtrip, Power/Constant fixes, depth-gated source mask, and the existing exact set `0008/0010/0011/0020/0021/0022/0023`. The 8bpc depth control is now exact-gated: PF8 `24377` hits and PF32 `0` in one pinned run. Capture the typed field/compose/store boundary at `(397,281)` for cases `0001/0015/0029`; do not repeat depth-control. For the 16bpc max-2 family, bounded n±1 actual-AEX compose sensitivity is closed and only case `0026 (907,222)` remains open for direct same-run PF16 store/export ownership. Keep Layer/no-bg `0012/0013/0014/0016` and outlier `0028` separate. | Revert the grounded PF16 boundary, repeat the closed depth-control request, reopen max-2 field/EDT topology from representative n±1 probes, call historical unbound 8bpc candidates current `AE exact`, use a runner without explicit depth, reopen `0010/0011`, apply global output rounding toggles, merge `0028` into the max-2 family, broad PNG tuning, or use CLI output as Windows-reference truth. |
 | OLMSmoother v1 | 8bpc `AE exact`; 16/32bpc request is sendable but unreturned | `host-stable` | `parked` | Keep v1 behind the hard lanes. When reopened, run the regenerated fail-closed package whose canonical readback contains only the three v1 parameters; 16bpc is exact-eligible after comparison and 32bpc remains FLOAT EXR probe-only. | Mix v1/v2 behavior without an explicit policy, accept AE compositing controls as v1 parameters, or promote an unreturned 32bpc pass-through branch. |
 | OLMSmoother2 no-key | 8bpc `AE exact` | `host-debuggable` | `ae-validate` | Preserve no-key exact behavior; use only bounded regression checks. | Spend Windows/runtime trips on no-key tuning. |
-| OLMSmoother2 legacy/key/gamma | `guarded`; exercised c280/helper/cce0 entries and Gamma Colors mode are locally binary-grounded | `host-debuggable` | `binary-proof` | Preserve the Smooth Range, a9c0 version-gate, direct PF float-slider fetch, parameter-surface, and macOS deployment-target fixes. Latest correctly reloaded Mac AE run is still known-red (`max=115`, mean `0.1616552`); live `(91,841)` is Windows `[0,0,0,0]`, Mac `[32,32,32,91]`. The 2026-07-12 local actual-AEX replay now binds the exact logged 5x5 class/setup neighborhood, but the old fixed-scale/mode-0 scaffold yields weight `0.4999996` instead of live `0.3563218`; therefore neighborhood data alone is insufficient. Next capture the typed live c280/cce0 config bytes and mode at this pixel, then replay that exact block; keep `0004/0012` separate. | Global fallback, alpha, index, curve-index, or `f270` changes; treat `[65536,65536]` or mode 0 as the live config; claim synthetic/CLI replay as Windows AE truth or AE exact; use an installed bundle without touching its root/rechecking Plugin Loading.log; repeat raw-100/raw-65536 or v2 re-encode mistakes; request final writer bytes again. |
+| OLMSmoother2 legacy/key/gamma | `guarded`; exercised c280/helper/cce0 entries and Gamma Colors mode are locally binary-grounded | `host-debuggable` | `binary-proof` | Preserve the Smooth Range, a9c0 version-gate, direct PF float-slider fetch, parameter-surface, and macOS deployment-target fixes. Latest correctly reloaded Mac AE run is still known-red (`max=115`, mean `0.1616552`); live `(91,841)` is Windows `[0,0,0,0]`, Mac `[32,32,32,91]`. The 2026-07-15 local matrix matches actual AEX and portable code for classifier `0x69` c=2 append/c=4 suppress and classifier `0xff`, while classifier `0x40` remains a dispatch gap. Next capture the typed live c280/cce0 config bytes and mode at this pixel, then replay that exact block; keep `0004/0012` separate. | Global fallback, alpha, index, curve-index, or `f270` changes; treat the passing synthetic matrix or `[65536,65536]`/mode 0 as the live config; claim local replay as Windows AE truth or AE exact; use an installed bundle without touching its root/rechecking Plugin Loading.log; repeat raw-100/raw-65536 or v2 re-encode mistakes; request final writer bytes again. |
 | OLMDirectionalBlur | front-only/no-variation/no-fade/no-tail/no-back/no-noise 8bpc slice is `AE exact` for 2/2 declared cases; Front Alpha Fade is `binary-grounded / known-red` against a hash-pinned current-2025-AEX reference (`max=3`, 226 pixels after the UCRT fix); other feature families remain `blocked` | `host-debuggable` | `binary-proof` | Preserve `core/dblur_frontonly.cpp`, exact host transforms, and the accepted double-exp-then-float Gaussian model (`336/336` UCRT words). Local actual-AEX rowdriver, normalization, clipping, coefficient-zero behavior, fractional table indexing, PF8 packing, and write ranges are closed for internal row 755. Run `windows_witness_olmdirectionalblur_row755_20260713.zip` and require production `row_end=2176` plus same-run destination/denominator/alpha typed state. Keep Size Variation, Sharp Tail, Back, and Noise independent. | Re-request UCRT tables; use the superseded June 19 PNG or old row755 package; bake host conversion, a channel bias, or a case-specific lookup into the plug-in; reopen exact front-only/rowdriver stages; broad PNG tuning; or apply the front-only shortcut to variation/tail modes. |
-| OLMRadialBlur | `guarded` / `blocked`; bounded producer/final-plane semantics and production raw A850 coordinates are binary-grounded, but case_0009 downstream indexing/cells remain open | `host-debuggable` | `binary-proof` | Treat lanes separately. Preserve the crop fix and promoted per-operation float32 A850 order. A fresh Mac AE capture matches actual-AEX raw A850 bits at 32/32; the remaining Windows PNG residual is `12876` pixels, `max=1`, so it is not AE exact. Do not compare full-frame indices/cells against the old `32x32`, quality-step-90 probe; it is explicitly non-semantic and the exactness gate fails closed. Obtain a semantic full-frame downstream index/cell/host-context witness at `(7,0)/(8,0)/(24,0)`. | AE visual matching, blind alpha tuning, using reduced-geometry indices/cells as full-frame truth, reopening raw A850 or bounded normalized planes, or changing downstream sampling before a semantic witness. |
+| OLMRadialBlur | `guarded` / `blocked`; bounded producer/final-plane semantics, B150 output ownership, and production raw A850 coordinates are binary-grounded, but case_0009 downstream indexing/cells remain open | `host-debuggable` | `binary-proof` | Treat lanes separately. Preserve the crop fix and promoted per-operation float32 A850 order. A fresh Mac AE capture matches actual-AEX raw A850 bits at 32/32; the remaining Windows PNG residual is `12876` pixels, `max=1`, so it is not AE exact. The bounded live/no-op differential proves B150 owns and changes its RGBA/scalar slice, but reduced geometry remains non-semantic for full-frame indices/cells. Obtain the semantic full-frame downstream index/cell/host-context witness at `(7,0)/(8,0)/(24,0)`. | AE visual matching, blind alpha tuning, using reduced-geometry B150 indices/cells as full-frame truth, reopening raw A850 or bounded normalized planes, or changing downstream sampling before a semantic witness. |
 | OLMKiraKira | `binary-grounded` Mode 1/2 control slices and Mode 3 warp/Gaussian call contract; Gaussian execution path still guarded | `host-smoke` | `binary-proof` | Preserve the hotspot compose witness and Mode 1/2 dispatch. Mode 3 has actual-AEX `CV_32FC1`, raw Size `[0,1]`, `sigmaX=length*0.5`, a corrected 5-degree affine, and OpenCV 4.5.5 post-warp `63/63` word proof. The portable Gaussian is `85/85` against pinned arm64 OpenCV, but the locally completed embedded-AEX Gaussian differs at all 63 words under a synthetic TLS/CPU-dispatch scaffold. A live desktop run reached the exact first kernel entry and grounded the pinned return RVA `0x126685c`, but captured no return words. The v4 retry exposed a PowerShell 5.1 split-argument launch loss; run the explicitly quoted v5 package. Only its accepted hash-pinned 21 raw coefficient words may decide production integration. Keep Mode 4 and other controls independent. | Tune production to the unvalidated 63-word Unicorn output, retune luma/gain/compose from broad PNGs, revive the missing-libm/zero-warp artifact, treat the entry-only live run as coefficient proof, reuse the split `Start-Process` argument form, call the Mode 3/4 three-pass placeholders compatible, or infer AE exactness from helper probes. |
 
 Current priority order:
@@ -1682,11 +1736,20 @@ single operational row:
    provenance evidence but missing the same-run debugger stop. Do not requeue
    it ahead of DG/DirectionalBlur unless the explicit decision is to resolve
    RadialBlur tiny Rotation first.
-4. `OLMBlur` 16bpc typed helper/pre-store proof, only if it becomes the best
-   binary-proof lane. The 2026-07-10 Mac rerun proves single-case and batch
-   exports now converge deterministically while canonical verification remains
-   `0/7` exact with `max_diff=2`. Do not repeat export provenance or request a
-   new Windows reference image; keep `case_0007` as a separate Legacy family.
+4. `OLMBlur` 16bpc typed pre-store arithmetic/operation-order proof. The
+   installed current-plugin SHA-256 is
+   `c6de66dab49a6a96852d6158780bfd8c52767cc699e2cef1fa2206e0fbadf206` and
+   revalidation is `5/7 AE exact` for `0001`, `0002`, `0005`, `0006`, and
+   `0007`; `case_0006` output SHA-256 is
+   `27d24c96a6f3c15d27d8884ede039e5fd97480d752324f04d8e3aa77acc8791f`.
+   Prove only `case_0003` Legacy (`max_diff=2` across 20 sign-mixed red
+   samples) and `case_0004` Non-Legacy (`max_diff=2` at `(411,258)` and
+   `(458,314)`). Both remain unlocalized before the final exported word, so
+   pre-store arithmetic, writer input/store, and export ownership remain in
+   the narrow proof chain.
+   Do not repeat export provenance or request a new Windows reference image;
+   global rounding, writer, kernel, and old installed-bundle changes are
+   forbidden.
 5. `OLMSmoother2 legacy` bounded upstream-producer proof only. The final writer
    is already grounded; next useful work is writer-anchor to producer-path
    reconstruction, not more broad PNG or final-writeback toggles.
@@ -1898,8 +1961,8 @@ predates the 2026-07-11 front-only 8bpc AE-exact closeout.
 | Plug-in / feature | 8bpc Software status | 16bpc status | 32bpc status | Evidence | Next required proof |
 | --- | --- | --- | --- | --- | --- |
 | ColorKeep synthetic helper | guarded | untested | untested | Synthetic CLI smoke only. | Real Windows Software reference or keep as support utility. |
-| OLMBlur exact slices `case_0001..0005` | AE exact for packaged 8bpc slices | not AE exact; current 16bpc Mac AE output is sign-mixed one-word | untested | 2026-06-19 AE pixel return is exact for `case_0001..0005` with `max_diff=0`; local verification report: `refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmblur_exact_20260619/reports/ae_pixel_all_exact.json`. 2026-06-22 provenance audit classifies OLMBlur as `normalized-software-exact-with-legacy-drift`: all seven AE-host candidates are exact against the 20260618 normalized Software refs; latest report: `refs/reports/olmblur_reference_provenance_20260622_025614/audit.md`. Cross-feature canonicalization also reports OLMBlur `normalized-software-exact` in `refs/reports/software_reference_canonicalization_8bpc.md`. 2026-06-26 reverify after fixing 16-bit ImageMagick endian decoding in `refs/scripts/verify_manifest.py` shows 16bpc `case_0001..0005` at `max_diff=2` with tiny means, not the previously reported 512-step family. 2026-06-28 current Mac AE rerun preserves that shape and shows mixed signed deltas; report: `refs/conformance/olmblur_16bpc_mac_ae_rerun_20260628.md`. 2026-06-28 word-delta audit infers only `+/-1` PF_Pixel16 word deltas for this family; report: `refs/conformance/olmblur_16bpc_word_delta_audit_20260628.md`. 2026-06-29 asm writer audit grounds the standard 16bpc writer as `round-add-helper-truncate-word-store`; report: `refs/conformance/olmblur_16bpc_asm_writer_audit_20260629.md`. 2026-06-29 writer-contract audit then proves current Mac non-Legacy `store16` still uses `nearbyintf(v)` rather than the Windows standard add-half/truncate family, but because all non-Legacy 16bpc cases remain sign-mixed one-word residuals this is not yet enough to justify a blind global writer swap; report: `refs/conformance/olmblur_16bpc_writer_contract_audit_20260629.md`. 2026-06-29 bounded live Mac AE probing on `case_0006` confirms the installed plug-in stores `1100.5 -> 1100` and `363.5 -> 364`, matching ties-to-even `nearbyint`; the live-probe audit then ties those witnesses to the exported `-2/+2` PNG deltas through `2 * stored_word - 1`; report: `refs/conformance/olmblur_16bpc_live_probe_audit_20260629.md`. A new current-baseline audit now freezes the exact Mac-side witness bundle across 16bpc non-Legacy, 16bpc Legacy, and old normalized 8bpc Legacy: `case_0006` stays sign-mixed (`314,14 => 2199 vs 2201`, `29,71 => 727 vs 725`), `case_0007` 16bpc keeps the one-word blue half-step (`345,672 => 25089 vs 25087`), and old normalized 8bpc `case_0007` keeps only one red pixel low at `(488,941)` while `(488,942)` matches exactly. Report: `refs/conformance/olmblur_current_word_baseline_20260629.md`. Current forecast IR: `notes/IR_OLMBlur.md`. | Preserve passing normalized 8bpc AE behavior. Next proof is final 16bpc pre-writeback float/helper/store order, not kernel tuning. |
-| OLMBlur residual slices `case_0006..0007` | AE exact for packaged 8bpc slices | not AE exact; `case_0006` is sign-mixed one-word, `case_0007` is down to a one-pixel family | untested | 2026-06-19 AE pixel return is exact for the formerly residual `case_0006..0007` with `max_diff=0`. 2026-06-20 runtime trace proves the remaining CLI residual is present before byte writeback: `case_0006` Windows pre-writeback red is `185.49998474121094` while Mac CLI is exactly `185.5`; `case_0007` uses the Legacy `OLMBlur+0x7FDF` writeback family. 2026-06-28 current Mac AE rerun originally kept `case_0006 max_diff=2` and `case_0007 max_diff=383` at `(0,0)`; word-delta audit separated the one-word family from the Legacy witness. 2026-06-29 bounded Mac AE probing then proved the old `(0,0)` anomaly was pre-store, and the stage probe localized it to the horizontal Legacy pass. A same-day decomp-backed carry-prev port based on `FUN_1800014f0` / `FUN_180001ea0` materially improves the active residual: old 8bpc `case_0007` drops from 3 residual pixels to 1, and the live Mac AE 16bpc probe now has `(0,0) raw=0 stored=0` with normalized Windows comparison at `max=1`, one pixel remaining; report: `refs/conformance/olmblur_legacy_carry_prev_probe_20260629.md`. Current IR: `notes/IR_OLMBlur.md`. | Keep the carry-prev rule. Next proof is the final one-word family for `case_0006` plus the single remaining Legacy witness pixel for `case_0007`. |
+| OLMBlur current-plugin 16bpc cases `case_0001..0007` | AE exact for packaged 8bpc slices | current-plugin: `5/7 AE exact` (`0001`, `0002`, `0005`, `0006`, `0007`) | untested | Current-plugin SHA-256 is `c6de66dab49a6a96852d6158780bfd8c52767cc699e2cef1fa2206e0fbadf206`; keep `case_0003` Legacy (`max_diff=2`, 20 sign-mixed red samples) and `case_0004` Non-Legacy (`max_diff=2`, red samples at `(411,258)` and `(458,314)`) open and unlocalized before the final exported word. | Preserve the exact cases. Next proof is a same-run typed pre-store arithmetic/writer/export chain for `case_0003`/`case_0004`; global rounding, writer, kernel, and old installed-bundle changes are forbidden. |
+| OLMBlur residual slices `case_0006..0007` | AE exact for packaged 8bpc slices | current-plugin 16bpc: `case_0006` and `case_0007` are `AE exact` | untested | `case_0006` output SHA-256 is `27d24c96a6f3c15d27d8884ede039e5fd97480d752324f04d8e3aa77acc8791f`; the current-plugin revalidation is `5/7 AE exact`. `case_0003`/`case_0004` are the only remaining red 16bpc cases and are covered by the narrow typed pre-store arithmetic/operation-order proof. | Do not reopen `case_0006` export provenance or change rounding, writer, or kernel globally. Do not use old installed-bundle conclusions. |
 | OLMColorKey core RGB/color-space/Replace | AE exact for core packaged 8bpc slices | reference covered / compare pending | untested | 2026-06-19 AE pixel return is exact for `case_0001..0008`; local report: `refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmcolorkey_exact_20260619/reports/ae_pixel_all_exact.json`. Normalized CLI is exact for core `case_0001..0004` and `case_0007`. | Add 16/32bpc references for the core path after Edge Blur reference generation is fixed. |
 | OLMColorKey Edge Thin erode / Edge Blur | AE-host exact against normalized 8bpc refs / AE-free CLI residual | AE exact for all 9 covered 16bpc ColorKey cases | untested | 2026-06-19 AE pixel return has Edge Thin erode `case_0005/0006` exact and Edge Blur `case_0008` exact. `case_0009` reports `max=47 mean=0.069921` only against the older 20260604 reference; 2026-06-21 and 2026-06-22 provenance audits show the returned candidate is exact against the 20260618 normalized ref and CLI reference, so this is a reference-generation split rather than a clean algorithm witness. Latest audit: `refs/reports/olmcolorkey_edge_reference_provenance_20260622_024907/audit.md`; it now emits the machine-readable classification `reference-generation-split` and the action “do not tune Edge Blur from the 20260604 residual.” Cross-feature canonicalization reports ColorKey 9/9 `normalized-software-exact` in `refs/reports/software_reference_canonicalization_8bpc.md`. 2026-06-26 16bpc reverify still leaves only `case_0009` failing (`12597px` in the `candidate kept / Windows removed` direction). 2026-06-27/28 runtime tracing proves that the live current-AEX 16bpc path uses `Force Lower Precision=3`, `amount=25`, `distance_type=2`, and `dist <= amount` inside a current `OLMColorKey+0x9000` positive Edge Thin orchestrator. Follow-up raw CDB proves primary residual `(1110,149)` consumes `dist=2.0`, takes the copy path, and writes matte word0 `0x0000 -> 0x8000`. 2026-06-28 PE/capstone audit of the Lab76 per-component comparator at `0x1800043a0` shows separate threshold/epsilon multipliers; applying that binary-grounded formula makes `Lab76 hit + taxicab Edge Thin <=25` exact against the Windows 16bpc reference (`diff=0`). 2026-06-28 Mac AE full-batch rerun completed all 9 `ae_pixel_bitdepth16_olmcolorkey_exact_20260625` cases, and `scripts/verify_ae_pixel_validation_result.py` reported `ok=9 fail=0 missing=0 total=9`, all `max=0 mean=0.0000`; report: `/tmp/olm_colorkey_16bpc_full_rerun_20260628/reports/ae_pixel_16bpc_all_exact.json`. 2026-06-28 adds a preview-only 32bpc float-output probe at `refs/reports/bit_depth_32bpc_probe_plan_20260628/request_preview.json`; it is not active and not completion evidence. | Preserve passing 8/16bpc behavior. Next ColorKey work is an intentionally scheduled 32bpc float-preserving reference/probe, not more 8/16bpc tuning. |
 | OLMToonDilate cases `1..3` | AE exact for packaged 8bpc slices | AE exact for the focused 16bpc slice `case_0001..0003`; 32bpc untested | untested | 2026-06-19 AE pixel return is exact for `case_0001..0003` with `max_diff=0`; local report: `refs/reports/ae_host_validation_20260619_2335/ae_pixel_olmtoondilate_exact_20260619/reports/ae_pixel_all_exact.json`. AEX-style two-pass chamfer propagation plus semi-alpha RGB premultiply also makes the normalized Windows AE Software refs exact in Python and C++ CLI. 2026-07-03 imported the focused Windows 16bpc batch and confirmed live Mac AE exactness for `case_0001..0003` in both isolated single-case reruns and a fresh batch rerun; note: `refs/conformance/olmtoondilate_16bpc_single_case_host_probe_20260703.md`. The temporary batch verifier output was not retained as a repository artifact. Current IR: `notes/IR_OLMToonDilate.md`. | Keep the IR tied to the two-pass/premultiply evidence; next ToonDilate work is broader bit-depth expansion or holdout use, not reopening the 8/16bpc kernel. |
@@ -1928,7 +1991,7 @@ Windows Software?".
 | Plug-in | Host status | この状態である理由 | AEで今やってよいこと |
 | --- | --- | --- | --- |
 | ColorKeep | `host-smoke` | Support/helper status only; real Windows compatibility slice is thin. | 読み込み・追加・最小レンダーだけを確認する。 |
-| OLMBlur | `host-debuggable` | Packaged 8bpc AE exact exists, but the 16bpc one-pixel residual is not yet classified as kernel, rounding, store, or export ownership. | case_0006 `(601,598)` の同一run診断だけを行う。見た目合わせはしない。 |
+| OLMBlur | `host-debuggable` | Packaged 8bpc AE exact exists; current-plugin 16bpc revalidation is `5/7 AE exact`, with two residuals still unlocalized before the final exported word in `case_0003`/`case_0004`. | `case_0003`/`case_0004` の同一run typed pre-store/writer/export proof だけを行う。見た目合わせはしない。 |
 | OLMColorKey | `host-stable` | 16bpc full batch now applies all parameters and verifies 9/9 `max=0` for the covered slice. | 回帰確認と32bpc展開を行う。自由な見た目合わせはしない。 |
 | OLMToonDilate | `host-stable` | Packaged 8bpc AE exact exists and no current host integration blocker is known. | 主に回帰確認を行う。 |
 | OLMDistanceGradation | `host-debuggable` | Mac AE automation is recovered. Single-case probes complete after the `eval` manifest parser fix, and the plug-in can emit gated field dumps for 16bpc witnesses. | 16bpcの指定witnessと回帰だけを確認する。 |

@@ -79,6 +79,44 @@ def scalar(loader: AexLoader, plane: int, radial: int, angle: int, radius: int) 
     return float(read_scalar_cell(loader, plane, radial, angle, radius))
 
 
+def f32_word(value: float) -> str:
+    return f"0x{struct.unpack('<I', struct.pack('<f', float(value)))[0]:08x}"
+
+
+def capture_worker_slice(loader: AexLoader, rgba_ptr: int, scalar_ptr: int,
+                         width: int, row_start: int, row_end: int) -> dict[str, Any]:
+    """Capture exactly the B150 row slice, preserving float32 bit patterns."""
+    rows = []
+    for row in range(row_start, row_end):
+        for column in range(width):
+            rgba_values = [read_f32(loader, rgba_ptr + (row * width + column) * 16 + 4 * channel)
+                           for channel in range(4)]
+            scalar_value = read_f32(loader, scalar_ptr + (row * width + column) * 4)
+            if any(value != 0.0 for value in rgba_values) or scalar_value != 0.0:
+                rows.append({
+                    "row": row,
+                    "column": column,
+                    "rgba_f32": rgba_values,
+                    "scalar_f32": scalar_value,
+                    "rgba_f32_words": [f32_word(value) for value in rgba_values],
+                    "scalar_f32_word": f32_word(scalar_value),
+                })
+    return {
+        "row_range": [row_start, row_end],
+        "cell_count": max(0, row_end - row_start) * width,
+        "nonzero_cell_count": len(rows),
+        "nonzero_cells": rows,
+        "rgba_sha256": hashlib.sha256(
+            loader.read_bytes(rgba_ptr + row_start * width * 16,
+                              max(0, row_end - row_start) * width * 16)
+        ).hexdigest(),
+        "scalar_sha256": hashlib.sha256(
+            loader.read_bytes(scalar_ptr + row_start * width * 4,
+                              max(0, row_end - row_start) * width * 4)
+        ).hexdigest(),
+    }
+
+
 def blocked(path: Path, reason: str, facts: dict[str, Any]) -> int:
     report = {
         "kind": "olmradialblur_final_plane_small_probe",
@@ -148,7 +186,7 @@ def main() -> int:
         "hook_hits": 0, "work": 0, "param": 0, "rdi_at_hook": 0, "rsi_at_hook": 0,
         "angle_count": 0, "radial_count": 0, "prefill": None,
         "prepass_calls": 0, "scatter_calls": 0, "prepass_detours": 0, "scatter_detours": 0,
-        "worker_snapshot": None, "b150_records": [],
+        "worker_snapshot": None, "b150_records": [], "b150_returns": 0,
     }
 
     def after_normalization(ld: AexLoader, address: int, size: int) -> None:
@@ -252,6 +290,8 @@ def main() -> int:
                 "width": width, "row_limit": row_limit,
                 "row_start": row_start, "row_end": row_end,
                 "output_rgba": output_rgba, "output_scalar": output_scalar,
+                "denominator_param_0x843": u64(ld, work + 0x843 * 8),
+                "return_address": u64(ld, rsp),
             },
             "context_fields": {},
             "rows": [],
@@ -278,7 +318,19 @@ def main() -> int:
                 })
         except Exception as exc:
             record["read_error"] = str(exc)
+        record["worker_owned_before_return"] = capture_worker_slice(
+            ld, output_rgba, output_scalar, width, row_start, row_end)
         state["b150_records"].append(record)
+
+        return_address = record["abi"]["return_address"]
+
+        def capture_b150_return(return_ld: AexLoader, _address: int, _size: int) -> None:
+            state["b150_returns"] += 1
+            if record.get("worker_owned_after_return") is None:
+                record["worker_owned_after_return"] = capture_worker_slice(
+                    return_ld, output_rgba, output_scalar, width, row_start, row_end)
+
+        loader.add_code_hook(return_address, capture_b150_return)
 
     loader.add_code_hook(FUN_18000B150, capture_b150_inputs)
 
@@ -460,6 +512,7 @@ def main() -> int:
             "prepass": "detoured" if options.detour_prepass else "actual-aex",
             "scatter": "detoured" if options.detour_scatter else "actual-aex",
             "prepass_calls": state["prepass_calls"],
+            "b150_returns": state["b150_returns"],
             "scatter_calls": state["scatter_calls"],
             "prepass_detour_calls": state["prepass_detours"],
             "scatter_detour_calls": state["scatter_detours"],

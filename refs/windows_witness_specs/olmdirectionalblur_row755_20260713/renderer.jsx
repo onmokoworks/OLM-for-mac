@@ -35,15 +35,49 @@
         return folder;
     }
 
-    function waitForFreshFile(file, since, tries, sleepMs) {
+    function waitForStableFile(file, since, timeoutMs, sleepMs) {
+        var startedWaiting = new Date();
         var sinceMs = since.getTime() - 2000;
-        for (var i = 0; i < tries; i++) {
-            if (file.exists && (!file.modified || file.modified.getTime() >= sinceMs)) {
-                return true;
+        var lastSize = -1;
+        var lastModified = -1;
+        var stablePolls = 0;
+        var polls = 0;
+        var observation = { status: "timeout", timeout_ms: timeoutMs, waited_ms: 0, polls: 0, stable_polls: 0, size_bytes: 0, modified_ms: 0 };
+        while (true) {
+            polls++;
+            var exists = file.exists;
+            var size = exists ? Number(file.length || 0) : 0;
+            var modified = exists && file.modified ? file.modified.getTime() : 0;
+            var fresh = exists && (!file.modified || modified >= sinceMs);
+            if (fresh && size > 0) {
+                stablePolls = (size === lastSize && modified === lastModified) ? stablePolls + 1 : 1;
+                if (stablePolls >= 2) {
+                    observation.status = "stable";
+                    observation.waited_ms = (new Date()).getTime() - startedWaiting.getTime();
+                    observation.polls = polls;
+                    observation.stable_polls = stablePolls;
+                    observation.size_bytes = size;
+                    observation.modified_ms = modified;
+                    return observation;
+                }
+                lastSize = size;
+                lastModified = modified;
+            } else {
+                stablePolls = 0;
+                lastSize = -1;
+                lastModified = -1;
+            }
+            if ((new Date()).getTime() - startedWaiting.getTime() >= timeoutMs) {
+                observation.waited_ms = (new Date()).getTime() - startedWaiting.getTime();
+                observation.polls = polls;
+                observation.stable_polls = stablePolls;
+                observation.size_bytes = size;
+                observation.modified_ms = modified;
+                observation.status = exists ? (size > 0 ? "unstable" : "empty") : "missing";
+                return observation;
             }
             $.sleep(sleepMs);
         }
-        return file.exists && (!file.modified || file.modified.getTime() >= sinceMs);
     }
 
     function writeText(path, text) {
@@ -170,6 +204,7 @@
     var forceNewProject = getenv("OLM_AE_FORCE_NEW_PROJECT") === "1";
     var forceSoftware = getenv("OLM_AE_FORCE_SOFTWARE") === "1";
     var inputAlphaMode = String(getenv("OLM_AE_INPUT_ALPHA_MODE") || "").toUpperCase();
+    var inputFileOverride = getenv("OLM_AE_INPUT_FILE_OVERRIDE");
     var pauseBeforeRender = getenv("OLM_AE_PAUSE_BEFORE_RENDER") === "1";
     var readyMarkerPath = getenv("OLM_AE_READY_MARKER");
     var continueMarkerPath = getenv("OLM_AE_CONTINUE_MARKER");
@@ -204,6 +239,7 @@
         output_dir: outputDir,
         output_png: "",
         output_exr: "",
+        png_observation: { status: "not_started", timeout_ms: 120000, waited_ms: 0, polls: 0, stable_polls: 0, size_bytes: 0, modified_ms: 0 },
         project_bits_per_channel: -1,
         project_working_space: "unknown",
         project_linear_blending: false,
@@ -298,7 +334,9 @@
             summary.warnings.push("bitsPerChannel: " + bitsError.toString());
         }
 
-        var inputPath = requestDir + "/" + requestManifest.input_dir + "/" + requestCase.before_effects_frame;
+        var inputFilename = inputFileOverride || requestCase.before_effects_frame;
+        var inputPath = requestDir + "/" + requestManifest.input_dir + "/" + inputFilename;
+        appendText(logPath, "inputFilename=" + inputFilename + (inputFileOverride ? " source=override\n" : " source=before_effects_frame\n"));
         appendText(logPath, "import " + inputPath + "\n");
         var footage = importFootage(inputPath);
         if (inputAlphaMode) {
@@ -490,8 +528,10 @@
             var renderStarted = new Date();
             comp.saveFrameToPng(Number(caseRef.time || 0), png);
             appendText(logPath, "saveFrameToPng returned\n");
-            if (!waitForFreshFile(png, renderStarted, 120, 250)) {
-                throw new Error("PNG was not written: " + outputPath);
+            summary.png_observation = waitForStableFile(png, renderStarted, 120000, 250);
+            appendText(logPath, "png observation " + summary.png_observation.status + " waited_ms=" + summary.png_observation.waited_ms + " size_bytes=" + summary.png_observation.size_bytes + "\n");
+            if (summary.png_observation.status !== "stable") {
+                throw new Error("PNG was not stably written (" + summary.png_observation.status + "): " + outputPath);
             }
             appendText(logPath, "png exists\n");
         }
@@ -512,6 +552,7 @@
             "  \"output_dir\": \"" + esc(summary.output_dir) + "\",\n" +
             "  \"output_png\": \"" + esc(summary.output_png) + "\",\n" +
             "  \"output_exr\": \"" + esc(summary.output_exr) + "\",\n" +
+            "  \"png_observation\": {\"status\": \"" + esc(summary.png_observation.status) + "\", \"timeout_ms\": " + summary.png_observation.timeout_ms + ", \"waited_ms\": " + summary.png_observation.waited_ms + ", \"polls\": " + summary.png_observation.polls + ", \"stable_polls\": " + summary.png_observation.stable_polls + ", \"size_bytes\": " + summary.png_observation.size_bytes + ", \"modified_ms\": " + summary.png_observation.modified_ms + "},\n" +
             "  \"project_bits_per_channel\": " + summary.project_bits_per_channel + ",\n" +
             "  \"project_working_space\": \"" + esc(summary.project_working_space) + "\",\n" +
             "  \"project_linear_blending\": " + (summary.project_linear_blending ? "true" : "false") + ",\n" +

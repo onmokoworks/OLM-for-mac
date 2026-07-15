@@ -100,6 +100,109 @@ def close(actual: float, expected: float, tolerance: float = 2e-6) -> bool:
     return math.isfinite(actual) and math.isfinite(expected) and abs(actual - expected) <= tolerance
 
 
+def raw_word_matches(value: float, word: Any) -> bool:
+    try:
+        return f32_word(word) == struct.unpack("<f", struct.pack("<f", value))[0]
+    except (TypeError, ValueError, struct.error, OverflowError):
+        return False
+
+
+def check_worker_slice_capture(capture: dict[str, Any]) -> list[str]:
+    issues: list[str] = []
+    cells = capture.get("nonzero_cells")
+    if not isinstance(cells, list):
+        return ["worker_capture_missing_nonzero_cells"]
+    for index, cell in enumerate(cells):
+        rgba = cell.get("rgba_f32")
+        words = cell.get("rgba_f32_words")
+        scalar = cell.get("scalar_f32")
+        scalar_word = cell.get("scalar_f32_word")
+        if not isinstance(rgba, list) or len(rgba) != 4 or not isinstance(words, list) or len(words) != 4:
+            issues.append(f"worker_capture_cell[{index}]_rgba_float32_shape")
+        elif not all(raw_word_matches(value, word) for value, word in zip(rgba, words)):
+            issues.append(f"worker_capture_cell[{index}]_rgba_raw_word_mismatch")
+        try:
+            scalar_float = float(scalar)
+        except (TypeError, ValueError, OverflowError):
+            scalar_float = math.nan
+        if not raw_word_matches(scalar_float, scalar_word):
+            issues.append(f"worker_capture_cell[{index}]_scalar_raw_word_mismatch")
+        try:
+            finite = all(math.isfinite(float(value)) for value in list(rgba or []) + [scalar])
+        except (TypeError, ValueError, OverflowError):
+            finite = False
+        if not finite:
+            issues.append(f"worker_capture_cell[{index}]_nonfinite_float32")
+    return sorted(set(issues))
+
+
+def analyze_differential(document: dict[str, Any]) -> dict[str, Any]:
+    pair = document.get("differential")
+    if not isinstance(pair, dict) or not isinstance(pair.get("live"), dict) or not isinstance(pair.get("noop"), dict):
+        raise ValueError("differential requires live and noop reports")
+    live, noop = pair["live"], pair["noop"]
+    issues: list[str] = []
+
+    live_exec = live.get("worker_execution", {})
+    noop_exec = noop.get("worker_execution", {})
+    if live.get("status") != "ok" or live_exec.get("prepass") != "actual-aex":
+        issues.append("live_actual_aex_prepass_not_proven")
+    if int(live_exec.get("prepass_calls", 0)) < 1 or int(live_exec.get("b150_returns", 0)) < 1:
+        issues.append("live_b150_hit_and_return_not_proven")
+    if int(noop_exec.get("prepass_detour_calls", 0)) != 1:
+        issues.append("noop_b150_detour_hit_not_proven")
+
+    live_records = live.get("b150_input_capture", [])
+    noop_records = noop.get("b150_input_capture", [])
+    if len(live_records) != 1 or len(noop_records) != 1:
+        issues.append("differential_requires_one_b150_record_each")
+    else:
+        live_abi = live_records[0].get("abi", {})
+        noop_abi = noop_records[0].get("abi", {})
+        semantic_fields = ("width", "row_limit", "row_start", "row_end")
+        for name in semantic_fields:
+            if live_abi.get(name) != noop_abi.get(name):
+                issues.append(f"b150_{name}_not_reproducible")
+        for name in ("source_rgba_f32", "scalar_a_f32", "scalar_b_f32"):
+            if live_records[0].get("rows") != noop_records[0].get("rows"):
+                issues.append("b150_source_or_scalar_inputs_not_reproducible")
+                break
+        if live_records[0].get("context_fields") != noop_records[0].get("context_fields"):
+            issues.append("b150_spans_not_reproducible")
+
+        live_before = live_records[0].get("worker_owned_before_return")
+        noop_before = noop_records[0].get("worker_owned_before_return")
+        live_after = live_records[0].get("worker_owned_after_return")
+        noop_after = noop_records[0].get("worker_owned_after_return")
+        for label, capture in (("live_before", live_before), ("noop_before", noop_before),
+                               ("live_after", live_after), ("noop_after", noop_after)):
+            if not isinstance(capture, dict):
+                issues.append(f"{label}_worker_capture_missing")
+            else:
+                issues.extend(f"{label}:{issue}" for issue in check_worker_slice_capture(capture))
+        if isinstance(live_before, dict) and isinstance(noop_before, dict):
+            if (live_before.get("rgba_sha256"), live_before.get("scalar_sha256")) != (noop_before.get("rgba_sha256"), noop_before.get("scalar_sha256")):
+                issues.append("worker_owned_inputs_differ_before_b150")
+        if isinstance(live_after, dict) and isinstance(noop_after, dict):
+            if (live_after.get("rgba_sha256"), live_after.get("scalar_sha256")) == (noop_after.get("rgba_sha256"), noop_after.get("scalar_sha256")):
+                issues.append("live_b150_did_not_change_worker_owned_outputs")
+
+    return {
+        "kind": "olmradialblur_case0009_sampler_prepass_writeback_analysis",
+        "schema": 2,
+        "evidence_class": "bounded_actual_aex_differential",
+        "status": "pass" if not issues else "fail",
+        "classification": "bounded-aex-worker-differential-proven" if not issues else "bounded-aex-worker-differential-failed",
+        "scope": "FUN_18000B150 worker-owned RGBA/scalar row-slice differential and float32 word invariants",
+        "issues": sorted(set(issues)),
+        "limitations": [
+            "Bounded direct-core emulator evidence only; not full-frame case_0009 evidence.",
+            "Does not compare Windows and Mac outputs or make an AE-exact claim.",
+            "Does not authorize PNG tuning or production-code changes.",
+        ],
+    }
+
+
 def check_point(point: dict[str, Any]) -> dict[str, Any]:
     radius, angle = point["radius"], point["angle"]
     fr, fa = radius - math.floor(radius), angle - math.floor(angle)
@@ -137,6 +240,8 @@ def check_point(point: dict[str, Any]) -> dict[str, Any]:
 
 
 def analyze(document: dict[str, Any]) -> dict[str, Any]:
+    if "differential" in document:
+        return analyze_differential(document)
     rows, evidence_class = canonical_points(document)
     if evidence_class == "local_fixture":
         checks: list[dict[str, Any]] = []
@@ -225,9 +330,17 @@ def main() -> int:
             "AE-exact claim.",
             "",
         ]
-        for check in result["checks"]:
-            label = tuple(check["xy"]) if "xy" in check else f"record {check['record']}"
-            lines.append(f"- `{label}`: `{check['status']}`, producer cells checked `{check['producer_cells_checked']}`")
+        if result["evidence_class"] == "bounded_actual_aex_differential":
+            lines.extend([
+                "The bounded differential requires an actual live B150 hit and return, "
+                "a paired no-op-detour hit, reproducible typed inputs/spans, changed "
+                "worker-owned outputs only, and exact raw float32 word invariants.",
+                "",
+            ])
+        else:
+            for check in result["checks"]:
+                label = tuple(check["xy"]) if "xy" in check else f"record {check['record']}"
+                lines.append(f"- `{label}`: `{check['status']}`, producer cells checked `{check['producer_cells_checked']}`")
         if result["issues"]:
             lines.extend(["", "Issues:", *[f"- {issue}" for issue in result["issues"]]])
         args.output_md.write_text("\n".join(lines) + "\n", encoding="utf-8")

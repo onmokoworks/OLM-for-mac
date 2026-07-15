@@ -204,6 +204,13 @@ def main() -> int:
     print(f"[INFO] result_json: {result_json}")
     if result.get("output_png"):
         print(f"[INFO] output_png: {result['output_png']}")
+    observation = result.get("png_observation") or {}
+    if observation:
+        print(
+            f"[INFO] png_observation: {observation.get('status')} "
+            f"waited_ms={observation.get('waited_ms', 0)} "
+            f"size_bytes={observation.get('size_bytes', 0)}"
+        )
     if result.get("output_exr"):
         print(f"[INFO] output_exr: {result['output_exr']}")
     if result.get("status") != "ok":

@@ -1,0 +1,402 @@
+{
+  "cases": [
+    {
+      "candidate_dtype": ">u2",
+      "compare_mode": "integer",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0001.png",
+      "id": "olmblur__case_0001",
+      "max_diff": 0,
+      "mean_diff": 0.0,
+      "nonzero_px": 0,
+      "nonzero_px_percent": 0.0,
+      "normalized_frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0001.png",
+      "pass": true,
+      "reference_dtype": ">u2",
+      "resolved_candidate": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0001.png",
+      "resolved_reference": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0001.png",
+      "samples": [],
+      "status": "compared",
+      "total_px": 518400
+    },
+    {
+      "candidate_dtype": ">u2",
+      "compare_mode": "integer",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0002.png",
+      "id": "olmblur__case_0002",
+      "max_diff": 0,
+      "mean_diff": 0.0,
+      "nonzero_px": 0,
+      "nonzero_px_percent": 0.0,
+      "normalized_frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0002.png",
+      "pass": true,
+      "reference_dtype": ">u2",
+      "resolved_candidate": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0002.png",
+      "resolved_reference": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0002.png",
+      "samples": [],
+      "status": "compared",
+      "total_px": 518400
+    },
+    {
+      "candidate_dtype": ">u2",
+      "compare_mode": "integer",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0003.png",
+      "id": "olmblur__case_0003",
+      "max_diff": 2,
+      "mean_diff": 1.9290123456790123e-05,
+      "nonzero_px": 20,
+      "nonzero_px_percent": 0.0038580246913580245,
+      "normalized_frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0003.png",
+      "pass": false,
+      "reference_dtype": ">u2",
+      "resolved_candidate": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0003.png",
+      "resolved_reference": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0003.png",
+      "samples": [
+        {
+          "candidate": [
+            5691,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            5689,
+            0,
+            0,
+            65535
+          ],
+          "x": 936,
+          "y": 1
+        },
+        {
+          "candidate": [
+            5715,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            5713,
+            0,
+            0,
+            65535
+          ],
+          "x": 739,
+          "y": 2
+        },
+        {
+          "candidate": [
+            5701,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            5699,
+            0,
+            0,
+            65535
+          ],
+          "x": 23,
+          "y": 36
+        },
+        {
+          "candidate": [
+            5705,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            5703,
+            0,
+            0,
+            65535
+          ],
+          "x": 59,
+          "y": 76
+        },
+        {
+          "candidate": [
+            5731,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            5729,
+            0,
+            0,
+            65535
+          ],
+          "x": 640,
+          "y": 85
+        },
+        {
+          "candidate": [
+            5743,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            5741,
+            0,
+            0,
+            65535
+          ],
+          "x": 383,
+          "y": 124
+        },
+        {
+          "candidate": [
+            5721,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            5719,
+            0,
+            0,
+            65535
+          ],
+          "x": 204,
+          "y": 179
+        },
+        {
+          "candidate": [
+            5725,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            5723,
+            0,
+            0,
+            65535
+          ],
+          "x": 250,
+          "y": 213
+        },
+        {
+          "candidate": [
+            5729,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            5727,
+            0,
+            0,
+            65535
+          ],
+          "x": 273,
+          "y": 218
+        },
+        {
+          "candidate": [
+            5729,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            5727,
+            0,
+            0,
+            65535
+          ],
+          "x": 273,
+          "y": 221
+        }
+      ],
+      "status": "compared",
+      "total_px": 518400
+    },
+    {
+      "candidate_dtype": ">u2",
+      "compare_mode": "integer",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0004.png",
+      "id": "olmblur__case_0004",
+      "max_diff": 2,
+      "mean_diff": 1.9290123456790124e-06,
+      "nonzero_px": 2,
+      "nonzero_px_percent": 0.00038580246913580245,
+      "normalized_frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0004.png",
+      "pass": false,
+      "reference_dtype": ">u2",
+      "resolved_candidate": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0004.png",
+      "resolved_reference": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0004.png",
+      "samples": [
+        {
+          "candidate": [
+            44073,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            44075,
+            0,
+            0,
+            65535
+          ],
+          "x": 411,
+          "y": 258
+        },
+        {
+          "candidate": [
+            52745,
+            0,
+            0,
+            65535
+          ],
+          "delta": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "reference": [
+            52747,
+            0,
+            0,
+            65535
+          ],
+          "x": 458,
+          "y": 314
+        }
+      ],
+      "status": "compared",
+      "total_px": 518400
+    },
+    {
+      "candidate_dtype": ">u2",
+      "compare_mode": "integer",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0005.png",
+      "id": "olmblur__case_0005",
+      "max_diff": 0,
+      "mean_diff": 0.0,
+      "nonzero_px": 0,
+      "nonzero_px_percent": 0.0,
+      "normalized_frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0005.png",
+      "pass": true,
+      "reference_dtype": ">u2",
+      "resolved_candidate": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0005.png",
+      "resolved_reference": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0005.png",
+      "samples": [],
+      "status": "compared",
+      "total_px": 2073600
+    },
+    {
+      "candidate_dtype": ">u2",
+      "compare_mode": "integer",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+      "id": "olmblur__case_0006",
+      "max_diff": 0,
+      "mean_diff": 0.0,
+      "nonzero_px": 0,
+      "nonzero_px_percent": 0.0,
+      "normalized_frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+      "pass": true,
+      "reference_dtype": ">u2",
+      "resolved_candidate": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+      "resolved_reference": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+      "samples": [],
+      "status": "compared",
+      "total_px": 2073600
+    },
+    {
+      "candidate_dtype": ">u2",
+      "compare_mode": "integer",
+      "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0007.png",
+      "id": "olmblur__case_0007",
+      "max_diff": 0,
+      "mean_diff": 0.0,
+      "nonzero_px": 0,
+      "nonzero_px_percent": 0.0,
+      "normalized_frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0007.png",
+      "pass": true,
+      "reference_dtype": ">u2",
+      "resolved_candidate": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0007.png",
+      "resolved_reference": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0007.png",
+      "samples": [],
+      "status": "compared",
+      "total_px": 2073600
+    }
+  ],
+  "summary": {
+    "fail": 2,
+    "missing": 0,
+    "ok": 5,
+    "total": 7
+  }
+}

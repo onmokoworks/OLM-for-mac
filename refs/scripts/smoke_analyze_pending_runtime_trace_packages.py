@@ -167,6 +167,17 @@ def main() -> int:
             raise AssertionError(
                 "OLMBlur case_0006 helper/pre-store request should expose the latest imported state"
             )
+        blur_case0006_common = by_id.get("olmblur_case0006_same_run_internal_20260713")
+        if blur_case0006_common is None:
+            raise AssertionError("missing OLMBlur case_0006 common-core request")
+        if blur_case0006_common["status"] != "superseded":
+            raise AssertionError(
+                "OLMBlur case_0006 common-core request must be superseded after current-plugin AE exact closeout, "
+                f"got {blur_case0006_common['status']}"
+            )
+        pending_ids = {row["request_id"] for row in rows if row.get("status") == "pending"}
+        if "olmblur_case0006_same_run_internal_20260713" in pending_ids:
+            raise AssertionError("superseded OLMBlur case_0006 common-core request must not remain pending")
         dg_case0023_answered = by_id.get("olmdistancegradation_16bpc_constant_case0023_outside0_witness_20260630")
         if dg_case0023_answered is None:
             raise AssertionError("missing answered DistanceGradation case_0023 OutsideThreshold=0 witness request")

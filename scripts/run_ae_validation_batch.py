@@ -116,6 +116,14 @@ def main() -> int:
     print(f"[INFO] run_dir: {run_dir}")
     print(f"[INFO] batch_result_json: {batch_result_json}")
     print(f"[INFO] requests_rendered: {len(result.get('requests', []))}")
+    observations = [
+        observation
+        for request in result.get("requests", [])
+        for observation in (request.get("png_observations") or {}).values()
+    ]
+    if observations:
+        stable = sum(1 for observation in observations if observation.get("status") == "stable")
+        print(f"[INFO] png_observations: {stable}/{len(observations)} stable")
     return 0
 
 

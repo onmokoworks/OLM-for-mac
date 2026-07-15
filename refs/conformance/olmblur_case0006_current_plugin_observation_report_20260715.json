@@ -1,0 +1,60 @@
+{
+  "ae_result": {
+    "ae_version": "26.3x87",
+    "project_bits_per_channel": 16
+  },
+  "case_id": "olmblur__case_0006",
+  "claim": "observation_only_not_exact",
+  "diagnostic_log": {
+    "path": "OLMBLUR_CASE0006_DIAGNOSTIC.log",
+    "record": {
+      "fields": {
+        "bias_dir": "1",
+        "blur_amount": "5",
+        "blur_smoothness": "100",
+        "case_id": "olmblur__case_0006",
+        "effect": "OLM_Blur",
+        "h": "1080",
+        "legacy": "0",
+        "plugin": "OLMBlur",
+        "plugin_sha256": "c6de66dab49a6a96852d6158780bfd8c52767cc699e2cef1fa2206e0fbadf206",
+        "pre_store": "(2304.5,2304.5,2319.23877)",
+        "pre_store_hex": "(0x1.201p+11,0x1.201p+11,0x1.21e7a4p+11)",
+        "project_bpc": "16",
+        "render_id": "olmblur-case0006-mac-observation-c76c687c",
+        "renderer": "Software",
+        "repeat": "10",
+        "request_id": "olmblur_case0006_mac_observation_20260715",
+        "stored": "(2305,2305,2319,32768)",
+        "w": "1920",
+        "x": "601",
+        "y": "598"
+      },
+      "marker": "OLMBLUR_OBSERVE_STORE16",
+      "raw": "OLMBLUR_OBSERVE_STORE16 plugin=OLMBlur effect=OLM_Blur case_id=olmblur__case_0006 request_id=olmblur_case0006_mac_observation_20260715 render_id=olmblur-case0006-mac-observation-c76c687c plugin_sha256=c6de66dab49a6a96852d6158780bfd8c52767cc699e2cef1fa2206e0fbadf206 project_bpc=16 renderer=Software x=601 y=598 w=1920 h=1080 blur_amount=5 blur_smoothness=100 repeat=10 bias_dir=1 legacy=0 pre_store=(2304.5,2304.5,2319.23877) pre_store_hex=(0x1.201p+11,0x1.201p+11,0x1.21e7a4p+11) stored=(2305,2305,2319,32768)"
+    },
+    "sha256": "1a03a746de257cc6f7163bb49e60a790c06e2af508c0c3ea3996c81d94b62840"
+  },
+  "mac_plugin_binary_sha256": "c6de66dab49a6a96852d6158780bfd8c52767cc699e2cef1fa2206e0fbadf206",
+  "output": {
+    "path": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+    "png": {
+      "bit_depth": 16,
+      "color_type": 6,
+      "compression": 0,
+      "filter_method": 0,
+      "height": 1080,
+      "interlace": 0,
+      "width": 1920
+    },
+    "sha256": "12bd4b24b9abff4ecf6176b8641bab151fc055b47153c37747c2dbee4606a4db"
+  },
+  "point": [
+    601,
+    598
+  ],
+  "render_id": "olmblur-case0006-mac-observation-c76c687c",
+  "request_id": "olmblur_case0006_mac_observation_20260715",
+  "schema": "olmblur-case0006-mac-observation-v1",
+  "status": "answered_observation"
+}

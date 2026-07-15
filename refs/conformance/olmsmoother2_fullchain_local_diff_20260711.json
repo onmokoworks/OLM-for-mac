@@ -150,6 +150,7 @@
         "cce0_gamma_colors_vs_production_orchestrator_equal_1e-6": true,
         "chain_count_equal": true,
         "chain_vertices_weights_equal_1e-6": true,
+        "classifier_index_equal": true,
         "descriptor_direct_equal": true,
         "direct_vertices_weights_equal_1e-6": true
       },
@@ -327,6 +328,7 @@
         "cce0_gamma_colors_vs_production_orchestrator_equal_1e-6": true,
         "chain_count_equal": true,
         "chain_vertices_weights_equal_1e-6": true,
+        "classifier_index_equal": true,
         "descriptor_direct_equal": true,
         "direct_vertices_weights_equal_1e-6": true
       },
@@ -370,6 +372,174 @@
         "direct_vertices": [],
         "fixture": "c4_control",
         "idx": 105,
+        "port_composite_float": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "pre125c0_append": false
+      }
+    },
+    {
+      "aex": {
+        "after_125c0_count": 0,
+        "append": true,
+        "c": 2,
+        "c280_entry": {
+          "count": 0,
+          "output_pointer": 536876608,
+          "returned_pointer": 536876608,
+          "scale_fixed": [
+            65536,
+            65536
+          ],
+          "vertices": []
+        },
+        "c280_equiv_helper_before_normalize": 0,
+        "c280_equiv_helper_vertices": [],
+        "cardinal6_descriptor": [
+          5,
+          7,
+          0,
+          5,
+          6,
+          0
+        ],
+        "cce0_entry": {
+          "bb10_after": [],
+          "config": {
+            "gamma_mode_byte": 0,
+            "scale_fixed": [
+              65536,
+              65536
+            ]
+          },
+          "output_pointer": 536876976,
+          "returned_pointer": 536876976,
+          "rgba": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "cce0_gamma_colors_entry": {
+          "bb10_after": [],
+          "config": {
+            "gamma_mode_byte": 3,
+            "scale_fixed": [
+              65536,
+              65536
+            ]
+          },
+          "output_pointer": 536877184,
+          "returned_pointer": 536877184,
+          "rgba": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "cce0_replay_float": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "chain_before_normalize": 0,
+        "chain_count": 0,
+        "chain_vertices": [],
+        "descriptor_direct": [
+          5,
+          6,
+          1,
+          5,
+          8,
+          5
+        ],
+        "direct_count": 1,
+        "direct_vertices": [
+          {
+            "rgba": [
+              0.800000011920929,
+              0.10000000149011612,
+              0.10000000149011612,
+              0.9960784316062927
+            ],
+            "weight": 0.4281609058380127
+          }
+        ],
+        "fixture": "classifier_zero",
+        "pre125c0_ret": 0
+      },
+      "comparison": {
+        "all_replayed_boundaries_equal": true,
+        "append_equal": true,
+        "c280_entry_vs_production_builder_equal_1e-6": true,
+        "c280_equiv_helpers_vs_production_builder_equal_1e-6": true,
+        "c_equal": true,
+        "cardinal6_descriptor_equal": true,
+        "cce0_accumulation_equal_1e-6": true,
+        "cce0_entry_vs_production_orchestrator_equal_1e-6": true,
+        "cce0_gamma_colors_vs_production_orchestrator_equal_1e-6": true,
+        "chain_count_equal": true,
+        "chain_vertices_weights_equal_1e-6": true,
+        "classifier_index_equal": true,
+        "descriptor_direct_equal": true,
+        "direct_vertices_weights_equal_1e-6": true
+      },
+      "port": {
+        "append": true,
+        "builder_count": 0,
+        "builder_gamma_colors_float": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "builder_orchestrated_float": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "builder_vertices": [],
+        "c": 2,
+        "cardinal6_descriptor": [
+          5,
+          7,
+          0,
+          5,
+          6,
+          0
+        ],
+        "chain_before_normalize": 0,
+        "chain_count": 0,
+        "chain_vertices": [],
+        "descriptor": [
+          5,
+          6,
+          1,
+          5,
+          8,
+          5
+        ],
+        "direct_count": 1,
+        "direct_vertices": [
+          {
+            "rgba": [
+              0.800000012,
+              0.100000001,
+              0.100000001,
+              0.996078432
+            ],
+            "weight": 0.428160906
+          }
+        ],
+        "fixture": "classifier_zero",
+        "idx": 255,
         "port_composite_float": [
           1,
           1,

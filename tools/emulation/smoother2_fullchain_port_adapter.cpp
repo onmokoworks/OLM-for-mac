@@ -3,6 +3,7 @@
 #include <array>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <vector>
 
 // The production port deliberately keeps its binary-shaped helpers static.
@@ -39,20 +40,33 @@ int classifier_index(const uint8_t *cp, int w, int h, int x, int y) {
 }  // namespace
 
 int smoother2_fullchain_port_adapter_main(int argc, char **argv) {
-  if (argc < 2 || argc > 4) return 2;
+  if (argc < 2 || argc > 5) return 2;
   const bool suppress = std::atoi(argv[1]) != 0;
+  const char *fixture = argc > 4 ? argv[4] : (suppress ? "c4_control" : "c2_witness");
   constexpr int w = 16, h = 16, x = 5, y = 6;
   std::vector<FPix> pixels((size_t)w * h, FPix{0, 0, 0, 0});
   std::vector<uint8_t> classes((size_t)w * h * 4, 0);
   pixels[(size_t)(y - 1) * w + x] = {0.8f, 0.1f, 0.1f, 0.99607843f};
   pixels[(size_t)y * w + x] = {1, 1, 1, 1};
-  // Additional independent classifier bytes make c280's index exactly 0x69.
-  classes[((size_t)y * w + x) * 4 + 1] = 1;
-  classes[((size_t)y * w + x) * 4 + 3] = 1;
-  classes[((size_t)y * w + (x + 1)) * 4] = 1;
-  classes[((size_t)(y + 1) * w + (x + 1)) * 4 + 2] = 1;
-  if (suppress) classes[((size_t)y * w + (x - 1)) * 4 + 1] = 1;
-  else classes[((size_t)(y - 1) * w + x) * 4] = 1;
+  auto set_class = [&](int xx, int yy, int b0, int b1, int b2, int b3) {
+    size_t off = ((size_t)yy * w + xx) * 4;
+    classes[off + 0] = (uint8_t)b0; classes[off + 1] = (uint8_t)b1;
+    classes[off + 2] = (uint8_t)b2; classes[off + 3] = (uint8_t)b3;
+  };
+  if (std::strcmp(fixture, "c2_witness") == 0 || std::strcmp(fixture, "c4_control") == 0) {
+    set_class(x, y, 0, 1, 0, 1);
+    set_class(x + 1, y, 1, 0, 0, 0);
+    set_class(x + 1, y + 1, 0, 0, 1, 0);
+  } else if (std::strcmp(fixture, "classifier_one") == 0) {
+    set_class(x, y, 1, 1, 1, 1);
+    set_class(x + 1, y, 1, 0, 0, 0);
+    set_class(x + 1, y + 1, 0, 0, 1, 0);
+    set_class(x - 1, y + 1, 0, 0, 0, 1);
+  } else if (std::strcmp(fixture, "classifier_zero") != 0) {
+    return 3;
+  }
+  if (std::strcmp(fixture, "c4_control") == 0) set_class(x - 1, y, 0, 1, 0, 0);
+  else set_class(x, y - 1, 1, 0, 0, 0);
 
   FPlane plane{pixels.data(), w * sizeof(FPix), 0};
   SmootherPolygon direct{};
@@ -102,7 +116,7 @@ int smoother2_fullchain_port_adapter_main(int argc, char **argv) {
   FPix final{};
   composite(final, pixels[(size_t)y * w + x], chained);
   std::printf("{\"fixture\":\"%s\",\"idx\":%d,\"descriptor\":[5,6,1,5,8,5],"
-              "\"c\":%d,\"append\":%s,", suppress ? "c4_control" : "c2_witness",
+              "\"c\":%d,\"append\":%s,", fixture,
               classifier_index(classes.data(), w, h, x, y), c, appended ? "true" : "false");
   print_vertices(direct, "direct");
   std::printf(",\"pre125c0_append\":%s,\"chain_before_normalize\":%d,",

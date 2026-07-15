@@ -93,15 +93,49 @@
         return folder;
     }
 
-    function waitForFreshFile(file, since, tries, sleepMs) {
+    function waitForStableFile(file, since, timeoutMs, sleepMs) {
+        var startedWaiting = new Date();
         var sinceMs = since.getTime() - 2000;
-        for (var i = 0; i < tries; i++) {
-            if (file.exists && (!file.modified || file.modified.getTime() >= sinceMs)) {
-                return true;
+        var lastSize = -1;
+        var lastModified = -1;
+        var stablePolls = 0;
+        var polls = 0;
+        var observation = { status: "timeout", timeout_ms: timeoutMs, waited_ms: 0, polls: 0, stable_polls: 0, size_bytes: 0, modified_ms: 0 };
+        while (true) {
+            polls++;
+            var exists = file.exists;
+            var size = exists ? Number(file.length || 0) : 0;
+            var modified = exists && file.modified ? file.modified.getTime() : 0;
+            var fresh = exists && (!file.modified || modified >= sinceMs);
+            if (fresh && size > 0) {
+                stablePolls = (size === lastSize && modified === lastModified) ? stablePolls + 1 : 1;
+                if (stablePolls >= 2) {
+                    observation.status = "stable";
+                    observation.waited_ms = (new Date()).getTime() - startedWaiting.getTime();
+                    observation.polls = polls;
+                    observation.stable_polls = stablePolls;
+                    observation.size_bytes = size;
+                    observation.modified_ms = modified;
+                    return observation;
+                }
+                lastSize = size;
+                lastModified = modified;
+            } else {
+                stablePolls = 0;
+                lastSize = -1;
+                lastModified = -1;
+            }
+            if ((new Date()).getTime() - startedWaiting.getTime() >= timeoutMs) {
+                observation.waited_ms = (new Date()).getTime() - startedWaiting.getTime();
+                observation.polls = polls;
+                observation.stable_polls = stablePolls;
+                observation.size_bytes = size;
+                observation.modified_ms = modified;
+                observation.status = exists ? (size > 0 ? "unstable" : "empty") : "missing";
+                return observation;
             }
             $.sleep(sleepMs);
         }
-        return file.exists && (!file.modified || file.modified.getTime() >= sinceMs);
     }
 
     function childByMatchOrName(group, matchName, name) {
@@ -285,8 +319,11 @@
             summary.errors.push(caseSpec.id + ": render threw " + e.toString());
             return false;
         }
-        if (!waitForFreshFile(png, renderStarted, 120, 250)) {
-            summary.errors.push(caseSpec.id + ": PNG was not written");
+        var observation = waitForStableFile(png, renderStarted, 120000, 250);
+        summary.png_observations[caseSpec.id] = observation;
+        appendText(progressLog, "png_observation " + caseSpec.id + " status=" + observation.status + " waited_ms=" + observation.waited_ms + " size_bytes=" + observation.size_bytes + "\n");
+        if (observation.status !== "stable") {
+            summary.errors.push(caseSpec.id + ": PNG was not stably written (" + observation.status + ")");
             return false;
         }
         if (paramErrors.length) {
@@ -324,6 +361,7 @@
             effect_name: requestManifest.effect_name,
             output_dir: resultRoot.fsName,
             rendered: [],
+            png_observations: {},
             warnings: [],
             errors: []
         };
@@ -344,12 +382,20 @@
     }
 
     function jsonSummary(summary) {
+        var observationParts = [];
+        for (var observationId in summary.png_observations) {
+            if (summary.png_observations.hasOwnProperty(observationId)) {
+                var observation = summary.png_observations[observationId];
+                observationParts.push("\"" + esc(observationId) + "\":{\"status\":\"" + esc(observation.status) + "\",\"timeout_ms\":" + observation.timeout_ms + ",\"waited_ms\":" + observation.waited_ms + ",\"polls\":" + observation.polls + ",\"stable_polls\":" + observation.stable_polls + ",\"size_bytes\":" + observation.size_bytes + ",\"modified_ms\":" + observation.modified_ms + "}");
+            }
+        }
         return "{\n" +
             "  \"kind\": \"olm_ae_pixel_validation_render_result\",\n" +
             "  \"request_id\": \"" + esc(summary.request_id) + "\",\n" +
             "  \"effect_name\": \"" + esc(summary.effect_name) + "\",\n" +
             "  \"output_dir\": \"" + esc(summary.output_dir) + "\",\n" +
             "  \"rendered\": " + jsonStringArray(summary.rendered) + ",\n" +
+            "  \"png_observations\": {" + observationParts.join(",") + "},\n" +
             "  \"warnings\": " + jsonStringArray(summary.warnings) + ",\n" +
             "  \"errors\": " + jsonStringArray(summary.errors) + "\n" +
             "}\n";
