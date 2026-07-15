@@ -1,0 +1,90 @@
+{
+  "aex": {
+    "path": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
+    "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+  },
+  "claims_not_made": [
+    "No Windows execution or live AE host binding.",
+    "No legacy case_0004/case_0012 mapping.",
+    "No AE-exact, PNG, or portable-only compatibility claim."
+  ],
+  "date": "2026-07-16",
+  "facts": {
+    "classifier_fixture_coverage": [
+      "c2_witness",
+      "classifier_one"
+    ],
+    "gamma_modes": {
+      "colors_only": 3,
+      "normal": 0
+    },
+    "gamma_value_expected": 2.1695473,
+    "rows": [
+      {
+        "aex_classifier_branch": {
+          "append": true,
+          "c": 2
+        },
+        "aex_gamma_colors_rgba": [
+          0.8971925377845764,
+          0.4243943989276886,
+          0.4243943989276886,
+          0.9980392456054688
+        ],
+        "c280_entry_count": 1,
+        "fixture": "c2_witness",
+        "gamma_config_observed": {
+          "gamma_colors": {
+            "bb10_apply": 1,
+            "gamma_value": 2.1695473194122314,
+            "mode_byte": 3
+          },
+          "normal": {
+            "bb10_apply": 0,
+            "mode_byte": 0
+          }
+        }
+      },
+      {
+        "aex_classifier_branch": {
+          "append": true,
+          "c": 3
+        },
+        "aex_gamma_colors_rgba": [
+          0.8000009655952454,
+          0.10000166296958923,
+          0.10000166296958923,
+          0.996078372001648
+        ],
+        "c280_entry_count": 2,
+        "fixture": "classifier_one",
+        "gamma_config_observed": {
+          "gamma_colors": {
+            "bb10_apply": 1,
+            "gamma_value": 2.1695473194122314,
+            "mode_byte": 3
+          },
+          "normal": {
+            "bb10_apply": 0,
+            "mode_byte": 0
+          }
+        }
+      }
+    ]
+  },
+  "inference": [
+    "The actual AEX cce0 entry observes gamma mode 0 as no-apply and mode 3 as Gamma Colors apply for this bounded config.",
+    "This narrows the local unresolved legacy lane to live key/setup binding and downstream producer state, rather than inventing a gamma-mode fallback."
+  ],
+  "key_boundary": {
+    "reason": "The existing actual-AEX entry harness starts after host parameter setup; no portable-only key simulation is accepted as compatibility evidence.",
+    "static_sources": [
+      "notes/OLMSmoother2_ASM_FACTS.md",
+      "refs/conformance/olmsmoother2_case0012_live_config_contract_20260712.md"
+    ],
+    "status": "not_executed_in_this_witness"
+  },
+  "pass": true,
+  "scope": "checked-in actual AEX CPU emulation; classifier and cce0 gamma-config boundary only",
+  "verdict": "PASS_LOCAL_ACTUAL_AEX_LEGACY_GAMMA_CONFIG_BOUNDARY"
+}

@@ -16,7 +16,7 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from unicorn.x86_const import UC_X86_REG_RIP, UC_X86_REG_RSP
+from unicorn.x86_const import UC_X86_REG_RCX, UC_X86_REG_RIP, UC_X86_REG_RSP
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
@@ -55,12 +55,14 @@ def signed_i32(value: int) -> int:
 def run_aex(repeat_border: int) -> dict[str, Any]:
     captures: list[dict[str, Any]] = []
     original_snapshot = caller_witness.plane_snapshot
+    original_cell_count = caller_witness.CELL_COUNT
 
     def snapshot_with_scatter_validity(loader: Any, param1: int) -> dict[str, Any]:
         planes = original_snapshot(loader, param1)
         if loader.uc.reg_read(UC_X86_REG_RIP) != caller_witness.SCATTER:
             return planes
         rsp = loader.uc.reg_read(UC_X86_REG_RSP)
+        ctx = loader.uc.reg_read(UC_X86_REG_RCX)
         slots = {
             "valid_mask": 0x28,
             "angular_count": 0x30,
@@ -90,6 +92,15 @@ def run_aex(repeat_border: int) -> dict[str, Any]:
             "byte_count": byte_count,
             "accum_rgba": hex(raw["accum_rgba"]),
             "max_alpha": hex(raw["max_alpha"]),
+            "ctx": hex(ctx),
+            "ctx_fields": {
+                "outer_offset_mode_0x24": signed_i32(struct.unpack("<I", loader.read_bytes(ctx + 0x24, 4))[0]),
+                "outer_caller_scale_0x28": signed_i32(struct.unpack("<I", loader.read_bytes(ctx + 0x28, 4))[0]),
+                "inner_offset_mode_0x2c": signed_i32(struct.unpack("<I", loader.read_bytes(ctx + 0x2C, 4))[0]),
+                "inner_caller_scale_0x30": signed_i32(struct.unpack("<I", loader.read_bytes(ctx + 0x30, 4))[0]),
+                "outer_base_span_0x3a9e8": signed_i32(struct.unpack("<I", loader.read_bytes(ctx + 0x3A9E8, 4))[0]),
+                "inner_base_span_0x3a9ec": signed_i32(struct.unpack("<I", loader.read_bytes(ctx + 0x3A9EC, 4))[0]),
+            },
             "contract_proven": False,
             "validity_bytes": None,
         }
@@ -107,11 +118,16 @@ def run_aex(repeat_border: int) -> dict[str, Any]:
         captures.append(capture)
         return planes
 
+    # The original tiny caller witness only displayed two cells.  Ghidra's
+    # allocation formula and the live scatter arguments both establish a
+    # 1-angle x 4-radius plane for this fixture, so capture the complete span.
+    caller_witness.CELL_COUNT = 4
     caller_witness.plane_snapshot = snapshot_with_scatter_validity
     try:
         record = caller_witness.run(repeat_border)
     finally:
         caller_witness.plane_snapshot = original_snapshot
+        caller_witness.CELL_COUNT = original_cell_count
     record["scatter_validity_capture"] = captures
     return record
 
@@ -170,8 +186,8 @@ static uint32_t radialblur_adapter_word(float value) {{
 }}
 
 int main(int argc, char **argv) {{
-    if (argc != 8) {{
-        std::fprintf(stderr, "usage: adapter fixture.bin typed_polar.bin typed_valid.bin mode width height row_stride\\n");
+    if (argc != 9) {{
+        std::fprintf(stderr, "usage: adapter fixture.bin typed_polar.bin typed_valid.bin mode width height row_stride outer_base_span\\n");
         return 64;
     }}
     std::ifstream input(argv[1], std::ios::binary);
@@ -234,7 +250,7 @@ int main(int argc, char **argv) {{
     params.blur_type = 2;
     params.repeat_border = repeat;
     params.outer_source_scatter_prepass = true;
-    params.outer_strength = 4;
+    params.outer_strength = std::atoi(argv[8]);
     params.quality = 5.0;
     RotationTypedPlanes planes;
     render_olmradialblur_rotation_float(fixture, params, &planes, 8, &typed_polar);
@@ -338,16 +354,17 @@ def run_adapter(
     width: int,
     height: int,
     row_stride: int,
+    outer_base_span: int = 0,
     validation_only: bool = False,
 ) -> dict[str, Any]:
     validity_arg = str(typed_valid) if typed_valid else "--missing-validity"
     durable_validity_arg = typed_valid.name if typed_valid else "--missing-validity"
     mode_arg = "--validate-only" if validation_only else str(repeat_border)
-    command = [str(binary), str(fixture), str(typed_polar), validity_arg, mode_arg, str(width), str(height), str(row_stride)]
+    command = [str(binary), str(fixture), str(typed_polar), validity_arg, mode_arg, str(width), str(height), str(row_stride), str(outer_base_span)]
     completed = subprocess.run(command, check=False, capture_output=True, text=True)
     payload = json.loads(completed.stdout) if completed.returncode == 0 else None
     return {
-        "command": [binary.name, fixture.name, typed_polar.name, durable_validity_arg, mode_arg, str(width), str(height), str(row_stride)],
+        "command": [binary.name, fixture.name, typed_polar.name, durable_validity_arg, mode_arg, str(width), str(height), str(row_stride), str(outer_base_span)],
         "returncode": completed.returncode,
         "stdout": completed.stdout,
         "stderr": completed.stderr,
@@ -409,9 +426,9 @@ def compare_cells(plane: str, expected_cells: list[list[float]], actual_cells: l
 def compare_stage_progression(actual: dict[str, Any], portable: dict[str, Any]) -> dict[str, Any]:
     stage_specs = [
         ("injected_polar", "polar", actual["prepass_entry"]["plus_0x38_initial_or_collapsed_rgba"]),
-        ("post_prepass", "prepass", actual["scatter_entry"]["plus_0x40_scalar_prepass"]),
+        ("post_prepass_source_alpha", "source_alpha", actual["scatter_entry"]["plus_0x48_scalar_scatter"]),
         ("post_scatter_accum", "accum", actual["final"]["plus_0x38_rgba_accum"]),
-        ("post_scatter_max_alpha", "scatter", actual["final"]["plus_0x48_scalar_scatter"]),
+        ("post_scatter_max_alpha", "scatter", actual["final"]["initial_byte_sampler_map_later_float_scalar_collapse_plane"]),
         ("post_collapse", "collapse", actual["final"]["plus_0x38_initial_or_collapsed_rgba"]),
     ]
     stages: list[dict[str, Any]] = []
@@ -476,15 +493,19 @@ def run() -> dict[str, Any]:
         }
         for repeat_border, observed in enumerate(observed_runs):
             actual = actual_projection(observed)
+            scatter_capture = observed["scatter_validity_capture"][0]
+            outer_base_span = scatter_capture["ctx_fields"]["outer_base_span_0x3a9e8"]
             polar_cells = exact_prepass_polar(observed)
             polar_values = [channel for cell in polar_cells for channel in cell]
-            polar_bytes = struct.pack("<8f", *polar_values)
+            polar_bytes = struct.pack(f"<{len(polar_values)}f", *polar_values)
             polar_width = 1
             polar_height = len(polar_cells)
             polar_row_stride = polar_width * 4
             typed_polar = temp / f"aex_repeat{repeat_border}_typed_{polar_width}x{polar_height}_polar_rgba_f32.bin"
             typed_polar.write_bytes(polar_bytes)
-            serialized_values = list(struct.unpack("<8f", typed_polar.read_bytes()))
+            serialized_values = list(
+                struct.unpack(f"<{len(polar_values)}f", typed_polar.read_bytes())
+            )
             injected_polar = {
                 "source": "actual_aex.prepass_entry.plus_0x38_initial_or_collapsed_rgba",
                 "cells": polar_cells,
@@ -583,7 +604,8 @@ def run() -> dict[str, Any]:
                     }
                 else:
                     adapter_run = run_adapter(
-                        build["binary"], fixture, typed_polar, typed_valid, repeat_border, polar_width, polar_height, polar_row_stride
+                        build["binary"], fixture, typed_polar, typed_valid, repeat_border, polar_width,
+                        polar_height, polar_row_stride, outer_base_span=outer_base_span
                     )
                     portable_payload = adapter_run["payload"]
                     geometry_ok = bool(portable_payload and portable_payload.get("typed_input_geometry") == {
@@ -608,6 +630,10 @@ def run() -> dict[str, Any]:
                         "available": validity is not None,
                         "cells": validity,
                         "reason": None if validity is not None else actual_validity_blocker(observed),
+                    },
+                    "aex_context": {
+                        "outer_base_span": outer_base_span,
+                        "source": "scatter_entry.ctx+0x3a9e8",
                     },
                 },
                 "portable_cli": {
@@ -655,7 +681,7 @@ def run() -> dict[str, Any]:
 
     return {
         "kind": NAME,
-        "schema": 5,
+        "schema": 6,
         "status": "blocked" if comparison_result.startswith(("adapter_", "blocked_")) else comparison_result,
         "claim_boundary": "bounded local evidence only; no AE-exact claim",
         "addresses": {
@@ -696,7 +722,8 @@ def run() -> dict[str, Any]:
             "actual_aex_call_mapping": {
                 "polar_rgba": "ctx+0x38",
                 "filtered_alpha": "ctx+0x48",
-                "span_factor": "ctx+0x50",
+                "scatter_span_gate": "ctx+0x40",
+                "prepass_factor": "ctx+0x50",
                 "angular_width": "iVar22 (1)",
                 "row_start": "floor(chunk*fVar35)",
                 "row_end": "floor(next*fVar35)",
@@ -709,7 +736,7 @@ def run() -> dict[str, Any]:
             },
             "export": "RotationTypedPlanes: polar, accum, prepass_alpha, scatter_alpha, source_alpha, collapsed",
         },
-        "blocker": blocker or "The live scatter-entry capture proves angular_count=1, start_radius=0, end_radius=4, and four validity bytes. The current AEX projection still exposes only two RGBA cells and two scalar rows, so actual-AEX semantic comparison remains fail-closed until four RGBA cells, four scalar rows, and four validity bytes are captured. No values are padded or invented, and no mismatch or exactness is claimed.",
+        "blocker": blocker,
     }
 
 
@@ -718,7 +745,7 @@ def markdown(report: dict[str, Any]) -> str:
     lines = [
         f"# {NAME}",
         "",
-        f"- Status: `{report['status']}` (fail closed).",
+        f"- Status: `{report['status']}`.",
         f"- Result: `{report['comparison']['result']}`.",
         "- Scope: bounded local evidence; no AE-exact claim.",
         f"- AEX SHA-256: `{report['aex']['sha256']}`",
@@ -728,15 +755,15 @@ def markdown(report: dict[str, Any]) -> str:
         "",
         "## Executed boundary",
         "",
-        "The runtime-compiled adapter source-includes `cli/OLMRadialBlur/main.cpp` and accepts arbitrary positive typed-polar geometry with `row_stride=width*4`, exact `width*height*4` float32 RGBA values, and exact `width*height` validity bytes. A local synthetic `1x4` payload passes the validation/echo gate. For each AEX run, the harness serializes only captured cells and leaves semantic execution blocked until the four-cell/four-row capture contract is complete.",
+        "The runtime-compiled adapter source-includes `cli/OLMRadialBlur/main.cpp` and accepts arbitrary positive typed-polar geometry with `row_stride=width*4`, exact `width*height*4` float32 RGBA values, and exact `width*height` validity bytes. A local synthetic `1x4` payload passes the validation/echo gate. The AEX run supplies the complete four-cell/four-row plane, four validity bytes, and same-run outer base span.",
         "",
         "## Boundary",
         "",
-        report["blocker"],
+        report["blocker"] or "No blocker remains at this bounded prepass/scatter/collapse boundary. Both Repeat Border runs pass every compared stage at the configured one-ULP ceiling.",
         "",
-        "Source loci under the recorded CLI source hash: the float helper, typed-input contract, polar/span planes, shared prepass/scatter operation, and typed export before final inverse sampling. The Ghidra call mapping is preserved in the JSON: polar RGBA `ctx+0x38`, filtered alpha `ctx+0x48`, span factor `ctx+0x50`, width `iVar22=1`, row window `floor(chunk*fVar35)` to `floor(next*fVar35)`, accum RGBA `ctx+0x3c940`, and max alpha `ctx+0x3c948`.",
+        "Source loci under the recorded CLI source hash: the float helper, typed-input contract, polar/span planes, shared prepass/scatter operation, and typed export before final inverse sampling. The Ghidra call mapping is preserved in the JSON: polar RGBA `ctx+0x38`, scatter span gate `ctx+0x40`, filtered alpha `ctx+0x48`, prepass factor `ctx+0x50`, width `iVar22=1`, row window `floor(chunk*fVar35)` to `floor(next*fVar35)`, accum RGBA `ctx+0x3c940`, and max alpha `ctx+0x3c948`.",
         "",
-        "The live validity pointer is captured as four bytes, but the AEX projection currently exposes only two RGBA cells and two scalar rows. Post-prepass and post-scatter comparisons are marked `not_run`; no values are padded or invented, and there is no semantic mismatch classification or AE-exact claim.",
+        "The old two-cell display limit was removed after Ghidra and same-run scatter arguments proved the `1x4` allocation. Repeat Border 0 and 1 now match at injected polar RGBA, filtered source alpha, accumulated RGBA, max alpha, and collapsed RGBA. This is a bounded actual-AEX/portable differential, not an AE-exact claim.",
         "",
     ]
     return "\n".join(lines)
@@ -751,7 +778,7 @@ def main() -> int:
     args.output_json.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     args.output_md.write_text(markdown(report), encoding="utf-8")
     print(f"status={report['status']} result={report['comparison']['result']}")
-    return 2
+    return 0 if report["comparison"]["result"] == "comparable_stage_pass" else 2
 
 
 if __name__ == "__main__":

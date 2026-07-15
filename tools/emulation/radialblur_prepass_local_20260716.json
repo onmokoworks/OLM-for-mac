@@ -8,12 +8,12 @@
     "path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
     "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
   },
-  "blocker": "The live scatter-entry capture proves angular_count=1, start_radius=0, end_radius=4, and four validity bytes. The current AEX projection still exposes only two RGBA cells and two scalar rows, so actual-AEX semantic comparison remains fail-closed until four RGBA cells, four scalar rows, and four validity bytes are captured. No values are padded or invented, and no mismatch or exactness is claimed.",
+  "blocker": "",
   "claim_boundary": "bounded local evidence only; no AE-exact claim",
   "comparison": {
     "fail_closed": true,
     "max_allowed_ulp": 1,
-    "result": "blocked_actual_capture_incomplete"
+    "result": "comparable_stage_pass"
   },
   "fixture": {
     "height": 2,
@@ -47,8 +47,8 @@
   },
   "kind": "radialblur_prepass_local_20260716",
   "portable_cli_provenance": {
-    "adapter_binary_sha256": "406d41c7b54ebd6dd0230008664ce79af39922491332ab6c79fed7183374d241",
-    "adapter_source_sha256": "9745c47a33ab864076d947411c7de800da5b48a0f512ca45892e9c1873e2698a",
+    "adapter_binary_sha256": "975b8e6df90aa0d534cd2f07268924fb541c6b4f398dfcb0a597fcd25b6e0ef7",
+    "adapter_source_sha256": "28f85b5256c960d921e442954e1a8e867354a8f3c5214cc7f0caa4cca0dd8523",
     "command": [
       "clang++",
       "-std=c++17",
@@ -64,7 +64,7 @@
       "<adapter-binary>"
     ],
     "production_source": "cli/OLMRadialBlur/main.cpp",
-    "production_source_sha256": "f1613bb0997e001d13eb5ef5b6f00695b82903779e0d58880e0455bf5b4c439c",
+    "production_source_sha256": "71d677115a909790894cdfa7a303caa7e04b263a8c27089382cb04a88ca3098b",
     "returncode": 0,
     "stderr": "",
     "stdout": ""
@@ -79,6 +79,12 @@
             ],
             [
               0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
             ]
           ],
           "plus_0x38_initial_or_collapsed_rgba": [
@@ -87,6 +93,18 @@
               0.8999999761581421,
               0.800000011920929,
               0.6000000238418579
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
             ],
             [
               0.0,
@@ -107,11 +125,29 @@
               0.0,
               0.0,
               0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
             ]
           ],
           "plus_0x40_scalar_prepass": [
             [
               0.800000011920929
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
             ],
             [
               0.0
@@ -123,9 +159,21 @@
             ],
             [
               0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
             ]
           ],
           "plus_0x50_source_alpha_or_variation_plane": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ],
             [
               1.0
             ],
@@ -179,6 +227,12 @@
             ],
             [
               0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
             ]
           ],
           "plus_0x38_initial_or_collapsed_rgba": [
@@ -187,6 +241,18 @@
               0.9000000357627869,
               0.800000011920929,
               0.6000000238418579
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
             ],
             [
               0.0,
@@ -207,11 +273,29 @@
               0.0,
               0.0,
               0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
             ]
           ],
           "plus_0x40_scalar_prepass": [
             [
               0.800000011920929
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
             ],
             [
               0.0
@@ -223,9 +307,21 @@
             ],
             [
               0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
             ]
           ],
           "plus_0x50_source_alpha_or_variation_plane": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ],
             [
               1.0
             ],
@@ -283,6 +379,12 @@
             ],
             [
               0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
             ]
           ],
           "plus_0x38_initial_or_collapsed_rgba": [
@@ -291,6 +393,18 @@
               0.9000000357627869,
               0.800000011920929,
               0.6000000238418579
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
             ],
             [
               0.0,
@@ -311,11 +425,29 @@
               0.0,
               0.0,
               0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
             ]
           ],
           "plus_0x40_scalar_prepass": [
             [
               0.800000011920929
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
             ],
             [
               0.0
@@ -327,9 +459,21 @@
             ],
             [
               0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
             ]
           ],
           "plus_0x50_source_alpha_or_variation_plane": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ],
             [
               1.0
             ],
@@ -345,6 +489,15 @@
             "angular_count": 1,
             "byte_count": 4,
             "contract_proven": true,
+            "ctx": "0x20000000",
+            "ctx_fields": {
+              "inner_base_span_0x3a9ec": 0,
+              "inner_caller_scale_0x30": 0,
+              "inner_offset_mode_0x2c": 1065353216,
+              "outer_base_span_0x3a9e8": 0,
+              "outer_caller_scale_0x28": 0,
+              "outer_offset_mode_0x24": 1065353216
+            },
             "end_radius": 4,
             "max_alpha": "0x400004c0",
             "quality_or_rows_raw": "0x0000000000000004",
@@ -371,25 +524,47 @@
       },
       "differential": {
         "earliest_divergence": null,
-        "pass": false,
-        "result": "blocked_actual_capture_incomplete",
+        "pass": true,
+        "result": "comparable_stage_pass",
         "stages": [
           {
+            "max_ulp": 0,
+            "mismatches": [],
             "pass": true,
+            "portable_plane": "polar",
             "stage": "injected_polar"
           },
           {
-            "pass": false,
-            "required": {
-              "rgba_cells": 4,
-              "scalar_rows": 4,
-              "validity_bytes": 4
-            },
-            "stage": "actual_capture_contract"
+            "max_ulp": 0,
+            "mismatches": [],
+            "pass": true,
+            "portable_plane": "source_alpha",
+            "stage": "post_prepass_source_alpha"
+          },
+          {
+            "max_ulp": 0,
+            "mismatches": [],
+            "pass": true,
+            "portable_plane": "accum",
+            "stage": "post_scatter_accum"
+          },
+          {
+            "max_ulp": 0,
+            "mismatches": [],
+            "pass": true,
+            "portable_plane": "scatter",
+            "stage": "post_scatter_max_alpha"
+          },
+          {
+            "max_ulp": 0,
+            "mismatches": [],
+            "pass": true,
+            "portable_plane": "collapse",
+            "stage": "post_collapse"
           }
         ]
       },
-      "differential_result": "blocked_actual_capture_incomplete",
+      "differential_result": "comparable_stage_pass",
       "geometry": {
         "aex_source_plane": {
           "angular_count": 1,
@@ -415,13 +590,13 @@
           "row_stride": 4,
           "width": 1
         },
-        "dimensions_equivalent": false,
+        "dimensions_equivalent": true,
         "portable_polar_plane": {
-          "height": null,
-          "indexed_cells_emitted": "not executed without four-cell actual capture",
-          "width": null
+          "height": 4,
+          "indexed_cells_emitted": "all caller-supplied 1x4 cells",
+          "width": 1
         },
-        "typed_contract_equivalent": false
+        "typed_contract_equivalent": true
       },
       "max_ulp": null,
       "portable_cli": {
@@ -429,12 +604,13 @@
           "command": [
             "radialblur_prepass_local_20260716_adapter",
             "existing_2x2_rgba_f32.bin",
-            "aex_repeat0_typed_1x2_polar_rgba_f32.bin",
-            "--missing-validity",
+            "aex_repeat0_typed_1x4_polar_rgba_f32.bin",
+            "aex_repeat0_typed_1x4_valid_u8.bin",
             "--validate-only",
             "1",
-            "2",
-            "4"
+            "4",
+            "4",
+            "0"
           ],
           "payload": {
             "implementation": "source-included-cli-main.cpp",
@@ -447,30 +623,373 @@
               "0x00000000",
               "0x00000000",
               "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
               "0x00000000"
             ],
             "typed_input_geometry": {
-              "height": 2,
+              "height": 4,
               "row_stride": 4,
               "width": 1
             },
-            "validity_available": false,
-            "validity_bytes": []
+            "validity_available": true,
+            "validity_bytes": [
+              1,
+              0,
+              0,
+              0
+            ]
           },
           "returncode": 0,
           "shared_stage_executed": false,
           "stderr": "",
-          "stdout": "{\"implementation\":\"source-included-cli-main.cpp\",\"input_validation_only\":true,\"typed_input_geometry\":{\"width\":1,\"height\":2,\"row_stride\":4},\"validity_available\":false,\"polar_words\":[\"0x3f800000\",\"0x3f666667\",\"0x3f4ccccd\",\"0x3f19999a\",\"0x00000000\",\"0x00000000\",\"0x00000000\",\"0x00000000\"],\"validity_bytes\":[]}\n"
+          "stdout": "{\"implementation\":\"source-included-cli-main.cpp\",\"input_validation_only\":true,\"typed_input_geometry\":{\"width\":1,\"height\":4,\"row_stride\":4},\"validity_available\":true,\"polar_words\":[\"0x3f800000\",\"0x3f666667\",\"0x3f4ccccd\",\"0x3f19999a\",\"0x00000000\",\"0x00000000\",\"0x00000000\",\"0x00000000\",\"0x00000000\",\"0x00000000\",\"0x00000000\",\"0x00000000\",\"0x00000000\",\"0x00000000\",\"0x00000000\",\"0x00000000\"],\"validity_bytes\":[1,0,0,0]}\n"
         },
         "adapter_run": {
-          "executed": false,
-          "reason": "actual_aex_capture_incomplete"
+          "command": [
+            "radialblur_prepass_local_20260716_adapter",
+            "existing_2x2_rgba_f32.bin",
+            "aex_repeat0_typed_1x4_polar_rgba_f32.bin",
+            "aex_repeat0_typed_1x4_valid_u8.bin",
+            "0",
+            "1",
+            "4",
+            "4",
+            "0"
+          ],
+          "payload": {
+            "accum": [
+              [
+                0.600000024,
+                0.540000021,
+                0.480000019,
+                0.600000024
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "collapse": [
+              [
+                1,
+                0.899999976,
+                0.800000012,
+                0.600000024
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "implementation": "source-included-cli-main.cpp",
+            "polar": [
+              [
+                1,
+                0.900000036,
+                0.800000012,
+                0.600000024
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "polar_dimensions": [
+              1,
+              4
+            ],
+            "polar_valid": [
+              true,
+              false,
+              false,
+              false
+            ],
+            "polar_xy": [
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                3,
+                1
+              ],
+              [
+                4,
+                1
+              ]
+            ],
+            "prepass": [
+              [
+                0.600000024
+              ],
+              [
+                0
+              ],
+              [
+                0
+              ],
+              [
+                0
+              ]
+            ],
+            "repeat_border": false,
+            "scatter": [
+              [
+                0.600000024
+              ],
+              [
+                0
+              ],
+              [
+                0
+              ],
+              [
+                0
+              ]
+            ],
+            "source_alpha": [
+              [
+                0.600000024
+              ],
+              [
+                0
+              ],
+              [
+                0
+              ],
+              [
+                0
+              ]
+            ],
+            "typed_input_geometry": {
+              "height": 4,
+              "row_stride": 4,
+              "width": 1
+            }
+          },
+          "returncode": 0,
+          "shared_stage_executed": true,
+          "stderr": "",
+          "stdout": "{\"implementation\":\"source-included-cli-main.cpp\",\"typed_input_geometry\":{\"width\":1,\"height\":4,\"row_stride\":4},\"repeat_border\":false,\"polar_dimensions\":[1,4],\"polar_xy\":[[1,1],[2,1],[3,1],[4,1]],\"polar_valid\":[true,false,false,false],\"polar\":[[1,0.900000036,0.800000012,0.600000024],[0,0,0,0],[0,0,0,0],[0,0,0,0]],\"accum\":[[0.600000024,0.540000021,0.480000019,0.600000024],[0,0,0,0],[0,0,0,0],[0,0,0,0]],\"prepass\":[[0.600000024],[0],[0],[0]],\"scatter\":[[0.600000024],[0],[0],[0]],\"source_alpha\":[[0.600000024],[0],[0],[0]],\"collapse\":[[1,0.899999976,0.800000012,0.600000024],[0,0,0,0],[0,0,0,0],[0,0,0,0]]}\n"
         },
         "deepest_callable_boundary": "render_olmradialblur_rotation_float with RotationTypedPlanes",
-        "typed_prepass_scatter_collapse_planes": null
+        "typed_prepass_scatter_collapse_planes": {
+          "accum": [
+            [
+              0.600000024,
+              0.540000021,
+              0.480000019,
+              0.600000024
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "collapse": [
+            [
+              1,
+              0.899999976,
+              0.800000012,
+              0.600000024
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "implementation": "source-included-cli-main.cpp",
+          "polar": [
+            [
+              1,
+              0.900000036,
+              0.800000012,
+              0.600000024
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "polar_dimensions": [
+            1,
+            4
+          ],
+          "polar_valid": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "polar_xy": [
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              4,
+              1
+            ]
+          ],
+          "prepass": [
+            [
+              0.600000024
+            ],
+            [
+              0
+            ],
+            [
+              0
+            ],
+            [
+              0
+            ]
+          ],
+          "repeat_border": false,
+          "scatter": [
+            [
+              0.600000024
+            ],
+            [
+              0
+            ],
+            [
+              0
+            ],
+            [
+              0
+            ]
+          ],
+          "source_alpha": [
+            [
+              0.600000024
+            ],
+            [
+              0
+            ],
+            [
+              0
+            ],
+            [
+              0
+            ]
+          ],
+          "typed_input_geometry": {
+            "height": 4,
+            "row_stride": 4,
+            "width": 1
+          }
+        }
       },
       "repeat_border": 0,
       "typed_input": {
+        "aex_context": {
+          "outer_base_span": 0,
+          "source": "scatter_entry.ctx+0x3a9e8"
+        },
         "polar": {
           "cells": [
             [
@@ -478,6 +997,18 @@
               0.9000000357627869,
               0.800000011920929,
               0.6000000238418579
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
             ],
             [
               0.0,
@@ -495,6 +1026,14 @@
             "0x00000000",
             "0x00000000",
             "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
             "0x00000000"
           ],
           "roundtrip_raw_f32_words": [
@@ -505,9 +1044,17 @@
             "0x00000000",
             "0x00000000",
             "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
             "0x00000000"
           ],
-          "serialized_sha256": "dd35b863fd0507ba579fc76ce885e8faa2767093b876c0cc77521b629acf2a86",
+          "serialized_sha256": "69a88afdf94e340f2da2b3e0e47d8d431e8eb9d8925a013eb1e6cdf7ed3fb654",
           "source": "actual_aex.prepass_entry.plus_0x38_initial_or_collapsed_rgba"
         },
         "validity": {
@@ -531,9 +1078,27 @@
             ],
             [
               0.6000000238418579
+            ],
+            [
+              0.6000000238418579
+            ],
+            [
+              0.6000000238418579
             ]
           ],
           "plus_0x38_initial_or_collapsed_rgba": [
+            [
+              1.0,
+              0.8999999761581421,
+              0.800000011920929,
+              0.6000000238418579
+            ],
+            [
+              1.0,
+              0.8999999761581421,
+              0.800000011920929,
+              0.6000000238418579
+            ],
             [
               1.0,
               0.8999999761581421,
@@ -559,9 +1124,27 @@
               0.5400000214576721,
               0.48000001907348633,
               0.6000000238418579
+            ],
+            [
+              0.6000000238418579,
+              0.5400000214576721,
+              0.48000001907348633,
+              0.6000000238418579
+            ],
+            [
+              0.6000000238418579,
+              0.5400000214576721,
+              0.48000001907348633,
+              0.6000000238418579
             ]
           ],
           "plus_0x40_scalar_prepass": [
+            [
+              0.800000011920929
+            ],
+            [
+              0.800000011920929
+            ],
             [
               0.800000011920929
             ],
@@ -575,9 +1158,21 @@
             ],
             [
               0.6000000238418579
+            ],
+            [
+              0.6000000238418579
+            ],
+            [
+              0.6000000238418579
             ]
           ],
           "plus_0x50_source_alpha_or_variation_plane": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ],
             [
               1.0
             ],
@@ -631,9 +1226,27 @@
             ],
             [
               0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
             ]
           ],
           "plus_0x38_initial_or_collapsed_rgba": [
+            [
+              1.0,
+              0.9000000357627869,
+              0.800000011920929,
+              0.6000000238418579
+            ],
+            [
+              1.0,
+              0.9000000357627869,
+              0.800000011920929,
+              0.6000000238418579
+            ],
             [
               1.0,
               0.9000000357627869,
@@ -659,9 +1272,27 @@
               0.0,
               0.0,
               0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0
             ]
           ],
           "plus_0x40_scalar_prepass": [
+            [
+              0.800000011920929
+            ],
+            [
+              0.800000011920929
+            ],
             [
               0.800000011920929
             ],
@@ -675,9 +1306,21 @@
             ],
             [
               0.0
+            ],
+            [
+              0.0
+            ],
+            [
+              0.0
             ]
           ],
           "plus_0x50_source_alpha_or_variation_plane": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ],
             [
               1.0
             ],
@@ -735,9 +1378,27 @@
             ],
             [
               0.6000000238418579
+            ],
+            [
+              0.6000000238418579
+            ],
+            [
+              0.6000000238418579
             ]
           ],
           "plus_0x38_initial_or_collapsed_rgba": [
+            [
+              1.0,
+              0.9000000357627869,
+              0.800000011920929,
+              0.6000000238418579
+            ],
+            [
+              1.0,
+              0.9000000357627869,
+              0.800000011920929,
+              0.6000000238418579
+            ],
             [
               1.0,
               0.9000000357627869,
@@ -763,9 +1424,27 @@
               0.5400000214576721,
               0.48000001907348633,
               0.6000000238418579
+            ],
+            [
+              0.6000000238418579,
+              0.5400000214576721,
+              0.48000001907348633,
+              0.6000000238418579
+            ],
+            [
+              0.6000000238418579,
+              0.5400000214576721,
+              0.48000001907348633,
+              0.6000000238418579
             ]
           ],
           "plus_0x40_scalar_prepass": [
+            [
+              0.800000011920929
+            ],
+            [
+              0.800000011920929
+            ],
             [
               0.800000011920929
             ],
@@ -779,9 +1458,21 @@
             ],
             [
               0.6000000238418579
+            ],
+            [
+              0.6000000238418579
+            ],
+            [
+              0.6000000238418579
             ]
           ],
           "plus_0x50_source_alpha_or_variation_plane": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ],
             [
               1.0
             ],
@@ -797,6 +1488,15 @@
             "angular_count": 1,
             "byte_count": 4,
             "contract_proven": true,
+            "ctx": "0x20000000",
+            "ctx_fields": {
+              "inner_base_span_0x3a9ec": 0,
+              "inner_caller_scale_0x30": 0,
+              "inner_offset_mode_0x2c": 1065353216,
+              "outer_base_span_0x3a9e8": 0,
+              "outer_caller_scale_0x28": 0,
+              "outer_offset_mode_0x24": 1065353216
+            },
             "end_radius": 4,
             "max_alpha": "0x400004c0",
             "quality_or_rows_raw": "0x0000000000000004",
@@ -823,25 +1523,47 @@
       },
       "differential": {
         "earliest_divergence": null,
-        "pass": false,
-        "result": "blocked_actual_capture_incomplete",
+        "pass": true,
+        "result": "comparable_stage_pass",
         "stages": [
           {
+            "max_ulp": 0,
+            "mismatches": [],
             "pass": true,
+            "portable_plane": "polar",
             "stage": "injected_polar"
           },
           {
-            "pass": false,
-            "required": {
-              "rgba_cells": 4,
-              "scalar_rows": 4,
-              "validity_bytes": 4
-            },
-            "stage": "actual_capture_contract"
+            "max_ulp": 0,
+            "mismatches": [],
+            "pass": true,
+            "portable_plane": "source_alpha",
+            "stage": "post_prepass_source_alpha"
+          },
+          {
+            "max_ulp": 0,
+            "mismatches": [],
+            "pass": true,
+            "portable_plane": "accum",
+            "stage": "post_scatter_accum"
+          },
+          {
+            "max_ulp": 0,
+            "mismatches": [],
+            "pass": true,
+            "portable_plane": "scatter",
+            "stage": "post_scatter_max_alpha"
+          },
+          {
+            "max_ulp": 0,
+            "mismatches": [],
+            "pass": true,
+            "portable_plane": "collapse",
+            "stage": "post_collapse"
           }
         ]
       },
-      "differential_result": "blocked_actual_capture_incomplete",
+      "differential_result": "comparable_stage_pass",
       "geometry": {
         "aex_source_plane": {
           "angular_count": 1,
@@ -867,13 +1589,13 @@
           "row_stride": 4,
           "width": 1
         },
-        "dimensions_equivalent": false,
+        "dimensions_equivalent": true,
         "portable_polar_plane": {
-          "height": null,
-          "indexed_cells_emitted": "not executed without four-cell actual capture",
-          "width": null
+          "height": 4,
+          "indexed_cells_emitted": "all caller-supplied 1x4 cells",
+          "width": 1
         },
-        "typed_contract_equivalent": false
+        "typed_contract_equivalent": true
       },
       "max_ulp": null,
       "portable_cli": {
@@ -881,12 +1603,13 @@
           "command": [
             "radialblur_prepass_local_20260716_adapter",
             "existing_2x2_rgba_f32.bin",
-            "aex_repeat1_typed_1x2_polar_rgba_f32.bin",
-            "--missing-validity",
+            "aex_repeat1_typed_1x4_polar_rgba_f32.bin",
+            "aex_repeat1_typed_1x4_valid_u8.bin",
             "--validate-only",
             "1",
-            "2",
-            "4"
+            "4",
+            "4",
+            "0"
           ],
           "payload": {
             "implementation": "source-included-cli-main.cpp",
@@ -899,32 +1622,387 @@
               "0x3f800000",
               "0x3f666667",
               "0x3f4ccccd",
+              "0x3f19999a",
+              "0x3f800000",
+              "0x3f666667",
+              "0x3f4ccccd",
+              "0x3f19999a",
+              "0x3f800000",
+              "0x3f666667",
+              "0x3f4ccccd",
               "0x3f19999a"
             ],
             "typed_input_geometry": {
-              "height": 2,
+              "height": 4,
               "row_stride": 4,
               "width": 1
             },
-            "validity_available": false,
-            "validity_bytes": []
+            "validity_available": true,
+            "validity_bytes": [
+              1,
+              0,
+              0,
+              0
+            ]
           },
           "returncode": 0,
           "shared_stage_executed": false,
           "stderr": "",
-          "stdout": "{\"implementation\":\"source-included-cli-main.cpp\",\"input_validation_only\":true,\"typed_input_geometry\":{\"width\":1,\"height\":2,\"row_stride\":4},\"validity_available\":false,\"polar_words\":[\"0x3f800000\",\"0x3f666667\",\"0x3f4ccccd\",\"0x3f19999a\",\"0x3f800000\",\"0x3f666667\",\"0x3f4ccccd\",\"0x3f19999a\"],\"validity_bytes\":[]}\n"
+          "stdout": "{\"implementation\":\"source-included-cli-main.cpp\",\"input_validation_only\":true,\"typed_input_geometry\":{\"width\":1,\"height\":4,\"row_stride\":4},\"validity_available\":true,\"polar_words\":[\"0x3f800000\",\"0x3f666667\",\"0x3f4ccccd\",\"0x3f19999a\",\"0x3f800000\",\"0x3f666667\",\"0x3f4ccccd\",\"0x3f19999a\",\"0x3f800000\",\"0x3f666667\",\"0x3f4ccccd\",\"0x3f19999a\",\"0x3f800000\",\"0x3f666667\",\"0x3f4ccccd\",\"0x3f19999a\"],\"validity_bytes\":[1,0,0,0]}\n"
         },
         "adapter_run": {
-          "executed": false,
-          "reason": "actual_aex_capture_incomplete"
+          "command": [
+            "radialblur_prepass_local_20260716_adapter",
+            "existing_2x2_rgba_f32.bin",
+            "aex_repeat1_typed_1x4_polar_rgba_f32.bin",
+            "aex_repeat1_typed_1x4_valid_u8.bin",
+            "1",
+            "1",
+            "4",
+            "4",
+            "0"
+          ],
+          "payload": {
+            "accum": [
+              [
+                0.600000024,
+                0.540000021,
+                0.480000019,
+                0.600000024
+              ],
+              [
+                0.600000024,
+                0.540000021,
+                0.480000019,
+                0.600000024
+              ],
+              [
+                0.600000024,
+                0.540000021,
+                0.480000019,
+                0.600000024
+              ],
+              [
+                0.600000024,
+                0.540000021,
+                0.480000019,
+                0.600000024
+              ]
+            ],
+            "collapse": [
+              [
+                1,
+                0.899999976,
+                0.800000012,
+                0.600000024
+              ],
+              [
+                1,
+                0.899999976,
+                0.800000012,
+                0.600000024
+              ],
+              [
+                1,
+                0.899999976,
+                0.800000012,
+                0.600000024
+              ],
+              [
+                1,
+                0.899999976,
+                0.800000012,
+                0.600000024
+              ]
+            ],
+            "implementation": "source-included-cli-main.cpp",
+            "polar": [
+              [
+                1,
+                0.900000036,
+                0.800000012,
+                0.600000024
+              ],
+              [
+                1,
+                0.900000036,
+                0.800000012,
+                0.600000024
+              ],
+              [
+                1,
+                0.900000036,
+                0.800000012,
+                0.600000024
+              ],
+              [
+                1,
+                0.900000036,
+                0.800000012,
+                0.600000024
+              ]
+            ],
+            "polar_dimensions": [
+              1,
+              4
+            ],
+            "polar_valid": [
+              true,
+              false,
+              false,
+              false
+            ],
+            "polar_xy": [
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                3,
+                1
+              ],
+              [
+                4,
+                1
+              ]
+            ],
+            "prepass": [
+              [
+                0.600000024
+              ],
+              [
+                0
+              ],
+              [
+                0
+              ],
+              [
+                0
+              ]
+            ],
+            "repeat_border": true,
+            "scatter": [
+              [
+                0.600000024
+              ],
+              [
+                0.600000024
+              ],
+              [
+                0.600000024
+              ],
+              [
+                0.600000024
+              ]
+            ],
+            "source_alpha": [
+              [
+                0.600000024
+              ],
+              [
+                0.600000024
+              ],
+              [
+                0.600000024
+              ],
+              [
+                0.600000024
+              ]
+            ],
+            "typed_input_geometry": {
+              "height": 4,
+              "row_stride": 4,
+              "width": 1
+            }
+          },
+          "returncode": 0,
+          "shared_stage_executed": true,
+          "stderr": "",
+          "stdout": "{\"implementation\":\"source-included-cli-main.cpp\",\"typed_input_geometry\":{\"width\":1,\"height\":4,\"row_stride\":4},\"repeat_border\":true,\"polar_dimensions\":[1,4],\"polar_xy\":[[1,1],[2,1],[3,1],[4,1]],\"polar_valid\":[true,false,false,false],\"polar\":[[1,0.900000036,0.800000012,0.600000024],[1,0.900000036,0.800000012,0.600000024],[1,0.900000036,0.800000012,0.600000024],[1,0.900000036,0.800000012,0.600000024]],\"accum\":[[0.600000024,0.540000021,0.480000019,0.600000024],[0.600000024,0.540000021,0.480000019,0.600000024],[0.600000024,0.540000021,0.480000019,0.600000024],[0.600000024,0.540000021,0.480000019,0.600000024]],\"prepass\":[[0.600000024],[0],[0],[0]],\"scatter\":[[0.600000024],[0.600000024],[0.600000024],[0.600000024]],\"source_alpha\":[[0.600000024],[0.600000024],[0.600000024],[0.600000024]],\"collapse\":[[1,0.899999976,0.800000012,0.600000024],[1,0.899999976,0.800000012,0.600000024],[1,0.899999976,0.800000012,0.600000024],[1,0.899999976,0.800000012,0.600000024]]}\n"
         },
         "deepest_callable_boundary": "render_olmradialblur_rotation_float with RotationTypedPlanes",
-        "typed_prepass_scatter_collapse_planes": null
+        "typed_prepass_scatter_collapse_planes": {
+          "accum": [
+            [
+              0.600000024,
+              0.540000021,
+              0.480000019,
+              0.600000024
+            ],
+            [
+              0.600000024,
+              0.540000021,
+              0.480000019,
+              0.600000024
+            ],
+            [
+              0.600000024,
+              0.540000021,
+              0.480000019,
+              0.600000024
+            ],
+            [
+              0.600000024,
+              0.540000021,
+              0.480000019,
+              0.600000024
+            ]
+          ],
+          "collapse": [
+            [
+              1,
+              0.899999976,
+              0.800000012,
+              0.600000024
+            ],
+            [
+              1,
+              0.899999976,
+              0.800000012,
+              0.600000024
+            ],
+            [
+              1,
+              0.899999976,
+              0.800000012,
+              0.600000024
+            ],
+            [
+              1,
+              0.899999976,
+              0.800000012,
+              0.600000024
+            ]
+          ],
+          "implementation": "source-included-cli-main.cpp",
+          "polar": [
+            [
+              1,
+              0.900000036,
+              0.800000012,
+              0.600000024
+            ],
+            [
+              1,
+              0.900000036,
+              0.800000012,
+              0.600000024
+            ],
+            [
+              1,
+              0.900000036,
+              0.800000012,
+              0.600000024
+            ],
+            [
+              1,
+              0.900000036,
+              0.800000012,
+              0.600000024
+            ]
+          ],
+          "polar_dimensions": [
+            1,
+            4
+          ],
+          "polar_valid": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "polar_xy": [
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              4,
+              1
+            ]
+          ],
+          "prepass": [
+            [
+              0.600000024
+            ],
+            [
+              0
+            ],
+            [
+              0
+            ],
+            [
+              0
+            ]
+          ],
+          "repeat_border": true,
+          "scatter": [
+            [
+              0.600000024
+            ],
+            [
+              0.600000024
+            ],
+            [
+              0.600000024
+            ],
+            [
+              0.600000024
+            ]
+          ],
+          "source_alpha": [
+            [
+              0.600000024
+            ],
+            [
+              0.600000024
+            ],
+            [
+              0.600000024
+            ],
+            [
+              0.600000024
+            ]
+          ],
+          "typed_input_geometry": {
+            "height": 4,
+            "row_stride": 4,
+            "width": 1
+          }
+        }
       },
       "repeat_border": 1,
       "typed_input": {
+        "aex_context": {
+          "outer_base_span": 0,
+          "source": "scatter_entry.ctx+0x3a9e8"
+        },
         "polar": {
           "cells": [
+            [
+              1.0,
+              0.9000000357627869,
+              0.800000011920929,
+              0.6000000238418579
+            ],
+            [
+              1.0,
+              0.9000000357627869,
+              0.800000011920929,
+              0.6000000238418579
+            ],
             [
               1.0,
               0.9000000357627869,
@@ -947,6 +2025,14 @@
             "0x3f800000",
             "0x3f666667",
             "0x3f4ccccd",
+            "0x3f19999a",
+            "0x3f800000",
+            "0x3f666667",
+            "0x3f4ccccd",
+            "0x3f19999a",
+            "0x3f800000",
+            "0x3f666667",
+            "0x3f4ccccd",
             "0x3f19999a"
           ],
           "roundtrip_raw_f32_words": [
@@ -957,9 +2043,17 @@
             "0x3f800000",
             "0x3f666667",
             "0x3f4ccccd",
+            "0x3f19999a",
+            "0x3f800000",
+            "0x3f666667",
+            "0x3f4ccccd",
+            "0x3f19999a",
+            "0x3f800000",
+            "0x3f666667",
+            "0x3f4ccccd",
             "0x3f19999a"
           ],
-          "serialized_sha256": "d18b2e9e4f8b51c941babca4147ec31817478d5caedada5ff893feef6d29c3f7",
+          "serialized_sha256": "9b4f5915970dfc5201c523fe13df9320ea4311b40c2bce29965edb76b3672273",
           "source": "actual_aex.prepass_entry.plus_0x38_initial_or_collapsed_rgba"
         },
         "validity": {
@@ -975,8 +2069,8 @@
       }
     }
   ],
-  "schema": 5,
-  "status": "blocked",
+  "schema": 6,
+  "status": "comparable_stage_pass",
   "synthetic_geometry_gate": {
     "geometry": {
       "height": 4,
@@ -993,7 +2087,8 @@
         "--validate-only",
         "1",
         "4",
-        "4"
+        "4",
+        "0"
       ],
       "payload": {
         "implementation": "source-included-cli-main.cpp",
@@ -1044,13 +2139,14 @@
       "filtered_alpha": "ctx+0x48",
       "max_alpha": "ctx+0x3c948",
       "polar_rgba": "ctx+0x38",
+      "prepass_factor": "ctx+0x50",
       "row_end": "floor(next*fVar35)",
       "row_start": "floor(chunk*fVar35)",
       "scatter_angular_count": "argument 6 at RSP+0x30",
       "scatter_end_radius": "argument 9 at RSP+0x48",
+      "scatter_span_gate": "ctx+0x40",
       "scatter_start_radius": "argument 8 at RSP+0x40",
-      "scatter_valid_mask": "argument 5 at RSP+0x28",
-      "span_factor": "ctx+0x50"
+      "scatter_valid_mask": "argument 5 at RSP+0x28"
     },
     "export": "RotationTypedPlanes: polar, accum, prepass_alpha, scatter_alpha, source_alpha, collapsed",
     "function": "render_olmradialblur_rotation_float",

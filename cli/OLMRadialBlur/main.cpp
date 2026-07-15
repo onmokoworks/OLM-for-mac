@@ -1943,7 +1943,6 @@ Image render_olmradialblur_rotation_float(const FloatImage &src, const RadialBlu
             for (int ai = 0; ai < angular_count; ++ai) {
                 const size_t cell = static_cast<size_t>(ri) * angular_count + ai;
                 const size_t dst = cell * 4;
-                if (!polar_valid[cell]) continue;
                 const float alpha = polar.rgba[dst + 3];
                 if (alpha <= 0.0f) continue;
                 if (params.inner_scatter_rgb_mode == "prepass-premul") {

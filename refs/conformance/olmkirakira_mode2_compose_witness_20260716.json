@@ -1,0 +1,218 @@
+{
+  "ae_exact_claim": false,
+  "cases": {
+    "five_active_saturating": {
+      "active_or_skipped": [
+        {
+          "index": 0,
+          "ray": "0x3f4ccccd",
+          "skipped": false
+        },
+        {
+          "index": 1,
+          "ray": "0x3f4ccccd",
+          "skipped": false
+        },
+        {
+          "index": 2,
+          "ray": "0x3f4ccccd",
+          "skipped": false
+        },
+        {
+          "index": 3,
+          "ray": "0x3f4ccccd",
+          "skipped": false
+        },
+        {
+          "index": 4,
+          "ray": "0x3f4ccccd",
+          "skipped": false
+        }
+      ],
+      "post_clamp_f32": [
+        "0x3f800000",
+        "0x3f000000",
+        "0x00000000",
+        "0x3f800000"
+      ],
+      "pre_clamp_f32": [
+        "0x40900000",
+        "0x3f000000",
+        "0x00000000",
+        "0x40800000"
+      ]
+    },
+    "one_short_ray": {
+      "active_or_skipped": [
+        {
+          "index": 0,
+          "ray": "0x3e4ccccd",
+          "skipped": false
+        },
+        {
+          "index": 1,
+          "ray": "0x00000000",
+          "skipped": true
+        },
+        {
+          "index": 2,
+          "ray": "0x00000000",
+          "skipped": true
+        },
+        {
+          "index": 3,
+          "ray": "0x00000000",
+          "skipped": true
+        },
+        {
+          "index": 4,
+          "ray": "0x00000000",
+          "skipped": true
+        }
+      ],
+      "post_clamp_f32": [
+        "0x3e800000",
+        "0x3f000000",
+        "0x3f400000",
+        "0x3e4ccccd"
+      ],
+      "pre_clamp_f32": [
+        "0x3e800000",
+        "0x3f000000",
+        "0x3f400000",
+        "0x3e4ccccd"
+      ]
+    },
+    "threshold_boundary": {
+      "active_or_skipped": [
+        {
+          "index": 0,
+          "ray": "0x3a03126f",
+          "skipped": true
+        },
+        {
+          "index": 1,
+          "ray": "0x3b03126f",
+          "skipped": false
+        },
+        {
+          "index": 2,
+          "ray": "0x00000000",
+          "skipped": true
+        },
+        {
+          "index": 3,
+          "ray": "0x00000000",
+          "skipped": true
+        },
+        {
+          "index": 4,
+          "ray": "0x00000000",
+          "skipped": true
+        }
+      ],
+      "post_clamp_f32": [
+        "0x3e800000",
+        "0x3f000000",
+        "0x3f400000",
+        "0x3b03126f"
+      ],
+      "pre_clamp_f32": [
+        "0x3e800000",
+        "0x3f000000",
+        "0x3f400000",
+        "0x3b03126f"
+      ]
+    },
+    "zero_ray_control": {
+      "active_or_skipped": [
+        {
+          "index": 0,
+          "ray": "0x00000000",
+          "skipped": true
+        },
+        {
+          "index": 1,
+          "ray": "0x00000000",
+          "skipped": true
+        },
+        {
+          "index": 2,
+          "ray": "0x00000000",
+          "skipped": true
+        },
+        {
+          "index": 3,
+          "ray": "0x00000000",
+          "skipped": true
+        },
+        {
+          "index": 4,
+          "ray": "0x00000000",
+          "skipped": true
+        }
+      ],
+      "post_clamp_f32": [
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "pre_clamp_f32": [
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ]
+    }
+  },
+  "date": "2026-07-16",
+  "facts": [
+    "FACT: the target zero-fills the output and visits five ray slots per pixel.",
+    "FACT: active slots add selected RGB directly and raw ray value to alpha before four channel clamps.",
+    "FACT: the AEX compares ray value against DAT_181489990 before the active-slot path.",
+    "FACT: DAT_181489990 is the little-endian float64 value 0.001 in the pinned AEX."
+  ],
+  "inferences": [
+    "INFERENCE: the independent float32 replay is a faithful local witness of this bounded operation order.",
+    "INFERENCE: the independent float32 replay is bounded to the pinned AEX threshold and observed operation order."
+  ],
+  "inputs": {
+    "aex": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "clamp": "FUN_181156740 @ 0x181156740",
+    "decomp": "decomp/OLMKiraKira.aex.c.txt",
+    "decomp_sha256": "990693e95695cd83032764f0452fbbe336b8f910ce4d9f5af94a2094c7f6328a",
+    "disasm": "disasm/OLMKiraKira.aex.asm.txt",
+    "disasm_sha256": "d23c749d225a934580c96f2929fb9d7253d07b1be208faa9de6ff89efc1f89b3",
+    "target": "FUN_18114ffd0 @ 0x18114ffd0",
+    "threshold": {
+      "address": "0x181489990",
+      "raw_le_f64": "fca9f1d24d62503f",
+      "value": 0.001
+    }
+  },
+  "kind": "olmkirakira_mode2_compose_witness",
+  "limits": [
+    "This does not prove later source/glow composition, host binding, Windows output, or AE exactness.",
+    "Final PNG bytes are intentionally outside the witness."
+  ],
+  "model_checks": {
+    "binary_threshold_skips_below_and_accepts_above": true,
+    "five_active_rays_clamp_independently": true,
+    "short_ray_adds_raw_rgb_alpha": true,
+    "zero_ray_is_noop": true
+  },
+  "schema": 1,
+  "scope": "one-pixel inner Mode-2 FUN_18114ffd0 aggregation/compose boundary; no PNG tuning",
+  "static_checks": {
+    "five_ray_iterations": true,
+    "four_independent_clamps": true,
+    "raw_alpha_add": true,
+    "raw_rgb_add": true,
+    "target_marker": true,
+    "threshold_skip": true,
+    "zero_fill_before_iteration": true
+  },
+  "status": "pass"
+}

@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "kind": "olmdirectionalblur_front_alpha_boundary_audit",
+  "selected_lane": "Front Alpha Fade",
+  "status": "pass",
+  "commands": [
+    "python3 tools/emulation/test_dblur_front_alpha_boundary_audit_20260716.py"
+  ],
+  "same_run_case": {
+    "case_id": "db_angle0_alpha_fade_hard_edges",
+    "request_id": "olmdirectionalblur_front_alpha_host_boundary_2025_20260711",
+    "loaded_aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "input_alpha_mode": "PREMULTIPLIED",
+    "host_boundary_input_formula_max_diff": 0,
+    "host_boundary_output_formula_max_diff": 0
+  },
+  "case_controls": {
+    "Size Variation#3": 0,
+    "Alpha Fade#6": 96,
+    "Sharp Tail#7": 0,
+    "Blur Strength#10": 0,
+    "Alpha Fade#11": 0,
+    "Sharp Tail#12": 0,
+    "Noise Variation#15": 0
+  },
+  "decomp_evidence": {
+    "file": "decomp/OLMDirectionalBlur.aex.c.txt",
+    "line_hits": {
+      "FUN_180001000(iVar7,iVar9,lVar2,lVar1,*(longlong *)(param_7 + 0x8088),": [
+        1540
+      ],
+      "param_7 + 0x3ed8,*(int *)(param_7 + 0x4c),": [
+        1541
+      ],
+      "param_7 + 0x7ee8,*(int *)(param_7 + 0x54),param_5,fVar10);": [
+        1542
+      ],
+      "fVar12 = fVar3 - ((float)((uint)((float)param_1 -": [
+        1570,
+        1581
+      ],
+      "*(float *)(param_7 + 0x40)) /": [
+        1572
+      ],
+      "FUN_1800013e0(iVar7,iVar9,'\\x01',lVar2,lVar1,*(longlong *)(param_7 + 0x8080),": [
+        1578
+      ]
+    },
+    "summary": {
+      "front_alpha_fade_gather_count": "+0x4c feeds FUN_180001000 prepass/gather table",
+      "back_alpha_fade_gather_count": "+0x54 feeds FUN_180001000 back gather table",
+      "front_sharp_tail_taper": "+0x40 participates in the scatter taper path, not the gather-count path"
+    }
+  },
+  "bounded_witness": {
+    "status": "pass",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "input_sha256": "671ae54fcf5eaca65986389034c63ce47c0bce9b842b193a652a87e195d05dcd",
+    "rowdriver_instructions": 4196879,
+    "normalization_instructions": 44412,
+    "writer_instructions": 11690,
+    "comparisons": {
+      "destination": {
+        "exact": true,
+        "differing_floats": 0,
+        "focus_differing_floats": 0,
+        "actual_sha256": "6e470f7de23e9feccf5cb1e471ccc622daa46429e07c37f220f1bbba6ccd97a0",
+        "portable_sha256": "6e470f7de23e9feccf5cb1e471ccc622daa46429e07c37f220f1bbba6ccd97a0",
+        "first_differing_indices": [],
+        "first_focus_differing_indices": []
+      },
+      "denominator": {
+        "exact": true,
+        "differing_floats": 0,
+        "focus_differing_floats": 0,
+        "actual_sha256": "46abe49fa5f5795add79d562ef7ee6d61ea37553ca4fbe1839e8dc225e258993",
+        "portable_sha256": "46abe49fa5f5795add79d562ef7ee6d61ea37553ca4fbe1839e8dc225e258993",
+        "first_differing_indices": [],
+        "first_focus_differing_indices": []
+      },
+      "alpha": {
+        "exact": true,
+        "differing_floats": 0,
+        "focus_differing_floats": 0,
+        "actual_sha256": "280e3793a17ebd92483773da12b511cd012c469bd41b37e7a6e2917ab1be77cc",
+        "portable_sha256": "280e3793a17ebd92483773da12b511cd012c469bd41b37e7a6e2917ab1be77cc",
+        "first_differing_indices": [],
+        "first_focus_differing_indices": []
+      }
+    },
+    "normalization": {
+      "exact": true,
+      "differing_floats": 0,
+      "focus_differing_floats": 0,
+      "actual_sha256": "2605a4dfc67b6a5a3386754602c3fb34e44f6ba607b5f7d6cc52a413fa2821c0",
+      "portable_sha256": "2605a4dfc67b6a5a3386754602c3fb34e44f6ba607b5f7d6cc52a413fa2821c0",
+      "first_differing_indices": [],
+      "first_focus_differing_indices": []
+    },
+    "writer_vs_windows": {
+      "exact": false,
+      "differing_floats": 226,
+      "focus_differing_floats": 0,
+      "actual_sha256": "9b90145bf4323ea96a902de2e77b57db5367d62d803e0a91b070c5a3250bc794",
+      "portable_sha256": "e69f3865bd321c56823a503d67f3410e2cda0674e0b32860f914dca38a3e7570",
+      "first_differing_indices": [
+        0,
+        10,
+        12,
+        13,
+        16,
+        17,
+        19,
+        20,
+        21,
+        24,
+        25,
+        27,
+        29,
+        30,
+        31,
+        35
+      ],
+      "first_focus_differing_indices": []
+    }
+  },
+  "mixed_family_evidence": {
+    "32bpc_case_count": 10,
+    "32bpc_family_counts": {
+      "back": 10,
+      "fade": 10,
+      "noise": 10,
+      "tail": 10,
+      "variation": 10
+    }
+  },
+  "fact": [
+    "The same-run Windows host-boundary proof for db_angle0_alpha_fade_hard_edges loaded the pinned 2025 AEX and both host formulas are exact (max_diff=0 in and out).",
+    "The bounded actual-AEX Front Alpha Fade witness rerun is byte-exact for rowdriver destination, denominator, alpha, and normalization against the portable harness.",
+    "The decomp rowdriver calls FUN_180001000 with +0x3ed8/+0x4c and +0x7ee8/+0x54, while the scatter taper path uses +0x40 before FUN_1800013e0.",
+    "The current software 24fps reference case keeps front Sharp Tail, all Back controls, and Noise Variation at zero while Front Alpha Fade is 96.",
+    "The imported 32bpc Windows family remains fully mixed across variation/fade/tail/back/noise (10/10 for each family), so those broader lanes are not isolated by the current float return set."
+  ],
+  "inference": [
+    "Front Alpha Fade is the smallest remaining DirectionalBlur lane that can be closed today with existing AEX, decomp, and harness evidence because it already has an exact bounded AEX replay and a pinned same-run host boundary.",
+    "Size Variation, Sharp Tail, Back, and Noise still require either a narrower typed witness or a less entangled return set before the same style of closure is justified.",
+    "The remaining Front Alpha Fade gap is downstream of the bounded rowdriver/normalization witness; this audit does not convert that lane into an AE-exact claim."
+  ],
+  "production_changed": false
+}
