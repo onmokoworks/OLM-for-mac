@@ -19,7 +19,8 @@ RUNTIME_RESULT_FILENAMES = {
 PRIORITY_PROFILES = {
     "olmdirectionalblur-2025-front-alpha-host-boundary": 1,
     "olmdirectionalblur-2025-alpha-fade-fullrender-row755-pre-normalization": 3,
-    "distancegradation-8bpc-current-aex-same-run-typed-boundary": 23,
+    "olmdirectionalblur-row755-common-core": 3,
+    "distancegradation-8bpc-current-aex-same-run-typed-boundary": 1,
     "radialblur-tiny-rotation-anchor-context-watch-followup": 3,
     "radialblur-tiny-rotation-anchor-pointer-watch-followup": 4,
     "radialblur-tiny-rotation-anchor-watch-followup": 5,
@@ -47,6 +48,7 @@ PRIORITY_PROFILES = {
     "radialblur-case0010-final-writeback": 18,
     "radialblur-zoom-case0009-final-plane-cells": 18,
     "radialblur-zoom-case0009-final-plane-typed": 18,
+    "radialblur-case0009-fullframe-postnorm-typed-common-core": 18,
     "distancegradation-case0023-refcon-stack-wordmap-followup": 17,
     "distancegradation-case0023-refcon-wordmap-followup": 18,
     "distancegradation-case0023-output-word-triplet-followup": 19,
@@ -75,6 +77,7 @@ PRIORITY_PROFILES = {
     "smoother2-current-aex-producer-path-diff": 212,
     "smoother2-current-aex-producer-bytes-20260708": 213,
     "smoother2-current-aex-0012-bind-then-read-20260708": 214,
+    "olmsmoother2-case0012-current-aex-common-core": 214,
     "windows-ae-addproperty-stall-diagnostics": 900,
     "windows-ae-runner-startup-diagnostics": 901,
 }
@@ -468,11 +471,38 @@ def package_manifest(path: Path) -> dict[str, Any] | None:
                 None,
             )
             if name is None:
+                name = next(
+                    (member for member in archive.namelist() if member.replace("\\", "/").endswith("package-manifest.json")),
+                    None,
+                )
+            if name is None:
                 return None
             data = json.loads(archive.read(name).decode("utf-8"))
     except Exception:
         return None
-    return data if isinstance(data, dict) and data.get("kind") == "olm_runtime_trace_request_package" else None
+    if not isinstance(data, dict):
+        return None
+    if data.get("kind") == "olm_runtime_trace_request_package":
+        return data
+    if data.get("kind") != "windows_witness_generated_package":
+        return None
+    queue = data.get("queue")
+    request_id = data.get("request_id")
+    if not isinstance(queue, dict) or not isinstance(request_id, str):
+        return None
+    return {
+        "kind": "olm_runtime_trace_request_package",
+        "profile": queue.get("profile") or "",
+        "supersedes": queue.get("supersedes") or [],
+        "runtime_actions": [
+            {
+                "request_id": request_id,
+                "plugin_area": queue.get("plugin_area") or "",
+                "command": queue.get("command") or "",
+                "stop_condition": queue.get("stop_condition") or "",
+            }
+        ],
+    }
 
 
 def answered_request_ids(root: Path) -> set[str]:
@@ -652,7 +682,7 @@ def superseded_request_ids(root: Path) -> set[str]:
     ids = set()
     for row in data.get("superseded", []):
         if isinstance(row, dict) and isinstance(row.get("request_id"), str):
-            ids.add(row["request_id"])
+            ids.add(normalize_request_id(row["request_id"]))
     return ids
 
 
@@ -669,6 +699,13 @@ def acceptance_note(request_id: str) -> str:
 
 def hard_lane_context(request_id: str) -> dict[str, str]:
     return dict(HARD_LANE_CONTEXTS.get(request_id, {}))
+
+
+def profile_priority(profile: str) -> int:
+    if profile in PRIORITY_PROFILES:
+        return PRIORITY_PROFILES[profile]
+    versionless = re.sub(r"-v[0-9]+$", "", profile)
+    return PRIORITY_PROFILES.get(versionless, 500)
 
 
 def row_status(request_id: str, answered: set[str], superseded: set[str], latest_status: str = "") -> str:
@@ -697,10 +734,16 @@ def collect(root: Path, package_dir: Path) -> list[dict[str, Any]]:
     latest_comparison_status = latest_comparison_statuses(root)
     latest_archives = latest_return_archives(root)
     rows: list[dict[str, Any]] = []
-    for package in sorted(package_dir.glob("*.zip")):
-        manifest = package_manifest(package)
-        if manifest is None:
-            continue
+    packages = [
+        (package, manifest)
+        for package in sorted(package_dir.glob("*.zip"))
+        if (manifest := package_manifest(package)) is not None
+    ]
+    for _, manifest in packages:
+        for request_id in manifest.get("supersedes", []):
+            if isinstance(request_id, str):
+                superseded.add(normalize_request_id(request_id))
+    for package, manifest in packages:
         profile = str(manifest.get("profile") or "")
         for action in manifest.get("runtime_actions", []):
             if not isinstance(action, dict):
@@ -721,7 +764,7 @@ def collect(root: Path, package_dir: Path) -> list[dict[str, Any]]:
                     "request_id": request_id,
                     "status": status,
                     "profile": profile,
-                    "priority": PRIORITY_PROFILES.get(profile, 500),
+                    "priority": profile_priority(profile),
                     "package": display_path(root, package),
                     "plugin_area": action.get("plugin_area") or "",
                     "command": action.get("command") or "",

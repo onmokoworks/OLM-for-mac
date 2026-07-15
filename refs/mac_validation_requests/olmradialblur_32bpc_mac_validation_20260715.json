@@ -1,0 +1,57 @@
+{
+  "schema": "olmradialblur-32bpc-mac-float-validation-v1",
+  "request_id": "olmradialblur_32bpc_mac_validation_20260715",
+  "status": "blocked_pending_mac_noop_control",
+  "ae_exact_claim": false,
+  "audit": "refs/conformance/olmradialblur_32bpc_float_evidence_audit_20260715.json",
+  "scope": "smallest two-case Mac AE FLOAT EXR candidate/control gate for Zoom and Rotation",
+  "common_setup": {
+    "width": 1920,
+    "height": 1080,
+    "frame_rate": 24,
+    "bits_per_channel": 32,
+    "renderer": "SOFTWARE",
+    "working_space": "must be recorded exactly; do not infer",
+    "linear_blending": "must be recorded exactly; do not infer",
+    "frame": 0,
+    "input": "re-import the case-specific Windows before-effects FLOAT EXR unchanged"
+  },
+  "cases": [
+    {
+      "id": "final_random10_olm_radialblur_01",
+      "blur_type": "Zoom",
+      "input_exr": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMRadialBlur/olm_bitdepth_32bpc_olmradialblur_exr_20260710__software_32bpc__fr24__final_random10_olm_radialblur_01_before_effects.exr",
+      "input_sha256": "7380b8dd76a7113c312593194f55cc739bf08aadd13f222fed5f70ab1693c3bd",
+      "params_source": "Windows manifest case final_random10_olm_radialblur_01",
+      "params": {"Blur Type": 1, "Center": [720, 805], "Outer Strength": 917, "Outer Offset Mode": 2, "Outer Offset": 32, "Outer Edge Fade": 22, "Inner Strength": 1222, "Inner Offset Mode": 2, "Inner Offset": 166, "Inner Edge Fade": 31, "Repeat Border": 0, "Ratio": 4.5422, "Angle": 6, "Quality": 39.9632, "Brightness Gain": 9.6282, "Size Variation": 60, "Noise Variation": 96, "Noise Type": 1, "Seed": 401, "Noise Offset": 43, "Thickness": 92, "Effect Opacity": 100, "GPU Rendering": 1}
+    },
+    {
+      "id": "final_random10_olm_radialblur_02",
+      "blur_type": "Rotation",
+      "input_exr": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMRadialBlur/olm_bitdepth_32bpc_olmradialblur_exr_20260710__software_32bpc__fr24__final_random10_olm_radialblur_02_before_effects.exr",
+      "input_sha256": "b4e86f94302c603f885d9ab6bc2ecb53727d2dfadbaab6b20e0eb7e96b12defc",
+      "params_source": "Windows manifest case final_random10_olm_radialblur_02",
+      "params": {"Blur Type": 2, "Center": [1283, 480], "Outer Strength": 1344, "Outer Offset Mode": 1, "Outer Offset": 469, "Outer Edge Fade": 66, "Inner Strength": 225, "Inner Offset Mode": 3, "Inner Offset": 350, "Inner Edge Fade": 5, "Repeat Border": 0, "Ratio": 3.292, "Angle": -167, "Quality": 25.2618, "Brightness Gain": 5.8734, "Size Variation": 2, "Noise Variation": 58, "Noise Type": 1, "Seed": 788, "Noise Offset": 50, "Thickness": 18, "Effect Opacity": 100, "GPU Rendering": 1}
+    }
+  ],
+  "mac_run_contract": {
+    "outputs_per_case": ["no_effect_control.exr", "effect_on.exr"],
+    "output_template": "OLM EXR 32 Float",
+    "format": "OpenEXR",
+    "compression": "uncompressed scanline",
+    "channels": ["A", "B", "G", "R"],
+    "sample_type": "FLOAT",
+    "dimensions": [1920, 1080],
+    "finite_samples_only": true,
+    "sha256_required": true,
+    "plugin_identity": {"filename": "OLMRadialBlur.plugin", "loaded_path_required": true, "sha256_required": true},
+    "comparison": {"control_gate": "Windows before-effects EXR vs Mac no-effect EXR raw float32 words", "effect_gate": "Windows effect EXR vs Mac effect-on EXR raw float32 words", "allowed_transform": "none", "epsilon": 0, "ae_exact_requires": "both gates pass with identical host/project/output settings, case bindings, and loaded plugin hash"}
+  },
+  "fail_closed": [
+    "Reject if either Windows input hash does not match bytes.",
+    "Reject missing or changed parameter bindings, source identity, frame, renderer, working-space, or linear-blending record.",
+    "Reject missing Mac no-effect control, plugin path/hash, or output hash/header metadata.",
+    "Reject PNG, HALF, compressed, non-RGBA, non-FLOAT, non-finite, or reused-output results.",
+    "Do not claim exactness from 8bpc semantics, visual similarity, CLI output, runtime traces, or an effect-only Mac render."
+  ]
+}

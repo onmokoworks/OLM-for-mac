@@ -1,0 +1,60 @@
+{
+  "schema": "olmradialblur-32bpc-float-evidence-audit-v1",
+  "audit_date": "2026-07-15",
+  "effect": "OLM RadialBlur",
+  "source_manifest": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMRadialBlur/reference_manifest.json",
+  "source_import": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMRadialBlur/reference_import.json",
+  "windows_host": {
+    "platform": "windows",
+    "ae_version": "26.3x87",
+    "renderer": "SOFTWARE",
+    "bits_per_channel": 32,
+    "dimensions": [1920, 1080],
+    "frame_rate": 24,
+    "working_space": null,
+    "linear_blending": null,
+    "intake_float_preserving": true,
+    "exr_header_observed": "OpenEXR v2 scanline, compression none, dataWindow 0..1919 x 0..1079"
+  },
+  "family_audit": {
+    "Zoom": {"cases": ["final_random10_olm_radialblur_01", "03", "05", "07", "09"], "evidence": "Blur Type=1; 5 imported FLOAT EXR pairs"},
+    "Rotation": {"cases": ["final_random10_olm_radialblur_02", "04", "06", "08", "10"], "evidence": "Blur Type=2; 5 imported FLOAT EXR pairs"},
+    "Inner": {"cases": "all 10", "evidence": "Inner Strength is nonzero in every manifest case"},
+    "variation": {"cases": "all 10", "evidence": "Size Variation is nonzero in every manifest case"},
+    "noise": {"cases": "all 10", "evidence": "Noise Variation is nonzero; Noise Type and Seed are pinned"},
+    "edge": {"cases": "all 10", "evidence": "Outer and Inner Edge Fade values are recorded; Repeat Border is recorded"}
+  },
+  "case_inventory": [
+    {"id": "final_random10_olm_radialblur_01", "blur_type": "Zoom", "input": "random_final_grid_1920x1080", "center": [720, 805], "outer_strength": 917, "inner_strength": 1222, "size_variation": 60, "noise_variation": 96, "noise_type": 1, "seed": 401, "edge_fades": [22, 31], "repeat_border": 0},
+    {"id": "final_random10_olm_radialblur_02", "blur_type": "Rotation", "input": "random_final_alpha_1920x1080", "center": [1283, 480], "outer_strength": 1344, "inner_strength": 225, "size_variation": 2, "noise_variation": 58, "noise_type": 1, "seed": 788, "edge_fades": [66, 5], "repeat_border": 0},
+    {"id": "final_random10_olm_radialblur_03", "blur_type": "Zoom", "input": "random_final_grid_1920x1080", "center": [1846, 154], "outer_strength": 1771, "inner_strength": 1228, "size_variation": 44, "noise_variation": 20, "noise_type": 1, "seed": 176, "edge_fades": [11, 78], "repeat_border": 1},
+    {"id": "final_random10_olm_radialblur_04", "blur_type": "Rotation", "input": "random_final_alpha_1920x1080", "center": [490, 909], "outer_strength": 198, "inner_strength": 232, "size_variation": 87, "noise_variation": 82, "noise_type": 1, "seed": 563, "edge_fades": [56, 52], "repeat_border": 1},
+    {"id": "final_random10_olm_radialblur_05", "blur_type": "Zoom", "input": "random_final_grid_1920x1080", "center": [1053, 584], "outer_strength": 624, "inner_strength": 1235, "size_variation": 29, "noise_variation": 44, "noise_type": 1, "seed": 949, "edge_fades": [1, 26], "repeat_border": 0},
+    {"id": "final_random10_olm_radialblur_06", "blur_type": "Rotation", "input": "random_final_alpha_1920x1080", "center": [1617, 259], "outer_strength": 1051, "inner_strength": 238, "size_variation": 71, "noise_variation": 6, "noise_type": 1, "seed": 337, "edge_fades": [46, 100], "repeat_border": 0},
+    {"id": "final_random10_olm_radialblur_07", "blur_type": "Zoom", "input": "random_final_grid_1920x1080", "center": [260, 1014], "outer_strength": 1478, "inner_strength": 1242, "size_variation": 13, "noise_variation": 68, "noise_type": 2, "seed": 724, "edge_fades": [90, 73], "repeat_border": 1},
+    {"id": "final_random10_olm_radialblur_08", "blur_type": "Rotation", "input": "random_final_alpha_1920x1080", "center": [823, 689], "outer_strength": 1905, "inner_strength": 245, "size_variation": 55, "noise_variation": 30, "noise_type": 2, "seed": 112, "edge_fades": [35, 47], "repeat_border": 1},
+    {"id": "final_random10_olm_radialblur_09", "blur_type": "Zoom", "input": "random_final_grid_1920x1080", "center": [1387, 364], "outer_strength": 332, "inner_strength": 1249, "size_variation": 97, "noise_variation": 92, "noise_type": 2, "seed": 499, "edge_fades": [80, 21], "repeat_border": 1},
+    {"id": "final_random10_olm_radialblur_10", "blur_type": "Rotation", "input": "random_final_alpha_1920x1080", "center": [30, 39], "outer_strength": 759, "inner_strength": 252, "size_variation": 39, "noise_variation": 54, "noise_type": 2, "seed": 885, "edge_fades": [25, 94], "repeat_border": 0}
+  ],
+  "smallest_fully_pinned_candidate": {
+    "case_ids": ["final_random10_olm_radialblur_01", "final_random10_olm_radialblur_02"],
+    "reason": "Two cases are the minimum set covering both Blur Type values while retaining nonzero Inner, Size Variation, Noise Variation, and edge-fade inputs. Every exposed parameter, source identity, renderer, bit depth, frame, and output pair is bound by the Windows manifest.",
+    "status": "candidate_for_mac_float_validation_only",
+    "not_ae_exact": true
+  },
+  "selected_artifacts": {
+    "case_01": {
+      "before_effects": {"path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMRadialBlur/olm_bitdepth_32bpc_olmradialblur_exr_20260710__software_32bpc__fr24__final_random10_olm_radialblur_01_before_effects.exr", "sha256": "7380b8dd76a7113c312593194f55cc739bf08aadd13f222fed5f70ab1693c3bd"},
+      "effect": {"path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMRadialBlur/olm_bitdepth_32bpc_olmradialblur_exr_20260710__software_32bpc__fr24__final_random10_olm_radialblur_01.exr", "sha256": "f90a6f81bfa265dbc86063954b8e42545b0facad72b439ae1d7f878083083d79"}
+    },
+    "case_02": {
+      "before_effects": {"path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMRadialBlur/olm_bitdepth_32bpc_olmradialblur_exr_20260710__software_32bpc__fr24__final_random10_olm_radialblur_02_before_effects.exr", "sha256": "b4e86f94302c603f885d9ab6bc2ecb53727d2dfadbaab6b20e0eb7e96b12defc"},
+      "effect": {"path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMRadialBlur/olm_bitdepth_32bpc_olmradialblur_exr_20260710__software_32bpc__fr24__final_random10_olm_radialblur_02.exr", "sha256": "2e42da5813fd9b8e768f66f8fcfe7fb455fc8411efb95f1309f4679d4aa5be15"}
+    }
+  },
+  "blockers": [
+    "Existing RadialBlur 8bpc Zoom, Rotation, and Inner semantics remain unresolved; this audit does not promote them.",
+    "No RadialBlur-specific Mac no-effect FLOAT EXR control has been accepted, so effect attribution and exactness remain blocked.",
+    "No Mac plugin identity/hash or Mac render outputs exist for these cases."
+  ]
+}

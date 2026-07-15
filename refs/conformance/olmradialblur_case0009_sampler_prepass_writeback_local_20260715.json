@@ -1,0 +1,48 @@
+{
+  "checks": [
+    {
+      "angle_index": 0,
+      "issues": [],
+      "producer_cells_checked": 1,
+      "radius_index": 0,
+      "record": 0,
+      "status": "pass"
+    },
+    {
+      "angle_index": 0,
+      "issues": [],
+      "producer_cells_checked": 1,
+      "radius_index": 1,
+      "record": 1,
+      "status": "pass"
+    },
+    {
+      "angle_index": 0,
+      "issues": [],
+      "producer_cells_checked": 1,
+      "radius_index": 2,
+      "record": 2,
+      "status": "pass"
+    },
+    {
+      "angle_index": 0,
+      "issues": [],
+      "producer_cells_checked": 1,
+      "radius_index": 3,
+      "record": 3,
+      "status": "pass"
+    }
+  ],
+  "classification": "local-invariant-proven",
+  "evidence_class": "local_fixture",
+  "issues": [],
+  "kind": "olmradialblur_case0009_sampler_prepass_writeback_analysis",
+  "limitations": [
+    "Does not compare Windows and Mac outputs.",
+    "Does not infer AE behavior or authorize a production change.",
+    "This fixture has no output-coordinate sampler rows; only producer normalization is checked."
+  ],
+  "schema": 1,
+  "scope": "sampler fractional weights, prepass normalization, and final-polar writeback only",
+  "status": "pass"
+}

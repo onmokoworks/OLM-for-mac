@@ -71,6 +71,10 @@ def valid_payload(module, words: list[int]) -> dict:
             "return_data": "0x20000100",
             "raw_words_u32": [f"{word:08x}" for word in words],
             "raw_bytes": 84,
+            "element_type": "float32",
+            "byte_order": "little",
+            "raw_encoding": "raw little-endian float32 words",
+            "raw_bytes_sha256": module.raw_words_sha256(words),
         },
         "trace": "\n".join(markers) + "\n",
     }
@@ -97,6 +101,8 @@ def main() -> int:
         "wrong sigma": ("observation", "first_getKernel", {"ecx": 21, "xmm1": 2.0, "r8": 5, "output_mat": "0x20000000"}),
         "missing preflight": ("preflight", "status", "missing"),
         "wrong byte count": ("observation", "raw_bytes", 80),
+        "wrong byte order": ("observation", "byte_order", "big"),
+        "wrong coefficient hash": ("observation", "raw_bytes_sha256", "0" * 64),
     }
     for label, (section, field, value) in mutations.items():
         candidate = copy.deepcopy(payload)
@@ -108,6 +114,18 @@ def main() -> int:
         line for line in missing_marker["trace"].splitlines() if not line.startswith("KK_KERNEL_RETURN")
     )
     expect_rejected(module, missing_marker, "missing trace marker")
+
+    marker_without_run = copy.deepcopy(payload)
+    marker_without_run["trace"] = marker_without_run["trace"].replace(
+        f"KK_CREATE run_id={marker_without_run['run_id']}", "KK_CREATE"
+    )
+    expect_rejected(module, marker_without_run, "marker without same-run identity")
+
+    marker_wrong_case = copy.deepcopy(payload)
+    marker_wrong_case["trace"] = marker_wrong_case["trace"].replace(
+        f"case_id={module.CASE_ID}", "case_id=another-case"
+    )
+    expect_rejected(module, marker_wrong_case, "run-start case identity mismatch")
 
     with tempfile.TemporaryDirectory(prefix="kirakira_live_classifier_") as temporary:
         source = Path(temporary) / "return.json"

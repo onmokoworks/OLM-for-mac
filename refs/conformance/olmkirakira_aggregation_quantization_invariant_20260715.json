@@ -1,0 +1,88 @@
+{
+  "checks": [
+    {
+      "exact_quantization": true,
+      "glow_rgba_float": [
+        1.0,
+        1.0,
+        1.0,
+        0.507505655
+      ],
+      "label": "934,118",
+      "max_abs_error": 2.8263381413040634e-08,
+      "observed_rgba_float": [
+        0.565446138,
+        0.565446138,
+        0.565446138,
+        1.0
+      ],
+      "observed_u8": [
+        144,
+        144,
+        144,
+        255
+      ],
+      "predicted_rgba_float": [
+        0.5654461662633814,
+        0.5654461662633814,
+        0.5654461662633814,
+        1.0
+      ],
+      "predicted_u8": [
+        144,
+        144,
+        144,
+        255
+      ],
+      "source_rgba_float": [
+        0.117647059,
+        0.117647059,
+        0.117647059,
+        1.0
+      ],
+      "status": "pass"
+    },
+    {
+      "label": "960,540",
+      "reason": "missing complete float/u8 witness fields",
+      "status": "incomplete"
+    },
+    {
+      "label": "960,490",
+      "reason": "missing complete float/u8 witness fields",
+      "status": "incomplete"
+    },
+    {
+      "label": "1010,540",
+      "reason": "missing complete float/u8 witness fields",
+      "status": "incomplete"
+    }
+  ],
+  "inputs": {
+    "actual_aex_forward_warp_report": "refs/conformance/olmkirakira_mode3_forward_warp_contract_actual_aex_20260713.json",
+    "actual_aex_forward_warp_status": "captured_forward_warp_contract",
+    "mac_compose_witness": "refs/conformance/olmkirakira_compose_boundary_mac_witness_20260630.json",
+    "opencv_455_stage_report": "refs/reports/runtime_trace_comparisons/olmkirakira_aggregation_compose_bt709_20260624.json",
+    "opencv_stage_kind": "olmkirakira_stage_trace_comparison"
+  },
+  "invariant": {
+    "alpha": "source_alpha",
+    "rgb": "glow_rgb * glow_alpha + source_rgb * (1 - glow_alpha)",
+    "tolerance_float": 1e-06,
+    "u8": "clamp(floor(float * 255 + 0.5), 0, 255)"
+  },
+  "kind": "olmkirakira_aggregation_quantization_invariant",
+  "limits": [
+    "This proves a local compose/quantization invariant for the complete Mac witness rows only.",
+    "It does not claim AE exactness, Windows equivalence, or a correction to the remaining hotspot residual."
+  ],
+  "schema": 1,
+  "scope": "Mac/local aggregation and final 8bpc quantization only",
+  "status": "local-invariant-proven",
+  "summary": {
+    "complete_count": 1,
+    "incomplete_count": 3,
+    "passed_count": 1,
+    "point_count": 4
+  }
+}

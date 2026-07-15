@@ -1,0 +1,45 @@
+{
+  "schema": "olmblur-case0006-mac-observation-request-v1",
+  "status": "sendable_fail_closed",
+  "request_id": "olmblur_case0006_mac_observation_20260715",
+  "case_id": "olmblur__case_0006",
+  "platform": "mac",
+  "host_action": "use_existing_after_effects_only",
+  "run_count": 1,
+  "request_dir": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmblur_exact_20260625",
+  "project": {
+    "width": 1920,
+    "height": 1080,
+    "bits_per_channel": 16,
+    "renderer": "Software",
+    "blur_amount": 5,
+    "blur_smoothness": 100,
+    "repeat": 10,
+    "bias_direction": 1,
+    "legacy": 0
+  },
+  "observation": {
+    "coordinate": [601, 598],
+    "mac_plugin_binary_sha256": "c6de66dab49a6a96852d6158780bfd8c52767cc699e2cef1fa2206e0fbadf206",
+    "mac_plugin_binary": "mac/OLMBlur/Mac/build/Debug/OLMBlur.plugin/Contents/MacOS/OLMBlur",
+    "gate": "OLMBLUR_OBSERVE_CASE0006_PIXEL=1",
+    "dump_log": "OLMBLUR_CASE0006_DIAGNOSTIC.log",
+    "required_record": "OLMBLUR_OBSERVE_STORE16",
+    "required_fields": ["pre_store", "pre_store_hex", "stored", "request_id", "render_id", "case_id", "plugin_sha256"]
+  },
+  "required_outputs": [
+    "AE_SINGLE_CASE_RESULT.json",
+    "OLMBLUR_CASE0006_DIAGNOSTIC.log",
+    "OLMBLUR_CASE0006_OBSERVATION_REPORT.json",
+    "one fresh non-interlaced RGBA16 1920x1080 PNG"
+  ],
+  "stop_lines": [
+    "do not install or launch After Effects",
+    "fail if the output directory is reused",
+    "fail before AE unless the installed Mac plugin binary matches the pinned SHA-256",
+    "fail if AE result is not successful 16bpc case_0006 Software",
+    "fail unless exactly one diagnostic record is present and fully bound",
+    "observation_only_not_exact"
+  ],
+  "runner": "scripts/run_olmblur_case0006_mac_observation_20260715.py"
+}

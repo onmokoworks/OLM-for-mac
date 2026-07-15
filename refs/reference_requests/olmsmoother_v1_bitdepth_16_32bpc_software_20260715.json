@@ -1,0 +1,264 @@
+{
+  "schema": "olm.conformance.request/2",
+  "request_id": "olmsmoother_v1_bitdepth_16_32bpc_software_20260715",
+  "created_at": "2026-07-15",
+  "status": "sendable_fail_closed",
+  "effect": {
+    "name": "OLM Smoother",
+    "match_name": "OLM Smoother",
+    "variant": "v1",
+    "v2_is_out_of_scope": true
+  },
+  "execution": {
+    "runner": "run_windows.ps1",
+    "renderer_jsx": "scripts/render_olmsmoother_v1.jsx",
+    "mode": "deterministic_comp_build_from_hashed_inputs",
+    "command": ".\\run_windows.ps1 -AfterFX \"C:\\Program Files\\Adobe\\Adobe After Effects 2026\\Support Files\\AfterFX.exe\""
+  },
+  "fixture": {
+    "width": 960,
+    "height": 540,
+    "frame_rate": 24,
+    "source_comp_width": 1920,
+    "source_comp_height": 1080,
+    "source_resolution_factor": [
+      2,
+      2
+    ]
+  },
+  "source_contract": {
+    "reference_manifest": {
+      "path": "source/reference_manifest.json",
+      "sha256": "0fa0e2e0215fd13716d20e24d39b90550348a6a6ec440d37943760b3857c3898"
+    },
+    "project": {
+      "path": "project/OLM test.aep",
+      "sha256": "110245fa413448ed836bbdea108870a291c732881f7a37ee13f55c7354ec5de1",
+      "role": "fixed source provenance; comps are rebuilt deterministically"
+    },
+    "windows_aex": {
+      "path": "plugin/OLMSmoother.aex",
+      "sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82"
+    },
+    "runner": {
+      "path": "run_windows.ps1",
+      "sha256": "dcb198aa7db2ef1f4bb30b5e1fde5e2d12bf3caa2791e246295aebad9e682df8"
+    },
+    "renderer_jsx": {
+      "path": "scripts/render_olmsmoother_v1.jsx",
+      "sha256": "5bbe5aab797801c93ed9c9750bf47d99b386bae210bda3e2852639f7d21d20fe"
+    },
+    "color_management": {
+      "path": "contracts/color.json",
+      "sha256": "213549cee54d091d79984989ed984b35eb67b3faec80f34edf3c415ed0690fc3"
+    },
+    "output_templates": {
+      "path": "contracts/output_templates.json",
+      "sha256": "2c510a65c024b922dd4e939374ccfb04971ff80c195c5f10b15b5dc1e9e21e21"
+    }
+  },
+  "render_sets": [
+    {
+      "id": "software_16bpc",
+      "required": true,
+      "renderer": "Software",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "bits_per_channel": 16,
+      "output_format": "png",
+      "output_template": "OLM PNG 16 RGBA",
+      "acceptance": "integer-exact-eligible-after-return-and-cross-host-hash-checks"
+    },
+    {
+      "id": "software_32bpc",
+      "required": true,
+      "renderer": "Software",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "bits_per_channel": 32,
+      "output_format": "exr",
+      "output_template": "OLM EXR 32 Float RGBA No Compression",
+      "acceptance": "probe-only-until-independent-mac-boundary-proof"
+    }
+  ],
+  "cases": [
+    {
+      "id": "case_0001",
+      "time": 0,
+      "input": {
+        "path": "inputs/case_0001_before_effects.png",
+        "sha256": "166cafc8aaa2bb2d78ed26a12fe95b6dcf0f6eeeabd7f3a4daaf0ceece500e4c",
+        "before_effects_scope": "selected_layer_all_effects_disabled"
+      },
+      "effect": {
+        "name": "OLM Smoother",
+        "match_name": "OLM Smoother",
+        "property_index": 1,
+        "enabled": true,
+        "active": true,
+        "params": [
+          {
+            "name": "Use Color Key",
+            "match_name": "OLM Smoother-0001",
+            "property_index": 1,
+            "property_value_type": "OneD",
+            "value": 0,
+            "enabled": true,
+            "active": true
+          },
+          {
+            "name": "Color Key",
+            "match_name": "OLM Smoother-0002",
+            "property_index": 2,
+            "property_value_type": "COLOR",
+            "value": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "enabled": true,
+            "active": true
+          },
+          {
+            "name": "Do Smooth Range",
+            "match_name": "OLM Smoother-0003",
+            "property_index": 3,
+            "property_value_type": "OneD",
+            "value": 6,
+            "enabled": true,
+            "active": true
+          }
+        ],
+        "v1_params_sha256": "dff891c3a184532c73785b62676f847ca58d791fd6f5bc344af02a3bacc42912"
+      }
+    },
+    {
+      "id": "case_0002",
+      "time": 0,
+      "input": {
+        "path": "inputs/case_0002_before_effects.png",
+        "sha256": "dd9c1adc8920f6785e5d4449545c29e5f3b60761244dae6d34293b401e0f0c9c",
+        "before_effects_scope": "selected_layer_all_effects_disabled"
+      },
+      "effect": {
+        "name": "OLM Smoother",
+        "match_name": "OLM Smoother",
+        "property_index": 1,
+        "enabled": true,
+        "active": true,
+        "params": [
+          {
+            "name": "Use Color Key",
+            "match_name": "OLM Smoother-0001",
+            "property_index": 1,
+            "property_value_type": "OneD",
+            "value": 0,
+            "enabled": true,
+            "active": true
+          },
+          {
+            "name": "Color Key",
+            "match_name": "OLM Smoother-0002",
+            "property_index": 2,
+            "property_value_type": "COLOR",
+            "value": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "enabled": true,
+            "active": true
+          },
+          {
+            "name": "Do Smooth Range",
+            "match_name": "OLM Smoother-0003",
+            "property_index": 3,
+            "property_value_type": "OneD",
+            "value": 6,
+            "enabled": true,
+            "active": true
+          }
+        ],
+        "v1_params_sha256": "dff891c3a184532c73785b62676f847ca58d791fd6f5bc344af02a3bacc42912"
+      }
+    },
+    {
+      "id": "case_0003",
+      "time": 0,
+      "input": {
+        "path": "inputs/case_0003_before_effects.png",
+        "sha256": "7dc50c17733999bb952a69f65d6dfe60249694dd449fd9a0acb67411ba30570b",
+        "before_effects_scope": "selected_layer_all_effects_disabled"
+      },
+      "effect": {
+        "name": "OLM Smoother",
+        "match_name": "OLM Smoother",
+        "property_index": 1,
+        "enabled": true,
+        "active": true,
+        "params": [
+          {
+            "name": "Use Color Key",
+            "match_name": "OLM Smoother-0001",
+            "property_index": 1,
+            "property_value_type": "OneD",
+            "value": 0,
+            "enabled": true,
+            "active": true
+          },
+          {
+            "name": "Color Key",
+            "match_name": "OLM Smoother-0002",
+            "property_index": 2,
+            "property_value_type": "COLOR",
+            "value": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "enabled": true,
+            "active": true
+          },
+          {
+            "name": "Do Smooth Range",
+            "match_name": "OLM Smoother-0003",
+            "property_index": 3,
+            "property_value_type": "OneD",
+            "value": 6,
+            "enabled": true,
+            "active": true
+          }
+        ],
+        "v1_params_sha256": "dff891c3a184532c73785b62676f847ca58d791fd6f5bc344af02a3bacc42912"
+      }
+    }
+  ],
+  "parameter_contract": {
+    "mapping": "Use Color Key, Color Key, Do Smooth Range -> v1 SM_USE_KEY, SM_KEY_COLOR, SM_TOLERANCE",
+    "property_indices": [
+      1,
+      2,
+      3
+    ],
+    "do_not_use_v2_mapping": true
+  },
+  "return_requirements": [
+    "Six successful AE render records",
+    "exact v1 effect identity, three parameter readbacks, and parameter artifact hashes",
+    "SOFTWARE renderer and fixed project/color/template metadata",
+    "SHA-256 for inputs, outputs, AEX, AEP, runner, JSX, contracts, AE result files and return manifest",
+    "16-bit RGBA PNG metadata for 16bpc",
+    "typed uncompressed RGBA OpenEXR metadata for 32bpc; classification remains probe-only"
+  ],
+  "stop_lines": [
+    "missing_runner_or_jsx",
+    "missing_renderer_or_template",
+    "aex_or_input_hash_mismatch",
+    "effect_identity_or_parameter_readback_mismatch",
+    "parameter_hash_mismatch",
+    "missing_output_or_metadata",
+    "32bpc_non_typed_exr",
+    "any_v2_substitution"
+  ]
+}

@@ -42,7 +42,8 @@
     },
     "words": 21,
     "element": "float32",
-    "encoding": "raw little-endian words",
+    "encoding": "raw little-endian float32 words",
+    "byte_order": "little",
     "source": "cv::Mat.data after getKernel return"
   },
   "preflight": {

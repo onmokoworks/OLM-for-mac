@@ -1,0 +1,499 @@
+{
+  "schema": "olmblur_32bpc_float_focus_audit.v1",
+  "request_id": "olmblur_32bpc_mac_windows_float_focus_20260711",
+  "plugin": "OLMBlur",
+  "bit_depth": "32bpc",
+  "comparison_policy": {
+    "mode": "raw_float32_words",
+    "tolerance": null,
+    "png_evidence_allowed": false
+  },
+  "windows_return": {
+    "root": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch",
+    "cases": [
+      {
+        "case_id": "olmblur__case_0001",
+        "windows_effect": {
+          "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0001.exr",
+          "sha256": "fd2e2020720513e7590d32fadfbb1acb1a25fa551b11d0c440f6e3391ded38b6",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "channel_order": [
+            "A",
+            "B",
+            "G",
+            "R"
+          ],
+          "sample_types": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "compression": 0,
+          "sample_counts": {
+            "finite": 8294400,
+            "nan": 0,
+            "+inf": 0,
+            "-inf": 0,
+            "total": 8294400
+          }
+        },
+        "windows_no_effect": {
+          "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0001_before_effects.exr",
+          "sha256": "d9d18cfac512f14f2f7eefcd0a6d12eede07a0105538c5dc61e2b70eeb26533d",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "channel_order": [
+            "A",
+            "B",
+            "G",
+            "R"
+          ],
+          "sample_types": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "compression": 0,
+          "sample_counts": {
+            "finite": 8294400,
+            "nan": 0,
+            "+inf": 0,
+            "-inf": 0,
+            "total": 8294400
+          }
+        },
+        "windows_effect_control_distinct": true
+      },
+      {
+        "case_id": "olmblur__case_0002",
+        "windows_effect": {
+          "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0002.exr",
+          "sha256": "b8d78a8233ed88d11987677132e49a7b75fb7bb77cb0eb3b6e411a7f3558bae4",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "channel_order": [
+            "A",
+            "B",
+            "G",
+            "R"
+          ],
+          "sample_types": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "compression": 0,
+          "sample_counts": {
+            "finite": 8294400,
+            "nan": 0,
+            "+inf": 0,
+            "-inf": 0,
+            "total": 8294400
+          }
+        },
+        "windows_no_effect": {
+          "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0002_before_effects.exr",
+          "sha256": "e18204cda230e231c14cbd416135b34f289934a7cb6ffb17a421f996166fa9e7",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "channel_order": [
+            "A",
+            "B",
+            "G",
+            "R"
+          ],
+          "sample_types": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "compression": 0,
+          "sample_counts": {
+            "finite": 8294400,
+            "nan": 0,
+            "+inf": 0,
+            "-inf": 0,
+            "total": 8294400
+          }
+        },
+        "windows_effect_control_distinct": true
+      },
+      {
+        "case_id": "olmblur__case_0003",
+        "windows_effect": {
+          "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0003.exr",
+          "sha256": "7eb243f4f6f91db6a87174eaba9ca9cb0a5f22fe7d032ad8054a2692a7099350",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "channel_order": [
+            "A",
+            "B",
+            "G",
+            "R"
+          ],
+          "sample_types": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "compression": 0,
+          "sample_counts": {
+            "finite": 8294400,
+            "nan": 0,
+            "+inf": 0,
+            "-inf": 0,
+            "total": 8294400
+          }
+        },
+        "windows_no_effect": {
+          "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0003_before_effects.exr",
+          "sha256": "5ccba2edd736e2eb00d51a54a99f4f6c40e70f9a0ee68634e9dc15c03548a87d",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "channel_order": [
+            "A",
+            "B",
+            "G",
+            "R"
+          ],
+          "sample_types": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "compression": 0,
+          "sample_counts": {
+            "finite": 8294400,
+            "nan": 0,
+            "+inf": 0,
+            "-inf": 0,
+            "total": 8294400
+          }
+        },
+        "windows_effect_control_distinct": true
+      },
+      {
+        "case_id": "olmblur__case_0004",
+        "windows_effect": {
+          "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0004.exr",
+          "sha256": "769a54fbd4bed9a64628a3677ff9b17bea7f650b62f8895f873d7a796c44f88c",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "channel_order": [
+            "A",
+            "B",
+            "G",
+            "R"
+          ],
+          "sample_types": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "compression": 0,
+          "sample_counts": {
+            "finite": 8294400,
+            "nan": 0,
+            "+inf": 0,
+            "-inf": 0,
+            "total": 8294400
+          }
+        },
+        "windows_no_effect": {
+          "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0004_before_effects.exr",
+          "sha256": "597e9f60c812d9afa254e4a93db0c592a8281caf9750a042aa1268ef981a5325",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "channel_order": [
+            "A",
+            "B",
+            "G",
+            "R"
+          ],
+          "sample_types": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "compression": 0,
+          "sample_counts": {
+            "finite": 8294400,
+            "nan": 0,
+            "+inf": 0,
+            "-inf": 0,
+            "total": 8294400
+          }
+        },
+        "windows_effect_control_distinct": true
+      },
+      {
+        "case_id": "olmblur__case_0005",
+        "windows_effect": {
+          "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0005.exr",
+          "sha256": "dd83f2c8d2c7ed8ae2c6d651d1c79051638f67233d7a37db476b0535cebce504",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "channel_order": [
+            "A",
+            "B",
+            "G",
+            "R"
+          ],
+          "sample_types": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "compression": 0,
+          "sample_counts": {
+            "finite": 8294400,
+            "nan": 0,
+            "+inf": 0,
+            "-inf": 0,
+            "total": 8294400
+          }
+        },
+        "windows_no_effect": {
+          "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0005_before_effects.exr",
+          "sha256": "9dfccf5cc18af3232f6509b1faa5f29fdf84981efcf3e3ac31d0524a73589558",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "channel_order": [
+            "A",
+            "B",
+            "G",
+            "R"
+          ],
+          "sample_types": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "compression": 0,
+          "sample_counts": {
+            "finite": 8294400,
+            "nan": 0,
+            "+inf": 0,
+            "-inf": 0,
+            "total": 8294400
+          }
+        },
+        "windows_effect_control_distinct": true
+      },
+      {
+        "case_id": "olmblur__case_0006",
+        "windows_effect": {
+          "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0006.exr",
+          "sha256": "2065f6dbe4f61f82aed266cb18163395cc87dc86ee906e7044d784794e22faba",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "channel_order": [
+            "A",
+            "B",
+            "G",
+            "R"
+          ],
+          "sample_types": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "compression": 0,
+          "sample_counts": {
+            "finite": 8294400,
+            "nan": 0,
+            "+inf": 0,
+            "-inf": 0,
+            "total": 8294400
+          }
+        },
+        "windows_no_effect": {
+          "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0006_before_effects.exr",
+          "sha256": "919e7cd757443bea2b5b35597ec23ae8af304a91dfb6390ae88f821ac1bd961f",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "channel_order": [
+            "A",
+            "B",
+            "G",
+            "R"
+          ],
+          "sample_types": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "compression": 0,
+          "sample_counts": {
+            "finite": 8294400,
+            "nan": 0,
+            "+inf": 0,
+            "-inf": 0,
+            "total": 8294400
+          }
+        },
+        "windows_effect_control_distinct": true
+      },
+      {
+        "case_id": "olmblur__case_0007",
+        "windows_effect": {
+          "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0007.exr",
+          "sha256": "c6d86840c2dba646a9b74ae4b0bd5d110dfc854afe0fe538f64264fb472345ce",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "channel_order": [
+            "A",
+            "B",
+            "G",
+            "R"
+          ],
+          "sample_types": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "compression": 0,
+          "sample_counts": {
+            "finite": 8294400,
+            "nan": 0,
+            "+inf": 0,
+            "-inf": 0,
+            "total": 8294400
+          }
+        },
+        "windows_no_effect": {
+          "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0007_before_effects.exr",
+          "sha256": "c7a191471ec87041fa8c4601d8515155a11d8cb40f476207bce6fa3c70bef392",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "channel_order": [
+            "A",
+            "B",
+            "G",
+            "R"
+          ],
+          "sample_types": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "compression": 0,
+          "sample_counts": {
+            "finite": 8294400,
+            "nan": 0,
+            "+inf": 0,
+            "-inf": 0,
+            "total": 8294400
+          }
+        },
+        "windows_effect_control_distinct": true
+      }
+    ],
+    "case_count": 7,
+    "all_float_rgba_exr": true,
+    "all_1920x1080": true,
+    "loaded_aex_sha256": null,
+    "loaded_aex_hash_present": false
+  },
+  "mac_candidate": {
+    "root": null,
+    "float_exr_imported": false,
+    "loaded_aex_sha256": null,
+    "loaded_aex_hash_present": false
+  },
+  "reported_but_not_reverified": {
+    "source": "refs/conformance/olmblur_32bpc_mac_ae_candidate_20260711.md",
+    "mac_effect_float_exr_cases": 7,
+    "mac_no_effect_vs_windows_exact_cases": [
+      "0001",
+      "0002",
+      "0003",
+      "0004"
+    ],
+    "mac_no_effect_vs_windows_input_conversion_cases": [
+      "0005",
+      "0006",
+      "0007"
+    ],
+    "windows_vs_mac_effect_differing_cases": [
+      "0001",
+      "0002",
+      "0003",
+      "0004",
+      "0005",
+      "0006",
+      "0007"
+    ],
+    "classification": "prose-only candidate record; EXRs and machine-readable Mac provenance are not imported"
+  },
+  "proven": [
+    "The focused request is exactly seven OLMBlur cases with 32bpc SOFTWARE requirements.",
+    "The imported Windows return has effect-on and before-effects FLOAT RGBA EXRs for all seven cases.",
+    "The imported Windows EXRs are valid uncompressed float-preserving 1920x1080 artifacts.",
+    "Mac adapter and complete-worker fixture evidence remain local binary/worker evidence, not cross-host AE exactness.",
+    "The prior Mac candidate note reports seven effect EXRs and four exact no-effect controls, but its Mac EXRs are not independently re-verifiable from imported workspace artifacts."
+  ],
+  "gates": {
+    "windows_float_return_complete": true,
+    "windows_loaded_aex_hash": false,
+    "mac_float_effect_and_control_imported": false,
+    "raw_cross_host_float_equality": false,
+    "ae_exact": false
+  },
+  "smallest_missing_cross_host_gate": {
+    "status": "blocked",
+    "required": [
+      "A same-contract Mac effect-on and effect-disabled FLOAT RGBA EXR pair for one focused case, with case/parameter/input identity.",
+      "The loaded Windows OLMBlur AEX SHA-256 bound to the imported or recaptured Windows effect output.",
+      "A machine-readable raw FLOAT32 word comparison for that paired case; expand to all seven before a seven-case AE-exact claim."
+    ],
+    "why": "Without the Mac artifacts and loaded Windows AEX identity, the existing Windows-versus-Mac effect deltas cannot be attributed to the current Mac worker."
+  },
+  "claims_forbidden": [
+    "AE exact",
+    "source tuning from the current PNG/EXR residuals"
+  ]
+}

@@ -68,7 +68,8 @@ void render_nonlegacy(const std::uint8_t* source_argb16,
                       std::uint8_t* destination_argb16,
                       std::size_t width,
                       std::size_t height,
-                      const Params& params) {
+                      const Params& params,
+                      StoreObservation* observation) {
     const std::size_t pixels = width * height;
     std::memcpy(destination_argb16, source_argb16, pixels * 8);
     std::vector<float> plane_a(pixels * 3);
@@ -119,9 +120,27 @@ void render_nonlegacy(const std::uint8_t* source_argb16,
     for (std::size_t pixel = 0; pixel < pixels; ++pixel) {
         const float* rgb = plane_a.data() + pixel * 3;
         std::uint8_t* destination = destination_argb16 + pixel * 8;
-        write_word(destination + 2, store_word(rgb[0]));
-        write_word(destination + 4, store_word(rgb[1]));
-        write_word(destination + 6, store_word(rgb[2]));
+        const bool observe_store = observation && observation->x < width &&
+                                   observation->y < height &&
+                                   pixel == observation->y * width + observation->x;
+        if (observe_store) {
+            observation->pre_store[0] = rgb[0];
+            observation->pre_store[1] = rgb[1];
+            observation->pre_store[2] = rgb[2];
+        }
+        const std::uint16_t stored_r = store_word(rgb[0]);
+        const std::uint16_t stored_g = store_word(rgb[1]);
+        const std::uint16_t stored_b = store_word(rgb[2]);
+        write_word(destination + 2, stored_r);
+        write_word(destination + 4, stored_g);
+        write_word(destination + 6, stored_b);
+        if (observe_store) {
+            observation->captured = true;
+            observation->stored_argb[0] = read_word(destination);
+            observation->stored_argb[1] = stored_r;
+            observation->stored_argb[2] = stored_g;
+            observation->stored_argb[3] = stored_b;
+        }
     }
 }
 

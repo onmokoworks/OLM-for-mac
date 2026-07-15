@@ -126,6 +126,9 @@ def verify_manifest_contracts(
     expect(template["case"]["overrides_match_name"] == OVERRIDES, "return template override mismatch")
     expect(template["observation"]["raw_words_u32"] == [None] * 21, "return template raw-word placeholders mismatch")
     expect(template["observation"]["raw_bytes"] == 84, "return template raw-byte count mismatch")
+    expect(template["observation"]["element_type"] == "float32", "return template element type mismatch")
+    expect(template["observation"]["byte_order"] == "little", "return template byte order mismatch")
+    expect(template["observation"]["raw_encoding"] == "raw little-endian float32 words", "return template encoding mismatch")
 
 
 def verify_zip(package: Path, support_dir: Path, runner_text: str, cdb_text: str) -> None:
@@ -177,6 +180,9 @@ def verify_ps1_fail_closed(runner_text: str, manifest: dict[str, Any]) -> None:
         "CDB artifact path contains whitespace",
         "no-space JSX launch path invariant failed",
         "size or SHA256 mismatch",
+        "host is not little-endian",
+        "raw little-endian float32 words",
+        "raw_bytes_sha256",
         "After Effects must be fully closed before this run",
         "SkipPowerShell51Relay",
         "interactive desktop, not SSH session 0",
@@ -208,6 +214,8 @@ def verify_ps1_fail_closed(runner_text: str, manifest: dict[str, Any]) -> None:
     expect("$ids.Count -ne 1" in runner_text, "runner does not fail closed on multi-run identity")
     expect("if($missing.Count){Finish 'exact_bind_failure'" in runner_text, "runner does not fail closed on missing markers")
     expect("$u32=for($i=0;$i -lt 21;$i++)" in runner_text, "runner does not decode 21 returned words")
+    expect("[BitConverter]::IsLittleEndian" in runner_text, "runner does not assert little-endian coefficient decoding")
+    expect("Get-FileHash -Algorithm SHA256 -LiteralPath $words" in runner_text, "runner does not hash the captured coefficient bytes")
     expect("preflight=@{status='ready'" in runner_text, "answered return omits successful preflight provenance")
     expect("-ArgumentList @('-m','-r'" not in runner_text, "PowerShell 5.1 may drop split Start-Process arguments")
     expect("while((Get-Date)-lt $deadline -and !(Test-Path -LiteralPath $preflightReady) -and !$preflight.HasExited)" not in runner_text, "preflight wait still terminates on launcher exit")

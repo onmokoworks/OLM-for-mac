@@ -1,0 +1,31 @@
+{
+  "request_id": "olmcolorkey_32bpc_mac_validation_20260715",
+  "kind": "olmcolorkey_32bpc_mac_candidate_control_request",
+  "status": "request_only_no_ae_exact_claim",
+  "scope": "OLMColorKey 32bpc Mac/Windows Software exactness",
+  "case_source": "refs/win_references/olm_reference_return_windows_20260703_32bpc_full_probe_exr_rerun/OLMbit-depthconformancebatch/reference_manifest.json",
+  "case_filter": "id starts with olmcolorkey__",
+  "required_case_count": 9,
+  "required_contract": {
+    "project_bits_per_channel": 32,
+    "renderer": "SOFTWARE",
+    "working_space": "None",
+    "linear_blending": false,
+    "output_template": "OLM EXR 32 Float",
+    "outputs_per_case": ["no_effect", "effect_on"],
+    "output_module_capture_api": "OutputModule.getSettings(GetSettingsFormat.STRING)",
+    "plugin_filename": "OLMColorKey.plugin",
+    "sha256_required": true,
+    "preflight_hash_must_equal_loaded_hash": true
+  },
+  "acceptance_boundary": {
+    "candidate_return_is_not_ae_exact": true,
+    "ae_exact_requires": "verified raw-float comparison manifest against the nine Windows Software FLOAT EXR pairs",
+    "png_only_is_probe_only": true,
+    "windows_artifact_hashes_are_required": true,
+    "comparison_rule": "all nine no-effect and effect-on pairs must have zero raw FLOAT32 word deltas"
+  },
+  "materializer": "scripts/package_olmcolorkey_32bpc_mac_validation_20260715.py",
+  "runner": "scripts/run_olmcolorkey_32bpc_mac_validation_20260715.py",
+  "reporter": "scripts/report_olmcolorkey_32bpc_mac_validation_20260715.py"
+}

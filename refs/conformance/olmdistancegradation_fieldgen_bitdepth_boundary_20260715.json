@@ -1,0 +1,122 @@
+{
+  "FACT": {
+    "eight_bpc_typed_request": {
+      "archive": "refs/windows_returns/20260714/20260714_1640__RETURN__OLMDG_8BPC_TYPED_BOUNDARY__fixed_batch.zip",
+      "failure_reason": "AE result missing for case_0001",
+      "missing_fields": [
+        "ae_result_case_0001.json"
+      ],
+      "status": "exact_bind_failure"
+    },
+    "mac_shared_fieldgen": {
+      "calls_distance_to_normalized_u8": 1,
+      "fieldgen_body_contains_pixel_size_branch": false,
+      "fieldgen_function": "dt_to_normalized",
+      "render_depth_dispatches": [
+        [
+          "",
+          "16"
+        ],
+        [
+          "",
+          "8"
+        ],
+        [
+          "8",
+          ""
+        ],
+        [
+          "",
+          "8"
+        ],
+        [
+          "16",
+          ""
+        ],
+        [
+          "",
+          "16"
+        ],
+        [
+          "",
+          "Float"
+        ]
+      ],
+      "source": "mac/OLMDistanceGradation/OLMDistanceGradation.cpp",
+      "threshold_scales_by_ds": true
+    },
+    "sixteen_bpc_livefield": {
+      "case_0026_points": 4,
+      "raw_field_words_present": 0,
+      "status": "no_exact_livefield_replays"
+    },
+    "sixteen_bpc_mac_residual_families": {
+      "case_0012": {
+        "max_diff": 2,
+        "nonzero_pixels": 2793
+      },
+      "case_0014": {
+        "max_diff": 4,
+        "nonzero_pixels": 10664
+      },
+      "case_0024": {
+        "max_diff": 2,
+        "nonzero_pixels": 991667
+      },
+      "case_0026": {
+        "max_diff": 2,
+        "nonzero_pixels": 819532
+      },
+      "case_0028": {
+        "max_diff": 3080,
+        "nonzero_pixels": 461476
+      }
+    },
+    "sixteen_bpc_typed_request": {
+      "archive": "refs/windows_returns/20260714/20260714_180155__RETURN__OLMDISTANCEGRADATION_CASE0026_16BPC_LIVEFIELD.zip",
+      "failure_reason": "CDB did not complete for olmdistancegradation_extended__case_0026",
+      "missing_fields": [
+        "cdb_exit"
+      ],
+      "status": "exact_bind_failure"
+    },
+    "thirty_two_bpc_evidence": {
+      "rendered_reference_artifacts": 174,
+      "sample_artifacts": [
+        "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0001.exr",
+        "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0001_before_effects.exr",
+        "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0002.exr",
+        "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0002_before_effects.exr",
+        "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0003.exr",
+        "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0003_before_effects.exr"
+      ],
+      "typed_field_callback_artifacts": 0
+    },
+    "windows_binary_fieldgen": {
+      "explicit_pixel_depth_token_in_function_body": false,
+      "fieldgen_param_signature": "param_4 threshold plus param_8 mode; no explicit depth parameter in decomp signature",
+      "function": "FUN_181174760",
+      "pipeline_tokens_present": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "source": "decomp/DistanceGradation.aex.c.txt"
+    }
+  },
+  "INFERENCE": {
+    "32bpc_limit": "The 32bpc artifacts establish rendered-reference presence only; they do not establish a typed field-generation boundary.",
+    "decision": "mac_field_generation_shared_before_depth_specific_mask_and_compose",
+    "fieldgen_boundary": "The Mac field builder is shared across RenderBits dispatches; observed depth branches are outside dt_to_normalized, in source-mask selection, compose, and PF16 handling.",
+    "residual_ownership": "The 16bpc max-2 and outlier families are not proven to originate in field generation by current evidence. The missing Windows raw field words and failed typed requests leave upstream-vs-boundary ownership open."
+  },
+  "guardrails": [
+    "No PNG or EXR pixels are converted into field values.",
+    "Windows typed-request failures are recorded as missing evidence, not as numeric facts.",
+    "No production plugin algorithm was changed because no byte-exact field-generation defect is proven."
+  ],
+  "kind": "olmdistancegradation_fieldgen_bitdepth_boundary",
+  "question": "Does Mac field generation itself branch on pixel depth before normalization?",
+  "schema": 1
+}

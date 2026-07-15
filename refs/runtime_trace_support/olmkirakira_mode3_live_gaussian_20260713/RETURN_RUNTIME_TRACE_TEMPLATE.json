@@ -77,7 +77,11 @@
       null,
       null
     ],
-    "raw_bytes": 84
+    "raw_bytes": 84,
+    "element_type": "float32",
+    "byte_order": "little",
+    "raw_encoding": "raw little-endian float32 words",
+    "raw_bytes_sha256": null
   },
   "failure": {
     "stage": null,

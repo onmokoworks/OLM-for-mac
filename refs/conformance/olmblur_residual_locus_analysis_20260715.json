@@ -1,0 +1,284 @@
+{
+  "kind": "olmblur_residual_locus_analysis",
+  "schema": 1,
+  "date": "2026-07-15",
+  "scope": "OLMBlur non-Legacy 16bpc case_0006",
+  "verdict": "separate-lanes",
+  "files": {
+    "windows_export": {
+      "path": "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+      "exists": true,
+      "bytes": 2485242,
+      "sha256": "27d24c96a6f3c15d27d8884ede039e5fd97480d752324f04d8e3aa77acc8791f",
+      "png_header": {
+        "width": 1920,
+        "height": 1080,
+        "bit_depth": 16,
+        "color_type": 6,
+        "compression": 0,
+        "filter_method": 0,
+        "interlace": 0
+      }
+    },
+    "mac_single_export": {
+      "path": "refs/reports/ae_single_case_olmblur_16bpc_witness_latest/olmblur__case_0006/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0006.png",
+      "exists": true,
+      "bytes": 2485331,
+      "sha256": "8990ef5b4cbf82b2d86e4a6014e4d8944eff24397aa97c1fb8ceafcc310a8787",
+      "png_header": {
+        "width": 1920,
+        "height": 1080,
+        "bit_depth": 16,
+        "color_type": 6,
+        "compression": 0,
+        "filter_method": 0,
+        "interlace": 0
+      }
+    },
+    "windows_return_report": {
+      "path": "refs/conformance/olmblur_case0006_worker_probe_return_20260715.md",
+      "exists": true,
+      "bytes": 4302,
+      "sha256": "62dd38f536490a883c0950d3007dc4727d880a064c57658c8f145eadbbcf019b",
+      "png_header": null
+    }
+  },
+  "identity": {
+    "windows_export_equals_canonical": true,
+    "windows_export_equals_mac_single": false
+  },
+  "windows_points_raw_16bit": {
+    "314,14": [
+      2201,
+      2201,
+      2201,
+      65535
+    ],
+    "29,71": [
+      725,
+      725,
+      725,
+      65535
+    ],
+    "601,598": [
+      4609,
+      4609,
+      4637,
+      65535
+    ]
+  },
+  "mac_single_points_raw_16bit": {
+    "314,14": [
+      2199,
+      2199,
+      2199,
+      65535
+    ],
+    "29,71": [
+      727,
+      727,
+      727,
+      65535
+    ],
+    "601,598": [
+      4607,
+      4607,
+      4637,
+      65535
+    ]
+  },
+  "windows_points_exported_8bit": {
+    "314,14": [
+      8,
+      8,
+      8,
+      255
+    ],
+    "29,71": [
+      2,
+      2,
+      2,
+      255
+    ],
+    "601,598": [
+      18,
+      18,
+      18,
+      255
+    ]
+  },
+  "mac_single_points_exported_8bit": {
+    "314,14": [
+      8,
+      8,
+      8,
+      255
+    ],
+    "29,71": [
+      2,
+      2,
+      2,
+      255
+    ],
+    "601,598": [
+      17,
+      17,
+      18,
+      255
+    ]
+  },
+  "residuals": [
+    {
+      "xy": [
+        601,
+        598
+      ],
+      "windows": [
+        18,
+        18,
+        18,
+        255
+      ],
+      "mac_single": [
+        17,
+        17,
+        18,
+        255
+      ],
+      "delta": [
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "windows_manifest": {
+    "platform": "windows",
+    "ae_version": "26.2x49",
+    "bits_per_channel": 16,
+    "renderer": "SOFTWARE",
+    "renderer_raw": 1816,
+    "width": 1920,
+    "height": 1080,
+    "pixel_aspect": 1,
+    "resolution_factor": [
+      1,
+      1
+    ],
+    "frame_rate": 24,
+    "case_id": "olmblur__case_0006",
+    "effect": {
+      "name": "OLM Blur",
+      "match_name": "OLM OLM Blur"
+    },
+    "params": {
+      "Blur Amount": 5,
+      "Blur Smoothness": 100,
+      "Number of Repeat": 10,
+      "Bias Direction": 1,
+      "Legacy": 0,
+      "Effect Opacity": 100,
+      "GPU Rendering": 1
+    }
+  },
+  "mac_manifest": {
+    "platform": "windows",
+    "ae_version": "26.2x49",
+    "bits_per_channel": 16,
+    "renderer": "SOFTWARE",
+    "renderer_raw": 1816,
+    "width": 1920,
+    "height": 1080,
+    "pixel_aspect": 1,
+    "resolution_factor": [
+      1,
+      1
+    ],
+    "frame_rate": 24,
+    "case_id": "olmblur__case_0006",
+    "effect": {
+      "name": "OLM Blur",
+      "match_name": "OLM OLM Blur"
+    },
+    "params": {
+      "Blur Amount": 5,
+      "Blur Smoothness": 100,
+      "Number of Repeat": 10,
+      "Bias Direction": 1,
+      "Legacy": 0,
+      "Effect Opacity": 100,
+      "GPU Rendering": 1
+    }
+  },
+  "host_contracts_compatible": true,
+  "actual_aex": {
+    "classification": {
+      "FACT": "typed actual-AEX dependency-cone observation",
+      "INFERENCE": "cone-local values equal an unpruned full helper run"
+    },
+    "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "portable_trace_self_check": true,
+    "first_windows_internal_difference_reason": "Windows evidence is final PNG words only; no same-run Windows helper/pre-store values are present",
+    "windows_png_difference_points": [
+      "(29,71)"
+    ]
+  },
+  "windows_return_classification": {
+    "accepted_same_run_export_provenance": true,
+    "not_olmblur_worker_trace": true
+  },
+  "mapping": {
+    "declared_transform": "identity",
+    "manifest_geometry_allows_identity": true,
+    "residual_locus": [
+      [
+        601,
+        598
+      ]
+    ],
+    "historical_internal_witnesses": [
+      [
+        314,
+        14
+      ],
+      [
+        29,
+        71
+      ]
+    ],
+    "identity_maps_residual_to_historical_witness": false,
+    "status": "not-proven",
+    "reason": "The only declared host transform is identity; (601,598) is distinct from (314,14) and (29,71), and no artifact supplies a provenance transform or same-run OLMBlur internal trace."
+  },
+  "gates": {
+    "required_files_present": true,
+    "windows_hash_is_canonical": true,
+    "single_residual_exactly_at_601_598": true,
+    "host_contracts_compatible": true,
+    "actual_aex_is_typed_but_not_windows_internal": true,
+    "windows_return_classification": true,
+    "cdb_attach_used": false
+  },
+  "fact": [
+    "Windows export is canonical/current-AEX byte identity.",
+    "Mac single differs at exactly one exported pixel: (601,598), Windows [18,18,18,255] versus Mac [17,17,18,255].",
+    "Historical typed witnesses are (314,14) and (29,71); the actual-AEX report does not localize a Windows internal difference."
+  ],
+  "inference": [
+    "No coordinate/provenance mapping is proven by current artifacts.",
+    "The export residual and historical internal witnesses must remain separate evidence lanes.",
+    "No helper, kernel, or rounding conclusion follows from this image-level residual."
+  ],
+  "forbidden_actions": [
+    "CDB attach",
+    "mac/OLMBlur edits",
+    "kernel tuning",
+    "rounding tuning",
+    "editing notes/CONFORMANCE_LEDGER.md"
+  ]
+}

@@ -1,0 +1,767 @@
+{
+  "decision": {
+    "ae_exact_claim_allowed_now": false,
+    "case": "final_random10_olm_directionalblur_01",
+    "mac_validation": "single-case-float-exr-gate",
+    "no_retune_justified": true,
+    "raw_cross_host_equality_required": true,
+    "request": "refs/mac_validation_requests/olmdirectionalblur_32bpc_mac_validation_20260715.json"
+  },
+  "evidence": {
+    "16bpc": {
+      "classification": "no-directionalblur-rows-in-covered-16bpc-exact-manifest",
+      "covered_case_count": 12,
+      "covered_manifest": "refs/conformance/bitdepth_16bpc_exact_manifest_20260709.json",
+      "covered_plugins": [
+        "OLMColorKey",
+        "OLMToonDilate"
+      ],
+      "directionalblur_case_count": 0
+    },
+    "32bpc_family_counts": {
+      "back": 10,
+      "fade": 10,
+      "noise": 10,
+      "tail": 10,
+      "variation": 10
+    },
+    "32bpc_windows": {
+      "case_count": 10,
+      "cases": [
+        {
+          "before_effects": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_01_before_effects.exr",
+          "before_effects_float_exr": true,
+          "before_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "before_sha256": "70c23365b3984f218c5030a3608a21bd364bda6ea287d8730ef361940ddfe82f",
+          "case_id": "final_random10_olm_directionalblur_01",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_01.exr",
+          "effect_float_exr": true,
+          "effect_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "effect_sha256": "f581946429a552ae90b8d8895b70b7818f7b950fdce44c7264bd4a97efbff516",
+          "families": [
+            "variation",
+            "fade",
+            "tail",
+            "back",
+            "noise"
+          ],
+          "input_id": "random_final_grid_1920x1080",
+          "params": {
+            "Alpha Fade#11": 56,
+            "Alpha Fade#6": 19,
+            "Angle#1": 179,
+            "Blur Strength#10": 180,
+            "Blur Strength#5": 519,
+            "Brightness Gain#2": 1.19280004501343,
+            "Effect Opacity#2": 100,
+            "GPU Rendering#3": 1,
+            "Noise Layer#17": 0,
+            "Noise Type#16": 1,
+            "Noise Variation#15": 8,
+            "Offset#19": 27,
+            "Seed#18": 121,
+            "Sharp Tail#12": 42,
+            "Sharp Tail#7": 37,
+            "Size Variation#3": 78,
+            "Thickness#20": 75
+          }
+        },
+        {
+          "before_effects": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_02_before_effects.exr",
+          "before_effects_float_exr": true,
+          "before_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "before_sha256": "b51cbe11178adaacbd761ce8b49a9c229b09d75abf4185b7ddc52766d1a19678",
+          "case_id": "final_random10_olm_directionalblur_02",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_02.exr",
+          "effect_float_exr": true,
+          "effect_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "effect_sha256": "32626b474113e71ac1ca5b54691308b85997e8958cd335ae1ea540227033c711",
+          "families": [
+            "variation",
+            "fade",
+            "tail",
+            "back",
+            "noise"
+          ],
+          "input_id": "random_final_alpha_1920x1080",
+          "params": {
+            "Alpha Fade#11": 6,
+            "Alpha Fade#6": 64,
+            "Angle#1": 7,
+            "Blur Strength#10": 1972,
+            "Blur Strength#5": 1372,
+            "Brightness Gain#2": 4.1269998550415,
+            "Effect Opacity#2": 100,
+            "GPU Rendering#3": 1,
+            "Noise Layer#17": 0,
+            "Noise Type#16": 3,
+            "Noise Variation#15": 45,
+            "Offset#19": 11,
+            "Seed#18": 901,
+            "Sharp Tail#12": 54,
+            "Sharp Tail#7": 25,
+            "Size Variation#3": 48,
+            "Thickness#20": 28
+          }
+        },
+        {
+          "before_effects": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_03_before_effects.exr",
+          "before_effects_float_exr": true,
+          "before_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "before_sha256": "299ca0b37e400bac3d8112a0a4539f55cbccb5a2e7bd6b01a91d4e630c8eb6c1",
+          "case_id": "final_random10_olm_directionalblur_03",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_03.exr",
+          "effect_float_exr": true,
+          "effect_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "effect_sha256": "d1daae668e54c28c2a8d0951f555338bbef86b05960498a4a99ea59fc8f729d5",
+          "families": [
+            "variation",
+            "fade",
+            "tail",
+            "back",
+            "noise"
+          ],
+          "input_id": "random_final_grid_1920x1080",
+          "params": {
+            "Alpha Fade#11": 56,
+            "Alpha Fade#6": 9,
+            "Angle#1": -166,
+            "Blur Strength#10": 3764,
+            "Blur Strength#5": 2226,
+            "Brightness Gain#2": 7.06120014190674,
+            "Effect Opacity#2": 100,
+            "GPU Rendering#3": 1,
+            "Noise Layer#17": 0,
+            "Noise Type#16": 2,
+            "Noise Variation#15": 82,
+            "Offset#19": 46,
+            "Seed#18": 682,
+            "Sharp Tail#12": 67,
+            "Sharp Tail#7": 12,
+            "Size Variation#3": 18,
+            "Thickness#20": 79
+          }
+        },
+        {
+          "before_effects": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_04_before_effects.exr",
+          "before_effects_float_exr": true,
+          "before_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "before_sha256": "52a284cf3afc7f5374c84f5cbbee4fdd78e9bc97dff889778d1911d01019415d",
+          "case_id": "final_random10_olm_directionalblur_04",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_04.exr",
+          "effect_float_exr": true,
+          "effect_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "effect_sha256": "feb20aab71279f61ceeeff02eaa23becca9fef3ffb140970cfbd15c9e7a092b2",
+          "families": [
+            "variation",
+            "fade",
+            "tail",
+            "back",
+            "noise"
+          ],
+          "input_id": "random_final_alpha_1920x1080",
+          "params": {
+            "Alpha Fade#11": 6,
+            "Alpha Fade#6": 54,
+            "Angle#1": 23,
+            "Blur Strength#10": 1557,
+            "Blur Strength#5": 3080,
+            "Brightness Gain#2": 9.99540042877197,
+            "Effect Opacity#2": 100,
+            "GPU Rendering#3": 1,
+            "Noise Layer#17": 0,
+            "Noise Type#16": 1,
+            "Noise Variation#15": 18,
+            "Offset#19": 30,
+            "Seed#18": 463,
+            "Sharp Tail#12": 79,
+            "Sharp Tail#7": 99,
+            "Size Variation#3": 88,
+            "Thickness#20": 32
+          }
+        },
+        {
+          "before_effects": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_05_before_effects.exr",
+          "before_effects_float_exr": true,
+          "before_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "before_sha256": "06b86f7106374c9a07d776de02d58f96568cf76e65048db585ef8610d98de105",
+          "case_id": "final_random10_olm_directionalblur_05",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_05.exr",
+          "effect_float_exr": true,
+          "effect_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "effect_sha256": "f9ebacd3fb6ee6def18b29e2e49e3d13abe6304091c59b2edc0bab2ce3c9973e",
+          "families": [
+            "variation",
+            "fade",
+            "tail",
+            "back",
+            "noise"
+          ],
+          "input_id": "random_final_grid_1920x1080",
+          "params": {
+            "Alpha Fade#11": 56,
+            "Alpha Fade#6": 99,
+            "Angle#1": -150,
+            "Blur Strength#10": 3349,
+            "Blur Strength#5": 3934,
+            "Brightness Gain#2": 2.92960000038147,
+            "Effect Opacity#2": 100,
+            "GPU Rendering#3": 1,
+            "Noise Layer#17": 0,
+            "Noise Type#16": 1,
+            "Noise Variation#15": 55,
+            "Offset#19": 14,
+            "Seed#18": 244,
+            "Sharp Tail#12": 91,
+            "Sharp Tail#7": 87,
+            "Size Variation#3": 58,
+            "Thickness#20": 83
+          }
+        },
+        {
+          "before_effects": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_06_before_effects.exr",
+          "before_effects_float_exr": true,
+          "before_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "before_sha256": "490f78838df68cd43a6ea7d7315520872bdc7297c6a9bf7c0e9ee05323a79476",
+          "case_id": "final_random10_olm_directionalblur_06",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_06.exr",
+          "effect_float_exr": true,
+          "effect_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "effect_sha256": "be5730bc88d81819bee8ef02209bdd007d36f794bff7fd19fea218c56916a493",
+          "families": [
+            "variation",
+            "fade",
+            "tail",
+            "back",
+            "noise"
+          ],
+          "input_id": "random_final_alpha_1920x1080",
+          "params": {
+            "Alpha Fade#11": 7,
+            "Alpha Fade#6": 44,
+            "Angle#1": 39,
+            "Blur Strength#10": 1141,
+            "Blur Strength#5": 787,
+            "Brightness Gain#2": 5.8636999130249,
+            "Effect Opacity#2": 100,
+            "GPU Rendering#3": 1,
+            "Noise Layer#17": 0,
+            "Noise Type#16": 3,
+            "Noise Variation#15": 92,
+            "Offset#19": 49,
+            "Seed#18": 25,
+            "Sharp Tail#12": 4,
+            "Sharp Tail#7": 74,
+            "Size Variation#3": 28,
+            "Thickness#20": 36
+          }
+        },
+        {
+          "before_effects": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_07_before_effects.exr",
+          "before_effects_float_exr": true,
+          "before_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "before_sha256": "7f420f14b58ee8632000327fa27c1f191553cd9a6abab7e8e690470cc38a3400",
+          "case_id": "final_random10_olm_directionalblur_07",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_07.exr",
+          "effect_float_exr": true,
+          "effect_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "effect_sha256": "d1a8d4f24b330d2dd7b908f7f180e87faf748d07a236a2919f2f1c6f618ee875",
+          "families": [
+            "variation",
+            "fade",
+            "tail",
+            "back",
+            "noise"
+          ],
+          "input_id": "random_final_grid_1920x1080",
+          "params": {
+            "Alpha Fade#11": 57,
+            "Alpha Fade#6": 90,
+            "Angle#1": -134,
+            "Blur Strength#10": 2933,
+            "Blur Strength#5": 1641,
+            "Brightness Gain#2": 8.79790019989014,
+            "Effect Opacity#2": 100,
+            "GPU Rendering#3": 1,
+            "Noise Layer#17": 0,
+            "Noise Type#16": 2,
+            "Noise Variation#15": 29,
+            "Offset#19": 33,
+            "Seed#18": 805,
+            "Sharp Tail#12": 16,
+            "Sharp Tail#7": 61,
+            "Size Variation#3": 98,
+            "Thickness#20": 87
+          }
+        },
+        {
+          "before_effects": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_08_before_effects.exr",
+          "before_effects_float_exr": true,
+          "before_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "before_sha256": "ae3d04d2e4dfcf8b333f556810671bbd2e76ffc6775d539d057211fab049f8d3",
+          "case_id": "final_random10_olm_directionalblur_08",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_08.exr",
+          "effect_float_exr": true,
+          "effect_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "effect_sha256": "132eb72050c06d5715d22e98ea4b8e31ee5608c32be666b622c1c5472be12078",
+          "families": [
+            "variation",
+            "fade",
+            "tail",
+            "back",
+            "noise"
+          ],
+          "input_id": "random_final_alpha_1920x1080",
+          "params": {
+            "Alpha Fade#11": 7,
+            "Alpha Fade#6": 35,
+            "Angle#1": 55,
+            "Blur Strength#10": 726,
+            "Blur Strength#5": 2495,
+            "Brightness Gain#2": 1.73210000991821,
+            "Effect Opacity#2": 100,
+            "GPU Rendering#3": 1,
+            "Noise Layer#17": 0,
+            "Noise Type#16": 1,
+            "Noise Variation#15": 66,
+            "Offset#19": 17,
+            "Seed#18": 586,
+            "Sharp Tail#12": 29,
+            "Sharp Tail#7": 49,
+            "Size Variation#3": 67,
+            "Thickness#20": 40
+          }
+        },
+        {
+          "before_effects": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_09_before_effects.exr",
+          "before_effects_float_exr": true,
+          "before_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "before_sha256": "4310b57358f7d50da0044416312b3c819490a5ee91ae29ff8089c7ab2ec2bd49",
+          "case_id": "final_random10_olm_directionalblur_09",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_09.exr",
+          "effect_float_exr": true,
+          "effect_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "effect_sha256": "0b49d5d9b635ff44060081a5c64133ad5d4adcec172bf60c42bef785d55566a2",
+          "families": [
+            "variation",
+            "fade",
+            "tail",
+            "back",
+            "noise"
+          ],
+          "input_id": "random_final_grid_1920x1080",
+          "params": {
+            "Alpha Fade#11": 57,
+            "Alpha Fade#6": 80,
+            "Angle#1": -117,
+            "Blur Strength#10": 2518,
+            "Blur Strength#5": 3349,
+            "Brightness Gain#2": 4.66629981994629,
+            "Effect Opacity#2": 100,
+            "GPU Rendering#3": 1,
+            "Noise Layer#17": 0,
+            "Noise Type#16": 1,
+            "Noise Variation#15": 3,
+            "Offset#19": 1,
+            "Seed#18": 366,
+            "Sharp Tail#12": 41,
+            "Sharp Tail#7": 36,
+            "Size Variation#3": 37,
+            "Thickness#20": 91
+          }
+        },
+        {
+          "before_effects": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_10_before_effects.exr",
+          "before_effects_float_exr": true,
+          "before_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "before_sha256": "18f5063941db0f8c4639aa8f43533b87c4f05860688bab4a5e7cccd76e021b5d",
+          "case_id": "final_random10_olm_directionalblur_10",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_olmdirectionalblur_exr_20260710__software_32bpc__fr24__final_random10_olm_directionalblur_10.exr",
+          "effect_float_exr": true,
+          "effect_header": {
+            "channel_order": [
+              "A",
+              "B",
+              "G",
+              "R"
+            ],
+            "compression": 0,
+            "sample_types": [
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "effect_sha256": "adf4fd9bcbcd56cfee5fe22f0ca2b36fa31631cbc1898b2601b9347595a2b2b6",
+          "families": [
+            "variation",
+            "fade",
+            "tail",
+            "back",
+            "noise"
+          ],
+          "input_id": "random_final_alpha_1920x1080",
+          "params": {
+            "Alpha Fade#11": 7,
+            "Alpha Fade#6": 25,
+            "Angle#1": 71,
+            "Blur Strength#10": 310,
+            "Blur Strength#5": 203,
+            "Brightness Gain#2": 7.60050010681152,
+            "Effect Opacity#2": 100,
+            "GPU Rendering#3": 1,
+            "Noise Layer#17": 0,
+            "Noise Type#16": 3,
+            "Noise Variation#15": 40,
+            "Offset#19": 36,
+            "Seed#18": 147,
+            "Sharp Tail#12": 53,
+            "Sharp Tail#7": 24,
+            "Size Variation#3": 7,
+            "Thickness#20": 44
+          }
+        }
+      ],
+      "classification": "windows-software-float-reference-only",
+      "float_preserving": true,
+      "manifest": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMDirectionalBlur/reference_manifest.json",
+      "software": true
+    },
+    "front_only_exact_family": {
+      "cases": [
+        "db_angle0_strength_sweep_small",
+        "db_angle0_no_tail_no_size"
+      ],
+      "claim": "8bpc front-only only; does not promote 16bpc or 32bpc",
+      "classification": "separate-8bpc-family",
+      "source": "refs/conformance/dblur_frontonly_mac_ae_exact_20260711.md"
+    }
+  },
+  "fail_closed": [
+    "No DirectionalBlur 16bpc exact claim: covered 16bpc manifest has no DirectionalBlur rows.",
+    "All imported 32bpc cases are variation/fade/tail/back/noise families; none is front-only exact-family evidence.",
+    "PNG or visual similarity cannot establish 32bpc exactness.",
+    "A Mac result is not exact unless same-contract control gates pass and raw FLOAT32 words are equal cross-host."
+  ],
+  "generated": "2026-07-15",
+  "kind": "olmdirectionalblur_bitdepth_evidence_audit",
+  "schema": 1,
+  "scope": "OLMDirectionalBlur 16/32bpc evidence only; no production source, row755, ledger, or orchestration"
+}

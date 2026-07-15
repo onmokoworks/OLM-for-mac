@@ -85,7 +85,8 @@ def package_manifest(case: dict[str, Any]) -> dict[str, Any]:
             "first_getKernel": {"ecx": 21, "xmm1": 2.5, "r8": 5},
             "words": 21,
             "element": "float32",
-            "encoding": "raw little-endian words",
+            "encoding": "raw little-endian float32 words",
+            "byte_order": "little",
             "source": "cv::Mat.data after getKernel return",
         },
         "preflight": {
@@ -132,7 +133,7 @@ def return_template() -> dict[str, Any]:
             "getKernelReturn": None,
         },
         "case": {"blur_mode_manifest": 3, "case_id": CASE_ID, "overrides_match_name": OVERRIDES, "expected_first_kernel": {"ecx": 21, "xmm1": 2.5, "r8": 5}},
-        "observation": {"wrapper_args": None, "create_seen": False, "first_getKernel": {"ecx": None, "xmm1": None, "r8": None, "output_mat": None}, "return_data": None, "raw_words_u32": [None] * 21, "raw_bytes": 84},
+        "observation": {"wrapper_args": None, "create_seen": False, "first_getKernel": {"ecx": None, "xmm1": None, "r8": None, "output_mat": None}, "return_data": None, "raw_words_u32": [None] * 21, "raw_bytes": 84, "element_type": "float32", "byte_order": "little", "raw_encoding": "raw little-endian float32 words", "raw_bytes_sha256": None},
         "failure": {"stage": None, "reason": None, "missing": [], "same_run": None},
     }
 
@@ -231,6 +232,7 @@ $requestId='olmkirakira_mode3_live_gaussian_20260713'; $caseId='final_random10_o
 if(![IO.Path]::IsPathRooted($WorkRoot)){$WorkRoot=Join-Path ([Environment]::CurrentDirectory) $WorkRoot}; $WorkRoot=[IO.Path]::GetFullPath($WorkRoot)
 $runId='kk-mode3-'+[guid]::NewGuid().ToString('N'); $work=Join-Path $WorkRoot $runId; New-Item -ItemType Directory -Force -Path $work | Out-Null; $work=(Get-Item -LiteralPath $work).FullName
 function Finish([string]$status,[hashtable]$extra,[int]$code){$body=[ordered]@{schema='olmkirakira-mode3-live-gaussian-return-v1';request_id=$requestId;status=$status;run_id=$runId}; foreach($x in $extra.GetEnumerator()){$body[$x.Key]=$x.Value}; $json=$body|ConvertTo-Json -Depth 20; $json|Set-Content -LiteralPath (Join-Path $work 'RETURN_RUNTIME_TRACE.json') -Encoding UTF8; $json; exit $code}
+$littleEndian=[BitConverter]::IsLittleEndian; if(-not $littleEndian){Finish 'exact_bind_failure' @{failure=@{stage='coefficient_encoding';reason='host is not little-endian'}} 3}
 function Get-AfterFxProcessState([string]$ExecutablePath,[int]$TargetSessionId){
   $items=@()
   try{
@@ -414,7 +416,7 @@ $proc=Start-Process -FilePath $CdbPath -ArgumentList ('-cf "'+$cdb+'" -p '+$aePi
 function Marker([string]$n){$lines|Where-Object{$_ -match "^$n\s"}|Select-Object -Last 1}; function Field([string]$l,[string]$k){$m=[regex]::Match($l,"(?:^|\s)$k=([^\s]+)");if($m.Success){$m.Groups[1].Value}}
 $start=Marker 'KK_RUN_START'; $mod=Marker 'KK_MODULE'; $wrap=Marker 'KK_WRAPPER'; $cr=Marker 'KK_CREATE'; $ke=Marker 'KK_KERNEL_ENTRY'; $kr=Marker 'KK_KERNEL_RETURN'; $missing=New-Object System.Collections.Generic.List[string]; foreach($p in @(@('run_start',$start),@('module',$mod),@('wrapper',$wrap),@('create',$cr),@('kernel_entry',$ke),@('kernel_return',$kr))){if(!$p[1]){[void]$missing.Add($p[0])}}
 if(!$ke -or (Field $ke 'ecx') -ne '21'){[void]$missing.Add('kernel_ecx_21')}; if(!$ke -or (Field $ke 'r8') -ne '5'){[void]$missing.Add('kernel_r8_5')}; if(!$ke -or [double](Field $ke 'xmm1') -ne 2.5){[void]$missing.Add('kernel_xmm1_2.5')}; if(!$kr -or (Field $kr 'word_count') -ne '21'){[void]$missing.Add('word_count_21')}; if(!(Test-Path -LiteralPath $words)){[void]$missing.Add('raw_words_file')}; elseif((Get-Item -LiteralPath $words).Length -ne 84){[void]$missing.Add('raw_words_size_84')}; $ids=@($lines|ForEach-Object{if($_ -match '^KK_\S+.*run_id=([^\s]+)'){$Matches[1]}}|Sort-Object -Unique); if($ids.Count -ne 1){[void]$missing.Add('same_run_identity')}; if(!$start -or (Field $start 'case_id') -ne $caseId){[void]$missing.Add('case_identity')}; if($missing.Count){Finish 'exact_bind_failure' @{failure=@{stage='binding';reason='required live markers or exact first-kernel fields missing';missing=@($missing);same_run_ids=$ids;trace=$joined}} 4}
-$raw=[IO.File]::ReadAllBytes($words); $u32=for($i=0;$i -lt 21;$i++){[BitConverter]::ToUInt32($raw,$i*4).ToString('x8')}; Finish 'answered' @{preflight=@{status='ready';marker=(Get-Content -LiteralPath $preflightReady -Raw);ae_pid=$preflightPid;powershell=$PSVersionTable.PSVersion.ToString();work_root=$WorkRoot};run=@{run_id=$ids[0];case_id=$caseId;module='OLMKiraKira.aex';module_base=$base;aex_sha256=$hash;aex_size=$aex.Length};binding=@{wrapper_rva='0x1272ec0';create_rva='0x1266730';getKernel_rva='0x12754a0';getKernelReturn_rva='0x126685c';wrapper=$wrapper;create=$create;getKernel=$kernel;getKernelReturn=$kernelReturn};case=@{blur_mode_manifest=3;overrides_match_name=@{'OLM OLM Kira Kira-0003'=5;'OLM OLM Kira Kira-0004'=0;'OLM OLM Kira Kira-0005'=0;'OLM OLM Kira Kira-0026'=0}};observation=@{module_marker=$mod;wrapper_marker=$wrap;create_marker=$cr;first_getKernel=@{ecx=[int](Field $ke 'ecx');xmm1=[double](Field $ke 'xmm1');r8=[int](Field $ke 'r8');output_mat=(Field $ke 'output_mat')};return_data=(Field $kr 'data');raw_words_u32=$u32;raw_bytes=84};trace=$joined} 0
+$raw=[IO.File]::ReadAllBytes($words); $u32=for($i=0;$i -lt 21;$i++){[BitConverter]::ToUInt32($raw,$i*4).ToString('x8')}; $coeffHash=(Get-FileHash -Algorithm SHA256 -LiteralPath $words).Hash.ToLowerInvariant(); Finish 'answered' @{preflight=@{status='ready';marker=(Get-Content -LiteralPath $preflightReady -Raw);ae_pid=$preflightPid;powershell=$PSVersionTable.PSVersion.ToString();work_root=$WorkRoot};run=@{run_id=$ids[0];case_id=$caseId;module='OLMKiraKira.aex';module_base=$base;aex_sha256=$hash;aex_size=$aex.Length};binding=@{wrapper_rva='0x1272ec0';create_rva='0x1266730';getKernel_rva='0x12754a0';getKernelReturn_rva='0x126685c';wrapper=$wrapper;create=$create;getKernel=$kernel;getKernelReturn=$kernelReturn};case=@{blur_mode_manifest=3;overrides_match_name=@{'OLM OLM Kira Kira-0003'=5;'OLM OLM Kira Kira-0004'=0;'OLM OLM Kira Kira-0005'=0;'OLM OLM Kira Kira-0026'=0}};observation=@{module_marker=$mod;wrapper_marker=$wrap;create_marker=$cr;first_getKernel=@{ecx=[int](Field $ke 'ecx');xmm1=[double](Field $ke 'xmm1');r8=[int](Field $ke 'r8');output_mat=(Field $ke 'output_mat')};return_data=(Field $kr 'data');raw_words_u32=$u32;raw_bytes=84;element_type='float32';byte_order='little';raw_encoding='raw little-endian float32 words';raw_bytes_sha256=$coeffHash};trace=$joined} 0
 '''
 
 

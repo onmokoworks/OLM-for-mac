@@ -1,0 +1,168 @@
+{
+  "algorithm_conclusion": {
+    "fact": "No current evidence demonstrates a normalized 8bpc or covered 16bpc Edge Thin, Edge Blur, color-space, or Replace mismatch.",
+    "inference": "No bounded source-code change is independently justified in this audit; the next discriminating step is a verified Mac/Windows raw-float comparison."
+  },
+  "blocker": {
+    "classification": "evidence-gate-not-algorithm-failure",
+    "id": "32bpc-mac-windows-raw-float-comparison",
+    "required_return": "same-contract Mac and Windows Software 32bpc FLOAT EXRs with before-effect controls and raw-float comparison manifest",
+    "scope": "OLMColorKey 32bpc Mac/Windows Software exactness",
+    "why_narrowest": "8bpc and covered 16bpc are exact; the Windows 32bpc float reference is present, but no Mac paired float comparison is present."
+  },
+  "evidence": {
+    "16bpc": {
+      "cases": 9,
+      "classification": "AE exact",
+      "exact_cases": 9,
+      "fact_source": "refs/conformance/bitdepth_16bpc_exact_manifest_20260703.md"
+    },
+    "32bpc": {
+      "cases": 9,
+      "classification": "windows-software-float-reference-only",
+      "fact_source": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/reference_manifest.json",
+      "float_preserving": true,
+      "historical_png_probe": {
+        "cases": 9,
+        "classification": "probe-only-png-return",
+        "float_preserving": false
+      },
+      "pair_validation": [
+        {
+          "before_effects": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0001_before_effects.exr",
+          "before_effects_float_exr": true,
+          "case_id": "olmcolorkey__case_0001",
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0001.exr",
+          "effect_float_exr": true,
+          "software": true
+        },
+        {
+          "before_effects": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0002_before_effects.exr",
+          "before_effects_float_exr": true,
+          "case_id": "olmcolorkey__case_0002",
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0002.exr",
+          "effect_float_exr": true,
+          "software": true
+        },
+        {
+          "before_effects": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0003_before_effects.exr",
+          "before_effects_float_exr": true,
+          "case_id": "olmcolorkey__case_0003",
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0003.exr",
+          "effect_float_exr": true,
+          "software": true
+        },
+        {
+          "before_effects": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0004_before_effects.exr",
+          "before_effects_float_exr": true,
+          "case_id": "olmcolorkey__case_0004",
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0004.exr",
+          "effect_float_exr": true,
+          "software": true
+        },
+        {
+          "before_effects": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0005_before_effects.exr",
+          "before_effects_float_exr": true,
+          "case_id": "olmcolorkey__case_0005",
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0005.exr",
+          "effect_float_exr": true,
+          "software": true
+        },
+        {
+          "before_effects": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0006_before_effects.exr",
+          "before_effects_float_exr": true,
+          "case_id": "olmcolorkey__case_0006",
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0006.exr",
+          "effect_float_exr": true,
+          "software": true
+        },
+        {
+          "before_effects": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0007_before_effects.exr",
+          "before_effects_float_exr": true,
+          "case_id": "olmcolorkey__case_0007",
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0007.exr",
+          "effect_float_exr": true,
+          "software": true
+        },
+        {
+          "before_effects": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0008_before_effects.exr",
+          "before_effects_float_exr": true,
+          "case_id": "olmcolorkey__case_0008",
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0008.exr",
+          "effect_float_exr": true,
+          "software": true
+        },
+        {
+          "before_effects": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0009_before_effects.exr",
+          "before_effects_float_exr": true,
+          "case_id": "olmcolorkey__case_0009",
+          "dimensions_match": true,
+          "effect": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmcolorkey__case_0009.exr",
+          "effect_float_exr": true,
+          "software": true
+        }
+      ],
+      "returned_formats": {
+        ".exr": 18
+      }
+    },
+    "8bpc": {
+      "cases": 9,
+      "classification": "normalized-software-exact",
+      "exact_cases": 9,
+      "fact_source": "refs/conformance/olmcolorkey_edge_8bpc_decision.json"
+    }
+  },
+  "fail_closed": {
+    "32bpc_ae_exact_claim_allowed": false,
+    "32bpc_ae_exact_forbidden_without_float_comparison": true,
+    "windows_float_reference_verified": true
+  },
+  "feature_coverage_facts": {
+    "color_spaces_and_replace": "implemented-and-exact-0-in-CLI-evidence",
+    "edge_thin_and_blur": "8bpc-normalized-exact; 16bpc-covered-exact",
+    "fact_sources": [
+      "notes/OLMColorKey_ASM_FACTS.md",
+      "notes/IR_OLMColorKey_Edge.md"
+    ],
+    "source_markers_present": {
+      "color_space_dispatch": true,
+      "edge_blur": true,
+      "edge_thin": true,
+      "float_dispatch": true,
+      "replace_tail": true
+    }
+  },
+  "generated": "2026-07-15",
+  "host_separation": {
+    "fact": "The 2026-07-12 Mac 32bpc case_0002 pair is Mac-side bit-exact no-op, while Windows and Mac control worlds differ before effect attribution.",
+    "inference": "Do not classify that pair as a ColorKey pixel mismatch or tune Edge/Replace/color-space from it.",
+    "source": "refs/conformance/olmcolorkey_32bpc_case0002_mac_pair_20260712.md"
+  },
+  "kind": "olmcolorkey_bitdepth_evidence_audit",
+  "mac_float_gate": {
+    "ae_exact_claim_allowed": false,
+    "candidate_index_count": 0,
+    "candidate_index_paths": [],
+    "capture_source": "mac/OLMColorKey/OLMColorKey.cpp",
+    "identity_request_fail_closed": true,
+    "pair_report_rejects_ae_exact": true,
+    "raw_float_comparison_ready": false,
+    "reason": "Mac candidate/control EXRs and a verified raw-float comparison manifest are absent.",
+    "windows_runtime_status": "not-run-on-this-macos-workspace"
+  },
+  "schema": 1,
+  "source_audit_inputs": {
+    "edge_ir_current_exact_present": true,
+    "legacy_16_text_present": true,
+    "replace_facts_present": true
+  }
+}

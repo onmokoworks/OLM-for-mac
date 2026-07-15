@@ -55,7 +55,8 @@ def complete_trace(*, capture_pid: int = 7550, capture_params: str = "0x000001f0
                 "stage=pre_normalization stage_rva=5554 before_normalization=1 worker_hits=1 "
                 "rowdriver_calls=2 row_start=0 row_end=2176 row755_covered=1 params_mismatch=0 "
                 "destination_base=0x000001f010000000 denominator_base=0x000001f020000000 "
-                "alpha_valid_base=0x000001f030000000 row0=0 col0=0 stride=2206 row=755 "
+                "alpha_valid_base=0x000001f030000000 destination_typed_f32=1 denominator_typed_f32=1 "
+                "alpha_valid_typed_f32=1 row0=0 col0=0 stride=2206 row=755 "
                 "x_start=747 x_end=1080 destination_bytes=5344 denominator_bytes=1336 "
                 "alpha_valid_bytes=1336 destination_address=0x000001f01196ce50 "
                 "denominator_address=0x000001f02065b394 alpha_valid_address=0x000001f03065b394"
@@ -115,8 +116,8 @@ def main() -> int:
     }
     assert spec["validation"]["identity_fields"][-2:] == ["witness_id", "params"]
     assert [(event["prefix"], event["cardinality"]) for event in spec["validation"]["events"]] == [
-        ("DBR_WORKER_ENTRY", {"scope": "per_case", "min": 1, "max": 2206}),
-        ("DBR_ROW_RANGE", {"scope": "per_case", "min": 1, "max": 2206}),
+        ("DBR_WORKER_ENTRY", {"scope": "per_case", "min": 1, "max": 2176}),
+        ("DBR_ROW_RANGE", {"scope": "per_case", "min": 1, "max": 2176}),
         ("DBR_PRE_NORMALIZATION_CAPTURE", {"scope": "per_case", "min": 1, "max": 1}),
     ]
 
@@ -143,6 +144,8 @@ def main() -> int:
         assert hook in json.dumps(spec["cases"][0]["addresses"])
     for byte_count in ("destination_bytes=5344", "denominator_bytes=1336", "alpha_valid_bytes=1336"):
         assert byte_count in probe
+    for typed_field in ("destination_typed_f32=1", "denominator_typed_f32=1", "alpha_valid_typed_f32=1"):
+        assert typed_field in probe
 
     accepted = validate_trace(spec, complete_trace(), IDENTITY)
     assert accepted["status"] == "answered" and len(accepted["events"]) == 4
@@ -153,6 +156,10 @@ def main() -> int:
         "params_drift": complete_trace(capture_params="0x000001f000009000"),
         "wrong_stage": complete_trace().replace("stage_rva=5554", "stage_rva=5555"),
         "wrong_bytes": complete_trace().replace("destination_bytes=5344", "destination_bytes=5343"),
+        "missing_destination_typed_state": complete_trace().replace("destination_typed_f32=1 ", ""),
+        "missing_denominator_typed_state": complete_trace().replace("denominator_typed_f32=1 ", ""),
+        "missing_alpha_typed_state": complete_trace().replace("alpha_valid_typed_f32=1 ", ""),
+        "wrong_row_end": complete_trace().replace("row_end=2176", "row_end=2206"),
         "bogus_destination_address": complete_trace().replace(
             "destination_address=0x000001f01196ce50", "destination_address=0x000001f01196ce40"
         ),
@@ -171,6 +178,7 @@ def main() -> int:
         "missing_rows": "\n".join(
             line for line in complete_trace().splitlines() if not line.startswith("DBR_ROW_RANGE ")
         ) + "\n",
+        "bind_failure_only": "DBR_BIND_FAILURE " + common() + " worker_hits=0 rowdriver_calls=0 row755_covered=0 params_mismatch=1 params=0x1 expected_params=0x2 row0=0 col0=0 stride=2206\n",
     }
     for name, trace in variants.items():
         rejected = validate_trace(spec, trace, IDENTITY)

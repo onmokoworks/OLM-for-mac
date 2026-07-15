@@ -4,14 +4,45 @@
 from __future__ import annotations
 
 import json
+import importlib.util
 import subprocess
 import sys
 import tempfile
 from pathlib import Path
 
 
+def load_analyzer(repo: Path):
+    spec = importlib.util.spec_from_file_location(
+        "analyze_pending_runtime_trace_packages", repo / "scripts/analyze_pending_runtime_trace_packages.py"
+    )
+    if spec is None or spec.loader is None:
+        raise AssertionError("could not load pending runtime analyzer")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 def main() -> int:
     repo = Path(__file__).resolve().parents[2]
+    analyzer = load_analyzer(repo)
+    with tempfile.TemporaryDirectory(prefix="pending_runtime_trace_superseded_smoke_") as tmp:
+        root = Path(tmp)
+        report_dir = root / "refs/reports"
+        report_dir.mkdir(parents=True)
+        (report_dir / "runtime_trace_superseded.json").write_text(
+            json.dumps(
+                {
+                    "kind": "olm_runtime_trace_superseded",
+                    "superseded": [{"request_id": "synthetic_request_20260715_retry_20260715"}],
+                }
+            ),
+            encoding="utf-8",
+        )
+        superseded = analyzer.superseded_request_ids(root)
+        if superseded != {"synthetic_request_20260715"}:
+            raise AssertionError(f"superseded retry ID must normalize to its queue ID, got {superseded}")
+        if analyzer.row_status("synthetic_request_20260715", set(), superseded) != "superseded":
+            raise AssertionError("normalized superseded retry ID must prevent a false-pending row")
     with tempfile.TemporaryDirectory(prefix="pending_runtime_trace_smoke_") as tmp:
         out_json = Path(tmp) / "pending_runtime_trace_packages.json"
         out_md = Path(tmp) / "pending_runtime_trace_packages.md"
@@ -37,6 +68,49 @@ def main() -> int:
         if not isinstance(rows, list) or not rows:
             raise AssertionError("expected runtime trace package rows")
         by_id = {row["request_id"]: row for row in rows}
+        dg_typed = by_id.get("olmdistancegradation_8bpc_current_aex_same_run_typed_boundary_20260712")
+        if dg_typed is None:
+            raise AssertionError("missing DistanceGradation 8bpc typed-boundary request")
+        if dg_typed["priority"] != 1:
+            raise AssertionError(
+                "DistanceGradation typed-boundary resend must remain queue head at priority 1, "
+                f"got {dg_typed['priority']}"
+            )
+        if "15 typed records" not in dg_typed.get("stop_condition", ""):
+            raise AssertionError("DistanceGradation typed-boundary request must expose the v4 acceptance gate")
+        successor_expectations = {
+            "olmdirectionalblur_row755_20260713": (
+                "refs/runtime_trace_packages/windows_witness_olmdirectionalblur_row755_20260713.zip",
+                3,
+            ),
+            "olmradialblur_case0009_fullframe_postnorm_typed_common_core_20260713": (
+                "refs/runtime_trace_packages/windows_witness_olmradialblur_case0009_fullframe_postnorm_typed_common_core_20260713.zip",
+                18,
+            ),
+            "olmsmoother2_case0012_current_aex_20260713": (
+                "refs/runtime_trace_packages/windows_witness_olmsmoother2_case0012_20260713.zip",
+                214,
+            ),
+        }
+        for request_id, (package, priority) in successor_expectations.items():
+            row = by_id.get(request_id)
+            if row is None:
+                raise AssertionError(f"missing common-core successor request: {request_id}")
+            if row["status"] != "pending":
+                raise AssertionError(f"common-core successor must remain pending: {request_id}={row['status']}")
+            if row["package"] != package or row["priority"] != priority:
+                raise AssertionError(
+                    f"common-core successor queue metadata drift: {request_id} "
+                    f"package={row['package']} priority={row['priority']}"
+                )
+        for request_id in (
+            "olmdirectionalblur_alpha_fade_fullrender_row755_20260712",
+            "olmradialblur_case0009_fullframe_postnorm_typed_20260710",
+            "olmsmoother2_case0012_live_config_binding_20260713",
+        ):
+            row = by_id.get(request_id)
+            if row is None or row["status"] != "superseded":
+                raise AssertionError(f"old witness request must be superseded by common-core package: {request_id}")
         kirakira_aggregation = by_id.get("kirakira_aggregation_compose_bt709_20260624")
         if kirakira_aggregation is None:
             raise AssertionError("missing KiraKira aggregation/compose request")

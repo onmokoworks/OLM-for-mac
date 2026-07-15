@@ -1,5 +1,57 @@
 {
   "request_id": "olm_bitdepth_32bpc_toondilate_float_20260710",
+  "historical_request_aliases": [
+    {
+      "request_id": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703",
+      "render_set_id": "software_32bpc",
+      "case_bindings": [
+        {
+          "request_case_id": "olmtoondilate__case_0001",
+          "historical_case_id": "olmtoondilate__case_0001",
+          "frame": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmtoondilate__case_0001.exr",
+          "before_effects_frame": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmtoondilate__case_0001_before_effects.exr",
+          "frame_sha256": "4c596c9bbd1e05e2ce28cbd314a5ad812b0beee3d538824f5f9e28166dfaaff3",
+          "before_effects_frame_sha256": "d3bf07c241a8c6f7415898c585b988e4aeeec37c4910591573cc488ceff9341e"
+        },
+        {
+          "request_case_id": "olmtoondilate__case_0002",
+          "historical_case_id": "olmtoondilate__case_0002",
+          "frame": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmtoondilate__case_0002.exr",
+          "before_effects_frame": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmtoondilate__case_0002_before_effects.exr",
+          "frame_sha256": "477d5bd998e7db929222a133367f5c6b1976a0754ee80342464946b6410b9f3c",
+          "before_effects_frame_sha256": "4c596c9bbd1e05e2ce28cbd314a5ad812b0beee3d538824f5f9e28166dfaaff3"
+        },
+        {
+          "request_case_id": "olmtoondilate__case_0003",
+          "historical_case_id": "olmtoondilate__case_0003",
+          "frame": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmtoondilate__case_0003.exr",
+          "before_effects_frame": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmtoondilate__case_0003_before_effects.exr",
+          "frame_sha256": "477d5bd998e7db929222a133367f5c6b1976a0754ee80342464946b6410b9f3c",
+          "before_effects_frame_sha256": "477d5bd998e7db929222a133367f5c6b1976a0754ee80342464946b6410b9f3c"
+        }
+      ],
+      "manifest_sha256": "f841f02f9ae75b50a3426ccb6fc7ec077f6ac78185e323f3d503aaf6202acc60",
+      "ae_version": "26.3x87",
+      "project": {
+        "path": null,
+        "name": null,
+        "bits_per_channel": 32,
+        "working_space": null,
+        "linearize_working_space": null,
+        "blend_colors_using_1_0_gamma": null,
+        "project_gpu_accel_type": {
+          "current_name": "SOFTWARE",
+          "raw": 1816
+        }
+      },
+      "output_capabilities": {
+        "output_format": "exr",
+        "float_preserving": true,
+        "output_template": "OLM EXR 32 Float",
+        "note": "This Windows AE runner uses the specified AE output module template via render queue."
+      }
+    }
+  ],
   "scope": {
     "bit_depth": "32bpc",
     "plugin_filters": [
@@ -33,21 +85,21 @@
     {
       "id": "olmtoondilate_case_0001_source",
       "description": "Use the same source image as normalized 8bpc OLMToonDilate case_0001. Recorded before_effects_frame: case_0001_before_effects.png",
-      "source_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMToonDilate/reference_manifest.json",
+      "source_manifest": "refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMToonDilate/reference_manifest.json",
       "source_case_id": "case_0001",
       "before_effects_frame": "case_0001_before_effects.png"
     },
     {
       "id": "olmtoondilate_case_0002_source",
       "description": "Use the same source image as normalized 8bpc OLMToonDilate case_0002. Recorded before_effects_frame: case_0002_before_effects.png",
-      "source_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMToonDilate/reference_manifest.json",
+      "source_manifest": "refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMToonDilate/reference_manifest.json",
       "source_case_id": "case_0002",
       "before_effects_frame": "case_0002_before_effects.png"
     },
     {
       "id": "olmtoondilate_case_0003_source",
       "description": "Use the same source image as normalized 8bpc OLMToonDilate case_0003. Recorded before_effects_frame: case_0003_before_effects.png",
-      "source_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMToonDilate/reference_manifest.json",
+      "source_manifest": "refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMToonDilate/reference_manifest.json",
       "source_case_id": "case_0003",
       "before_effects_frame": "case_0003_before_effects.png"
     }

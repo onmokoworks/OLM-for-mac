@@ -18,7 +18,7 @@ This project-local staging folder is generated from
 
 ## Why This One
 
-- OLMDistanceGradation current-AEX 8bpc field staging, compose, and host store
+- OLMDistanceGradation PF8 typed field/compose/host boundary
 
 ## Acceptance
 
@@ -26,7 +26,7 @@ This project-local staging folder is generated from
 
 ## Stop Condition
 
-PENDING: do not send or classify this package as answered. The current runner is retained only as a historical failed attempt until a separate typed-boundary implementation is reviewed.
+Return answered only for 15 typed records plus PF8>0/PF32=0, one run/PID/base/hash/depth identity, and one output address within each case. Otherwise exact_bind_failure with raw logs.
 
 ## Share Check
 

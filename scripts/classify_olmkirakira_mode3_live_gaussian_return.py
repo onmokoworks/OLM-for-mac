@@ -4,8 +4,10 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
+import struct
 import subprocess
 import sys
 import zipfile
@@ -89,6 +91,10 @@ def parse_raw_words(raw: object) -> list[int]:
     return words
 
 
+def raw_words_sha256(words: list[int]) -> str:
+    return hashlib.sha256(struct.pack("<21I", *words)).hexdigest()
+
+
 def validate_payload(payload: dict) -> list[int]:
     """Validate the live-process proof contract before classifying coefficients."""
     require(payload.get("schema") == SCHEMA, "return schema mismatch")
@@ -129,6 +135,9 @@ def validate_payload(payload: dict) -> list[int]:
 
     observation = payload.get("observation") or {}
     require(observation.get("raw_bytes") == 84, "raw byte count mismatch")
+    require(observation.get("element_type") == "float32", "coefficient element type is not float32")
+    require(observation.get("byte_order") == "little", "coefficient byte order is not little-endian")
+    require(observation.get("raw_encoding") == "raw little-endian float32 words", "coefficient encoding declaration mismatch")
     first = observation.get("first_getKernel") or {}
     require(first.get("ecx") == 21, "getKernel ecx mismatch")
     require(first.get("r8") == 5, "getKernel r8 type mismatch")
@@ -147,9 +156,23 @@ def validate_payload(payload: dict) -> list[int]:
     trace_run_ids = set(re.findall(r"^KK_\S+.*?\brun_id=([^\s]+)", trace, flags=re.MULTILINE))
     require(trace_run_ids == {run_id}, f"trace does not prove one run identity: {sorted(trace_run_ids)}")
     for marker in REQUIRED_TRACE_MARKERS:
-        require(bool(re.search(rf"^{marker}\b", trace, flags=re.MULTILINE)), f"trace marker missing: {marker}")
+        marker_lines = re.findall(rf"^{marker}\b.*$", trace, flags=re.MULTILINE)
+        require(marker_lines, f"trace marker missing: {marker}")
+        require(
+            all(re.search(rf"\brun_id={re.escape(run_id)}(?:\s|$)", line) for line in marker_lines),
+            f"trace marker is not bound to the returned run: {marker}",
+        )
+    require(
+        bool(re.search(rf"^KK_RUN_START\b.*\bcase_id={re.escape(CASE_ID)}(?:\s|$)", trace, flags=re.MULTILINE)),
+        "trace run-start case identity mismatch",
+    )
 
-    return parse_raw_words(observation.get("raw_words_u32"))
+    words = parse_raw_words(observation.get("raw_words_u32"))
+    require(
+        str(observation.get("raw_bytes_sha256", "")).lower() == raw_words_sha256(words),
+        "coefficient byte hash does not match the reported 21 little-endian uint32 words",
+    )
+    return words
 
 
 def main() -> int:

@@ -3,6 +3,15 @@
   "description": "Common-core Windows OLMRadialBlur case_0009 full-frame post-normalization typed witness.",
   "request_id": "olmradialblur_case0009_fullframe_postnorm_typed_common_core_20260713",
   "run_id_prefix": "rb9fulltyped",
+  "queue": {
+    "profile": "radialblur-case0009-fullframe-postnorm-typed-common-core",
+    "plugin_area": "OLMRadialBlur Zoom case_0009 full-frame post-normalization typed witness",
+    "command": "Run one pinned-AEX Software render and capture the producer inputs plus typed post-normalization cells for (7,0), (8,0), and (24,0) with the same-run export.",
+    "stop_condition": "answered only when all three semantic coordinates, their live addresses, four-cell typed values, producer state, and same-run export are present; otherwise return the exact bind failure.",
+    "supersedes": [
+      "olmradialblur_case0009_fullframe_postnorm_typed_20260710"
+    ]
+  },
   "plugin": {
     "name": "OLM RadialBlur",
     "module_filename": "OLMRadialBlur.aex",

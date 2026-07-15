@@ -21,6 +21,63 @@ POISON_RE = re.compile(
     r"DEADBEEF|BAADF00D|CCCCCCCC|CDCDCDCD|FEEEFEEE|FFFFFFFF|7FC00000)(?:$|[,;:])",
     re.IGNORECASE,
 )
+HEX_WORD_RE = re.compile(r"^[0-9a-fA-F]{8}$")
+POINTER_RE = re.compile(r"^(?:0x)?[0-9a-fA-F]+(?:`[0-9a-fA-F]+)?$")
+BYTE_RGBA_RE = re.compile(r"^(?:[0-9]{1,3},){3}[0-9]{1,3}$")
+
+
+def has_hex_words(value: str, count: int) -> bool:
+    words = value.split(",")
+    return len(words) == count and all(HEX_WORD_RE.fullmatch(word) for word in words)
+
+
+def pointer_value(value: str) -> int | None:
+    if POINTER_RE.fullmatch(value) is None:
+        return None
+    return int(value.removeprefix("0x").removeprefix("0X").replace("`", ""), 16)
+
+
+def validate_typed_point(fields: dict[str, Any], index: int) -> list[str]:
+    issues: list[str] = []
+    if fields.get("run_identity") != "same-run":
+        issues.append(f"point[{index}]:run_identity=same-run")
+    for name in ("inverse_coords", "radius_index", "angle_index"):
+        if name == "inverse_coords":
+            valid = has_hex_words(str(fields.get(name, "")), 2)
+        else:
+            valid = bool(HEX_WORD_RE.fullmatch(str(fields.get(name, ""))))
+        if not valid:
+            issues.append(f"point[{index}]:{name}=typed_float32_words")
+
+    slots = ("cell00", "cell10", "cell01", "cell11")
+    addresses: list[int] = []
+    for slot in slots:
+        ident = pointer_value(str(fields.get(f"{slot}_id", "")))
+        address = pointer_value(str(fields.get(f"{slot}_addr", "")))
+        if ident is None or address is None or ident == 0 or address == 0:
+            issues.append(f"point[{index}]:{slot}=live_cell_id_and_address")
+        elif ident != address:
+            issues.append(f"point[{index}]:{slot}_id_matches_address")
+        addresses.append(address or 0)
+        if not has_hex_words(str(fields.get(f"{slot}_accum_rgba", "")), 4):
+            issues.append(f"point[{index}]:{slot}_accum_rgba=float32_rgba")
+        if not HEX_WORD_RE.fullmatch(str(fields.get(f"{slot}_denom", ""))):
+            issues.append(f"point[{index}]:{slot}_denom=float32")
+        if not HEX_WORD_RE.fullmatch(str(fields.get(f"{slot}_valid", ""))):
+            issues.append(f"point[{index}]:{slot}_valid=float32")
+        if not has_hex_words(str(fields.get(f"{slot}_final_rgba", "")), 4):
+            issues.append(f"point[{index}]:{slot}_final_rgba=float32_rgba")
+    if len(set(addresses)) != len(addresses) or 0 in addresses:
+        issues.append(f"point[{index}]:cell_addresses=distinct_nonzero")
+    if not has_hex_words(str(fields.get("bilinear_weights", "")), 4):
+        issues.append(f"point[{index}]:bilinear_weights=float32[4]")
+    for name in ("final_rgba",):
+        if not has_hex_words(str(fields.get(name, "")), 4):
+            issues.append(f"point[{index}]:{name}=float32_rgba")
+    for name in ("final_alpha_sum", "pre_byte_alpha"):
+        if not HEX_WORD_RE.fullmatch(str(fields.get(name, ""))):
+            issues.append(f"point[{index}]:{name}=float32")
+    return issues
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -138,6 +195,33 @@ def normalized_path(path: Path) -> str:
     return os.path.normcase(os.path.realpath(os.path.abspath(str(path))))
 
 
+def read_key_value_log(path: Path, marker: str) -> dict[str, str] | None:
+    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        if line == marker or line.startswith(marker + "\n"):
+            continue
+        if line.startswith(marker):
+            return dict(
+                item.split("=", 1)
+                for item in line[len(marker):].strip().splitlines()
+                if "=" in item
+            )
+    return None
+
+
+def parse_binding_log(path: Path, marker: str) -> dict[str, str] | None:
+    lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    for index, line in enumerate(lines):
+        if line == marker:
+            values: dict[str, str] = {}
+            for candidate in lines[index + 1 :]:
+                if "=" not in candidate:
+                    break
+                key, value = candidate.split("=", 1)
+                values[key] = value
+            return values
+    return None
+
+
 def enrich(contract: dict[str, Any], status: dict[str, Any], work: Path) -> dict[str, Any]:
     if status.get("status") != "answered":
         return status
@@ -150,7 +234,9 @@ def enrich(contract: dict[str, Any], status: dict[str, Any], work: Path) -> dict
     reference_path = Path(__file__).resolve().parents[1] / values["reference_png_path"]
     result_path = work / f"ae_result_{case_id}.json"
     log_path = work / f"ae_{case_id}.log"
-    required = [observed_path, reference_path, result_path, log_path]
+    queue_bootstrap_path = work / "queue_bootstrap.log"
+    queue_log_path = work / "queue.log"
+    required = [observed_path, reference_path, result_path, log_path, queue_bootstrap_path, queue_log_path]
     missing = [str(path) for path in required if not path.is_file()]
     if missing:
         return fail(contract, "radial_artifact_binding", "required render or reference artifact is missing", missing)
@@ -170,6 +256,27 @@ def enrich(contract: dict[str, Any], status: dict[str, Any], work: Path) -> dict
         result_issues.append("ae_result.output_png=exact_same_run_export")
     if "gpuAccelType=SOFTWARE" not in log:
         result_issues.append("ae_log.gpuAccelType=SOFTWARE")
+    queue_binding = parse_binding_log(queue_bootstrap_path, "WITNESS_QUEUE_BOOTSTRAP")
+    queue_log = queue_log_path.read_text(encoding="utf-8", errors="replace")
+    run_id = str(status["run"]["run_id"])
+    queue_path = Path(__file__).resolve().parents[1] / contract["queue"]
+    queue_sha256 = sha256(queue_path) if queue_path.is_file() else ""
+    if not queue_binding:
+        result_issues.append("queue_bootstrap=published_binding")
+    else:
+        for name, expected in (("run_id", run_id), ("work", str(work)), ("root", str(queue_path.parents[1]))):
+            actual = queue_binding.get(name, "")
+            matches = (
+                actual.lower() == expected.lower()
+                if name == "run_id"
+                else normalized_path(Path(actual)) == normalized_path(Path(expected))
+            )
+            if not matches:
+                result_issues.append(f"queue_bootstrap.{name}=contract_bound")
+        if queue_binding.get("queue_sha256", "").lower() != queue_sha256.lower():
+            result_issues.append("queue_bootstrap.queue_sha256=packaged_queue")
+    if f"WITNESS_QUEUE_START run_id={run_id}" not in queue_log or f"WITNESS_QUEUE_END run_id={run_id}" not in queue_log:
+        result_issues.append("queue.log.run_id=trace_run_id")
     if result_issues:
         return fail(contract, "radial_render_identity", "AE result is not the canonical same-run render", result_issues, json.dumps(result, sort_keys=True))
 
@@ -195,6 +302,7 @@ def enrich(contract: dict[str, Any], status: dict[str, Any], work: Path) -> dict
         if xy in by_xy:
             semantic_issues.append(f"point[{index}]:duplicate_xy={xy[0]},{xy[1]}")
         by_xy[xy] = row
+        semantic_issues.extend(validate_typed_point(fields, index))
         for field, value in fields.items():
             text = str(value)
             if not text or POISON_RE.search(text):
@@ -219,6 +327,7 @@ def enrich(contract: dict[str, Any], status: dict[str, Any], work: Path) -> dict
             "render_class": values["render_class"],
             "image_run_id": run["run_id"],
             "image_case_id": case_id,
+            "export_rgba8": ",".join(map(str, observed)),
         })
         witnesses.append({
             "run_id": run["run_id"],

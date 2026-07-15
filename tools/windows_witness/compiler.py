@@ -192,6 +192,8 @@ def compile_witness(spec_path: Path, output_dir: Path, zip_path: Path | None = N
         "entrypoint": "artifacts/run_witness.ps1",
         "files": inventory,
     }
+    if "queue" in spec:
+        manifest["queue"] = spec["queue"]
     (output_dir / "package-manifest.json").write_bytes(canonical_json(manifest))
     deterministic_zip(output_dir, archive)
     return output_dir, archive

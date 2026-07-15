@@ -1,0 +1,668 @@
+{
+  "ae_exact_claim": false,
+  "cases": [
+    {
+      "approximated_input": 0,
+      "before_effects_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "8c1d418c7b853cc6f79087215ee86ab0b9eac423953c1a3409af3e120891a7f0",
+        "valid_uncompressed_float_rgba": true
+      },
+      "before_effects_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_01_before_effects.exr",
+      "control_family": "blur_mode_4",
+      "effect_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "810b76cde27a6590f0f2913d2e4f7bc2c1649c77b128a7c174d46b0088215c1d",
+        "valid_uncompressed_float_rgba": true
+      },
+      "effect_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_01.exr",
+      "eligibility": "blocked_unresolved_mode3_or_mode4",
+      "fully_pinned": true,
+      "id": "final_random10_olm_kira_kira_01",
+      "input_id": "random_final_grid_1920x1080",
+      "merge_mode": 2,
+      "mode": 4,
+      "params_count": 42,
+      "params_sha256": "9baabc16de003ac9b8e1d407d812d2651e527d237b1da54cf5091577129dc440",
+      "strength_multiplier": 167
+    },
+    {
+      "approximated_input": 0,
+      "before_effects_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "e100cd998a5e6f093cf7233821a0ba67d866117ca2f1b300023d6672457e6954",
+        "valid_uncompressed_float_rgba": true
+      },
+      "before_effects_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_02_before_effects.exr",
+      "control_family": "blur_mode_1",
+      "effect_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "6cb101ee9ad52f388a286e4d1be960fad7812024e2e1a3e7346d73979ed17d1f",
+        "valid_uncompressed_float_rgba": true
+      },
+      "effect_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_02.exr",
+      "eligibility": "eligible_grounded_mode1_or_mode2",
+      "fully_pinned": true,
+      "id": "final_random10_olm_kira_kira_02",
+      "input_id": "random_final_alpha_1920x1080",
+      "merge_mode": 1,
+      "mode": 1,
+      "params_count": 42,
+      "params_sha256": "be3664b249e030f2ce45337f2c6f1fcdc712797d35c5144267a1f8e36cd3e83c",
+      "strength_multiplier": 41
+    },
+    {
+      "approximated_input": 0,
+      "before_effects_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "8bdac36ca9a84569ce568781810283eb1bbcb326934c123d2daf38b16c80bc91",
+        "valid_uncompressed_float_rgba": true
+      },
+      "before_effects_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_03_before_effects.exr",
+      "control_family": "blur_mode_3",
+      "effect_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "d8edeac2dd268e90f451535a4c0d0c7f5f8ddf3cb7978762305e125e5982938f",
+        "valid_uncompressed_float_rgba": true
+      },
+      "effect_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_03.exr",
+      "eligibility": "blocked_unresolved_mode3_or_mode4",
+      "fully_pinned": true,
+      "id": "final_random10_olm_kira_kira_03",
+      "input_id": "random_final_grid_1920x1080",
+      "merge_mode": 1,
+      "mode": 3,
+      "params_count": 42,
+      "params_sha256": "95bd69def5027340fde2520d8541490ee0996a1f26459734f370676f5ff92cb5",
+      "strength_multiplier": 915
+    },
+    {
+      "approximated_input": 1,
+      "before_effects_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "f004f56651793a586e94dfabd467eb0e0df9fcf5f8500db5d54e215e070bc267",
+        "valid_uncompressed_float_rgba": true
+      },
+      "before_effects_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_04_before_effects.exr",
+      "control_family": "blur_mode_4",
+      "effect_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "c655cabc4a01e889f8a77f973352ce1e67201d6501539fc47e9f021f89549598",
+        "valid_uncompressed_float_rgba": true
+      },
+      "effect_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_04.exr",
+      "eligibility": "blocked_unresolved_mode3_or_mode4",
+      "fully_pinned": true,
+      "id": "final_random10_olm_kira_kira_04",
+      "input_id": "random_final_alpha_1920x1080",
+      "merge_mode": 2,
+      "mode": 4,
+      "params_count": 42,
+      "params_sha256": "22a2d8eb5b4eddf88c78bb676ac6a7e76eccd30da2bb62cad10354836e897e88",
+      "strength_multiplier": 789
+    },
+    {
+      "approximated_input": 1,
+      "before_effects_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "24b0782b49de384af3f46d613c0c69dd01a6bb02d38226a54a413950d58155d6",
+        "valid_uncompressed_float_rgba": true
+      },
+      "before_effects_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_05_before_effects.exr",
+      "control_family": "blur_mode_1",
+      "effect_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "943dbb1eafaa7f9a664750185a709b8f09e909deedb0dafc99fc448e8b72a7fe",
+        "valid_uncompressed_float_rgba": true
+      },
+      "effect_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_05.exr",
+      "eligibility": "eligible_grounded_mode1_or_mode2",
+      "fully_pinned": true,
+      "id": "final_random10_olm_kira_kira_05",
+      "input_id": "random_final_grid_1920x1080",
+      "merge_mode": 2,
+      "mode": 1,
+      "params_count": 42,
+      "params_sha256": "c261bf4deb3fc8d17dd1a8b85c6c386d7d4f7d37fd10228bfea8914e674669fa",
+      "strength_multiplier": 663
+    },
+    {
+      "approximated_input": 0,
+      "before_effects_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "27e55775eb4b6b038ac04f10b56e5800904efb658864ff4c1c64ed0728ae2676",
+        "valid_uncompressed_float_rgba": true
+      },
+      "before_effects_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_06_before_effects.exr",
+      "control_family": "blur_mode_2",
+      "effect_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "5dc720b60b1e453c75787f0948560fa712fb66399a2390f583ab448f17288830",
+        "valid_uncompressed_float_rgba": true
+      },
+      "effect_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_06.exr",
+      "eligibility": "eligible_grounded_mode1_or_mode2",
+      "fully_pinned": true,
+      "id": "final_random10_olm_kira_kira_06",
+      "input_id": "random_final_alpha_1920x1080",
+      "merge_mode": 1,
+      "mode": 2,
+      "params_count": 42,
+      "params_sha256": "cf30acd083b7a8836b54a7a7a0d3bee51ce4d181c94ee5b22d1cb82fdd982d5b",
+      "strength_multiplier": 536
+    },
+    {
+      "approximated_input": 0,
+      "before_effects_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "20962bb08aa7c5a5cdaa549fbff0356d240b91bed6c67b5ca4c6b6d325c9a356",
+        "valid_uncompressed_float_rgba": true
+      },
+      "before_effects_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_07_before_effects.exr",
+      "control_family": "blur_mode_3",
+      "effect_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "c3d4a1c01f07bdbaf0fec73302b156d22d44b39474df1d2c22c9d562658fd75d",
+        "valid_uncompressed_float_rgba": true
+      },
+      "effect_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_07.exr",
+      "eligibility": "blocked_unresolved_mode3_or_mode4",
+      "fully_pinned": true,
+      "id": "final_random10_olm_kira_kira_07",
+      "input_id": "random_final_grid_1920x1080",
+      "merge_mode": 2,
+      "mode": 3,
+      "params_count": 42,
+      "params_sha256": "244d2121750c31dd7b4c06577f2d89c942f8835c1b95a50ce796955cc54075c2",
+      "strength_multiplier": 410
+    },
+    {
+      "approximated_input": 1,
+      "before_effects_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "d9bfadc91935239a44deec0872d2dd24b15b26eeb8488cd34b06cde3121e20fc",
+        "valid_uncompressed_float_rgba": true
+      },
+      "before_effects_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_08_before_effects.exr",
+      "control_family": "blur_mode_1",
+      "effect_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "1299d893a9860f8aa97481f198614d0596151c1ff94628602a2402f17599030d",
+        "valid_uncompressed_float_rgba": true
+      },
+      "effect_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_08.exr",
+      "eligibility": "eligible_grounded_mode1_or_mode2",
+      "fully_pinned": true,
+      "id": "final_random10_olm_kira_kira_08",
+      "input_id": "random_final_alpha_1920x1080",
+      "merge_mode": 2,
+      "mode": 1,
+      "params_count": 42,
+      "params_sha256": "452cd9b7c1d0246b42eebbaeb94a92c1e95f6b3a1c7dbee8aea323113d43432a",
+      "strength_multiplier": 284
+    },
+    {
+      "approximated_input": 1,
+      "before_effects_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "d32e20f429da453910c6fa2038bf133b29fae0df793acb9444c3af399fbc3729",
+        "valid_uncompressed_float_rgba": true
+      },
+      "before_effects_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_09_before_effects.exr",
+      "control_family": "blur_mode_2",
+      "effect_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "54141be427a2f4b97a364a2f384811715d1e47dba28a3a353a6fa48734eb171e",
+        "valid_uncompressed_float_rgba": true
+      },
+      "effect_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_09.exr",
+      "eligibility": "eligible_grounded_mode1_or_mode2",
+      "fully_pinned": true,
+      "id": "final_random10_olm_kira_kira_09",
+      "input_id": "random_final_grid_1920x1080",
+      "merge_mode": 1,
+      "mode": 2,
+      "params_count": 42,
+      "params_sha256": "ace4fd4afec942562600730e73cab1cb8bd0318d06407fe370c29fa52f21ff84",
+      "strength_multiplier": 158
+    },
+    {
+      "approximated_input": 1,
+      "before_effects_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "2cbad9f4d6afb88e285191728a4120c9e0b7691d64b52cfa4a77ce8127029d88",
+        "valid_uncompressed_float_rgba": true
+      },
+      "before_effects_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_10_before_effects.exr",
+      "control_family": "blur_mode_3",
+      "effect_exr": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "04f0ef0b2ca612e38114ae1486c5027e58d093f46032bdd60f54c7066aa039e0",
+        "valid_uncompressed_float_rgba": true
+      },
+      "effect_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_10.exr",
+      "eligibility": "blocked_unresolved_mode3_or_mode4",
+      "fully_pinned": true,
+      "id": "final_random10_olm_kira_kira_10",
+      "input_id": "random_final_alpha_1920x1080",
+      "merge_mode": 1,
+      "mode": 3,
+      "params_count": 42,
+      "params_sha256": "433d05f5135c31329a2f2f88dbd7acca4851a80c7ec71ec79274ca7a69e7dc91",
+      "strength_multiplier": 32
+    }
+  ],
+  "control_family_counts": {
+    "blur_mode_1": 3,
+    "blur_mode_2": 2,
+    "blur_mode_3": 3,
+    "blur_mode_4": 2
+  },
+  "date": "2026-07-15",
+  "eligible_cases": [
+    "final_random10_olm_kira_kira_02",
+    "final_random10_olm_kira_kira_05",
+    "final_random10_olm_kira_kira_06",
+    "final_random10_olm_kira_kira_08",
+    "final_random10_olm_kira_kira_09"
+  ],
+  "import_summary": {
+    "case_count": 10,
+    "float_preserving_present": true,
+    "split_case_count": 10
+  },
+  "kind": "olmkirakira_32bpc_evidence_audit",
+  "limits": [
+    "The imported EXRs are Windows reference evidence, not Mac validation.",
+    "No raw cross-host equality was performed.",
+    "No source or production lane was changed.",
+    "Mode3 Gaussian remains unresolved and is excluded from the selected candidate."
+  ],
+  "mac_request": "refs/mac_validation_requests/olmkirakira_mode2_32bpc_mac_validation_20260715.json",
+  "mode_counts": {
+    "1": 3,
+    "2": 2,
+    "3": 3,
+    "4": 2
+  },
+  "schema_version": 1,
+  "selected_candidate": {
+    "approximated_input": 0,
+    "before_effects_exr": {
+      "channel_order": [
+        "A",
+        "B",
+        "G",
+        "R"
+      ],
+      "compression": 0,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "sample_types": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "sha256": "27e55775eb4b6b038ac04f10b56e5800904efb658864ff4c1c64ed0728ae2676",
+      "valid_uncompressed_float_rgba": true
+    },
+    "before_effects_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_06_before_effects.exr",
+    "control_family": "blur_mode_2",
+    "effect_exr": {
+      "channel_order": [
+        "A",
+        "B",
+        "G",
+        "R"
+      ],
+      "compression": 0,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "sample_types": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "sha256": "5dc720b60b1e453c75787f0948560fa712fb66399a2390f583ab448f17288830",
+      "valid_uncompressed_float_rgba": true
+    },
+    "effect_frame": "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_06.exr",
+    "eligibility": "eligible_grounded_mode1_or_mode2",
+    "fully_pinned": true,
+    "id": "final_random10_olm_kira_kira_06",
+    "input_id": "random_final_alpha_1920x1080",
+    "merge_mode": 1,
+    "mode": 2,
+    "params_count": 42,
+    "params_sha256": "cf30acd083b7a8836b54a7a7a0d3bee51ce4d181c94ee5b22d1cb82fdd982d5b",
+    "strength_multiplier": 536
+  },
+  "source_manifest": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMKiraKira/reference_manifest.json",
+  "status": "candidate_identified_mac_validation_pending"
+}

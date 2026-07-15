@@ -3,6 +3,15 @@
   "description": "Current-AEX OLMDirectionalBlur alpha-fade row 755 pre-normalization byte witness migrated from the 2026-07-13 no-space JSX retry.",
   "request_id": "olmdirectionalblur_row755_20260713",
   "run_id_prefix": "dblur-row755",
+  "queue": {
+    "profile": "olmdirectionalblur-row755-common-core",
+    "plugin_area": "OLMDirectionalBlur alpha-fade row 755 pre-normalization typed witness",
+    "command": "Run the supplied common-core witness once under the pinned AEX and capture worker, row-driver, destination, denominator, and alpha state for row 755.",
+    "stop_condition": "answered only when the typed row bounds and required destination/denominator/alpha fields are bound to one run; otherwise return the exact bind failure.",
+    "supersedes": [
+      "olmdirectionalblur_alpha_fade_fullrender_row755_20260712"
+    ]
+  },
   "plugin": {
     "name": "OLM DirectionalBlur",
     "module_filename": "OLMDirectionalBlur.aex",
@@ -85,7 +94,7 @@
       {
         "name": "worker_entry",
         "prefix": "DBR_WORKER_ENTRY",
-        "cardinality": {"scope": "per_case", "min": 1, "max": 2206},
+        "cardinality": {"scope": "per_case", "min": 1, "max": 2176},
         "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "params", "stage", "entry_rva", "worker_hit"],
         "field_constraints": {
           "witness_id": {"equals": "olmdirectionalblur-row755-common-core-v1"},
@@ -98,7 +107,7 @@
       {
         "name": "rowdriver_range",
         "prefix": "DBR_ROW_RANGE",
-        "cardinality": {"scope": "per_case", "min": 1, "max": 2206},
+        "cardinality": {"scope": "per_case", "min": 1, "max": 2176},
         "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "params", "stage", "entry_rva", "call", "start", "end", "row755_covered"],
         "field_constraints": {
           "witness_id": {"equals": "olmdirectionalblur-row755-common-core-v1"},
@@ -115,7 +124,7 @@
         "name": "pre_normalization_capture",
         "prefix": "DBR_PRE_NORMALIZATION_CAPTURE",
         "cardinality": {"scope": "per_case", "min": 1, "max": 1},
-        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "params", "stage", "stage_rva", "before_normalization", "worker_hits", "rowdriver_calls", "row_start", "row_end", "row755_covered", "params_mismatch", "destination_base", "denominator_base", "alpha_valid_base", "row0", "col0", "stride", "row", "x_start", "x_end", "destination_bytes", "denominator_bytes", "alpha_valid_bytes", "destination_address", "denominator_address", "alpha_valid_address"],
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "params", "stage", "stage_rva", "before_normalization", "worker_hits", "rowdriver_calls", "row_start", "row_end", "row755_covered", "params_mismatch", "destination_base", "denominator_base", "alpha_valid_base", "destination_typed_f32", "denominator_typed_f32", "alpha_valid_typed_f32", "row0", "col0", "stride", "row", "x_start", "x_end", "destination_bytes", "denominator_bytes", "alpha_valid_bytes", "destination_address", "denominator_address", "alpha_valid_address"],
         "field_constraints": {
           "witness_id": {"equals": "olmdirectionalblur-row755-common-core-v1"},
           "params": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
@@ -131,6 +140,9 @@
           "destination_base": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
           "denominator_base": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
           "alpha_valid_base": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "destination_typed_f32": {"equals": "1"},
+          "denominator_typed_f32": {"equals": "1"},
+          "alpha_valid_typed_f32": {"equals": "1"},
           "row0": {"pattern": "^[0-9]+$"},
           "col0": {"pattern": "^[0-9]+$"},
           "stride": {"equals": "2206"},

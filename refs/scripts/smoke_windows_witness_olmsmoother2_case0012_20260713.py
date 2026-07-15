@@ -6,6 +6,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -26,6 +27,24 @@ REFERENCE_ROOT = ROOT / "refs/win_references/olm_reference_return_windows_smooth
 CASE_ID = "legacy_case_0012_gamma5_red_blue_current_aex"
 HASH = "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
 FIXED_ZIP_TIME = (2026, 1, 1, 0, 0, 0)
+
+
+def assert_printf_contract(template: str, marker: str, expected_offsets: range) -> None:
+    """Check the rendered command's conversions, arguments, and byte span."""
+    line = next(line for line in template.splitlines() if marker in line)
+    match = re.search(r'\.printf \\\"(?P<format>.*?)\\\\n\\\",(?P<args>.*?)\} ;gc', line)
+    assert match, marker
+    conversions = re.findall(r'%(?!%)[-+#0 ]*(?:\d+|\*)?(?:\.\d+|\.\*)?[a-zA-Z]', match.group("format"))
+    args = [item.strip() for item in match.group("args").split(",")]
+    assert len(conversions) == len(args), (marker, conversions, args)
+    byte_args = [item for item in args if item.startswith("by(")]
+    offsets = [int(re.search(r'\+0x([0-9a-fA-F]{2})\)$', item).group(1), 16) for item in byte_args]
+    expected = list(expected_offsets)
+    expected_byte_args = len(expected) + (1 if marker == "stage=cce0" else 0)
+    assert len(byte_args) == expected_byte_args, (marker, byte_args)
+    assert offsets[:len(expected)] == expected, (marker, offsets)
+    if marker == "stage=cce0":
+        assert offsets[len(expected):] == [0x06], (marker, offsets)
 
 
 def compile_package(temp: Path, name: str) -> tuple[Path, Path]:
@@ -59,7 +78,7 @@ def main() -> int:
     assert case["addresses"] == {
         "writer_anchor": "0x3370",
         "final_writer": "0x3610",
-        "c2bb": "0xc2bb",
+        "c280": "0xc280",
         "cce0": "0xcce0",
         "e170": "0xe170",
         "e3a0": "0xe3a0",
@@ -76,24 +95,26 @@ def main() -> int:
         ("S2_F270", {"scope": "per_case", "min": 1, "max": 1}),
         ("S2_E3A0", {"scope": "per_case", "min": 1, "max": 1}),
         ("S2_CCE0", {"scope": "per_case", "min": 1, "max": 1}),
-        ("S2_C2BB", {"scope": "per_case", "min": 1, "max": 1}),
+        ("S2_C280", {"scope": "per_case", "min": 1, "max": 1}),
         ("S2_WRITER", {"scope": "per_case", "min": 1, "max": 1}),
     ]
 
     template = (SPEC_ROOT / "probe.cdb.in").read_text(encoding="ascii")
     assert '.logopen /t "{{TRACE_PATH}}"' in template
     for semantic in (
-        "center_b0", "prev_b0", "left_b1", "e170_c",
-        "fifth_argument_config_pointer", "config_pointer_source",
+        "center_b0", "prev_b0", "left_b1", "center_class_bytes", "prev_class_bytes", "left_class_bytes", "e170_c",
+        "config_pointer", "config_pointer_source", "mode_byte",
         "saved_config_pointer", "current_config_pointer", "pointer_identity",
-        "config_raw_bytes", "raw_smoothness", "raw_extra_smooth", "rgba_u8",
+        "scale_fixed", "config_raw_bytes", "rgba_u8",
     ):
         assert semantic in template
     for placeholder in ("RUN_ID", "AE_PID", "MODULE_BASE", "AEX_SHA256", "PROJECT_BPC", "RENDERER", "CASE_ID", "TRACE_PATH"):
         assert "{{" + placeholder + "}}" in template
-    assert template.count("bp {{ADDRESS:c2bb}}") == 1
+    assert template.count("bp {{ADDRESS:c280}}") == 1
     assert template.count("bp {{ADDRESS:cce0}}") == 1
     assert ".detach;q" in template
+    assert_printf_contract(template, "stage=cce0", range(7))
+    assert_printf_contract(template, "stage=c280", range(0x20, 0x28))
 
     request = json.loads((SPEC_ROOT / "request/request_manifest.json").read_text(encoding="utf-8"))
     reference = json.loads((SPEC_ROOT / "request/reference_manifest.json").read_text(encoding="utf-8"))
@@ -113,13 +134,16 @@ def main() -> int:
     assert accepted["status"] == "answered" and len(accepted["events"]) == 7
     variants = {
         "missing_fixture": missing,
-        "duplicate": complete + next(line for line in complete.splitlines(True) if line.startswith("S2_C2BB ")),
+        "duplicate": complete + next(line for line in complete.splitlines(True) if line.startswith("S2_C280 ")),
         "pid_drift": complete.replace("ae_pid=7312", "ae_pid=9999", 1),
         "descriptor_drift": complete.replace("descriptor=91,841,1,91,843,5", "descriptor=91,841,1,91,842,5", 1),
         "pointer_mismatch": complete.replace("pointer_identity=1", "pointer_identity=0", 1),
-        "missing_config_field": complete.replace(" raw_extra_smooth=40", "", 1),
-        "bad_raw_smoothness": complete.replace("raw_smoothness=100", "raw_smoothness=65536", 1),
-        "bad_raw_extra": complete.replace("raw_extra_smooth=40", "raw_extra_smooth=65536", 1),
+        "missing_class_bytes": complete.replace(" center_class_bytes=140,141,142,143", "", 1),
+        "missing_c280_scale": complete.replace(" scale_fixed=65536,65536", "", 1),
+        "missing_cce0_raw": complete.replace(" config_raw_bytes=00,00,80,3f,04,00,03", "", 1),
+        "missing_cce0_mode": complete.replace(" mode_byte=3", "", 1),
+        "append_not_corroborated": complete.replace("stage=f270 hook_rva=f270 append=1", "stage=f270 hook_rva=f270 append=0", 1),
+        "missing_writer_corroboration": complete.replace("S2_WRITER ", "S2_WRITER_MISSING ", 1),
     }
     for name, trace in variants.items():
         rejected = validate_trace(spec, trace, identity)

@@ -1,0 +1,164 @@
+{
+  "schema": "olm-smoother2-mac-float-validation-v1",
+  "request_id": "olmsmoother2_no_key_32bpc_mac_validation_20260715",
+  "status": "blocked_pending_windows_artifact_attestation",
+  "ae_exact_claim": false,
+  "effect": {
+    "name": "OLM Smoother v2",
+    "match_name": "OLM Smoother v2"
+  },
+  "scope": {
+    "effect_name": "OLM Smoother v2",
+    "effect_match_name": "OLM Smoother v2",
+    "plugin_version_mode": 2,
+    "bit_depth": "32bpc",
+    "case_count": 1,
+    "case_filter": "case 07 only: Enable Color Key=0 and Smoother Version=2",
+    "excluded": [
+      "OLM Smoother v1 mode cases 01, 03, 05",
+      "key-on cases 02, 04, 06, 08, 10",
+      "legacy/current-AEX PNG cases",
+      "case0012 common-core witness"
+    ]
+  },
+  "common_setup": {
+    "bit_depth": 32,
+    "comp_width": 1920,
+    "comp_height": 1080,
+    "frame_rate": 24,
+    "project_renderer": "SOFTWARE",
+    "working_space": "None",
+    "linear_blending": false
+  },
+  "render_sets": [
+    {
+      "id": "software_32bpc",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "bit_depth": "32bpc",
+      "bits_per_channel": 32,
+      "required": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "windows_case_07_before_effects_float_exr",
+      "description": "Windows case-07 before-effects FLOAT EXR; re-import unchanged",
+      "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMSmootherv2/olm_bitdepth_32bpc_olmsmoother2_exr_20260710__software_32bpc__fr24__final_random10_olm_smoother_v2_07_before_effects.exr"
+    }
+  ],
+  "cases": [
+    {
+      "id": "final_random10_olm_smoother_v2_07",
+      "source_case_id": "final_random10_olm_smoother_v2_07",
+      "input": "windows_case_07_before_effects_float_exr",
+      "effect": {
+        "name": "OLM Smoother v2",
+        "match_name": "OLM Smoother v2"
+      },
+      "params_full": [
+        {"name": "Enable Color Key", "match_name": "OLM Smoother v2-0001", "property_index": 1, "value": 0},
+        {"name": "Color Key", "match_name": "OLM Smoother v2-0002", "property_index": 2, "value": [0.9729, 0.9154, 0.625, 1]},
+        {"name": "Invert Color Key", "match_name": "OLM Smoother v2-0015", "property_index": 3, "value": 0},
+        {"name": "Smoothness", "match_name": "OLM Smoother v2-0003", "property_index": 4, "value": 10},
+        {"name": "Extra Smooth", "match_name": "OLM Smoother v2-0004", "property_index": 5, "value": 1},
+        {"name": "Smooth Range", "match_name": "OLM Smoother v2-0005", "property_index": 6, "value": 99},
+        {"name": "Smoother Version", "match_name": "OLM Smoother v2-0006", "property_index": 7, "value": 2},
+        {"name": "Gamma Correction", "match_name": "OLM Smoother v2-0007", "property_index": 8, "value": 1},
+        {"name": "Gamma Value", "match_name": "OLM Smoother v2-0008", "property_index": 9, "value": 1.27},
+        {"name": "Number of Gamma Colors", "match_name": "OLM Smoother v2-0009", "property_index": 10, "value": 2},
+        {"name": "Gamma Color", "match_name": "OLM Smoother v2-0010", "property_index": 11, "value": [0.9124, 0.1492, 0.9387, 1]},
+        {"name": "Gamma Color", "match_name": "OLM Smoother v2-0011", "property_index": 12, "value": [0.7517, 0.8444, 0.6757, 1]},
+        {"name": "Gamma Color", "match_name": "OLM Smoother v2-0012", "property_index": 13, "value": [0.4844, 0.1335, 0.3913, 1]},
+        {"name": "Gamma Color", "match_name": "OLM Smoother v2-0013", "property_index": 14, "value": [0.0682, 0.029, 0.4988, 1]},
+        {"name": "Gamma Color", "match_name": "OLM Smoother v2-0014", "property_index": 15, "value": [0.8323, 0.8468, 0.0306, 1]}
+      ]
+    }
+  ],
+  "windows_reference": {
+    "manifest": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMSmootherv2/reference_manifest.json",
+    "artifact_root": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMSmootherv2",
+    "ae_version": "26.3x87",
+    "renderer": "SOFTWARE",
+    "bits_per_channel": 32,
+    "working_space": "None",
+    "linear_blending": false,
+    "case_id": "final_random10_olm_smoother_v2_07",
+    "input_id": "random_final_grid_1920x1080",
+    "before_effects_frame": "olm_bitdepth_32bpc_olmsmoother2_exr_20260710__software_32bpc__fr24__final_random10_olm_smoother_v2_07_before_effects.exr",
+    "before_effects_sha256": "366eb9e01e7c3c60df59dbcf6fb549a57d2156e95105fbea397de5353736c9fb",
+    "effect_frame": "olm_bitdepth_32bpc_olmsmoother2_exr_20260710__software_32bpc__fr24__final_random10_olm_smoother_v2_07.exr",
+    "effect_sha256": "95f0339e428e85803b3f6c806632938827b70574a88392abd3ab9c1af22af1c5",
+    "exr_contract_observed": {
+      "dimensions": [1920, 1080],
+      "physical_channel_order": ["A", "B", "G", "R"],
+      "sample_types": [2, 2, 2, 2],
+      "compression": 0,
+      "finite_sample_count_per_file": 8294400,
+      "nonfinite_sample_count_per_file": 0
+    },
+    "attestation_required": [
+      "manifest binds both artifact SHA-256 values",
+      "manifest records channel order, sample type, dimensions, color space, and alpha mode",
+      "existing verifier passes without --allow-unrendered"
+    ]
+  },
+  "case": {
+    "id": "final_random10_olm_smoother_v2_07",
+    "source_case_id": "final_random10_olm_smoother_v2_07",
+    "params_full": [
+      {"name": "Enable Color Key", "match_name": "OLM Smoother v2-0001", "property_index": 1, "value": 0},
+      {"name": "Color Key", "match_name": "OLM Smoother v2-0002", "property_index": 2, "value": [0.9729, 0.9154, 0.625, 1]},
+      {"name": "Invert Color Key", "match_name": "OLM Smoother v2-0015", "property_index": 3, "value": 0},
+      {"name": "Smoothness", "match_name": "OLM Smoother v2-0003", "property_index": 4, "value": 10},
+      {"name": "Extra Smooth", "match_name": "OLM Smoother v2-0004", "property_index": 5, "value": 1},
+      {"name": "Smooth Range", "match_name": "OLM Smoother v2-0005", "property_index": 6, "value": 99},
+      {"name": "Smoother Version", "match_name": "OLM Smoother v2-0006", "property_index": 7, "value": 2},
+      {"name": "Gamma Correction", "match_name": "OLM Smoother v2-0007", "property_index": 8, "value": 1},
+      {"name": "Gamma Value", "match_name": "OLM Smoother v2-0008", "property_index": 9, "value": 1.27},
+      {"name": "Number of Gamma Colors", "match_name": "OLM Smoother v2-0009", "property_index": 10, "value": 2},
+      {"name": "Gamma Color", "match_name": "OLM Smoother v2-0010", "property_index": 11, "value": [0.9124, 0.1492, 0.9387, 1]},
+      {"name": "Gamma Color", "match_name": "OLM Smoother v2-0011", "property_index": 12, "value": [0.7517, 0.8444, 0.6757, 1]},
+      {"name": "Gamma Color", "match_name": "OLM Smoother v2-0012", "property_index": 13, "value": [0.4844, 0.1335, 0.3913, 1]},
+      {"name": "Gamma Color", "match_name": "OLM Smoother v2-0013", "property_index": 14, "value": [0.0682, 0.029, 0.4988, 1]},
+      {"name": "Gamma Color", "match_name": "OLM Smoother v2-0014", "property_index": 15, "value": [0.8323, 0.8468, 0.0306, 1]}
+    ]
+  },
+  "mac_run_contract": {
+    "input": "re-import the Windows case-07 before-effects FLOAT EXR unchanged; do not use PNG",
+    "outputs": ["no_effect_control.exr", "effect_on.exr"],
+    "project_bits_per_channel": 32,
+    "renderer": "SOFTWARE",
+    "working_space": "None",
+    "linear_blending": false,
+    "output_template": "OLM EXR 32 Float",
+    "plugin_binary": {"filename": "OLMSmoother2.plugin", "sha256_required": true},
+    "host_identity": ["macOS version", "AE version/build", "loaded plugin path and SHA-256"],
+    "artifact_requirements": {
+      "format": "OpenEXR",
+      "compression": "uncompressed scanline",
+      "channels": ["A", "B", "G", "R"],
+      "sample_type": "FLOAT",
+      "dimensions": [1920, 1080],
+      "finite_samples_only": true,
+      "sha256": true
+    },
+    "comparison": {
+      "control_gate": "Windows before-effects EXR vs Mac no-effect EXR raw float32 words",
+      "effect_gate": "Windows effect EXR vs Mac effect-on EXR raw float32 words",
+      "allowed_transform": "none",
+      "epsilon": 0,
+      "normalization": false,
+      "ae_exact_requires": "both gates pass and the case contract, host identity, and loaded plugin hash are bound"
+    }
+  },
+  "fail_closed": [
+    "reject if Windows artifact hashes or required metadata are absent or do not match bytes",
+    "reject if Enable Color Key is not exactly 0",
+    "reject if Smoother Version is not exactly 2",
+    "reject if any parameter differs from params_full",
+    "reject PNG, HALF, compressed, non-RGBA, or non-FLOAT outputs",
+    "reject missing Mac no-effect control or loaded plugin SHA-256",
+    "reject exactness on any host/control mismatch",
+    "never infer AE exactness from CLI, runtime trace, PNG, or visual similarity"
+  ]
+}

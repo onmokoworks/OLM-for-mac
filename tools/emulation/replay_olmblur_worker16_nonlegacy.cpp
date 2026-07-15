@@ -33,7 +33,25 @@ int main(int argc, char** argv) {
         const auto expected = read_file(directory + "expected_argb16.bin");
         std::vector<std::uint8_t> actual(source.size());
         const olm::blur::worker16::Params params{c.amount, 100.0f, c.repeat, c.direction};
-        olm::blur::worker16::render_nonlegacy(source.data(), actual.data(), c.width, c.height, params);
+        const std::size_t observe_x = c.width / 2;
+        const std::size_t observe_y = c.height / 2;
+        olm::blur::worker16::StoreObservation observation{
+            observe_x, observe_y, false, {0.0f, 0.0f, 0.0f}, {0, 0, 0, 0}};
+        olm::blur::worker16::render_nonlegacy(
+            source.data(), actual.data(), c.width, c.height, params, &observation);
+        const std::size_t observed_offset = (observe_y * c.width + observe_x) * 8;
+        if (!observation.captured ||
+            observation.stored_argb[0] !=
+                static_cast<std::uint16_t>(actual[observed_offset] | (actual[observed_offset + 1] << 8)) ||
+            observation.stored_argb[1] !=
+                static_cast<std::uint16_t>(actual[observed_offset + 2] | (actual[observed_offset + 3] << 8)) ||
+            observation.stored_argb[2] !=
+                static_cast<std::uint16_t>(actual[observed_offset + 4] | (actual[observed_offset + 5] << 8)) ||
+            observation.stored_argb[3] !=
+                static_cast<std::uint16_t>(actual[observed_offset + 6] | (actual[observed_offset + 7] << 8))) {
+            std::cerr << "OBSERVATION " << c.id << " did not bind the final store\n";
+            ok = false;
+        }
         if (actual != expected) {
             std::size_t mismatch = 0;
             while (mismatch < actual.size() && actual[mismatch] == expected[mismatch]) ++mismatch;

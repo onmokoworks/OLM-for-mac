@@ -1,0 +1,3026 @@
+{
+  "schema": 1,
+  "kind": "olmdistancegradation_32bpc_float_evidence_audit",
+  "audited_at": "2026-07-15",
+  "windows_source": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/reference_manifest.json",
+  "windows_provenance": {
+    "platform": "windows",
+    "ae_version": "26.3x87",
+    "bits_per_channel": 32,
+    "renderer": {
+      "current_name": "SOFTWARE",
+      "raw": 1816
+    },
+    "output_capabilities": {
+      "output_format": "exr",
+      "float_preserving": true,
+      "output_template": "OLM EXR 32 Float",
+      "note": "This Windows AE runner uses the specified AE output module template via render queue."
+    }
+  },
+  "candidate_subset": {
+    "selection": "all DistanceGradation cases with complete before/effect FLOAT EXR pairs and 12 effect parameter values",
+    "case_count": 29,
+    "groups": {
+      "olmdistancegradation_basic": 12,
+      "olmdistancegradation_blur": 1,
+      "olmdistancegradation_extended": 16
+    },
+    "case_ids": [
+      "olmdistancegradation_basic__case_0001",
+      "olmdistancegradation_basic__case_0002",
+      "olmdistancegradation_basic__case_0003",
+      "olmdistancegradation_basic__case_0004",
+      "olmdistancegradation_basic__case_0005",
+      "olmdistancegradation_basic__case_0006",
+      "olmdistancegradation_basic__case_0007",
+      "olmdistancegradation_basic__case_0009",
+      "olmdistancegradation_basic__case_0015",
+      "olmdistancegradation_basic__case_0017",
+      "olmdistancegradation_basic__case_0018",
+      "olmdistancegradation_basic__case_0019",
+      "olmdistancegradation_extended__case_0008",
+      "olmdistancegradation_extended__case_0010",
+      "olmdistancegradation_extended__case_0011",
+      "olmdistancegradation_extended__case_0012",
+      "olmdistancegradation_extended__case_0013",
+      "olmdistancegradation_extended__case_0014",
+      "olmdistancegradation_extended__case_0016",
+      "olmdistancegradation_extended__case_0020",
+      "olmdistancegradation_extended__case_0021",
+      "olmdistancegradation_extended__case_0022",
+      "olmdistancegradation_extended__case_0023",
+      "olmdistancegradation_extended__case_0024",
+      "olmdistancegradation_extended__case_0025",
+      "olmdistancegradation_extended__case_0026",
+      "olmdistancegradation_extended__case_0027",
+      "olmdistancegradation_extended__case_0028",
+      "olmdistancegradation_blur__case_0029"
+    ]
+  },
+  "rejected_or_pending": {
+    "missing_windows_pair_or_binding": [],
+    "mac_exact_case_count": 0,
+    "current_mac_evidence": [
+      {
+        "path": "refs/conformance/olmdistancegradation_fieldgen_bitdepth_boundary_20260715.json",
+        "finding": "32bpc rendered references are present, but typed field callback artifacts are zero",
+        "eligibility": "not a Mac 32bpc output comparison"
+      },
+      {
+        "path": "refs/conformance/olmdistancegradation_16bpc_livefield_source_actual_aex_20260713.json",
+        "finding": "16bpc livefield/source evidence only",
+        "eligibility": "wrong bit depth and no 32bpc raw EXR pair"
+      },
+      {
+        "path": "refs/conformance/olmdistancegradation_true16_residual_family_audit_20260709.json",
+        "finding": "true16 residual-family analysis",
+        "eligibility": "diagnostic evidence, not 32bpc cross-host equality"
+      }
+    ],
+    "mac_missing_binding": [
+      "fresh Mac 32bpc Software render result",
+      "same-run raw-float Mac output corresponding to each Windows effect EXR",
+      "Mac input hash proving the imported before-effects frame is the selected Windows input",
+      "Mac parameter snapshot for the same case IDs",
+      "Mac plugin SHA-256 and AE/project/output-module provenance"
+    ]
+  },
+  "guardrails": [
+    "Windows FLOAT EXR presence is reference evidence, not Mac validation.",
+    "16bpc PNG or diagnostic float samples cannot bind a 32bpc exact result.",
+    "PNG-only Mac output is probe evidence and cannot satisfy this contract.",
+    "No production retune and no AE-exact claim without raw cross-host equality."
+  ],
+  "cases": [
+    {
+      "id": "olmdistancegradation_basic__case_0001",
+      "group": "olmdistancegradation_basic",
+      "input_id": "olmdistancegradation_basic_case_0001_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0001_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0001.exr",
+      "input_sha256": "6b1972a25a1a336f52fe10d627fbe710d97578329112878d0c17a2f6607b6e97",
+      "output_sha256": "5500a71581ccc9df4501dfdb4380b3d0066cf2e20e1b50bb68188c6fecac06df",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_basic__case_0001_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 1
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 128
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_basic__case_0002",
+      "group": "olmdistancegradation_basic",
+      "input_id": "olmdistancegradation_basic_case_0002_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0002_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0002.exr",
+      "input_sha256": "bca34ca035983920dafc3e0e10cd6c6689445389fcab48bd579fd48820824a7a",
+      "output_sha256": "a1fe778bc2407f70534d7cb9192b6ea19815a5db0083c36d3d2d211e29edd33c",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_basic__case_0002_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 1
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 1
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 128
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_basic__case_0003",
+      "group": "olmdistancegradation_basic",
+      "input_id": "olmdistancegradation_basic_case_0003_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0003_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0003.exr",
+      "input_sha256": "dddb09691d7f55b595ce9654ea36357214a2a537590c07f97dd5e83091c63e14",
+      "output_sha256": "43d97605b855d05a2647cd08987c2b1926f99f7009e88abe7560b86c12e4aa89",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_basic__case_0003_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 1
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 128
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_basic__case_0004",
+      "group": "olmdistancegradation_basic",
+      "input_id": "olmdistancegradation_basic_case_0004_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0004_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0004.exr",
+      "input_sha256": "a9aa4e27ff73ed9201ad9cef39de6de2a371c559e071dca9c38dcd0105bd2b6d",
+      "output_sha256": "273d6b9eccfffc21960e1ac16515fb4459ae7c6567ef64de63fb78b9235bf7af",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_basic__case_0004_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 1
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 128
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_basic__case_0005",
+      "group": "olmdistancegradation_basic",
+      "input_id": "olmdistancegradation_basic_case_0005_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0005_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0005.exr",
+      "input_sha256": "4a93fcec7e504d84caafb2f94744c085e6c7d5dedc4c485971a854ce7c614585",
+      "output_sha256": "43a29429559bffa907569be85858a2bfccf911643d75421e9b3de1b2f3963a72",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_basic__case_0005_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 1
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 128
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_basic__case_0006",
+      "group": "olmdistancegradation_basic",
+      "input_id": "olmdistancegradation_basic_case_0006_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0006_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0006.exr",
+      "input_sha256": "ef4742a58d6377b5c0f5d0eeac4d714aef24e0ccdb77e6553c694523f5c5c734",
+      "output_sha256": "6b98ce2da96e809dd5cbe6a31c5dbd94df04a4b00f642af84bfc331fdd852c03",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_basic__case_0006_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 1
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 128
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_basic__case_0007",
+      "group": "olmdistancegradation_basic",
+      "input_id": "olmdistancegradation_basic_case_0007_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0007_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0007.exr",
+      "input_sha256": "57da45c9fa0ababd30e337554d2a31a76ec47ef446c97d4ea5dc7f7ba860a9fb",
+      "output_sha256": "6a1445a47642f6b230d43a5395510bfcb248d3988efa462e6bd9f5b690105ff4",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_basic__case_0007_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 2
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 128
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_basic__case_0009",
+      "group": "olmdistancegradation_basic",
+      "input_id": "olmdistancegradation_basic_case_0009_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0009_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0009.exr",
+      "input_sha256": "40538bd41a9debf9150b87cd4e5473d08a128e968832334de2e89deaf8a964ec",
+      "output_sha256": "2b72e7b37fcceedb0c1985505bf982665bb35ac25d3913c9c773ee0aac0482ef",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_basic__case_0009_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 2
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 512
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_basic__case_0015",
+      "group": "olmdistancegradation_basic",
+      "input_id": "olmdistancegradation_basic_case_0015_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0015_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0015.exr",
+      "input_sha256": "bfe414f6431ee999f0a8353746866ab373b3f606d6adf04095b73d04bc5ac0da",
+      "output_sha256": "0b8b26baca71fcc80a7d8b71c1eed477a3c1ffd7d4c55f3845e27c4bdc34f456",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_basic__case_0015_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 1
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 1
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 204
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 2
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_basic__case_0017",
+      "group": "olmdistancegradation_basic",
+      "input_id": "olmdistancegradation_basic_case_0017_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0017_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0017.exr",
+      "input_sha256": "07a3935703a5bf42203ab130f8558665e4539b1d431bb6ff0f579972b43550b4",
+      "output_sha256": "5627d92d179fbc22b51c287f126b1706c5e10c4c8c45a67ffd4e697b62f398a1",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_basic__case_0017_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 1
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 1
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 204
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 2
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_basic__case_0018",
+      "group": "olmdistancegradation_basic",
+      "input_id": "olmdistancegradation_basic_case_0018_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0018_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0018.exr",
+      "input_sha256": "b8894c2c8dc39af16ec9b9b11a2b7593f41dcb334114356ab0671d5ca9cce051",
+      "output_sha256": "f81619eec67dfa7a76c1da1946b1aed60a7eb2829aa6442b295e0024d60c93af",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_basic__case_0018_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 1
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 204
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 1
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              0.1098041459918,
+              0,
+              0.93333333730698,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_basic__case_0019",
+      "group": "olmdistancegradation_basic",
+      "input_id": "olmdistancegradation_basic_case_0019_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0019_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0019.exr",
+      "input_sha256": "c98166f21897f68ded9ab83536ca2acbf3e91eeaad95610c5ea0c9934afec20a",
+      "output_sha256": "2091a4d8927d73a0e18e2e9c98ee7a8b2ecf78642dcbc7db764fc175a13fc745",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_basic__case_0019_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 1
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 204
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 1
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              0.1098041459918,
+              0,
+              0.93333333730698,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_extended__case_0008",
+      "group": "olmdistancegradation_extended",
+      "input_id": "olmdistancegradation_extended_case_0008_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0008_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0008.exr",
+      "input_sha256": "a39e8bb132ed2bf81d35d3da17a9e467feadaa10cbc8d08f21ec6307f61af187",
+      "output_sha256": "c6088d5f11e64fcb311e652aba2bc7b6929a13914ea977f4579bc08233c66767",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_extended__case_0008_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 2
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 0
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_extended__case_0010",
+      "group": "olmdistancegradation_extended",
+      "input_id": "olmdistancegradation_extended_case_0010_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0010_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0010.exr",
+      "input_sha256": "66863ed89cfa545e24acb6d53a0aaaecacbe80c196e72a78ef466e01bebe1c23",
+      "output_sha256": "31620a76a16393711bc62dff8e7bdb4237434ac7471004954d8bf9e1d9cc5192",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_extended__case_0010_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 3
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 82
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_extended__case_0011",
+      "group": "olmdistancegradation_extended",
+      "input_id": "olmdistancegradation_extended_case_0011_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0011_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0011.exr",
+      "input_sha256": "5481a7cb44064d782213570d159a7057accdc32803779f68fe5cfc6572e5cbdc",
+      "output_sha256": "e44e355f58abd9cbc3bc9e42316638d1079b7ed4816a2677d486222615ad9aae",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_extended__case_0011_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 3
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 0
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_extended__case_0012",
+      "group": "olmdistancegradation_extended",
+      "input_id": "olmdistancegradation_extended_case_0012_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0012_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0012.exr",
+      "input_sha256": "6d906ee776e6e1664f505f2261e083e903793a0431c09d3f6fe909184ac58856",
+      "output_sha256": "483b55d6afd0e2c98619c0713bb9ae476c2138c6e7539e51ea1d25a3bc3b3c5b",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_extended__case_0012_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 3
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 204
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 2
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_extended__case_0013",
+      "group": "olmdistancegradation_extended",
+      "input_id": "olmdistancegradation_extended_case_0013_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0013_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0013.exr",
+      "input_sha256": "c2c5634b40b10cc04d763344f6796ca12e07c02c32580c4511e824a458141b80",
+      "output_sha256": "88f96f130167f5dc916b0cc5aca64d596463280e918bc1ce184fd5745d10865f",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_extended__case_0013_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 1
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 204
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 2
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_extended__case_0014",
+      "group": "olmdistancegradation_extended",
+      "input_id": "olmdistancegradation_extended_case_0014_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0014_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0014.exr",
+      "input_sha256": "23f6d5fe5cb4fb596b70e53ae103f0f36b1ff6bb1676da9e74b9a20902349da0",
+      "output_sha256": "72a98318269d45e11f6a01a00fd3103a0880ad82e2a1ecfe0f65ee2a710c17eb",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_extended__case_0014_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 1
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 204
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 2
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_extended__case_0016",
+      "group": "olmdistancegradation_extended",
+      "input_id": "olmdistancegradation_extended_case_0016_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0016_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0016.exr",
+      "input_sha256": "f3710515bcf7471fc83df44e3f2ee7c920458ccb877df945a076e7a02eff4a39",
+      "output_sha256": "1332af228da02abd3f39c6769d3d2b3c97332c6dd0c127a30896e0f9f97dc8cc",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_extended__case_0016_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 1
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 1
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 204
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 2
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 2
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_extended__case_0020",
+      "group": "olmdistancegradation_extended",
+      "input_id": "olmdistancegradation_extended_case_0020_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0020_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0020.exr",
+      "input_sha256": "dd694821b23977874b42dc347a19e42d3f6e313265df305283df3f5f6e542698",
+      "output_sha256": "64a156434350aad1c447260c8b6e4503182268c0accb65555998107b8e4a6d52",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_extended__case_0020_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 1
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 204
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 1
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              0.1098041459918,
+              0,
+              0.93333333730698,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 1
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_extended__case_0021",
+      "group": "olmdistancegradation_extended",
+      "input_id": "olmdistancegradation_extended_case_0021_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0021_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0021.exr",
+      "input_sha256": "59223562f7321fe204cc9268fd926efc2c9b6b5d3745129e4af39435b90d85d1",
+      "output_sha256": "74ab4697cf7d12fc560df3c2e56a3ac945495c2d1533766cf1d7e2c111a07321",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_extended__case_0021_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 3
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 402
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 1
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              0.1098041459918,
+              0,
+              0.93333333730698,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 1
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_extended__case_0022",
+      "group": "olmdistancegradation_extended",
+      "input_id": "olmdistancegradation_extended_case_0022_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0022_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0022.exr",
+      "input_sha256": "bf7f60fe71584f92975a40a3c8163ef6e1218dbeed161afb1968da6032bf50f0",
+      "output_sha256": "074fd08ad94872b52e41a056a08f32eacefd8888cae09314d0be76d2e2a86a41",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_extended__case_0022_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 3
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 11
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 1
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              0.1098041459918,
+              0,
+              0.93333333730698,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 1
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_extended__case_0023",
+      "group": "olmdistancegradation_extended",
+      "input_id": "olmdistancegradation_extended_case_0023_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0023_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0023.exr",
+      "input_sha256": "943004bf4fe017d6faca23ae237bc615ec1d86bf9c916c5402f816a99a3a829b",
+      "output_sha256": "364c1acbca0dbc8cd2c620e3bcf8ddd5442f94920dafadd01293a3d578436eea",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_extended__case_0023_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 3
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 0
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 1
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              0.1098041459918,
+              0,
+              0.93333333730698,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 1
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_extended__case_0024",
+      "group": "olmdistancegradation_extended",
+      "input_id": "olmdistancegradation_extended_case_0024_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0024_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0024.exr",
+      "input_sha256": "dd7fe56d93f47c33927f6ab9b237bd0415cebf155060995a06cd23a05933a624",
+      "output_sha256": "cb525258dcfe4df00fba1a8916a5a910f69743cd290034f1b9e211edb2b747fd",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_extended__case_0024_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 0
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 3
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 17
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 1
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              0.1098041459918,
+              0,
+              0.93333333730698,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 3
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_extended__case_0025",
+      "group": "olmdistancegradation_extended",
+      "input_id": "olmdistancegradation_extended_case_0025_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0025_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0025.exr",
+      "input_sha256": "d21d1ab16dc6f72d6737d2cb958420354b407e3a6ae2b805236956ef3be15b94",
+      "output_sha256": "6f9241477ae98c1d6cfca0eb0039cc804a44dccb2acea1fb492193c3837897da",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_extended__case_0025_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 1
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 3
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 13
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 1
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              0.1098041459918,
+              0,
+              0.93333333730698,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 3
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 1
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_extended__case_0026",
+      "group": "olmdistancegradation_extended",
+      "input_id": "olmdistancegradation_extended_case_0026_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0026_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0026.exr",
+      "input_sha256": "beb651ab5bef0e762b6d7de6cd0370beb267443747d41b3a6eda347983d6b915",
+      "output_sha256": "4fbe83c2d3e3b1e4510103a4f6c69f3c32bf6be6be8e7f0da1df78ed746b0d6d",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_extended__case_0026_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 1
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 3
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 13
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 1
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              0.1098041459918,
+              0,
+              0.93333333730698,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 4
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 2.59740734100342
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_extended__case_0027",
+      "group": "olmdistancegradation_extended",
+      "input_id": "olmdistancegradation_extended_case_0027_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0027_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0027.exr",
+      "input_sha256": "6e3529cc667dc0f8af2741175aa9090cd8a7a95b2168905b71fcf9dc8f6edbc2",
+      "output_sha256": "c907f3d27151b53d62e1c2f3b69a03a4ca6e7221f745d261f026f096ffd0d948",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_extended__case_0027_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 1
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 3
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 13
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 2
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 1
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              0.1098041459918,
+              0,
+              0.93333333730698,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 4
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 2.59740734100342
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_extended__case_0028",
+      "group": "olmdistancegradation_extended",
+      "input_id": "olmdistancegradation_extended_case_0028_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0028_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_extended__case_0028.exr",
+      "input_sha256": "f12405c16379da6cb9805f3845a89308db7ba417c9c05f5c12302789f63df33b",
+      "output_sha256": "c97ec8df8f35717a2942f2c505d8a50e4b8c774746b6b1bdbed503502d070283",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_extended__case_0028_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 1
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 3
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 13
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 2
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 1
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              0.1098041459918,
+              0,
+              0.93333333730698,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 4
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 0.40016460418701
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 1
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "olmdistancegradation_blur__case_0029",
+      "group": "olmdistancegradation_blur",
+      "input_id": "olmdistancegradation_blur_case_0029_source",
+      "render_set_id": "software_32bpc",
+      "input": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_blur__case_0029_before_effects.exr",
+      "output": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_blur__case_0029.exr",
+      "input_sha256": "6ae64bafbbbf35e4d779980f0b47309c28b00facbe5de2239e1158c397431323",
+      "output_sha256": "f44049b6865a91e5dbb482c755aedf5e54061c2c869607dd33c40895e191e56e",
+      "input_bytes": 33195419,
+      "output_bytes": 33195419,
+      "comp": {
+        "name": "olmdistancegradation_blur__case_0029_software_32bpc_24",
+        "width": 1920,
+        "height": 1080,
+        "pixel_aspect": 1,
+        "frame_rate": 24,
+        "duration": 1,
+        "resolution_factor": [
+          1,
+          1
+        ]
+      },
+      "effect": {
+        "name": "Distance Gradation",
+        "match_name": "OLM Distance Gradation",
+        "property_index": 1,
+        "params": [
+          {
+            "name": "Invert",
+            "match_name": "OLM Distance Gradation-0001",
+            "value": 1
+          },
+          {
+            "name": "In/Out",
+            "match_name": "OLM Distance Gradation-0002",
+            "value": 1
+          },
+          {
+            "name": "Inside Threshold",
+            "match_name": "OLM Distance Gradation-0003",
+            "value": 1
+          },
+          {
+            "name": "Outside Threshold",
+            "match_name": "OLM Distance Gradation-0004",
+            "value": 13
+          },
+          {
+            "name": "Render Mode",
+            "match_name": "OLM Distance Gradation-0005",
+            "value": 1
+          },
+          {
+            "name": "Use Background Color",
+            "match_name": "OLM Distance Gradation-0006",
+            "value": 0
+          },
+          {
+            "name": "Gradation Color",
+            "match_name": "OLM Distance Gradation-0007",
+            "value": [
+              0.1098041459918,
+              0,
+              0.93333333730698,
+              1
+            ]
+          },
+          {
+            "name": "BG Color ",
+            "match_name": "OLM Distance Gradation-0008",
+            "value": [
+              1,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "name": "Interpolation Mode",
+            "match_name": "OLM Distance Gradation-0009",
+            "value": 1
+          },
+          {
+            "name": "Power",
+            "match_name": "OLM Distance Gradation-0010",
+            "value": 0.00999999977648
+          },
+          {
+            "name": "Blur Mode",
+            "match_name": "OLM Distance Gradation-0011",
+            "value": 2
+          },
+          {
+            "name": "Blur Size",
+            "match_name": "OLM Distance Gradation-0012",
+            "value": 30
+          }
+        ]
+      }
+    }
+  ]
+}

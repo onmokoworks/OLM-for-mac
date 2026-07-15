@@ -13,6 +13,7 @@ import sys
 import tempfile
 import zipfile
 import zlib
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -42,7 +43,11 @@ def fixture_line(prefix: str, fields: list[str], overrides: dict[str, str] | Non
     values.update({
         field: "1047" if field in {"row_start", "row_end"} else
         "1920" if field == "width" else "1080" if field == "height" else
-        "0x1" if field.endswith("_addr") else "00000000"
+        "0x1000" if field in {"source_rgba", "source_scalar", "scale_plane", "accum_plane", "alpha_plane", "context"} else
+        {"cell00_id": "0x1000", "cell10_id": "0x1010", "cell01_id": "0x1020", "cell11_id": "0x1030"}.get(field,
+        {"cell00_addr": "0x1000", "cell10_addr": "0x1010", "cell01_addr": "0x1020", "cell11_addr": "0x1030"}.get(field,
+        "3f800000,3f800000,3f800000,3f800000" if field.endswith("_rgba") or field == "bilinear_weights" else
+        "3f800000,3f800000" if field == "inverse_coords" else "3f800000"))
         for field in fields if field not in values
     })
     values.update({"row_start": "1047", "row_end": "1048", "width": "1920", "height": "1080"})
@@ -72,7 +77,7 @@ def png_rgba8(width: int, height: int) -> bytes:
     return b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", ihdr) + chunk(b"IDAT", zlib.compress(rows)) + chunk(b"IEND", b"")
 
 
-def prepare_work(work: Path, contract: dict, observed: bytes | None = None) -> Path:
+def prepare_work(work: Path, contract: dict, observed: bytes | None = None, package_root: Path | None = None) -> Path:
     export = work / "exports/case_0009/case_0009.png"
     export.parent.mkdir(parents=True, exist_ok=True)
     if observed is not None:
@@ -82,6 +87,13 @@ def prepare_work(work: Path, contract: dict, observed: bytes | None = None) -> P
         "output_png": str(export.resolve()),
     }), encoding="utf-8")
     (work / "ae_case_0009.log").write_text("gpuAccelType=SOFTWARE\n", encoding="utf-8")
+    queue = Path(__file__).resolve().parents[2] / "refs/runtime_trace_packages/windows_witness_olmradialblur_case0009_fullframe_postnorm_typed_common_core_20260713/scripts/ae_witness_queue.jsx"
+    queue_hash = hashlib.sha256(queue.read_bytes()).hexdigest()
+    (work / "queue_bootstrap.log").write_text(
+        f"WITNESS_QUEUE_BOOTSTRAP\nrun_id=rb9-fixture\nwork={work.resolve()}\nroot={(package_root or queue.parent.parent).resolve()}\nqueue_sha256={queue_hash}\n",
+        encoding="utf-8",
+    )
+    (work / "queue.log").write_text("WITNESS_QUEUE_START run_id=rb9-fixture\nWITNESS_QUEUE_END run_id=rb9-fixture\n", encoding="utf-8")
     return export
 
 
@@ -109,6 +121,17 @@ def main() -> int:
     assert "pre_byte_alpha" in cdb and "run_identity=same-run" in cdb
     assert "@r13d==0" in cdb and "@$t1==0" in cdb
     assert "UNREAD" not in cdb and "1920" in cdb and "1080" in cdb and "32x32" not in cdb
+    point_cdb = next(line for line in cdb.splitlines() if 'RB9_POINT_TYPED' in line)
+    format_text = point_cdb.split('.printf ', 1)[1].split('\\n\\",', 1)[0]
+    format_count = len(re.findall(r'%[-+ #0-9]*(?:x|u|p)', format_text))
+    args_text = point_cdb.split('\\n\\",', 1)[1].rsplit(';r', 1)[0]
+    depth = 0
+    args_count = 1
+    for char in args_text:
+        depth += char == '('
+        depth -= char == ')'
+        args_count += char == ',' and depth == 0
+    assert format_count == args_count == 66
     for expression in ("dwo(@rsp+28)", "@ebx", "@r13d", "@rdi", "@rdx", "poi(@rsi+38)", "poi(@rsi+4210)", "poi(@rsi+4218)", "@rcx+10", "@xmm6", "@xmm7"):
         assert expression in cdb
     event_map = {event["prefix"]: event for event in spec["validation"]["events"]}
@@ -137,6 +160,12 @@ def main() -> int:
             packages.append((temp / name, temp / f"{name}.zip"))
         assert packages[0][1].read_bytes() == packages[1][1].read_bytes()
         package, archive_path = packages[0]
+        generated_cdb = next((package / "cdb").glob("*.cdb.in")).read_text(encoding="ascii")
+        assert "cell00_id=00" not in generated_cdb
+        assert "cell00_id=%p" in generated_cdb
+        renderer = (package / "scripts/renderer.jsx").read_text(encoding="utf-8")
+        assert '\\"output_png\\":' in renderer and '\\"case_id\\":' in renderer
+        assert "run_id:" not in renderer
         with zipfile.ZipFile(archive_path) as archive:
             assert archive.testzip() is None
             assert archive.namelist() == sorted(archive.namelist())
@@ -168,9 +197,9 @@ def main() -> int:
         contract = json.loads((package / "witness-contract.json").read_text(encoding="utf-8"))
         validator = load_generated_validator(package)
         positive_work = temp / "positive"
-        export = prepare_work(positive_work, contract, REFERENCE.read_bytes())
-        enriched = validator.enrich(contract, copy.deepcopy(accepted), positive_work)
-        assert enriched["status"] == "answered"
+        export = prepare_work(positive_work, contract, REFERENCE.read_bytes(), package)
+        enriched = validator.enrich(contract, copy.deepcopy(accepted), positive_work.resolve())
+        assert enriched["status"] == "answered", enriched
         assert [row["xy"] for row in enriched["pixel_witnesses"]] == [[7, 0], [8, 0], [24, 0]]
         assert all(row["observed_rgba8"] == row["reference_rgba8"] for row in enriched["pixel_witnesses"])
         assert all(row["run_id"] == "rb9-fixture" and row["case_id"] == "case_0009" for row in enriched["pixel_witnesses"])
@@ -185,34 +214,46 @@ def main() -> int:
 
         negative_cases: list[tuple[str, dict, Path]] = []
         missing_work = temp / "missing"
-        prepare_work(missing_work, contract, None)
+        prepare_work(missing_work, contract, None, package)
         negative_cases.append(("missing export", copy.deepcopy(accepted), missing_work))
         wrong_class_work = temp / "wrong-class"
-        prepare_work(wrong_class_work, contract, png_rgba8(1, 1))
+        prepare_work(wrong_class_work, contract, png_rgba8(1, 1), package)
         negative_cases.append(("wrong dimensions", copy.deepcopy(accepted), wrong_class_work))
         wrong_path_work = temp / "wrong-path"
-        prepare_work(wrong_path_work, contract, REFERENCE.read_bytes())
+        prepare_work(wrong_path_work, contract, REFERENCE.read_bytes(), package)
         result_path = wrong_path_work / "ae_result_case_0009.json"
         result = json.loads(result_path.read_text(encoding="utf-8"))
         result["output_png"] = str((wrong_path_work / "foreign.png").resolve())
         result_path.write_text(json.dumps(result), encoding="utf-8")
         negative_cases.append(("wrong output path", copy.deepcopy(accepted), wrong_path_work))
+        cross_run_work = temp / "cross-run-queue"
+        prepare_work(cross_run_work, contract, REFERENCE.read_bytes(), package)
+        bootstrap_path = cross_run_work / "queue_bootstrap.log"
+        bootstrap = bootstrap_path.read_text(encoding="utf-8").replace("run_id=rb9-fixture", "run_id=other-run")
+        bootstrap_path.write_text(bootstrap, encoding="utf-8")
+        negative_cases.append(("cross-run queue binding", copy.deepcopy(accepted), cross_run_work))
+        wrong_queue_work = temp / "wrong-queue"
+        prepare_work(wrong_queue_work, contract, REFERENCE.read_bytes(), package)
+        bootstrap_path = wrong_queue_work / "queue_bootstrap.log"
+        bootstrap = re.sub(r"queue_sha256=[0-9a-f]+", "queue_sha256=" + "0" * 64, bootstrap_path.read_text(encoding="utf-8"))
+        bootstrap_path.write_text(bootstrap, encoding="utf-8")
+        negative_cases.append(("wrong queue hash", copy.deepcopy(accepted), wrong_queue_work))
         for marker in ("UNREAD", "SENTINEL", "DEADBEEF", "CCCCCCCC"):
             poison_status = validate_trace(spec, complete_trace(spec, {"pre_byte_alpha": marker}), IDENTITY)
             poison_work = temp / f"poison-{marker.lower()}"
-            prepare_work(poison_work, contract, REFERENCE.read_bytes())
+            prepare_work(poison_work, contract, REFERENCE.read_bytes(), package)
             negative_cases.append((marker, poison_status, poison_work))
         duplicate_status = validate_trace(spec, complete_trace(spec).replace("x=24 ", "x=8 "), IDENTITY)
         duplicate_work = temp / "duplicate"
-        prepare_work(duplicate_work, contract, REFERENCE.read_bytes())
+        prepare_work(duplicate_work, contract, REFERENCE.read_bytes(), package)
         negative_cases.append(("duplicate target", duplicate_status, duplicate_work))
         for label, status, work in negative_cases:
-            rejected = validator.enrich(contract, status, work)
+            rejected = validator.enrich(contract, status, work.resolve())
             assert rejected["status"] == "exact_bind_failure", label
 
         wrong_reference = copy.deepcopy(contract)
         wrong_reference["cases"][0]["template_values"]["reference_png_sha256"] = "0" * 64
-        rejected = validator.enrich(wrong_reference, copy.deepcopy(accepted), positive_work)
+        rejected = validator.enrich(wrong_reference, copy.deepcopy(accepted), positive_work.resolve())
         assert rejected["status"] == "exact_bind_failure"
         assert rejected["failure"]["stage"] == "radial_reference_identity"
 

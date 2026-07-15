@@ -1,0 +1,21 @@
+{
+  "kind": "olmtoondilate_mac_depth_contract_audit",
+  "schema": 1,
+  "status": "pass",
+  "facts": {
+    "legacy_pf_cmd_render_depths": [
+      8,
+      16
+    ],
+    "smart_render_depth_source": "extra->input->bitdepth",
+    "smart_render_float_branch": true,
+    "float_color_aware": true,
+    "mac_32bpc_pair_classification": "blocked-by-host-input-conversion",
+    "mac_32bpc_ae_exact": false
+  },
+  "inferences": [
+    "Mac 32bpc execution is evidence-backed only on the advertised Smart Render path.",
+    "The legacy PF_Cmd_RENDER callback must not be used as proof of 32bpc support.",
+    "The current 32bpc float return remains a host/input probe, not AE exact evidence."
+  ]
+}

@@ -113,10 +113,25 @@ def validate_spec(spec: dict[str, Any], base_dir: Path | None = None) -> None:
         "schema_version", "request_id", "run_id_prefix", "plugin", "host", "project",
         "renderer", "request_assets", "cdb", "cases", "validation", "return_bundle",
     }
-    _keys(spec, root_required, root_required | {"description"}, "spec")
+    _keys(spec, root_required, root_required | {"description", "queue"}, "spec")
     _need(spec["schema_version"] == SCHEMA_VERSION, "schema_version must be 1")
     for key in ("request_id", "run_id_prefix"):
         _need(isinstance(spec[key], str) and ID_RE.fullmatch(spec[key]) is not None, f"{key} is invalid")
+
+    queue = spec.get("queue")
+    if queue is not None:
+        _need(isinstance(queue, dict), "spec.queue must be an object")
+        queue_required = {"profile", "plugin_area", "command", "stop_condition"}
+        _keys(queue, queue_required, queue_required | {"supersedes"}, "spec.queue")
+        for key in queue_required:
+            _need(isinstance(queue[key], str) and bool(queue[key]), f"spec.queue.{key} is required")
+        supersedes = queue.get("supersedes", [])
+        _need(isinstance(supersedes, list), "spec.queue.supersedes must be an array")
+        for index, request_id in enumerate(supersedes):
+            _need(
+                isinstance(request_id, str) and ID_RE.fullmatch(request_id) is not None,
+                f"spec.queue.supersedes[{index}] is invalid",
+            )
 
     plugin = spec["plugin"]
     _keys(plugin, {"name", "module_filename", "aex_sha256", "default_aex_path"},

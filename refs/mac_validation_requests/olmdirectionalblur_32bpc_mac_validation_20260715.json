@@ -1,0 +1,78 @@
+{
+  "kind": "olmdirectionalblur_32bpc_mac_float_validation_request",
+  "schema_version": 1,
+  "request_id": "olmdirectionalblur_32bpc_mac_validation_20260715",
+  "status": "request_only_no_ae_exact_claim",
+  "scope": "smallest same-contract Mac AE FLOAT EXR candidate/control gate",
+  "source_audit": "refs/conformance/olmdirectionalblur_32bpc_float_evidence_audit_20260715.json",
+  "case": {
+    "id": "final_random10_olm_directionalblur_01",
+    "source_case_id": "final_random10_olm_directionalblur_01",
+    "input": {
+      "path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_olm_final_random10_olm_directionalblur_20260629/input/olm_final_random10_olm_directionalblur_20260629__software__fr24__final_random10_olm_directionalblur_01_before_effects.png",
+      "sha256": "5276e925f0e7f6de61532a6f9adc3c33a9c8e7330deb0b96eb83f16a30273776",
+      "hash_algorithm": "sha256"
+    },
+    "comp": {"width": 1920, "height": 1080, "pixel_aspect": 1, "duration": 1, "frame_rate": 24, "frame": 0},
+    "effect": {
+      "name": "OLM DirectionalBlur",
+      "match_name": "OLM Directional Blur",
+      "enabled": true,
+      "params": {
+        "Angle": 179,
+        "Brightness Gain": 1.19280004501343,
+        "Size Variation": 78,
+        "Front Blur Strength": 519,
+        "Front Alpha Fade": 19,
+        "Front Sharp Tail": 37,
+        "Back Blur Strength": 180,
+        "Back Alpha Fade": 56,
+        "Back Sharp Tail": 42,
+        "Noise Variation": 8,
+        "Noise Type": 1,
+        "Noise Layer": 0,
+        "Seed": 121,
+        "Noise Offset": 27,
+        "Thickness": 75,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "parameter_identity_source": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMDirectionalBlur/reference_manifest.json"
+    }
+  },
+  "ae_contract": {
+    "major_minor": "26.3",
+    "bits_per_channel": 32,
+    "renderer": "SOFTWARE",
+    "working_space": "None",
+    "linear_blending": false,
+    "frame": 0,
+    "output_template": "OLM EXR 32 Float",
+    "output_format": "OpenEXR",
+    "channels": ["A", "B", "G", "R"],
+    "sample_type": "FLOAT",
+    "compression": "none",
+    "outputs": ["no_effect", "effect_on"]
+  },
+  "plugin_identity": {
+    "filename": "OLMDirectionalBlur.plugin",
+    "sha256_required": true,
+    "loaded_hash_capture_required": true,
+    "windows_reference_hash": "MISSING_IN_IMPORTED_MANIFEST"
+  },
+  "acceptance": {
+    "cross_host_comparison": "raw_float32_words; compare Windows effect/control and Mac effect/control under the same case contract",
+    "control_gate": "Windows no-effect equals Mac no-effect before attributing effect deltas",
+    "ae_exact_claim": false,
+    "png_only": "probe_only",
+    "fail_closed": [
+      "missing or changed input",
+      "missing or mismatched plugin path/hash",
+      "AE/project/renderer/color/output setting drift",
+      "missing control or unequal Output Module settings captures",
+      "missing, compressed, non-FLOAT, wrong-channel-order, dimension-mismatched, or unhashed EXR",
+      "any return without an explicit ae_exact_claim=false",
+      "any nonzero raw FLOAT32 word delta"
+    ]
+  }
+}

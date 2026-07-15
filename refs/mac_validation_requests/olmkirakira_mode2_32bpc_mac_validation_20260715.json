@@ -1,0 +1,1319 @@
+{
+  "case": {
+    "comp": {
+      "duration": 1,
+      "frame_rate": 24,
+      "height": 1080,
+      "name": "final_random10_olm_kira_kira_06_software_32bpc_24",
+      "pixel_aspect": 1,
+      "resolution_factor": [
+        1,
+        1
+      ],
+      "width": 1920
+    },
+    "effect": {
+      "match_name": "OLM OLM Kira Kira",
+      "name": "OLM Kira Kira",
+      "params_full": [
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0008",
+          "name": "Channel",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Channel"
+          ],
+          "path_full": [],
+          "property_index": 1,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 4,
+            "minValue": 1,
+            "unitsText": ""
+          },
+          "value": 2,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0009",
+          "name": "Blur Mode",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Blur Mode"
+          ],
+          "path_full": [],
+          "property_index": 2,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 4,
+            "minValue": 1,
+            "unitsText": ""
+          },
+          "value": 2,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0017",
+          "name": "Merge mode",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Merge mode"
+          ],
+          "path_full": [],
+          "property_index": 3,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 2,
+            "minValue": 1,
+            "unitsText": ""
+          },
+          "value": 1,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0010",
+          "name": "Approximated Input",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Approximated Input"
+          ],
+          "path_full": [],
+          "property_index": 4,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 1,
+            "minValue": 0,
+            "unitsText": ""
+          },
+          "value": 0,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0002",
+          "name": "Brightness Gain",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Brightness Gain"
+          ],
+          "path_full": [],
+          "property_index": 5,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 100,
+            "minValue": 1,
+            "unitsText": ""
+          },
+          "value": 42,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0011",
+          "name": "Strength multiplier",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Strength multiplier"
+          ],
+          "path_full": [],
+          "property_index": 6,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 1000,
+            "minValue": 0,
+            "unitsText": ""
+          },
+          "value": 536,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0027",
+          "name": "Fade Out",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Fade Out"
+          ],
+          "path_full": [],
+          "property_index": 7,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 1,
+            "minValue": 0,
+            "unitsText": ""
+          },
+          "value": 0,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0007",
+          "name": "Glow Opacity",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Glow Opacity"
+          ],
+          "path_full": [],
+          "property_index": 8,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 10000,
+            "minValue": 0,
+            "unitsText": ""
+          },
+          "value": 4348,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0012",
+          "name": "Source Opacity",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Source Opacity"
+          ],
+          "path_full": [],
+          "property_index": 9,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 100,
+            "minValue": 0,
+            "unitsText": ""
+          },
+          "value": 47,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0003",
+          "name": "Vertical Length",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Vertical Length"
+          ],
+          "path_full": [],
+          "property_index": 10,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 1000,
+            "minValue": 0,
+            "unitsText": ""
+          },
+          "value": 424,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0013",
+          "name": "Vertical Color",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Vertical Color"
+          ],
+          "path_full": [],
+          "property_index": 11,
+          "property_type": "6212",
+          "property_value_type": "6418",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 3921568.62745098,
+            "minValue": -3921568.62745098,
+            "unitsText": ""
+          },
+          "value": [
+            0.26449999213219,
+            0.45260000228882,
+            0.87169998884201,
+            1
+          ],
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": false,
+          "enabled": true,
+          "error": "Error: After Effects error: Can not get or set a value from this property (matchname is \u201cOLM OLM Kira Kira-0029\u201d). This property\u2019s propertyValueType is PropertyValueType.NO_VALUE.",
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0029",
+          "name": "Vertical Color Ramp",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Vertical Color Ramp"
+          ],
+          "path_full": [],
+          "property_index": 12,
+          "property_type": "6212",
+          "property_value_type": "6412",
+          "range_metadata": {
+            "hasMax": false,
+            "hasMin": false,
+            "maxValue": null,
+            "minValue": null,
+            "unitsText": ""
+          },
+          "value": null,
+          "value_read_method": null
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0018",
+          "name": "Use Ramp",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Use Ramp"
+          ],
+          "path_full": [],
+          "property_index": 13,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 1,
+            "minValue": 0,
+            "unitsText": ""
+          },
+          "value": 1,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "error": "Error: After Effects error: Can not get or set a value from this property (matchname is \u201cOLM OLM Kira Kira-0019\u201d). This propertyValueType CUSTOM_VALUE has not been implemented.",
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0019",
+          "name": "Ramp",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Ramp"
+          ],
+          "path_full": [],
+          "property_index": 14,
+          "property_type": "6212",
+          "property_value_type": "6419",
+          "range_metadata": {
+            "hasMax": false,
+            "hasMin": false,
+            "maxValue": null,
+            "minValue": null,
+            "unitsText": ""
+          },
+          "value": null,
+          "value_read_method": null
+        },
+        {
+          "active": true,
+          "can_set_expression": false,
+          "enabled": true,
+          "error": "Error: After Effects error: Can not get or set a value from this property (matchname is \u201cOLM OLM Kira Kira-0030\u201d). This property\u2019s propertyValueType is PropertyValueType.NO_VALUE.",
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0030",
+          "name": "",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            ""
+          ],
+          "path_full": [],
+          "property_index": 15,
+          "property_type": "6212",
+          "property_value_type": "6412",
+          "range_metadata": {
+            "hasMax": false,
+            "hasMin": false,
+            "maxValue": null,
+            "minValue": null,
+            "unitsText": ""
+          },
+          "value": null,
+          "value_read_method": null
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0004",
+          "name": "Horizontal Length",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Horizontal Length"
+          ],
+          "path_full": [],
+          "property_index": 16,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 1000,
+            "minValue": 0,
+            "unitsText": ""
+          },
+          "value": 323,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0014",
+          "name": "Horizontal Color",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Horizontal Color"
+          ],
+          "path_full": [],
+          "property_index": 17,
+          "property_type": "6212",
+          "property_value_type": "6418",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 3921568.62745098,
+            "minValue": -3921568.62745098,
+            "unitsText": ""
+          },
+          "value": [
+            0.56449997425079,
+            0.34679999947548,
+            0.05770000070333,
+            1
+          ],
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": false,
+          "enabled": true,
+          "error": "Error: After Effects error: Can not get or set a value from this property (matchname is \u201cOLM OLM Kira Kira-0031\u201d). This property\u2019s propertyValueType is PropertyValueType.NO_VALUE.",
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0031",
+          "name": "Horizontal Color Ramp",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Horizontal Color Ramp"
+          ],
+          "path_full": [],
+          "property_index": 18,
+          "property_type": "6212",
+          "property_value_type": "6412",
+          "range_metadata": {
+            "hasMax": false,
+            "hasMin": false,
+            "maxValue": null,
+            "minValue": null,
+            "unitsText": ""
+          },
+          "value": null,
+          "value_read_method": null
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0020",
+          "name": "Use Ramp",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Use Ramp"
+          ],
+          "path_full": [],
+          "property_index": 19,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 1,
+            "minValue": 0,
+            "unitsText": ""
+          },
+          "value": 0,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "error": "Error: After Effects error: Can not get or set a value from this property (matchname is \u201cOLM OLM Kira Kira-0021\u201d). This propertyValueType CUSTOM_VALUE has not been implemented.",
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0021",
+          "name": "Ramp",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Ramp"
+          ],
+          "path_full": [],
+          "property_index": 20,
+          "property_type": "6212",
+          "property_value_type": "6419",
+          "range_metadata": {
+            "hasMax": false,
+            "hasMin": false,
+            "maxValue": null,
+            "minValue": null,
+            "unitsText": ""
+          },
+          "value": null,
+          "value_read_method": null
+        },
+        {
+          "active": true,
+          "can_set_expression": false,
+          "enabled": true,
+          "error": "Error: After Effects error: Can not get or set a value from this property (matchname is \u201cOLM OLM Kira Kira-0032\u201d). This property\u2019s propertyValueType is PropertyValueType.NO_VALUE.",
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0032",
+          "name": "",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            ""
+          ],
+          "path_full": [],
+          "property_index": 21,
+          "property_type": "6212",
+          "property_value_type": "6412",
+          "range_metadata": {
+            "hasMax": false,
+            "hasMin": false,
+            "maxValue": null,
+            "minValue": null,
+            "unitsText": ""
+          },
+          "value": null,
+          "value_read_method": null
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0005",
+          "name": "Diagonal Length",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Diagonal Length"
+          ],
+          "path_full": [],
+          "property_index": 22,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 1000,
+            "minValue": 0,
+            "unitsText": ""
+          },
+          "value": 132,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0015",
+          "name": "Diagonal Color",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Diagonal Color"
+          ],
+          "path_full": [],
+          "property_index": 23,
+          "property_type": "6212",
+          "property_value_type": "6418",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 3921568.62745098,
+            "minValue": -3921568.62745098,
+            "unitsText": ""
+          },
+          "value": [
+            0.64679998159409,
+            0.81269997358322,
+            0.8449000120163,
+            1
+          ],
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": false,
+          "enabled": true,
+          "error": "Error: After Effects error: Can not get or set a value from this property (matchname is \u201cOLM OLM Kira Kira-0033\u201d). This property\u2019s propertyValueType is PropertyValueType.NO_VALUE.",
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0033",
+          "name": "Diagonal Color Ramp",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Diagonal Color Ramp"
+          ],
+          "path_full": [],
+          "property_index": 24,
+          "property_type": "6212",
+          "property_value_type": "6412",
+          "range_metadata": {
+            "hasMax": false,
+            "hasMin": false,
+            "maxValue": null,
+            "minValue": null,
+            "unitsText": ""
+          },
+          "value": null,
+          "value_read_method": null
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0022",
+          "name": "Use Ramp",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Use Ramp"
+          ],
+          "path_full": [],
+          "property_index": 25,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 1,
+            "minValue": 0,
+            "unitsText": ""
+          },
+          "value": 0,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "error": "Error: After Effects error: Can not get or set a value from this property (matchname is \u201cOLM OLM Kira Kira-0023\u201d). This propertyValueType CUSTOM_VALUE has not been implemented.",
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0023",
+          "name": "Ramp",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Ramp"
+          ],
+          "path_full": [],
+          "property_index": 26,
+          "property_type": "6212",
+          "property_value_type": "6419",
+          "range_metadata": {
+            "hasMax": false,
+            "hasMin": false,
+            "maxValue": null,
+            "minValue": null,
+            "unitsText": ""
+          },
+          "value": null,
+          "value_read_method": null
+        },
+        {
+          "active": true,
+          "can_set_expression": false,
+          "enabled": true,
+          "error": "Error: After Effects error: Can not get or set a value from this property (matchname is \u201cOLM OLM Kira Kira-0034\u201d). This property\u2019s propertyValueType is PropertyValueType.NO_VALUE.",
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0034",
+          "name": "",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            ""
+          ],
+          "path_full": [],
+          "property_index": 27,
+          "property_type": "6212",
+          "property_value_type": "6412",
+          "range_metadata": {
+            "hasMax": false,
+            "hasMin": false,
+            "maxValue": null,
+            "minValue": null,
+            "unitsText": ""
+          },
+          "value": null,
+          "value_read_method": null
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0026",
+          "name": "Diagonal 2 length",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Diagonal 2 length"
+          ],
+          "path_full": [],
+          "property_index": 28,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 1000,
+            "minValue": 0,
+            "unitsText": ""
+          },
+          "value": 717,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0028",
+          "name": "Diagonal Color2",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Diagonal Color2"
+          ],
+          "path_full": [],
+          "property_index": 29,
+          "property_type": "6212",
+          "property_value_type": "6418",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 3921568.62745098,
+            "minValue": -3921568.62745098,
+            "unitsText": ""
+          },
+          "value": [
+            0.65460002422333,
+            0.8759999871254,
+            0.44190001487732,
+            1
+          ],
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": false,
+          "enabled": true,
+          "error": "Error: After Effects error: Can not get or set a value from this property (matchname is \u201cOLM OLM Kira Kira-0037\u201d). This property\u2019s propertyValueType is PropertyValueType.NO_VALUE.",
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0037",
+          "name": "Diagonal 2 Color Ramp",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Diagonal 2 Color Ramp"
+          ],
+          "path_full": [],
+          "property_index": 30,
+          "property_type": "6212",
+          "property_value_type": "6412",
+          "range_metadata": {
+            "hasMax": false,
+            "hasMin": false,
+            "maxValue": null,
+            "minValue": null,
+            "unitsText": ""
+          },
+          "value": null,
+          "value_read_method": null
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0035",
+          "name": "Use Ramp",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Use Ramp"
+          ],
+          "path_full": [],
+          "property_index": 31,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 1,
+            "minValue": 0,
+            "unitsText": ""
+          },
+          "value": 0,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "error": "Error: After Effects error: Can not get or set a value from this property (matchname is \u201cOLM OLM Kira Kira-0036\u201d). This propertyValueType CUSTOM_VALUE has not been implemented.",
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0036",
+          "name": "Ramp",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Ramp"
+          ],
+          "path_full": [],
+          "property_index": 32,
+          "property_type": "6212",
+          "property_value_type": "6419",
+          "range_metadata": {
+            "hasMax": false,
+            "hasMin": false,
+            "maxValue": null,
+            "minValue": null,
+            "unitsText": ""
+          },
+          "value": null,
+          "value_read_method": null
+        },
+        {
+          "active": true,
+          "can_set_expression": false,
+          "enabled": true,
+          "error": "Error: After Effects error: Can not get or set a value from this property (matchname is \u201cOLM OLM Kira Kira-0038\u201d). This property\u2019s propertyValueType is PropertyValueType.NO_VALUE.",
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0038",
+          "name": "",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            ""
+          ],
+          "path_full": [],
+          "property_index": 33,
+          "property_type": "6212",
+          "property_value_type": "6412",
+          "range_metadata": {
+            "hasMax": false,
+            "hasMin": false,
+            "maxValue": null,
+            "minValue": null,
+            "unitsText": ""
+          },
+          "value": null,
+          "value_read_method": null
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0006",
+          "name": "Highlight Radius",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Highlight Radius"
+          ],
+          "path_full": [],
+          "property_index": 34,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 500,
+            "minValue": 0,
+            "unitsText": ""
+          },
+          "value": 295,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0016",
+          "name": "Highlight Color",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Highlight Color"
+          ],
+          "path_full": [],
+          "property_index": 35,
+          "property_type": "6212",
+          "property_value_type": "6418",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 3921568.62745098,
+            "minValue": -3921568.62745098,
+            "unitsText": ""
+          },
+          "value": [
+            0.54919999837875,
+            0.96679997444153,
+            0.82580000162125,
+            1
+          ],
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": false,
+          "enabled": true,
+          "error": "Error: After Effects error: Can not get or set a value from this property (matchname is \u201cOLM OLM Kira Kira-0039\u201d). This property\u2019s propertyValueType is PropertyValueType.NO_VALUE.",
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0039",
+          "name": "Highlight Color Ramp",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Highlight Color Ramp"
+          ],
+          "path_full": [],
+          "property_index": 36,
+          "property_type": "6212",
+          "property_value_type": "6412",
+          "range_metadata": {
+            "hasMax": false,
+            "hasMin": false,
+            "maxValue": null,
+            "minValue": null,
+            "unitsText": ""
+          },
+          "value": null,
+          "value_read_method": null
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0024",
+          "name": "Use Ramp",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Use Ramp"
+          ],
+          "path_full": [],
+          "property_index": 37,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 1,
+            "minValue": 0,
+            "unitsText": ""
+          },
+          "value": 0,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "error": "Error: After Effects error: Can not get or set a value from this property (matchname is \u201cOLM OLM Kira Kira-0025\u201d). This propertyValueType CUSTOM_VALUE has not been implemented.",
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0025",
+          "name": "Ramp",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Ramp"
+          ],
+          "path_full": [],
+          "property_index": 38,
+          "property_type": "6212",
+          "property_value_type": "6419",
+          "range_metadata": {
+            "hasMax": false,
+            "hasMin": false,
+            "maxValue": null,
+            "minValue": null,
+            "unitsText": ""
+          },
+          "value": null,
+          "value_read_method": null
+        },
+        {
+          "active": true,
+          "can_set_expression": false,
+          "enabled": true,
+          "error": "Error: After Effects error: Can not get or set a value from this property (matchname is \u201cOLM OLM Kira Kira-0040\u201d). This property\u2019s propertyValueType is PropertyValueType.NO_VALUE.",
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0040",
+          "name": "",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            ""
+          ],
+          "path_full": [],
+          "property_index": 39,
+          "property_type": "6212",
+          "property_value_type": "6412",
+          "range_metadata": {
+            "hasMax": false,
+            "hasMin": false,
+            "maxValue": null,
+            "minValue": null,
+            "unitsText": ""
+          },
+          "value": null,
+          "value_read_method": null
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "OLM OLM Kira Kira-0001",
+          "name": "Glow Rotation",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Glow Rotation"
+          ],
+          "path_full": [],
+          "property_index": 40,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": false,
+            "hasMin": false,
+            "maxValue": null,
+            "minValue": null,
+            "unitsText": "degrees"
+          },
+          "value": -116,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": true,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "ADBE Effect Mask Opacity",
+          "name": "Effect Opacity",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Compositing Options",
+            "Effect Opacity"
+          ],
+          "path_full": [],
+          "property_index": 2,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 100,
+            "minValue": 0,
+            "unitsText": "percent"
+          },
+          "value": 100,
+          "value_read_method": "value"
+        },
+        {
+          "active": true,
+          "can_set_expression": false,
+          "enabled": true,
+          "expression_enabled": false,
+          "is_time_varying": false,
+          "match_name": "ADBE Force CPU GPU",
+          "name": "GPU Rendering",
+          "num_keys": 0,
+          "path": [
+            "OLM Kira Kira",
+            "Compositing Options",
+            "GPU Rendering"
+          ],
+          "path_full": [],
+          "property_index": 3,
+          "property_type": "6212",
+          "property_value_type": "6417",
+          "range_metadata": {
+            "hasMax": true,
+            "hasMin": true,
+            "maxValue": 3,
+            "minValue": 1,
+            "unitsText": ""
+          },
+          "value": 1,
+          "value_read_method": "value"
+        }
+      ],
+      "property_index": 1
+    },
+    "id": "final_random10_olm_kira_kira_06",
+    "input_id": "random_final_alpha_1920x1080",
+    "input_path": "random_final_alpha_1920x1080.png",
+    "params_sha256": "cf30acd083b7a8836b54a7a7a0d3bee51ce4d181c94ee5b22d1cb82fdd982d5b",
+    "source_case_id": "final_random10_olm_kira_kira_06",
+    "windows_outputs": {
+      "before_effects": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMKiraKira/olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_06_before_effects.exr",
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "27e55775eb4b6b038ac04f10b56e5800904efb658864ff4c1c64ed0728ae2676",
+        "valid_uncompressed_float_rgba": true
+      },
+      "effect_on": {
+        "channel_order": [
+          "A",
+          "B",
+          "G",
+          "R"
+        ],
+        "compression": 0,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMKiraKira/olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_06.exr",
+        "sample_types": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "sha256": "5dc720b60b1e453c75787f0948560fa712fb66399a2390f583ab448f17288830",
+        "valid_uncompressed_float_rgba": true
+      }
+    }
+  },
+  "comparison": {
+    "ae_exact_claim": false,
+    "png_only": "probe_only",
+    "required": "raw FLOAT32 word equality for both returned files after semantic channel mapping"
+  },
+  "fail_closed": [
+    "reject missing or changed source input",
+    "reject missing or mismatched loaded OLMKiraKira.plugin SHA-256",
+    "reject missing params_full, property identity, value, or params_sha256 mismatch",
+    "reject AE version, SOFTWARE renderer, 32bpc, frame, color, or Output Module drift",
+    "reject missing before-effects control or effect-on output",
+    "reject non-OpenEXR, compressed, HALF, non-RGBA, non-FLOAT, non-1920x1080, or unhashed outputs",
+    "reject exactness until both raw FLOAT32 comparisons pass",
+    "never infer exactness from PNG, CLI, emulation, visual similarity, or unresolved Mode3 Gaussian evidence"
+  ],
+  "kind": "olmkirakira_mode2_32bpc_mac_validation_request",
+  "mac_contract": {
+    "ae_major_minor": "26.3",
+    "bits_per_channel": 32,
+    "frame": 0,
+    "linear_blending": "record actual value; reject drift from Windows contract",
+    "output_module": {
+      "channels": [
+        "A",
+        "B",
+        "G",
+        "R"
+      ],
+      "compression": "none",
+      "container": "OpenEXR",
+      "sample_type": "FLOAT",
+      "settings_capture_required": true
+    },
+    "output_template": "OLM EXR 32 Float",
+    "outputs": [
+      "before_effects_control",
+      "effect_on"
+    ],
+    "renderer": "SOFTWARE",
+    "working_space": "record actual value; reject drift from Windows contract"
+  },
+  "plugin": {
+    "filename": "OLMKiraKira.plugin",
+    "loaded_hash_capture_required": true,
+    "sha256": "421f670fdf26cc61170028e4b65709c8232358f4a63a04f46b498b6dd4b96b0a"
+  },
+  "request_id": "olmkirakira_mode2_32bpc_mac_validation_20260715",
+  "schema_version": 1,
+  "scope": "smallest fully pinned imported Windows 32bpc candidate independent of unresolved Mode3 Gaussian",
+  "source_audit": "refs/conformance/olmkirakira_32bpc_evidence_audit_20260715.json",
+  "status": "sendable_fail_closed_no_ae_exact_claim",
+  "windows_contract": {
+    "ae_version": "26.3x87",
+    "bits_per_channel": 32,
+    "import": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMKiraKira/reference_import.json",
+    "manifest": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMKiraKira/reference_manifest.json",
+    "output": {
+      "channels": [
+        "A",
+        "B",
+        "G",
+        "R"
+      ],
+      "compression": "none",
+      "container": "OpenEXR",
+      "sample_type": "FLOAT"
+    },
+    "renderer": "SOFTWARE"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "kind": "olmblur_32bpc_mac_candidate_control_request",
+  "schema_version": 1,
+  "request_id": "olmblur_32bpc_mac_validation_20260715",
+  "status": "request_only_no_ae_exact_claim",
+  "scope": "smallest same-case Mac AE FLOAT EXR candidate/control gate",
+  "source_audit": "refs/conformance/olmblur_32bpc_float_focus_audit_20260715.json",
+  "case": {
+    "id": "olmblur__case_0001",
+    "source_case_id": "case_0001",
+    "input": {
+      "path": "refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMBlur/case_0001_before_effects.png",
+      "sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+      "hash_algorithm": "sha256"
+    },
+    "comp": {"width": 1920, "height": 1080, "pixel_aspect": 1, "duration": 0.0416666666666667, "frame_rate": 24},
+    "effect": {
+      "name": "OLM Blur",
+      "match_name": "OLM OLM Blur",
+      "params": [
+        {"name": "Blur Amount", "match_name": "OLM OLM Blur-0005", "property_index": 1, "value": 129.4},
+        {"name": "Blur Smoothness", "match_name": "OLM OLM Blur-0006", "property_index": 2, "value": 100},
+        {"name": "Number of Repeat", "match_name": "OLM OLM Blur-0003", "property_index": 3, "value": 2},
+        {"name": "Bias Direction", "match_name": "OLM OLM Blur-0004", "property_index": 4, "value": 1},
+        {"name": "Legacy", "match_name": "OLM OLM Blur-0007", "property_index": 5, "value": 0},
+        {"name": "Effect Opacity", "match_name": "ADBE Effect Mask Opacity", "property_index": 2, "value": 100},
+        {"name": "GPU Rendering", "match_name": "ADBE Force CPU GPU", "property_index": 3, "value": 1}
+      ]
+    }
+  },
+  "ae_contract": {
+    "major_minor": "26.3",
+    "bits_per_channel": 32,
+    "renderer": "SOFTWARE",
+    "working_space": "None",
+    "linear_blending": false,
+    "frame": 0,
+    "output_template": "OLM EXR 32 Float",
+    "output_module_settings_capture_api": "OutputModule.getSettings(GetSettingsFormat.STRING)",
+    "output_format": "OpenEXR",
+    "channels": ["A", "B", "G", "R"],
+    "sample_type": "FLOAT",
+    "compression": "none",
+    "outputs": ["no_effect", "effect_on"]
+  },
+  "plugin_identity": {"filename": "OLMBlur.plugin", "sha256_required": true, "loaded_hash_capture_required": true},
+  "acceptance": {
+    "cross_host_comparison": "raw_float32_words against Windows effect/control pair for this case",
+    "ae_exact_claim": false,
+    "png_only": "probe_only",
+    "fail_closed": [
+      "missing or changed input",
+      "missing or mismatched plugin path/hash",
+      "AE/project/renderer/color/output setting drift",
+      "missing control or unequal Output Module settings captures",
+      "missing/non-FLOAT/unhashed EXR",
+      "any return without an explicit ae_exact_claim=false"
+    ]
+  }
+}
