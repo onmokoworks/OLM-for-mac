@@ -15,7 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 GENERATOR = ROOT / "scripts/package_olmblur_32bpc_case0001_hash_bound_recapture_20260715.py"
 HASH = "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
-PREFIX = "olmblur_32bpc_case0001_hash_bound_recapture_20260715/"
+PREFIX = "olmblur_32bpc_case0001_hash_bound_recapture_retry_20260715/"
 
 
 def main() -> int:
@@ -46,8 +46,15 @@ def main() -> int:
             ps = archive.read(PREFIX + "run_olmblur_32bpc_case0001.ps1").decode("utf-8")
             jsx = archive.read(PREFIX + "scripts/ae_render_single_case.jsx").decode("utf-8")
             readme = archive.read(PREFIX + "README.md").decode("utf-8")
-            assert manifest["request_id"] == "olmblur_32bpc_case0001_hash_bound_recapture_20260715"
+            assert manifest["request_id"] == "olmblur_32bpc_case0001_hash_bound_recapture_retry_20260715"
             assert manifest["same_ae_process_pair_required"] is True
+            assert manifest["process_binding"] == {
+                "ready_marker_nonce": True,
+                "marker_pid": True,
+                "fresh_afterfx": True,
+                "launch_relation": True,
+                "exact_loaded_aex_path_and_hash": True,
+            }
             assert package_contract["request_id"] == manifest["request_id"]
             for record in package_contract["artifacts"].values():
                 payload = archive.read(PREFIX + record["path"])
@@ -67,10 +74,13 @@ def main() -> int:
             assert [(p["name"], p["value"]) for p in case["effects"][0]["params"]] == [("Blur Amount", 129.4), ("Blur Smoothness", 100), ("Number of Repeat", 2), ("Bias Direction", 1), ("Legacy", 0), ("Effect Opacity", 100), ("GPU Rendering", 1)]
             assert hashlib.sha256(archive.read(PREFIX + "input/case_0001_before_effects.png")).hexdigest() == "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4"
             assert "$env:OLM_AE_REQUEST_DIR = $Root" in ps and "Join-Path $Root 'request'" not in ps
-            for term in ("$Root = $PSScriptRoot", "$jsxPath = $contractFiles.renderer", "$quotedJsxPath = '\"' + $jsxPath + '\"'", "Get-FileHash", "ExpectedInputHash", "package_contract.json", "contract artifact SHA-256 mismatch", "package_contract_sha256", "contract_artifact_sha256", "same_ae_process_pair=$true", "$script:ActiveAePid", "Stop-Process -Id $script:ActiveAePid -Force", "AE was not started", "close every existing AfterFX process", "WaitForExit(600000)", "render_timeout", "OLM EXR 32 Float", "required_compression='none'", "header_validated=$false", "OLM_AE_DISABLE_EFFECT", "Resolve-RenderedExr", "Find-LoadedAex $launch.Id", "loaded_aex_gate", "loadedHash", "effect_param_readback", "parameter_readback", "$paramReadback", "effect_count_after_setup", "no_effect_count_after_removal", "no_effect_verified", "effect_identity_readback", "output_module_readback", "Premultiplied (Matted)", "project_gpu_accel_type_raw -ne 1816", "output_exr", "effect_no_effect.exr", "return_manifest.json", "status.json", "answered_candidate_pending_exr_header_validation", "evidence_archive_failure", "Compress-Archive", "ReturnZip"):
+            for term in ("$Root = $PSScriptRoot", "$jsxPath = $contractFiles.renderer", "$quotedJsxPath = '\"' + $jsxPath + '\"'", "Get-FileHash", "ExpectedInputHash", "package_contract.json", "contract artifact SHA-256 mismatch", "package_contract_sha256", "contract_artifact_sha256", "same_ae_process_pair=$true", "$script:ActiveAePids", "Stop-Process -Id $pidValue -Force", "AE was not started", "close every existing AfterFX process", "WaitForExit(600000)", "render_timeout", "OLM EXR 32 Float", "required_compression='none'", "header_validated=$false", "OLM_AE_DISABLE_EFFECT", "Resolve-RenderedExr", "loaded_aex_gate", "loadedHash", "effect_param_readback", "parameter_readback", "$paramReadback", "effect_count_after_setup", "no_effect_count_after_removal", "no_effect_verified", "effect_identity_readback", "output_module_readback", "Premultiplied (Matted)", "project_gpu_accel_type_raw -ne 1816", "output_exr", "effect_no_effect.exr", "return_manifest.json", "status.json", "answered_candidate_pending_exr_header_validation", "evidence_archive_failure", "Compress-Archive", "ReturnZip", "OLM_AE_PAUSE_BEFORE_RENDER", "OLM_AE_READY_MARKER", "OLM_AE_CONTINUE_MARKER", "OLM_AE_RUN_NONCE", "OLM_AE_READY_CASE", "Get-CimInstance Win32_Process", "Get-LaunchRelation", "Convert-CimProcessRecord", "ConvertFrom-StringData", "process_binding", "observed_afterfx", "module_probe_attempts", "Get-AexObservation", "runtime_diagnostics", "ae_ready_gate", "$AbortMarker", "$killPids"):
                 assert term in ps, term
+            assert "Set-Content -LiteralPath $ContinueMarker -Value 'abort'" not in ps
             assert ps.count("Start-Process -FilePath $AfterFX") == 1
             for term in ("OLM OLM Blur-0003", "OLM OLM Blur-0004", "OLM OLM Blur-0005", "OLM OLM Blur-0006", "OLM OLM Blur-0007", "scalarReadback", "effect_param_readback", "effect_count_after_setup", "no_effect_count_after_removal", "effect.remove()", "renderExrBranch(\"effect_on\")", "renderExrBranch(\"no_effect\")", "no_effect_verified", "effect_identity_readback", "getSettings(GetSettingsFormat.STRING)", "output_module_readback", "SOFTWARE renderer did not stick", "project_gpu_accel_type_raw"):
+                assert term in jsx, term
+            for term in ("OLM_AE_RUN_NONCE", "OLM_AE_READY_CASE", "readyPid", "fixture=ae_render_single_case.jsx", "effect_loaded=1", "parameters_applied=1"):
                 assert term in jsx, term
             assert 'summary.warnings.length ?' in jsx
             assert "One AE process, project, comp, and input" in readme

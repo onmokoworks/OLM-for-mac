@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "kind": "olmblur_32bpc_case0001_hash_bound_recapture_retry",
+  "case_id": "olmblur__case_0001",
+  "bit_depth": 32,
+  "original_attempt": {
+    "request_id": "olmblur_32bpc_case0001_hash_bound_recapture_20260715",
+    "request_zip_sha256": "f0dd409e2455ade7a853386ccaafaadb977af162b839cba88a4a3cb43e76fde4",
+    "return_zip_sha256": "de5c55c003150251726dc25b1a24035ae1a1d91cc738c4f94a5833afd09a67ac",
+    "status": "exact_bind_failure",
+    "reported_stage": "runtime",
+    "reason": "loaded_aex_gate: hash-pinned OLMBlur.aex was not observed in the launched AfterFX process before render acceptance",
+    "classification": "failed_observation_gate",
+    "accepted_as_render_evidence": false,
+    "archive_members": [
+      "return_manifest.json",
+      "status.json"
+    ]
+  },
+  "facts": [
+    "The prelaunch path and SHA-256 checks completed before the loaded-module gate was reached.",
+    "The failed return contains no EXR, AE result JSON, AE log, module list, or process diagnostics.",
+    "The original runner inspected only the PID returned by Start-Process and did not pause AE at a render-ready point.",
+    "The failure does not prove that a different AEX rendered and does not prove an algorithm mismatch."
+  ],
+  "inference": "The original loaded-module observation could be a false negative caused by launcher/worker PID separation or by missing the module-loaded time window. The failed archive is too sparse to choose between those explanations.",
+  "retry": {
+    "request_id": "olmblur_32bpc_case0001_hash_bound_recapture_retry_20260715",
+    "request_zip_sha256": "d178ff2a56eea84cb2b87261f28cd9a285d7936246a16423f45fbf3a3dcb7c53",
+    "package_contract_sha256": "06f81dadf9da07151f7197a7208d44ccc857ed778af90a32a51e337a343021df",
+    "required_aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+    "gates": [
+      "fresh AfterFX launch",
+      "nonce-bound render-ready marker",
+      "marker-provided AfterFX PID",
+      "same session and exact AfterFX executable path",
+      "fresh creation time and launcher relation",
+      "exact loaded OLMBlur.aex path and SHA-256",
+      "live effect identity and five parameter readbacks",
+      "same-process effect removal and no-effect control",
+      "actual Output Module readback",
+      "post-return EXR header validation"
+    ],
+    "status": "sent_for_windows_execution"
+  },
+  "correctness_effect": "none",
+  "ae_exact_claim": false
+}

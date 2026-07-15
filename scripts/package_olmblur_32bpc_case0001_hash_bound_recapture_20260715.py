@@ -18,9 +18,9 @@ REQUEST = ROOT / "refs/reference_requests/olmblur_32bpc_mac_windows_float_focus_
 REFERENCE_SOURCE = ROOT / "refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMBlur/reference_manifest.json"
 INPUT_SOURCE = REFERENCE_SOURCE.parent / "case_0001_before_effects.png"
 RENDERER = ROOT / "scripts/ae_render_single_case.jsx"
-PACKAGE_STEM = "olmblur_32bpc_case0001_hash_bound_recapture_20260715"
+PACKAGE_STEM = "olmblur_32bpc_case0001_hash_bound_recapture_retry_20260715"
 OUTPUT_DEFAULT = ROOT / "refs/reference_requests" / f"{PACKAGE_STEM}.zip"
-REQUEST_ID = "olmblur_32bpc_case0001_hash_bound_recapture_20260715"
+REQUEST_ID = "olmblur_32bpc_case0001_hash_bound_recapture_retry_20260715"
 CASE_ID = "olmblur__case_0001"
 CASE_FILE_ID = "case_0001"
 REQUIRED_AEX_SHA256 = "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
@@ -103,31 +103,79 @@ $ExpectedHash = '{REQUIRED_AEX_SHA256}'
 $ExpectedInputHash = 'cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4'
 $ExpectedTemplate = '{EXR_TEMPLATE}'
 $RequestId = '{REQUEST_ID}'
+$RunNonce = [guid]::NewGuid().ToString('N')
 $RunId = 'olmblur-case0001-' + [guid]::NewGuid().ToString('N')
 $RunDir = Join-Path $OutputDir $RunId
 $ReturnZip = Join-Path $OutputDir ($RequestId + '-' + $RunId + '.zip')
-$script:ActiveAePid = $null
+$script:ActiveAePids = @()
+$script:Launch = $null
 New-Item -ItemType Directory -Force -Path $RunDir | Out-Null
 $StatusPath = Join-Path $RunDir 'status.json'
 $ManifestPath = Join-Path $RunDir 'return_manifest.json'
+$ReadyMarker = Join-Path $RunDir 'ae_ready.marker'
+$ContinueMarker = Join-Path $RunDir 'ae_continue.marker'
+$AbortMarker = Join-Path $RunDir 'ae_abort.marker'
+$LaunchStdout = Join-Path $RunDir 'afterfx_launcher_stdout.txt'
+$LaunchStderr = Join-Path $RunDir 'afterfx_launcher_stderr.txt'
 function Write-Json([string]$Path, [object]$Value) {{ $Value | ConvertTo-Json -Depth 30 | Set-Content -LiteralPath $Path -Encoding UTF8 }}
-function Fail-Closed([string]$Stage, [string]$Reason, [object]$Detail=$null) {{
-  if ($null -ne $script:ActiveAePid) {{ try {{ Stop-Process -Id $script:ActiveAePid -Force -ErrorAction SilentlyContinue; Wait-Process -Id $script:ActiveAePid -Timeout 30 -ErrorAction SilentlyContinue }} catch {{}}; $script:ActiveAePid = $null }}
-  $body = [ordered]@{{ schema='olmblur-32bpc-case0001-return-v1'; request_id=$RequestId; run_id=$RunId; status='exact_bind_failure'; failure=[ordered]@{{stage=$Stage; reason=$Reason; detail=$Detail}} }}
-  Write-Json $StatusPath $body; Write-Json $ManifestPath $body
-  try {{ if (Test-Path -LiteralPath $ReturnZip) {{ Remove-Item -LiteralPath $ReturnZip -Force }}; Compress-Archive -Path (Join-Path $RunDir '*') -DestinationPath $ReturnZip -CompressionLevel Optimal }} catch {{ Write-Error "evidence_archive_failure: $($_.Exception.Message)"; exit 3 }}
-  Write-Error "$Stage`: $Reason"; exit 2
+function Read-OrNull([string]$Path) {{ if (Test-Path -LiteralPath $Path -PathType Leaf) {{ return Get-Content -LiteralPath $Path -Raw }}; return $null }}
+function Get-CimProcess([int]$Id) {{ Get-CimInstance Win32_Process -Filter ("ProcessId=" + $Id) -ErrorAction SilentlyContinue }}
+function Convert-CimProcessRecord([object]$Process) {{
+  if ($null -eq $Process) {{ return $null }}
+  return [ordered]@{{pid=[int]$Process.ProcessId;parent_pid=[int]$Process.ParentProcessId;session_id=[int]$Process.SessionId;started_utc=$Process.CreationDate.ToUniversalTime().ToString('o');path=$Process.ExecutablePath;command_line=$Process.CommandLine}}
 }}
-function Read-Json([string]$Path) {{ if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) {{ throw "missing JSON: $Path" }}; Get-Content -LiteralPath $Path -Raw | ConvertFrom-Json }}
-function Find-LoadedAex([int]$ExpectedPid, [string]$ExpectedPath) {{
-  try {{
-    $process = Get-Process -Id $ExpectedPid -ErrorAction Stop
-    if ($process.ProcessName -ine 'AfterFX') {{ return $null }}
-    $module = @($process.Modules | Where-Object {{ $_.FileName -ieq $ExpectedPath }} | Select-Object -First 1)
-    if ($module.Count -eq 1) {{ return [ordered]@{{process=$process;module=$module[0]}} }}
-  }} catch {{}}
+function Get-LaunchRelation([int]$ActualPid, [int]$LauncherPid) {{
+  if ($ActualPid -eq $LauncherPid) {{ return 'launcher-pid' }}
+  $cursor = $ActualPid
+  for ($index = 0; $index -lt 8; $index++) {{
+    $process = Get-CimProcess $cursor
+    if ($null -eq $process) {{ break }}
+    $parent = [int]$process.ParentProcessId
+    if ($parent -eq $LauncherPid) {{ return 'descendant-of-launcher' }}
+    $cursor = $parent
+  }}
   return $null
 }}
+function Get-AfterFxState {{
+  if ([string]::IsNullOrWhiteSpace($script:ExpectedAfterFxPath)) {{ return @() }}
+  @(Get-CimInstance Win32_Process -Filter "Name='AfterFX.exe'" -ErrorAction SilentlyContinue | Where-Object {{
+    $_.SessionId -eq $script:SessionId -and $_.ExecutablePath -and [IO.Path]::GetFullPath($_.ExecutablePath) -ieq $script:ExpectedAfterFxPath
+  }} | ForEach-Object {{ [ordered]@{{pid=[int]$_.ProcessId;parent_pid=[int]$_.ParentProcessId;session_id=[int]$_.SessionId;started_utc=$_.CreationDate.ToUniversalTime().ToString('o');path=$_.ExecutablePath;command_line=$_.CommandLine}} }})
+}}
+function Get-AexObservation([string]$ExpectedPath) {{
+  $rows = @()
+  foreach ($state in @(Get-AfterFxState)) {{
+    $record = [ordered]@{{pid=[int]$state.pid;parent_pid=[int]$state.parent_pid;module_enumeration='not_attempted';olmblur_modules=@();error=$null}}
+    try {{
+      $process = Get-Process -Id $state.pid -ErrorAction Stop
+      $record.module_enumeration = 'ok'
+      $record.olmblur_modules = @($process.Modules | Where-Object {{ [IO.Path]::GetFileName($_.FileName) -ieq 'OLMBlur.aex' }} | ForEach-Object {{
+        [ordered]@{{path=$_.FileName;is_expected_path=($_.FileName -ieq $ExpectedPath);base_address=('0x{{0:x}}' -f $_.BaseAddress.ToInt64())}}
+      }})
+    }} catch {{ $record.module_enumeration = 'error'; $record.error = $_.Exception.Message }}
+    $rows += $record
+  }}
+  return @($rows)
+}}
+function Get-RuntimeDiagnostics([string]$ExpectedPath) {{
+  $launchState = $null
+  if ($null -ne $script:Launch) {{
+    try {{ $script:Launch.Refresh(); $launchState = [ordered]@{{pid=[int]$script:Launch.Id;has_exited=[bool]$script:Launch.HasExited;exit_code=$(if ($script:Launch.HasExited) {{ try {{ $script:Launch.ExitCode }} catch {{ $null }} }} else {{ $null }})}} }} catch {{ $launchState = [ordered]@{{error=$_.Exception.Message}} }}
+  }}
+  return [ordered]@{{launcher=$launchState;candidate_afterfx=@(Get-AfterFxState);aex_observation=@(Get-AexObservation $ExpectedPath);ready_marker=(Read-OrNull $ReadyMarker);ae_log=(Read-OrNull (Join-Path $RunDir 'same_run.log'));ae_result=(Read-OrNull (Join-Path $RunDir 'same_run.result.json'));launcher_stdout=(Read-OrNull $LaunchStdout);launcher_stderr=(Read-OrNull $LaunchStderr)}}
+}}
+function Fail-Closed([string]$Stage, [string]$Reason, [object]$Detail=$null) {{
+  $diagnostics = Get-RuntimeDiagnostics $PluginPath
+  Set-Content -LiteralPath $AbortMarker -Value ("stage=" + $Stage + "`nreason=" + $Reason) -Encoding UTF8 -ErrorAction SilentlyContinue
+  $killPids = @($script:ActiveAePids + @(Get-AfterFxState | ForEach-Object {{ $_.pid }}) | Select-Object -Unique)
+  foreach ($pidValue in $killPids) {{ try {{ Stop-Process -Id $pidValue -Force -ErrorAction SilentlyContinue; Wait-Process -Id $pidValue -Timeout 30 -ErrorAction SilentlyContinue }} catch {{}} }}
+  $script:ActiveAePids = @()
+  $body = [ordered]@{{ schema='olmblur-32bpc-case0001-return-v1'; request_id=$RequestId; run_id=$RunId; status='exact_bind_failure'; failure=[ordered]@{{stage=$Stage; reason=$Reason; detail=$Detail;runtime_diagnostics=$diagnostics}} }}
+  Write-Json $StatusPath $body; Write-Json $ManifestPath $body
+  try {{ if (Test-Path -LiteralPath $ReturnZip) {{ Remove-Item -LiteralPath $ReturnZip -Force }}; Compress-Archive -Path (Join-Path $RunDir '*') -DestinationPath $ReturnZip -CompressionLevel Optimal }} catch {{ [Console]::Error.WriteLine("evidence_archive_failure: $($_.Exception.Message)"); exit 3 }}
+  [Console]::Error.WriteLine("$Stage`: $Reason"); exit 2
+}}
+function Read-Json([string]$Path) {{ if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) {{ throw "missing JSON: $Path" }}; Get-Content -LiteralPath $Path -Raw | ConvertFrom-Json }}
 function Resolve-RenderedExr([object]$Result, [string]$Label, [string]$ExpectedRoot) {{
   $reported = [string]$Result.output_exr
   if ([string]::IsNullOrWhiteSpace($reported)) {{ throw "$Label result JSON did not report output_exr" }}
@@ -148,6 +196,8 @@ try {{
   if ($hash -ne $ExpectedHash) {{ Fail-Closed 'preflight' 'OLMBlur.aex SHA-256 mismatch; AE was not started' $pluginRecord }}
   if (-not (Test-Path -LiteralPath $AfterFX -PathType Leaf)) {{ Fail-Closed 'preflight' 'AfterFX.exe is missing; AE was not started' $AfterFX }}
   $AfterFX = (Get-Item -LiteralPath $AfterFX).FullName
+  $script:ExpectedAfterFxPath = $AfterFX
+  $script:SessionId = (Get-Process -Id $PID -ErrorAction Stop).SessionId
   $inputPath = Join-Path $Root 'input\case_0001_before_effects.png'
   if (-not (Test-Path -LiteralPath $inputPath -PathType Leaf)) {{ Fail-Closed 'preflight' 'packaged input is missing' $inputPath }}
   $inputHash = (Get-FileHash -LiteralPath $inputPath -Algorithm SHA256).Hash.ToLowerInvariant()
@@ -179,19 +229,57 @@ try {{
   $env:OLM_AE_REQUEST_DIR = $Root; $env:OLM_AE_CASE_ID = '{CASE_ID}'; $env:OLM_AE_OUTPUT_DIR = $out
   $env:OLM_AE_LOG_PATH = $logPath; $env:OLM_AE_RESULT_JSON = $resultPath; $env:OLM_AE_OUTPUT_MODE = 'exr_render_queue'; $env:OLM_AE_OUTPUT_TEMPLATE = $ExpectedTemplate
   $env:OLM_AE_FORCE_SOFTWARE = '1'; $env:OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT = '1'; $env:OLM_AE_FORCE_NEW_PROJECT = '1'; $env:OLM_AE_DISABLE_EFFECT = '0'; $env:OLM_AE_KEEP_OPEN = '0'
+  $env:OLM_AE_PAUSE_BEFORE_RENDER = '1'; $env:OLM_AE_READY_MARKER = $ReadyMarker; $env:OLM_AE_CONTINUE_MARKER = $ContinueMarker; $env:OLM_AE_PAUSE_TIMEOUT_SECONDS = '300'; $env:OLM_AE_RUN_NONCE = $RunNonce; $env:OLM_AE_READY_CASE = '{CASE_ID}'
   $jsxPath = $contractFiles.renderer; $quotedJsxPath = '"' + $jsxPath + '"'
-  $launch = Start-Process -FilePath $AfterFX -ArgumentList @('-r', $quotedJsxPath) -PassThru -WindowStyle Normal
-  $script:ActiveAePid = $launch.Id
-  $loaded = $null; $deadline = (Get-Date).AddSeconds(120)
-  while ((Get-Date) -lt $deadline -and $null -eq $loaded) {{ $loaded = Find-LoadedAex $launch.Id $plugin.FullName; if ($null -eq $loaded) {{ Start-Sleep -Milliseconds 250 }} }}
-  if ($null -eq $loaded) {{ Fail-Closed 'loaded_aex_gate' 'hash-pinned OLMBlur.aex was not observed in the launched AfterFX process before render acceptance' $pluginRecord }}
+  $launchStarted = Get-Date
+  $launch = Start-Process -FilePath $AfterFX -ArgumentList @('-r', $quotedJsxPath) -RedirectStandardOutput $LaunchStdout -RedirectStandardError $LaunchStderr -PassThru -WindowStyle Normal
+  $script:Launch = $launch
+  $script:ActiveAePids = @($launch.Id)
+  $launchCim = $null; $launchDeadline = (Get-Date).AddSeconds(10)
+  while ((Get-Date) -lt $launchDeadline -and $null -eq $launchCim) {{ $launchCim = Get-CimProcess $launch.Id; if ($null -eq $launchCim) {{ Start-Sleep -Milliseconds 100 }} }}
+  if ($null -ne $launchCim) {{
+    $launchRecord = Convert-CimProcessRecord $launchCim
+  }} else {{
+    $launchSession = $null; $launchStartUtc = $null
+    try {{ $launchSession = [int]$launch.SessionId }} catch {{}}
+    try {{ $launchStartUtc = $launch.StartTime.ToUniversalTime().ToString('o') }} catch {{}}
+    $launchRecord = [ordered]@{{pid=[int]$launch.Id;parent_pid=$null;session_id=$launchSession;started_utc=$launchStartUtc;path=$AfterFX;command_line=$null}}
+  }}
+  $deadline = (Get-Date).AddSeconds(180)
+  while ((Get-Date) -lt $deadline -and -not (Test-Path -LiteralPath $ReadyMarker -PathType Leaf)) {{
+    $script:ActiveAePids = @($script:ActiveAePids + @(Get-AfterFxState | ForEach-Object {{ $_.pid }}) | Select-Object -Unique)
+    Start-Sleep -Milliseconds 250
+  }}
+  if (-not (Test-Path -LiteralPath $ReadyMarker -PathType Leaf)) {{ Fail-Closed 'ae_ready_gate' 'AE did not reach the effect-loaded, parameters-applied pause before render' (Get-RuntimeDiagnostics $plugin.FullName) }}
+  $readyText = Get-Content -LiteralPath $ReadyMarker -Raw
+  try {{ $readyData = ConvertFrom-StringData $readyText }} catch {{ Fail-Closed 'ae_ready_gate' 'AE ready marker is not key/value data' $readyText }}
+  if ($readyData.nonce -ne $RunNonce -or $readyData.case -ne '{CASE_ID}' -or $readyData.fixture -ne 'ae_render_single_case.jsx' -or $readyData.pid -notmatch '^\d+$' -or $readyData.effect_loaded -ne '1' -or $readyData.parameters_applied -ne '1') {{ Fail-Closed 'ae_ready_gate' 'AE ready marker identity mismatch' ([ordered]@{{expected_nonce=$RunNonce;expected_case='{CASE_ID}';actual=$readyText}}) }}
+  $actualAePid = [int]$readyData.pid
+  $actualCim = Get-CimProcess $actualAePid
+  if ($null -eq $actualCim -or $actualCim.Name -ine 'AfterFX.exe' -or [IO.Path]::GetFullPath($actualCim.ExecutablePath) -ine $AfterFX -or [int]$actualCim.SessionId -ne $script:SessionId -or $actualCim.CreationDate -lt $launchStarted.AddSeconds(-2)) {{ Fail-Closed 'process_binding' 'ready marker PID is not the fresh in-session AfterFX executable launched for this request' ([ordered]@{{ready=$readyText;candidate=$actualCim;launch_pid=[int]$launch.Id;launch_started=$launchStarted.ToUniversalTime().ToString('o')}}) }}
+  $relation = Get-LaunchRelation $actualAePid $launch.Id
+  if ([string]::IsNullOrWhiteSpace($relation)) {{ Fail-Closed 'process_binding' 'ready marker AfterFX PID is unrelated to this launch' ([ordered]@{{actual_ae_pid=$actualAePid;launch_pid=[int]$launch.Id;candidate=$actualCim}}) }}
+  $script:ActiveAePids = @($script:ActiveAePids + $actualAePid | Select-Object -Unique)
+  $processBinding = [ordered]@{{nonce=$RunNonce;ready_marker_raw=$readyText;caller_session_id=[int]$script:SessionId;launch_started_utc=$launchStarted.ToUniversalTime().ToString('o');launcher=$launchRecord;actual_afterfx=(Convert-CimProcessRecord $actualCim);relation=$relation;observed_afterfx=@(Get-AfterFxState)}}
+  $loaded = $null; $moduleAttempts = @(); $deadline = (Get-Date).AddSeconds(30)
+  while ((Get-Date) -lt $deadline -and $null -eq $loaded) {{
+    $attempt = [ordered]@{{ts_utc=(Get-Date).ToUniversalTime().ToString('o');target_pid=$actualAePid;get_process_ok=$false;modules_ok=$false;match_count=0;error_type=$null;error_message=$null}}
+    try {{
+      $boundProcess = Get-Process -Id $actualAePid -ErrorAction Stop; $attempt.get_process_ok = $true
+      $matches = @($boundProcess.Modules | Where-Object {{ $_.FileName -ieq $plugin.FullName }}); $attempt.modules_ok = $true; $attempt.match_count = $matches.Count
+      if ($matches.Count -eq 1) {{ $loaded = [pscustomobject]@{{process=$boundProcess;module=$matches[0]}} }}
+    }} catch {{ $attempt.error_type = $_.Exception.GetType().FullName; $attempt.error_message = $_.Exception.Message }}
+    $moduleAttempts += $attempt
+    if ($null -eq $loaded) {{ Start-Sleep -Milliseconds 250 }}
+  }}
+  if ($null -eq $loaded) {{ Fail-Closed 'loaded_aex_gate' 'exact hash-pinned OLMBlur.aex was not observable in the pause-bound AfterFX PID' ([ordered]@{{expected_plugin=$pluginRecord;binding=[ordered]@{{nonce=$RunNonce;actual_ae_pid=$actualAePid;launch_pid=[int]$launch.Id;relation=$relation}};module_probe_attempts=$moduleAttempts;observation=@(Get-AexObservation $plugin.FullName)}}) }}
   $loadedHash = (Get-FileHash -LiteralPath $loaded.module.FileName -Algorithm SHA256).Hash.ToLowerInvariant()
   if ($loadedHash -ne $ExpectedHash) {{ Fail-Closed 'loaded_aex_gate' 'loaded OLMBlur.aex SHA-256 mismatch' ([ordered]@{{expected_sha256=$ExpectedHash;actual_sha256=$loadedHash;path=$loaded.module.FileName;ae_pid=$loaded.process.Id}}) }}
   $loadedFile = Get-Item -LiteralPath $loaded.module.FileName
-  $loadedRecord = [ordered]@{{path=$loaded.module.FileName;size_bytes=[int64]$loadedFile.Length;last_write_time_utc=$loadedFile.LastWriteTimeUtc.ToString('o');sha256=$loadedHash;ae_pid=[int]$loaded.process.Id}}
-  if (-not $launch.WaitForExit(600000)) {{ try {{ $launch.Kill() }} catch {{}}; Fail-Closed 'render_timeout' 'same-run pair exceeded 600 seconds' $pluginRecord }}
-  $script:ActiveAePid = $null
-  if ($launch.ExitCode -ne 0) {{ Fail-Closed 'render' "same-run AfterFX exit $($launch.ExitCode)" $pluginRecord }}
+  $loadedRecord = [ordered]@{{path=$loaded.module.FileName;size_bytes=[int64]$loadedFile.Length;last_write_time_utc=$loadedFile.LastWriteTimeUtc.ToString('o');sha256=$loadedHash;ae_pid=[int]$loaded.process.Id;launch_pid=[int]$launch.Id;relation=$relation;run_nonce=$RunNonce;module_base=('0x{{0:x}}' -f $loaded.module.BaseAddress.ToInt64());ready_marker=$readyText.Trim();process_binding=$processBinding;module_probe_attempts=$moduleAttempts}}
+  Set-Content -LiteralPath $ContinueMarker -Value 'continue' -Encoding ASCII
+  if (-not $loaded.process.WaitForExit(600000)) {{ Fail-Closed 'render_timeout' 'same-run pair exceeded 600 seconds after the pause gate' $loadedRecord }}
+  $script:ActiveAePids = @()
   $result = Read-Json $resultPath
   if ([string]$result.status -ne 'ok' -or [string]$result.ae_version -ne '26.3x87' -or [int]$result.project_bits_per_channel -ne 32 -or [int]$result.project_gpu_accel_type_raw -ne 1816 -or [string]$result.project_working_space -ne '' -or [bool]$result.project_linear_blending) {{ Fail-Closed 'render' 'same-run AE result failed project contract' ($result | ConvertTo-Json -Compress) }}
   if (@($result.warnings).Count -ne 0) {{ Fail-Closed 'render' 'same-run result returned warnings' ($result | ConvertTo-Json -Compress) }}
@@ -302,6 +390,27 @@ def adapted_renderer() -> str:
     if anchor not in source:
         raise SystemExit("shared JSX anchor for live readback was not found")
     source = source.replace(anchor, readback + anchor, 1)
+    ready_anchor = '''            writeText(
+                readyMarkerPath,
+                "ready case_id=" + caseId + " pid_host=AfterFX effect_loaded=1 parameters_applied=1\\n"
+            );'''
+    ready_replacement = '''            var readyNonce = getenv("OLM_AE_RUN_NONCE");
+            var readyCase = getenv("OLM_AE_READY_CASE");
+            if (!readyNonce || readyCase !== caseId) {
+                throw new Error("pause marker identity is missing or mismatched");
+            }
+            var pidCommand = "powershell.exe -NoProfile -NonInteractive -Command \\\"$id=$PID; for($i=0;$i -lt 8;$i++){$p=Get-CimInstance Win32_Process -Filter ('ProcessId='+$id);if(-not $p){break};if($p.Name -ieq 'AfterFX.exe'){[Console]::Write($p.ProcessId);break};$id=$p.ParentProcessId}\\\"";
+            var readyPid = system.callSystem(pidCommand).replace(/[^0-9]/g, "");
+            if (!readyPid) {
+                throw new Error("could not bind pause marker to AfterFX PID");
+            }
+            writeText(
+                readyMarkerPath,
+                "nonce=" + readyNonce + "\\ncase=" + readyCase + "\\npid=" + readyPid + "\\nfixture=ae_render_single_case.jsx\\nae_version=" + app.version + "\\neffect_loaded=1\\nparameters_applied=1\\n"
+            );'''
+    if ready_anchor not in source:
+        raise SystemExit("shared JSX anchor for pause marker identity was not found")
+    source = source.replace(ready_anchor, ready_replacement, 1)
     exr_block = '''        if (outputMode === "exr_render_queue") {
             if (!outputTemplate) {
                 throw new Error("OLM_AE_OUTPUT_TEMPLATE is required for exr_render_queue");
@@ -407,7 +516,7 @@ README = f"""# OLMBlur case_0001 Windows 32bpc FLOAT EXR recapture
 
 This is a single-case, Windows-only Adobe After Effects 26.3 package for request ID `{REQUEST_ID}`. It embeds only the case_0001 input and exact request parameters from the focused 32bpc request. The runner requires OLMBlur.aex SHA-256 `{REQUIRED_AEX_SHA256}` and checks that hash before starting AE.
 
-The entrypoint uses `GpuAccelType.SOFTWARE`, 32bpc, an empty working space, linear blending off, and the exact Output Module template `{EXR_TEMPLATE}`. One AE process, project, comp, and input render the effect-on branch first; the runner then removes the effect, proves the Effect Parade is empty, and renders the no-effect branch in that same process. The actual EXR source filenames are taken from the AE result JSON; the runner never assumes a sequence filename.
+The entrypoint uses `GpuAccelType.SOFTWARE`, 32bpc, an empty working space, linear blending off, and the exact Output Module template `{EXR_TEMPLATE}`. A nonce-bound JSX marker pauses after the effect and parameters are live but before rendering. The runner binds that marker PID to the fresh AfterFX launch, checks the exact loaded AEX path and hash, then resumes. One AE process, project, comp, and input render the effect-on branch first; the runner then removes the effect, proves the Effect Parade is empty, and renders the no-effect branch in that same process. The actual EXR source filenames are taken from the AE result JSON; the runner never assumes a sequence filename.
 
 Run `run_olmblur_32bpc_case0001.ps1`. The returned `return/return_manifest.json` records the request ID, one launched AE PID, loaded plugin path/size/mtime/hash, contract-artifact hashes, AE/project state, actual effect parameter and Output Module readbacks, archive paths, sizes, and hashes. The copied input/manifests/JSX allow intake to verify the executed contract. `return/status.json` is written for both success and every failure; errors are `exact_bind_failure` and no partial render is claimed. EXR FLOAT/uncompressed header acceptance remains a mandatory Mac-side intake gate. All paths inside this ZIP are package-relative or Windows runtime paths; no personal Mac absolute path is embedded.
 """
@@ -426,7 +535,7 @@ def build(output: Path) -> Path:
         (stage / "scripts/ae_render_single_case.jsx").write_text(adapted_renderer(), encoding="utf-8")
         (stage / "request_manifest.json").write_text(json.dumps(request_manifest, indent=2) + "\n", encoding="utf-8")
         (stage / "reference_manifest.json").write_text(json.dumps(reference, indent=2) + "\n", encoding="utf-8")
-        manifest = {"schema": 1, "kind": "olmblur_windows_case0001_float_exr_recapture", "request_id": REQUEST_ID, "platform": "windows", "entrypoint": "run_olmblur_32bpc_case0001.ps1", "same_ae_process_pair_required": True, "plugin": {"name": "OLMBlur.aex", "required_sha256": REQUIRED_AEX_SHA256, "record": ["path", "size_bytes", "last_write_time_utc", "sha256"]}, "project": {"bits_per_channel": 32, "gpu_accel_type": {"current_name": "SOFTWARE", "raw": "GpuAccelType.SOFTWARE"}, "working_space": "", "linear_blending": False}, "output_template": EXR_TEMPLATE, "cases": [CASE_ID], "effect_outputs": ["return/effect_on.exr", "return/effect_no_effect.exr"], "fail_closed_status": "return/status.json", "windows_return": "<OutputDir>/request-run.zip"}
+        manifest = {"schema": 2, "kind": "olmblur_windows_case0001_float_exr_recapture", "request_id": REQUEST_ID, "platform": "windows", "entrypoint": "run_olmblur_32bpc_case0001.ps1", "same_ae_process_pair_required": True, "process_binding": {"ready_marker_nonce": True, "marker_pid": True, "fresh_afterfx": True, "launch_relation": True, "exact_loaded_aex_path_and_hash": True}, "plugin": {"name": "OLMBlur.aex", "required_sha256": REQUIRED_AEX_SHA256, "record": ["path", "size_bytes", "last_write_time_utc", "sha256"]}, "project": {"bits_per_channel": 32, "gpu_accel_type": {"current_name": "SOFTWARE", "raw": "GpuAccelType.SOFTWARE"}, "working_space": "", "linear_blending": False}, "output_template": EXR_TEMPLATE, "cases": [CASE_ID], "effect_outputs": ["return/effect_on.exr", "return/effect_no_effect.exr"], "fail_closed_status": "return/status.json", "windows_return": "<OutputDir>/request-run.zip"}
         (stage / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
         (stage / "run_olmblur_32bpc_case0001.ps1").write_text(powershell(), encoding="utf-8")
         (stage / "README.md").write_text(README, encoding="utf-8")
