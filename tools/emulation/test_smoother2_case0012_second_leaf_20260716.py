@@ -44,8 +44,10 @@ def main() -> int:
     assert data["aex"]["trace"]["second_leaf"]["count_after"] == 2
     assert data["aex"]["trace"]["second_leaf"]["append"] is True
     assert data["aex"]["trace"]["second_leaf"]["returned_vertex"]["source_xy"] == [92, 843]
+    assert data["aex"]["trace"]["dispatcher"] == {"name": "fef0", "key": 0x14, "count_after": 2}
+    assert data["portable"]["dispatcher"] == {"name": "fef0", "key": 0x14, "count_after": 2}
     print("PASS: case0012 second-leaf diagnostic binding and count contract")
-    print("accepted Windows evidence ends at first count=1; local AEX/portable second leaf count=2")
+    print("accepted descriptor selects fef0 key 0x14; AEX/portable dispatcher count=2")
     return 0
 
 

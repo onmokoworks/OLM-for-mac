@@ -16,14 +16,18 @@ AE exact: **false**
   - polygon count `1 -> 2`
 - The portable and actual-AEX second-leaf predicate, append decision, and
   count are equal.
+- Calling the checked-in AEX `FUN_18000fef0` dispatcher with the accepted
+  descriptor selects key `0x14` and grows the polygon from `0 -> 2`. The
+  portable dispatcher produces the same count.
 
 ## Boundary
 
-The accepted Windows witness ends after the first append at count `1`. It
-does not observe `df30`, `f130`, or `e290`, so this result does not prove that
-Windows skips the second leaf. It proves that the local leaf implementation
-matches the checked-in AEX for the supplied state and moves the unresolved
-boundary to second-leaf dispatch/input ownership before `cce0`.
+The accepted live Windows witness ends after the first append at count `1`.
+It does not observe the return values of `df30`, `f130`, or `e290`. However,
+the accepted descriptor and checked-in current AEX together prove dispatch:
+key `0x14` calls `f270` and then calls `f130` unconditionally. The remaining
+boundary is the live class-plane input/return and polygon state after that
+second leaf, before `cce0`; it is not a dispatch uncertainty.
 
 ## Verification
 
@@ -35,7 +39,7 @@ Expected result:
 
 ```text
 PASS: case0012 second-leaf diagnostic binding and count contract
-accepted Windows evidence ends at first count=1; local AEX/portable second leaf count=2
+accepted descriptor selects fef0 key 0x14; AEX/portable dispatcher count=2
 ```
 
 Machine-readable evidence:
@@ -43,6 +47,5 @@ Machine-readable evidence:
 
 ## Claims Not Made
 
-- No Windows `df30/f130/e290` internal behavior.
-- No claim that Windows skips the second leaf.
+- No live Windows `df30/f130/e290` return values or post-leaf polygon capture.
 - No AE-host or AE-exact result.

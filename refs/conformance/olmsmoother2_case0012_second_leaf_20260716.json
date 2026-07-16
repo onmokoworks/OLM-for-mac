@@ -3,6 +3,11 @@
     "path": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
     "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
     "trace": {
+      "dispatcher": {
+        "count_after": 2,
+        "key": 20,
+        "name": "fef0"
+      },
       "engine": "checked_in_aex_unicorn_mac_local",
       "entry": {
         "first_predicate_e170": 7,
@@ -52,16 +57,18 @@
     ]
   },
   "claims_not_made": [
-    "No Windows f130/df30/e290 internals",
-    "No claim that Windows skips the second leaf",
+    "No live Windows f130/df30/e290 return values",
+    "No live Windows post-second-leaf polygon capture",
     "No AE-host execution",
-    "No production-source or ledger change"
+    "No production-source change"
   ],
   "comparison": {
     "aex_portable_count_after_equal": true,
+    "aex_portable_dispatch_count_equal": true,
     "aex_portable_second_append_equal": true,
     "aex_portable_second_predicate_equal": true,
     "descriptor_equal": true,
+    "dispatcher_selects_two_leaf_case": true,
     "first_predicate_matches_binding": true,
     "local_count_exceeds_accepted_first_count": true
   },
@@ -74,6 +81,11 @@
       842,
       2
     ],
+    "dispatcher": {
+      "count_after": 2,
+      "key": 20,
+      "name": "fef0"
+    },
     "entry": {
       "first_predicate_e170": 7,
       "second_predicate_df30": 0
@@ -99,6 +111,6 @@
     },
     "vertices_total": 2
   },
-  "scope": "Mac-local checked-in AEX and portable adapter; accepted Windows evidence ends at first count=1",
+  "scope": "Accepted current-case descriptor plus checked-in AEX and portable dispatcher; live Windows evidence ends at first count=1",
   "verdict": "PASS_MAC_CASE0012_SECOND_LEAF_BOUNDARY"
 }

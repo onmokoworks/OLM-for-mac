@@ -49,6 +49,9 @@ int main() {
   const int second_predicate = win_df30(poly, desc);
   const bool second_append = win_leaf_f130(poly, desc, K_ONE);
   const int count_after_second = poly.count;
+  SmootherPolygon dispatch_poly = poly;
+  dispatch_poly.count = 0;
+  win_disp_fef0(dispatch_poly, desc);
 
   std::printf("{\"descriptor\":[%d,%d,%d,%d,%d,%d],\"entry\":{\"first_predicate_e170\":%d,\"second_predicate_df30\":%d},"
               "\"first_leaf\":{\"name\":\"f270->e3a0\",\"append\":%s,\"count_before\":%d,\"count_after\":%d},"
@@ -58,6 +61,7 @@ int main() {
               second_append ? "true" : "false", count_after_first, count_after_second);
   if (second_append && count_after_second > count_after_first) emit_vertex(poly, count_after_first);
   else std::printf("null");
-  std::printf("},\"vertices_total\":%d}\n", poly.count);
+  std::printf("},\"dispatcher\":{\"name\":\"fef0\",\"key\":%d,\"count_after\":%d},\"vertices_total\":%d}\n",
+              desc[2] - 1 + desc[5] * 10, dispatch_poly.count, poly.count);
   return 0;
 }
