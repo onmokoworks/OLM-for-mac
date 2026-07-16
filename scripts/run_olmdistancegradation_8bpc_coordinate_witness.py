@@ -28,6 +28,11 @@ CASES = {
 FIELD_HEADER = re.compile(r"\bw=(\d+) h=(\d+) pixel_size=(\d+)\b")
 FIELD_POINT = re.compile(r"\bpoint x=(-?\d+) y=(-?\d+)\b")
 SHADE_POINT = re.compile(r"\bshade x=(-?\d+) y=(-?\d+) pixel_size=(\d+)\b")
+SHADE_STORE = re.compile(
+    r"\bshade x=(-?\d+) y=(-?\d+) pixel_size=(\d+).*?"
+    r"store_a=(\d+) store_r=(\d+) store_g=(\d+) store_b=(\d+) "
+    r"dst_a=(\d+) dst_r=(\d+) dst_g=(\d+) dst_b=(\d+)"
+)
 
 
 def sha256(path: Path) -> str:
@@ -102,11 +107,19 @@ def check_case(output_root: Path, case: str) -> dict:
     if not headers or any(int(pixel_size) != 4 for _, _, pixel_size in headers):
         raise ValueError(f"{case}: field dump has no PF8 header")
     field_hits = [tuple(map(int, hit)) for hit in FIELD_POINT.findall(field_text) if tuple(map(int, hit)) == expected]
-    shade_hits = [tuple(map(int, hit[:2])) for hit in SHADE_POINT.findall(p["shade"].read_text(encoding="utf-8", errors="replace")) if int(hit[2]) == 4 and tuple(map(int, hit[:2])) == expected]
+    shade_text = p["shade"].read_text(encoding="utf-8", errors="replace")
+    shade_hits = [tuple(map(int, hit[:2])) for hit in SHADE_POINT.findall(shade_text) if int(hit[2]) == 4 and tuple(map(int, hit[:2])) == expected]
     if len(field_hits) != 1:
         raise ValueError(f"{case}: expected one PF8 field witness at {expected}, found {len(field_hits)}")
     if len(shade_hits) != 1:
         raise ValueError(f"{case}: expected one PF8 shade witness at {expected}, found {len(shade_hits)}")
+    store_rows = [tuple(map(int, hit)) for hit in SHADE_STORE.findall(shade_text) if int(hit[2]) == 4 and tuple(map(int, hit[:2])) == expected]
+    if len(store_rows) != 1:
+        raise ValueError(f"{case}: expected one PF8 store/readback witness at {expected}, found {len(store_rows)}")
+    stores = store_rows[0][3:7]
+    readback = store_rows[0][7:11]
+    if stores != readback:
+        raise ValueError(f"{case}: PF8 store/readback mismatch: store={stores}, dst={readback}")
     png = Path(result.get("output_png", ""))
     return {
         "case_id": case,
@@ -115,6 +128,7 @@ def check_case(output_root: Path, case: str) -> dict:
         "project_bits_per_channel": result.get("project_bits_per_channel"),
         "field_pf8_hits": len(field_hits),
         "shade_pf8_hits": len(shade_hits),
+        "store_matches_dst_readback": True,
         "output_png": str(png),
         "output_png_sha256": sha256(png) if png.is_file() else None,
     }

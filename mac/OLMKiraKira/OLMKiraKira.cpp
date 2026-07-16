@@ -551,6 +551,7 @@ static void ReadRenderInfo(PF_InData *in_data, PF_ParamDef *params[], OLMKiraKir
 	info->glow_opacity = params[OLMKIRAKIRA_GLOW_OPACITY]->u.sd.value / 100.0;
 	info->channel = params[OLMKIRAKIRA_CHANNEL]->u.pd.value;
 	info->blur_mode = params[OLMKIRAKIRA_BLUR_MODE]->u.pd.value;
+	info->merge_mode = params[OLMKIRAKIRA_MERGE_MODE]->u.pd.value;
 	info->strength_multiplier = params[OLMKIRAKIRA_STRENGTH_MULTIPLIER]->u.sd.value / 100.0;
 	info->source_opacity = params[OLMKIRAKIRA_SOURCE_OPACITY]->u.sd.value / 100.0;
 	CopyColorParam(in_data, params[OLMKIRAKIRA_VERTICAL_COLOR], &info->vertical_color);
@@ -585,6 +586,7 @@ static PF_Err CheckoutSmartInfo(PF_InData *in_data, OLMKiraKiraInfo *info)
 	ERR(checkout(OLMKIRAKIRA_GLOW_OPACITY, &p)); info->glow_opacity = p.u.sd.value / 100.0; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_CHANNEL, &p)); info->channel = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_BLUR_MODE, &p)); info->blur_mode = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMKIRAKIRA_MERGE_MODE, &p)); info->merge_mode = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_STRENGTH_MULTIPLIER, &p)); info->strength_multiplier = p.u.sd.value / 100.0; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_SOURCE_OPACITY, &p)); info->source_opacity = p.u.sd.value / 100.0; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_VERTICAL_COLOR, &p)); CopyColorParam(in_data, &p, &info->vertical_color); PF_CHECKIN_PARAM(in_data, &p);

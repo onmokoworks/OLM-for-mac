@@ -348,16 +348,17 @@ static void debug_dump_shade_point(
 	const char *path, const DGParams &p, long x, long y, size_t pixel_size,
 	float sa, float sr, float sg, float sb, float field_x, float d_alpha,
 	float oa, float orv, float og, float ob,
-	unsigned long stored_a, unsigned long stored_r, unsigned long stored_g, unsigned long stored_b)
+	unsigned long stored_a, unsigned long stored_r, unsigned long stored_g, unsigned long stored_b,
+	unsigned long dst_a, unsigned long dst_r, unsigned long dst_g, unsigned long dst_b)
 {
 	if (!path || !path[0]) return;
 	FILE *f = fopen(path, "a");
 	if (!f) return;
 	fprintf(f,
-	        "shade x=%ld y=%ld pixel_size=%zu use_bg=%d render_mode=%ld src_a=%.9g src_r=%.9g src_g=%.9g src_b=%.9g field_x=%.9g d_alpha=%.9g out_a=%.9g out_r=%.9g out_g=%.9g out_b=%.9g store_a=%lu store_r=%lu store_g=%lu store_b=%lu\n",
+	        "shade x=%ld y=%ld pixel_size=%zu use_bg=%d render_mode=%ld src_a=%.9g src_r=%.9g src_g=%.9g src_b=%.9g field_x=%.9g d_alpha=%.9g out_a=%.9g out_r=%.9g out_g=%.9g out_b=%.9g store_a=%lu store_r=%lu store_g=%lu store_b=%lu dst_a=%lu dst_r=%lu dst_g=%lu dst_b=%lu\n",
 	        x, y, pixel_size, p.use_bg ? 1 : 0, (long)p.render_mode,
 	        sa, sr, sg, sb, field_x, d_alpha, oa, orv, og, ob,
-	        stored_a, stored_r, stored_g, stored_b);
+	        stored_a, stored_r, stored_g, stored_b, dst_a, dst_r, dst_g, dst_b);
 	fclose(f);
 }
 
@@ -728,7 +729,8 @@ template<> void shade_scanline<PF_Pixel8>(
 		if (debug_point_selected(points, i, y)) {
 			debug_dump_shade_point(shade_debug_path, p, i, y, sizeof(PF_Pixel8),
 			                       sa, sr, sg, sb, x_row[i], a_row[i], oa, orv, og, ob,
-			                       da, dr, dg, db);
+			                       da, dr, dg, db,
+			                       dst[i].alpha, dst[i].red, dst[i].green, dst[i].blue);
 		}
 	}
 }
@@ -804,7 +806,8 @@ template<> void shade_scanline<PF_Pixel16>(
 		if (debug_point_selected(points, i, y)) {
 			debug_dump_shade_point(shade_debug_path, p, i, y, sizeof(PF_Pixel16),
 			                       sa, sr, sg, sb, x_row[i], a_row[i], oa, orv, og, ob,
-			                       da, dr, dg, db);
+			                       da, dr, dg, db,
+			                       dst[i].alpha, dst[i].red, dst[i].green, dst[i].blue);
 		}
 	}
 }
@@ -828,7 +831,7 @@ template<> void shade_scanline<PF_PixelFloat>(
 		if (debug_point_selected(points, i, y)) {
 			debug_dump_shade_point(shade_debug_path, p, i, y, sizeof(PF_PixelFloat),
 			                       sa, sr, sg, sb, x_row[i], a_row[i], oa, orv, og, ob,
-			                       0, 0, 0, 0);
+			                       0, 0, 0, 0, 0, 0, 0, 0);
 		}
 	}
 }

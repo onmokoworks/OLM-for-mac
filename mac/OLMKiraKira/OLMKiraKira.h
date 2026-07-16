@@ -106,6 +106,7 @@ typedef struct {
 	PF_FpLong glow_opacity;
 	A_long channel;
 	A_long blur_mode;
+	A_long merge_mode;
 	PF_FpLong strength_multiplier;
 	PF_FpLong source_opacity;
 	PF_PixelFloat vertical_color;

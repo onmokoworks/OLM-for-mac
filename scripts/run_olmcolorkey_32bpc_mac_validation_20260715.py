@@ -12,7 +12,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-from package_olmcolorkey_32bpc_mac_validation_20260715 import REQUEST_INDEX, STEM, build
+from package_olmcolorkey_32bpc_mac_validation_20260715 import REQUEST_INDEX, STEM, build, resolve_plugin_binary
 
 
 def digest(path: Path) -> str:
@@ -57,8 +57,10 @@ def main() -> int:
     parser.add_argument("--timeout", type=int, default=7200)
     parser.add_argument("--dump-js", type=Path, default=None)
     args = parser.parse_args()
-    if args.plugin_path.name != "OLMColorKey.plugin" or not args.plugin_path.exists():
-        print("[FAIL_CLOSED] --plugin-path must name an existing OLMColorKey.plugin", file=sys.stderr); return 2
+    try:
+        plugin_bundle, plugin_binary = resolve_plugin_binary(args.plugin_path)
+    except (FileNotFoundError, ValueError) as exc:
+        print(f"[FAIL_CLOSED] {exc}", file=sys.stderr); return 2
     support = args.support_dir or Path(tempfile.mkdtemp(prefix=STEM + "_"))
     output_dir = (args.output_dir or (support / "return")).resolve(); output_dir.mkdir(parents=True, exist_ok=True)
     result_json = (args.result_json or (output_dir / "mac_validation_return.json")).resolve()
@@ -73,7 +75,7 @@ def main() -> int:
     cases = request["cases"]
     jsx = support / "run_mac_olmcolorkey_32bpc_validation.jsx"
     wrapper = support / "run_mac_wrapper.jsx"
-    expected_plugin_hash = digest(args.plugin_path)
+    expected_plugin_hash = digest(plugin_binary)
     env = {"OLM_AE_MAC_INPUT_DIR": str((support / "input").resolve()), "OLM_AE_MAC_OUTPUT_DIR": str(output_dir), "OLM_AE_MAC_RESULT_JSON": str(result_json), "OLM_AE_MAC_PLUGIN_PATH": str(args.plugin_path.resolve()), "OLM_AE_MAC_PLUGIN_SHA256": expected_plugin_hash}
     lines = [f"$.setenv({json.dumps(k)}, {json.dumps(v)});" for k, v in env.items()]
     lines.append(f"$.evalFile(new File({json.dumps(str(jsx.resolve()))}));")
@@ -87,8 +89,8 @@ def main() -> int:
     try: result = verify(result_json, cases, output_dir)
     except (ValueError, json.JSONDecodeError) as exc:
         print(f"[FAIL_CLOSED] {exc}", file=sys.stderr); return 1
-    expected_plugin_hash = digest(args.plugin_path)
-    if result.get("plugin", {}).get("sha256") != expected_plugin_hash or result.get("plugin", {}).get("expected_sha256") != expected_plugin_hash:
+    expected_plugin_hash = digest(plugin_binary)
+    if result.get("plugin", {}).get("bundle_path") != str(plugin_bundle) or result.get("plugin", {}).get("path") != str(plugin_binary) or result.get("plugin", {}).get("sha256") != expected_plugin_hash or result.get("plugin", {}).get("expected_sha256") != expected_plugin_hash:
         print("[FAIL_CLOSED] returned plugin hash does not match --plugin-path", file=sys.stderr); return 1
     report = {"kind": "olmcolorkey_32bpc_mac_validation_report", "status": "candidate_return_verified", "ae_exact_claim": False, "case_count": len(result["cases"]), "result_json": str(result_json), "next_gate": "compare Mac and Windows raw FLOAT EXR samples"}
     report_path = output_dir / "validation_report.json"; report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

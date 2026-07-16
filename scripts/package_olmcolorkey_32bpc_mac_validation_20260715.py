@@ -19,6 +19,7 @@ WINDOWS_FLOAT_ROOT = ROOT / "refs/win_references/20260710_190500__ae26_3_32bpc_r
 STEM = "olmcolorkey_32bpc_mac_validation_20260715"
 DEFAULT_OUTPUT = ROOT / "refs/runtime_trace_packages" / f"{STEM}.zip"
 MAC_PLUGIN_NAME = "OLMColorKey.plugin"
+MAC_PLUGIN_BINARY_NAME = "OLMColorKey"
 OUTPUT_TEMPLATE = "OLM EXR 32 Float"
 CAPTURE_API = "OutputModule.getSettings(GetSettingsFormat.STRING)"
 SEMANTIC_INTENT = {
@@ -31,6 +32,28 @@ SEMANTIC_INTENT = {
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def resolve_plugin_binary(path: Path) -> tuple[Path, Path]:
+    """Return the validated bundle and its actual Mach-O executable."""
+    supplied = path.expanduser().resolve()
+    if supplied.is_dir():
+        if supplied.name != MAC_PLUGIN_NAME:
+            raise ValueError(f"plugin path must name {MAC_PLUGIN_NAME}")
+        bundle = supplied
+        binary = bundle / "Contents" / "MacOS" / MAC_PLUGIN_BINARY_NAME
+    elif supplied.is_file():
+        if supplied.name != MAC_PLUGIN_BINARY_NAME or supplied.parent.name != "MacOS" or supplied.parent.parent.name != "Contents":
+            raise ValueError(f"binary path must be {MAC_PLUGIN_NAME}/Contents/MacOS/{MAC_PLUGIN_BINARY_NAME}")
+        bundle = supplied.parent.parent.parent
+        if bundle.name != MAC_PLUGIN_NAME:
+            raise ValueError(f"binary path must be inside {MAC_PLUGIN_NAME}")
+        binary = supplied
+    else:
+        raise FileNotFoundError(supplied)
+    if not bundle.is_dir() or not binary.is_file():
+        raise FileNotFoundError(f"missing {MAC_PLUGIN_BINARY_NAME} inside {bundle}")
+    return bundle, binary
 
 
 def load_cases() -> tuple[dict, list[dict]]:
@@ -82,7 +105,7 @@ def jsx_source(cases: list[dict]) -> str:
     cases_json = json.dumps(cases, separators=(",", ":"), ensure_ascii=True)
     return r'''/* OLMColorKey 32bpc Mac validation. AE host only; never installs a plug-in. */
 (function () {
-    var cases = CASES_JSON;
+    var cases = CASES_JSON, MAC_PLUGIN_NAME = "OLMColorKey.plugin", MAC_PLUGIN_BINARY_NAME = "OLMColorKey";
     function env(name) { try { return $.getenv(name) || ""; } catch (e) { return ""; } }
     function fail(message) { throw new Error("FAIL_CLOSED: " + message); }
     function quote(value) { return '"' + String(value).replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\r/g, "\\r").replace(/\n/g, "\\n") + '"'; }
@@ -141,14 +164,25 @@ def jsx_source(cases: list[dict]) -> str:
         item.remove();
         return { path: outputPath, sha256: outputHash, output_module_settings: captureRecord };
     }
+    function resolvePluginIdentity(value) {
+        var suppliedFile = new File(value), bundle;
+        if (suppliedFile.exists && suppliedFile.name === MAC_PLUGIN_BINARY_NAME && suppliedFile.parent.name === "MacOS" && suppliedFile.parent.parent.name === "Contents") {
+            bundle = new Folder(suppliedFile.parent.parent.parent.fsName);
+        } else {
+            bundle = new Folder(value);
+        }
+        if (!bundle.exists || bundle.name !== MAC_PLUGIN_NAME) fail("plugin identity path/name mismatch");
+        var binary = new File(bundle.fsName + "/Contents/MacOS/" + MAC_PLUGIN_BINARY_NAME);
+        if (!binary.exists || binary.name !== MAC_PLUGIN_BINARY_NAME) fail("plugin binary missing");
+        return { bundle: bundle, binary: binary };
+    }
     function identity() {
         var pluginPath = env("OLM_AE_MAC_PLUGIN_PATH"), expectedPluginHash = env("OLM_AE_MAC_PLUGIN_SHA256");
         if (!pluginPath) fail("OLM_AE_MAC_PLUGIN_PATH is required");
-        var file = new File(pluginPath);
-        if (!file.exists || file.name !== "OLMColorKey.plugin") fail("plugin identity path/name mismatch");
+        var resolved = resolvePluginIdentity(pluginPath), file = resolved.binary;
         if (!/^[0-9a-fA-F]{64}$/.test(expectedPluginHash)) fail("OLM_AE_MAC_PLUGIN_SHA256 is required");
         var loadedHash = hash(file.fsName); if (loadedHash !== expectedPluginHash.toLowerCase()) fail("plugin changed after preflight hash");
-        return { filename: file.name, path: file.fsName, sha256: loadedHash, expected_sha256: expectedPluginHash.toLowerCase() };
+        return { filename: resolved.bundle.name, bundle_path: resolved.bundle.fsName, path: file.fsName, sha256: loadedHash, expected_sha256: expectedPluginHash.toLowerCase() };
     }
     var outputDir = env("OLM_AE_MAC_OUTPUT_DIR");
     var manifestPath = env("OLM_AE_MAC_RESULT_JSON");
@@ -216,7 +250,7 @@ def build(output: Path, support: Path) -> None:
         "windows_float32_pairs": windows_float_pairs(source_cases),
         "cases": compact,
         "required_ae": {"major_minor": "26.3", "renderer": "SOFTWARE", "bits_per_channel": 32, "working_space": "None", "linear_blending": False},
-        "plugin_identity": {"filename": MAC_PLUGIN_NAME, "sha256_required": True, "path_must_be_explicit": True, "preflight_hash_must_equal_loaded_hash": True},
+        "plugin_identity": {"filename": MAC_PLUGIN_NAME, "binary_filename": MAC_PLUGIN_BINARY_NAME, "sha256_required": True, "path_must_be_explicit": True, "path_may_be_bundle_or_binary": True, "preflight_hash_must_equal_loaded_hash": True},
         "output_module": {"template_name": OUTPUT_TEMPLATE, "capture_api": CAPTURE_API, "semantic_intent": SEMANTIC_INTENT, "settings_sha256_must_match_per_case": True},
         "return_contract": {"outputs_per_case": ["no_effect", "effect_on"], "format": "FLOAT EXR", "sha256_required": True, "header_metadata_required": True, "raw_float_comparison_manifest_required": True},
         "fail_closed": ["reject missing or stale inputs", "reject plugin identity mismatch", "reject project or renderer drift", "reject missing no-effect control", "reject missing or unequal settings captures", "reject non-EXR or missing hashes", "do not claim AE exact before Mac/Windows raw-float comparison"],

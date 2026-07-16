@@ -57,9 +57,17 @@ exactly one PF8 field record and one PF8 shade record:
 
 | Case | Field value | Stored ARGB | Output SHA-256 |
 | --- | --- | --- | --- |
-| `case_0001` | `0.0078125` | `57,255,0,0` | `4e38e5fd4d4be8c8cee366a4ffebe7499832635ffed3f426f13a08417ce66185` |
-| `case_0015` | `0.037291009` | `10,10,0,0` | `393f60193b5536d9c79a17fa23964cfdaceb91b54c0f262463ff3b2eb262c8fb` |
-| `case_0029` | `0.250339508` | `64,28,0,238` | `812ff8bec3bac86d1f87804ef3ae52756dfbfd941b61206ff684754eecef56b1` |
+| `case_0001` | `0.0078125` | `57,255,0,0` | `77b57253e0b1076267bfff2bed639ac22343b6434d18b3ff5506d2b71f857224` |
+| `case_0015` | `0.037291009` | `10,10,0,0` | `3679cc373c8d2544540c38817fc8307710c5decc269ad3682585ac768d98f4ce` |
+| `case_0029` | `0.250339508` | `64,28,0,238` | `b615818e1ec29afb32bd0d994a0ed83e6001d1278da3c7b7c926ae6500c0a86b` |
+
+The current-source universal bundle binary SHA-256 was
+`f60fecc36b108202e7e724487d2c46695743526fcf358c766bf4b52de2c2d596`.
+Two fresh three-case runs with that installed binary produced the same output
+hashes above. For every point, the pre-assignment clamped ARGB bytes equaled
+the immediate destination-world readback bytes. An earlier run used a stale
+installed bundle and produced different output hashes; those hashes are
+superseded and are not conformance evidence.
 
 The run is a Mac path-liveness proof, not a Windows comparison and not an
 `AE exact` claim. No Windows or NAS operation is part of this tool.

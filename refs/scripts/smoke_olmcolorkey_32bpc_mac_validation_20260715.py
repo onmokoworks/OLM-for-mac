@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import subprocess
 import sys
 import tempfile
@@ -15,6 +16,8 @@ GENERATOR = ROOT / "scripts/package_olmcolorkey_32bpc_mac_validation_20260715.py
 RUNNER = ROOT / "scripts/run_olmcolorkey_32bpc_mac_validation_20260715.py"
 REQUEST_INDEX = ROOT / "refs/mac_validation_requests/olmcolorkey_32bpc_mac_validation_20260715.json"
 MAC_REQUEST_ID = "olmcolorkey_32bpc_mac_validation_20260715"
+sys.path.insert(0, str(ROOT / "scripts"))
+from package_olmcolorkey_32bpc_mac_validation_20260715 import resolve_plugin_binary  # noqa: E402
 
 
 def main() -> int:
@@ -28,36 +31,34 @@ def main() -> int:
         assert request["output_module"]["template_name"] == "OLM EXR 32 Float"
         assert request["return_contract"]["format"] == "FLOAT EXR"
         assert request["return_contract"]["raw_float_comparison_manifest_required"] is True
-        assert request["plugin_identity"]["preflight_hash_must_equal_loaded_hash"] is True
+        assert request["plugin_identity"]["path_must_be_explicit"] is True
+        assert request["plugin_identity"]["path_may_be_bundle_or_binary"] is True
+        assert request["plugin_identity"]["binary_filename"] == "OLMColorKey"
         assert len(request["windows_float32_pairs"]) == 9
         assert all(len(pair[branch]["sha256"]) == 64 for pair in request["windows_float32_pairs"] for branch in ("no_effect", "effect_on"))
         assert REQUEST_INDEX.exists()
         assert not (ROOT / "refs/reference_requests/olmcolorkey_32bpc_mac_validation_20260715.json").exists()
         assert all((support / "input" / case["input"]).exists() for case in request["cases"])
         jsx = (support / "run_mac_olmcolorkey_32bpc_validation.jsx").read_text(encoding="utf-8")
-        for token in ("GpuAccelType.SOFTWARE", "bitsPerChannel", "OLM_AE_MAC_PLUGIN_PATH", "OLM_AE_MAC_PLUGIN_SHA256", "workingSpace", "input_sha256", "OLM EXR 32 Float", "getSettings(GetSettingsFormat.STRING)", "no_effect", "effect_on", "FAIL_CLOSED"):
+        for token in ("GpuAccelType.SOFTWARE", "bitsPerChannel", "OLM_AE_MAC_PLUGIN_PATH", "OLM_AE_MAC_PLUGIN_SHA256", "Contents/MacOS/", "OLMColorKey", "workingSpace", "input_sha256", "OLM EXR 32 Float", "getSettings(GetSettingsFormat.STRING)", "no_effect", "effect_on", "FAIL_CLOSED"):
             assert token in jsx, token
         subprocess.run([sys.executable, str(RUNNER), "--plugin-path", str(temp / "wrong.plugin"), "--support-dir", str(temp / "runner"), "--dump-js", str(dumped)], cwd=ROOT, check=False)
         assert not dumped.exists()
-        plugin = temp / "OLMColorKey.plugin"
-        plugin.write_bytes(b"smoke-only plugin identity\n")
-        runner_support = temp / "runner"
-        subprocess.run(
-            [
-                sys.executable,
-                str(RUNNER),
-                "--plugin-path",
-                str(plugin),
-                "--support-dir",
-                str(runner_support),
-                "--dump-js",
-                str(dumped),
-            ],
-            cwd=ROOT,
-            check=True,
-        )
-        assert dumped.exists()
-        assert not (runner_support / f"{MAC_REQUEST_ID}.zip").exists()
+        bundle = temp / "OLMColorKey.plugin"
+        binary = bundle / "Contents" / "MacOS" / "OLMColorKey"
+        binary.parent.mkdir(parents=True)
+        binary.write_bytes(b"smoke-only Mach-O identity\n")
+        expected_hash = hashlib.sha256(binary.read_bytes()).hexdigest()
+        for plugin_path in (bundle, binary):
+            resolved_bundle, resolved_binary = resolve_plugin_binary(plugin_path)
+            assert resolved_bundle == bundle.resolve()
+            assert resolved_binary == binary.resolve()
+            assert hashlib.sha256(resolved_binary.read_bytes()).hexdigest() == expected_hash
+        for plugin_path in (bundle, binary):
+            runner_support = temp / ("runner_bundle" if plugin_path == bundle else "runner_binary")
+            subprocess.run([sys.executable, str(RUNNER), "--plugin-path", str(plugin_path), "--support-dir", str(runner_support), "--dump-js", str(dumped)], cwd=ROOT, check=True)
+            assert dumped.exists()
+            assert not (runner_support / f"{MAC_REQUEST_ID}.zip").exists()
         with zipfile.ZipFile(archive) as z:
             names = set(z.namelist())
             assert "request_manifest.json" in names and "windows_reference_manifest.json" in names
