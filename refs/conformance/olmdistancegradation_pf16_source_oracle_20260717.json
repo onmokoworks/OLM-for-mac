@@ -1,0 +1,104 @@
+{
+  "schema": "olmdistancegradation.pf16-source-oracle/1",
+  "date": "2026-07-17",
+  "status": "blocked",
+  "blocker": "active PF16 words differ byte-for-byte after both actual-AEX and production-source runs complete",
+  "fixture": {
+    "width": 8,
+    "height": 5,
+    "rowbytes": 76,
+    "padding_bytes_per_row": 12,
+    "padding_canary": "0xa5",
+    "smallest_branch_change": "refcon+0x90: 1 -> 0"
+  },
+  "degenerate_control": {
+    "actual_aex_status": "PASS",
+    "compose_entries": 40,
+    "equality_discriminating": false
+  },
+  "actual_aex_non_degenerate": {
+    "status": "PASS",
+    "compose_entries": 40,
+    "active_sha256": "f7d3ab8608430f32b72351c8c681a36de5845e61bf1c83d34340abbbb9ad4d5f",
+    "unique_words_agrb": [[32768, 0, 0, 0]],
+    "padding_preserved": true
+  },
+  "mac_source_oracle": {
+    "return_code": 0,
+    "implementation": "production RenderBits<PF_Pixel16> -> shade_scanline<PF_Pixel16> -> compose_pixel",
+    "production_source_sha256": "8fa772b65419281b81a1a4eb37618771d210c4728b54aa73cb29f9f610e9e6d8",
+    "bridge_sha256": "1e40ceb459b69d3dc8405243a1de20059e665a8c65fdf066efea004f32536b88",
+    "active_sha256": "671dbfeaeeaf7c953f652cc08052f56e16daf1d69203c0ffaa6d756d05c68b8e",
+    "unique_words_agrb": [[32768, 3598, 0, 30583]],
+    "padding_preserved": true,
+    "input_unchanged": true
+  },
+  "comparison": {
+    "active_byte_count": 320,
+    "active_byte_equal": false,
+    "byte_mismatch_count": 160,
+    "first_mismatch_byte": 2
+  },
+  "first_divergence": {
+    "classification": "fieldgen_or_staging",
+    "pixel_count": 40,
+    "actual_aex_field": {
+      "active_sha256": "7b6436b0c98f62380866d9432c2af0ee08ce16a171bda6951aecd95ee1307d61",
+      "raw_words_agrb_all": [0, 0, 0, 0],
+      "x_values_all": 0.0
+    },
+    "mac_production_field_input_to_shade": {
+      "active_sha256": "54ce1783a09fc0934862ee25f7c499122d59fdb961ee3079228938a44d1394e2",
+      "raw_words_agrb_all": [0, 32768, 0, 0],
+      "x_values_all": 1.0,
+      "d_alpha_values_all": 1.0,
+      "return_code": 0
+    },
+    "raw_field_words_equal": false,
+    "field_x_equal": false
+  },
+  "compose_observation": {
+    "semantic_match": true,
+    "actual_aex": {
+      "refcon": {
+        "degenerate": 0,
+        "inout_mode": 3,
+        "use_bg": 1,
+        "invert": 1,
+        "render_mode": 1,
+        "interp_mode": 1,
+        "power": 1.0,
+        "grad_rgb": [0.10980392247438431, 0.0, 0.9333333373069763],
+        "bg_rgb": [0.0, 0.0, 0.0]
+      },
+      "source_pixel_agrb": [32768, 0, 0, 0]
+    },
+    "source": {
+      "interp_mode": "linear",
+      "source_pixel_agrb": [32768, 0, 0, 0]
+    }
+  },
+  "parameter_contract": {
+    "semantic_match": true,
+    "actual_aex_grad_rgb": [0.10980392156862745, 0.0, 0.9333333333333333],
+    "source_grad_rgb": [0.10980392156862745, 0.0, 0.9333333333333333],
+    "background_rgb": [0.0, 0.0, 0.0],
+    "actual_aex_interp_raw": 1,
+    "source_interp_raw": 2,
+    "interp_semantics": "linear"
+  },
+  "world_contract": {
+    "semantic_match": true,
+    "width": 8,
+    "height": 5,
+    "rowbytes": 76,
+    "source_active_sha256": "f7d3ab8608430f32b72351c8c681a36de5845e61bf1c83d34340abbbb9ad4d5f"
+  },
+  "claims": {
+    "mac_source_oracle_executed": true,
+    "windows_claim": false,
+    "ae_exact_claim": false,
+    "production_edits": false,
+    "ledger_edits": false
+  }
+}

@@ -87,13 +87,15 @@
   live `FUN_181170480` pointer through a continuation-safe host PF Iterate16
   callback for all `8 * 5 = 40` pixels. Every nested compose returns to its
   private sentinel, the outer context is restored, and the observable 12-byte
-  row padding canary is preserved. This proves wrapper-to-compose reachability
-  and host iteration in the bounded degenerate/use-background fixture, but not
-  final PF16 equality, Windows equivalence, or `AE exact`. The next Mac-only
-  action is to compare active output words with the matching Mac source oracle
-  and then broaden beyond the degenerate compose branch.
+  row padding canary is preserved. A production-source oracle with matched
+  compose parameters and source world then localizes the first divergence
+  before compose: the actual wrapper field is `X=0` at all 40 pixels, while
+  production `RenderBits<PF_Pixel16>` supplies `X=1` (`32768`) at all 40.
+  Compose semantics match and both paddings remain intact. Therefore the live
+  Mac-only lane is now `fieldgen_or_staging`; do not tune compose/writeback.
+  This is still not Windows equivalence or `AE exact`.
   Evidence:
-  `refs/conformance/olmdistancegradation_pf16_iterate_callback_20260717.json`.
+  `refs/conformance/olmdistancegradation_pf16_source_oracle_20260717.json`.
 
 - 2026-07-17 `RadialBlur reconstructed Zoom actual collapse` (latest
   override): no correctness status is promoted. A hash-pinned Mac Unicorn

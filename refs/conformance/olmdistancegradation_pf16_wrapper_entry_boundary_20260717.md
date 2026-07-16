@@ -43,6 +43,11 @@ padding_canary observable=True preserved=True
   for all `8 * 5 = 40` pixels using per-pixel output storage.
 - Each nested compose returned to the private sentinel `0x90001000`, after
   which the suspended outer callback context was restored.
+- The compose refcon now has an explicit contract dump/assertion. The audited
+  gradient floats are `(28/255, 0, 238/255)`, background floats are `(0,0,0)`,
+  and the source world is 8x5 with rowbytes 76. These values are mirrored by
+  the independent source oracle; see the source-oracle evidence for the
+  non-degenerate comparison.
 - The active output bytes have SHA-256
   `f7d3ab8608430f32b72351c8c681a36de5845e61bf1c83d34340abbbb9ad4d5f`.
   The observable 12-byte row padding canary remained `0xA5`; its concatenated

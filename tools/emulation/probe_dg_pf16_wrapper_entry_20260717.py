@@ -38,6 +38,35 @@ WIDTH, HEIGHT, PAD = 8, 5, 12
 ROWBYTES = WIDTH * 8 + PAD
 SENTINEL = 0xA5
 
+# Compose refcon contract audited against test_dg_compose.py::build_case0023_refcon.
+REFCON_OFFSETS = {
+    "src_world": 0x00,
+    "field_world": 0x08,
+    "degenerate": 0x90,
+    "inout_mode": 0x94,
+    "grad_g": 0x9C,
+    "grad_r": 0xA0,
+    "grad_b": 0xA4,
+    "bg_g": 0xAC,
+    "bg_r": 0xB0,
+    "bg_b": 0xB4,
+    "use_bg": 0xC0,
+    "invert": 0xC1,
+    "render_mode": 0xC8,
+    "interp_mode": 0xCC,
+    "power": 0xD0,
+}
+CONTRACT = {
+    "invert": 1,
+    "inout_mode": 3,
+    "render_mode": 1,
+    "use_bg": 1,
+    "interp_mode": 1,
+    "power": 1.0,
+    "grad_rgb": (28.0 / 255.0, 0.0, 238.0 / 255.0),
+    "bg_rgb": (0.0, 0.0, 0.0),
+}
+
 
 def u64(ld: AexLoader, address: int) -> int:
     return struct.unpack("<Q", ld.read_bytes(address, 8))[0]
@@ -83,7 +112,7 @@ def setup_handle_and_spbasic(ld: AexLoader) -> tuple[int, list[dict[str, object]
 
     def color_get(loader, args):
         # PF ColorParamSuite::PF_GetColor(param, value, PF_PixelFloat* out).
-        loader.write_bytes(args[2], struct.pack("<4f", 0.1098041459918, 0.0, 0.93333333730698, 1.0))
+        loader.write_bytes(args[2], struct.pack("<4f", *CONTRACT["grad_rgb"], 1.0))
         return 0
 
     color_suite = ld.host_alloc(0x08)
@@ -116,6 +145,32 @@ def setup_handle_and_spbasic(ld: AexLoader) -> tuple[int, list[dict[str, object]
         if rowbytes < width * 8:
             raise RuntimeError("PF Iterate16 output rowbytes is smaller than active pixels")
         loader.read_bytes(output_data, width * 8)
+        if "field_capture" not in state:
+            field_active = b"".join(loader.read_bytes(output_data + y * rowbytes, width * 8) for y in range(height))
+            state["field_capture"] = {
+                "raw_words_agrb": [list(struct.unpack("<4H", field_active[i:i + 8])) for i in range(0, len(field_active), 8)],
+                "x_values": [struct.unpack("<H", field_active[i + 2:i + 4])[0] / 32768.0 for i in range(0, len(field_active), 8)],
+                "active_sha256": hashlib.sha256(field_active).hexdigest(),
+                "rowbytes": rowbytes,
+            }
+        if "compose_observation" not in state:
+            src_world = u64(loader, compose_refcon + REFCON_OFFSETS["src_world"])
+            src_data = u64(loader, src_world + 0x18)
+            state["compose_observation"] = {
+                "xy": [0, 0],
+                "refcon": {
+                    "degenerate": loader.read_bytes(compose_refcon + REFCON_OFFSETS["degenerate"], 1)[0],
+                    "inout_mode": struct.unpack("<i", loader.read_bytes(compose_refcon + REFCON_OFFSETS["inout_mode"], 4))[0],
+                    "use_bg": loader.read_bytes(compose_refcon + REFCON_OFFSETS["use_bg"], 1)[0],
+                    "invert": loader.read_bytes(compose_refcon + REFCON_OFFSETS["invert"], 1)[0],
+                    "render_mode": struct.unpack("<i", loader.read_bytes(compose_refcon + REFCON_OFFSETS["render_mode"], 4))[0],
+                    "interp_mode": struct.unpack("<i", loader.read_bytes(compose_refcon + REFCON_OFFSETS["interp_mode"], 4))[0],
+                    "power": struct.unpack("<f", loader.read_bytes(compose_refcon + REFCON_OFFSETS["power"], 4))[0],
+                    "grad_rgb": [struct.unpack("<f", loader.read_bytes(compose_refcon + REFCON_OFFSETS[name], 4))[0] for name in ("grad_r", "grad_g", "grad_b")],
+                    "bg_rgb": [struct.unpack("<f", loader.read_bytes(compose_refcon + REFCON_OFFSETS[name], 4))[0] for name in ("bg_r", "bg_g", "bg_b")],
+                },
+                "source_pixel_agrb": list(struct.unpack("<4H", loader.read_bytes(src_data, 8))),
+            }
 
         # AexLoader.call_function() uses one global return trampoline.  The
         # suite callback runs while that trampoline is already owned by the
@@ -214,7 +269,7 @@ def build_param_table(ld: AexLoader, spbasic: int) -> tuple[int, list[dict[str, 
             loader.write_bytes(value_out, struct.pack("<d", 2.59740734100342))
             size = 8
         elif selector in (7, 8):
-            loader.write_bytes(out, struct.pack("<4f", 0.1098041459918, 0.0, 0.93333333730698, 1.0))
+            loader.write_bytes(out, struct.pack("<4f", *CONTRACT["grad_rgb"], 1.0))
             size = 16
         elif size == 1:
             loader.write_bytes(value_out, bytes([value]))
@@ -257,7 +312,7 @@ def build_world_provider(ld: AexLoader, output_world: int) -> int:
     return provider
 
 
-def run() -> dict[str, object]:
+def run(degenerate: bool = True) -> dict[str, object]:
     ld = make_loader()
     ld.register_libm_impls(max_threads=1)
     WindowsOpenCVRuntime(ld).install()
@@ -269,6 +324,14 @@ def run() -> dict[str, object]:
     source_pixels = {(x, y): (32768, 0, 0, 0) for y in range(HEIGHT) for x in range(WIDTH)}
     source_world = build_world(ld, WIDTH, HEIGHT, source_pixels)
     compose_source_world = build_world(ld, WIDTH, HEIGHT, source_pixels)
+    compose_source_tight = u64(ld, compose_source_world + 0x18)
+    compose_source_padded = ld.bump_alloc(ROWBYTES * HEIGHT, align=64)
+    ld.write_bytes(compose_source_padded, bytes([SENTINEL]) * (ROWBYTES * HEIGHT))
+    for y in range(HEIGHT):
+        ld.write_bytes(compose_source_padded + y * ROWBYTES,
+                       ld.read_bytes(compose_source_tight + y * WIDTH * 8, WIDTH * 8))
+    ld.write_bytes(compose_source_world + 0x18, struct.pack("<Q", compose_source_padded))
+    ld.write_bytes(compose_source_world + 0x20, struct.pack("<I", ROWBYTES))
     source_data = u64(ld, source_world + 0x18)
     padded = ld.bump_alloc(ROWBYTES * HEIGHT, align=64)
     ld.write_bytes(padded, bytes([SENTINEL]) * (ROWBYTES * HEIGHT))
@@ -303,7 +366,7 @@ def run() -> dict[str, object]:
     report: dict[str, object] = {
         "status": "blocked", "function": hex(FUN_WRAPPER),
         "classification": "bounded same-loader actual-AEX reachability probe; no AE-exact claim",
-        "compose_fixture": "degenerate PF16 compose branch; wrapper-produced fieldgen still runs before dispatch",
+        "compose_fixture": "degenerate PF16 compose branch" if degenerate else "non-degenerate PF16 compose branch",
         "ae_exact_claim": False,
         "binary_sha256": sha256_file(ROOT / "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex"),
         "stages": stages, "callback_events": checkout_events,
@@ -319,15 +382,34 @@ def run() -> dict[str, object]:
         # iterate16 dispatch in this same AEX loader.
         refcon = ld.host_alloc(0x100, align=16)
         ld.write_bytes(refcon, b"\x00" * 0x100)
-        ld.write_bytes(refcon + 0x00, struct.pack("<Q", compose_source_world))
-        ld.write_bytes(refcon + 0x08, struct.pack("<Q", output_world))
-        ld.write_bytes(refcon + 0x90, b"\x01")
-        ld.write_bytes(refcon + 0x94, struct.pack("<i", 3))
-        ld.write_bytes(refcon + 0xC0, b"\x01")
-        ld.write_bytes(refcon + 0xC1, b"\x01")
-        ld.write_bytes(refcon + 0xC8, struct.pack("<i", 1))
-        ld.write_bytes(refcon + 0xCC, struct.pack("<i", 1))
-        ld.write_bytes(refcon + 0xD0, struct.pack("<f", 1.0))
+        ld.write_bytes(refcon + REFCON_OFFSETS["src_world"], struct.pack("<Q", compose_source_world))
+        ld.write_bytes(refcon + REFCON_OFFSETS["field_world"], struct.pack("<Q", output_world))
+        ld.write_bytes(refcon + REFCON_OFFSETS["degenerate"], bytes([1 if degenerate else 0]))
+        ld.write_bytes(refcon + REFCON_OFFSETS["inout_mode"], struct.pack("<i", CONTRACT["inout_mode"]))
+        grad_r, grad_g, grad_b = CONTRACT["grad_rgb"]
+        bg_r, bg_g, bg_b = CONTRACT["bg_rgb"]
+        for name, value in (("grad_g", grad_g), ("grad_r", grad_r), ("grad_b", grad_b),
+                            ("bg_g", bg_g), ("bg_r", bg_r), ("bg_b", bg_b)):
+            ld.write_bytes(refcon + REFCON_OFFSETS[name], struct.pack("<f", value))
+        ld.write_bytes(refcon + REFCON_OFFSETS["use_bg"], bytes([CONTRACT["use_bg"]]))
+        ld.write_bytes(refcon + REFCON_OFFSETS["invert"], bytes([CONTRACT["invert"]]))
+        ld.write_bytes(refcon + REFCON_OFFSETS["render_mode"], struct.pack("<i", CONTRACT["render_mode"]))
+        ld.write_bytes(refcon + REFCON_OFFSETS["interp_mode"], struct.pack("<i", CONTRACT["interp_mode"]))
+        ld.write_bytes(refcon + REFCON_OFFSETS["power"], struct.pack("<f", CONTRACT["power"]))
+        scalar_contract = {
+            "degenerate": int(degenerate),
+            "inout_mode": CONTRACT["inout_mode"], "use_bg": CONTRACT["use_bg"],
+            "invert": CONTRACT["invert"], "render_mode": CONTRACT["render_mode"],
+            "interp_mode": CONTRACT["interp_mode"], "power": CONTRACT["power"],
+            "grad_rgb": list(CONTRACT["grad_rgb"]), "bg_rgb": list(CONTRACT["bg_rgb"]),
+        }
+        assert struct.unpack("<i", ld.read_bytes(refcon + REFCON_OFFSETS["inout_mode"], 4))[0] == 3
+        assert struct.unpack("<i", ld.read_bytes(refcon + REFCON_OFFSETS["render_mode"], 4))[0] == 1
+        assert struct.unpack("<i", ld.read_bytes(refcon + REFCON_OFFSETS["interp_mode"], 4))[0] == 1
+        assert ld.read_bytes(refcon + REFCON_OFFSETS["grad_r"], 4) == struct.pack("<f", grad_r)
+        assert ld.read_bytes(refcon + REFCON_OFFSETS["grad_b"], 4) == struct.pack("<f", grad_b)
+        assert ld.read_bytes(refcon + REFCON_OFFSETS["bg_r"], 4) == struct.pack("<f", bg_r)
+        assert ld.read_bytes(refcon + REFCON_OFFSETS["bg_b"], 4) == struct.pack("<f", bg_b)
         # FUN_181170280 passes param_5[1] as the compose callback refcon.
         # Keep that driver context distinct from the actual compose state.
         driver_context = ld.host_alloc(0x10, align=16)
@@ -363,6 +445,19 @@ def run() -> dict[str, object]:
         active = b"".join(ld.read_bytes(output_data + y * ROWBYTES, WIDTH * 8) for y in range(HEIGHT))
         padding = b"".join(ld.read_bytes(output_data + y * ROWBYTES + WIDTH * 8, PAD) for y in range(HEIGHT))
         report["output_active_sha256"] = hashlib.sha256(active).hexdigest()
+        report["parameter_contract"] = {"offsets": {key: hex(value) for key, value in REFCON_OFFSETS.items()}, "values": scalar_contract}
+        report["world_contract"] = {
+            "width": WIDTH, "height": HEIGHT, "rowbytes": ROWBYTES,
+            "source_active_sha256": hashlib.sha256(b"".join(ld.read_bytes(u64(ld, compose_source_world + 0x18) + y * ROWBYTES, WIDTH * 8) for y in range(HEIGHT))).hexdigest(),
+            "field_world_data": hex(u64(ld, output_world + 0x18)),
+            "field_world_rowbytes": struct.unpack("<I", ld.read_bytes(output_world + 0x20, 4))[0],
+        }
+        report["field_capture"] = iterate_state["field_capture"]
+        report["compose_observation"] = iterate_state["compose_observation"]
+        report["output_active_words_agrb"] = [
+            list(struct.unpack("<4H", active[offset : offset + 8]))
+            for offset in range(0, len(active), 8)
+        ]
         report["padding_canary"] = {"observable": True, "preserved": padding == bytes([SENTINEL]) * (PAD * HEIGHT), "sha256": hashlib.sha256(padding).hexdigest()}
         if not downstream:
             report["blocker"] = "FUN_181170280 returned before FUN_181170480; PF Iterate16 suite callback did not reach compose"
