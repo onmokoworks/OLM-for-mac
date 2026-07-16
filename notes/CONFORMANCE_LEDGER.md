@@ -844,6 +844,18 @@ treating a mismatch as algorithm drift.
 
 ## Latest Overrides
 
+- 2026-07-17 `OLMKiraKira Mode 2 aggregation/caller output`: use
+  `refs/conformance/olmkirakira_mode2_actual_aex_merge_boundary_20260717.md`
+  and `refs/conformance/olmkirakira_mode2_caller_output_boundary_20260717.md`.
+  Three direct actual-AEX fixtures ground five-ray raw accumulation, the
+  conditional color-helper path, four clamps, and float RGBA output. Static
+  caller flow then proves Mode 2 selection through vtable `+0x10` and forwards
+  the result into a caller-owned float buffer; the immediate caller performs
+  no compose or PF8/PF16/PF32 writer selection afterward. The first unavailable
+  ABI is `FUN_18114f4a0`'s host-owned vtable/channel object. Do not reopen the
+  grounded aggregation, gain, clamps, or typed writers; the next proof must
+  bind that host object/next consumer without claiming AE exactness.
+
 - 2026-07-17 `OLMColorKey Edge Thin erode leaf`: use
   `refs/conformance/olmcolorkey_edge_thin_erode_aex_20260717.md` / `.json`.
   The hash-pinned actual-AEX `FUN_180008320` completes `2,176` exhaustive
