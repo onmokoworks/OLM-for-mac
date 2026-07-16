@@ -108,6 +108,41 @@ def fixture_paths(item: dict) -> tuple[Path, Path, Path]:
     return stem.with_suffix(".src.bin"), stem.with_suffix(".dst.bin"), stem.with_suffix(".json")
 
 
+def alpha_order_stress_source() -> bytes:
+    values = []
+    alphas = {(3, 1): 0.1, (3, 2): 0.2, (4, 1): 0.3, (4, 2): 0.4}
+    for y in range(6):
+        for x in range(6):
+            values.extend([0.0, 0.0, 0.0, alphas.get((x, y), 0.0)])
+    return struct.pack("<%df" % len(values), *values)
+
+
+def f32_sum(values: list[float]) -> float:
+    result = values[0]
+    for value in values[1:]:
+        result = struct.unpack("<f", struct.pack("<f", result + value))[0]
+    return result
+
+
+def verify_alpha_order_stress() -> None:
+    source = alpha_order_stress_source()
+    destination = bytes([0xAA]) * len(source)
+    target_alpha_offset = (1 * 6 + 3) * 16 + 12
+    actual = run_candidate(source, destination, 6, 6, 0.37)
+    aex = run_aex(source, destination, 6, 6, 0.37)
+    candidate_bits = fbits(struct.unpack_from("<f", actual, target_alpha_offset)[0])
+    aex_bits = fbits(struct.unpack_from("<f", aex, target_alpha_offset)[0])
+
+    terms = [0.023930974304676056, 0.007491882890462875,
+             0.18760348856449127, 0.03915436938405037]
+    mac_bits = fbits(f32_sum([terms[index] for index in (2, 0, 1, 3)]))
+    stated_aex_bits = fbits(f32_sum([terms[index] for index in (1, 0, 2, 3)]))
+    assert mac_bits == 0x3E843044
+    assert stated_aex_bits == 0x3E843043
+    assert aex_bits == mac_bits, f"actual AEX: 0x{aex_bits:08x}, Mac-order witness: 0x{mac_bits:08x}"
+    assert candidate_bits == aex_bits
+
+
 def materialize() -> None:
     FIXTURES.mkdir(parents=True, exist_ok=True)
     manifest = {"schema": 1, "primitive": "FUN_180001ec0", "pixel_layout": "float32 RGBA", "cases": []}
@@ -137,6 +172,7 @@ def verify() -> None:
             for offset, (got, want) in enumerate(zip(actual, expected)):
                 if got != want:
                     raise AssertionError(f"{item['id']}: byte {offset}: got 0x{got:02x}, expected 0x{want:02x}")
+    verify_alpha_order_stress()
     print(f"[OK] {len(manifest['cases'])} actual-AEX rotate fixtures match byte-for-byte")
 
 
