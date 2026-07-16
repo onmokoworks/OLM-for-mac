@@ -1,0 +1,276 @@
+{
+  "schema": "olmblur.case0003-0004.readiness-audit/1",
+  "status": "pass_local_crosscheck_with_open_worker_boundary",
+  "claim_boundary": "local actual-AEX fixture and portable evidence only; no AE exact claim",
+  "aex": {
+    "path": "plugins_2025/OLMBlur.aex",
+    "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+  },
+  "inputs": {
+    "case0003_schedule_report_sha256": "e052905292fe5de03197d5888352e9ad0edb9f0db70b75797ec3ed06221a9b39",
+    "case0004_replay_report_sha256": "015bd884f5f7186a6923c74e95e009c4d9709151a5d537c976ee741f1754f878",
+    "case0004_double_exp_report_sha256": "efe028a62fb731e266019ef45d2257619d589be71730583b48c8988317c7412d",
+    "actual_aex_prestore_report_sha256": "eca2346417ff59c9be9aeac070c162c6efa1e4424a20f1d868889502973cd2c1"
+  },
+  "checks": {
+    "case0003": {
+      "call_count": 120,
+      "iterations": [
+        {
+          "iteration": 1,
+          "calls": 12,
+          "h_offsets": [
+            0,
+            90,
+            180,
+            270,
+            360,
+            450
+          ],
+          "v_offsets": [
+            0,
+            160,
+            320,
+            480,
+            640,
+            800
+          ]
+        },
+        {
+          "iteration": 2,
+          "calls": 12,
+          "h_offsets": [
+            0,
+            90,
+            180,
+            270,
+            360,
+            450
+          ],
+          "v_offsets": [
+            0,
+            160,
+            320,
+            480,
+            640,
+            800
+          ]
+        },
+        {
+          "iteration": 3,
+          "calls": 12,
+          "h_offsets": [
+            0,
+            90,
+            180,
+            270,
+            360,
+            450
+          ],
+          "v_offsets": [
+            0,
+            160,
+            320,
+            480,
+            640,
+            800
+          ]
+        },
+        {
+          "iteration": 4,
+          "calls": 12,
+          "h_offsets": [
+            0,
+            90,
+            180,
+            270,
+            360,
+            450
+          ],
+          "v_offsets": [
+            0,
+            160,
+            320,
+            480,
+            640,
+            800
+          ]
+        },
+        {
+          "iteration": 5,
+          "calls": 12,
+          "h_offsets": [
+            0,
+            90,
+            180,
+            270,
+            360,
+            450
+          ],
+          "v_offsets": [
+            0,
+            160,
+            320,
+            480,
+            640,
+            800
+          ]
+        },
+        {
+          "iteration": 6,
+          "calls": 12,
+          "h_offsets": [
+            0,
+            90,
+            180,
+            270,
+            360,
+            450
+          ],
+          "v_offsets": [
+            0,
+            160,
+            320,
+            480,
+            640,
+            800
+          ]
+        },
+        {
+          "iteration": 7,
+          "calls": 12,
+          "h_offsets": [
+            0,
+            90,
+            180,
+            270,
+            360,
+            450
+          ],
+          "v_offsets": [
+            0,
+            160,
+            320,
+            480,
+            640,
+            800
+          ]
+        },
+        {
+          "iteration": 8,
+          "calls": 12,
+          "h_offsets": [
+            0,
+            90,
+            180,
+            270,
+            360,
+            450
+          ],
+          "v_offsets": [
+            0,
+            160,
+            320,
+            480,
+            640,
+            800
+          ]
+        },
+        {
+          "iteration": 9,
+          "calls": 12,
+          "h_offsets": [
+            0,
+            90,
+            180,
+            270,
+            360,
+            450
+          ],
+          "v_offsets": [
+            0,
+            160,
+            320,
+            480,
+            640,
+            800
+          ]
+        },
+        {
+          "iteration": 10,
+          "calls": 12,
+          "h_offsets": [
+            0,
+            90,
+            180,
+            270,
+            360,
+            450
+          ],
+          "v_offsets": [
+            0,
+            160,
+            320,
+            480,
+            640,
+            800
+          ]
+        }
+      ],
+      "coefficient_words_exact": 4970
+    },
+    "case0004": {
+      "radius_sequence": [
+        125,
+        36,
+        10,
+        2
+      ],
+      "h_v_pass_ranges_exact": true,
+      "helper_micro_exact": true
+    },
+    "case0004_double_exp": {
+      "coefficient_words_compared": 177,
+      "all_exact": true,
+      "radii": [
+        125,
+        36,
+        10,
+        2
+      ]
+    },
+    "case0003_source_conversion": {
+      "all_source_conversion_exact": true,
+      "worker_helper_bounded": false
+    },
+    "case0004_source_and_writer": {
+      "source_conversion_exact": true,
+      "writer_store_exact_for_portable_inputs": true,
+      "worker_helper_bounded": false
+    },
+    "writer_rounding": {
+      "actual_aex_standard": {
+        "input_f32": [
+          22037.498046875,
+          26373.498046875,
+          0.0
+        ],
+        "stored_argb16": [
+          32768,
+          22037,
+          26373,
+          0
+        ],
+        "instructions": 22,
+        "direct_memory_cvttss2si": false
+      },
+      "rule": "actual-AEX standard writer stores the retained controlled values after the established add-0.5/truncate behavior"
+    }
+  },
+  "uncovered_locally_testable": [
+    "No additional schedule condition was uncovered: case0003 H/V partitions and offsets are now checked explicitly, not only by total call count.",
+    "No additional coefficient condition was uncovered: case0004 covers all 16 H/V stages and case0003 covers 4970/4970 candidate words.",
+    "No additional rounding condition was uncovered: the actual-AEX writer half-tie control remains the governing local evidence."
+  ],
+  "remaining_blocker": "case0003 full-frame worker/helper pre-store and case0004 radius-125 worker/helper pre-store remain unexecuted; AE/Windows exactness remains unclaimed."
+}
