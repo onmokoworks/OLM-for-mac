@@ -1,5 +1,27 @@
 # OLM Conformance Ledger
 
+- 2026-07-17 `OLMBlur case0004 natural checkpoint runner` (latest override):
+  no correctness status is promoted. A new runner preserves the existing
+  bounded replay and adds fail-closed save/resume controls for the pinned
+  960x540 PF16 case. A checkpoint at the actual worker entry saves and loads
+  in a fresh process; a bounded resume continues in the real AEX and exits
+  nonzero when it does not reach helper/writer proof before the instruction
+  cap. No Python prefill, helper detour, crop replay, or output claim is used.
+  Next action is a long natural run to save at `0x180001000`, then resume to
+  writer pre/post stores `0x1800030e2/0x180003123`. Evidence:
+  `tools/emulation/probe_olmblur_case0004_checkpoint_resume_20260717.py`.
+
+- 2026-07-17 `OLMToonDilate PF32 seed propagation matrix` (latest override):
+  no AE correctness status is promoted. Forty-eight actual-AEX worker runs
+  cover eight seed directions, alpha `0.499/0.5/0.501`, and radius `1/2`.
+  Every run returns naturally, reaches the actual copy helper, matches an
+  independent 8-neighbor raw PF32 word-copy oracle exactly, and preserves row
+  padding. Case artifacts retain input/output hashes and zero byte-diff
+  counts rather than duplicating all pixels. This closes the bounded PF32
+  worker propagation matrix, not host conversion, Windows, or Mac AE output.
+  Evidence:
+  `refs/conformance/olmtoondilate_pf32_seed_propagation_matrix_20260717.json`.
+
 - 2026-07-17 `OLMDistanceGradation PF16 threshold boundary matrix` (latest
   override): no AE correctness status is promoted. Six fixtures spanning the
   raw threshold `n-1/n/n+1`, transparent/opaque topology, and PF16 endpoint

@@ -1,0 +1,910 @@
+{
+  "status": "PASS_PF32_SEED_PROPAGATION_MATRIX",
+  "schema": "olmtoondilate.pf32-seed-propagation-matrix/1",
+  "aex": "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex",
+  "worker": "0x1801a6800",
+  "helper": "0x1801ac8e0",
+  "fixture": {
+    "width": 5,
+    "height": 5,
+    "rowbytes": 84,
+    "pixel_bits": 128,
+    "directions": [
+      "left",
+      "right",
+      "up",
+      "down",
+      "up_left",
+      "up_right",
+      "down_left",
+      "down_right"
+    ],
+    "alphas": [
+      0.499,
+      0.5,
+      0.501
+    ],
+    "radii": [
+      1.0,
+      2.0
+    ],
+    "layout": "one opaque seed at each center-adjacent direction; every other pixel has paired semi-alpha raw words"
+  },
+  "oracle": "independent 8-neighbor BFS; copy the seed's raw four float32 words to every point at graph distance <= radius",
+  "gates": {
+    "aex_present": true,
+    "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+    "case_count_48": true,
+    "all_workers_returned": true,
+    "all_helpers_observed": true,
+    "all_visible_4_word_exact": true,
+    "all_row_padding_preserved": true
+  },
+  "cases": [
+    {
+      "status": "RETURN",
+      "direction": "left",
+      "seed": [
+        1,
+        2
+      ],
+      "alpha": 0.499,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6290,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "d4bf0fd9d7ecf4a4f790592a07866514c8f537dc7c431483f5b298d0ba60be65",
+      "oracle_visible_sha256": "d4bf0fd9d7ecf4a4f790592a07866514c8f537dc7c431483f5b298d0ba60be65",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "left",
+      "seed": [
+        1,
+        2
+      ],
+      "alpha": 0.499,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6769,
+      "helper_hit_count": 19,
+      "actual_visible_sha256": "b0da6d40a69481d6d44f231ad12e0c2483b47d9b005fa42a92c3a3a9c6107827",
+      "oracle_visible_sha256": "b0da6d40a69481d6d44f231ad12e0c2483b47d9b005fa42a92c3a3a9c6107827",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "left",
+      "seed": [
+        1,
+        2
+      ],
+      "alpha": 0.5,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6290,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "4279572d62f4669c22db1e6b2b39959f9d2e7f478975a5f4c9014aaeef3c61f4",
+      "oracle_visible_sha256": "4279572d62f4669c22db1e6b2b39959f9d2e7f478975a5f4c9014aaeef3c61f4",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "left",
+      "seed": [
+        1,
+        2
+      ],
+      "alpha": 0.5,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6769,
+      "helper_hit_count": 19,
+      "actual_visible_sha256": "a01666c3fe63471befbe3cd1e255d8082d607b4f80d34a7dd10120d19c2ddd2b",
+      "oracle_visible_sha256": "a01666c3fe63471befbe3cd1e255d8082d607b4f80d34a7dd10120d19c2ddd2b",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "left",
+      "seed": [
+        1,
+        2
+      ],
+      "alpha": 0.501,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6290,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "b8a0318f3ad9588978615f0a64031e6c86d3f8491e77ad91969cb8d87cce4c82",
+      "oracle_visible_sha256": "b8a0318f3ad9588978615f0a64031e6c86d3f8491e77ad91969cb8d87cce4c82",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "left",
+      "seed": [
+        1,
+        2
+      ],
+      "alpha": 0.501,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6769,
+      "helper_hit_count": 19,
+      "actual_visible_sha256": "1c35380e59d38587ee99c5bc19379297157cb2eb5980ff81075deb17ccff1a05",
+      "oracle_visible_sha256": "1c35380e59d38587ee99c5bc19379297157cb2eb5980ff81075deb17ccff1a05",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "right",
+      "seed": [
+        3,
+        2
+      ],
+      "alpha": 0.499,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6270,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "935f68664e0b31c35c39523ed567a6451c9710ebaa676e58f23d69d12ddbc1b6",
+      "oracle_visible_sha256": "935f68664e0b31c35c39523ed567a6451c9710ebaa676e58f23d69d12ddbc1b6",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "right",
+      "seed": [
+        3,
+        2
+      ],
+      "alpha": 0.499,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6747,
+      "helper_hit_count": 19,
+      "actual_visible_sha256": "bacfc27d3566bcbb5262dc5b12c60549d3e5eda5fc5fab4e4a581ca9feed634a",
+      "oracle_visible_sha256": "bacfc27d3566bcbb5262dc5b12c60549d3e5eda5fc5fab4e4a581ca9feed634a",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "right",
+      "seed": [
+        3,
+        2
+      ],
+      "alpha": 0.5,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6270,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "a897cab25e34d8691e6da7de0d3dc1800b07cb74d3bb2aaed2b449f4d1697c6b",
+      "oracle_visible_sha256": "a897cab25e34d8691e6da7de0d3dc1800b07cb74d3bb2aaed2b449f4d1697c6b",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "right",
+      "seed": [
+        3,
+        2
+      ],
+      "alpha": 0.5,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6747,
+      "helper_hit_count": 19,
+      "actual_visible_sha256": "a071fc2e50b5134959fae925d523e81b2781df6bdd03cada69f476087b354464",
+      "oracle_visible_sha256": "a071fc2e50b5134959fae925d523e81b2781df6bdd03cada69f476087b354464",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "right",
+      "seed": [
+        3,
+        2
+      ],
+      "alpha": 0.501,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6270,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "8bbce0a9726383efdfeb44c96d30a338ca73f8ea320349e0386b7c57cb1a6129",
+      "oracle_visible_sha256": "8bbce0a9726383efdfeb44c96d30a338ca73f8ea320349e0386b7c57cb1a6129",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "right",
+      "seed": [
+        3,
+        2
+      ],
+      "alpha": 0.501,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6747,
+      "helper_hit_count": 19,
+      "actual_visible_sha256": "125206cd757c4a4d20f88223204bd899660039062ccb7c9298f01ffb4f53bac5",
+      "oracle_visible_sha256": "125206cd757c4a4d20f88223204bd899660039062ccb7c9298f01ffb4f53bac5",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up",
+      "seed": [
+        2,
+        1
+      ],
+      "alpha": 0.499,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6302,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "4103216df522645cd54c41124fa00a842ce31ba0fa5a1814c508cdaedac63431",
+      "oracle_visible_sha256": "4103216df522645cd54c41124fa00a842ce31ba0fa5a1814c508cdaedac63431",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up",
+      "seed": [
+        2,
+        1
+      ],
+      "alpha": 0.499,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6782,
+      "helper_hit_count": 19,
+      "actual_visible_sha256": "71564071c5610d92d944b321591564a91a6cceec683c698d6729d400634d230d",
+      "oracle_visible_sha256": "71564071c5610d92d944b321591564a91a6cceec683c698d6729d400634d230d",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up",
+      "seed": [
+        2,
+        1
+      ],
+      "alpha": 0.5,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6302,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "0c9ef69c6ccda8deb9018ac98a08293d116b14ac72ce56d50d9a222a816fe0ad",
+      "oracle_visible_sha256": "0c9ef69c6ccda8deb9018ac98a08293d116b14ac72ce56d50d9a222a816fe0ad",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up",
+      "seed": [
+        2,
+        1
+      ],
+      "alpha": 0.5,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6782,
+      "helper_hit_count": 19,
+      "actual_visible_sha256": "bd7b33fb10b7fb10ee0133ba6ccb360d8f7180bcb6454ccc9e39b2fc13c328aa",
+      "oracle_visible_sha256": "bd7b33fb10b7fb10ee0133ba6ccb360d8f7180bcb6454ccc9e39b2fc13c328aa",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up",
+      "seed": [
+        2,
+        1
+      ],
+      "alpha": 0.501,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6302,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "4f6f60fb6fece046de4b4949798a2b52b460ef4e9304230da8ba56149b3a81a0",
+      "oracle_visible_sha256": "4f6f60fb6fece046de4b4949798a2b52b460ef4e9304230da8ba56149b3a81a0",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up",
+      "seed": [
+        2,
+        1
+      ],
+      "alpha": 0.501,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6782,
+      "helper_hit_count": 19,
+      "actual_visible_sha256": "3cf86de301389e96b83a558b71c5613c16aad9b22efc583d3b249194a0565ac1",
+      "oracle_visible_sha256": "3cf86de301389e96b83a558b71c5613c16aad9b22efc583d3b249194a0565ac1",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down",
+      "seed": [
+        2,
+        3
+      ],
+      "alpha": 0.499,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6262,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "adf5305e162efec0a26cde86a5bfdb159be02bc93796690c18183bd0e9b911e7",
+      "oracle_visible_sha256": "adf5305e162efec0a26cde86a5bfdb159be02bc93796690c18183bd0e9b911e7",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down",
+      "seed": [
+        2,
+        3
+      ],
+      "alpha": 0.499,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6737,
+      "helper_hit_count": 19,
+      "actual_visible_sha256": "aa6bed1e60df43562f8615a6a5c2f504217e80f47e0c91c7779d0a8d18c5ff7e",
+      "oracle_visible_sha256": "aa6bed1e60df43562f8615a6a5c2f504217e80f47e0c91c7779d0a8d18c5ff7e",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down",
+      "seed": [
+        2,
+        3
+      ],
+      "alpha": 0.5,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6262,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "c595207701cc79746d60f4bb0cfa2f418409dc9dcb8e9033e5607f78c098d52b",
+      "oracle_visible_sha256": "c595207701cc79746d60f4bb0cfa2f418409dc9dcb8e9033e5607f78c098d52b",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down",
+      "seed": [
+        2,
+        3
+      ],
+      "alpha": 0.5,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6737,
+      "helper_hit_count": 19,
+      "actual_visible_sha256": "de69a34c7567f3398b6537d6ef62d3d2a58bfef941102d9d81963fc7f2ddf39f",
+      "oracle_visible_sha256": "de69a34c7567f3398b6537d6ef62d3d2a58bfef941102d9d81963fc7f2ddf39f",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down",
+      "seed": [
+        2,
+        3
+      ],
+      "alpha": 0.501,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6262,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "5c1c34c2f58f4159c5301725adebaf866c4b91ce48da30991fd83b3a23c2975f",
+      "oracle_visible_sha256": "5c1c34c2f58f4159c5301725adebaf866c4b91ce48da30991fd83b3a23c2975f",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down",
+      "seed": [
+        2,
+        3
+      ],
+      "alpha": 0.501,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6737,
+      "helper_hit_count": 19,
+      "actual_visible_sha256": "b618b8e1ced1b0cd02bd9401f3c96accdb954994f9366d6002b6e74d7aaddff3",
+      "oracle_visible_sha256": "b618b8e1ced1b0cd02bd9401f3c96accdb954994f9366d6002b6e74d7aaddff3",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up_left",
+      "seed": [
+        1,
+        1
+      ],
+      "alpha": 0.499,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6310,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "1624ca1d1a1ad1635d20d230233cabf1897feaa14a06130082df33e0d35c90b8",
+      "oracle_visible_sha256": "1624ca1d1a1ad1635d20d230233cabf1897feaa14a06130082df33e0d35c90b8",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up_left",
+      "seed": [
+        1,
+        1
+      ],
+      "alpha": 0.499,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6617,
+      "helper_hit_count": 15,
+      "actual_visible_sha256": "fd4293a4e67c53fa0c8bf9a9b52dcf41903285c2c9192b741348aa66b0de7353",
+      "oracle_visible_sha256": "fd4293a4e67c53fa0c8bf9a9b52dcf41903285c2c9192b741348aa66b0de7353",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up_left",
+      "seed": [
+        1,
+        1
+      ],
+      "alpha": 0.5,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6310,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "815a6da311d653076080feeb4e6c78f0e5047f2747f154be5fda7d5ba8b27403",
+      "oracle_visible_sha256": "815a6da311d653076080feeb4e6c78f0e5047f2747f154be5fda7d5ba8b27403",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up_left",
+      "seed": [
+        1,
+        1
+      ],
+      "alpha": 0.5,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6617,
+      "helper_hit_count": 15,
+      "actual_visible_sha256": "eefe2fbb298cf1f17c88d059c03329a9b840fd2c779151ddf60f61a34634a53b",
+      "oracle_visible_sha256": "eefe2fbb298cf1f17c88d059c03329a9b840fd2c779151ddf60f61a34634a53b",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up_left",
+      "seed": [
+        1,
+        1
+      ],
+      "alpha": 0.501,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6310,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "4f343587275ff8102277f91ca9dbca28c0cc97f4b7e29bb78ead586fa34a9787",
+      "oracle_visible_sha256": "4f343587275ff8102277f91ca9dbca28c0cc97f4b7e29bb78ead586fa34a9787",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up_left",
+      "seed": [
+        1,
+        1
+      ],
+      "alpha": 0.501,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6617,
+      "helper_hit_count": 15,
+      "actual_visible_sha256": "7b4d231e50ec390257bbe57fc7242b57e97bad4f138a509716215edcc87c2f15",
+      "oracle_visible_sha256": "7b4d231e50ec390257bbe57fc7242b57e97bad4f138a509716215edcc87c2f15",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up_right",
+      "seed": [
+        3,
+        1
+      ],
+      "alpha": 0.499,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6290,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "f0d08c8635c744cc7d79fa9afb139359c71b89072e26891e09a48c6f95598ff8",
+      "oracle_visible_sha256": "f0d08c8635c744cc7d79fa9afb139359c71b89072e26891e09a48c6f95598ff8",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up_right",
+      "seed": [
+        3,
+        1
+      ],
+      "alpha": 0.499,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6595,
+      "helper_hit_count": 15,
+      "actual_visible_sha256": "07319789a89bf9918b7826398040336129bb73d116d9e0e4e4a7f98b8b75ac44",
+      "oracle_visible_sha256": "07319789a89bf9918b7826398040336129bb73d116d9e0e4e4a7f98b8b75ac44",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up_right",
+      "seed": [
+        3,
+        1
+      ],
+      "alpha": 0.5,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6290,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "1236a0a1ff40f4aa1e0b1f3dcca0a7a12d6781ae15592a4490dd74021ce093c0",
+      "oracle_visible_sha256": "1236a0a1ff40f4aa1e0b1f3dcca0a7a12d6781ae15592a4490dd74021ce093c0",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up_right",
+      "seed": [
+        3,
+        1
+      ],
+      "alpha": 0.5,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6595,
+      "helper_hit_count": 15,
+      "actual_visible_sha256": "dfab161d6b0ffbbd6a1617b1a6aea3b49e6a3a733c2a5d252d8332cd43658075",
+      "oracle_visible_sha256": "dfab161d6b0ffbbd6a1617b1a6aea3b49e6a3a733c2a5d252d8332cd43658075",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up_right",
+      "seed": [
+        3,
+        1
+      ],
+      "alpha": 0.501,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6290,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "31c30ca5b86418a1b124730473fbfc68ca4f5e533fbc1c3517216e3407f10e93",
+      "oracle_visible_sha256": "31c30ca5b86418a1b124730473fbfc68ca4f5e533fbc1c3517216e3407f10e93",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "up_right",
+      "seed": [
+        3,
+        1
+      ],
+      "alpha": 0.501,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6595,
+      "helper_hit_count": 15,
+      "actual_visible_sha256": "2aecff02d3a73189e02664c33e9bd2ad8ffda7fea0cf58262c2c221083c2b4a9",
+      "oracle_visible_sha256": "2aecff02d3a73189e02664c33e9bd2ad8ffda7fea0cf58262c2c221083c2b4a9",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down_left",
+      "seed": [
+        1,
+        3
+      ],
+      "alpha": 0.499,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6270,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "296f39865a1d865ae1ad89ac3a54127b9397df821fc350cb9f078eac621b4cfa",
+      "oracle_visible_sha256": "296f39865a1d865ae1ad89ac3a54127b9397df821fc350cb9f078eac621b4cfa",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down_left",
+      "seed": [
+        1,
+        3
+      ],
+      "alpha": 0.499,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6573,
+      "helper_hit_count": 15,
+      "actual_visible_sha256": "bc3ee319c3141b0aee759715f219f23e58041bb300f05049ad7d7f9f6d71e663",
+      "oracle_visible_sha256": "bc3ee319c3141b0aee759715f219f23e58041bb300f05049ad7d7f9f6d71e663",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down_left",
+      "seed": [
+        1,
+        3
+      ],
+      "alpha": 0.5,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6270,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "1bca387f97f5f98c234d5f941f325807a39ed6ae955f5483683db4f6df586818",
+      "oracle_visible_sha256": "1bca387f97f5f98c234d5f941f325807a39ed6ae955f5483683db4f6df586818",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down_left",
+      "seed": [
+        1,
+        3
+      ],
+      "alpha": 0.5,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6573,
+      "helper_hit_count": 15,
+      "actual_visible_sha256": "18e8c3b71fac69867d5ee9a1e93235c5c3ec9f755071bb6400f07ab2153d2c95",
+      "oracle_visible_sha256": "18e8c3b71fac69867d5ee9a1e93235c5c3ec9f755071bb6400f07ab2153d2c95",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down_left",
+      "seed": [
+        1,
+        3
+      ],
+      "alpha": 0.501,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6270,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "1bb04c1f3ce0e81605aa51d6ac03217344ec54aeae12f08bd09e7fecc080f379",
+      "oracle_visible_sha256": "1bb04c1f3ce0e81605aa51d6ac03217344ec54aeae12f08bd09e7fecc080f379",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down_left",
+      "seed": [
+        1,
+        3
+      ],
+      "alpha": 0.501,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6573,
+      "helper_hit_count": 15,
+      "actual_visible_sha256": "f5b66775943deace356ce16cfed29289d59ddc99ae083073f78522834c4bbed2",
+      "oracle_visible_sha256": "f5b66775943deace356ce16cfed29289d59ddc99ae083073f78522834c4bbed2",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down_right",
+      "seed": [
+        3,
+        3
+      ],
+      "alpha": 0.499,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6254,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "1264d8703b0fbebb21f99e884842fe98c01b9ed3159ccdb60774232b6a4550b4",
+      "oracle_visible_sha256": "1264d8703b0fbebb21f99e884842fe98c01b9ed3159ccdb60774232b6a4550b4",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down_right",
+      "seed": [
+        3,
+        3
+      ],
+      "alpha": 0.499,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6555,
+      "helper_hit_count": 15,
+      "actual_visible_sha256": "1430c98c79eb320a414a339505b8dd354bfa542d0dde0c0912aad6a33ae1c644",
+      "oracle_visible_sha256": "1430c98c79eb320a414a339505b8dd354bfa542d0dde0c0912aad6a33ae1c644",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down_right",
+      "seed": [
+        3,
+        3
+      ],
+      "alpha": 0.5,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6254,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "c408ef3cbc39869b99cd44bfeb6fe98fc94b64cd5f71f34555f745d7d96535fc",
+      "oracle_visible_sha256": "c408ef3cbc39869b99cd44bfeb6fe98fc94b64cd5f71f34555f745d7d96535fc",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down_right",
+      "seed": [
+        3,
+        3
+      ],
+      "alpha": 0.5,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6555,
+      "helper_hit_count": 15,
+      "actual_visible_sha256": "e3482dd50832de361c2f3440b0b407e221af80d8cf7eb88b3a29b4e559209e99",
+      "oracle_visible_sha256": "e3482dd50832de361c2f3440b0b407e221af80d8cf7eb88b3a29b4e559209e99",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down_right",
+      "seed": [
+        3,
+        3
+      ],
+      "alpha": 0.501,
+      "radius": 1.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6254,
+      "helper_hit_count": 8,
+      "actual_visible_sha256": "c9e638dff621b30646c62880833e585c7822bdec6d27f01a78589fef2876c470",
+      "oracle_visible_sha256": "c9e638dff621b30646c62880833e585c7822bdec6d27f01a78589fef2876c470",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    },
+    {
+      "status": "RETURN",
+      "direction": "down_right",
+      "seed": [
+        3,
+        3
+      ],
+      "alpha": 0.501,
+      "radius": 2.0,
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 6555,
+      "helper_hit_count": 15,
+      "actual_visible_sha256": "9478c225e365d0e42cf6987263b9e80cf5fcbd9ffc291126decf1c8750c8ff38",
+      "oracle_visible_sha256": "9478c225e365d0e42cf6987263b9e80cf5fcbd9ffc291126decf1c8750c8ff38",
+      "visible_byte_diff_count": 0,
+      "visible_exact_4_word": true,
+      "padding_preserved": true
+    }
+  ],
+  "claim_boundary": "bounded Mac-local actual-AEX/Unicorn PF32 worker versus independent raw-copy oracle; no AE exact, Windows exact, host-conversion, or production claim"
+}
