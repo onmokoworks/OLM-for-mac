@@ -16,8 +16,8 @@
 
 ## Windows Typed Witness
 
-- No same-run Windows producer return is present. The next witness is narrowed to one case/pixel and absolute RVA binding.
-- Required memory contract: `class_base=[RCX+0x18]`, `class_stride=[RCX+0x28]`; bytes at `(91,841)`, `(91,840)`, and `(90,841)+byte1`; then `RAX` at e170/f270/e3a0 and vertex storage `+0x40/+0x50`.
+- The current-case same-run Windows producer witness is accepted in `refs/conformance/olmsmoother2_legacy_key_producer_actual_aex_20260716.md`.
+- It binds descriptor `92,841,1,92,842,2`, class bytes, `e170 c=7`, and the first append. The local synthetic c=2 row above remains a separate leaf-function fixture.
 
 ## Reproduction
 
@@ -31,7 +31,7 @@ Result: exit `0` when all local actual-AEX producer checks pass.
 
 ## Claims Not Made
 
-- No Windows producer truth
+- Synthetic c=2 fixture is not the current case mapping
 - No AE exactness
 - No portable compatibility
 - No final-writer or PNG tuning

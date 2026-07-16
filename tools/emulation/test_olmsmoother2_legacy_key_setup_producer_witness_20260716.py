@@ -3,8 +3,8 @@
 
 This is a checked-in actual-AEX CPU witness.  It records the producer-owned
 class bytes and append decisions for the retained case-0012 descriptor, then
-prints the exact Windows typed witness still required.  It is not a host or
-portable compatibility oracle.
+binds that synthetic row to the later accepted Windows typed witness. It is
+not a host or portable compatibility oracle.
 """
 
 from __future__ import annotations
@@ -92,23 +92,24 @@ def run() -> dict[str, Any]:
             "The local synthetic coordinates are translation-equivalent for the relative class addressing, but are not a Windows case mapping.",
         ],
         "windows_typed_witness": {
-            "status": "not_available_in_workspace",
-            "required_same_run_identity": ["case_id", "xy=(91,841)", "AE Software", "8bpc", "AEX SHA-256", "module_base", "AfterFX PID"],
+            "status": "accepted_current_case",
+            "source": "refs/conformance/olmsmoother2_legacy_key_producer_actual_aex_20260716.md",
+            "same_run_identity": ["legacy_case_0012_gamma5_red_blue_current_aex", "xy=(92,841)", "AE Software", "8bpc", "AEX SHA-256", "module_base", "AfterFX PID"],
             "hook_sites": {k: {"name": v["name"], "rva": v["rva"], "bind": "absolute module_base + RVA"} for k, v in FUNCS.items()},
-            "descriptor": [91, 841, 1, 91, 843, 5],
+            "descriptor": [92, 841, 1, 92, 842, 2],
             "required_memory_contract": {
                 "e170_base_rcx": "live producer struct; read qword [RCX+0x18] as class_base and qword [RCX+0x28] as class_stride",
-                "e170_desc_rdx": "int[6], desc[0]=91, desc[1]=841",
-                "center_b0": "byte[class_base + 841*class_stride + 91*4 + 0]",
-                "prev_b0": "byte[class_base + 840*class_stride + 91*4 + 0]",
-                "left_b1": "byte[class_base + 841*class_stride + 90*4 + 1]",
+                "e170_desc_rdx": "int[6], desc[0]=92, desc[1]=841",
+                "center_b0": "byte[class_base + 841*class_stride + 92*4 + 0]",
+                "prev_b0": "byte[class_base + 840*class_stride + 92*4 + 0]",
+                "left_b1": "byte[class_base + 841*class_stride + 91*4 + 1]",
                 "e170_c": "EAX/RAX low byte at return from FUN_18000e170",
                 "f270": "RAX low byte and vertex count at +0x130 of the same producer struct",
                 "e3a0": "RAX low byte, first vertex at +0x40, weight at +0x50",
             },
-            "acceptance": "Return all fields from one bound run; do not substitute local values or final writer bytes.",
+            "acceptance": "Accepted descriptor, class bytes, e170 c=7, and first append are all bound to one returned run.",
         },
-        "claims_not_made": ["No Windows producer truth", "No AE exactness", "No portable compatibility", "No final-writer or PNG tuning"],
+        "claims_not_made": ["Synthetic c=2 fixture is not the current case mapping", "No AE exactness", "No portable compatibility", "No final-writer or PNG tuning"],
         "pass": all(checks),
     }
 
@@ -131,11 +132,11 @@ def main() -> int:
             "- The bounded local row is `c=2`, `f270 append`, `e3a0 append`; the exact raw values are in the JSON.",
             "- `e170` uses class base `+0x18`, class stride `+0x28`, and the three byte addresses recorded in the typed contract.", "",
             "## INFERENCE", "", *[f"- {x}" for x in r["inference"]], "",
-            "## Windows Typed Witness", "", "- No same-run Windows producer return is present. The next witness is narrowed to one case/pixel and absolute RVA binding.",
-            "- Required memory contract: `class_base=[RCX+0x18]`, `class_stride=[RCX+0x28]`; bytes at `(91,841)`, `(91,840)`, and `(90,841)+byte1`; then `RAX` at e170/f270/e3a0 and vertex storage `+0x40/+0x50`.",
+            "## Windows Typed Witness", "", "- The current-case same-run Windows producer witness is accepted in `refs/conformance/olmsmoother2_legacy_key_producer_actual_aex_20260716.md`.",
+            "- It binds descriptor `92,841,1,92,842,2`, class bytes, `e170 c=7`, and the first append. The local synthetic c=2 row above remains a separate leaf-function fixture.",
             "", "## Reproduction", "", "```sh", "python3 tools/emulation/test_olmsmoother2_legacy_key_setup_producer_witness_20260716.py \\", "  --output-json refs/conformance/olmsmoother2_legacy_key_setup_producer_witness_20260716.json \\", "  --output-md refs/conformance/olmsmoother2_legacy_key_setup_producer_witness_20260716.md", "```", "",
             "Result: exit `0` when all local actual-AEX producer checks pass.", "", "## Claims Not Made", "", *[f"- {x}" for x in r["claims_not_made"]], "",
-        ]) + "\n", encoding="utf-8")
+        ]).rstrip() + "\n", encoding="utf-8")
     print(payload, end="")
     return 0 if result["pass"] else 1
 

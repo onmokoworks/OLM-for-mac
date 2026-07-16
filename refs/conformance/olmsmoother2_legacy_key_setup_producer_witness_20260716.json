@@ -4,7 +4,7 @@
     "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
   },
   "claims_not_made": [
-    "No Windows producer truth",
+    "Synthetic c=2 fixture is not the current case mapping",
     "No AE exactness",
     "No portable compatibility",
     "No final-writer or PNG tuning"
@@ -91,14 +91,14 @@
   "scope": "actual-AEX CPU emulation of legacy producer; upstream of c280/cce0",
   "verdict": "PASS_LOCAL_ACTUAL_AEX_LEGACY_KEY_SETUP_PRODUCER",
   "windows_typed_witness": {
-    "acceptance": "Return all fields from one bound run; do not substitute local values or final writer bytes.",
+    "acceptance": "Accepted descriptor, class bytes, e170 c=7, and first append are all bound to one returned run.",
     "descriptor": [
-      91,
+      92,
       841,
       1,
-      91,
-      843,
-      5
+      92,
+      842,
+      2
     ],
     "hook_sites": {
       "e170": {
@@ -118,24 +118,25 @@
       }
     },
     "required_memory_contract": {
-      "center_b0": "byte[class_base + 841*class_stride + 91*4 + 0]",
+      "center_b0": "byte[class_base + 841*class_stride + 92*4 + 0]",
       "e170_base_rcx": "live producer struct; read qword [RCX+0x18] as class_base and qword [RCX+0x28] as class_stride",
       "e170_c": "EAX/RAX low byte at return from FUN_18000e170",
-      "e170_desc_rdx": "int[6], desc[0]=91, desc[1]=841",
+      "e170_desc_rdx": "int[6], desc[0]=92, desc[1]=841",
       "e3a0": "RAX low byte, first vertex at +0x40, weight at +0x50",
       "f270": "RAX low byte and vertex count at +0x130 of the same producer struct",
-      "left_b1": "byte[class_base + 841*class_stride + 90*4 + 1]",
-      "prev_b0": "byte[class_base + 840*class_stride + 91*4 + 0]"
+      "left_b1": "byte[class_base + 841*class_stride + 91*4 + 1]",
+      "prev_b0": "byte[class_base + 840*class_stride + 92*4 + 0]"
     },
-    "required_same_run_identity": [
-      "case_id",
-      "xy=(91,841)",
+    "same_run_identity": [
+      "legacy_case_0012_gamma5_red_blue_current_aex",
+      "xy=(92,841)",
       "AE Software",
       "8bpc",
       "AEX SHA-256",
       "module_base",
       "AfterFX PID"
     ],
-    "status": "not_available_in_workspace"
+    "source": "refs/conformance/olmsmoother2_legacy_key_producer_actual_aex_20260716.md",
+    "status": "accepted_current_case"
   }
 }

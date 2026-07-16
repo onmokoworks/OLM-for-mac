@@ -1,0 +1,104 @@
+{
+  "aex": {
+    "path": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
+    "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "trace": {
+      "engine": "checked_in_aex_unicorn_mac_local",
+      "entry": {
+        "first_predicate_e170": 7,
+        "second_predicate_df30": 0
+      },
+      "first_leaf": {
+        "append": true,
+        "count_after": 1,
+        "count_before": 0,
+        "name": "f270->e3a0",
+        "return_low": 1
+      },
+      "second_leaf": {
+        "append": true,
+        "count_after": 2,
+        "count_before": 1,
+        "name": "f130->e290",
+        "return_low": 1,
+        "returned_vertex": {
+          "rgba": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "source_xy": [
+            92,
+            843
+          ],
+          "weight": 0.1767241209745407
+        }
+      },
+      "vertices_total": 2
+    }
+  },
+  "binding": {
+    "accepted_e170": 7,
+    "accepted_first_count": 1,
+    "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+    "descriptor": [
+      92,
+      841,
+      1,
+      92,
+      842,
+      2
+    ]
+  },
+  "claims_not_made": [
+    "No Windows f130/df30/e290 internals",
+    "No claim that Windows skips the second leaf",
+    "No AE-host execution",
+    "No production-source or ledger change"
+  ],
+  "comparison": {
+    "aex_portable_count_after_equal": true,
+    "aex_portable_second_append_equal": true,
+    "aex_portable_second_predicate_equal": true,
+    "descriptor_equal": true,
+    "first_predicate_matches_binding": true,
+    "local_count_exceeds_accepted_first_count": true
+  },
+  "portable": {
+    "descriptor": [
+      92,
+      841,
+      1,
+      92,
+      842,
+      2
+    ],
+    "entry": {
+      "first_predicate_e170": 7,
+      "second_predicate_df30": 0
+    },
+    "first_leaf": {
+      "append": true,
+      "count_after": 1,
+      "count_before": 0,
+      "name": "f270->e3a0"
+    },
+    "second_leaf": {
+      "append": true,
+      "count_after": 2,
+      "count_before": 1,
+      "name": "f130->e290",
+      "returned_vertex": {
+        "source_xy": [
+          92,
+          843
+        ],
+        "weight": 0.176724121
+      }
+    },
+    "vertices_total": 2
+  },
+  "scope": "Mac-local checked-in AEX and portable adapter; accepted Windows evidence ends at first count=1",
+  "verdict": "PASS_MAC_CASE0012_SECOND_LEAF_BOUNDARY"
+}
