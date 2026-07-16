@@ -6,7 +6,7 @@
   "additionalProperties": false,
   "required": [
     "schema_version", "request_id", "run_id_prefix", "plugin", "host",
-    "project", "renderer", "request_assets", "cdb", "cases", "validation",
+    "project", "renderer", "request_assets", "cases", "validation",
     "return_bundle"
   ],
   "properties": {
@@ -22,13 +22,14 @@
         "name": {"type": "string", "minLength": 1},
         "module_filename": {"type": "string", "pattern": "^[^/\\\\]+\\.aex$"},
         "aex_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-        "default_aex_path": {"type": "string", "minLength": 1}
+        "default_aex_path": {"type": "string", "minLength": 1},
+        "cache_rescan": {"type": "boolean"}
       }
     },
     "host": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["afterfx_path", "cdb_path"],
+      "required": ["afterfx_path"],
       "properties": {
         "afterfx_path": {"type": "string", "minLength": 1},
         "cdb_path": {"type": "string", "minLength": 1}
@@ -50,6 +51,7 @@
     },
     "renderer": {"$ref": "#/$defs/sourceObject"},
     "request_assets": {"$ref": "#/$defs/sourceObject"},
+    "transport": {"$ref": "#/$defs/transport"},
     "cdb": {
       "type": "object",
       "additionalProperties": false,
@@ -114,13 +116,44 @@
     },
     "case": {
       "type": "object", "additionalProperties": false,
-      "required": ["id", "cdb_template"],
+      "required": ["id"],
       "properties": {
         "id": {"$ref": "#/$defs/id"},
         "cdb_template": {"$ref": "#/$defs/relativePath"},
         "template_values": {"type": "object", "additionalProperties": {"type": ["string", "number", "boolean"]}},
         "addresses": {"type": "object", "propertyNames": {"$ref": "#/$defs/id"}, "additionalProperties": {"type": "string", "pattern": "^0x[0-9a-fA-F]+$"}},
         "exports": {"type": "array", "items": {"$ref": "#/$defs/export"}}
+      }
+    },
+    "transport": {
+      "oneOf": [
+        {"$ref": "#/$defs/cdbTransport"},
+        {"$ref": "#/$defs/collectorTransport"}
+      ]
+    },
+    "cdbTransport": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {"kind": {"const": "cdb"}}
+    },
+    "collectorTransport": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "injector_path", "collector_dll", "config_template", "required_outputs"],
+      "properties": {
+        "kind": {"const": "in_process_collector"},
+        "injector_path": {"$ref": "#/$defs/relativePath"},
+        "collector_dll": {"$ref": "#/$defs/relativePath"},
+        "config_template": {"$ref": "#/$defs/relativePath"},
+        "required_outputs": {
+          "type": "array", "minItems": 2, "uniqueItems": true,
+          "items": {"$ref": "#/$defs/relativePath"},
+          "allOf": [
+            {"contains": {"const": "collector_trace.txt"}},
+            {"contains": {"const": "collector_status.json"}}
+          ]
+        },
+        "arm_timeout_seconds": {"type": "integer", "minimum": 1},
+        "capture_timeout_seconds": {"type": "integer", "minimum": 1}
       }
     },
     "constraint": {

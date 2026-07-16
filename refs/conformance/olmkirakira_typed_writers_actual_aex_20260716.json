@@ -1,0 +1,128 @@
+{
+  "ae_exact_claim": false,
+  "aex": "plugins_2025/OLMKiraKira.aex",
+  "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+  "cases": [
+    {
+      "depth": "PF8",
+      "exact": true,
+      "expected_argb_units_or_bits": [
+        191,
+        127,
+        255,
+        63
+      ],
+      "input_rgba_f32_bits": [
+        "0x3f000000",
+        "0x3f800000",
+        "0x3e800000",
+        "0x3f400000"
+      ],
+      "instructions": 15,
+      "observed_argb_units_or_bits": [
+        191,
+        127,
+        255,
+        63
+      ],
+      "raw_hex": "bf7fff3f"
+    },
+    {
+      "depth": "PF8",
+      "exact": true,
+      "expected_argb_units_or_bits": [
+        127,
+        193,
+        126,
+        1
+      ],
+      "input_rgba_f32_bits": [
+        "0xbe800000",
+        "0x3fc00000",
+        "0x3b808081",
+        "0x3f000000"
+      ],
+      "instructions": 15,
+      "observed_argb_units_or_bits": [
+        127,
+        193,
+        126,
+        1
+      ],
+      "raw_hex": "7fc17e01"
+    },
+    {
+      "depth": "PF16",
+      "exact": true,
+      "expected_argb_units_or_bits": [
+        255,
+        127,
+        32768,
+        57344
+      ],
+      "input_rgba_f32_bits": [
+        "0x3b7f0000",
+        "0x3f800000",
+        "0xbe800000",
+        "0x3bff8000"
+      ],
+      "instructions": 15,
+      "observed_argb_units_or_bits": [
+        255,
+        127,
+        32768,
+        57344
+      ],
+      "raw_hex": "ff007f00008000e0"
+    },
+    {
+      "depth": "PF32",
+      "exact": true,
+      "expected_argb_units_or_bits": [
+        "0x40000000",
+        "0xbe800000",
+        "0x3fc00000",
+        "0x3dcccccd"
+      ],
+      "input_rgba_f32_bits": [
+        "0xbe800000",
+        "0x3fc00000",
+        "0x3dcccccd",
+        "0x40000000"
+      ],
+      "instructions": 6,
+      "observed_argb_units_or_bits": [
+        "0x40000000",
+        "0xbe800000",
+        "0x3fc00000",
+        "0x3dcccccd"
+      ],
+      "raw_hex": "00000040000080be0000c03fcdcccc3d"
+    }
+  ],
+  "facts": [
+    "FACT: all observed writer outputs exactly matched the x86 float32/truncate/raw-store model.",
+    "FACT: channel order at the destination is ARGB for PF8, PF16, and PF32."
+  ],
+  "inferences": [
+    "INFERENCE: these leaf helper semantics are reusable only after a caller path is bound to the helper in the same algorithm/run."
+  ],
+  "static_proof": {
+    "command": "objdump -d --start-address=0x181230b90 --stop-address=0x181230c39 plugins_2025/OLMKiraKira.aex",
+    "missing": [],
+    "required_fragments": {
+      "PF16 alpha store": "movw\t%ax, (%rcx)",
+      "PF16 scale": "# 0x1814d65ac",
+      "PF32 raw float store": "movss\t%xmm3, (%rax)",
+      "PF8 alpha store": "movb\t%al, (%rcx)",
+      "PF8 scale": "# 0x1814d65a8",
+      "truncate": "cvttss2si"
+    }
+  },
+  "status": "pass",
+  "writer_entries": {
+    "PF16": "0x181230bd0",
+    "PF32": "0x181230c20",
+    "PF8": "0x181230b90"
+  }
+}

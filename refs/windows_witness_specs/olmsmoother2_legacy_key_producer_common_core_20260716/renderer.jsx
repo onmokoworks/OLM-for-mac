@@ -494,6 +494,11 @@
                 throw new Error("pause handshake timed out waiting for " + continueMarkerPath);
             }
             appendText(logPath, "pause.continue marker=" + continueMarkerPath + "\n");
+            app.purge(PurgeTarget.ALL_CACHES);
+            appendText(logPath, "pause.continue cache_purge=ALL_CACHES\n");
+            effect.enabled = false;
+            effect.enabled = true;
+            appendText(logPath, "pause.continue effect_toggle=off_on\n");
         }
 
         if (outputMode === "exr_render_queue") {

@@ -51,9 +51,14 @@ def main() -> int:
         assert "@rax+0x40,dwo(@rax+0x30)" not in probe
         common = dict(run_id="smoke-run", ae_pid=42, module_base="0x1000")
         trace = "\n".join([
-            event("S2_PRODUCER_BIND", "bind", "x=91 y=841 idx=105 descriptor=91,841,1,91,843,5 writer_hook_rva=3370 binding_expression=writer_xy_anchor_then_producer_return_address pointer_context=rsp+0x34_x_rsp+0x38_y"),
-            event("S2_PRODUCER_E170_ENTRY", "e170_entry", "hook_rva=e170 return_address=0x2000 class_base=0x3000 class_stride=192 center_addr=0xdead prev_addr=0xbeef left_addr=0xcafe center_b0=0 prev_b0=1 left_b1=0 class_base_offset=18 class_stride_offset=28"),
-            event("S2_PRODUCER_E170_RETURN", "e170_return", "hook_rva=e170 return_site=f284 return_rax=0x2 e170_c=2"),
+            event("S2_PRODUCER_BIND", "bind", "x=91 y=841 idx=105 expected_descriptor_hint=91,841,1,91,843,5 writer_hook_rva=350b binding_expression=writer_xy_anchor_then_producer_return_address pointer_context=rsp+0x34_x_rsp+0x38_y"),
+            event("S2_UPSTREAM_C280", "c280_entry", "hook_rva=c280 caller_x=91 caller_y=841 source_plane=0x2800 class_plane=0x3000 class_stride=7680 cplane_w=1920 cplane_h=1080 config_pointer=0x4000 index_inputs=unavailable index_inputs_proven=false"),
+            event("S2_UPSTREAM_10760", "cardinal_10760", "hook_rva=10760 starting_center=92,841 class_plane=0x3000 class_stride=7680 cplane_w=1920 cplane_h=1080 scanner_grid=stack_local"),
+            event("S2_UPSTREAM_D3B0", "d3b0_entry", "hook_rva=d3b0 input_xy=92,841 input_third=unavailable result_triple=deferred_to_fef0_descriptor"),
+            event("S2_UPSTREAM_DA50", "da50_entry", "hook_rva=da50 input_xy=92,841 input_third=unavailable result_triple=deferred_to_fef0_descriptor"),
+            event("S2_UPSTREAM_FEF0", "fef0_entry", "hook_rva=fef0 descriptor_before=92,841,1,92,842,2 d3b0_return_triple=92,841,1 da50_return_triple=92,842,2 return_triples_source=fef0_p2_descriptor_before dispatch_key=20 dispatch_key_expression=(p2[2]-1)+p2[5]*10"),
+            event("S2_PRODUCER_E170_ENTRY", "e170_entry", "hook_rva=e170 return_address=0x2000 p2_ptr=0x2800 descriptor=92,841,1,92,842,2 sample_x=92 sample_y=841 cplane_w=1920 cplane_h=1080 class_base=0x3000 class_stride=7680 center_addr=0xdead prev_addr=0xbeef left_addr=0xcafe center_b0=255 prev_b0=255 left_b1=255 class_base_offset=18 class_stride_offset=28 p2_source=rdx"),
+            event("S2_PRODUCER_E170_RETURN", "e170_return", "hook_rva=e170 return_site=f284 return_rax=0x7 e170_c=7"),
             event("S2_PRODUCER_F270_ENTRY", "f270_entry", "hook_rva=f270 return_address=0x2100 producer_struct=0x4000"),
             event("S2_PRODUCER_F270_RETURN", "f270_return", "hook_rva=f270 return_site=ff5b return_rax=0x1 return_low=1 vertex_storage=0x4040 vertex_count=1 first_vertex_rgba_words=00000000,00000000,00000000,00000000 weight_word=3ecccccd"),
             event("S2_PRODUCER_E3A0_ENTRY", "e3a0_entry", "hook_rva=e3a0 return_address=0x2200 producer_struct=0x4000"),

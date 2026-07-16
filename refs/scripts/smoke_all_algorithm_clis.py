@@ -169,6 +169,7 @@ def main() -> int:
         Smoke("OLMKiraKira Mode 3/4 narrowing", [py, "refs/scripts/smoke_olmkirakira_mode34_narrowing.py"]),
         Smoke("OLMKiraKira Mode 2 compose witness", [py, "tools/emulation/test_olmkirakira_mode2_compose_witness_20260716.py"], "regression-gate"),
         Smoke("OLMKiraKira Mode 2 host compose/writeback boundary", [py, "tools/emulation/test_olmkirakira_mode2_host_compose_writeback_boundary_20260716.py"], "regression-gate"),
+        Smoke("OLMKiraKira actual-AEX typed writers", [py, "tools/emulation/test_olmkirakira_typed_writers_actual_aex_20260716.py"], "regression-gate"),
         Smoke("OLMKiraKira Mode 2 Mac typed boundary", [py, "tools/emulation/test_olmkirakira_mode2_mac_boundary_20260716.py"], "regression-gate"),
         Smoke("OLMKiraKira Mode 2 compose/writeback package", [py, "refs/scripts/smoke_olmkirakira_mode2_compose_writeback_20260716.py"], "regression-gate"),
         Smoke("KiraKira forward-warp box-input package", [py, "refs/scripts/smoke_package_kirakira_forward_warp_box_input.py"]),

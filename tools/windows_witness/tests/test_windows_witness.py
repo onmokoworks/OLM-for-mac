@@ -8,7 +8,7 @@ import unittest
 import zipfile
 from pathlib import Path
 
-from tools.windows_witness.compiler import compile_witness
+from tools.windows_witness.compiler import _queue_source, compile_witness
 from tools.windows_witness.core import SpecError, load_spec
 from tools.windows_witness.runtime import bundle_return, validate_trace
 
@@ -59,6 +59,84 @@ def trace_with_address_fields(contract: dict) -> str:
 
 
 class CompilerTests(unittest.TestCase):
+    def _collector_fixture(self, root: Path) -> Path:
+        fixture = root / "collector-fixture"
+        shutil.copytree(EXAMPLE, fixture)
+        for name, content in {
+            "fake_injector.exe": "macOS test placeholder; never executed\n",
+            "fake_collector.dll": "macOS test placeholder; never loaded\n",
+            "collector-config.json.in": '{"run_id":"{{RUN_ID}}","pid":"{{AE_PID}}","case":"{{CASE_ID}}","output":"{{OUTPUT_DIR}}"}\n',
+        }.items():
+            (fixture / name).write_text(content, encoding="utf-8")
+        spec_path = fixture / "witness-spec.json"
+        spec = json.loads(spec_path.read_text(encoding="utf-8"))
+        spec.pop("cdb")
+        for case in spec["cases"]:
+            case.pop("cdb_template")
+            case.pop("addresses")
+        spec["transport"] = {
+            "kind": "in_process_collector",
+            "injector_path": "fake_injector.exe",
+            "collector_dll": "fake_collector.dll",
+            "config_template": "collector-config.json.in",
+            "required_outputs": ["collector_trace.txt", "collector_status.json", "collector.jsonl"],
+            "arm_timeout_seconds": 7,
+            "capture_timeout_seconds": 11,
+        }
+        spec_path.write_text(json.dumps(spec), encoding="utf-8")
+        return spec_path
+
+    def test_in_process_collector_package_is_generated_without_building_windows_assets(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            spec_path = self._collector_fixture(Path(temp))
+            package, archive = compile_witness(spec_path, Path(temp) / "package", Path(temp) / "package.zip")
+            contract = json.loads((package / "witness-contract.json").read_text(encoding="utf-8"))
+            self.assertEqual(contract["transport"]["kind"], "in_process_collector")
+            self.assertEqual(contract["transport"]["arm_timeout_seconds"], 7)
+            self.assertEqual(contract["transport"]["capture_timeout_seconds"], 11)
+            self.assertTrue((package / "collector" / "injector.exe").is_file())
+            self.assertTrue((package / "collector" / "collector.dll").is_file())
+            self.assertTrue((package / "collector" / "config.json.in").is_file())
+            with zipfile.ZipFile(archive) as contents:
+                self.assertIn("collector/injector.exe", contents.namelist())
+                self.assertNotIn("cdb/000_case_0001.cdb.in", contents.namelist())
+
+    def test_in_process_collector_rejects_missing_or_unresolved_assets(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            spec_path = self._collector_fixture(Path(temp))
+            spec = json.loads(spec_path.read_text(encoding="utf-8"))
+            spec["transport"]["injector_path"] = "missing.exe"
+            spec_path.write_text(json.dumps(spec), encoding="utf-8")
+            with self.assertRaisesRegex(SpecError, "missing collector asset"):
+                compile_witness(spec_path, Path(temp) / "package", Path(temp) / "package.zip")
+
+            second_spec_path = self._collector_fixture(Path(temp) / "second")
+            spec = json.loads(second_spec_path.read_text(encoding="utf-8"))
+            (second_spec_path.parent / "collector-config.json.in").write_text("{{UNKNOWN}}\n", encoding="utf-8")
+            with self.assertRaisesRegex(SpecError, "unsupported or unresolved placeholder"):
+                compile_witness(second_spec_path, Path(temp) / "package-2", Path(temp) / "package-2.zip")
+
+    def test_in_process_collector_requires_canonical_outputs_and_unique_basenames(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            missing_spec_path = self._collector_fixture(Path(temp) / "missing")
+            missing = json.loads(missing_spec_path.read_text(encoding="utf-8"))
+            missing["transport"]["required_outputs"] = ["foo.txt", "bar.txt"]
+            missing_spec_path.write_text(json.dumps(missing), encoding="utf-8")
+            with self.assertRaisesRegex(SpecError, "must include collector_trace.txt and collector_status.json"):
+                compile_witness(missing_spec_path, Path(temp) / "missing-package", Path(temp) / "missing.zip")
+
+            collision_spec_path = self._collector_fixture(Path(temp) / "collision")
+            collision = json.loads(collision_spec_path.read_text(encoding="utf-8"))
+            collision["transport"]["required_outputs"] = [
+                "collector_trace.txt",
+                "collector_status.json",
+                "sub/collector.jsonl",
+                "other/collector.jsonl",
+            ]
+            collision_spec_path.write_text(json.dumps(collision), encoding="utf-8")
+            with self.assertRaisesRegex(SpecError, "unique basenames"):
+                compile_witness(collision_spec_path, Path(temp) / "collision-package", Path(temp) / "collision.zip")
+
     def test_compile_is_deterministic_and_complete(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             temp_path = Path(temp)
@@ -90,6 +168,37 @@ class CompilerTests(unittest.TestCase):
                 self.assertIn("cdb/000_case_0001.cdb.in", names)
                 self.assertTrue(all(info.date_time == (2026, 1, 1, 0, 0, 0) for info in archive.infolist()))
 
+    def test_legacy_cdb_contract_remains_the_default_transport(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package, _ = compile_witness(SPEC, Path(temp) / "package", Path(temp) / "package.zip")
+            contract = json.loads((package / "witness-contract.json").read_text(encoding="utf-8"))
+            self.assertNotIn("transport", contract)
+            self.assertEqual(contract["cases"][0]["package_cdb_template"], "cdb/000_case_0001.cdb.in")
+
+    def test_plugin_cache_rescan_is_explicit_opt_in_and_packed_into_the_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            fixture = Path(temp) / "fixture"
+            shutil.copytree(EXAMPLE, fixture)
+            path = fixture / "witness-spec.json"
+            spec = json.loads(path.read_text(encoding="utf-8"))
+            spec["plugin"]["cache_rescan"] = True
+            path.write_text(json.dumps(spec), encoding="utf-8")
+            package, _ = compile_witness(path, fixture / "package", fixture / "package.zip")
+            contract = json.loads((package / "witness-contract.json").read_text(encoding="utf-8"))
+            self.assertTrue(contract["plugin"]["cache_rescan"])
+            self.assertIn("plugin_cache_rescan.json", contract["return_bundle"]["include_logs"])
+
+    def test_plugin_cache_rescan_rejects_non_boolean_values(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            fixture = Path(temp) / "fixture"
+            shutil.copytree(EXAMPLE, fixture)
+            path = fixture / "witness-spec.json"
+            spec = json.loads(path.read_text(encoding="utf-8"))
+            spec["plugin"]["cache_rescan"] = "yes"
+            path.write_text(json.dumps(spec), encoding="utf-8")
+            with self.assertRaisesRegex(SpecError, "plugin.cache_rescan must be boolean"):
+                compile_witness(path, fixture / "package", fixture / "package.zip")
+
     def test_generated_windows_queue_normalizes_package_paths(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             package, _ = compile_witness(SPEC, Path(temp) / "package", Path(temp) / "package.zip")
@@ -101,10 +210,15 @@ class CompilerTests(unittest.TestCase):
         specs_root = Path(__file__).resolve().parents[3] / "refs" / "windows_witness_specs"
         renderers = sorted(specs_root.glob("*/renderer.jsx"))
         self.assertGreaterEqual(len(renderers), 1)
+        import_renderers = 0
         for renderer in renderers:
             with self.subTest(renderer=renderer.parent.name):
                 source = renderer.read_text(encoding="utf-8")
+                if "importFile" not in source:
+                    continue
+                import_renderers += 1
                 self.assertIn("file = new File(file.fsName);", source)
+        self.assertGreaterEqual(import_renderers, 1)
 
     def test_rejects_non_truncating_cdb_log(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -251,9 +365,10 @@ class CompilerTests(unittest.TestCase):
         self.assertIn("$launchDir = Join-Path $env:PUBLIC", source)
         self.assertIn("Copy-Item -LiteralPath $queuePath -Destination $queueLaunch", source)
         self.assertIn("function ConvertTo-WindowsCommandLineArgument", source)
-        self.assertIn("$directQueueLaunch = [string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1'", source)
-        self.assertIn("Join-WindowsCommandLine @($AfterFxPath, '-m')", source)
-        self.assertIn("$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)", source)
+        self.assertIn("$directQueueLaunch = ([string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1') -or ($transportKind -eq 'in_process_collector')", source)
+        self.assertIn("Join-WindowsCommandLine @($AfterFxPath)", source)
+        self.assertNotIn("Join-WindowsCommandLine @($AfterFxPath, '-m')", source)
+        self.assertIn("$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-ro', $normalizedQueuePath)", source)
         self.assertIn("$dispatchScheduledTaskName = '\\OLM_Witness_Dispatch_'", source)
         self.assertIn("schtasks.exe /Create /TN $dispatchScheduledTaskName", source)
         self.assertIn("schtasks.exe /Run /TN $dispatchScheduledTaskName", source)
@@ -306,6 +421,63 @@ class CompilerTests(unittest.TestCase):
         self.assertIn("Stop-CdbCapture\n    Finish (Failure 'cdb_capture'", source)
         self.assertIn("CDB was terminated and AfterFX was stopped", source)
         self.assertIn("cdb_alive_after_cleanup", source)
+
+    def test_launcher_collector_branch_is_fail_closed_and_pid_bound(self) -> None:
+        source = LAUNCHER.read_text(encoding="utf-8")
+        self.assertIn("$transportKind = if ($contract.transport", source)
+        self.assertIn("@('--pid', [string]$boundPid, '--dll', $dllPath, '--config', $configPath)", source)
+        self.assertIn("collector_status.json", source)
+        self.assertIn("$status.status -ne 'ok'", source)
+        self.assertIn("Set-Content -LiteralPath $continue -Value 'continue'", source)
+        collector_branch = source[source.index("    $collectorOutputDir"):]
+        self.assertLess(collector_branch.index("Wait-CollectorStatus $collectorStatusPath 'armed'"), collector_branch.index("Set-Content -LiteralPath $continue -Value 'continue'"))
+        self.assertLess(collector_branch.index("Set-Content -LiteralPath $continue -Value 'continue'"), collector_branch.index("Read-CollectorStatus $collectorStatusPath 'ok'"))
+        self.assertLess(collector_branch.index("Read-CollectorStatus $collectorStatusPath 'ok'"), collector_branch.index("Validate-CollectorOutputs $case"))
+        injector_launch = source[source.index("$script:injectorProcess = Start-Process"):]
+        self.assertIn("-Wait -PassThru", injector_launch.splitlines()[0])
+        self.assertLess(source.index("-Wait -PassThru"), source.index("$injectorExitCode = $injectorProcess.ExitCode"))
+
+    def test_launcher_cache_rescan_only_removes_exact_plugin_cache_entries(self) -> None:
+        source = LAUNCHER.read_text(encoding="utf-8")
+        self.assertIn("function Invoke-PluginCacheRescan", source)
+        self.assertIn("function Test-PluginCacheModuleMatch", source)
+        self.assertIn("function Get-PluginCacheRoots", source)
+        self.assertIn("plugin_cache_rescan.json", source)
+        self.assertIn("match_rule = 'registry leaf must equal module_filename or module_filename + underscore suffix'", source)
+        self.assertIn("Get-ChildItem -LiteralPath $root.PSPath -Recurse", source)
+        self.assertIn("Remove-Item -LiteralPath $match.PSPath -Recurse -Force", source)
+        self.assertNotIn("Remove-Item -LiteralPath $root.PSPath -Recurse -Force", source)
+        self.assertIn("Failure 'plugin_cache_rescan'", source)
+
+    def test_collector_transport_uses_single_direct_queue_launch(self) -> None:
+        source = LAUNCHER.read_text(encoding="utf-8")
+        selector = "($transportKind -eq 'in_process_collector')"
+        direct_launch = "Join-WindowsCommandLine @($AfterFxPath, '-ro', $normalizedQueuePath)"
+        ordinary_launch = "Join-WindowsCommandLine @($AfterFxPath)"
+        dispatch_guard = "if (!$directQueueLaunch) {"
+        self.assertIn(selector, source)
+        self.assertIn(direct_launch, source)
+        self.assertIn(ordinary_launch, source)
+        self.assertIn(dispatch_guard, source)
+        self.assertLess(source.index(selector), source.index(direct_launch))
+        self.assertLess(source.index(direct_launch), source.index(ordinary_launch))
+        self.assertLess(source.index(ordinary_launch), source.index(dispatch_guard))
+        guarded_dispatch = source[source.index(dispatch_guard):]
+        self.assertIn("$dispatchScheduledTaskName", guarded_dispatch)
+        self.assertIn("schtasks.exe /Run /TN $dispatchScheduledTaskName", guarded_dispatch)
+
+    def test_generated_queue_does_not_start_a_second_ae_script(self) -> None:
+        queue = _queue_source(load_spec(SPEC))
+        self.assertIn('var rendererSource = read(root + "/scripts/renderer.jsx");', queue)
+        self.assertIn("eval(rendererSource);", queue)
+        self.assertNotIn("$.evalFile", queue)
+
+    def test_collector_trace_uses_the_existing_flat_event_validator(self) -> None:
+        base_contract = load_spec(SPEC)
+        collector_contract = copy.deepcopy(base_contract)
+        collector_contract["transport"] = {"kind": "in_process_collector"}
+        result = validate_trace(collector_contract, complete_trace(base_contract), {"run_id": "synth-fixture", "ae_pid": 4242, "module_base": "0x7ff800000000"})
+        self.assertEqual(result["status"], "answered")
 
 
 class RuntimeTests(unittest.TestCase):

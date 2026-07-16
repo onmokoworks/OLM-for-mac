@@ -27,7 +27,8 @@ if ($ParseOnly) {
 
 if (!$AexPath) { $AexPath = [string]$contract.plugin.default_aex_path }
 if (!$AfterFxPath) { $AfterFxPath = [string]$contract.host.afterfx_path }
-if (!$CdbPath) { $CdbPath = [string]$contract.host.cdb_path }
+$transportKind = if ($contract.transport -and $contract.transport.kind) { [string]$contract.transport.kind } else { 'cdb' }
+if (!$CdbPath -and $transportKind -eq 'cdb') { $CdbPath = [string]$contract.host.cdb_path }
 $runId = ([string]$contract.run_id_prefix) + '-' + ([guid]::NewGuid().ToString('N'))
 $work = Join-Path $WorkRoot $runId
 New-Item -ItemType Directory -Force -Path $work | Out-Null
@@ -35,6 +36,7 @@ $work = (Get-Item -LiteralPath $work).FullName
 $combinedTrace = Join-Path $work 'combined_cdb_trace.txt'
 $identityPath = Join-Path $work 'runtime_identity.json'
 $statusPath = Join-Path $work 'validation_status.json'
+$pluginCacheRescanPath = Join-Path $work 'plugin_cache_rescan.json'
 $launchOut = Join-Path $work 'afterfx_launcher_stdout.txt'
 $launchErr = Join-Path $work 'afterfx_launcher_stderr.txt'
 $processDiagnostics = Join-Path $work 'afterfx_process_diagnostics.json'
@@ -47,6 +49,7 @@ $queuePath = Join-Path $PackageRoot ([string]$contract.queue).Replace('/', '\')
 $sessionId = (Get-Process -Id $PID).SessionId
 $launch = $null
 $cdb = $null
+$injectorProcess = $null
 $launchStarted = $false
 $launchArguments = $null
 $launchArgumentValues = @()
@@ -65,6 +68,7 @@ $dispatchScheduledTaskName = $null
 $dispatchScheduledTaskCreated = $false
 $normalizedQueuePath = $null
 $observedCommandLine = $null
+$renderAePid = $null
 $bootstrapObservedMarker = $false
 $bootstrapPluginLoadClaimed = $false
 $queueBootstrapObserved = $false
@@ -140,6 +144,89 @@ function Get-AfterFxState {
     })
 }
 
+function Test-PluginCacheModuleMatch([string]$keyName, [string]$moduleFilename) {
+  if ([string]::IsNullOrWhiteSpace($keyName) -or [string]::IsNullOrWhiteSpace($moduleFilename)) { return $false }
+  $pattern = '^' + [regex]::Escape($moduleFilename) + '(?:_.+)?$'
+  return $keyName -imatch $pattern
+}
+
+function Get-PluginCacheRoots {
+  $roots = @()
+  $afterEffectsRoot = 'HKCU:\Software\Adobe\After Effects'
+  if (!(Test-Path -LiteralPath $afterEffectsRoot)) { return @() }
+  foreach ($versionKey in @(Get-ChildItem -LiteralPath $afterEffectsRoot -ErrorAction SilentlyContinue)) {
+    foreach ($cacheName in @('PluginCache', 'PluginCache.64', 'HeadlessPluginCache', 'HeadlessPluginCache.64')) {
+      $candidate = Join-Path $versionKey.PSPath $cacheName
+      if (Test-Path -LiteralPath $candidate) {
+        $roots += Get-Item -LiteralPath $candidate
+      }
+    }
+  }
+  return @($roots | Sort-Object PSPath -Unique)
+}
+
+function Get-RegistryKeySnapshot([string]$path) {
+  $item = Get-Item -LiteralPath $path
+  $values = [ordered]@{}
+  $properties = Get-ItemProperty -LiteralPath $path
+  foreach ($property in $properties.PSObject.Properties) {
+    if ($property.Name -like 'PS*') { continue }
+    $values[$property.Name] = $property.Value
+  }
+  $children = @()
+  foreach ($child in @(Get-ChildItem -LiteralPath $path -ErrorAction SilentlyContinue | Sort-Object Name)) {
+    $children += (Get-RegistryKeySnapshot $child.PSPath)
+  }
+  return [ordered]@{
+    path = $item.PSPath
+    values = $values
+    children = $children
+  }
+}
+
+function Write-PluginCacheRescanReport([string]$path, [object]$report) {
+  $report | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath $path -Encoding UTF8
+}
+
+function Invoke-PluginCacheRescan([object]$plugin, [string]$aexPath, [string]$reportPath) {
+  $moduleFilename = [string]$plugin.module_filename
+  $report = [ordered]@{
+    enabled = [bool]$plugin.cache_rescan
+    module_filename = $moduleFilename
+    aex_path = $aexPath
+    match_rule = 'registry leaf must equal module_filename or module_filename + underscore suffix'
+    roots_scanned = @()
+    matched_keys = @()
+    deleted_keys = @()
+  }
+  if (-not $report.enabled) { return }
+  try {
+    $roots = @(Get-PluginCacheRoots)
+    $report.roots_scanned = @($roots | ForEach-Object { $_.PSPath })
+    $matches = @()
+    foreach ($root in $roots) {
+      foreach ($key in @(Get-ChildItem -LiteralPath $root.PSPath -Recurse -ErrorAction SilentlyContinue)) {
+        if (Test-PluginCacheModuleMatch $key.PSChildName $moduleFilename) {
+          $matches += $key
+        }
+      }
+    }
+    $uniqueMatches = @($matches | Sort-Object PSPath -Unique)
+    foreach ($match in $uniqueMatches) {
+      $report.matched_keys += (Get-RegistryKeySnapshot $match.PSPath)
+    }
+    foreach ($match in @($uniqueMatches | Sort-Object { $_.PSPath.Length } -Descending)) {
+      Remove-Item -LiteralPath $match.PSPath -Recurse -Force
+      $report.deleted_keys += $match.PSPath
+    }
+    Write-PluginCacheRescanReport $reportPath $report
+  } catch {
+    $report['error'] = $_.Exception.Message
+    Write-PluginCacheRescanReport $reportPath $report
+    throw
+  }
+}
+
 function Stop-WitnessProcesses {
   foreach ($case in @($contract.cases)) {
     $ready = Join-Path $work ("ready_" + $case.id + '.marker')
@@ -149,6 +236,7 @@ function Stop-WitnessProcesses {
     }
   }
   Stop-CdbCapture
+  if ($injectorProcess -and !$injectorProcess.HasExited) { Stop-Process -Id $injectorProcess.Id -Force -ErrorAction SilentlyContinue }
   if ($launch -and !$launch.HasExited) { Stop-Process -Id $launch.Id -Force -ErrorAction SilentlyContinue }
   foreach ($retry in @($queueRetryProcesses)) {
     if ($retry -and !$retry.HasExited) { Stop-Process -Id $retry.Id -Force -ErrorAction SilentlyContinue }
@@ -282,7 +370,73 @@ function Render-Cdb([object]$case, [string]$trace, [Int64]$baseValue, [string]$h
   return $text
 }
 
-foreach ($path in @($AexPath, $AfterFxPath, $CdbPath, $queuePath)) {
+function Render-CollectorConfig([object]$case, [string]$configPath, [string]$outputDir) {
+  $templatePath = Join-Path $PackageRoot ([string]$contract.transport.package_config_template).Replace('/', '\')
+  $text = Get-Content -LiteralPath $templatePath -Raw
+  $fixed = [ordered]@{RUN_ID=$runId; AE_PID=[string]$boundPid; CASE_ID=[string]$case.id; OUTPUT_DIR=$outputDir.Replace('\', '/')}
+  foreach ($pair in $fixed.GetEnumerator()) { $text = $text.Replace('{{' + $pair.Key + '}}', [string]$pair.Value) }
+  foreach ($property in $case.template_values.psobject.Properties) {
+    $text = $text.Replace('{{CASE_VALUE:' + $property.Name + '}}', [string]$property.Value)
+  }
+  if ($text -match '\{\{[^{}]+\}\}') { throw "unresolved collector config placeholder: $($Matches[0])" }
+  $text | Set-Content -LiteralPath $configPath -Encoding UTF8
+}
+
+function Invoke-Collector([object]$case, [string]$outputDir, [string]$configPath, [string]$stdout, [string]$stderr) {
+  $injectorPath = Join-Path $PackageRoot ([string]$contract.transport.package_injector_path).Replace('/', '\')
+  $dllPath = Join-Path $PackageRoot ([string]$contract.transport.package_collector_dll).Replace('/', '\')
+  $arguments = Join-WindowsCommandLine @('--pid', [string]$boundPid, '--dll', $dllPath, '--config', $configPath)
+  $script:injectorProcess = Start-Process -FilePath $injectorPath -ArgumentList $arguments -RedirectStandardOutput $stdout -RedirectStandardError $stderr -NoNewWindow -Wait -PassThru
+  $injectorExitCode = $injectorProcess.ExitCode
+  if ($injectorExitCode -ne 0) {
+    throw "collector injector failed for $($case.id) with exit code $injectorExitCode"
+  }
+}
+
+function Read-CollectorStatus([string]$path, [string]$expectedStatus, [string]$caseId) {
+  if (!(Test-Path -LiteralPath $path -PathType Leaf)) { return $null }
+  try { $status = Get-Content -LiteralPath $path -Raw | ConvertFrom-Json }
+  catch {
+    # The collector replaces this file atomically while publishing progress.
+    # A reader can briefly race the replacement; retry until the enclosing
+    # arm/capture deadline instead of turning a transient read into failure.
+    return $null
+  }
+  if ($null -eq $status -or $status.status -ne $expectedStatus) { return $null }
+  foreach ($field in @('run_id', 'ae_pid', 'case_id')) {
+    if ($null -eq $status.$field) { throw "collector $expectedStatus status is missing $field for $caseId" }
+  }
+  if ([string]$status.run_id -cne $runId -or
+      [string]$status.ae_pid -cne [string]$boundPid -or
+      [string]$status.case_id -cne $caseId) {
+    throw "collector $expectedStatus status identity mismatch for $caseId"
+  }
+  return $status
+}
+
+function Wait-CollectorStatus([string]$path, [string]$expectedStatus, [string]$caseId, [int]$timeoutSeconds) {
+  $deadline = (Get-Date).AddSeconds($timeoutSeconds)
+  while ((Get-Date) -lt $deadline) {
+    $status = Read-CollectorStatus $path $expectedStatus $caseId
+    if ($null -ne $status) { return $status }
+    Start-Sleep -Milliseconds 250
+  }
+  throw "collector status=$expectedStatus was not observed for $caseId within ${timeoutSeconds}s"
+}
+
+function Validate-CollectorOutputs([object]$case, [string]$outputDir, [string]$combinedTrace, [object]$status) {
+  if ($null -eq $status -or $status.status -ne 'ok') { throw "collector status is not ok for $($case.id)" }
+  foreach ($relative in @($contract.transport.required_outputs)) {
+    $path = Join-Path $outputDir ([string]$relative).Replace('/', '\')
+    if (!(Test-Path -LiteralPath $path -PathType Leaf)) { throw "collector output missing for $($case.id): $relative" }
+    Copy-Item -LiteralPath $path -Destination (Join-Path $work ("collector_" + $case.id + '_' + [IO.Path]::GetFileName($path))) -Force
+  }
+  $tracePath = Join-Path $outputDir 'collector_trace.txt'
+  Get-Content -LiteralPath $tracePath | Add-Content -LiteralPath $combinedTrace
+}
+
+foreach ($path in @($AexPath, $AfterFxPath, $(if ($transportKind -eq 'cdb') { $CdbPath } else { $null }), $queuePath)) {
+  if (!$path) { continue }
   if (!(Test-Path -LiteralPath $path -PathType Leaf)) { Finish (Failure 'preflight' "required file missing: $path" @('preflight_file') '') 2 }
 }
 if (Get-Process -Name AfterFX -ErrorAction SilentlyContinue) {
@@ -290,11 +444,15 @@ if (Get-Process -Name AfterFX -ErrorAction SilentlyContinue) {
 }
 $AexPath = (Get-Item -LiteralPath $AexPath).FullName
 $AfterFxPath = (Get-Item -LiteralPath $AfterFxPath).FullName
-$CdbPath = (Get-Item -LiteralPath $CdbPath).FullName
+if ($transportKind -eq 'cdb') { $CdbPath = (Get-Item -LiteralPath $CdbPath).FullName }
 $PackageRoot = (Get-Item -LiteralPath $PackageRoot).FullName
 $hash = (Get-FileHash -LiteralPath $AexPath -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($hash -ne [string]$contract.plugin.aex_sha256) {
   Finish (Failure 'module_hash' 'AEX hash does not match the witness contract' @('expected_aex_sha256') "actual=$hash") 2
+}
+if ($contract.plugin.PSObject.Properties.Name -contains 'cache_rescan' -and [bool]$contract.plugin.cache_rescan) {
+  try { Invoke-PluginCacheRescan $contract.plugin $AexPath $pluginCacheRescanPath }
+  catch { Finish (Failure 'plugin_cache_rescan' $_.Exception.Message @('plugin_cache_rescan') '') 2 }
 }
 
 $env:WINDOWS_WITNESS_WORK_ROOT = $work
@@ -322,15 +480,18 @@ if ($queueLaunch -match '\s') { Finish (Failure 'path_preflight' 'short JSX laun
 $normalizedQueuePath = [IO.Path]::GetFullPath($queueLaunch)
 $queueHash = (Get-FileHash -LiteralPath $queueLaunch -Algorithm SHA256).Hash.ToLowerInvariant()
 $env:WINDOWS_WITNESS_QUEUE_SHA256 = $queueHash
-$directQueueLaunch = [string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1'
+$directQueueLaunch = ([string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1') -or ($transportKind -eq 'in_process_collector')
 $afterFxCommandLine = if ($directQueueLaunch) {
-  Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)
+  # `-ro` is AE's re-entrant file-script form. It preserves the same process
+  # while allowing the queue to evaluate its bundled renderer.
+  Join-WindowsCommandLine @($AfterFxPath, '-ro', $normalizedQueuePath)
 } else {
-  Join-WindowsCommandLine @($AfterFxPath, '-m')
+  # Launch one ordinary desktop instance. `-m` permits a second AE process,
+  # which makes the later `-r` dispatch lose the launch wrapper environment.
+  Join-WindowsCommandLine @($AfterFxPath)
 }
-$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)
-$wrapperLines = @(
-  '@echo off',
+$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-ro', $normalizedQueuePath)
+$environmentLines = @(
   ('set "WINDOWS_WITNESS_WORK_ROOT=' + $work + '"'),
   ('set "WINDOWS_WITNESS_RUN_ID=' + $runId + '"'),
   ('set "WINDOWS_WITNESS_PACKAGE_ROOT=' + $PackageRoot + '"'),
@@ -340,9 +501,9 @@ $wrapperLines = @(
   'set "OLM_AE_FORCE_SOFTWARE=1"'
 )
 foreach ($property in $contract.project.environment.psobject.Properties) {
-  $wrapperLines += ('set "' + $property.Name + '=' + [string]$property.Value + '"')
+  $environmentLines += ('set "' + $property.Name + '=' + [string]$property.Value + '"')
 }
-$wrapperLines += @($afterFxCommandLine, 'exit /b %ERRORLEVEL%')
+$wrapperLines = @('@echo off') + $environmentLines + @($afterFxCommandLine, 'exit /b %ERRORLEVEL%')
 $wrapperLines | Set-Content -LiteralPath $launchWrapper -Encoding ASCII
 $launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)
 $launchArguments = Join-WindowsCommandLine $launchArgumentValues
@@ -371,7 +532,7 @@ while ((Get-Date) -lt $deadline) {
   Start-Sleep -Milliseconds 250
 }
 if ($launchStates.Count -ne 1) {
-  Finish (Failure 'desktop_process_discovery' 'After Effects -m process did not become observable' @('one_desktop_AfterFX_process') '') 2
+  Finish (Failure 'desktop_process_discovery' 'After Effects desktop process did not become observable' @('one_desktop_AfterFX_process') '') 2
 }
 $launch = Get-Process -Id ([int]$launchStates[0].pid) -ErrorAction SilentlyContinue
 if (!$launch) {
@@ -380,7 +541,9 @@ if (!$launch) {
 $mainAePid = [int]$launch.Id
 $dispatchTaskOutput = @()
 if (!$directQueueLaunch) {
-  $dispatchLines = @('@echo off', $queueDispatchCommandLine, 'exit /b %ERRORLEVEL%')
+  # AE 2025 may execute `-r` in a second desktop process. Give that process
+  # the same run identity as the warm-up process so the JSX can bind itself.
+  $dispatchLines = @('@echo off') + $environmentLines + @($queueDispatchCommandLine, 'exit /b %ERRORLEVEL%')
   $dispatchLines | Set-Content -LiteralPath $dispatchWrapper -Encoding ASCII
   $dispatchScheduledTaskName = '\OLM_Witness_Dispatch_' + ($runId -replace '[^A-Za-z0-9_-]', '_')
   $dispatchTaskOutput = & schtasks.exe /Create /TN $dispatchScheduledTaskName /TR $dispatchWrapper /SC ONCE /SD $taskDate /ST $taskTime /IT /F 2>&1
@@ -416,6 +579,16 @@ if ([string]$queueBootstrapBinding.run_id -cne $runId -or
     [string]$queueBootstrapBinding.queue_sha256 -cne $queueHash) {
   Finish (Failure 'queue_binding' 'queue bootstrap marker does not match this run/package/script' @('queue_bootstrap:run_id', 'queue_bootstrap:work', 'queue_bootstrap:root', 'queue_bootstrap:queue_sha256') ($queueBootstrapBinding | ConvertTo-Json -Compress)) 2
 }
+$renderAePid = $mainAePid
+if (!$directQueueLaunch) {
+  $queueStates = @(Get-AfterFxState | Where-Object { [int]$_.pid -ne $mainAePid })
+  if ($queueStates.Count -gt 1) {
+    Finish (Failure 'queue_process_binding' 'More than one AE process remained after the JSX dispatch' @('zero_or_one_queue_AfterFX_process') ($queueStates | ConvertTo-Json -Compress)) 2
+  }
+  if ($queueStates.Count -eq 1) {
+    $renderAePid = [int]$queueStates[0].pid
+  }
+}
 foreach ($case in @($contract.cases | Sort-Object order)) {
   $caseId = [string]$case.id
   $ready = Join-Path $work ("ready_$caseId.marker")
@@ -442,7 +615,7 @@ foreach ($case in @($contract.cases | Sort-Object order)) {
   $loaded = @()
   $deadline = (Get-Date).AddSeconds(30)
   while ((Get-Date) -lt $deadline -and $loaded.Count -ne 1) {
-    $loaded = @(Get-AfterFxState | ForEach-Object {
+    $loaded = @(Get-AfterFxState | Where-Object { [int]$_.pid -eq $renderAePid } | ForEach-Object {
       $process = Get-Process -Id $_.pid -ErrorAction SilentlyContinue
       try {
         $module = $process.Modules | Where-Object { $_.FileName -ieq $AexPath } | Select-Object -First 1
@@ -466,6 +639,7 @@ foreach ($case in @($contract.cases | Sort-Object order)) {
     Finish (Failure 'same_run_identity' 'AE PID or module base changed between cases' @('shared_ae_pid', 'shared_module_base') "pid=$($ae.Id) base=$base") 2
   }
 
+  if ($transportKind -eq 'cdb') {
   try {
     Render-Cdb $case $shortTrace $module.BaseAddress.ToInt64() $hash | Set-Content -LiteralPath $shortScript -Encoding ASCII
     Copy-Item -LiteralPath $shortScript -Destination $script -Force
@@ -495,11 +669,48 @@ foreach ($case in @($contract.cases | Sort-Object order)) {
     Copy-Item -LiteralPath $shortTrace -Destination $trace -Force
     Get-Content -LiteralPath $shortTrace | Add-Content -LiteralPath $combinedTrace
   }
+  } else {
+    $collectorOutputDir = Join-Path $work ("exports\" + $caseId)
+    New-Item -ItemType Directory -Force -Path $collectorOutputDir | Out-Null
+    $collectorConfig = Join-Path $work ("collector_config_" + $caseId + '.json')
+    $collectorStdout = Join-Path $work ("collector_stdout_" + $caseId + '.txt')
+    $collectorStderr = Join-Path $work ("collector_stderr_" + $caseId + '.txt')
+    $collectorStatusPath = Join-Path $collectorOutputDir 'collector_status.json'
+    foreach ($relative in @($contract.transport.required_outputs)) {
+      Remove-Item -LiteralPath (Join-Path $collectorOutputDir ([string]$relative).Replace('/', '\')) -Force -ErrorAction SilentlyContinue
+    }
+    try {
+      Render-CollectorConfig $case $collectorConfig $collectorOutputDir
+      Invoke-Collector $case $collectorOutputDir $collectorConfig $collectorStdout $collectorStderr
+      Wait-CollectorStatus $collectorStatusPath 'armed' $caseId ([int]$contract.transport.arm_timeout_seconds) | Out-Null
+      Set-Content -LiteralPath $continue -Value 'continue' -Encoding ASCII
+      $collectorCaptureDeadline = (Get-Date).AddSeconds([int]$contract.transport.capture_timeout_seconds)
+      $collectorStatus = $null
+      $aeResult = $null
+      while ((Get-Date) -lt $collectorCaptureDeadline -and ($null -eq $collectorStatus -or $null -eq $aeResult)) {
+        if ($null -eq $aeResult -and (Test-Path -LiteralPath $result -PathType Leaf)) {
+          try { $aeResult = Get-Content -LiteralPath $result -Raw | ConvertFrom-Json }
+          catch { throw "AE result is not valid JSON for $caseId" }
+        }
+        if ($null -eq $collectorStatus) {
+          $collectorStatus = Read-CollectorStatus $collectorStatusPath 'ok' $caseId
+        }
+        if ($null -eq $collectorStatus -or $null -eq $aeResult) { Start-Sleep -Milliseconds 250 }
+      }
+      if ($null -eq $aeResult) { throw "AE result missing for $caseId before collector capture completed" }
+      if ($null -eq $collectorStatus) { throw "collector status=ok missing for $caseId before capture timeout" }
+      Validate-CollectorOutputs $case $collectorOutputDir $combinedTrace $collectorStatus
+    }
+    catch { Finish (Failure 'collector_capture' $_.Exception.Message @('collector_injection_and_outputs') '') 2 }
+  }
 
-  $deadline = (Get-Date).AddSeconds(180)
-  while ((Get-Date) -lt $deadline -and !(Test-Path -LiteralPath $result)) { Start-Sleep -Milliseconds 250 }
-  if (!(Test-Path -LiteralPath $result -PathType Leaf)) { Finish (Failure 'render_result' "AE result missing for $caseId" @("ae_result_$caseId.json") '') 2 }
-  $aeResult = Get-Content -LiteralPath $result -Raw | ConvertFrom-Json
+  if ($transportKind -eq 'cdb') {
+    $deadline = (Get-Date).AddSeconds(180)
+    while ((Get-Date) -lt $deadline -and !(Test-Path -LiteralPath $result)) { Start-Sleep -Milliseconds 250 }
+    if (!(Test-Path -LiteralPath $result -PathType Leaf)) { Finish (Failure 'render_result' "AE result missing for $caseId" @("ae_result_$caseId.json") '') 2 }
+    try { $aeResult = Get-Content -LiteralPath $result -Raw | ConvertFrom-Json }
+    catch { Finish (Failure 'render_result' "AE result is not valid JSON for $caseId" @('valid_ae_result_json') '') 2 }
+  }
   if ($aeResult.status -ne 'ok' -or [int]$aeResult.project_bits_per_channel -ne [int]$contract.project.bits_per_channel) {
     Finish (Failure 'render_result' "AE render result is invalid for $caseId" @('status=ok', 'project_bits_per_channel') ($aeResult | ConvertTo-Json -Compress)) 2
   }

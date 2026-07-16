@@ -42,6 +42,7 @@
 | The preserved `0004 +0x350b` pre-call `[rsp+0x48]` floats are not target input evidence. Decomp shows `rcx=[rsp+0x48]` is the `FUN_18000cce0` output buffer, and the saved red-heavy value `[0.78198957,0.0015756468,0.0015756468,1.0]` matches Mac `cce0_after_b120` for the neighboring previous pixel `(500,1055)`. Treat it as stale output-buffer content. The remaining hard witness for `(501,1055)` is the Windows final writer value `[0.34566423,0.11387402,0.11387402,1.0]` / `[159,95,95,255]`. | `refs/returns/windows/20260621_smoother2_legacy_current_aex_0004_cce0_stepover/`, local Mac `--trace-pixel` probes for `(500,1055)` and `(501,1055)`. | false-lead retired / writer-grounded |
 | Key-enabled current-AEX class-plane generation follows Smooth Range, not the earlier key-predicate threshold. With Smooth Range promoted to the default, `0004 (501,1055)` changes from `idx=192` / one gray sample / `[0.05220960,0.05220960,0.05220960,1.0]` to `idx=208` / three samples / `cce0_after_b120=[0.34566417,0.11387399,0.11387399,1.0]`, matching the Windows final writer floats within print precision. The 11 before-frame measured legacy cases improve from mean-sum `1.3008` to `0.0589`; `0002` and `0003` remain exact. | Local `--class-threshold-mode` sweep and `refs/scripts/smoke_olmsmoother2_legacy_current_aex_cli.py`. | implementation-improved / residual-classified |
 | Local producer-path diff groundwork now assembles the active `0004`/`0012` witness lanes as a writer-anchored stage matrix, so the next harness only needs the first unresolved producer proof. `0004` is reduced to `idx=0xd0` polygon-or-fallback evidence; `0012` is reduced to the first divergence inside `cardinal6/e170/f270/e3a0`. | `scripts/analyze_smoother2_producer_path_diff.py`, `refs/scripts/smoke_analyze_smoother2_producer_path_diff.py`. | harness-grounded |
+| Accepted Windows actual-AEX producer witness for `legacy_case_0012_gamma5_red_blue_current_aex` binds the live lane at writer hook `+0x350b`, captures exact call order `f270 entry -> e170 entry/return -> e3a0 entry/return -> f270 return`, returns valid `e170_c=7`, and preserves one-vertex raw words `3e3ce706,3e3ce706,3e3ce706,3f2eaeaf` / `3e91a7b9`. The corrected rerun now proves live `RDX p2[0..5]=92,841,1,92,842,2`, sample `x/y=92,841`, center bytes `255,255,0,255`, previous bytes `255,0,0,0`, left bytes `0,255,0,255`, and predicate bits `center_b0=255`, `prev_b0=255`, `left_b1=255`, which match `e170_c=7`. The remaining divergence is upstream descriptor/dispatch selection versus the current Mac local descriptor `91,841,1,91,843,5`. | `refs/conformance/olmsmoother2_legacy_key_producer_actual_aex_20260716.md`, `refs/reports/runtime_trace_summary_windows_witness_olmsmoother2_legacy_key_producer_common_core_20260716_20260716_150855.json`, `refs/windows_returns/20260716/20260716_150500__RETURN__OLMSMOOTHER2_RDX_DESCRIPTOR_CORRECTED/RETURN_OLMSMOOTHER2_LEGACY_KEY_PRODUCER.zip`. | current-AEX witness exact / predicate matched / descriptor-dispatch narrowed |
 
 ## Parameters
 
@@ -513,18 +514,28 @@ filter.
   curve-index source. Keep the override as a diagnostic only; do not promote
   it into production behavior.
 - 2026-06-21 `f270/e170/e3a0` trace refinement:
-  The current `0012 (91,841)` max witness enters `cardinal6` with
-  `desc=(91,841,1,91,843,5)` and `key=50`. Local `e170` reads
-  `A(x,y-1)=1`, `R(x-1,y)=0`, `A(x,y)=0`, producing `c=2`; `f270` then emits
-  source `(91,840)` with `weight=0.35632184`, `rgba=(0.99106717,0.99106717,
-  0.99106717,0.99607843)`, leading to `cce0_after_b120=[0.99106723,
-  0.99106723,0.99106723,0.35492450]`. Suppressing all `f270` emits is rejected:
-  the nine residual cases worsen from normal `mean_sum=0.058945` to
-  `mean_sum=0.0831`-class behavior, and `0012` worsens from `max=91
-  mean=0.0151` to `max=122 mean=0.0184`. Therefore the remaining mismatch is
-  not solved by a global `f270` suppression; the next Windows proof must decide
-  whether this exact witness differs in `desc/key`, `e170` bits, or `e3a0`
-  trapezoid/append state.
+  This is now a local predecessor only. The current `0012 (91,841)` max
+  witness enters `cardinal6` with `desc=(91,841,1,91,843,5)` and `key=50`.
+  Local `e170` reads `A(x,y-1)=1`, `R(x-1,y)=0`, `A(x,y)=0`, producing `c=2`;
+  `f270` then emits source `(91,840)` with `weight=0.35632184`,
+  `rgba=(0.99106717,0.99106717,0.99106717,0.99607843)`, leading to
+  `cce0_after_b120=[0.99106723,0.99106723,0.99106723,0.35492450]`.
+  Suppressing all `f270` emits is rejected: the nine residual cases worsen
+  from normal `mean_sum=0.058945` to `mean_sum=0.0831`-class behavior, and
+  `0012` worsens from `max=91 mean=0.0151` to `max=122 mean=0.0184`. The
+  accepted 2026-07-16 Windows actual-AEX producer witness returns valid
+  `e170_c=7` with a one-vertex `e3a0/f270` result, so `c=2` is no longer the
+  live target truth for this lane. The corrected rerun now proves the live
+  descriptor `92,841,1,92,842,2` and matching predicate bytes
+  `center_b0=255`, `prev_b0=255`, `left_b1=255`, so the remaining work moves
+  upstream to why Windows selects that descriptor/dispatch lane while the Mac
+  local path still uses `91,841,1,91,843,5`.
+  A 2026-07-16 local probe at the corrected Windows origin `(92,841)` produces
+  `cardinal6 desc=(92,840,1,92,843,2)`, not the Windows
+  `(92,841,1,92,842,2)`. This rules out a coordinate-only explanation and
+  narrows the next witness to the `d3b0/da50` stop-predicate class bytes around
+  `x=91..93`, `y=840..844`; see
+  `refs/conformance/olmsmoother2_legacy_upstream_descriptor_local_probe_20260716.md`.
 - 2026-06-24 Ghidra MCP static recheck:
   - `FUN_18000e170` reads exactly `A(x,y-1)`, `R(x-1,y)`, and `A(x,y)` and
     returns the `2/4/1` bit sum. The current Mac `win_e170` matches this
@@ -566,12 +577,19 @@ filter.
     passthrough `[1,1,1,0]`, but Windows writes `[103,103,103,113]`. The next
     proof is whether Windows also has zero vertices or whether a helper appends
     neighbor-derived samples before cce0.
-  - `0012 (91,841)`: `idx=105`, `cardinal6 desc=(91,841,1,91,843,5)`,
-    `key=50`, `e170 c=2`, `f270 -> e3a0`, appending source `(91,840)` with
-    weight `0.35632184`, then `cce0_after_b120=[0.99106723,0.99106723,
-    0.99106723,0.35492450]`, while Windows is transparent. The next proof is
-    the first Windows-vs-Mac divergence among c280 idx, cardinal6 desc/key,
-    e170 bits/code, f270/e3a0 emission, cce0 blend, or final writer.
+  - `0012 (91,841)`: local predecessor path is `idx=105`,
+    `cardinal6 desc=(91,841,1,91,843,5)`, `key=50`, `e170 c=2`,
+    `f270 -> e3a0`, appending source `(91,840)` with weight `0.35632184`,
+    then `cce0_after_b120=[0.99106723,0.99106723,0.99106723,0.35492450]`,
+    while Windows is transparent. The accepted 2026-07-16 live witness now
+    preserves valid call order `f270 -> e170 -> e3a0`, live `e170_c=7`, and
+    one-vertex raw words
+    `3e3ce706,3e3ce706,3e3ce706,3f2eaeaf` / `3e91a7b9`. The corrected rerun
+    proves live `RDX p2[0..5]=92,841,1,92,842,2` with sample `92,841` and
+    predicate bytes `center_b0=255`, `prev_b0=255`, `left_b1=255`, matching
+    the Windows `c=7` return. The next proof is therefore the first upstream
+    descriptor/dispatch divergence versus the current Mac local descriptor
+    `91,841,1,91,843,5`.
 - 2026-06-24 witness neighborhood report:
   `refs/reports/olmsmoother2_witness_neighborhood_20260624/neighborhood.md`
   records the 5x5 Windows-reference-vs-Mac-candidate neighborhood around the
