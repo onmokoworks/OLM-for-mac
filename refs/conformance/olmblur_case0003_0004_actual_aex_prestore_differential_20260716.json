@@ -1,0 +1,801 @@
+{
+  "schema": "olmblur.case0003-0004.actual-aex-prestore-differential/1",
+  "status": "partial_fail_closed",
+  "platform": "Mac-only Unicorn execution of actual PE AEX; no Windows/SSH/NAS execution",
+  "identity": {
+    "aex": "plugins_2025/OLMBlur.aex",
+    "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+  },
+  "decoded_inputs": {
+    "olmblur__case_0003": {
+      "png_dimensions": [
+        960,
+        540
+      ],
+      "png_sha256": "930317e23068ea93bfd72961c2215e755e73cfd4ec784d97bccca223ed94e30a",
+      "pf16_sha256": "afd4269575102eda52e581cec8e77fe62f5f7e808e33cf64d6baf186c81b70aa",
+      "mapping": "RGBA16 PNG -> little-endian PF16 A,R,G,B using (word + 1) // 2",
+      "parameters": {
+        "blur_amount": 248.600006103516,
+        "smoothness": 100,
+        "repeat": 10,
+        "bias_direction": 1,
+        "legacy": 1
+      },
+      "manifest_frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0003.png"
+    },
+    "olmblur__case_0004": {
+      "png_dimensions": [
+        960,
+        540
+      ],
+      "png_sha256": "930317e23068ea93bfd72961c2215e755e73cfd4ec784d97bccca223ed94e30a",
+      "pf16_sha256": "afd4269575102eda52e581cec8e77fe62f5f7e808e33cf64d6baf186c81b70aa",
+      "mapping": "RGBA16 PNG -> little-endian PF16 A,R,G,B using (word + 1) // 2",
+      "parameters": {
+        "blur_amount": 125.599998474121,
+        "smoothness": 100,
+        "repeat": 4,
+        "bias_direction": 1,
+        "legacy": 0
+      },
+      "manifest_frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0004.png"
+    }
+  },
+  "case_0003_legacy": {
+    "entry": "0x180005f20",
+    "staging_stop": "0x1800065ae",
+    "points": {
+      "(936,1)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(739,2)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(23,36)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(59,76)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(640,85)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(383,124)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(204,179)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(250,213)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(273,218)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(273,221)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(298,228)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(227,278)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(564,281)": {
+        "source_argb16_words": [
+          32768,
+          32768,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x47000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x47000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(165,345)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(165,346)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(129,403)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(362,406)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(362,408)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(756,425)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      },
+      "(25,482)": {
+        "source_argb16_words": [
+          32768,
+          0,
+          0,
+          0
+        ],
+        "actual_staged_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "portable_decode_rgb_bits_hex": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "active_flag": 1,
+        "exact": true
+      }
+    },
+    "instructions": 15572740,
+    "all_source_conversion_exact": true,
+    "feasibility": {
+      "radius_each_iteration": 248,
+      "repeat": 10,
+      "axis_dependency_reach_before_first_helper": 4712,
+      "frame": [
+        960,
+        540
+      ],
+      "full_frame_dependency": true,
+      "stop_reason": "ten radius-248 alternating passes make each residual's pre-store dependency cone full-frame; actual helper/writer execution is not bounded"
+    },
+    "classification": "source_conversion_excluded_then_fail_closed_before_worker_helper_pre_store"
+  },
+  "case_0004_nonlegacy": {
+    "actual_aex": {
+      "entry": "0x180002280",
+      "staging_stop": "0x1800028db",
+      "points": {
+        "(411,258)": {
+          "source_argb16_words": [
+            32768,
+            32768,
+            0,
+            0
+          ],
+          "actual_staged_rgb_bits_hex": [
+            "0x47000000",
+            "0x00000000",
+            "0x00000000"
+          ],
+          "portable_decode_rgb_bits_hex": [
+            "0x47000000",
+            "0x00000000",
+            "0x00000000"
+          ],
+          "active_flag": 1,
+          "exact": true
+        },
+        "(458,314)": {
+          "source_argb16_words": [
+            32768,
+            32768,
+            0,
+            0
+          ],
+          "actual_staged_rgb_bits_hex": [
+            "0x47000000",
+            "0x00000000",
+            "0x00000000"
+          ],
+          "portable_decode_rgb_bits_hex": [
+            "0x47000000",
+            "0x00000000",
+            "0x00000000"
+          ],
+          "active_flag": 1,
+          "exact": true
+        }
+      },
+      "instructions": 15956673,
+      "all_source_conversion_exact": true
+    },
+    "portable": {
+      "staging": {
+        "(411,258)": {
+          "bits_hex": [
+            "0x47000000",
+            "0x00000000",
+            "0x00000000"
+          ]
+        },
+        "(458,314)": {
+          "bits_hex": [
+            "0x47000000",
+            "0x00000000",
+            "0x00000000"
+          ]
+        }
+      },
+      "stages": [
+        {
+          "points": {
+            "(411,258)": {
+              "bits_hex": [
+                "0x46c65c32",
+                "0x00000000",
+                "0x00000000"
+              ]
+            },
+            "(458,314)": {
+              "bits_hex": [
+                "0x46f2a398",
+                "0x00000000",
+                "0x00000000"
+              ]
+            }
+          },
+          "iteration": 1,
+          "direction": "horizontal",
+          "radius": 125
+        },
+        {
+          "points": {
+            "(411,258)": {
+              "bits_hex": [
+                "0x46b02885",
+                "0x00000000",
+                "0x00000000"
+              ]
+            },
+            "(458,314)": {
+              "bits_hex": [
+                "0x46d2af52",
+                "0x00000000",
+                "0x00000000"
+              ]
+            }
+          },
+          "iteration": 1,
+          "direction": "vertical",
+          "radius": 125
+        },
+        {
+          "points": {
+            "(411,258)": {
+              "bits_hex": [
+                "0x46ae7641",
+                "0x00000000",
+                "0x00000000"
+              ]
+            },
+            "(458,314)": {
+              "bits_hex": [
+                "0x46d09b14",
+                "0x00000000",
+                "0x00000000"
+              ]
+            }
+          },
+          "iteration": 2,
+          "direction": "horizontal",
+          "radius": 36
+        },
+        {
+          "points": {
+            "(411,258)": {
+              "bits_hex": [
+                "0x46ac7bf4",
+                "0x00000000",
+                "0x00000000"
+              ]
+            },
+            "(458,314)": {
+              "bits_hex": [
+                "0x46ce6ab3",
+                "0x00000000",
+                "0x00000000"
+              ]
+            }
+          },
+          "iteration": 2,
+          "direction": "vertical",
+          "radius": 36
+        },
+        {
+          "points": {
+            "(411,258)": {
+              "bits_hex": [
+                "0x46ac5a9d",
+                "0x00000000",
+                "0x00000000"
+              ]
+            },
+            "(458,314)": {
+              "bits_hex": [
+                "0x46ce3f3d",
+                "0x00000000",
+                "0x00000000"
+              ]
+            }
+          },
+          "iteration": 3,
+          "direction": "horizontal",
+          "radius": 10
+        },
+        {
+          "points": {
+            "(411,258)": {
+              "bits_hex": [
+                "0x46ac30e1",
+                "0x00000000",
+                "0x00000000"
+              ]
+            },
+            "(458,314)": {
+              "bits_hex": [
+                "0x46ce11f4",
+                "0x00000000",
+                "0x00000000"
+              ]
+            }
+          },
+          "iteration": 3,
+          "direction": "vertical",
+          "radius": 10
+        },
+        {
+          "points": {
+            "(411,258)": {
+              "bits_hex": [
+                "0x46ac2e47",
+                "0x00000000",
+                "0x00000000"
+              ]
+            },
+            "(458,314)": {
+              "bits_hex": [
+                "0x46ce0e8b",
+                "0x00000000",
+                "0x00000000"
+              ]
+            }
+          },
+          "iteration": 4,
+          "direction": "horizontal",
+          "radius": 2
+        },
+        {
+          "points": {
+            "(411,258)": {
+              "bits_hex": [
+                "0x46ac2aff",
+                "0x00000000",
+                "0x00000000"
+              ]
+            },
+            "(458,314)": {
+              "bits_hex": [
+                "0x46ce0aff",
+                "0x00000000",
+                "0x00000000"
+              ]
+            }
+          },
+          "iteration": 4,
+          "direction": "vertical",
+          "radius": 2
+        }
+      ],
+      "final": {
+        "(411,258)": {
+          "pre_store_bits_hex": [
+            "0x46ac2aff",
+            "0x00000000",
+            "0x00000000"
+          ],
+          "stored_rgb_words": [
+            22037,
+            0,
+            0
+          ]
+        },
+        "(458,314)": {
+          "pre_store_bits_hex": [
+            "0x46ce0aff",
+            "0x00000000",
+            "0x00000000"
+          ],
+          "stored_rgb_words": [
+            26373,
+            0,
+            0
+          ]
+        }
+      },
+      "self_check": true
+    },
+    "comparison": {
+      "source_conversion_exact": true,
+      "actual_writer_micro_runs": {
+        "(411,258)": {
+          "input_f32": [
+            22037.498046875,
+            0.0,
+            0.0
+          ],
+          "stored_argb16": [
+            32768,
+            22037,
+            0,
+            0
+          ],
+          "instructions": 22,
+          "direct_memory_cvttss2si": false,
+          "portable_stored_rgb_words": [
+            22037,
+            0,
+            0
+          ],
+          "stored_rgb_exact": true
+        },
+        "(458,314)": {
+          "input_f32": [
+            26373.498046875,
+            0.0,
+            0.0
+          ],
+          "stored_argb16": [
+            32768,
+            26373,
+            0,
+            0
+          ],
+          "instructions": 22,
+          "direct_memory_cvttss2si": false,
+          "portable_stored_rgb_words": [
+            26373,
+            0,
+            0
+          ],
+          "stored_rgb_exact": true
+        }
+      },
+      "writer_store_exact_for_portable_inputs": true,
+      "full_worker_attempt": {
+        "status": "instruction_cap_before_writer",
+        "max_instructions_per_witness": 1000000000,
+        "observed_writer_points": 0,
+        "reason": "radius-125 actual helper execution did not reach the writer within the established cap"
+      },
+      "first_divergence": null,
+      "classification": "worker_helper_pre_store_unresolved_fail_closed"
+    }
+  },
+  "FACT": [
+    "Both actual worker entries execute from the pinned OLMBlur.aex with exact manifest parameters.",
+    "case_0003 reaches the post-staging boundary and all 20 residual coordinates exactly match portable PF16 decoding.",
+    "case_0004 bounded actual-AEX versus portable classification is worker_helper_pre_store_unresolved_fail_closed."
+  ],
+  "INFERENCE": [
+    "case_0003 source conversion is excluded on the retained decoded input, but worker-helper/pre-store, writer-store, and output mapping remain unresolved because its exact dependency cone is full-frame.",
+    "case_0004 source conversion and the actual writer rule on portable pre-store inputs are excluded; the first unexecuted discriminating boundary is worker/helper pre-store."
+  ],
+  "unproven": [
+    "Windows live facts",
+    "AE host source reconstruction beyond retained PNG decoding",
+    "AE export mapping",
+    "case_0003 writer input/store"
+  ]
+}
