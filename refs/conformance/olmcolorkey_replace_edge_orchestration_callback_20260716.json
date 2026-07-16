@@ -1,0 +1,496 @@
+{
+  "binary_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+  "blur_world_diagnostics": [
+    {
+      "hook": "FUN_1800085b0.entry",
+      "r9_world": {
+        "address": "0x40000040",
+        "height": 5,
+        "payload": "0x20000080",
+        "rowbytes": 20,
+        "width": 5
+      },
+      "rcx_context": "0x400004e0",
+      "rdx_temporary": {
+        "address": "0x0",
+        "valid": false
+      },
+      "stack_words": {
+        "0x20": "0x40000040",
+        "0x28": "0xf0fedc0",
+        "0x30": "0xf0fee40",
+        "0x38": "0x40000080",
+        "0x40": "0x0",
+        "0x48": "0x0"
+      }
+    }
+  ],
+  "callback_contract": "callback(refcon, output_world, params, 0, 0) -> PF_Err",
+  "callback_events": [
+    {
+      "args": [
+        "0x40000000",
+        "0x40000040",
+        "0x40000080",
+        "0x0"
+      ],
+      "callback": "OLMColorKey.replace_edge",
+      "copy": {
+        "copied_bytes": 100,
+        "output_world": "0x40000040",
+        "rows": 5,
+        "source_world": "0x40000000",
+        "visible_bytes_per_row": 20
+      },
+      "order": 1,
+      "stack_arg5": "0x0"
+    },
+    {
+      "args": [
+        "0x18001fea8",
+        "0x2",
+        "0xf0fed00",
+        "0x5"
+      ],
+      "callback": "SPBasic.AcquireSuite",
+      "suite_name": "PF World Suite",
+      "table": "0x20000128"
+    },
+    {
+      "args": [
+        "0x40000000",
+        "0x5",
+        "0x5",
+        "0x1"
+      ],
+      "callback": "PF_WorldSuite",
+      "contract": "PF World Suite v2 first slot; bounded host-world access result"
+    },
+    {
+      "args": [
+        "0x18001fea8",
+        "0x2",
+        "0x5",
+        "0x1"
+      ],
+      "callback": "PF_HandleSuite.release_suite"
+    },
+    {
+      "args": [
+        "0x18001fea8",
+        "0x2",
+        "0xf0fed00",
+        "0x5"
+      ],
+      "callback": "SPBasic.AcquireSuite",
+      "suite_name": "PF World Suite",
+      "table": "0x20000128"
+    },
+    {
+      "args": [
+        "0x40000000",
+        "0x5",
+        "0x5",
+        "0x1"
+      ],
+      "callback": "PF_WorldSuite",
+      "contract": "PF World Suite v2 first slot; bounded host-world access result"
+    },
+    {
+      "args": [
+        "0x18001fea8",
+        "0x2",
+        "0x5",
+        "0x1"
+      ],
+      "callback": "PF_HandleSuite.release_suite"
+    },
+    {
+      "args": [
+        "0x18001fea8",
+        "0x2",
+        "0xf0fed00",
+        "0x5"
+      ],
+      "callback": "SPBasic.AcquireSuite",
+      "suite_name": "PF World Suite",
+      "table": "0x20000128"
+    },
+    {
+      "args": [
+        "0x40000000",
+        "0x5",
+        "0x5",
+        "0x1"
+      ],
+      "callback": "PF_WorldSuite",
+      "contract": "PF World Suite v2 first slot; bounded host-world access result"
+    },
+    {
+      "args": [
+        "0x18001fea8",
+        "0x2",
+        "0x5",
+        "0x1"
+      ],
+      "callback": "PF_HandleSuite.release_suite"
+    },
+    {
+      "args": [
+        "0x18001feb8",
+        "0x1",
+        "0xf0fed68",
+        "0x0"
+      ],
+      "callback": "SPBasic.AcquireSuite",
+      "suite_name": "PF Iterate8 Suite",
+      "table": "0x20000120"
+    },
+    {
+      "args": [
+        "0x400004e0",
+        "0x0",
+        "0x6",
+        "0x40000040"
+      ],
+      "bounded_pass_through": {
+        "area": [
+          0,
+          0,
+          5,
+          5
+        ],
+        "copied_bytes": 100
+      },
+      "callback": "PF_Iterate8",
+      "guest_callback_calls": 25,
+      "stack": {
+        "arg0_words": [
+          "0x0",
+          "0x0",
+          "0x0",
+          "0x0",
+          "0x0",
+          "0x0",
+          "0x0",
+          "0x0"
+        ],
+        "callback": "0x180001e00",
+        "destination_world": "0xf0fedc0",
+        "rect": "0x400000ac",
+        "refcon": "0x40000480",
+        "refcon_words": [
+          "0x0",
+          "0x40000040",
+          "0x40000080",
+          "0x0",
+          "0x2",
+          "0x1",
+          "0x0",
+          "0x0"
+        ]
+      }
+    },
+    {
+      "args": [
+        "0x18001feb8",
+        "0x1",
+        "0x6",
+        "0x40000040"
+      ],
+      "callback": "PF_HandleSuite.release_suite"
+    },
+    {
+      "args": [
+        "0x40000000",
+        "0xf0fedc0",
+        "0x40000080",
+        "0x0"
+      ],
+      "callback": "OLMColorKey.replace_edge",
+      "copy": {
+        "copied_bytes": 100,
+        "output_world": "0xf0fedc0",
+        "rows": 5,
+        "source_world": "0x40000000",
+        "visible_bytes_per_row": 20
+      },
+      "order": 2,
+      "stack_arg5": "0x0"
+    },
+    {
+      "args": [
+        "0x18001f2b0",
+        "0x2",
+        "0xf0feca8",
+        "0x40000040"
+      ],
+      "callback": "SPBasic.AcquireSuite",
+      "suite_name": "PF Handle Suite",
+      "table": "0x200000f0"
+    },
+    {
+      "args": [
+        "0x18001f5f8",
+        "0x2",
+        "0xf0fec70",
+        "0x40000040"
+      ],
+      "callback": "SPBasic.AcquireSuite",
+      "suite_name": "PF Handle Suite",
+      "table": "0x200000f0"
+    },
+    {
+      "callback": "PF_HandleSuite.new_handle",
+      "requested_size": 100,
+      "result": "0x200003d0",
+      "size": 100
+    },
+    {
+      "callback": "PF_HandleSuite.lock_handle",
+      "handle": "0x200003d0"
+    },
+    {
+      "args": [
+        "0x18001f5f8",
+        "0x2",
+        "0x82000030",
+        "0x40000040"
+      ],
+      "callback": "PF_HandleSuite.release_suite"
+    },
+    {
+      "args": [
+        "0x18001f5f8",
+        "0x2",
+        "0xf0fec98",
+        "0xf0fecb8"
+      ],
+      "callback": "SPBasic.AcquireSuite",
+      "suite_name": "PF Handle Suite",
+      "table": "0x200000f0"
+    },
+    {
+      "callback": "PF_HandleSuite.unlock_handle",
+      "handle": "0x200003d0"
+    },
+    {
+      "callback": "PF_HandleSuite.dispose_handle",
+      "handle": "0x200003d0"
+    },
+    {
+      "args": [
+        "0x18001f5f8",
+        "0x2",
+        "0xf0fec98",
+        "0xf0fecb8"
+      ],
+      "callback": "PF_HandleSuite.release_suite"
+    },
+    {
+      "args": [
+        "0x18001f2b0",
+        "0x2",
+        "0xf0fec98",
+        "0xf0fecb8"
+      ],
+      "callback": "PF_HandleSuite.release_suite"
+    },
+    {
+      "args": [
+        "0x18001fe98",
+        "0x2",
+        "0xf0fed28",
+        "0xf0fecb8"
+      ],
+      "callback": "SPBasic.AcquireSuite",
+      "suite_name": "PF World Suite",
+      "table": "0x20000128"
+    },
+    {
+      "args": [
+        "0x40000000",
+        "0xf0fee40",
+        "0x82000080",
+        "0xf0fecb8"
+      ],
+      "callback": "PF_WorldSuite.populate"
+    },
+    {
+      "args": [
+        "0x18001fe98",
+        "0x2",
+        "0x82000080",
+        "0xf0fecb8"
+      ],
+      "callback": "PF_HandleSuite.release_suite"
+    },
+    {
+      "args": [
+        "0x18001fe98",
+        "0x2",
+        "0xf0fed28",
+        "0xf0fecb8"
+      ],
+      "callback": "SPBasic.AcquireSuite",
+      "suite_name": "PF World Suite",
+      "table": "0x20000128"
+    },
+    {
+      "args": [
+        "0x40000000",
+        "0xf0feec0",
+        "0x82000080",
+        "0xf0fecb8"
+      ],
+      "callback": "PF_WorldSuite.populate"
+    },
+    {
+      "args": [
+        "0x18001fe98",
+        "0x2",
+        "0x82000080",
+        "0xf0fecb8"
+      ],
+      "callback": "PF_HandleSuite.release_suite"
+    },
+    {
+      "args": [
+        "0x18001fe98",
+        "0x2",
+        "0xf0fed28",
+        "0xf0fecb8"
+      ],
+      "callback": "SPBasic.AcquireSuite",
+      "suite_name": "PF World Suite",
+      "table": "0x20000128"
+    },
+    {
+      "args": [
+        "0x40000000",
+        "0xf0fedc0",
+        "0x82000080",
+        "0xf0fecb8"
+      ],
+      "callback": "PF_WorldSuite.populate"
+    },
+    {
+      "args": [
+        "0x18001fe98",
+        "0x2",
+        "0x82000080",
+        "0xf0fecb8"
+      ],
+      "callback": "PF_HandleSuite.release_suite"
+    }
+  ],
+  "callback_object": {
+    "callback_slot": "0x82000090",
+    "ctx_plus_b0": "0x400008e0",
+    "ctx_plus_b8_refcon": "0x40000000"
+  },
+  "cleanup_observed": true,
+  "diagnostics": {
+    "cleanup_observed": true,
+    "last_callback": {
+      "args": [
+        "0x18001fe98",
+        "0x2",
+        "0x82000080",
+        "0xf0fecb8"
+      ],
+      "callback": "PF_HandleSuite.release_suite"
+    },
+    "next_blocker": null,
+    "stage_hooks_observed": true
+  },
+  "entry": "0x1800094b0",
+  "expected_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+  "handle_suite": {
+    "ctx_plus_180": "0x20000140",
+    "type": 3,
+    "vtable": "0x200000f0"
+  },
+  "host_world_events": [
+    {
+      "destination": {
+        "height": 5,
+        "payload": "0x200001d0",
+        "width": 5,
+        "world": "0xf0feec0"
+      },
+      "hook": "FUN_180008c90.entry",
+      "source": {
+        "existing": true,
+        "world": "0xf0fedc0"
+      }
+    },
+    {
+      "destination": {
+        "existing": true,
+        "world": "0xf0feec0"
+      },
+      "hook": "FUN_180008c90.entry",
+      "source": {
+        "existing": true,
+        "world": "0xf0fedc0"
+      }
+    },
+    {
+      "copied_header_bytes": 20,
+      "hook": "FUN_180006e20.entry",
+      "output_payload": "0x20000240",
+      "output_world": "0xf0fee40",
+      "source_world": "0x40000000",
+      "temporary_world": "0xf0feec0"
+    }
+  ],
+  "instructions": 32595,
+  "output_matches_source": true,
+  "rax": "0x0",
+  "replace_predicate_events": [],
+  "required_stage_order": [
+    "replacement_write",
+    "thin_boundary",
+    "blur_boundary",
+    "blur_apply"
+  ],
+  "scope": "Mac-local Unicorn follow-up against hash-pinned checked-in Windows PE; next-stage classification only, not AE exact",
+  "stage_events": [
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "replacement_write",
+    "thin_boundary",
+    "blur_boundary",
+    "blur_apply"
+  ],
+  "stage_order": [
+    "replacement_write",
+    "thin_boundary",
+    "blur_boundary",
+    "blur_apply"
+  ],
+  "status": "pass"
+}
