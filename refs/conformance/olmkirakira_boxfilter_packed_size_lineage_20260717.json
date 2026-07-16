@@ -1,0 +1,422 @@
+{
+  "ae_exact_claim": false,
+  "answer": {
+    "classification_basis": "Raw argument continuity and the unmodified FilterEngine assertion are required; host checkout values are a negative control only.",
+    "param_4": "FUN_181280e92 loads R9 from [RSP+0x1f8] for FUN_181281260; 0x181281326 forwards R9 unchanged; FUN_181280fa0 retains it in RBX and forwards its low dword to FUN_181281e90",
+    "param_5": "constructed by caller stack load 0x1812812c3 -> [RSP+0x20], consumed as fifth Win64 argument",
+    "param_6": "constructed by caller byte load 0x181281304 -> [RSP+0x28], consumed as sixth Win64 argument"
+  },
+  "checks": {
+    "actual_aex_callsite_observed": true,
+    "actual_aex_entry_observed": true,
+    "actual_aex_upstream_packed_source_observed": true,
+    "filterengine_invalid_geometry_observed": true,
+    "host_checkout_contains_raw_geometry_sentinel": false,
+    "no_value_patch_or_assertion_suppression": true,
+    "static_asm_present": true,
+    "static_decomp_contract_present": true,
+    "upstream_callsite_entry_packed_argument_identical": true
+  },
+  "classification": "AEX_ALGORITHM_OR_OBJECT_VALUE",
+  "date": "2026-07-17",
+  "kind": "olmkirakira_boxfilter_packed_size_lineage",
+  "limits": [
+    "No invalid value was patched into any object, source plane, or argument slot.",
+    "The cv::FilterEngine assertion was not bypassed or suppressed.",
+    "No Windows execution, After Effects host binding, final pixel, or AE-exactness claim.",
+    "Only this new runner and its two new evidence files are owned by this task."
+  ],
+  "platform_scope": "Mac-only Unicorn actual-AEX execution of checked-in Windows PE; no Windows/AE claim",
+  "question": "Where are FUN_181280fa0 param_4 packed width/height and param_5/param_6 constructed, and are the invalid geometry words sentinel or algorithm values?",
+  "runtime": {
+    "callsite_arguments": [
+      {
+        "param_4_packed": {
+          "height_high_i32": 1,
+          "raw_hex": "0x0000000180000000",
+          "width_low_i32": -2147483648
+        },
+        "param_5_high_i32": -1,
+        "param_5_low_i32": -1,
+        "param_5_raw": "0xffffffffffffffff",
+        "param_6_raw": 1,
+        "point": "callsite",
+        "registers": {
+          "R8": "0x5",
+          "R9": "0x180000000",
+          "RCX": "0xf0fd8b0",
+          "RDX": "0x5"
+        },
+        "rip": "0x181281326",
+        "rsp": "0xf0fd7b0",
+        "stack_contract": "caller RSP+0x20/+0x28"
+      }
+    ],
+    "common_owner_status": "FAILED",
+    "entry_arguments": [
+      {
+        "param_4_packed": {
+          "height_high_i32": 1,
+          "raw_hex": "0x0000000180000000",
+          "width_low_i32": -2147483648
+        },
+        "param_5_high_i32": -1,
+        "param_5_low_i32": -1,
+        "param_5_raw": "0xffffffffffffffff",
+        "param_6_raw": 1,
+        "point": "entry",
+        "registers": {
+          "R8": "0x5",
+          "R9": "0x180000000",
+          "RCX": "0xf0fd8b0",
+          "RDX": "0x5"
+        },
+        "rip": "0x181280fa0",
+        "rsp": "0xf0fd7a8",
+        "stack_contract": "callee entry RSP+0x28/+0x30"
+      }
+    ],
+    "execution_stop": {
+      "condition": "FilterEngine anchor assertion persisted after verified bootstrap; fail closed",
+      "dispatch": {
+        "chunk_instructions": 10000,
+        "chunks": [
+          {
+            "chunk": 1,
+            "instructions": 10000,
+            "rip": "0x181322e86"
+          },
+          {
+            "chunk": 2,
+            "instructions": 10000,
+            "rip": "0x181160cab"
+          },
+          {
+            "chunk": 3,
+            "instructions": 10000,
+            "rip": "0x181156bb8"
+          },
+          {
+            "chunk": 4,
+            "instructions": 10000,
+            "rip": "0x18132b27c"
+          }
+        ],
+        "max_chunks": 64,
+        "progress_history": [],
+        "terminal": "filterengine_anchor_assertion_after_verified_bootstrap"
+      },
+      "dispatch_fault": {
+        "message": "Unhandled CPU exception (UC_ERR_EXCEPTION)",
+        "registers_rcx_rdx_r8_r9": [
+          "0xf0fd320",
+          "0x18181e9d8",
+          "0x52",
+          "0xffffffffffffffff"
+        ],
+        "rip": "0x181162610",
+        "type": "UcError"
+      },
+      "grounded_location": null,
+      "instructions": 40000,
+      "rax": "0x0",
+      "registers_rcx_rdx_r8_r9_rbp_rsi_rdi": [
+        "0xf0fd320",
+        "0x18181e9d8",
+        "0x52",
+        "0xffffffffffffffff",
+        "0x0",
+        "0xf0fd450",
+        "0x18152bfd8"
+      ],
+      "rip": "0x181162610",
+      "rsp": "0xf0fd2e0"
+    },
+    "filterengine_assertion": {
+      "anchor": {
+        "x": -1073741824,
+        "y": 0
+      },
+      "compare_path": "0x1812b9b6f..0x1812b9b92",
+      "compared_fields": {
+        "+0x14 ksize.width": -2147483648,
+        "+0x18 ksize.height": 1,
+        "+0x1c anchor.x": -1073741824,
+        "+0x20 anchor.y": 0
+      },
+      "failed_predicates": [
+        "0 <= anchor.x",
+        "anchor.x < ksize.width"
+      ],
+      "ksize": {
+        "height": 1,
+        "width": -2147483648
+      },
+      "label": "FilterEngine::init anchor assertion throw callsite",
+      "object_pointer": "0x20006d70",
+      "object_register": "RDI",
+      "predicates": {
+        "0 <= anchor.x": false,
+        "0 <= anchor.y": true,
+        "anchor.x < ksize.width": false,
+        "anchor.y < ksize.height": true
+      },
+      "rip": "0x1812b9da8",
+      "stop_without_mutation": true,
+      "throw_target": "FUN_181162610"
+    },
+    "parameter_checkout_values": [
+      {
+        "disk_id": 1,
+        "name": "Glow Rotation",
+        "value": 0.0
+      },
+      {
+        "disk_id": 2,
+        "name": "Brightness Gain",
+        "value": 1.0
+      },
+      {
+        "disk_id": 11,
+        "name": "Strength multiplier",
+        "value": 100
+      },
+      {
+        "disk_id": 27,
+        "name": "Fade Out",
+        "value": 0
+      },
+      {
+        "disk_id": 3,
+        "name": "Vertical Length",
+        "value": 50
+      },
+      {
+        "disk_id": 13,
+        "name": "Vertical Color",
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "disk_id": 18,
+        "name": "Vertical Use Ramp",
+        "value": 0
+      },
+      {
+        "disk_id": 4,
+        "name": "Horizontal Length",
+        "value": 50
+      },
+      {
+        "disk_id": 14,
+        "name": "Horizontal Color",
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "disk_id": 20,
+        "name": "Horizontal Use Ramp",
+        "value": 0
+      },
+      {
+        "disk_id": 5,
+        "name": "Diagonal Length",
+        "value": 50
+      },
+      {
+        "disk_id": 15,
+        "name": "Diagonal Color",
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "disk_id": 22,
+        "name": "Diagonal Use Ramp",
+        "value": 0
+      },
+      {
+        "disk_id": 26,
+        "name": "Diagonal 2 length",
+        "value": 50
+      },
+      {
+        "disk_id": 28,
+        "name": "Diagonal Color2",
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "disk_id": 35,
+        "name": "Diagonal 2 Use Ramp",
+        "value": 0
+      },
+      {
+        "disk_id": 6,
+        "name": "Highlight Radius",
+        "value": 0
+      },
+      {
+        "disk_id": 16,
+        "name": "Highlight Color",
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "disk_id": 24,
+        "name": "Highlight Use Ramp",
+        "value": 0
+      },
+      {
+        "disk_id": 7,
+        "name": "Glow Opacity",
+        "value": 100
+      },
+      {
+        "disk_id": 12,
+        "name": "Source Opacity",
+        "value": 100
+      },
+      {
+        "disk_id": 8,
+        "name": "Channel",
+        "value": 2
+      },
+      {
+        "disk_id": 9,
+        "name": "Blur Mode",
+        "value": 2
+      },
+      {
+        "disk_id": 17,
+        "name": "Merge mode",
+        "value": 1
+      },
+      {
+        "disk_id": 10,
+        "name": "Approximated Input",
+        "value": 0
+      }
+    ],
+    "upstream_callsite_arguments": [
+      {
+        "param_4_packed": {
+          "height_high_i32": 1,
+          "raw_hex": "0x0000000180000000",
+          "width_low_i32": -2147483648
+        },
+        "param_5_high_i32": -1,
+        "param_5_low_i32": -1,
+        "param_5_raw": "0xffffffffffffffff",
+        "param_6_raw": 1,
+        "point": "upstream_callsite",
+        "registers": {
+          "R8": "0x5",
+          "R9": "0x180000000",
+          "RCX": "0xf0fd8b0",
+          "RDX": "0x5"
+        },
+        "rip": "0x181280ea2",
+        "rsp": "0xf0fd820",
+        "stack_contract": "caller RSP+0x20/+0x28"
+      }
+    ]
+  },
+  "schema": 1,
+  "static": {
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "all_expected_present": true,
+    "asm_sha256": "d23c749d225a934580c96f2929fb9d7253d07b1be208faa9de6ff89efc1f89b3",
+    "decomp_contract": {
+      "fun_181280fa0_signature": "param_4=packed width/height, param_5=stack qword, param_6=stack byte",
+      "fun_181280fa0_to_row_sum": "FUN_181281e90(local_90, local_c4, iVar9, param_4 & 0xffffffff)",
+      "fun_181281e90_geometry": "param_4 is the row geometry width/height source object argument",
+      "source_excerpt_present": true
+    },
+    "decomp_sha256": "990693e95695cd83032764f0452fbbe336b8f910ce4d9f5af94a2094c7f6328a",
+    "expected": {
+      "callee_forwarding": [
+        "181280fc9  MOV RBX,R9",
+        "181280fcc  MOV R13D,R8D",
+        "181280fcf  MOV EDI,EDX",
+        "181280fd4  MOV R14,RCX",
+        "18128106c  MOV R9D,EBX",
+        "18128106f  MOV R8D,R15D",
+        "181281072  MOV EDX,dword ptr [RBP + -0x7d]",
+        "181281079  CALL 0x181281e90"
+      ],
+      "caller_stack_build": [
+        "1812812c3  MOV RAX,qword ptr [RSP + 0x90]",
+        "1812812cb  MOV qword ptr [RSP + 0x20],RAX",
+        "181281304  MOVZX EAX,byte ptr [RSP + 0x98]",
+        "18128130c  MOV byte ptr [RSP + 0x28],AL",
+        "181281318  MOV qword ptr [RSP + 0x20],RAX",
+        "181281326  CALL 0x181280fa0"
+      ],
+      "packed_param4_setup": [
+        "1812812ef  MOV R8D,ESI",
+        "1812812f2  MOV EDX,EBP",
+        "1812812f4  MOV RCX,RDI",
+        "181281326  CALL 0x181280fa0"
+      ],
+      "upstream_packed_source": [
+        "181280e85  MOV RAX,qword ptr [RSP + 0x200]",
+        "181280e8d  MOV qword ptr [RSP + 0x20],RAX",
+        "181280e92  MOV R9,qword ptr [RSP + 0x1f8]",
+        "181280ea2  CALL 0x181281260"
+      ]
+    },
+    "observed": {
+      "callee_forwarding": [
+        "181280fc9  MOV RBX,R9",
+        "181280fcc  MOV R13D,R8D",
+        "181280fcf  MOV EDI,EDX",
+        "181280fd4  MOV R14,RCX",
+        "18128106c  MOV R9D,EBX",
+        "18128106f  MOV R8D,R15D",
+        "181281072  MOV EDX,dword ptr [RBP + -0x7d]",
+        "181281079  CALL 0x181281e90"
+      ],
+      "caller_stack_build": [
+        "1812812c3  MOV RAX,qword ptr [RSP + 0x90]",
+        "1812812cb  MOV qword ptr [RSP + 0x20],RAX",
+        "181281304  MOVZX EAX,byte ptr [RSP + 0x98]",
+        "18128130c  MOV byte ptr [RSP + 0x28],AL",
+        "181281318  MOV qword ptr [RSP + 0x20],RAX",
+        "181281326  CALL 0x181280fa0"
+      ],
+      "packed_param4_setup": [
+        "1812812ef  MOV R8D,ESI",
+        "1812812f2  MOV EDX,EBP",
+        "1812812f4  MOV RCX,RDI",
+        "181281326  CALL 0x181280fa0"
+      ],
+      "upstream_packed_source": [
+        "181280e85  MOV RAX,qword ptr [RSP + 0x200]",
+        "181280e8d  MOV qword ptr [RSP + 0x20],RAX",
+        "181280e92  MOV R9,qword ptr [RSP + 0x1f8]",
+        "181280ea2  CALL 0x181281260"
+      ]
+    }
+  },
+  "status": "PASS_CLASSIFIED_FAIL_CLOSED_STOP"
+}

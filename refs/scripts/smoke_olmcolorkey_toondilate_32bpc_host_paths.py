@@ -25,10 +25,19 @@ def main() -> int:
         missing = [needle for needle in needles if needle not in text]
         if missing:
             raise SystemExit(f"{path}: missing {missing}")
-        if "short bitdepth = PF_WORLD_IS_DEEP(output) ? 16 : 8;" not in text:
-            raise SystemExit(f"{path}: legacy render depth boundary changed")
+        format_dispatch = [
+            "PF_GetPixelFormat(input, &format)",
+            "case PF_PixelFormat_ARGB32:",
+            "case PF_PixelFormat_ARGB64:",
+            "case PF_PixelFormat_ARGB128:",
+        ]
+        missing_dispatch = [needle for needle in format_dispatch if needle not in text]
+        if missing_dispatch:
+            raise SystemExit(f"{path}: incomplete legacy-render pixel-format dispatch: {missing_dispatch}")
+        if "PF_WORLD_IS_DEEP(output) ? 16 : 8" in text:
+            raise SystemExit(f"{path}: legacy render still collapses 32bpc into the 16bpc path")
 
-    print("32bpc host/path smoke: PASS (smart depth dispatch and float contract present)")
+    print("32bpc host/path smoke: PASS (legacy pixel-format and smart depth dispatch present)")
     return 0
 
 

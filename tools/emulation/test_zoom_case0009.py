@@ -74,6 +74,8 @@ FUN_180005C2B = 0x180005C2B
 FUN_180005C7C = 0x180005C7C
 FUN_180005C9F = 0x180005C9F
 FUN_180005D99 = 0x180005D99
+FUN_180005E68 = 0x180005E68
+FUN_180007C14 = 0x180007C14
 DIRECT_CORE_BRANCH_HOOKS = {
     FUN_18000573B: "thread-count-read",
     FUN_180005849: "input-world-read",
@@ -801,6 +803,8 @@ def main() -> int:
         "direct_prefill_mode": None,
         "direct_python_prefill": None,
         "direct_stop_after_prefill": False,
+        "final_sampler_calls": [],
+        "host_writeback_calls": [],
     }
     execution_state: dict[str, Any] = {
         "checkpoint_enabled": False,
@@ -834,8 +838,15 @@ def main() -> int:
         UC_X86_REG_RCX,
         UC_X86_REG_RDI,
         UC_X86_REG_RDX,
+        UC_X86_REG_R8,
+        UC_X86_REG_R9,
         UC_X86_REG_RIP,
         UC_X86_REG_RSI,
+        UC_X86_REG_RSP,
+        UC_X86_REG_XMM0,
+        UC_X86_REG_XMM1,
+        UC_X86_REG_XMM2,
+        UC_X86_REG_XMM3,
     )
 
     def safe_u32(addr: int) -> int | None:
@@ -892,6 +903,49 @@ def main() -> int:
 
     def capture_scatter(ld: AexLoader, address: int, size: int) -> None:
         captured["scatter_calls"] += 1
+
+    def capture_final_sampler_callsite(ld: AexLoader, address: int, size: int) -> None:
+        calls = captured.setdefault("final_sampler_calls", [])
+        if len(calls) >= 4:
+            return
+        rsp = ld.uc.reg_read(UC_X86_REG_RSP)
+        param = int(captured.get("zoom_param2") or 0)
+        geometry = safe_u64(param + 0x08) if param else None
+        width = safe_u32(geometry + 0x24) if geometry else None
+        output_base = safe_u64(param + 0xA0) if param else None
+        destination = ld.uc.reg_read(UC_X86_REG_RDX)
+        cell = ((destination - output_base) // 16) if output_base and destination >= output_base else None
+        calls.append({
+            "rip": hex(address),
+            "source_polar": hex(ld.uc.reg_read(UC_X86_REG_RCX)),
+            "destination": hex(destination),
+            "radial_count": ld.uc.reg_read(UC_X86_REG_R8) & 0xFFFFFFFF,
+            "angle_count": ld.uc.reg_read(UC_X86_REG_R9) & 0xFFFFFFFF,
+            "source_rowbytes": safe_u32(rsp + 0x20),
+            "sample_radius": safe_f32(rsp + 0x28),
+            "sample_angle": safe_f32(rsp + 0x30),
+            "output_cell": cell,
+            "output_xy": [cell % width, cell // width] if cell is not None and width else None,
+        })
+
+    def low_f32(register_value: int) -> float:
+        return struct.unpack("<f", int(register_value & 0xFFFFFFFF).to_bytes(4, "little"))[0]
+
+    def capture_host_writeback_callsite(ld: AexLoader, address: int, size: int) -> None:
+        calls = captured.setdefault("host_writeback_calls", [])
+        if len(calls) >= 4:
+            return
+        calls.append({
+            "rip": hex(address),
+            "output_world": hex(ld.uc.reg_read(UC_X86_REG_RCX)),
+            "x": ld.uc.reg_read(UC_X86_REG_RDX) & 0xFFFFFFFF,
+            "y": ld.uc.reg_read(UC_X86_REG_R8) & 0xFFFFFFFF,
+            "pixel_pointer": hex(ld.uc.reg_read(UC_X86_REG_R9)),
+            "rgba_f32": [
+                low_f32(ld.uc.reg_read(register))
+                for register in (UC_X86_REG_XMM0, UC_X86_REG_XMM1, UC_X86_REG_XMM2, UC_X86_REG_XMM3)
+            ],
+        })
 
     def capture_staging_loop(ld: AexLoader, address: int, size: int) -> None:
         captured["staging_loop_hits"] += 1
@@ -1031,6 +1085,8 @@ def main() -> int:
     loader.add_code_hook(FUN_1800056F0, capture_zoom_named)
     loader.add_code_hook(FUN_18000B150, capture_prepass)
     loader.add_code_hook(FUN_18000A9D0, capture_scatter)
+    loader.add_code_hook(FUN_180005E68, capture_final_sampler_callsite)
+    loader.add_code_hook(FUN_180007C14, capture_host_writeback_callsite)
     loader.add_code_hook(FUN_18000573B, force_direct_thread_count)
     for hook_addr in DIRECT_CORE_BRANCH_HOOKS:
         loader.add_code_hook(hook_addr, capture_direct_core_branch)
@@ -1215,6 +1271,8 @@ def main() -> int:
             "staging_loop_samples": captured["staging_loop_samples"],
             "direct_thread_fixups": captured["direct_thread_fixups"],
             "direct_core_samples": captured["direct_core_samples"],
+            "final_sampler_calls": captured.get("final_sampler_calls", []),
+            "host_writeback_calls": captured.get("host_writeback_calls", []),
             "direct_prefill_fast_forwarded": captured["direct_prefill_fast_forwarded"],
             "direct_prefill_fast_forward_plane": captured["direct_prefill_fast_forward_plane"],
             "direct_prefill_fast_forward_cells": captured.get("direct_prefill_fast_forward_cells", 0),
@@ -1310,6 +1368,8 @@ def main() -> int:
         "scatter_detour_calls": captured["scatter_detour_calls"],
         "direct_thread_fixups": captured["direct_thread_fixups"],
         "direct_core_samples": captured["direct_core_samples"],
+        "final_sampler_calls": captured.get("final_sampler_calls", []),
+        "host_writeback_calls": captured.get("host_writeback_calls", []),
         "direct_prefill_fast_forwarded": captured["direct_prefill_fast_forwarded"],
         "direct_prefill_fast_forward_plane": captured["direct_prefill_fast_forward_plane"],
         "direct_prefill_fast_forward_cells": captured.get("direct_prefill_fast_forward_cells", 0),

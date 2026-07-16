@@ -1,5 +1,16 @@
 # OLM Conformance Ledger
 
+- 2026-07-17 `OLMKiraKira boxFilter packed-size lineage` (latest override):
+  no correctness status is promoted. The packed width/height argument passed
+  through `FUN_181280fa0` is already `(-2147483648, 1)` at its actual-AEX
+  callsite and entry. `0x181280e92` loads the packed value from the upstream
+  AEX frame, and the next wrapper forwards it unchanged; host checkout does
+  not contain the sentinel word. This classifies the current invalid geometry
+  as an AEX algorithm/object value in the emulated fixture, while leaving open
+  whether an earlier missing live-host object initialization caused it. The
+  FilterEngine assertion remains unmodified and fail-closed. Evidence:
+  `refs/conformance/olmkirakira_boxfilter_packed_size_lineage_20260717.json`.
+
 - 2026-07-17 `OLMRadialBlur chained natural-render checkpoints` (latest
   override): no correctness status is promoted. `test_zoom_case0009.py` can
   now resume a saved actual-AEX state while saving either a later target-RIP
@@ -7,10 +18,10 @@
   caller run saves at staging RIP `0x180007811`; two fresh-process progress
   hops preserve the same host/AEX state and advance the live RIP. This removes
   the prior need to restart the 960x540 staging path for every observation and
-  enables bounded continuation through core `0x1800056f0` and prefill start
-  `0x180005a00`, both now reached without Python/synthetic prefill or worker
-  detours. Final sampler `0x180005e68` and host writeback `0x180007c14` remain
-  unreached. Evidence:
+  enables bounded continuation through core `0x1800056f0`, prefill start
+  `0x180005a00`, and prefill end `0x180005ba2`, all now reached without
+  Python/synthetic prefill or worker detours. Final sampler `0x180005e68` and
+  host writeback `0x180007c14` remain unreached. Evidence:
   `refs/conformance/olmradialblur_natural_checkpoint_journey_20260717.json`
   and `refs/conformance/olmradialblur_zoom_checkpoint_chain_20260717.json`.
 

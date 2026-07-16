@@ -141,6 +141,7 @@ def build_spec(effect_key: str) -> dict[str, Any]:
             {
                 "id": effect["case_id"],
                 "cdb_template": "probe.cdb.in",
+                "bits_per_channel": 32,
                 "template_values": {
                     "witness_id": effect["witness_id"],
                     "effect_slug": effect["effect_slug"],
@@ -1453,9 +1454,9 @@ Finish $validated $(if ($validateCode -eq 0 -and $validated.status -eq 'answered
     launcher = launcher.replace(old, new)
     old_continue = "Set-Content -LiteralPath $continue -Value 'continue' -Encoding ASCII"
     new_continue = "$continueBinding = \"continue run_id=$runId ae_pid=$boundPid module_base=$boundBase aex_sha256=$hash\"\n  Set-Content -LiteralPath $continue -Value $continueBinding -Encoding ASCII"
-    if launcher.count(old_continue) != 1:
+    if old_continue not in launcher:
         raise RuntimeError("common launcher continue binding changed")
-    launcher = launcher.replace(old_continue, new_continue)
+    launcher = launcher.replace(old_continue, new_continue, 1)
     old_ready = "$readyText -notmatch 'effect_loaded=1' -or $readyText -notmatch 'parameters_applied=1'"
     new_ready = "$readyText -notmatch 'effect_loaded=1' -or $readyText -notmatch 'parameters_applied=1' -or $readyText -notmatch 'search_radius_requested=13' -or $readyText -notmatch 'search_radius_readback=13' -or $readyText -notmatch 'renderer_observed=SOFTWARE' -or $readyText -notmatch 'linear_blending=0'"
     if launcher.count(old_ready) != 1:

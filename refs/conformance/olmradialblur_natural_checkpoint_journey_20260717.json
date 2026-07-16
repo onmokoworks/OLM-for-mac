@@ -55,6 +55,20 @@
       "rip": "0x180005a00",
       "synthetic_prefill": false,
       "worker_detours": false
+    },
+    {
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "case_id": "case_0009",
+      "file_sha256": "60a1997482da48248b3e49e820506a1d8f2bcc38114e07bb37f36b656e3af287",
+      "file_size": 1014977,
+      "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+      "instructions_executed": 954651817,
+      "label": "prefill_end",
+      "manifest_sha256": "7ec542fad64cc210474c6309c3e48c9f12bd0885f54d31943da873d94024b565",
+      "python_prefill": false,
+      "rip": "0x180005ba2",
+      "synthetic_prefill": false,
+      "worker_detours": false
     }
   ],
   "checks": {

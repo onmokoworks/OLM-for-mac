@@ -14,22 +14,22 @@
   ],
   "entry_checkpoint": {
     "rip": "0x180007811",
-    "sha256": "bcafa4313a809f8bd1ad7acc76b728f772bea93707a77bed8c39d5b64b1f7c91",
-    "size": 222763
+    "sha256": "155a41b79d30a944eec43a1864c235ffc96dee1a311b4da45beb0cf8cee6fda7",
+    "size": 222814
   },
   "kind": "olmradialblur_zoom_checkpoint_chain_20260717",
   "progress_hops": [
     {
       "instruction_budget": 100000,
       "rip": "0x180017267",
-      "sha256": "598651207cd16e0522696c3618dc094e9c4e531c68a3b2cc23fa93518d00730c",
-      "size": 222942
+      "sha256": "61a069901780a5f02aec8bf06d60fe7fa43a35639711f124d77fe6ac8617266b",
+      "size": 222993
     },
     {
       "instruction_budget": 100000,
       "rip": "0x18001726c",
-      "sha256": "daa97ca46ff48edfd6cb05b5ac4af1ba22abb37260ed1855e45fec278c1bc154",
-      "size": 223055
+      "sha256": "113142b607d48ececaf489aaa59a5bdb990c80a51d3e5ed8abcc93ea245782d8",
+      "size": 223106
     }
   ],
   "status": "pass_local_transport_only"
