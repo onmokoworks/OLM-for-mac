@@ -66,34 +66,16 @@ struct ToonPixelTraits;
 template <>
 struct ToonPixelTraits<PF_Pixel8> {
 	static bool opaque(const PF_Pixel8 &p) { return p.alpha == PF_MAX_CHAN8; }
-	static void premultiply_semi_alpha(PF_Pixel8 &p) {
-		if (p.alpha == 0 || p.alpha == PF_MAX_CHAN8) return;
-		p.red   = (A_u_char)(((A_long)p.red   * (A_long)p.alpha + 127) / 255);
-		p.green = (A_u_char)(((A_long)p.green * (A_long)p.alpha + 127) / 255);
-		p.blue  = (A_u_char)(((A_long)p.blue  * (A_long)p.alpha + 127) / 255);
-	}
 };
 
 template <>
 struct ToonPixelTraits<PF_Pixel16> {
 	static bool opaque(const PF_Pixel16 &p) { return p.alpha == PF_MAX_CHAN16; }
-	static void premultiply_semi_alpha(PF_Pixel16 &p) {
-		if (p.alpha == 0 || p.alpha == PF_MAX_CHAN16) return;
-		p.red   = (A_u_short)(((A_long)p.red   * (A_long)p.alpha + 16383) / 32768);
-		p.green = (A_u_short)(((A_long)p.green * (A_long)p.alpha + 16383) / 32768);
-		p.blue  = (A_u_short)(((A_long)p.blue  * (A_long)p.alpha + 16383) / 32768);
-	}
 };
 
 template <>
 struct ToonPixelTraits<PF_PixelFloat> {
 	static bool opaque(const PF_PixelFloat &p) { return p.alpha >= 1.0f; }
-	static void premultiply_semi_alpha(PF_PixelFloat &p) {
-		if (p.alpha <= 0.0f || p.alpha >= 1.0f) return;
-		p.red *= p.alpha;
-		p.green *= p.alpha;
-		p.blue *= p.alpha;
-	}
 };
 
 template <typename PixelT>
@@ -188,12 +170,6 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			try_relax(x, y, coords, 4);
 		}
 	}
-	for (A_long y = 0; y < h; ++y) {
-		for (A_long x = 0; x < w; ++x) {
-			ToonPixelTraits<PixelT>::premultiply_semi_alpha(*PixelAt<PixelT>(output, x, y));
-		}
-	}
-
 	return PF_Err_NONE;
 }
 
