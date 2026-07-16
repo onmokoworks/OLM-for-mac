@@ -1,0 +1,369 @@
+{
+  "schema": "olmdistancegradation.pf8-compose-store-differential/1",
+  "generated_at": "2026-07-16T12:07:25Z",
+  "status": "pass",
+  "scope": "compose/store only; not AEX field generation",
+  "binary": {
+    "path": "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex",
+    "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "expected_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "hash_match": true,
+    "entry_rva": "0x1170870",
+    "entry_va": "0x181170870"
+  },
+  "fixture": {
+    "width": 1024,
+    "height": 512,
+    "rowbytes": 4096,
+    "pixel_size": 4,
+    "world_contract": "test_dg_compose.py PF_EffectWorld offsets",
+    "field_and_source_generation_compared": false,
+    "points": [
+      [
+        17,
+        0
+      ],
+      [
+        780,
+        495
+      ],
+      [
+        987,
+        496
+      ]
+    ],
+    "field_world_validation": {
+      "world": "0x40000000",
+      "data": "0x20000000",
+      "width": 1024,
+      "height": 512,
+      "rowbytes": 4096,
+      "geometry_match": true,
+      "readback": [
+        {
+          "xy": [
+            17,
+            0
+          ],
+          "address": "0x20000044",
+          "expected": [
+            255,
+            2,
+            0,
+            0
+          ],
+          "actual": [
+            255,
+            2,
+            0,
+            0
+          ],
+          "match": true
+        },
+        {
+          "xy": [
+            780,
+            495
+          ],
+          "address": "0x201efc30",
+          "expected": [
+            10,
+            10,
+            0,
+            0
+          ],
+          "actual": [
+            10,
+            10,
+            0,
+            0
+          ],
+          "match": true
+        },
+        {
+          "xy": [
+            987,
+            496
+          ],
+          "address": "0x201f0f6c",
+          "expected": [
+            64,
+            64,
+            0,
+            0
+          ],
+          "actual": [
+            64,
+            64,
+            0,
+            0
+          ],
+          "match": true
+        }
+      ],
+      "readback_match": true
+    },
+    "source_world_validation": {
+      "world": "0x40000080",
+      "data": "0x20200000",
+      "width": 1024,
+      "height": 512,
+      "rowbytes": 4096,
+      "geometry_match": true,
+      "readback": [
+        {
+          "xy": [
+            17,
+            0
+          ],
+          "address": "0x20200044",
+          "expected": [
+            57,
+            0,
+            0,
+            57
+          ],
+          "actual": [
+            57,
+            0,
+            0,
+            57
+          ],
+          "match": true
+        },
+        {
+          "xy": [
+            780,
+            495
+          ],
+          "address": "0x203efc30",
+          "expected": [
+            10,
+            10,
+            0,
+            0
+          ],
+          "actual": [
+            10,
+            10,
+            0,
+            0
+          ],
+          "match": true
+        },
+        {
+          "xy": [
+            987,
+            496
+          ],
+          "address": "0x203f0f6c",
+          "expected": [
+            64,
+            28,
+            0,
+            238
+          ],
+          "actual": [
+            64,
+            28,
+            0,
+            238
+          ],
+          "match": true
+        }
+      ],
+      "readback_match": true
+    }
+  },
+  "points": [
+    {
+      "xy": [
+        17,
+        0
+      ],
+      "field_addr": "0x20000044",
+      "source_addr": "0x20200044",
+      "output_addr": "0x20400000",
+      "field_bytes_agrb": [
+        255,
+        2,
+        0,
+        0
+      ],
+      "source_bytes_agrb": [
+        57,
+        0,
+        0,
+        57
+      ],
+      "actual_pre_u8_register_lanes": [
+        55.71999740600586,
+        20.479999542236328,
+        0.9091373085975647,
+        255.0
+      ],
+      "actual_pre_u8_agrb": [
+        255.0,
+        55.71999740600586,
+        231.830013692379,
+        20.479999542236328
+      ],
+      "actual_output_bytes_agrb": [
+        255,
+        55,
+        231,
+        20
+      ],
+      "portable_pre_u8_agrb": [
+        255.0,
+        55.72,
+        231.83,
+        20.48
+      ],
+      "portable_output_bytes_agrb": [
+        255,
+        55,
+        231,
+        20
+      ],
+      "stages": [
+        "field_read",
+        "source_read",
+        "pre_u8",
+        "post_store"
+      ],
+      "pre_u8_match": true,
+      "stages_match": true,
+      "store_match": true,
+      "match": true
+    },
+    {
+      "xy": [
+        780,
+        495
+      ],
+      "field_addr": "0x201efc30",
+      "source_addr": "0x203efc30",
+      "output_addr": "0x20400010",
+      "field_bytes_agrb": [
+        10,
+        10,
+        0,
+        0
+      ],
+      "source_bytes_agrb": [
+        10,
+        10,
+        0,
+        0
+      ],
+      "actual_pre_u8_register_lanes": [
+        54.20000457763672,
+        20.80000114440918,
+        0.9056863188743591,
+        255.0
+      ],
+      "actual_pre_u8_agrb": [
+        255.0,
+        54.20000457763672,
+        230.95001131296158,
+        20.80000114440918
+      ],
+      "actual_output_bytes_agrb": [
+        255,
+        54,
+        230,
+        20
+      ],
+      "portable_pre_u8_agrb": [
+        255.0,
+        54.20000000000001,
+        230.95000000000002,
+        20.8
+      ],
+      "portable_output_bytes_agrb": [
+        255,
+        54,
+        230,
+        20
+      ],
+      "stages": [
+        "field_read",
+        "source_read",
+        "pre_u8",
+        "post_store"
+      ],
+      "pre_u8_match": true,
+      "stages_match": true,
+      "store_match": true,
+      "match": true
+    },
+    {
+      "xy": [
+        987,
+        496
+      ],
+      "field_addr": "0x201f0f6c",
+      "source_addr": "0x203f0f6c",
+      "output_addr": "0x20400020",
+      "field_bytes_agrb": [
+        64,
+        64,
+        0,
+        0
+      ],
+      "source_bytes_agrb": [
+        64,
+        28,
+        0,
+        238
+      ],
+      "actual_pre_u8_register_lanes": [
+        43.939998626708984,
+        22.96000099182129,
+        0.8823922276496887,
+        255.0
+      ],
+      "actual_pre_u8_agrb": [
+        255.0,
+        43.939998626708984,
+        225.01001805067062,
+        22.96000099182129
+      ],
+      "actual_output_bytes_agrb": [
+        255,
+        43,
+        225,
+        22
+      ],
+      "portable_pre_u8_agrb": [
+        255.0,
+        43.94,
+        225.01000000000002,
+        22.96
+      ],
+      "portable_output_bytes_agrb": [
+        255,
+        43,
+        225,
+        22
+      ],
+      "stages": [
+        "field_read",
+        "source_read",
+        "pre_u8",
+        "post_store"
+      ],
+      "pre_u8_match": true,
+      "stages_match": true,
+      "store_match": true,
+      "match": true
+    }
+  ],
+  "conclusion": {
+    "actual_aex_and_portable_model_match": true,
+    "field_generation_claim": false,
+    "fact": "The same injected field/source bytes produced matching actual-AEX and portable compose/store bytes.",
+    "inference": "Any unexplained external render residual remains upstream of this injected compose/store comparison or outside this bounded callback."
+  }
+}
