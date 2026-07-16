@@ -9,6 +9,7 @@ typedef std::uint32_t A_u_long;
 typedef void *PF_ProgPtr;
 typedef A_long PF_Err;
 enum { PF_Err_NONE = 0 };
+enum { PF_Err_BAD_CALLBACK_PARAM = -1 };
 enum { PF_Stage_BETA = 0 };
 typedef A_long PF_Cmd;
 enum { PF_Cmd_ABOUT = 0, PF_Cmd_GLOBAL_SETUP, PF_Cmd_PARAMS_SETUP,
@@ -17,6 +18,8 @@ enum { PF_Cmd_ABOUT = 0, PF_Cmd_GLOBAL_SETUP, PF_Cmd_PARAMS_SETUP,
 struct PF_Pixel8 { std::uint8_t alpha, red, green, blue; };
 struct PF_Pixel16 { std::uint16_t alpha, red, green, blue; };
 struct PF_PixelFloat { float alpha, red, green, blue; };
+enum PF_PixelFormat { PF_PixelFormat_INVALID, PF_PixelFormat_ARGB32,
+                      PF_PixelFormat_ARGB64, PF_PixelFormat_ARGB128 };
 struct PF_LRect { A_long left, top, right, bottom; };
 struct PF_EffectWorld {
     void *data;
@@ -62,6 +65,22 @@ struct PF_SmartRenderCallbacks {
     PF_Err (*checkout_output)(PF_ProgPtr, PF_EffectWorld **);
 };
 struct PF_SmartRenderExtra { PF_SmartRenderInput *input; PF_SmartRenderCallbacks *cb; };
+
+struct PF_WorldSuite2 {
+    PF_Err PF_GetPixelFormat(PF_LayerDef *world, PF_PixelFormat *format) {
+        *format = world->bitdepth == 8 ? PF_PixelFormat_ARGB32
+                 : world->bitdepth == 16 ? PF_PixelFormat_ARGB64 : PF_PixelFormat_ARGB128;
+        return PF_Err_NONE;
+    }
+};
+static constexpr const char *kPFWorldSuite = "PF World Suite";
+static constexpr A_long kPFWorldSuiteVersion2 = 2;
+template <typename SuiteT>
+struct AEFX_SuiteScoper {
+    SuiteT suite;
+    AEFX_SuiteScoper(PF_InData *, const char *, A_long, PF_OutData *) {}
+    SuiteT *operator->() { return &suite; }
+};
 
 struct PF_ColorParamSuite1 {
     PF_Err (*PF_GetFloatingPointColorFromColorDef)(PF_ProgPtr, PF_ParamDef *, PF_PixelFloat *);
