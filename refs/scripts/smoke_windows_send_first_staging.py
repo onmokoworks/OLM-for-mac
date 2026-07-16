@@ -16,6 +16,7 @@ import hashlib
 import io
 import json
 import os
+import shutil
 import tempfile
 import zipfile
 from pathlib import Path, PurePosixPath
@@ -27,6 +28,7 @@ WINDOWS_WITNESS_BATCH_MANIFEST_NAME = "batch-manifest.json"
 WINDOWS_WITNESS_BATCH_README = "README.txt"
 WINDOWS_WITNESS_BATCH_ONE_CLICK = "RUN_WINDOWS_WITNESS_BATCH.cmd"
 WINDOWS_WITNESS_BATCH_LAUNCHER = "run_windows_witness_batch.ps1"
+WINDOWS_WITNESS_GENERATED_PACKAGE_KIND = "windows_witness_generated_package"
 EXCHANGE_SPLIT_SUBDIRS = ("mac_requests", "windows_processing", "mac_returns")
 
 
@@ -101,18 +103,17 @@ def find_unique_by_basename(files: dict[str, bytes], basename: str) -> tuple[str
 
 def runtime_request_manifest(path: Path) -> dict[str, Any] | None:
     try:
-        with zipfile.ZipFile(path) as archive:
-            manifest_names = [
-                name for name in archive.namelist()
-                if name.replace("\\", "/").split("/")[-1] == "runtime_trace_package_manifest.json"
-            ]
-        if len(manifest_names) != 1:
-            return None
         files = read_zip_members(path)
         entry = find_unique_by_basename(files, "runtime_trace_package_manifest.json")
+        if entry is None:
+            return None
         return load_json_bytes(entry[1], f"{path.name}:runtime_trace_package_manifest.json") if entry else None
     except (OSError, UnicodeError, json.JSONDecodeError, zipfile.BadZipFile):
         return None
+    except ValueError as exc:
+        if str(exc).startswith("invalid ZIP:"):
+            return None
+        raise
 
 
 def parse_runtime_request_package(path: Path) -> dict[str, Any] | None:
@@ -141,6 +142,101 @@ def parse_runtime_request_package(path: Path) -> dict[str, Any] | None:
         if isinstance(action, dict) and isinstance(action.get("request_id"), str) and action["request_id"]:
             ids.add(action["request_id"])
     return {"manifest": manifest, "path": path, "request_ids": ids}
+
+
+def parse_windows_witness_generated_package(path: Path) -> dict[str, Any] | None:
+    """Parse a compiler-generated package without weakening its file contract."""
+    try:
+        with zipfile.ZipFile(path) as archive:
+            root_manifest = [info for info in archive.infolist() if info.filename == "package-manifest.json"]
+            if not root_manifest:
+                # A foreign archive may contain a package-manifest.json as an
+                # ordinary nested payload. It is not ours to validate.
+                return None
+            require(len(root_manifest) == 1, f"{path.name} has duplicate root package-manifest.json")
+            root_manifest_data = load_json_bytes(
+                archive.read(root_manifest[0]), f"{path.name}:package-manifest.json"
+            )
+            if root_manifest_data.get("kind") != WINDOWS_WITNESS_GENERATED_PACKAGE_KIND:
+                return None
+    except (OSError, zipfile.BadZipFile):
+        return None
+    try:
+        files = read_zip_members(path)
+    except ValueError as exc:
+        if str(exc).startswith("invalid ZIP:"):
+            return None
+        raise
+    manifest_entry = find_unique_by_basename(files, "package-manifest.json")
+    if manifest_entry is None:
+        return None
+    manifest_name, manifest_bytes = manifest_entry
+    require(manifest_name == "package-manifest.json", f"{path.name} package manifest must be at ZIP root")
+    manifest = load_json_bytes(manifest_bytes, f"{path.name}:{manifest_name}")
+    if manifest.get("kind") != WINDOWS_WITNESS_GENERATED_PACKAGE_KIND:
+        return None
+    require(manifest.get("schema_version") == 1, f"{path.name} package schema_version mismatch")
+    request_id = validate_safe_id(manifest.get("request_id"), f"{path.name} package request_id")
+
+    def package_member(value: Any, label: str) -> str:
+        require(isinstance(value, str) and value, f"{path.name} package {label} is missing")
+        member = canonical_member(value)
+        require(member == value, f"{path.name} package {label} must be canonical")
+        return member
+
+    contract_name = package_member(manifest.get("contract"), "contract")
+    entrypoint_name = package_member(manifest.get("entrypoint"), "entrypoint")
+    require(contract_name == "witness-contract.json", f"{path.name} package contract path mismatch")
+    require(entrypoint_name == "artifacts/run_witness.ps1", f"{path.name} package entrypoint path mismatch")
+    require(contract_name in files, f"{path.name} package contract is missing: {contract_name}")
+    require(entrypoint_name in files, f"{path.name} package entrypoint is missing: {entrypoint_name}")
+    request_manifest_name = "request/request_manifest.json"
+    require(request_manifest_name in files, f"{path.name} package request manifest is missing: {request_manifest_name}")
+    contract = load_json_bytes(files[contract_name], f"{path.name}:{contract_name}")
+    require(contract.get("request_id") == request_id, f"{path.name} contract request_id mismatch")
+    request_manifest = load_json_bytes(files[request_manifest_name], f"{path.name}:{request_manifest_name}")
+    require(request_manifest.get("request_id") == request_id, f"{path.name} request manifest request_id mismatch")
+
+    inventory = manifest.get("files")
+    require(isinstance(inventory, list) and inventory, f"{path.name} package files are missing")
+    listed: set[str] = set()
+    for index, item in enumerate(inventory, start=1):
+        require(isinstance(item, dict), f"{path.name} package files[{index}] is invalid")
+        member = package_member(item.get("path"), f"files[{index}].path")
+        key = member.casefold()
+        require(key not in listed, f"{path.name} package has duplicate file: {member}")
+        listed.add(key)
+        require(member in files, f"{path.name} package file is missing: {member}")
+        digest = item.get("sha256")
+        require(isinstance(digest, str) and len(digest) == 64 and all(ch in "0123456789abcdef" for ch in digest), f"{path.name} package files[{index}].sha256 is invalid")
+        size = item.get("size_bytes")
+        require(isinstance(size, int) and not isinstance(size, bool) and size >= 0, f"{path.name} package files[{index}].size_bytes is invalid")
+        require(len(files[member]) == size, f"{path.name} package file size mismatch: {member}")
+        require(sha256_bytes(files[member]) == digest, f"{path.name} package file SHA-256 mismatch: {member}")
+
+    actual = {name.casefold() for name in files if name != manifest_name}
+    require(actual == listed, f"{path.name} package file inventory mismatch")
+    return {"manifest": manifest, "path": path, "request_ids": {request_id}, "package_kind": WINDOWS_WITNESS_GENERATED_PACKAGE_KIND}
+
+
+def parse_staged_request_package(path: Path) -> dict[str, Any] | None:
+    """Recognize both legacy runtime requests and generated witness packages."""
+    generated = parse_windows_witness_generated_package(path)
+    if generated is not None:
+        return generated
+    try:
+        with zipfile.ZipFile(path) as archive:
+            has_nested_package_manifest = any(
+                info.filename.replace("\\", "/") != "package-manifest.json"
+                and PurePosixPath(info.filename.replace("\\", "/")).name == "package-manifest.json"
+                for info in archive.infolist()
+                if not info.is_dir()
+            )
+    except (OSError, zipfile.BadZipFile):
+        has_nested_package_manifest = False
+    if has_nested_package_manifest:
+        return None
+    return parse_runtime_request_package(path)
 
 
 def inner_job_request_id(data: bytes, label: str) -> str:
@@ -346,7 +442,7 @@ def validate_project_send_first(rows: list[dict[str, Any]], staging_dir: Path, r
     expected_name = package_path.name
     staged_packages = [
         package for path in sorted(staging_dir.glob("*.zip"))
-        if (package := parse_runtime_request_package(path)) is not None
+        if (package := parse_staged_request_package(path)) is not None
     ]
     expected_ids = {str(send_first.get("request_id") or "")}
     matching = [
@@ -539,6 +635,144 @@ def run_self_test() -> int:
         repo.mkdir()
         staging.mkdir()
         canonical_dir.mkdir(parents=True)
+
+        repo_root = Path(__file__).resolve().parents[2]
+        generated_fixture = repo_root / (
+            "refs/runtime_trace_packages/"
+            "windows_witness_olmdirectionalblur_writer_entry_20260716.zip"
+        )
+        legacy_fixture = repo_root / (
+            "refs/runtime_trace_packages/"
+            "olm_runtime_trace_olmblur_case0006_same_run_internal_20260713.zip"
+        )
+        generated = parse_staged_request_package(generated_fixture)
+        require(generated is not None, "DirectionalBlur generated fixture was not recognized")
+        require(
+            generated["request_ids"] == {"olmdirectionalblur_writer_entry_20260716"},
+            "generated fixture request identity drifted",
+        )
+        require(parse_staged_request_package(legacy_fixture) is not None, "legacy runtime fixture was not recognized")
+
+        def write_generated_variant(
+            destination: Path,
+            *,
+            request_manifest_id: str | None = None,
+            contract_id: str | None = None,
+            unsafe_member: str | None = None,
+            digest_mismatch: bool = False,
+            size_mismatch: bool = False,
+            missing_member: str | None = None,
+            extra_member: str | None = None,
+        ) -> None:
+            files = read_zip_members(generated_fixture)
+            package_manifest = load_json_bytes(files["package-manifest.json"], "self-test package-manifest.json")
+            if request_manifest_id is not None:
+                request_manifest = load_json_bytes(files["request/request_manifest.json"], "self-test request_manifest.json")
+                request_manifest["request_id"] = request_manifest_id
+                files["request/request_manifest.json"] = (json.dumps(request_manifest, sort_keys=True) + "\n").encode("ascii")
+            if contract_id is not None:
+                contract = load_json_bytes(files["witness-contract.json"], "self-test witness-contract.json")
+                contract["request_id"] = contract_id
+                files["witness-contract.json"] = (json.dumps(contract, sort_keys=True) + "\n").encode("ascii")
+            for item in package_manifest["files"]:
+                member = item["path"]
+                item["size_bytes"] = len(files[member])
+                item["sha256"] = sha256_bytes(files[member])
+            if digest_mismatch:
+                package_manifest["files"][0]["sha256"] = "0" * 64
+            if size_mismatch:
+                package_manifest["files"][0]["size_bytes"] += 1
+            if missing_member is not None:
+                files.pop(missing_member)
+            files.pop("package-manifest.json")
+            with zipfile.ZipFile(destination, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
+                for name, data in sorted(files.items()):
+                    archive.writestr(name, data)
+                if unsafe_member is not None:
+                    archive.writestr(unsafe_member, b"unsafe\n")
+                if extra_member is not None:
+                    archive.writestr(extra_member, b"extra\n")
+                # Rewrite the manifest after all mutations so the intended
+                # negative case is the contract failure under test.
+                archive.writestr("package-manifest.json", (json.dumps(package_manifest, sort_keys=True) + "\n").encode("ascii"))
+
+        def require_generated_failure(path: Path, needle: str, message: str) -> None:
+            try:
+                parse_staged_request_package(path)
+            except ValueError as exc:
+                require(needle in str(exc), f"unexpected {message} failure: {exc}")
+            else:
+                raise AssertionError(f"{message} must fail closed")
+
+        unsafe_generated = tmp / "unsafe_generated.zip"
+        write_generated_variant(unsafe_generated, unsafe_member="jobs/../request_manifest.json")
+        try:
+            parse_staged_request_package(unsafe_generated)
+        except ValueError as exc:
+            require("unsafe ZIP member" in str(exc), f"unexpected unsafe-member failure: {exc}")
+        else:
+            raise AssertionError("unsafe generated package must fail closed")
+
+        digest_mismatch = tmp / "digest_mismatch.zip"
+        write_generated_variant(digest_mismatch, digest_mismatch=True)
+        require_generated_failure(digest_mismatch, "SHA-256 mismatch", "digest mismatch")
+
+        size_mismatch = tmp / "size_mismatch.zip"
+        write_generated_variant(size_mismatch, size_mismatch=True)
+        require_generated_failure(size_mismatch, "size mismatch", "size mismatch")
+
+        missing_listed = tmp / "missing_listed.zip"
+        write_generated_variant(missing_listed, missing_member="README.md")
+        require_generated_failure(missing_listed, "file is missing", "missing listed file")
+
+        extra_canonical = tmp / "extra_canonical.zip"
+        write_generated_variant(extra_canonical, extra_member="extra.txt")
+        require_generated_failure(extra_canonical, "inventory mismatch", "extra canonical member")
+
+        unrelated_nested = tmp / "unrelated_nested.zip"
+        with zipfile.ZipFile(unrelated_nested, "w", zipfile.ZIP_DEFLATED) as archive:
+            archive.writestr("foreign/package-manifest.json", b'{"kind":"other_package"}\n')
+            archive.writestr("jobs/../unsafe.txt", b"unsafe\n")
+        require(parse_staged_request_package(unrelated_nested) is None, "unrelated nested package must be ignored")
+
+        request_identity_mismatch = tmp / "request_identity_mismatch.zip"
+        write_generated_variant(request_identity_mismatch, request_manifest_id="other_request")
+        try:
+            parse_staged_request_package(request_identity_mismatch)
+        except ValueError as exc:
+            require("request manifest request_id mismatch" in str(exc), f"unexpected request identity failure: {exc}")
+        else:
+            raise AssertionError("request manifest identity mismatch must fail closed")
+
+        contract_identity_mismatch = tmp / "contract_identity_mismatch.zip"
+        write_generated_variant(contract_identity_mismatch, contract_id="other_request")
+        try:
+            parse_staged_request_package(contract_identity_mismatch)
+        except ValueError as exc:
+            require("contract request_id mismatch" in str(exc), f"unexpected contract identity failure: {exc}")
+        else:
+            raise AssertionError("witness contract identity mismatch must fail closed")
+
+        generated_staging = tmp / "generated_staging"
+        generated_staging.mkdir()
+        staged_generated = generated_staging / generated_fixture.name
+        shutil.copy2(generated_fixture, staged_generated)
+        generated_package_rel = Path("refs/runtime_trace_packages") / generated_fixture.name
+        readme = generated_staging / "README.md"
+        readme.write_text(
+            "olmdirectionalblur_writer_entry_20260716\n"
+            f"{generated_fixture.name}\n"
+            f"{sha256(generated_fixture)}\n",
+            encoding="utf-8",
+        )
+        ok, message = validate_project_send_first(
+            [{"package": generated_package_rel.as_posix(), "request_id": "olmdirectionalblur_writer_entry_20260716"}],
+            generated_staging,
+            repo_root,
+            readme,
+        )
+        require(ok, message)
+
         inner_path = tmp / "inner.zip"
         inner_bytes = build_synthetic_witness_job_zip(inner_path, "batch_pending_request")
         batch_path = staging / "olm_windows_witness_batch_test.zip"
@@ -724,7 +958,7 @@ def main(argv: list[str] | None = None) -> int:
                 returned_batch = parse_windows_witness_batch_return(path) if looks_like_windows_witness_batch(path) else None
                 if returned_batch is not None:
                     continue
-                if parse_runtime_request_package(path) is not None or looks_like_windows_witness_batch(path):
+                if parse_staged_request_package(path) is not None or looks_like_windows_witness_batch(path):
                     stale_artifacts.append(path.name)
         except ValueError as exc:
             print(f"[FAIL] {exc}")
