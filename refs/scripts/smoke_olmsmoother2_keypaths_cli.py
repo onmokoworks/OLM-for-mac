@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Green regression gate for OLMSmoother2 key-path cases.
+"""Known-red measurement for OLMSmoother2 key-path cases.
 
 Cases 2-4 exercise the disasm-confirmed active-palette and scalar-key paths.
-They are now near/exact against the Windows reference and should stay guarded
-while the remaining no-key polygon/smoother residual in case_0001 is refined.
+The AE-saved input PNGs are not a host-input oracle after the binary-grounded
+frame-setup unpremultiply fix, so this broad comparison remains diagnostic.
+Typed producer/config witnesses are the regression gates for this lane.
 """
 
 import shutil

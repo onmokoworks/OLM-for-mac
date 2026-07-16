@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Green regression gate for OLMSmoother2 Gamma Colors cases.
+"""Known-red measurement for OLMSmoother2 Gamma Colors cases.
 
 Cases 10-12 exercise the disasm-confirmed FUN_18000bb10/FUN_18000a9c0
-Gamma Colors path. This guards the Win setter fact that Gamma Colors are not
-the frame-level FUN_180002930 alpha palette.
+Gamma Colors path. The broad AE-saved PNG comparison is diagnostic after the
+binary-grounded frame-setup fix; typed config/producer witnesses guard the
+fact that Gamma Colors are not the frame-level FUN_180002930 alpha palette.
 """
 
 import shutil

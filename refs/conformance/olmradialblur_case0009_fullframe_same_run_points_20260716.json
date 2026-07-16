@@ -1,0 +1,1238 @@
+{
+  "aex": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+  "provenance": {
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+    "manifest_sha256": "7ec542fad64cc210474c6309c3e48c9f12bd0885f54d31943da873d94024b565"
+  },
+  "case_id": "case_0009",
+  "classification": "direct-python-prefill-candidate-hooks-reached",
+  "direct_core_samples": [
+    {
+      "hook": "thread-count-read",
+      "param": 1073742784,
+      "param_output_0xa0": 603226112,
+      "param_rgba_0x98": 553459712,
+      "param_source_0x88": 586637312,
+      "param_source_0x90": 586637312,
+      "r12": 0,
+      "r14": 1073742784,
+      "r15": 0,
+      "rax": 1,
+      "rbx": 0,
+      "rcx": 32,
+      "rdi": 0,
+      "rdx": 1073742784,
+      "rip": "0x18000573b",
+      "rsi": 636403712,
+      "work": 636403712,
+      "work_accum_0x842": 0,
+      "work_angle_step_0x14": 0.003490658476948738,
+      "work_denom_0x843": 0,
+      "work_final_7": 0,
+      "work_max_radius_0x1c": 0,
+      "work_min_radius_0x18": 0,
+      "work_plane_0x38": 0,
+      "work_plane_0x40": 0,
+      "work_plane_0x4210": 0,
+      "work_plane_0x4218": 0,
+      "work_quality_step_0x10": 0.20000000298023224,
+      "work_thread_count_0x4220": 1
+    },
+    {
+      "hook": "input-world-read",
+      "param": 1073742784,
+      "param_output_0xa0": 603226112,
+      "param_rgba_0x98": 553459712,
+      "param_source_0x88": 586637312,
+      "param_source_0x90": 586637312,
+      "r12": 0,
+      "r14": 1073742784,
+      "r15": 0,
+      "rax": 1073742528,
+      "rbx": 636403740,
+      "rcx": 636420208,
+      "rdi": 636403736,
+      "rdx": 0,
+      "rip": "0x180005849",
+      "rsi": 636403712,
+      "work": 636403712,
+      "work_accum_0x842": 0,
+      "work_angle_step_0x14": 0.003490658476948738,
+      "work_denom_0x843": 0,
+      "work_final_7": 0,
+      "work_max_radius_0x1c": 0,
+      "work_min_radius_0x18": 0,
+      "work_plane_0x38": 0,
+      "work_plane_0x40": 0,
+      "work_plane_0x4210": 0,
+      "work_plane_0x4218": 0,
+      "work_quality_step_0x10": 0.20000000298023224,
+      "work_thread_count_0x4220": 1
+    },
+    {
+      "hook": "post-input-world",
+      "param": 1073742784,
+      "param_output_0xa0": 603226112,
+      "param_rgba_0x98": 553459712,
+      "param_source_0x88": 586637312,
+      "param_source_0x90": 586637312,
+      "r12": 1800,
+      "r14": 1073742784,
+      "r15": 1104,
+      "rax": 252702672,
+      "rbx": 7948800,
+      "rcx": 0,
+      "rdi": 1987200,
+      "rdx": 0,
+      "rip": "0x1800058b0",
+      "rsi": 636403712,
+      "work": 636403712,
+      "work_accum_0x842": 0,
+      "work_angle_step_0x14": 0.003490658476948738,
+      "work_denom_0x843": 0,
+      "work_final_7": 0,
+      "work_max_radius_0x1c": 1103,
+      "work_min_radius_0x18": 0,
+      "work_plane_0x38": 0,
+      "work_plane_0x40": 0,
+      "work_plane_0x4210": 0,
+      "work_plane_0x4218": 0,
+      "work_quality_step_0x10": 0.20000000298023224,
+      "work_thread_count_0x4220": 1
+    },
+    {
+      "hook": "polar-prefill-start",
+      "param": 1073742784,
+      "param_output_0xa0": 603226112,
+      "param_rgba_0x98": 553459712,
+      "param_source_0x88": 586637312,
+      "param_source_0x90": 586637312,
+      "r12": 1800,
+      "r14": 1073742784,
+      "r15": 1104,
+      "rax": 17664,
+      "rbx": 0,
+      "rcx": 0,
+      "rdi": 731806464,
+      "rdx": 1,
+      "rip": "0x180005a00",
+      "rsi": 636403712,
+      "work": 636403712,
+      "work_accum_0x842": 636420864,
+      "work_angle_step_0x14": 0.003490658476948738,
+      "work_denom_0x843": 668216064,
+      "work_final_7": 676164864,
+      "work_max_radius_0x1c": 1103,
+      "work_min_radius_0x18": 0,
+      "work_plane_0x38": 676164864,
+      "work_plane_0x40": 707960064,
+      "work_plane_0x4210": 636420864,
+      "work_plane_0x4218": 668216064,
+      "work_quality_step_0x10": 0.20000000298023224,
+      "work_thread_count_0x4220": 1
+    },
+    {
+      "hook": "pre-prepass-region-a",
+      "param": 1073742784,
+      "param_output_0xa0": 603226112,
+      "param_rgba_0x98": 553459712,
+      "param_source_0x88": 586637312,
+      "param_source_0x90": 586637312,
+      "r12": 1800,
+      "r14": 1073742784,
+      "r15": 1104,
+      "rax": 17664,
+      "rbx": 0,
+      "rcx": 0,
+      "rdi": 733793664,
+      "rdx": 1,
+      "rip": "0x180005ba2",
+      "rsi": 636403712,
+      "work": 636403712,
+      "work_accum_0x842": 636420864,
+      "work_angle_step_0x14": 0.003490658476948738,
+      "work_denom_0x843": 668216064,
+      "work_final_7": 676164864,
+      "work_max_radius_0x1c": 1103,
+      "work_min_radius_0x18": 0,
+      "work_plane_0x38": 676164864,
+      "work_plane_0x40": 707960064,
+      "work_plane_0x4210": 636420864,
+      "work_plane_0x4218": 668216064,
+      "work_quality_step_0x10": 0.20000000298023224,
+      "work_thread_count_0x4220": 1
+    },
+    {
+      "hook": "pre-prepass-region-b",
+      "param": 1073742784,
+      "param_output_0xa0": 603226112,
+      "param_rgba_0x98": 553459712,
+      "param_source_0x88": 586637312,
+      "param_source_0x90": 586637312,
+      "r12": 1800,
+      "r14": 1073742784,
+      "r15": 1104,
+      "rax": 0,
+      "rbx": 0,
+      "rcx": 1,
+      "rdi": 733793664,
+      "rdx": 0,
+      "rip": "0x180005bbb",
+      "rsi": 636403712,
+      "work": 636403712,
+      "work_accum_0x842": 636420864,
+      "work_angle_step_0x14": 0.003490658476948738,
+      "work_denom_0x843": 668216064,
+      "work_final_7": 676164864,
+      "work_max_radius_0x1c": 1103,
+      "work_min_radius_0x18": 0,
+      "work_plane_0x38": 676164864,
+      "work_plane_0x40": 707960064,
+      "work_plane_0x4210": 636420864,
+      "work_plane_0x4218": 668216064,
+      "work_quality_step_0x10": 0.20000000298023224,
+      "work_thread_count_0x4220": 1
+    },
+    {
+      "hook": "pre-scatter-branch-a",
+      "param": 1073742784,
+      "param_output_0xa0": 603226112,
+      "param_rgba_0x98": 553459712,
+      "param_source_0x88": 586637312,
+      "param_source_0x90": 586637312,
+      "r12": 1800,
+      "r14": 1073742784,
+      "r15": 1104,
+      "rax": 636420864,
+      "rbx": 1,
+      "rcx": 636403712,
+      "rdi": 733793664,
+      "rdx": 676164864,
+      "rip": "0x180005c1a",
+      "rsi": 636403712,
+      "work": 636403712,
+      "work_accum_0x842": 636420864,
+      "work_angle_step_0x14": 0.003490658476948738,
+      "work_denom_0x843": 668216064,
+      "work_final_7": 676164864,
+      "work_max_radius_0x1c": 1103,
+      "work_min_radius_0x18": 0,
+      "work_plane_0x38": 676164864,
+      "work_plane_0x40": 707960064,
+      "work_plane_0x4210": 636420864,
+      "work_plane_0x4218": 668216064,
+      "work_quality_step_0x10": 0.20000000298023224,
+      "work_thread_count_0x4220": 1
+    },
+    {
+      "hook": "pre-scatter-branch-b",
+      "param": 1073742784,
+      "param_output_0xa0": 603226112,
+      "param_rgba_0x98": 553459712,
+      "param_source_0x88": 586637312,
+      "param_source_0x90": 586637312,
+      "r12": 1800,
+      "r14": 1073742784,
+      "r15": 1104,
+      "rax": 1,
+      "rbx": 1,
+      "rcx": 1,
+      "rdi": 733793664,
+      "rdx": 1800,
+      "rip": "0x180005c2b",
+      "rsi": 636403712,
+      "work": 636403712,
+      "work_accum_0x842": 636420864,
+      "work_angle_step_0x14": 0.003490658476948738,
+      "work_denom_0x843": 668216064,
+      "work_final_7": 676164864,
+      "work_max_radius_0x1c": 1103,
+      "work_min_radius_0x18": 0,
+      "work_plane_0x38": 676164864,
+      "work_plane_0x40": 707960064,
+      "work_plane_0x4210": 636420864,
+      "work_plane_0x4218": 668216064,
+      "work_quality_step_0x10": 0.20000000298023224,
+      "work_thread_count_0x4220": 1
+    },
+    {
+      "hook": "post-scatter-branch",
+      "param": 1073742784,
+      "param_output_0xa0": 603226112,
+      "param_rgba_0x98": 553459712,
+      "param_source_0x88": 586637312,
+      "param_source_0x90": 586637312,
+      "r12": 1800,
+      "r14": 1073742784,
+      "r15": 1104,
+      "rax": 636420864,
+      "rbx": 1,
+      "rcx": 0,
+      "rdi": 733793664,
+      "rdx": 1801,
+      "rip": "0x180005c7c",
+      "rsi": 636403712,
+      "work": 636403712,
+      "work_accum_0x842": 636420864,
+      "work_angle_step_0x14": 0.003490658476948738,
+      "work_denom_0x843": 668216064,
+      "work_final_7": 676164864,
+      "work_max_radius_0x1c": 1103,
+      "work_min_radius_0x18": 0,
+      "work_plane_0x38": 676164864,
+      "work_plane_0x40": 707960064,
+      "work_plane_0x4210": 636420864,
+      "work_plane_0x4218": 668216064,
+      "work_quality_step_0x10": 0.20000000298023224,
+      "work_thread_count_0x4220": 1
+    }
+  ],
+  "direct_debug_size": null,
+  "direct_prefill_fast_forward_cells": 1987200,
+  "direct_prefill_fast_forward_plane": 733793664,
+  "direct_prefill_fast_forwarded": true,
+  "direct_prefill_mode": "python-repeat-border",
+  "direct_python_prefill": {
+    "angle_count": 1800,
+    "cells": 1987200,
+    "first_cells": [
+      {
+        "angle_idx": 0,
+        "radius_idx": 0,
+        "rgba": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scalar8": 1.0,
+        "scalar9": 1.0,
+        "src_xy": [
+          960.0,
+          540.0
+        ]
+      },
+      {
+        "angle_idx": 0,
+        "radius_idx": 1,
+        "rgba": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scalar8": 1.0,
+        "scalar9": 1.0,
+        "src_xy": [
+          961.0,
+          540.0
+        ]
+      },
+      {
+        "angle_idx": 0,
+        "radius_idx": 2,
+        "rgba": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scalar8": 1.0,
+        "scalar9": 1.0,
+        "src_xy": [
+          962.0,
+          540.0
+        ]
+      },
+      {
+        "angle_idx": 0,
+        "radius_idx": 3,
+        "rgba": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scalar8": 1.0,
+        "scalar9": 1.0,
+        "src_xy": [
+          963.0,
+          540.0
+        ]
+      },
+      {
+        "angle_idx": 0,
+        "radius_idx": 4,
+        "rgba": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scalar8": 1.0,
+        "scalar9": 1.0,
+        "src_xy": [
+          964.0,
+          540.0
+        ]
+      },
+      {
+        "angle_idx": 0,
+        "radius_idx": 5,
+        "rgba": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scalar8": 1.0,
+        "scalar9": 1.0,
+        "src_xy": [
+          965.0,
+          540.0
+        ]
+      },
+      {
+        "angle_idx": 0,
+        "radius_idx": 6,
+        "rgba": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scalar8": 1.0,
+        "scalar9": 1.0,
+        "src_xy": [
+          966.0,
+          540.0
+        ]
+      },
+      {
+        "angle_idx": 0,
+        "radius_idx": 7,
+        "rgba": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scalar8": 1.0,
+        "scalar9": 1.0,
+        "src_xy": [
+          967.0,
+          540.0
+        ]
+      }
+    ],
+    "radial_count": 1104,
+    "sample_plane_9_from_source": false,
+    "source_rgba_0x98": 553459712,
+    "source_scalar_0x88": 586637312,
+    "source_scalar_0x90": 586637312,
+    "valid_count": 1987200
+  },
+  "direct_stop_after_prefill": false,
+  "direct_thread_fixups": 0,
+  "direct_zoom_context": {
+    "geometry_height": 1080,
+    "geometry_ptr_0x08": 1073742528,
+    "geometry_width": 1920,
+    "output_plane_0xa0": 603226112,
+    "rgba_plane_0x98": 553459712,
+    "scalar_ones_0x88_0x90": 586637312,
+    "scalar_zeros": 594931712
+  },
+  "elapsed_seconds": 150.2674081325531,
+  "entry_reached": true,
+  "final_sample": {
+    "angle_indices": [
+      1047,
+      1048
+    ],
+    "cells": {
+      "a0_r0": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "a0_r1": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "a1_r0": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "a1_r1": [
+        0.0,
+        0.0,
+        0.0,
+        0.9999999403953552
+      ]
+    },
+    "radius_indices": [
+      1096,
+      1097
+    ],
+    "round_u8": [
+      0,
+      0,
+      0,
+      255
+    ],
+    "sample_float": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "trunc_u8": [
+      0,
+      0,
+      0,
+      255
+    ],
+    "weights": [
+      0.3416016697883606,
+      0.1009032130241394,
+      0.4303709864616394,
+      0.1271241307258606
+    ]
+  },
+  "geometry": {
+    "angle_count": 1800,
+    "angle_index": 1047.557459233642,
+    "angle_raw": 3.656665325164795,
+    "angle_step": 0.003490658476948738,
+    "height": 1080,
+    "max_radius_plus": 1103,
+    "min_radius": 0,
+    "quality_step": 0.20000000298023224,
+    "radial_count": 1104,
+    "radius_index": 1096.22802734375,
+    "radius_raw": 1096.22802734375,
+    "width": 1920
+  },
+  "kind": "olmradialblur_zoom_case0009_aex_witness",
+  "max_instructions": 150000000,
+  "output_world_rgba": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "param_ctx": {
+    "alpha_bool": 0,
+    "angle_radians_int": 0,
+    "blur_type": 1,
+    "brightness_gain": 1.0,
+    "center_x": 960.0,
+    "center_y": 540.0,
+    "inner_edge_fade": 0,
+    "inner_offset": 0,
+    "inner_offset_mode": 1,
+    "inner_strength": 0,
+    "noise_offset": 0.0,
+    "noise_type": 1,
+    "noise_variation_scaled": 0.0,
+    "outer_edge_fade": 0,
+    "outer_offset": 0,
+    "outer_offset_mode": 1,
+    "outer_strength": 1717,
+    "quality_recip": 0.20000000298023224,
+    "ratio": 1.0,
+    "repeat_border": 1,
+    "seed": 1,
+    "size_variation_scaled": 0.0,
+    "thickness": 10.0
+  },
+  "point_samples": [
+    {
+      "final_float": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "final_sample": {
+        "angle_indices": [
+          1047,
+          1048
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          1095,
+          1096
+        ],
+        "round_u8": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "sample_float": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "trunc_u8": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "weights": [
+          0.20135849714279175,
+          0.11224013566970825,
+          0.44073134660720825,
+          0.24567002058029175
+        ]
+      },
+      "final_u8": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "four_cells": {
+        "a0_r0": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "a0_r1": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "a1_r0": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "a1_r1": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "indices": {
+        "angle": 1047.6863449042787,
+        "angle_cells": [
+          1047,
+          1048
+        ],
+        "radius": 1095.35791015625,
+        "radius_cells": [
+          1095,
+          1096
+        ]
+      },
+      "inverse_coords": {
+        "angle_raw": 3.6571152210235596,
+        "radius_raw": 1095.35791015625
+      },
+      "output_world_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "weights": [
+        0.20135849714279175,
+        0.11224013566970825,
+        0.44073134660720825,
+        0.24567002058029175
+      ],
+      "witness_cells": {
+        "accum_0x842": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "denom_0x843": {
+          "a0_r0": 1.0,
+          "a0_r1": 1.0,
+          "a1_r0": 1.0,
+          "a1_r1": 1.0
+        },
+        "final_7": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "xy": [
+        7,
+        0
+      ]
+    },
+    {
+      "final_float": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "final_sample": {
+        "angle_indices": [
+          1047,
+          1048
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0000001192092896
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          1094,
+          1095
+        ],
+        "round_u8": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "sample_float": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "trunc_u8": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "weights": [
+          0.09455564618110657,
+          0.09013673663139343,
+          0.41740724444389343,
+          0.39790037274360657
+        ]
+      },
+      "final_u8": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "four_cells": {
+        "a0_r0": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "a0_r1": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "a1_r0": [
+          0.0,
+          0.0,
+          0.0,
+          1.0000001192092896
+        ],
+        "a1_r1": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "indices": {
+        "angle": 1047.8153671786997,
+        "angle_cells": [
+          1047,
+          1048
+        ],
+        "radius": 1094.488037109375,
+        "radius_cells": [
+          1094,
+          1095
+        ]
+      },
+      "inverse_coords": {
+        "angle_raw": 3.6575655937194824,
+        "radius_raw": 1094.488037109375
+      },
+      "output_world_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "weights": [
+        0.09455564618110657,
+        0.09013673663139343,
+        0.41740724444389343,
+        0.39790037274360657
+      ],
+      "witness_cells": {
+        "accum_0x842": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0000001192092896
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "denom_0x843": {
+          "a0_r0": 1.0,
+          "a0_r1": 1.0,
+          "a1_r0": 1.0000001192092896,
+          "a1_r1": 1.0
+        },
+        "final_7": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0000001192092896
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "xy": [
+        8,
+        0
+      ]
+    },
+    {
+      "final_float": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "final_sample": {
+        "angle_indices": [
+          1049,
+          1050
+        ],
+        "cells": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "radius_indices": [
+          1080,
+          1081
+        ],
+        "round_u8": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "sample_float": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "trunc_u8": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "weights": [
+          0.03673219680786133,
+          0.05506467819213867,
+          0.36341428756713867,
+          0.5447888374328613
+        ]
+      },
+      "final_u8": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "four_cells": {
+        "a0_r0": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "a0_r1": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "a1_r0": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "a1_r1": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "indices": {
+        "angle": 1049.908205458495,
+        "angle_cells": [
+          1049,
+          1050
+        ],
+        "radius": 1080.599853515625,
+        "radius_cells": [
+          1080,
+          1081
+        ]
+      },
+      "inverse_coords": {
+        "angle_raw": 3.6648709774017334,
+        "radius_raw": 1080.599853515625
+      },
+      "output_world_rgba": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "weights": [
+        0.03673219680786133,
+        0.05506467819213867,
+        0.36341428756713867,
+        0.5447888374328613
+      ],
+      "witness_cells": {
+        "accum_0x842": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        "denom_0x843": {
+          "a0_r0": 1.0,
+          "a0_r1": 1.0,
+          "a1_r0": 1.0,
+          "a1_r1": 1.0
+        },
+        "final_7": {
+          "a0_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a0_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r0": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "a1_r1": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "xy": [
+        24,
+        0
+      ]
+    }
+  ],
+  "pointers": {
+    "accum_0x842": 636420864,
+    "denom_0x843": 668216064,
+    "final_7": 676164864,
+    "zoom_param1": 636403712,
+    "zoom_param2": 1073742784
+  },
+  "prepass_calls": 1,
+  "prepass_detour_calls": 0,
+  "reader_call_count": 21,
+  "reading": "This is a full-size direct-core harness witness with the hot Zoom polar input prefill replaced by a Python implementation derived from FUN_1800056f0 and the repeat-border bilinear samplers. It is stronger than the synthetic fast-forward because source planes and geometry participate. The prefill formula is exact against the original AEX at reduced geometry (max_abs_diff=0.0; see olmradialblur_zoom_python_prefill_validation_20260708.md), but the full-frame result remains a local candidate until its host/output binding is compared with a same-run Windows witness.",
+  "render_fault": "",
+  "render_instructions": 150000000,
+  "render_stop_rip": "0x90000000",
+  "scatter_calls": 1,
+  "scatter_detour_calls": 0,
+  "schema": 1,
+  "windows_trace": {
+    "classification": "pre-output alpha-normalization / sampler-side residual; not a later byte-writer mismatch",
+    "final_rgba_u8": [
+      20,
+      3,
+      3,
+      254
+    ],
+    "pre_writeback_rgba_float": [
+      0.08224078267812729,
+      0.014130095019936562,
+      0.014130095019936562,
+      0.9999999403953552
+    ],
+    "sampler_or_polar_xy": [
+      1047.5574951171875,
+      1096.22802734375
+    ]
+  },
+  "witness_cells": {
+    "accum_0x842": {
+      "a0_r0": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "a0_r1": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "a1_r0": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "a1_r1": [
+        0.0,
+        0.0,
+        0.0,
+        0.9999999403953552
+      ]
+    },
+    "denom_0x843": {
+      "a0_r0": 1.0,
+      "a0_r1": 1.0,
+      "a1_r0": 1.0,
+      "a1_r1": 0.9999999403953552
+    },
+    "final_7": {
+      "a0_r0": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "a0_r1": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "a1_r0": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "a1_r1": [
+        0.0,
+        0.0,
+        0.0,
+        0.9999999403953552
+      ]
+    }
+  },
+  "xy": [
+    6,
+    0
+  ],
+  "zoom_branch_hits": 0,
+  "zoom_callsite_hits": 0,
+  "zoom_setup_a7e0_calls": 1,
+  "zoom_setup_a810_calls": 1
+}

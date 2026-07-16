@@ -17,6 +17,7 @@ appears later.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import struct
@@ -88,6 +89,14 @@ DIRECT_CORE_BRANCH_HOOKS = {
 }
 
 
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--aex-path", type=Path, default=DEFAULT_AEX)
@@ -96,6 +105,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--case-id", default="case_0009")
     parser.add_argument("--x", type=int, default=6)
     parser.add_argument("--y", type=int, default=0)
+    parser.add_argument(
+        "--point",
+        type=parse_point,
+        action="append",
+        default=[],
+        metavar="X,Y",
+        help="Repeatable post-core sample point. The expensive direct-core run is shared.",
+    )
     parser.add_argument("--trace-comparison-json", type=Path, default=DEFAULT_TRACE)
     parser.add_argument("--output-json", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--output-md", type=Path, default=DEFAULT_MD)
@@ -154,6 +171,14 @@ def parse_args() -> argparse.Namespace:
         help="Direct-core harness only: replace FUN_18000a9d0 with a no-op callback to test final-plane reachability.",
     )
     return parser.parse_args()
+
+
+def parse_point(value: str) -> tuple[int, int]:
+    try:
+        x_text, y_text = value.split(",", 1)
+        return int(x_text.strip()), int(y_text.strip())
+    except (ValueError, TypeError) as exc:
+        raise argparse.ArgumentTypeError(f"point must be X,Y, got {value!r}") from exc
 
 
 def parse_debug_size(value: str) -> tuple[int, int] | None:
@@ -532,6 +557,62 @@ def sample_final_plane(
     }
 
 
+def sample_zoom_point(
+    loader: AexLoader,
+    final: int,
+    accum: int,
+    denom: int,
+    radial_count: int,
+    angle_count: int,
+    min_radius: int,
+    angle_step: float,
+    work: int,
+    output_world: int,
+    x: int,
+    y: int,
+    debug_size: bool = False,
+) -> dict[str, Any]:
+    """Read one point from the already-computed Zoom planes and output world."""
+    radius_raw, angle_raw = call_zoom_inverse(loader, work, float(x), float(y))
+    angle_index = angle_raw / angle_step if angle_step else 0.0
+    if debug_size and angle_count:
+        angle_index %= float(angle_count)
+    elif float(angle_count) <= angle_index:
+        angle_index -= float(angle_count)
+    radius_index = radius_raw - float(min_radius)
+    final_sample = sample_final_plane(loader, final, radial_count, angle_count, radius_index, angle_index)
+    cell_labels = {
+        "a0_r0": (final_sample["angle_indices"][0], final_sample["radius_indices"][0]),
+        "a0_r1": (final_sample["angle_indices"][0], final_sample["radius_indices"][1]),
+        "a1_r0": (final_sample["angle_indices"][1], final_sample["radius_indices"][0]),
+        "a1_r1": (final_sample["angle_indices"][1], final_sample["radius_indices"][1]),
+    }
+    witness_cells = {"accum_0x842": {}, "denom_0x843": {}, "final_7": {}}
+    for label, (ai, ri) in cell_labels.items():
+        witness_cells["accum_0x842"][label] = [float(v) for v in read_rgba_cell(loader, accum, radial_count, ai, ri)]
+        witness_cells["denom_0x843"][label] = float(read_scalar_cell(loader, denom, radial_count, ai, ri))
+        witness_cells["final_7"][label] = [float(v) for v in read_rgba_cell(loader, final, radial_count, ai, ri)]
+    out_argb = read_world_pixel_argb(loader, output_world, x, y)
+    out_rgba = [int(out_argb[1]), int(out_argb[2]), int(out_argb[3]), int(out_argb[0])]
+    return {
+        "xy": [x, y],
+        "inverse_coords": {"radius_raw": radius_raw, "angle_raw": angle_raw},
+        "indices": {
+            "radius": radius_index,
+            "angle": angle_index,
+            "angle_cells": final_sample["angle_indices"],
+            "radius_cells": final_sample["radius_indices"],
+        },
+        "weights": final_sample["weights"],
+        "four_cells": final_sample["cells"],
+        "final_float": final_sample["sample_float"],
+        "final_u8": final_sample["trunc_u8"],
+        "final_sample": final_sample,
+        "witness_cells": witness_cells,
+        "output_world_rgba": out_rgba,
+    }
+
+
 def classify(local: dict[str, Any], win: dict[str, Any]) -> str:
     win_f = win.get("aex_pre_writeback_rgba_float_or_hex")
     local_sample = local["final_sample"]["sample_float"]
@@ -556,6 +637,9 @@ def build_markdown(report: dict[str, Any]) -> str:
         f"- Case: `{report['case_id']}`",
         f"- XY: `{report['xy']}`",
         f"- AEX: `{report['aex']}`",
+        f"- AEX SHA-256: `{report.get('provenance', {}).get('aex_sha256')}`",
+        f"- Input SHA-256: `{report.get('provenance', {}).get('input_sha256')}`",
+        f"- Manifest SHA-256: `{report.get('provenance', {}).get('manifest_sha256')}`",
         f"- Entry reached: `{report['entry_reached']}`",
         f"- Classification: `{report['classification']}`",
         "",
@@ -617,6 +701,21 @@ def build_markdown(report: dict[str, Any]) -> str:
         "",
         "### Denominator `param_1[0x843]`",
     ])
+    point_samples = report.get("point_samples", [])
+    if point_samples:
+        insertion = lines.index("## Witness Cells")
+        lines[insertion:insertion] = [
+            "## Same-run point samples",
+            "",
+            "| XY | radius / angle index | final float RGBA | trunc u8 | output-world RGBA |",
+            "| --- | --- | --- | --- | --- |",
+            *[
+                f"| `{point['xy']}` | `{point['indices']['radius']}` / `{point['indices']['angle']}` | "
+                f"`{point['final_float']}` | `{point['final_u8']}` | `{point['output_world_rgba']}` |"
+                for point in point_samples
+            ],
+            "",
+        ]
     for key, value in report["witness_cells"]["denom_0x843"].items():
         lines.append(f"- `{key}`: `{value}`")
     lines.append("")
@@ -968,6 +1067,11 @@ def main() -> int:
             "case_id": args.case_id,
             "xy": [args.x, args.y],
             "aex": str(args.aex_path.relative_to(REPO_ROOT) if args.aex_path.is_relative_to(REPO_ROOT) else args.aex_path),
+            "provenance": {
+                "aex_sha256": sha256_file(args.aex_path),
+                "input_sha256": sha256_file(args.input_png),
+                "manifest_sha256": sha256_file(args.manifest),
+            },
             "entry_reached": False,
             "elapsed_seconds": elapsed,
             "render_instructions": int(render_result["instructions"]),
@@ -997,6 +1101,7 @@ def main() -> int:
             "reader_call_count": len(provenance),
             "param_ctx": param_ctx_dump,
             "direct_zoom_context": direct_context if args.direct_zoom_core else None,
+            "point_samples": [],
             "setup_pointers": {
                 "render_ctx": render_ctx,
                 "param_ctx": param_ctx,
@@ -1034,29 +1139,26 @@ def main() -> int:
     python_prefill_info = captured.get("direct_python_prefill") or {}
     angle_count = int(python_prefill_info.get("angle_count") or (360.0 / quality_step if quality_step else 0))
 
-    radius_raw, angle_raw = call_zoom_inverse(loader, work, float(args.x), float(args.y))
-    angle_index = angle_raw / angle_step if angle_step else 0.0
-    if debug_size is not None and angle_count:
-        angle_index = angle_index % float(angle_count)
-    elif float(angle_count) <= angle_index:
-        angle_index -= float(angle_count)
-    radius_index = radius_raw - float(min_radius)
-    final_sample = sample_final_plane(loader, final, radial_count, angle_count, radius_index, angle_index)
-
-    cell_labels = {
-        "a0_r0": (final_sample["angle_indices"][0], final_sample["radius_indices"][0]),
-        "a0_r1": (final_sample["angle_indices"][0], final_sample["radius_indices"][1]),
-        "a1_r0": (final_sample["angle_indices"][1], final_sample["radius_indices"][0]),
-        "a1_r1": (final_sample["angle_indices"][1], final_sample["radius_indices"][1]),
-    }
-    witness_cells = {"accum_0x842": {}, "denom_0x843": {}, "final_7": {}}
-    for label, (ai, ri) in cell_labels.items():
-        witness_cells["accum_0x842"][label] = [float(v) for v in read_rgba_cell(loader, accum, radial_count, ai, ri)]
-        witness_cells["denom_0x843"][label] = float(read_scalar_cell(loader, denom, radial_count, ai, ri))
-        witness_cells["final_7"][label] = [float(v) for v in read_rgba_cell(loader, final, radial_count, ai, ri)]
-
-    out_argb = read_world_pixel_argb(loader, output_world, args.x, args.y)
-    out_rgba = [int(out_argb[1]), int(out_argb[2]), int(out_argb[3]), int(out_argb[0])]
+    legacy_point = sample_zoom_point(
+        loader, final, accum, denom, radial_count, angle_count, min_radius,
+        angle_step, work, output_world, args.x, args.y,
+        debug_size is not None,
+    )
+    point_samples = [
+        sample_zoom_point(
+            loader, final, accum, denom, radial_count, angle_count, min_radius,
+            angle_step, work, output_world, point_x, point_y,
+            debug_size is not None,
+        )
+        for point_x, point_y in args.point
+    ]
+    radius_raw = legacy_point["inverse_coords"]["radius_raw"]
+    angle_raw = legacy_point["inverse_coords"]["angle_raw"]
+    radius_index = legacy_point["indices"]["radius"]
+    angle_index = legacy_point["indices"]["angle"]
+    final_sample = legacy_point["final_sample"]
+    witness_cells = legacy_point["witness_cells"]
+    out_rgba = legacy_point["output_world_rgba"]
     win = windows_case(args.trace_comparison_json, args.case_id)
     report: dict[str, Any] = {
         "kind": "olmradialblur_zoom_case0009_aex_witness",
@@ -1064,6 +1166,11 @@ def main() -> int:
         "case_id": args.case_id,
         "xy": [args.x, args.y],
         "aex": str(args.aex_path.relative_to(REPO_ROOT) if args.aex_path.is_relative_to(REPO_ROOT) else args.aex_path),
+        "provenance": {
+            "aex_sha256": sha256_file(args.aex_path),
+            "input_sha256": sha256_file(args.input_png),
+            "manifest_sha256": sha256_file(args.manifest),
+        },
         "entry_reached": True,
         "elapsed_seconds": elapsed,
         "render_instructions": int(render_result["instructions"]),
@@ -1114,6 +1221,7 @@ def main() -> int:
         "witness_cells": witness_cells,
         "final_sample": final_sample,
         "output_world_rgba": out_rgba,
+        "point_samples": point_samples,
         "windows_trace": {
             "pre_writeback_rgba_float": win.get("aex_pre_writeback_rgba_float_or_hex"),
             "final_rgba_u8": win.get("aex_final_rgba_u8"),
@@ -1162,9 +1270,11 @@ def main() -> int:
             "polar input prefill replaced by a Python implementation derived "
             "from FUN_1800056f0 and the repeat-border bilinear samplers. It is "
             "stronger than the synthetic fast-forward because source planes and "
-            "geometry participate, but it is still a candidate witness until "
-            "validated against an original reduced-geometry AEX prefill or a "
-            "Windows trace."
+            "geometry participate. The prefill formula is exact against the "
+            "original AEX at reduced geometry (max_abs_diff=0.0; see "
+            "olmradialblur_zoom_python_prefill_validation_20260708.md), but the "
+            "full-frame result remains a local candidate until its host/output "
+            "binding is compared with a same-run Windows witness."
         )
     elif args.direct_fast_forward_prefill:
         report["classification"] = "direct-fast-forward-prefill-hooks-reached-nonsemantic"
