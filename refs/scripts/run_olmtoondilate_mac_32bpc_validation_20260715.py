@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run or validate the isolated Mac ToonDilate 32bpc request."""
 from __future__ import annotations
-import argparse, hashlib, json, os, subprocess, sys
+import argparse, datetime as dt, hashlib, json, os, re, subprocess, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -17,6 +17,38 @@ def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
 def read(path): return json.loads(path.read_text(encoding="utf-8-sig"))
 def fail(message): raise SystemExit("FAIL CLOSED: " + message)
 
+def resolve_plugin_binary(path: Path) -> tuple[Path, Path]:
+    supplied = path.expanduser().resolve()
+    if supplied.is_dir() and supplied.name == "OLMToonDilate.plugin":
+        bundle = supplied
+        binary = bundle / "Contents/MacOS/OLMToonDilate"
+    elif supplied.is_file() and supplied.name == "OLMToonDilate" and supplied.parent.name == "MacOS" and supplied.parent.parent.name == "Contents":
+        binary = supplied
+        bundle = supplied.parent.parent.parent
+    else:
+        fail("plugin path must be OLMToonDilate.plugin or its Contents/MacOS/OLMToonDilate executable")
+    if bundle.name != "OLMToonDilate.plugin" or not binary.is_file():
+        fail("OLMToonDilate plugin executable is unavailable")
+    return bundle, binary
+
+def ae_process_proof(plugin_binary: Path) -> dict:
+    found = subprocess.run(["pgrep", "-x", "After Effects"], text=True, capture_output=True, timeout=10)
+    pids = [int(value) for value in found.stdout.split() if value.isdigit()]
+    if found.returncode != 0 or len(pids) != 1: fail(f"expected exactly one After Effects process after render, found {pids!r}")
+    pid = pids[0]
+    started = subprocess.run(["ps", "-p", str(pid), "-o", "lstart="], text=True, capture_output=True, timeout=10)
+    if started.returncode != 0 or not started.stdout.strip(): fail("cannot read After Effects process start time")
+    started_text = " ".join(started.stdout.split())
+    started_at = dt.datetime.strptime(started_text, "%a %b %d %H:%M:%S %Y").timestamp()
+    if plugin_binary.stat().st_mtime > started_at + 1: fail("plugin binary was modified after After Effects started")
+    mapped = subprocess.run(["vmmap", str(pid)], text=True, capture_output=True, timeout=120)
+    resolved = str(plugin_binary.resolve())
+    if mapped.returncode != 0 or not any(re.search(r"\s" + re.escape(resolved) + r"$", line) for line in mapped.stdout.splitlines()):
+        fail("requested OLMToonDilate binary is not mapped in After Effects")
+    return {"method": "vmmap_exact_path", "pid": pid, "module_path": resolved,
+            "module_sha256": sha(plugin_binary), "process_started_local": started_text,
+            "binary_predates_process_start": True}
+
 def verify_output(path, expected_dimensions=(64, 64)):
     try:
         return inspect_float_rgba_exr(path, expected_dimensions=expected_dimensions)
@@ -27,8 +59,8 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--package", type=Path, default=PACKAGE)
     p.add_argument("--execute", action="store_true", help="explicitly invoke AE on macOS")
-    p.add_argument("--ae-app", default="Adobe After Effects 2025")
-    p.add_argument("--plugin-binary", type=Path)
+    p.add_argument("--ae-app", default="Adobe After Effects 2026")
+    p.add_argument("--plugin-binary", type=Path, help="OLMToonDilate.plugin bundle or its Mach-O executable")
     p.add_argument("--windows-return", type=Path)
     args = p.parse_args(); package = args.package.resolve(); request = read(package / "request_manifest.json")
     if request["case"]["plugin"]["sha256"] != PLUGIN_SHA: fail("request plugin hash drifted")
@@ -39,13 +71,15 @@ def main():
               "reason": "cross_host_return_compare_required", "request_id": request["request_id"], "fixture_sha256": sha(fixture)}
     if args.execute:
         if sys.platform != "darwin": fail("--execute requires macOS")
-        if subprocess.run(["pgrep", "-x", "AfterFX"], stdout=subprocess.DEVNULL).returncode == 0: fail("AfterFX is already running")
-        plugin = args.plugin_binary.resolve() if args.plugin_binary else Path("/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin")
-        if not plugin.is_file() or sha(plugin) != PLUGIN_SHA: fail("exact ToonDilate plugin binary/hash is unavailable")
+        if subprocess.run(["pgrep", "-x", "After Effects"], stdout=subprocess.DEVNULL).returncode == 0: fail("After Effects is already running; use a fresh process for loaded-module proof")
+        supplied = args.plugin_binary or Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin"
+        plugin_bundle, plugin = resolve_plugin_binary(supplied)
+        if sha(plugin) != PLUGIN_SHA: fail("exact ToonDilate plugin binary/hash is unavailable")
         env = dict(os.environ); env.update({"OLM_AE_TYPED_FIXTURE_OUTPUT_DIR": str(output_dir), "OLM_AE_TYPED_FIXTURE_TEMPLATE": "OLM EXR 32 Float",
             "OLM_AE_TYPED_FIXTURE_PROJECT_PATH": str(output_dir / "fixture.aep"), "OLM_AE_TYPED_FIXTURE_EFFECT": "OLM Toon Dilate",
             "OLM_AE_TYPED_FIXTURE_OVERWRITE": "0"})
         subprocess.run(["osascript", "-e", "with timeout of 3600 seconds", "-e", f'tell application "{args.ae_app}" to DoScriptFile POSIX file "{fixture}" with override', "-e", "end timeout"], check=True, env=env)
+        loaded_proof = ae_process_proof(plugin)
         result = read(output_dir / "fixture_result.json")
         if result.get("status") != "ok": fail("AE fixture did not report ok")
         manifest = read(output_dir / "fixture_manifest.json")
@@ -60,7 +94,7 @@ def main():
         record = {"kind": "olm_32bpc_typed_procedural_render_record", "schema": 1, "platform": "macos", "record_role": "reference",
                   "required_ae_major_minor": "26.3", "ae_version": result.get("ae_version", ""), "output_template": "OLM EXR 32 Float",
                   "fixture_jsx_sha256": sha(fixture), "renderer_class": "SOFTWARE", "linear_blending": False,
-                  "cases": [{"id": request["case"]["id"], "effect": "OLM Toon Dilate", "plugin": {"name": "OLMToonDilate.plugin", "path": str(plugin), "sha256": sha(plugin)},
+                  "cases": [{"id": request["case"]["id"], "effect": "OLM Toon Dilate", "plugin": {"name": "OLMToonDilate.plugin", "bundle_path": str(plugin_bundle), "path": str(plugin), "sha256": sha(plugin), "loaded_plugin_proof": loaded_proof},
                              "fixture_contract": request["fixture_contract"], "parameters_requested": request["case"]["parameters"],
                              "outputs": {n: {"path": str(path), "sha256": inspected[n]["sha256"], "exr": inspected[n]} for n, path in outputs.items()},
                              "output_module": {"template_name": "OLM EXR 32 Float", "capture_api": "OutputModule.getSettings(GetSettingsFormat.STRING)",

@@ -51,6 +51,8 @@ def main() -> int:
         plugin = result.get("plugin", {})
         plugin_path = Path(plugin.get("path", ""))
         if plugin.get("filename") != "OLMColorKey.plugin" or not plugin_path.is_file() or len(plugin.get("sha256", "")) != 64 or plugin.get("expected_sha256") != plugin.get("sha256") or (plugin_path.is_file() and digest(plugin_path) != plugin.get("sha256")): errors.append("installed plugin SHA is missing or not bound to the loaded binary")
+        proof = result.get("loaded_plugin_proof", {})
+        if proof.get("method") != "vmmap_exact_path" or proof.get("module_path") != plugin.get("path") or proof.get("module_sha256") != plugin.get("sha256") or proof.get("binary_predates_process_start") is not True or not isinstance(proof.get("pid"), int): errors.append("loaded plugin is not bound to the AE process mapping")
         returned = result.get("cases", [])
         if [case.get("id") for case in returned] != expected_ids: errors.append("case set/order mismatch")
         windows = pinned.get("windows_float32_pairs", [])

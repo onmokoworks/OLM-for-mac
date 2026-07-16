@@ -16,5 +16,8 @@ def main():
     proc=subprocess.run([sys.executable,str(RUN),"--package",str(out)],cwd=ROOT,text=True,capture_output=True); assert proc.returncode==0,proc.stderr
     report=json.loads((out/"mac_run/validation_report.json").read_text()); assert report["status"]=="blocked" and report["ae_exact"] is False
     proc=subprocess.run([sys.executable,str(RUN),"--package",str(out),"--execute"],cwd=ROOT,text=True,capture_output=True); assert proc.returncode!=0; assert "FAIL CLOSED" in proc.stderr+proc.stdout
+    runner=RUN.read_text(encoding="utf-8")
+    for token in ("Adobe After Effects 2026","pgrep\", \"-x\", \"After Effects","vmmap_exact_path","binary_predates_process_start","re.escape(resolved)","Contents/MacOS/OLMToonDilate"):
+      assert token in runner, token
   print("[OK] isolated ToonDilate Mac 32bpc package smoke")
 if __name__=="__main__": main()

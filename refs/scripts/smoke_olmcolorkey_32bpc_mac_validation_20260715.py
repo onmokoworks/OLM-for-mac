@@ -59,6 +59,12 @@ def main() -> int:
             subprocess.run([sys.executable, str(RUNNER), "--plugin-path", str(plugin_path), "--support-dir", str(runner_support), "--dump-js", str(dumped)], cwd=ROOT, check=True)
             assert dumped.exists()
             assert not (runner_support / f"{MAC_REQUEST_ID}.zip").exists()
+        runner = RUNNER.read_text(encoding="utf-8")
+        for token in ("vmmap_exact_path", "binary_predates_process_start", "modified after After Effects started", "loaded_plugin_proof", "re.escape(resolved)"):
+            assert token in runner, token
+        reporter = (ROOT / "scripts/report_olmcolorkey_32bpc_mac_validation_20260715.py").read_text(encoding="utf-8")
+        for token in ("vmmap_exact_path", "module_path", "module_sha256", "binary_predates_process_start"):
+            assert token in reporter, token
         with zipfile.ZipFile(archive) as z:
             names = set(z.namelist())
             assert "request_manifest.json" in names and "windows_reference_manifest.json" in names

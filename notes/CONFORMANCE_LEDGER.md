@@ -1,5 +1,15 @@
 # OLM Conformance Ledger
 
+- 2026-07-16 `Mac 32bpc loaded-module gates` (latest override): no correctness
+  status is promoted. ColorKey and ToonDilate validation runners now bind the
+  claimed Mach-O path and SHA-256 to the single live After Effects process via
+  exact-path `vmmap`, and reject a binary modified after AE startup. ColorKey's
+  first nine-case attempt stopped fail-closed at an existing unsaved-project
+  modal and produced no candidate evidence. ToonDilate is not executed because
+  its request pins `c05db8...c32b3` while the installed current binary is
+  `d47a81...954de`; repinning requires separate provenance, not a silent hash
+  update. Evidence: `refs/conformance/mac_32bpc_loaded_module_gates_20260716.md`.
+
 - 2026-07-16 `KiraKira Merge Mode plumbing` (latest override): no correctness
   status is promoted. The Mac UI already exposed Merge Mode, but normal and
   Smart Render both discarded its value. `OLMKiraKiraInfo`, `ReadRenderInfo`,

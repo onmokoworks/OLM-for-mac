@@ -180,6 +180,7 @@ def main() -> int:
         Smoke("ColorKey Edge decision matrix", [py, "refs/scripts/smoke_analyze_colorkey_edge_decision_matrix.py"]),
         Smoke("ColorKey 32bpc PF_PixelFloat input identity request", [py, "refs/scripts/smoke_package_ae26_3_32bpc_input_identity_request.py"]),
         Smoke("ColorKey 32bpc Mac validation identity", [py, "refs/scripts/smoke_olmcolorkey_32bpc_mac_validation_20260715.py"], "regression-gate"),
+        Smoke("ToonDilate 32bpc Mac validation identity", [py, "refs/scripts/smoke_package_olmtoondilate_mac_32bpc_validation_20260715.py"], "regression-gate"),
         Smoke("OLMToonDilate 32bpc typed procedural common-core Windows witness", [py, "refs/scripts/smoke_windows_witness_olmtoondilate_32bpc_typed_procedural_samecomp_20260713.py"]),
         Smoke("OLMDistanceGradation trace comparison", [py, "refs/scripts/smoke_compare_distancegradation_trace.py"]),
         Smoke("OLMDistanceGradation AEX CPU emulation", [py, "refs/scripts/smoke_emulation_opencv_detours.py"]),

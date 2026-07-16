@@ -4,9 +4,11 @@
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -17,6 +19,34 @@ from package_olmcolorkey_32bpc_mac_validation_20260715 import REQUEST_INDEX, STE
 
 def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def ae_process_proof(plugin_binary: Path) -> dict[str, object]:
+    found = subprocess.run(["pgrep", "-x", "After Effects"], text=True, capture_output=True, timeout=10)
+    pids = [int(value) for value in found.stdout.split() if value.isdigit()]
+    if found.returncode != 0 or len(pids) != 1:
+        raise RuntimeError(f"expected exactly one After Effects process, found {pids!r}")
+    pid = pids[0]
+    started = subprocess.run(["ps", "-p", str(pid), "-o", "lstart="], text=True, capture_output=True, timeout=10)
+    if started.returncode != 0 or not started.stdout.strip():
+        raise RuntimeError("cannot read After Effects process start time")
+    started_text = " ".join(started.stdout.split())
+    started_at = dt.datetime.strptime(started_text, "%a %b %d %H:%M:%S %Y").timestamp()
+    if plugin_binary.stat().st_mtime > started_at + 1:
+        raise RuntimeError("plugin binary was modified after After Effects started; restart AE before validation")
+    mapped = subprocess.run(["vmmap", str(pid)], text=True, capture_output=True, timeout=120)
+    resolved = str(plugin_binary.resolve())
+    exact_mapping = any(re.search(r"\s" + re.escape(resolved) + r"$", line) for line in mapped.stdout.splitlines())
+    if mapped.returncode != 0 or not exact_mapping:
+        raise RuntimeError("requested OLMColorKey binary is not mapped in the After Effects process")
+    return {
+        "method": "vmmap_exact_path",
+        "pid": pid,
+        "process_started_local": started_text,
+        "module_path": resolved,
+        "module_sha256": digest(plugin_binary),
+        "binary_predates_process_start": True,
+    }
 
 
 def verify(result_path: Path, expected_cases: list[dict], output_dir: Path) -> dict:
@@ -89,9 +119,18 @@ def main() -> int:
     try: result = verify(result_json, cases, output_dir)
     except (ValueError, json.JSONDecodeError) as exc:
         print(f"[FAIL_CLOSED] {exc}", file=sys.stderr); return 1
-    expected_plugin_hash = digest(plugin_binary)
-    if result.get("plugin", {}).get("bundle_path") != str(plugin_bundle) or result.get("plugin", {}).get("path") != str(plugin_binary) or result.get("plugin", {}).get("sha256") != expected_plugin_hash or result.get("plugin", {}).get("expected_sha256") != expected_plugin_hash:
-        print("[FAIL_CLOSED] returned plugin hash does not match --plugin-path", file=sys.stderr); return 1
+    try:
+        proof = ae_process_proof(plugin_binary)
+        expected_plugin_hash = digest(plugin_binary)
+        plugin = result.get("plugin", {})
+        if plugin.get("bundle_path") != str(plugin_bundle) or plugin.get("path") != str(plugin_binary) or plugin.get("sha256") != expected_plugin_hash or plugin.get("expected_sha256") != expected_plugin_hash:
+            raise RuntimeError("returned plugin hash does not match --plugin-path")
+        if plugin.get("path") != proof["module_path"] or plugin.get("sha256") != proof["module_sha256"]:
+            raise RuntimeError("AE return plugin identity disagrees with mapped-module proof")
+        result["loaded_plugin_proof"] = proof
+        result_json.write_text(json.dumps(result, sort_keys=True, separators=(",", ":")) + "\n", encoding="utf-8")
+    except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as exc:
+        print(f"[FAIL_CLOSED] loaded plug-in proof failed: {exc}", file=sys.stderr); return 1
     report = {"kind": "olmcolorkey_32bpc_mac_validation_report", "status": "candidate_return_verified", "ae_exact_claim": False, "case_count": len(result["cases"]), "result_json": str(result_json), "next_gate": "compare Mac and Windows raw FLOAT EXR samples"}
     report_path = output_dir / "validation_report.json"; report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(f"[OK] verified candidate return: {report_path}"); return 0
