@@ -1,0 +1,763 @@
+{
+  "status": "PASS_PF8_WORKER_TIE_BREAK",
+  "aex": "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex",
+  "worker": "0x1801a6150",
+  "worker_abi": "(context, unused, source_world, destination_world, radius_ptr)",
+  "helper": "0x1801ac880",
+  "tie_branch": [
+    "0x1801a63e1",
+    "0x1801a6459"
+  ],
+  "copy_call": "0x1801a64dd",
+  "copy_resume": "0x1801a64e2",
+  "fixture": {
+    "width": 3,
+    "height": 1,
+    "rowbytes": 16,
+    "radius": 1.0,
+    "pixel_format": "PF8 ARGB",
+    "paired_orders": [
+      "A,T,B",
+      "B,T,A"
+    ]
+  },
+  "pixels": {
+    "A": [
+      255,
+      10,
+      20,
+      30
+    ],
+    "T": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "B": [
+      255,
+      90,
+      80,
+      70
+    ],
+    "padding": [
+      165,
+      165,
+      165,
+      165
+    ]
+  },
+  "provenance": {
+    "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+    "expected_aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+    "worker": "0x1801a6150",
+    "worker_function_hash_size": 256,
+    "expected_worker_function_sha256": "500bda28032d0ecf005415cc9488e8348c1b20e5b99f7c0c61f976cbae10f647",
+    "worker_function_sha256": "500bda28032d0ecf005415cc9488e8348c1b20e5b99f7c0c61f976cbae10f647"
+  },
+  "paired_runs": [
+    {
+      "order": "A,T,B",
+      "input": [
+        [
+          255,
+          10,
+          20,
+          30
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          90,
+          80,
+          70
+        ]
+      ],
+      "status": "RETURN",
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 1150,
+      "tie_branch_events": [
+        {
+          "r8d": 4294967295,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a63e1"
+        },
+        {
+          "r8d": 4294967295,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a63e4"
+        },
+        {
+          "r8d": 4294967295,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a63e8"
+        },
+        {
+          "r8d": 0,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a63ec"
+        },
+        {
+          "r8d": 0,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a63ef"
+        },
+        {
+          "r8d": 0,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a640d"
+        },
+        {
+          "r8d": 0,
+          "r9d": 4294967295,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a6410"
+        },
+        {
+          "r8d": 0,
+          "r9d": 4294967295,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a6416"
+        },
+        {
+          "r8d": 0,
+          "r9d": 4294967295,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a6419"
+        },
+        {
+          "r8d": 0,
+          "r9d": 4294967295,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a641d"
+        },
+        {
+          "r8d": 0,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a6421"
+        },
+        {
+          "r8d": 0,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a6424"
+        },
+        {
+          "r8d": 0,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a644a"
+        },
+        {
+          "r8d": 4294967295,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a644d"
+        },
+        {
+          "r8d": 4294967295,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a6452"
+        },
+        {
+          "r8d": 4294967295,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a6455"
+        },
+        {
+          "r8d": 4294967295,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a6459"
+        }
+      ],
+      "helper_events": [
+        {
+          "source": "0x20000040",
+          "destination": "0x20000044",
+          "source_raw_before": [
+            255,
+            10,
+            20,
+            30
+          ],
+          "destination_raw_before": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "copy_call_resume_events": [
+        {
+          "address": "0x1801a64dd",
+          "source": "0x20000040",
+          "destination": "0x20000044"
+        },
+        {
+          "address": "0x1801a64e2",
+          "kind": "copy_resume"
+        }
+      ],
+      "output_raw_immediately_after_worker_return": [
+        255,
+        10,
+        20,
+        30,
+        255,
+        10,
+        20,
+        30,
+        255,
+        90,
+        80,
+        70,
+        165,
+        165,
+        165,
+        165
+      ],
+      "output_pixels": [
+        [
+          255,
+          10,
+          20,
+          30
+        ],
+        [
+          255,
+          10,
+          20,
+          30
+        ],
+        [
+          255,
+          90,
+          80,
+          70
+        ]
+      ],
+      "padding_preserved": true,
+      "events": [
+        {
+          "kind": "pf_copy_callback_entry",
+          "args": [
+            "0x1234",
+            "0x20000010",
+            "0x20000050",
+            "0x0",
+            "0x0"
+          ],
+          "world_keys": [
+            "0x20000010",
+            "0x20000050"
+          ]
+        },
+        {
+          "kind": "pf_copy_callback",
+          "abi": "5 args",
+          "args": [
+            "0x1234",
+            "0x20000010",
+            "0x20000050",
+            "0x0",
+            "0x0"
+          ],
+          "return_address": "0x1801a6221",
+          "source_world": "0x20000010",
+          "destination_world": "0x20000050",
+          "source_payload": "0x20000000",
+          "destination_payload": "0x20000040",
+          "width": 3,
+          "height": 1,
+          "source_rowbytes": 16,
+          "destination_rowbytes": 16,
+          "visible_bytes_per_row": 12,
+          "copied_rows": [
+            {
+              "source": 536870912,
+              "destination": 536870976,
+              "bytes": 12
+            }
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0xf0fecc8",
+            "0x20"
+          ]
+        },
+        {
+          "kind": "suite_alloc",
+          "size": 12,
+          "result": "0x400002b0"
+        },
+        {
+          "kind": "suite_free",
+          "ptr": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0x1",
+            "0x2"
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fee08",
+            "0xffffffffffffffff"
+          ]
+        },
+        {
+          "kind": "suite_handle_slot10",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_handle_slot18",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fee08",
+            "0xffffffffffffffff"
+          ]
+        }
+      ]
+    },
+    {
+      "order": "B,T,A",
+      "input": [
+        [
+          255,
+          90,
+          80,
+          70
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          10,
+          20,
+          30
+        ]
+      ],
+      "status": "RETURN",
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 1150,
+      "tie_branch_events": [
+        {
+          "r8d": 4294967295,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a63e1"
+        },
+        {
+          "r8d": 4294967295,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a63e4"
+        },
+        {
+          "r8d": 4294967295,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a63e8"
+        },
+        {
+          "r8d": 0,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a63ec"
+        },
+        {
+          "r8d": 0,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a63ef"
+        },
+        {
+          "r8d": 0,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a640d"
+        },
+        {
+          "r8d": 0,
+          "r9d": 4294967295,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a6410"
+        },
+        {
+          "r8d": 0,
+          "r9d": 4294967295,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a6416"
+        },
+        {
+          "r8d": 0,
+          "r9d": 4294967295,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a6419"
+        },
+        {
+          "r8d": 0,
+          "r9d": 4294967295,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a641d"
+        },
+        {
+          "r8d": 0,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a6421"
+        },
+        {
+          "r8d": 0,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a6424"
+        },
+        {
+          "r8d": 0,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a644a"
+        },
+        {
+          "r8d": 4294967295,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a644d"
+        },
+        {
+          "r8d": 4294967295,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a6452"
+        },
+        {
+          "r8d": 4294967295,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a6455"
+        },
+        {
+          "r8d": 4294967295,
+          "r9d": 0,
+          "r10d": 4294967295,
+          "r12d": 0,
+          "edi": 1,
+          "return_address": "0x20000050",
+          "address": "0x1801a6459"
+        }
+      ],
+      "helper_events": [
+        {
+          "source": "0x20000040",
+          "destination": "0x20000044",
+          "source_raw_before": [
+            255,
+            90,
+            80,
+            70
+          ],
+          "destination_raw_before": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "copy_call_resume_events": [
+        {
+          "address": "0x1801a64dd",
+          "source": "0x20000040",
+          "destination": "0x20000044"
+        },
+        {
+          "address": "0x1801a64e2",
+          "kind": "copy_resume"
+        }
+      ],
+      "output_raw_immediately_after_worker_return": [
+        255,
+        90,
+        80,
+        70,
+        255,
+        90,
+        80,
+        70,
+        255,
+        10,
+        20,
+        30,
+        165,
+        165,
+        165,
+        165
+      ],
+      "output_pixels": [
+        [
+          255,
+          90,
+          80,
+          70
+        ],
+        [
+          255,
+          90,
+          80,
+          70
+        ],
+        [
+          255,
+          10,
+          20,
+          30
+        ]
+      ],
+      "padding_preserved": true,
+      "events": [
+        {
+          "kind": "pf_copy_callback_entry",
+          "args": [
+            "0x1234",
+            "0x20000010",
+            "0x20000050",
+            "0x0",
+            "0x0"
+          ],
+          "world_keys": [
+            "0x20000010",
+            "0x20000050"
+          ]
+        },
+        {
+          "kind": "pf_copy_callback",
+          "abi": "5 args",
+          "args": [
+            "0x1234",
+            "0x20000010",
+            "0x20000050",
+            "0x0",
+            "0x0"
+          ],
+          "return_address": "0x1801a6221",
+          "source_world": "0x20000010",
+          "destination_world": "0x20000050",
+          "source_payload": "0x20000000",
+          "destination_payload": "0x20000040",
+          "width": 3,
+          "height": 1,
+          "source_rowbytes": 16,
+          "destination_rowbytes": 16,
+          "visible_bytes_per_row": 12,
+          "copied_rows": [
+            {
+              "source": 536870912,
+              "destination": 536870976,
+              "bytes": 12
+            }
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0xf0fecc8",
+            "0x20"
+          ]
+        },
+        {
+          "kind": "suite_alloc",
+          "size": 12,
+          "result": "0x400002b0"
+        },
+        {
+          "kind": "suite_free",
+          "ptr": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0x1",
+            "0x2"
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fee08",
+            "0xffffffffffffffff"
+          ]
+        },
+        {
+          "kind": "suite_handle_slot10",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_handle_slot18",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fee08",
+            "0xffffffffffffffff"
+          ]
+        }
+      ]
+    }
+  ],
+  "gates": {
+    "provenance_hash_gate_passed": true,
+    "both_workers_returned": true,
+    "both_tie_branches_observed": true,
+    "both_helpers_observed": true,
+    "copy_call_and_resume_observed": true,
+    "raw_captured_after_return": true,
+    "center_retains_first_forward_winner": true,
+    "padding_preserved": true
+  },
+  "claim_boundary": "Bounded actual-AEX PF8 worker tie-break observation under local Unicorn; no general distance, host/AE exact, all tie-order, or case0003 closure claim."
+}
