@@ -16,7 +16,7 @@ PRODUCTION = ROOT / "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"
 CORE = ROOT / "core"
 WIDTH = HEIGHT = 16
 ROWBYTES = 76
-EXTENT = [2, 1, 14, 15]
+EXTENTS = [[0, 0, WIDTH, HEIGHT], [2, 1, 14, 15]]
 PIXEL_BYTES = 4
 INPUT_PAD = 0xA5
 OUTPUT_PAD = 0xEE
@@ -44,7 +44,7 @@ namespace {{
 constexpr int kWidth = 16;
 constexpr int kHeight = 16;
 constexpr int kRowbytes = 76;
-constexpr int kExtent[4] = {{2, 1, 14, 15}};
+constexpr int kExtents[2][4] = {{{{0, 0, kWidth, kHeight}}, {{2, 1, 14, 15}}}};
 constexpr std::uint8_t kInputPad = 0xA5;
 constexpr std::uint8_t kOutputPad = 0xEE;
 
@@ -85,7 +85,6 @@ int main() {{
     PF_EffectWorld in{{}};
     in.data = reinterpret_cast<PF_PixelPtr>(input.data());
     in.rowbytes = kRowbytes; in.width = kWidth; in.height = kHeight;
-    in.extent_hint = {{kExtent[0], kExtent[1], kExtent[2], kExtent[3]}};
     OLMDirectionalBlurInfo info{{}};
     info.brightness_gain = 1.0;
     info.front_strength = 48;
@@ -93,8 +92,10 @@ int main() {{
     info.render_scale_x = info.render_scale_y = 1.0;
 
     std::printf("{{\\"status\\":\\"ok\\",\\"cases\\":[");
-    for (int case_index = 0; case_index < 2; ++case_index) {{
-        const float angle = case_index == 0 ? 0.0f : 45.0f;
+    for (int roi_index = 0; roi_index < 2; ++roi_index) {{
+        in.extent_hint = {{kExtents[roi_index][0], kExtents[roi_index][1], kExtents[roi_index][2], kExtents[roi_index][3]}};
+        for (int angle_index = 0; angle_index < 2; ++angle_index) {{
+        const float angle = angle_index == 0 ? 0.0f : 45.0f;
         info.angle_deg = angle;
         std::array<std::uint8_t, kWidth * kHeight * 4> source{{}};
         std::array<std::uint8_t, kWidth * kHeight * 4> expected{{}};
@@ -110,7 +111,7 @@ int main() {{
         PF_EffectWorld out{{}};
         out.data = reinterpret_cast<PF_PixelPtr>(output.data());
         out.rowbytes = kRowbytes; out.width = kWidth; out.height = kHeight;
-        out.extent_hint = {{kExtent[0], kExtent[1], kExtent[2], kExtent[3]}};
+        out.extent_hint = {{kExtents[roi_index][0], kExtents[roi_index][1], kExtents[roi_index][2], kExtents[roi_index][3]}};
         int used_exact = 0;
         if (OLMDirectionalBlurTestRenderWorld(&in, &out, &info, 8, &used_exact) != PF_Err_NONE)
             return 12;
@@ -121,9 +122,10 @@ int main() {{
             pixels_match &= p[0] == q[3] && p[1] == q[0] && p[2] == q[1] && p[3] == q[2];
         }}
         if (used_exact != 1 || !pixels_match || input != input_before || !padding_is(input, kInputPad) || !padding_is(output, kOutputPad))
-            return 20 + case_index;
-        if (case_index) std::printf(",");
-        std::printf("{{\\"angle\\":%.1f,\\"used_exact\\":%d,\\"pixels_match\\":true,\\"input_unchanged\\":true,\\"input_padding_unchanged\\":true,\\"output_padding_unchanged\\":true,\\"output_digest\\":\\"%s\\"}}", angle, used_exact, sha(output).c_str());
+            return 20 + roi_index * 2 + angle_index;
+        if (roi_index || angle_index) std::printf(",");
+        std::printf("{{\\"roi\\":\\"%s\\",\\"extent_hint\\":[%d,%d,%d,%d],\\"angle\\":%.1f,\\"used_exact\\":%d,\\"pixels_match\\":true,\\"input_unchanged\\":true,\\"input_padding_unchanged\\":true,\\"output_padding_unchanged\\":true,\\"output_digest\\":\\"%s\\"}}", roi_index ? "partial" : "full", kExtents[roi_index][0], kExtents[roi_index][1], kExtents[roi_index][2], kExtents[roi_index][3], angle, used_exact, sha(output).c_str());
+        }}
     }}
     std::printf("],\\"gates\\":[");
     struct Gate {{ const char *name; OLMDirectionalBlurInfo mutate; }};
@@ -149,7 +151,7 @@ int main() {{
         PF_EffectWorld gate_out{{}};
         gate_out.data = reinterpret_cast<PF_PixelPtr>(input.data());
         gate_out.rowbytes = kRowbytes; gate_out.width = kWidth; gate_out.height = kHeight;
-        gate_out.extent_hint = {{kExtent[0], kExtent[1], kExtent[2], kExtent[3]}};
+        gate_out.extent_hint = {{kExtents[1][0], kExtents[1][1], kExtents[1][2], kExtents[1][3]}};
         if (std::strcmp(gates[i].name, "dimension_mismatch") == 0) gate_out.width = 15;
         int used_exact = 1;
         if (OLMDirectionalBlurTestRenderWorld(&in, &gate_out, &gated, 8, &used_exact) != PF_Err_NONE || used_exact != 0)
@@ -182,7 +184,7 @@ def main() -> int:
         raise RuntimeError(f"adapter probe failed ({run.returncode}): {run.stderr}")
     report = json.loads(run.stdout)
     report["build"] = build
-    report["world"] = {"dimensions": [WIDTH, HEIGHT], "rowbytes": ROWBYTES, "extent_hint": EXTENT,
+    report["world"] = {"dimensions": [WIDTH, HEIGHT], "rowbytes": ROWBYTES, "extent_hints": EXTENTS,
                         "input_padding": hex(INPUT_PAD), "output_padding": hex(OUTPUT_PAD)}
     report["production_source"] = str(PRODUCTION.relative_to(ROOT))
     report["reference_path"] = "olm_dblur_frontonly_rgba8"

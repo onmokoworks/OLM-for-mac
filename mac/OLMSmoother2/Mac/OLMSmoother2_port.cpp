@@ -3103,6 +3103,26 @@ static void win_cardinal_6(SmootherPolygon &poly) {
 	if (poly.cur_x == poly.cplane_w - 1) return;
 	GridDesc g = grid_of(poly);
 	int center[2] = { poly.cur_x, poly.cur_y };
+	if (poly.cur_x == g_olmsmoother2_trace_x && poly.cur_y == g_olmsmoother2_trace_y) {
+		// These are the exact two columns consumed by d3b0/da50. Keeping the
+		// dump at the cardinal boundary makes endpoint differences explainable
+		// without changing class-plane or polygon behavior.
+		for (int yy = poly.cur_y - 2; yy <= poly.cur_y + 3; ++yy) {
+			std::fprintf(stderr,
+			             "trace cardinal6 cplane y=%d x=%d bytes=%u,%u,%u,%u x1=%d bytes=%u,%u,%u,%u\n",
+			             yy,
+			             poly.cur_x,
+			             (unsigned)cp_b(&g, poly.cur_x, yy, 0),
+			             (unsigned)cp_b(&g, poly.cur_x, yy, 1),
+			             (unsigned)cp_b(&g, poly.cur_x, yy, 2),
+			             (unsigned)cp_b(&g, poly.cur_x, yy, 3),
+			             poly.cur_x + 1,
+			             (unsigned)cp_b(&g, poly.cur_x + 1, yy, 0),
+			             (unsigned)cp_b(&g, poly.cur_x + 1, yy, 1),
+			             (unsigned)cp_b(&g, poly.cur_x + 1, yy, 2),
+			             (unsigned)cp_b(&g, poly.cur_x + 1, yy, 3));
+		}
+	}
 	int s1[3]; scan_d3b0(s1, &g, center);
 	int s2[3]; scan_da50(s2, &g, center);
 	int desc[6] = { s1[0], s1[1], s1[2], s2[0], s2[1], s2[2] };
@@ -3914,11 +3934,12 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	}
 	const std::vector<FPix> scratch_pre_setup = scratch;
 
-	// FUN_180002e90's orchestration: unpremul if key enabled, apply key/invert,
-	// apply gamma encode.  Gate flags from the SMParams.
-	if (p.enable_key) {
-		win_FUN_180002840_unpremul(scratch.data(), w, h);
-	}
+	// FUN_180002e90 gates unpremultiply on byte [render params + 0x18].
+	// FUN_180005180 passes setter_base + 8 as the render params pointer, so
+	// this is setter byte +0x20. FUN_180004e10 initializes that field to zero
+	// and never ties it to Enable Color Key. The current Windows AEX therefore
+	// keeps premultiplied 8bpc input here; treating enable_key as this gate
+	// changes the class plane and cardinal descriptors in legacy key cases.
 	// FUN_180002930 guard (Win FUN_180002e90 @ 0x180002e90):
 	//   `*(longlong *)(param_4 + 0x60) != 0`
 	// ASM at FUN_180004e10 shows one way to populate this active palette:

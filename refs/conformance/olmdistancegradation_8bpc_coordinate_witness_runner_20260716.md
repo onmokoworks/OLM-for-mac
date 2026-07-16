@@ -1,0 +1,69 @@
+# OLMDistanceGradation 8bpc Coordinate Witness Runner
+
+Date: 2026-07-16
+
+## Scope
+
+`scripts/run_olmdistancegradation_8bpc_coordinate_witness.py` is a bounded
+Mac-local witness runner/checker for the three coordinates selected by the
+8bpc liveness census in
+`refs/conformance/olmdistancegradation_8bpc_coordinate_liveness_census_return_20260715.md`:
+
+| Case | Coordinate |
+| --- | --- |
+| `case_0001` | `(17,0)` |
+| `case_0015` | `(780,495)` |
+| `case_0029` | `(987,496)` |
+
+The script validates the canonical split 8bpc request manifests, limits
+`OLM_DG_DEBUG_POINTS` to one coordinate per case, and passes
+`OLM_DG_DEBUG_DUMP_PATH` and `OLM_DG_SHADE_DEBUG_PATH` to the existing
+`scripts/run_ae_single_case.py`. The checker requires one PF8 field witness and
+one PF8 shade witness at the requested coordinate, plus an AE result reporting
+project depth 8. It does not compare output PNGs or claim exactness.
+
+`case_0001` and `case_0015` use
+`handoff/ae_pixel_validation_20260618/requests/ae_pixel_olmdistancegradation_basic_exact_20260619`;
+`case_0029` uses
+`handoff/ae_pixel_validation_20260618/requests/ae_pixel_olmdistancegradation_blur_exact_20260619`.
+The runner does not copy or mutate request fixtures.
+
+## Use
+
+Discovery/dry-run, with no AE invocation:
+
+```sh
+python3 scripts/run_olmdistancegradation_8bpc_coordinate_witness.py --dry-run
+```
+
+Execute into a disposable directory:
+
+```sh
+python3 scripts/run_olmdistancegradation_8bpc_coordinate_witness.py --run --output-dir /tmp/olmdg_8bpc_coordinate_witness_run
+```
+
+Check an existing run without invoking AE:
+
+```sh
+python3 scripts/run_olmdistancegradation_8bpc_coordinate_witness.py --check --output-dir /tmp/olmdg_8bpc_coordinate_witness_run
+```
+
+## Validation
+
+Dry-run validation and a live Mac AE execution were performed on 2026-07-16.
+The live run used AE `26.3x87`, Software, a fresh project, color management
+disabled, and reported 8bpc for every case. All three coordinates produced
+exactly one PF8 field record and one PF8 shade record:
+
+| Case | Field value | Stored ARGB | Output SHA-256 |
+| --- | --- | --- | --- |
+| `case_0001` | `0.0078125` | `57,255,0,0` | `4e38e5fd4d4be8c8cee366a4ffebe7499832635ffed3f426f13a08417ce66185` |
+| `case_0015` | `0.037291009` | `10,10,0,0` | `393f60193b5536d9c79a17fa23964cfdaceb91b54c0f262463ff3b2eb262c8fb` |
+| `case_0029` | `0.250339508` | `64,28,0,238` | `812ff8bec3bac86d1f87804ef3ae52756dfbfd941b61206ff684754eecef56b1` |
+
+The run is a Mac path-liveness proof, not a Windows comparison and not an
+`AE exact` claim. No Windows or NAS operation is part of this tool.
+
+The runner passes `--keep-open` because the single-case JSX otherwise quits AE
+after the first case, invalidating the next Apple Event connection. This note
+and the script are harness-only changes. Production plugin source is unchanged.

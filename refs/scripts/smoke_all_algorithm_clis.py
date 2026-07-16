@@ -146,6 +146,7 @@ def main() -> int:
         Smoke("OLMSmoother2 c280-cce0 local differential", [py, "refs/scripts/smoke_smoother2_fullchain_diff.py"]),
         Smoke("OLMSmoother2 legacy key gamma config witness", [py, "tools/emulation/test_olmsmoother2_legacy_key_gamma_classifier_config_witness_20260716.py", "--output-json", "refs/conformance/olmsmoother2_legacy_key_gamma_classifier_config_witness_20260716.json", "--output-md", "refs/conformance/olmsmoother2_legacy_key_gamma_classifier_config_witness_20260716.md"], "regression-gate"),
         Smoke("OLMSmoother2 legacy key producer witness", [py, "tools/emulation/test_olmsmoother2_legacy_key_setup_producer_witness_20260716.py"], "regression-gate"),
+        Smoke("OLMSmoother2 case_0012 unpremultiply gate witness", [py, "refs/scripts/smoke_olmsmoother2_case0012_unpremul_gate.py"], "regression-gate"),
         Smoke("OLMSmoother2 legacy key producer common-core request", [py, "refs/scripts/smoke_windows_witness_olmsmoother2_legacy_key_producer_20260716.py"], "regression-gate"),
         Smoke("OLMSmoother2 0012 typed return analyzer", [py, "refs/scripts/smoke_olmsmoother2_0012_typed_bind_read.py"]),
         Smoke("OLMSmoother2 case_0012 common-core Windows witness", [py, "refs/scripts/smoke_windows_witness_olmsmoother2_case0012_20260713.py"]),
