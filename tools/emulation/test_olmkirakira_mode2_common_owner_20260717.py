@@ -52,6 +52,8 @@ DISPATCH_MAX_CHUNKS = 64
 OPENCV_DISPATCH_GLOBAL = 0x181843990
 OPENCV_DISPATCH_TABLE_BYTES = 0x10000
 OPENCV_DISPATCH_READY_FLAG = 0x181843998
+OPENCV_DISPATCH_COEFFICIENT_BYTES = 0x8000
+OPENCV_BOOTSTRAP_MAX_INSTRUCTIONS = 2_500_000
 
 FILTER_SIZE_PRIMARY_ZERO_WIDTH = 0x1812982EC
 FILTER_SIZE_PRIMARY_HEIGHT_LOAD = 0x1812982F1
@@ -244,7 +246,7 @@ def collect_static_fact_witnesses() -> dict[str, dict[str, object]]:
                 "18114bec4  MOV byte ptr [0x181843998],0x1",
                 "181292f59  MOV RAX,qword ptr [0x181843990]",
             ],
-            "semantics": "OpenCV bootstrap probes FUN_181294950 across the 1/2/4 modes and later code reads qword ptr [0x181843990]. The exact implementation state behind 0x181843990 remains unproven here.",
+            "semantics": "OpenCV bootstrap calls FUN_181294950 with (channels, table_write) = (1,0), (1,1), (2,0), (2,1), (4,0), (4,1), sets DAT_181843998 only after all six calls return nonzero, and later code reads qword ptr [0x181843990].",
             "asm_present": all(line in asm for line in (
                 "18114be69  CALL 0x181294950",
                 "18114be7a  CALL 0x181294950",
@@ -663,11 +665,59 @@ def run_owner_probe() -> dict[str, object]:
     loader.write_bytes(tls_slot, b"\0" * TLS_SLOT_SIZE)
     loader.write_bytes(tls_slot + TLS_EPOCH_OFFSET, struct.pack("<i", TLS_UNINITIALIZED_EPOCH))
     loader.write_bytes(TEB_BASE + GS_TLS_OFFSET, struct.pack("<Q", tls_table))
-    # The actual-AEX OpenCV CPU-dispatch initializer requires this process
-    # global to name writable backing storage before FUN_181294950 runs.
+    # The actual-AEX bootstrap expects this process global to name writable
+    # storage. The binary itself populates it through FUN_18114be60.
     opencv_dispatch_table = loader.host_alloc(OPENCV_DISPATCH_TABLE_BYTES, align=64)
     loader.write_bytes(opencv_dispatch_table, b"\0" * OPENCV_DISPATCH_TABLE_BYTES)
     loader.write_bytes(OPENCV_DISPATCH_GLOBAL, struct.pack("<Q", opencv_dispatch_table))
+    loader.write_bytes(OPENCV_DISPATCH_READY_FLAG, b"\0")
+    opencv_bootstrap_calls: list[dict[str, object]] = []
+
+    def capture_opencv_bootstrap_call(ld: AexLoader, _address: int, _size: int) -> None:
+        opencv_bootstrap_calls.append({
+            "call": len(opencv_bootstrap_calls) + 1,
+            "function": "FUN_181294950",
+            "channels": ld.uc.reg_read(UC_X86_REG_RCX) & 0xFFFFFFFF,
+            "table_write": ld.uc.reg_read(UC_X86_REG_RDX) & 0xFF,
+            "return_address": hex(read_u64(ld, ld.uc.reg_read(UC_X86_REG_RSP))),
+        })
+
+    loader.add_code_hook(0x181294950, capture_opencv_bootstrap_call)
+    bootstrap_ready_before = loader.read_bytes(OPENCV_DISPATCH_READY_FLAG, 1)[0]
+    bootstrap_result = loader.call_function(
+        OPENCV_DISPATCH_BOOTSTRAP,
+        max_instructions=OPENCV_BOOTSTRAP_MAX_INSTRUCTIONS,
+    )
+    bootstrap_terminal_rip = loader.uc.reg_read(UC_X86_REG_RIP)
+    coefficient_region = loader.read_bytes(
+        opencv_dispatch_table,
+        OPENCV_DISPATCH_COEFFICIENT_BYTES,
+    )
+    coefficient_nonzero_bytes = sum(byte != 0 for byte in coefficient_region)
+    bootstrap_ready_after = loader.read_bytes(OPENCV_DISPATCH_READY_FLAG, 1)[0]
+    expected_bootstrap_args = [(1, 0), (1, 1), (2, 0), (2, 1), (4, 0), (4, 1)]
+    observed_bootstrap_args = [
+        (int(item["channels"]), int(item["table_write"]))
+        for item in opencv_bootstrap_calls
+    ]
+    bootstrap_call_witness = list(opencv_bootstrap_calls)
+    if bootstrap_terminal_rip != 0x90000000:
+        raise RuntimeError(
+            f"FUN_18114be60 did not return within {OPENCV_BOOTSTRAP_MAX_INSTRUCTIONS} instructions; "
+            f"RIP=0x{bootstrap_terminal_rip:x} ready={bootstrap_ready_after} "
+            f"coefficient_nonzero_bytes={coefficient_nonzero_bytes}"
+        )
+    if observed_bootstrap_args != expected_bootstrap_args:
+        raise RuntimeError(
+            f"FUN_18114be60 call sequence mismatch: observed={observed_bootstrap_args!r}"
+        )
+    if bootstrap_ready_after != 1 or coefficient_nonzero_bytes == 0:
+        raise RuntimeError(
+            f"FUN_18114be60 incomplete state: ready={bootstrap_ready_after} "
+            f"coefficient_nonzero_bytes={coefficient_nonzero_bytes}"
+        )
+    # Bootstrap checkpoints are initialization evidence, not Mode2 progress.
+    dispatch_checkpoints.clear()
     runtime_state = {
         "tls_index_global": hex(TLS_INDEX_GLOBAL),
         "tls_index_value": struct.unpack("<I", loader.read_bytes(TLS_INDEX_GLOBAL, 4))[0],
@@ -680,7 +730,32 @@ def run_owner_probe() -> dict[str, object]:
         "opencv_dispatch_global": hex(OPENCV_DISPATCH_GLOBAL),
         "opencv_dispatch_table": hex(opencv_dispatch_table),
         "opencv_dispatch_table_bytes": OPENCV_DISPATCH_TABLE_BYTES,
-        "opencv_dispatch_table_contract": "emulated writable zero-initialized 0x10000-byte backing store, 64-byte aligned; bounded hypothesis for the 0x181843990 global only, not proof that the exact OpenCV dispatch/implementation state now matches Mode2 expectations",
+        "opencv_dispatch_table_contract": "emulated writable 0x10000-byte backing store, 64-byte aligned; populated only by actual FUN_18114be60 -> FUN_181294950 execution",
+        "opencv_bootstrap": {
+            "function": "FUN_18114be60",
+            "boundary": "complete actual bootstrap; no narrower direct-call fallback required",
+            "max_instructions": OPENCV_BOOTSTRAP_MAX_INSTRUCTIONS,
+            "instructions": bootstrap_result["instructions"],
+            "terminal_rip": hex(bootstrap_terminal_rip),
+            "calls": bootstrap_call_witness,
+            "expected_arguments": [list(args) for args in expected_bootstrap_args],
+            "arguments_match": observed_bootstrap_args == expected_bootstrap_args,
+            "ready_flag": {
+                "address": hex(OPENCV_DISPATCH_READY_FLAG),
+                "before": bootstrap_ready_before,
+                "after": bootstrap_ready_after,
+                "verified": bootstrap_ready_after == 1,
+            },
+            "coefficient_region": {
+                "pointer_source": hex(OPENCV_DISPATCH_GLOBAL),
+                "pointer": hex(opencv_dispatch_table),
+                "bytes": OPENCV_DISPATCH_COEFFICIENT_BYTES,
+                "nonzero_bytes": coefficient_nonzero_bytes,
+                "contains_nonzero": coefficient_nonzero_bytes > 0,
+                "sha256": hashlib.sha256(coefficient_region).hexdigest(),
+                "head_64_hex": coefficient_region[:64].hex(),
+            },
+        },
     }
 
     def param_checkin(current: AexLoader, args: list[int]) -> int:
@@ -1147,18 +1222,18 @@ def run_owner_probe() -> dict[str, object]:
             owner_tail = "FUN_18115ea40 OOM constructor (requested bytes recorded below)"
         elif runtime_error_boundary.get("exception_class") == "cv::FilterEngine::init":
             next_contract = {
-                "kind": "OpenCV dispatch/implementation state",
+                "kind": "binary-generated invalid FilterEngine anchor/ksize relation after verified OpenCV bootstrap",
                 "boundary": "FUN_181162610",
                 "exception_class": runtime_error_boundary.get("exception_class"),
                 "source_file": runtime_error_boundary.get("source_file"),
                 "line": runtime_error_boundary.get("line"),
                 "assertion": runtime_error_boundary.get("message"),
                 "static_size_fact": "Size=(0,5) is binary-generated here: width/x is explicitly zeroed and height/y is loaded from the stack local observed as 5; do not classify it as missing fixture geometry and do not invent width",
-                "inference_only": "The 0x181843990 dispatch/implementation table may be implicated, but that remains inference unless a stronger witness proves the exact expected state",
+                "opencv_bootstrap_result": "Actual FUN_18114be60 returned, set DAT_181843998=1, and populated a nonzero 0x8000-byte coefficient region; the assertion persisted, so the former zero-table shortcut is not the cause of this stop.",
                 "fail_closed": True,
             }
-            classification = "bounded_aligned_allocator_contract_crossed_next_opencv_dispatch_state_boundary"
-            owner_tail = "FUN_181162610 cv::FilterEngine::init throw path from filter.dispatch.cpp:5"
+            classification = "verified_opencv_bootstrap_crossed_then_filterengine_anchor_assertion_persisted"
+            owner_tail = "FUN_181162610 cv::FilterEngine::init anchor/ksize throw path from filter.dispatch.cpp:5"
         elif runtime_error_boundary:
             next_contract = {
                 "kind": "OpenCV cv::Exception boundary",
@@ -1269,8 +1344,8 @@ def run_owner_probe() -> dict[str, object]:
             terminal = "fixture_state_fault"
             condition = "dispatch fixture-state fault; fail closed"
             if runtime_error_boundary.get("exception_class") == "cv::FilterEngine::init":
-                terminal = "opencv_dispatch_or_implementation_state_unavailable"
-                condition = "dispatch OpenCV dispatch/implementation-state fault; fail closed"
+                terminal = "filterengine_anchor_assertion_after_verified_bootstrap"
+                condition = "FilterEngine anchor assertion persisted after verified bootstrap; fail closed"
             execution_stop.update({
                 "condition": condition,
                 "rip": dispatch_fault["rip"],
@@ -1351,13 +1426,13 @@ def run_owner_probe() -> dict[str, object]:
                 "derivable_from_current_mat_tls_parameter_contracts": False,
                 "reason": "Size=(0,5) is generated inside the binary filter path itself. The fixture did not omit kernel geometry, and this harness must not invent a replacement width.",
                 "next_unavailable_boundary": {
-                    "kind": "OpenCV dispatch/implementation state",
+                    "kind": "binary-generated invalid FilterEngine anchor/ksize relation after verified OpenCV bootstrap",
                     "boundary": "FUN_181162610",
                     "exception_class": runtime_error_boundary.get("exception_class"),
                     "source_file": runtime_error_boundary.get("source_file"),
                     "line": runtime_error_boundary.get("line"),
                     "assertion": runtime_error_boundary.get("message"),
-                    "inference_only": "The zero-initialized 0x181843990 table may be implicated, but that remains inference unless proven by a stronger witness",
+                    "opencv_bootstrap_result": "Actual FUN_18114be60 returned, set DAT_181843998=1, and populated a nonzero 0x8000-byte coefficient region before Mode2; the same anchor assertion persisted.",
                 },
                 "call_chain": [
                     "FUN_181150790",
@@ -1423,8 +1498,8 @@ def run_owner_probe() -> dict[str, object]:
             "first_unavailable_boundary": (
                 f"exact stop: FUN_181150790 entered; dispatch checkpoint repeated at RIP={execution_stop.get('rip')}; fixture state made no progress; no unimplemented import observed, no typed writer claim"
                 if execution_stop.get("condition") == "repeated checkpoint; fail closed"
-                else "exact stop: FUN_181150790 entered; FUN_181162610 cv::FilterEngine::init throw path from filter.dispatch.cpp:5 was reached after the binary-generated Size=(0,5) setup; do not treat that geometry as missing fixture state; next unavailable boundary is OpenCV dispatch/implementation state, with 0x181843990 implicated only as inference; no typed writer claim"
-                if execution_stop.get("condition") == "dispatch OpenCV dispatch/implementation-state fault; fail closed"
+                else "exact stop after actual FUN_18114be60 bootstrap returned with DAT_181843998=1 and nonzero coefficients: FUN_181162610 cv::FilterEngine::init still asserted for binary-generated Size=(0,5); anchor/width was not patched and no typed writer was reached"
+                if execution_stop.get("condition") == "FilterEngine anchor assertion persisted after verified bootstrap; fail closed"
                 else f"exact stop: FUN_181150790 entered; FUN_181294950 fixture-state fault at RIP={execution_stop.get('rip')}; bounded execution failed closed; no typed writer claim"
                 if execution_stop.get("condition") == "dispatch fixture-state fault; fail closed"
                 else f"exact stop: FUN_181150790 entered; bounded dispatch chunks exhausted at RIP={execution_stop.get('rip')}; no unimplemented import observed, no typed writer claim"
@@ -1499,7 +1574,7 @@ def run_owner_probe() -> dict[str, object]:
             "first_unavailable_boundary": (
                 f"next exact boundary after one-key FLS/TLS lifecycle: FUN_18115eb30 -> _aligned_malloc({oom_request['requested_bytes']}, 64) returned null and reached FUN_18115ea40; no typed writer claim"
                 if oom_request else
-                "next exact boundary after bounded aligned allocation: FUN_181162610 cv::FilterEngine::init throw path from filter.dispatch.cpp:5; Size=(0,5) was binary-generated, so the remaining unavailable boundary is OpenCV dispatch/implementation state, with 0x181843990 implicated only as inference; no typed writer claim"
+                "next exact boundary after actual FUN_18114be60 bootstrap and bounded aligned allocation: FUN_181162610 cv::FilterEngine::init anchor/ksize throw path from filter.dispatch.cpp:5; DAT_181843998=1 and nonzero coefficients were verified, Size=(0,5) remained binary-generated, and no typed writer was reached"
             ),
             "exception": f"{type(exc).__name__}: {exc}",
         }

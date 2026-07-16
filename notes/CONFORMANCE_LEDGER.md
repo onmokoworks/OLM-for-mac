@@ -2,19 +2,17 @@
 
 - 2026-07-17 `OLMKiraKira Mode2 dispatch Size boundary` (latest override):
   no correctness status is promoted. A resumable natural run advances
-  `FUN_181150790 -> FUN_181294950` through 200,000 instructions after grounding
-  the aligned dispatch table at `0x181843990`. It now fails closed in the
-  actual OpenCV path after `FUN_181298180` supplies `cv::Size=(0,5)` to the
-  filter chain. Static assembly proves the zero width is intentional AEX
-  state: `XOR R9D,R9D` followed by the store at `0x1812982ec`; height 5 comes
-  from `RSP+0x48`, and the sibling setup repeats the same zero-width pattern.
-  Therefore this is not missing host geometry and the width must not be
-  patched. The exact call chain is `FUN_181150790 -> FUN_181294950 ->
-  FUN_181298180 -> FUN_1811d88c0 -> FUN_1812b9db0 -> FUN_181162610`.
-  Next Mac-only action: reconstruct the embedded OpenCV dispatch/implementation
-  state selected before the assertion. The zero-initialized dispatch table is
-  a candidate cause, not yet a fact. Do not suppress the assertion or claim a
-  typed writer. Evidence:
+  through the actual OpenCV bootstrap `FUN_18114be60`: all six
+  `FUN_181294950` calls return, `DAT_181843998` changes from 0 to 1, and the
+  first `0x8000` coefficient bytes contain 26,892 nonzero bytes with SHA-256
+  `e83d193a...78e611`. Mode2 still fails in `cv::FilterEngine::init` after
+  `FUN_181298180` supplies the binary-generated `Size=(0,5)` argument. This
+  proves the former zero-filled coefficient-table shortcut is not the cause.
+  Static assembly pins the zero first component to `XOR R9D,R9D` and
+  `0x1812982ec`; the second component comes from `RSP+0x48`. Next Mac-only
+  action: identify the semantic role and producer contract of that second
+  component and its relation to the accompanying kernel size. Do not patch the
+  argument, suppress the assertion, or claim a typed writer. Evidence:
   `refs/conformance/olmkirakira_mode2_common_owner_20260717.json`.
 
 - 2026-07-17 `OLMDistanceGradation 16bpc proof-render preflight` (latest
@@ -32,15 +30,16 @@
 
 - 2026-07-17 `OLMDirectionalBlur natural pre-render continuation` (latest
   override): no correctness status is promoted. The nested synthetic
-  `PF_Iterate8` continuation now uses a grounded trampoline and no longer
-  faults at callback slot `0x820000e0`. The natural 8bpc owner passes checkout,
-  depth, and parameter-materialization gates, reaches the first Iterate8 and
-  actual transform helper `FUN_180001ec0`, then fails closed at `0x180002064`
-  before a downstream Iterate8/output callback. No distinct write from source
-  plane `params+0x8078` to writer plane `params+0x8090` is observed. Next
-  Mac-only action: reconstruct the transform helper state at that exact
-  boundary; do not alter the proven writer or fabricate output values.
-  Evidence:
+  `PF_Iterate8` continuation now preserves the real first callback frame and
+  returns naturally from `0x180006980`. The live 8bpc state reaches and records
+  `0x180002064`, rotate-back `0x180005628`, the `params+0x8090` ownership store
+  at `0x18000562d`, second Iterate8 at `0x180005665`, and real output callback
+  `0x180006b30` in order. The first actual downstream write overlapping the
+  selected writer cell occurs at `0x180002196`. No pixel was copied into the
+  host model, so this closes the bounded natural writer path only, not output
+  values or AE exact. Next Mac-only action: run a discriminating nonzero
+  interior fixture through the same path and compare typed writer words with
+  the production Mac source; do not alter the proven writer. Evidence:
   `refs/conformance/olmdirectionalblur_iterate8_natural_prerender_followup_20260717.json`.
 
 - 2026-07-17 `OLMRadialBlur natural B150 span matrix` (latest override): no

@@ -1,8 +1,9 @@
 {
   "schema": 1,
   "kind": "olmdirectionalblur_iterate8_natural_prerender_followup",
-  "status": "blocked",
-  "claim_scope": "Natural Mac-local 8bpc AEX path; first distinct writer-cell write only if observed",
+  "status": "pass",
+  "claim_scope": "Natural Mac-local 8bpc AEX continuation; no modeled pixel output",
+  "blocked": null,
   "provenance": {
     "aex": "plugins_2025/OLMDirectionalBlur.aex",
     "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
@@ -185,6 +186,7 @@
       }
     ],
     "fixture_status": "blocked",
+    "fixture_report_phase": "before explicit live-state continuation",
     "fixture_blocked": {
       "reason": "pre-render-return",
       "message": "FUN_180007bd0 returned without entering PF Iterate8 or 0x180005628",
@@ -225,7 +227,7 @@
       "required": "the exact PF Iterate8 callback ABI or render branch state; no callback values were fabricated"
     },
     "continuation_boundary": {
-      "kind": "actual-rotate-helper-boundary",
+      "kind": "second-real-output-callback",
       "last_rip": "0x180002064",
       "raw_fixture_reason": "pre-render-return",
       "raw_fixture_message": "FUN_180007bd0 returned without entering PF Iterate8 or 0x180005628",
@@ -262,7 +264,20 @@
         "0x820000c0": "DirectionalBlur.rowdriver.byte_exact",
         "0x820000d0": "PF_Iterate8"
       },
-      "grounded_populate_return": "0x90000000"
+      "old_global_return_with_emu_stop": "0x90000000",
+      "private_return_without_emu_stop": "0x820ffff0",
+      "private_stack": [
+        "0x60000000",
+        "0x60010000"
+      ],
+      "private_callback_calls": 514,
+      "outer_continuations": [
+        {
+          "attempt": 1,
+          "start_rip": "0x180002068",
+          "end_rip": "0x90000000"
+        }
+      ]
     },
     "downstream_reach": {
       "first_iterate": true,
@@ -279,10 +294,20 @@
         0,
         0
       ],
+      "iterate8_frame": {
+        "rsp": "0xf0f5928",
+        "return_rip": "0x1800067c8",
+        "rect_rsp_0x28": "0x4000041c",
+        "refcon_rsp_0x30": "0xf0f6e60",
+        "callback_rsp_0x38": "0x180006980",
+        "dst_rsp_0x40": "0x400003f0",
+        "raw_0x00_0x67": "c86700800100000000000000000000000000000000000000308700400000000067650080010000001c04004000000000606e0f0f000000008069008001000000f0030040000000000000004000000000000000000000000000000000000000000000000000000000"
+      },
       "params": "0xf0f6e60",
       "callback_result": {
         "instructions": 35,
-        "rax": 0
+        "rax": 0,
+        "rip": "0x820ffff0"
       },
       "source_base_0x8078": "0x2002ac90",
       "writer_base_0x8090": "0x2002d6d0",
@@ -301,8 +326,411 @@
         0.0
       ]
     },
-    "first_distinct_write_0x8078_to_0x8090": null,
-    "all_distinct_writes": [],
+    "natural_continuation_checkpoints": {
+      "rotate_sample_0x180002064": {
+        "rip": "0x180002064",
+        "registers": {
+          "rax": "0x19",
+          "rbx": "0x1a",
+          "rcx": "0x68",
+          "rdx": "0x18",
+          "rsi": "0x1a",
+          "rdi": "0x2002ac90",
+          "rbp": "0x2002da18",
+          "rsp": "0xf0f5d10",
+          "r8": "0x1",
+          "r9": "0x2002da28",
+          "r10": "0x2",
+          "r11": "0x1a0",
+          "r12": "0x68",
+          "r13": "0x40000060",
+          "r14": "0xd",
+          "r15": "0xd"
+        },
+        "readable_pointer_qwords": {
+          "rax": {
+            "address": "0x19",
+            "qword": null
+          },
+          "rbx": {
+            "address": "0x1a",
+            "qword": null
+          },
+          "rcx": {
+            "address": "0x68",
+            "qword": null
+          },
+          "rdx": {
+            "address": "0x18",
+            "qword": null
+          },
+          "rsi": {
+            "address": "0x1a",
+            "qword": null
+          },
+          "rdi": {
+            "address": "0x2002ac90",
+            "qword": "0x0"
+          },
+          "rbp": {
+            "address": "0x2002da18",
+            "qword": "0x0"
+          },
+          "rsp": {
+            "address": "0xf0f5d10",
+            "qword": "0x0"
+          },
+          "r8": {
+            "address": "0x1",
+            "qword": null
+          },
+          "r9": {
+            "address": "0x2002da28",
+            "qword": "0x0"
+          }
+        },
+        "xmm": {
+          "xmm2": {
+            "low_f32": 9.5367431640625e-07,
+            "raw": "00008035000000000000000000000000"
+          },
+          "xmm3": {
+            "low_f32": 0.0,
+            "raw": "00000000000000000000000000000000"
+          },
+          "xmm5": {
+            "low_f32": 9.5367431640625e-07,
+            "raw": "00008035000000000000000000000000"
+          },
+          "xmm6": {
+            "low_f32": 1.0,
+            "raw": "0000803f000000000000000000000000"
+          }
+        }
+      },
+      "rotateback_call_0x180005628": {
+        "rip": "0x180005628",
+        "registers": {
+          "rax": "0xa8c",
+          "rbx": "0xf0f6e60",
+          "rcx": "0x2002d6d0",
+          "rdx": "0x2002ac90",
+          "rsi": "0x2002d6d0",
+          "rdi": "0x0",
+          "rbp": "0xf0f5f20",
+          "rsp": "0xf0f5e20",
+          "r8": "0x1a",
+          "r9": "0x1a",
+          "r10": "0x1a",
+          "r11": "0xf0f5df0",
+          "r12": "0x400002f0",
+          "r13": "0x40000060",
+          "r14": "0x1b",
+          "r15": "0x2002ac90"
+        },
+        "readable_pointer_qwords": {
+          "rax": {
+            "address": "0xa8c",
+            "qword": null
+          },
+          "rbx": {
+            "address": "0xf0f6e60",
+            "qword": "0x40000060"
+          },
+          "rcx": {
+            "address": "0x2002d6d0",
+            "qword": "0x0"
+          },
+          "rdx": {
+            "address": "0x2002ac90",
+            "qword": "0x0"
+          },
+          "rsi": {
+            "address": "0x2002d6d0",
+            "qword": "0x0"
+          },
+          "rdi": {
+            "address": "0x0",
+            "qword": null
+          },
+          "rbp": {
+            "address": "0xf0f5f20",
+            "qword": "0x0"
+          },
+          "rsp": {
+            "address": "0xf0f5e20",
+            "qword": "0xf0f6e60"
+          },
+          "r8": {
+            "address": "0x1a",
+            "qword": null
+          },
+          "r9": {
+            "address": "0x1a",
+            "qword": null
+          }
+        },
+        "xmm": {
+          "xmm2": {
+            "low_f32": 0.0,
+            "raw": "00000000000000000000000000000000"
+          },
+          "xmm3": {
+            "low_f32": 0.9999990463256836,
+            "raw": "f0ff7f3f000000000000000000000000"
+          },
+          "xmm5": {
+            "low_f32": 1.0,
+            "raw": "0000803f000000000000000000000000"
+          },
+          "xmm6": {
+            "low_f32": 0.0,
+            "raw": "00000000000000000000000000000000"
+          }
+        }
+      },
+      "rotateback_return_0x18000562d": {
+        "rip": "0x18000562d",
+        "registers": {
+          "rax": "0x19",
+          "rbx": "0xf0f6e60",
+          "rcx": "0x0",
+          "rdx": "0x19",
+          "rsi": "0x2002d6d0",
+          "rdi": "0x0",
+          "rbp": "0xf0f5f20",
+          "rsp": "0xf0f5e20",
+          "r8": "0x1a",
+          "r9": "0x2002d6d8",
+          "r10": "0x1a",
+          "r11": "0xf0f5df0",
+          "r12": "0x400002f0",
+          "r13": "0x40000060",
+          "r14": "0x1b",
+          "r15": "0x2002ac90"
+        },
+        "readable_pointer_qwords": {
+          "rax": {
+            "address": "0x19",
+            "qword": null
+          },
+          "rbx": {
+            "address": "0xf0f6e60",
+            "qword": "0x40000060"
+          },
+          "rcx": {
+            "address": "0x0",
+            "qword": null
+          },
+          "rdx": {
+            "address": "0x19",
+            "qword": null
+          },
+          "rsi": {
+            "address": "0x2002d6d0",
+            "qword": "0x0"
+          },
+          "rdi": {
+            "address": "0x0",
+            "qword": null
+          },
+          "rbp": {
+            "address": "0xf0f5f20",
+            "qword": "0x0"
+          },
+          "rsp": {
+            "address": "0xf0f5e20",
+            "qword": "0xf0f6e60"
+          },
+          "r8": {
+            "address": "0x1a",
+            "qword": null
+          },
+          "r9": {
+            "address": "0x2002d6d8",
+            "qword": "0x0"
+          }
+        },
+        "xmm": {
+          "xmm2": {
+            "low_f32": 0.9999990463256836,
+            "raw": "f0ff7f3f000000000000000000000000"
+          },
+          "xmm3": {
+            "low_f32": 0.0,
+            "raw": "00000000000000000000000000000000"
+          },
+          "xmm5": {
+            "low_f32": 1.0,
+            "raw": "0000803f000000000000000000000000"
+          },
+          "xmm6": {
+            "low_f32": 0.0,
+            "raw": "00000000000000000000000000000000"
+          }
+        }
+      },
+      "output_iterate_call_0x180005665": {
+        "rip": "0x180005665",
+        "registers": {
+          "rax": "0x4000041c",
+          "rbx": "0xf0f6e60",
+          "rcx": "0x40000060",
+          "rdx": "0x0",
+          "rsi": "0x2002d6d0",
+          "rdi": "0x0",
+          "rbp": "0xf0f5f20",
+          "rsp": "0xf0f5e20",
+          "r8": "0x10",
+          "r9": "0x400002f0",
+          "r10": "0x1a",
+          "r11": "0xf0f5df0",
+          "r12": "0x400002f0",
+          "r13": "0x40000060",
+          "r14": "0x1b",
+          "r15": "0x2002ac90"
+        },
+        "readable_pointer_qwords": {
+          "rax": {
+            "address": "0x4000041c",
+            "qword": "0x0"
+          },
+          "rbx": {
+            "address": "0xf0f6e60",
+            "qword": "0x40000060"
+          },
+          "rcx": {
+            "address": "0x40000060",
+            "qword": "0x82000070"
+          },
+          "rdx": {
+            "address": "0x0",
+            "qword": null
+          },
+          "rsi": {
+            "address": "0x2002d6d0",
+            "qword": "0x0"
+          },
+          "rdi": {
+            "address": "0x0",
+            "qword": null
+          },
+          "rbp": {
+            "address": "0xf0f5f20",
+            "qword": "0x0"
+          },
+          "rsp": {
+            "address": "0xf0f5e20",
+            "qword": "0xf0f6e60"
+          },
+          "r8": {
+            "address": "0x10",
+            "qword": null
+          },
+          "r9": {
+            "address": "0x400002f0",
+            "qword": "0x0"
+          }
+        },
+        "xmm": {
+          "xmm2": {
+            "low_f32": 0.9999990463256836,
+            "raw": "f0ff7f3f000000000000000000000000"
+          },
+          "xmm3": {
+            "low_f32": 0.0,
+            "raw": "00000000000000000000000000000000"
+          },
+          "xmm5": {
+            "low_f32": 1.0,
+            "raw": "0000803f000000000000000000000000"
+          },
+          "xmm6": {
+            "low_f32": 0.0,
+            "raw": "00000000000000000000000000000000"
+          }
+        }
+      },
+      "real_output_callback_0x180006b30": {
+        "entry": "0x180006b30",
+        "xy": [
+          0,
+          0
+        ],
+        "params": "0xf0f6e60",
+        "out_ptr": "0x200004c0",
+        "callback_result": {
+          "instructions": 35,
+          "rax": 0,
+          "rip": "0x820ffff0"
+        },
+        "pixels_copied_to_host_model": false
+      }
+    },
+    "required_checkpoint_order": [
+      {
+        "checkpoint": "real_populate_return_0x180006980",
+        "observed": true,
+        "required_state": "real 0x180006980 callback return and preserved PF_Iterate8 frame"
+      },
+      {
+        "checkpoint": "rotate_sample_0x180002064",
+        "observed": true,
+        "required_state": "live rotate registers and readable pointer state at 0x180002064"
+      },
+      {
+        "checkpoint": "rotateback_call_0x180005628",
+        "observed": true,
+        "required_state": "natural worker state reaching the rotateback call at 0x180005628"
+      },
+      {
+        "checkpoint": "rotateback_return_0x18000562d",
+        "observed": true,
+        "required_state": "ABI/state required for FUN_180001ec0 to return to 0x18000562d"
+      },
+      {
+        "checkpoint": "output_iterate_call_0x180005665",
+        "observed": true,
+        "required_state": "natural PF_Iterate8 output-call frame at 0x180005665"
+      },
+      {
+        "checkpoint": "real_output_callback_0x180006b30",
+        "observed": true,
+        "required_state": "second PF_Iterate8 ABI/state invoking real callback 0x180006b30"
+      }
+    ],
+    "first_distinct_write_0x8078_to_0x8090": {
+      "address": "0x2002df4c",
+      "size": 4,
+      "value": "0x0",
+      "rip": "0x180002196"
+    },
+    "all_distinct_writes": [
+      {
+        "address": "0x2002df4c",
+        "size": 4,
+        "value": "0x0",
+        "rip": "0x180002196"
+      },
+      {
+        "address": "0x2002df40",
+        "size": 4,
+        "value": "0x0",
+        "rip": "0x1800021a1"
+      },
+      {
+        "address": "0x2002df48",
+        "size": 4,
+        "value": "0x0",
+        "rip": "0x1800021ad"
+      },
+      {
+        "address": "0x2002df44",
+        "size": 4,
+        "value": "0x0",
+        "rip": "0x1800021b7"
+      }
+    ],
     "transform_entry": "0x180001ec0",
     "writer_entry": "0x180006b30"
   },

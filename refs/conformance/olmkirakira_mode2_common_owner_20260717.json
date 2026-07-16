@@ -239,16 +239,16 @@
         "requested_bytes": 16,
         "returned": "0x400105c0"
       },
-      "classification": "bounded_aligned_allocator_contract_crossed_next_opencv_dispatch_state_boundary",
+      "classification": "verified_opencv_bootstrap_crossed_then_filterengine_anchor_assertion_persisted",
       "fail_closed": true,
       "next_contract": {
         "assertion": "0 <= anchor.x && anchor.x < ksize.width && 0 <= anchor.y && anchor.y < ksize.height",
         "boundary": "FUN_181162610",
         "exception_class": "cv::FilterEngine::init",
         "fail_closed": true,
-        "inference_only": "The 0x181843990 dispatch/implementation table may be implicated, but that remains inference unless a stronger witness proves the exact expected state",
-        "kind": "OpenCV dispatch/implementation state",
+        "kind": "binary-generated invalid FilterEngine anchor/ksize relation after verified OpenCV bootstrap",
         "line": 5,
+        "opencv_bootstrap_result": "Actual FUN_18114be60 returned, set DAT_181843998=1, and populated a nonzero 0x8000-byte coefficient region; the assertion persisted, so the former zero-table shortcut is not the cause of this stop.",
         "source_file": "C:\\Users\\devbuild\\Documents\\4.5.5\\sources\\modules\\imgproc\\src\\filter.dispatch.cpp",
         "static_size_fact": "Size=(0,5) is binary-generated here: width/x is explicitly zeroed and height/y is loaded from the stack local observed as 5; do not classify it as missing fixture geometry and do not invent width"
       },
@@ -256,7 +256,7 @@
         "FUN_181157ed0 cv::Mat copy",
         "FUN_181159ff0 / cv::Mat storage creation",
         "FUN_18115eb30 allocation wrapper",
-        "FUN_181162610 cv::FilterEngine::init throw path from filter.dispatch.cpp:5"
+        "FUN_181162610 cv::FilterEngine::init anchor/ksize throw path from filter.dispatch.cpp:5"
       ],
       "source_geometry": {
         "channels": 4,
@@ -1640,1295 +1640,14 @@
         ]
       }
     ],
-    "dispatch_checkpoints": [
-      {
-        "inner": 0,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 0,
-        "work_destination": "0x1818439a1",
-        "work_source": "0x0"
-      },
-      {
-        "inner": 0,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 0,
-        "work_destination": "0x1818439a1",
-        "work_source": "0x0"
-      },
-      {
-        "inner": 1,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 1,
-        "work_destination": "0x1818439a3",
-        "work_source": "0x8"
-      },
-      {
-        "inner": 1,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 1,
-        "work_destination": "0x1818439a3",
-        "work_source": "0x8"
-      },
-      {
-        "inner": 2,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 2,
-        "work_destination": "0x1818439a5",
-        "work_source": "0x10"
-      },
-      {
-        "inner": 2,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 2,
-        "work_destination": "0x1818439a5",
-        "work_source": "0x10"
-      },
-      {
-        "inner": 3,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 3,
-        "work_destination": "0x1818439a7",
-        "work_source": "0x18"
-      },
-      {
-        "inner": 3,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 3,
-        "work_destination": "0x1818439a7",
-        "work_source": "0x18"
-      },
-      {
-        "inner": 4,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 4,
-        "work_destination": "0x1818439a9",
-        "work_source": "0x20"
-      },
-      {
-        "inner": 4,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 4,
-        "work_destination": "0x1818439a9",
-        "work_source": "0x20"
-      },
-      {
-        "inner": 5,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 5,
-        "work_destination": "0x1818439ab",
-        "work_source": "0x28"
-      },
-      {
-        "inner": 5,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 5,
-        "work_destination": "0x1818439ab",
-        "work_source": "0x28"
-      },
-      {
-        "inner": 6,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 6,
-        "work_destination": "0x1818439ad",
-        "work_source": "0x30"
-      },
-      {
-        "inner": 6,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 6,
-        "work_destination": "0x1818439ad",
-        "work_source": "0x30"
-      },
-      {
-        "inner": 7,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 7,
-        "work_destination": "0x1818439af",
-        "work_source": "0x38"
-      },
-      {
-        "inner": 7,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 7,
-        "work_destination": "0x1818439af",
-        "work_source": "0x38"
-      },
-      {
-        "inner": 8,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 8,
-        "work_destination": "0x1818439b1",
-        "work_source": "0x40"
-      },
-      {
-        "inner": 8,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 8,
-        "work_destination": "0x1818439b1",
-        "work_source": "0x40"
-      },
-      {
-        "inner": 9,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 9,
-        "work_destination": "0x1818439b3",
-        "work_source": "0x48"
-      },
-      {
-        "inner": 9,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 9,
-        "work_destination": "0x1818439b3",
-        "work_source": "0x48"
-      },
-      {
-        "inner": 10,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 10,
-        "work_destination": "0x1818439b5",
-        "work_source": "0x50"
-      },
-      {
-        "inner": 10,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 10,
-        "work_destination": "0x1818439b5",
-        "work_source": "0x50"
-      },
-      {
-        "inner": 11,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 11,
-        "work_destination": "0x1818439b7",
-        "work_source": "0x58"
-      },
-      {
-        "inner": 11,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 11,
-        "work_destination": "0x1818439b7",
-        "work_source": "0x58"
-      },
-      {
-        "inner": 12,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 12,
-        "work_destination": "0x1818439b9",
-        "work_source": "0x60"
-      },
-      {
-        "inner": 12,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 12,
-        "work_destination": "0x1818439b9",
-        "work_source": "0x60"
-      },
-      {
-        "inner": 13,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 13,
-        "work_destination": "0x1818439bb",
-        "work_source": "0x68"
-      },
-      {
-        "inner": 13,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 13,
-        "work_destination": "0x1818439bb",
-        "work_source": "0x68"
-      },
-      {
-        "inner": 14,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 14,
-        "work_destination": "0x1818439bd",
-        "work_source": "0x70"
-      },
-      {
-        "inner": 14,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 14,
-        "work_destination": "0x1818439bd",
-        "work_source": "0x70"
-      },
-      {
-        "inner": 15,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 15,
-        "work_destination": "0x1818439bf",
-        "work_source": "0x78"
-      },
-      {
-        "inner": 15,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 15,
-        "work_destination": "0x1818439bf",
-        "work_source": "0x78"
-      },
-      {
-        "inner": 16,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 16,
-        "work_destination": "0x1818439c1",
-        "work_source": "0x80"
-      },
-      {
-        "inner": 16,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 16,
-        "work_destination": "0x1818439c1",
-        "work_source": "0x80"
-      },
-      {
-        "inner": 17,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 17,
-        "work_destination": "0x1818439c3",
-        "work_source": "0x88"
-      },
-      {
-        "inner": 17,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 17,
-        "work_destination": "0x1818439c3",
-        "work_source": "0x88"
-      },
-      {
-        "inner": 18,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 18,
-        "work_destination": "0x1818439c5",
-        "work_source": "0x90"
-      },
-      {
-        "inner": 18,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 18,
-        "work_destination": "0x1818439c5",
-        "work_source": "0x90"
-      },
-      {
-        "inner": 19,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 19,
-        "work_destination": "0x1818439c7",
-        "work_source": "0x98"
-      },
-      {
-        "inner": 19,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 19,
-        "work_destination": "0x1818439c7",
-        "work_source": "0x98"
-      },
-      {
-        "inner": 20,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 20,
-        "work_destination": "0x1818439c9",
-        "work_source": "0xa0"
-      },
-      {
-        "inner": 20,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 20,
-        "work_destination": "0x1818439c9",
-        "work_source": "0xa0"
-      },
-      {
-        "inner": 21,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 21,
-        "work_destination": "0x1818439cb",
-        "work_source": "0xa8"
-      },
-      {
-        "inner": 21,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 21,
-        "work_destination": "0x1818439cb",
-        "work_source": "0xa8"
-      },
-      {
-        "inner": 22,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 22,
-        "work_destination": "0x1818439cd",
-        "work_source": "0xb0"
-      },
-      {
-        "inner": 22,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 22,
-        "work_destination": "0x1818439cd",
-        "work_source": "0xb0"
-      },
-      {
-        "inner": 23,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 23,
-        "work_destination": "0x1818439cf",
-        "work_source": "0xb8"
-      },
-      {
-        "inner": 23,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 23,
-        "work_destination": "0x1818439cf",
-        "work_source": "0xb8"
-      },
-      {
-        "inner": 24,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 24,
-        "work_destination": "0x1818439d1",
-        "work_source": "0xc0"
-      },
-      {
-        "inner": 24,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 24,
-        "work_destination": "0x1818439d1",
-        "work_source": "0xc0"
-      },
-      {
-        "inner": 25,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 25,
-        "work_destination": "0x1818439d3",
-        "work_source": "0xc8"
-      },
-      {
-        "inner": 25,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 25,
-        "work_destination": "0x1818439d3",
-        "work_source": "0xc8"
-      },
-      {
-        "inner": 26,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 26,
-        "work_destination": "0x1818439d5",
-        "work_source": "0xd0"
-      },
-      {
-        "inner": 26,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 26,
-        "work_destination": "0x1818439d5",
-        "work_source": "0xd0"
-      },
-      {
-        "inner": 27,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 27,
-        "work_destination": "0x1818439d7",
-        "work_source": "0xd8"
-      },
-      {
-        "inner": 27,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 27,
-        "work_destination": "0x1818439d7",
-        "work_source": "0xd8"
-      },
-      {
-        "inner": 28,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 28,
-        "work_destination": "0x1818439d9",
-        "work_source": "0xe0"
-      },
-      {
-        "inner": 28,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 28,
-        "work_destination": "0x1818439d9",
-        "work_source": "0xe0"
-      },
-      {
-        "inner": 29,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 29,
-        "work_destination": "0x1818439db",
-        "work_source": "0xe8"
-      },
-      {
-        "inner": 29,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 29,
-        "work_destination": "0x1818439db",
-        "work_source": "0xe8"
-      },
-      {
-        "inner": 30,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 30,
-        "work_destination": "0x1818439dd",
-        "work_source": "0xf0"
-      },
-      {
-        "inner": 30,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 30,
-        "work_destination": "0x1818439dd",
-        "work_source": "0xf0"
-      },
-      {
-        "inner": 31,
-        "label": "dispatch_loop_entry",
-        "outer": 0,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 31,
-        "work_destination": "0x1818439df",
-        "work_source": "0xf8"
-      },
-      {
-        "inner": 31,
-        "label": "dispatch_outer_progress",
-        "outer": 0,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 31,
-        "work_destination": "0x1818439df",
-        "work_source": "0xf8"
-      },
-      {
-        "inner": 0,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 32,
-        "work_destination": "0x1818439e1",
-        "work_source": "0x0"
-      },
-      {
-        "inner": 0,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 32,
-        "work_destination": "0x1818439e1",
-        "work_source": "0x0"
-      },
-      {
-        "inner": 1,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 33,
-        "work_destination": "0x1818439e3",
-        "work_source": "0x8"
-      },
-      {
-        "inner": 1,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 33,
-        "work_destination": "0x1818439e3",
-        "work_source": "0x8"
-      },
-      {
-        "inner": 2,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 34,
-        "work_destination": "0x1818439e5",
-        "work_source": "0x10"
-      },
-      {
-        "inner": 2,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 34,
-        "work_destination": "0x1818439e5",
-        "work_source": "0x10"
-      },
-      {
-        "inner": 3,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 35,
-        "work_destination": "0x1818439e7",
-        "work_source": "0x18"
-      },
-      {
-        "inner": 3,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 35,
-        "work_destination": "0x1818439e7",
-        "work_source": "0x18"
-      },
-      {
-        "inner": 4,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 36,
-        "work_destination": "0x1818439e9",
-        "work_source": "0x20"
-      },
-      {
-        "inner": 4,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 36,
-        "work_destination": "0x1818439e9",
-        "work_source": "0x20"
-      },
-      {
-        "inner": 5,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 37,
-        "work_destination": "0x1818439eb",
-        "work_source": "0x28"
-      },
-      {
-        "inner": 5,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 37,
-        "work_destination": "0x1818439eb",
-        "work_source": "0x28"
-      },
-      {
-        "inner": 6,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 38,
-        "work_destination": "0x1818439ed",
-        "work_source": "0x30"
-      },
-      {
-        "inner": 6,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 38,
-        "work_destination": "0x1818439ed",
-        "work_source": "0x30"
-      },
-      {
-        "inner": 7,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 39,
-        "work_destination": "0x1818439ef",
-        "work_source": "0x38"
-      },
-      {
-        "inner": 7,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 39,
-        "work_destination": "0x1818439ef",
-        "work_source": "0x38"
-      },
-      {
-        "inner": 8,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 40,
-        "work_destination": "0x1818439f1",
-        "work_source": "0x40"
-      },
-      {
-        "inner": 8,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 40,
-        "work_destination": "0x1818439f1",
-        "work_source": "0x40"
-      },
-      {
-        "inner": 9,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 41,
-        "work_destination": "0x1818439f3",
-        "work_source": "0x48"
-      },
-      {
-        "inner": 9,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 41,
-        "work_destination": "0x1818439f3",
-        "work_source": "0x48"
-      },
-      {
-        "inner": 10,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 42,
-        "work_destination": "0x1818439f5",
-        "work_source": "0x50"
-      },
-      {
-        "inner": 10,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 42,
-        "work_destination": "0x1818439f5",
-        "work_source": "0x50"
-      },
-      {
-        "inner": 11,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 43,
-        "work_destination": "0x1818439f7",
-        "work_source": "0x58"
-      },
-      {
-        "inner": 11,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 43,
-        "work_destination": "0x1818439f7",
-        "work_source": "0x58"
-      },
-      {
-        "inner": 12,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 44,
-        "work_destination": "0x1818439f9",
-        "work_source": "0x60"
-      },
-      {
-        "inner": 12,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 44,
-        "work_destination": "0x1818439f9",
-        "work_source": "0x60"
-      },
-      {
-        "inner": 13,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 45,
-        "work_destination": "0x1818439fb",
-        "work_source": "0x68"
-      },
-      {
-        "inner": 13,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 45,
-        "work_destination": "0x1818439fb",
-        "work_source": "0x68"
-      },
-      {
-        "inner": 14,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 46,
-        "work_destination": "0x1818439fd",
-        "work_source": "0x70"
-      },
-      {
-        "inner": 14,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 46,
-        "work_destination": "0x1818439fd",
-        "work_source": "0x70"
-      },
-      {
-        "inner": 15,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 47,
-        "work_destination": "0x1818439ff",
-        "work_source": "0x78"
-      },
-      {
-        "inner": 15,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 47,
-        "work_destination": "0x1818439ff",
-        "work_source": "0x78"
-      },
-      {
-        "inner": 16,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 48,
-        "work_destination": "0x181843a01",
-        "work_source": "0x80"
-      },
-      {
-        "inner": 16,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 48,
-        "work_destination": "0x181843a01",
-        "work_source": "0x80"
-      },
-      {
-        "inner": 17,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 49,
-        "work_destination": "0x181843a03",
-        "work_source": "0x88"
-      },
-      {
-        "inner": 17,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 49,
-        "work_destination": "0x181843a03",
-        "work_source": "0x88"
-      },
-      {
-        "inner": 18,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 50,
-        "work_destination": "0x181843a05",
-        "work_source": "0x90"
-      },
-      {
-        "inner": 18,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 50,
-        "work_destination": "0x181843a05",
-        "work_source": "0x90"
-      },
-      {
-        "inner": 19,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 51,
-        "work_destination": "0x181843a07",
-        "work_source": "0x98"
-      },
-      {
-        "inner": 19,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 51,
-        "work_destination": "0x181843a07",
-        "work_source": "0x98"
-      },
-      {
-        "inner": 20,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 52,
-        "work_destination": "0x181843a09",
-        "work_source": "0xa0"
-      },
-      {
-        "inner": 20,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 52,
-        "work_destination": "0x181843a09",
-        "work_source": "0xa0"
-      },
-      {
-        "inner": 21,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 53,
-        "work_destination": "0x181843a0b",
-        "work_source": "0xa8"
-      },
-      {
-        "inner": 21,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 53,
-        "work_destination": "0x181843a0b",
-        "work_source": "0xa8"
-      },
-      {
-        "inner": 22,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 54,
-        "work_destination": "0x181843a0d",
-        "work_source": "0xb0"
-      },
-      {
-        "inner": 22,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 54,
-        "work_destination": "0x181843a0d",
-        "work_source": "0xb0"
-      },
-      {
-        "inner": 23,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 55,
-        "work_destination": "0x181843a0f",
-        "work_source": "0xb8"
-      },
-      {
-        "inner": 23,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 55,
-        "work_destination": "0x181843a0f",
-        "work_source": "0xb8"
-      },
-      {
-        "inner": 24,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 56,
-        "work_destination": "0x181843a11",
-        "work_source": "0xc0"
-      },
-      {
-        "inner": 24,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 56,
-        "work_destination": "0x181843a11",
-        "work_source": "0xc0"
-      },
-      {
-        "inner": 25,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 57,
-        "work_destination": "0x181843a13",
-        "work_source": "0xc8"
-      },
-      {
-        "inner": 25,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 57,
-        "work_destination": "0x181843a13",
-        "work_source": "0xc8"
-      },
-      {
-        "inner": 26,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 58,
-        "work_destination": "0x181843a15",
-        "work_source": "0xd0"
-      },
-      {
-        "inner": 26,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 58,
-        "work_destination": "0x181843a15",
-        "work_source": "0xd0"
-      },
-      {
-        "inner": 27,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 59,
-        "work_destination": "0x181843a17",
-        "work_source": "0xd8"
-      },
-      {
-        "inner": 27,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 59,
-        "work_destination": "0x181843a17",
-        "work_source": "0xd8"
-      },
-      {
-        "inner": 28,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 60,
-        "work_destination": "0x181843a19",
-        "work_source": "0xe0"
-      },
-      {
-        "inner": 28,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 60,
-        "work_destination": "0x181843a19",
-        "work_source": "0xe0"
-      },
-      {
-        "inner": 29,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 61,
-        "work_destination": "0x181843a1b",
-        "work_source": "0xe8"
-      },
-      {
-        "inner": 29,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 61,
-        "work_destination": "0x181843a1b",
-        "work_source": "0xe8"
-      },
-      {
-        "inner": 30,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 62,
-        "work_destination": "0x181843a1d",
-        "work_source": "0xf0"
-      },
-      {
-        "inner": 30,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 62,
-        "work_destination": "0x181843a1d",
-        "work_source": "0xf0"
-      },
-      {
-        "inner": 31,
-        "label": "dispatch_loop_entry",
-        "outer": 1,
-        "rip": "0x181294ad5",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 63,
-        "work_destination": "0x181843a1f",
-        "work_source": "0xf8"
-      },
-      {
-        "inner": 31,
-        "label": "dispatch_outer_progress",
-        "outer": 1,
-        "rip": "0x181294c2e",
-        "rsp": "0xf0fc2a0",
-        "work_coordinate": 63,
-        "work_destination": "0x181843a1f",
-        "work_source": "0xf8"
-      }
-    ],
+    "dispatch_checkpoints": [],
     "dispatch_diagnosis": {
       "chunk_instructions": 10000,
       "max_chunks": 64,
       "progress_invariant": "work_coordinate = outer*0x20 + inner; each dispatch_loop_entry checkpoint must strictly increase it",
       "strategy": "resume the original call frame at the current RIP; do not re-enter FUN_181150790",
       "terminal_classification": {
-        "classification": "opencv_dispatch_or_implementation_state_unavailable",
+        "classification": "filterengine_anchor_assertion_after_verified_bootstrap",
         "fixture_state_fault": false,
         "repeated_fixture_state": false,
         "returned": false,
@@ -2947,7 +1666,7 @@
       }
     ],
     "execution_stop": {
-      "condition": "dispatch OpenCV dispatch/implementation-state fault; fail closed",
+      "condition": "FilterEngine anchor assertion persisted after verified bootstrap; fail closed",
       "dispatch": {
         "chunk_instructions": 10000,
         "chunks": [
@@ -2969,103 +1688,12 @@
           {
             "chunk": 4,
             "instructions": 10000,
-            "rip": "0x181294b1e"
-          },
-          {
-            "chunk": 5,
-            "instructions": 10000,
-            "rip": "0x181294ad5"
-          },
-          {
-            "chunk": 6,
-            "instructions": 10000,
-            "rip": "0x181294b0c"
-          },
-          {
-            "chunk": 7,
-            "instructions": 10000,
-            "rip": "0x181294b3e"
-          },
-          {
-            "chunk": 8,
-            "instructions": 10000,
-            "rip": "0x181294c77"
-          },
-          {
-            "chunk": 9,
-            "instructions": 10000,
-            "rip": "0x181294b34"
-          },
-          {
-            "chunk": 10,
-            "instructions": 10000,
-            "rip": "0x181294b06"
-          },
-          {
-            "chunk": 11,
-            "instructions": 10000,
-            "rip": "0x181294c45"
-          },
-          {
-            "chunk": 12,
-            "instructions": 10000,
-            "rip": "0x181294b45"
-          },
-          {
-            "chunk": 13,
-            "instructions": 10000,
-            "rip": "0x181294b23"
-          },
-          {
-            "chunk": 14,
-            "instructions": 10000,
-            "rip": "0x181294c60"
-          },
-          {
-            "chunk": 15,
-            "instructions": 10000,
-            "rip": "0x181294b10"
-          },
-          {
-            "chunk": 16,
-            "instructions": 10000,
-            "rip": "0x181294d1e"
-          },
-          {
-            "chunk": 17,
-            "instructions": 10000,
-            "rip": "0x181294cff"
-          },
-          {
-            "chunk": 18,
-            "instructions": 10000,
-            "rip": "0x181294d6b"
-          },
-          {
-            "chunk": 19,
-            "instructions": 10000,
-            "rip": "0x181294d4d"
-          },
-          {
-            "chunk": 20,
-            "instructions": 10000,
-            "rip": "0x1812983c4"
+            "rip": "0x18132b27c"
           }
         ],
         "max_chunks": 64,
-        "progress_history": [
-          {
-            "inner": 28,
-            "label": "chunk_boundary",
-            "outer": 4,
-            "rip": "0x181294ad5",
-            "rsp": "0xf0fc2a0",
-            "work_coordinate": 156,
-            "work_destination": "0x181843ad9",
-            "work_source": "0xe0"
-          }
-        ],
-        "terminal": "opencv_dispatch_or_implementation_state_unavailable"
+        "progress_history": [],
+        "terminal": "filterengine_anchor_assertion_after_verified_bootstrap"
       },
       "dispatch_fault": {
         "message": "Unhandled CPU exception (UC_ERR_EXCEPTION)",
@@ -3079,7 +1707,7 @@
         "type": "UcError"
       },
       "grounded_location": null,
-      "instructions": 200000,
+      "instructions": 40000,
       "rax": "0x0",
       "registers_rcx_rdx_r8_r9_rbp_rsi_rdi": [
         "0xf0fd320",
@@ -3123,9 +1751,9 @@
         "assertion": "0 <= anchor.x && anchor.x < ksize.width && 0 <= anchor.y && anchor.y < ksize.height",
         "boundary": "FUN_181162610",
         "exception_class": "cv::FilterEngine::init",
-        "inference_only": "The zero-initialized 0x181843990 table may be implicated, but that remains inference unless proven by a stronger witness",
-        "kind": "OpenCV dispatch/implementation state",
+        "kind": "binary-generated invalid FilterEngine anchor/ksize relation after verified OpenCV bootstrap",
         "line": 5,
+        "opencv_bootstrap_result": "Actual FUN_18114be60 returned, set DAT_181843998=1, and populated a nonzero 0x8000-byte coefficient region before Mode2; the same anchor assertion persisted.",
         "source_file": "C:\\Users\\devbuild\\Documents\\4.5.5\\sources\\modules\\imgproc\\src\\filter.dispatch.cpp"
       },
       "reason": "Size=(0,5) is generated inside the binary filter path itself. The fixture did not omit kernel geometry, and this harness must not invent a replacement width.",
@@ -3193,7 +1821,7 @@
         "rip": "0x1812b9da8"
       }
     ],
-    "first_unavailable_boundary": "exact stop: FUN_181150790 entered; FUN_181162610 cv::FilterEngine::init throw path from filter.dispatch.cpp:5 was reached after the binary-generated Size=(0,5) setup; do not treat that geometry as missing fixture state; next unavailable boundary is OpenCV dispatch/implementation state, with 0x181843990 implicated only as inference; no typed writer claim",
+    "first_unavailable_boundary": "exact stop after actual FUN_18114be60 bootstrap returned with DAT_181843998=1 and nonzero coefficients: FUN_181162610 cv::FilterEngine::init still asserted for binary-generated Size=(0,5); anchor/width was not patched and no typed writer was reached",
     "fls_lifecycle": [
       {
         "accepted": true,
@@ -8169,10 +6797,103 @@
     "runtime_tls": {
       "contract": "GS:[0x58] -> TLS table; table[0] -> slot; slot+0x04 -> lazy-init epoch",
       "gs_tls_address": "0x50000058",
+      "opencv_bootstrap": {
+        "arguments_match": true,
+        "boundary": "complete actual bootstrap; no narrower direct-call fallback required",
+        "calls": [
+          {
+            "call": 1,
+            "channels": 1,
+            "function": "FUN_181294950",
+            "return_address": "0x18114be6e",
+            "table_write": 0
+          },
+          {
+            "call": 2,
+            "channels": 1,
+            "function": "FUN_181294950",
+            "return_address": "0x18114be7f",
+            "table_write": 1
+          },
+          {
+            "call": 3,
+            "channels": 2,
+            "function": "FUN_181294950",
+            "return_address": "0x18114be8e",
+            "table_write": 0
+          },
+          {
+            "call": 4,
+            "channels": 2,
+            "function": "FUN_181294950",
+            "return_address": "0x18114be9f",
+            "table_write": 1
+          },
+          {
+            "call": 5,
+            "channels": 4,
+            "function": "FUN_181294950",
+            "return_address": "0x18114beae",
+            "table_write": 0
+          },
+          {
+            "call": 6,
+            "channels": 4,
+            "function": "FUN_181294950",
+            "return_address": "0x18114bebf",
+            "table_write": 1
+          }
+        ],
+        "coefficient_region": {
+          "bytes": 32768,
+          "contains_nonzero": true,
+          "head_64_hex": "ff7f0000ff7f0000ff7f0000ff7f000000000100000001000000010000000100007c0004007c0004007c0004007c000400000000000000000000000000000000",
+          "nonzero_bytes": 26892,
+          "pointer": "0x40000580",
+          "pointer_source": "0x181843990",
+          "sha256": "e83d193aa117df5072c5f3cbc32c8ace5190a99c88430c688738791ec378e611"
+        },
+        "expected_arguments": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "function": "FUN_18114be60",
+        "instructions": 1873769,
+        "max_instructions": 2500000,
+        "ready_flag": {
+          "address": "0x181843998",
+          "after": 1,
+          "before": 0,
+          "verified": true
+        },
+        "terminal_rip": "0x90000000"
+      },
       "opencv_dispatch_global": "0x181843990",
       "opencv_dispatch_table": "0x40000580",
       "opencv_dispatch_table_bytes": 65536,
-      "opencv_dispatch_table_contract": "emulated writable zero-initialized 0x10000-byte backing store, 64-byte aligned; bounded hypothesis for the 0x181843990 global only, not proof that the exact OpenCV dispatch/implementation state now matches Mode2 expectations",
+      "opencv_dispatch_table_contract": "emulated writable 0x10000-byte backing store, 64-byte aligned; populated only by actual FUN_18114be60 -> FUN_181294950 execution",
       "tls_epoch_address": "0x40000474",
       "tls_epoch_initial": -1,
       "tls_index_global": "0x1818c3ea8",
@@ -8574,7 +7295,7 @@
         "18114bec4  MOV byte ptr [0x181843998],0x1",
         "181292f59  MOV RAX,qword ptr [0x181843990]"
       ],
-      "semantics": "OpenCV bootstrap probes FUN_181294950 across the 1/2/4 modes and later code reads qword ptr [0x181843990]. The exact implementation state behind 0x181843990 remains unproven here."
+      "semantics": "OpenCV bootstrap calls FUN_181294950 with (channels, table_write) = (1,0), (1,1), (2,0), (2,1), (4,0), (4,1), sets DAT_181843998 only after all six calls return nonzero, and later code reads qword ptr [0x181843990]."
     }
   },
   "status": "FAILED"
