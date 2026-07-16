@@ -1,0 +1,477 @@
+{
+  "abi": {
+    "call": "RCX=ctx, RDX=boundary_world, R8D=2, R9=matched_world, stack5=source_world, stack6=distance_world, stack7=destination_world, XMM1=amount",
+    "ctx_offsets": {
+      "0x180": "PF_HandleSuite acquire/release descriptor",
+      "0x40": "amount float",
+      "0x44": "distance_type int",
+      "0x48": "distance_type/control int"
+    },
+    "world_offsets": {
+      "0x18": "payload",
+      "0x20": "row_bytes",
+      "0x24": "width",
+      "0x28": "height"
+    }
+  },
+  "baseline": {
+    "amount": -2.0,
+    "distance_temp": [
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "instructions": 1719,
+    "output_first_channel": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      127,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "output_raw_hex": "000000000000000000000000000000000000000000000000000000007f00000000000000000000000000000000000000000000000000000000000000",
+    "rax": "0x0",
+    "seed": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      255,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "suite_cleanup": true
+  },
+  "boundary_rule_comparison": {
+    "candidate_a": "keep iff dist > abs(amount)",
+    "candidate_b": "keep iff dist > abs(amount)+1",
+    "observed": "neither candidate matches any exhaustive AEX leaf output; these are not the semantic operation of FUN_180008320",
+    "rounding": "MULSS rounds to float32, then CVTTSS2SI truncates toward zero; MOV word stores the low 16 bits"
+  },
+  "classification": "FACT: Mac-local Unicorn execution of the checked-in Windows PE leaf; not AE-host execution",
+  "facts": [
+    "The pinned AEX leaf returns RAX=0 and completes PF Handle Suite cleanup for every exhaustive case.",
+    "The output matte and generated temporary float values are captured directly before any PNG/export stage.",
+    "distance_type=2 is supplied to the proven type-2 distance leaf and erode call.",
+    "The exhaustive search tests all 32 binary 5x1 seeds and all 512 binary 3x3 seeds at four negative amounts.",
+    "Static target bytes 0x180008494..0x1800084A8 load a source word, multiply it by a generated float, truncate with CVTTSS2SI, and store a word; they contain no comparison against abs(amount)."
+  ],
+  "inferences": [
+    "The two requested predicates are caller-level erode oracles, not this leaf's operation: the leaf has no comparison against abs(amount).",
+    "The exact caller threshold and any caller rounding/boundary rule remain outside FUN_180008320 and are not inferred here.",
+    "The independent terminal-loop oracle matches the six constant-word fixtures when supplied with the generated float values captured from the AEX; it does not independently prove the float-generation stage for all exhaustive calls."
+  ],
+  "inputs": {
+    "distance_first_float_bytes_sha256": "2dfba633817046c7f559ed4b93076048435f7e1a90f14eb8035c04b9ebae2537",
+    "distance_leaf": {
+      "function": "FUN_180005D60",
+      "instructions": 1846,
+      "rax": "0x0",
+      "va": "0x180005d60"
+    },
+    "distance_type": 2,
+    "height": 3,
+    "seed_first_channel": [
+      [
+        255,
+        255,
+        255,
+        255,
+        255
+      ],
+      [
+        255,
+        255,
+        0,
+        255,
+        255
+      ],
+      [
+        255,
+        255,
+        255,
+        255,
+        255
+      ]
+    ],
+    "width": 5
+  },
+  "kind": "olmcolorkey_edge_thin_erode_aex_20260717",
+  "provenance": {
+    "aex": "aex/OLMColorKey/Plugins/64/2025/OLMColorKey.aex",
+    "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "function": "FUN_180008320",
+    "function_bytes_sha256": "86b20586a515a54ff0eefd819b1c77c52be04167f740dac1ea23ae15f373b5e7",
+    "function_end_exclusive": "0x1800085b0",
+    "function_va": "0x180008320"
+  },
+  "schema": 2,
+  "search": {
+    "amounts": [
+      -1.0,
+      -2.0,
+      -3.0,
+      -4.0
+    ],
+    "candidate_a_matches": 0,
+    "candidate_b_matches": 0,
+    "dimensions": [
+      [
+        5,
+        1
+      ],
+      [
+        3,
+        3
+      ]
+    ],
+    "discriminating_cases": 274,
+    "exact_fixtures": [
+      {
+        "aex": {
+          "amount": -1.0,
+          "distance_temp": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "instructions": 705,
+          "output_first_channel": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "output_raw_hex": "0000000000000000000000000000000000000000",
+          "rax": "0x0",
+          "seed": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "suite_cleanup": true
+        },
+        "oracle": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "seed_words": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "aex": {
+          "amount": -1.0,
+          "distance_temp": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "instructions": 705,
+          "output_first_channel": [
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "output_raw_hex": "0100000000000000010000000000000001000000",
+          "rax": "0x0",
+          "seed": [
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "suite_cleanup": true
+        },
+        "oracle": [
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "seed_words": [
+          3,
+          3,
+          3,
+          3,
+          3
+        ]
+      },
+      {
+        "aex": {
+          "amount": -1.0,
+          "distance_temp": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "instructions": 705,
+          "output_first_channel": [
+            2,
+            0,
+            2,
+            0,
+            2
+          ],
+          "output_raw_hex": "0200000000000000020000000000000002000000",
+          "rax": "0x0",
+          "seed": [
+            5,
+            5,
+            5,
+            5,
+            5
+          ],
+          "suite_cleanup": true
+        },
+        "oracle": [
+          2,
+          0,
+          2,
+          0,
+          2
+        ],
+        "seed_words": [
+          5,
+          5,
+          5,
+          5,
+          5
+        ]
+      },
+      {
+        "aex": {
+          "amount": -1.0,
+          "distance_temp": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "instructions": 705,
+          "output_first_channel": [
+            63,
+            0,
+            63,
+            0,
+            63
+          ],
+          "output_raw_hex": "3f000000000000003f000000000000003f000000",
+          "rax": "0x0",
+          "seed": [
+            127,
+            127,
+            127,
+            127,
+            127
+          ],
+          "suite_cleanup": true
+        },
+        "oracle": [
+          63,
+          0,
+          63,
+          0,
+          63
+        ],
+        "seed_words": [
+          127,
+          127,
+          127,
+          127,
+          127
+        ]
+      },
+      {
+        "aex": {
+          "amount": -1.0,
+          "distance_temp": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "instructions": 705,
+          "output_first_channel": [
+            127,
+            0,
+            127,
+            0,
+            127
+          ],
+          "output_raw_hex": "7f000000000000007f000000000000007f000000",
+          "rax": "0x0",
+          "seed": [
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          "suite_cleanup": true
+        },
+        "oracle": [
+          127,
+          0,
+          127,
+          0,
+          127
+        ],
+        "seed_words": [
+          255,
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "aex": {
+          "amount": -1.0,
+          "distance_temp": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "instructions": 705,
+          "output_first_channel": [
+            255,
+            0,
+            255,
+            0,
+            255
+          ],
+          "output_raw_hex": "ff3f000000000000ff3f000000000000ff3f0000",
+          "rax": "0x0",
+          "seed": [
+            32767,
+            32767,
+            32767,
+            32767,
+            32767
+          ],
+          "suite_cleanup": true
+        },
+        "oracle": [
+          255,
+          0,
+          255,
+          0,
+          255
+        ],
+        "seed_words": [
+          32767,
+          32767,
+          32767,
+          32767,
+          32767
+        ]
+      }
+    ],
+    "first_boundary_disagreement": {
+      "aex": {
+        "amount": -1.0,
+        "distance_temp": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "instructions": 713,
+        "output_first_channel": [
+          127,
+          0,
+          0,
+          0,
+          0
+        ],
+        "output_raw_hex": "7f00000000000000000000000000000000000000",
+        "rax": "0x0",
+        "seed": [
+          255,
+          255,
+          0,
+          0,
+          0
+        ],
+        "suite_cleanup": true
+      },
+      "candidate_a": [
+        255,
+        0,
+        0,
+        0,
+        0
+      ],
+      "candidate_b": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "height": 1,
+      "pixel_index": 0,
+      "width": 5
+    },
+    "independent_oracle": "raw x*2 word load/store -> float32 MULSS -> CVTTSS2SI -> low uint16 -> x*4 sample",
+    "neither_matches": 274,
+    "tested_cases": 2176
+  },
+  "status": "pass"
+}
