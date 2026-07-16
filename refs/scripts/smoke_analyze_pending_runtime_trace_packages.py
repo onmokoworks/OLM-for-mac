@@ -79,9 +79,9 @@ def main() -> int:
         if "15 typed records" not in dg_typed.get("stop_condition", ""):
             raise AssertionError("DistanceGradation typed-boundary request must expose the v4 acceptance gate")
         successor_expectations = {
-            "olmdirectionalblur_row755_20260713": (
-                "refs/runtime_trace_packages/windows_witness_olmdirectionalblur_row755_20260713.zip",
-                3,
+            "olmdirectionalblur_writer_entry_20260716": (
+                "refs/runtime_trace_packages/windows_witness_olmdirectionalblur_writer_entry_20260716.zip",
+                2,
             ),
             "olmradialblur_case0009_fullframe_postnorm_typed_common_core_20260713": (
                 "refs/runtime_trace_packages/windows_witness_olmradialblur_case0009_fullframe_postnorm_typed_common_core_20260713.zip",
@@ -90,6 +90,10 @@ def main() -> int:
             "olmsmoother2_case0012_current_aex_20260713": (
                 "refs/runtime_trace_packages/windows_witness_olmsmoother2_case0012_20260713.zip",
                 214,
+            ),
+            "olmkirakira_mode2_compose_writeback_20260716": (
+                "refs/runtime_trace_packages/olmkirakira_mode2_compose_writeback_20260716.zip",
+                42,
             ),
         }
         for request_id, (package, priority) in successor_expectations.items():
@@ -105,6 +109,7 @@ def main() -> int:
                 )
         for request_id in (
             "olmdirectionalblur_alpha_fade_fullrender_row755_20260712",
+            "olmdirectionalblur_row755_20260713",
             "olmradialblur_case0009_fullframe_postnorm_typed_20260710",
             "olmsmoother2_case0012_live_config_binding_20260713",
         ):

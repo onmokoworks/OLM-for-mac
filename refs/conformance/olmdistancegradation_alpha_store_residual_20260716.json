@@ -1,0 +1,108 @@
+{
+  "schema": "olmdistancegradation.alpha-store-residual-classifier/1",
+  "status": "classified_not_closed",
+  "classification": "Mac-closable exclusions complete; upstream field/pre-store/store boundary remains unresolved",
+  "ae_exact_claim": false,
+  "production_edits": false,
+  "inputs": {
+    "points": [
+      {
+        "case_id": "case_0010",
+        "xy": [
+          6,
+          40
+        ],
+        "family": "outside_actual_max",
+        "mac_field_x": 0.9002838730812073,
+        "mac_out_a": 0.0997161269187927,
+        "mac_store_a": 3267,
+        "windows_store_a": 3268
+      },
+      {
+        "case_id": "case_0010",
+        "xy": [
+          901,
+          394
+        ],
+        "family": "inside_threshold_half_boundary",
+        "mac_field_x": 0.6985930800437927,
+        "mac_out_a": 0.3014069199562073,
+        "mac_store_a": 9877,
+        "windows_store_a": 9876
+      },
+      {
+        "case_id": "case_0011",
+        "xy": [
+          915,
+          392
+        ],
+        "family": "inside_threshold_half_boundary",
+        "mac_field_x": 0.1345367729663849,
+        "mac_out_a": 0.8654632270336151,
+        "mac_store_a": 28360,
+        "windows_store_a": 28359
+      }
+    ],
+    "typed_audit": "refs/conformance/olmdistancegradation_0010_0011_opencv_field_prep_audit_20260709.json",
+    "compose_contract": "refs/conformance/olmdistancegradation_0010_0011_compose_input_pointer_contract_20260709.md",
+    "store_return": "refs/conformance/olmdistancegradation_0010_0011_writeback_pointer_map_return_intake_20260709.md",
+    "writer_boundary": "refs/conformance/dg_pf16_writer_boundary_20260716.json",
+    "writer_active_path": "refs/conformance/dg_pf16_writer_active_path_20260716.json",
+    "case0026_manifest": "refs/conformance/olmdistancegradation_16bpc_livefield_source_actual_aex_20260713.json"
+  },
+  "checks": {
+    "typed_field_values_reproduce_retained_mac_bits": true,
+    "store_deltas_windows_minus_mac": [
+      1,
+      -1,
+      -1
+    ],
+    "sign_flip_present": true,
+    "single_global_store_rule_possible": false,
+    "pf16_writer_direct_boundary_is_code_domain_only": true,
+    "pf16_writer_active_on_compose_fixture": false,
+    "case0026_exact_replay_fail_closed_without_field_words": true
+  },
+  "typed_checks": [
+    {
+      "xy": [
+        6,
+        40
+      ],
+      "field_bits_reused": true,
+      "field_x": 0.9002838730812073,
+      "family": "outside_actual_max"
+    },
+    {
+      "xy": [
+        901,
+        394
+      ],
+      "field_bits_reused": true,
+      "field_x": 0.6985930800437927,
+      "family": "inside_threshold_half_boundary"
+    },
+    {
+      "xy": [
+        915,
+        392
+      ],
+      "field_bits_reused": true,
+      "field_x": 0.1345367729663849,
+      "family": "inside_threshold_half_boundary"
+    }
+  ],
+  "decision": {
+    "final_pf16_rounding": "excluded: Windows-minus-Mac deltas are +1,-1,+/-1, not one global rule",
+    "channel_layout": "excluded for this residual: accepted pointer map and matching alpha symptom do not identify a layout fault",
+    "export": "excluded as the primary store residual: Windows PF16 store words already differ; same-run true16 export remains absent",
+    "field_vs_compose_alpha": "not separable locally: typed Mac field values reproduce Mac behavior, but Windows consumed field/pre-store floats are absent",
+    "allowed_next": "request or obtain coordinate-bound Windows field word and compose pre-store alpha; do not tune production source"
+  },
+  "limitations": [
+    "The active-path writer census has zero writer hits on its bounded compose fixture; this is inactive_for_fixture, not global dead code.",
+    "The direct PF16 writer boundary is actual-AEX code-domain evidence and does not prove the AE host dispatch or upstream scale.",
+    "case_0026 remains partial because field raw words are missing; its output cannot be used to invent field words.",
+    "No AE exact status is promoted."
+  ]
+}

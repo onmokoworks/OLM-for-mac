@@ -1,0 +1,9 @@
+.effmach amd64
+.expr /s masm
+sxi 80000003
+.logopen /t "{{TRACE_PATH}}"
+r @$t0=0
+bp {{ADDRESS:writer_entry}} ".if (@$t0==0 && @r12d==169 && @r13d==494) {r @$t0=1;.printf \"DBR_WRITER_ENTRY run_id={{RUN_ID}} ae_pid={{AE_PID}} module_base={{MODULE_BASE}} aex_sha256={{AEX_SHA256}} project_bpc={{PROJECT_BPC}} renderer={{RENDERER}} case_id={{CASE_ID}} witness_id={{CASE_VALUE:witness_id}} stage=writer_entry hook_rva=566a x=494 y=169 writer_addr=%p pf_output_addr=%p rgba_f32_bits=0x%08x,0x%08x,0x%08x,0x%08x typed_f32=1 same_run_key=writer-pf-494-169\\n\",@rdi,@rsi,dwo(@xmm0),dwo(@xmm1),dwo(@xmm2),dwo(@xmm3);};gc"
+bp {{ADDRESS:pf_store}} ".if (@$t0==1 && @r12d==169 && @r13d==494) {r @$t1=poi(@rsi);.writemem \"{{TRACE_PATH}}.writer_pf_argb8.bin\" @rsi @rsi+3;.printf \"DBR_PF_STORE run_id={{RUN_ID}} ae_pid={{AE_PID}} module_base={{MODULE_BASE}} aex_sha256={{AEX_SHA256}} project_bpc={{PROJECT_BPC}} renderer={{RENDERER}} case_id={{CASE_ID}} witness_id={{CASE_VALUE:witness_id}} stage=pf_store hook_rva=6b30 x=494 y=169 store_addr=%p writer_addr=%p pf_argb_bytes=%u,%u,%u,%u typed_argb8=1 same_run_key=writer-pf-494-169\\n\",@rsi,@rdi,by(@rsi),by(@rsi+1),by(@rsi+2),by(@rsi+3);.echo DBR_WRITER_ENTRY_COMPLETE;.detach;q};gc"
+.echo DBR_WRITER_ENTRY_BREAKPOINTS_READY
+g

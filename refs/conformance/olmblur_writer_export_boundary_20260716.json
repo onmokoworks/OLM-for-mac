@@ -1,0 +1,117 @@
+{
+  "schema": "olmblur.mac-actual-aex-prestore-writer-export-boundary/1",
+  "status": "pass_local_boundary_no_ae_exact",
+  "aex": {
+    "path": "plugins_2025/OLMBlur.aex",
+    "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+  },
+  "asm_decomp_contract": {
+    "nonlegacy_entry": "FUN_180002280",
+    "legacy_entry": "FUN_180005f20",
+    "standard_writer": [
+      "0x1800030e2",
+      "0x180003123"
+    ],
+    "alternate_writer": [
+      "0x1800031d0",
+      "0x18000325a"
+    ],
+    "standard_rule": "ADDSS 0.5f -> floorf -> CVTTSS2SI -> store AX",
+    "alternate_rule": "CVTTSS2SI memory -> store AX; no +0.5"
+  },
+  "case_0004_nonlegacy": {
+    "legacy": 0,
+    "points": {
+      "(411,258)": {
+        "portable_pre_store_bits": "0x46ac2aff",
+        "portable_pre_store": 22037.498046875,
+        "retained_candidate_word": 22037,
+        "retained_expected_word": 22038
+      },
+      "(458,314)": {
+        "portable_pre_store_bits": "0x46ce0aff",
+        "portable_pre_store": 26373.498046875,
+        "retained_candidate_word": 26373,
+        "retained_expected_word": 26374
+      }
+    }
+  },
+  "case_0003_legacy": {
+    "legacy": 1,
+    "retained_residual_points": 20,
+    "retained_residual_sign": {
+      "candidate_minus_expected_png": {
+        "+2": 19,
+        "-2": 1
+      }
+    }
+  },
+  "actual_aex_writer_runs": {
+    "standard_case0004_values": {
+      "input_f32": [
+        22037.498046875,
+        26373.498046875,
+        0.0
+      ],
+      "stored_argb16": [
+        32768,
+        22037,
+        26373,
+        0
+      ],
+      "instructions": 22,
+      "direct_memory_cvttss2si": false
+    },
+    "alternate_legacy_control_values": {
+      "status": "not_called_without_live_caller_context",
+      "input_f32": [
+        250.49998474121094,
+        0.0016103045782074332,
+        0.0016103045782074332
+      ],
+      "stored_argb16": null,
+      "direct_memory_cvttss2si": true
+    }
+  },
+  "existing_worker_emulator": {
+    "legacy_worker_fixture": {
+      "returncode": 0,
+      "last_line": "}",
+      "stderr_tail": ""
+    },
+    "nonlegacy_worker_fixture": {
+      "returncode": 0,
+      "last_line": "}",
+      "stderr_tail": ""
+    }
+  },
+  "export_ownership": {
+    "local_mapping": "stored PF16 word -> retained PNG comparison word is an external AE/export contract; controlled PNG-domain mapping is 2*word-1 for odd words",
+    "case_0004_candidate_to_expected_internal_delta": [
+      [
+        22037,
+        22038
+      ],
+      [
+        26373,
+        26374
+      ]
+    ],
+    "case_0003_internal_delta_not_bound": true
+  },
+  "FACT": [
+    "The actual AEX standard writer stores both case_0004 retained portable pre-store values as 22037 and 26373.",
+    "The Legacy alternate direct writer is retained as ASM/decomp ownership evidence; its live caller context is not fabricated by this witness.",
+    "Both existing 16bpc worker emulator fixture commands return zero."
+  ],
+  "INFERENCE": [
+    "case_0004's retained one-word-low values are not localized to an AE PNG export rule by this Mac run; the portable pre-store is already below the next word.",
+    "case_0003 remains upstream/host-unbound at the residual points; the local Legacy writer ownership is bounded by ASM/decomp plus the complete-worker fixture, not by a live residual-point trace."
+  ],
+  "unproven": [
+    "Windows same-run pre-store bits",
+    "Windows same-run stored PF16 words",
+    "AE host/export ownership for either retained case",
+    "AE exactness"
+  ]
+}

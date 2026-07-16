@@ -1,0 +1,141 @@
+{
+  "aex": {
+    "path": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
+    "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+  },
+  "claims_not_made": [
+    "No Windows producer truth",
+    "No AE exactness",
+    "No portable compatibility",
+    "No final-writer or PNG tuning"
+  ],
+  "date": "2026-07-16",
+  "facts": {
+    "class_plane_contract": {
+      "base_offset": "+0x18",
+      "bytes": {
+        "center_b0": 0,
+        "left_b1": 0,
+        "prev_b0": 1
+      },
+      "pixel_stride": 4,
+      "stride_offset": "+0x28"
+    },
+    "e170": {
+      "c": 2,
+      "meaning": "bit 1=center b0, bit 2=previous-row b0, bit 4=left-pixel b1"
+    },
+    "e3a0": {
+      "first_vertex": {
+        "rgba": [
+          0.9910671710968018,
+          0.9910671710968018,
+          0.9910671710968018,
+          0.9960784316062927
+        ],
+        "weight": 0.4281609058380127
+      },
+      "ret_low_byte": 1,
+      "scale_input": 0.5800000023841858,
+      "vertex_count": 1
+    },
+    "f270": {
+      "first_vertex": {
+        "rgba": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weight": 0.4281609058380127
+      },
+      "ret_low_byte": 1,
+      "rule": "c==4 suppresses; c!=4 calls e3a0",
+      "vertex_count": 1
+    },
+    "functions": {
+      "e170": {
+        "name": "FUN_18000e170",
+        "rva": "0x0000e170"
+      },
+      "e3a0": {
+        "name": "FUN_18000e3a0",
+        "rva": "0x0000e3a0"
+      },
+      "f270": {
+        "name": "FUN_18000f270",
+        "rva": "0x0000f270"
+      }
+    }
+  },
+  "fixture": {
+    "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+    "descriptor": [
+      5,
+      6,
+      1,
+      5,
+      8,
+      5
+    ],
+    "local_xy": [
+      5,
+      6
+    ]
+  },
+  "inference": [
+    "The legacy producer reaches e3a0 under the observed c=2 class state; no gamma fallback is involved at this boundary.",
+    "The local synthetic coordinates are translation-equivalent for the relative class addressing, but are not a Windows case mapping."
+  ],
+  "pass": true,
+  "scope": "actual-AEX CPU emulation of legacy producer; upstream of c280/cce0",
+  "verdict": "PASS_LOCAL_ACTUAL_AEX_LEGACY_KEY_SETUP_PRODUCER",
+  "windows_typed_witness": {
+    "acceptance": "Return all fields from one bound run; do not substitute local values or final writer bytes.",
+    "descriptor": [
+      91,
+      841,
+      1,
+      91,
+      843,
+      5
+    ],
+    "hook_sites": {
+      "e170": {
+        "bind": "absolute module_base + RVA",
+        "name": "FUN_18000e170",
+        "rva": "0x0000e170"
+      },
+      "e3a0": {
+        "bind": "absolute module_base + RVA",
+        "name": "FUN_18000e3a0",
+        "rva": "0x0000e3a0"
+      },
+      "f270": {
+        "bind": "absolute module_base + RVA",
+        "name": "FUN_18000f270",
+        "rva": "0x0000f270"
+      }
+    },
+    "required_memory_contract": {
+      "center_b0": "byte[class_base + 841*class_stride + 91*4 + 0]",
+      "e170_base_rcx": "live producer struct; read qword [RCX+0x18] as class_base and qword [RCX+0x28] as class_stride",
+      "e170_c": "EAX/RAX low byte at return from FUN_18000e170",
+      "e170_desc_rdx": "int[6], desc[0]=91, desc[1]=841",
+      "e3a0": "RAX low byte, first vertex at +0x40, weight at +0x50",
+      "f270": "RAX low byte and vertex count at +0x130 of the same producer struct",
+      "left_b1": "byte[class_base + 841*class_stride + 90*4 + 1]",
+      "prev_b0": "byte[class_base + 840*class_stride + 91*4 + 0]"
+    },
+    "required_same_run_identity": [
+      "case_id",
+      "xy=(91,841)",
+      "AE Software",
+      "8bpc",
+      "AEX SHA-256",
+      "module_base",
+      "AfterFX PID"
+    ],
+    "status": "not_available_in_workspace"
+  }
+}

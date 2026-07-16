@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "description": "Same-run Windows Front Alpha Fade writer-entry versus PF byte-store witness.",
+  "request_id": "olmdirectionalblur_writer_entry_20260716",
+  "run_id_prefix": "dblur-writer-20260716",
+  "queue": {
+    "profile": "olmdirectionalblur-front-alpha-writer-entry",
+    "plugin_area": "OLMDirectionalBlur Front Alpha Fade writer entry and PF store witness",
+    "command": "Run one pinned-AEX Software render and capture the typed writer input, PF store, PF output binding, and same-run PNG export at (494,169).",
+    "stop_condition": "answered only when writer entry, PF store, PF output binding, and export binding all share one run identity; otherwise return exact_bind_failure.",
+    "supersedes": [
+      "olmdirectionalblur_row755_20260713"
+    ]
+  },
+  "plugin": {
+    "name": "OLM DirectionalBlur",
+    "module_filename": "OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "default_aex_path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\OLMDirectionalBlur.aex"
+  },
+  "host": {
+    "afterfx_path": "C:\\Program Files\\Adobe\\Adobe After Effects 2025\\Support Files\\AfterFX.exe",
+    "cdb_path": "C:\\Program Files (x86)\\Windows Kits\\10\\Debuggers\\x64\\cdb.exe"
+  },
+  "project": {
+    "bits_per_channel": 8,
+    "renderer": "Software",
+    "environment": {
+      "OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT": "1",
+      "OLM_AE_INPUT_ALPHA_MODE": "PREMULTIPLIED",
+      "WINDOWS_WITNESS_DIRECT_R": "1"
+    }
+  },
+  "renderer": {"source": "renderer.jsx"},
+  "request_assets": {"source": "request"},
+  "cdb": {
+    "armed_marker": "DBR_WRITER_ENTRY_BREAKPOINTS_READY",
+    "arm_timeout_seconds": 60,
+    "capture_timeout_seconds": 300
+  },
+  "cases": [
+    {
+      "id": "db_angle0_alpha_fade_hard_edges",
+      "cdb_template": "probe.cdb.in",
+      "template_values": {"witness_id": "olmdirectionalblur-writer-entry-v1"},
+      "addresses": {
+        "worker_entry": "0x4d84",
+        "rowdriver_entry": "0x38d0",
+        "writer_entry": "0x566a",
+        "pf_store": "0x6b30"
+      },
+      "exports": [
+        {"source": "cdb_trace_{case_id}.txt.writer_pf_argb8.bin", "archive_path": "return/writer_pf_argb8.bin", "required": true},
+        {"source": "exports/{case_id}/directionalblur_context_scale_20260606__software__fr24__db_angle0_alpha_fade_hard_edges.png", "archive_path": "return/rendered_db_angle0_alpha_fade_hard_edges.png", "required": true}
+      ]
+    }
+  ],
+  "validation": {
+    "identity_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id"],
+    "events": [
+      {
+        "name": "writer_entry",
+        "prefix": "DBR_WRITER_ENTRY",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "hook_rva", "x", "y", "writer_addr", "pf_output_addr", "rgba_f32_bits", "typed_f32", "same_run_key"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmdirectionalblur-writer-entry-v1"}, "stage": {"equals": "writer_entry"}, "hook_rva": {"equals": "566a"},
+          "x": {"equals": "494"}, "y": {"equals": "169"}, "writer_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"}, "pf_output_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "rgba_f32_bits": {"pattern": "^0x[0-9a-fA-F]{8},0x[0-9a-fA-F]{8},0x[0-9a-fA-F]{8},0x[0-9a-fA-F]{8}$"}, "typed_f32": {"equals": "1"}, "same_run_key": {"equals": "writer-pf-494-169"}
+        }
+      },
+      {
+        "name": "pf_store",
+        "prefix": "DBR_PF_STORE",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "hook_rva", "x", "y", "store_addr", "writer_addr", "pf_argb_bytes", "typed_argb8", "same_run_key"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmdirectionalblur-writer-entry-v1"}, "stage": {"equals": "pf_store"}, "hook_rva": {"equals": "6b30"},
+          "x": {"equals": "494"}, "y": {"equals": "169"}, "store_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"}, "writer_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
+          "pf_argb_bytes": {"pattern": "^[0-9]+,[0-9]+,[0-9]+,[0-9]+$"}, "typed_argb8": {"equals": "1"}, "same_run_key": {"equals": "writer-pf-494-169"}
+        }
+      },
+      {
+        "name": "pf_output_bind",
+        "prefix": "DBR_PF_OUTPUT",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "output_world", "pf_output_sha256", "same_run_key"],
+        "field_constraints": {"witness_id": {"equals": "olmdirectionalblur-writer-entry-v1"}, "stage": {"equals": "pf_output"}, "output_world": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"}, "pf_output_sha256": {"pattern": "^[0-9a-fA-F]{64}$"}, "same_run_key": {"equals": "writer-pf-494-169"}}
+      },
+      {
+        "name": "export_bind",
+        "prefix": "DBR_EXPORT",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "export_path", "same_run_key"],
+        "field_constraints": {"witness_id": {"equals": "olmdirectionalblur-writer-entry-v1"}, "stage": {"equals": "export"}, "export_path": {"pattern": "^exports/.+\\.png$"}, "same_run_key": {"equals": "writer-pf-494-169"}}
+      }
+    ]
+  },
+  "return_bundle": {"json_name": "RETURN_OLMDIRECTIONALBLUR_WRITER_ENTRY.json", "zip_name": "RETURN_OLMDIRECTIONALBLUR_WRITER_ENTRY.zip", "include_logs": []}
+}

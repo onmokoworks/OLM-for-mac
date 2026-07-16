@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "kind": "olmdirectionalblur_writer_boundary_localization",
+  "status": "pass",
+  "scope": {
+    "case_id": "db_angle0_alpha_fade_hard_edges",
+    "selected_lane": "Front Alpha Fade",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "writer_focus": [
+      1308,
+      184,
+      1308,
+      517
+    ]
+  },
+  "replay": {
+    "rowdriver_instructions": 4196879,
+    "normalization_instructions": 44412,
+    "writer_instructions": 11690,
+    "rowdriver_destination_denominator_alpha_exact": true,
+    "normalization_exact": true,
+    "actual_writer_sha256": "9b90145bf4323ea96a902de2e77b57db5367d62d803e0a91b070c5a3250bc794",
+    "windows_pf_output_sha256": "1c53bb46bde66355ac77059b29be237e4c800ddd3931e9db4d0181b25af644b1"
+  },
+  "boundaries": {
+    "writer_vs_windows_pf_slice": {
+      "differing_values": 468,
+      "differing_pixels": 226,
+      "per_channel_argb": [
+        30,
+        129,
+        174,
+        135
+      ],
+      "first_pixel_indices": [
+        0,
+        10,
+        12,
+        13,
+        16,
+        17,
+        19,
+        20,
+        21,
+        24,
+        25,
+        27,
+        29,
+        30,
+        31,
+        35
+      ]
+    },
+    "writer_vs_windows_packed_words": 226,
+    "windows_pf_to_png_host_export": {
+      "differing_values": 0,
+      "differing_pixels": 0,
+      "per_channel_argb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "first_pixel_indices": []
+    },
+    "accepted_same_run_host_input_formula_max_diff": 0,
+    "accepted_same_run_host_output_formula_max_diff": 0
+  },
+  "classification": {
+    "export": "ruled_out_for_this_residual: Windows PF-world to PNG formula is exact",
+    "writer_output_or_store": "first_observed_mismatch: actual-AEX writer bytes differ from Windows PF-world slice",
+    "writer_input_vs_store": "not_separable: Windows pre-writer float/store witness is absent",
+    "production_change": false,
+    "ae_exact_promotion": false
+  },
+  "fact": [
+    "The actual-AEX rowdriver destination, denominator, alpha, and normalization remain exact against the portable bounded replay.",
+    "The actual-AEX output-writer slice differs from the same-run Windows PF output at 226 packed 32-bit words (468 channel values) across 226 pixels.",
+    "The accepted same-run Windows PF output converts to the returned PNG with zero differing values under the recorded host formula.",
+    "The Windows return contains no typed pre-writer float buffer or writer-entry capture for this case."
+  ],
+  "inference": [
+    "PNG/export is not the source of the 226-value writer_vs_windows boundary residual.",
+    "The residual is localized to the plug-in output side at or before PF byte storage, but cannot be assigned uniquely to writer input versus the store without a Windows typed writer-entry witness.",
+    "No production change is justified and no AE-exact status is promoted."
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "description": "One fresh AE Software 32bpc canonical OLMKiraKira Mode 2 chain witness through selected typed writer store.",
+  "request_id": "olmkirakira_mode2_compose_writeback_20260716",
+  "run_id_prefix": "kk-mode2-wb",
+  "queue": {
+    "profile": "olmkirakira-mode2-compose-writeback",
+    "plugin_area": "OLMKiraKira Mode 2 host compose and selected writer witness",
+    "command": "Run one fresh pinned-AEX Software 32bpc render and capture the Mode 2 return, host compose, selected PF writer, and typed store result in one run.",
+    "stop_condition": "answered only when Mode 2 return, host compose, exactly one selected writer, and its store result share one run identity; otherwise return exact_bind_failure."
+  },
+  "plugin": {
+    "name": "OLMKiraKira",
+    "module_filename": "OLMKiraKira.aex",
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "default_aex_path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\OLMKiraKira.aex"
+  },
+  "host": {
+    "afterfx_path": "C:\\Program Files\\Adobe\\Adobe After Effects 2025\\Support Files\\AfterFX.exe",
+    "cdb_path": "C:\\Program Files (x86)\\Windows Kits\\10\\Debuggers\\x64\\cdb.exe"
+  },
+  "project": {"bits_per_channel": 32, "renderer": "Software"},
+  "renderer": {"source": "renderer.jsx"},
+  "request_assets": {"source": "request"},
+  "cdb": {"armed_marker": "KK_MODE2_WRITEBACK_BREAKPOINTS_READY", "arm_timeout_seconds": 60, "capture_timeout_seconds": 300},
+  "cases": [{
+    "id": "kk_vertical_len50_brightness1_strength100",
+    "cdb_template": "mode2_compose_writeback.cdb.in",
+    "template_values": {"witness_id": "olmkirakira-mode2-compose-writeback-v1"},
+    "addresses": {
+      "mode2_return": "0x15019e",
+      "host_compose": "0x1501a0",
+      "pf8_entry": "0x230b90",
+      "pf16_entry": "0x230bd0",
+      "pf32_entry": "0x230c20",
+      "pf8_store_after": "0x230ba8",
+      "pf16_store_after": "0x230be8",
+      "pf32_store_after": "0x230c38"
+    },
+    "exports": []
+  }],
+  "validation": {
+    "identity_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id"],
+    "events": [
+      {"name": "mode2_return", "prefix": "KK_MODE2_RETURN", "cardinality": {"scope": "per_case", "min": 1, "max": 1}, "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "target_rva", "dispatch_slot", "threshold_f64", "output_ptr", "pre_clamp_rgba_f32", "post_clamp_rgba_f32", "clamp_count"], "field_constraints": {"stage": {"equals": "mode2_return"}, "target_rva": {"equals": "14ffd0"}, "dispatch_slot": {"equals": "+0x10"}, "threshold_f64": {"equals": "0.001"}, "clamp_count": {"equals": "4"}}},
+      {"name": "host_compose", "prefix": "KK_HOST_COMPOSE", "cardinality": {"scope": "per_case", "min": 1, "max": 1}, "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "input_ptr", "output_ptr", "compose_formula", "source_rgba_f32", "glow_rgba_f32", "typed_prewriteback_rgba_f32"], "field_constraints": {"stage": {"equals": "host_compose"}}},
+      {"name": "pf8_entry", "prefix": "KK_PF8_ENTRY", "cardinality": {"scope": "per_case", "min": 0, "max": 1}, "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "entry_rva", "input_scale", "destination_addr"]},
+      {"name": "pf16_entry", "prefix": "KK_PF16_ENTRY", "cardinality": {"scope": "per_case", "min": 0, "max": 1}, "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "entry_rva", "input_scale", "destination_addr"]},
+      {"name": "pf32_entry", "prefix": "KK_PF32_ENTRY", "cardinality": {"scope": "per_case", "min": 0, "max": 1}, "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "entry_rva", "input_scale", "destination_addr"]},
+      {"name": "selected_writer", "prefix": "KK_SELECTED_WRITER", "cardinality": {"scope": "per_case", "min": 1, "max": 1}, "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "writer_family", "entry_rva", "input_scale", "conversion", "destination_addr", "typed_prewriteback_rgba_f32"], "field_constraints": {"stage": {"equals": "selected_writer"}, "writer_family": {"pattern": "^(PF8|PF16|PF32)$"}}},
+      {"name": "store_after", "prefix": "KK_STORE_AFTER", "cardinality": {"scope": "per_case", "min": 1, "max": 1}, "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "writer_family", "entry_rva", "destination_addr", "after_store_words", "store_width"], "field_constraints": {"stage": {"equals": "store_after"}, "writer_family": {"pattern": "^(PF8|PF16|PF32)$"}}}
+    ]
+  },
+  "return_bundle": {"json_name": "RETURN_WINDOWS_WITNESS.json", "zip_name": "RETURN_WINDOWS_WITNESS.zip"}
+}

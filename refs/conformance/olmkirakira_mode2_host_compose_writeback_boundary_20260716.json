@@ -1,0 +1,76 @@
+{
+  "address_evidence": {
+    "dispatch_mode2": "FUN_18114f4a0 -> indirect vtable +0x10 -> output pointer setup at 0x18114fc2d..0x18114fc28",
+    "target_boundary": "0x181150112 clamp input -> four 0x181156740 calls -> float stores -> RET at 0x18115019e",
+    "writer_candidates": "0x181230b90 byte stores; 0x181230bd0 word stores; 0x181230c20 float stores"
+  },
+  "ae_exact_claim": false,
+  "checked_in_aex_emulator": {
+    "address_bytes": {
+      "0x18114ffd0": "488bc44c8948204c",
+      "0x181150112": "0f28c2e826660000",
+      "0x181150250": "40574883ec20488b",
+      "0x181156740": "0f2f05d904330048",
+      "0x181230b90": "f30f1025105a2a00",
+      "0x181230bd0": "f30f1025d4592a00",
+      "0x181230c20": "488b442428f30f11"
+    },
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "loader": "tools/emulation/aex_loader.py AexLoader(fast=True)",
+    "threshold_f64": 0.001,
+    "threshold_raw_le_f64": "fca9f1d24d62503f"
+  },
+  "date": "2026-07-16",
+  "evidence_class": "static-only checked-in AEX/decomp/assembly boundary audit",
+  "facts": [
+    "FACT: Mode 2 dispatch reaches an indirect vtable slot at +0x10 and supplies the float output pointer setup used by the aggregation target.",
+    "FACT: FUN_18114ffd0 reads DAT_181489990 as a float64 comparison value, and the loaded pinned AEX stores 0.001 at that address.",
+    "FACT: FUN_18114ffd0 writes only float RGBA values after four independent FUN_181156740 clamps, then returns.",
+    "FACT: separate checked-in helpers perform byte, word, and float stores at FUN_181230b90, FUN_181230bd0, and FUN_181230c20."
+  ],
+  "inferences": [
+    "INFERENCE: the Mode-2 target's post-clamp buffer is an intermediate float RGBA result, not proof of host compose or final writeback.",
+    "INFERENCE: no checked-in static chain binds this Mode-2 output pointer to a unique host compose site or one of the writer helpers."
+  ],
+  "inputs": {
+    "aex": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+    "decomp": "decomp/OLMKiraKira.aex.c.txt",
+    "disasm": "disasm/OLMKiraKira.aex.asm.txt",
+    "target": "FUN_18114ffd0 @ 0x18114ffd0",
+    "threshold": "DAT_181489990 @ 0x181489990, float64",
+    "writer_candidates": [
+      "0x181230b90",
+      "0x181230bd0",
+      "0x181230c20"
+    ]
+  },
+  "kind": "olmkirakira_mode2_host_compose_writeback_boundary",
+  "limits": [
+    "This is not AEX execution, Windows execution, host binding, or AE exactness.",
+    "No production source, ledger, or PNG was changed."
+  ],
+  "missing_evidence": [
+    "Same-run Windows/AE trace with pinned AEX hash and Mode-2 vtable target.",
+    "The output pointer after 0x18115019e, followed by the host compose operation and its source/glow inputs.",
+    "Typed pre-writeback RGBA and the selected PF8/PF16/PF32 writer entry, input scale, conversion, and destination address.",
+    "Final AE output comparison for the same pixel; PNG-only comparison is insufficient."
+  ],
+  "schema": 1,
+  "scope": "Mode-2 output after four clamps through the unresolved host compose/writeback boundary; no PNG tuning",
+  "static_checks": {
+    "dispatch_mode1_and_mode2_share_float_output_setup": true,
+    "dispatch_mode2_uses_vtable_plus_0x10": true,
+    "f32_writer_stores_float_words": true,
+    "mode2_target_is_present": true,
+    "target_has_four_clamps": true,
+    "target_has_no_byte_or_word_store": true,
+    "target_has_no_host_writer_call": true,
+    "target_reads_float64_threshold": true,
+    "target_returns_after_clamp": true,
+    "target_writes_float_rgba": true,
+    "target_zero_fills_output": true,
+    "u16_writer_stores_words": true,
+    "u8_writer_stores_bytes": true
+  },
+  "status": "pass"
+}
