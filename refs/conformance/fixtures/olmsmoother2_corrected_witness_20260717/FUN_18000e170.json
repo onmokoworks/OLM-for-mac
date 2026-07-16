@@ -1,0 +1,15 @@
+{
+  "function": "FUN_18000e170",
+  "image_base": "0x180000000",
+  "virtual_address": "0x18000e170",
+  "code_size": 132,
+  "code_end_exclusive": "0x18000e1f4",
+  "code_sha256": "90503de993f8891f72003eef21eff906ff9ed5cb0be4654295549a9aebc6378d",
+  "code_hex": "4883ec280f1041184c6302f20f1049280f290424f20f114c24104585c07509418d40044883c428c3486342044e8d0c850000000048634c24104c8bd04c0fafd148ffc8498bd04c8b0424480fafc1498d0c92420fb65401fd4903c1420fb60400f6d81bc083e002f6da1bc933d283e10403c14b8d0c11423814010f95c203c24883c428c3",
+  "provenance": {
+    "source_aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "source_aex_path": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
+    "extraction": "raw .text bytes at RVA 0xe170 through the ret immediately before the next function's int3 padding",
+    "independent_execution": "Unicorn x86-64 with synthetic RCX struct and RDX int[6] descriptor; no PE loader or AEX file required"
+  }
+}

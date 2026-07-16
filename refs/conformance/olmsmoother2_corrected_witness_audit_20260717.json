@@ -1,0 +1,120 @@
+{
+  "claims_not_made": [
+    "No mixed-identity bind event is used as the corrected sample identity.",
+    "No claim that c280 is solved.",
+    "No claim that cce0 is solved.",
+    "No claim about x=91,y=841 or any ZIP carrying that retired witness.",
+    "No AE exactness, full-AEX reproducibility, or final-writer claim."
+  ],
+  "inputs": {
+    "function_fixture": "refs/conformance/fixtures/olmsmoother2_corrected_witness_20260717/FUN_18000e170.json",
+    "function_fixture_metadata": {
+      "code_end_exclusive": "0x18000e1f4",
+      "code_hex": "4883ec280f1041184c6302f20f1049280f290424f20f114c24104585c07509418d40044883c428c3486342044e8d0c850000000048634c24104c8bd04c0fafd148ffc8498bd04c8b0424480fafc1498d0c92420fb65401fd4903c1420fb60400f6d81bc083e002f6da1bc933d283e10403c14b8d0c11423814010f95c203c24883c428c3",
+      "code_sha256": "90503de993f8891f72003eef21eff906ff9ed5cb0be4654295549a9aebc6378d",
+      "code_size": 132,
+      "function": "FUN_18000e170",
+      "image_base": "0x180000000",
+      "provenance": {
+        "extraction": "raw .text bytes at RVA 0xe170 through the ret immediately before the next function's int3 padding",
+        "independent_execution": "Unicorn x86-64 with synthetic RCX struct and RDX int[6] descriptor; no PE loader or AEX file required",
+        "source_aex_path": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
+        "source_aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+      },
+      "virtual_address": "0x18000e170"
+    },
+    "hashes": {
+      "function_code": "90503de993f8891f72003eef21eff906ff9ed5cb0be4654295549a9aebc6378d",
+      "source_aex": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+      "source_member": "c5f48309d9cc995f324ce7345caf8e993755db7d73e0745d36adbe252ed065bd",
+      "source_zip": "8c031837ac6a2e95fec657cd444ca303ba3c8fb66bf2235f3c038b37e207efcf"
+    },
+    "original_zip_name": "RETURN_OLMSMOOTHER2_LEGACY_KEY_PRODUCER.zip",
+    "original_zip_path": "refs/windows_returns/20260716/20260716_150500__RETURN__OLMSMOOTHER2_RDX_DESCRIPTOR_CORRECTED/RETURN_OLMSMOOTHER2_LEGACY_KEY_PRODUCER.zip",
+    "primary_artifact": "refs/conformance/fixtures/olmsmoother2_corrected_witness_20260717/RETURN_OLMSMOOTHER2_LEGACY_KEY_PRODUCER.json",
+    "primary_member": "RETURN_OLMSMOOTHER2_LEGACY_KEY_PRODUCER.json",
+    "source_metadata": "refs/conformance/fixtures/olmsmoother2_corrected_witness_20260717/metadata.json",
+    "source_zip_provenance_attestation": {
+      "clean_clone_reproof": false,
+      "name": "RETURN_OLMSMOOTHER2_LEGACY_KEY_PRODUCER.zip",
+      "path": "refs/windows_returns/20260716/20260716_150500__RETURN__OLMSMOOTHER2_RDX_DESCRIPTOR_CORRECTED/RETURN_OLMSMOOTHER2_LEGACY_KEY_PRODUCER.zip",
+      "role": "provenance attestation only; not clean-clone re-proof",
+      "sha256": "8c031837ac6a2e95fec657cd444ca303ba3c8fb66bf2235f3c038b37e207efcf"
+    }
+  },
+  "interpretation": [
+    "The local branch logic requires previous_b0 to be nonzero.",
+    "The Windows witness separately reports previous_b0=255 for this corrected run."
+  ],
+  "local_extracted_function": {
+    "branch_logic": "previous_b0 must be nonzero",
+    "code_sha256": "90503de993f8891f72003eef21eff906ff9ed5cb0be4654295549a9aebc6378d",
+    "e170_c": 7,
+    "function": "FUN_18000e170",
+    "input_bytes_source": "exact retained Windows e170 class bytes"
+  },
+  "parsed_windows_facts": {
+    "class_bytes": {
+      "center": [
+        255,
+        255,
+        0,
+        255
+      ],
+      "left": [
+        0,
+        255,
+        0,
+        255
+      ],
+      "previous": [
+        255,
+        0,
+        0,
+        0
+      ]
+    },
+    "descriptor_rdx_p2": [
+      92,
+      841,
+      1,
+      92,
+      842,
+      2
+    ],
+    "e170_address_relation": {
+      "center_addr": 2618307219568,
+      "class_base": 2618300760320,
+      "class_stride": 7680,
+      "left_addr": 2618307219565,
+      "prev_addr": 2618307211888
+    },
+    "e170_c": 7,
+    "event_order": [
+      "f270_entry",
+      "e170_entry",
+      "e170_return",
+      "e3a0_entry",
+      "e3a0_return",
+      "f270_return"
+    ],
+    "identity": {
+      "ae_pid": "59192",
+      "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+      "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+      "module_base": "0x7ffa99cd0000",
+      "project_bpc": "8",
+      "renderer": "Software",
+      "run_id": "smoother2-legacy-producer-inprocess-fcefd3f4d8b9410b93ede5dff562675b",
+      "witness_id": "olmsmoother2-legacy-key-producer-common-core-v1"
+    },
+    "previous_b0": 255,
+    "sample_xy": [
+      92,
+      841
+    ]
+  },
+  "pass": true,
+  "scope": "legacy case_0012 producer e170 semantics only at x=92,y=841",
+  "verdict": "PASS_CORRECTED_E170_EXTRACTED_CODE_WITNESS_AUDIT"
+}

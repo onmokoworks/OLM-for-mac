@@ -1,0 +1,274 @@
+{
+  "artifacts": [],
+  "capture_diagnostics": [],
+  "events": [
+    {
+      "event": "bind",
+      "fields": {
+        "ae_pid": "59192",
+        "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+        "binding_expression": "writer_xy_anchor_then_producer_return_address",
+        "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+        "expected_descriptor_hint": "91,841,1,91,843,5",
+        "idx": "105",
+        "module_base": "0x7ffa99cd0000",
+        "pointer_context": "rsp+0x34_x_rsp+0x38_y",
+        "project_bpc": "8",
+        "renderer": "Software",
+        "run_id": "smoother2-legacy-producer-inprocess-fcefd3f4d8b9410b93ede5dff562675b",
+        "stage": "bind",
+        "witness_id": "olmsmoother2-legacy-key-producer-common-core-v1",
+        "writer_hook_rva": "350b",
+        "x": "91",
+        "y": "841"
+      },
+      "prefix": "S2_PRODUCER_BIND"
+    },
+    {
+      "event": "f270_entry",
+      "fields": {
+        "ae_pid": "59192",
+        "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+        "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+        "hook_rva": "f270",
+        "module_base": "0x7ffa99cd0000",
+        "producer_struct": "0xbb87fff380",
+        "project_bpc": "8",
+        "renderer": "Software",
+        "return_address": "0x7ffa99cdff5b",
+        "run_id": "smoother2-legacy-producer-inprocess-fcefd3f4d8b9410b93ede5dff562675b",
+        "stage": "f270_entry",
+        "witness_id": "olmsmoother2-legacy-key-producer-common-core-v1"
+      },
+      "prefix": "S2_PRODUCER_F270_ENTRY"
+    },
+    {
+      "event": "e170_entry",
+      "fields": {
+        "ae_pid": "59192",
+        "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+        "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+        "center_addr": "0x2619f459070",
+        "center_b0": "255",
+        "center_class_bytes": "255,255,0,255",
+        "class_base": "0x2619ee30100",
+        "class_base_offset": "18",
+        "class_stride": "0x1e00",
+        "class_stride_offset": "28",
+        "cplane_h": "1080",
+        "cplane_w": "1920",
+        "descriptor": "92,841,1,92,842,2",
+        "hook_rva": "e170",
+        "left_addr": "0x2619f45906d",
+        "left_b1": "255",
+        "left_class_bytes": "0,255,0,255",
+        "module_base": "0x7ffa99cd0000",
+        "p2_ptr": "0xbb87fff2e0",
+        "p2_source": "rdx",
+        "prev_addr": "0x2619f457270",
+        "prev_b0": "255",
+        "prev_class_bytes": "255,0,0,0",
+        "project_bpc": "8",
+        "renderer": "Software",
+        "return_address": "0x7ffa99cdf284",
+        "run_id": "smoother2-legacy-producer-inprocess-fcefd3f4d8b9410b93ede5dff562675b",
+        "sample_x": "92",
+        "sample_y": "841",
+        "stage": "e170_entry",
+        "witness_id": "olmsmoother2-legacy-key-producer-common-core-v1"
+      },
+      "prefix": "S2_PRODUCER_E170_ENTRY"
+    },
+    {
+      "event": "e170_return",
+      "fields": {
+        "ae_pid": "59192",
+        "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+        "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+        "e170_c": "7",
+        "hook_rva": "e170",
+        "module_base": "0x7ffa99cd0000",
+        "project_bpc": "8",
+        "renderer": "Software",
+        "return_rax": "0x7",
+        "return_site": "f284",
+        "run_id": "smoother2-legacy-producer-inprocess-fcefd3f4d8b9410b93ede5dff562675b",
+        "stage": "e170_return",
+        "witness_id": "olmsmoother2-legacy-key-producer-common-core-v1"
+      },
+      "prefix": "S2_PRODUCER_E170_RETURN"
+    },
+    {
+      "event": "e3a0_entry",
+      "fields": {
+        "ae_pid": "59192",
+        "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+        "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+        "hook_rva": "e3a0",
+        "module_base": "0x7ffa99cd0000",
+        "producer_struct": "0xbb87fff380",
+        "project_bpc": "8",
+        "renderer": "Software",
+        "return_address": "0x7ffa99cdff5b",
+        "run_id": "smoother2-legacy-producer-inprocess-fcefd3f4d8b9410b93ede5dff562675b",
+        "stage": "e3a0_entry",
+        "witness_id": "olmsmoother2-legacy-key-producer-common-core-v1"
+      },
+      "prefix": "S2_PRODUCER_E3A0_ENTRY"
+    },
+    {
+      "event": "e3a0_return",
+      "fields": {
+        "ae_pid": "59192",
+        "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+        "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+        "first_vertex_rgba_words": "3e3ce706,3e3ce706,3e3ce706,3f2eaeaf",
+        "hook_rva": "e3a0",
+        "module_base": "0x7ffa99cd0000",
+        "project_bpc": "8",
+        "renderer": "Software",
+        "return_low": "1",
+        "return_rax": "0x3e91a701",
+        "return_site": "e420",
+        "run_id": "smoother2-legacy-producer-inprocess-fcefd3f4d8b9410b93ede5dff562675b",
+        "stage": "e3a0_return",
+        "vertex_count": "1",
+        "vertex_storage": "0xbb87fff3c0",
+        "weight_word": "3e91a7b9",
+        "witness_id": "olmsmoother2-legacy-key-producer-common-core-v1"
+      },
+      "prefix": "S2_PRODUCER_E3A0_RETURN"
+    },
+    {
+      "event": "f270_return",
+      "fields": {
+        "ae_pid": "59192",
+        "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+        "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+        "first_vertex_rgba_words": "3e3ce706,3e3ce706,3e3ce706,3f2eaeaf",
+        "hook_rva": "f270",
+        "module_base": "0x7ffa99cd0000",
+        "project_bpc": "8",
+        "renderer": "Software",
+        "return_low": "1",
+        "return_rax": "0x3e91a701",
+        "return_site": "ff5b",
+        "run_id": "smoother2-legacy-producer-inprocess-fcefd3f4d8b9410b93ede5dff562675b",
+        "stage": "f270_return",
+        "vertex_count": "1",
+        "vertex_storage": "0xbb87fff3c0",
+        "weight_word": "3e91a7b9",
+        "witness_id": "olmsmoother2-legacy-key-producer-common-core-v1"
+      },
+      "prefix": "S2_PRODUCER_F270_RETURN"
+    }
+  ],
+  "logs": [
+    {
+      "archive_path": "logs/afterfx_process_diagnostics.json",
+      "sha256": "84b61615da08ce5942f9d1319366c79863f06880218f11090a24c790f20cf1ac",
+      "size_bytes": 1496
+    },
+    {
+      "archive_path": "logs/afterfx_launch_wrapper.cmd",
+      "sha256": "1c6362a631c497588cb3023c75a91a16a035c28232d1b90a52eeda4ebbc32c79",
+      "size_bytes": 736
+    },
+    {
+      "archive_path": "logs/launched_queue.jsx",
+      "sha256": "ed970c9ea6ee184cd81d53be1eddbbaa3cdbdae64814ad9f60acb6e82e558366",
+      "size_bytes": 2838
+    },
+    {
+      "archive_path": "logs/queue_bootstrap.log",
+      "sha256": "1b19d25f3051915e034e75b3946bca6fd6e3b5d9d76d62faf2f007863f9e6844",
+      "size_bytes": 339
+    },
+    {
+      "archive_path": "logs/queue.log",
+      "sha256": "8e43b6d01123274a570d2bf1df835354fb8b410e6fd626de1912b8a14bccbea2",
+      "size_bytes": 488
+    },
+    {
+      "archive_path": "logs/combined_cdb_trace.txt",
+      "sha256": "1b247ba46c0018334902d4377ee39f7d08d828ec79a333f996dcc4d632e1ab13",
+      "size_bytes": 3850
+    },
+    {
+      "archive_path": "logs/runtime_identity.json",
+      "sha256": "11ce739db8b65aff353077beb6778529bd440856c362642feb9ff72790589ef7",
+      "size_bytes": 158
+    },
+    {
+      "archive_path": "logs/validation_status.json",
+      "sha256": "85952907f4bbdedcd5dc55bda11fa1592744e4196cb6a357e6f4d42340f7fc4a",
+      "size_bytes": 11342
+    },
+    {
+      "archive_path": "logs/plugin_cache_rescan.json",
+      "sha256": "6d93220d0fd2293d60a2360bb9635cc760fdd8c13894fbe04be151e5c67de0ca",
+      "size_bytes": 3175
+    },
+    {
+      "archive_path": "logs/ready_legacy_case_0012_gamma5_red_blue_current_aex.marker",
+      "sha256": "ac238560d1b5966b66bf353a3a9ef3bdc564ff5e1d65940e32c0f03db2a5d85a",
+      "size_bytes": 114
+    },
+    {
+      "archive_path": "logs/continue_legacy_case_0012_gamma5_red_blue_current_aex.marker",
+      "sha256": "37a8110651cc7b06e629725bd6116037a57412e2dfcae9c07ed9a9999dae1973",
+      "size_bytes": 10
+    },
+    {
+      "archive_path": "logs/collector_legacy_case_0012_gamma5_red_blue_current_aex_collector_trace.txt",
+      "sha256": "1b247ba46c0018334902d4377ee39f7d08d828ec79a333f996dcc4d632e1ab13",
+      "size_bytes": 3850
+    },
+    {
+      "archive_path": "logs/collector_legacy_case_0012_gamma5_red_blue_current_aex_collector_status.json",
+      "sha256": "85b7d9b7615d9427720ff9a0490aa76ce947034a3c0765a19db35f6fddba3571",
+      "size_bytes": 822
+    },
+    {
+      "archive_path": "logs/collector_legacy_case_0012_gamma5_red_blue_current_aex_collector.jsonl",
+      "sha256": "0b0888988dd818afb20dd7bb826a680e30a06f095d28067f4f416fe9000fc942",
+      "size_bytes": 1229
+    },
+    {
+      "archive_path": "logs/collector_config_legacy_case_0012_gamma5_red_blue_current_aex.json",
+      "sha256": "b8bf81b8a70ca102d6e477b740074a42fe0f45549c2ee862f988bd6ee4be7b4f",
+      "size_bytes": 1194
+    },
+    {
+      "archive_path": "logs/collector_stdout_legacy_case_0012_gamma5_red_blue_current_aex.txt",
+      "sha256": "41b29c456e6e276dcd03b1176b3aefa8b469953af5139b48ae77ddd5a4c17d6f",
+      "size_bytes": 121
+    },
+    {
+      "archive_path": "logs/collector_stderr_legacy_case_0012_gamma5_red_blue_current_aex.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "archive_path": "logs/ae_legacy_case_0012_gamma5_red_blue_current_aex.log",
+      "sha256": "d6ccece8dfd293e42c8e4d003565b512b5aa96f0a7c82c7be27cdeb3dfd26108",
+      "size_bytes": 3751
+    },
+    {
+      "archive_path": "logs/ae_result_legacy_case_0012_gamma5_red_blue_current_aex.json",
+      "sha256": "9446f0504c2fbb06fa4a8ece0427e2e4cdcc6c0a5288665fc642a8dc79d7345d",
+      "size_bytes": 1013
+    }
+  ],
+  "request_id": "olmsmoother2_legacy_key_producer_inprocess_20260716",
+  "run": {
+    "ae_pid": 59192,
+    "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "module_base": "0x7ffa99cd0000",
+    "project_bits_per_channel": 8,
+    "renderer": "Software",
+    "run_id": "smoother2-legacy-producer-inprocess-fcefd3f4d8b9410b93ede5dff562675b"
+  },
+  "schema_version": 1,
+  "status": "answered"
+}

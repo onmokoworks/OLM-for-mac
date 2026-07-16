@@ -1,0 +1,10 @@
+{
+  "source_zip_path": "refs/windows_returns/20260716/20260716_150500__RETURN__OLMSMOOTHER2_RDX_DESCRIPTOR_CORRECTED/RETURN_OLMSMOOTHER2_LEGACY_KEY_PRODUCER.zip",
+  "source_zip_name": "RETURN_OLMSMOOTHER2_LEGACY_KEY_PRODUCER.zip",
+  "source_zip_sha256": "8c031837ac6a2e95fec657cd444ca303ba3c8fb66bf2235f3c038b37e207efcf",
+  "source_zip_role": "provenance_attestation_only_not_clean_clone_reproof",
+  "source_member_name": "RETURN_OLMSMOOTHER2_LEGACY_KEY_PRODUCER.json",
+  "source_member_sha256": "c5f48309d9cc995f324ce7345caf8e993755db7d73e0745d36adbe252ed065bd",
+  "function_fixture_name": "FUN_18000e170.json",
+  "function_code_sha256": "90503de993f8891f72003eef21eff906ff9ed5cb0be4654295549a9aebc6378d"
+}
