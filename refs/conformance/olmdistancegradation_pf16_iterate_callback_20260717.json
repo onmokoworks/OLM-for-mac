@@ -1,0 +1,40 @@
+{
+  "schema": "olmdistancegradation.pf16-iterate-callback/1",
+  "date": "2026-07-17",
+  "status": "PASS",
+  "classification": "bounded same-loader actual-AEX reachability probe; no AE-exact claim",
+  "binary_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "functions": {
+    "wrapper": "0x181170ff0",
+    "iterate_driver": "0x181170280",
+    "fieldgen": "0x181174760",
+    "compose": "0x181170480"
+  },
+  "counts": {
+    "wrapper_entries": 1,
+    "fieldgen_entries": 2,
+    "compose_entries": 40,
+    "iterate_callback_invocations": 40,
+    "pixels": 40
+  },
+  "nested_continuation": {
+    "return_sentinel": "0x90001000",
+    "all_calls_returned_to_sentinel": true,
+    "outer_context_restored": true
+  },
+  "padding_canary": {
+    "observable": true,
+    "byte": "0xa5",
+    "preserved": true,
+    "sha256": "aabad596d9727bb3c8e76e49409af32b4457774332b964cbfde683b75e533360"
+  },
+  "output_active_sha256": "f7d3ab8608430f32b72351c8c681a36de5845e61bf1c83d34340abbbb9ad4d5f",
+  "compose_fixture": "degenerate PF16 compose branch; wrapper-produced fieldgen still runs before dispatch",
+  "claims": {
+    "actual_wrapper_to_fieldgen": true,
+    "actual_wrapper_to_compose": true,
+    "windows_claim": false,
+    "ae_exact_claim": false,
+    "final_pf16_equality_claim": false
+  }
+}

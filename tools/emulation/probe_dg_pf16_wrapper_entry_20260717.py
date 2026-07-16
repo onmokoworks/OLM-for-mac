@@ -93,7 +93,7 @@ def setup_handle_and_spbasic(ld: AexLoader) -> tuple[int, list[dict[str, object]
         rsp = loader.uc.reg_read(UC_X86_REG_RSP)
         stack = {hex(off): hex(u64(loader, rsp + off)) for off in range(0x20, 0x60, 8)}
         callback = u64(loader, rsp + 0x38)
-        compose_refcon = u64(loader, rsp + 0x30)
+        compose_refcon = u64(loader, rsp + 0x40)
         event = {
             "args": [hex(v) for v in args],
             "stack": stack,
@@ -290,25 +290,21 @@ def run() -> dict[str, object]:
     ld.write_bytes(param4 + 8, struct.pack("<Q", provider))
 
     stages: list[dict[str, object]] = []
-    compose_trace: list[str] = []
 
     def hook(label: str):
         def capture(loader: AexLoader, address: int, size: int):
             rsp = loader.uc.reg_read(UC_X86_REG_RSP)
-            stages.append({"stage": label, "address": hex(address), "size": size, "rsp": hex(rsp), "rcx": hex(loader.uc.reg_read(UC_X86_REG_RCX)), "rdx": hex(loader.uc.reg_read(UC_X86_REG_RDX)), "r8": hex(loader.uc.reg_read(UC_X86_REG_R8)), "r9": hex(loader.uc.reg_read(UC_X86_REG_R9)), "stack0": hex(u64(loader, rsp)), "stack28": hex(u64(loader, rsp + 0x28)), "stack30": hex(u64(loader, rsp + 0x30)), "stack_d0": hex(u64(loader, rsp + 0xd0))})
+            stages.append({"stage": label, "address": hex(address), "size": size, "rsp": hex(rsp), "rcx": hex(loader.uc.reg_read(UC_X86_REG_RCX)), "rdx": hex(loader.uc.reg_read(UC_X86_REG_RDX)), "r8": hex(loader.uc.reg_read(UC_X86_REG_R8)), "r9": hex(loader.uc.reg_read(UC_X86_REG_R9)), "stack28": hex(u64(loader, rsp + 0x28)), "stack30": hex(u64(loader, rsp + 0x30))})
         return capture
 
     ld.add_code_hook(FUN_WRAPPER, hook("FUN_181170ff0"))
     ld.add_code_hook(FUN_FIELDGEN, hook("FUN_181174760"))
     ld.add_code_hook(FUN_COMPOSE, hook("FUN_181170480"))
-    ld.add_code_hook(0x18117050B, hook("FUN_181170480_return"))
-    ld.add_code_hook(0x181170864, hook("FUN_181170480_ret"))
-    def trace_compose(uc, address, _size, _user_data):
-        compose_trace.append(hex(address))
-        del compose_trace[:-32]
-    ld.uc.hook_add(UC_HOOK_CODE, trace_compose, begin=FUN_COMPOSE, end=FUN_COMPOSE + 0x400)
     report: dict[str, object] = {
         "status": "blocked", "function": hex(FUN_WRAPPER),
+        "classification": "bounded same-loader actual-AEX reachability probe; no AE-exact claim",
+        "compose_fixture": "degenerate PF16 compose branch; wrapper-produced fieldgen still runs before dispatch",
+        "ae_exact_claim": False,
         "binary_sha256": sha256_file(ROOT / "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex"),
         "stages": stages, "callback_events": checkout_events,
         "callbacks_before_call": list(ld.callback_log),
@@ -379,7 +375,6 @@ def run() -> dict[str, object]:
             callback_args_at_fault=[hex(v) for v in ld._read_int_args(ld.uc, 4)],
             registers_at_fault={name: hex(ld.uc.reg_read(reg)) for name, reg in (("rax", UC_X86_REG_RAX), ("rbx", UC_X86_REG_RBX), ("rcx", UC_X86_REG_RCX), ("rdx", UC_X86_REG_RDX), ("r8", UC_X86_REG_R8), ("r9", UC_X86_REG_R9), ("rsp", UC_X86_REG_RSP))},
             return_address=hex(u64(ld, ld.uc.reg_read(UC_X86_REG_RSP) + 0x78)),
-            compose_trace=compose_trace,
         )
     report["callback_log"] = [{"label": label, "args": [hex(v) for v in args], "ret": ret} for label, args, ret in ld.callback_log]
     report["import_names"] = [entry.name for entry in ld.import_log]

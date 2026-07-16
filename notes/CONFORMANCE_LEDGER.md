@@ -43,13 +43,17 @@
 
 - 2026-07-17 `DistanceGradation PF16 wrapper/iterate boundary` (latest
   override): no correctness status is promoted. The actual AEX wrapper
-  `FUN_181170ff0` returns after reaching fieldgen twice and acquiring the host
-  PF Iterate16 suite. Its live callback pointer is `FUN_181170480` at
-  `RSP+0x38`, but the current host suite stub does not invoke it, so compose,
-  padding preservation, and final PF16 equality remain unproved. The next
-  Mac-only action is a continuation-safe PF Iterate16 callback driver.
+  `FUN_181170ff0` returns after reaching fieldgen twice and dispatching the
+  live `FUN_181170480` pointer through a continuation-safe host PF Iterate16
+  callback for all `8 * 5 = 40` pixels. Every nested compose returns to its
+  private sentinel, the outer context is restored, and the observable 12-byte
+  row padding canary is preserved. This proves wrapper-to-compose reachability
+  and host iteration in the bounded degenerate/use-background fixture, but not
+  final PF16 equality, Windows equivalence, or `AE exact`. The next Mac-only
+  action is to compare active output words with the matching Mac source oracle
+  and then broaden beyond the degenerate compose branch.
   Evidence:
-  `refs/conformance/olmdistancegradation_pf16_wrapper_entry_boundary_20260717.md`.
+  `refs/conformance/olmdistancegradation_pf16_iterate_callback_20260717.json`.
 
 - 2026-07-17 `RadialBlur reconstructed Zoom actual collapse` (latest
   override): no correctness status is promoted. A hash-pinned Mac Unicorn
