@@ -1,0 +1,3106 @@
+{
+  "schema": "olmdistancegradation.pf8-mask-stride-field-actual-aex/1",
+  "generated_at": "2026-07-16T14:22:14Z",
+  "status": "pass",
+  "scope": "PF8 alpha-to-mask, row-stride, and field helper only; not AE exact",
+  "identity": {
+    "aex": {
+      "actual": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+      "expected": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+    },
+    "mac_relevant_slice": {
+      "actual": "8eaa733d4a63e2fc04ff8766e9d11930c585d153965b117dd8326544c006f9d8",
+      "expected": "8eaa733d4a63e2fc04ff8766e9d11930c585d153965b117dd8326544c006f9d8"
+    },
+    "core_source": {
+      "actual": "001493f40681ddf1f8408b15b25c5795500f84423019df6e51c30741dffb71c9",
+      "expected": "001493f40681ddf1f8408b15b25c5795500f84423019df6e51c30741dffb71c9"
+    },
+    "core_header": {
+      "actual": "230b9861e855cdb24cc96253efdf17f264564f64fdbb2d9897f7be52078fc08e",
+      "expected": "230b9861e855cdb24cc96253efdf17f264564f64fdbb2d9897f7be52078fc08e"
+    }
+  },
+  "fixture": {
+    "width": 17,
+    "height": 11,
+    "pf8_layout": "A,R,G,B uint8",
+    "input_rowbytes": 80,
+    "mask_rowbytes": 20,
+    "output_rowbytes": 80,
+    "zero_alpha_xy": [
+      [
+        0,
+        5
+      ],
+      [
+        8,
+        5
+      ],
+      [
+        16,
+        5
+      ]
+    ],
+    "raw_threshold": 4,
+    "param8": 0,
+    "ds_scale": 0.5,
+    "effective_field_threshold": 4,
+    "sentinels": {
+      "input_padding": "0xa5",
+      "mask_padding": "0xb6",
+      "output_padding": "0xcd"
+    }
+  },
+  "compile_command": [
+    "clang++",
+    "-std=c++17",
+    "-O2",
+    "-dynamiclib",
+    "core/olmdistancegradation_fieldgen.cpp",
+    "tools/emulation/dg_pf8_mask_stride_field_harness_20260716.cpp",
+    "-o",
+    "<temporary>/libdg_pf8_mask_stride_field_20260716.dylib"
+  ],
+  "layout": {
+    "pf8_pixel_size": 4,
+    "visible_input_bytes_per_row": 68,
+    "input_padding_bytes_per_row": 12,
+    "visible_output_bytes_per_row": 68,
+    "output_padding_bytes_per_row": 12,
+    "layout_match": true,
+    "invalid_layouts_rejected": true
+  },
+  "mac_harness": {
+    "input_unchanged": true,
+    "input_padding": {
+      "byte_count": 132,
+      "sentinel": "0xa5",
+      "mutation_count": 0,
+      "sha256": "c9684485701dd34af6728ebd298e7d7c12caeb15ee97305661fa27ba7f4a9b66"
+    },
+    "mask_padding": {
+      "byte_count": 33,
+      "sentinel": "0xb6",
+      "mutation_count": 0,
+      "sha256": "7ea6f0d45ee88610578b7d41ce50677b39a05b64906d93382a8e2788c590c3da"
+    },
+    "output_padding": {
+      "byte_count": 132,
+      "sentinel": "0xcd",
+      "mutation_count": 0,
+      "sha256": "77760f907e6781fddc593a9327325fa1a0f89a2b183c79d85e1155c360fd2c88"
+    },
+    "input_padding_unchanged": true,
+    "mask_padding_unchanged": true,
+    "output_padding_unchanged": true,
+    "invalid_layout_returns": {
+      "short_input_rowbytes": 0,
+      "short_mask_rowbytes": 0,
+      "short_output_rowbytes": 0
+    },
+    "invalid_layouts_rejected": true,
+    "output_visible_changed": true,
+    "visible_output_sha256": "909f16c56983304b87087babfb76100c2cfd0561d8ca09c21bf8814f614d6ece"
+  },
+  "actual_aex_execution": {
+    "instructions": 6923,
+    "detour_hits": [
+      "resize",
+      "resize",
+      "normalize"
+    ],
+    "callback_counts": {
+      "PFHandle.dispose": 8,
+      "PFHandle.lock": 8,
+      "PFHandle.new": 8,
+      "PFHandle.unlock": 8,
+      "SPBasic.AcquireSuite": 16,
+      "SPBasic.ReleaseSuite": 16,
+      "cv::dist_transform": 1,
+      "cv::normalize_minmax": 1,
+      "cv::resize_same_shape": 2,
+      "cv::threshold": 1
+    },
+    "import_counts": {
+      "VCRUNTIME140.dll!memset": 16
+    },
+    "detours_match": true,
+    "callbacks_match": true,
+    "imports_match": true
+  },
+  "opencv_oracle": {
+    "version": "4.5.5",
+    "operations": [
+      "distanceTransform(DIST_L2,DIST_MASK_PRECISE)",
+      "threshold(THRESH_TRUNC,raw_threshold=4)",
+      "normalize(alpha=0,beta=1,NORM_MINMAX)"
+    ]
+  },
+  "visible_mask_u8": [
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  ],
+  "anchors": [
+    {
+      "xy": [
+        0,
+        5
+      ],
+      "mask_u8": 0,
+      "mac_f32": 0.0,
+      "mac_bits": "0x00000000",
+      "actual_aex_f32": 0.0,
+      "actual_aex_bits": "0x00000000",
+      "opencv455_f32": 0.0,
+      "opencv455_bits": "0x00000000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        1,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.25,
+      "mac_bits": "0x3e800000",
+      "actual_aex_f32": 0.25,
+      "actual_aex_bits": "0x3e800000",
+      "opencv455_f32": 0.25,
+      "opencv455_bits": "0x3e800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        2,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.5,
+      "mac_bits": "0x3f000000",
+      "actual_aex_f32": 0.5,
+      "actual_aex_bits": "0x3f000000",
+      "opencv455_f32": 0.5,
+      "opencv455_bits": "0x3f000000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        4,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        8,
+        5
+      ],
+      "mask_u8": 0,
+      "mac_f32": 0.0,
+      "mac_bits": "0x00000000",
+      "actual_aex_f32": 0.0,
+      "actual_aex_bits": "0x00000000",
+      "opencv455_f32": 0.0,
+      "opencv455_bits": "0x00000000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        12,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        16,
+        5
+      ],
+      "mask_u8": 0,
+      "mac_f32": 0.0,
+      "mac_bits": "0x00000000",
+      "actual_aex_f32": 0.0,
+      "actual_aex_bits": "0x00000000",
+      "opencv455_f32": 0.0,
+      "opencv455_bits": "0x00000000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        8,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    }
+  ],
+  "samples": [
+    {
+      "xy": [
+        0,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        1,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        2,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        3,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        4,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        5,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        6,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        7,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        8,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        9,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        10,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        11,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        12,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        13,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        14,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        15,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        16,
+        0
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        0,
+        1
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        1,
+        1
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        2,
+        1
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        3,
+        1
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        4,
+        1
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        5,
+        1
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        6,
+        1
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        7,
+        1
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        8,
+        1
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        9,
+        1
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        10,
+        1
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        11,
+        1
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        12,
+        1
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        13,
+        1
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        14,
+        1
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        15,
+        1
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        16,
+        1
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        0,
+        2
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.75,
+      "mac_bits": "0x3f400000",
+      "actual_aex_f32": 0.75,
+      "actual_aex_bits": "0x3f400000",
+      "opencv455_f32": 0.75,
+      "opencv455_bits": "0x3f400000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        1,
+        2
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7905694246292114,
+      "mac_bits": "0x3f4a62c2",
+      "actual_aex_f32": 0.7905694246292114,
+      "actual_aex_bits": "0x3f4a62c2",
+      "opencv455_f32": 0.7905694246292114,
+      "opencv455_bits": "0x3f4a62c2",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        2,
+        2
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.9013878107070923,
+      "mac_bits": "0x3f66c15a",
+      "actual_aex_f32": 0.9013878107070923,
+      "actual_aex_bits": "0x3f66c15a",
+      "opencv455_f32": 0.9013878107070923,
+      "opencv455_bits": "0x3f66c15a",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        3,
+        2
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        4,
+        2
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        5,
+        2
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        6,
+        2
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.9013878107070923,
+      "mac_bits": "0x3f66c15a",
+      "actual_aex_f32": 0.9013878107070923,
+      "actual_aex_bits": "0x3f66c15a",
+      "opencv455_f32": 0.9013878107070923,
+      "opencv455_bits": "0x3f66c15a",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        7,
+        2
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7905694246292114,
+      "mac_bits": "0x3f4a62c2",
+      "actual_aex_f32": 0.7905694246292114,
+      "actual_aex_bits": "0x3f4a62c2",
+      "opencv455_f32": 0.7905694246292114,
+      "opencv455_bits": "0x3f4a62c2",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        8,
+        2
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.75,
+      "mac_bits": "0x3f400000",
+      "actual_aex_f32": 0.75,
+      "actual_aex_bits": "0x3f400000",
+      "opencv455_f32": 0.75,
+      "opencv455_bits": "0x3f400000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        9,
+        2
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7905694246292114,
+      "mac_bits": "0x3f4a62c2",
+      "actual_aex_f32": 0.7905694246292114,
+      "actual_aex_bits": "0x3f4a62c2",
+      "opencv455_f32": 0.7905694246292114,
+      "opencv455_bits": "0x3f4a62c2",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        10,
+        2
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.9013878107070923,
+      "mac_bits": "0x3f66c15a",
+      "actual_aex_f32": 0.9013878107070923,
+      "actual_aex_bits": "0x3f66c15a",
+      "opencv455_f32": 0.9013878107070923,
+      "opencv455_bits": "0x3f66c15a",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        11,
+        2
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        12,
+        2
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        13,
+        2
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        14,
+        2
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.9013878107070923,
+      "mac_bits": "0x3f66c15a",
+      "actual_aex_f32": 0.9013878107070923,
+      "actual_aex_bits": "0x3f66c15a",
+      "opencv455_f32": 0.9013878107070923,
+      "opencv455_bits": "0x3f66c15a",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        15,
+        2
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7905694246292114,
+      "mac_bits": "0x3f4a62c2",
+      "actual_aex_f32": 0.7905694246292114,
+      "actual_aex_bits": "0x3f4a62c2",
+      "opencv455_f32": 0.7905694246292114,
+      "opencv455_bits": "0x3f4a62c2",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        16,
+        2
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.75,
+      "mac_bits": "0x3f400000",
+      "actual_aex_f32": 0.75,
+      "actual_aex_bits": "0x3f400000",
+      "opencv455_f32": 0.75,
+      "opencv455_bits": "0x3f400000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        0,
+        3
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.5,
+      "mac_bits": "0x3f000000",
+      "actual_aex_f32": 0.5,
+      "actual_aex_bits": "0x3f000000",
+      "opencv455_f32": 0.5,
+      "opencv455_bits": "0x3f000000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        1,
+        3
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.55901700258255,
+      "mac_bits": "0x3f0f1bbd",
+      "actual_aex_f32": 0.55901700258255,
+      "actual_aex_bits": "0x3f0f1bbd",
+      "opencv455_f32": 0.55901700258255,
+      "opencv455_bits": "0x3f0f1bbd",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        2,
+        3
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7071067690849304,
+      "mac_bits": "0x3f3504f3",
+      "actual_aex_f32": 0.7071067690849304,
+      "actual_aex_bits": "0x3f3504f3",
+      "opencv455_f32": 0.7071067690849304,
+      "opencv455_bits": "0x3f3504f3",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        3,
+        3
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.9013878107070923,
+      "mac_bits": "0x3f66c15a",
+      "actual_aex_f32": 0.9013878107070923,
+      "actual_aex_bits": "0x3f66c15a",
+      "opencv455_f32": 0.9013878107070923,
+      "opencv455_bits": "0x3f66c15a",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        4,
+        3
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        5,
+        3
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.9013878107070923,
+      "mac_bits": "0x3f66c15a",
+      "actual_aex_f32": 0.9013878107070923,
+      "actual_aex_bits": "0x3f66c15a",
+      "opencv455_f32": 0.9013878107070923,
+      "opencv455_bits": "0x3f66c15a",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        6,
+        3
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7071067690849304,
+      "mac_bits": "0x3f3504f3",
+      "actual_aex_f32": 0.7071067690849304,
+      "actual_aex_bits": "0x3f3504f3",
+      "opencv455_f32": 0.7071067690849304,
+      "opencv455_bits": "0x3f3504f3",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        7,
+        3
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.55901700258255,
+      "mac_bits": "0x3f0f1bbd",
+      "actual_aex_f32": 0.55901700258255,
+      "actual_aex_bits": "0x3f0f1bbd",
+      "opencv455_f32": 0.55901700258255,
+      "opencv455_bits": "0x3f0f1bbd",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        8,
+        3
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.5,
+      "mac_bits": "0x3f000000",
+      "actual_aex_f32": 0.5,
+      "actual_aex_bits": "0x3f000000",
+      "opencv455_f32": 0.5,
+      "opencv455_bits": "0x3f000000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        9,
+        3
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.55901700258255,
+      "mac_bits": "0x3f0f1bbd",
+      "actual_aex_f32": 0.55901700258255,
+      "actual_aex_bits": "0x3f0f1bbd",
+      "opencv455_f32": 0.55901700258255,
+      "opencv455_bits": "0x3f0f1bbd",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        10,
+        3
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7071067690849304,
+      "mac_bits": "0x3f3504f3",
+      "actual_aex_f32": 0.7071067690849304,
+      "actual_aex_bits": "0x3f3504f3",
+      "opencv455_f32": 0.7071067690849304,
+      "opencv455_bits": "0x3f3504f3",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        11,
+        3
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.9013878107070923,
+      "mac_bits": "0x3f66c15a",
+      "actual_aex_f32": 0.9013878107070923,
+      "actual_aex_bits": "0x3f66c15a",
+      "opencv455_f32": 0.9013878107070923,
+      "opencv455_bits": "0x3f66c15a",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        12,
+        3
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        13,
+        3
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.9013878107070923,
+      "mac_bits": "0x3f66c15a",
+      "actual_aex_f32": 0.9013878107070923,
+      "actual_aex_bits": "0x3f66c15a",
+      "opencv455_f32": 0.9013878107070923,
+      "opencv455_bits": "0x3f66c15a",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        14,
+        3
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7071067690849304,
+      "mac_bits": "0x3f3504f3",
+      "actual_aex_f32": 0.7071067690849304,
+      "actual_aex_bits": "0x3f3504f3",
+      "opencv455_f32": 0.7071067690849304,
+      "opencv455_bits": "0x3f3504f3",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        15,
+        3
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.55901700258255,
+      "mac_bits": "0x3f0f1bbd",
+      "actual_aex_f32": 0.55901700258255,
+      "actual_aex_bits": "0x3f0f1bbd",
+      "opencv455_f32": 0.55901700258255,
+      "opencv455_bits": "0x3f0f1bbd",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        16,
+        3
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.5,
+      "mac_bits": "0x3f000000",
+      "actual_aex_f32": 0.5,
+      "actual_aex_bits": "0x3f000000",
+      "opencv455_f32": 0.5,
+      "opencv455_bits": "0x3f000000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        0,
+        4
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.25,
+      "mac_bits": "0x3e800000",
+      "actual_aex_f32": 0.25,
+      "actual_aex_bits": "0x3e800000",
+      "opencv455_f32": 0.25,
+      "opencv455_bits": "0x3e800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        1,
+        4
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.3535533845424652,
+      "mac_bits": "0x3eb504f3",
+      "actual_aex_f32": 0.3535533845424652,
+      "actual_aex_bits": "0x3eb504f3",
+      "opencv455_f32": 0.3535533845424652,
+      "opencv455_bits": "0x3eb504f3",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        2,
+        4
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.55901700258255,
+      "mac_bits": "0x3f0f1bbd",
+      "actual_aex_f32": 0.55901700258255,
+      "actual_aex_bits": "0x3f0f1bbd",
+      "opencv455_f32": 0.55901700258255,
+      "opencv455_bits": "0x3f0f1bbd",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        3,
+        4
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7905694246292114,
+      "mac_bits": "0x3f4a62c2",
+      "actual_aex_f32": 0.7905694246292114,
+      "actual_aex_bits": "0x3f4a62c2",
+      "opencv455_f32": 0.7905694246292114,
+      "opencv455_bits": "0x3f4a62c2",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        4,
+        4
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        5,
+        4
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7905694246292114,
+      "mac_bits": "0x3f4a62c2",
+      "actual_aex_f32": 0.7905694246292114,
+      "actual_aex_bits": "0x3f4a62c2",
+      "opencv455_f32": 0.7905694246292114,
+      "opencv455_bits": "0x3f4a62c2",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        6,
+        4
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.55901700258255,
+      "mac_bits": "0x3f0f1bbd",
+      "actual_aex_f32": 0.55901700258255,
+      "actual_aex_bits": "0x3f0f1bbd",
+      "opencv455_f32": 0.55901700258255,
+      "opencv455_bits": "0x3f0f1bbd",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        7,
+        4
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.3535533845424652,
+      "mac_bits": "0x3eb504f3",
+      "actual_aex_f32": 0.3535533845424652,
+      "actual_aex_bits": "0x3eb504f3",
+      "opencv455_f32": 0.3535533845424652,
+      "opencv455_bits": "0x3eb504f3",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        8,
+        4
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.25,
+      "mac_bits": "0x3e800000",
+      "actual_aex_f32": 0.25,
+      "actual_aex_bits": "0x3e800000",
+      "opencv455_f32": 0.25,
+      "opencv455_bits": "0x3e800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        9,
+        4
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.3535533845424652,
+      "mac_bits": "0x3eb504f3",
+      "actual_aex_f32": 0.3535533845424652,
+      "actual_aex_bits": "0x3eb504f3",
+      "opencv455_f32": 0.3535533845424652,
+      "opencv455_bits": "0x3eb504f3",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        10,
+        4
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.55901700258255,
+      "mac_bits": "0x3f0f1bbd",
+      "actual_aex_f32": 0.55901700258255,
+      "actual_aex_bits": "0x3f0f1bbd",
+      "opencv455_f32": 0.55901700258255,
+      "opencv455_bits": "0x3f0f1bbd",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        11,
+        4
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7905694246292114,
+      "mac_bits": "0x3f4a62c2",
+      "actual_aex_f32": 0.7905694246292114,
+      "actual_aex_bits": "0x3f4a62c2",
+      "opencv455_f32": 0.7905694246292114,
+      "opencv455_bits": "0x3f4a62c2",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        12,
+        4
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        13,
+        4
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7905694246292114,
+      "mac_bits": "0x3f4a62c2",
+      "actual_aex_f32": 0.7905694246292114,
+      "actual_aex_bits": "0x3f4a62c2",
+      "opencv455_f32": 0.7905694246292114,
+      "opencv455_bits": "0x3f4a62c2",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        14,
+        4
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.55901700258255,
+      "mac_bits": "0x3f0f1bbd",
+      "actual_aex_f32": 0.55901700258255,
+      "actual_aex_bits": "0x3f0f1bbd",
+      "opencv455_f32": 0.55901700258255,
+      "opencv455_bits": "0x3f0f1bbd",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        15,
+        4
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.3535533845424652,
+      "mac_bits": "0x3eb504f3",
+      "actual_aex_f32": 0.3535533845424652,
+      "actual_aex_bits": "0x3eb504f3",
+      "opencv455_f32": 0.3535533845424652,
+      "opencv455_bits": "0x3eb504f3",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        16,
+        4
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.25,
+      "mac_bits": "0x3e800000",
+      "actual_aex_f32": 0.25,
+      "actual_aex_bits": "0x3e800000",
+      "opencv455_f32": 0.25,
+      "opencv455_bits": "0x3e800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        0,
+        5
+      ],
+      "mask_u8": 0,
+      "mac_f32": 0.0,
+      "mac_bits": "0x00000000",
+      "actual_aex_f32": 0.0,
+      "actual_aex_bits": "0x00000000",
+      "opencv455_f32": 0.0,
+      "opencv455_bits": "0x00000000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        1,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.25,
+      "mac_bits": "0x3e800000",
+      "actual_aex_f32": 0.25,
+      "actual_aex_bits": "0x3e800000",
+      "opencv455_f32": 0.25,
+      "opencv455_bits": "0x3e800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        2,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.5,
+      "mac_bits": "0x3f000000",
+      "actual_aex_f32": 0.5,
+      "actual_aex_bits": "0x3f000000",
+      "opencv455_f32": 0.5,
+      "opencv455_bits": "0x3f000000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        3,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.75,
+      "mac_bits": "0x3f400000",
+      "actual_aex_f32": 0.75,
+      "actual_aex_bits": "0x3f400000",
+      "opencv455_f32": 0.75,
+      "opencv455_bits": "0x3f400000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        4,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        5,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.75,
+      "mac_bits": "0x3f400000",
+      "actual_aex_f32": 0.75,
+      "actual_aex_bits": "0x3f400000",
+      "opencv455_f32": 0.75,
+      "opencv455_bits": "0x3f400000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        6,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.5,
+      "mac_bits": "0x3f000000",
+      "actual_aex_f32": 0.5,
+      "actual_aex_bits": "0x3f000000",
+      "opencv455_f32": 0.5,
+      "opencv455_bits": "0x3f000000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        7,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.25,
+      "mac_bits": "0x3e800000",
+      "actual_aex_f32": 0.25,
+      "actual_aex_bits": "0x3e800000",
+      "opencv455_f32": 0.25,
+      "opencv455_bits": "0x3e800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        8,
+        5
+      ],
+      "mask_u8": 0,
+      "mac_f32": 0.0,
+      "mac_bits": "0x00000000",
+      "actual_aex_f32": 0.0,
+      "actual_aex_bits": "0x00000000",
+      "opencv455_f32": 0.0,
+      "opencv455_bits": "0x00000000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        9,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.25,
+      "mac_bits": "0x3e800000",
+      "actual_aex_f32": 0.25,
+      "actual_aex_bits": "0x3e800000",
+      "opencv455_f32": 0.25,
+      "opencv455_bits": "0x3e800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        10,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.5,
+      "mac_bits": "0x3f000000",
+      "actual_aex_f32": 0.5,
+      "actual_aex_bits": "0x3f000000",
+      "opencv455_f32": 0.5,
+      "opencv455_bits": "0x3f000000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        11,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.75,
+      "mac_bits": "0x3f400000",
+      "actual_aex_f32": 0.75,
+      "actual_aex_bits": "0x3f400000",
+      "opencv455_f32": 0.75,
+      "opencv455_bits": "0x3f400000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        12,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        13,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.75,
+      "mac_bits": "0x3f400000",
+      "actual_aex_f32": 0.75,
+      "actual_aex_bits": "0x3f400000",
+      "opencv455_f32": 0.75,
+      "opencv455_bits": "0x3f400000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        14,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.5,
+      "mac_bits": "0x3f000000",
+      "actual_aex_f32": 0.5,
+      "actual_aex_bits": "0x3f000000",
+      "opencv455_f32": 0.5,
+      "opencv455_bits": "0x3f000000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        15,
+        5
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.25,
+      "mac_bits": "0x3e800000",
+      "actual_aex_f32": 0.25,
+      "actual_aex_bits": "0x3e800000",
+      "opencv455_f32": 0.25,
+      "opencv455_bits": "0x3e800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        16,
+        5
+      ],
+      "mask_u8": 0,
+      "mac_f32": 0.0,
+      "mac_bits": "0x00000000",
+      "actual_aex_f32": 0.0,
+      "actual_aex_bits": "0x00000000",
+      "opencv455_f32": 0.0,
+      "opencv455_bits": "0x00000000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        0,
+        6
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.25,
+      "mac_bits": "0x3e800000",
+      "actual_aex_f32": 0.25,
+      "actual_aex_bits": "0x3e800000",
+      "opencv455_f32": 0.25,
+      "opencv455_bits": "0x3e800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        1,
+        6
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.3535533845424652,
+      "mac_bits": "0x3eb504f3",
+      "actual_aex_f32": 0.3535533845424652,
+      "actual_aex_bits": "0x3eb504f3",
+      "opencv455_f32": 0.3535533845424652,
+      "opencv455_bits": "0x3eb504f3",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        2,
+        6
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.55901700258255,
+      "mac_bits": "0x3f0f1bbd",
+      "actual_aex_f32": 0.55901700258255,
+      "actual_aex_bits": "0x3f0f1bbd",
+      "opencv455_f32": 0.55901700258255,
+      "opencv455_bits": "0x3f0f1bbd",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        3,
+        6
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7905694246292114,
+      "mac_bits": "0x3f4a62c2",
+      "actual_aex_f32": 0.7905694246292114,
+      "actual_aex_bits": "0x3f4a62c2",
+      "opencv455_f32": 0.7905694246292114,
+      "opencv455_bits": "0x3f4a62c2",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        4,
+        6
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        5,
+        6
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7905694246292114,
+      "mac_bits": "0x3f4a62c2",
+      "actual_aex_f32": 0.7905694246292114,
+      "actual_aex_bits": "0x3f4a62c2",
+      "opencv455_f32": 0.7905694246292114,
+      "opencv455_bits": "0x3f4a62c2",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        6,
+        6
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.55901700258255,
+      "mac_bits": "0x3f0f1bbd",
+      "actual_aex_f32": 0.55901700258255,
+      "actual_aex_bits": "0x3f0f1bbd",
+      "opencv455_f32": 0.55901700258255,
+      "opencv455_bits": "0x3f0f1bbd",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        7,
+        6
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.3535533845424652,
+      "mac_bits": "0x3eb504f3",
+      "actual_aex_f32": 0.3535533845424652,
+      "actual_aex_bits": "0x3eb504f3",
+      "opencv455_f32": 0.3535533845424652,
+      "opencv455_bits": "0x3eb504f3",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        8,
+        6
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.25,
+      "mac_bits": "0x3e800000",
+      "actual_aex_f32": 0.25,
+      "actual_aex_bits": "0x3e800000",
+      "opencv455_f32": 0.25,
+      "opencv455_bits": "0x3e800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        9,
+        6
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.3535533845424652,
+      "mac_bits": "0x3eb504f3",
+      "actual_aex_f32": 0.3535533845424652,
+      "actual_aex_bits": "0x3eb504f3",
+      "opencv455_f32": 0.3535533845424652,
+      "opencv455_bits": "0x3eb504f3",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        10,
+        6
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.55901700258255,
+      "mac_bits": "0x3f0f1bbd",
+      "actual_aex_f32": 0.55901700258255,
+      "actual_aex_bits": "0x3f0f1bbd",
+      "opencv455_f32": 0.55901700258255,
+      "opencv455_bits": "0x3f0f1bbd",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        11,
+        6
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7905694246292114,
+      "mac_bits": "0x3f4a62c2",
+      "actual_aex_f32": 0.7905694246292114,
+      "actual_aex_bits": "0x3f4a62c2",
+      "opencv455_f32": 0.7905694246292114,
+      "opencv455_bits": "0x3f4a62c2",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        12,
+        6
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        13,
+        6
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7905694246292114,
+      "mac_bits": "0x3f4a62c2",
+      "actual_aex_f32": 0.7905694246292114,
+      "actual_aex_bits": "0x3f4a62c2",
+      "opencv455_f32": 0.7905694246292114,
+      "opencv455_bits": "0x3f4a62c2",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        14,
+        6
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.55901700258255,
+      "mac_bits": "0x3f0f1bbd",
+      "actual_aex_f32": 0.55901700258255,
+      "actual_aex_bits": "0x3f0f1bbd",
+      "opencv455_f32": 0.55901700258255,
+      "opencv455_bits": "0x3f0f1bbd",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        15,
+        6
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.3535533845424652,
+      "mac_bits": "0x3eb504f3",
+      "actual_aex_f32": 0.3535533845424652,
+      "actual_aex_bits": "0x3eb504f3",
+      "opencv455_f32": 0.3535533845424652,
+      "opencv455_bits": "0x3eb504f3",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        16,
+        6
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.25,
+      "mac_bits": "0x3e800000",
+      "actual_aex_f32": 0.25,
+      "actual_aex_bits": "0x3e800000",
+      "opencv455_f32": 0.25,
+      "opencv455_bits": "0x3e800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        0,
+        7
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.5,
+      "mac_bits": "0x3f000000",
+      "actual_aex_f32": 0.5,
+      "actual_aex_bits": "0x3f000000",
+      "opencv455_f32": 0.5,
+      "opencv455_bits": "0x3f000000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        1,
+        7
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.55901700258255,
+      "mac_bits": "0x3f0f1bbd",
+      "actual_aex_f32": 0.55901700258255,
+      "actual_aex_bits": "0x3f0f1bbd",
+      "opencv455_f32": 0.55901700258255,
+      "opencv455_bits": "0x3f0f1bbd",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        2,
+        7
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7071067690849304,
+      "mac_bits": "0x3f3504f3",
+      "actual_aex_f32": 0.7071067690849304,
+      "actual_aex_bits": "0x3f3504f3",
+      "opencv455_f32": 0.7071067690849304,
+      "opencv455_bits": "0x3f3504f3",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        3,
+        7
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.9013878107070923,
+      "mac_bits": "0x3f66c15a",
+      "actual_aex_f32": 0.9013878107070923,
+      "actual_aex_bits": "0x3f66c15a",
+      "opencv455_f32": 0.9013878107070923,
+      "opencv455_bits": "0x3f66c15a",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        4,
+        7
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        5,
+        7
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.9013878107070923,
+      "mac_bits": "0x3f66c15a",
+      "actual_aex_f32": 0.9013878107070923,
+      "actual_aex_bits": "0x3f66c15a",
+      "opencv455_f32": 0.9013878107070923,
+      "opencv455_bits": "0x3f66c15a",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        6,
+        7
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7071067690849304,
+      "mac_bits": "0x3f3504f3",
+      "actual_aex_f32": 0.7071067690849304,
+      "actual_aex_bits": "0x3f3504f3",
+      "opencv455_f32": 0.7071067690849304,
+      "opencv455_bits": "0x3f3504f3",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        7,
+        7
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.55901700258255,
+      "mac_bits": "0x3f0f1bbd",
+      "actual_aex_f32": 0.55901700258255,
+      "actual_aex_bits": "0x3f0f1bbd",
+      "opencv455_f32": 0.55901700258255,
+      "opencv455_bits": "0x3f0f1bbd",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        8,
+        7
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.5,
+      "mac_bits": "0x3f000000",
+      "actual_aex_f32": 0.5,
+      "actual_aex_bits": "0x3f000000",
+      "opencv455_f32": 0.5,
+      "opencv455_bits": "0x3f000000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        9,
+        7
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.55901700258255,
+      "mac_bits": "0x3f0f1bbd",
+      "actual_aex_f32": 0.55901700258255,
+      "actual_aex_bits": "0x3f0f1bbd",
+      "opencv455_f32": 0.55901700258255,
+      "opencv455_bits": "0x3f0f1bbd",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        10,
+        7
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7071067690849304,
+      "mac_bits": "0x3f3504f3",
+      "actual_aex_f32": 0.7071067690849304,
+      "actual_aex_bits": "0x3f3504f3",
+      "opencv455_f32": 0.7071067690849304,
+      "opencv455_bits": "0x3f3504f3",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        11,
+        7
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.9013878107070923,
+      "mac_bits": "0x3f66c15a",
+      "actual_aex_f32": 0.9013878107070923,
+      "actual_aex_bits": "0x3f66c15a",
+      "opencv455_f32": 0.9013878107070923,
+      "opencv455_bits": "0x3f66c15a",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        12,
+        7
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        13,
+        7
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.9013878107070923,
+      "mac_bits": "0x3f66c15a",
+      "actual_aex_f32": 0.9013878107070923,
+      "actual_aex_bits": "0x3f66c15a",
+      "opencv455_f32": 0.9013878107070923,
+      "opencv455_bits": "0x3f66c15a",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        14,
+        7
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7071067690849304,
+      "mac_bits": "0x3f3504f3",
+      "actual_aex_f32": 0.7071067690849304,
+      "actual_aex_bits": "0x3f3504f3",
+      "opencv455_f32": 0.7071067690849304,
+      "opencv455_bits": "0x3f3504f3",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        15,
+        7
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.55901700258255,
+      "mac_bits": "0x3f0f1bbd",
+      "actual_aex_f32": 0.55901700258255,
+      "actual_aex_bits": "0x3f0f1bbd",
+      "opencv455_f32": 0.55901700258255,
+      "opencv455_bits": "0x3f0f1bbd",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        16,
+        7
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.5,
+      "mac_bits": "0x3f000000",
+      "actual_aex_f32": 0.5,
+      "actual_aex_bits": "0x3f000000",
+      "opencv455_f32": 0.5,
+      "opencv455_bits": "0x3f000000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        0,
+        8
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.75,
+      "mac_bits": "0x3f400000",
+      "actual_aex_f32": 0.75,
+      "actual_aex_bits": "0x3f400000",
+      "opencv455_f32": 0.75,
+      "opencv455_bits": "0x3f400000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        1,
+        8
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7905694246292114,
+      "mac_bits": "0x3f4a62c2",
+      "actual_aex_f32": 0.7905694246292114,
+      "actual_aex_bits": "0x3f4a62c2",
+      "opencv455_f32": 0.7905694246292114,
+      "opencv455_bits": "0x3f4a62c2",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        2,
+        8
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.9013878107070923,
+      "mac_bits": "0x3f66c15a",
+      "actual_aex_f32": 0.9013878107070923,
+      "actual_aex_bits": "0x3f66c15a",
+      "opencv455_f32": 0.9013878107070923,
+      "opencv455_bits": "0x3f66c15a",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        3,
+        8
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        4,
+        8
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        5,
+        8
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        6,
+        8
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.9013878107070923,
+      "mac_bits": "0x3f66c15a",
+      "actual_aex_f32": 0.9013878107070923,
+      "actual_aex_bits": "0x3f66c15a",
+      "opencv455_f32": 0.9013878107070923,
+      "opencv455_bits": "0x3f66c15a",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        7,
+        8
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7905694246292114,
+      "mac_bits": "0x3f4a62c2",
+      "actual_aex_f32": 0.7905694246292114,
+      "actual_aex_bits": "0x3f4a62c2",
+      "opencv455_f32": 0.7905694246292114,
+      "opencv455_bits": "0x3f4a62c2",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        8,
+        8
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.75,
+      "mac_bits": "0x3f400000",
+      "actual_aex_f32": 0.75,
+      "actual_aex_bits": "0x3f400000",
+      "opencv455_f32": 0.75,
+      "opencv455_bits": "0x3f400000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        9,
+        8
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7905694246292114,
+      "mac_bits": "0x3f4a62c2",
+      "actual_aex_f32": 0.7905694246292114,
+      "actual_aex_bits": "0x3f4a62c2",
+      "opencv455_f32": 0.7905694246292114,
+      "opencv455_bits": "0x3f4a62c2",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        10,
+        8
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.9013878107070923,
+      "mac_bits": "0x3f66c15a",
+      "actual_aex_f32": 0.9013878107070923,
+      "actual_aex_bits": "0x3f66c15a",
+      "opencv455_f32": 0.9013878107070923,
+      "opencv455_bits": "0x3f66c15a",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        11,
+        8
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        12,
+        8
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        13,
+        8
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        14,
+        8
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.9013878107070923,
+      "mac_bits": "0x3f66c15a",
+      "actual_aex_f32": 0.9013878107070923,
+      "actual_aex_bits": "0x3f66c15a",
+      "opencv455_f32": 0.9013878107070923,
+      "opencv455_bits": "0x3f66c15a",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        15,
+        8
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.7905694246292114,
+      "mac_bits": "0x3f4a62c2",
+      "actual_aex_f32": 0.7905694246292114,
+      "actual_aex_bits": "0x3f4a62c2",
+      "opencv455_f32": 0.7905694246292114,
+      "opencv455_bits": "0x3f4a62c2",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        16,
+        8
+      ],
+      "mask_u8": 1,
+      "mac_f32": 0.75,
+      "mac_bits": "0x3f400000",
+      "actual_aex_f32": 0.75,
+      "actual_aex_bits": "0x3f400000",
+      "opencv455_f32": 0.75,
+      "opencv455_bits": "0x3f400000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        0,
+        9
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        1,
+        9
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        2,
+        9
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        3,
+        9
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        4,
+        9
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        5,
+        9
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        6,
+        9
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        7,
+        9
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        8,
+        9
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        9,
+        9
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        10,
+        9
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        11,
+        9
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        12,
+        9
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        13,
+        9
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        14,
+        9
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        15,
+        9
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        16,
+        9
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        0,
+        10
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        1,
+        10
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        2,
+        10
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        3,
+        10
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        4,
+        10
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        5,
+        10
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        6,
+        10
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        7,
+        10
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        8,
+        10
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        9,
+        10
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        10,
+        10
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        11,
+        10
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        12,
+        10
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        13,
+        10
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        14,
+        10
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        15,
+        10
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    },
+    {
+      "xy": [
+        16,
+        10
+      ],
+      "mask_u8": 1,
+      "mac_f32": 1.0,
+      "mac_bits": "0x3f800000",
+      "actual_aex_f32": 1.0,
+      "actual_aex_bits": "0x3f800000",
+      "opencv455_f32": 1.0,
+      "opencv455_bits": "0x3f800000",
+      "three_way_exact": true
+    }
+  ],
+  "comparison": {
+    "sample_count": 187,
+    "mac_actual_aex_f32_exact": 187,
+    "mac_opencv455_f32_exact": 187,
+    "actual_aex_opencv455_f32_exact": 187
+  },
+  "guards": {
+    "identity_match": true,
+    "layout_match": true,
+    "invalid_layouts_rejected": true,
+    "mask_match": true,
+    "detours_match": true,
+    "callbacks_match": true,
+    "imports_match": true,
+    "input_unchanged": true,
+    "input_padding_unchanged": true,
+    "mask_padding_unchanged": true,
+    "output_padding_unchanged": true,
+    "output_not_identity_sentinel": true,
+    "all_187_fields_exact": true
+  }
+}

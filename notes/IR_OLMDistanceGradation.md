@@ -44,6 +44,15 @@
   `project.bits_per_channel` is absent. The canonical 8bpc batch explicitly
   logs `bits_per_channel 8 source=comp.bpc`; the current plug-in is `0/29`
   exact. This supersedes using the unbound 2026-06-19 output as current status.
+- 2026-07-16 PF8 integration boundary:
+  `refs/conformance/olmdistancegradation_pf8_mask_stride_field_actual_aex_20260716.md`
+  source-links the current portable field core behind a padded PF8
+  alpha-to-mask mirror. Its `17x11` field is float32-word exact at `187/187`
+  samples against both the hash-pinned actual-AEX helper and OpenCV 4.5.5;
+  input, mask, and output padding remain untouched and invalid row layouts are
+  rejected. This is not the complete `RenderBits` path and not AE exact. It
+  narrows the unresolved PF8 integration lane to host-world/resize staging
+  between the grounded mask/field and compose/store boundaries.
 
 ## Source Evidence
 
@@ -63,6 +72,7 @@
 | 16bpc and float compose use sibling iterate callbacks. | `FUN_181170280` requests `PF iterate16 Suite` and passes `FUN_181170480`; float path stores callback `FUN_181170c90`. | binary-grounded |
 | OpenCV `NORM_MINMAX` field normalization uses one float32 reciprocal scale followed by multiplication; it is not per-element division by the maximum. | Actual-AEX fieldgen fixtures plus the OpenCV 4.5.5 sidecar and `refs/conformance/olmdistancegradation_opencv_pf16_boundary_20260711.md`. | binary-grounded / independently reproduced |
 | Hash-pinned direct `FUN_181174760` execution matches the current portable field core at all `187/187` float32 samples for a bounded `param8=0`, raw-threshold `4`, `ds_scale=1` ramp; strict `param8=1`, threshold-zero anchors are `(0,1,1)`. An explicit `ds_scale=0.5` changes the current caller's effective threshold and therefore does not match the raw-threshold helper call. | `refs/conformance/olmdistancegradation_fieldgen_actual_aex_differential_20260716.md`; detour/callback/import/sample guards are recorded in the paired JSON. | binary-grounded helper parity; caller integration unresolved |
+| A padded PF8 source-linked mirror preserves alpha-mask semantics and rowbytes while producing `187/187` float32 field words identical to the hash-pinned actual-AEX helper and OpenCV 4.5.5. Input/mask/output padding is unchanged and undersized layouts fail closed. | `refs/conformance/olmdistancegradation_pf8_mask_stride_field_actual_aex_20260716.md` and paired JSON. | binary-grounded mask/stride/field boundary; full RenderBits/AE host path unresolved |
 | All nine render-family callsites load the raw threshold directly from config `+0xb8/+0xbc` into `R9D` before `FUN_181174760`; scaled width/height are separate stack arguments. The Mac caller now mirrors this and keeps downsample scale out of the threshold helper. | `disasm/DistanceGradation.aex.asm.txt` callsites and `refs/conformance/olmdistancegradation_raw_threshold_contract_20260716.md`. | binary-grounded / implemented / AE validation pending |
 | Before `FUN_181170480` consumes the 16bpc field world, OpenCV converts the normalized float field to PF16 with round-to-nearest-even. Focused scaled values `22891.5`, `29500.5`, `4408.5009765625`, `1.5`, `2.5`, `3.5` become `22892`, `29500`, `4409`, `2`, `2`, `4`. | OpenCV 4.5.5 sidecar `CV_16U` conversion, actual-AEX field values, Mac AE `case_0010/0011` exact result, and the focused core regression. | binary-grounded + AE-host-validated |
 | 16bpc compose scales by `32768.0`, reads pixels with `1/32768`, and appears to write via `CVTTSS2SI`. This is a binary fact, but it is not yet adopted as the Mac output rule. | `FUN_181170480` uses `DAT_181504a80 = 1/32768`, `DAT_181504ac4 = 32768`, then `CVTTSS2SI` before storing 16-bit ARGB words. A 2026-06-26 Mac AE experiment that globally switched the port to truncation kept the exact count flat and worsened several 16bpc residuals, so the current port keeps round-to-nearest while source/field packing is unresolved. | binary-grounded / implementation-rejected-for-now |
