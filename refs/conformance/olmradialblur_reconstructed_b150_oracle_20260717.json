@@ -1,0 +1,789 @@
+{
+  "claim_boundary": "bounded reconstructed-state B150 equivalence only; no natural prefill, Windows, or AE-exact claim",
+  "classification": "bounded-reconstructed-b150-equivalence-proven",
+  "comparison": {
+    "all_six_raw_words_match": true,
+    "comparisons": [
+      {
+        "cell": [
+          1047,
+          1095
+        ],
+        "checks": {
+          "input_seed_words_equal": true,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        "expected": {
+          "rgba_f32": [
+            0.25,
+            0.5,
+            0.75,
+            1.0
+          ],
+          "rgba_f32_words": [
+            "0x3e800000",
+            "0x3f000000",
+            "0x3f400000",
+            "0x3f800000"
+          ],
+          "scalar_f32": [
+            1.0
+          ],
+          "scalar_f32_words": [
+            "0x3f800000"
+          ]
+        },
+        "observed": {
+          "rgba": {
+            "f32": [
+              0.25,
+              0.5,
+              0.75,
+              1.0
+            ],
+            "f32_words": [
+              "0x3e800000",
+              "0x3f000000",
+              "0x3f400000",
+              "0x3f800000"
+            ]
+          },
+          "scalar": {
+            "f32": [
+              1.0
+            ],
+            "f32_words": [
+              "0x3f800000"
+            ]
+          }
+        },
+        "status": "match"
+      },
+      {
+        "cell": [
+          1047,
+          1096
+        ],
+        "checks": {
+          "input_seed_words_equal": true,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        "expected": {
+          "rgba_f32": [
+            0.25,
+            0.125,
+            0.0625,
+            0.5
+          ],
+          "rgba_f32_words": [
+            "0x3e800000",
+            "0x3e000000",
+            "0x3d800000",
+            "0x3f000000"
+          ],
+          "scalar_f32": [
+            0.5
+          ],
+          "scalar_f32_words": [
+            "0x3f000000"
+          ]
+        },
+        "observed": {
+          "rgba": {
+            "f32": [
+              0.25,
+              0.125,
+              0.0625,
+              0.5
+            ],
+            "f32_words": [
+              "0x3e800000",
+              "0x3e000000",
+              "0x3d800000",
+              "0x3f000000"
+            ]
+          },
+          "scalar": {
+            "f32": [
+              0.5
+            ],
+            "f32_words": [
+              "0x3f000000"
+            ]
+          }
+        },
+        "status": "match"
+      },
+      {
+        "cell": [
+          1048,
+          1095
+        ],
+        "checks": {
+          "input_seed_words_equal": true,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        "expected": {
+          "rgba_f32": [
+            0.5625,
+            0.09375,
+            0.1875,
+            0.75
+          ],
+          "rgba_f32_words": [
+            "0x3f100000",
+            "0x3dc00000",
+            "0x3e400000",
+            "0x3f400000"
+          ],
+          "scalar_f32": [
+            0.75
+          ],
+          "scalar_f32_words": [
+            "0x3f400000"
+          ]
+        },
+        "observed": {
+          "rgba": {
+            "f32": [
+              0.5625,
+              0.09375,
+              0.1875,
+              0.75
+            ],
+            "f32_words": [
+              "0x3f100000",
+              "0x3dc00000",
+              "0x3e400000",
+              "0x3f400000"
+            ]
+          },
+          "scalar": {
+            "f32": [
+              0.75
+            ],
+            "f32_words": [
+              "0x3f400000"
+            ]
+          }
+        },
+        "status": "match"
+      },
+      {
+        "cell": [
+          1048,
+          1096
+        ],
+        "checks": {
+          "input_seed_words_equal": true,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        "expected": {
+          "rgba_f32": [
+            0.25,
+            0.125,
+            0.0625,
+            0.25
+          ],
+          "rgba_f32_words": [
+            "0x3e800000",
+            "0x3e000000",
+            "0x3d800000",
+            "0x3e800000"
+          ],
+          "scalar_f32": [
+            0.25
+          ],
+          "scalar_f32_words": [
+            "0x3e800000"
+          ]
+        },
+        "observed": {
+          "rgba": {
+            "f32": [
+              0.25,
+              0.125,
+              0.0625,
+              0.25
+            ],
+            "f32_words": [
+              "0x3e800000",
+              "0x3e000000",
+              "0x3d800000",
+              "0x3e800000"
+            ]
+          },
+          "scalar": {
+            "f32": [
+              0.25
+            ],
+            "f32_words": [
+              "0x3e800000"
+            ]
+          }
+        },
+        "status": "match"
+      },
+      {
+        "cell": [
+          1047,
+          1094
+        ],
+        "checks": {
+          "input_seed_words_equal": true,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        "expected": {
+          "rgba_f32": [
+            0.109375,
+            0.21875,
+            0.328125,
+            0.875
+          ],
+          "rgba_f32_words": [
+            "0x3de00000",
+            "0x3e600000",
+            "0x3ea80000",
+            "0x3f600000"
+          ],
+          "scalar_f32": [
+            0.875
+          ],
+          "scalar_f32_words": [
+            "0x3f600000"
+          ]
+        },
+        "observed": {
+          "rgba": {
+            "f32": [
+              0.109375,
+              0.21875,
+              0.328125,
+              0.875
+            ],
+            "f32_words": [
+              "0x3de00000",
+              "0x3e600000",
+              "0x3ea80000",
+              "0x3f600000"
+            ]
+          },
+          "scalar": {
+            "f32": [
+              0.875
+            ],
+            "f32_words": [
+              "0x3f600000"
+            ]
+          }
+        },
+        "status": "match"
+      },
+      {
+        "cell": [
+          1048,
+          1094
+        ],
+        "checks": {
+          "input_seed_words_equal": true,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        "expected": {
+          "rgba_f32": [
+            0.234375,
+            0.390625,
+            0.15625,
+            0.625
+          ],
+          "rgba_f32_words": [
+            "0x3e700000",
+            "0x3ec80000",
+            "0x3e200000",
+            "0x3f200000"
+          ],
+          "scalar_f32": [
+            0.625
+          ],
+          "scalar_f32_words": [
+            "0x3f200000"
+          ]
+        },
+        "observed": {
+          "rgba": {
+            "f32": [
+              0.234375,
+              0.390625,
+              0.15625,
+              0.625
+            ],
+            "f32_words": [
+              "0x3e700000",
+              "0x3ec80000",
+              "0x3e200000",
+              "0x3f200000"
+            ]
+          },
+          "scalar": {
+            "f32": [
+              0.625
+            ],
+            "f32_words": [
+              "0x3f200000"
+            ]
+          }
+        },
+        "status": "match"
+      }
+    ],
+    "first_divergence": null
+  },
+  "gates": {
+    "all_six_raw_words_match": true,
+    "exact_abi": true,
+    "one_entry_one_return": true,
+    "pinned_hash": true,
+    "spans_zero_for_oracle": true
+  },
+  "kind": "olmradialblur_reconstructed_b150_oracle_20260717",
+  "observed_b150": {
+    "abi": {
+      "context": 536870912,
+      "output_rgba": 564682688,
+      "output_scalar": 583212224,
+      "raw_float32_input_rgba_rdx": 536888384,
+      "return_address": 2415919104,
+      "row_end": 1049,
+      "row_limit": 1049,
+      "row_start": 1047,
+      "scale_r8": 555417920,
+      "source_alpha_r9": 560050304,
+      "width": 1104
+    },
+    "context_fields": {
+      "gaussian_table_pointer_plus_0x3ee0": 0,
+      "gaussian_table_pointer_plus_0x4070": 0,
+      "span_work_plus_0x4200": 0,
+      "span_work_plus_0x4204": 0
+    },
+    "input_cells": {
+      "1047,1094": {
+        "rgba": {
+          "f32": [
+            0.125,
+            0.25,
+            0.375,
+            0.875
+          ],
+          "f32_words": [
+            "0x3e000000",
+            "0x3e800000",
+            "0x3ec00000",
+            "0x3f600000"
+          ]
+        },
+        "source_alpha": {
+          "f32": [
+            1.0
+          ],
+          "f32_words": [
+            "0x3f800000"
+          ]
+        }
+      },
+      "1047,1095": {
+        "rgba": {
+          "f32": [
+            0.25,
+            0.5,
+            0.75,
+            1.0
+          ],
+          "f32_words": [
+            "0x3e800000",
+            "0x3f000000",
+            "0x3f400000",
+            "0x3f800000"
+          ]
+        },
+        "source_alpha": {
+          "f32": [
+            1.0
+          ],
+          "f32_words": [
+            "0x3f800000"
+          ]
+        }
+      },
+      "1047,1096": {
+        "rgba": {
+          "f32": [
+            0.5,
+            0.25,
+            0.125,
+            0.5
+          ],
+          "f32_words": [
+            "0x3f000000",
+            "0x3e800000",
+            "0x3e000000",
+            "0x3f000000"
+          ]
+        },
+        "source_alpha": {
+          "f32": [
+            1.0
+          ],
+          "f32_words": [
+            "0x3f800000"
+          ]
+        }
+      },
+      "1048,1094": {
+        "rgba": {
+          "f32": [
+            0.375,
+            0.625,
+            0.25,
+            0.625
+          ],
+          "f32_words": [
+            "0x3ec00000",
+            "0x3f200000",
+            "0x3e800000",
+            "0x3f200000"
+          ]
+        },
+        "source_alpha": {
+          "f32": [
+            1.0
+          ],
+          "f32_words": [
+            "0x3f800000"
+          ]
+        }
+      },
+      "1048,1095": {
+        "rgba": {
+          "f32": [
+            0.75,
+            0.125,
+            0.25,
+            0.75
+          ],
+          "f32_words": [
+            "0x3f400000",
+            "0x3e000000",
+            "0x3e800000",
+            "0x3f400000"
+          ]
+        },
+        "source_alpha": {
+          "f32": [
+            1.0
+          ],
+          "f32_words": [
+            "0x3f800000"
+          ]
+        }
+      },
+      "1048,1096": {
+        "rgba": {
+          "f32": [
+            1.0,
+            0.5,
+            0.25,
+            0.25
+          ],
+          "f32_words": [
+            "0x3f800000",
+            "0x3f000000",
+            "0x3e800000",
+            "0x3e800000"
+          ]
+        },
+        "source_alpha": {
+          "f32": [
+            1.0
+          ],
+          "f32_words": [
+            "0x3f800000"
+          ]
+        }
+      }
+    },
+    "output_cells": {
+      "1047,1094": {
+        "rgba": {
+          "f32": [
+            0.109375,
+            0.21875,
+            0.328125,
+            0.875
+          ],
+          "f32_words": [
+            "0x3de00000",
+            "0x3e600000",
+            "0x3ea80000",
+            "0x3f600000"
+          ]
+        },
+        "scalar": {
+          "f32": [
+            0.875
+          ],
+          "f32_words": [
+            "0x3f600000"
+          ]
+        }
+      },
+      "1047,1095": {
+        "rgba": {
+          "f32": [
+            0.25,
+            0.5,
+            0.75,
+            1.0
+          ],
+          "f32_words": [
+            "0x3e800000",
+            "0x3f000000",
+            "0x3f400000",
+            "0x3f800000"
+          ]
+        },
+        "scalar": {
+          "f32": [
+            1.0
+          ],
+          "f32_words": [
+            "0x3f800000"
+          ]
+        }
+      },
+      "1047,1096": {
+        "rgba": {
+          "f32": [
+            0.25,
+            0.125,
+            0.0625,
+            0.5
+          ],
+          "f32_words": [
+            "0x3e800000",
+            "0x3e000000",
+            "0x3d800000",
+            "0x3f000000"
+          ]
+        },
+        "scalar": {
+          "f32": [
+            0.5
+          ],
+          "f32_words": [
+            "0x3f000000"
+          ]
+        }
+      },
+      "1048,1094": {
+        "rgba": {
+          "f32": [
+            0.234375,
+            0.390625,
+            0.15625,
+            0.625
+          ],
+          "f32_words": [
+            "0x3e700000",
+            "0x3ec80000",
+            "0x3e200000",
+            "0x3f200000"
+          ]
+        },
+        "scalar": {
+          "f32": [
+            0.625
+          ],
+          "f32_words": [
+            "0x3f200000"
+          ]
+        }
+      },
+      "1048,1095": {
+        "rgba": {
+          "f32": [
+            0.5625,
+            0.09375,
+            0.1875,
+            0.75
+          ],
+          "f32_words": [
+            "0x3f100000",
+            "0x3dc00000",
+            "0x3e400000",
+            "0x3f400000"
+          ]
+        },
+        "scalar": {
+          "f32": [
+            0.75
+          ],
+          "f32_words": [
+            "0x3f400000"
+          ]
+        }
+      },
+      "1048,1096": {
+        "rgba": {
+          "f32": [
+            0.25,
+            0.125,
+            0.0625,
+            0.25
+          ],
+          "f32_words": [
+            "0x3e800000",
+            "0x3e000000",
+            "0x3d800000",
+            "0x3e800000"
+          ]
+        },
+        "scalar": {
+          "f32": [
+            0.25
+          ],
+          "f32_words": [
+            "0x3e800000"
+          ]
+        }
+      }
+    },
+    "output_plane_sha256": {
+      "rgba": "58ce5872a61e5e5c6834572c5bf4499af2684bd0b1aa92fca74435e4e963349d",
+      "scalar": "725bebff55b063058ed685d5f38b4257838fc8157e2530743aa62fa1b25fddb2"
+    },
+    "scale_cells": {
+      "1047,1094": {
+        "f32": [
+          1.0
+        ],
+        "f32_words": [
+          "0x3f800000"
+        ]
+      },
+      "1047,1095": {
+        "f32": [
+          1.0
+        ],
+        "f32_words": [
+          "0x3f800000"
+        ]
+      },
+      "1047,1096": {
+        "f32": [
+          1.0
+        ],
+        "f32_words": [
+          "0x3f800000"
+        ]
+      },
+      "1048,1094": {
+        "f32": [
+          1.0
+        ],
+        "f32_words": [
+          "0x3f800000"
+        ]
+      },
+      "1048,1095": {
+        "f32": [
+          1.0
+        ],
+        "f32_words": [
+          "0x3f800000"
+        ]
+      },
+      "1048,1096": {
+        "f32": [
+          1.0
+        ],
+        "f32_words": [
+          "0x3f800000"
+        ]
+      }
+    }
+  },
+  "oracle": {
+    "current_mac_source": {
+      "f32_helpers_lines": [
+        36,
+        42,
+        48
+      ],
+      "path": "mac/OLMRadialBlur/OLMRadialBlur.cpp"
+    },
+    "decomp_reference": {
+      "lines": [
+        112,
+        117
+      ],
+      "path": "disasm/v1_analysis/21_recon_RadialBlur.md"
+    },
+    "kind": "minimal-zero-span-b150-spec",
+    "operations": [
+      "seed alpha and weight=1.0f",
+      "no Gaussian taps because span_work+0x4200/+0x4204 are zero",
+      "out_alpha=f32(alpha/1.0f)",
+      "out_rgb=f32(source_rgb*out_alpha)",
+      "scalar=f32(out_alpha)"
+    ],
+    "rounding": "each multiply/divide is explicitly rounded to float32; raw little-endian words compared",
+    "source_basis": "AEX FUN_18000B150 decomp/assembly loop and current Mac float32 helper convention"
+  },
+  "portable_equivalent": false,
+  "provenance": {
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "pinned_aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "seed_source": "independent duplicate of the six documented float32 seeds; not actual output"
+  },
+  "schema": 1,
+  "status": "pass",
+  "target": {
+    "cells": [
+      [
+        1047,
+        1095
+      ],
+      [
+        1047,
+        1096
+      ],
+      [
+        1048,
+        1095
+      ],
+      [
+        1048,
+        1096
+      ]
+    ],
+    "controls": [
+      [
+        1047,
+        1094
+      ],
+      [
+        1048,
+        1094
+      ]
+    ],
+    "row_end": 1049,
+    "row_start": 1047,
+    "width": 1104
+  }
+}

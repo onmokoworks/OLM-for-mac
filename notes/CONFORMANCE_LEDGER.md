@@ -1,5 +1,45 @@
 # OLM Conformance Ledger
 
+- 2026-07-17 `OLMRadialBlur reconstructed B150 population` (latest override):
+  no correctness status is promoted. A logical width-1104, rows-1047..1048
+  reconstructed fixture executes actual `FUN_18000B150` once and changes all
+  six seeded target/control output cells. An independent zero-span spec oracle,
+  with explicit per-operation float32 rounding, matches every RGBA and scalar
+  raw word. This closes only bounded zero-span B150 population math; natural
+  prefill, nonzero Gaussian spans/tables, Windows equivalence, and `AE exact`
+  remain open. Evidence:
+  `refs/conformance/olmradialblur_reconstructed_b150_oracle_20260717.json`.
+
+- 2026-07-17 `OLMKiraKira parameter-surface contract` (latest override): no
+  correctness status is promoted. Manifest-backed comparison proves that five
+  Windows custom Color Ramp rows are absent from the Mac schema and that the
+  top-level parameter order differs. The checked-in validator now requires
+  match-name identity, rejects index-only KiraKira rows, fails closed as
+  `unmappable` for the missing ramp rows, and accepts the 25 mapped plugin rows
+  plus two shared built-ins. This protects reference application but does not
+  implement the missing Mac ramp UI. Evidence:
+  `refs/conformance/olmkirakira_parameter_surface_contract_20260717.json`.
+
+- 2026-07-17 `OLMColorKey PF32 Mac SmartRender adapter` (latest override): no
+  correctness status is promoted. A source-included arm64 harness executes the
+  actual `EffectMain` SmartRender dispatch for a core case and an Edge Blur
+  case, verifies parameter checkout order and callback lifecycle, preserves
+  padded rowbytes, exercises the current zero-alpha/premultiply behavior, and
+  performs no `PF_Cmd_RENDER` fallback. This is a Mac source-adapter contract
+  proof, not a Windows comparison or 32bpc `AE exact`. Evidence:
+  `tools/emulation/test_olmcolorkey_mac_smartrender_adapter_20260717.py`.
+
+- 2026-07-17 `OLMKiraKira Mode2 typed-writer lineage gate` (latest override):
+  no correctness status is promoted. The actual Mode2 target mutates its float
+  RGBA output and the actual PF32 leaf records matching XMM inputs and ARGB
+  destination mutation in one Unicorn instance, but the value transfer between
+  them is Python-mediated. Static and runtime checks confirm the Mode2 target
+  returns without a typed-writer call edge, so the harness correctly exits `2`
+  with `BLOCKED` instead of promoting synthetic lineage. The next Mac-only
+  boundary is their common upper caller/orchestrator, not another direct leaf
+  invocation. Evidence:
+  `refs/conformance/olmkirakira_mode2_pointer_lineage_20260717.json`.
+
 - 2026-07-17 `OLMDirectionalBlur Mac SmartRender adapter` (latest override):
   no correctness status is promoted. A source-included arm64 adapter executes
   the production PF16 and PF32 SmartRender dispatch with padded rowbytes. Both

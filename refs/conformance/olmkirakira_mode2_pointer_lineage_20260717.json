@@ -1,0 +1,103 @@
+{
+  "ae_exact_claim": false,
+  "date": "2026-07-17",
+  "facts": [
+    "FACT: Mode2 executed and mutated its float RGBA output buffer in the actual checked-in AEX.",
+    "FACT: the pre-clamp hook recorded XMM0..XMM3 and the live RDI output pointer.",
+    "FACT: PF32 executed in the same Unicorn instance and recorded XMM0..XMM3, [RSP+0x28], and destination before/after bytes.",
+    "FACT: the same-run Python-mediated value transfer is not natural AEX pointer lineage."
+  ],
+  "inputs": {
+    "aex": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "dispatch": "FUN_18114f4a0 @ 0x18114f4a0",
+    "mode2_callsite": "0x18114fc28 via vtable +0x10",
+    "mode2_target": "FUN_18114ffd0 @ 0x18114ffd0",
+    "output_checkpoint": "0x181150022",
+    "pf32_callsites": [
+      "0x18114e5d7",
+      "0x18114e739"
+    ],
+    "pf32_writer": "FUN_181230c20 @ 0x181230c20",
+    "pre_clamp": "0x181150112"
+  },
+  "kind": "olmkirakira_mode2_pointer_lineage",
+  "limits": [
+    "No natural Mode2-to-typed-writer lineage was promoted.",
+    "No Windows execution, After Effects host binding, final pixel, or AE exactness claim.",
+    "No production source or ledger was changed."
+  ],
+  "lineage_gate": {
+    "mediated_same_run_control_is_rejected": true,
+    "natural_aex_lineage_reached": false,
+    "reason": "Mode2 target returns after float stores and has no call edge to PF32; the PF32 invocation is a control-only direct leaf call."
+  },
+  "platform_scope": "Mac-only Unicorn execution of the checked-in Windows PE AEX; no Windows/AE claim",
+  "runtime": {
+    "mode2": {
+      "instructions": 209,
+      "output_after": "0000003f0000403f0000803fcdcc4c3e",
+      "output_before": "a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5",
+      "output_mutated": true,
+      "output_pointer": "0x400000e0",
+      "output_rgba_f32_bits": [
+        "0x3f000000",
+        "0x3f400000",
+        "0x3f800000",
+        "0x3e4ccccd"
+      ],
+      "pre_clamp_trace": {
+        "pre_clamp_hits": 1,
+        "rdi_output_pointer": "0x400000e0",
+        "rip": "0x181150112",
+        "xmm0_to_xmm3_f32_bits": [
+          "0x00000000",
+          "0x3f800000",
+          "0x3f000000",
+          "0x00000000"
+        ]
+      },
+      "target": "0x18114ffd0"
+    },
+    "pf32_control_only": {
+      "input_rgba_f32_bits_from_mode2_output": [
+        "0x3f000000",
+        "0x3f400000",
+        "0x3f800000",
+        "0x3e4ccccd"
+      ],
+      "instructions": 6,
+      "natural_aex_lineage": false,
+      "same_run": true,
+      "target": "0x181230c20",
+      "trace": {
+        "destination_after": "cdcc4c3e0000003f0000403f0000803f",
+        "destination_before": "a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5",
+        "destination_mutated": true,
+        "destination_pointer_rsp_plus_0x28": "0x400000f0",
+        "rip": "0x181230c20",
+        "rsp": "0xf0fefc8",
+        "writer_entry_hits": 1,
+        "xmm0_to_xmm3_f32_bits": [
+          "0x3f000000",
+          "0x3f400000",
+          "0x3f800000",
+          "0x3e4ccccd"
+        ]
+      }
+    }
+  },
+  "schema": 1,
+  "static_checks": {
+    "dispatch_mode2_vtable_plus_0x10": true,
+    "mode2_callsite_anchor": true,
+    "mode2_float_rgba_output": true,
+    "mode2_has_no_writer_edge": true,
+    "mode2_output_and_preclamp": true,
+    "no_static_mode2_to_pf32_edge": true,
+    "pf32_writer_float_stores": true,
+    "pf32_writer_stack_destination": true,
+    "typed_pf32_callsites_present": true
+  },
+  "status": "BLOCKED"
+}
