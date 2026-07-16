@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-07-17",
+  "effect": "OLMDistanceGradation",
+  "scope": "Mac-only RenderBits host-world/resize staging",
+  "decision": "bounded-layout-differential-added",
+  "closed_boundaries": ["PF8 helper", "field", "compose"],
+  "contracts": {
+    "dimensions": "RenderBits takes width/height from output world; audit requires same-shape staging",
+    "rowbytes": "row address advances by each world rowbytes; active copy is width * typed pixel size",
+    "copy": "AEX decomp shows active-row copies of width*4, width*8, or width*16 bytes",
+    "depth_conversion": {
+      "PF_Pixel8": 255,
+      "PF_Pixel16": 32768,
+      "PF_PixelFloat": 1
+    },
+    "resize": "non-identity host-world resize remains unresolved and is rejected by the differential"
+  },
+  "evidence": [
+    "mac/OLMDistanceGradation/OLMDistanceGradation.cpp:850-900",
+    "decomp/DistanceGradation.aex.c.txt:FUN_181170870",
+    "decomp/DistanceGradation.aex.c.txt:FUN_181170480",
+    "decomp/DistanceGradation.aex.c.txt:FUN_181170c90",
+    "decomp/DistanceGradation.aex.c.txt:FUN_181171d00",
+    "disasm/DistanceGradation.aex.asm.txt:FUN_181174760"
+  ],
+  "runner": "tools/emulation/test_olmdistancegradation_renderbits_host_resize_staging_20260717.py",
+  "claims_not_made": ["AE exact", "Windows AEX equivalence", "recovered non-identity resize kernel"],
+  "production_or_ledger_modified": false,
+  "facts": [
+    "The bounded same-shape staging differential passes for 4/8/16-byte pixel layouts with padded source and destination rowbytes.",
+    "The six existing production RenderBits harness fixtures pass in the same run.",
+    "The current Mac RenderBits body takes width and height from the output world while addressing input and output rows with their respective rowbytes."
+  ],
+  "inferences": [
+    "A same-shape world contract is sufficient for the covered bounded fixtures.",
+    "Non-identity host-world resize, origin, and allocation behavior remain unresolved and are intentionally rejected by the differential."
+  ],
+  "status": "pass_bounded_layout_differential"
+}
