@@ -45,8 +45,8 @@ GlobalSetup(PF_InData *, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
 {
 	out_data->my_version = PF_VERSION(MAJOR_VERSION, MINOR_VERSION, BUG_VERSION,
 	                                  STAGE_VERSION, BUILD_VERSION);
-	out_data->out_flags  = 0x02000040;
-	out_data->out_flags2 = 0x08001400;
+	out_data->out_flags  = 0x06000040;
+	out_data->out_flags2 = 0x08001408;
 	return PF_Err_NONE;
 }
 

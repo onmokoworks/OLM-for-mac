@@ -32,11 +32,11 @@ typedef short int      int16;
 
 #include "OLMDistanceGradation_Strings.h"
 
-#define MAJOR_VERSION 2
-#define MINOR_VERSION 4
-#define BUG_VERSION   0
-#define STAGE_VERSION PF_Stage_BETA
-#define BUILD_VERSION 5
+#define MAJOR_VERSION 0
+#define MINOR_VERSION 8
+#define BUG_VERSION   2
+#define STAGE_VERSION PF_Stage_ALPHA
+#define BUILD_VERSION 0
 
 enum {
 	DG_INPUT = 0,

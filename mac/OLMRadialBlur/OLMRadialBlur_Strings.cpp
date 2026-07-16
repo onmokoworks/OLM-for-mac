@@ -20,7 +20,7 @@ TableString g_strs[StrID_NUMTYPES] = {
 	{ StrID_InnerOffsetMode_Param_Name, "Offset Mode" },
 	{ StrID_InnerOffset_Param_Name, "Offset" },
 	{ StrID_OuterOffsetMode_Param_Name, "Offset Mode" },
-	{ StrID_OffsetMode_Choices,    "Add|Max|Replace" },
+	{ StrID_OffsetMode_Choices,    "Add|Max|Override" },
 	{ StrID_OuterOffset_Param_Name, "Offset" },
 	{ StrID_InnerStrength_Param_Name, "Inner Strength" },
 	{ StrID_RepeatBorder_Param_Name, "Repeat Border" },
