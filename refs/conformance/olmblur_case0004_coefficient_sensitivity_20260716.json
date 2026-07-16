@@ -1,0 +1,1142 @@
+{
+  "schema": "olmblur.case0004.coefficient-sensitivity/1",
+  "status": "pass_bounded_ab",
+  "platform": "Mac-only native portable helper composition; no actual-AEX Layer B execution",
+  "identity": {
+    "caller_report": "refs/conformance/olmblur_case0004_staged_helper_replay_20260716.json",
+    "caller_report_sha256": "015bd884f5f7186a6923c74e95e009c4d9709151a5d537c976ee741f1754f878",
+    "mac_generation_report": "refs/conformance/olmblur_case0004_mac_generation_audit_20260716.json",
+    "mac_generation_report_sha256": "fa593a9bb2315d8bda3714fc8187683c0d1cf890559bf0ce45a348f57de6c155",
+    "input": {
+      "path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0004_before_effects.png",
+      "png_sha256": "930317e23068ea93bfd72961c2215e755e73cfd4ec784d97bccca223ed94e30a",
+      "pf16_sha256": "afd4269575102eda52e581cec8e77fe62f5f7e808e33cf64d6baf186c81b70aa"
+    }
+  },
+  "coefficient_discriminators": [
+    {
+      "iteration": 1,
+      "index": 57,
+      "index_base": 0,
+      "a_word": "0x3ecaa909",
+      "b_word": "0x3ecaa908",
+      "unsigned_word_delta": -1
+    },
+    {
+      "iteration": 1,
+      "index": 70,
+      "index_base": 0,
+      "a_word": "0x3e7d158f",
+      "b_word": "0x3e7d158e",
+      "unsigned_word_delta": -1
+    }
+  ],
+  "radius_sequence": [
+    125,
+    36,
+    10,
+    2
+  ],
+  "set_labels": {
+    "a": "declared host-callback coefficient set; not Windows truth",
+    "b": "current Mac production-generated coefficient set; not Windows truth"
+  },
+  "portable_compile_command": [
+    "c++",
+    "-std=c++17",
+    "-O2",
+    "-ffp-contract=off",
+    "-Icore",
+    "core/olmblur_helper.cpp",
+    "tools/emulation/probe_olmblur_case0004_portable_helper.cpp",
+    "-o",
+    "<temporary>/replay_olmblur_helper_fixture"
+  ],
+  "a": {
+    "initial_crop_dimensions": [
+      347,
+      347
+    ],
+    "stages": [
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 1,
+        "direction": "horizontal",
+        "radius": 125,
+        "input_dimensions": [
+          347,
+          347
+        ],
+        "output_dimensions": [
+          97,
+          347
+        ],
+        "retained_output_sha256": "b1b5c5689d69ef87db347340512cdf66376f72ac72237ae0b0df6fc61d88ddd3",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 1,
+        "direction": "vertical",
+        "radius": 125,
+        "input_dimensions": [
+          97,
+          347
+        ],
+        "output_dimensions": [
+          97,
+          97
+        ],
+        "retained_output_sha256": "06ef8bc33579623c77f89b4dd4821a3fbc5c1eb065dbb826b0789d99a07a53fe",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 2,
+        "direction": "horizontal",
+        "radius": 36,
+        "input_dimensions": [
+          97,
+          97
+        ],
+        "output_dimensions": [
+          25,
+          97
+        ],
+        "retained_output_sha256": "bf38dcc385d92d80df9d0374f37def1aa3bd67b7af4c308fc3c62dc3bd56e971",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 2,
+        "direction": "vertical",
+        "radius": 36,
+        "input_dimensions": [
+          25,
+          97
+        ],
+        "output_dimensions": [
+          25,
+          25
+        ],
+        "retained_output_sha256": "3b5508237fdda6d20d34dff9f716a8b07c52b9fa41cb32b255af377fe4202d73",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 3,
+        "direction": "horizontal",
+        "radius": 10,
+        "input_dimensions": [
+          25,
+          25
+        ],
+        "output_dimensions": [
+          5,
+          25
+        ],
+        "retained_output_sha256": "8378cd88dd3a62d07f90b78ba3f4773e662d5c6b82cca90e5e2a54282f1bb5a6",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 3,
+        "direction": "vertical",
+        "radius": 10,
+        "input_dimensions": [
+          5,
+          25
+        ],
+        "output_dimensions": [
+          5,
+          5
+        ],
+        "retained_output_sha256": "8e53bfc28ce4c9db2efc45bc6d6231e63b5bedf09b8f56af64423d274a1ec38e",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 4,
+        "direction": "horizontal",
+        "radius": 2,
+        "input_dimensions": [
+          5,
+          5
+        ],
+        "output_dimensions": [
+          1,
+          5
+        ],
+        "retained_output_sha256": "ee437b315c628fbc48026936dbc2f9fff4884d1bbc8191833a46ac4239d8eafa",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 4,
+        "direction": "vertical",
+        "radius": 2,
+        "input_dimensions": [
+          1,
+          5
+        ],
+        "output_dimensions": [
+          1,
+          1
+        ],
+        "retained_output_sha256": "dc323fe41745c7a6de2abc2ca3e992657d5757f3fa60ada529acbd012a93f223",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 1,
+        "direction": "horizontal",
+        "radius": 125,
+        "input_dimensions": [
+          347,
+          347
+        ],
+        "output_dimensions": [
+          97,
+          347
+        ],
+        "retained_output_sha256": "5f61b297264602328b204b56ca67b773a1784bf5a7f1802c4391a27e70f0b4e1",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 1,
+        "direction": "vertical",
+        "radius": 125,
+        "input_dimensions": [
+          97,
+          347
+        ],
+        "output_dimensions": [
+          97,
+          97
+        ],
+        "retained_output_sha256": "34140b254b6a6eba1cfc5978b6300b8b3a009eb6ae1b08f2d29036fc1c8bae08",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 2,
+        "direction": "horizontal",
+        "radius": 36,
+        "input_dimensions": [
+          97,
+          97
+        ],
+        "output_dimensions": [
+          25,
+          97
+        ],
+        "retained_output_sha256": "a952c7423dd9f6bb24592da07909bd3f435b096fbab9a214b3f97dc568929e15",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 2,
+        "direction": "vertical",
+        "radius": 36,
+        "input_dimensions": [
+          25,
+          97
+        ],
+        "output_dimensions": [
+          25,
+          25
+        ],
+        "retained_output_sha256": "9e8dc47e5ac92560e5cf31b3fe2f141fb5c6a68e4d9de99954f6ca12b5c98e43",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 3,
+        "direction": "horizontal",
+        "radius": 10,
+        "input_dimensions": [
+          25,
+          25
+        ],
+        "output_dimensions": [
+          5,
+          25
+        ],
+        "retained_output_sha256": "a236cc725c85fabc3254a4466c3838222f201bc7b94a273c6ecb5e7a95f457fa",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 3,
+        "direction": "vertical",
+        "radius": 10,
+        "input_dimensions": [
+          5,
+          25
+        ],
+        "output_dimensions": [
+          5,
+          5
+        ],
+        "retained_output_sha256": "1ee06b8e755286435a03d79566340ae9c0b1c74bea8debd19c829f19090a5e3d",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 4,
+        "direction": "horizontal",
+        "radius": 2,
+        "input_dimensions": [
+          5,
+          5
+        ],
+        "output_dimensions": [
+          1,
+          5
+        ],
+        "retained_output_sha256": "d40d5ec3d53c4483a8a77b5689847475c5842917ab25f6ec2979756ba93f1dbc",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 4,
+        "direction": "vertical",
+        "radius": 2,
+        "input_dimensions": [
+          1,
+          5
+        ],
+        "output_dimensions": [
+          1,
+          1
+        ],
+        "retained_output_sha256": "13d2d233645e11fe42bacfc97ff33df950648bf228319014a8347a85bc80f0ec",
+        "execution": "portable_only"
+      }
+    ],
+    "final_bits_hex": {
+      "(411,258)": [
+        "0x46ac2b00",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "(458,314)": [
+        "0x46ce0b00",
+        "0x00000000",
+        "0x00000000"
+      ]
+    }
+  },
+  "b": {
+    "initial_crop_dimensions": [
+      347,
+      347
+    ],
+    "stages": [
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 1,
+        "direction": "horizontal",
+        "radius": 125,
+        "input_dimensions": [
+          347,
+          347
+        ],
+        "output_dimensions": [
+          97,
+          347
+        ],
+        "retained_output_sha256": "02b3e3938e93835f372e8bae1b7940837b39efea59f71bcd51ccdd4b60c14980",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 1,
+        "direction": "vertical",
+        "radius": 125,
+        "input_dimensions": [
+          97,
+          347
+        ],
+        "output_dimensions": [
+          97,
+          97
+        ],
+        "retained_output_sha256": "6c8b40f3c088da11a87a92dc3183af87da7002b3042ad4b9e35a583eb2ad22b7",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 2,
+        "direction": "horizontal",
+        "radius": 36,
+        "input_dimensions": [
+          97,
+          97
+        ],
+        "output_dimensions": [
+          25,
+          97
+        ],
+        "retained_output_sha256": "9f100afb59f57c83948a4f760456486c1e6c929457484762d987da801cab7221",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 2,
+        "direction": "vertical",
+        "radius": 36,
+        "input_dimensions": [
+          25,
+          97
+        ],
+        "output_dimensions": [
+          25,
+          25
+        ],
+        "retained_output_sha256": "30f476760c507c2d1af2b4887d08f7789d9b927bb538d68dca46bc0c444b54e9",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 3,
+        "direction": "horizontal",
+        "radius": 10,
+        "input_dimensions": [
+          25,
+          25
+        ],
+        "output_dimensions": [
+          5,
+          25
+        ],
+        "retained_output_sha256": "425fe5548432270d8a0972698d21a39b7b75e050d5a407ec69d6bd218a6123c5",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 3,
+        "direction": "vertical",
+        "radius": 10,
+        "input_dimensions": [
+          5,
+          25
+        ],
+        "output_dimensions": [
+          5,
+          5
+        ],
+        "retained_output_sha256": "4cb27b069b24799aadeb8013cf2e9ebf1783b7e4958519d87d2f8d6bccf05aa8",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 4,
+        "direction": "horizontal",
+        "radius": 2,
+        "input_dimensions": [
+          5,
+          5
+        ],
+        "output_dimensions": [
+          1,
+          5
+        ],
+        "retained_output_sha256": "7511921d900e23142d0afb226e52f8f538a1966b134cd73a63ad2e40fab5e63f",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 4,
+        "direction": "vertical",
+        "radius": 2,
+        "input_dimensions": [
+          1,
+          5
+        ],
+        "output_dimensions": [
+          1,
+          1
+        ],
+        "retained_output_sha256": "7c1767a7b3809161c422c7ddf2709823f2b0fa926c2d3fd8ebdcd27e59e13230",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 1,
+        "direction": "horizontal",
+        "radius": 125,
+        "input_dimensions": [
+          347,
+          347
+        ],
+        "output_dimensions": [
+          97,
+          347
+        ],
+        "retained_output_sha256": "93912f708b976fff8070440d4adcdd2dd88b93d9f0f9005c3025a60bcb3810a2",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 1,
+        "direction": "vertical",
+        "radius": 125,
+        "input_dimensions": [
+          97,
+          347
+        ],
+        "output_dimensions": [
+          97,
+          97
+        ],
+        "retained_output_sha256": "e3f28911616d0327e9785372d11625fbc8f9f688c0ee2bc1a7c5e2fbad39608e",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 2,
+        "direction": "horizontal",
+        "radius": 36,
+        "input_dimensions": [
+          97,
+          97
+        ],
+        "output_dimensions": [
+          25,
+          97
+        ],
+        "retained_output_sha256": "de98fbd2374e05c2d270fb26eaa8ba8ea0e3d4de37cfb3bb8fd4019d74ba5a6c",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 2,
+        "direction": "vertical",
+        "radius": 36,
+        "input_dimensions": [
+          25,
+          97
+        ],
+        "output_dimensions": [
+          25,
+          25
+        ],
+        "retained_output_sha256": "7ea6f1aae2a09f8d3a9b36438c38a157c9a4bd35698979167145a4ce435c61cb",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 3,
+        "direction": "horizontal",
+        "radius": 10,
+        "input_dimensions": [
+          25,
+          25
+        ],
+        "output_dimensions": [
+          5,
+          25
+        ],
+        "retained_output_sha256": "8e5fcdc83209bebccb2da7131d5b7c743e0470f9b59d6b8e01c18b1f21413f45",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 3,
+        "direction": "vertical",
+        "radius": 10,
+        "input_dimensions": [
+          5,
+          25
+        ],
+        "output_dimensions": [
+          5,
+          5
+        ],
+        "retained_output_sha256": "3971fb42d9aa392be2214aba3bd5c85644e089a4f8dd8e5ad8e85218e924615c",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 4,
+        "direction": "horizontal",
+        "radius": 2,
+        "input_dimensions": [
+          5,
+          5
+        ],
+        "output_dimensions": [
+          1,
+          5
+        ],
+        "retained_output_sha256": "01299a08b4f3912c083534be90ea20c17232524c17c209782032159d9d17451d",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 4,
+        "direction": "vertical",
+        "radius": 2,
+        "input_dimensions": [
+          1,
+          5
+        ],
+        "output_dimensions": [
+          1,
+          1
+        ],
+        "retained_output_sha256": "b368fd007c55e0223e29d90c8d9abe467c901a1cb1067f187437541546d932b4",
+        "execution": "portable_only"
+      }
+    ],
+    "final_bits_hex": {
+      "(411,258)": [
+        "0x46ac2aff",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "(458,314)": [
+        "0x46ce0aff",
+        "0x00000000",
+        "0x00000000"
+      ]
+    }
+  },
+  "supplemental_index57_only": {
+    "execution": "portable_only synthetic isolation; not coefficient set B and not Windows truth",
+    "cone": {
+      "initial_crop_dimensions": [
+        347,
+        347
+      ],
+      "stages": [
+        {
+          "witness": [
+            411,
+            258
+          ],
+          "iteration": 1,
+          "direction": "horizontal",
+          "radius": 125,
+          "input_dimensions": [
+            347,
+            347
+          ],
+          "output_dimensions": [
+            97,
+            347
+          ],
+          "retained_output_sha256": "02b3e3938e93835f372e8bae1b7940837b39efea59f71bcd51ccdd4b60c14980",
+          "execution": "portable_only"
+        },
+        {
+          "witness": [
+            411,
+            258
+          ],
+          "iteration": 1,
+          "direction": "vertical",
+          "radius": 125,
+          "input_dimensions": [
+            97,
+            347
+          ],
+          "output_dimensions": [
+            97,
+            97
+          ],
+          "retained_output_sha256": "1c600f743778806985b624c27a01c674c9b49d83a283d8932292a8e1bff27682",
+          "execution": "portable_only"
+        },
+        {
+          "witness": [
+            411,
+            258
+          ],
+          "iteration": 2,
+          "direction": "horizontal",
+          "radius": 36,
+          "input_dimensions": [
+            97,
+            97
+          ],
+          "output_dimensions": [
+            25,
+            97
+          ],
+          "retained_output_sha256": "9c94f8c60634b6f2d8486bed09fccb990295b0aac2db64922db861adf434508d",
+          "execution": "portable_only"
+        },
+        {
+          "witness": [
+            411,
+            258
+          ],
+          "iteration": 2,
+          "direction": "vertical",
+          "radius": 36,
+          "input_dimensions": [
+            25,
+            97
+          ],
+          "output_dimensions": [
+            25,
+            25
+          ],
+          "retained_output_sha256": "30f476760c507c2d1af2b4887d08f7789d9b927bb538d68dca46bc0c444b54e9",
+          "execution": "portable_only"
+        },
+        {
+          "witness": [
+            411,
+            258
+          ],
+          "iteration": 3,
+          "direction": "horizontal",
+          "radius": 10,
+          "input_dimensions": [
+            25,
+            25
+          ],
+          "output_dimensions": [
+            5,
+            25
+          ],
+          "retained_output_sha256": "425fe5548432270d8a0972698d21a39b7b75e050d5a407ec69d6bd218a6123c5",
+          "execution": "portable_only"
+        },
+        {
+          "witness": [
+            411,
+            258
+          ],
+          "iteration": 3,
+          "direction": "vertical",
+          "radius": 10,
+          "input_dimensions": [
+            5,
+            25
+          ],
+          "output_dimensions": [
+            5,
+            5
+          ],
+          "retained_output_sha256": "4cb27b069b24799aadeb8013cf2e9ebf1783b7e4958519d87d2f8d6bccf05aa8",
+          "execution": "portable_only"
+        },
+        {
+          "witness": [
+            411,
+            258
+          ],
+          "iteration": 4,
+          "direction": "horizontal",
+          "radius": 2,
+          "input_dimensions": [
+            5,
+            5
+          ],
+          "output_dimensions": [
+            1,
+            5
+          ],
+          "retained_output_sha256": "7511921d900e23142d0afb226e52f8f538a1966b134cd73a63ad2e40fab5e63f",
+          "execution": "portable_only"
+        },
+        {
+          "witness": [
+            411,
+            258
+          ],
+          "iteration": 4,
+          "direction": "vertical",
+          "radius": 2,
+          "input_dimensions": [
+            1,
+            5
+          ],
+          "output_dimensions": [
+            1,
+            1
+          ],
+          "retained_output_sha256": "7c1767a7b3809161c422c7ddf2709823f2b0fa926c2d3fd8ebdcd27e59e13230",
+          "execution": "portable_only"
+        },
+        {
+          "witness": [
+            458,
+            314
+          ],
+          "iteration": 1,
+          "direction": "horizontal",
+          "radius": 125,
+          "input_dimensions": [
+            347,
+            347
+          ],
+          "output_dimensions": [
+            97,
+            347
+          ],
+          "retained_output_sha256": "93912f708b976fff8070440d4adcdd2dd88b93d9f0f9005c3025a60bcb3810a2",
+          "execution": "portable_only"
+        },
+        {
+          "witness": [
+            458,
+            314
+          ],
+          "iteration": 1,
+          "direction": "vertical",
+          "radius": 125,
+          "input_dimensions": [
+            97,
+            347
+          ],
+          "output_dimensions": [
+            97,
+            97
+          ],
+          "retained_output_sha256": "ec447e364a94f40b78022feae4e1410bb099e40bd926a851356fdb1aa2ccb241",
+          "execution": "portable_only"
+        },
+        {
+          "witness": [
+            458,
+            314
+          ],
+          "iteration": 2,
+          "direction": "horizontal",
+          "radius": 36,
+          "input_dimensions": [
+            97,
+            97
+          ],
+          "output_dimensions": [
+            25,
+            97
+          ],
+          "retained_output_sha256": "94fe489b4b7db70a683732f1f54f416617ed82f0b7e88002f850259de8ccf0b1",
+          "execution": "portable_only"
+        },
+        {
+          "witness": [
+            458,
+            314
+          ],
+          "iteration": 2,
+          "direction": "vertical",
+          "radius": 36,
+          "input_dimensions": [
+            25,
+            97
+          ],
+          "output_dimensions": [
+            25,
+            25
+          ],
+          "retained_output_sha256": "51ea4de40c207376b10d116f05444abef899068093f416d67bd425566cd29caa",
+          "execution": "portable_only"
+        },
+        {
+          "witness": [
+            458,
+            314
+          ],
+          "iteration": 3,
+          "direction": "horizontal",
+          "radius": 10,
+          "input_dimensions": [
+            25,
+            25
+          ],
+          "output_dimensions": [
+            5,
+            25
+          ],
+          "retained_output_sha256": "568449247e9b422eb9a0b96b0666192ec6ada7c28ef8a6891566ed548541cbe2",
+          "execution": "portable_only"
+        },
+        {
+          "witness": [
+            458,
+            314
+          ],
+          "iteration": 3,
+          "direction": "vertical",
+          "radius": 10,
+          "input_dimensions": [
+            5,
+            25
+          ],
+          "output_dimensions": [
+            5,
+            5
+          ],
+          "retained_output_sha256": "3971fb42d9aa392be2214aba3bd5c85644e089a4f8dd8e5ad8e85218e924615c",
+          "execution": "portable_only"
+        },
+        {
+          "witness": [
+            458,
+            314
+          ],
+          "iteration": 4,
+          "direction": "horizontal",
+          "radius": 2,
+          "input_dimensions": [
+            5,
+            5
+          ],
+          "output_dimensions": [
+            1,
+            5
+          ],
+          "retained_output_sha256": "01299a08b4f3912c083534be90ea20c17232524c17c209782032159d9d17451d",
+          "execution": "portable_only"
+        },
+        {
+          "witness": [
+            458,
+            314
+          ],
+          "iteration": 4,
+          "direction": "vertical",
+          "radius": 2,
+          "input_dimensions": [
+            1,
+            5
+          ],
+          "output_dimensions": [
+            1,
+            1
+          ],
+          "retained_output_sha256": "b368fd007c55e0223e29d90c8d9abe467c901a1cb1067f187437541546d932b4",
+          "execution": "portable_only"
+        }
+      ],
+      "final_bits_hex": {
+        "(411,258)": [
+          "0x46ac2aff",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "(458,314)": [
+          "0x46ce0aff",
+          "0x00000000",
+          "0x00000000"
+        ]
+      }
+    },
+    "comparisons": {
+      "(411,258)": {
+        "a_pre_store_bits_hex": [
+          "0x46ac2b00",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "index57_only_pre_store_bits_hex": [
+          "0x46ac2aff",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "pre_store_exact": false,
+        "a_predicted_rgb_words": [
+          22038,
+          0,
+          0
+        ],
+        "index57_only_predicted_rgb_words": [
+          22037,
+          0,
+          0
+        ],
+        "predicted_words_exact": false
+      },
+      "(458,314)": {
+        "a_pre_store_bits_hex": [
+          "0x46ce0b00",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "index57_only_pre_store_bits_hex": [
+          "0x46ce0aff",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "pre_store_exact": false,
+        "a_predicted_rgb_words": [
+          26374,
+          0,
+          0
+        ],
+        "index57_only_predicted_rgb_words": [
+          26373,
+          0,
+          0
+        ],
+        "predicted_words_exact": false
+      }
+    }
+  },
+  "standard_writer_prediction": {
+    "arithmetic": "for each float32 RGB value: floorf(float32(value + 0.5f)), clamped to [0,32768]",
+    "claim": "reported prediction only; not an actual-AEX writer run and not Windows truth",
+    "comparisons": {
+      "(411,258)": {
+        "a_pre_store_bits_hex": [
+          "0x46ac2b00",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "b_pre_store_bits_hex": [
+          "0x46ac2aff",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "pre_store_exact": false,
+        "a_predicted_rgb_words": [
+          22038,
+          0,
+          0
+        ],
+        "b_predicted_rgb_words": [
+          22037,
+          0,
+          0
+        ],
+        "predicted_words_exact": false
+      },
+      "(458,314)": {
+        "a_pre_store_bits_hex": [
+          "0x46ce0b00",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "b_pre_store_bits_hex": [
+          "0x46ce0aff",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "pre_store_exact": false,
+        "a_predicted_rgb_words": [
+          26374,
+          0,
+          0
+        ],
+        "b_predicted_rgb_words": [
+          26373,
+          0,
+          0
+        ],
+        "predicted_words_exact": false
+      }
+    }
+  },
+  "conclusion": {
+    "complete_coefficient_set_changes_pre_store": true,
+    "complete_coefficient_set_changes_predicted_word": true,
+    "declared_single_index57_delta_assumption_valid": false,
+    "index57_only_changes_pre_store": true,
+    "index57_only_changes_predicted_word": true
+  },
+  "claim_limit": "Both sets are bounded Mac-side hypotheses. Neither is labeled or inferred as Windows truth."
+}
