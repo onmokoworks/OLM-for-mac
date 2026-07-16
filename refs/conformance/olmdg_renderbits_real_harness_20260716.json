@@ -1,0 +1,40 @@
+{
+  "harness": "tools/emulation/dg_renderbits_real_harness_20260716.cpp",
+  "production_translation_unit": "mac/OLMDistanceGradation/OLMDistanceGradation.cpp",
+  "production_call": "RenderBits<PF_Pixel8>",
+  "sdk_shim": "tools/emulation/dg_renderbits_real_harness_20260716_sdk_shim.h",
+  "build_and_run": "tools/emulation/dg_renderbits_real_harness_20260716.sh",
+  "fixtures": [
+    {
+      "name": "tiny",
+      "width": 3,
+      "height": 2,
+      "rowbytes": 12,
+      "result": "PASS",
+      "active_pixels": "6x{255,17,34,51}"
+    },
+    {
+      "name": "padded-row-guard",
+      "width": 3,
+      "height": 2,
+      "rowbytes": 17,
+      "padding_bytes_per_row": 5,
+      "padding_canary": "0xa5",
+      "result": "PASS",
+      "active_pixels": "6x{255,17,34,51}"
+    }
+  ],
+  "observed_command": "tools/emulation/dg_renderbits_real_harness_20260716.sh",
+  "observed_stdout": [
+    "PASS tiny rowbytes=12 pixels=6x{255,17,34,51}",
+    "PASS padded-row-guard rowbytes=17 pixels=6x{255,17,34,51}"
+  ],
+  "exit_status": 0
+  ,
+  "scope": "Mac-only structural execution of the production PF8 RenderBits body and rowbytes/padding safety",
+  "claims_not_made": [
+    "No Windows AEX equivalence claim",
+    "No AE-host exactness claim",
+    "No proof yet for non-constant field generation or PF16/PF32 RenderBits"
+  ]
+}
