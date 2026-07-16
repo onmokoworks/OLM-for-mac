@@ -23,8 +23,8 @@ INPUT = (
 PROBE = ROOT / "tools/emulation/probe_olmblur_case0004_worker16.cpp"
 SOURCES = [PROBE, ROOT / "core/olmblur_helper.cpp", ROOT / "core/olmblur_worker16_nonlegacy.cpp"]
 OBSERVATIONS = {
-    (411, 258): ("46ac2aff", 22037),
-    (458, 314): ("46ce0aff", 26373),
+    (411, 258): ("46ac2b00", 22038),
+    (458, 314): ("46ce0b00", 26374),
 }
 
 
