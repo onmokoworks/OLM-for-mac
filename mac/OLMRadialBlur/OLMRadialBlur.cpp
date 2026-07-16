@@ -1,5 +1,7 @@
 #include "OLMRadialBlur.h"
 
+#include <AEFX_SuiteHandlerTemplate.h>
+
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
@@ -1432,13 +1434,33 @@ static OLMRadialBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong comp_wi
 }
 
 static PF_Err
-Render(PF_InData *, PF_OutData *, PF_ParamDef *params[], PF_LayerDef *output)
+Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
 	OLMRadialBlurInfo info = InfoFromParams(params,
 		params[OLMRADIALBLUR_INPUT]->u.ld.width,
 		params[OLMRADIALBLUR_INPUT]->u.ld.height);
-	short bitdepth = PF_WORLD_IS_DEEP(output) ? 16 : 8;
-	return RenderWorld(&params[OLMRADIALBLUR_INPUT]->u.ld, output, info, bitdepth);
+	PF_EffectWorld *input = &params[OLMRADIALBLUR_INPUT]->u.ld;
+	PF_PixelFormat format = PF_PixelFormat_INVALID;
+	AEFX_SuiteScoper<PF_WorldSuite2> world_suite = AEFX_SuiteScoper<PF_WorldSuite2>(
+		in_data, kPFWorldSuite, kPFWorldSuiteVersion2, out_data);
+	PF_Err err = world_suite->PF_GetPixelFormat(input, &format);
+	if (err) return err;
+
+	short bitdepth = 0;
+	switch (format) {
+	case PF_PixelFormat_ARGB32:
+		bitdepth = 8;
+		break;
+	case PF_PixelFormat_ARGB64:
+		bitdepth = 16;
+		break;
+	case PF_PixelFormat_ARGB128:
+		bitdepth = 32;
+		break;
+	default:
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	return RenderWorld(input, output, info, bitdepth);
 }
 
 typedef struct {

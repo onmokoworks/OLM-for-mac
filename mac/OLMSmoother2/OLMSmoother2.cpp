@@ -901,11 +901,23 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 static PF_Err
 Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
+	PF_Err err = PF_Err_NONE;
 	PF_LayerDef *input = &params[SM_INPUT]->u.ld;
-	if (PF_WORLD_IS_DEEP(input)) {
-		return RenderBits<PF_Pixel16>(in_data, params, input, output);
-	} else {
+	PF_PixelFormat format = PF_PixelFormat_INVALID;
+	AEFX_SuiteScoper<PF_WorldSuite2> world_suite = AEFX_SuiteScoper<PF_WorldSuite2>(
+		in_data, kPFWorldSuite, kPFWorldSuiteVersion2, out_data);
+	ERR(world_suite->PF_GetPixelFormat(input, &format));
+	if (err) return err;
+
+	switch (format) {
+	case PF_PixelFormat_ARGB32:
 		return RenderBits<PF_Pixel8>(in_data, params, input, output);
+	case PF_PixelFormat_ARGB64:
+		return RenderBits<PF_Pixel16>(in_data, params, input, output);
+	case PF_PixelFormat_ARGB128:
+		return RenderBits<PF_PixelFloat>(in_data, params, input, output);
+	default:
+		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 }
 

@@ -5,6 +5,7 @@
 #include "olmblur_worker32_nonlegacy.h"
 #include "olmblur_worker32_legacy.h"
 #include "olmblur_worker8_legacy.h"
+#include "AEFX_SuiteHandlerTemplate.h"
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
@@ -1306,7 +1307,26 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	bp.legacy      = params[OLMBLUR_LEGACY]->u.bd.value;
 
 	PF_EffectWorld *input = &params[OLMBLUR_INPUT]->u.ld;
-	short bpc = PF_WORLD_IS_DEEP(output) ? 16 : 8;
+	PF_PixelFormat format = PF_PixelFormat_INVALID;
+	AEFX_SuiteScoper<PF_WorldSuite2> world_suite(in_data, kPFWorldSuite,
+	                                             kPFWorldSuiteVersion2, out_data);
+	ERR(world_suite->PF_GetPixelFormat(input, &format));
+	if (err) return err;
+
+	short bpc = 0;
+	switch (format) {
+	case PF_PixelFormat_ARGB32:
+		bpc = 8;
+		break;
+	case PF_PixelFormat_ARGB64:
+		bpc = 16;
+		break;
+	case PF_PixelFormat_ARGB128:
+		bpc = 32;
+		break;
+	default:
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
 
 	ERR(PF_COPY(input, output, NULL, NULL));
 	ERR(BlurRender(in_data, input, output, bpc, &bp));

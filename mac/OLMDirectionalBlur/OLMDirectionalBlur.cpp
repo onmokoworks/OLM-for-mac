@@ -1,5 +1,7 @@
 #include "OLMDirectionalBlur.h"
 
+#include <AEFX_SuiteHandlerTemplate.h>
+
 #include "../../core/dblur_frontonly.h"
 #include "../../core/dblur_gaussian.h"
 
@@ -527,13 +529,33 @@ static void RenderScaleFromInData(PF_InData *in_data, PF_FpLong &scale_x, PF_FpL
 }
 
 static PF_Err
-Render(PF_InData *in_data, PF_OutData *, PF_ParamDef *params[], PF_LayerDef *output)
+Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
 	PF_FpLong scale_x, scale_y;
 	RenderScaleFromInData(in_data, scale_x, scale_y);
 	OLMDirectionalBlurInfo info = InfoFromParams(params, scale_x, scale_y);
-	short bitdepth = PF_WORLD_IS_DEEP(output) ? 16 : 8;
-	return RenderWorld(&params[OLMDIRECTIONALBLUR_INPUT]->u.ld, output, info, bitdepth);
+	PF_EffectWorld *input = &params[OLMDIRECTIONALBLUR_INPUT]->u.ld;
+	PF_PixelFormat format = PF_PixelFormat_INVALID;
+	AEFX_SuiteScoper<PF_WorldSuite2> world_suite = AEFX_SuiteScoper<PF_WorldSuite2>(
+		in_data, kPFWorldSuite, kPFWorldSuiteVersion2, out_data);
+	PF_Err err = world_suite->PF_GetPixelFormat(input, &format);
+	if (err) return err;
+
+	short bitdepth = 0;
+	switch (format) {
+	case PF_PixelFormat_ARGB32:
+		bitdepth = 8;
+		break;
+	case PF_PixelFormat_ARGB64:
+		bitdepth = 16;
+		break;
+	case PF_PixelFormat_ARGB128:
+		bitdepth = 32;
+		break;
+	default:
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	return RenderWorld(input, output, info, bitdepth);
 }
 
 typedef struct {

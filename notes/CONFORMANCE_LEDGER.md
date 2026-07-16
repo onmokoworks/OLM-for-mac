@@ -1,5 +1,15 @@
 # OLM Conformance Ledger
 
+- 2026-07-16 `classic PF_Cmd_RENDER bit-depth dispatch` (latest override):
+  no correctness status is promoted. All eight classic render entry points now
+  query `PF_WorldSuite2::PF_GetPixelFormat` and map ARGB32/ARGB64/ARGB128 to
+  8/16/32 bpc, failing closed on unknown formats. This removes the prior
+  `PF_WORLD_IS_DEEP` ambiguity that treated every deep world as 16bpc. The four
+  discoverable source-contract tests and all eight Debug builds pass;
+  SmartRender behavior is unchanged. This is source/build evidence only, with
+  no AE host render or AE-exact claim. Evidence:
+  `refs/conformance/olm_classic_render_bitdepth_dispatch_20260716.md`.
+
 - 2026-07-16 `OLMBlur case_0004 double-exp production candidate` (latest
   override): no correctness status is promoted. Keeping the current float32
   exponent input and all powf/pow/radius/sigma/denom order, replacing only
