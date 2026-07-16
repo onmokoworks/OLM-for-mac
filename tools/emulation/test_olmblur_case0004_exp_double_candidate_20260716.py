@@ -32,7 +32,7 @@ from probe_olmblur_case0004_staged_helper_replay import (  # noqa: E402
 
 PROBE = ROOT / "tools/emulation/probe_olmblur_case0004_exp_double_candidate.cpp"
 PRODUCTION_SOURCE = ROOT / "mac/OLMBlur/OLMBlur.cpp"
-PRODUCTION_SOURCE_SHA256 = "6ecf1189393c072190e29ba964e4c7dbbb6a33b31c7a491738a2d40d739f1995"
+PRODUCTION_SOURCE_SHA256 = "55def455a29f72c04748a784bcd598ddeecb84ec25d475376ea93b6e838e3b02"
 REPORT_JSON = ROOT / "refs/conformance/olmblur_case0004_exp_double_candidate_20260716.json"
 REPORT_MD = ROOT / "refs/conformance/olmblur_case0004_exp_double_candidate_20260716.md"
 

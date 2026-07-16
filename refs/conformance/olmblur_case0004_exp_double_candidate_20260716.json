@@ -16,7 +16,7 @@
       "pf16_sha256": "afd4269575102eda52e581cec8e77fe62f5f7e808e33cf64d6baf186c81b70aa"
     },
     "production_source": "mac/OLMBlur/OLMBlur.cpp",
-    "production_source_sha256": "6ecf1189393c072190e29ba964e4c7dbbb6a33b31c7a491738a2d40d739f1995"
+    "production_source_sha256": "55def455a29f72c04748a784bcd598ddeecb84ec25d475376ea93b6e838e3b02"
   },
   "candidate": "current powf/pow/radius/sigma/denom order; x_f32 unchanged; weight=static_cast<float>(std::exp(static_cast<double>(x_f32)))",
   "generation_compile_command": [

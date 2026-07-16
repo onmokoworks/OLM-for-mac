@@ -16,7 +16,7 @@
 
 ## INFERENCE
 
-- Production source `mac/OLMBlur/OLMBlur.cpp` is pinned to `6ecf1189393c072190e29ba964e4c7dbbb6a33b31c7a491738a2d40d739f1995` and contains the candidate exactly once.
+- Production source `mac/OLMBlur/OLMBlur.cpp` is pinned to `55def455a29f72c04748a784bcd598ddeecb84ec25d475376ea93b6e838e3b02` and contains the candidate exactly once.
 - The production source is integrated and builds for arm64/x86_64; Mac AE output remains unvalidated.
 - The cone replay is portable-only, and neither coefficients nor outputs are labeled Windows truth.
 
