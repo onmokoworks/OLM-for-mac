@@ -1064,3 +1064,56 @@ folders by SHA-256 rather than case number. Current result:
   RadialBlur exactness work.
 - Noise and Size Variation exactness outside currently guarded slices.
 - Mac AE exactness and 16/32bpc behavior.
+
+## 2026-07-17 Mac-only scatter-tail binary/source audit
+
+Read-only comparison of live-grounded AEX
+`RadialBlur_scatter_tail_by_direction` (`FUN_180001c90`) against the current
+Mac implementation. Full evidence is recorded in
+`refs/conformance/olmradialblur_scatter_tail_binary_source_audit_20260717.md`.
+
+- **FACT:** AEX mode selection applies mode 1 as `base + caller_distance`,
+  mode 2 as `max(base, caller_distance)`, and mode 3 as `caller_distance`,
+  then clamps the resolved span only at the upper bound `3000` and computes
+  `trunc(span * span_gate)` (`decomp/OLMRadialBlur.aex.c.txt:585-600`). Mac
+  Zoom omits mode 1 (`mac/OLMRadialBlur/OLMRadialBlur.cpp:849-854`). Mac
+  Rotation has the three mode branches, but subtracts one before clamping
+  (`mac/OLMRadialBlur/OLMRadialBlur.cpp:857-864`).
+- **FACT:** AEX's positive-length table step is
+  `trunc(30000 / effective_len)` (`decomp/OLMRadialBlur.aex.c.txt:599-603`,
+  `disasm/OLMRadialBlur.aex.asm.txt:829-843`). Mac feeds the altered
+  `span - 1` length into its generated weights and starts sampling at weight
+  index zero (`mac/OLMRadialBlur/OLMRadialBlur.cpp:834-846`,
+  `1205-1218`).
+- **FACT:** AEX uses separate outer and inner table bases, `ctx + 0x68` and
+  `ctx + 0x1d528` (`decomp/OLMRadialBlur.aex.c.txt:619-620,733-734`). The Mac
+  path synthesizes one generic weight vector and bypasses Rotation whenever
+  Inner Strength is nonzero (`mac/OLMRadialBlur/OLMRadialBlur.cpp:834-846,1122-1127`).
+- **FACT:** Outer angular wrap remains in the current AEX row, while inner
+  angular underflow advances to the tail of the next radius row
+  (`decomp/OLMRadialBlur.aex.c.txt:726-731,807-824`). Mac uses same-row
+  circular wrapping for its taps (`mac/OLMRadialBlur/OLMRadialBlur.cpp:1205-1208`)
+  and therefore has no equivalent inner row advance. Its inverse sampler also
+  clamps both radius neighbors to the edge rows
+  (`mac/OLMRadialBlur/OLMRadialBlur.cpp:1311-1320`).
+- **FACT:** AEX multiplies the passed source alpha by each table weight,
+  accumulates RGBA, and updates a persistent max-alpha plane with
+  `old <= new && new != old` (`decomp/OLMRadialBlur.aex.c.txt:619-627`). Mac
+  keeps only a local small-path maximum and otherwise writes source alpha for
+  convolution paths (`mac/OLMRadialBlur/OLMRadialBlur.cpp:1204-1218,1260-1265,1288-1295`).
+- **FACT:** Mac's `weighted_alpha > 1e-8` guard suppresses RGB writes when the
+  weighted alpha is NaN (`mac/OLMRadialBlur/OLMRadialBlur.cpp:1214-1218`). The
+  AEX helper has no corresponding accumulation guard after the caller gate
+  and writes the resulting float contributions before the max comparison
+  (`decomp/OLMRadialBlur.aex.c.txt:619-627`).
+- **INFERENCE:** The integer `30000 / effective_len` quotient is not itself a
+  separate arithmetic mismatch; the observed source mismatch is its altered
+  input length and zero-origin sample sequence. The AEX max comparison and
+  `std::max` have equivalent ordinary quiet-NaN ordering in isolation. The
+  demonstrated NaN mismatch is the Mac weighted-alpha conditional plus the
+  missing persistent max-alpha plane.
+
+**Non-claim:** This audit authorizes no production patch, PNG tuning, or ledger
+change. A function-level equivalence harness covering span resolution, table
+indexing, row transitions, RGBA accumulation, max-alpha updates, and NaN cases
+is required before any production edit is authorized.
