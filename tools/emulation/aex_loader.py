@@ -19,8 +19,15 @@ See tools/emulation/README.md for usage and current limitations.
 from __future__ import annotations
 
 import ctypes
+import hashlib
+import json
+import marshal
 import math
+import os
+import shutil
 import struct
+import tempfile
+import zlib
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable, Dict, List, Optional
@@ -58,15 +65,61 @@ from unicorn.x86_const import (
     UC_X86_REG_R14,
     UC_X86_REG_R15,
     UC_X86_REG_RIP,
+    UC_X86_REG_EFLAGS,
+    UC_X86_REG_MXCSR,
     UC_X86_REG_XMM0,
     UC_X86_REG_XMM1,
     UC_X86_REG_XMM2,
     UC_X86_REG_XMM3,
+    UC_X86_REG_XMM4,
+    UC_X86_REG_XMM5,
+    UC_X86_REG_XMM6,
+    UC_X86_REG_XMM7,
+    UC_X86_REG_XMM8,
+    UC_X86_REG_XMM9,
+    UC_X86_REG_XMM10,
+    UC_X86_REG_XMM11,
+    UC_X86_REG_XMM12,
+    UC_X86_REG_XMM13,
+    UC_X86_REG_XMM14,
+    UC_X86_REG_XMM15,
 )
 
 PAGE_SIZE = 0x1000
 
-_XMM_REGS = [UC_X86_REG_XMM0, UC_X86_REG_XMM1, UC_X86_REG_XMM2, UC_X86_REG_XMM3]
+_XMM_REGS = [
+    UC_X86_REG_XMM0, UC_X86_REG_XMM1, UC_X86_REG_XMM2, UC_X86_REG_XMM3,
+    UC_X86_REG_XMM4, UC_X86_REG_XMM5, UC_X86_REG_XMM6, UC_X86_REG_XMM7,
+    UC_X86_REG_XMM8, UC_X86_REG_XMM9, UC_X86_REG_XMM10, UC_X86_REG_XMM11,
+    UC_X86_REG_XMM12, UC_X86_REG_XMM13, UC_X86_REG_XMM14, UC_X86_REG_XMM15,
+]
+
+_GP_REGS = {
+    "rax": UC_X86_REG_RAX, "rbx": UC_X86_REG_RBX,
+    "rcx": UC_X86_REG_RCX, "rdx": UC_X86_REG_RDX,
+    "rsi": UC_X86_REG_RSI, "rdi": UC_X86_REG_RDI,
+    "rbp": UC_X86_REG_RBP, "rsp": UC_X86_REG_RSP,
+    "r8": UC_X86_REG_R8, "r9": UC_X86_REG_R9,
+    "r10": UC_X86_REG_R10, "r11": UC_X86_REG_R11,
+    "r12": UC_X86_REG_R12, "r13": UC_X86_REG_R13,
+    "r14": UC_X86_REG_R14, "r15": UC_X86_REG_R15,
+    "rip": UC_X86_REG_RIP,
+}
+
+CHECKPOINT_MAGIC = b"AEXCP64\x00"
+CHECKPOINT_VERSION = 1
+CHECKPOINT_CHUNK_SIZE = 1024 * 1024
+
+
+def _callable_fingerprint(fn: Callable) -> dict:
+    """Return a stable code-identity fingerprint for a callback/import shim."""
+    target = getattr(fn, "__func__", fn)
+    code = getattr(target, "__code__", None)
+    return {
+        "module": getattr(target, "__module__", None),
+        "qualname": getattr(target, "__qualname__", type(target).__qualname__),
+        "code_sha256": hashlib.sha256(marshal.dumps(code)).hexdigest() if code else None,
+    }
 
 
 def align_up(value: int, align: int = PAGE_SIZE) -> int:
@@ -164,6 +217,7 @@ class AexLoader:
         self._callback_cursor = CALLBACK_STUB_BASE
         self.callback_log: List[tuple] = []
         self._code_hooks: List[object] = []
+        self._checkpoint_image_dirty_pages: set[int] = set()
 
         # Optional read-access tracing (used to enumerate context-struct
         # offsets). List of (lo, hi) ranges; when non-empty a MEM_READ hook
@@ -339,6 +393,9 @@ class AexLoader:
         cb_addr = self.install_callback(label, handler)
         patch = b"\x48\xb8" + struct.pack("<Q", cb_addr) + b"\xff\xe0"
         self.uc.mem_write(guest_addr, patch)
+        first_page = guest_addr & ~(PAGE_SIZE - 1)
+        last_page = (guest_addr + len(patch) - 1) & ~(PAGE_SIZE - 1)
+        self._checkpoint_image_dirty_pages.update(range(first_page, last_page + 1, PAGE_SIZE))
         return cb_addr
 
     def add_code_hook(self, guest_addr: int,
@@ -660,6 +717,318 @@ class AexLoader:
         }
         return result
 
+    # -- resumable loader checkpoints -------------------------------------
+    def _aex_sha256(self) -> str:
+        digest = hashlib.sha256()
+        with self.path.open("rb") as handle:
+            for chunk in iter(lambda: handle.read(CHECKPOINT_CHUNK_SIZE), b""):
+                digest.update(chunk)
+        return digest.hexdigest()
+
+    def _writable_image_ranges(self) -> List[tuple[int, int, str]]:
+        ranges: List[tuple[int, int, List[str]]] = []
+        for section in self.pe.sections:
+            if not (section.Characteristics & 0x80000000):  # IMAGE_SCN_MEM_WRITE
+                continue
+            start = self.load_base + (section.VirtualAddress & ~(PAGE_SIZE - 1))
+            extent = max(section.Misc_VirtualSize, section.SizeOfRawData)
+            end = min(self.load_base + self.size_of_image,
+                      align_up(self.load_base + section.VirtualAddress + extent))
+            name = section.Name.rstrip(b"\x00").decode("ascii", "replace")
+            if ranges and start <= ranges[-1][1]:
+                ranges[-1] = (ranges[-1][0], max(ranges[-1][1], end), ranges[-1][2] + [name])
+            else:
+                ranges.append((start, end, [name]))
+        return [(start, end - start, "+".join(names)) for start, end, names in ranges]
+
+    def _checkpoint_regions(self) -> List[tuple[str, int, int, str]]:
+        regions = [
+            (f"pe-writable:{label}", addr, size, "pe-writable")
+            for addr, size, label in self._writable_image_ranges()
+        ]
+        writable_pages = {addr for _, addr, size, _ in regions
+                          for addr in range(addr, addr + size, PAGE_SIZE)}
+        for addr in sorted(self._checkpoint_image_dirty_pages - writable_pages):
+            regions.append((f"pe-detour:0x{addr - self.load_base:x}", addr, PAGE_SIZE, "pe-detour"))
+        regions.extend([
+            ("stack", STACK_BASE, STACK_SIZE, "stack"),
+            ("heap-used", HEAP_BASE, self._heap_cursor - HEAP_BASE, "heap"),
+            ("host-used", HOST_STRUCT_BASE, self._host_cursor - HOST_STRUCT_BASE, "host"),
+            ("teb", TEB_BASE, TEB_SIZE, "teb"),
+            ("callback-stubs", CALLBACK_STUB_BASE,
+             self._callback_cursor - CALLBACK_STUB_BASE, "callbacks"),
+        ])
+        return [(name, addr, size, kind) for name, addr, size, kind in regions if size]
+
+    def _checkpoint_registers(self) -> dict:
+        return {
+            "gp": {name: int(self.uc.reg_read(reg)) for name, reg in _GP_REGS.items()},
+            "eflags": int(self.uc.reg_read(UC_X86_REG_EFLAGS)),
+            "mxcsr": int(self.uc.reg_read(UC_X86_REG_MXCSR)),
+            "xmm": [f"{int(self.uc.reg_read(reg)):032x}" for reg in _XMM_REGS],
+        }
+
+    def save_checkpoint(self, path: str | Path, metadata: Optional[dict] = None) -> dict:
+        """Save deterministic compressed CPU and mutable-memory state."""
+        destination = Path(path)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        region_spools = []
+        region_metadata = []
+        try:
+            for name, address, size, kind in self._checkpoint_regions():
+                spool = tempfile.SpooledTemporaryFile(max_size=16 * CHECKPOINT_CHUNK_SIZE)
+                compressor = zlib.compressobj(level=9, wbits=zlib.MAX_WBITS)
+                digest = hashlib.sha256()
+                compressed_size = 0
+                for offset in range(0, size, CHECKPOINT_CHUNK_SIZE):
+                    raw = bytes(self.uc.mem_read(address + offset,
+                                                 min(CHECKPOINT_CHUNK_SIZE, size - offset)))
+                    digest.update(raw)
+                    encoded = compressor.compress(raw)
+                    spool.write(encoded)
+                    compressed_size += len(encoded)
+                tail = compressor.flush()
+                spool.write(tail)
+                compressed_size += len(tail)
+                spool.seek(0)
+                region_spools.append(spool)
+                region_metadata.append({
+                    "name": name, "kind": kind, "address": address, "size": size,
+                    "compressed_size": compressed_size, "sha256": digest.hexdigest(),
+                })
+
+            callbacks = [
+                {"address": address, "label": label, "handler": _callable_fingerprint(handler)}
+                for address, (label, handler) in sorted(self.callbacks.items())
+            ]
+            import_impls = {
+                name: _callable_fingerprint(handler)
+                for name, handler in sorted(self.import_impls.items())
+            }
+            header = {
+                "format": "aex-loader-x64-checkpoint",
+                "version": CHECKPOINT_VERSION,
+                "aex": {
+                    "sha256": self._aex_sha256(),
+                    "size": self.path.stat().st_size,
+                    "machine": int(self.pe.FILE_HEADER.Machine),
+                    "timestamp": int(self.pe.FILE_HEADER.TimeDateStamp),
+                    "image_base": self.image_base,
+                    "load_base": self.load_base,
+                    "size_of_image": self.size_of_image,
+                },
+                "allocators": {
+                    "heap_cursor": self._heap_cursor,
+                    "heap_mapped_size": self._heap_mapped_size,
+                    "host_cursor": self._host_cursor,
+                    "host_mapped_size": self._host_mapped_size,
+                    "callback_cursor": self._callback_cursor,
+                },
+                "callbacks": callbacks,
+                "import_impls": import_impls,
+                "registers": self._checkpoint_registers(),
+                "regions": region_metadata,
+                "instructions_executed": self.instructions_executed,
+                "metadata": metadata or {},
+            }
+            header_bytes = json.dumps(
+                header, sort_keys=True, separators=(",", ":"), ensure_ascii=True,
+            ).encode("ascii")
+            prefix = CHECKPOINT_MAGIC + struct.pack("<IQ", CHECKPOINT_VERSION, len(header_bytes))
+            prefix += hashlib.sha256(header_bytes).digest()
+
+            fd, temporary_name = tempfile.mkstemp(prefix="aex-checkpoint-", dir="/tmp")
+            try:
+                with os.fdopen(fd, "wb") as output:
+                    output.write(prefix)
+                    output.write(header_bytes)
+                    for spool in region_spools:
+                        shutil.copyfileobj(spool, output, CHECKPOINT_CHUNK_SIZE)
+                    output.flush()
+                    os.fsync(output.fileno())
+                os.replace(temporary_name, destination)
+            except Exception:
+                try:
+                    os.unlink(temporary_name)
+                except FileNotFoundError:
+                    pass
+                raise
+            return header
+        finally:
+            for spool in region_spools:
+                spool.close()
+
+    def _validate_checkpoint_header(self, header: dict) -> None:
+        if header.get("format") != "aex-loader-x64-checkpoint":
+            raise ValueError("checkpoint format mismatch")
+        if header.get("version") != CHECKPOINT_VERSION:
+            raise ValueError(f"unsupported checkpoint version: {header.get('version')!r}")
+        expected_aex = {
+            "sha256": self._aex_sha256(),
+            "size": self.path.stat().st_size,
+            "machine": int(self.pe.FILE_HEADER.Machine),
+            "timestamp": int(self.pe.FILE_HEADER.TimeDateStamp),
+            "image_base": self.image_base,
+            "load_base": self.load_base,
+            "size_of_image": self.size_of_image,
+        }
+        if header.get("aex") != expected_aex:
+            raise ValueError("checkpoint AEX identity or fixed-base image metadata mismatch")
+        expected_callbacks = [
+            {"address": address, "label": label, "handler": _callable_fingerprint(handler)}
+            for address, (label, handler) in sorted(self.callbacks.items())
+        ]
+        if header.get("callbacks") != expected_callbacks:
+            raise ValueError("checkpoint callback topology mismatch")
+        expected_import_impls = {
+            name: _callable_fingerprint(handler)
+            for name, handler in sorted(self.import_impls.items())
+        }
+        if header.get("import_impls") != expected_import_impls:
+            raise ValueError("checkpoint import implementation mismatch")
+        allocators = header.get("allocators", {})
+        required_allocator_fields = (
+            "heap_cursor", "heap_mapped_size", "host_cursor", "host_mapped_size",
+            "callback_cursor",
+        )
+        if any(not isinstance(allocators.get(name), int) for name in required_allocator_fields):
+            raise ValueError("invalid checkpoint allocator metadata")
+        expected_regions = [
+            {
+                "name": f"pe-writable:{label}", "kind": "pe-writable",
+                "address": address, "size": size,
+            }
+            for address, size, label in self._writable_image_ranges()
+        ]
+        writable_pages = {
+            page
+            for region in expected_regions
+            for page in range(region["address"], region["address"] + region["size"], PAGE_SIZE)
+        }
+        expected_regions.extend(
+            {
+                "name": f"pe-detour:0x{address - self.load_base:x}",
+                "kind": "pe-detour", "address": address, "size": PAGE_SIZE,
+            }
+            for address in sorted(self._checkpoint_image_dirty_pages - writable_pages)
+        )
+        expected_regions.extend([
+            {"name": "stack", "kind": "stack", "address": STACK_BASE, "size": STACK_SIZE},
+            {
+                "name": "heap-used", "kind": "heap", "address": HEAP_BASE,
+                "size": allocators["heap_cursor"] - HEAP_BASE,
+            },
+            {
+                "name": "host-used", "kind": "host", "address": HOST_STRUCT_BASE,
+                "size": allocators["host_cursor"] - HOST_STRUCT_BASE,
+            },
+            {"name": "teb", "kind": "teb", "address": TEB_BASE, "size": TEB_SIZE},
+            {
+                "name": "callback-stubs", "kind": "callbacks", "address": CALLBACK_STUB_BASE,
+                "size": allocators["callback_cursor"] - CALLBACK_STUB_BASE,
+            },
+        ])
+        expected_regions = [region for region in expected_regions if region["size"]]
+        actual_regions = [
+            {key: region.get(key) for key in ("name", "kind", "address", "size")}
+            for region in header.get("regions", [])
+        ]
+        if actual_regions != expected_regions:
+            raise ValueError("checkpoint region layout mismatch")
+
+    def load_checkpoint(self, path: str | Path) -> dict:
+        """Validate then restore a checkpoint into this fresh fixed-base loader."""
+        prefix_size = len(CHECKPOINT_MAGIC) + 4 + 8 + 32
+        restored_regions = []
+        with Path(path).open("rb") as source:
+            prefix = source.read(prefix_size)
+            if len(prefix) != prefix_size or not prefix.startswith(CHECKPOINT_MAGIC):
+                raise ValueError("invalid or truncated checkpoint magic")
+            version, header_size = struct.unpack(
+                "<IQ", prefix[len(CHECKPOINT_MAGIC):len(CHECKPOINT_MAGIC) + 12],
+            )
+            if version != CHECKPOINT_VERSION or header_size > 64 * 1024 * 1024:
+                raise ValueError("invalid checkpoint version or metadata size")
+            expected_header_hash = prefix[-32:]
+            header_bytes = source.read(header_size)
+            if len(header_bytes) != header_size:
+                raise ValueError("truncated checkpoint metadata")
+            if hashlib.sha256(header_bytes).digest() != expected_header_hash:
+                raise ValueError("checkpoint metadata checksum mismatch")
+            try:
+                header = json.loads(header_bytes.decode("ascii"))
+            except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+                raise ValueError("invalid checkpoint metadata") from exc
+            self._validate_checkpoint_header(header)
+
+            for region in header.get("regions", []):
+                compressed_size = region.get("compressed_size")
+                raw_size = region.get("size")
+                if not isinstance(compressed_size, int) or compressed_size < 0:
+                    raise ValueError("invalid checkpoint compressed region size")
+                if not isinstance(raw_size, int) or raw_size <= 0:
+                    raise ValueError("invalid checkpoint raw region size")
+                encoded = source.read(compressed_size)
+                if len(encoded) != compressed_size:
+                    raise ValueError(f"truncated checkpoint region {region.get('name')!r}")
+                try:
+                    raw = zlib.decompress(encoded)
+                except zlib.error as exc:
+                    raise ValueError(f"corrupt checkpoint region {region.get('name')!r}") from exc
+                if len(raw) != raw_size or hashlib.sha256(raw).hexdigest() != region.get("sha256"):
+                    raise ValueError(f"checkpoint region checksum mismatch: {region.get('name')!r}")
+                restored_regions.append((region, raw))
+            if source.read(1):
+                raise ValueError("checkpoint has trailing data")
+
+        allocators = header.get("allocators", {})
+        heap_cursor = allocators.get("heap_cursor")
+        host_cursor = allocators.get("host_cursor")
+        heap_mapped_size = allocators.get("heap_mapped_size")
+        host_mapped_size = allocators.get("host_mapped_size")
+        callback_cursor = allocators.get("callback_cursor")
+        if not (HEAP_BASE <= heap_cursor <= HEAP_BASE + heap_mapped_size):
+            raise ValueError("invalid checkpoint heap cursor metadata")
+        if not (HOST_STRUCT_BASE <= host_cursor <= HOST_STRUCT_BASE + host_mapped_size):
+            raise ValueError("invalid checkpoint host cursor metadata")
+        if callback_cursor != self._callback_cursor:
+            raise ValueError("checkpoint callback cursor mismatch")
+        self._ensure_heap_mapped(HEAP_BASE + heap_mapped_size)
+        self._ensure_host_mapped(HOST_STRUCT_BASE + host_mapped_size)
+
+        for region, raw in restored_regions:
+            self.uc.mem_write(region["address"], raw)
+            if region.get("kind") == "pe-detour":
+                self._checkpoint_image_dirty_pages.add(region["address"])
+        self._heap_cursor = heap_cursor
+        self._host_cursor = host_cursor
+        self._callback_cursor = callback_cursor
+        registers = header["registers"]
+        for name, reg in _GP_REGS.items():
+            self.uc.reg_write(reg, int(registers["gp"][name]))
+        self.uc.reg_write(UC_X86_REG_EFLAGS, int(registers["eflags"]))
+        self.uc.reg_write(UC_X86_REG_MXCSR, int(registers["mxcsr"]))
+        for reg, value in zip(_XMM_REGS, registers["xmm"]):
+            self.uc.reg_write(reg, int(value, 16))
+        self.uc.msr_write(IA32_GS_BASE_MSR, TEB_BASE)
+        self.instructions_executed = int(header.get("instructions_executed", 0))
+        return header
+
+    def resume_execution(self, max_instructions: int = 20_000_000) -> Dict[str, int]:
+        """Continue from the current RIP until the normal return trampoline."""
+        start = int(self.uc.reg_read(UC_X86_REG_RIP))
+        start_instr = self.instructions_executed
+        try:
+            self.uc.emu_start(start, RETURN_TRAMPOLINE, count=max_instructions)
+        except UcError as exc:
+            rip = self.uc.reg_read(UC_X86_REG_RIP)
+            raise RuntimeError(f"emulation faulted at RIP=0x{rip:x}: {exc}") from exc
+        return {
+            "rax": int(self.uc.reg_read(UC_X86_REG_RAX)),
+            "rip": int(self.uc.reg_read(UC_X86_REG_RIP)),
+            "instructions": self.instructions_executed - start_instr,
+        }
+
     # -- convenience for float args as raw 32-bit packing -------------------
     @staticmethod
     def f32_to_xmm_bytes(value: float) -> bytes:
@@ -671,6 +1040,13 @@ class AexLoader:
 
     def write_bytes(self, addr: int, data: bytes) -> None:
         self.uc.mem_write(addr, data)
+        if data and self.load_base <= addr < self.load_base + self.size_of_image:
+            end = min(addr + len(data), self.load_base + self.size_of_image)
+            first_page = addr & ~(PAGE_SIZE - 1)
+            last_page = (end - 1) & ~(PAGE_SIZE - 1)
+            self._checkpoint_image_dirty_pages.update(
+                range(first_page, last_page + 1, PAGE_SIZE)
+            )
 
     def read_bytes(self, addr: int, size: int) -> bytes:
         return bytes(self.uc.mem_read(addr, size))

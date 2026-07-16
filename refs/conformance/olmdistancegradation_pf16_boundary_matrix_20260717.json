@@ -1,0 +1,35 @@
+{
+  "schema": "olmdistancegradation.pf16-boundary-matrix/1",
+  "date": "2026-07-17",
+  "status": "PASS",
+  "classification": "hash_pinned_actual_aex_vs_production_source_raw_word_matrix",
+  "contract": {
+    "width": 8,
+    "height": 5,
+    "rowbytes": 76,
+    "padding_bytes_per_row": 12,
+    "padding_canary": "0xa5",
+    "raw_pf16_threshold": 32768,
+    "inside_threshold": 158,
+    "outside_threshold": 13,
+    "downsample_x": [1, 1],
+    "downsample_y": [1, 1]
+  },
+  "aex": {
+    "path": "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex",
+    "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+  },
+  "source": {
+    "mac_source_sha256": "6cf94450a0c662fc39faeb5076ba86776ff716ebe3bba7e58fdfd42accd8f459",
+    "bridge_sha256": "e4b301c5077959e900c52ce146baeb3aa2554ac1b28bb5eeca78210fa0ab51e0"
+  },
+  "cases": [
+    {"name": "raw_threshold_n_minus_1", "input_active_sha256": "3a43ce59f2c0b9aed7cd81d6e337d0d59039376c33effce1718636b4cc271eda", "field_sha256": "2809a6364274c9b1f0516ec80aa9f82b85dafe0f18eff137aca538c67e738c1e", "compose_sha256": "018d979e3d7d798021e128a53ff66eb3002cbc35f92134ec140901f041bad973", "field_raw_words_exact": true, "compose_raw_bytes_exact": true, "padding_preserved": true},
+    {"name": "raw_threshold_n", "input_active_sha256": "471bbe2bb8605465d907f880dc90fcf0b1029d12e7ba648aff92ac3cab524086", "field_sha256": "2809a6364274c9b1f0516ec80aa9f82b85dafe0f18eff137aca538c67e738c1e", "compose_sha256": "018d979e3d7d798021e128a53ff66eb3002cbc35f92134ec140901f041bad973", "field_raw_words_exact": true, "compose_raw_bytes_exact": true, "padding_preserved": true},
+    {"name": "raw_threshold_n_plus_1", "input_active_sha256": "4137b450338f0de905d8cf630cf7710c2d7c9bce1f620728e2304ffff8d28198", "field_sha256": "2809a6364274c9b1f0516ec80aa9f82b85dafe0f18eff137aca538c67e738c1e", "compose_sha256": "018d979e3d7d798021e128a53ff66eb3002cbc35f92134ec140901f041bad973", "field_raw_words_exact": true, "compose_raw_bytes_exact": true, "padding_preserved": true},
+    {"name": "transparent_0_vs_opaque_1", "input_active_sha256": "58271517c55fea6fd92cec98a09c6fd28a5891ab4e0a92e6bb56f51da14dc5e0", "field_sha256": "c40ea14d388e0a3990ec328de8d296e20d33017e7601b01e286303c4fb440e51", "compose_sha256": "6bf1f1ec4ab026059a63785e035a7c1c3cea4e504ed0efedec95f70dd770ec53", "field_raw_words_exact": true, "compose_raw_bytes_exact": true, "padding_preserved": true},
+    {"name": "pf16_half_step_minus_exact_plus", "input_active_sha256": "a3c54e319eb48394dd3bcfbf13901f8ce35d52bdb36a69df4d5284e99d13cb7c", "field_sha256": "748de97e03f63cfadad51e298a76c918e5deedb5f0b246fa996ef3078f8a99a4", "compose_sha256": "837d84174580b3074ddd1bfc0001dd751b04a3e93b0507e259ac60bc78199334", "field_raw_words_exact": true, "compose_raw_bytes_exact": true, "padding_preserved": true},
+    {"name": "pf16_endpoint_zero_half_full", "input_active_sha256": "58271517c55fea6fd92cec98a09c6fd28a5891ab4e0a92e6bb56f51da14dc5e0", "field_sha256": "c40ea14d388e0a3990ec328de8d296e20d33017e7601b01e286303c4fb440e51", "compose_sha256": "6bf1f1ec4ab026059a63785e035a7c1c3cea4e504ed0efedec95f70dd770ec53", "field_raw_words_exact": true, "compose_raw_bytes_exact": true, "padding_preserved": true}
+  ],
+  "claims": {"windows_claim": false, "ae_exact_claim": false}
+}

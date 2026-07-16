@@ -1,18 +1,75 @@
 # OLM Conformance Ledger
 
-- 2026-07-17 `OLMKiraKira Mode2 dispatch Size boundary` (latest override):
+- 2026-07-17 `OLMDistanceGradation PF16 threshold boundary matrix` (latest
+  override): no AE correctness status is promoted. Six fixtures spanning the
+  raw threshold `n-1/n/n+1`, transparent/opaque topology, and PF16 endpoint
+  values execute the hash-pinned AEX and production source. All field words
+  and compose bytes match exactly, with zero diffs and intact row-padding
+  canaries. This broadens the bounded PF16 field/compose proof beyond the
+  original single fixture; it is not a Windows or Mac AE output claim. Next
+  action remains canonical AE validation of the unresolved host families.
+  Evidence:
+  `refs/conformance/olmdistancegradation_pf16_boundary_matrix_20260717.json`.
+
+- 2026-07-17 `OLMKiraKira FilterEngine store lineage` (latest override): no
+  correctness status is promoted. Actual `cv::FilterEngine::init` stores at
+  `0x1812b9b38` and `0x1812b9b4d` write the failing object fields, rather than
+  the scheduler range previously misidentified as geometry. The first store
+  copies raw `RAX=0x0000000180000000` to ksize `(INT32_MIN,1)`; the second
+  copies `RAX=0x00000000c0000000` to anchor `(-1073741824,0)`. The assertion
+  later reads the same values without mutation. The immediate source writes
+  are also grounded: `0x18128257a/0x18128257e` create R8's
+  `0x80000000/0xc0000000`, while `0x181281bbe/0x181281bc2` create RDX's
+  `1/0`. The next local boundary is therefore the calculation feeding the two
+  R8 stores, not the FilterEngine copy itself. No values were patched and no
+  writer or AE claim is made.
+  Evidence: `refs/conformance/olmkirakira_mode2_common_owner_20260717.json`.
+
+- 2026-07-17 `OLMRadialBlur resumable full-size transport` (latest override):
+  no correctness status is promoted. `AexLoader` can now save and restore a
+  compressed x64 loader-state checkpoint containing GP/XMM/flags,
+  mutable PE pages, stack, used heap/host memory, TEB, allocator cursors, and
+  callback stubs. Callback and import-shim code identities are pinned, while
+  harness option/state contracts remain the caller's responsibility.
+  Checkpoints fail closed on format, checksum, AEX identity, fixed-base
+  layout, region layout, and callback/import topology mismatches. A
+  synthetic mid-instruction-boundary round trip matches uninterrupted
+  execution exactly, and corruption/AEX-mismatch tests pass. The authentic
+  case_0009 runner exposes save-at-RIP and fresh-process resume controls so a
+  naturally reached full-size `0x180005c9f` state can be reused instead of
+  replaying the expensive prefix. This is transport infrastructure only: no
+  full-size value, Windows equivalence, or AE exact claim is made. Next
+  Mac-only action: produce the natural full-size pre-collapse checkpoint and
+  resume the four-cell witness from it. Evidence:
+  `tools/emulation/test_aex_checkpoint_roundtrip_20260717.py`.
+
+- 2026-07-17 `OLMDirectionalBlur nonzero typed-writer oracle` (latest
+  override): no AE correctness status is promoted. A checked-in 16x16
+  nonzero interior crop executes the actual AEX chain `0x180006980 ->
+  FUN_180001ec0 -> 0x180006b30` with 256 populate and 256 writer calls. All
+  256 PF_Pixel8 writer words match the source-included production Mac oracle
+  exactly, with zero mismatches and identical output SHA-256. No pixel values
+  were injected into the host model. This closes the bounded 8bpc local
+  algorithm/writer comparison, not Windows or Mac AE output. Next action:
+  loaded-module-bound Mac AE comparison against the Windows Software reference;
+  do not reopen writer math from PNG-only tuning. Evidence:
+  `refs/conformance/olmdirectionalblur_nonzero_writer_oracle_20260717.json`.
+
+- 2026-07-17 `OLMKiraKira Mode2 FilterEngine object boundary` (latest override):
   no correctness status is promoted. A resumable natural run advances
   through the actual OpenCV bootstrap `FUN_18114be60`: all six
   `FUN_181294950` calls return, `DAT_181843998` changes from 0 to 1, and the
   first `0x8000` coefficient bytes contain 26,892 nonzero bytes with SHA-256
-  `e83d193a...78e611`. Mode2 still fails in `cv::FilterEngine::init` after
-  `FUN_181298180` supplies the binary-generated `Size=(0,5)` argument. This
-  proves the former zero-filled coefficient-table shortcut is not the cause.
-  Static assembly pins the zero first component to `XOR R9D,R9D` and
-  `0x1812982ec`; the second component comes from `RSP+0x48`. Next Mac-only
-  action: identify the semantic role and producer contract of that second
-  component and its relation to the accompanying kernel size. Do not patch the
-  argument, suppress the assertion, or claim a typed writer. Evidence:
+  `e83d193a...78e611`. Mode2 still fails in `cv::FilterEngine::init`, but the
+  formerly reported `(0,5)` is now correctly grounded as the scheduler range
+  `[0,dst.rows)`, not anchor/ksize. Runtime capture of the actual FilterEngine
+  object at the throw path gives anchor `(-1073741824,0)` and ksize
+  `(-2147483648,1)`; `0 <= anchor.x` and `anchor.x < ksize.width` fail. This
+  proves both the coefficient table and scheduler range are valid upstream
+  boundaries while the FilterEngine constructor/object state is not. Next
+  Mac-only action: trace the producer of FilterEngine fields at
+  `+0x14/+0x18/+0x1c/+0x20`; do not patch values, suppress the assertion, or
+  claim a typed writer. Evidence:
   `refs/conformance/olmkirakira_mode2_common_owner_20260717.json`.
 
 - 2026-07-17 `OLMDistanceGradation 16bpc proof-render preflight` (latest

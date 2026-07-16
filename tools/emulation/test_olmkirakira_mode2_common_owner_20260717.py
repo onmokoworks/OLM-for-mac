@@ -29,6 +29,7 @@ from unicorn.x86_const import (
     UC_X86_REG_RSP,
     UC_X86_REG_XMM2,
 )
+from unicorn import UC_HOOK_MEM_WRITE
 from aex_loader import TEB_BASE
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -45,6 +46,10 @@ PF32_OWNER = 0x18114D7F0
 MODE2_DISPATCH = 0x18114F4A0
 PF32_TYPED_OWNER = 0x18114E460
 PF32_CALLSITES = (0x18114E5D7, 0x18114E739)
+FILTERENGINE_KSIZE_STORE_PRODUCERS = (0x1812B9B38, 0x1812B9B4D)
+FILTERENGINE_SOURCE_READ_SITES = (0x1812B9B27, 0x1812B9B3C, 0x1812B9B3F, 0x1812B9B46)
+FILTERENGINE_DIRECT_FILTER_BRANCH = 0x1812B9633
+FILTERENGINE_DIRECT_FILTER_STORE = 0x1812B96B2
 DISPATCH_LOOP_ENTRY = 0x181294AD5
 DISPATCH_PROGRESS = 0x181294C2E
 DISPATCH_CHUNK_INSTRUCTIONS = 10_000
@@ -55,21 +60,21 @@ OPENCV_DISPATCH_READY_FLAG = 0x181843998
 OPENCV_DISPATCH_COEFFICIENT_BYTES = 0x8000
 OPENCV_BOOTSTRAP_MAX_INSTRUCTIONS = 2_500_000
 
-FILTER_SIZE_PRIMARY_ZERO_WIDTH = 0x1812982EC
-FILTER_SIZE_PRIMARY_HEIGHT_LOAD = 0x1812982F1
-FILTER_SIZE_PRIMARY_CALL = 0x1812983B4
-FILTER_SIZE_SIBLING_ZERO_WIDTH = 0x1812977B8
-FILTER_SIZE_SIBLING_HEIGHT_LOAD = 0x1812977C0
-FILTER_SIZE_SIBLING_CALL = 0x181297811
+SCHEDULER_RANGE_PRIMARY_ZERO_START = 0x1812982EC
+SCHEDULER_RANGE_PRIMARY_END_LOAD = 0x1812982F1
+SCHEDULER_RANGE_PRIMARY_CALL = 0x1812983B4
+SCHEDULER_RANGE_SIBLING_ZERO_START = 0x1812977B8
+SCHEDULER_RANGE_SIBLING_END_LOAD = 0x1812977C0
+SCHEDULER_RANGE_SIBLING_CALL = 0x181297811
 OPENCV_DISPATCH_BOOTSTRAP = 0x18114BE60
 
-FILTER_SIZE_PRIMARY_BYTES = bytes.fromhex(
+SCHEDULER_RANGE_PRIMARY_BYTES = bytes.fromhex(
     "4533c9418bd1488bbdf805000085c97e51488bce4c8bc3f20f101d7f6b24000f1f8000000000"
     "660f6ed2f30fe6d20f28c2f20f5907f20f59c3f20f2dc0418900f20f595718f20f59d30f28c2f2"
     "0f2dc08901ffc24d8d4004488d49043b54244c7cc444894c24388b4424488944243c48"
 )
-FILTER_SIZE_SIBLING_BYTES = bytes.fromhex("c7442458000000008b8424280100008944245c488d8c2420")
-FILTER_SIZE_SIBLING_CALL_BYTES = bytes.fromhex("488d9424a0010000488d4c2458e8aa10")
+SCHEDULER_RANGE_SIBLING_BYTES = bytes.fromhex("c7442458000000008b8424280100008944245c488d8c2420")
+SCHEDULER_RANGE_SIBLING_CALL_BYTES = bytes.fromhex("488d9424a0010000488d4c2458e8aa10")
 OPENCV_DISPATCH_BOOTSTRAP_BYTES = bytes.fromhex(
     "4883ec2833d28d4a01e8e28a14004885c0745db201b901000000e8d18a14004885c0744c33d28d4a02"
     "e8c28a14004885c0743db201b902000000e8b18a14004885c0742c33d28d4a04e8a28a14004885c074"
@@ -172,12 +177,12 @@ def collect_static_fact_witnesses() -> dict[str, dict[str, object]]:
     decomp = DECOMP.read_text(encoding="utf-8")
     loader = AexLoader(str(AEX), verbose=False, fast=True)
     return {
-        "filter_size_primary": {
+        "scheduler_range_primary": {
             "function": "FUN_181298180",
             "bytes": {
                 "address": hex(0x18129828A),
-                "hex": loader.read_bytes(0x18129828A, len(FILTER_SIZE_PRIMARY_BYTES)).hex(),
-                "expected_hex": FILTER_SIZE_PRIMARY_BYTES.hex(),
+                "hex": loader.read_bytes(0x18129828A, len(SCHEDULER_RANGE_PRIMARY_BYTES)).hex(),
+                "expected_hex": SCHEDULER_RANGE_PRIMARY_BYTES.hex(),
             },
             "disasm": [
                 "18129828a  XOR R9D,R9D",
@@ -187,7 +192,7 @@ def collect_static_fact_witnesses() -> dict[str, dict[str, object]]:
                 "1812983af  LEA RCX,[RSP + 0x38]",
                 "1812983b4  CALL 0x1811d88c0",
             ],
-            "semantics": "FUN_181298180 explicitly zeroes Size.width/x at [RSP+0x38] after XOR R9D,R9D, then copies Size.height/y from [RSP+0x48] into [RSP+0x3c] before calling FUN_1811d88c0.",
+            "semantics": "FUN_181298180 forms the scheduler range [0,dst.rows): it writes start=0 at [RSP+0x38] and copies the destination row count to end at [RSP+0x3c] before calling FUN_1811d88c0. This RCX pair is not anchor or ksize geometry.",
             "decomp_grounding": "local_670 = 0; local_66c = local_660; ... FUN_1811d88c0(&local_670,&local_608,...)",
             "decomp_present": "local_670 = 0;" in decomp and "local_66c = local_660;" in decomp and "FUN_1811d88c0(&local_670,&local_608,(double)uVar9 * DAT_1814d6750);" in decomp,
             "asm_present": all(line in asm for line in (
@@ -199,15 +204,15 @@ def collect_static_fact_witnesses() -> dict[str, dict[str, object]]:
                 "1812983b4  CALL 0x1811d88c0",
             )),
         },
-        "filter_size_sibling": {
+        "scheduler_range_sibling": {
             "function": "FUN_181297ac0 caller frame before return 0x181297816",
             "bytes": {
-                "setup_address": hex(FILTER_SIZE_SIBLING_ZERO_WIDTH),
-                "setup_hex": loader.read_bytes(FILTER_SIZE_SIBLING_ZERO_WIDTH, len(FILTER_SIZE_SIBLING_BYTES)).hex(),
-                "setup_expected_hex": FILTER_SIZE_SIBLING_BYTES.hex(),
-                "call_address": hex(FILTER_SIZE_SIBLING_CALL - 0xD),
-                "call_hex": loader.read_bytes(FILTER_SIZE_SIBLING_CALL - 0xD, len(FILTER_SIZE_SIBLING_CALL_BYTES)).hex(),
-                "call_expected_hex": FILTER_SIZE_SIBLING_CALL_BYTES.hex(),
+                "setup_address": hex(SCHEDULER_RANGE_SIBLING_ZERO_START),
+                "setup_hex": loader.read_bytes(SCHEDULER_RANGE_SIBLING_ZERO_START, len(SCHEDULER_RANGE_SIBLING_BYTES)).hex(),
+                "setup_expected_hex": SCHEDULER_RANGE_SIBLING_BYTES.hex(),
+                "call_address": hex(SCHEDULER_RANGE_SIBLING_CALL - 0xD),
+                "call_hex": loader.read_bytes(SCHEDULER_RANGE_SIBLING_CALL - 0xD, len(SCHEDULER_RANGE_SIBLING_CALL_BYTES)).hex(),
+                "call_expected_hex": SCHEDULER_RANGE_SIBLING_CALL_BYTES.hex(),
             },
             "disasm": [
                 "1812977b8  MOV dword ptr [RSP + 0x58],0x0",
@@ -217,7 +222,7 @@ def collect_static_fact_witnesses() -> dict[str, dict[str, object]]:
                 "18129780c  LEA RCX,[RSP + 0x58]",
                 "181297811  CALL 0x1811d88c0",
             ],
-            "semantics": "The sibling setup repeats the same pattern: width/x is written as 0, height/y is copied from a caller local at [RSP+0x128], then FUN_1811d88c0 consumes the resulting Size from [RSP+0x58].",
+            "semantics": "The sibling setup repeats the scheduler contract: range.start=0 and range.end=dst.rows from the caller local at [RSP+0x128], then FUN_1811d88c0 consumes the range through RCX.",
             "decomp_grounding": "local_320 = 0; local_31c = local_250; ... FUN_1811d88c0(&local_320,&local_1d8,...)",
             "decomp_present": "local_320 = 0;" in decomp and "local_31c = local_250;" in decomp and "FUN_1811d88c0(&local_320,&local_1d8,(double)uVar5 * DAT_1814d6750);" in decomp,
             "asm_present": all(line in asm for line in (
@@ -228,6 +233,48 @@ def collect_static_fact_witnesses() -> dict[str, dict[str, object]]:
                 "18129780c  LEA RCX,[RSP + 0x58]",
                 "181297811  CALL 0x1811d88c0",
             )),
+        },
+        "filterengine_anchor_assertion": {
+            "function": "FUN_1812b98e0 cv::FilterEngine::init",
+            "object_register": "RDI",
+            "object_fields": {
+                "+0x14": "ksize.width",
+                "+0x18": "ksize.height",
+                "+0x1c": "anchor.x",
+                "+0x20": "anchor.y",
+            },
+            "compare_path": "0x1812b9b6f..0x1812b9b92",
+            "throw_callsite": "0x1812b9da8 -> FUN_181162610",
+            "semantics": "The assertion path reads all four compared fields directly from the FilterEngine object held in RDI; the runtime hook reports their values and the failed predicate without changing them.",
+            "asm_present": all(line in asm for line in (
+                "1812b9b6f  TEST EAX,EAX",
+                "1812b9b77  MOV R14D,dword ptr [RDI + 0x14]",
+                "1812b9b7b  CMP EAX,R14D",
+                "1812b9b84  MOV EAX,dword ptr [RDI + 0x20]",
+                "1812b9b8f  CMP EAX,dword ptr [RDI + 0x18]",
+                "1812b9da8  CALL 0x181162610",
+            )),
+        },
+        "filterengine_lineage_sites": {
+            "function": "FUN_1812b98e0 cv::FilterEngine::init",
+            "sites": {
+                "source_read_sites": [hex(address) for address in FILTERENGINE_SOURCE_READ_SITES],
+                "ksize_width_height_store": {"address": hex(FILTERENGINE_KSIZE_STORE_PRODUCERS[0]), "length": 4, "next": hex(FILTERENGINE_KSIZE_STORE_PRODUCERS[0] + 4)},
+                "anchor_x_y_store": {"address": hex(FILTERENGINE_KSIZE_STORE_PRODUCERS[1]), "length": 4, "next": hex(FILTERENGINE_KSIZE_STORE_PRODUCERS[1] + 4)},
+                "direct_filter_compare": {"address": hex(FILTERENGINE_DIRECT_FILTER_BRANCH), "length": 3, "next": hex(FILTERENGINE_DIRECT_FILTER_BRANCH + 3)},
+                "direct_filter_store": {"address": hex(FILTERENGINE_DIRECT_FILTER_STORE), "length": 3, "next": hex(FILTERENGINE_DIRECT_FILTER_STORE + 3)},
+            },
+            "asm_present": all(line in asm for line in (
+                "1812b9b27  MOV ECX,dword ptr [RDX + 0x8]",
+                "1812b9b3c  MOV ECX,dword ptr [RDX + 0xc]",
+                "1812b9b3f  MOV EAX,dword ptr [R8 + 0xc]",
+                "1812b9b46  MOV dword ptr [RBP + -0x55],ECX",
+                "1812b9b38  MOV qword ptr [RDI + 0x14],RAX",
+                "1812b9b4d  MOV qword ptr [RDI + 0x1c],RAX",
+                "1812b9633  CMP EDX,0x6",
+                "1812b96b2  MOV qword ptr [RDI],RAX",
+            )),
+            "hook_semantics": "A write-watch records real memory writes and instruction RIPs; source-read hooks capture RDX/R8 and RDI windows as raw/i32/f32; post hooks reread RDI +0x14..+0x20 without mutation.",
         },
         "opencv_dispatch_state": {
             "bootstrap_function": "FUN_18114be60",
@@ -285,8 +332,10 @@ def static_checks() -> dict[str, bool]:
         "pf32_owner_enters_typed_owner": "18114dd0d  CALL 0x18114e460" in pf32,
         "typed_owner_has_pf32_sites": all(f"{address:x}  CALL 0x181230c20" in typed for address in PF32_CALLSITES),
         "typed_writer_uses_rsp_plus_0x28": "181230c20  MOV RAX,qword ptr [RSP + 0x28]" in asm,
-        "filter_size_primary_static_bytes_and_semantics_are_grounded": static_facts["filter_size_primary"]["bytes"]["hex"] == static_facts["filter_size_primary"]["bytes"]["expected_hex"] and static_facts["filter_size_primary"]["asm_present"] and static_facts["filter_size_primary"]["decomp_present"],
-        "filter_size_sibling_static_bytes_and_semantics_are_grounded": static_facts["filter_size_sibling"]["bytes"]["setup_hex"] == static_facts["filter_size_sibling"]["bytes"]["setup_expected_hex"] and static_facts["filter_size_sibling"]["bytes"]["call_hex"] == static_facts["filter_size_sibling"]["bytes"]["call_expected_hex"] and static_facts["filter_size_sibling"]["asm_present"] and static_facts["filter_size_sibling"]["decomp_present"],
+        "scheduler_range_primary_static_bytes_and_semantics_are_grounded": static_facts["scheduler_range_primary"]["bytes"]["hex"] == static_facts["scheduler_range_primary"]["bytes"]["expected_hex"] and static_facts["scheduler_range_primary"]["asm_present"] and static_facts["scheduler_range_primary"]["decomp_present"],
+        "scheduler_range_sibling_static_bytes_and_semantics_are_grounded": static_facts["scheduler_range_sibling"]["bytes"]["setup_hex"] == static_facts["scheduler_range_sibling"]["bytes"]["setup_expected_hex"] and static_facts["scheduler_range_sibling"]["bytes"]["call_hex"] == static_facts["scheduler_range_sibling"]["bytes"]["call_expected_hex"] and static_facts["scheduler_range_sibling"]["asm_present"] and static_facts["scheduler_range_sibling"]["decomp_present"],
+        "filterengine_anchor_assertion_fields_are_grounded": static_facts["filterengine_anchor_assertion"]["asm_present"],
+        "filterengine_lineage_sites_are_grounded": static_facts["filterengine_lineage_sites"]["asm_present"],
         "opencv_dispatch_state_reference_is_grounded": static_facts["opencv_dispatch_state"]["bytes"]["hex"] == static_facts["opencv_dispatch_state"]["bytes"]["expected_hex"] and static_facts["opencv_dispatch_state"]["asm_present"],
     }
 
@@ -319,6 +368,8 @@ def run_owner_probe() -> dict[str, object]:
     next_runtime_boundary: dict[str, object] = {}
     dispatch_checkpoints: list[dict[str, object]] = []
     filter_setup_trace: list[dict[str, object]] = []
+    filter_assertion_capture: dict[str, object] = {}
+    filter_lineage_trace: list[dict[str, object]] = []
 
     def dispatch_checkpoint(ld: AexLoader, label: str) -> dict[str, object]:
         rsp = ld.uc.reg_read(UC_X86_REG_RSP)
@@ -1094,46 +1145,230 @@ def run_owner_probe() -> dict[str, object]:
                 "rdx": hex(rdx),
                 "xmm2_f64": struct.unpack("<d", int(ld.uc.reg_read(UC_X86_REG_XMM2) & ((1 << 64) - 1)).to_bytes(8, "little"))[0],
             }
-            if label == "FilterEngine setup entry":
+            if label == "FUN_1811d88c0 scheduler entry":
                 entry.update({
-                    "rcx_size_xy_i32": [struct.unpack("<i", ld.read_bytes(rcx + offset, 4))[0] for offset in (0, 4)],
+                    "rcx_scheduler_range_start_end_i32": [struct.unpack("<i", ld.read_bytes(rcx + offset, 4))[0] for offset in (0, 4)],
+                    "rcx_scheduler_semantics": "[start,end) = [0,dst.rows)",
                     "rdx_structure_0x00_0x40": ld.read_bytes(rdx, 0x40).hex(),
                 })
+            if label == "FilterEngine init body":
+                rdx = ld.uc.reg_read(UC_X86_REG_RDX)
+                r8 = ld.uc.reg_read(UC_X86_REG_R8)
+                rdi = ld.uc.reg_read(UC_X86_REG_RDI)
+                entry["r8_object_pointer"] = hex(r8)
+                entry["rdx_object_pointer"] = hex(rdx)
+                entry["filterengine_rdi_object_pointer"] = hex(rdi)
             filter_setup_trace.append(entry)
         return hook
 
-    loader.add_code_hook(0x1811D88C0, capture_filter_setup("FilterEngine setup entry"))
+    loader.add_code_hook(0x1811D88C0, capture_filter_setup("FUN_1811d88c0 scheduler entry"))
     loader.add_code_hook(0x1811D8A50, capture_filter_setup("FilterEngine init body"))
 
-    def capture_filter_engine_init(ld: AexLoader, _address: int, _size: int) -> None:
-        rsp = ld.uc.reg_read(UC_X86_REG_RSP)
-        structure = ld.uc.reg_read(UC_X86_REG_RCX)
-        filter_setup_trace.append({
-            "label": "FilterEngine::init entry",
-            "rip": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
-            "return_address": hex(read_u64(ld, rsp)),
-            "structure": hex(structure),
-            "structure_i32": {
-                f"+0x{offset:x}": struct.unpack("<i", ld.read_bytes(structure + offset, 4))[0]
-                for offset in (0x8, 0xc, 0x10, 0x14, 0x18, 0x1c, 0x20, 0x60)
+    def filter_object_fields(ld: AexLoader, structure: int) -> dict[str, int]:
+        return {
+            f"+0x{offset:x}": struct.unpack("<i", ld.read_bytes(structure + offset, 4))[0]
+            for offset in (0x14, 0x18, 0x1C, 0x20)
+        }
+
+    def object_window_snapshot(ld: AexLoader, pointer: int) -> dict[str, object]:
+        raw = ld.read_bytes(pointer, 0x24)
+        return {
+            "pointer": hex(pointer),
+            "range": "+0x00..+0x20",
+            "raw_hex": raw.hex(),
+            "i32": {
+                f"+0x{offset:02x}": struct.unpack("<i", raw[offset:offset + 4])[0]
+                for offset in range(0, 0x24, 4)
             },
-            "rdx": hex(ld.uc.reg_read(UC_X86_REG_RDX)),
-            "r8": hex(ld.uc.reg_read(UC_X86_REG_R8)),
-            "r9": hex(ld.uc.reg_read(UC_X86_REG_R9)),
+            "f32": {
+                f"+0x{offset:02x}": struct.unpack("<f", raw[offset:offset + 4])[0]
+                for offset in range(0, 0x24, 4)
+            },
+        }
+
+    source_object_pointers: set[int] = set()
+    watched_object_pointers: set[int] = set()
+    filter_last_writes: dict[str, dict[str, object]] = {}
+    heap_write_history: list[dict[str, object]] = []
+
+    def last_writes_for_object(pointer: int) -> dict[str, dict[str, object]]:
+        result: dict[str, dict[str, object]] = {}
+        for offset in range(0, 0x24, 4):
+            for item in reversed(heap_write_history):
+                item_start = int(item["address"], 16)
+                item_end = item_start + int(item["size"])
+                if item_start <= pointer + offset < item_end:
+                    result[f"+0x{offset:02x}"] = item
+                    break
+        return result
+
+    def watch_filter_and_source_writes(uc: object, _access: int, address: int, size: int, value: int, _user_data: object) -> None:
+        if 0x20000000 <= address < 0x21000000:
+            heap_write_history.append({
+                "address": hex(address),
+                "size": size,
+                "value_raw_hex": int(value & ((1 << (size * 8)) - 1)).to_bytes(size, "little").hex(),
+                "instruction_rip": hex(uc.reg_read(UC_X86_REG_RIP)),
+            })
+        targets = [("FilterEngine.RDI", pointer) for pointer in watched_object_pointers]
+        targets.extend(("source.RDX/R8", pointer) for pointer in source_object_pointers)
+        target = next((item for item in targets if item[1] <= address < item[1] + 0x24), None)
+        if target is None:
+            return
+        pointer_name, pointer = target
+        rip = uc.reg_read(UC_X86_REG_RIP)
+        before = object_window_snapshot(loader, pointer)
+        entry = {
+            "kind": "filterengine_lineage_write_watch",
+            "target": pointer_name,
+            "object_pointer": hex(pointer),
+            "address": hex(address),
+            "offset": hex(address - pointer),
+            "size": size,
+            "value_raw_hex": int(value & ((1 << (size * 8)) - 1)).to_bytes(size, "little").hex(),
+            "instruction_rip": hex(rip),
+            "registers": {name: hex(uc.reg_read(reg)) for name, reg in (("RDX", UC_X86_REG_RDX), ("R8", UC_X86_REG_R8), ("RAX", UC_X86_REG_RAX), ("RDI", UC_X86_REG_RDI))},
+            "before": before,
+        }
+        filter_lineage_trace.append(entry)
+        if pointer_name == "FilterEngine.RDI":
+            for offset in range(max(0, address - pointer), min(0x24, address - pointer + size), 4):
+                filter_last_writes[f"+0x{offset:02x}"] = {
+                    "instruction_rip": hex(rip),
+                    "address": hex(address),
+                    "size": size,
+                    "target": pointer_name,
+                }
+
+    loader.uc.hook_add(UC_HOOK_MEM_WRITE, watch_filter_and_source_writes)
+
+    def capture_filter_source_reads(ld: AexLoader, _address: int, _size: int) -> None:
+        rdx = ld.uc.reg_read(UC_X86_REG_RDX)
+        r8 = ld.uc.reg_read(UC_X86_REG_R8)
+        if ld.uc.reg_read(UC_X86_REG_RIP) == FILTERENGINE_SOURCE_READ_SITES[0]:
+            watched_object_pointers.clear()
+            filter_last_writes.clear()
+        source_object_pointers.update((rdx, r8))
+        watched_object_pointers.add(ld.uc.reg_read(UC_X86_REG_RDI))
+        filter_lineage_trace.append({
+            "kind": "filterengine_source_read_site",
+            "instruction_rip": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
+            "object_register": "RDX/R8",
+            "rdx": object_window_snapshot(ld, rdx),
+            "r8": object_window_snapshot(ld, r8),
+            "filterengine_rdi": object_window_snapshot(ld, ld.uc.reg_read(UC_X86_REG_RDI)),
+            "last_filterengine_writes": dict(filter_last_writes),
+            "last_source_writes": {
+                "RDX": last_writes_for_object(rdx),
+                "R8": last_writes_for_object(r8),
+            },
+            "unresolved_source_offsets": {
+                "RDX": [f"+0x{offset:02x}" for offset in range(0, 0x24, 4) if f"+0x{offset:02x}" not in last_writes_for_object(rdx)],
+                "R8": [f"+0x{offset:02x}" for offset in range(0, 0x24, 4) if f"+0x{offset:02x}" not in last_writes_for_object(r8)],
+            },
         })
 
-    loader.add_code_hook(0x1812B9DB0, capture_filter_engine_init)
-    loader.add_code_hook(0x1812AEB72, capture_filter_engine_init)
-    loader.add_code_hook(0x1812B9DA8, lambda ld, _address, _size: filter_setup_trace.append({
-        "label": "FilterEngine assertion callsite",
-        "rip": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
-        "return_address": hex(read_u64(ld, ld.uc.reg_read(UC_X86_REG_RSP))),
-        "rcx": hex(ld.uc.reg_read(UC_X86_REG_RCX)),
-        "rdx": hex(ld.uc.reg_read(UC_X86_REG_RDX)),
-        "r8": hex(ld.uc.reg_read(UC_X86_REG_R8)),
-        "r9": hex(ld.uc.reg_read(UC_X86_REG_R9)),
-        "rbp": hex(ld.uc.reg_read(UC_X86_REG_RBP)),
-    }))
+    for source_read_site in FILTERENGINE_SOURCE_READ_SITES:
+        loader.add_code_hook(source_read_site, capture_filter_source_reads)
+
+    def capture_filter_store_producer(label: str, next_address: int):
+        def hook(ld: AexLoader, _address: int, _size: int) -> None:
+            structure = ld.uc.reg_read(UC_X86_REG_RDI)
+            store_value = ld.uc.reg_read(UC_X86_REG_RAX) & ((1 << 64) - 1)
+            entry = {
+                "kind": "filterengine_store_producer",
+                "label": label,
+                "address": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
+                "instruction_length": next_address - ld.uc.reg_read(UC_X86_REG_RIP),
+                "post_store_hook": hex(next_address),
+                "object_register": "RDI",
+                "object_pointer": hex(structure),
+                "store_source_register": "RAX",
+                "store_source": hex(store_value),
+                "source_objects": {"RDX": hex(ld.uc.reg_read(UC_X86_REG_RDX)), "R8": hex(ld.uc.reg_read(UC_X86_REG_R8))},
+                "object_fields_before": filter_object_fields(ld, structure),
+            }
+            filter_lineage_trace.append(entry)
+        return hook
+
+    def capture_filter_store_after(label: str):
+        def hook(ld: AexLoader, _address: int, _size: int) -> None:
+            structure = ld.uc.reg_read(UC_X86_REG_RDI)
+            entry = next((item for item in reversed(filter_lineage_trace) if item.get("post_store_hook") == hex(ld.uc.reg_read(UC_X86_REG_RIP)) and item.get("object_pointer") == hex(structure)), None)
+            after = {
+                "kind": "filterengine_store_post",
+                "label": label,
+                "address": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
+                "object_register": "RDI",
+                "object_pointer": hex(structure),
+                "object_fields_after": filter_object_fields(ld, structure),
+            }
+            if entry is not None:
+                entry.update(after)
+            else:
+                filter_lineage_trace.append(after)
+            producer_rip = hex(ld.uc.reg_read(UC_X86_REG_RIP) - 4)
+            watched_write = next((item for item in reversed(filter_lineage_trace) if item.get("kind") == "filterengine_lineage_write_watch" and item.get("object_pointer") == hex(structure) and item.get("instruction_rip") == producer_rip), None)
+            if watched_write is not None:
+                watched_write["after"] = object_window_snapshot(ld, structure)
+        return hook
+
+    def capture_direct_filter_branch_after(ld: AexLoader, _address: int, _size: int) -> None:
+        filter_lineage_trace.append({
+            "kind": "direct_filter_branch_post",
+            "label": "direct-filter compare immediately after",
+            "address": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
+            "compare_instruction": hex(FILTERENGINE_DIRECT_FILTER_BRANCH),
+            "compare_operand_EDX": ld.uc.reg_read(UC_X86_REG_RDX) & 0xFFFFFFFF,
+            "direct_filter_selected": (ld.uc.reg_read(UC_X86_REG_RDX) & 0xFFFFFFFF) == 6,
+            "object_register": "RDI",
+            "object_pointer": hex(ld.uc.reg_read(UC_X86_REG_RDI)),
+            "object_fields": filter_object_fields(ld, ld.uc.reg_read(UC_X86_REG_RDI)),
+        })
+
+    loader.add_code_hook(FILTERENGINE_KSIZE_STORE_PRODUCERS[0], capture_filter_store_producer("ksize.width/height real store", FILTERENGINE_KSIZE_STORE_PRODUCERS[0] + 4))
+    loader.add_code_hook(FILTERENGINE_KSIZE_STORE_PRODUCERS[0] + 4, capture_filter_store_after("ksize.width/height store immediately after"))
+    loader.add_code_hook(FILTERENGINE_KSIZE_STORE_PRODUCERS[1], capture_filter_store_producer("anchor.x/y real store", FILTERENGINE_KSIZE_STORE_PRODUCERS[1] + 4))
+    loader.add_code_hook(FILTERENGINE_KSIZE_STORE_PRODUCERS[1] + 4, capture_filter_store_after("anchor.x/y store immediately after"))
+    loader.add_code_hook(FILTERENGINE_DIRECT_FILTER_BRANCH + 3, capture_direct_filter_branch_after)
+    loader.add_code_hook(FILTERENGINE_DIRECT_FILTER_STORE, capture_filter_store_producer("direct-filter object data store", FILTERENGINE_DIRECT_FILTER_STORE + 3))
+    loader.add_code_hook(FILTERENGINE_DIRECT_FILTER_STORE + 3, capture_filter_store_after("direct-filter object data store immediately after"))
+
+    def capture_filter_assertion(ld: AexLoader, _address: int, _size: int) -> None:
+        rsp = ld.uc.reg_read(UC_X86_REG_RSP)
+        structure = ld.uc.reg_read(UC_X86_REG_RDI)
+        ksize_width, ksize_height, anchor_x, anchor_y = (
+            struct.unpack("<i", ld.read_bytes(structure + offset, 4))[0]
+            for offset in (0x14, 0x18, 0x1C, 0x20)
+        )
+        predicates = {
+            "0 <= anchor.x": 0 <= anchor_x,
+            "anchor.x < ksize.width": anchor_x < ksize_width,
+            "0 <= anchor.y": 0 <= anchor_y,
+            "anchor.y < ksize.height": anchor_y < ksize_height,
+        }
+        filter_assertion_capture.update({
+            "label": "FilterEngine::init anchor assertion throw callsite",
+            "rip": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
+            "throw_target": "FUN_181162610",
+            "object_register": "RDI",
+            "object_pointer": hex(structure),
+            "compared_fields": {
+                "+0x14 ksize.width": ksize_width,
+                "+0x18 ksize.height": ksize_height,
+                "+0x1c anchor.x": anchor_x,
+                "+0x20 anchor.y": anchor_y,
+            },
+            "ksize": {"width": ksize_width, "height": ksize_height},
+            "anchor": {"x": anchor_x, "y": anchor_y},
+            "predicates": predicates,
+            "failed_predicates": [name for name, passed in predicates.items() if not passed],
+            "compare_path": "0x1812b9b6f..0x1812b9b92",
+            "stop_without_mutation": True,
+        })
+        filter_setup_trace.append(dict(filter_assertion_capture))
+
+    loader.add_code_hook(0x1812B9DA8, capture_filter_assertion)
     loader.add_code_hook(0x18132c184, lambda ld, _address, _size: next_runtime_boundary.update({
         "address": "0x18132c184",
         "kind": "CRT exception object construction before _CxxThrowException",
@@ -1222,13 +1457,14 @@ def run_owner_probe() -> dict[str, object]:
             owner_tail = "FUN_18115ea40 OOM constructor (requested bytes recorded below)"
         elif runtime_error_boundary.get("exception_class") == "cv::FilterEngine::init":
             next_contract = {
-                "kind": "binary-generated invalid FilterEngine anchor/ksize relation after verified OpenCV bootstrap",
+                "kind": "runtime-captured invalid FilterEngine anchor/ksize relation after verified OpenCV bootstrap",
                 "boundary": "FUN_181162610",
                 "exception_class": runtime_error_boundary.get("exception_class"),
                 "source_file": runtime_error_boundary.get("source_file"),
                 "line": runtime_error_boundary.get("line"),
                 "assertion": runtime_error_boundary.get("message"),
-                "static_size_fact": "Size=(0,5) is binary-generated here: width/x is explicitly zeroed and height/y is loaded from the stack local observed as 5; do not classify it as missing fixture geometry and do not invent width",
+                "scheduler_range_fact": "FUN_1811d88c0 RCX=(0,5) is the scheduler range [0,dst.rows), not anchor or ksize.",
+                "filterengine_object_capture": filter_assertion_capture,
                 "opencv_bootstrap_result": "Actual FUN_18114be60 returned, set DAT_181843998=1, and populated a nonzero 0x8000-byte coefficient region; the assertion persisted, so the former zero-table shortcut is not the cause of this stop.",
                 "fail_closed": True,
             }
@@ -1407,31 +1643,41 @@ def run_owner_probe() -> dict[str, object]:
         }
         filter_failure = None
         if runtime_error_boundary.get("exception_class") == "cv::FilterEngine::init":
-            size_entry = next((item for item in filter_setup_trace if item.get("label") == "FilterEngine setup entry"), {})
+            scheduler_entry = next((item for item in filter_setup_trace if item.get("label") == "FUN_1811d88c0 scheduler entry"), {})
             filter_failure = {
                 "smallest_invalid_state": {
-                    "kind": "generated cv::Size kernel geometry",
-                    "owner": "FUN_181298180 / sibling stack locals passed to FUN_1811d88c0",
-                    "passed_to": "FUN_1811d88c0 RCX",
-                    "observed_xy": size_entry.get("rcx_size_xy_i32"),
-                    "observed_height_y": size_entry.get("rcx_size_xy_i32", [None, None])[1],
-                    "invalid_field": "binary-generated width/x == 0",
+                    "kind": "FilterEngine object anchor/ksize fields at assertion throw path",
+                    "owner": "FUN_1812b98e0 cv::FilterEngine::init object in RDI",
+                    "object_pointer": filter_assertion_capture.get("object_pointer"),
+                    "compared_fields": filter_assertion_capture.get("compared_fields"),
+                    "anchor": filter_assertion_capture.get("anchor"),
+                    "ksize": filter_assertion_capture.get("ksize"),
+                    "predicates": filter_assertion_capture.get("predicates"),
+                    "failed_predicates": filter_assertion_capture.get("failed_predicates"),
+                },
+                "scheduler_range": {
+                    "owner": "FUN_181298180 / sibling stack locals passed to FUN_1811d88c0 RCX",
+                    "observed_start_end": scheduler_entry.get("rcx_scheduler_range_start_end_i32"),
+                    "semantics": "[0,dst.rows); not anchor or ksize",
                 },
                 "associated_mat": {
                     "owner": "FUN_1811d88c0 RDX structure",
                     "observed_shape": "5x5",
-                    "observed_header_hex": size_entry.get("rdx_structure_0x00_0x40"),
+                    "observed_header_hex": scheduler_entry.get("rdx_structure_0x00_0x40"),
                 },
-                "static_fact_witness_keys": ["filter_size_primary", "filter_size_sibling", "opencv_dispatch_state"],
+                "static_fact_witness_keys": ["scheduler_range_primary", "scheduler_range_sibling", "filterengine_anchor_assertion", "filterengine_lineage_sites", "opencv_dispatch_state"],
                 "derivable_from_current_mat_tls_parameter_contracts": False,
-                "reason": "Size=(0,5) is generated inside the binary filter path itself. The fixture did not omit kernel geometry, and this harness must not invent a replacement width.",
+                "reason": "The scheduler pair (0,5) is valid [0,dst.rows) work partitioning. The failure is reported only from the actual FilterEngine object fields captured in RDI at the assertion callsite.",
                 "next_unavailable_boundary": {
-                    "kind": "binary-generated invalid FilterEngine anchor/ksize relation after verified OpenCV bootstrap",
+                    "kind": "runtime-captured invalid FilterEngine anchor/ksize relation after verified OpenCV bootstrap",
                     "boundary": "FUN_181162610",
                     "exception_class": runtime_error_boundary.get("exception_class"),
                     "source_file": runtime_error_boundary.get("source_file"),
                     "line": runtime_error_boundary.get("line"),
                     "assertion": runtime_error_boundary.get("message"),
+                    "anchor": filter_assertion_capture.get("anchor"),
+                    "ksize": filter_assertion_capture.get("ksize"),
+                    "failed_predicates": filter_assertion_capture.get("failed_predicates"),
                     "opencv_bootstrap_result": "Actual FUN_18114be60 returned, set DAT_181843998=1, and populated a nonzero 0x8000-byte coefficient region before Mode2; the same anchor assertion persisted.",
                 },
                 "call_chain": [
@@ -1439,7 +1685,7 @@ def run_owner_probe() -> dict[str, object]:
                     "FUN_181294950",
                     "FUN_181298180 + 0x234 callsite 0x1812983b4",
                     "FUN_1811d88c0",
-                    "FUN_1812b9db0 assertion callsite 0x1812b9da8",
+                    "FUN_1812b98e0 FilterEngine::init compare path 0x1812b9b6f..0x1812b9b92 and assertion callsite 0x1812b9da8",
                     "FUN_181162610",
                 ],
                 "assertion": runtime_error_boundary,
@@ -1467,6 +1713,8 @@ def run_owner_probe() -> dict[str, object]:
             "inner_entry": inner_entry,
             "inner_instruction_trace": inner_instruction_trace,
             "filter_setup_trace": filter_setup_trace,
+            "filter_lineage_trace": filter_lineage_trace,
+            "filter_assertion_capture": filter_assertion_capture,
             "dispatch_checkpoints": dispatch_checkpoints,
             "dispatch_diagnosis": dispatch_diagnosis,
             "filter_failure": filter_failure,
@@ -1498,7 +1746,7 @@ def run_owner_probe() -> dict[str, object]:
             "first_unavailable_boundary": (
                 f"exact stop: FUN_181150790 entered; dispatch checkpoint repeated at RIP={execution_stop.get('rip')}; fixture state made no progress; no unimplemented import observed, no typed writer claim"
                 if execution_stop.get("condition") == "repeated checkpoint; fail closed"
-                else "exact stop after actual FUN_18114be60 bootstrap returned with DAT_181843998=1 and nonzero coefficients: FUN_181162610 cv::FilterEngine::init still asserted for binary-generated Size=(0,5); anchor/width was not patched and no typed writer was reached"
+                else f"exact stop after actual FUN_18114be60 bootstrap returned with DAT_181843998=1 and nonzero coefficients: FUN_181162610 cv::FilterEngine::init asserted with anchor.x={filter_assertion_capture.get('anchor', {}).get('x')}, anchor.y={filter_assertion_capture.get('anchor', {}).get('y')}, ksize.width={filter_assertion_capture.get('ksize', {}).get('width')}, ksize.height={filter_assertion_capture.get('ksize', {}).get('height')}; failed predicates={filter_assertion_capture.get('failed_predicates')}; FUN_1811d88c0 RCX=(0,5) is scheduler range [0,dst.rows); no values were patched and there is no writer or AE claim"
                 if execution_stop.get("condition") == "FilterEngine anchor assertion persisted after verified bootstrap; fail closed"
                 else f"exact stop: FUN_181150790 entered; FUN_181294950 fixture-state fault at RIP={execution_stop.get('rip')}; bounded execution failed closed; no typed writer claim"
                 if execution_stop.get("condition") == "dispatch fixture-state fault; fail closed"
@@ -1538,6 +1786,8 @@ def run_owner_probe() -> dict[str, object]:
             "inner_entry": inner_entry,
             "inner_instruction_trace": inner_instruction_trace,
             "filter_setup_trace": filter_setup_trace,
+            "filter_lineage_trace": filter_lineage_trace,
+            "filter_assertion_capture": filter_assertion_capture,
             "dispatch_checkpoints": dispatch_checkpoints,
             "dispatch_diagnosis": {
                 "strategy": "resume the original call frame at the current RIP; do not re-enter FUN_181150790",
@@ -1574,7 +1824,7 @@ def run_owner_probe() -> dict[str, object]:
             "first_unavailable_boundary": (
                 f"next exact boundary after one-key FLS/TLS lifecycle: FUN_18115eb30 -> _aligned_malloc({oom_request['requested_bytes']}, 64) returned null and reached FUN_18115ea40; no typed writer claim"
                 if oom_request else
-                "next exact boundary after actual FUN_18114be60 bootstrap and bounded aligned allocation: FUN_181162610 cv::FilterEngine::init anchor/ksize throw path from filter.dispatch.cpp:5; DAT_181843998=1 and nonzero coefficients were verified, Size=(0,5) remained binary-generated, and no typed writer was reached"
+                f"next exact boundary after actual FUN_18114be60 bootstrap and bounded aligned allocation: FUN_181162610 cv::FilterEngine::init throw path; anchor={filter_assertion_capture.get('anchor')}, ksize={filter_assertion_capture.get('ksize')}, failed={filter_assertion_capture.get('failed_predicates')}; FUN_1811d88c0 RCX=(0,5) is scheduler range [0,dst.rows), with no value patching or writer/AE claim"
             ),
             "exception": f"{type(exc).__name__}: {exc}",
         }

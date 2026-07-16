@@ -246,11 +246,44 @@
         "boundary": "FUN_181162610",
         "exception_class": "cv::FilterEngine::init",
         "fail_closed": true,
-        "kind": "binary-generated invalid FilterEngine anchor/ksize relation after verified OpenCV bootstrap",
+        "filterengine_object_capture": {
+          "anchor": {
+            "x": -1073741824,
+            "y": 0
+          },
+          "compare_path": "0x1812b9b6f..0x1812b9b92",
+          "compared_fields": {
+            "+0x14 ksize.width": -2147483648,
+            "+0x18 ksize.height": 1,
+            "+0x1c anchor.x": -1073741824,
+            "+0x20 anchor.y": 0
+          },
+          "failed_predicates": [
+            "0 <= anchor.x",
+            "anchor.x < ksize.width"
+          ],
+          "ksize": {
+            "height": 1,
+            "width": -2147483648
+          },
+          "label": "FilterEngine::init anchor assertion throw callsite",
+          "object_pointer": "0x20006d70",
+          "object_register": "RDI",
+          "predicates": {
+            "0 <= anchor.x": false,
+            "0 <= anchor.y": true,
+            "anchor.x < ksize.width": false,
+            "anchor.y < ksize.height": true
+          },
+          "rip": "0x1812b9da8",
+          "stop_without_mutation": true,
+          "throw_target": "FUN_181162610"
+        },
+        "kind": "runtime-captured invalid FilterEngine anchor/ksize relation after verified OpenCV bootstrap",
         "line": 5,
         "opencv_bootstrap_result": "Actual FUN_18114be60 returned, set DAT_181843998=1, and populated a nonzero 0x8000-byte coefficient region; the assertion persisted, so the former zero-table shortcut is not the cause of this stop.",
-        "source_file": "C:\\Users\\devbuild\\Documents\\4.5.5\\sources\\modules\\imgproc\\src\\filter.dispatch.cpp",
-        "static_size_fact": "Size=(0,5) is binary-generated here: width/x is explicitly zeroed and height/y is loaded from the stack local observed as 5; do not classify it as missing fixture geometry and do not invent width"
+        "scheduler_range_fact": "FUN_1811d88c0 RCX=(0,5) is the scheduler range [0,dst.rows), not anchor or ksize.",
+        "source_file": "C:\\Users\\devbuild\\Documents\\4.5.5\\sources\\modules\\imgproc\\src\\filter.dispatch.cpp"
       },
       "owner_chain": [
         "FUN_181157ed0 cv::Mat copy",
@@ -1721,6 +1754,39 @@
       "rip": "0x181162610",
       "rsp": "0xf0fd2e0"
     },
+    "filter_assertion_capture": {
+      "anchor": {
+        "x": -1073741824,
+        "y": 0
+      },
+      "compare_path": "0x1812b9b6f..0x1812b9b92",
+      "compared_fields": {
+        "+0x14 ksize.width": -2147483648,
+        "+0x18 ksize.height": 1,
+        "+0x1c anchor.x": -1073741824,
+        "+0x20 anchor.y": 0
+      },
+      "failed_predicates": [
+        "0 <= anchor.x",
+        "anchor.x < ksize.width"
+      ],
+      "ksize": {
+        "height": 1,
+        "width": -2147483648
+      },
+      "label": "FilterEngine::init anchor assertion throw callsite",
+      "object_pointer": "0x20006d70",
+      "object_register": "RDI",
+      "predicates": {
+        "0 <= anchor.x": false,
+        "0 <= anchor.y": true,
+        "anchor.x < ksize.width": false,
+        "anchor.y < ksize.height": true
+      },
+      "rip": "0x1812b9da8",
+      "stop_without_mutation": true,
+      "throw_target": "FUN_181162610"
+    },
     "filter_failure": {
       "assertion": {
         "address": "0x181162610",
@@ -1743,46 +1809,1126 @@
         "FUN_181294950",
         "FUN_181298180 + 0x234 callsite 0x1812983b4",
         "FUN_1811d88c0",
-        "FUN_1812b9db0 assertion callsite 0x1812b9da8",
+        "FUN_1812b98e0 FilterEngine::init compare path 0x1812b9b6f..0x1812b9b92 and assertion callsite 0x1812b9da8",
         "FUN_181162610"
       ],
       "derivable_from_current_mat_tls_parameter_contracts": false,
       "next_unavailable_boundary": {
+        "anchor": {
+          "x": -1073741824,
+          "y": 0
+        },
         "assertion": "0 <= anchor.x && anchor.x < ksize.width && 0 <= anchor.y && anchor.y < ksize.height",
         "boundary": "FUN_181162610",
         "exception_class": "cv::FilterEngine::init",
-        "kind": "binary-generated invalid FilterEngine anchor/ksize relation after verified OpenCV bootstrap",
+        "failed_predicates": [
+          "0 <= anchor.x",
+          "anchor.x < ksize.width"
+        ],
+        "kind": "runtime-captured invalid FilterEngine anchor/ksize relation after verified OpenCV bootstrap",
+        "ksize": {
+          "height": 1,
+          "width": -2147483648
+        },
         "line": 5,
         "opencv_bootstrap_result": "Actual FUN_18114be60 returned, set DAT_181843998=1, and populated a nonzero 0x8000-byte coefficient region before Mode2; the same anchor assertion persisted.",
         "source_file": "C:\\Users\\devbuild\\Documents\\4.5.5\\sources\\modules\\imgproc\\src\\filter.dispatch.cpp"
       },
-      "reason": "Size=(0,5) is generated inside the binary filter path itself. The fixture did not omit kernel geometry, and this harness must not invent a replacement width.",
-      "smallest_invalid_state": {
-        "invalid_field": "binary-generated width/x == 0",
-        "kind": "generated cv::Size kernel geometry",
-        "observed_height_y": 5,
-        "observed_xy": [
+      "reason": "The scheduler pair (0,5) is valid [0,dst.rows) work partitioning. The failure is reported only from the actual FilterEngine object fields captured in RDI at the assertion callsite.",
+      "scheduler_range": {
+        "observed_start_end": [
           0,
           5
         ],
-        "owner": "FUN_181298180 / sibling stack locals passed to FUN_1811d88c0",
-        "passed_to": "FUN_1811d88c0 RCX"
+        "owner": "FUN_181298180 / sibling stack locals passed to FUN_1811d88c0 RCX",
+        "semantics": "[0,dst.rows); not anchor or ksize"
+      },
+      "smallest_invalid_state": {
+        "anchor": {
+          "x": -1073741824,
+          "y": 0
+        },
+        "compared_fields": {
+          "+0x14 ksize.width": -2147483648,
+          "+0x18 ksize.height": 1,
+          "+0x1c anchor.x": -1073741824,
+          "+0x20 anchor.y": 0
+        },
+        "failed_predicates": [
+          "0 <= anchor.x",
+          "anchor.x < ksize.width"
+        ],
+        "kind": "FilterEngine object anchor/ksize fields at assertion throw path",
+        "ksize": {
+          "height": 1,
+          "width": -2147483648
+        },
+        "object_pointer": "0x20006d70",
+        "owner": "FUN_1812b98e0 cv::FilterEngine::init object in RDI",
+        "predicates": {
+          "0 <= anchor.x": false,
+          "0 <= anchor.y": true,
+          "anchor.x < ksize.width": false,
+          "anchor.y < ksize.height": true
+        }
       },
       "static_fact_witness_keys": [
-        "filter_size_primary",
-        "filter_size_sibling",
+        "scheduler_range_primary",
+        "scheduler_range_sibling",
+        "filterengine_anchor_assertion",
+        "filterengine_lineage_sites",
         "opencv_dispatch_state"
       ],
       "stop_without_mutation": true
     },
+    "filter_lineage_trace": [
+      {
+        "filterengine_rdi": {
+          "f32": {
+            "+0x00": -3.8692765300813995e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 7.006492321624085e-45,
+            "+0x0c": 7.006492321624085e-45,
+            "+0x10": 8.407790785948902e-45,
+            "+0x14": 0.0,
+            "+0x18": 0.0,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125289000,
+            "+0x04": 1,
+            "+0x08": 5,
+            "+0x0c": 5,
+            "+0x10": 6,
+            "+0x14": 0,
+            "+0x18": 0,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d70",
+          "range": "+0x00..+0x20",
+          "raw_hex": "d8a952810100000005000000050000000600000000000000000000000000000000000000"
+        },
+        "instruction_rip": "0x1812b9b27",
+        "kind": "filterengine_source_read_site",
+        "last_filterengine_writes": {},
+        "last_source_writes": {
+          "R8": {
+            "+0x00": {
+              "address": "0x20006d00",
+              "instruction_rip": "0x181282577",
+              "size": 8,
+              "value_raw_hex": "f0ca4d8101000000"
+            },
+            "+0x04": {
+              "address": "0x20006d00",
+              "instruction_rip": "0x181282577",
+              "size": 8,
+              "value_raw_hex": "f0ca4d8101000000"
+            },
+            "+0x08": {
+              "address": "0x20006d08",
+              "instruction_rip": "0x18128257a",
+              "size": 4,
+              "value_raw_hex": "00000080"
+            },
+            "+0x0c": {
+              "address": "0x20006d0c",
+              "instruction_rip": "0x18128257e",
+              "size": 4,
+              "value_raw_hex": "000000c0"
+            },
+            "+0x10": {
+              "address": "0x20006d10",
+              "instruction_rip": "0x181281b94",
+              "size": 8,
+              "value_raw_hex": "a0e34d8101000000"
+            },
+            "+0x14": {
+              "address": "0x20006d10",
+              "instruction_rip": "0x181281b94",
+              "size": 8,
+              "value_raw_hex": "a0e34d8101000000"
+            },
+            "+0x18": {
+              "address": "0x20006d18",
+              "instruction_rip": "0x1812b9a6e",
+              "size": 4,
+              "value_raw_hex": "02000000"
+            },
+            "+0x1c": {
+              "address": "0x20006d1c",
+              "instruction_rip": "0x181281b86",
+              "size": 4,
+              "value_raw_hex": "01000000"
+            },
+            "+0x20": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            }
+          },
+          "RDX": {
+            "+0x00": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            },
+            "+0x04": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            },
+            "+0x08": {
+              "address": "0x20006d28",
+              "instruction_rip": "0x181281bbe",
+              "size": 4,
+              "value_raw_hex": "01000000"
+            },
+            "+0x0c": {
+              "address": "0x20006d2c",
+              "instruction_rip": "0x181281bc2",
+              "size": 4,
+              "value_raw_hex": "00000000"
+            },
+            "+0x10": {
+              "address": "0x20006d30",
+              "instruction_rip": "0x181281bcb",
+              "size": 8,
+              "value_raw_hex": "00000000000000be"
+            },
+            "+0x14": {
+              "address": "0x20006d30",
+              "instruction_rip": "0x181281bcb",
+              "size": 8,
+              "value_raw_hex": "00000000000000be"
+            },
+            "+0x18": {
+              "address": "0x20006d38",
+              "instruction_rip": "0x181281bd0",
+              "size": 4,
+              "value_raw_hex": "00000000"
+            },
+            "+0x20": {
+              "address": "0x20006d40",
+              "instruction_rip": "0x181281bb2",
+              "size": 8,
+              "value_raw_hex": "0000000000000000"
+            }
+          }
+        },
+        "object_register": "RDX/R8",
+        "r8": {
+          "f32": {
+            "+0x00": -3.77981539404136e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": -0.0,
+            "+0x0c": -2.0,
+            "+0x10": -3.781586635300267e-38,
+            "+0x14": 1.401298464324817e-45,
+            "+0x18": 2.802596928649634e-45,
+            "+0x1c": 1.401298464324817e-45,
+            "+0x20": -3.7799431924613067e-38
+          },
+          "i32": {
+            "+0x00": -2125608208,
+            "+0x04": 1,
+            "+0x08": -2147483648,
+            "+0x0c": -1073741824,
+            "+0x10": -2125601888,
+            "+0x14": 1,
+            "+0x18": 2,
+            "+0x1c": 1,
+            "+0x20": -2125607752
+          },
+          "pointer": "0x20006d00",
+          "range": "+0x00..+0x20",
+          "raw_hex": "f0ca4d810100000000000080000000c0a0e34d81010000000200000001000000b8cc4d81"
+        },
+        "rdx": {
+          "f32": {
+            "+0x00": -3.7799431924613067e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 1.401298464324817e-45,
+            "+0x0c": 0.0,
+            "+0x10": 0.0,
+            "+0x14": -0.125,
+            "+0x18": 0.0,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125607752,
+            "+0x04": 1,
+            "+0x08": 1,
+            "+0x0c": 0,
+            "+0x10": 0,
+            "+0x14": -1107296256,
+            "+0x18": 0,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d20",
+          "range": "+0x00..+0x20",
+          "raw_hex": "b8cc4d8101000000010000000000000000000000000000be000000000000000000000000"
+        },
+        "unresolved_source_offsets": {
+          "R8": [],
+          "RDX": [
+            "+0x1c"
+          ]
+        }
+      },
+      {
+        "address": "0x1812b9b3c",
+        "instruction_length": 4,
+        "kind": "filterengine_store_post",
+        "label": "ksize.width/height store immediately after",
+        "object_fields_after": {
+          "+0x14": -2147483648,
+          "+0x18": 1,
+          "+0x1c": 0,
+          "+0x20": 0
+        },
+        "object_fields_before": {
+          "+0x14": 0,
+          "+0x18": 0,
+          "+0x1c": 0,
+          "+0x20": 0
+        },
+        "object_pointer": "0x20006d70",
+        "object_register": "RDI",
+        "post_store_hook": "0x1812b9b3c",
+        "source_objects": {
+          "R8": "0x20006d00",
+          "RDX": "0x20006d20"
+        },
+        "store_source": "0x180000000",
+        "store_source_register": "RAX"
+      },
+      {
+        "address": "0x20006d84",
+        "after": {
+          "f32": {
+            "+0x00": -3.8692765300813995e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 7.006492321624085e-45,
+            "+0x0c": 7.006492321624085e-45,
+            "+0x10": 8.407790785948902e-45,
+            "+0x14": -0.0,
+            "+0x18": 1.401298464324817e-45,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125289000,
+            "+0x04": 1,
+            "+0x08": 5,
+            "+0x0c": 5,
+            "+0x10": 6,
+            "+0x14": -2147483648,
+            "+0x18": 1,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d70",
+          "range": "+0x00..+0x20",
+          "raw_hex": "d8a952810100000005000000050000000600000000000080010000000000000000000000"
+        },
+        "before": {
+          "f32": {
+            "+0x00": -3.8692765300813995e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 7.006492321624085e-45,
+            "+0x0c": 7.006492321624085e-45,
+            "+0x10": 8.407790785948902e-45,
+            "+0x14": 0.0,
+            "+0x18": 0.0,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125289000,
+            "+0x04": 1,
+            "+0x08": 5,
+            "+0x0c": 5,
+            "+0x10": 6,
+            "+0x14": 0,
+            "+0x18": 0,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d70",
+          "range": "+0x00..+0x20",
+          "raw_hex": "d8a952810100000005000000050000000600000000000000000000000000000000000000"
+        },
+        "instruction_rip": "0x1812b9b38",
+        "kind": "filterengine_lineage_write_watch",
+        "object_pointer": "0x20006d70",
+        "offset": "0x14",
+        "registers": {
+          "R8": "0x20006d00",
+          "RAX": "0x180000000",
+          "RDI": "0x20006d70",
+          "RDX": "0x20006d20"
+        },
+        "size": 8,
+        "target": "FilterEngine.RDI",
+        "value_raw_hex": "0000008001000000"
+      },
+      {
+        "filterengine_rdi": {
+          "f32": {
+            "+0x00": -3.8692765300813995e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 7.006492321624085e-45,
+            "+0x0c": 7.006492321624085e-45,
+            "+0x10": 8.407790785948902e-45,
+            "+0x14": -0.0,
+            "+0x18": 1.401298464324817e-45,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125289000,
+            "+0x04": 1,
+            "+0x08": 5,
+            "+0x0c": 5,
+            "+0x10": 6,
+            "+0x14": -2147483648,
+            "+0x18": 1,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d70",
+          "range": "+0x00..+0x20",
+          "raw_hex": "d8a952810100000005000000050000000600000000000080010000000000000000000000"
+        },
+        "instruction_rip": "0x1812b9b3c",
+        "kind": "filterengine_source_read_site",
+        "last_filterengine_writes": {
+          "+0x14": {
+            "address": "0x20006d84",
+            "instruction_rip": "0x1812b9b38",
+            "size": 8,
+            "target": "FilterEngine.RDI"
+          },
+          "+0x18": {
+            "address": "0x20006d84",
+            "instruction_rip": "0x1812b9b38",
+            "size": 8,
+            "target": "FilterEngine.RDI"
+          }
+        },
+        "last_source_writes": {
+          "R8": {
+            "+0x00": {
+              "address": "0x20006d00",
+              "instruction_rip": "0x181282577",
+              "size": 8,
+              "value_raw_hex": "f0ca4d8101000000"
+            },
+            "+0x04": {
+              "address": "0x20006d00",
+              "instruction_rip": "0x181282577",
+              "size": 8,
+              "value_raw_hex": "f0ca4d8101000000"
+            },
+            "+0x08": {
+              "address": "0x20006d08",
+              "instruction_rip": "0x18128257a",
+              "size": 4,
+              "value_raw_hex": "00000080"
+            },
+            "+0x0c": {
+              "address": "0x20006d0c",
+              "instruction_rip": "0x18128257e",
+              "size": 4,
+              "value_raw_hex": "000000c0"
+            },
+            "+0x10": {
+              "address": "0x20006d10",
+              "instruction_rip": "0x181281b94",
+              "size": 8,
+              "value_raw_hex": "a0e34d8101000000"
+            },
+            "+0x14": {
+              "address": "0x20006d10",
+              "instruction_rip": "0x181281b94",
+              "size": 8,
+              "value_raw_hex": "a0e34d8101000000"
+            },
+            "+0x18": {
+              "address": "0x20006d18",
+              "instruction_rip": "0x1812b9a6e",
+              "size": 4,
+              "value_raw_hex": "02000000"
+            },
+            "+0x1c": {
+              "address": "0x20006d1c",
+              "instruction_rip": "0x181281b86",
+              "size": 4,
+              "value_raw_hex": "01000000"
+            },
+            "+0x20": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            }
+          },
+          "RDX": {
+            "+0x00": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            },
+            "+0x04": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            },
+            "+0x08": {
+              "address": "0x20006d28",
+              "instruction_rip": "0x181281bbe",
+              "size": 4,
+              "value_raw_hex": "01000000"
+            },
+            "+0x0c": {
+              "address": "0x20006d2c",
+              "instruction_rip": "0x181281bc2",
+              "size": 4,
+              "value_raw_hex": "00000000"
+            },
+            "+0x10": {
+              "address": "0x20006d30",
+              "instruction_rip": "0x181281bcb",
+              "size": 8,
+              "value_raw_hex": "00000000000000be"
+            },
+            "+0x14": {
+              "address": "0x20006d30",
+              "instruction_rip": "0x181281bcb",
+              "size": 8,
+              "value_raw_hex": "00000000000000be"
+            },
+            "+0x18": {
+              "address": "0x20006d38",
+              "instruction_rip": "0x181281bd0",
+              "size": 4,
+              "value_raw_hex": "00000000"
+            },
+            "+0x20": {
+              "address": "0x20006d40",
+              "instruction_rip": "0x181281bb2",
+              "size": 8,
+              "value_raw_hex": "0000000000000000"
+            }
+          }
+        },
+        "object_register": "RDX/R8",
+        "r8": {
+          "f32": {
+            "+0x00": -3.77981539404136e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": -0.0,
+            "+0x0c": -2.0,
+            "+0x10": -3.781586635300267e-38,
+            "+0x14": 1.401298464324817e-45,
+            "+0x18": 2.802596928649634e-45,
+            "+0x1c": 1.401298464324817e-45,
+            "+0x20": -3.7799431924613067e-38
+          },
+          "i32": {
+            "+0x00": -2125608208,
+            "+0x04": 1,
+            "+0x08": -2147483648,
+            "+0x0c": -1073741824,
+            "+0x10": -2125601888,
+            "+0x14": 1,
+            "+0x18": 2,
+            "+0x1c": 1,
+            "+0x20": -2125607752
+          },
+          "pointer": "0x20006d00",
+          "range": "+0x00..+0x20",
+          "raw_hex": "f0ca4d810100000000000080000000c0a0e34d81010000000200000001000000b8cc4d81"
+        },
+        "rdx": {
+          "f32": {
+            "+0x00": -3.7799431924613067e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 1.401298464324817e-45,
+            "+0x0c": 0.0,
+            "+0x10": 0.0,
+            "+0x14": -0.125,
+            "+0x18": 0.0,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125607752,
+            "+0x04": 1,
+            "+0x08": 1,
+            "+0x0c": 0,
+            "+0x10": 0,
+            "+0x14": -1107296256,
+            "+0x18": 0,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d20",
+          "range": "+0x00..+0x20",
+          "raw_hex": "b8cc4d8101000000010000000000000000000000000000be000000000000000000000000"
+        },
+        "unresolved_source_offsets": {
+          "R8": [],
+          "RDX": [
+            "+0x1c"
+          ]
+        }
+      },
+      {
+        "filterengine_rdi": {
+          "f32": {
+            "+0x00": -3.8692765300813995e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 7.006492321624085e-45,
+            "+0x0c": 7.006492321624085e-45,
+            "+0x10": 8.407790785948902e-45,
+            "+0x14": -0.0,
+            "+0x18": 1.401298464324817e-45,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125289000,
+            "+0x04": 1,
+            "+0x08": 5,
+            "+0x0c": 5,
+            "+0x10": 6,
+            "+0x14": -2147483648,
+            "+0x18": 1,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d70",
+          "range": "+0x00..+0x20",
+          "raw_hex": "d8a952810100000005000000050000000600000000000080010000000000000000000000"
+        },
+        "instruction_rip": "0x1812b9b3f",
+        "kind": "filterengine_source_read_site",
+        "last_filterengine_writes": {
+          "+0x14": {
+            "address": "0x20006d84",
+            "instruction_rip": "0x1812b9b38",
+            "size": 8,
+            "target": "FilterEngine.RDI"
+          },
+          "+0x18": {
+            "address": "0x20006d84",
+            "instruction_rip": "0x1812b9b38",
+            "size": 8,
+            "target": "FilterEngine.RDI"
+          }
+        },
+        "last_source_writes": {
+          "R8": {
+            "+0x00": {
+              "address": "0x20006d00",
+              "instruction_rip": "0x181282577",
+              "size": 8,
+              "value_raw_hex": "f0ca4d8101000000"
+            },
+            "+0x04": {
+              "address": "0x20006d00",
+              "instruction_rip": "0x181282577",
+              "size": 8,
+              "value_raw_hex": "f0ca4d8101000000"
+            },
+            "+0x08": {
+              "address": "0x20006d08",
+              "instruction_rip": "0x18128257a",
+              "size": 4,
+              "value_raw_hex": "00000080"
+            },
+            "+0x0c": {
+              "address": "0x20006d0c",
+              "instruction_rip": "0x18128257e",
+              "size": 4,
+              "value_raw_hex": "000000c0"
+            },
+            "+0x10": {
+              "address": "0x20006d10",
+              "instruction_rip": "0x181281b94",
+              "size": 8,
+              "value_raw_hex": "a0e34d8101000000"
+            },
+            "+0x14": {
+              "address": "0x20006d10",
+              "instruction_rip": "0x181281b94",
+              "size": 8,
+              "value_raw_hex": "a0e34d8101000000"
+            },
+            "+0x18": {
+              "address": "0x20006d18",
+              "instruction_rip": "0x1812b9a6e",
+              "size": 4,
+              "value_raw_hex": "02000000"
+            },
+            "+0x1c": {
+              "address": "0x20006d1c",
+              "instruction_rip": "0x181281b86",
+              "size": 4,
+              "value_raw_hex": "01000000"
+            },
+            "+0x20": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            }
+          },
+          "RDX": {
+            "+0x00": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            },
+            "+0x04": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            },
+            "+0x08": {
+              "address": "0x20006d28",
+              "instruction_rip": "0x181281bbe",
+              "size": 4,
+              "value_raw_hex": "01000000"
+            },
+            "+0x0c": {
+              "address": "0x20006d2c",
+              "instruction_rip": "0x181281bc2",
+              "size": 4,
+              "value_raw_hex": "00000000"
+            },
+            "+0x10": {
+              "address": "0x20006d30",
+              "instruction_rip": "0x181281bcb",
+              "size": 8,
+              "value_raw_hex": "00000000000000be"
+            },
+            "+0x14": {
+              "address": "0x20006d30",
+              "instruction_rip": "0x181281bcb",
+              "size": 8,
+              "value_raw_hex": "00000000000000be"
+            },
+            "+0x18": {
+              "address": "0x20006d38",
+              "instruction_rip": "0x181281bd0",
+              "size": 4,
+              "value_raw_hex": "00000000"
+            },
+            "+0x20": {
+              "address": "0x20006d40",
+              "instruction_rip": "0x181281bb2",
+              "size": 8,
+              "value_raw_hex": "0000000000000000"
+            }
+          }
+        },
+        "object_register": "RDX/R8",
+        "r8": {
+          "f32": {
+            "+0x00": -3.77981539404136e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": -0.0,
+            "+0x0c": -2.0,
+            "+0x10": -3.781586635300267e-38,
+            "+0x14": 1.401298464324817e-45,
+            "+0x18": 2.802596928649634e-45,
+            "+0x1c": 1.401298464324817e-45,
+            "+0x20": -3.7799431924613067e-38
+          },
+          "i32": {
+            "+0x00": -2125608208,
+            "+0x04": 1,
+            "+0x08": -2147483648,
+            "+0x0c": -1073741824,
+            "+0x10": -2125601888,
+            "+0x14": 1,
+            "+0x18": 2,
+            "+0x1c": 1,
+            "+0x20": -2125607752
+          },
+          "pointer": "0x20006d00",
+          "range": "+0x00..+0x20",
+          "raw_hex": "f0ca4d810100000000000080000000c0a0e34d81010000000200000001000000b8cc4d81"
+        },
+        "rdx": {
+          "f32": {
+            "+0x00": -3.7799431924613067e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 1.401298464324817e-45,
+            "+0x0c": 0.0,
+            "+0x10": 0.0,
+            "+0x14": -0.125,
+            "+0x18": 0.0,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125607752,
+            "+0x04": 1,
+            "+0x08": 1,
+            "+0x0c": 0,
+            "+0x10": 0,
+            "+0x14": -1107296256,
+            "+0x18": 0,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d20",
+          "range": "+0x00..+0x20",
+          "raw_hex": "b8cc4d8101000000010000000000000000000000000000be000000000000000000000000"
+        },
+        "unresolved_source_offsets": {
+          "R8": [],
+          "RDX": [
+            "+0x1c"
+          ]
+        }
+      },
+      {
+        "filterengine_rdi": {
+          "f32": {
+            "+0x00": -3.8692765300813995e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 7.006492321624085e-45,
+            "+0x0c": 7.006492321624085e-45,
+            "+0x10": 8.407790785948902e-45,
+            "+0x14": -0.0,
+            "+0x18": 1.401298464324817e-45,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125289000,
+            "+0x04": 1,
+            "+0x08": 5,
+            "+0x0c": 5,
+            "+0x10": 6,
+            "+0x14": -2147483648,
+            "+0x18": 1,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d70",
+          "range": "+0x00..+0x20",
+          "raw_hex": "d8a952810100000005000000050000000600000000000080010000000000000000000000"
+        },
+        "instruction_rip": "0x1812b9b46",
+        "kind": "filterengine_source_read_site",
+        "last_filterengine_writes": {
+          "+0x14": {
+            "address": "0x20006d84",
+            "instruction_rip": "0x1812b9b38",
+            "size": 8,
+            "target": "FilterEngine.RDI"
+          },
+          "+0x18": {
+            "address": "0x20006d84",
+            "instruction_rip": "0x1812b9b38",
+            "size": 8,
+            "target": "FilterEngine.RDI"
+          }
+        },
+        "last_source_writes": {
+          "R8": {
+            "+0x00": {
+              "address": "0x20006d00",
+              "instruction_rip": "0x181282577",
+              "size": 8,
+              "value_raw_hex": "f0ca4d8101000000"
+            },
+            "+0x04": {
+              "address": "0x20006d00",
+              "instruction_rip": "0x181282577",
+              "size": 8,
+              "value_raw_hex": "f0ca4d8101000000"
+            },
+            "+0x08": {
+              "address": "0x20006d08",
+              "instruction_rip": "0x18128257a",
+              "size": 4,
+              "value_raw_hex": "00000080"
+            },
+            "+0x0c": {
+              "address": "0x20006d0c",
+              "instruction_rip": "0x18128257e",
+              "size": 4,
+              "value_raw_hex": "000000c0"
+            },
+            "+0x10": {
+              "address": "0x20006d10",
+              "instruction_rip": "0x181281b94",
+              "size": 8,
+              "value_raw_hex": "a0e34d8101000000"
+            },
+            "+0x14": {
+              "address": "0x20006d10",
+              "instruction_rip": "0x181281b94",
+              "size": 8,
+              "value_raw_hex": "a0e34d8101000000"
+            },
+            "+0x18": {
+              "address": "0x20006d18",
+              "instruction_rip": "0x1812b9a6e",
+              "size": 4,
+              "value_raw_hex": "02000000"
+            },
+            "+0x1c": {
+              "address": "0x20006d1c",
+              "instruction_rip": "0x181281b86",
+              "size": 4,
+              "value_raw_hex": "01000000"
+            },
+            "+0x20": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            }
+          },
+          "RDX": {
+            "+0x00": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            },
+            "+0x04": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            },
+            "+0x08": {
+              "address": "0x20006d28",
+              "instruction_rip": "0x181281bbe",
+              "size": 4,
+              "value_raw_hex": "01000000"
+            },
+            "+0x0c": {
+              "address": "0x20006d2c",
+              "instruction_rip": "0x181281bc2",
+              "size": 4,
+              "value_raw_hex": "00000000"
+            },
+            "+0x10": {
+              "address": "0x20006d30",
+              "instruction_rip": "0x181281bcb",
+              "size": 8,
+              "value_raw_hex": "00000000000000be"
+            },
+            "+0x14": {
+              "address": "0x20006d30",
+              "instruction_rip": "0x181281bcb",
+              "size": 8,
+              "value_raw_hex": "00000000000000be"
+            },
+            "+0x18": {
+              "address": "0x20006d38",
+              "instruction_rip": "0x181281bd0",
+              "size": 4,
+              "value_raw_hex": "00000000"
+            },
+            "+0x20": {
+              "address": "0x20006d40",
+              "instruction_rip": "0x181281bb2",
+              "size": 8,
+              "value_raw_hex": "0000000000000000"
+            }
+          }
+        },
+        "object_register": "RDX/R8",
+        "r8": {
+          "f32": {
+            "+0x00": -3.77981539404136e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": -0.0,
+            "+0x0c": -2.0,
+            "+0x10": -3.781586635300267e-38,
+            "+0x14": 1.401298464324817e-45,
+            "+0x18": 2.802596928649634e-45,
+            "+0x1c": 1.401298464324817e-45,
+            "+0x20": -3.7799431924613067e-38
+          },
+          "i32": {
+            "+0x00": -2125608208,
+            "+0x04": 1,
+            "+0x08": -2147483648,
+            "+0x0c": -1073741824,
+            "+0x10": -2125601888,
+            "+0x14": 1,
+            "+0x18": 2,
+            "+0x1c": 1,
+            "+0x20": -2125607752
+          },
+          "pointer": "0x20006d00",
+          "range": "+0x00..+0x20",
+          "raw_hex": "f0ca4d810100000000000080000000c0a0e34d81010000000200000001000000b8cc4d81"
+        },
+        "rdx": {
+          "f32": {
+            "+0x00": -3.7799431924613067e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 1.401298464324817e-45,
+            "+0x0c": 0.0,
+            "+0x10": 0.0,
+            "+0x14": -0.125,
+            "+0x18": 0.0,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125607752,
+            "+0x04": 1,
+            "+0x08": 1,
+            "+0x0c": 0,
+            "+0x10": 0,
+            "+0x14": -1107296256,
+            "+0x18": 0,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d20",
+          "range": "+0x00..+0x20",
+          "raw_hex": "b8cc4d8101000000010000000000000000000000000000be000000000000000000000000"
+        },
+        "unresolved_source_offsets": {
+          "R8": [],
+          "RDX": [
+            "+0x1c"
+          ]
+        }
+      },
+      {
+        "address": "0x1812b9b51",
+        "instruction_length": 4,
+        "kind": "filterengine_store_post",
+        "label": "anchor.x/y store immediately after",
+        "object_fields_after": {
+          "+0x14": -2147483648,
+          "+0x18": 1,
+          "+0x1c": -1073741824,
+          "+0x20": 0
+        },
+        "object_fields_before": {
+          "+0x14": -2147483648,
+          "+0x18": 1,
+          "+0x1c": 0,
+          "+0x20": 0
+        },
+        "object_pointer": "0x20006d70",
+        "object_register": "RDI",
+        "post_store_hook": "0x1812b9b51",
+        "source_objects": {
+          "R8": "0x20006d00",
+          "RDX": "0x20006d20"
+        },
+        "store_source": "0xc0000000",
+        "store_source_register": "RAX"
+      },
+      {
+        "address": "0x20006d8c",
+        "after": {
+          "f32": {
+            "+0x00": -3.8692765300813995e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 7.006492321624085e-45,
+            "+0x0c": 7.006492321624085e-45,
+            "+0x10": 8.407790785948902e-45,
+            "+0x14": -0.0,
+            "+0x18": 1.401298464324817e-45,
+            "+0x1c": -2.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125289000,
+            "+0x04": 1,
+            "+0x08": 5,
+            "+0x0c": 5,
+            "+0x10": 6,
+            "+0x14": -2147483648,
+            "+0x18": 1,
+            "+0x1c": -1073741824,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d70",
+          "range": "+0x00..+0x20",
+          "raw_hex": "d8a95281010000000500000005000000060000000000008001000000000000c000000000"
+        },
+        "before": {
+          "f32": {
+            "+0x00": -3.8692765300813995e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 7.006492321624085e-45,
+            "+0x0c": 7.006492321624085e-45,
+            "+0x10": 8.407790785948902e-45,
+            "+0x14": -0.0,
+            "+0x18": 1.401298464324817e-45,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125289000,
+            "+0x04": 1,
+            "+0x08": 5,
+            "+0x0c": 5,
+            "+0x10": 6,
+            "+0x14": -2147483648,
+            "+0x18": 1,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d70",
+          "range": "+0x00..+0x20",
+          "raw_hex": "d8a952810100000005000000050000000600000000000080010000000000000000000000"
+        },
+        "instruction_rip": "0x1812b9b4d",
+        "kind": "filterengine_lineage_write_watch",
+        "object_pointer": "0x20006d70",
+        "offset": "0x1c",
+        "registers": {
+          "R8": "0x20006d00",
+          "RAX": "0xc0000000",
+          "RDI": "0x20006d70",
+          "RDX": "0x20006d20"
+        },
+        "size": 8,
+        "target": "FilterEngine.RDI",
+        "value_raw_hex": "000000c000000000"
+      }
+    ],
     "filter_setup_trace": [
       {
-        "label": "FilterEngine setup entry",
+        "label": "FUN_1811d88c0 scheduler entry",
         "rcx": "0xf0fd018",
-        "rcx_size_xy_i32": [
+        "rcx_scheduler_range_start_end_i32": [
           0,
           5
         ],
+        "rcx_scheduler_semantics": "[start,end) = [0,dst.rows)",
         "rdx": "0xf0fd080",
         "rdx_structure_0x00_0x40": "68e94d81010000000540ff4202000000050000000500000080060140000000008006014000000000e406014000000000e4060140000000000000000000000000",
         "return_address": "0x1812983b9",
@@ -1790,20 +2936,24 @@
         "xmm2_f64": 0.0003814697265625
       },
       {
+        "filterengine_rdi_object_pointer": "0xf0fd080",
         "label": "FilterEngine init body",
+        "r8_object_pointer": "0xf0fd214",
         "rcx": "0xf0fd018",
         "rdx": "0xf0fd080",
+        "rdx_object_pointer": "0xf0fd080",
         "return_address": "0x1811d896c",
         "rip": "0x1811d8a50",
         "xmm2_f64": 0.0003814697265625
       },
       {
-        "label": "FilterEngine setup entry",
+        "label": "FUN_1811d88c0 scheduler entry",
         "rcx": "0xf0fc828",
-        "rcx_size_xy_i32": [
+        "rcx_scheduler_range_start_end_i32": [
           0,
           5
         ],
+        "rcx_scheduler_semantics": "[start,end) = [0,dst.rows)",
         "rdx": "0xf0fc970",
         "rdx_structure_0x00_0x40": "00e54d810100000090c80f0f00000000f0c80f0f00000000e0c90f0f0000000040ca0f0f00000000000000000100000000000000000000000000000000000000",
         "return_address": "0x181297816",
@@ -1811,17 +2961,40 @@
         "xmm2_f64": 0.0003814697265625
       },
       {
-        "label": "FilterEngine assertion callsite",
-        "r8": "0x18152bfd8",
-        "r9": "0x18152bf80",
-        "rbp": "0xf0fd5c1",
-        "rcx": "0xffffff29",
-        "rdx": "0xf0fd598",
-        "return_address": "0xf0fd950",
-        "rip": "0x1812b9da8"
+        "anchor": {
+          "x": -1073741824,
+          "y": 0
+        },
+        "compare_path": "0x1812b9b6f..0x1812b9b92",
+        "compared_fields": {
+          "+0x14 ksize.width": -2147483648,
+          "+0x18 ksize.height": 1,
+          "+0x1c anchor.x": -1073741824,
+          "+0x20 anchor.y": 0
+        },
+        "failed_predicates": [
+          "0 <= anchor.x",
+          "anchor.x < ksize.width"
+        ],
+        "ksize": {
+          "height": 1,
+          "width": -2147483648
+        },
+        "label": "FilterEngine::init anchor assertion throw callsite",
+        "object_pointer": "0x20006d70",
+        "object_register": "RDI",
+        "predicates": {
+          "0 <= anchor.x": false,
+          "0 <= anchor.y": true,
+          "anchor.x < ksize.width": false,
+          "anchor.y < ksize.height": true
+        },
+        "rip": "0x1812b9da8",
+        "stop_without_mutation": true,
+        "throw_target": "FUN_181162610"
       }
     ],
-    "first_unavailable_boundary": "exact stop after actual FUN_18114be60 bootstrap returned with DAT_181843998=1 and nonzero coefficients: FUN_181162610 cv::FilterEngine::init still asserted for binary-generated Size=(0,5); anchor/width was not patched and no typed writer was reached",
+    "first_unavailable_boundary": "exact stop after actual FUN_18114be60 bootstrap returned with DAT_181843998=1 and nonzero coefficients: FUN_181162610 cv::FilterEngine::init asserted with anchor.x=-1073741824, anchor.y=0, ksize.width=-2147483648, ksize.height=1; failed predicates=['0 <= anchor.x', 'anchor.x < ksize.width']; FUN_1811d88c0 RCX=(0,5) is scheduler range [0,dst.rows); no values were patched and there is no writer or AE claim",
     "fls_lifecycle": [
       {
         "accepted": true,
@@ -7218,8 +8391,8 @@
     "common_owner_present": true,
     "common_owner_reads_pf_depth": true,
     "common_owner_selects_pf32_owner": true,
-    "filter_size_primary_static_bytes_and_semantics_are_grounded": true,
-    "filter_size_sibling_static_bytes_and_semantics_are_grounded": true,
+    "filterengine_anchor_assertion_fields_are_grounded": true,
+    "filterengine_lineage_sites_are_grounded": true,
     "kira_defaults_are_grounded": true,
     "next_callback_pointer_abi_is_grounded": true,
     "opencv_dispatch_state_reference_is_grounded": true,
@@ -7230,52 +8403,58 @@
     "param_table_scan_is_grounded": true,
     "pf32_owner_enters_mode2_dispatch": true,
     "pf32_owner_enters_typed_owner": true,
+    "scheduler_range_primary_static_bytes_and_semantics_are_grounded": true,
+    "scheduler_range_sibling_static_bytes_and_semantics_are_grounded": true,
     "typed_owner_has_pf32_sites": true,
     "typed_writer_uses_rsp_plus_0x28": true
   },
   "static_fact_witnesses": {
-    "filter_size_primary": {
+    "filterengine_anchor_assertion": {
       "asm_present": true,
-      "bytes": {
-        "address": "0x18129828a",
-        "expected_hex": "4533c9418bd1488bbdf805000085c97e51488bce4c8bc3f20f101d7f6b24000f1f8000000000660f6ed2f30fe6d20f28c2f20f5907f20f59c3f20f2dc0418900f20f595718f20f59d30f28c2f20f2dc08901ffc24d8d4004488d49043b54244c7cc444894c24388b4424488944243c48",
-        "hex": "4533c9418bd1488bbdf805000085c97e51488bce4c8bc3f20f101d7f6b24000f1f8000000000660f6ed2f30fe6d20f28c2f20f5907f20f59c3f20f2dc0418900f20f595718f20f59d30f28c2f20f2dc08901ffc24d8d4004488d49043b54244c7cc444894c24388b4424488944243c48"
+      "compare_path": "0x1812b9b6f..0x1812b9b92",
+      "function": "FUN_1812b98e0 cv::FilterEngine::init",
+      "object_fields": {
+        "+0x14": "ksize.width",
+        "+0x18": "ksize.height",
+        "+0x1c": "anchor.x",
+        "+0x20": "anchor.y"
       },
-      "decomp_grounding": "local_670 = 0; local_66c = local_660; ... FUN_1811d88c0(&local_670,&local_608,...)",
-      "decomp_present": true,
-      "disasm": [
-        "18129828a  XOR R9D,R9D",
-        "1812982ec  MOV dword ptr [RSP + 0x38],R9D",
-        "1812982f1  MOV EAX,dword ptr [RSP + 0x48]",
-        "1812982f5  MOV dword ptr [RSP + 0x3c],EAX",
-        "1812983af  LEA RCX,[RSP + 0x38]",
-        "1812983b4  CALL 0x1811d88c0"
-      ],
-      "function": "FUN_181298180",
-      "semantics": "FUN_181298180 explicitly zeroes Size.width/x at [RSP+0x38] after XOR R9D,R9D, then copies Size.height/y from [RSP+0x48] into [RSP+0x3c] before calling FUN_1811d88c0."
+      "object_register": "RDI",
+      "semantics": "The assertion path reads all four compared fields directly from the FilterEngine object held in RDI; the runtime hook reports their values and the failed predicate without changing them.",
+      "throw_callsite": "0x1812b9da8 -> FUN_181162610"
     },
-    "filter_size_sibling": {
+    "filterengine_lineage_sites": {
       "asm_present": true,
-      "bytes": {
-        "call_address": "0x181297804",
-        "call_expected_hex": "488d9424a0010000488d4c2458e8aa10",
-        "call_hex": "488d9424a0010000488d4c2458e8aa10",
-        "setup_address": "0x1812977b8",
-        "setup_expected_hex": "c7442458000000008b8424280100008944245c488d8c2420",
-        "setup_hex": "c7442458000000008b8424280100008944245c488d8c2420"
-      },
-      "decomp_grounding": "local_320 = 0; local_31c = local_250; ... FUN_1811d88c0(&local_320,&local_1d8,...)",
-      "decomp_present": true,
-      "disasm": [
-        "1812977b8  MOV dword ptr [RSP + 0x58],0x0",
-        "1812977c0  MOV EAX,dword ptr [RSP + 0x128]",
-        "1812977c7  MOV dword ptr [RSP + 0x5c],EAX",
-        "181297804  LEA RDX,[RSP + 0x1a0]",
-        "18129780c  LEA RCX,[RSP + 0x58]",
-        "181297811  CALL 0x1811d88c0"
-      ],
-      "function": "FUN_181297ac0 caller frame before return 0x181297816",
-      "semantics": "The sibling setup repeats the same pattern: width/x is written as 0, height/y is copied from a caller local at [RSP+0x128], then FUN_1811d88c0 consumes the resulting Size from [RSP+0x58]."
+      "function": "FUN_1812b98e0 cv::FilterEngine::init",
+      "hook_semantics": "A write-watch records real memory writes and instruction RIPs; source-read hooks capture RDX/R8 and RDI windows as raw/i32/f32; post hooks reread RDI +0x14..+0x20 without mutation.",
+      "sites": {
+        "anchor_x_y_store": {
+          "address": "0x1812b9b4d",
+          "length": 4,
+          "next": "0x1812b9b51"
+        },
+        "direct_filter_compare": {
+          "address": "0x1812b9633",
+          "length": 3,
+          "next": "0x1812b9636"
+        },
+        "direct_filter_store": {
+          "address": "0x1812b96b2",
+          "length": 3,
+          "next": "0x1812b96b5"
+        },
+        "ksize_width_height_store": {
+          "address": "0x1812b9b38",
+          "length": 4,
+          "next": "0x1812b9b3c"
+        },
+        "source_read_sites": [
+          "0x1812b9b27",
+          "0x1812b9b3c",
+          "0x1812b9b3f",
+          "0x1812b9b46"
+        ]
+      }
     },
     "opencv_dispatch_state": {
       "asm_present": true,
@@ -7296,6 +8475,49 @@
         "181292f59  MOV RAX,qword ptr [0x181843990]"
       ],
       "semantics": "OpenCV bootstrap calls FUN_181294950 with (channels, table_write) = (1,0), (1,1), (2,0), (2,1), (4,0), (4,1), sets DAT_181843998 only after all six calls return nonzero, and later code reads qword ptr [0x181843990]."
+    },
+    "scheduler_range_primary": {
+      "asm_present": true,
+      "bytes": {
+        "address": "0x18129828a",
+        "expected_hex": "4533c9418bd1488bbdf805000085c97e51488bce4c8bc3f20f101d7f6b24000f1f8000000000660f6ed2f30fe6d20f28c2f20f5907f20f59c3f20f2dc0418900f20f595718f20f59d30f28c2f20f2dc08901ffc24d8d4004488d49043b54244c7cc444894c24388b4424488944243c48",
+        "hex": "4533c9418bd1488bbdf805000085c97e51488bce4c8bc3f20f101d7f6b24000f1f8000000000660f6ed2f30fe6d20f28c2f20f5907f20f59c3f20f2dc0418900f20f595718f20f59d30f28c2f20f2dc08901ffc24d8d4004488d49043b54244c7cc444894c24388b4424488944243c48"
+      },
+      "decomp_grounding": "local_670 = 0; local_66c = local_660; ... FUN_1811d88c0(&local_670,&local_608,...)",
+      "decomp_present": true,
+      "disasm": [
+        "18129828a  XOR R9D,R9D",
+        "1812982ec  MOV dword ptr [RSP + 0x38],R9D",
+        "1812982f1  MOV EAX,dword ptr [RSP + 0x48]",
+        "1812982f5  MOV dword ptr [RSP + 0x3c],EAX",
+        "1812983af  LEA RCX,[RSP + 0x38]",
+        "1812983b4  CALL 0x1811d88c0"
+      ],
+      "function": "FUN_181298180",
+      "semantics": "FUN_181298180 forms the scheduler range [0,dst.rows): it writes start=0 at [RSP+0x38] and copies the destination row count to end at [RSP+0x3c] before calling FUN_1811d88c0. This RCX pair is not anchor or ksize geometry."
+    },
+    "scheduler_range_sibling": {
+      "asm_present": true,
+      "bytes": {
+        "call_address": "0x181297804",
+        "call_expected_hex": "488d9424a0010000488d4c2458e8aa10",
+        "call_hex": "488d9424a0010000488d4c2458e8aa10",
+        "setup_address": "0x1812977b8",
+        "setup_expected_hex": "c7442458000000008b8424280100008944245c488d8c2420",
+        "setup_hex": "c7442458000000008b8424280100008944245c488d8c2420"
+      },
+      "decomp_grounding": "local_320 = 0; local_31c = local_250; ... FUN_1811d88c0(&local_320,&local_1d8,...)",
+      "decomp_present": true,
+      "disasm": [
+        "1812977b8  MOV dword ptr [RSP + 0x58],0x0",
+        "1812977c0  MOV EAX,dword ptr [RSP + 0x128]",
+        "1812977c7  MOV dword ptr [RSP + 0x5c],EAX",
+        "181297804  LEA RDX,[RSP + 0x1a0]",
+        "18129780c  LEA RCX,[RSP + 0x58]",
+        "181297811  CALL 0x1811d88c0"
+      ],
+      "function": "FUN_181297ac0 caller frame before return 0x181297816",
+      "semantics": "The sibling setup repeats the scheduler contract: range.start=0 and range.end=dst.rows from the caller local at [RSP+0x128], then FUN_1811d88c0 consumes the range through RCX."
     }
   },
   "status": "FAILED"

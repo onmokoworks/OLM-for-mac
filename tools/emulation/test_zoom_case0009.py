@@ -29,7 +29,7 @@ from typing import Any
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).parent))
-from aex_loader import AexLoader  # noqa: E402
+from aex_loader import AexLoader, RETURN_TRAMPOLINE  # noqa: E402
 from test_m4_case0010 import (  # noqa: E402
     build_host_suites,
     build_param_block,
@@ -169,6 +169,17 @@ def parse_args() -> argparse.Namespace:
         "--direct-detour-scatter",
         action="store_true",
         help="Direct-core harness only: replace FUN_18000a9d0 with a no-op callback to test final-plane reachability.",
+    )
+    parser.add_argument(
+        "--save-checkpoint-at-rip",
+        nargs=2,
+        metavar=("PATH", "RIP"),
+        help="Save primary-render state before RIP executes, then stop (for example /tmp/case0009.aexcp 0x180005ba2).",
+    )
+    parser.add_argument(
+        "--resume-checkpoint",
+        type=Path,
+        help="Resume the primary render from an AexLoader checkpoint created by this runner.",
     )
     return parser.parse_args()
 
@@ -736,6 +747,16 @@ def build_markdown(report: dict[str, Any]) -> str:
 
 def main() -> int:
     args = parse_args()
+    if args.save_checkpoint_at_rip and args.resume_checkpoint:
+        raise SystemExit("--save-checkpoint-at-rip and --resume-checkpoint are mutually exclusive")
+    checkpoint_path = None
+    checkpoint_rip = None
+    if args.save_checkpoint_at_rip:
+        checkpoint_path = Path(args.save_checkpoint_at_rip[0])
+        try:
+            checkpoint_rip = int(args.save_checkpoint_at_rip[1], 0)
+        except ValueError as exc:
+            raise SystemExit("checkpoint RIP must be a decimal or 0x-prefixed integer") from exc
     debug_size = parse_debug_size(args.direct_debug_size)
     if debug_size is not None and not args.direct_zoom_core:
         raise SystemExit("--direct-debug-size requires --direct-zoom-core")
@@ -777,6 +798,27 @@ def main() -> int:
         "direct_prefill_mode": None,
         "direct_python_prefill": None,
         "direct_stop_after_prefill": False,
+    }
+    execution_state: dict[str, Any] = {
+        "checkpoint_enabled": False,
+        "checkpoint_saved": False,
+        "direct_context": None,
+        "param_ctx_dump": None,
+    }
+
+    checkpoint_config = {
+        "case_id": args.case_id,
+        "input_sha256": sha256_file(args.input_png),
+        "manifest_sha256": sha256_file(args.manifest),
+        "trace_staging_loop": bool(args.trace_staging_loop),
+        "direct_zoom_core": bool(args.direct_zoom_core),
+        "direct_debug_size": args.direct_debug_size,
+        "direct_debug_quality_step": float(args.direct_debug_quality_step),
+        "direct_fast_forward_prefill": bool(args.direct_fast_forward_prefill),
+        "direct_python_prefill": bool(args.direct_python_prefill),
+        "direct_stop_after_prefill": bool(args.direct_stop_after_prefill),
+        "direct_detour_prepass": bool(args.direct_detour_prepass),
+        "direct_detour_scatter": bool(args.direct_detour_scatter),
     }
 
     # Avoid relying on numeric register ids in the hook body.
@@ -1004,60 +1046,124 @@ def main() -> int:
             return 0
         loader.detour_function(FUN_18000A9D0, "RadialBlur.Zoom.a9d0.noop", detour_scatter)
 
+    def save_primary_render_checkpoint(ld: AexLoader, address: int, size: int) -> None:
+        if not execution_state["checkpoint_enabled"] or execution_state["checkpoint_saved"]:
+            return
+        metadata = {
+            "harness": "test_zoom_case0009",
+            "harness_checkpoint_version": 1,
+            "config": checkpoint_config,
+            "captured": captured,
+            "pointers": {
+                "render_ctx": render_ctx,
+                "input_world": input_world,
+                "output_world": output_world,
+                "param_ctx": param_ctx,
+            },
+            "direct_context": execution_state["direct_context"],
+            "param_ctx_dump": execution_state["param_ctx_dump"],
+        }
+        ld.save_checkpoint(checkpoint_path, metadata=metadata)
+        execution_state["checkpoint_saved"] = True
+        ld.uc.emu_stop()
+
+    if checkpoint_rip is not None:
+        loader.add_code_hook(checkpoint_rip, save_primary_render_checkpoint)
+
     start = time.time()
-    loader.call_function(FUN_180008690, int_args=[0, 0, 0, param_ctx, render_ctx], max_instructions=5_000_000)
-    param_ctx_dump = read_param_ctx(loader, param_ctx)
-    if args.direct_zoom_core:
-        direct_context = prepare_direct_zoom_context(
-            loader,
-            param_ctx,
-            render_ctx,
-            input_world,
-            output_world,
-            image,
-            debug_size,
-        )
-        work_addr = loader.bump_alloc(0x4300, align=64)
-        loader.write_bytes(work_addr, b"\x00" * 0x4300)
-        loader.call_function(FUN_18000A7E0, int_args=[work_addr], max_instructions=10_000)
-        strength = read_f32(loader, param_ctx + 0x80)
-        loader.call_function(
-            FUN_18000A810,
-            int_args=[work_addr],
-            float_args={1: (strength, "f")},
-            max_instructions=10_000,
-        )
-        if debug_size is not None:
-            loader.write_bytes(work_addr + 0x10, struct.pack("<f", float(args.direct_debug_quality_step)))
-        captured["zoom_param1"] = work_addr
-        captured["zoom_param2"] = param_ctx
-        direct_start_instr = loader.instructions_executed
+    if args.resume_checkpoint:
+        checkpoint_header = loader.load_checkpoint(args.resume_checkpoint)
+        checkpoint_metadata = checkpoint_header.get("metadata", {})
+        if checkpoint_metadata.get("harness") != "test_zoom_case0009":
+            raise SystemExit("checkpoint was not created by test_zoom_case0009")
+        if checkpoint_metadata.get("harness_checkpoint_version") != 1:
+            raise SystemExit("unsupported case0009 harness checkpoint version")
+        if checkpoint_metadata.get("config") != checkpoint_config:
+            raise SystemExit("checkpoint case0009 options do not match this invocation")
+        expected_pointers = {
+            "render_ctx": render_ctx,
+            "input_world": input_world,
+            "output_world": output_world,
+            "param_ctx": param_ctx,
+        }
+        if checkpoint_metadata.get("pointers") != expected_pointers:
+            raise SystemExit("checkpoint host pointer layout does not match this fresh process")
+        captured.clear()
+        captured.update(checkpoint_metadata["captured"])
+        direct_context = checkpoint_metadata.get("direct_context")
+        param_ctx_dump = checkpoint_metadata.get("param_ctx_dump")
         render_fault = ""
         try:
-            render_result = loader.call_function(
-                FUN_1800056F0,
-                int_args=[work_addr, param_ctx],
-                max_instructions=args.max_instructions,
-            )
+            render_result = loader.resume_execution(max_instructions=args.max_instructions)
         except RuntimeError as exc:
             render_fault = str(exc)
-            render_result = {
-                "instructions": loader.instructions_executed - direct_start_instr,
-                "fault": render_fault,
-            }
+            render_result = {"instructions": 0, "fault": render_fault}
+    else:
+        loader.call_function(FUN_180008690, int_args=[0, 0, 0, param_ctx, render_ctx], max_instructions=5_000_000)
+        param_ctx_dump = read_param_ctx(loader, param_ctx)
+        execution_state["param_ctx_dump"] = param_ctx_dump
+        if args.direct_zoom_core:
+            direct_context = prepare_direct_zoom_context(
+                loader, param_ctx, render_ctx, input_world, output_world, image, debug_size,
+            )
+            execution_state["direct_context"] = direct_context
+            work_addr = loader.bump_alloc(0x4300, align=64)
+            loader.write_bytes(work_addr, b"\x00" * 0x4300)
+            loader.call_function(FUN_18000A7E0, int_args=[work_addr], max_instructions=10_000)
+            strength = read_f32(loader, param_ctx + 0x80)
+            loader.call_function(
+                FUN_18000A810, int_args=[work_addr], float_args={1: (strength, "f")},
+                max_instructions=10_000,
+            )
+            if debug_size is not None:
+                loader.write_bytes(work_addr + 0x10, struct.pack("<f", float(args.direct_debug_quality_step)))
+            captured["zoom_param1"] = work_addr
+            captured["zoom_param2"] = param_ctx
+            direct_start_instr = loader.instructions_executed
+            render_fault = ""
+            execution_state["checkpoint_enabled"] = True
+            try:
+                render_result = loader.call_function(
+                    FUN_1800056F0, int_args=[work_addr, param_ctx],
+                    max_instructions=args.max_instructions,
+                )
+            except RuntimeError as exc:
+                render_fault = str(exc)
+                render_result = {
+                    "instructions": loader.instructions_executed - direct_start_instr,
+                    "fault": render_fault,
+                }
+            finally:
+                execution_state["checkpoint_enabled"] = False
+        else:
+            direct_context = None
+            render_fault = ""
+            execution_state["checkpoint_enabled"] = True
+            try:
+                render_result = loader.call_function(
+                    FUN_180007520, int_args=[render_ctx, 0, input_world, output_world, param_ctx],
+                    max_instructions=args.max_instructions,
+                )
+            finally:
+                execution_state["checkpoint_enabled"] = False
+
+    render_stop_rip = loader.uc.reg_read(UC_X86_REG_RIP)
+    if execution_state["checkpoint_saved"]:
+        print(f"checkpoint_saved={checkpoint_path}")
+        print(f"checkpoint_rip=0x{checkpoint_rip:x}")
+        return 0
+    if checkpoint_path is not None:
+        raise SystemExit(
+            f"checkpoint RIP 0x{checkpoint_rip:x} was not reached; no checkpoint was written"
+        )
+
+    if args.direct_zoom_core:
+        work_addr = int(captured.get("zoom_param1") or 0)
         try:
             loader.call_function(FUN_18000A800, int_args=[work_addr], max_instructions=10_000)
         except Exception:
             pass
-    else:
-        render_fault = ""
-        render_result = loader.call_function(
-            FUN_180007520,
-            int_args=[render_ctx, 0, input_world, output_world, param_ctx],
-            max_instructions=args.max_instructions,
-        )
     elapsed = time.time() - start
-    render_stop_rip = loader.uc.reg_read(UC_X86_REG_RIP)
 
     work = int(captured["zoom_param1"])
     if not work:
@@ -1250,7 +1356,15 @@ def main() -> int:
             "comparing the original AEX prefill cells against the Python prefill "
             "candidate without mixing in the heavy worker stages."
         )
-    elif debug_size is None:
+    elif (
+        debug_size is None
+        and render_stop_rip == RETURN_TRAMPOLINE
+        and not render_fault
+        and not args.direct_python_prefill
+        and not args.direct_fast_forward_prefill
+        and not args.direct_detour_prepass
+        and not args.direct_detour_scatter
+    ):
         report["classification"] = classify(report, win)
         report["reading"] = (
             "This is a Mac-side AEX CPU emulation witness. It proves Zoom entry and "
@@ -1258,6 +1372,13 @@ def main() -> int:
             "sample alpha and denominator cells to the Windows trace to decide whether "
             "the 254/255 split is already present before final output. It does not by "
             "itself prove Mac AE exact."
+        )
+    elif debug_size is None:
+        report["classification"] = "natural-fullsize-execution-incomplete-values-not-claimed"
+        report["reading"] = (
+            "The authentic, non-detoured full-size render did not reach its return "
+            "trampoline in this run. Any currently mapped plane bytes are partial "
+            "execution state and are not claimed as natural full-size case0009 values."
         )
     if args.direct_python_prefill and not args.direct_stop_after_prefill:
         report["classification"] = (
