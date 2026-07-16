@@ -1,5 +1,80 @@
 # OLM Conformance Ledger
 
+- 2026-07-17 `OLMDistanceGradation PF16 bounded full-chain exact` (latest
+  override): no AE correctness status is promoted. The earlier
+  `fieldgen_or_staging` result was caused by a harness contract error:
+  WIDTH/HEIGHT were written into the PF_InData downsample numerators, staging
+  the AEX side as 64x25, and an all-opaque degenerate field was manually forced
+  through the non-degenerate compose branch. With 1/1 ratios and an actual
+  transparent/opaque boundary, the hash-pinned AEX and production Mac source
+  match all 40 field words. Decomp of `FUN_181170480` proves PF16 truncating
+  float-to-int stores; removing the Mac-only `+0.5` closes the complete
+  40-pixel output at byte_diff=0. Universal Debug build and all focused
+  harnesses pass. The new binary is installed at the sole MediaCore path, but
+  AE PID 7653 still holds the previous module because graceful quit was
+  cancelled. Next allowed action: after a safe AE restart, rerun the canonical
+  16bpc batch with loaded-module SHA binding. Evidence:
+  `refs/conformance/olmdistancegradation_pf16_field_staging_exact_20260717.json`.
+
+- 2026-07-17 `OLMBlur 32bpc source/AEX adapter` (latest override): no AE
+  correctness status is promoted. Production `BlurRender(..., 32, ...)`
+  matches 12/12 actual-AEX float fixtures across Legacy and Non-Legacy paths,
+  including bias directions, radius/repeat boundaries, mixed alpha, exact
+  alpha preservation, and padded rowbytes. This is Mac production-source
+  versus bounded actual-AEX evidence, not Windows AE/EXR or Mac AE exactness.
+  The retained Windows EXR set is not sufficient to bind a cross-host result
+  to the AEX actually loaded by AE. Next allowed action: obtain one same-run
+  Windows record containing the loaded AEX path/hash, AfterFX PID/module base,
+  parameter readbacks, and control/effect EXR hashes, then run the equivalent
+  loaded-module-bound Mac AE comparison. Evidence:
+  `refs/conformance/olmblur_32bpc_source_aex_adapter_20260717.md` and
+  `refs/conformance/olmblur_32bpc_missing_windows_loaded_aex_artifact_20260717.md`.
+
+- 2026-07-17 `OLMRadialBlur natural B150 checkpoint` (latest override): no
+  correctness status is promoted. A bounded natural case_0009 caller reaches
+  B150 once after 85,967 instructions without Python prefill or a worker
+  detour. Four natural prefill rows populate all 196 RGBA and source-alpha
+  cells, and caller/work-object pointers agree. `FUN_180008690` owns the two
+  spans through host integer-reader indices 5/9 (Outer/Inner Edge Fade); all
+  13 retained references set both to zero. Changing only Outer Edge Fade to 1
+  naturally propagates through `param_ctx+0x6c`, `work+0x4200`, and
+  `FUN_18000B680`, yielding B150 spans `1/0` and nonzero inline-table counts
+  `1/0` without direct harness writes. This closes zero-state ownership and a
+  minimal natural nonzero table fixture only; larger spans, B150 output,
+  Windows equivalence, and AE exact remain open. Next Mac-only action: execute
+  the populated B150 output path and compare it with an independent float32
+  oracle. Evidence:
+  `refs/conformance/olmradialblur_natural_b150_checkpoint_20260717.json`.
+
+- 2026-07-17 `OLMSmoother2 case0012 class-plane intake` (latest override):
+  no correctness status is promoted. Fail-closed intake proves the three
+  retained return ZIPs contain only center/previous/left class bytes and no
+  backing neighborhood dump. The old 5x5 capture conflicts with two corrected
+  live coordinates. Two completions preserve every retained fact and the same
+  e170 result yet produce actual-AEX c280 polygon counts 0 and 3, proving the
+  missing neighborhood is not uniquely reconstructible. A Mac-local natural
+  caller now executes `FUN_18000ada0 -> VCOMP140!_vcomp_fork -> FUN_18000ac00
+  -> FUN_18000ae10`, makes 256 classifier calls, regenerates the supported 3x4
+  class window exactly, and feeds it into actual c280 for polygon count 1.
+  Do not splice old captures or tune c280. The remaining fail-closed boundary
+  is the `FUN_18000ada0` entry state: source/class planes, rectangle, strides,
+  and config bytes `+0x1c/+0x70/+0x74`. Evidence:
+  `refs/conformance/olmsmoother2_case0012_classplane_return_replay_20260717.json`
+  and
+  `refs/conformance/olmsmoother2_case0012_classplane_natural_caller_20260717.json`.
+
+- 2026-07-17 `OLMKiraKira Handle Suite natural boundary` (latest
+  override): no correctness status is promoted. The common-owner run now
+  completes 25 grounded checkouts/checkins plus five exact
+  `PF ColorParamSuite` v1 acquisitions, conversions, and releases while
+  preserving both PF32 world canaries. `PF Handle Suite` v2 acquisition,
+  16-byte allocation, and lock now also execute with recorded pointers. The
+  run stops fail-closed at the lazy runtime/TLS initialization inside
+  `FUN_181159da0+0x4b` before unlock/dispose; no natural typed writer has been
+  reached. Next Mac-only action is the minimum TLS/runtime contract at RIP
+  `0x181159deb`, not a direct writer invocation. Evidence:
+  `refs/conformance/olmkirakira_mode2_common_owner_20260717.json`.
+
 - 2026-07-17 `OLMRadialBlur reconstructed B150 population` (latest override):
   no correctness status is promoted. A logical width-1104, rows-1047..1048
   reconstructed fixture executes actual `FUN_18000B150` once and changes all

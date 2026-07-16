@@ -88,7 +88,8 @@ def source_input() -> bytearray:
     data = bytearray([CANARY] * (ROWBYTES * HEIGHT))
     for y in range(HEIGHT):
         for x in range(WIDTH):
-            struct.pack_into("<4H", data, y * ROWBYTES + x * 8, 32768, 0, 0, 0)
+            alpha = 32768 if 1 <= y < 4 and 2 <= x < 6 and not (x == 3 and y == 2) else 0
+            struct.pack_into("<4H", data, y * ROWBYTES + x * 8, alpha, 0, 0, 0)
     return data
 
 
@@ -110,7 +111,12 @@ def run() -> dict[str, object]:
     # The degenerate branch is not a useful equality oracle: it bypasses field
     # reads and emits the same use-background branch for every pixel. Keep it
     # recorded, then change only the branch flag for the discriminating run.
-    actual_run = actual.run(degenerate=False)
+    source_alphas = [
+        32768 if 1 <= y < 4 and 2 <= x < 6 and not (x == 3 and y == 2) else 0
+        for y in range(HEIGHT)
+        for x in range(WIDTH)
+    ]
+    actual_run = actual.run(degenerate=False, source_alpha_words=source_alphas)
     if actual_run["status"] != "PASS":
         return {
             "status": "blocked",
@@ -153,10 +159,13 @@ def run() -> dict[str, object]:
         assert field_rc == 0
         source_active = active(output)
         aex_active = b"".join(
-            struct.pack("<4H", *words) for words in actual_run["output_active_words_agrb"]
+            struct.pack("<4H", words[0], words[2], words[1], words[3])
+            for words in actual_run["output_active_words_agrb"]
         )
         source_padding = padding(output)
-        source_field_words = [[0, int(field_words[i]), 0, 0] for i in range(WIDTH * HEIGHT)]
+        # The AEX stores its scalar OpenCV field replicated across the PF16
+        # staging channels before the compose callback consumes channel 1.
+        source_field_words = [[int(field_words[i])] * 4 for i in range(WIDTH * HEIGHT)]
         source_field_active = b"".join(struct.pack("<4H", *words) for words in source_field_words)
         actual_observation = actual_run["compose_observation"]
         actual_refcon = actual_observation["refcon"]
@@ -165,7 +174,7 @@ def run() -> dict[str, object]:
             actual_refcon["inout_mode"] == 3 and actual_refcon["use_bg"] == 1 and
             actual_refcon["invert"] == 1 and actual_refcon["render_mode"] == 1 and
             actual_refcon["power"] == 1.0 and
-            actual_observation["source_pixel_agrb"] == [32768, 0, 0, 0] and
+            actual_observation["source_pixel_agrb"] == [0, 0, 0, 0] and
             actual_refcon["bg_rgb"] == [0.0, 0.0, 0.0] and
             b"".join(struct.pack("<f", value) for value in actual_refcon["grad_rgb"]) ==
             b"".join(struct.pack("<f", value) for value in (28.0 / 255.0, 0.0, 238.0 / 255.0))
@@ -240,7 +249,7 @@ def run() -> dict[str, object]:
                         "grad_rgb": [28.0 / 255.0, 0.0, 238.0 / 255.0],
                         "bg_rgb": [0.0, 0.0, 0.0],
                     },
-                    "source_pixel_agrb": [32768, 0, 0, 0],
+                    "source_pixel_agrb": [0, 0, 0, 0],
                 },
                 "semantic_match": compose_semantic_match,
             },

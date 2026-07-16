@@ -1,5 +1,10 @@
 # OLMDistanceGradation PF16 Mac Source Oracle
 
+> Superseded on 2026-07-17 by
+> olmdistancegradation_pf16_field_staging_exact_20260717.md. This historical
+> run placed WIDTH/HEIGHT in the downsample numerators and manually forced an
+> all-opaque degenerate field through the non-degenerate compose branch.
+
 Date: 2026-07-17 (Mac)
 
 This evidence compares the current 8x5 actual-AEX PF16 Iterate16 fixture with

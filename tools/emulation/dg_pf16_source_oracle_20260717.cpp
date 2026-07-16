@@ -77,6 +77,39 @@ extern "C" int dg_pf16_source_field_20260717(
     return 0;
 }
 
+extern "C" int dg_pf16_source_components_20260717(
+    const std::uint16_t *input,
+    std::size_t input_rowbytes,
+    float *inside,
+    float *outside,
+    float *max_combine,
+    float *add_combine,
+    std::size_t count) {
+    constexpr std::size_t width = 8;
+    constexpr std::size_t height = 5;
+    if (!input || !inside || !outside || !max_combine || !add_combine ||
+        count < width * height || input_rowbytes < width * sizeof(PF_Pixel16)) return -1;
+
+    std::vector<float> alpha(width * height, 0.0f);
+    std::vector<u_char> mask(width * height, 0);
+    for (std::size_t y = 0; y < height; ++y) {
+        const auto *row = reinterpret_cast<const PF_Pixel16 *>(
+            reinterpret_cast<const std::uint8_t *>(input) + y * input_rowbytes);
+        for (std::size_t x = 0; x < width; ++x) {
+            alpha[y * width + x] = static_cast<float>(row[x].alpha) / 32768.0f;
+        }
+    }
+    build_mask_from_alpha(alpha.data(), mask.data(), width, height, sizeof(PF_Pixel16));
+    dt_to_normalized(mask.data(), inside, width, height, 158, false);
+    invert_mask(mask.data(), width, height);
+    dt_to_normalized(mask.data(), outside, width, height, 13, false);
+    for (std::size_t i = 0; i < width * height; ++i) {
+        max_combine[i] = std::max(inside[i], outside[i]);
+        add_combine[i] = inside[i] + outside[i];
+    }
+    return 0;
+}
+
 extern "C" int dg_pf16_source_oracle_20260717(
     const std::uint16_t *input,
     std::size_t input_rowbytes,

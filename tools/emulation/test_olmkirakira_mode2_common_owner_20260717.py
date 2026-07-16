@@ -159,6 +159,154 @@ def run_owner_probe() -> dict[str, object]:
     loader.write_bytes(descriptor, struct.pack("<2Q", input_world, suite))
     loader.write_bytes(suite, b"\0" * 0x28)
     callback_state: dict[str, object] = {}
+    suite_events: list[dict[str, object]] = []
+
+    def color_from_def(current: AexLoader, args: list[int]) -> int:
+        if args[0] != refcon or args[1] == 0 or args[2] == 0:
+            raise RuntimeError("invalid PF ColorParamSuite1 color conversion ABI")
+        raw = current.read_bytes(args[1] + 0x38, 4)
+        alpha, red, green, blue = raw
+        current.write_bytes(
+            args[2],
+            struct.pack(
+                "<4f",
+                alpha / 255.0,
+                red / 255.0,
+                green / 255.0,
+                blue / 255.0,
+            ),
+        )
+        callback_state.setdefault("color_conversion", []).append({
+            "abi_registers_rcx_rdx_r8_r9": [hex(value) for value in args],
+            "param_def_pointer": hex(args[1]),
+            "output_pointer": hex(args[2]),
+            "input_color_bytes_alpha_red_green_blue": list(raw),
+            "return": 0,
+            "return_semantics": "PF_Err_NONE",
+        })
+        return 0
+
+    color_suite = loader.host_alloc(0x08, align=16)
+    loader.write_bytes(
+        color_suite,
+        struct.pack("<Q", loader.install_callback("PFColorParamSuite1.PF_GetFloatingPointColorFromColorDef", color_from_def)),
+    )
+    handle_events: list[dict[str, object]] = []
+
+    def handle_new(current: AexLoader, args: list[int]) -> int:
+        size = args[0] & 0xFFFFFFFFFFFFFFFF
+        if size > 0x1000000:
+            raise RuntimeError(f"unbounded PF Handle Suite new size 0x{size:x}")
+        data = current.bump_alloc(max(size, 1), align=64)
+        current.write_bytes(data, b"\0" * max(size, 1))
+        handle = current.host_alloc(0x08, align=16)
+        current.write_bytes(handle, struct.pack("<Q", data))
+        handle_events.append({
+            "callback": "PF_HandleSuite1.new",
+            "size": size,
+            "handle": hex(handle),
+            "data": hex(data),
+            "return": hex(handle),
+        })
+        return handle
+
+    def handle_lock(current: AexLoader, args: list[int]) -> int:
+        handle = args[0]
+        data = struct.unpack("<Q", current.read_bytes(handle, 8))[0] if handle else 0
+        handle_events.append({
+            "callback": "PF_HandleSuite1.lock",
+            "handle": hex(handle),
+            "data": hex(data),
+            "return": hex(data),
+        })
+        return data
+
+    def handle_unlock(current: AexLoader, args: list[int]) -> int:
+        handle_events.append({
+            "callback": "PF_HandleSuite1.unlock",
+            "handle": hex(args[0]),
+            "return": 0,
+            "return_semantics": "PF_Err_NONE",
+        })
+        return 0
+
+    def handle_dispose(current: AexLoader, args: list[int]) -> int:
+        handle_events.append({
+            "callback": "PF_HandleSuite1.dispose",
+            "handle": hex(args[0]),
+            "return": 0,
+            "return_semantics": "PF_Err_NONE",
+        })
+        return 0
+
+    handle_suite = loader.host_alloc(0x20, align=16)
+    loader.write_bytes(
+        handle_suite,
+        struct.pack(
+            "<4Q",
+            loader.install_callback("PF_HandleSuite1.new", handle_new),
+            loader.install_callback("PF_HandleSuite1.lock", handle_lock),
+            loader.install_callback("PF_HandleSuite1.unlock", handle_unlock),
+            loader.install_callback("PF_HandleSuite1.dispose", handle_dispose),
+        ),
+    )
+
+    def read_c_string(current: AexLoader, address: int) -> str:
+        raw = bytearray()
+        for offset in range(128):
+            byte = current.read_bytes(address + offset, 1)
+            if byte == b"\0":
+                break
+            raw.extend(byte)
+        return raw.decode("ascii", errors="replace")
+
+    def acquire_suite(current: AexLoader, args: list[int]) -> int:
+        name = read_c_string(current, args[0])
+        version = args[1] & 0xFFFFFFFF
+        out_pointer = args[2]
+        if name == "PF ColorParamSuite" and version == 1:
+            returned_suite = color_suite
+            contract = "PF ColorParamSuite1 v1"
+        elif name == "PF Handle Suite" and version == 2:
+            returned_suite = handle_suite
+            contract = "PF Handle Suite v2"
+        else:
+            returned_suite = None
+            contract = "rejected"
+        accepted = returned_suite is not None
+        if accepted:
+            current.write_bytes(out_pointer, struct.pack("<Q", returned_suite))
+        suite_events.append({
+            "callback": "SPBasic.AcquireSuite",
+            "name": name,
+            "version": version,
+            "out_pointer": hex(out_pointer),
+            "returned_suite": hex(returned_suite) if accepted else None,
+            "return": 0 if accepted else 1,
+            "contract": contract,
+        })
+        return 0 if accepted else 1
+
+    def release_suite(current: AexLoader, args: list[int]) -> int:
+        suite_events.append({
+            "callback": "SPBasic.ReleaseSuite",
+            "name": read_c_string(current, args[0]),
+            "version": args[1] & 0xFFFFFFFF,
+            "return": 0,
+            "return_semantics": "PF_Err_NONE",
+        })
+        return 0
+
+    spbasic = loader.host_alloc(0x10, align=16)
+    loader.write_bytes(
+        spbasic,
+        struct.pack(
+            "<2Q",
+            loader.install_callback("SPBasic.AcquireSuite", acquire_suite),
+            loader.install_callback("SPBasic.ReleaseSuite", release_suite),
+        ),
+    )
+    loader.write_bytes(context + 0x180, struct.pack("<Q", spbasic))
 
     def param_checkin(current: AexLoader, args: list[int]) -> int:
         if args[0] != refcon:
@@ -287,6 +435,8 @@ def run_owner_probe() -> dict[str, object]:
             "status": "FAILED",
             "events": events,
             "callback": callback_state,
+            "handle_events": handle_events,
+            "suite_events": suite_events,
             "suite_call_trace": suite_call_trace,
             "internal_boundary_trace": internal_boundary_trace,
             "natural_writer_reached": False,
@@ -307,6 +457,8 @@ def run_owner_probe() -> dict[str, object]:
             "status": "BLOCKED",
             "events": events,
             "callback": callback_state,
+            "handle_events": handle_events,
+            "suite_events": suite_events,
             "suite_call_trace": suite_call_trace,
             "internal_boundary_trace": internal_boundary_trace,
             "natural_writer_reached": False,
@@ -324,7 +476,7 @@ def run_owner_probe() -> dict[str, object]:
                 "proven_entries": {"address": hex(param_table + 0x8), "count": len(PARAM_SELECTOR_ORDER), "disk_ids": list(PARAM_SELECTOR_ORDER), "source": "mac/OLMKiraKira/OLMKiraKira.h disk IDs; first request FUN_18114e860 0x18114e87f MOV R8D,0x1"},
                 "context_defaults": {"+0xe0": 0, "+0xe4": 0, "+0xf0": 0, "source": "zero-initialized fixture; exact FUN_1811542b0 reads"},
             },
-            "first_unavailable_boundary": "unprovided PF ColorParamSuite/SPBasic suite at FUN_181232350 +0x3b (MOV RAX,[RBX]); RBX=[outer context+0x180]=0; required AcquireSuite output at RSP+0x78",
+            "first_unavailable_boundary": "PF Handle Suite v2 new(16)/lock completed; next natural boundary is FUN_181159da0 +0x4b at 0x181159deb during lazy runtime singleton TLS initialization, before unlock/dispose or typed writer",
             "exception": f"{type(exc).__name__}: {exc}",
         }
 

@@ -1,8 +1,9 @@
 {
   "schema": "olmdistancegradation.pf16-source-oracle/1",
   "date": "2026-07-17",
-  "status": "blocked",
-  "blocker": "active PF16 words differ byte-for-byte after both actual-AEX and production-source runs complete",
+  "status": "superseded",
+  "blocker": "historical invalid fixture: downsample numerators held WIDTH/HEIGHT and the all-opaque field was manually forced through the non-degenerate compose branch",
+  "superseded_by": "refs/conformance/olmdistancegradation_pf16_field_staging_exact_20260717.json",
   "fixture": {
     "width": 8,
     "height": 5,

@@ -32,7 +32,7 @@ template <> struct PixelTraits<PF_Pixel16> {
         return {static_cast<std::uint16_t>(alpha), static_cast<std::uint16_t>(red),
                 static_cast<std::uint16_t>(green), static_cast<std::uint16_t>(blue)};
     }
-    static PF_Pixel16 expected() { return {32768, 2185, 4369, 6554}; }
+    static PF_Pixel16 expected() { return {32768, 2184, 4369, 6553}; }
 };
 
 template <> struct PixelTraits<PF_PixelFloat> {

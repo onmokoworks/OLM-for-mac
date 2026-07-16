@@ -1,0 +1,385 @@
+{
+  "binary": {
+    "path": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
+    "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+  },
+  "binary_grounding": {
+    "ac00_ae10_call": "0x18000aced",
+    "ac00_static_end_call": "0x18000ad84",
+    "ac00_static_init_call": "0x18000ac44",
+    "ada0_vcomp_fork_call": "0x18000adfe",
+    "cce0_c280_call": "0x18000cd5a",
+    "vcomp_import_thunk": "0x180020f00 -> IAT 0x180022120 -> VCOMP140!_vcomp_fork"
+  },
+  "claims_not_made": [
+    "No recovered corrected Windows class plane",
+    "No Windows or After Effects execution claim",
+    "No production correctness or AE exact claim",
+    "No ledger or production-source change"
+  ],
+  "fixture": {
+    "host_origin": [
+      91,
+      841
+    ],
+    "smooth_range": 88,
+    "source": "refs/conformance/olmsmoother2_case0012_class_neighborhood_20260712.log",
+    "translated_origin": [
+      8,
+      8
+    ]
+  },
+  "live_boundary": {
+    "ada0_or_ae10_input_checkpoints_in_returns": 0,
+    "corrected_retained_class_pixels": 3,
+    "exact_next_checkpoint": "FUN_18000ada0 entry: RCX=source FPlane*, RDX=class FPlane*, R8=rect*, R9=config*; capture source neighborhood and config before _vcomp_fork",
+    "missing_inputs": [
+      "post-frame-setup float source neighborhood needed by ae10",
+      "ada0 config bytes +0x1c, +0x70, and float +0x74",
+      "requested rectangle and source/class descriptor strides bound to the same run"
+    ],
+    "reentrant_source_plane_pointer_only": "0x1bb16e50100"
+  },
+  "natural_checkpoint": {
+    "c280_from_generated_plane": {
+      "count": 1,
+      "vertices": [
+        {
+          "rgba": [
+            0.9910671710968018,
+            0.9910671710968018,
+            0.9910671710968018,
+            0.9960784316062927
+          ],
+          "weight": 0.49999961256980896
+        }
+      ]
+    },
+    "checkpoint": "immediately after FUN_18000ada0 returns and before FUN_18000beb0/c280 consumption",
+    "classifier_entries": 256,
+    "entry": "0x18000ada0",
+    "expected_window": [
+      {
+        "class": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "offset": [
+          -1,
+          -1
+        ]
+      },
+      {
+        "class": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "offset": [
+          0,
+          -1
+        ]
+      },
+      {
+        "class": [
+          0,
+          255,
+          0,
+          255
+        ],
+        "offset": [
+          1,
+          -1
+        ]
+      },
+      {
+        "class": [
+          0,
+          0,
+          255,
+          255
+        ],
+        "offset": [
+          -1,
+          0
+        ]
+      },
+      {
+        "class": [
+          0,
+          255,
+          0,
+          255
+        ],
+        "offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "class": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "offset": [
+          1,
+          0
+        ]
+      },
+      {
+        "class": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "offset": [
+          -1,
+          1
+        ]
+      },
+      {
+        "class": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "offset": [
+          0,
+          1
+        ]
+      },
+      {
+        "class": [
+          255,
+          0,
+          255,
+          255
+        ],
+        "offset": [
+          1,
+          1
+        ]
+      },
+      {
+        "class": [
+          255,
+          0,
+          0,
+          0
+        ],
+        "offset": [
+          -1,
+          2
+        ]
+      },
+      {
+        "class": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "offset": [
+          0,
+          2
+        ]
+      },
+      {
+        "class": [
+          255,
+          0,
+          255,
+          0
+        ],
+        "offset": [
+          1,
+          2
+        ]
+      }
+    ],
+    "full_rectangle_populated": true,
+    "generated_window": [
+      {
+        "class": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "offset": [
+          -1,
+          -1
+        ]
+      },
+      {
+        "class": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "offset": [
+          0,
+          -1
+        ]
+      },
+      {
+        "class": [
+          0,
+          255,
+          0,
+          255
+        ],
+        "offset": [
+          1,
+          -1
+        ]
+      },
+      {
+        "class": [
+          0,
+          0,
+          255,
+          255
+        ],
+        "offset": [
+          -1,
+          0
+        ]
+      },
+      {
+        "class": [
+          0,
+          255,
+          0,
+          255
+        ],
+        "offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "class": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "offset": [
+          1,
+          0
+        ]
+      },
+      {
+        "class": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "offset": [
+          -1,
+          1
+        ]
+      },
+      {
+        "class": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "offset": [
+          0,
+          1
+        ]
+      },
+      {
+        "class": [
+          255,
+          0,
+          255,
+          255
+        ],
+        "offset": [
+          1,
+          1
+        ]
+      },
+      {
+        "class": [
+          255,
+          0,
+          0,
+          0
+        ],
+        "offset": [
+          -1,
+          2
+        ]
+      },
+      {
+        "class": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "offset": [
+          0,
+          2
+        ]
+      },
+      {
+        "class": [
+          255,
+          0,
+          255,
+          0
+        ],
+        "offset": [
+          1,
+          2
+        ]
+      }
+    ],
+    "generated_window_exact": true,
+    "instructions": 54625,
+    "natural_chain": [
+      "0x18000ada0",
+      "VCOMP140!_vcomp_fork",
+      "0x18000ac00",
+      "0x18000ae10"
+    ],
+    "vcomp": {
+      "fork": [
+        {
+          "captured_argument_count": 7,
+          "if_value": 1,
+          "private_continuation": true,
+          "serial_worker_invocations": 1,
+          "worker": "0x18000ac00"
+        }
+      ],
+      "static_schedule": [
+        {
+          "first": 0,
+          "increment": 1,
+          "last": 15,
+          "step": 1
+        }
+      ]
+    },
+    "worker_entries": 1
+  },
+  "scope": "Mac-local actual-AEX ada0/ac00/ae10 execution on a translated retained fixture; corrected live source inputs remain absent",
+  "verdict": "PASS_MAC_NATURAL_CLASSPLANE_CALLER_WITH_EXACT_LIVE_INPUT_BOUNDARY"
+}

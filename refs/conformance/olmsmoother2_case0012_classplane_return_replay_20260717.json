@@ -1,0 +1,192 @@
+{
+  "archives": {
+    "corrected": {
+      "path": "refs/windows_returns/20260716/20260716_150500__RETURN__OLMSMOOTHER2_RDX_DESCRIPTOR_CORRECTED/RETURN_OLMSMOOTHER2_LEGACY_KEY_PRODUCER.zip",
+      "sha256": "8c031837ac6a2e95fec657cd444ca303ba3c8fb66bf2235f3c038b37e207efcf",
+      "status": "answered"
+    },
+    "initial": {
+      "path": "refs/windows_returns/20260716/20260716_142500__RETURN__OLMSMOOTHER2_LEGACY_KEY_PRODUCER_INPROCESS/RETURN_OLMSMOOTHER2_LEGACY_KEY_PRODUCER.zip",
+      "sha256": "3ccc3817091e48e537af746c6b984f5275f91d35a8cab09f7d3fce4519c46b9f",
+      "status": "answered"
+    },
+    "reentrant": {
+      "path": "refs/windows_returns/20260716/20260716_155333__RETURN__OLMSMOOTHER2_UPSTREAM_CLASSPLANE_REENTRANT/RETURN_OLMSMOOTHER2_LEGACY_KEY_PRODUCER.zip",
+      "sha256": "2743bc7e6e391cb3b0965a90bc069adb2eaa74df7e913a4bc8c92a0322c48e33",
+      "status": "exact_bind_failure"
+    }
+  },
+  "binary_grounding": {
+    "adapter_source": "tools/emulation/smoother2_case0012_classplane_replay_adapter_20260717.cpp",
+    "aex_path": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
+    "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "extracted_predicate": "FUN_18000e170",
+    "portable_source": "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp"
+  },
+  "claims_not_made": [
+    "No Windows replay",
+    "No recovered Windows class plane",
+    "No After Effects host correctness claim",
+    "No AE exact claim",
+    "No production or ledger change"
+  ],
+  "conclusion": "Missing live neighbor class bytes are absent from all three returns and are not uniquely reconstructible from checked-in evidence.",
+  "descriptor": [
+    92,
+    841,
+    1,
+    92,
+    842,
+    2
+  ],
+  "intake": {
+    "class_dump_members": [],
+    "reentrant_c280_index_inputs_proven": false,
+    "retained_class_pixels": {
+      "center": [
+        255,
+        255,
+        0,
+        255
+      ],
+      "left": [
+        0,
+        255,
+        0,
+        255
+      ],
+      "previous": [
+        255,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "old_neighborhood_conflicts": [
+    {
+      "corrected": [
+        255,
+        255,
+        0,
+        255
+      ],
+      "name": "center",
+      "old": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "xy": "92,841"
+    },
+    {
+      "corrected": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "name": "previous",
+      "old": [
+        0,
+        255,
+        0,
+        255
+      ],
+      "xy": "92,840"
+    }
+  ],
+  "old_neighborhood_source": "refs/conformance/olmsmoother2_case0012_class_neighborhood_20260712.log",
+  "replay": {
+    "c280_counts_differ": true,
+    "completions": {
+      "one": {
+        "aex": {
+          "completion": "one",
+          "count": 3,
+          "vertices": [
+            {
+              "rgba": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "weight": 32.768001556396484
+            },
+            {
+              "rgba": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "weight": 16.384000778198242
+            },
+            {
+              "rgba": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "weight": 32.768001556396484
+            }
+          ]
+        },
+        "match": true,
+        "portable": {
+          "completion": "one",
+          "count": 3,
+          "vertices": [
+            {
+              "rgba": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "weight": 32.7680016
+            },
+            {
+              "rgba": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "weight": 16.3840008
+            },
+            {
+              "rgba": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "weight": 32.7680016
+            }
+          ]
+        }
+      },
+      "zero": {
+        "aex": {
+          "completion": "zero",
+          "count": 0,
+          "vertices": []
+        },
+        "match": true,
+        "portable": {
+          "completion": "zero",
+          "count": 0,
+          "vertices": []
+        }
+      }
+    },
+    "e170_extracted_code_result": 7
+  },
+  "required_next_witness": "same-run class-plane neighborhood bytes around the corrected c280 sample, captured before process exit",
+  "scope": "fail-closed return parsing and local actual-AEX/portable ambiguity replay; not Windows or AE exact",
+  "verdict": "BLOCKED_CASE0012_LIVE_CLASSPLANE_NOT_RECOVERABLE_LOCALLY"
+}

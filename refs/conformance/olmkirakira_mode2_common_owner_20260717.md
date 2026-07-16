@@ -64,19 +64,60 @@ run, with each `PF_ParamDef` zeroed to `0xb0` bytes and populated at `u+0x38`;
 the JSON records selector, match-name, raw structure bytes, ABI registers,
 stack time-scale, and check-in return values.
 
+## FACT
+
+The minimal `SPBasicSuite` contract was then installed at
+`outer_context+0x180`. `AcquireSuite` accepts only the exact AEX request
+`"PF ColorParamSuite"`, version `1`, writes a one-slot
+`PF_ColorParamSuite1` at the requested output address, and `ReleaseSuite`
+returns `PF_Err_NONE`. The suite's slot 0 implements the grounded
+`PF_GetFloatingPointColorFromColorDef(effect_ref, PF_ParamDef*, PF_PixelFloat*)`
+shape, copying the checked-out `PF_RGBColor` bytes at `PF_ParamDef+0x38` to
+normalized float channels. The run records five successful acquisitions,
+five color conversions, and five releases.
+
+The existing parameter path remains intact: 25 grounded checkouts and 25
+checkins execute, and both world-suite callbacks still return the 1x1 PF32
+worlds with their padding canaries preserved.
+
 The rerun stops at the next exact unavailable boundary:
 
 ```text
-FUN_181232350 +0x3b: MOV RAX,[RBX]
-                     ; RBX = [outer_context+0x180]
-fixture: [outer_context+0x180] == 0x0
-required object: SPBasicSuite with AcquireSuite at [RBX+0x0]
-required suite: PF ColorParamSuite1, acquired using suite name at 0x1814d6650,
-                version 1, output pointer RSP+0x78
-result: RIP=0x18123238b / UC_ERR_READ_UNMAPPED
+FUN_181231ec0 +0x7e: MOV RAX,[R14]
+                      ; R14 = SPBasicSuite at [param+0x180]
+request: AcquireSuite("PF Handle Suite", version 2, output RSP+0x38)
+fixture: strict minimal AcquireSuite returns 1 for this unimplemented suite
+result: AEX exception path at RIP=0x18123204f / UC_ERR_EXCEPTION
 ```
 
-The color-suite object and callback semantics were not fabricated. No natural
-Mode2-to-PF32-writer lineage was claimed. The harness exits `2` and writes the machine-readable
-details to
+## FACT
+
+The minimal binary-grounded `PF Handle Suite` v2 contract is now installed
+alongside the retained ColorParamSuite contract. Its four suite slots are
+`new(size)`, `lock(handle)`, `unlock(handle)`, and `dispose(handle)`.
+The natural run accepts the exact `"PF Handle Suite"` version `2` request,
+allocates one bounded 16-byte handle payload, and returns its payload pointer
+from `lock`. The JSON records the suite acquisition, `new(16)`, and
+`lock(handle)`. No `unlock` or `dispose` callback was reached.
+
+The rerun stops at the next exact unavailable boundary:
+
+```text
+PF Handle Suite v2: new(16) -> lock(handle) completed
+next call: FUN_181159da0 +0x4b at 0x181159deb
+operation: lazy runtime singleton / TLS epoch read
+result: Invalid memory read / UC_ERR_READ_UNMAPPED
+```
+
+## INFERENCE
+
+The ColorParamSuite and the first PF Handle Suite v2 lifecycle boundary are
+now crossed in the existing common-owner harness, but the natural PF32 owner
+does not yet reach a typed writer. The next Mac-only action is the bounded
+runtime/TLS singleton contract, not a direct writer invocation or
+Python-mediated output transfer. No Windows execution, After Effects host
+binding, final pixel, or AE exactness claim is made.
+
+The harness remains fail-closed and exits `2`; the machine-readable details
+are in
 `refs/conformance/olmkirakira_mode2_common_owner_20260717.json`.

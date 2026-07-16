@@ -1,0 +1,1356 @@
+{
+  "claim_boundary": "bounded Mac Unicorn actual-AEX natural caller through B150 entry; no B150 execution, full-size, Windows, AE, or production claim",
+  "classification": "bounded-natural-reader-owned-nonzero-b150-table-checkpoint",
+  "gates": {
+    "manifest_baseline": {
+      "actual_caller_bindings": true,
+      "b150_outputs_pristine": true,
+      "binary_kernel_calls_ground_tables": true,
+      "bounded_instruction_budget": true,
+      "edge_fields_owned_by_actual_reader": true,
+      "effective_geometry_consistent": true,
+      "natural_geometry": true,
+      "natural_prefill_changed_rgba_and_alpha": true,
+      "natural_prefill_loop_complete": true,
+      "natural_prefill_rgba_and_alpha_finite_nonzero": true,
+      "one_b150_entry": true,
+      "scale_plane_faithfully_zero": true,
+      "zero_span_inline_tables_consistent": true,
+      "zero_spans_fail_closed": true
+    },
+    "outer_edge_fade_1": {
+      "actual_caller_bindings": true,
+      "actual_reader_to_core_lineage": true,
+      "b150_outputs_pristine": true,
+      "binary_kernel_calls_ground_tables": true,
+      "bounded_instruction_budget": true,
+      "edge_fields_owned_by_actual_reader": true,
+      "effective_geometry_consistent": true,
+      "minimum_nonzero_inline_table": true,
+      "minimum_nonzero_span": true,
+      "natural_geometry": true,
+      "natural_prefill_changed_rgba_and_alpha": true,
+      "natural_prefill_loop_complete": true,
+      "natural_prefill_rgba_and_alpha_finite_nonzero": true,
+      "one_b150_entry": true,
+      "scale_plane_faithfully_zero": true
+    },
+    "paired_fixture": {
+      "all_checked_in_reference_edge_fades_zero": true,
+      "minimum_positive_integer_variation": true,
+      "only_host_reader_value_changed": true,
+      "same_natural_b150_geometry": true
+    }
+  },
+  "harness": {
+    "max_instructions": 2000000,
+    "python_prefill": false,
+    "quality_step_override": 90.0,
+    "source_geometry": [
+      32,
+      32
+    ],
+    "worker_detour": false
+  },
+  "kind": "olmradialblur_natural_b150_checkpoint_20260717",
+  "provenance": {
+    "actual_sha256": {
+      "aex": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "input": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+      "manifest": "7ec542fad64cc210474c6309c3e48c9f12bd0885f54d31943da873d94024b565"
+    },
+    "case_id": "case_0009",
+    "pinned_sha256": {
+      "aex": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "input": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+      "manifest": "7ec542fad64cc210474c6309c3e48c9f12bd0885f54d31943da873d94024b565"
+    },
+    "reference_edge_fades": [
+      {
+        "case_id": "case_0001",
+        "inner_edge_fade": 0,
+        "outer_edge_fade": 0
+      },
+      {
+        "case_id": "case_0002",
+        "inner_edge_fade": 0,
+        "outer_edge_fade": 0
+      },
+      {
+        "case_id": "case_0003",
+        "inner_edge_fade": 0,
+        "outer_edge_fade": 0
+      },
+      {
+        "case_id": "case_0004",
+        "inner_edge_fade": 0,
+        "outer_edge_fade": 0
+      },
+      {
+        "case_id": "case_0005",
+        "inner_edge_fade": 0,
+        "outer_edge_fade": 0
+      },
+      {
+        "case_id": "case_0006",
+        "inner_edge_fade": 0,
+        "outer_edge_fade": 0
+      },
+      {
+        "case_id": "case_0007",
+        "inner_edge_fade": 0,
+        "outer_edge_fade": 0
+      },
+      {
+        "case_id": "case_0008",
+        "inner_edge_fade": 0,
+        "outer_edge_fade": 0
+      },
+      {
+        "case_id": "case_0009",
+        "inner_edge_fade": 0,
+        "outer_edge_fade": 0
+      },
+      {
+        "case_id": "case_0010",
+        "inner_edge_fade": 0,
+        "outer_edge_fade": 0
+      },
+      {
+        "case_id": "case_0011",
+        "inner_edge_fade": 0,
+        "outer_edge_fade": 0
+      },
+      {
+        "case_id": "case_0012",
+        "inner_edge_fade": 0,
+        "outer_edge_fade": 0
+      },
+      {
+        "case_id": "case_0013",
+        "inner_edge_fade": 0,
+        "outer_edge_fade": 0
+      }
+    ]
+  },
+  "runs": {
+    "manifest_baseline": {
+      "b150_entries": 1,
+      "before_prefill": {
+        "angle_count": 4,
+        "planes": {
+          "scale": {
+            "address": 553526592,
+            "all_finite": true,
+            "cells": 196,
+            "channels": 1,
+            "nonzero_cell_count": 0,
+            "nonzero_value_count": 0,
+            "selected_nonzero_cells": [],
+            "sha256": "0c37ddc45244523ca3b841e3ea85e147a1d35c6ae1cd767e8c30dabf057516fd"
+          },
+          "source_alpha": {
+            "address": 553525760,
+            "all_finite": true,
+            "cells": 196,
+            "channels": 1,
+            "nonzero_cell_count": 0,
+            "nonzero_value_count": 0,
+            "selected_nonzero_cells": [],
+            "sha256": "0c37ddc45244523ca3b841e3ea85e147a1d35c6ae1cd767e8c30dabf057516fd"
+          },
+          "source_rgba": {
+            "address": 553521792,
+            "all_finite": true,
+            "cells": 196,
+            "channels": 4,
+            "nonzero_cell_count": 0,
+            "nonzero_value_count": 0,
+            "selected_nonzero_cells": [],
+            "sha256": "b00cd820a573181c37db022786eec519e6440cc3643181e0449da9c3f8f3e271"
+          }
+        },
+        "radial_count": 49
+      },
+      "case_config_i32": {
+        "b150_span_source_plus_0x6c": 0,
+        "b150_span_source_plus_0x70": 0,
+        "param_plus_0x64": 1717,
+        "param_plus_0x68": 0
+      },
+      "checkpoint": {
+        "abi": {
+          "context": 553500672,
+          "effective_cells": 196,
+          "effective_row_end": 4,
+          "output_rgba": 553517824,
+          "output_scalar": 553520960,
+          "return_address": 6442474527,
+          "row_end": 5,
+          "row_limit": 4,
+          "row_start": 0,
+          "scale": 553526592,
+          "source_alpha": 553525760,
+          "source_rgba": 553521792,
+          "width": 49
+        },
+        "context": {
+          "left_span_i32": 0,
+          "left_table_inline": {
+            "address": 553516768,
+            "all_finite": true,
+            "f32_words": [
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000"
+            ],
+            "float_count": 100,
+            "nonzero_count": 0,
+            "sha256": "7a12e561363385e9dfeeab326368731c030ed4b374e7f5897ac819159d2884c5"
+          },
+          "right_span_i32": 0,
+          "right_table_inline": {
+            "address": 553517168,
+            "all_finite": true,
+            "f32_words": [
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000"
+            ],
+            "float_count": 100,
+            "nonzero_count": 0,
+            "sha256": "7a12e561363385e9dfeeab326368731c030ed4b374e7f5897ac819159d2884c5"
+          }
+        },
+        "planes": {
+          "output_rgba_before_b150": {
+            "address": 553517824,
+            "all_finite": true,
+            "cells": 196,
+            "channels": 4,
+            "nonzero_cell_count": 0,
+            "nonzero_value_count": 0,
+            "selected_nonzero_cells": [],
+            "sha256": "b00cd820a573181c37db022786eec519e6440cc3643181e0449da9c3f8f3e271"
+          },
+          "output_scalar_before_b150": {
+            "address": 553520960,
+            "all_finite": true,
+            "cells": 196,
+            "channels": 1,
+            "nonzero_cell_count": 0,
+            "nonzero_value_count": 0,
+            "selected_nonzero_cells": [],
+            "sha256": "0c37ddc45244523ca3b841e3ea85e147a1d35c6ae1cd767e8c30dabf057516fd"
+          },
+          "scale": {
+            "address": 553526592,
+            "all_finite": true,
+            "cells": 196,
+            "channels": 1,
+            "nonzero_cell_count": 0,
+            "nonzero_value_count": 0,
+            "selected_nonzero_cells": [],
+            "sha256": "0c37ddc45244523ca3b841e3ea85e147a1d35c6ae1cd767e8c30dabf057516fd"
+          },
+          "source_alpha": {
+            "address": 553525760,
+            "all_finite": true,
+            "cells": 196,
+            "channels": 1,
+            "nonzero_cell_count": 196,
+            "nonzero_value_count": 196,
+            "selected_nonzero_cells": [
+              {
+                "f32": [
+                  1.0
+                ],
+                "f32_words": [
+                  "0x3f800000"
+                ],
+                "index": 0
+              },
+              {
+                "f32": [
+                  1.0
+                ],
+                "f32_words": [
+                  "0x3f800000"
+                ],
+                "index": 1
+              },
+              {
+                "f32": [
+                  1.0
+                ],
+                "f32_words": [
+                  "0x3f800000"
+                ],
+                "index": 2
+              },
+              {
+                "f32": [
+                  1.0
+                ],
+                "f32_words": [
+                  "0x3f800000"
+                ],
+                "index": 3
+              },
+              {
+                "f32": [
+                  1.0
+                ],
+                "f32_words": [
+                  "0x3f800000"
+                ],
+                "index": 4
+              },
+              {
+                "f32": [
+                  1.0
+                ],
+                "f32_words": [
+                  "0x3f800000"
+                ],
+                "index": 5
+              },
+              {
+                "f32": [
+                  1.0
+                ],
+                "f32_words": [
+                  "0x3f800000"
+                ],
+                "index": 6
+              },
+              {
+                "f32": [
+                  1.0
+                ],
+                "f32_words": [
+                  "0x3f800000"
+                ],
+                "index": 7
+              }
+            ],
+            "sha256": "fff91e873df93b4fe0f83d2e7a763bf00af8fe4a51f4e5662a433611336db00a"
+          },
+          "source_rgba": {
+            "address": 553521792,
+            "all_finite": true,
+            "cells": 196,
+            "channels": 4,
+            "nonzero_cell_count": 196,
+            "nonzero_value_count": 196,
+            "selected_nonzero_cells": [
+              {
+                "f32": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "f32_words": [
+                  "0x00000000",
+                  "0x00000000",
+                  "0x00000000",
+                  "0x3f800000"
+                ],
+                "index": 0
+              },
+              {
+                "f32": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "f32_words": [
+                  "0x00000000",
+                  "0x00000000",
+                  "0x00000000",
+                  "0x3f800000"
+                ],
+                "index": 1
+              },
+              {
+                "f32": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "f32_words": [
+                  "0x00000000",
+                  "0x00000000",
+                  "0x00000000",
+                  "0x3f800000"
+                ],
+                "index": 2
+              },
+              {
+                "f32": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "f32_words": [
+                  "0x00000000",
+                  "0x00000000",
+                  "0x00000000",
+                  "0x3f800000"
+                ],
+                "index": 3
+              },
+              {
+                "f32": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "f32_words": [
+                  "0x00000000",
+                  "0x00000000",
+                  "0x00000000",
+                  "0x3f800000"
+                ],
+                "index": 4
+              },
+              {
+                "f32": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "f32_words": [
+                  "0x00000000",
+                  "0x00000000",
+                  "0x00000000",
+                  "0x3f800000"
+                ],
+                "index": 5
+              },
+              {
+                "f32": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "f32_words": [
+                  "0x00000000",
+                  "0x00000000",
+                  "0x00000000",
+                  "0x3f800000"
+                ],
+                "index": 6
+              },
+              {
+                "f32": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "f32_words": [
+                  "0x00000000",
+                  "0x00000000",
+                  "0x00000000",
+                  "0x3f800000"
+                ],
+                "index": 7
+              }
+            ],
+            "sha256": "6fc114c6e7b87419dea99d64c705ab08ff77be310e7c97785e09c405a8e6ff4c"
+          }
+        },
+        "work_bindings": {
+          "output_rgba_work_plus_0x4210": 553517824,
+          "output_scalar_work_plus_0x4218": 553520960,
+          "scale_work_plus_0x50": 553526592,
+          "source_alpha_work_plus_0x48": 553525760,
+          "source_rgba_work_plus_0x38": 553521792
+        }
+      },
+      "direct_context": {
+        "geometry_height": 32,
+        "geometry_ptr_0x08": 1073743104,
+        "geometry_width": 32,
+        "output_plane_0xa0": 553484288,
+        "rgba_plane_0x98": 553459712,
+        "scalar_ones_0x88_0x90": 553476096,
+        "scalar_zeros": 553480192
+      },
+      "instructions": 85967,
+      "kernel_calls": [
+        {
+          "return_address": 6442473414,
+          "span_argument_i32": 1717,
+          "table_address": 553500760
+        },
+        {
+          "return_address": 6442473451,
+          "span_argument_i32": 0,
+          "table_address": 553508760
+        },
+        {
+          "return_address": 6442473488,
+          "span_argument_i32": 0,
+          "table_address": 553516768
+        },
+        {
+          "return_address": 6442473525,
+          "span_argument_i32": 0,
+          "table_address": 553517168
+        }
+      ],
+      "param_ctx": 1073742784,
+      "parameter_materialization": {
+        "direct_param_field_writes_by_harness": 0,
+        "edge_reader_callsites": [
+          {
+            "callsite": 6442485553,
+            "output_pointer": 1073742892,
+            "reader_index": 5
+          },
+          {
+            "callsite": 6442485637,
+            "output_pointer": 1073742896,
+            "reader_index": 9
+          }
+        ],
+        "edge_reader_provenance": [
+          {
+            "output_pointers": [
+              1073742892
+            ],
+            "reader": "e270",
+            "reader_index": 5,
+            "value": 0
+          },
+          {
+            "output_pointers": [
+              1073742896
+            ],
+            "reader": "e270",
+            "reader_index": 9,
+            "value": 0
+          }
+        ],
+        "host_reader_outer_edge_fade": 0,
+        "manifest_outer_edge_fade": 0
+      },
+      "prefill_boundary_hits": 1,
+      "prefill_loop_hits": 4,
+      "work": 553500672
+    },
+    "outer_edge_fade_1": {
+      "b150_entries": 1,
+      "before_prefill": {
+        "angle_count": 4,
+        "planes": {
+          "scale": {
+            "address": 553526592,
+            "all_finite": true,
+            "cells": 196,
+            "channels": 1,
+            "nonzero_cell_count": 0,
+            "nonzero_value_count": 0,
+            "selected_nonzero_cells": [],
+            "sha256": "0c37ddc45244523ca3b841e3ea85e147a1d35c6ae1cd767e8c30dabf057516fd"
+          },
+          "source_alpha": {
+            "address": 553525760,
+            "all_finite": true,
+            "cells": 196,
+            "channels": 1,
+            "nonzero_cell_count": 0,
+            "nonzero_value_count": 0,
+            "selected_nonzero_cells": [],
+            "sha256": "0c37ddc45244523ca3b841e3ea85e147a1d35c6ae1cd767e8c30dabf057516fd"
+          },
+          "source_rgba": {
+            "address": 553521792,
+            "all_finite": true,
+            "cells": 196,
+            "channels": 4,
+            "nonzero_cell_count": 0,
+            "nonzero_value_count": 0,
+            "selected_nonzero_cells": [],
+            "sha256": "b00cd820a573181c37db022786eec519e6440cc3643181e0449da9c3f8f3e271"
+          }
+        },
+        "radial_count": 49
+      },
+      "case_config_i32": {
+        "b150_span_source_plus_0x6c": 1,
+        "b150_span_source_plus_0x70": 0,
+        "param_plus_0x64": 1717,
+        "param_plus_0x68": 0
+      },
+      "checkpoint": {
+        "abi": {
+          "context": 553500672,
+          "effective_cells": 196,
+          "effective_row_end": 4,
+          "output_rgba": 553517824,
+          "output_scalar": 553520960,
+          "return_address": 6442474527,
+          "row_end": 5,
+          "row_limit": 4,
+          "row_start": 0,
+          "scale": 553526592,
+          "source_alpha": 553525760,
+          "source_rgba": 553521792,
+          "width": 49
+        },
+        "context": {
+          "left_span_i32": 1,
+          "left_table_inline": {
+            "address": 553516768,
+            "all_finite": true,
+            "f32_words": [
+              "0x3f800000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000"
+            ],
+            "float_count": 100,
+            "nonzero_count": 1,
+            "sha256": "73dd05206d5db66f9184988ee7bd289f502b12bfd4fad5cbd99e10081492b5b4"
+          },
+          "right_span_i32": 0,
+          "right_table_inline": {
+            "address": 553517168,
+            "all_finite": true,
+            "f32_words": [
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000",
+              "0x00000000"
+            ],
+            "float_count": 100,
+            "nonzero_count": 0,
+            "sha256": "7a12e561363385e9dfeeab326368731c030ed4b374e7f5897ac819159d2884c5"
+          }
+        },
+        "planes": {
+          "output_rgba_before_b150": {
+            "address": 553517824,
+            "all_finite": true,
+            "cells": 196,
+            "channels": 4,
+            "nonzero_cell_count": 0,
+            "nonzero_value_count": 0,
+            "selected_nonzero_cells": [],
+            "sha256": "b00cd820a573181c37db022786eec519e6440cc3643181e0449da9c3f8f3e271"
+          },
+          "output_scalar_before_b150": {
+            "address": 553520960,
+            "all_finite": true,
+            "cells": 196,
+            "channels": 1,
+            "nonzero_cell_count": 0,
+            "nonzero_value_count": 0,
+            "selected_nonzero_cells": [],
+            "sha256": "0c37ddc45244523ca3b841e3ea85e147a1d35c6ae1cd767e8c30dabf057516fd"
+          },
+          "scale": {
+            "address": 553526592,
+            "all_finite": true,
+            "cells": 196,
+            "channels": 1,
+            "nonzero_cell_count": 0,
+            "nonzero_value_count": 0,
+            "selected_nonzero_cells": [],
+            "sha256": "0c37ddc45244523ca3b841e3ea85e147a1d35c6ae1cd767e8c30dabf057516fd"
+          },
+          "source_alpha": {
+            "address": 553525760,
+            "all_finite": true,
+            "cells": 196,
+            "channels": 1,
+            "nonzero_cell_count": 196,
+            "nonzero_value_count": 196,
+            "selected_nonzero_cells": [
+              {
+                "f32": [
+                  1.0
+                ],
+                "f32_words": [
+                  "0x3f800000"
+                ],
+                "index": 0
+              },
+              {
+                "f32": [
+                  1.0
+                ],
+                "f32_words": [
+                  "0x3f800000"
+                ],
+                "index": 1
+              },
+              {
+                "f32": [
+                  1.0
+                ],
+                "f32_words": [
+                  "0x3f800000"
+                ],
+                "index": 2
+              },
+              {
+                "f32": [
+                  1.0
+                ],
+                "f32_words": [
+                  "0x3f800000"
+                ],
+                "index": 3
+              },
+              {
+                "f32": [
+                  1.0
+                ],
+                "f32_words": [
+                  "0x3f800000"
+                ],
+                "index": 4
+              },
+              {
+                "f32": [
+                  1.0
+                ],
+                "f32_words": [
+                  "0x3f800000"
+                ],
+                "index": 5
+              },
+              {
+                "f32": [
+                  1.0
+                ],
+                "f32_words": [
+                  "0x3f800000"
+                ],
+                "index": 6
+              },
+              {
+                "f32": [
+                  1.0
+                ],
+                "f32_words": [
+                  "0x3f800000"
+                ],
+                "index": 7
+              }
+            ],
+            "sha256": "fff91e873df93b4fe0f83d2e7a763bf00af8fe4a51f4e5662a433611336db00a"
+          },
+          "source_rgba": {
+            "address": 553521792,
+            "all_finite": true,
+            "cells": 196,
+            "channels": 4,
+            "nonzero_cell_count": 196,
+            "nonzero_value_count": 196,
+            "selected_nonzero_cells": [
+              {
+                "f32": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "f32_words": [
+                  "0x00000000",
+                  "0x00000000",
+                  "0x00000000",
+                  "0x3f800000"
+                ],
+                "index": 0
+              },
+              {
+                "f32": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "f32_words": [
+                  "0x00000000",
+                  "0x00000000",
+                  "0x00000000",
+                  "0x3f800000"
+                ],
+                "index": 1
+              },
+              {
+                "f32": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "f32_words": [
+                  "0x00000000",
+                  "0x00000000",
+                  "0x00000000",
+                  "0x3f800000"
+                ],
+                "index": 2
+              },
+              {
+                "f32": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "f32_words": [
+                  "0x00000000",
+                  "0x00000000",
+                  "0x00000000",
+                  "0x3f800000"
+                ],
+                "index": 3
+              },
+              {
+                "f32": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "f32_words": [
+                  "0x00000000",
+                  "0x00000000",
+                  "0x00000000",
+                  "0x3f800000"
+                ],
+                "index": 4
+              },
+              {
+                "f32": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "f32_words": [
+                  "0x00000000",
+                  "0x00000000",
+                  "0x00000000",
+                  "0x3f800000"
+                ],
+                "index": 5
+              },
+              {
+                "f32": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "f32_words": [
+                  "0x00000000",
+                  "0x00000000",
+                  "0x00000000",
+                  "0x3f800000"
+                ],
+                "index": 6
+              },
+              {
+                "f32": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "f32_words": [
+                  "0x00000000",
+                  "0x00000000",
+                  "0x00000000",
+                  "0x3f800000"
+                ],
+                "index": 7
+              }
+            ],
+            "sha256": "6fc114c6e7b87419dea99d64c705ab08ff77be310e7c97785e09c405a8e6ff4c"
+          }
+        },
+        "work_bindings": {
+          "output_rgba_work_plus_0x4210": 553517824,
+          "output_scalar_work_plus_0x4218": 553520960,
+          "scale_work_plus_0x50": 553526592,
+          "source_alpha_work_plus_0x48": 553525760,
+          "source_rgba_work_plus_0x38": 553521792
+        }
+      },
+      "direct_context": {
+        "geometry_height": 32,
+        "geometry_ptr_0x08": 1073743104,
+        "geometry_width": 32,
+        "output_plane_0xa0": 553484288,
+        "rgba_plane_0x98": 553459712,
+        "scalar_ones_0x88_0x90": 553476096,
+        "scalar_zeros": 553480192
+      },
+      "instructions": 85992,
+      "kernel_calls": [
+        {
+          "return_address": 6442473414,
+          "span_argument_i32": 1717,
+          "table_address": 553500760
+        },
+        {
+          "return_address": 6442473451,
+          "span_argument_i32": 0,
+          "table_address": 553508760
+        },
+        {
+          "return_address": 6442473488,
+          "span_argument_i32": 1,
+          "table_address": 553516768
+        },
+        {
+          "return_address": 6442473525,
+          "span_argument_i32": 0,
+          "table_address": 553517168
+        }
+      ],
+      "param_ctx": 1073742784,
+      "parameter_materialization": {
+        "direct_param_field_writes_by_harness": 0,
+        "edge_reader_callsites": [
+          {
+            "callsite": 6442485553,
+            "output_pointer": 1073742892,
+            "reader_index": 5
+          },
+          {
+            "callsite": 6442485637,
+            "output_pointer": 1073742896,
+            "reader_index": 9
+          }
+        ],
+        "edge_reader_provenance": [
+          {
+            "output_pointers": [
+              1073742892
+            ],
+            "reader": "e270",
+            "reader_index": 5,
+            "value": 1
+          },
+          {
+            "output_pointers": [
+              1073742896
+            ],
+            "reader": "e270",
+            "reader_index": 9,
+            "value": 0
+          }
+        ],
+        "host_reader_outer_edge_fade": 1,
+        "manifest_outer_edge_fade": 0
+      },
+      "prefill_boundary_hits": 1,
+      "prefill_loop_hits": 4,
+      "work": 553500672
+    }
+  },
+  "schema": 1,
+  "status": "pass"
+}

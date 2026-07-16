@@ -293,8 +293,11 @@ def build_param_table(ld: AexLoader, spbasic: int) -> tuple[int, list[dict[str, 
         (0x00, struct.pack("<Q", checkout_addr)), (0x08, struct.pack("<Q", release_addr)),
         (0xB8, struct.pack("<Q", handle)), (0xE0, struct.pack("<I", 0)),
         (0xE4, struct.pack("<I", 0)), (0xF0, struct.pack("<I", 0)),
-        (0x11C, struct.pack("<I", 1)), (0x120, struct.pack("<I", WIDTH)),
-        (0x124, struct.pack("<I", 1)), (0x128, struct.pack("<I", HEIGHT)),
+        # PF_InData downsample ratios are denominator/numerator pairs.  These
+        # fields are not the world dimensions; putting WIDTH/HEIGHT here makes
+        # the AEX stage an 8x5 world as 64x25 and invalidates field comparisons.
+        (0x11C, struct.pack("<I", 1)), (0x120, struct.pack("<I", 1)),
+        (0x124, struct.pack("<I", 1)), (0x128, struct.pack("<I", 1)),
         (0x180, struct.pack("<Q", spbasic)),
     ):
         ld.write_bytes(params + off, data)
@@ -312,16 +315,23 @@ def build_world_provider(ld: AexLoader, output_world: int) -> int:
     return provider
 
 
-def run(degenerate: bool = True) -> dict[str, object]:
+def run(
+    degenerate: bool = True,
+    source_alpha_words: list[int] | None = None,
+) -> dict[str, object]:
     ld = make_loader()
     ld.register_libm_impls(max_threads=1)
     WindowsOpenCVRuntime(ld).install()
     spbasic, suite_events, iterate_events, iterate_state = setup_handle_and_spbasic(ld)
-    mask = np.zeros((HEIGHT, WIDTH), dtype=np.uint8)
-    mask[1:4, 2:6] = 255
-    mask[2, 3] = 0
-
-    source_pixels = {(x, y): (32768, 0, 0, 0) for y in range(HEIGHT) for x in range(WIDTH)}
+    if source_alpha_words is None:
+        source_alpha_words = [32768] * (WIDTH * HEIGHT)
+    if len(source_alpha_words) != WIDTH * HEIGHT:
+        raise ValueError(f"source_alpha_words must contain {WIDTH * HEIGHT} values")
+    source_pixels = {
+        (x, y): (int(source_alpha_words[y * WIDTH + x]), 0, 0, 0)
+        for y in range(HEIGHT)
+        for x in range(WIDTH)
+    }
     source_world = build_world(ld, WIDTH, HEIGHT, source_pixels)
     compose_source_world = build_world(ld, WIDTH, HEIGHT, source_pixels)
     compose_source_tight = u64(ld, compose_source_world + 0x18)

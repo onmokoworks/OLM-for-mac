@@ -1,0 +1,41 @@
+{
+  "schema": "olmdistancegradation.pf16-field-staging-differential/1",
+  "date": "2026-07-17",
+  "status": "PASS",
+  "classification": "fieldgen_staging_compose_and_pf16_store_exact",
+  "fixture": {
+    "width": 8,
+    "height": 5,
+    "rowbytes": 76,
+    "downsample_x": [1, 1],
+    "downsample_y": [1, 1],
+    "opaque_pixels": 11,
+    "transparent_pixels": 29
+  },
+  "actual_aex": {
+    "binary_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "fieldgen_hits": 2,
+    "compose_hits": 40,
+    "padding_preserved": true
+  },
+  "field_comparison": {
+    "pixel_count": 40,
+    "word_diff_count": 0,
+    "actual_sha256": "6d1ee820a97431c10097c0cd7df673012352c2e14e11b9c161430d388791d392",
+    "source_sha256": "6d1ee820a97431c10097c0cd7df673012352c2e14e11b9c161430d388791d392"
+  },
+  "output_comparison": {
+    "pixel_diff_count": 0,
+    "byte_diff_count": 0
+  },
+  "binary_grounding": {
+    "pf16_compose_function": "FUN_181170480",
+    "writer_rule": "float channel * 32768, truncating float-to-int conversion, clamp to PF16 range",
+    "mac_change": "clamp16 removed the prior +0.5 rounding term"
+  },
+  "claims": {
+    "bounded_actual_aex_source_exact": true,
+    "windows_claim": false,
+    "ae_exact_claim": false
+  }
+}
