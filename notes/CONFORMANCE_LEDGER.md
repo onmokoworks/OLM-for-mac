@@ -5,10 +5,12 @@
   claimed Mach-O path and SHA-256 to the single live After Effects process via
   exact-path `vmmap`, and reject a binary modified after AE startup. ColorKey's
   first nine-case attempt stopped fail-closed at an existing unsaved-project
-  modal and produced no candidate evidence. ToonDilate is not executed because
-  its request pins `c05db8...c32b3` while the installed current binary is
-  `d47a81...954de`; repinning requires separate provenance, not a silent hash
-  update. Evidence: `refs/conformance/mac_32bpc_loaded_module_gates_20260716.md`.
+  modal and produced no candidate evidence. ToonDilate's unavailable old
+  `c05db8...c32b3` pin is superseded by an explicit current-candidate revision:
+  installed and Debug-build Mach-O both hash to `d47a81...954de`, and the
+  request records source/project hashes plus universal architectures. It has
+  not yet been rendered. Evidence:
+  `refs/conformance/mac_32bpc_loaded_module_gates_20260716.md`.
 
 - 2026-07-16 `KiraKira Merge Mode plumbing` (latest override): no correctness
   status is promoted. The Mac UI already exposed Merge Mode, but normal and

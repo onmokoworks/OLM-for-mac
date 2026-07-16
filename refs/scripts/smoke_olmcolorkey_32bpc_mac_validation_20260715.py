@@ -40,7 +40,7 @@ def main() -> int:
         assert not (ROOT / "refs/reference_requests/olmcolorkey_32bpc_mac_validation_20260715.json").exists()
         assert all((support / "input" / case["input"]).exists() for case in request["cases"])
         jsx = (support / "run_mac_olmcolorkey_32bpc_validation.jsx").read_text(encoding="utf-8")
-        for token in ("GpuAccelType.SOFTWARE", "bitsPerChannel", "OLM_AE_MAC_PLUGIN_PATH", "OLM_AE_MAC_PLUGIN_SHA256", "Contents/MacOS/", "OLMColorKey", "workingSpace", "input_sha256", "OLM EXR 32 Float", "getSettings(GetSettingsFormat.STRING)", "no_effect", "effect_on", "FAIL_CLOSED"):
+        for token in ("GpuAccelType.SOFTWARE", "bitsPerChannel", "OLM_AE_MAC_PLUGIN_PATH", "OLM_AE_MAC_PLUGIN_SHA256", "Contents/MacOS/", "OLMColorKey", "workingSpace", "input_sha256", "OLM EXR 32 Float", "getSettings(GetSettingsFormat.STRING)", "existing project must be closed before validation", "no_effect", "effect_on", "FAIL_CLOSED"):
             assert token in jsx, token
         subprocess.run([sys.executable, str(RUNNER), "--plugin-path", str(temp / "wrong.plugin"), "--support-dir", str(temp / "runner"), "--dump-js", str(dumped)], cwd=ROOT, check=False)
         assert not dumped.exists()
@@ -62,6 +62,7 @@ def main() -> int:
         runner = RUNNER.read_text(encoding="utf-8")
         for token in ("vmmap_exact_path", "binary_predates_process_start", "modified after After Effects started", "loaded_plugin_proof", "re.escape(resolved)"):
             assert token in runner, token
+        assert "error.txt" in dumped.read_text(encoding="utf-8")
         reporter = (ROOT / "scripts/report_olmcolorkey_32bpc_mac_validation_20260715.py").read_text(encoding="utf-8")
         for token in ("vmmap_exact_path", "module_path", "module_sha256", "binary_predates_process_start"):
             assert token in reporter, token

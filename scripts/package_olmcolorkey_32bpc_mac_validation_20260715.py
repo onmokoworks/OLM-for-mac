@@ -188,6 +188,7 @@ def jsx_source(cases: list[dict]) -> str:
     var manifestPath = env("OLM_AE_MAC_RESULT_JSON");
     if (!outputDir || !manifestPath) fail("output and result paths are required");
     var folder = new Folder(outputDir); if (!folder.exists) folder.create();
+    if (app.project && (app.project.numItems > 0 || app.project.file !== null || app.project.dirty === true)) fail("existing project must be closed before validation");
     var plugin = identity(), results = [], project = app.newProject();
     project.bitsPerChannel = 32;
     if (Number(project.bitsPerChannel) !== 32) fail("project is not 32bpc");

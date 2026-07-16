@@ -11,7 +11,7 @@ _here = Path(__file__).resolve().parent
 _helper = _here if _here.name == "olmtoondilate_mac_32bpc_validation_20260715" else ROOT / "runtime_trace_packages/olmtoondilate_mac_32bpc_validation_20260715"
 sys.path.insert(0, str(_helper))
 from verify_32bpc_float_return import VerificationError, inspect_float_rgba_exr
-PLUGIN_SHA = "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+PLUGIN_SHA = "d47a81bd8259bd5ca0db31b71a4e0ffd4fef1c037ef31ffd1a922de1775954de"
 
 def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
 def read(path): return json.loads(path.read_text(encoding="utf-8-sig"))

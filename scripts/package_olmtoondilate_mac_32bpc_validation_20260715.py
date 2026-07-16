@@ -15,7 +15,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_PACKAGE = ROOT / "refs/runtime_trace_packages/windows_witness_olmtoondilate_32bpc_typed_procedural_samecomp_20260713"
 STEM = "olmtoondilate_mac_32bpc_validation_20260715"
-PLUGIN_SHA256 = "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+PLUGIN_SHA256 = "d47a81bd8259bd5ca0db31b71a4e0ffd4fef1c037ef31ffd1a922de1775954de"
+PLUGIN_BINARY = ROOT / "mac/OLMToonDilate/Mac/build/Debug/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate"
+PLUGIN_SOURCE_PATHS = (
+    ROOT / "mac/OLMToonDilate/OLMToonDilate.cpp",
+    ROOT / "mac/OLMToonDilate/OLMToonDilate.h",
+    ROOT / "mac/OLMToonDilate/OLMToonDilatePiPL.r",
+    ROOT / "mac/OLMToonDilate/Mac/OLMToonDilate.xcodeproj/project.pbxproj",
+)
 CONTRACT = {
     "manifest_kind": "olm_32bpc_typed_procedural_fixture",
     "project_bits_per_channel": 32,
@@ -75,6 +82,8 @@ def fixture_source() -> str:
 
 
 def write_package(root: Path) -> dict:
+    if not PLUGIN_BINARY.is_file() or digest(PLUGIN_BINARY) != PLUGIN_SHA256:
+        raise RuntimeError("current ToonDilate candidate binary is missing or hash-drifted")
     (root / "fixture").mkdir(parents=True)
     fixture = root / "fixture/ae_generate_32bpc_olmtoondilate_fixture.jsx"
     fixture.write_text(fixture_source(), encoding="utf-8")
@@ -90,7 +99,11 @@ def write_package(root: Path) -> dict:
             "semantic_intent": INTENT, "semantic_verification": SEMANTIC_VERIFICATION, "hash_algorithm": "sha256",
             "same_hash_required": ["no_effect_vs_effect_on"]},
         "case": {"id": "olmtoondilate_typed_procedural_64x64", "effect": "OLM Toon Dilate",
-                 "plugin": {"name": "OLMToonDilate.plugin", "sha256": PLUGIN_SHA256},
+                 "plugin": {"name": "OLMToonDilate.plugin", "binary": "Contents/MacOS/OLMToonDilate",
+                            "sha256": PLUGIN_SHA256,
+                            "candidate_provenance": {"source_sha256": {
+                                str(path.relative_to(ROOT)): digest(path) for path in PLUGIN_SOURCE_PATHS
+                            }, "build_architectures": ["arm64", "x86_64"]}},
                  "parameters": PARAMETERS, "outputs": CONTRACT["output_names"]},
         "acceptance_gate": {"comparison": "Mac AE vs Windows AE Software", "required": "raw FLOAT EXR bits exact",
                              "evidence_boundary": "AE render records only; CLI/emulation is intermediate evidence"},

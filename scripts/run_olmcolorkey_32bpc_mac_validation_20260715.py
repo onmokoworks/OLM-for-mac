@@ -107,15 +107,22 @@ def main() -> int:
     wrapper = support / "run_mac_wrapper.jsx"
     expected_plugin_hash = digest(plugin_binary)
     env = {"OLM_AE_MAC_INPUT_DIR": str((support / "input").resolve()), "OLM_AE_MAC_OUTPUT_DIR": str(output_dir), "OLM_AE_MAC_RESULT_JSON": str(result_json), "OLM_AE_MAC_PLUGIN_PATH": str(args.plugin_path.resolve()), "OLM_AE_MAC_PLUGIN_SHA256": expected_plugin_hash}
+    error_path = result_json.with_suffix(result_json.suffix + ".error.txt")
     lines = [f"$.setenv({json.dumps(k)}, {json.dumps(v)});" for k, v in env.items()]
-    lines.append(f"$.evalFile(new File({json.dumps(str(jsx.resolve()))}));")
+    lines.append(
+        f"try {{ $.evalFile(new File({json.dumps(str(jsx.resolve()))})); }} catch (e) {{\n"
+        f"  var f = new File({json.dumps(str(error_path.resolve()))}); f.encoding = 'UTF-8';\n"
+        "  if (f.open('w')) { f.write(String(e) + '\\nline=' + String(e.line || '') + '\\n'); f.close(); }\n"
+        "  throw e;\n}"
+    )
     wrapper.write_text("\n".join(lines) + "\n", encoding="utf-8")
     if args.dump_js:
         args.dump_js.write_text(wrapper.read_text(encoding="utf-8"), encoding="utf-8"); print(f"[OK] wrote {args.dump_js}"); return 0
     script = f'tell application {json.dumps(args.app_name)} to DoScriptFile POSIX file {json.dumps(str(wrapper))} with override\n'
     proc = subprocess.run(["osascript"], input=script, text=True, capture_output=True, timeout=args.timeout + 30)
     if proc.returncode != 0 or not result_json.exists():
-        print("[FAIL_CLOSED] AE did not produce a return", file=sys.stderr); return 1
+        detail = error_path.read_text(encoding="utf-8", errors="replace").strip() if error_path.exists() else "no JSX error log"
+        print(f"[FAIL_CLOSED] AE did not produce a return: {detail}", file=sys.stderr); return 1
     try: result = verify(result_json, cases, output_dir)
     except (ValueError, json.JSONDecodeError) as exc:
         print(f"[FAIL_CLOSED] {exc}", file=sys.stderr); return 1
