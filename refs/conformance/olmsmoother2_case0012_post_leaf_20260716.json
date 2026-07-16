@@ -1,0 +1,169 @@
+{
+  "aex": {
+    "path": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
+    "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "trace": {
+      "calls": {
+        "count_before": 0,
+        "f130_return_low": 1,
+        "f270_return_low": 1
+      },
+      "cce0_called": false,
+      "descriptor": [
+        92,
+        841,
+        1,
+        92,
+        842,
+        2
+      ],
+      "engine": "checked_in_aex_unicorn_mac_local",
+      "entry": {
+        "df30": 0,
+        "e170_c": 7
+      },
+      "key": 20,
+      "snapshots": {
+        "after_f130": {
+          "boundary": "immediately_after_unconditional_f130_before_cce0",
+          "count": 2,
+          "vertices": [
+            {
+              "rgba": [
+                0.18447503447532654,
+                0.18447503447532654,
+                0.18447503447532654,
+                0.6823529601097107
+              ],
+              "weight": 0.39224135875701904
+            },
+            {
+              "rgba": [
+                0.125,
+                0.25,
+                0.75,
+                0.625
+              ],
+              "weight": 0.1767241209745407
+            }
+          ]
+        },
+        "after_f270": {
+          "boundary": "immediately_after_f270_before_f130",
+          "count": 1,
+          "vertices": [
+            {
+              "rgba": [
+                0.18447503447532654,
+                0.18447503447532654,
+                0.18447503447532654,
+                0.6823529601097107
+              ],
+              "weight": 0.39224135875701904
+            }
+          ]
+        }
+      }
+    }
+  },
+  "case": {
+    "descriptor": [
+      92,
+      841,
+      1,
+      92,
+      842,
+      2
+    ],
+    "id": "legacy_case_0012_gamma5_red_blue_current_aex",
+    "key": 20
+  },
+  "claims_not_made": [
+    "No After Effects host execution",
+    "No live Windows post-f130 polygon capture",
+    "No AE-exact claim",
+    "No production or PNG change"
+  ],
+  "comparison": {
+    "after_f130_count_equal": true,
+    "after_f130_vertices_equal": true,
+    "after_f270_count_equal": true,
+    "after_f270_vertices_equal": true,
+    "descriptor_equal": true,
+    "df30_equal": true,
+    "e170_c_equal": true,
+    "f130_return_equal": true,
+    "f270_return_equal": true,
+    "first_vertex_expected": true,
+    "key_equal": true,
+    "no_cce0_aex": true,
+    "no_cce0_portable": true,
+    "second_source_expected": true
+  },
+  "portable": {
+    "calls": {
+      "count_before": 0,
+      "f130_count": 2,
+      "f130_return_low": 1,
+      "f270_count": 1,
+      "f270_return_low": 1
+    },
+    "cce0_called": false,
+    "descriptor": [
+      92,
+      841,
+      1,
+      92,
+      842,
+      2
+    ],
+    "entry": {
+      "df30": 0,
+      "e170_c": 7
+    },
+    "key": 20,
+    "snapshots": {
+      "after_f130": {
+        "boundary": "after_f130",
+        "count": 2,
+        "vertices": [
+          {
+            "rgba": [
+              0.184475034,
+              0.184475034,
+              0.184475034,
+              0.68235296
+            ],
+            "weight": 0.392241359
+          },
+          {
+            "rgba": [
+              0.125,
+              0.25,
+              0.75,
+              0.625
+            ],
+            "weight": 0.176724121
+          }
+        ]
+      },
+      "after_f270": {
+        "boundary": "after_f270",
+        "count": 1,
+        "vertices": [
+          {
+            "rgba": [
+              0.184475034,
+              0.184475034,
+              0.184475034,
+              0.68235296
+            ],
+            "weight": 0.392241359
+          }
+        ]
+      }
+    }
+  },
+  "scope": "Mac-only actual-AEX CPU emulation versus current portable f270/f130 path; polygon captured before cce0; not AE exact",
+  "verdict": "PASS_MAC_CASE0012_POST_LEAF_BOUNDARY"
+}
