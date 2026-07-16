@@ -87,6 +87,15 @@ Windows behavior.
 - `Ramp` / color-ramp custom controls
   - still absent from the current Mac UI surface
 
+## Ramp Payload Static Audit
+
+The read-only checkout trace is recorded in
+`refs/conformance/olmkirakira_ramp_payload_checkout_static_20260717.md`.
+The binary-grounded result is an opaque PF ramp handle checkout into five
+contiguous `0x144`-byte state blocks. The payload field semantics and a direct
+opaque-handle-to-RGBA lookup routine remain unresolved; do not treat the
+current Mac ramp/UI gap as evidence for a serialized schema.
+
 ## Algorithm IR
 
 1. Build seed from input according to Channel and Strength.
