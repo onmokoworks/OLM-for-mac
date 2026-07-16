@@ -844,6 +844,58 @@ treating a mismatch as algorithm drift.
 
 ## Latest Overrides
 
+- 2026-07-17 `OLMColorKey Edge Thin erode leaf`: use
+  `refs/conformance/olmcolorkey_edge_thin_erode_aex_20260717.md` / `.json`.
+  The hash-pinned actual-AEX `FUN_180008320` completes `2,176` exhaustive
+  calls and disproves both prior threshold predicates as leaf semantics. Six
+  terminal-loop fixtures ground the raw word load, float32 `MULSS`,
+  `CVTTSS2SI` truncation, and low-word store. The caller's float-generation
+  and amount-scaling stage remains open; do not patch the production threshold
+  from this leaf alone.
+
+- 2026-07-17 `OLMRadialBlur scatter-tail core`: use
+  `refs/conformance/olmradialblur_scatter_tail_equivalence_20260717.md` /
+  `.json`. The unwired portable `FUN_180001c90` core matches ten actual-AEX
+  fixtures byte-for-byte, including mode 2, the 3000 clamp, table origin,
+  inner row-tail underflow, persistent max-alpha, source NaN payload, and
+  `CVTTSS2SI` exceptional sentinels. UBSan is clean. This is function-level
+  evidence only; production wiring and full-frame host/output binding remain
+  open, and the portable bounds bailout is an explicit safety divergence
+  outside the fixture domain.
+
+- 2026-07-17 `OLMToonDilate raw semi-alpha candidate`: use
+  `refs/conformance/olmtoondilate_pf32_raw_copy_witness_20260717.md` and
+  `refs/conformance/olmtoondilate_rgb_alpha_postpass_ab_20260717.md`. A seeded
+  actual-AEX PF32 worker hits the live copy helper while an out-of-radius
+  semi-alpha pixel survives with raw RGB, disproving the Mac-only final
+  `RGB*=alpha` postpass for the bounded path. Removing it makes 8bpc
+  `case_0002` exact, improves but does not close `case_0003`, and preserves
+  all three covered 16bpc exact cases. Keep the status candidate /
+  binary-grounded until Mac AE regression and 32bpc cross-host validation.
+
+- 2026-07-17 `OLMDistanceGradation RenderBits staging boundary`: use
+  `refs/conformance/olmdistancegradation_renderbits_host_resize_staging_audit_20260717.md`
+  / `.json`. Four typed same-shape staging cases and six existing production
+  harness cases pass with padded rowbytes. Non-identity resize, origin, and
+  host allocation order remain unresolved; this does not reopen EDT,
+  compose, or store and does not promote 8bpc status.
+
+- 2026-07-17 `OLMDirectionalBlur writer caller contract`: use
+  `refs/conformance/olmdirectionalblur_caller_contract_20260717.md` / `.json`.
+  A real `FUN_180006700` wrapper call binds the Iterate8 callback ABI and the
+  `0x180006b30` writer's params/x/y/stack-output contract, including the
+  float-cell index formula and one actual packed ARGB8 result. The pending
+  Windows same-run writer-entry floats are still required; do not change the
+  already-grounded writer from this synthetic caller fixture.
+
+- 2026-07-17 `OLMBlur case_0003/0004 readiness`: use
+  `refs/conformance/olmblur_case0003_0004_readiness_audit_20260717.md` /
+  `.json`. The audit now fail-closes all 120 Legacy schedule calls, ten H/V
+  partitions, four Non-Legacy radius stages, coefficient sets `4970/4970` and
+  `177/177`, and the retained writer rounding control. No additional local
+  schedule/coefficient/rounding condition remains; the worker/helper
+  pre-store boundary and fresh Mac AE validation remain open.
+
 - 2026-07-16 `OLMBlur Legacy case_0003 schedule/full-frame candidate`: use
   `refs/conformance/olmblur_case0003_legacy_schedule_fullframe_20260716.md` /
   `.json`. The hash-pinned Legacy caller, with helper bodies detoured, emits
