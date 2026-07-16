@@ -883,13 +883,20 @@ treating a mismatch as algorithm drift.
 
 - 2026-07-17 `OLMToonDilate raw semi-alpha candidate`: use
   `refs/conformance/olmtoondilate_pf32_raw_copy_witness_20260717.md` and
-  `refs/conformance/olmtoondilate_rgb_alpha_postpass_ab_20260717.md`. A seeded
+  `refs/conformance/olmtoondilate_rgb_alpha_postpass_ab_20260717.md`, plus
+  `refs/conformance/olmtoondilate_pf8_seed_predicate_20260717.md` / `.json`.
+  A seeded
   actual-AEX PF32 worker hits the live copy helper while an out-of-radius
   semi-alpha pixel survives with raw RGB, disproving the Mac-only final
   `RGB*=alpha` postpass for the bounded path. Removing it makes 8bpc
   `case_0002` exact, improves but does not close `case_0003`, and preserves
-  all three covered 16bpc exact cases. Keep the status candidate /
-  binary-grounded until Mac AE regression and 32bpc cross-host validation.
+  all three covered 16bpc exact cases. A paired hash-pinned native PF8 worker
+  fixture further proves that alpha `254` is not a propagation seed while
+  alpha `255` is; both runs reach the live copy helper and preserve padded
+  rowbytes. Do not revisit the PF8 opaque-seed threshold for `case_0003`;
+  narrow the residual at propagation distance, tie-break, or transparent-cell
+  candidate selection. Keep the status candidate / binary-grounded until Mac
+  AE regression and 32bpc cross-host validation.
 
 - 2026-07-17 `OLMDistanceGradation RenderBits staging boundary`: use
   `refs/conformance/olmdistancegradation_renderbits_host_resize_staging_audit_20260717.md`
