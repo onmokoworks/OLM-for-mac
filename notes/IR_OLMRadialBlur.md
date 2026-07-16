@@ -1117,3 +1117,21 @@ Mac implementation. Full evidence is recorded in
 change. A function-level equivalence harness covering span resolution, table
 indexing, row transitions, RGBA accumulation, max-alpha updates, and NaN cases
 is required before any production edit is authorized.
+
+## 2026-07-17 reconstructed Zoom collapse execution
+
+`tools/emulation/probe_radialblur_reconstructed_zoom_collapse_20260717.py`
+enters the actual AEX block at `FUN_1800056F0+0x5c9f` with reconstructed
+caller state and stops at the exact post-loop boundary `0x180005d96`.
+
+- **FACT:** the real block writes the reconstructed `+0xe` cells exactly as
+  the independent float32 collapse oracle predicts at x=`7,8,24`.
+- **FACT:** the real `FUN_180009D80` result matches the collapsed x=7 cell.
+- **FACT:** x=7 and x=8 retain alpha `1.0f`; x=24 discriminates the RGBA
+  population while retaining alpha `1.0f`.
+- **INFERENCE:** in this bounded fixture, neither caller collapse nor D80
+  sampling explains the retained Windows x=7 sub-one value. The first live
+  uncertainty remains upstream population/worker state.
+
+This is a reconstructed direct-entry proof, not a natural full-size caller,
+Windows equivalence, production authorization, or AE-exact result.

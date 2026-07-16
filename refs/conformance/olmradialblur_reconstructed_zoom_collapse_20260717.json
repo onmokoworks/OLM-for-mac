@@ -1,0 +1,344 @@
+{
+  "claim_boundary": "Mac Unicorn actual-AEX reconstructed caller state; no AE exact, Windows, or production claim",
+  "classification": "bounded-actual-aex-collapse-proven",
+  "fixture": {
+    "case_id": "case_0009",
+    "controls": [
+      8,
+      24
+    ],
+    "height": 1,
+    "source_row": 540,
+    "width": 32,
+    "x": 7
+  },
+  "gates": {
+    "actual_collapse_entry_exit": true,
+    "all_finite": true,
+    "controls_present": true,
+    "d80_matches_collapsed_x7": true,
+    "discriminating_f250": true,
+    "entry_counts": {
+      "collapse_entry": 1,
+      "collapse_exit": 1,
+      "inverse_sampler": 1,
+      "scatter": 1,
+      "worker": 1
+    },
+    "hashes": true,
+    "oracle_matches_actual": true
+  },
+  "kind": "olmradialblur_reconstructed_zoom_collapse_20260717",
+  "provenance": {
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+    "pinned": {
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4"
+    }
+  },
+  "run": {
+    "collapse_instructions": 853,
+    "direct_entry_state": {
+      "r12_outer_count": 1,
+      "r14_geometry_owner": "0x20004cc0",
+      "r15_inner_count": 32,
+      "rsi_work": "0x20000000"
+    },
+    "entries": {
+      "collapse_entry": [
+        {
+          "registers": {
+            "r12": 1,
+            "r14": 536890560,
+            "r15": 32,
+            "rbp": 536890576,
+            "rsi": 536870912,
+            "rsp": 252702664
+          },
+          "return_address": "0x90000000",
+          "rip": "0x180005c9f",
+          "stack_plus_0x20": "0x20004840"
+        }
+      ],
+      "collapse_exit": [
+        {
+          "r12": 1,
+          "r15": 32,
+          "rip": "0x180005d96",
+          "rsi": 536870912,
+          "stopped": true
+        }
+      ],
+      "inverse_sampler": [
+        {
+          "register_args": [
+            536890048,
+            536890832,
+            32,
+            1
+          ],
+          "stack_args": [
+            128,
+            1088946176,
+            0
+          ]
+        }
+      ],
+      "scatter": [
+        {
+          "register_args": [
+            536870912,
+            536888384,
+            536888896,
+            536889152
+          ],
+          "stack_args": [
+            536889280,
+            32,
+            1,
+            0,
+            1,
+            536889408,
+            536889920
+          ]
+        }
+      ],
+      "worker": [
+        {
+          "register_args": [
+            536870912,
+            536888384,
+            536888896,
+            536889024
+          ],
+          "stack_args": [
+            32,
+            1,
+            0,
+            1,
+            536889408,
+            536889920
+          ]
+        }
+      ]
+    },
+    "initial_state_sha256": "969d1f8ae4d1b66987ef31c0856fb98670fe5c6211de8fe528cbfd65fcdcc06f",
+    "plane_bindings": {
+      "+0xe_collapsed_rgba": "0x20004ac0",
+      "+0xf250_rgba": "0x20004840",
+      "+0xf252_scalar": "0x20004a40"
+    },
+    "pointers": {
+      "accum_rgba": 536889408,
+      "denom": 536889920,
+      "final_rgba": 536890048,
+      "geometry": 536888320,
+      "param": 536888064,
+      "scalar_a": 536888896,
+      "scalar_b": 536889024,
+      "scatter_b": 536889152,
+      "scatter_c": 536889280,
+      "source_rgba": 536888384,
+      "work": 536870912
+    },
+    "records": [
+      {
+        "+0xe_collapsed_rgba": {
+          "f32": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "f32_words": [
+            "0x3f800000",
+            "0x3f800000",
+            "0x3f800000",
+            "0x3f800000"
+          ]
+        },
+        "+0xf250_rgba": {
+          "f32": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "f32_words": [
+            "0x3f800000",
+            "0x3f800000",
+            "0x3f800000",
+            "0x3f800000"
+          ]
+        },
+        "+0xf252_scalar": {
+          "f32": [
+            1.0
+          ],
+          "f32_words": [
+            "0x3f800000"
+          ]
+        },
+        "FUN_180009D80": {
+          "angle_index": 0.0,
+          "entry": "0x180009d80",
+          "radius_index": 7.25,
+          "returned": true,
+          "rgba_f32": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "rgba_f32_words": [
+            "0x3f800000",
+            "0x3f800000",
+            "0x3f800000",
+            "0x3f800000"
+          ],
+          "x": 7
+        },
+        "actual_matches_oracle": true,
+        "controls": "primary",
+        "python_oracle": {
+          "f32": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "f32_words": [
+            "0x3f800000",
+            "0x3f800000",
+            "0x3f800000",
+            "0x3f800000"
+          ]
+        },
+        "x": 7
+      },
+      {
+        "+0xe_collapsed_rgba": {
+          "f32": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "f32_words": [
+            "0x3f800000",
+            "0x3f800000",
+            "0x3f800000",
+            "0x3f800000"
+          ]
+        },
+        "+0xf250_rgba": {
+          "f32": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "f32_words": [
+            "0x3f800000",
+            "0x3f800000",
+            "0x3f800000",
+            "0x3f800000"
+          ]
+        },
+        "+0xf252_scalar": {
+          "f32": [
+            1.0
+          ],
+          "f32_words": [
+            "0x3f800000"
+          ]
+        },
+        "actual_matches_oracle": true,
+        "controls": "control",
+        "python_oracle": {
+          "f32": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "f32_words": [
+            "0x3f800000",
+            "0x3f800000",
+            "0x3f800000",
+            "0x3f800000"
+          ]
+        },
+        "x": 8
+      },
+      {
+        "+0xe_collapsed_rgba": {
+          "f32": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "f32_words": [
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x3f800000"
+          ]
+        },
+        "+0xf250_rgba": {
+          "f32": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "f32_words": [
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x3f800000"
+          ]
+        },
+        "+0xf252_scalar": {
+          "f32": [
+            1.0
+          ],
+          "f32_words": [
+            "0x3f800000"
+          ]
+        },
+        "actual_matches_oracle": true,
+        "controls": "control",
+        "python_oracle": {
+          "f32": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "f32_words": [
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x3f800000"
+          ]
+        },
+        "x": 24
+      }
+    ],
+    "sampler_instructions": 126,
+    "scatter_instructions": 646,
+    "typed_row_sha256": "770d5d217a7c4f88c9a16ea5a25c48efc6bc3bb7b197aec898b084f35db202f1",
+    "worker_instructions": 2375
+  },
+  "schema": 1,
+  "status": "pass",
+  "target": {
+    "collapse_entry": "0x180005c9f",
+    "collapse_exit": "0x180005d96",
+    "function": "FUN_1800056F0",
+    "sampler": "0x180009d80"
+  }
+}

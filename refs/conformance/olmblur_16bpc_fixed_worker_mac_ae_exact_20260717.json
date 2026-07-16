@@ -1,0 +1,36 @@
+{
+  "kind": "olmblur_16bpc_mac_ae_exact",
+  "schema": 1,
+  "record_id": "olmblur_16bpc_fixed_worker_mac_ae_exact_20260717",
+  "status": "ae_exact",
+  "source_commit": "e053c3dc",
+  "ae": {
+    "version": "26.3x87",
+    "process_id": 7653,
+    "bits_per_channel": 16,
+    "renderer": "SOFTWARE",
+    "working_space": "None",
+    "linear_blending": false
+  },
+  "loaded_plugin": {
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin/Contents/MacOS/OLMBlur",
+    "sha256": "71df7efc027b463327fefa23575fff5f80d4b38ff529ae97418d79297f4f0d72",
+    "proof": "lsof exact loaded module path plus on-disk sha256 in the rendering process"
+  },
+  "request": {
+    "path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmblur_exact_20260625",
+    "request_manifest_sha256": "1ff908fca5b733a629ff6a72f107278f94a2510a3a6e192ae969bb90ca070047",
+    "reference_manifest_sha256": "c4378358c8b4db2b2d5d12d0bf0b4142f141963538ca5ec4d86a49eeb8b9e71e"
+  },
+  "cases": [
+    {"id": "olmblur__case_0001", "max_diff": 0, "mean_diff": 0.0, "output_sha256": "53f3b365b5048055dd85b3617a343599be2ad85f75f620edc193765561f4d36f"},
+    {"id": "olmblur__case_0002", "max_diff": 0, "mean_diff": 0.0, "output_sha256": "340402d053e8dc628b4f6aebc57ac3502aa921b4f6ef4f4446265be57f30e19d"},
+    {"id": "olmblur__case_0003", "max_diff": 0, "mean_diff": 0.0, "output_sha256": "ecd4ad9d746b65782fa7173f996cd58b3c45051984cd30e467f5e639164f90af"},
+    {"id": "olmblur__case_0004", "max_diff": 0, "mean_diff": 0.0, "output_sha256": "7858aee7cd925a29b646513addfefa7845a56245cf07609ce3ac859cfc9892bf"},
+    {"id": "olmblur__case_0005", "max_diff": 0, "mean_diff": 0.0, "output_sha256": "114dc3ea17afeef6f38f9dcd75609fac9041b72f23d7ecd8912edbe528190cb3"},
+    {"id": "olmblur__case_0006", "max_diff": 0, "mean_diff": 0.0, "output_sha256": "27d24c96a6f3c15d27d8884ede039e5fd97480d752324f04d8e3aa77acc8791f"},
+    {"id": "olmblur__case_0007", "max_diff": 0, "mean_diff": 0.0, "output_sha256": "2b7f5f0990cd3009fc3690b7b1b4943b11c6bce67ec41cbcde98508ec6578f50"}
+  ],
+  "summary": {"exact": 7, "fail": 0, "missing": 0, "total": 7},
+  "claim_boundary": "AE exact for the declared normalized 16bpc seven-case OLMBlur slice only; no 32bpc promotion"
+}
