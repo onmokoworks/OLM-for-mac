@@ -861,9 +861,15 @@ treating a mismatch as algorithm drift.
   The hash-pinned actual-AEX `FUN_180008320` completes `2,176` exhaustive
   calls and disproves both prior threshold predicates as leaf semantics. Six
   terminal-loop fixtures ground the raw word load, float32 `MULSS`,
-  `CVTTSS2SI` truncation, and low-word store. The caller's float-generation
-  and amount-scaling stage remains open; do not patch the production threshold
-  from this leaf alone.
+  `CVTTSS2SI` truncation, and low-word store. Static and connected-stage
+  evidence separates the direct `8AD0 -> 58A0 -> 8320` family, whose immediate
+  caller is `FUN_180009000`, from the independent 8-bit `8C90 -> 5D60` plus
+  inline-erode path in `FUN_1800094B0`; the latter never calls `8320`. The
+  pinned constant at `0x18001f754` is `4000.0f`, not `0.5f`. A bounded direct
+  pipeline preserves the generated distance world and matches the portable
+  terminal oracle, but neither complete caller function has executed. Host
+  orchestration and the full amount-normalization boundary therefore remain
+  open; do not patch the production threshold from the leaf alone.
 
 - 2026-07-17 `OLMRadialBlur scatter-tail core`: use
   `refs/conformance/olmradialblur_scatter_tail_equivalence_20260717.md` /
