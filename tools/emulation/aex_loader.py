@@ -394,6 +394,8 @@ class AexLoader:
 
         ABI notes (Windows x64):
           - cos/sin take a double in XMM0 and return a double in XMM0.
+          - pow takes doubles in XMM0/XMM1 and returns a double in XMM0.
+          - powf takes floats in XMM0/XMM1 and returns a float in XMM0.
           - expf/log2f take a float in XMM0 and return a float in XMM0.
           - atan2f takes float y in XMM0, float x in XMM1, returns float XMM0.
           - omp_get_max_threads returns an int in EAX/RAX.
@@ -416,6 +418,12 @@ class AexLoader:
                 return 0
             return impl
 
+        def _f2(fn):
+            def impl(uc, args):
+                self.write_xmm_f32(0, fn(self.read_xmm_f32(0), self.read_xmm_f32(1)))
+                return 0
+            return impl
+
         def _atan2f(uc, args):
             y = self.read_xmm_f32(0)
             x = self.read_xmm_f32(1)
@@ -426,6 +434,7 @@ class AexLoader:
             "cos": _d1(math.cos),
             "sin": _d1(math.sin),
             "pow": _d2(math.pow),
+            "powf": _f2(math.pow),
             "expf": _f1(math.exp),
             "log2f": _f1(math.log2),
             "atan2f": _atan2f,
