@@ -23,6 +23,8 @@ from unicorn.x86_const import (
     UC_X86_REG_RDX,
     UC_X86_REG_R8,
     UC_X86_REG_R9,
+    UC_X86_REG_R14,
+    UC_X86_REG_R15,
     UC_X86_REG_RDI,
     UC_X86_REG_RIP,
     UC_X86_REG_RSI,
@@ -44,6 +46,10 @@ REPORT = ROOT / "refs/conformance/olmkirakira_mode2_common_owner_20260717.json"
 COMMON_OWNER = 0x18114C8F0
 PF32_OWNER = 0x18114D7F0
 MODE2_DISPATCH = 0x18114F4A0
+MODE2_ENTRY_VALUE_READ = 0x18114F8F2
+MODE2_ENTRY_VALUE_WRITE = 0x18114F8F8
+MODE2_PLANE_VALUE_READ = 0x18114F900
+MODE2_PLANE_VALUE_WRITE = 0x18114F904
 PF32_TYPED_OWNER = 0x18114E460
 PF32_CALLSITES = (0x18114E5D7, 0x18114E739)
 FILTERENGINE_KSIZE_STORE_PRODUCERS = (0x1812B9B38, 0x1812B9B4D)
@@ -316,6 +322,9 @@ def static_checks() -> dict[str, bool]:
     owner_c = slice_between(decomp, "// === FUN_18114c8f0", "// === FUN_18114ca70")
     pf32 = slice_between(asm, "; === FUN_18114d7f0", "; === FUN_18114ddc0")
     typed = slice_between(asm, "; === FUN_18114e460", "; === FUN_18114e7b0")
+    mode2_caller = slice_between(asm, "; === FUN_18114f4a0", "; === FUN_18114fd90")
+    inner = slice_between(asm, "; === FUN_181150790", "; === FUN_1811512a0")
+    builder = slice_between(asm, "; === FUN_18114e860", "; === FUN_18114ebe0")
     return {
         "common_owner_present": "18114c8f0  PUSH RBX" in owner and "FUN_18114c8f0" in owner_c,
         "common_owner_reads_pf_depth": "MOVZX R14D,word ptr [RAX + 0x2c]" in owner,
@@ -329,6 +338,30 @@ def static_checks() -> dict[str, bool]:
         "kira_defaults_are_grounded": len(PARAM_DEFAULTS) == 25 and PARAM_SELECTOR_ORDER == tuple(spec["disk_id"] for spec in PARAM_BY_SELECTOR.values()) and "OLM OLM Kira Kira-0001" in KIRA_MANIFEST.read_text(encoding="utf-8") and "CHANNEL_DISK_ID = 8" in (ROOT / "mac/OLMKiraKira/OLMKiraKira.h").read_text(encoding="utf-8"),
         "next_callback_pointer_abi_is_grounded": "181232764  MOV RAX,qword ptr [RCX + 0x8]" in asm and "181232768  MOV RCX,qword ptr [RCX + 0xb8]" in asm and "18123276f  CALL RAX" in asm,
         "pf32_owner_enters_mode2_dispatch": "18114dbfc  CALL 0x18114f4a0" in pf32,
+        "mode2_caller_carries_rdi_plus_0x5c_0x60_to_rsp_plus_0x50": all(
+            line in asm for line in (
+                "18114cfdc  MOV R10D,dword ptr [RDI + 0x5c]",
+                "18114cfe0  MOV R11D,dword ptr [RDI + 0x60]",
+                "18114d013  MOV dword ptr [RSP + 0x58],R10D",
+                "18114d018  MOV dword ptr [RSP + 0x50],R11D",
+            )
+        ),
+        "mode2_caller_copies_rdi_plus_0x60_into_mode2_frame": "18114f62f  MOV RAX,qword ptr [RDI + 0x60]" in mode2_caller and "18114f633  MOV qword ptr [RBX + 0x60],RAX" in mode2_caller,
+        "inner_entry_stack_plus_0x38_is_caller_value": "18114f90f  LEA RAX,[RBP + 0x60]" in mode2_caller and "18114f8f8  MOV dword ptr [RSP + 0x38],EAX" in mode2_caller and "18114f929  CALL 0x181150790" in mode2_caller,
+        "mode2_value_lineage_sites_are_grounded": all(line in mode2_caller for line in (
+            "18114f8f2  MOV EAX,dword ptr [RBP + 0x5d8]",
+            "18114f8f8  MOV dword ptr [RSP + 0x38],EAX",
+            "18114f900  MOV EAX,dword ptr [R15 + RAX*0x1]",
+            "18114f904  MOV dword ptr [RSP + 0x30],EAX",
+        )),
+        "inner_size_or_path_is_grounded": all(line in inner for line in (
+            "18115110a  MOV RDI,RSI",
+            "18115110d  MOV RAX,0x100000000",
+            "181151117  OR RDI,RAX",
+            "181151162  MOV R9,RDI",
+            "18115116f  CALL 0x181280bc0",
+        )),
+        "aex_builder_does_not_directly_write_plus_0x60": "[RDI + 0x60]" not in builder,
         "pf32_owner_enters_typed_owner": "18114dd0d  CALL 0x18114e460" in pf32,
         "typed_owner_has_pf32_sites": all(f"{address:x}  CALL 0x181230c20" in typed for address in PF32_CALLSITES),
         "typed_writer_uses_rsp_plus_0x28": "181230c20  MOV RAX,qword ptr [RSP + 0x28]" in asm,
@@ -361,6 +394,17 @@ def run_owner_probe() -> dict[str, object]:
     fls_thread_values: dict[int, dict[int, int]] = {}
     control_flow_trace: list[dict[str, object]] = []
     mode2_call_args: dict[str, object] = {}
+    mode2_value_lineage: dict[str, object] = {
+        "fail_closed": True,
+        "observations": [],
+    }
+    mode2_pointer_lineage: dict[str, object] = {
+        "fail_closed": True,
+        "target_offsets": ["0x5c", "0x60"],
+        "dispatch_entries": [],
+        "writes": [],
+    }
+    watched_mode2_targets: dict[int, dict[str, object]] = {}
     mode2_instruction_trace: list[dict[str, object]] = []
     inner_entry: dict[str, object] = {}
     inner_instruction_trace: list[dict[str, object]] = []
@@ -370,6 +414,10 @@ def run_owner_probe() -> dict[str, object]:
     filter_setup_trace: list[dict[str, object]] = []
     filter_assertion_capture: dict[str, object] = {}
     filter_lineage_trace: list[dict[str, object]] = []
+    row_sum_entry_capture: dict[str, object] = {}
+    row_sum_compare_capture: list[dict[str, object]] = []
+    row_sum_target_store_capture: list[dict[str, object]] = []
+    row_sum_runtime_trace: list[dict[str, object]] = []
 
     def dispatch_checkpoint(ld: AexLoader, label: str) -> dict[str, object]:
         rsp = ld.uc.reg_read(UC_X86_REG_RSP)
@@ -1017,12 +1065,234 @@ def run_owner_probe() -> dict[str, object]:
 
     def capture_mode2_entry(ld: AexLoader, _address: int, _size: int) -> None:
         rsp = ld.uc.reg_read(UC_X86_REG_RSP)
+        entry_rdi = ld.uc.reg_read(UC_X86_REG_RDI)
+        # The hook fires before the prologue's MOV RDI,RDX; RDX is the
+        # context that becomes semantic RDI inside FUN_18114f4a0.
+        rdi = ld.uc.reg_read(UC_X86_REG_RDX)
+        target_entry: dict[str, object] = {
+            "entry_rip": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
+            "cpu_rdi_before_prologue": hex(entry_rdi),
+            "rdi": hex(rdi),
+            "targets": {},
+        }
+        for role, base in (("caller_param_context", entry_rdi), ("semantic_mode2_rdi", rdi)):
+            for offset in (0x5C, 0x60):
+                address = base + offset
+                initial = ld.read_bytes(address, 4)
+                watched_mode2_targets[address] = {
+                    "role": role,
+                    "rdi": base,
+                    "offset": offset,
+                    "initial_raw": initial.hex(),
+                    "writes": [],
+                }
+                target_entry["targets"][f"{role}+0x{offset:x}"] = {
+                    "address": hex(address),
+                    "initial_raw": initial.hex(),
+                    "initial_u32": struct.unpack("<I", initial)[0],
+                    "initial_i32": struct.unpack("<i", initial)[0],
+                }
+        mode2_pointer_lineage["dispatch_entries"].append(target_entry)
         mode2_call_args.update({
+            "original_rsp": hex(rsp),
+            "rdi_context_pointer": hex(rdi),
             "entry_stack": {f"+0x{offset:x}": hex(read_u64(ld, rsp + offset)) for offset in range(0x20, 0x58, 8)},
             "param10_stack_value": struct.unpack("<i", ld.read_bytes(rsp + 0x50, 4))[0],
             "param10_source": "FUN_18114d7f0 caller [RSP+0x50] = PF32 local param_5 + 0x4c",
         })
+        entry_address = rsp + 0x50
+        entry_raw = ld.read_bytes(entry_address, 4)
+        mode2_value_lineage["mode2_dispatch_entry"] = {
+            "function": "FUN_18114f4a0",
+            "original_rsp": hex(rsp),
+            "address": hex(entry_address),
+            "raw": entry_raw.hex(),
+            "u32": struct.unpack("<I", entry_raw)[0],
+            "i32": struct.unpack("<i", entry_raw)[0],
+            "source": "caller-preloaded stack at original entry_rsp+0x50",
+        }
     loader.add_code_hook(MODE2_DISPATCH, capture_mode2_entry)
+
+    def capture_mode2_value_read(label: str, address: int):
+        def hook(ld: AexLoader, _address: int, _size: int) -> None:
+            rsp = ld.uc.reg_read(UC_X86_REG_RSP)
+            rbp = ld.uc.reg_read(UC_X86_REG_RBP)
+            if address == MODE2_ENTRY_VALUE_READ:
+                source_address = rbp + 0x5D8
+                source = "[RBP+0x5d8] == original entry_rsp+0x50"
+                raw = ld.read_bytes(source_address, 4)
+            else:
+                source_address = ld.uc.reg_read(UC_X86_REG_R15) + ld.uc.reg_read(UC_X86_REG_RAX)
+                source = "[R15+RAX] plane value"
+                raw = ld.read_bytes(source_address, 4)
+            mode2_value_lineage["observations"].append({
+                "kind": "read",
+                "label": label,
+                "address": hex(address),
+                "source_address": hex(source_address),
+                "source": source,
+                "raw": raw.hex(),
+                "u32": struct.unpack("<I", raw)[0],
+                "rsp": hex(rsp),
+                "rbp": hex(rbp),
+            })
+        return hook
+
+    def capture_mode2_value_write(label: str, address: int):
+        def hook(ld: AexLoader, _address: int, _size: int) -> None:
+            rsp = ld.uc.reg_read(UC_X86_REG_RSP)
+            target_address = rsp + (0x38 if address == MODE2_ENTRY_VALUE_WRITE else 0x30)
+            before = ld.read_bytes(target_address, 4)
+            value = ld.uc.reg_read(UC_X86_REG_RAX) & 0xFFFFFFFF
+            mode2_value_lineage["observations"].append({
+                "kind": "write",
+                "label": label,
+                "address": hex(address),
+                "target_address": hex(target_address),
+                "target_stack_offset": hex(target_address - rsp),
+                "before_raw": before.hex(),
+                "value_raw": value.to_bytes(4, "little").hex(),
+                "value_u32": value,
+                "source_register": "EAX",
+                "rsp": hex(rsp),
+            })
+        return hook
+
+    loader.add_code_hook(MODE2_ENTRY_VALUE_READ, capture_mode2_value_read("entry value read", MODE2_ENTRY_VALUE_READ))
+    loader.add_code_hook(MODE2_ENTRY_VALUE_WRITE, capture_mode2_value_write("entry value outgoing write", MODE2_ENTRY_VALUE_WRITE))
+    loader.add_code_hook(MODE2_PLANE_VALUE_READ, capture_mode2_value_read("inner stack+0x38 source read", MODE2_PLANE_VALUE_READ))
+    loader.add_code_hook(MODE2_PLANE_VALUE_WRITE, capture_mode2_value_write("inner stack+0x38 outgoing write", MODE2_PLANE_VALUE_WRITE))
+
+    def watch_mode2_pointer_writes(uc: object, _access: int, address: int, size: int, value: int, _user_data: object) -> None:
+        write_end = address + size
+        for target_address, target in watched_mode2_targets.items():
+            if address >= target_address + 4 or write_end <= target_address:
+                continue
+            before = bytes(uc.mem_read(target_address, 4)).hex()
+            rip = uc.reg_read(UC_X86_REG_RIP)
+            event = {
+                "target_address": hex(target_address),
+                "target_offset": f"+0x{target['offset']:x}",
+                "write_address": hex(address),
+                "write_size": size,
+                "write_value": hex(value),
+                "before_raw": before,
+                "after_raw": bytes(uc.mem_read(target_address, 4)).hex(),
+                "writer_rip": hex(rip),
+                "writer_origin": "AEX" if 0x180000000 <= rip < 0x182000000 else "host_callback_or_runtime",
+                "registers": {
+                    "RIP": hex(rip),
+                    "RSP": hex(uc.reg_read(UC_X86_REG_RSP)),
+                    "RBP": hex(uc.reg_read(UC_X86_REG_RBP)),
+                    "RCX": hex(uc.reg_read(UC_X86_REG_RCX)),
+                    "RDX": hex(uc.reg_read(UC_X86_REG_RDX)),
+                    "R8": hex(uc.reg_read(UC_X86_REG_R8)),
+                    "R9": hex(uc.reg_read(UC_X86_REG_R9)),
+                    "RAX": hex(uc.reg_read(UC_X86_REG_RAX)),
+                    "RBX": hex(uc.reg_read(UC_X86_REG_RBX)),
+                    "RSI": hex(uc.reg_read(UC_X86_REG_RSI)),
+                    "RDI": hex(uc.reg_read(UC_X86_REG_RDI)),
+                },
+            }
+            target["writes"].append(event)
+            mode2_pointer_lineage["writes"].append(event)
+
+    loader.uc.hook_add(UC_HOOK_MEM_WRITE, watch_mode2_pointer_writes)
+
+    def finalize_mode2_pointer_lineage() -> None:
+        targets: dict[str, dict[str, object]] = {}
+        for address, target in watched_mode2_targets.items():
+            writes = target["writes"]
+            targets[f"{target['role']}+0x{target['offset']:x}"] = {
+                "role": target["role"],
+                "address": hex(address),
+                "initial_raw": target["initial_raw"],
+                "first_observed_write": writes[0] if writes else None,
+                "last_observed_write": writes[-1] if writes else None,
+                "watch_fired": bool(writes),
+                "fail_closed": not writes,
+                "write_count": len(writes),
+                "final_raw": loader.read_bytes(address, 4).hex(),
+            }
+        mode2_pointer_lineage["targets"] = targets
+        values_80000000 = [
+            event for event in mode2_pointer_lineage["writes"]
+            if event["write_value"] in ("0x80000000", "0x80000000")
+            or event["after_raw"] == "00000080"
+        ]
+        mode2_pointer_lineage["value_0x80000000_writes"] = values_80000000
+        mode2_pointer_lineage["origin_diagnosis"] = {
+            "host_param_checkout_write_count": sum(
+                1 for event in mode2_pointer_lineage["writes"]
+                if event["writer_origin"] == "host_callback_or_runtime"
+            ),
+            "aex_write_count": sum(
+                1 for event in mode2_pointer_lineage["writes"]
+                if event["writer_origin"] == "AEX"
+            ),
+            "zero_x80000000_writer_count": len(values_80000000),
+            "zero_x80000000_origin": sorted({event["writer_origin"] for event in values_80000000}),
+            "classification": (
+                "host param checkout"
+                if values_80000000 and all(event["writer_origin"] == "host_callback_or_runtime" for event in values_80000000)
+                else "AEX calculation"
+                if values_80000000 and all(event["writer_origin"] == "AEX" for event in values_80000000)
+                else "not observed"
+                if not values_80000000
+                else "mixed/ambiguous"
+            ),
+        }
+        inner_value = inner_entry.get("stack_args", {}).get("+0x38")
+        checkout_values = [
+            event.get("param_def_u_plus_0x38_raw", "")
+            for event in callback_state.get("param_checkout", [])
+        ]
+        entry_value = mode2_value_lineage.get("mode2_dispatch_entry", {}).get("u32")
+        entry_read = next(
+            (item for item in mode2_value_lineage["observations"]
+             if item.get("address") == hex(MODE2_ENTRY_VALUE_READ)),
+            None,
+        )
+        plane_write = next(
+            (item for item in mode2_value_lineage["observations"]
+             if item.get("address") == hex(MODE2_PLANE_VALUE_WRITE)),
+            None,
+        )
+        inner_u32 = int(inner_value, 16) if isinstance(inner_value, str) else None
+        host_contains_inner = inner_u32 is not None and any(
+            inner_u32.to_bytes(4, "little").hex() in value for value in checkout_values
+        )
+        if inner_u32 is not None and entry_value == inner_u32 and entry_read is not None:
+            value_classification = "caller-preloaded"
+        elif inner_u32 is not None and plane_write and plane_write.get("value_u32") == inner_u32:
+            value_classification = "in-function write"
+        elif host_contains_inner:
+            value_classification = "host"
+        else:
+            value_classification = "unresolved"
+        mode2_value_lineage["comparison"] = {
+            "entry_rsp_plus_0x50_u32": entry_value,
+            "entry_value_read_u32": entry_read.get("u32") if entry_read else None,
+            "inner_entry_stack_plus_0x38_u32": inner_u32,
+            "inner_entry_stack_plus_0x38_equals_entry_value": inner_u32 == entry_value,
+            "inner_entry_stack_plus_0x38_equals_entry_read": bool(entry_read and entry_read.get("u32") == inner_u32),
+            "inner_entry_stack_plus_0x38_equals_in_function_write": bool(plane_write and plane_write.get("value_u32") == inner_u32),
+            "host_checkout_contains_inner_value": host_contains_inner,
+            "classification": value_classification,
+            "fail_closed": value_classification == "unresolved",
+        }
+        mode2_pointer_lineage["derived_value_diagnosis"] = {
+            "inner_entry_stack_plus_0x38": inner_value,
+            "special_plane_branch_value": next(
+                (item.get("plane_test_value") for item in control_flow_trace
+                 if item.get("label") == "Mode2 special-plane branch"),
+                None,
+            ),
+            "host_param_checkout_raw_values": checkout_values,
+            "host_checkout_contains_0x80000000": any("00000080" in value for value in checkout_values),
+            "aex_constant_path": "FUN_181150790 inner mode-2 path reaches AEX RDX=0x80000000 and passes stack+0x38=0x80000000 before the observed FilterEngine stop",
+            "classification": "AEX calculation" if inner_value == "0x80000000" and not any("00000080" in value for value in checkout_values) else "host param checkout or ambiguous",
+        }
 
     def capture_mode2_branch(label: str, address: int):
         def hook(ld: AexLoader, _address: int, _size: int) -> None:
@@ -1185,6 +1455,111 @@ def run_owner_probe() -> dict[str, object]:
                 for offset in range(0, 0x24, 4)
             },
         }
+
+    def row_sum_stack_snapshot(ld: AexLoader, rsp: int) -> dict[str, str]:
+        return {f"+0x{offset:x}": hex(read_u64(ld, rsp + offset)) for offset in range(0x20, 0x60, 8)}
+
+    row_sum_trace_mnemonics = (
+        "CMP", "TEST", "J", "AND", "XOR", "SUB", "SAR", "SHR", "SHL", "CDQ", "BTR", "OR", "LEA"
+    )
+
+    def capture_row_sum_entry(ld: AexLoader, _address: int, _size: int) -> None:
+        rsp = ld.uc.reg_read(UC_X86_REG_RSP)
+        object_pointer = ld.uc.reg_read(UC_X86_REG_RCX)
+        row_sum_entry_capture.update({
+            "function": "FUN_181281e90",
+            "address": "0x181281e90",
+            "rip": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
+            "registers": {
+                name: hex(ld.uc.reg_read(reg))
+                for name, reg in (("RCX", UC_X86_REG_RCX), ("RDX", UC_X86_REG_RDX), ("R8", UC_X86_REG_R8), ("R9", UC_X86_REG_R9))
+            },
+            "object_register": "RCX",
+            "object_pointer": hex(object_pointer),
+            "object_window": object_window_snapshot(ld, object_pointer),
+            "rsp": hex(rsp),
+            "stack_args": row_sum_stack_snapshot(ld, rsp),
+            "param5_stack_value": struct.unpack("<i", ld.read_bytes(rsp + 0x28, 4))[0],
+            "param5_source": "Win64 fifth argument at entry RSP+0x28",
+        })
+
+    def capture_row_sum_compare(ld: AexLoader, _address: int, _size: int) -> None:
+        rsp = ld.uc.reg_read(UC_X86_REG_RSP)
+        object_pointer = ld.uc.reg_read(UC_X86_REG_RBX)
+        row_sum_compare_capture.append({
+            "function": "FUN_181281360",
+            "address": "0x181281bbe",
+            "instruction": "MOV dword ptr [RBX + 0x8],R15D",
+            "rip": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
+            "registers": {
+                name: hex(ld.uc.reg_read(reg))
+                for name, reg in (("RCX", UC_X86_REG_RCX), ("RDX", UC_X86_REG_RDX), ("R8", UC_X86_REG_R8), ("R9", UC_X86_REG_R9), ("RAX", UC_X86_REG_RAX), ("RBX", UC_X86_REG_RBX), ("R14", UC_X86_REG_R14), ("R15", UC_X86_REG_R15))
+            },
+            "r15d_before_store": ld.uc.reg_read(UC_X86_REG_R15) & 0xFFFFFFFF,
+            "r14d_before_store": ld.uc.reg_read(UC_X86_REG_R14) & 0xFFFFFFFF,
+            "object_register": "RBX",
+            "object_pointer": hex(object_pointer),
+            "object_window": object_window_snapshot(ld, object_pointer),
+            "rsp": hex(rsp),
+            "stack_args": row_sum_stack_snapshot(ld, rsp),
+        })
+
+    def capture_row_sum_target_store(ld: AexLoader, _address: int, _size: int) -> None:
+        rsp = ld.uc.reg_read(UC_X86_REG_RSP)
+        object_pointer = ld.uc.reg_read(UC_X86_REG_RBX)
+        row_sum_target_store_capture.append({
+            "function": "FUN_181281e90",
+            "address": "0x18128257a",
+            "instruction": "MOV dword ptr [RBX + 0x8],R15D",
+            "capture_phase": "immediately_before_instruction",
+            "rip": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
+            "registers": {
+                name: hex(ld.uc.reg_read(reg))
+                for name, reg in (("RCX", UC_X86_REG_RCX), ("RDX", UC_X86_REG_RDX), ("R8", UC_X86_REG_R8), ("R9", UC_X86_REG_R9), ("RAX", UC_X86_REG_RAX), ("RBX", UC_X86_REG_RBX), ("R14", UC_X86_REG_R14), ("R15", UC_X86_REG_R15))
+            },
+            "r15d_before_store": ld.uc.reg_read(UC_X86_REG_R15) & 0xFFFFFFFF,
+            "r14d_before_store": ld.uc.reg_read(UC_X86_REG_R14) & 0xFFFFFFFF,
+            "object_register": "RBX",
+            "object_pointer": hex(object_pointer),
+            "object_window": object_window_snapshot(ld, object_pointer),
+            "rsp": hex(rsp),
+            "stack_args": row_sum_stack_snapshot(ld, rsp),
+            "value_sources": {
+                "object_plus_0x8": "R15D",
+                "object_plus_0xc_next_instruction": "R14D",
+            },
+        })
+
+    def capture_row_sum_runtime(ld: AexLoader, _address: int, _size: int, *, address: int, mnemonic: str, function: str) -> None:
+        if len(row_sum_runtime_trace) >= 512:
+            return
+        rsp = ld.uc.reg_read(UC_X86_REG_RSP)
+        row_sum_runtime_trace.append({
+            "function": function,
+            "address": hex(address),
+            "instruction": mnemonic,
+            "rip": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
+            "registers": {
+                name: hex(ld.uc.reg_read(reg))
+                for name, reg in (("RCX", UC_X86_REG_RCX), ("RDX", UC_X86_REG_RDX), ("R8", UC_X86_REG_R8), ("R9", UC_X86_REG_R9), ("RAX", UC_X86_REG_RAX), ("RBX", UC_X86_REG_RBX), ("R14", UC_X86_REG_R14), ("R15", UC_X86_REG_R15))
+            },
+            "stack_args": row_sum_stack_snapshot(ld, rsp),
+        })
+
+    loader.add_code_hook(0x181281E90, capture_row_sum_entry)
+    loader.add_code_hook(0x181281BBE, capture_row_sum_compare)
+    loader.add_code_hook(0x18128257A, capture_row_sum_target_store)
+    asm_text = ASM.read_text(encoding="utf-8")
+    for start, end, function in (("; === FUN_181281360", "; === FUN_181281e90", "FUN_181281360"), ("; === FUN_181281e90", "; === FUN_181282750", "FUN_181281e90")):
+        for line in slice_between(asm_text, start, end).splitlines():
+            match = re.match(r"([0-9a-f]+)\s+(.+)$", line)
+            if not match:
+                continue
+            address = int(match.group(1), 16)
+            mnemonic = match.group(2).strip()
+            if not mnemonic.startswith(row_sum_trace_mnemonics):
+                continue
+            loader.add_code_hook(address, lambda ld, _address, _size, address=address, mnemonic=mnemonic, function=function: capture_row_sum_runtime(ld, _address, _size, address=address, mnemonic=mnemonic, function=function))
 
     source_object_pointers: set[int] = set()
     watched_object_pointers: set[int] = set()
@@ -1691,6 +2066,7 @@ def run_owner_probe() -> dict[str, object]:
                 "assertion": runtime_error_boundary,
                 "stop_without_mutation": True,
             }
+        finalize_mode2_pointer_lineage()
         return {
             "status": "FAILED",
             "events": events,
@@ -1709,9 +2085,15 @@ def run_owner_probe() -> dict[str, object]:
             "aligned_live": {hex(pointer): spec for pointer, spec in aligned_live.items()},
             "control_flow_trace": control_flow_trace,
             "mode2_call_args": mode2_call_args,
+            "mode2_value_lineage": mode2_value_lineage,
+            "mode2_pointer_lineage": mode2_pointer_lineage,
             "mode2_instruction_trace": mode2_instruction_trace,
             "inner_entry": inner_entry,
             "inner_instruction_trace": inner_instruction_trace,
+            "row_sum_entry_capture": row_sum_entry_capture,
+            "row_sum_compare_capture": row_sum_compare_capture,
+            "row_sum_target_store_capture": row_sum_target_store_capture,
+            "row_sum_runtime_trace": row_sum_runtime_trace,
             "filter_setup_trace": filter_setup_trace,
             "filter_lineage_trace": filter_lineage_trace,
             "filter_assertion_capture": filter_assertion_capture,
@@ -1764,6 +2146,7 @@ def run_owner_probe() -> dict[str, object]:
             "rsp": hex(loader.uc.reg_read(UC_X86_REG_RSP)),
             "registers_rcx_rdx_r8_r9_rbp_rsi_rdi": [hex(loader.uc.reg_read(reg)) for reg in (UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_RBP, UC_X86_REG_RSI, UC_X86_REG_RDI)],
         })
+        finalize_mode2_pointer_lineage()
         return {
             "status": "BLOCKED",
             "events": events,
@@ -1782,9 +2165,15 @@ def run_owner_probe() -> dict[str, object]:
             "aligned_live": {hex(pointer): spec for pointer, spec in aligned_live.items()},
             "control_flow_trace": control_flow_trace,
             "mode2_call_args": mode2_call_args,
+            "mode2_value_lineage": mode2_value_lineage,
+            "mode2_pointer_lineage": mode2_pointer_lineage,
             "mode2_instruction_trace": mode2_instruction_trace,
             "inner_entry": inner_entry,
             "inner_instruction_trace": inner_instruction_trace,
+            "row_sum_entry_capture": row_sum_entry_capture,
+            "row_sum_compare_capture": row_sum_compare_capture,
+            "row_sum_target_store_capture": row_sum_target_store_capture,
+            "row_sum_runtime_trace": row_sum_runtime_trace,
             "filter_setup_trace": filter_setup_trace,
             "filter_lineage_trace": filter_lineage_trace,
             "filter_assertion_capture": filter_assertion_capture,

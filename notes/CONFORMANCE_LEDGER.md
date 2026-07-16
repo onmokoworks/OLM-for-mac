@@ -1,5 +1,17 @@
 # OLM Conformance Ledger
 
+- 2026-07-17 `OLMKiraKira Mode2 special-value lineage` (latest override): no
+  correctness status is promoted. At `FUN_18114f4a0` entry, the caller-provided
+  value at original `RSP+0x50` is `2`, and `0x18114f8f2` reads the same value.
+  The AEX then reads `0x80000000` from its plane at `0x18114f900` and writes it
+  into the outgoing call frame at `0x18114f904`; the subsequent
+  `FUN_181150790` entry observes that exact value at stack `+0x38`. Host
+  parameter checkout contains no matching raw value. This classifies the
+  special value as an in-function AEX write, not a host/UI parameter. The run
+  still fails closed at the known `cv::FilterEngine::init` assertion, so no
+  writer, output, or AE-exact claim follows. Evidence:
+  `refs/conformance/olmkirakira_mode2_common_owner_20260717.json`.
+
 - 2026-07-17 `OLMBlur case0004 natural checkpoint runner` (latest override):
   no correctness status is promoted. A new runner preserves the existing
   bounded replay and adds fail-closed save/resume controls for the pinned
