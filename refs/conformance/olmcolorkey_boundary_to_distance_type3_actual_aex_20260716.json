@@ -1,0 +1,689 @@
+{
+  "abi": {
+    "args": "RCX=ctx, RDX=seed_world, R8=distance_world, XMM3=255.0",
+    "ctx_offsets": {
+      "0x120": 255,
+      "0x128": 255,
+      "0x180": "HandleSuite descriptor"
+    }
+  },
+  "acceptance_gates": {
+    "cleanup_observed": true,
+    "exactly_one_required_allocation": true,
+    "float32_model_match": true,
+    "lifecycle_complete": true,
+    "no_unresolved_imports": true,
+    "normal_return": true
+  },
+  "aex": {
+    "actual_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "expected_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "path": "aex/OLMColorKey/Plugins/64/2025/OLMColorKey.aex",
+    "sha256_match": true
+  },
+  "blocked_reason": null,
+  "classification": "Mac-local Unicorn execution of checked-in Windows PE with the proven narrow PF Handle Suite shim; not AE-host execution and not AE-exact",
+  "cleanup_observed": true,
+  "float32_model_comparison": {
+    "channels": 4,
+    "match": true,
+    "max_abs_error": 0.0
+  },
+  "independent_model": {
+    "first_channel": [
+      [
+        570.1973342624464,
+        360.62445840513925,
+        255.0,
+        360.62445840513925,
+        570.1973342624464
+      ],
+      [
+        510.0,
+        255.0,
+        0.0,
+        255.0,
+        510.0
+      ],
+      [
+        570.1973342624464,
+        360.62445840513925,
+        255.0,
+        360.62445840513925,
+        570.1973342624464
+      ]
+    ],
+    "four_channel": true,
+    "kind": "nearest_zero_seed_euclidean_pixel_distance"
+  },
+  "instructions": 4311,
+  "lifecycle_complete": true,
+  "loader_import_log": [],
+  "normal_return": true,
+  "output": [
+    [
+      [
+        570.1973266601562,
+        570.1973266601562,
+        570.1973266601562,
+        570.1973266601562
+      ],
+      [
+        360.62445068359375,
+        360.62445068359375,
+        360.62445068359375,
+        360.62445068359375
+      ],
+      [
+        255.0,
+        255.0,
+        255.0,
+        255.0
+      ],
+      [
+        360.62445068359375,
+        360.62445068359375,
+        360.62445068359375,
+        360.62445068359375
+      ],
+      [
+        570.1973266601562,
+        570.1973266601562,
+        570.1973266601562,
+        570.1973266601562
+      ]
+    ],
+    [
+      [
+        510.0,
+        510.0,
+        510.0,
+        510.0
+      ],
+      [
+        255.0,
+        255.0,
+        255.0,
+        255.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        255.0,
+        255.0,
+        255.0,
+        255.0
+      ],
+      [
+        510.0,
+        510.0,
+        510.0,
+        510.0
+      ]
+    ],
+    [
+      [
+        570.1973266601562,
+        570.1973266601562,
+        570.1973266601562,
+        570.1973266601562
+      ],
+      [
+        360.62445068359375,
+        360.62445068359375,
+        360.62445068359375,
+        360.62445068359375
+      ],
+      [
+        255.0,
+        255.0,
+        255.0,
+        255.0
+      ],
+      [
+        360.62445068359375,
+        360.62445068359375,
+        360.62445068359375,
+        360.62445068359375
+      ],
+      [
+        570.1973266601562,
+        570.1973266601562,
+        570.1973266601562,
+        570.1973266601562
+      ]
+    ]
+  ],
+  "rax": "0x0",
+  "scope_note": "Type3 boundary-to-distance lane only; no full Replace+Edge claim.",
+  "seed": {
+    "boundary_rax": "0x0",
+    "first_channel": [
+      [
+        255,
+        255,
+        255,
+        255,
+        255
+      ],
+      [
+        255,
+        255,
+        0,
+        255,
+        255
+      ],
+      [
+        255,
+        255,
+        255,
+        255,
+        255
+      ]
+    ]
+  },
+  "shim": {
+    "allocation_count": 8,
+    "callbacks_seen": [
+      "PF_HandleSuite.acquire",
+      "PF_HandleSuite.new_handle",
+      "PF_HandleSuite.lock_handle",
+      "PF_HandleSuite.release_suite",
+      "PF_HandleSuite.acquire",
+      "PF_HandleSuite.new_handle",
+      "PF_HandleSuite.lock_handle",
+      "PF_HandleSuite.release_suite",
+      "PF_HandleSuite.acquire",
+      "PF_HandleSuite.new_handle",
+      "PF_HandleSuite.lock_handle",
+      "PF_HandleSuite.release_suite",
+      "PF_HandleSuite.acquire",
+      "PF_HandleSuite.new_handle",
+      "PF_HandleSuite.lock_handle",
+      "PF_HandleSuite.release_suite",
+      "PF_HandleSuite.acquire",
+      "PF_HandleSuite.new_handle",
+      "PF_HandleSuite.lock_handle",
+      "PF_HandleSuite.release_suite",
+      "PF_HandleSuite.acquire",
+      "PF_HandleSuite.unlock_handle",
+      "PF_HandleSuite.dispose_handle",
+      "PF_HandleSuite.new_handle",
+      "PF_HandleSuite.lock_handle",
+      "PF_HandleSuite.release_suite",
+      "PF_HandleSuite.acquire",
+      "PF_HandleSuite.unlock_handle",
+      "PF_HandleSuite.dispose_handle",
+      "PF_HandleSuite.new_handle",
+      "PF_HandleSuite.lock_handle",
+      "PF_HandleSuite.release_suite",
+      "PF_HandleSuite.acquire",
+      "PF_HandleSuite.unlock_handle",
+      "PF_HandleSuite.dispose_handle",
+      "PF_HandleSuite.new_handle",
+      "PF_HandleSuite.lock_handle",
+      "PF_HandleSuite.release_suite",
+      "PF_HandleSuite.acquire",
+      "PF_HandleSuite.unlock_handle",
+      "PF_HandleSuite.dispose_handle",
+      "PF_HandleSuite.release_suite",
+      "PF_HandleSuite.acquire",
+      "PF_HandleSuite.unlock_handle",
+      "PF_HandleSuite.dispose_handle",
+      "PF_HandleSuite.release_suite",
+      "PF_HandleSuite.acquire",
+      "PF_HandleSuite.unlock_handle",
+      "PF_HandleSuite.dispose_handle",
+      "PF_HandleSuite.release_suite",
+      "PF_HandleSuite.acquire",
+      "PF_HandleSuite.unlock_handle",
+      "PF_HandleSuite.dispose_handle",
+      "PF_HandleSuite.release_suite",
+      "PF_HandleSuite.acquire",
+      "PF_HandleSuite.unlock_handle",
+      "PF_HandleSuite.dispose_handle",
+      "PF_HandleSuite.release_suite"
+    ],
+    "events": [
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fef20",
+          "0xf0fefd0"
+        ],
+        "callback": "PF_HandleSuite.acquire"
+      },
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x20000290",
+        "size": 60
+      },
+      {
+        "callback": "PF_HandleSuite.lock_handle",
+        "handle": "0x20000290"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0x82000030",
+          "0xf0fefd0"
+        ],
+        "callback": "PF_HandleSuite.release_suite"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fedd0",
+          "0x3"
+        ],
+        "callback": "PF_HandleSuite.acquire"
+      },
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x200002d0",
+        "size": 20
+      },
+      {
+        "callback": "PF_HandleSuite.lock_handle",
+        "handle": "0x200002d0"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0x82000030",
+          "0x3"
+        ],
+        "callback": "PF_HandleSuite.release_suite"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fedd0",
+          "0x3"
+        ],
+        "callback": "PF_HandleSuite.acquire"
+      },
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x200002f0",
+        "size": 12
+      },
+      {
+        "callback": "PF_HandleSuite.lock_handle",
+        "handle": "0x200002f0"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0x82000030",
+          "0x3"
+        ],
+        "callback": "PF_HandleSuite.release_suite"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fee00",
+          "0x3"
+        ],
+        "callback": "PF_HandleSuite.acquire"
+      },
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x20000300",
+        "size": 12
+      },
+      {
+        "callback": "PF_HandleSuite.lock_handle",
+        "handle": "0x20000300"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fee00",
+          "0x3"
+        ],
+        "callback": "PF_HandleSuite.release_suite"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fedd0",
+          "0x3"
+        ],
+        "callback": "PF_HandleSuite.acquire"
+      },
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x20000310",
+        "size": 16
+      },
+      {
+        "callback": "PF_HandleSuite.lock_handle",
+        "handle": "0x20000310"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0x82000030",
+          "0x3"
+        ],
+        "callback": "PF_HandleSuite.release_suite"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fede0",
+          "0x14"
+        ],
+        "callback": "PF_HandleSuite.acquire"
+      },
+      {
+        "callback": "PF_HandleSuite.unlock_handle",
+        "handle": "0x200002f0"
+      },
+      {
+        "callback": "PF_HandleSuite.dispose_handle",
+        "handle": "0x200002f0"
+      },
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x20000320",
+        "size": 20
+      },
+      {
+        "callback": "PF_HandleSuite.lock_handle",
+        "handle": "0x20000320"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0x82000030",
+          "0x14"
+        ],
+        "callback": "PF_HandleSuite.release_suite"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fee00",
+          "0x14"
+        ],
+        "callback": "PF_HandleSuite.acquire"
+      },
+      {
+        "callback": "PF_HandleSuite.unlock_handle",
+        "handle": "0x20000300"
+      },
+      {
+        "callback": "PF_HandleSuite.dispose_handle",
+        "handle": "0x20000300"
+      },
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x20000340",
+        "size": 20
+      },
+      {
+        "callback": "PF_HandleSuite.lock_handle",
+        "handle": "0x20000340"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fee00",
+          "0x14"
+        ],
+        "callback": "PF_HandleSuite.release_suite"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fede0",
+          "0x14"
+        ],
+        "callback": "PF_HandleSuite.acquire"
+      },
+      {
+        "callback": "PF_HandleSuite.unlock_handle",
+        "handle": "0x20000310"
+      },
+      {
+        "callback": "PF_HandleSuite.dispose_handle",
+        "handle": "0x20000310"
+      },
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x20000360",
+        "size": 24
+      },
+      {
+        "callback": "PF_HandleSuite.lock_handle",
+        "handle": "0x20000360"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0x82000030",
+          "0x14"
+        ],
+        "callback": "PF_HandleSuite.release_suite"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fee08",
+          "0x4"
+        ],
+        "callback": "PF_HandleSuite.acquire"
+      },
+      {
+        "callback": "PF_HandleSuite.unlock_handle",
+        "handle": "0x20000360"
+      },
+      {
+        "callback": "PF_HandleSuite.dispose_handle",
+        "handle": "0x20000360"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fee08",
+          "0x4"
+        ],
+        "callback": "PF_HandleSuite.release_suite"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fef20",
+          "0x4"
+        ],
+        "callback": "PF_HandleSuite.acquire"
+      },
+      {
+        "callback": "PF_HandleSuite.unlock_handle",
+        "handle": "0x20000340"
+      },
+      {
+        "callback": "PF_HandleSuite.dispose_handle",
+        "handle": "0x20000340"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fef20",
+          "0x4"
+        ],
+        "callback": "PF_HandleSuite.release_suite"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fef20",
+          "0x4"
+        ],
+        "callback": "PF_HandleSuite.acquire"
+      },
+      {
+        "callback": "PF_HandleSuite.unlock_handle",
+        "handle": "0x20000320"
+      },
+      {
+        "callback": "PF_HandleSuite.dispose_handle",
+        "handle": "0x20000320"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fef20",
+          "0x4"
+        ],
+        "callback": "PF_HandleSuite.release_suite"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fef20",
+          "0x4"
+        ],
+        "callback": "PF_HandleSuite.acquire"
+      },
+      {
+        "callback": "PF_HandleSuite.unlock_handle",
+        "handle": "0x200002d0"
+      },
+      {
+        "callback": "PF_HandleSuite.dispose_handle",
+        "handle": "0x200002d0"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fef20",
+          "0x4"
+        ],
+        "callback": "PF_HandleSuite.release_suite"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fefd8",
+          "0xf0fef58"
+        ],
+        "callback": "PF_HandleSuite.acquire"
+      },
+      {
+        "callback": "PF_HandleSuite.unlock_handle",
+        "handle": "0x20000290"
+      },
+      {
+        "callback": "PF_HandleSuite.dispose_handle",
+        "handle": "0x20000290"
+      },
+      {
+        "args": [
+          "0x18001f5f8",
+          "0x2",
+          "0xf0fefd8",
+          "0xf0fef58"
+        ],
+        "callback": "PF_HandleSuite.release_suite"
+      }
+    ],
+    "expected_allocation_bytes": 60,
+    "lifecycle_order_valid": true,
+    "new_handle_allocations": [
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x20000290",
+        "size": 60
+      },
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x200002d0",
+        "size": 20
+      },
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x200002f0",
+        "size": 12
+      },
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x20000300",
+        "size": 12
+      },
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x20000310",
+        "size": 16
+      },
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x20000320",
+        "size": 20
+      },
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x20000340",
+        "size": 20
+      },
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x20000360",
+        "size": 24
+      }
+    ],
+    "required_allocation_count": 1,
+    "required_allocations": [
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x20000290",
+        "size": 60
+      }
+    ],
+    "suite": "0x20000270",
+    "vtable": "0x20000240"
+  },
+  "status": "pass",
+  "target": {
+    "name": "FUN_180007ec0",
+    "va": "0x180007ec0"
+  },
+  "world": {
+    "distance_channels": 4,
+    "height": 3,
+    "pixel_bytes": 16,
+    "width": 5
+  }
+}

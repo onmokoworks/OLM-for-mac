@@ -31,6 +31,7 @@
 | Edge Blur distance type dispatch is read from `ctx+0x44`. | `FUN_1800094b0` dispatch to `FUN_180006e20`, `FUN_180005d60`, `FUN_180007ec0`. | binary-grounded |
 | Edge Blur seed world is produced by `FUN_180008c90`, which marks keep-side inner boundary seeds. | Static Ghidra facts in `notes/OLMColorKey_ASM_FACTS.md`. | binary-grounded |
 | Edge Blur Distance Type 1 must not be forced to Euclidean. | Only `FUN_180007ec0` squares and square-roots; current implementations route by distance type. | binary-grounded |
+| Distance Type 3 is the Euclidean lane. Hash-pinned local execution of `FUN_180007ec0` completes the PF Handle Suite lifecycle with no unresolved imports and writes four equal float32 channels matching an independent nearest-zero Euclidean model exactly on the bounded `5x3` fixture. | `refs/conformance/olmcolorkey_boundary_to_distance_type3_actual_aex_20260716.json`. | binary-grounded / bounded actual-AEX differential |
 | Positive Edge Thin copies when `dist <= amount`. | 8bpc positive loop compiles to `COMISS amount, dist; JC skip`. | binary-grounded |
 | PNG-fit probes that use drop-side seed, direct Direction=3 formula, or `< amount` are rejected without runtime proof. | `notes/OLMColorKey_ASM_FACTS.md`, 2026-06-19 rejected probes. | negative evidence |
 
