@@ -1,0 +1,74 @@
+{
+  "kind": "olmblur_16bpc_candidates_mac_validation_contract",
+  "schema": 1,
+  "record_id": "olmblur_16bpc_candidates_mac_validation_20260716",
+  "status": "pending_live_loaded_module_proof",
+  "platform": "macOS-only",
+  "ae_execution": "not_run_by_this_wrapper",
+  "source_identity": {
+    "git_revision_required": "26e2bfc98e0d9c7b4d3b747687aa48805f881d69",
+    "files": [
+      {
+        "path": "mac/OLMBlur/OLMBlur.cpp",
+        "sha256": "6ecf1189393c072190e29ba964e4c7dbbb6a33b31c7a491738a2d40d739f1995"
+      },
+      {
+        "path": "core/olmblur_worker16_legacy.cpp",
+        "sha256": "b20228bf8c987940d1dd2922eec9984ac9fbcfbb1450f46a28e44fcf857d90da"
+      }
+    ]
+  },
+  "binary_identity": {
+    "path": "mac/OLMBlur/Mac/build/Debug/OLMBlur.plugin/Contents/MacOS/OLMBlur",
+    "sha256": "80cfee9c244f6548775db1cb3e8be87067b7676af40f8841902e9e16aab727b5",
+    "hash_algorithm": "sha256"
+  },
+  "request_identity": {
+    "request_manifest": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/request_manifest.json",
+    "request_manifest_sha256": "1ff908fca5b733a629ff6a72f107278f94a2510a3a6e192ae969bb90ca070047",
+    "reference_manifest": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/reference_manifest.json",
+    "reference_manifest_sha256": "c4378358c8b4db2b2d5d12d0bf0b4142f141963538ca5ec4d86a49eeb8b9e71e",
+    "selected_case_ids": [
+      "olmblur__case_0003",
+      "olmblur__case_0004"
+    ]
+  },
+  "cases": [
+    {
+      "id": "olmblur__case_0003",
+      "input": {
+        "path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0003_before_effects.png",
+        "sha256": "930317e23068ea93bfd72961c2215e755e73cfd4ec784d97bccca223ed94e30a"
+      },
+      "reference": {
+        "path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0003.png",
+        "sha256": "ecd4ad9d746b65782fa7173f996cd58b3c45051984cd30e467f5e639164f90af"
+      },
+      "reference_manifest_case": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0003.png"
+    },
+    {
+      "id": "olmblur__case_0004",
+      "input": {
+        "path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0004_before_effects.png",
+        "sha256": "930317e23068ea93bfd72961c2215e755e73cfd4ec784d97bccca223ed94e30a"
+      },
+      "reference": {
+        "path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0004.png",
+        "sha256": "7858aee7cd925a29b646513addfefa7845a56245cf07609ce3ac859cfc9892bf"
+      },
+      "reference_manifest_case": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0004.png"
+    }
+  ],
+  "required_future_proof": {
+    "loaded_module": "explicit runtime proof of the exact hashed binary, path, PID, AE session, and render nonce",
+    "comparison": "authoritative true16 channel words for both selected outputs against the pinned references",
+    "promotion": "exact is permitted only when loaded-module identity and raw true16 equality both pass"
+  },
+  "fail_closed": [
+    "missing source git revision",
+    "missing binary or binary hash mismatch",
+    "missing, stale, or ambiguous loaded-module proof",
+    "PNG-only, byte-view, or pre-store-only evidence",
+    "any candidate/reference mismatch or missing selected case"
+  ]
+}
