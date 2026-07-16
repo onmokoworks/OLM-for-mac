@@ -1,0 +1,637 @@
+{
+  "status": "PASS_PF8_SEED_PREDICATE_DISCRIMINATED",
+  "aex": "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex",
+  "worker": "0x1801a6150",
+  "helper": "0x1801ac880",
+  "fixture": {
+    "width": 5,
+    "height": 1,
+    "radius": 1.0,
+    "layout": "x0 zero; x1 paired alpha 254/255; x2 zero; x3 alpha255 control; x4 zero",
+    "pixel_format": "PF8 ARGB"
+  },
+  "provenance": {
+    "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+    "expected_aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+    "worker_address": "0x1801a6150",
+    "function_hash_size": 256,
+    "expected_worker_function_sha256": "500bda28032d0ecf005415cc9488e8348c1b20e5b99f7c0c61f976cbae10f647",
+    "worker_function_sha256": "500bda28032d0ecf005415cc9488e8348c1b20e5b99f7c0c61f976cbae10f647"
+  },
+  "paired_runs": [
+    {
+      "x1_alpha": 254,
+      "input_raw": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          254,
+          255,
+          40,
+          80
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          17,
+          29,
+          43
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "status": "RETURN",
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 1639,
+      "helper_hits": [
+        {
+          "source": "0x2000008c",
+          "destination": "0x20000090",
+          "source_raw_before": [
+            255,
+            17,
+            29,
+            43
+          ],
+          "destination_raw_before": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "source": "0x2000008c",
+          "destination": "0x20000088",
+          "source_raw_before": [
+            255,
+            17,
+            29,
+            43
+          ],
+          "destination_raw_before": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "events": [
+        {
+          "kind": "pf_copy_callback_entry",
+          "args": [
+            "0x1234",
+            "0x20000020",
+            "0x200000a0",
+            "0x0",
+            "0x0"
+          ],
+          "world_keys": [
+            "0x20000020",
+            "0x200000a0"
+          ]
+        },
+        {
+          "kind": "pf_copy_callback",
+          "abi": "5 args",
+          "args": [
+            "0x1234",
+            "0x20000020",
+            "0x200000a0",
+            "0x0",
+            "0x0"
+          ],
+          "return_address": "0x1801a6221",
+          "source_world": "0x20000020",
+          "destination_world": "0x200000a0",
+          "source_payload": "0x20000000",
+          "destination_payload": "0x20000080",
+          "width": 5,
+          "height": 1,
+          "source_rowbytes": 24,
+          "destination_rowbytes": 24,
+          "visible_bytes_per_row": 20,
+          "copied_rows": [
+            {
+              "source": 536870912,
+              "destination": 536871040,
+              "bytes": 20
+            }
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0xf0fecc8",
+            "0x20"
+          ]
+        },
+        {
+          "kind": "suite_alloc",
+          "size": 20,
+          "result": "0x400002b0"
+        },
+        {
+          "kind": "suite_free",
+          "ptr": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0x1",
+            "0x2"
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fee08",
+            "0xffffffffffffffff"
+          ]
+        },
+        {
+          "kind": "suite_handle_slot10",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_handle_slot18",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fee08",
+            "0xffffffffffffffff"
+          ]
+        }
+      ],
+      "output_raw_immediately_after_worker_return": [
+        0,
+        0,
+        0,
+        0,
+        254,
+        255,
+        40,
+        80,
+        255,
+        17,
+        29,
+        43,
+        255,
+        17,
+        29,
+        43,
+        255,
+        17,
+        29,
+        43,
+        165,
+        165,
+        165,
+        165
+      ],
+      "output_pixels": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          254,
+          255,
+          40,
+          80
+        ],
+        [
+          255,
+          17,
+          29,
+          43
+        ],
+        [
+          255,
+          17,
+          29,
+          43
+        ],
+        [
+          255,
+          17,
+          29,
+          43
+        ]
+      ],
+      "model_exact_equality_alpha_255": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          254,
+          255,
+          40,
+          80
+        ],
+        [
+          255,
+          17,
+          29,
+          43
+        ],
+        [
+          255,
+          17,
+          29,
+          43
+        ],
+        [
+          255,
+          17,
+          29,
+          43
+        ]
+      ],
+      "model_threshold_conversion_alpha_ge_254": [
+        [
+          254,
+          254,
+          40,
+          80
+        ],
+        [
+          254,
+          254,
+          40,
+          80
+        ],
+        [
+          254,
+          254,
+          40,
+          80
+        ],
+        [
+          255,
+          17,
+          29,
+          43
+        ],
+        [
+          255,
+          17,
+          29,
+          43
+        ]
+      ],
+      "matches_exact_equality_model": true,
+      "matches_threshold_conversion_model": false,
+      "padding_preserved": true
+    },
+    {
+      "x1_alpha": 255,
+      "input_raw": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          255,
+          40,
+          80
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          255,
+          17,
+          29,
+          43
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "status": "RETURN",
+      "worker_return_rax": "0xf0fef20",
+      "worker_instructions": 1583,
+      "helper_hits": [
+        {
+          "source": "0x20000084",
+          "destination": "0x20000088",
+          "source_raw_before": [
+            255,
+            255,
+            40,
+            80
+          ],
+          "destination_raw_before": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "source": "0x2000008c",
+          "destination": "0x20000090",
+          "source_raw_before": [
+            255,
+            17,
+            29,
+            43
+          ],
+          "destination_raw_before": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "source": "0x20000084",
+          "destination": "0x20000080",
+          "source_raw_before": [
+            255,
+            255,
+            40,
+            80
+          ],
+          "destination_raw_before": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "events": [
+        {
+          "kind": "pf_copy_callback_entry",
+          "args": [
+            "0x1234",
+            "0x20000020",
+            "0x200000a0",
+            "0x0",
+            "0x0"
+          ],
+          "world_keys": [
+            "0x20000020",
+            "0x200000a0"
+          ]
+        },
+        {
+          "kind": "pf_copy_callback",
+          "abi": "5 args",
+          "args": [
+            "0x1234",
+            "0x20000020",
+            "0x200000a0",
+            "0x0",
+            "0x0"
+          ],
+          "return_address": "0x1801a6221",
+          "source_world": "0x20000020",
+          "destination_world": "0x200000a0",
+          "source_payload": "0x20000000",
+          "destination_payload": "0x20000080",
+          "width": 5,
+          "height": 1,
+          "source_rowbytes": 24,
+          "destination_rowbytes": 24,
+          "visible_bytes_per_row": 20,
+          "copied_rows": [
+            {
+              "source": 536870912,
+              "destination": 536871040,
+              "bytes": 20
+            }
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0xf0fecc8",
+            "0x20"
+          ]
+        },
+        {
+          "kind": "suite_alloc",
+          "size": 20,
+          "result": "0x400002b0"
+        },
+        {
+          "kind": "suite_free",
+          "ptr": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0x1",
+            "0x2"
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fee08",
+            "0xffffffffffffffff"
+          ]
+        },
+        {
+          "kind": "suite_handle_slot10",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_handle_slot18",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fee08",
+            "0xffffffffffffffff"
+          ]
+        }
+      ],
+      "output_raw_immediately_after_worker_return": [
+        255,
+        255,
+        40,
+        80,
+        255,
+        255,
+        40,
+        80,
+        255,
+        255,
+        40,
+        80,
+        255,
+        17,
+        29,
+        43,
+        255,
+        17,
+        29,
+        43,
+        165,
+        165,
+        165,
+        165
+      ],
+      "output_pixels": [
+        [
+          255,
+          255,
+          40,
+          80
+        ],
+        [
+          255,
+          255,
+          40,
+          80
+        ],
+        [
+          255,
+          255,
+          40,
+          80
+        ],
+        [
+          255,
+          17,
+          29,
+          43
+        ],
+        [
+          255,
+          17,
+          29,
+          43
+        ]
+      ],
+      "model_exact_equality_alpha_255": [
+        [
+          255,
+          255,
+          40,
+          80
+        ],
+        [
+          255,
+          255,
+          40,
+          80
+        ],
+        [
+          255,
+          255,
+          40,
+          80
+        ],
+        [
+          255,
+          17,
+          29,
+          43
+        ],
+        [
+          255,
+          17,
+          29,
+          43
+        ]
+      ],
+      "model_threshold_conversion_alpha_ge_254": [
+        [
+          255,
+          255,
+          40,
+          80
+        ],
+        [
+          255,
+          255,
+          40,
+          80
+        ],
+        [
+          255,
+          255,
+          40,
+          80
+        ],
+        [
+          255,
+          17,
+          29,
+          43
+        ],
+        [
+          255,
+          17,
+          29,
+          43
+        ]
+      ],
+      "matches_exact_equality_model": true,
+      "matches_threshold_conversion_model": true,
+      "padding_preserved": true
+    }
+  ],
+  "gates": {
+    "provenance_gate_passed": true,
+    "both_workers_returned": true,
+    "both_helpers_observed": true,
+    "raw_captured_immediately_after_return": true,
+    "paired_alpha_only_difference": true,
+    "x3_opaque_control_retained_or_propagated": true,
+    "padding_preserved": true
+  },
+  "claim_boundary": "bounded actual-AEX PF8 worker fixture through local Unicorn; no PNG tuning, production edit, host or AE exact claim"
+}
