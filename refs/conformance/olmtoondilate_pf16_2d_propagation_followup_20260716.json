@@ -1,0 +1,1421 @@
+{
+  "status": "PASS_2D_PROPAGATION_CLASSIFIED",
+  "aex": "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex",
+  "worker": "0x1801a5a90",
+  "known_boundary": "0x1801adc8f",
+  "fixture": {
+    "width": 2,
+    "height": 2,
+    "rowbytes": 16,
+    "radius": 1.0,
+    "alpha_sweep": [
+      0,
+      1,
+      16384,
+      32767,
+      32768,
+      32769,
+      65535
+    ],
+    "seed_layout": "A at (0,0), B at (1,1)"
+  },
+  "gates": {
+    "all_returned": true,
+    "all_crossed_boundary": true,
+    "decision_observed": true,
+    "source_selection_and_four_words": true,
+    "render_typed_matches": true,
+    "output_layout_valid": true,
+    "header_geometry_valid": true
+  },
+  "first_divergence": null,
+  "cases": [
+    {
+      "alpha_a": 0,
+      "status": "RETURN",
+      "return_rax": "0xf0fef20",
+      "instructions": 1606,
+      "next_decision_observed": true,
+      "helper_capture_count": 3,
+      "captures": [
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871056,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 0,
+            "y": 1
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        },
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871048,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 0
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        },
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871040,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            0,
+            1001,
+            2002,
+            3003
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 0,
+            "y": 0
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        }
+      ],
+      "copy_resume_observed": true,
+      "source_selection_observed": true,
+      "four_pf16_words_captured": true,
+      "expected_render_typed_pf16": [
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ],
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ]
+      ],
+      "actual_output_pf16": [
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ],
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ]
+      ],
+      "render_typed_match": true,
+      "output_layout_valid": true,
+      "input_header_geometry": {
+        "data": 536870912,
+        "rowbytes": 16,
+        "width": 2,
+        "height": 2,
+        "pixel_bits": 64
+      },
+      "output_header_geometry": {
+        "data": 536871040,
+        "rowbytes": 16,
+        "width": 2,
+        "height": 2,
+        "pixel_bits": 64
+      },
+      "header_geometry_valid": true,
+      "worker_boundary_crossed": true
+    },
+    {
+      "alpha_a": 1,
+      "status": "RETURN",
+      "return_rax": "0xf0fef20",
+      "instructions": 1606,
+      "next_decision_observed": true,
+      "helper_capture_count": 3,
+      "captures": [
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871056,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 0,
+            "y": 1
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        },
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871048,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 0
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        },
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871040,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            1,
+            1001,
+            2002,
+            3003
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 0,
+            "y": 0
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        }
+      ],
+      "copy_resume_observed": true,
+      "source_selection_observed": true,
+      "four_pf16_words_captured": true,
+      "expected_render_typed_pf16": [
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ],
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ]
+      ],
+      "actual_output_pf16": [
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ],
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ]
+      ],
+      "render_typed_match": true,
+      "output_layout_valid": true,
+      "input_header_geometry": {
+        "data": 536870912,
+        "rowbytes": 16,
+        "width": 2,
+        "height": 2,
+        "pixel_bits": 64
+      },
+      "output_header_geometry": {
+        "data": 536871040,
+        "rowbytes": 16,
+        "width": 2,
+        "height": 2,
+        "pixel_bits": 64
+      },
+      "header_geometry_valid": true,
+      "worker_boundary_crossed": true
+    },
+    {
+      "alpha_a": 16384,
+      "status": "RETURN",
+      "return_rax": "0xf0fef20",
+      "instructions": 1606,
+      "next_decision_observed": true,
+      "helper_capture_count": 3,
+      "captures": [
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871056,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 0,
+            "y": 1
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        },
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871048,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 0
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        },
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871040,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            16384,
+            1001,
+            2002,
+            3003
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 0,
+            "y": 0
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        }
+      ],
+      "copy_resume_observed": true,
+      "source_selection_observed": true,
+      "four_pf16_words_captured": true,
+      "expected_render_typed_pf16": [
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ],
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ]
+      ],
+      "actual_output_pf16": [
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ],
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ]
+      ],
+      "render_typed_match": true,
+      "output_layout_valid": true,
+      "input_header_geometry": {
+        "data": 536870912,
+        "rowbytes": 16,
+        "width": 2,
+        "height": 2,
+        "pixel_bits": 64
+      },
+      "output_header_geometry": {
+        "data": 536871040,
+        "rowbytes": 16,
+        "width": 2,
+        "height": 2,
+        "pixel_bits": 64
+      },
+      "header_geometry_valid": true,
+      "worker_boundary_crossed": true
+    },
+    {
+      "alpha_a": 32767,
+      "status": "RETURN",
+      "return_rax": "0xf0fef20",
+      "instructions": 1606,
+      "next_decision_observed": true,
+      "helper_capture_count": 3,
+      "captures": [
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871056,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 0,
+            "y": 1
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        },
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871048,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 0
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        },
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871040,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            32767,
+            1001,
+            2002,
+            3003
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 0,
+            "y": 0
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        }
+      ],
+      "copy_resume_observed": true,
+      "source_selection_observed": true,
+      "four_pf16_words_captured": true,
+      "expected_render_typed_pf16": [
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ],
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ]
+      ],
+      "actual_output_pf16": [
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ],
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ]
+      ],
+      "render_typed_match": true,
+      "output_layout_valid": true,
+      "input_header_geometry": {
+        "data": 536870912,
+        "rowbytes": 16,
+        "width": 2,
+        "height": 2,
+        "pixel_bits": 64
+      },
+      "output_header_geometry": {
+        "data": 536871040,
+        "rowbytes": 16,
+        "width": 2,
+        "height": 2,
+        "pixel_bits": 64
+      },
+      "header_geometry_valid": true,
+      "worker_boundary_crossed": true
+    },
+    {
+      "alpha_a": 32768,
+      "status": "RETURN",
+      "return_rax": "0xf0fef20",
+      "instructions": 1462,
+      "next_decision_observed": true,
+      "helper_capture_count": 2,
+      "captures": [
+        {
+          "source_ptr": 536871040,
+          "destination_ptr": 536871048,
+          "return_address": "0x1801a5e22",
+          "source_words_before": [
+            32768,
+            1001,
+            2002,
+            3003
+          ],
+          "destination_words_before": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 0,
+            "y": 0
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 0
+          },
+          "after_destination": [
+            0,
+            128,
+            233,
+            3,
+            210,
+            7,
+            187,
+            11
+          ]
+        },
+        {
+          "source_ptr": 536871040,
+          "destination_ptr": 536871056,
+          "return_address": "0x1801a5e22",
+          "source_words_before": [
+            32768,
+            1001,
+            2002,
+            3003
+          ],
+          "destination_words_before": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 0,
+            "y": 0
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 0,
+            "y": 1
+          },
+          "after_destination": [
+            0,
+            128,
+            233,
+            3,
+            210,
+            7,
+            187,
+            11
+          ]
+        }
+      ],
+      "copy_resume_observed": true,
+      "source_selection_observed": true,
+      "four_pf16_words_captured": true,
+      "expected_render_typed_pf16": [
+        [
+          [
+            32768,
+            1001,
+            2002,
+            3003
+          ],
+          [
+            32768,
+            1001,
+            2002,
+            3003
+          ]
+        ],
+        [
+          [
+            32768,
+            1001,
+            2002,
+            3003
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ]
+      ],
+      "actual_output_pf16": [
+        [
+          [
+            32768,
+            1001,
+            2002,
+            3003
+          ],
+          [
+            32768,
+            1001,
+            2002,
+            3003
+          ]
+        ],
+        [
+          [
+            32768,
+            1001,
+            2002,
+            3003
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ]
+      ],
+      "render_typed_match": true,
+      "output_layout_valid": true,
+      "input_header_geometry": {
+        "data": 536870912,
+        "rowbytes": 16,
+        "width": 2,
+        "height": 2,
+        "pixel_bits": 64
+      },
+      "output_header_geometry": {
+        "data": 536871040,
+        "rowbytes": 16,
+        "width": 2,
+        "height": 2,
+        "pixel_bits": 64
+      },
+      "header_geometry_valid": true,
+      "worker_boundary_crossed": true
+    },
+    {
+      "alpha_a": 32769,
+      "status": "RETURN",
+      "return_rax": "0xf0fef20",
+      "instructions": 1606,
+      "next_decision_observed": true,
+      "helper_capture_count": 3,
+      "captures": [
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871056,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 0,
+            "y": 1
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        },
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871048,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 0
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        },
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871040,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            32769,
+            1001,
+            2002,
+            3003
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 0,
+            "y": 0
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        }
+      ],
+      "copy_resume_observed": true,
+      "source_selection_observed": true,
+      "four_pf16_words_captured": true,
+      "expected_render_typed_pf16": [
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ],
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ]
+      ],
+      "actual_output_pf16": [
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ],
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ]
+      ],
+      "render_typed_match": true,
+      "output_layout_valid": true,
+      "input_header_geometry": {
+        "data": 536870912,
+        "rowbytes": 16,
+        "width": 2,
+        "height": 2,
+        "pixel_bits": 64
+      },
+      "output_header_geometry": {
+        "data": 536871040,
+        "rowbytes": 16,
+        "width": 2,
+        "height": 2,
+        "pixel_bits": 64
+      },
+      "header_geometry_valid": true,
+      "worker_boundary_crossed": true
+    },
+    {
+      "alpha_a": 65535,
+      "status": "RETURN",
+      "return_rax": "0xf0fef20",
+      "instructions": 1606,
+      "next_decision_observed": true,
+      "helper_capture_count": 3,
+      "captures": [
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871056,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 0,
+            "y": 1
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        },
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871048,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 0
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        },
+        {
+          "source_ptr": 536871064,
+          "destination_ptr": 536871040,
+          "return_address": "0x1801a609a",
+          "source_words_before": [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          "destination_words_before": [
+            65535,
+            1001,
+            2002,
+            3003
+          ],
+          "source_selection": {
+            "world": "output",
+            "x": 1,
+            "y": 1
+          },
+          "destination_selection": {
+            "world": "output",
+            "x": 0,
+            "y": 0
+          },
+          "after_destination": [
+            0,
+            128,
+            164,
+            15,
+            141,
+            19,
+            118,
+            23
+          ]
+        }
+      ],
+      "copy_resume_observed": true,
+      "source_selection_observed": true,
+      "four_pf16_words_captured": true,
+      "expected_render_typed_pf16": [
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ],
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ]
+      ],
+      "actual_output_pf16": [
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ],
+        [
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ],
+          [
+            32768,
+            4004,
+            5005,
+            6006
+          ]
+        ]
+      ],
+      "render_typed_match": true,
+      "output_layout_valid": true,
+      "input_header_geometry": {
+        "data": 536870912,
+        "rowbytes": 16,
+        "width": 2,
+        "height": 2,
+        "pixel_bits": 64
+      },
+      "output_header_geometry": {
+        "data": 536871040,
+        "rowbytes": 16,
+        "width": 2,
+        "height": 2,
+        "pixel_bits": 64
+      },
+      "header_geometry_valid": true,
+      "worker_boundary_crossed": true
+    }
+  ],
+  "facts": [
+    "The actual-AEX worker is invoked locally through Unicorn on macOS.",
+    "A helper capture records the selected source pointer, destination pointer, and four PF16 words before copy.",
+    "The post-boundary result is classified only when the worker returns and the copy decision is observable."
+  ],
+  "inferences": [
+    "The synthetic suite and PF_COPY callbacks approximate the observed host ABI; they are not AE-host behavior.",
+    "RenderTyped<PF_Pixel16> comparison is a source-level semantic comparison, not an AE-exact claim."
+  ],
+  "claim_boundary": "bounded actual-AEX 2D propagation/copy witness; no production or AE-exact claim"
+}
