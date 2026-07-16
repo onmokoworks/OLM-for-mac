@@ -39,15 +39,24 @@ def main() -> int:
     assert data["binding"]["descriptor"] == [92, 841, 1, 92, 842, 2]
     assert data["binding"]["accepted_e170"] == 7
     assert data["binding"]["accepted_first_count"] == 1
+    assert data["comparison"]["accepted_case_id"] is True
+    assert data["comparison"]["accepted_descriptor"] is True
+    assert data["comparison"]["accepted_e170"] is True
+    assert data["comparison"]["accepted_first_count"] is True
     assert data["aex"]["trace"]["first_leaf"]["count_after"] == 1
     assert data["aex"]["trace"]["second_leaf"]["count_before"] == 1
     assert data["aex"]["trace"]["second_leaf"]["count_after"] == 2
     assert data["aex"]["trace"]["second_leaf"]["append"] is True
     assert data["aex"]["trace"]["second_leaf"]["returned_vertex"]["source_xy"] == [92, 843]
+    assert data["aex"]["trace"]["second_leaf"]["returned_vertex"]["rgba"] == [0.125, 0.25, 0.75, 0.625]
+    assert data["comparison"]["aex_df30_f130_e290_path"] is True
+    assert data["comparison"]["aex_portable_rgba_equal"] is True
+    assert data["comparison"]["aex_portable_weight_equal"] is True
+    assert data["comparison"]["second_append_count_one_to_two"] is True
     assert data["aex"]["trace"]["dispatcher"] == {"name": "fef0", "key": 0x14, "count_after": 2}
     assert data["portable"]["dispatcher"] == {"name": "fef0", "key": 0x14, "count_after": 2}
-    print("PASS: case0012 second-leaf diagnostic binding and count contract")
-    print("accepted descriptor selects fef0 key 0x14; AEX/portable dispatcher count=2")
+    print("PASS: case0012 second-leaf binding, path, payload, weight, and count contract")
+    print("accepted descriptor selects fef0 key 0x14; AEX/portable df30->f130->e290 payload and count=2")
     return 0
 
 

@@ -16,8 +16,9 @@ void set_class(std::vector<uint8_t> &classes, int x, int y, int channel, uint8_t
 
 void emit_vertex(const SmootherPolygon &poly, int index) {
   const PolyVertex &v = poly.samples[index];
-  std::printf("{\"source_xy\":[%d,%d],\"weight\":%.9g}",
-              index == 0 ? X : X, index == 0 ? Y - 1 : Y + 2, v.w);
+  std::printf("{\"source_xy\":[%d,%d],\"rgba\":[%.9g,%.9g,%.9g,%.9g],\"weight\":%.9g}",
+              index == 0 ? X : X, index == 0 ? Y - 1 : Y + 2,
+              v.r, v.g, v.b, v.a, v.w);
 }
 }
 
@@ -30,6 +31,7 @@ int main() {
   set_class(classes, X, Y - 1, 0, 255);
   set_class(classes, X - 1, Y, 1, 255);
   FPlane plane{pixels.data(), W * static_cast<int>(sizeof(FPix)), 0};
+  plane.base[(Y + 2) * W + X] = FPix{0.125f, 0.25f, 0.75f, 0.625f};
   SmootherPolygon poly{};
   poly.plane = &plane;
   poly.cplane_base = classes.data();
@@ -55,7 +57,7 @@ int main() {
 
   std::printf("{\"descriptor\":[%d,%d,%d,%d,%d,%d],\"entry\":{\"first_predicate_e170\":%d,\"second_predicate_df30\":%d},"
               "\"first_leaf\":{\"name\":\"f270->e3a0\",\"append\":%s,\"count_before\":%d,\"count_after\":%d},"
-              "\"second_leaf\":{\"name\":\"f130->e290\",\"append\":%s,\"count_before\":%d,\"count_after\":%d,\"returned_vertex\":",
+              "\"second_leaf\":{\"name\":\"f130->e290\",\"path\":{\"predicate\":\"FUN_18000df30\",\"wrapper\":\"FUN_18000f130\",\"emitter\":\"FUN_18000e290\"},\"append\":%s,\"count_before\":%d,\"count_after\":%d,\"returned_vertex\":",
               desc[0], desc[1], desc[2], desc[3], desc[4], desc[5], first_predicate, second_predicate,
               first_append ? "true" : "false", count_before, count_after_first,
               second_append ? "true" : "false", count_after_first, count_after_second);

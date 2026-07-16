@@ -28,9 +28,12 @@ from test_smoother2_producer import (  # noqa: E402
 
 F_DF30 = 0x18000DF30
 F_F130 = 0x18000F130
+F_E290 = 0x18000E290
 F_FEF0 = 0x18000FEF0
 CASE_ID = "legacy_case_0012_gamma5_red_blue_current_aex"
 DESCRIPTOR = [92, 841, 1, 92, 842, 2]
+SECOND_SOURCE_RGBA = [0.125, 0.25, 0.75, 0.625]
+PAYLOAD_TOLERANCE = 1e-6
 BINDING_JSON = ROOT / "refs/conformance/olmsmoother2_legacy_key_setup_producer_witness_20260716.json"
 BINDING_MD = ROOT / "refs/conformance/olmsmoother2_legacy_key_producer_actual_aex_20260716.md"
 
@@ -66,6 +69,7 @@ def run_aex() -> dict:
     ss.set_class_pixel(92, 841, b0=255)
     ss.set_class_pixel(92, 840, b0=255)
     ss.set_class_pixel(91, 841, b0=0, b1=255)
+    ss.set_src_pixel(92, 843, SECOND_SOURCE_RGBA)
     ss.set_vcount(0)
     d = loader.bump_alloc(24, align=16)
     loader.write_bytes(d, __import__("struct").pack("<6i", *DESCRIPTOR))
@@ -87,7 +91,7 @@ def run_aex() -> dict:
         "engine": "checked_in_aex_unicorn_mac_local",
         "entry": {"first_predicate_e170": first_pred, "second_predicate_df30": second_pred},
         "first_leaf": {"name": "f270->e3a0", "return_low": first_ret, "append": after_first > before, "count_before": before, "count_after": after_first},
-        "second_leaf": {"name": "f130->e290", "return_low": second_ret, "append": after_second > after_first, "count_before": after_first, "count_after": after_second, "returned_vertex": returned},
+        "second_leaf": {"name": "f130->e290", "path": {"predicate": "FUN_18000df30", "wrapper": "FUN_18000f130", "emitter": "FUN_18000e290"}, "return_low": second_ret, "append": after_second > after_first, "count_before": after_first, "count_after": after_second, "returned_vertex": returned},
         "dispatcher": {"name": "fef0", "key": DESCRIPTOR[2] - 1 + DESCRIPTOR[5] * 10, "count_after": dispatch_count},
         "vertices_total": after_second,
     }
@@ -101,19 +105,33 @@ def main() -> int:
     binding = require_binding()
     aex = run_aex()
     portable = json.loads(subprocess.check_output([str(args.adapter)], text=True))
+    aex_vertex = aex["second_leaf"]["returned_vertex"]
+    portable_vertex = portable["second_leaf"]["returned_vertex"]
     comparison = {
+        "accepted_case_id": binding["case_id"] == CASE_ID,
         "descriptor_equal": portable["descriptor"] == DESCRIPTOR,
+        "accepted_descriptor": binding["descriptor"] == DESCRIPTOR,
+        "accepted_e170": binding["accepted_e170"] == 7,
+        "accepted_first_count": binding["accepted_first_count"] == 1,
         "first_predicate_matches_binding": aex["entry"]["first_predicate_e170"] == binding["accepted_e170"],
         "aex_portable_second_predicate_equal": aex["entry"]["second_predicate_df30"] == portable["entry"]["second_predicate_df30"],
+        "aex_df30_f130_e290_path": aex["second_leaf"]["path"] == {"predicate": "FUN_18000df30", "wrapper": "FUN_18000f130", "emitter": "FUN_18000e290"},
+        "second_source_coordinate": aex_vertex is not None and aex_vertex["source_xy"] == [92, 843] and portable_vertex["source_xy"] == [92, 843],
+        "aex_distinctive_source_rgba": aex_vertex is not None and all(abs(got - want) <= PAYLOAD_TOLERANCE for got, want in zip(aex_vertex["rgba"], SECOND_SOURCE_RGBA)),
+        "portable_distinctive_source_rgba": all(abs(got - want) <= PAYLOAD_TOLERANCE for got, want in zip(portable_vertex["rgba"], SECOND_SOURCE_RGBA)),
+        "aex_portable_rgba_equal": aex_vertex is not None and all(abs(got - want) <= PAYLOAD_TOLERANCE for got, want in zip(aex_vertex["rgba"], portable_vertex["rgba"])),
+        "aex_portable_weight_equal": aex_vertex is not None and abs(aex_vertex["weight"] - portable_vertex["weight"]) <= PAYLOAD_TOLERANCE,
         "aex_portable_second_append_equal": aex["second_leaf"]["append"] == portable["second_leaf"]["append"],
         "aex_portable_count_after_equal": aex["second_leaf"]["count_after"] == portable["second_leaf"]["count_after"],
+        "second_append_count_one_to_two": aex["second_leaf"]["append"] and aex["second_leaf"]["count_before"] == 1 and aex["second_leaf"]["count_after"] == 2,
         "aex_portable_dispatch_count_equal": aex["dispatcher"]["count_after"] == portable["dispatcher"]["count_after"],
         "dispatcher_selects_two_leaf_case": aex["dispatcher"]["key"] == 0x14 and aex["dispatcher"]["count_after"] == 2,
+        "final_total_count_two": aex["vertices_total"] == 2 and portable["vertices_total"] == 2,
         "local_count_exceeds_accepted_first_count": aex["second_leaf"]["count_after"] > binding["accepted_first_count"],
     }
     result = {
         "verdict": "PASS_MAC_CASE0012_SECOND_LEAF_BOUNDARY" if all(comparison.values()) else "FAIL_MAC_CASE0012_SECOND_LEAF_BOUNDARY",
-        "scope": "Accepted current-case descriptor plus checked-in AEX and portable dispatcher; live Windows evidence ends at first count=1",
+        "scope": "Accepted current-case descriptor plus checked-in actual AEX df30->f130->e290 payload and portable comparison; live Windows evidence ends at first count=1",
         "binding": binding,
         "aex": {"path": str(AEX_PATH.relative_to(ROOT)), "sha256": hashlib.sha256(AEX_PATH.read_bytes()).hexdigest(), "trace": aex},
         "portable": portable,

@@ -25,13 +25,18 @@
         "count_after": 2,
         "count_before": 1,
         "name": "f130->e290",
+        "path": {
+          "emitter": "FUN_18000e290",
+          "predicate": "FUN_18000df30",
+          "wrapper": "FUN_18000f130"
+        },
         "return_low": 1,
         "returned_vertex": {
           "rgba": [
-            0.0,
-            0.0,
-            0.0,
-            0.0
+            0.125,
+            0.25,
+            0.75,
+            0.625
           ],
           "source_xy": [
             92,
@@ -67,10 +72,22 @@
     "aex_portable_dispatch_count_equal": true,
     "aex_portable_second_append_equal": true,
     "aex_portable_second_predicate_equal": true,
+    "aex_portable_rgba_equal": true,
+    "aex_portable_weight_equal": true,
+    "aex_distinctive_source_rgba": true,
+    "aex_df30_f130_e290_path": true,
+    "accepted_case_id": true,
+    "accepted_descriptor": true,
+    "accepted_e170": true,
+    "accepted_first_count": true,
     "descriptor_equal": true,
     "dispatcher_selects_two_leaf_case": true,
+    "final_total_count_two": true,
     "first_predicate_matches_binding": true,
-    "local_count_exceeds_accepted_first_count": true
+    "local_count_exceeds_accepted_first_count": true,
+    "portable_distinctive_source_rgba": true,
+    "second_append_count_one_to_two": true,
+    "second_source_coordinate": true
   },
   "portable": {
     "descriptor": [
@@ -96,12 +113,23 @@
       "count_before": 0,
       "name": "f270->e3a0"
     },
-    "second_leaf": {
+      "second_leaf": {
       "append": true,
       "count_after": 2,
       "count_before": 1,
-      "name": "f130->e290",
-      "returned_vertex": {
+        "name": "f130->e290",
+        "path": {
+          "emitter": "FUN_18000e290",
+          "predicate": "FUN_18000df30",
+          "wrapper": "FUN_18000f130"
+        },
+        "returned_vertex": {
+          "rgba": [
+            0.125,
+            0.25,
+            0.75,
+            0.625
+          ],
         "source_xy": [
           92,
           843
@@ -111,6 +139,6 @@
     },
     "vertices_total": 2
   },
-  "scope": "Accepted current-case descriptor plus checked-in AEX and portable dispatcher; live Windows evidence ends at first count=1",
+  "scope": "Accepted current-case descriptor plus checked-in actual AEX df30->f130->e290 payload and portable comparison; live Windows evidence ends at first count=1",
   "verdict": "PASS_MAC_CASE0012_SECOND_LEAF_BOUNDARY"
 }
