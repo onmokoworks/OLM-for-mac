@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
+#include <cstring>
 #include <limits>
 
 namespace olm::radialblur {
@@ -38,6 +39,20 @@ int trunc_f32_to_int(float value) {
     return static_cast<int>(value);
 }
 
+int add_wrap_i32(int left, int right) {
+    static_assert(sizeof(int) == sizeof(std::uint32_t), "AEX contract requires 32-bit int");
+    static_assert(std::numeric_limits<int>::min() == -2147483647 - 1,
+                  "AEX contract requires two's-complement int32");
+    std::uint32_t left_bits = 0;
+    std::uint32_t right_bits = 0;
+    std::memcpy(&left_bits, &left, sizeof(left_bits));
+    std::memcpy(&right_bits, &right, sizeof(right_bits));
+    const std::uint32_t result_bits = left_bits + right_bits;
+    int result = 0;
+    std::memcpy(&result, &result_bits, sizeof(result));
+    return result;
+}
+
 }  // namespace
 
 void scatter_tail(const ScatterTailContext& context,
@@ -46,7 +61,7 @@ void scatter_tail(const ScatterTailContext& context,
     const int mode = input.direction == 0 ? context.outer_mode : context.inner_mode;
     int resolved = input.direction == 0 ? context.outer_base_length : context.inner_base_length;
     if (mode == 1) {
-        resolved += input.caller_distance;
+        resolved = add_wrap_i32(resolved, input.caller_distance);
     } else if (mode == 2) {
         resolved = std::max(resolved, input.caller_distance);
     } else if (mode == 3) {

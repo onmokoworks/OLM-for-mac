@@ -1,0 +1,146 @@
+{
+  "aex": {
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "cases": {
+      "alpha=-0.5": {
+        "expected_helper_call_count": 2,
+        "helper_calls": [
+          {
+            "angular": 0,
+            "caller_distance": 8,
+            "direction": 0,
+            "radius": 1
+          },
+          {
+            "angular": 0,
+            "caller_distance": 12,
+            "direction": 1,
+            "radius": 1
+          }
+        ],
+        "max_exact": true,
+        "scatter_exact": true,
+        "status": "pass"
+      },
+      "alpha=0": {
+        "expected_helper_call_count": 0,
+        "helper_calls": [],
+        "max_exact": true,
+        "scatter_exact": true,
+        "status": "pass"
+      },
+      "alpha=NaN": {
+        "expected_helper_call_count": 0,
+        "helper_calls": [],
+        "max_exact": true,
+        "scatter_exact": true,
+        "status": "pass"
+      },
+      "span=-1": {
+        "expected_helper_call_count": 2,
+        "helper_calls": [
+          {
+            "angular": 0,
+            "caller_distance": 8,
+            "direction": 0,
+            "radius": 1
+          },
+          {
+            "angular": 0,
+            "caller_distance": 12,
+            "direction": 1,
+            "radius": 1
+          }
+        ],
+        "max_exact": true,
+        "scatter_exact": true,
+        "status": "pass"
+      },
+      "span=0": {
+        "expected_helper_call_count": 0,
+        "helper_calls": [],
+        "max_exact": true,
+        "scatter_exact": true,
+        "status": "pass"
+      },
+      "span=NaN": {
+        "expected_helper_call_count": 0,
+        "helper_calls": [],
+        "max_exact": true,
+        "scatter_exact": true,
+        "status": "pass"
+      },
+      "start_radius=1": {
+        "expected_helper_call_count": 2,
+        "helper_calls": [
+          {
+            "angular": 0,
+            "caller_distance": 8,
+            "direction": 0,
+            "radius": 1
+          },
+          {
+            "angular": 0,
+            "caller_distance": 12,
+            "direction": 1,
+            "radius": 1
+          }
+        ],
+        "max_exact": true,
+        "scatter_exact": true,
+        "status": "pass"
+      },
+      "valid=0": {
+        "expected_helper_call_count": 0,
+        "helper_calls": [],
+        "max_exact": true,
+        "scatter_exact": true,
+        "status": "pass"
+      }
+    },
+    "status": "pass",
+    "tail_entry_order": [
+      {
+        "angular": 0,
+        "caller_distance": 8,
+        "direction": 0,
+        "radius": 1
+      },
+      {
+        "angular": 0,
+        "caller_distance": 12,
+        "direction": 1,
+        "radius": 1
+      }
+    ],
+    "tail_mode1_wrap_add": {
+      "actual_effective_len_i32": -2147483648,
+      "base_length_i32": 2147483647,
+      "buffers_unchanged": true,
+      "caller_distance_i32": 1,
+      "status": "pass",
+      "wrapped_sum_i32": -2147483648
+    },
+    "tail_order_outer_then_inner": true
+  },
+  "aex_anchor": "0x180002520",
+  "aex_tail_helper": "0x180001c90",
+  "bounds_divergences": [
+    "portable caller rejects geometry/buffer coverage failures before writing",
+    "portable tail bails out when a computed cell reaches cell_count; AEX has no equivalent check; undersized buffers are outside the claim"
+  ],
+  "caller": "0x1800024c0",
+  "claim_boundary": "bounded caller fixtures against the pinned AEX and portable C++; not AE exact, production wiring, or broad equivalence",
+  "cpp": {
+    "status": "pass",
+    "stderr": "",
+    "ubsan_extreme_mode1_wrap": "pass",
+    "ubsan_status": "pass",
+    "ubsan_stderr": ""
+  },
+  "float_contract": "DAT_1800212d4=1.0f; scalar float32 operation order; builds use -fno-fast-math -ffp-contract=off",
+  "gate_contract": "UCOMISS value,0 then JZ: zero and unordered NaN skip; negative finite nonzero values remain active",
+  "mode1_add_contract": "base_length + caller_distance uses defined uint32 representation addition and bit-preserving int32 conversion to emulate x86 ADD wrap",
+  "schema": "olmradialblur.scatter-caller/3",
+  "status": "pass"
+}
