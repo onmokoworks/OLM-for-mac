@@ -10,6 +10,12 @@ def main():
   with tempfile.TemporaryDirectory(prefix="toondilate_mac_smoke_") as d:
     out=Path(d)/"package"; subprocess.run([sys.executable,str(GEN),"--output-dir",str(out)],cwd=ROOT,check=True,capture_output=True,text=True)
     req=json.loads((out/"request_manifest.json").read_text()); assert req["case"]["effect"]=="OLM Toon Dilate"; assert req["project"]=={"bits_per_channel":32,"working_space":"None","linear_blending":False}
+    plugin=req["case"]["plugin"]; assert plugin["binary"]=="Contents/MacOS/OLMToonDilate"; assert len(plugin["sha256"])==64
+    provenance=plugin["candidate_provenance"]; assert provenance["build_architectures"]==["arm64","x86_64"]
+    assert set(provenance["source_sha256"])=={
+      "mac/OLMToonDilate/OLMToonDilate.cpp","mac/OLMToonDilate/OLMToonDilate.h",
+      "mac/OLMToonDilate/OLMToonDilatePiPL.r","mac/OLMToonDilate/Mac/OLMToonDilate.xcodeproj/project.pbxproj",
+    }; assert all(len(value)==64 for value in provenance["source_sha256"].values())
     fixture=(out/"fixture/ae_generate_32bpc_olmtoondilate_fixture.jsx").read_text();
     for token in ("OLM Toon Dilate","OutputModule.getSettings(GetSettingsFormat.STRING)","GpuAccelType.SOFTWARE","project.bitsPerChannel = 32","project.linearBlending = false"):
       assert token in fixture, token
