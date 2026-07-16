@@ -375,7 +375,7 @@ struct DistanceField {
 
 static float debug_raw_distance_at(const u_char *mask, long w, long h, long x, long y);
 static void dt_to_normalized(
-	const u_char *mask, float *out, long w, long h, long threshold, float ds_scale, bool constant_interp);
+	const u_char *mask, float *out, long w, long h, long threshold, bool constant_interp);
 
 // Depth-dependent source-mask rule (both sides AE-host proven at the correct
 // project depth; earlier sentinel confusion came from 8bpc requests silently
@@ -421,13 +421,11 @@ static void debug_dump_distance_field(const char *path, const float *alpha, cons
 			inside_mask[i] = source_mask_owns_alpha(alpha[i], pixel_size) ? 1 : 0;
 			outside_mask[i] = inside_mask[i] ? 0 : 1;
 		}
-		float ds = (p.ds_x + p.ds_y) * 0.5f;
-		if (ds <= 0.0f) ds = 1.0f;
 		bool constant_interp = (p.interp_mode == INTERP_CONSTANT);
-		dt_to_normalized(inside_mask.data(), inside_norm.data(), w, h, p.inside_threshold, ds, constant_interp);
-		dt_to_normalized(outside_mask.data(), outside_norm.data(), w, h, p.outside_threshold, ds, constant_interp);
-		float inside_t = (float)p.inside_threshold * ds;
-		float outside_t = (float)p.outside_threshold * ds;
+		dt_to_normalized(inside_mask.data(), inside_norm.data(), w, h, p.inside_threshold, constant_interp);
+		dt_to_normalized(outside_mask.data(), outside_norm.data(), w, h, p.outside_threshold, constant_interp);
+		float inside_t = (float)p.inside_threshold;
+		float outside_t = (float)p.outside_threshold;
 		if (!constant_interp && inside_t < 1.0f) inside_t = 1.0f;
 		if (!constant_interp && outside_t < 1.0f) outside_t = 1.0f;
 		const char *cursor = points;
@@ -480,17 +478,15 @@ static void invert_mask(u_char *mask, long w, long h)
 // the gradient is stretched to fill [0,1] anyway, so inverted X reaches 0 at the
 // deepest interior pixel instead of leaving a residual.
 //
-// One detail is still only implementation-grounded: this port scales the raw UI
-// threshold by averaged downsample `ds_scale` before the helper work. The AEX
-// helper body visibly receives scaled temp dimensions from the caller, but the
-// exact threshold-scaling ownership in the caller path is not fully proven yet.
+// The AEX callers load the raw UI threshold directly into R9D from config +0xb8
+// or +0xbc. Scaled staging dimensions are separate arguments, so downsample
+// scale does not own the threshold passed to this helper.
 static void dt_to_normalized(
-	const u_char *mask, float *out, long w, long h, long threshold, float ds_scale, bool constant_interp)
+	const u_char *mask, float *out, long w, long h, long threshold, bool constant_interp)
 {
-	float t = (float)threshold * ds_scale;
 	(void)olm::distancegradation::distance_to_normalized_u8(
 		mask, (size_t)w, (size_t)h, (size_t)w,
-		out, (size_t)w * sizeof(float), t, constant_interp);
+		out, (size_t)w * sizeof(float), (float)threshold, constant_interp);
 }
 
 static float debug_raw_distance_at(const u_char *mask, long w, long h, long x, long y)
@@ -529,20 +525,20 @@ static void build_distance_field(
 			float no_edge_x = p.invert ? 0.0f : 1.0f;
 			for (long i = 0; i < w * h; ++i) df.x[i] = no_edge_x;
 		} else {
-			dt_to_normalized(mask.data(), df.x.data(), w, h, p.inside_threshold, ds,
+			dt_to_normalized(mask.data(), df.x.data(), w, h, p.inside_threshold,
 			                 p.interp_mode == INTERP_CONSTANT);
 		}
 	} else if (p.in_out == IN_OUT_OUTSIDE) {
 		invert_mask(mask.data(), w, h);
-		dt_to_normalized(mask.data(), df.x.data(), w, h, p.outside_threshold, ds,
+		dt_to_normalized(mask.data(), df.x.data(), w, h, p.outside_threshold,
 		                 p.interp_mode == INTERP_CONSTANT);
 	} else { // BOTH
 		std::vector<float> inside((size_t)w * h), outside((size_t)w * h);
-		dt_to_normalized(mask.data(), inside.data(), w, h, p.inside_threshold, ds,
+		dt_to_normalized(mask.data(), inside.data(), w, h, p.inside_threshold,
 		                 p.interp_mode == INTERP_CONSTANT);
 		std::vector<u_char> m2 = mask; // copy
 		invert_mask(m2.data(), w, h);
-		dt_to_normalized(m2.data(), outside.data(), w, h, p.outside_threshold, ds,
+		dt_to_normalized(m2.data(), outside.data(), w, h, p.outside_threshold,
 		                 p.interp_mode == INTERP_CONSTANT);
 		for (long i = 0; i < w * h; ++i) df.x[i] = std::max(inside[i], outside[i]);
 	}
