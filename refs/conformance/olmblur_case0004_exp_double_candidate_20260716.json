@@ -1,0 +1,422 @@
+{
+  "schema": "olmblur.case0004.exp-double-candidate-gate/1",
+  "status": "pass_candidate_gate",
+  "classification": "coefficient_exact",
+  "platform": {
+    "system": "Darwin",
+    "architecture": "arm64",
+    "compiler": "Apple clang version 17.0.0 (clang-1700.6.4.2)"
+  },
+  "identity": {
+    "caller_report": "refs/conformance/olmblur_case0004_staged_helper_replay_20260716.json",
+    "caller_report_sha256": "015bd884f5f7186a6923c74e95e009c4d9709151a5d537c976ee741f1754f878",
+    "input": {
+      "path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0004_before_effects.png",
+      "png_sha256": "930317e23068ea93bfd72961c2215e755e73cfd4ec784d97bccca223ed94e30a",
+      "pf16_sha256": "afd4269575102eda52e581cec8e77fe62f5f7e808e33cf64d6baf186c81b70aa"
+    },
+    "production_source": "mac/OLMBlur/OLMBlur.cpp",
+    "production_source_sha256": "6ecf1189393c072190e29ba964e4c7dbbb6a33b31c7a491738a2d40d739f1995"
+  },
+  "candidate": "current powf/pow/radius/sigma/denom order; x_f32 unchanged; weight=static_cast<float>(std::exp(static_cast<double>(x_f32)))",
+  "generation_compile_command": [
+    "c++",
+    "-std=c++17",
+    "-O2",
+    "-ffp-contract=off",
+    "tools/emulation/probe_olmblur_case0004_exp_double_candidate.cpp",
+    "-o",
+    "<temporary>/exp_double_candidate"
+  ],
+  "portable_compile_command": [
+    "c++",
+    "-std=c++17",
+    "-O2",
+    "-ffp-contract=off",
+    "-Icore",
+    "core/olmblur_helper.cpp",
+    "tools/emulation/probe_olmblur_case0004_portable_helper.cpp",
+    "-o",
+    "<temporary>/replay_olmblur_helper_fixture"
+  ],
+  "radius_sequence": [
+    125,
+    36,
+    10,
+    2
+  ],
+  "coefficient_words_compared": 177,
+  "all_coefficient_words_exact": true,
+  "first_mismatch": null,
+  "iterations": [
+    {
+      "iteration": 1,
+      "radius": 125,
+      "coefficient_count": 126,
+      "mismatch_count": 0,
+      "declared_sha256": "8f408d5e7519d5d3c56b5d734301e153b50a6165f140b6c4ed7a273392e17a5a",
+      "candidate_sha256": "8f408d5e7519d5d3c56b5d734301e153b50a6165f140b6c4ed7a273392e17a5a"
+    },
+    {
+      "iteration": 2,
+      "radius": 36,
+      "coefficient_count": 37,
+      "mismatch_count": 0,
+      "declared_sha256": "21546d5883b7104b99154b903481c2209c2892d328d7de4e6233d8f1ed0352fa",
+      "candidate_sha256": "21546d5883b7104b99154b903481c2209c2892d328d7de4e6233d8f1ed0352fa"
+    },
+    {
+      "iteration": 3,
+      "radius": 10,
+      "coefficient_count": 11,
+      "mismatch_count": 0,
+      "declared_sha256": "f734bb91d74087f223153daca4a34f0138465b53ee88d7087b41a8e9966e6e00",
+      "candidate_sha256": "f734bb91d74087f223153daca4a34f0138465b53ee88d7087b41a8e9966e6e00"
+    },
+    {
+      "iteration": 4,
+      "radius": 2,
+      "coefficient_count": 3,
+      "mismatch_count": 0,
+      "declared_sha256": "f2cf8b9df6b23cc0f059b5d34970e859f4d3a83fb910dfa5ca58664b1e60ca0f",
+      "candidate_sha256": "f2cf8b9df6b23cc0f059b5d34970e859f4d3a83fb910dfa5ca58664b1e60ca0f"
+    }
+  ],
+  "portable_full_cone": {
+    "execution": "portable_only",
+    "stages": [
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 1,
+        "direction": "horizontal",
+        "radius": 125,
+        "input_dimensions": [
+          347,
+          347
+        ],
+        "output_dimensions": [
+          97,
+          347
+        ],
+        "retained_output_sha256": "b1b5c5689d69ef87db347340512cdf66376f72ac72237ae0b0df6fc61d88ddd3",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 1,
+        "direction": "vertical",
+        "radius": 125,
+        "input_dimensions": [
+          97,
+          347
+        ],
+        "output_dimensions": [
+          97,
+          97
+        ],
+        "retained_output_sha256": "06ef8bc33579623c77f89b4dd4821a3fbc5c1eb065dbb826b0789d99a07a53fe",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 2,
+        "direction": "horizontal",
+        "radius": 36,
+        "input_dimensions": [
+          97,
+          97
+        ],
+        "output_dimensions": [
+          25,
+          97
+        ],
+        "retained_output_sha256": "bf38dcc385d92d80df9d0374f37def1aa3bd67b7af4c308fc3c62dc3bd56e971",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 2,
+        "direction": "vertical",
+        "radius": 36,
+        "input_dimensions": [
+          25,
+          97
+        ],
+        "output_dimensions": [
+          25,
+          25
+        ],
+        "retained_output_sha256": "3b5508237fdda6d20d34dff9f716a8b07c52b9fa41cb32b255af377fe4202d73",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 3,
+        "direction": "horizontal",
+        "radius": 10,
+        "input_dimensions": [
+          25,
+          25
+        ],
+        "output_dimensions": [
+          5,
+          25
+        ],
+        "retained_output_sha256": "8378cd88dd3a62d07f90b78ba3f4773e662d5c6b82cca90e5e2a54282f1bb5a6",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 3,
+        "direction": "vertical",
+        "radius": 10,
+        "input_dimensions": [
+          5,
+          25
+        ],
+        "output_dimensions": [
+          5,
+          5
+        ],
+        "retained_output_sha256": "8e53bfc28ce4c9db2efc45bc6d6231e63b5bedf09b8f56af64423d274a1ec38e",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 4,
+        "direction": "horizontal",
+        "radius": 2,
+        "input_dimensions": [
+          5,
+          5
+        ],
+        "output_dimensions": [
+          1,
+          5
+        ],
+        "retained_output_sha256": "ee437b315c628fbc48026936dbc2f9fff4884d1bbc8191833a46ac4239d8eafa",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          411,
+          258
+        ],
+        "iteration": 4,
+        "direction": "vertical",
+        "radius": 2,
+        "input_dimensions": [
+          1,
+          5
+        ],
+        "output_dimensions": [
+          1,
+          1
+        ],
+        "retained_output_sha256": "dc323fe41745c7a6de2abc2ca3e992657d5757f3fa60ada529acbd012a93f223",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 1,
+        "direction": "horizontal",
+        "radius": 125,
+        "input_dimensions": [
+          347,
+          347
+        ],
+        "output_dimensions": [
+          97,
+          347
+        ],
+        "retained_output_sha256": "5f61b297264602328b204b56ca67b773a1784bf5a7f1802c4391a27e70f0b4e1",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 1,
+        "direction": "vertical",
+        "radius": 125,
+        "input_dimensions": [
+          97,
+          347
+        ],
+        "output_dimensions": [
+          97,
+          97
+        ],
+        "retained_output_sha256": "34140b254b6a6eba1cfc5978b6300b8b3a009eb6ae1b08f2d29036fc1c8bae08",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 2,
+        "direction": "horizontal",
+        "radius": 36,
+        "input_dimensions": [
+          97,
+          97
+        ],
+        "output_dimensions": [
+          25,
+          97
+        ],
+        "retained_output_sha256": "a952c7423dd9f6bb24592da07909bd3f435b096fbab9a214b3f97dc568929e15",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 2,
+        "direction": "vertical",
+        "radius": 36,
+        "input_dimensions": [
+          25,
+          97
+        ],
+        "output_dimensions": [
+          25,
+          25
+        ],
+        "retained_output_sha256": "9e8dc47e5ac92560e5cf31b3fe2f141fb5c6a68e4d9de99954f6ca12b5c98e43",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 3,
+        "direction": "horizontal",
+        "radius": 10,
+        "input_dimensions": [
+          25,
+          25
+        ],
+        "output_dimensions": [
+          5,
+          25
+        ],
+        "retained_output_sha256": "a236cc725c85fabc3254a4466c3838222f201bc7b94a273c6ecb5e7a95f457fa",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 3,
+        "direction": "vertical",
+        "radius": 10,
+        "input_dimensions": [
+          5,
+          25
+        ],
+        "output_dimensions": [
+          5,
+          5
+        ],
+        "retained_output_sha256": "1ee06b8e755286435a03d79566340ae9c0b1c74bea8debd19c829f19090a5e3d",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 4,
+        "direction": "horizontal",
+        "radius": 2,
+        "input_dimensions": [
+          5,
+          5
+        ],
+        "output_dimensions": [
+          1,
+          5
+        ],
+        "retained_output_sha256": "d40d5ec3d53c4483a8a77b5689847475c5842917ab25f6ec2979756ba93f1dbc",
+        "execution": "portable_only"
+      },
+      {
+        "witness": [
+          458,
+          314
+        ],
+        "iteration": 4,
+        "direction": "vertical",
+        "radius": 2,
+        "input_dimensions": [
+          1,
+          5
+        ],
+        "output_dimensions": [
+          1,
+          1
+        ],
+        "retained_output_sha256": "13d2d233645e11fe42bacfc97ff33df950648bf228319014a8347a85bc80f0ec",
+        "execution": "portable_only"
+      }
+    ],
+    "final": {
+      "(411,258)": {
+        "pre_store_bits_hex": [
+          "0x46ac2b00",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "standard_writer_predicted_rgb_words": [
+          22038,
+          0,
+          0
+        ]
+      },
+      "(458,314)": {
+        "pre_store_bits_hex": [
+          "0x46ce0b00",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "standard_writer_predicted_rgb_words": [
+          26374,
+          0,
+          0
+        ]
+      }
+    }
+  },
+  "production_integration": "source-contract-exact; arm64/x86_64 Debug build validated separately",
+  "claim_limit": "Mac production formula and portable sensitivity only; not Windows CRT truth or AE exact."
+}

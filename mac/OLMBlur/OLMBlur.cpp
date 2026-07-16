@@ -1264,7 +1264,8 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 			float sigma = (float)radius_d / 3.0f;
 			float denom = 2.0f * sigma * sigma;
 			for (A_long k = 0; k <= radius; ++k) {
-				weights[k] = expf(-(float)(k*k) / denom);
+				const float exponent = -(float)(k*k) / denom;
+				weights[k] = (float)exp((double)exponent);
 			}
 
 			if (bp->bias_dir == BIAS_DIR_VERTICAL) {
