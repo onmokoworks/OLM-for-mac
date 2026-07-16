@@ -1,0 +1,66 @@
+{
+  "actual_aex_target_witness": {
+    "expected_output_rgba_f32_bits": [
+      "0x3f000000",
+      "0x3f400000",
+      "0x3f800000",
+      "0x3e4ccccd"
+    ],
+    "instructions": 209,
+    "output_address": "0x400000e0",
+    "output_matches_expected": true,
+    "output_raw_hex": "0000003f0000403f0000803fcdcc4c3e",
+    "output_rgba_f32_bits": [
+      "0x3f000000",
+      "0x3f400000",
+      "0x3f800000",
+      "0x3e4ccccd"
+    ],
+    "target": "0x18114ffd0"
+  },
+  "ae_exact_claim": false,
+  "boundary": {
+    "after_target_return": "caller performs vector cleanup/deallocation and returns; no output read, host compose, or typed writer call is present",
+    "caller_to_target": "FUN_18114f4a0 indirect vtable +0x10 -> FUN_18114ffd0",
+    "first_unavailable_abi": "the host-owned object passed as caller param_1 (vtable slots, channel allocation/callback state, and upstream buffers) required to execute FUN_18114f4a0 end-to-end",
+    "target_output_argument": "target param_7 / RDI receives caller [RBP-0x20] forwarded at [RSP+0x30]"
+  },
+  "date": "2026-07-17",
+  "evidence_class": "actual checked-in AEX target execution plus immediate-caller static callsite audit",
+  "facts": [
+    "FACT: the immediate AEX caller selects Mode 1 through vtable slot +0x8 and Mode 2 through +0x10.",
+    "FACT: the Mode-2 callsite forwards its output pointer as target param_7; the actual target writes the proven float RGBA tuple there.",
+    "FACT: the immediate caller has no post-call read of that output pointer and no PF8/PF16/PF32 writer call before returning.",
+    "FACT: the direct target witness executed against the pinned AEX and wrote the expected float RGBA bytes."
+  ],
+  "inferences": [
+    "INFERENCE: Merge Mode participates in selecting the aggregation target before the result reaches the caller-owned float buffer.",
+    "INFERENCE: the next consumer of that buffer is outside this immediate AEX caller slice; this evidence does not place Merge Mode in later writer selection."
+  ],
+  "inputs": {
+    "aex": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "immediate_caller": "FUN_18114f4a0 @ 0x18114f4a0",
+    "mode1_vtable_slot": "+0x8",
+    "mode2_target": "FUN_18114ffd0 @ 0x18114ffd0",
+    "mode2_vtable_slot": "+0x10"
+  },
+  "kind": "olmkirakira_mode2_caller_output_boundary",
+  "limits": [
+    "The full caller cannot be executed by the checked-in loader without its host-owned object/ABI and upstream allocations.",
+    "The first unavailable ABI is the caller param_1 vtable/channel object, before any host compose/writeback observation.",
+    "No PNG, Windows host result, or AE exactness is claimed."
+  ],
+  "schema": 1,
+  "static_checks": {
+    "caller_forwards_output_arg7": true,
+    "caller_passes_dimensions_and_opacity": true,
+    "caller_returns_after_cleanup": true,
+    "immediate_caller_present": true,
+    "mode1_and_mode2_vtable_slots": true,
+    "mode2_target_callsite": true,
+    "post_call_has_no_output_read": true,
+    "post_call_has_no_typed_writer": true
+  },
+  "status": "pass"
+}
