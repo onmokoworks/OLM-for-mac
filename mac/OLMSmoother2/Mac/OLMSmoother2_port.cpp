@@ -3754,8 +3754,9 @@ static inline double win_FUN_180004d70_literal(double v);
 static void post_unpremul_gamma(FPix &px, bool gamma_enable, float gamma_value) {
 	float a = px.a;
 	if (a != 0.0f && a != 1.0f) {
-		float inv = 1.0f / a;
-		px.r *= inv; px.g *= inv; px.b *= inv;
+		// FUN_18000b120 uses three scalar DIVSS instructions. Computing one
+		// reciprocal and multiplying shifts the float32 rounding point.
+		px.r /= a; px.g /= a; px.b /= a;
 	}
 	if (gamma_enable && gamma_value > 0.0f) {
 		double e = (double)gamma_value;

@@ -844,6 +844,21 @@ treating a mismatch as algorithm drift.
 
 ## Latest Overrides
 
+- 2026-07-17 `OLMSmoother2 c280/cce0 direct-division boundary`: use
+  `refs/conformance/olmsmoother2_case0012_post_leaf_cce0_20260717.md` /
+  `.json`. A hash-pinned local AEX run and the current portable path now use
+  an exactly matched `16x16` synthetic class/source fixture and caller config
+  words `65536/65536` (normalized `655.36/655.36`, gamma mode `0`). The c280
+  vertex RGBA and weight were already bit-exact. The former first cce0 red
+  difference was one float32 ULP and came from the Mac computing one reciprocal
+  then multiplying RGB, while `FUN_18000b120` performs three scalar `DIVSS`
+  instructions at `0x18000b17c/181/18f`. Using direct per-channel division
+  makes all nine compared c280/cce0 float32 words bit-exact. This closes only
+  the bounded local synthetic arithmetic boundary; it is not live Windows,
+  AE exact, a case_0012 continuation, or proof that the live polygon/dispatch
+  selection is correct. Preserve the direct-division rule and continue the
+  live post-f130/polygon-state lane separately.
+
 - 2026-07-17 `OLMKiraKira Mode 2 aggregation/caller output`: use
   `refs/conformance/olmkirakira_mode2_actual_aex_merge_boundary_20260717.md`
   and `refs/conformance/olmkirakira_mode2_caller_output_boundary_20260717.md`.

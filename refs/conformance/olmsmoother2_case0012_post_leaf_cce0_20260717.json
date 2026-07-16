@@ -1,0 +1,546 @@
+{
+  "aex": {
+    "path": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
+    "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "trace": {
+      "c280_count": 1,
+      "c280_vertices": [
+        {
+          "rgba_f32": [
+            0.800000011920929,
+            0.10000000149011612,
+            0.10000000149011612,
+            0.9960784316062927
+          ],
+          "rgba_u32": [
+            1061997773,
+            1036831949,
+            1036831949,
+            1065287423
+          ],
+          "rgba_u32_hex": [
+            "0x3f4ccccd",
+            "0x3dcccccd",
+            "0x3dcccccd",
+            "0x3f7efeff"
+          ],
+          "weight_f32": 0.4999988377094269,
+          "weight_u32": 1056964569,
+          "weight_u32_hex": "0x3effffd9"
+        }
+      ],
+      "caller_config": {
+        "gamma_mode_byte": 0,
+        "normalized": [
+          655.36,
+          655.36
+        ],
+        "scale_fixed": [
+          65536,
+          65536
+        ],
+        "version": 2
+      },
+      "cce0": {
+        "rgba_f32": [
+          0.9001967310905457,
+          0.5508851408958435,
+          0.5508851408958435,
+          0.9980392456054688
+        ],
+        "rgba_u32": [
+          1063678795,
+          1057818319,
+          1057818319,
+          1065320320
+        ],
+        "rgba_u32_hex": [
+          "0x3f66734b",
+          "0x3f0d06cf",
+          "0x3f0d06cf",
+          "0x3f7f7f80"
+        ]
+      },
+      "fixture": {
+        "class_pixels": [
+          [
+            5,
+            6,
+            0,
+            1,
+            0,
+            1
+          ],
+          [
+            6,
+            6,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            6,
+            7,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            5,
+            5,
+            1,
+            0,
+            0,
+            0
+          ]
+        ],
+        "height": 16,
+        "name": "c2_witness",
+        "source_pixels": [
+          [
+            5,
+            5,
+            0.8,
+            0.1,
+            0.1,
+            0.99607843
+          ],
+          [
+            5,
+            6,
+            1,
+            1,
+            1,
+            1
+          ]
+        ],
+        "width": 16,
+        "xy": [
+          5,
+          6
+        ]
+      }
+    }
+  },
+  "artifact_paths": {
+    "json": "refs/conformance/olmsmoother2_case0012_post_leaf_cce0_20260717.json",
+    "md": "refs/conformance/olmsmoother2_case0012_post_leaf_cce0_20260717.md"
+  },
+  "binary_grounding": {
+    "aex_divss_addresses": [
+      "0x18000b17c",
+      "0x18000b181",
+      "0x18000b18f"
+    ],
+    "aex_function": "FUN_18000b120",
+    "portable_rule": "divide r, g, and b directly by alpha; do not compute one reciprocal and multiply",
+    "portable_source": "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp"
+  },
+  "caller_config": {
+    "gamma_mode_byte": 0,
+    "normalized": [
+      655.36,
+      655.36
+    ],
+    "scale_fixed": [
+      65536,
+      65536
+    ],
+    "version": 2
+  },
+  "claims_not_made": [
+    "No live Windows or After Effects host claim",
+    "No case_0012 continuation claim",
+    "No post-leaf state transfer claim",
+    "No production correctness claim",
+    "No ledger change"
+  ],
+  "comparison": {
+    "aex_shape_problems": [],
+    "aex_shape_valid": true,
+    "all_words_bitwise_equal": true,
+    "bitwise_word_results": [
+      {
+        "bitwise_equal": true,
+        "label": "c280_rgba.r",
+        "sequence_index": 0
+      },
+      {
+        "bitwise_equal": true,
+        "label": "c280_rgba.g",
+        "sequence_index": 1
+      },
+      {
+        "bitwise_equal": true,
+        "label": "c280_rgba.b",
+        "sequence_index": 2
+      },
+      {
+        "bitwise_equal": true,
+        "label": "c280_rgba.a",
+        "sequence_index": 3
+      },
+      {
+        "bitwise_equal": true,
+        "label": "c280_weight",
+        "sequence_index": 4
+      },
+      {
+        "bitwise_equal": true,
+        "label": "cce0_rgba.r",
+        "sequence_index": 5
+      },
+      {
+        "bitwise_equal": true,
+        "label": "cce0_rgba.g",
+        "sequence_index": 6
+      },
+      {
+        "bitwise_equal": true,
+        "label": "cce0_rgba.b",
+        "sequence_index": 7
+      },
+      {
+        "bitwise_equal": true,
+        "label": "cce0_rgba.a",
+        "sequence_index": 8
+      }
+    ],
+    "c280_count_exact": true,
+    "caller_config_exact": true,
+    "fixture_exact": true,
+    "portable_shape_problems": [],
+    "portable_shape_valid": true,
+    "word_sequence": [
+      "c280_rgba.r",
+      "c280_rgba.g",
+      "c280_rgba.b",
+      "c280_rgba.a",
+      "c280_weight",
+      "cce0_rgba.r",
+      "cce0_rgba.g",
+      "cce0_rgba.b",
+      "cce0_rgba.a"
+    ]
+  },
+  "first_divergence": {
+    "stage": "bitwise_match"
+  },
+  "fixture": {
+    "class_pixels": [
+      [
+        5,
+        6,
+        0,
+        1,
+        0,
+        1
+      ],
+      [
+        6,
+        6,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        6,
+        7,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        5,
+        5,
+        1,
+        0,
+        0,
+        0
+      ]
+    ],
+    "height": 16,
+    "name": "c2_witness",
+    "source_pixels": [
+      [
+        5,
+        5,
+        0.8,
+        0.1,
+        0.1,
+        0.99607843
+      ],
+      [
+        5,
+        6,
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    "width": 16,
+    "xy": [
+      5,
+      6
+    ]
+  },
+  "portable": {
+    "adapter_source": "tools/emulation/smoother2_case0012_post_leaf_cce0_adapter_20260717.cpp",
+    "trace": {
+      "c280_count": 1,
+      "c280_vertices": [
+        {
+          "rgba_f32": [
+            0.800000011920929,
+            0.10000000149011612,
+            0.10000000149011612,
+            0.9960784316062927
+          ],
+          "rgba_u32": [
+            1061997773,
+            1036831949,
+            1036831949,
+            1065287423
+          ],
+          "rgba_u32_hex": [
+            "0x3f4ccccd",
+            "0x3dcccccd",
+            "0x3dcccccd",
+            "0x3f7efeff"
+          ],
+          "weight_f32": 0.4999988377094269,
+          "weight_u32": 1056964569,
+          "weight_u32_hex": "0x3effffd9"
+        }
+      ],
+      "caller_config": {
+        "gamma_mode_byte": 0,
+        "normalized": [
+          655.36,
+          655.36
+        ],
+        "scale_fixed": [
+          65536,
+          65536
+        ],
+        "version": 2
+      },
+      "cce0": {
+        "rgba_f32": [
+          0.9001967310905457,
+          0.5508851408958435,
+          0.5508851408958435,
+          0.9980392456054688
+        ],
+        "rgba_u32": [
+          1063678795,
+          1057818319,
+          1057818319,
+          1065320320
+        ],
+        "rgba_u32_hex": [
+          "0x3f66734b",
+          "0x3f0d06cf",
+          "0x3f0d06cf",
+          "0x3f7f7f80"
+        ]
+      },
+      "fixture": {
+        "class_pixels": [
+          [
+            5,
+            6,
+            0,
+            1,
+            0,
+            1
+          ],
+          [
+            6,
+            6,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            6,
+            7,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            5,
+            5,
+            1,
+            0,
+            0,
+            0
+          ]
+        ],
+        "height": 16,
+        "name": "c2_witness",
+        "source_pixels": [
+          [
+            5,
+            5,
+            0.8,
+            0.1,
+            0.1,
+            0.99607843
+          ],
+          [
+            5,
+            6,
+            1,
+            1,
+            1,
+            1
+          ]
+        ],
+        "width": 16,
+        "xy": [
+          5,
+          6
+        ]
+      }
+    }
+  },
+  "scope": "local checked-in AEX versus portable c280/cce0 float32-word witness; not live Windows, not After Effects host truth, not case_0012 continuation",
+  "verdict": "LOCAL_SYNTHETIC_BITWISE_MATCH",
+  "word_rows": [
+    {
+      "aex_f32": 0.800000011920929,
+      "aex_u32": 1061997773,
+      "aex_u32_hex": "0x3f4ccccd",
+      "bitwise_equal": true,
+      "label": "c280_rgba.r",
+      "lowest_differing_bit_lsb0": null,
+      "portable_f32": 0.800000011920929,
+      "portable_u32": 1061997773,
+      "portable_u32_hex": "0x3f4ccccd",
+      "sequence_index": 0,
+      "xor_u32": 0,
+      "xor_u32_hex": "0x00000000"
+    },
+    {
+      "aex_f32": 0.10000000149011612,
+      "aex_u32": 1036831949,
+      "aex_u32_hex": "0x3dcccccd",
+      "bitwise_equal": true,
+      "label": "c280_rgba.g",
+      "lowest_differing_bit_lsb0": null,
+      "portable_f32": 0.10000000149011612,
+      "portable_u32": 1036831949,
+      "portable_u32_hex": "0x3dcccccd",
+      "sequence_index": 1,
+      "xor_u32": 0,
+      "xor_u32_hex": "0x00000000"
+    },
+    {
+      "aex_f32": 0.10000000149011612,
+      "aex_u32": 1036831949,
+      "aex_u32_hex": "0x3dcccccd",
+      "bitwise_equal": true,
+      "label": "c280_rgba.b",
+      "lowest_differing_bit_lsb0": null,
+      "portable_f32": 0.10000000149011612,
+      "portable_u32": 1036831949,
+      "portable_u32_hex": "0x3dcccccd",
+      "sequence_index": 2,
+      "xor_u32": 0,
+      "xor_u32_hex": "0x00000000"
+    },
+    {
+      "aex_f32": 0.9960784316062927,
+      "aex_u32": 1065287423,
+      "aex_u32_hex": "0x3f7efeff",
+      "bitwise_equal": true,
+      "label": "c280_rgba.a",
+      "lowest_differing_bit_lsb0": null,
+      "portable_f32": 0.9960784316062927,
+      "portable_u32": 1065287423,
+      "portable_u32_hex": "0x3f7efeff",
+      "sequence_index": 3,
+      "xor_u32": 0,
+      "xor_u32_hex": "0x00000000"
+    },
+    {
+      "aex_f32": 0.4999988377094269,
+      "aex_u32": 1056964569,
+      "aex_u32_hex": "0x3effffd9",
+      "bitwise_equal": true,
+      "label": "c280_weight",
+      "lowest_differing_bit_lsb0": null,
+      "portable_f32": 0.4999988377094269,
+      "portable_u32": 1056964569,
+      "portable_u32_hex": "0x3effffd9",
+      "sequence_index": 4,
+      "xor_u32": 0,
+      "xor_u32_hex": "0x00000000"
+    },
+    {
+      "aex_f32": 0.9001967310905457,
+      "aex_u32": 1063678795,
+      "aex_u32_hex": "0x3f66734b",
+      "bitwise_equal": true,
+      "label": "cce0_rgba.r",
+      "lowest_differing_bit_lsb0": null,
+      "portable_f32": 0.9001967310905457,
+      "portable_u32": 1063678795,
+      "portable_u32_hex": "0x3f66734b",
+      "sequence_index": 5,
+      "xor_u32": 0,
+      "xor_u32_hex": "0x00000000"
+    },
+    {
+      "aex_f32": 0.5508851408958435,
+      "aex_u32": 1057818319,
+      "aex_u32_hex": "0x3f0d06cf",
+      "bitwise_equal": true,
+      "label": "cce0_rgba.g",
+      "lowest_differing_bit_lsb0": null,
+      "portable_f32": 0.5508851408958435,
+      "portable_u32": 1057818319,
+      "portable_u32_hex": "0x3f0d06cf",
+      "sequence_index": 6,
+      "xor_u32": 0,
+      "xor_u32_hex": "0x00000000"
+    },
+    {
+      "aex_f32": 0.5508851408958435,
+      "aex_u32": 1057818319,
+      "aex_u32_hex": "0x3f0d06cf",
+      "bitwise_equal": true,
+      "label": "cce0_rgba.b",
+      "lowest_differing_bit_lsb0": null,
+      "portable_f32": 0.5508851408958435,
+      "portable_u32": 1057818319,
+      "portable_u32_hex": "0x3f0d06cf",
+      "sequence_index": 7,
+      "xor_u32": 0,
+      "xor_u32_hex": "0x00000000"
+    },
+    {
+      "aex_f32": 0.9980392456054688,
+      "aex_u32": 1065320320,
+      "aex_u32_hex": "0x3f7f7f80",
+      "bitwise_equal": true,
+      "label": "cce0_rgba.a",
+      "lowest_differing_bit_lsb0": null,
+      "portable_f32": 0.9980392456054688,
+      "portable_u32": 1065320320,
+      "portable_u32_hex": "0x3f7f7f80",
+      "sequence_index": 8,
+      "xor_u32": 0,
+      "xor_u32_hex": "0x00000000"
+    }
+  ]
+}
