@@ -458,6 +458,7 @@ if ($contract.plugin.PSObject.Properties.Name -contains 'cache_rescan' -and [boo
 $env:WINDOWS_WITNESS_WORK_ROOT = $work
 $env:WINDOWS_WITNESS_RUN_ID = $runId
 $env:WINDOWS_WITNESS_PACKAGE_ROOT = $PackageRoot
+$env:WINDOWS_WITNESS_REQUEST_ID = [string]$contract.request_id
 $env:OLM_AE_PAUSE_BEFORE_RENDER = '1'
 $env:OLM_AE_PAUSE_TIMEOUT_SECONDS = '300'
 $env:OLM_AE_FORCE_SOFTWARE = '1'
@@ -495,6 +496,7 @@ $environmentLines = @(
   ('set "WINDOWS_WITNESS_WORK_ROOT=' + $work + '"'),
   ('set "WINDOWS_WITNESS_RUN_ID=' + $runId + '"'),
   ('set "WINDOWS_WITNESS_PACKAGE_ROOT=' + $PackageRoot + '"'),
+  ('set "WINDOWS_WITNESS_REQUEST_ID=' + [string]$contract.request_id + '"'),
   ('set "WINDOWS_WITNESS_QUEUE_SHA256=' + $queueHash + '"'),
   'set "OLM_AE_PAUSE_BEFORE_RENDER=1"',
   'set "OLM_AE_PAUSE_TIMEOUT_SECONDS=300"',
@@ -568,7 +570,7 @@ if (!(Test-Path -LiteralPath $queueBootstrap -PathType Leaf)) {
 $queueBootstrapObserved = $true
 try { $queueBootstrapBinding = Read-QueueBootstrapBinding $queueBootstrap }
 catch { Finish (Failure 'queue_binding' $_.Exception.Message @('queue_bootstrap_binding') '') 2 }
-foreach ($field in @('run_id', 'work', 'root', 'queue_sha256')) {
+foreach ($field in @('run_id', 'work', 'root', 'request_id', 'queue_sha256')) {
   if ($null -eq $queueBootstrapBinding.$field) {
     Finish (Failure 'queue_binding' "queue bootstrap marker is missing $field" @("queue_bootstrap:$field") '') 2
   }
@@ -576,8 +578,9 @@ foreach ($field in @('run_id', 'work', 'root', 'queue_sha256')) {
 if ([string]$queueBootstrapBinding.run_id -cne $runId -or
     ![string]::Equals([string]$queueBootstrapBinding.work, $work, [StringComparison]::OrdinalIgnoreCase) -or
     ![string]::Equals([string]$queueBootstrapBinding.root, $PackageRoot, [StringComparison]::OrdinalIgnoreCase) -or
+    [string]$queueBootstrapBinding.request_id -cne [string]$contract.request_id -or
     [string]$queueBootstrapBinding.queue_sha256 -cne $queueHash) {
-  Finish (Failure 'queue_binding' 'queue bootstrap marker does not match this run/package/script' @('queue_bootstrap:run_id', 'queue_bootstrap:work', 'queue_bootstrap:root', 'queue_bootstrap:queue_sha256') ($queueBootstrapBinding | ConvertTo-Json -Compress)) 2
+  Finish (Failure 'queue_binding' 'queue bootstrap marker does not match this run/package/request/script' @('queue_bootstrap:run_id', 'queue_bootstrap:work', 'queue_bootstrap:root', 'queue_bootstrap:request_id', 'queue_bootstrap:queue_sha256') ($queueBootstrapBinding | ConvertTo-Json -Compress)) 2
 }
 $renderAePid = $mainAePid
 if (!$directQueueLaunch) {

@@ -1,0 +1,9 @@
+{
+  "kind": "olmradialblur_single_case_probe_plan",
+  "reference_dir": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/win_references/20260604_olm/OLMRadialBlur",
+  "request_dir": "/Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/requests/ae_single_radialblur_case_0009_probe_20260701",
+  "case_id": "case_0009",
+  "debug_points_spec": "6,0;5,0;7,0;6,1;8,0;9,0;10,0;2,0;3,0;4,0",
+  "suggested_run_command": "python3 scripts/run_ae_single_case.py --request-dir /Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/requests/ae_single_radialblur_case_0009_probe_20260701 --case-id case_0009 --output-dir /tmp/case_0009_radialblur_probe_20260701 --ae-env OLMRADIALBLUR_DEBUG_DUMP_PATH=/tmp/case_0009_radialblur_probe_20260701/radialblur_debug.log --ae-env OLMRADIALBLUR_DEBUG_POINTS=6,0;5,0;7,0;6,1;8,0;9,0;10,0;2,0;3,0;4,0",
+  "suggested_analysis_command": "python3 scripts/analyze_radialblur_debug_points.py /tmp/case_0009_radialblur_probe_20260701/radialblur_debug.log --output-json /Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/requests/ae_single_radialblur_case_0009_probe_20260701/radialblur_debug_points.json --output-md /Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/requests/ae_single_radialblur_case_0009_probe_20260701/radialblur_debug_points.md"
+}

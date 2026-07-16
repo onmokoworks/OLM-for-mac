@@ -41,6 +41,7 @@
   "cases": [
     {
       "id": "db_angle0_alpha_fade_hard_edges",
+      "bits_per_channel": 8,
       "cdb_template": "probe.cdb.in",
       "template_values": {"witness_id": "olmdirectionalblur-writer-entry-v1"},
       "addresses": {

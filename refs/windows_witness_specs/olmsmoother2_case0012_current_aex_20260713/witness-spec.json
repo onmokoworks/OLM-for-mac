@@ -43,6 +43,7 @@
   "cases": [
     {
       "id": "legacy_case_0012_gamma5_red_blue_current_aex",
+      "bits_per_channel": 8,
       "cdb_template": "probe.cdb.in",
       "template_values": {
         "witness_id": "olmsmoother2-case0012-unified-current-aex-v1"

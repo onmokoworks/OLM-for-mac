@@ -116,9 +116,10 @@
     },
     "case": {
       "type": "object", "additionalProperties": false,
-      "required": ["id"],
+      "required": ["id", "bits_per_channel"],
       "properties": {
         "id": {"$ref": "#/$defs/id"},
+        "bits_per_channel": {"enum": [8, 16, 32]},
         "cdb_template": {"$ref": "#/$defs/relativePath"},
         "template_values": {"type": "object", "additionalProperties": {"type": ["string", "number", "boolean"]}},
         "addresses": {"type": "object", "propertyNames": {"$ref": "#/$defs/id"}, "additionalProperties": {"type": "string", "pattern": "^0x[0-9a-fA-F]+$"}},

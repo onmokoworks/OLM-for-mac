@@ -34,6 +34,7 @@
   "cases": [
     {
       "id": "olmdistancegradation_extended__case_0026",
+      "bits_per_channel": 16,
       "cdb_template": "livefield_source.cdb.in",
       "template_values": {
         "witness_id": "olmdistancegradation-case0026-16bpc-livefield-v1"

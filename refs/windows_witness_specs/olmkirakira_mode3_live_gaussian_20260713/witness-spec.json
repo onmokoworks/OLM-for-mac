@@ -34,6 +34,7 @@
   "cases": [
     {
       "id": "final_random10_olm_kira_kira_03",
+      "bits_per_channel": 32,
       "cdb_template": "mode3_live_gaussian.cdb.in",
       "template_values": {
         "witness_id": "olmkirakira-mode3-live-gaussian-common-core-v1"

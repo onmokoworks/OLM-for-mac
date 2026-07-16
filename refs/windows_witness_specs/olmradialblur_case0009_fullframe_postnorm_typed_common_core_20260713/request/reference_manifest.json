@@ -1,0 +1,1067 @@
+{
+  "schema": 2,
+  "kind": "ae_effect_reference_manifest",
+  "created_at": "2026-06-04T21:40:35.937+09:00",
+  "platform": "windows",
+  "ae_version": "25.2x131",
+  "project": {
+    "path": "C:\\Users\\optim\\Desktop\\OLM\\OLM test.aep",
+    "name": "OLM%20test.aep",
+    "bits_per_channel": 8
+  },
+  "comp": {
+    "name": "Comp 1",
+    "width": 1920,
+    "height": 1080,
+    "frame_rate": 24,
+    "duration": 6.16666666666667,
+    "bpc": 8
+  },
+  "layer": {
+    "name": "Adjustment Layer 1",
+    "index": 1,
+    "source_name": "Solid 1920x1080"
+  },
+  "cases": [
+    {
+      "id": "case_0009",
+      "frame": "case_0009.png",
+      "time": 0,
+      "time_display": "00:00:00:00",
+      "recorded_at": "2026-06-04T21:42:30.654+09:00",
+      "selected_layer_effect_count": 1,
+      "effects": [
+        {
+          "name": "OLM RadialBlur",
+          "match_name": "OLM RadialBlur",
+          "property_index": 1,
+          "enabled": true,
+          "active": true,
+          "params": [
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Blur Type"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Blur Type",
+                  "match_name": "OLM RadialBlur-0001",
+                  "property_index": 1
+                }
+              ],
+              "name": "Blur Type",
+              "match_name": "OLM RadialBlur-0001",
+              "property_index": 1,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Center"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Center",
+                  "match_name": "OLM RadialBlur-0002",
+                  "property_index": 2
+                }
+              ],
+              "name": "Center",
+              "match_name": "OLM RadialBlur-0002",
+              "property_index": 2,
+              "property_type": "PROPERTY",
+              "property_value_type": "TwoD_SPATIAL",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": [
+                960,
+                540
+              ],
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Outer Blur"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Outer Blur",
+                  "match_name": "OLM RadialBlur-0003",
+                  "property_index": 3
+                }
+              ],
+              "name": "Outer Blur",
+              "match_name": "OLM RadialBlur-0003",
+              "property_index": 3,
+              "property_type": "PROPERTY",
+              "property_value_type": "NO_VALUE",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": null,
+              "value_read_method": null,
+              "error": "Error: After Effects error: Can not get or set a value from this property (matchname is “OLM RadialBlur-0003”). This property’s propertyValueType is PropertyValueType.NO_VALUE."
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Strength"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Strength",
+                  "match_name": "OLM RadialBlur-0004",
+                  "property_index": 4
+                }
+              ],
+              "name": "Strength",
+              "match_name": "OLM RadialBlur-0004",
+              "property_index": 4,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1717,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Offset Mode"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Offset Mode",
+                  "match_name": "OLM RadialBlur-0028",
+                  "property_index": 5
+                }
+              ],
+              "name": "Offset Mode",
+              "match_name": "OLM RadialBlur-0028",
+              "property_index": 5,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Offset"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Offset",
+                  "match_name": "OLM RadialBlur-0029",
+                  "property_index": 6
+                }
+              ],
+              "name": "Offset",
+              "match_name": "OLM RadialBlur-0029",
+              "property_index": 6,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Edge Fade"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Edge Fade",
+                  "match_name": "OLM RadialBlur-0005",
+                  "property_index": 7
+                }
+              ],
+              "name": "Edge Fade",
+              "match_name": "OLM RadialBlur-0005",
+              "property_index": 7,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                ""
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "",
+                  "match_name": "OLM RadialBlur-0006",
+                  "property_index": 8
+                }
+              ],
+              "name": "",
+              "match_name": "OLM RadialBlur-0006",
+              "property_index": 8,
+              "property_type": "PROPERTY",
+              "property_value_type": "NO_VALUE",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": null,
+              "value_read_method": null,
+              "error": "Error: After Effects error: Can not get or set a value from this property (matchname is “OLM RadialBlur-0006”). This property’s propertyValueType is PropertyValueType.NO_VALUE."
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Inner Blur"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Inner Blur",
+                  "match_name": "OLM RadialBlur-0007",
+                  "property_index": 9
+                }
+              ],
+              "name": "Inner Blur",
+              "match_name": "OLM RadialBlur-0007",
+              "property_index": 9,
+              "property_type": "PROPERTY",
+              "property_value_type": "NO_VALUE",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": null,
+              "value_read_method": null,
+              "error": "Error: After Effects error: Can not get or set a value from this property (matchname is “OLM RadialBlur-0007”). This property’s propertyValueType is PropertyValueType.NO_VALUE."
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Strength"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Strength",
+                  "match_name": "OLM RadialBlur-0008",
+                  "property_index": 10
+                }
+              ],
+              "name": "Strength",
+              "match_name": "OLM RadialBlur-0008",
+              "property_index": 10,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Offset Mode"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Offset Mode",
+                  "match_name": "OLM RadialBlur-0030",
+                  "property_index": 11
+                }
+              ],
+              "name": "Offset Mode",
+              "match_name": "OLM RadialBlur-0030",
+              "property_index": 11,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Offset"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Offset",
+                  "match_name": "OLM RadialBlur-0031",
+                  "property_index": 12
+                }
+              ],
+              "name": "Offset",
+              "match_name": "OLM RadialBlur-0031",
+              "property_index": 12,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Edge Fade"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Edge Fade",
+                  "match_name": "OLM RadialBlur-0009",
+                  "property_index": 13
+                }
+              ],
+              "name": "Edge Fade",
+              "match_name": "OLM RadialBlur-0009",
+              "property_index": 13,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                ""
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "",
+                  "match_name": "OLM RadialBlur-0010",
+                  "property_index": 14
+                }
+              ],
+              "name": "",
+              "match_name": "OLM RadialBlur-0010",
+              "property_index": 14,
+              "property_type": "PROPERTY",
+              "property_value_type": "NO_VALUE",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": null,
+              "value_read_method": null,
+              "error": "Error: After Effects error: Can not get or set a value from this property (matchname is “OLM RadialBlur-0010”). This property’s propertyValueType is PropertyValueType.NO_VALUE."
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Repeat Border"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Repeat Border",
+                  "match_name": "OLM RadialBlur-0026",
+                  "property_index": 15
+                }
+              ],
+              "name": "Repeat Border",
+              "match_name": "OLM RadialBlur-0026",
+              "property_index": 15,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Ellipse"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Ellipse",
+                  "match_name": "OLM RadialBlur-0011",
+                  "property_index": 16
+                }
+              ],
+              "name": "Ellipse",
+              "match_name": "OLM RadialBlur-0011",
+              "property_index": 16,
+              "property_type": "PROPERTY",
+              "property_value_type": "NO_VALUE",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": null,
+              "value_read_method": null,
+              "error": "Error: After Effects error: Can not get or set a value from this property (matchname is “OLM RadialBlur-0011”). This property’s propertyValueType is PropertyValueType.NO_VALUE."
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Ratio"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Ratio",
+                  "match_name": "OLM RadialBlur-0012",
+                  "property_index": 17
+                }
+              ],
+              "name": "Ratio",
+              "match_name": "OLM RadialBlur-0012",
+              "property_index": 17,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Angle"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Angle",
+                  "match_name": "OLM RadialBlur-0013",
+                  "property_index": 18
+                }
+              ],
+              "name": "Angle",
+              "match_name": "OLM RadialBlur-0013",
+              "property_index": 18,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                ""
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "",
+                  "match_name": "OLM RadialBlur-0014",
+                  "property_index": 19
+                }
+              ],
+              "name": "",
+              "match_name": "OLM RadialBlur-0014",
+              "property_index": 19,
+              "property_type": "PROPERTY",
+              "property_value_type": "NO_VALUE",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": null,
+              "value_read_method": null,
+              "error": "Error: After Effects error: Can not get or set a value from this property (matchname is “OLM RadialBlur-0014”). This property’s propertyValueType is PropertyValueType.NO_VALUE."
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Quality"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Quality",
+                  "match_name": "OLM RadialBlur-0015",
+                  "property_index": 20
+                }
+              ],
+              "name": "Quality",
+              "match_name": "OLM RadialBlur-0015",
+              "property_index": 20,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 5,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Brightness Gain"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Brightness Gain",
+                  "match_name": "OLM RadialBlur-0016",
+                  "property_index": 21
+                }
+              ],
+              "name": "Brightness Gain",
+              "match_name": "OLM RadialBlur-0016",
+              "property_index": 21,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Size Variation"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Size Variation",
+                  "match_name": "OLM RadialBlur-0017",
+                  "property_index": 22
+                }
+              ],
+              "name": "Size Variation",
+              "match_name": "OLM RadialBlur-0017",
+              "property_index": 22,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Noise Parameters"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Noise Parameters",
+                  "match_name": "OLM RadialBlur-0018",
+                  "property_index": 23
+                }
+              ],
+              "name": "Noise Parameters",
+              "match_name": "OLM RadialBlur-0018",
+              "property_index": 23,
+              "property_type": "PROPERTY",
+              "property_value_type": "NO_VALUE",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": null,
+              "value_read_method": null,
+              "error": "Error: After Effects error: Can not get or set a value from this property (matchname is “OLM RadialBlur-0018”). This property’s propertyValueType is PropertyValueType.NO_VALUE."
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Noise Variation"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Noise Variation",
+                  "match_name": "OLM RadialBlur-0019",
+                  "property_index": 24
+                }
+              ],
+              "name": "Noise Variation",
+              "match_name": "OLM RadialBlur-0019",
+              "property_index": 24,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Noise Type"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Noise Type",
+                  "match_name": "OLM RadialBlur-0020",
+                  "property_index": 25
+                }
+              ],
+              "name": "Noise Type",
+              "match_name": "OLM RadialBlur-0020",
+              "property_index": 25,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Noise Layer"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Noise Layer",
+                  "match_name": "OLM RadialBlur-0021",
+                  "property_index": 26
+                }
+              ],
+              "name": "Noise Layer",
+              "match_name": "OLM RadialBlur-0021",
+              "property_index": 26,
+              "property_type": "PROPERTY",
+              "property_value_type": "LAYER_INDEX",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Seed"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Seed",
+                  "match_name": "OLM RadialBlur-0022",
+                  "property_index": 27
+                }
+              ],
+              "name": "Seed",
+              "match_name": "OLM RadialBlur-0022",
+              "property_index": 27,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Offset"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Offset",
+                  "match_name": "OLM RadialBlur-0023",
+                  "property_index": 28
+                }
+              ],
+              "name": "Offset",
+              "match_name": "OLM RadialBlur-0023",
+              "property_index": 28,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 0,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Thickness"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Thickness",
+                  "match_name": "OLM RadialBlur-0024",
+                  "property_index": 29
+                }
+              ],
+              "name": "Thickness",
+              "match_name": "OLM RadialBlur-0024",
+              "property_index": 29,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 10,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                ""
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "",
+                  "match_name": "OLM RadialBlur-0025",
+                  "property_index": 30
+                }
+              ],
+              "name": "",
+              "match_name": "OLM RadialBlur-0025",
+              "property_index": 30,
+              "property_type": "PROPERTY",
+              "property_value_type": "NO_VALUE",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": null,
+              "value_read_method": null,
+              "error": "Error: After Effects error: Can not get or set a value from this property (matchname is “OLM RadialBlur-0025”). This property’s propertyValueType is PropertyValueType.NO_VALUE."
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Compositing Options",
+                "Effect Opacity"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Compositing Options",
+                  "match_name": "ADBE Effect Built In Params",
+                  "property_index": 31
+                },
+                {
+                  "name": "Effect Opacity",
+                  "match_name": "ADBE Effect Mask Opacity",
+                  "property_index": 2
+                }
+              ],
+              "name": "Effect Opacity",
+              "match_name": "ADBE Effect Mask Opacity",
+              "property_index": 2,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": true,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 100,
+              "value_read_method": "value"
+            },
+            {
+              "path": [
+                "OLM RadialBlur",
+                "Compositing Options",
+                "GPU Rendering"
+              ],
+              "path_full": [
+                {
+                  "name": "OLM RadialBlur",
+                  "match_name": "OLM RadialBlur",
+                  "property_index": 1
+                },
+                {
+                  "name": "Compositing Options",
+                  "match_name": "ADBE Effect Built In Params",
+                  "property_index": 31
+                },
+                {
+                  "name": "GPU Rendering",
+                  "match_name": "ADBE Force CPU GPU",
+                  "property_index": 3
+                }
+              ],
+              "name": "GPU Rendering",
+              "match_name": "ADBE Force CPU GPU",
+              "property_index": 3,
+              "property_type": "PROPERTY",
+              "property_value_type": "OneD",
+              "is_time_varying": false,
+              "num_keys": 0,
+              "can_set_expression": false,
+              "expression_enabled": false,
+              "enabled": true,
+              "active": true,
+              "value": 1,
+              "value_read_method": "value"
+            }
+          ]
+        }
+      ],
+      "before_effects_frame": "case_0009_before_effects.png",
+      "before_effects_scope": "selected_layer_all_effects_disabled",
+      "render_resolution_factor": [
+        1,
+        1
+      ]
+    }
+  ]
+}

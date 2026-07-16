@@ -168,6 +168,37 @@ class CompilerTests(unittest.TestCase):
                 self.assertIn("cdb/000_case_0001.cdb.in", names)
                 self.assertTrue(all(info.date_time == (2026, 1, 1, 0, 0, 0) for info in archive.infolist()))
 
+    def test_packaged_cdb_artifact_uses_request_bound_runtime(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package, archive_path = compile_witness(SPEC, Path(temp) / "package", Path(temp) / "package.zip")
+            contract = json.loads((package / "witness-contract.json").read_text(encoding="utf-8"))
+            launcher_path = package / "artifacts" / "run_witness.ps1"
+            launcher = launcher_path.read_text(encoding="utf-8")
+            queue = (package / "scripts" / "ae_witness_queue.jsx").read_text(encoding="utf-8")
+            request_manifest = json.loads((package / "request" / "request_manifest.json").read_text(encoding="utf-8"))
+
+            self.assertEqual(launcher_path.read_bytes(), LAUNCHER.read_bytes())
+            self.assertIn("$env:WINDOWS_WITNESS_REQUEST_ID = [string]$contract.request_id", launcher)
+            self.assertIn('launcherRequestId = env("WINDOWS_WITNESS_REQUEST_ID")', queue)
+            self.assertIn('requestManifest.request_id !== expectedRequestId', queue)
+            self.assertEqual(request_manifest["request_id"], contract["request_id"])
+            with zipfile.ZipFile(archive_path) as archive:
+                self.assertEqual(archive.read("artifacts/run_witness.ps1"), launcher_path.read_bytes())
+                self.assertEqual(archive.read("request/request_manifest.json"), (package / "request" / "request_manifest.json").read_bytes())
+
+    def test_compile_rejects_missing_request_manifest(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            fixture = Path(temp) / "fixture"
+            shutil.copytree(EXAMPLE, fixture)
+            (fixture / "request" / "request_manifest.json").unlink()
+            with self.assertRaisesRegex(SpecError, "missing request manifest"):
+                compile_witness(fixture / "witness-spec.json", fixture / "package", fixture / "package.zip")
+
+            collector_spec = self._collector_fixture(Path(temp) / "collector")
+            (collector_spec.parent / "request" / "request_manifest.json").unlink()
+            with self.assertRaisesRegex(SpecError, "missing request manifest"):
+                compile_witness(collector_spec, Path(temp) / "collector-package", Path(temp) / "collector.zip")
+
     def test_legacy_cdb_contract_remains_the_default_transport(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             package, _ = compile_witness(SPEC, Path(temp) / "package", Path(temp) / "package.zip")
@@ -205,6 +236,57 @@ class CompilerTests(unittest.TestCase):
             queue = (package / "scripts" / "ae_witness_queue.jsx").read_text(encoding="utf-8")
             self.assertIn("root = new Folder(root).fsName;", queue)
             self.assertIn('var requestDir = new Folder(root + "/request").fsName;', queue)
+
+    def test_generated_queue_binds_request_manifest_and_case_depth(self) -> None:
+        queue = _queue_source(load_spec(SPEC))
+        self.assertIn('parseJson(requestDir + "/request_manifest.json")', queue)
+        self.assertIn('requestManifest.request_id !== expectedRequestId', queue)
+        self.assertIn('launcherRequestId = env("WINDOWS_WITNESS_REQUEST_ID")', queue)
+        self.assertIn('launcher request_id does not match the compiled contract', queue)
+        self.assertIn('request_id=" + expectedRequestId', queue)
+        self.assertIn('$.setenv("OLM_AE_REQUEST_ID", expectedRequestId);', queue)
+        self.assertIn('$.setenv("OLM_AE_BITS_PER_CHANNEL", String(caseBitsPerChannel));', queue)
+        self.assertIn('app.project.bitsPerChannel = caseBitsPerChannel', queue)
+        self.assertIn('renderer bitsPerChannel does not match case contract', queue)
+
+    def test_rejects_case_without_explicit_bits_per_channel(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            fixture = Path(temp) / "fixture"
+            shutil.copytree(EXAMPLE, fixture)
+            path = fixture / "witness-spec.json"
+            spec = json.loads(path.read_text(encoding="utf-8"))
+            spec["cases"][0].pop("bits_per_channel")
+            path.write_text(json.dumps(spec), encoding="utf-8")
+            with self.assertRaisesRegex(SpecError, r"cases\[0\] missing keys: bits_per_channel"):
+                load_spec(path)
+
+    def test_rejects_case_depth_drift_from_project(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            fixture = Path(temp) / "fixture"
+            shutil.copytree(EXAMPLE, fixture)
+            path = fixture / "witness-spec.json"
+            spec = json.loads(path.read_text(encoding="utf-8"))
+            spec["cases"][0]["bits_per_channel"] = 8
+            path.write_text(json.dumps(spec), encoding="utf-8")
+            with self.assertRaisesRegex(SpecError, r"cases\[0\]\.bits_per_channel must match project.bits_per_channel"):
+                load_spec(path)
+
+    def test_all_canonical_witness_specs_compile(self) -> None:
+        specs_root = Path(__file__).resolve().parents[3] / "refs" / "windows_witness_specs"
+        specs = sorted(specs_root.glob("*/witness-spec.json"))
+        self.assertEqual(len(specs), 10)
+        with tempfile.TemporaryDirectory() as temp:
+            output_root = Path(temp)
+            for spec in specs:
+                with self.subTest(spec=spec.parent.name):
+                    package, archive = compile_witness(
+                        spec, output_root / spec.parent.name, output_root / f"{spec.parent.name}.zip"
+                    )
+                    self.assertTrue((package / "witness-contract.json").is_file())
+                    self.assertTrue(archive.is_file())
+                    contract = json.loads((package / "witness-contract.json").read_text(encoding="utf-8"))
+                    self.assertTrue(all(case["bits_per_channel"] == contract["project"]["bits_per_channel"]
+                                        for case in contract["cases"]))
 
     def test_windows_renderers_normalize_import_paths_for_ae(self) -> None:
         specs_root = Path(__file__).resolve().parents[3] / "refs" / "windows_witness_specs"
@@ -327,6 +409,7 @@ class CompilerTests(unittest.TestCase):
             for name, mutate in {
                 "missing_request_id": lambda manifest: manifest.pop("request_id", None),
                 "mismatched_request_id": lambda manifest: manifest.__setitem__("request_id", "wrong_request"),
+                "invalid_request_id": lambda manifest: manifest.__setitem__("request_id", "not valid"),
             }.items():
                 with self.subTest(name=name):
                     fixture = Path(temp) / name
@@ -364,6 +447,9 @@ class CompilerTests(unittest.TestCase):
         self.assertNotIn("-ArgumentList @('-m', '-r', $queuePath)", source)
         self.assertIn("$launchDir = Join-Path $env:PUBLIC", source)
         self.assertIn("Copy-Item -LiteralPath $queuePath -Destination $queueLaunch", source)
+        self.assertIn("$env:WINDOWS_WITNESS_REQUEST_ID = [string]$contract.request_id", source)
+        self.assertIn("set \"WINDOWS_WITNESS_REQUEST_ID=", source)
+        self.assertIn("queueBootstrapBinding.request_id -cne [string]$contract.request_id", source)
         self.assertIn("function ConvertTo-WindowsCommandLineArgument", source)
         self.assertIn("$directQueueLaunch = ([string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1') -or ($transportKind -eq 'in_process_collector')", source)
         self.assertIn("Join-WindowsCommandLine @($AfterFxPath)", source)

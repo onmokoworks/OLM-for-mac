@@ -66,9 +66,9 @@ def main() -> int:
         assert "'-cf', $bootstrapCdbScript, '--', $AfterFxPath" not in launcher
         assert "schtasks.exe /Create /TN $scheduledTaskName" in launcher
         assert "'-o', '-pd', '-g', '-G'" not in launcher
-        assert "$directQueueLaunch = [string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1'" in launcher
-        assert "Join-WindowsCommandLine @($AfterFxPath, '-m')" in launcher
-        assert "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)" in launcher
+        assert "$directQueueLaunch = ([string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1') -or ($transportKind -eq 'in_process_collector')" in launcher
+        assert "Join-WindowsCommandLine @($AfterFxPath)" in launcher
+        assert "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-ro', $normalizedQueuePath)" in launcher
         assert "$dispatchScheduledTaskName = '\\OLM_Witness_Dispatch_'" in launcher
         assert "schtasks.exe /Create /TN $dispatchScheduledTaskName" in launcher
         assert "schtasks.exe /Run /TN $dispatchScheduledTaskName" in launcher

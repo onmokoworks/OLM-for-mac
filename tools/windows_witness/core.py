@@ -171,8 +171,12 @@ def validate_spec(spec: dict[str, Any], base_dir: Path | None = None) -> None:
     seen_cases: set[str] = set()
     for index, case in enumerate(cases):
         where = f"cases[{index}]"
-        _keys(case, {"id", "cdb_template"}, {"id", "cdb_template", "template_values", "addresses", "exports"}, where)
+        _keys(case, {"id", "cdb_template", "bits_per_channel"},
+              {"id", "cdb_template", "bits_per_channel", "template_values", "addresses", "exports"}, where)
         _need(isinstance(case["id"], str) and ID_RE.fullmatch(case["id"]) is not None, f"{where}.id is invalid")
+        _need(case["bits_per_channel"] in (8, 16, 32), f"{where}.bits_per_channel must be 8, 16, or 32")
+        _need(case["bits_per_channel"] == project["bits_per_channel"],
+              f"{where}.bits_per_channel must match project.bits_per_channel")
         _need(case["id"] not in seen_cases, f"duplicate case id: {case['id']}")
         seen_cases.add(case["id"])
         _safe_relative(case["cdb_template"], f"{where}.cdb_template")
@@ -287,20 +291,20 @@ def validate_spec(spec: dict[str, Any], base_dir: Path | None = None) -> None:
         request_assets_dir = base_dir / assets["source"]
         _need(request_assets_dir.is_dir(), f"missing request assets: {request_assets_dir}")
         request_manifest = request_assets_dir / "request_manifest.json"
-        if request_manifest.is_file():
-            try:
-                embedded = json.loads(request_manifest.read_text(encoding="utf-8-sig"))
-            except (OSError, json.JSONDecodeError) as exc:
-                raise SpecError(f"could not read embedded request manifest {request_manifest}: {exc}") from exc
-            _need(isinstance(embedded, dict), f"{request_manifest} must be a JSON object")
-            _need(
-                isinstance(embedded.get("request_id"), str) and bool(embedded["request_id"]),
-                f"{request_manifest} must define request_id",
-            )
-            _need(
-                embedded["request_id"] == spec["request_id"],
-                f"{request_manifest} request_id must exactly match spec.request_id",
-            )
+        _need(request_manifest.is_file(), f"missing request manifest: {request_manifest}")
+        try:
+            embedded = json.loads(request_manifest.read_text(encoding="utf-8-sig"))
+        except (OSError, json.JSONDecodeError) as exc:
+            raise SpecError(f"could not read embedded request manifest {request_manifest}: {exc}") from exc
+        _need(isinstance(embedded, dict), f"{request_manifest} must be a JSON object")
+        _need(
+            isinstance(embedded.get("request_id"), str) and ID_RE.fullmatch(embedded["request_id"]) is not None,
+            f"{request_manifest} request_id is invalid",
+        )
+        _need(
+            embedded["request_id"] == spec["request_id"],
+            f"{request_manifest} request_id must exactly match spec.request_id",
+        )
 
 
 def load_spec(path: Path) -> dict[str, Any]:

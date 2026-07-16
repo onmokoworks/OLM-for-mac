@@ -24,7 +24,7 @@
   "request_assets": {"source": "request"},
   "cdb": {"armed_marker": "KK_MODE2_WRITEBACK_BREAKPOINTS_READY", "arm_timeout_seconds": 60, "capture_timeout_seconds": 300},
   "cases": [{
-    "id": "kk_vertical_len50_brightness1_strength100",
+    "id": "kk_vertical_len50_brightness1_strength100", "bits_per_channel": 32,
     "cdb_template": "mode2_compose_writeback.cdb.in",
     "template_values": {"witness_id": "olmkirakira-mode2-compose-writeback-v1"},
     "addresses": {

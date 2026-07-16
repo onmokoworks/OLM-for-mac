@@ -1,0 +1,35 @@
+{
+  "kind": "olm_ae_pixel_validation_request",
+  "request_id": "olmradialblur_case0009_fullframe_postnorm_typed_common_core_20260713",
+  "created_at": "2026-07-01T00:00:00Z",
+  "reference_manifest": "reference_manifest.json",
+  "reference_profile": "windows-software-single-case",
+  "effect_name": "OLM RadialBlur",
+  "effect_match_name": "OLM RadialBlur",
+  "input_dir": "input",
+  "expected_dir": "expected",
+  "candidate_dir_hint": "candidate",
+  "gate_kind": "host_smoke_pixel_tolerance",
+  "cases": [
+    {
+      "id": "case_0009",
+      "before_effects_frame": "case_0009_before_effects.png",
+      "frame": "case_0009.png"
+    }
+  ],
+  "threshold_groups": [
+    {
+      "name": "single_case_exact",
+      "case_ids": [
+        "case_0009"
+      ],
+      "max_diff": 0,
+      "mean_diff": 0.0,
+      "nonzero_px_percent": 0.0
+    }
+  ],
+  "notes": [
+    "Single-case OLMRadialBlur probe request.",
+    "Use with run_ae_single_case.py and OLMRADIALBLUR_DEBUG_POINTS."
+  ]
+}

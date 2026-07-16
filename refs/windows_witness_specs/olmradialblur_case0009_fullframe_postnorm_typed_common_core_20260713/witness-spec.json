@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "Common-core Windows OLMRadialBlur case_0009 full-frame post-normalization typed witness.",
+  "description": "Common-core Windows OLMRadialBlur case_0009 full-frame post-normalization typed witness. Renderer provenance: scripts/ae_render_single_case.jsx. Request provenance: handoff/ae_pixel_validation_20260618/requests/ae_single_radialblur_case_0009_probe_20260701, copied with binary bytes preserved; only request_manifest.request_id is rewritten to this spec request_id.",
   "request_id": "olmradialblur_case0009_fullframe_postnorm_typed_common_core_20260713",
   "run_id_prefix": "rb9fulltyped",
   "queue": {
@@ -39,6 +39,7 @@
   "cases": [
     {
       "id": "case_0009",
+      "bits_per_channel": 8,
       "cdb_template": "fullframe_postnorm_typed.cdb.in",
       "template_values": {
         "witness_id": "olmradialblur-case0009-fullframe-postnorm-common-core-v1",

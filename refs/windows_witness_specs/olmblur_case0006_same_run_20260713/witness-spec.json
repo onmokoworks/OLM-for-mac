@@ -34,6 +34,7 @@
   "cases": [
     {
       "id": "olmblur__case_0006",
+      "bits_per_channel": 16,
       "cdb_template": "probe.cdb.in",
       "template_values": {
         "witness_id": "olmblur-case0006-rgb16-common-core-v1"

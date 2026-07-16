@@ -34,6 +34,7 @@
   "cases": [
     {
       "id": "case_0001",
+      "bits_per_channel": 8,
       "cdb_template": "typed_boundary.cdb.in",
       "addresses": {
         "pf8": "0x1170870",
@@ -53,6 +54,7 @@
     },
     {
       "id": "case_0015",
+      "bits_per_channel": 8,
       "cdb_template": "typed_boundary.cdb.in",
       "addresses": {
         "pf8": "0x1170870",
@@ -72,6 +74,7 @@
     },
     {
       "id": "case_0029",
+      "bits_per_channel": 8,
       "cdb_template": "typed_boundary.cdb.in",
       "addresses": {
         "pf8": "0x1170870",

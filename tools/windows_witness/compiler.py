@@ -10,14 +10,10 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
-from .core import SpecError, canonical_json, deterministic_zip, sha256_file, validate_spec
+from .core import ID_RE, SpecError, canonical_json, deterministic_zip, sha256_file, validate_spec
 
 
 HERE = Path(__file__).resolve().parent
-LEGACY_CDB_RUNTIME = (
-    HERE.parents[1]
-    / "refs/runtime_trace_packages/windows_witness_olmblur_case0006_20260713/artifacts/run_witness.ps1"
-)
 COLLECTOR_PLACEHOLDER_RE = re.compile(r"\{\{([^{}]+)\}\}")
 COLLECTOR_STATIC_PLACEHOLDERS = {"RUN_ID", "AE_PID", "CASE_ID", "OUTPUT_DIR"}
 RUNTIME_FILES = {
@@ -27,7 +23,11 @@ RUNTIME_FILES = {
 
 
 def _queue_source(contract: dict[str, Any]) -> str:
-    case_ids = json.dumps([case["id"] for case in contract["cases"]], ensure_ascii=True)
+    cases = json.dumps(
+        [{"id": case["id"], "bits_per_channel": case["bits_per_channel"]} for case in contract["cases"]],
+        ensure_ascii=True,
+    )
+    request_id = json.dumps(contract["request_id"], ensure_ascii=True)
     environment = json.dumps(contract["project"].get("environment", {}), ensure_ascii=True, sort_keys=True)
     return f'''/* Generated serial AE witness queue. Common behavior; probes live in CDB templates. */
 (function () {{
@@ -43,32 +43,49 @@ def _queue_source(contract: dict[str, Any]) -> str:
         var value = file.read(); file.close();
         return value;
     }}
+    function parseJson(path) {{ return eval("(" + read(path) + ")"); }}
     var bootstrapPath = File($.fileName).parent.fsName + "/queue_bootstrap.log";
     var work = env("WINDOWS_WITNESS_WORK_ROOT");
     var runId = env("WINDOWS_WITNESS_RUN_ID");
+    var launcherRequestId = env("WINDOWS_WITNESS_REQUEST_ID");
     var root = env("WINDOWS_WITNESS_PACKAGE_ROOT") || File($.fileName).parent.parent.fsName;
     root = new Folder(root).fsName;
     var queueSha256 = env("WINDOWS_WITNESS_QUEUE_SHA256");
+    var expectedRequestId = {request_id};
+    if (!launcherRequestId || launcherRequestId !== expectedRequestId) {{
+        throw new Error("launcher request_id does not match the compiled contract");
+    }}
+    var requestDir = new Folder(root + "/request").fsName;
+    var requestManifest = parseJson(requestDir + "/request_manifest.json");
+    if (!requestManifest || requestManifest.request_id !== expectedRequestId) {{
+        throw new Error("request manifest request_id does not match the compiled contract");
+    }}
     var bootstrapTempPath = bootstrapPath + ".tmp";
     write(bootstrapTempPath, "WITNESS_QUEUE_BOOTSTRAP\\n" +
         "run_id=" + runId + "\\n" +
         "work=" + work + "\\n" +
         "root=" + root + "\\n" +
+        "request_id=" + expectedRequestId + "\\n" +
         "queue_sha256=" + queueSha256 + "\\n", false);
     if (!(new File(bootstrapTempPath)).rename("queue_bootstrap.log")) {{
         throw new Error("could not publish queue bootstrap marker");
     }}
-    var requestDir = new Folder(root + "/request").fsName;
-    var cases = {case_ids};
+    var cases = {cases};
     var extraEnvironment = {environment};
     var rendererSource = read(root + "/scripts/renderer.jsx");
     if (!work || !runId || !root || !queueSha256) {{ throw new Error("WINDOWS_WITNESS queue binding is required"); }}
     var queueLog = work + "/queue.log";
     write(queueLog, "WITNESS_QUEUE_START run_id=" + runId + "\\n", false);
     for (var i = 0; i < cases.length; i++) {{
-        var caseId = cases[i];
+        var caseId = cases[i].id;
+        var caseBitsPerChannel = Number(cases[i].bits_per_channel);
+        if (caseBitsPerChannel !== 8 && caseBitsPerChannel !== 16 && caseBitsPerChannel !== 32) {{
+            throw new Error("invalid case bits_per_channel for " + caseId);
+        }}
         $.setenv("OLM_AE_REQUEST_DIR", requestDir);
+        $.setenv("OLM_AE_REQUEST_ID", expectedRequestId);
         $.setenv("OLM_AE_CASE_ID", caseId);
+        $.setenv("OLM_AE_BITS_PER_CHANNEL", String(caseBitsPerChannel));
         $.setenv("OLM_AE_OUTPUT_DIR", work + "/exports/" + caseId);
         $.setenv("OLM_AE_LOG_PATH", work + "/ae_" + caseId + ".log");
         $.setenv("OLM_AE_RESULT_JSON", work + "/ae_result_" + caseId + ".json");
@@ -76,6 +93,7 @@ def _queue_source(contract: dict[str, Any]) -> str:
         $.setenv("OLM_AE_CONTINUE_MARKER", work + "/continue_" + caseId + ".marker");
         $.setenv("OLM_AE_KEEP_OPEN", i === cases.length - 1 ? "0" : "1");
         $.setenv("OLM_AE_FORCE_NEW_PROJECT", i === 0 ? "1" : "0");
+        if (app.project) {{ app.project.bitsPerChannel = caseBitsPerChannel; }}
         for (var key in extraEnvironment) {{
             if (extraEnvironment.hasOwnProperty(key)) {{ $.setenv(key, String(extraEnvironment[key])); }}
         }}
@@ -83,6 +101,15 @@ def _queue_source(contract: dict[str, Any]) -> str:
         // `-r` already owns AE's script slot. evalFile would be rejected as a
         // second script unless AE is launched with an override flag.
         eval(rendererSource);
+        var result = parseJson(work + "/ae_result_" + caseId + ".json");
+        var observedBitsPerChannel = result.project_bits_per_channel;
+        if (observedBitsPerChannel === undefined && app.project) {{
+            observedBitsPerChannel = app.project.bitsPerChannel;
+        }}
+        if (Number(observedBitsPerChannel) !== caseBitsPerChannel) {{
+            throw new Error("renderer bitsPerChannel does not match case contract for " + caseId);
+        }}
+        if (app.project) {{ app.project.bitsPerChannel = caseBitsPerChannel; }}
         write(queueLog, "WITNESS_CASE_END run_id=" + runId + " case_id=" + caseId + "\\n", true);
     }}
     write(queueLog, "WITNESS_QUEUE_END run_id=" + runId + "\\n", true);
@@ -236,10 +263,7 @@ def compile_witness(spec_path: Path, output_dir: Path, zip_path: Path | None = N
     (output_dir / "cdb").mkdir()
     shutil.copy2(base / spec["renderer"]["source"], output_dir / "scripts" / "renderer.jsx")
     for destination, source in RUNTIME_FILES.items():
-        if destination == "artifacts/run_witness.ps1" and transport.get("kind", "cdb") == "cdb":
-            (output_dir / destination).write_bytes(_legacy_cdb_runtime(source))
-        else:
-            shutil.copy2(source, output_dir / destination)
+        shutil.copy2(source, output_dir / destination)
     (output_dir / "scripts" / "ae_witness_queue.jsx").write_text(_queue_source(contract), encoding="utf-8", newline="\n")
     (output_dir / "README.md").write_text(_package_readme(contract), encoding="utf-8", newline="\n")
 
@@ -281,13 +305,6 @@ def compile_witness(spec_path: Path, output_dir: Path, zip_path: Path | None = N
     (output_dir / "package-manifest.json").write_bytes(canonical_json(manifest))
     deterministic_zip(output_dir, archive)
     return output_dir, archive
-
-
-def _legacy_cdb_runtime(source: Path) -> bytes:
-    """Keep the pre-transport CDB artifact byte-identical for existing packages."""
-    if not LEGACY_CDB_RUNTIME.is_file():
-        raise SpecError(f"canonical legacy CDB runtime is missing: {LEGACY_CDB_RUNTIME}")
-    return LEGACY_CDB_RUNTIME.read_bytes()
 
 
 def _load_spec_for_compiler(spec_path: Path) -> dict[str, Any]:
@@ -372,13 +389,16 @@ def _validate_collector_transport(spec: dict[str, Any], base: Path) -> None:
     if not assets.is_dir():
         raise SpecError(f"missing request assets: {assets}")
     manifest = assets / "request_manifest.json"
-    if manifest.is_file():
-        try:
-            embedded = json.loads(manifest.read_text(encoding="utf-8-sig"))
-        except (OSError, json.JSONDecodeError) as exc:
-            raise SpecError(f"could not read embedded request manifest {manifest}: {exc}") from exc
-        if not isinstance(embedded, dict) or embedded.get("request_id") != spec.get("request_id"):
-            raise SpecError(f"{manifest} request_id must exactly match spec.request_id")
+    if not manifest.is_file():
+        raise SpecError(f"missing request manifest: {manifest}")
+    try:
+        embedded = json.loads(manifest.read_text(encoding="utf-8-sig"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise SpecError(f"could not read embedded request manifest {manifest}: {exc}") from exc
+    if not isinstance(embedded, dict) or not isinstance(embedded.get("request_id"), str) or ID_RE.fullmatch(embedded["request_id"]) is None:
+        raise SpecError(f"{manifest} request_id is invalid")
+    if embedded["request_id"] != spec.get("request_id"):
+        raise SpecError(f"{manifest} request_id must exactly match spec.request_id")
 
 
 def main(argv: list[str] | None = None) -> int:

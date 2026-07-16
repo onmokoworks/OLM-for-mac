@@ -30,6 +30,7 @@
   "cases": [
     {
       "id": "case_0001",
+      "bits_per_channel": 16,
       "cdb_template": "probe.cdb.in",
       "template_values": {"sample": "left"},
       "addresses": {"entry": "0x2280"},
@@ -37,6 +38,7 @@
     },
     {
       "id": "case_0002",
+      "bits_per_channel": 16,
       "cdb_template": "probe.cdb.in",
       "template_values": {"sample": "right"},
       "addresses": {"entry": "0x2280"},
