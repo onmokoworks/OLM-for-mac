@@ -1,0 +1,152 @@
+{
+  "schema": 1,
+  "kind": "olmdirectionalblur_actual_populate_checkpoint",
+  "status": "pass",
+  "scope": "Mac-local Unicorn natural angle-0 8bpc callback attempt; first-cell raw float capture",
+  "claim_scope": "Actual AEX populate callback only; no Windows or AE-exact claim",
+  "provenance": {
+    "aex": "plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "fixture": "tools/emulation/dblur_fullrender_host_fixture_20260711.py",
+    "fixture_sha256": "e3216aa5a213efaf2129dd11bf9c4a5e6e4a5c162d034c607df6e0bda1fba80a",
+    "source": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png",
+    "source_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4"
+  },
+  "actual_callback": {
+    "entry": "0x180006980",
+    "fixture_model_populate_replaced": true,
+    "minimum_abi": "(params, x=RDX, y=R8, source_pixel=R9)",
+    "captured": {
+      "params": "0xf0f6e60",
+      "xy": [
+        0,
+        0
+      ],
+      "source_pixel_argb8": [
+        255,
+        255,
+        0,
+        0
+      ],
+      "callback_attempt": 2,
+      "callback_instructions": 35,
+      "plane": {
+        "source_base_0x8078": "0x2002ac90",
+        "writer_base_0x8090": "0x2002d6d0",
+        "width": 26,
+        "height": 26,
+        "row0": 5,
+        "col0": 5,
+        "cell_index": 135,
+        "source_cell_address": "0x2002b500",
+        "writer_cell_address": "0x2002df40",
+        "cell_bytes": 16
+      },
+      "raw_source_rgba_f32": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "raw_writer_rgba_f32_before_downstream_copy": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "callback_attempts": 2
+  },
+  "natural_fixture": {
+    "status": "blocked",
+    "fixture_return": 0,
+    "blocked": {
+      "reason": "StopAfterActualPopulate",
+      "message": "checkpoint stop after actual populate callback",
+      "last_rip": "0x180006a1d",
+      "completed_checkpoints": [
+        "rotate"
+      ],
+      "required": "continue from the real PF Iterate8 populate return through AEX rotate, rowdriver, normalization, rotateback 0x180005628, and output callback; do not synthesize missing stages"
+    },
+    "callbacks_before_stop": [
+      {
+        "callback": "0x180006980",
+        "params": "0xf0f6e60",
+        "start": 0,
+        "end": 16,
+        "regs": [
+          "0x40000060",
+          "0x0",
+          "0x10",
+          "0x400002f0"
+        ],
+        "return_rip": "0x1800067c8",
+        "raw_stack": {
+          "0x20": "0x180006567",
+          "0x28": "0x4000041c",
+          "0x30": "0xf0f6e60",
+          "0x38": "0x180006980",
+          "0x40": "0x400003f0",
+          "0x48": "0x40000000",
+          "0x50": "0x0",
+          "0x58": "0x0",
+          "0x60": "0x0"
+        },
+        "source_world": "0x400002f0",
+        "rect": "0x4000041c",
+        "area_words": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "area_bounds": {
+          "start": 0,
+          "end": 16,
+          "width": 26,
+          "height": 26
+        },
+        "dst_world": "0x400003f0",
+        "refcon": "0xf0f6e60",
+        "wrapper_call": {
+          "rip": "0x1800067c5",
+          "stack_slots_at_callback": {
+            "0x20": "0x180006567",
+            "0x28": "0x4000041c",
+            "0x30": "0xf0f6e60",
+            "0x38": "0x180006980",
+            "0x40": "0x400003f0",
+            "0x48": "0x40000000",
+            "0x50": "0x0",
+            "0x58": "0x0",
+            "0x60": "0x0"
+          }
+        },
+        "param_stride": 26,
+        "param_height": 26
+      }
+    ],
+    "checkpoints": {
+      "rotate": {
+        "callsite": "0x18000528a"
+      }
+    }
+  },
+  "nearest_blocker": {
+    "kind": "intentional_checkpoint_stop",
+    "reason": "checkpoint stop after actual populate callback",
+    "continuation_tested": false,
+    "first_unresolved_boundary": "PF Iterate8 continuation after actual callback; no synthetic recovery",
+    "fixture_report_reason": "StopAfterActualPopulate"
+  },
+  "fail_closed": {
+    "status": "pass",
+    "actual_population_owner": "0x180006980",
+    "production_source_edited": false,
+    "ledger_edited": false,
+    "windows_values_fabricated": false,
+    "ae_exact_claim": false
+  },
+  "command": "python3 tools/emulation/test_olmdirectionalblur_actual_populate_checkpoint_20260717.py"
+}

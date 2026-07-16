@@ -1,0 +1,235 @@
+{
+  "cases_0x42": [
+    {
+      "ada_instructions": 175065,
+      "c280": {
+        "count": 2,
+        "output_pointer": 536876752,
+        "returned_pointer": 536876752,
+        "scale_fixed": [
+          65536,
+          65536
+        ],
+        "vertices": [
+          {
+            "rgba": [
+              0.25,
+              0.125,
+              0.0,
+              1.0
+            ],
+            "weight": 0.24999845027923584
+          },
+          {
+            "rgba": [
+              0.25,
+              0.125,
+              0.0,
+              1.0
+            ],
+            "weight": 0.24999845027923584
+          }
+        ]
+      },
+      "class_plane_sha256": "087610790b54818d2a3623478246557105a877d84c309ce6dbcad584eda8a7e0",
+      "classifier_index": 66,
+      "gate": 1,
+      "multiplier": 1.0,
+      "raw": 0,
+      "weight_calls": [
+        {
+          "p1": 1207178.375,
+          "p2": 7,
+          "p3": 0.25
+        },
+        {
+          "p1": 1207178.375,
+          "p2": 7,
+          "p3": 0.25
+        }
+      ]
+    },
+    {
+      "ada_instructions": 175065,
+      "c280": {
+        "count": 2,
+        "output_pointer": 536876752,
+        "returned_pointer": 536876752,
+        "scale_fixed": [
+          65536,
+          65536
+        ],
+        "vertices": [
+          {
+            "rgba": [
+              0.25,
+              0.125,
+              0.0,
+              1.0
+            ],
+            "weight": 0.24999845027923584
+          },
+          {
+            "rgba": [
+              0.25,
+              0.125,
+              0.0,
+              1.0
+            ],
+            "weight": 0.24999845027923584
+          }
+        ]
+      },
+      "class_plane_sha256": "087610790b54818d2a3623478246557105a877d84c309ce6dbcad584eda8a7e0",
+      "classifier_index": 66,
+      "gate": 1,
+      "multiplier": 1.0,
+      "raw": 1,
+      "weight_calls": [
+        {
+          "p1": 1207178.375,
+          "p2": 7,
+          "p3": 0.25
+        },
+        {
+          "p1": 1207178.375,
+          "p2": 7,
+          "p3": 0.25
+        }
+      ]
+    }
+  ],
+  "claims_not_made": [
+    "No portable 0x5a c280 equivalence",
+    "No Windows/AE execution claim",
+    "No production Mac source or ledger edit"
+  ],
+  "comparisons_0x42": [
+    {
+      "count": 2,
+      "raw_weights_equal": true,
+      "status": "exact",
+      "vertices": [
+        {
+          "actual_rgba": [
+            0.25,
+            0.125,
+            0.0,
+            1.0
+          ],
+          "actual_weight_bits": "98ff7f3e",
+          "expected_rgba": [
+            0.25,
+            0.125,
+            0.0,
+            1.0
+          ],
+          "expected_weight": 0.24999845027923584,
+          "expected_weight_bits": "98ff7f3e",
+          "index": 0,
+          "inputs": {
+            "p1": 1207178.375,
+            "p2": 7,
+            "p3": 0.25
+          },
+          "rgba_raw_float_bits": true
+        },
+        {
+          "actual_rgba": [
+            0.25,
+            0.125,
+            0.0,
+            1.0
+          ],
+          "actual_weight_bits": "98ff7f3e",
+          "expected_rgba": [
+            0.25,
+            0.125,
+            0.0,
+            1.0
+          ],
+          "expected_weight": 0.24999845027923584,
+          "expected_weight_bits": "98ff7f3e",
+          "index": 1,
+          "inputs": {
+            "p1": 1207178.375,
+            "p2": 7,
+            "p3": 0.25
+          },
+          "rgba_raw_float_bits": true
+        }
+      ]
+    },
+    {
+      "count": 2,
+      "raw_weights_equal": true,
+      "status": "exact",
+      "vertices": [
+        {
+          "actual_rgba": [
+            0.25,
+            0.125,
+            0.0,
+            1.0
+          ],
+          "actual_weight_bits": "98ff7f3e",
+          "expected_rgba": [
+            0.25,
+            0.125,
+            0.0,
+            1.0
+          ],
+          "expected_weight": 0.24999845027923584,
+          "expected_weight_bits": "98ff7f3e",
+          "index": 0,
+          "inputs": {
+            "p1": 1207178.375,
+            "p2": 7,
+            "p3": 0.25
+          },
+          "rgba_raw_float_bits": true
+        },
+        {
+          "actual_rgba": [
+            0.25,
+            0.125,
+            0.0,
+            1.0
+          ],
+          "actual_weight_bits": "98ff7f3e",
+          "expected_rgba": [
+            0.25,
+            0.125,
+            0.0,
+            1.0
+          ],
+          "expected_weight": 0.24999845027923584,
+          "expected_weight_bits": "98ff7f3e",
+          "index": 1,
+          "inputs": {
+            "p1": 1207178.375,
+            "p2": 7,
+            "p3": 0.25
+          },
+          "rgba_raw_float_bits": true
+        }
+      ]
+    }
+  ],
+  "grounding": {
+    "aex_owner": "FUN_180013630@0x180013630",
+    "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "half": 0.5,
+    "one": 1.0,
+    "rounding": "SSE scalar single precision after each arithmetic instruction"
+  },
+  "next_family": {
+    "attempted": true,
+    "classifier_index": "0x5a",
+    "owner": "FUN_18000ec40@0x18000ec40",
+    "reason": "The 0x5a cardinal family reaches a new leaf/predicate composition not independently grounded in this follow-up; no empty geometry or weight equivalence is guessed.",
+    "status": "stopped_first_new_owner"
+  },
+  "scope": "fresh actual AEX c280 for all 30 fixtures; independent bit-precise FUN_180013630 comparison for both 0x42 cases",
+  "verdict": "PASS_EXACT_C280_0X42_WEIGHT_ORACLE_STOPPED_AT_0X5A_OWNER"
+}

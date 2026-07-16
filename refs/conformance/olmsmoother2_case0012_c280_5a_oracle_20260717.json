@@ -1,0 +1,78 @@
+{
+  "cases_0x5a": [
+    {
+      "ada_instructions": 175289,
+      "c280": {
+        "count": 0,
+        "output_pointer": 536876752,
+        "returned_pointer": 536876752,
+        "scale_fixed": [
+          65536,
+          65536
+        ],
+        "vertices": []
+      },
+      "class_plane_sha256": "a7dfa814e01529d8afd5c0420992b0103301b6dbe8d513b687f39d985ea0bef6",
+      "classifier_index": 90,
+      "gate": 1,
+      "multiplier": 0.0,
+      "raw": 0,
+      "weight_calls": []
+    },
+    {
+      "ada_instructions": 175289,
+      "c280": {
+        "count": 0,
+        "output_pointer": 536876752,
+        "returned_pointer": 536876752,
+        "scale_fixed": [
+          65536,
+          65536
+        ],
+        "vertices": []
+      },
+      "class_plane_sha256": "a7dfa814e01529d8afd5c0420992b0103301b6dbe8d513b687f39d985ea0bef6",
+      "classifier_index": 90,
+      "gate": 1,
+      "multiplier": 0.0,
+      "raw": 1,
+      "weight_calls": []
+    }
+  ],
+  "claims_not_made": [
+    "No non-empty 0x5a geometry claim",
+    "No Windows/AE execution claim",
+    "No production Mac source or ledger edit"
+  ],
+  "comparisons_0x5a": [
+    {
+      "polygon_count": 0,
+      "rgba_raw_float_bits": true,
+      "status": "exact_empty",
+      "vertex_order": [],
+      "weights_raw_float_bits": true
+    },
+    {
+      "polygon_count": 0,
+      "rgba_raw_float_bits": true,
+      "status": "exact_empty",
+      "vertex_order": [],
+      "weights_raw_float_bits": true
+    }
+  ],
+  "first_new_owner": null,
+  "grounding": {
+    "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "owner": "FUN_18000ec40@0x18000ec40",
+    "path": [
+      "FUN_18000e0e0@0x18000e0e0",
+      "FUN_18000dbd0@0x18000dbd0",
+      "FUN_18000d230@0x18000d230",
+      "FUN_18000e430@0x18000e430",
+      "FUN_1800104d0@0x1800104d0"
+    ],
+    "scalar_contract": "e430/13630 weight path is not entered for either 0x5a fixture"
+  },
+  "scope": "fresh actual AEX c280 over the natural matrix; independent FUN_18000ec40 empty-path oracle for both 0x5a fixtures",
+  "verdict": "PASS_EXACT_C280_0X5A_EMPTY_PATH_ORACLE"
+}

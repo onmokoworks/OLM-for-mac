@@ -1,0 +1,260 @@
+{
+  "schema": 1,
+  "kind": "olmdirectionalblur_natural_writer_owner_checkpoint",
+  "status": "pass",
+  "scope": "Mac-local Unicorn natural 8bpc caller at requested angle 0; bounded writer-entry ownership only",
+  "claim_scope": "No Windows live values and no AE-exact claim",
+  "provenance": {
+    "aex": "plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "fixture": "tools/emulation/dblur_fullrender_host_fixture_20260711.py",
+    "fixture_sha256": "e3216aa5a213efaf2129dd11bf9c4a5e6e4a5c162d034c607df6e0bda1fba80a",
+    "source": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png",
+    "source_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4"
+  },
+  "natural_path": {
+    "requested_angle_degrees": 0,
+    "observed_internal_angle_radians": 1.5707963705062866,
+    "upstream_callsites": [
+      "0x18000528a",
+      "0x180005665"
+    ],
+    "wrapper": "0x180006700",
+    "iterate_callbacks": [
+      "0x180006980",
+      "0x180006b30"
+    ],
+    "iterate_area": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "checkpoints": {
+      "rotate": {
+        "callsite": "0x18000528a"
+      },
+      "first_iterate": {
+        "callback": "0x180006980",
+        "area_words": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "refcon": "0xf0f6e60"
+      },
+      "rowdriver": {
+        "entry": "0x1800038d0"
+      },
+      "rotateback": {
+        "callsite": "0x180005628"
+      },
+      "final_host_output": {
+        "callback": "0x180006b30",
+        "area_words": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "refcon": "0xf0f6e60"
+      }
+    }
+  },
+  "ownership": {
+    "owner": "output Iterate8 callback refcon at [RSP+0x30]; its +0x8090 field owns the writer-entry float buffer",
+    "output_iterate_refcon": "0xf0f6e60",
+    "output_iterate_stack_slot": "[RSP+0x30]",
+    "writer_entry_samples": [
+      {
+        "xy": [
+          0,
+          0
+        ],
+        "params": "0xf0f6e60",
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "float_cell_index": 135,
+        "float_byte_offset": 2160,
+        "writer_entry_rgba_f32": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "writer_entry_argb8": [
+          255,
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "xy": [
+          1,
+          0
+        ],
+        "params": "0xf0f6e60",
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "float_cell_index": 136,
+        "float_byte_offset": 2176,
+        "writer_entry_rgba_f32": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "writer_entry_argb8": [
+          255,
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "xy": [
+          2,
+          0
+        ],
+        "params": "0xf0f6e60",
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "float_cell_index": 137,
+        "float_byte_offset": 2192,
+        "writer_entry_rgba_f32": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "writer_entry_argb8": [
+          255,
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "xy": [
+          3,
+          0
+        ],
+        "params": "0xf0f6e60",
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "float_cell_index": 138,
+        "float_byte_offset": 2208,
+        "writer_entry_rgba_f32": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "writer_entry_argb8": [
+          255,
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "xy": [
+          4,
+          0
+        ],
+        "params": "0xf0f6e60",
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "float_cell_index": 139,
+        "float_byte_offset": 2224,
+        "writer_entry_rgba_f32": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "writer_entry_argb8": [
+          255,
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "xy": [
+          5,
+          0
+        ],
+        "params": "0xf0f6e60",
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "float_cell_index": 140,
+        "float_byte_offset": 2240,
+        "writer_entry_rgba_f32": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "writer_entry_argb8": [
+          255,
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "xy": [
+          6,
+          0
+        ],
+        "params": "0xf0f6e60",
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "float_cell_index": 141,
+        "float_byte_offset": 2256,
+        "writer_entry_rgba_f32": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "writer_entry_argb8": [
+          255,
+          255,
+          0,
+          0
+        ]
+      }
+    ],
+    "writer": "0x180006b30",
+    "upstream_producer": "unresolved beyond this refcon; post-rotateback internal context is a distinct object"
+  },
+  "fail_closed": {
+    "status": "pass",
+    "natural_fixture_status": "blocked",
+    "natural_fixture_blocker": "iterate8-suite-abi",
+    "production_source_edited": false,
+    "ledger_edited": false,
+    "windows_values_fabricated": false,
+    "ae_exact_claim": false,
+    "bounded_stop": "real 0x180006b30 writer invoked per natural output callback; no AE host claim"
+  },
+  "command": "python3 tools/emulation/test_olmdirectionalblur_natural_writer_owner_20260717.py"
+}

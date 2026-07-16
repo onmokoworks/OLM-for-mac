@@ -1,0 +1,142 @@
+{
+  "claims_not_made": [
+    "No Windows/AE execution claim",
+    "No production Mac source or ledger claim"
+  ],
+  "contract": {
+    "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "arguments": [
+      "RCX=source_fplane",
+      "RDX=class_fplane",
+      "R8=rect",
+      "R9=config"
+    ],
+    "config": {
+      "+0x1c": "int threshold numerator; ae10 divides by DAT_180022dd0 then adds bias",
+      "+0x70": "byte gate for neighbor hysteresis branch",
+      "+0x74": "float multiplier applied to hysteresis comparison"
+    },
+    "entry": "FUN_18000ada0@0x18000ada0",
+    "evidence": {
+      "assembly": "disasm/OLMSmoother2.aex.asm.txt",
+      "decomp": "decomp/OLMSmoother2.aex.c.txt"
+    },
+    "fplane": {
+      "base_offset": "0x00",
+      "class_pixel_bytes": 4,
+      "height_offset": "0x0c",
+      "size_bytes": 24,
+      "source_pixel_bytes": 16,
+      "stride_offset": "0x10",
+      "stride_unit": "bytes per row",
+      "width_offset": "0x08"
+    },
+    "rect": {
+      "end_exclusive": true,
+      "layout": "int32[4]",
+      "order": [
+        "left",
+        "top",
+        "right",
+        "bottom"
+      ]
+    }
+  },
+  "oracle": {
+    "class_stride": 24,
+    "exclusive_endpoints_proved": true,
+    "rect": [
+      1,
+      1,
+      4,
+      3
+    ],
+    "source_stride": 96,
+    "untouched_pixels": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        3
+      ],
+      [
+        4,
+        3
+      ]
+    ],
+    "visited_pixels": [
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        3,
+        2
+      ]
+    ]
+  },
+  "scope": "local actual-AEX/decomp contract plus independent padded-stride rectangle oracle",
+  "verdict": "PASS_FAIL_CLOSED_FUN_18000ADA0_ENTRY_CONTRACT_ORACLE"
+}

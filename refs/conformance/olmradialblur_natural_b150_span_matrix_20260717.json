@@ -1,0 +1,4345 @@
+{
+  "claim_boundary": "bounded Mac Unicorn actual-AEX natural reader-owned B150 span matrix; no Windows, After Effects exact, or production claim",
+  "classification": "bounded-natural-b150-span-2-3-and-inner-1-oracle-match",
+  "gates": {
+    "inner_span_1": true,
+    "outer_matrix_generalizes": true,
+    "outer_span_2": true,
+    "outer_span_3": true
+  },
+  "inner_reachability": {
+    "observed_spans": [
+      0,
+      1
+    ],
+    "reader_value_observed": true,
+    "requested_inner_edge_fade": 1,
+    "status": "reachable"
+  },
+  "kind": "olmradialblur_natural_b150_span_matrix_20260717",
+  "oracle": {
+    "comparison": "raw little-endian float32 words",
+    "output": "natural cell source RGBA=(0,0,0,1), source-alpha=1, scale-destination=0; per-cell gate and scalar source-alpha writeback",
+    "table": "FUN_18000B680 scalar expf path: f32(n*n*(1/9)); f32((v+v)+1e-5); f32(exp(f32(-i*i/v)))"
+  },
+  "provenance": {
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "checkpoint": "refs/conformance/olmradialblur_natural_b150_checkpoint_20260717.json",
+    "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+    "manifest_sha256": "7ec542fad64cc210474c6309c3e48c9f12bd0885f54d31943da873d94024b565",
+    "pinned": {
+      "aex": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "input": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+      "manifest": "7ec542fad64cc210474c6309c3e48c9f12bd0885f54d31943da873d94024b565"
+    }
+  },
+  "scenarios": [
+    {
+      "b150_entries": 1,
+      "b150_returns": 1,
+      "expected_spans": [
+        2,
+        0
+      ],
+      "gates": {
+        "all_196_output_words_match": true,
+        "left_table_oracle_match": true,
+        "natural_geometry": true,
+        "one_entry_one_return": true,
+        "requested_reader_values_observed": true,
+        "right_table_oracle_match": true,
+        "span_oracle_match": true
+      },
+      "instructions": 103060,
+      "left_table_actual_words": [
+        "0x3f800000",
+        "0x3ea63964",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "left_table_oracle_words": [
+        "0x3f800000",
+        "0x3ea63964",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "name": "outer_2",
+      "observed_spans": [
+        2,
+        0
+      ],
+      "outputs": [
+        {
+          "index": 0,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 1,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 2,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 3,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 4,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 5,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 6,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 7,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 8,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 9,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 10,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 11,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 12,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 13,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 14,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 15,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 16,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 17,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 18,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 19,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 20,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 21,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 22,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 23,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 24,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 25,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 26,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 27,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 28,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 29,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 30,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 31,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 32,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 33,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 34,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 35,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 36,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 37,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 38,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 39,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 40,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 41,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 42,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 43,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 44,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 45,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 46,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 47,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 48,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 49,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 50,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 51,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 52,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 53,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 54,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 55,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 56,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 57,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 58,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 59,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 60,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 61,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 62,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 63,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 64,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 65,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 66,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 67,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 68,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 69,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 70,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 71,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 72,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 73,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 74,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 75,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 76,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 77,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 78,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 79,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 80,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 81,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 82,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 83,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 84,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 85,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 86,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 87,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 88,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 89,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 90,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 91,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 92,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 93,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 94,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 95,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 96,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 97,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 98,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 99,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 100,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 101,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 102,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 103,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 104,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 105,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 106,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 107,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 108,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 109,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 110,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 111,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 112,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 113,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 114,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 115,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 116,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 117,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 118,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 119,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 120,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 121,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 122,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 123,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 124,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 125,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 126,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 127,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 128,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 129,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 130,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 131,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 132,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 133,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 134,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 135,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 136,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 137,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 138,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 139,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 140,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 141,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 142,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 143,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 144,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 145,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 146,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 147,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 148,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 149,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 150,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 151,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 152,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 153,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 154,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 155,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 156,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 157,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 158,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 159,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 160,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 161,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 162,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 163,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 164,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 165,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 166,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 167,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 168,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 169,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 170,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 171,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 172,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 173,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 174,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 175,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 176,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 177,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 178,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 179,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 180,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 181,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 182,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 183,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 184,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 185,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 186,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 187,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 188,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 189,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 190,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 191,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 192,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 193,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 194,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 195,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        }
+      ],
+      "reader_provenance": [
+        {
+          "index": 5,
+          "outputs": [
+            1073742892
+          ],
+          "reader": "e270",
+          "value": 2
+        },
+        {
+          "index": 9,
+          "outputs": [
+            1073742896
+          ],
+          "reader": "e270",
+          "value": 0
+        }
+      ],
+      "requested": {
+        "inner_edge_fade": 0,
+        "outer_edge_fade": 2
+      },
+      "right_table_actual_words": [
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "right_table_oracle_words": [
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ]
+    },
+    {
+      "b150_entries": 1,
+      "b150_returns": 1,
+      "expected_spans": [
+        3,
+        0
+      ],
+      "gates": {
+        "all_196_output_words_match": true,
+        "left_table_oracle_match": true,
+        "natural_geometry": true,
+        "one_entry_one_return": true,
+        "requested_reader_values_observed": true,
+        "right_table_oracle_match": true,
+        "span_oracle_match": true
+      },
+      "instructions": 105466,
+      "left_table_actual_words": [
+        "0x3f800000",
+        "0x3f1b45b2",
+        "0x3e0a95b2",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "left_table_oracle_words": [
+        "0x3f800000",
+        "0x3f1b45b2",
+        "0x3e0a95b2",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "name": "outer_3",
+      "observed_spans": [
+        3,
+        0
+      ],
+      "outputs": [
+        {
+          "index": 0,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 1,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 2,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 3,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 4,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 5,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 6,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 7,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 8,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 9,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 10,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 11,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 12,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 13,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 14,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 15,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 16,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 17,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 18,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 19,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 20,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 21,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 22,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 23,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 24,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 25,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 26,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 27,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 28,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 29,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 30,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 31,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 32,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 33,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 34,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 35,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 36,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 37,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 38,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 39,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 40,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 41,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 42,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 43,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 44,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 45,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 46,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 47,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 48,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 49,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 50,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 51,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 52,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 53,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 54,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 55,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 56,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 57,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 58,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 59,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 60,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 61,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 62,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 63,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 64,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 65,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 66,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 67,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 68,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 69,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 70,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 71,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 72,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 73,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 74,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 75,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 76,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 77,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 78,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 79,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 80,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 81,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 82,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 83,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 84,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 85,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 86,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 87,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 88,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 89,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 90,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 91,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 92,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 93,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 94,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 95,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 96,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 97,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 98,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 99,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 100,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 101,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 102,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 103,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 104,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 105,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 106,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 107,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 108,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 109,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 110,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 111,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 112,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 113,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 114,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 115,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 116,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 117,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 118,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 119,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 120,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 121,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 122,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 123,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 124,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 125,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 126,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 127,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 128,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 129,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 130,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 131,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 132,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 133,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 134,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 135,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 136,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 137,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 138,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 139,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 140,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 141,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 142,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 143,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 144,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 145,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 146,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 147,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 148,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 149,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 150,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 151,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 152,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 153,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 154,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 155,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 156,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 157,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 158,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 159,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 160,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 161,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 162,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 163,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 164,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 165,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 166,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 167,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 168,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 169,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 170,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 171,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 172,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 173,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 174,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 175,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 176,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 177,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 178,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 179,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 180,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 181,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 182,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 183,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 184,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 185,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 186,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 187,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 188,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 189,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 190,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 191,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 192,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 193,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 194,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 195,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        }
+      ],
+      "reader_provenance": [
+        {
+          "index": 5,
+          "outputs": [
+            1073742892
+          ],
+          "reader": "e270",
+          "value": 3
+        },
+        {
+          "index": 9,
+          "outputs": [
+            1073742896
+          ],
+          "reader": "e270",
+          "value": 0
+        }
+      ],
+      "requested": {
+        "inner_edge_fade": 0,
+        "outer_edge_fade": 3
+      },
+      "right_table_actual_words": [
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "right_table_oracle_words": [
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ]
+    },
+    {
+      "b150_entries": 1,
+      "b150_returns": 1,
+      "expected_spans": [
+        0,
+        1
+      ],
+      "gates": {
+        "all_196_output_words_match": true,
+        "left_table_oracle_match": true,
+        "natural_geometry": true,
+        "one_entry_one_return": true,
+        "requested_reader_values_observed": true,
+        "right_table_oracle_match": true,
+        "span_oracle_match": true
+      },
+      "instructions": 100226,
+      "left_table_actual_words": [
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "left_table_oracle_words": [
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "name": "inner_attempt_1",
+      "observed_spans": [
+        0,
+        1
+      ],
+      "outputs": [
+        {
+          "index": 0,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 1,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 2,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 3,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 4,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 5,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 6,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 7,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 8,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 9,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 10,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 11,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 12,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 13,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 14,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 15,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 16,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 17,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 18,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 19,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 20,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 21,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 22,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 23,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 24,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 25,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 26,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 27,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 28,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 29,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 30,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 31,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 32,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 33,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 34,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 35,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 36,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 37,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 38,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 39,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 40,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 41,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 42,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 43,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 44,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 45,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 46,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 47,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 48,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 49,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 50,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 51,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 52,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 53,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 54,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 55,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 56,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 57,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 58,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 59,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 60,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 61,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 62,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 63,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 64,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 65,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 66,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 67,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 68,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 69,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 70,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 71,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 72,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 73,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 74,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 75,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 76,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 77,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 78,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 79,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 80,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 81,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 82,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 83,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 84,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 85,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 86,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 87,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 88,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 89,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 90,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 91,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 92,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 93,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 94,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 95,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 96,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 97,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 98,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 99,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 100,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 101,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 102,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 103,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 104,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 105,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 106,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 107,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 108,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 109,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 110,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 111,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 112,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 113,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 114,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 115,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 116,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 117,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 118,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 119,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 120,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 121,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 122,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 123,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 124,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 125,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 126,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 127,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 128,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 129,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 130,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 131,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 132,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 133,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 134,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 135,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 136,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 137,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 138,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 139,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 140,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 141,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 142,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 143,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 144,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 145,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 146,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 147,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 148,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 149,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 150,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 151,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 152,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 153,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 154,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 155,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 156,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 157,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 158,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 159,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 160,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 161,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 162,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 163,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 164,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 165,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 166,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 167,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 168,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 169,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 170,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 171,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 172,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 173,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 174,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 175,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 176,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 177,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 178,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 179,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 180,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 181,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 182,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 183,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 184,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 185,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 186,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 187,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 188,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 189,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 190,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 191,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 192,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 193,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 194,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        },
+        {
+          "index": 195,
+          "rgba_words_equal": true,
+          "scalar_words_equal": true
+        }
+      ],
+      "reader_provenance": [
+        {
+          "index": 5,
+          "outputs": [
+            1073742892
+          ],
+          "reader": "e270",
+          "value": 0
+        },
+        {
+          "index": 9,
+          "outputs": [
+            1073742896
+          ],
+          "reader": "e270",
+          "value": 1
+        }
+      ],
+      "requested": {
+        "inner_edge_fade": 1,
+        "outer_edge_fade": 0
+      },
+      "right_table_actual_words": [
+        "0x3f800000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "right_table_oracle_words": [
+        "0x3f800000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ]
+    }
+  ],
+  "schema": 1,
+  "status": "pass"
+}

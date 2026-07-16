@@ -1,0 +1,316 @@
+{
+  "schema": 1,
+  "kind": "olmdirectionalblur_r15_population_owner_checkpoint",
+  "status": "blocked",
+  "scope": "Mac-local natural angle-0 fixture; R15 allocation and target float-cell population ownership",
+  "claim_scope": "Allocation/layout resolved to the fixture host suite; population owner escapes the natural AEX path",
+  "provenance": {
+    "aex": "plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "fixture": "tools/emulation/dblur_fullrender_host_fixture_20260711.py",
+    "fixture_sha256": "e3216aa5a213efaf2129dd11bf9c4a5e6e4a5c162d034c607df6e0bda1fba80a",
+    "source": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png",
+    "source_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4"
+  },
+  "allocation": {
+    "producer_function": "0x180004a20",
+    "size_formula": "params+0x80a0 * params+0x80a4 * 4 bytes",
+    "size_site": "0x180004c02",
+    "observed_width": 26,
+    "observed_height": 26,
+    "observed_size_bytes": 2704,
+    "handle_creation_call": "0x180004c0c",
+    "lock_call": "0x180004c79",
+    "lock_return": "0x180004c7c",
+    "lock_return_samples": [
+      {
+        "label": "PFHandle.lock",
+        "args": [
+          "0x400086f0",
+          "0x2",
+          "0xf0f5e70",
+          "0x5"
+        ],
+        "ret": 537046152
+      }
+    ],
+    "handle_new_call_count": 5,
+    "ownership_boundary": "PF Handle Suite new/lock callback; suite internals are not production-AEX execution"
+  },
+  "layout": {
+    "writer_float_base": "0x2002ac88",
+    "row0": 5,
+    "col0": 5,
+    "stride_floats": 26,
+    "target_xy": [
+      0,
+      0
+    ],
+    "target_cell_index": 135,
+    "target_cell_address": "0x2002b4f8",
+    "target_cell_bytes": 16
+  },
+  "population": {
+    "nearest_actual_aex_population_function": "0x180006980",
+    "actual_aex_population_writes": [],
+    "observed_fixture_population_writes": [
+      {
+        "address": "0x2002b4f8",
+        "size": 4,
+        "value": "0x0",
+        "rip": "0x180004db2"
+      },
+      {
+        "address": "0x2002b4fc",
+        "size": 4,
+        "value": "0x0",
+        "rip": "0x180004db2"
+      },
+      {
+        "address": "0x2002b500",
+        "size": 4,
+        "value": "0x0",
+        "rip": "0x180004db2"
+      },
+      {
+        "address": "0x2002b504",
+        "size": 4,
+        "value": "0x0",
+        "rip": "0x180004db2"
+      },
+      {
+        "address": "0x2002b4f8",
+        "size": 4,
+        "value": "0x0",
+        "rip": "0x1800055d7"
+      },
+      {
+        "address": "0x2002b4fc",
+        "size": 8,
+        "value": "0x0",
+        "rip": "0x1800055db"
+      },
+      {
+        "address": "0x2002b504",
+        "size": 4,
+        "value": "0x0",
+        "rip": "0x1800055e0"
+      },
+      {
+        "address": "0x2002b504",
+        "size": 4,
+        "value": "0x3f800000",
+        "rip": "0x180002196"
+      }
+    ],
+    "owner": "fixture.model_populate invoked by the emulated PF Iterate8 callback",
+    "natural_aex_population_observed": false
+  },
+  "natural_checkpoint": {
+    "fixture_status": "ok",
+    "callbacks": [
+      "0x180006980",
+      "0x180006b30"
+    ],
+    "checkpoints": {
+      "rotate": {
+        "callsite": "0x18000528a"
+      },
+      "first_iterate": {
+        "callback": "0x180006980",
+        "area_words": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "refcon": "0xf0f6e60"
+      },
+      "rowdriver": {
+        "entry": "0x1800038d0"
+      },
+      "rotateback": {
+        "callsite": "0x180005628"
+      },
+      "final_host_output": {
+        "callback": "0x180006b30",
+        "area_words": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "refcon": "0xf0f6e60"
+      },
+      "normalization": {
+        "after_rotateback": true
+      }
+    },
+    "output_samples": [
+      {
+        "params": "0xf0f6e60",
+        "xy": [
+          0,
+          0
+        ],
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "height": 26,
+        "cell_index": 135,
+        "cell_address": "0x2002b4f8"
+      },
+      {
+        "params": "0xf0f6e60",
+        "xy": [
+          1,
+          0
+        ],
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "height": 26,
+        "cell_index": 136,
+        "cell_address": "0x2002b508"
+      },
+      {
+        "params": "0xf0f6e60",
+        "xy": [
+          2,
+          0
+        ],
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "height": 26,
+        "cell_index": 137,
+        "cell_address": "0x2002b518"
+      },
+      {
+        "params": "0xf0f6e60",
+        "xy": [
+          3,
+          0
+        ],
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "height": 26,
+        "cell_index": 138,
+        "cell_address": "0x2002b528"
+      },
+      {
+        "params": "0xf0f6e60",
+        "xy": [
+          4,
+          0
+        ],
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "height": 26,
+        "cell_index": 139,
+        "cell_address": "0x2002b538"
+      },
+      {
+        "params": "0xf0f6e60",
+        "xy": [
+          5,
+          0
+        ],
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "height": 26,
+        "cell_index": 140,
+        "cell_address": "0x2002b548"
+      },
+      {
+        "params": "0xf0f6e60",
+        "xy": [
+          6,
+          0
+        ],
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "height": 26,
+        "cell_index": 141,
+        "cell_address": "0x2002b558"
+      },
+      {
+        "params": "0xf0f6e60",
+        "xy": [
+          7,
+          0
+        ],
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "height": 26,
+        "cell_index": 142,
+        "cell_address": "0x2002b568"
+      },
+      {
+        "params": "0xf0f6e60",
+        "xy": [
+          8,
+          0
+        ],
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "height": 26,
+        "cell_index": 143,
+        "cell_address": "0x2002b578"
+      },
+      {
+        "params": "0xf0f6e60",
+        "xy": [
+          9,
+          0
+        ],
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "height": 26,
+        "cell_index": 144,
+        "cell_address": "0x2002b588"
+      },
+      {
+        "params": "0xf0f6e60",
+        "xy": [
+          10,
+          0
+        ],
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "height": 26,
+        "cell_index": 145,
+        "cell_address": "0x2002b598"
+      }
+    ]
+  },
+  "fail_closed": {
+    "status": "blocked",
+    "reason": "population-owner-escaped-natural-fixture",
+    "first_missing_boundary": "PF Iterate8 callback 0x180006980 was replaced by fixture.model_populate",
+    "production_source_edited": false,
+    "ledger_edited": false,
+    "windows_values_fabricated": false,
+    "ae_exact_claim": false
+  },
+  "command": "python3 tools/emulation/test_olmdirectionalblur_r15_population_owner_20260717.py"
+}

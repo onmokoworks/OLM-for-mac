@@ -1,0 +1,129 @@
+{
+  "schema": 1,
+  "kind": "olmdirectionalblur_writer_buffer_provenance_checkpoint",
+  "status": "pass",
+  "scope": "Mac-local Unicorn natural angle-0 8bpc path; params+0x8090 write provenance",
+  "claim_scope": "No Windows live values and no AE-exact claim",
+  "provenance": {
+    "aex": "plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "fixture": "tools/emulation/dblur_fullrender_host_fixture_20260711.py",
+    "fixture_sha256": "e3216aa5a213efaf2129dd11bf9c4a5e6e4a5c162d034c607df6e0bda1fba80a",
+    "source": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png",
+    "source_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4"
+  },
+  "static": {
+    "producer_function": "0x180004a20",
+    "write_sites": [
+      "0x180003f4b",
+      "0x18000489d",
+      "0x180004cdb",
+      "0x180005a66",
+      "0x18000636d",
+      "0x18000562d"
+    ],
+    "nearest_natural_write": "0x18000562d",
+    "nearest_natural_write_value_source": "R15 stored through MOVQ 0x8090(%RBX)",
+    "allocation_return": {
+      "callsite": "0x180004c79 indirect suite + 8 call",
+      "return_checkpoint": "0x180004c7c",
+      "owner_boundary": "host suite allocation return; suite internals are outside this evidence"
+    }
+  },
+  "natural_checkpoint": {
+    "requested_angle_degrees": 0,
+    "producer_function": "0x180004a20",
+    "wrapper": "0x180006700",
+    "output_callback": "0x180006b30",
+    "output_iterate_refcon": "0xf0f6e60",
+    "output_params_plus_8090": "0xf0feef0",
+    "output_iterate_area": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "callbacks": [
+      "0x180006980",
+      "0x180006b30"
+    ],
+    "checkpoints": {
+      "rotate": {
+        "callsite": "0x18000528a"
+      },
+      "first_iterate": {
+        "callback": "0x180006980",
+        "area_words": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "refcon": "0xf0f6e60"
+      },
+      "rowdriver": {
+        "entry": "0x1800038d0"
+      },
+      "rotateback": {
+        "callsite": "0x180005628"
+      },
+      "final_host_output": {
+        "callback": "0x180006b30",
+        "area_words": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "refcon": "0xf0f6e60"
+      },
+      "normalization": {
+        "after_rotateback": true
+      }
+    },
+    "target_writes": [
+      {
+        "address": "0xf0feef0",
+        "value": "0x2002d6c8",
+        "rip": "0x180004cdb"
+      },
+      {
+        "address": "0xf0feef0",
+        "value": "0x2002ac88",
+        "rip": "0x18000562d"
+      }
+    ],
+    "all_param_qword_write_count": 584
+  },
+  "input_ownership": {
+    "pointer_owner_at_nearest_write": "R15 in FUN_180004A20 immediately before MOVQ at 0x18000562d",
+    "allocation_return_samples": [
+      {
+        "rip": "0x180004c7c",
+        "rax_return_value": "0x2002ac88",
+        "r15": "0x0",
+        "rbx": "0xf0f6e60"
+      }
+    ],
+    "nearest_write_registers": [
+      {
+        "rip": "0x18000562d",
+        "r15": "0x2002ac88",
+        "rbx": "0xf0f6e60"
+      }
+    ],
+    "buffer_pointer_is_writer_base": true,
+    "upstream_allocation_owner": "unresolved beyond the producer's R15 value; no suite/ABI fabrication"
+  },
+  "fail_closed": {
+    "status": "pass",
+    "fixture_status": "ok",
+    "fixture_blocker": null,
+    "first_missing_suite_or_abi": null,
+    "production_source_edited": false,
+    "ledger_edited": false,
+    "windows_values_fabricated": false,
+    "ae_exact_claim": false
+  },
+  "command": "python3 tools/emulation/test_olmdirectionalblur_writer_buffer_provenance_20260717.py"
+}

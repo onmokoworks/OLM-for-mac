@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import struct
 import sys
 from pathlib import Path
@@ -17,12 +18,17 @@ from pathlib import Path
 from unicorn.x86_const import (
     UC_X86_REG_RAX,
     UC_X86_REG_RBX,
+    UC_X86_REG_RBP,
     UC_X86_REG_RCX,
     UC_X86_REG_RDX,
     UC_X86_REG_R8,
     UC_X86_REG_R9,
+    UC_X86_REG_RDI,
+    UC_X86_REG_RIP,
+    UC_X86_REG_RSI,
     UC_X86_REG_RSP,
 )
+from aex_loader import TEB_BASE
 
 ROOT = Path(__file__).resolve().parents[2]
 AEX = ROOT / "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex"
@@ -38,6 +44,13 @@ PF32_OWNER = 0x18114D7F0
 MODE2_DISPATCH = 0x18114F4A0
 PF32_TYPED_OWNER = 0x18114E460
 PF32_CALLSITES = (0x18114E5D7, 0x18114E739)
+
+TLS_INDEX_GLOBAL = 0x1818C3EA8
+GS_TLS_OFFSET = 0x58
+TLS_EPOCH_OFFSET = 0x04
+TLS_TABLE_SIZE = 0x08
+TLS_SLOT_SIZE = 0x100
+TLS_UNINITIALIZED_EPOCH = -1
 
 # Values are the grounded case_0001 defaults from the Windows manifest. The
 # disk selectors match the Kira source's ParamsSetup disk IDs.
@@ -80,6 +93,49 @@ def slice_between(text: str, start: str, end: str) -> str:
     return text[left:text.index(end, left)]
 
 
+def read_u64(loader: AexLoader, address: int) -> int:
+    return struct.unpack("<Q", loader.read_bytes(address, 8))[0]
+
+
+def mat_snapshot(loader: AexLoader, address: int) -> dict[str, object]:
+    dims = struct.unpack("<i", loader.read_bytes(address + 0x4, 4))[0]
+    result: dict[str, object] = {
+        "address": hex(address),
+        "flags": hex(struct.unpack("<I", loader.read_bytes(address, 4))[0]),
+        "dims": dims,
+        "rows": struct.unpack("<i", loader.read_bytes(address + 0x8, 4))[0],
+        "cols": struct.unpack("<i", loader.read_bytes(address + 0xC, 4))[0],
+        "data": hex(read_u64(loader, address + 0x18)),
+        "datastart": hex(read_u64(loader, address + 0x10)),
+        "dataend": hex(read_u64(loader, address + 0x20)),
+        "datalimit": hex(read_u64(loader, address + 0x28)),
+        "sizes": hex(read_u64(loader, address + 0x40)),
+        "steps": hex(read_u64(loader, address + 0x48)),
+    }
+    if 0 <= dims <= 32:
+        sizes = result["sizes"]
+        steps = result["steps"]
+        if isinstance(sizes, str) and isinstance(steps, str):
+            sizes_address = int(sizes, 16)
+            steps_address = int(steps, 16)
+            result["size_values"] = [
+                struct.unpack("<i", loader.read_bytes(sizes_address + i * 4, 4))[0]
+                for i in range(dims)
+            ]
+            result["step_values"] = [
+                read_u64(loader, steps_address + i * 8)
+                for i in range(dims)
+            ]
+    return result
+
+
+def read_std_string(loader: AexLoader, address: int) -> str:
+    size = read_u64(loader, address + 0x10)
+    capacity = read_u64(loader, address + 0x18)
+    source = address if capacity < 0x10 else read_u64(loader, address)
+    return loader.read_bytes(source, min(size, 4096)).decode("ascii", errors="replace")
+
+
 def static_checks() -> dict[str, bool]:
     decomp = DECOMP.read_text(encoding="utf-8")
     asm = ASM.read_text(encoding="utf-8")
@@ -115,6 +171,142 @@ def run_owner_probe() -> dict[str, object]:
     }))
     suite_call_trace: list[dict[str, object]] = []
     internal_boundary_trace: list[dict[str, object]] = []
+    allocation_trace: list[dict[str, object]] = []
+    mat_trace: list[dict[str, object]] = []
+    oom_request: dict[str, object] = {}
+    aligned_lifecycle: list[dict[str, object]] = []
+    aligned_live: dict[int, dict[str, int]] = {}
+    aligned_max_request = 0x100000
+    aligned_max_alignment = 0x1000
+    fls_lifecycle: list[dict[str, object]] = []
+    fls_live_keys: dict[int, dict[str, int]] = {}
+    fls_thread_values: dict[int, dict[int, int]] = {}
+    control_flow_trace: list[dict[str, object]] = []
+    mode2_call_args: dict[str, object] = {}
+    mode2_instruction_trace: list[dict[str, object]] = []
+    inner_entry: dict[str, object] = {}
+    inner_instruction_trace: list[dict[str, object]] = []
+    execution_stop: dict[str, object] = {}
+    next_runtime_boundary: dict[str, object] = {}
+
+    def aligned_malloc_probe(_uc: object, args: list[int]) -> int:
+        requested, alignment = int(args[0]), int(args[1])
+        event: dict[str, object] = {
+            "operation": "_aligned_malloc",
+            "requested_bytes": requested,
+            "alignment": alignment,
+            "bounded_contract": {
+                "requested_bytes": {"min": 1, "max": aligned_max_request},
+                "alignment": {"min": 8, "max": aligned_max_alignment, "power_of_two": True},
+            },
+        }
+        aligned_lifecycle.append(event)
+        if (
+            requested <= 0
+            or requested > aligned_max_request
+            or alignment < 8
+            or alignment > aligned_max_alignment
+            or alignment & (alignment - 1)
+        ):
+            event.update({"accepted": False, "return": "0x0", "reason": "outside positive bounded power-of-two contract"})
+            return 0
+        try:
+            pointer = loader.host_alloc(requested, align=alignment)
+            loader.write_bytes(pointer, b"\0" * requested)
+        except Exception as exc:
+            event.update({"accepted": False, "return": "0x0", "probe_error": f"{type(exc).__name__}: {exc}"})
+            raise
+        if pointer <= 0 or pointer % alignment:
+            event.update({"accepted": False, "return": "0x0", "reason": "host allocation violated requested alignment"})
+            raise RuntimeError(f"_aligned_malloc returned misaligned pointer 0x{pointer:x}")
+        aligned_live[pointer] = {"size": requested, "alignment": alignment}
+        event.update({"accepted": True, "return": hex(pointer), "lifecycle": "live"})
+        return pointer
+
+    def aligned_free_probe(_uc: object, args: list[int]) -> int:
+        pointer = int(args[0])
+        spec = aligned_live.pop(pointer, None)
+        event: dict[str, object] = {"operation": "_aligned_free", "pointer": hex(pointer)}
+        aligned_lifecycle.append(event)
+        if spec is None:
+            event.update({"accepted": False, "reason": "unknown or already-freed pointer"})
+            raise RuntimeError(f"_aligned_free lifecycle violation for 0x{pointer:x}")
+        if pointer % spec["alignment"]:
+            event.update({"accepted": False, "reason": "live pointer no longer satisfies recorded alignment"})
+            raise RuntimeError(f"_aligned_free alignment violation for 0x{pointer:x}")
+        event.update({"accepted": True, "size": spec["size"], "alignment": spec["alignment"], "lifecycle": "freed"})
+        return 0
+
+    loader.register_import_impl("_aligned_malloc", aligned_malloc_probe)
+    loader.register_import_impl("_aligned_free", aligned_free_probe)
+
+    # OpenCV's observed TlsAbstraction uses one FLS key on this emulated
+    # thread. Keep key allocation and value ownership explicit so a stale key
+    # or cross-thread value cannot silently pass the runtime boundary.
+    fls_thread_id = TEB_BASE
+
+    def fls_alloc_probe(_uc: object, args: list[int]) -> int:
+        callback = int(args[0])
+        event: dict[str, object] = {
+            "operation": "FlsAlloc",
+            "callback": hex(callback),
+            "bounded_contract": {"key": 0, "thread": hex(fls_thread_id)},
+        }
+        fls_lifecycle.append(event)
+        if fls_live_keys:
+            event.update({"accepted": False, "return": 0xFFFFFFFF, "reason": "one-key contract already allocated"})
+            return 0xFFFFFFFF
+        if callback != 0x181164520:
+            event.update({"accepted": False, "return": 0xFFFFFFFF, "reason": "callback outside observed contract"})
+            return 0xFFFFFFFF
+        fls_live_keys[0] = {"thread": fls_thread_id, "callback": callback}
+        fls_thread_values[fls_thread_id] = {}
+        event.update({"accepted": True, "key": 0, "return": 0, "lifecycle": "allocated"})
+        return 0
+
+    def fls_get_probe(_uc: object, args: list[int]) -> int:
+        key = int(args[0])
+        event: dict[str, object] = {"operation": "FlsGetValue", "key": key, "thread": hex(fls_thread_id)}
+        fls_lifecycle.append(event)
+        if key not in fls_live_keys:
+            event.update({"accepted": False, "return": 0, "reason": "unknown or freed key"})
+            raise RuntimeError(f"FlsGetValue lifecycle violation for key {key}")
+        value = fls_thread_values[fls_thread_id].get(key, 0)
+        event.update({"accepted": True, "return": hex(value), "lifecycle": "read"})
+        return value
+
+    def fls_set_probe(_uc: object, args: list[int]) -> int:
+        key, value = int(args[0]), int(args[1])
+        event: dict[str, object] = {
+            "operation": "FlsSetValue",
+            "key": key,
+            "value": hex(value),
+            "thread": hex(fls_thread_id),
+        }
+        fls_lifecycle.append(event)
+        if key not in fls_live_keys:
+            event.update({"accepted": False, "return": 0, "reason": "unknown or freed key"})
+            raise RuntimeError(f"FlsSetValue lifecycle violation for key {key}")
+        fls_thread_values[fls_thread_id][key] = value
+        event.update({"accepted": True, "return": 1, "lifecycle": "set"})
+        return 1
+
+    def fls_free_probe(_uc: object, args: list[int]) -> int:
+        key = int(args[0])
+        event: dict[str, object] = {"operation": "FlsFree", "key": key, "thread": hex(fls_thread_id)}
+        fls_lifecycle.append(event)
+        spec = fls_live_keys.pop(key, None)
+        if spec is None:
+            event.update({"accepted": False, "return": 0, "reason": "unknown or already-freed key"})
+            raise RuntimeError(f"FlsFree lifecycle violation for key {key}")
+        value = fls_thread_values[fls_thread_id].pop(key, 0)
+        event.update({"accepted": True, "return": 1, "cleared_value": hex(value), "lifecycle": "freed"})
+        return 1
+
+    loader.register_import_impl("FlsAlloc", fls_alloc_probe)
+    loader.register_import_impl("FlsGetValue", fls_get_probe)
+    loader.register_import_impl("FlsSetValue", fls_set_probe)
+    loader.register_import_impl("FlsFree", fls_free_probe)
 
     pixel_size = 16
     rowbytes = pixel_size + 8
@@ -308,6 +500,27 @@ def run_owner_probe() -> dict[str, object]:
     )
     loader.write_bytes(context + 0x180, struct.pack("<Q", spbasic))
 
+    # FUN_181159da0's lazy C++ runtime path reads the Windows TLS pointer
+    # table through GS:[0x58], then reads the selected slot's epoch at +0x4.
+    # The checked-in image has _tls_index == 0; install only that bounded
+    # single-thread storage contract and leave initialization to the AEX.
+    tls_table = loader.host_alloc(TLS_TABLE_SIZE, align=16)
+    tls_slot = loader.host_alloc(TLS_SLOT_SIZE, align=16)
+    loader.write_bytes(tls_table, struct.pack("<Q", tls_slot))
+    loader.write_bytes(tls_slot, b"\0" * TLS_SLOT_SIZE)
+    loader.write_bytes(tls_slot + TLS_EPOCH_OFFSET, struct.pack("<i", TLS_UNINITIALIZED_EPOCH))
+    loader.write_bytes(TEB_BASE + GS_TLS_OFFSET, struct.pack("<Q", tls_table))
+    runtime_state = {
+        "tls_index_global": hex(TLS_INDEX_GLOBAL),
+        "tls_index_value": struct.unpack("<I", loader.read_bytes(TLS_INDEX_GLOBAL, 4))[0],
+        "gs_tls_address": hex(TEB_BASE + GS_TLS_OFFSET),
+        "tls_table": hex(tls_table),
+        "tls_slot": hex(tls_slot),
+        "tls_epoch_address": hex(tls_slot + TLS_EPOCH_OFFSET),
+        "tls_epoch_initial": TLS_UNINITIALIZED_EPOCH,
+        "contract": "GS:[0x58] -> TLS table; table[0] -> slot; slot+0x04 -> lazy-init epoch",
+    }
+
     def param_checkin(current: AexLoader, args: list[int]) -> int:
         if args[0] != refcon:
             raise RuntimeError("invalid PF_ParamCheckin ABI")
@@ -420,17 +633,371 @@ def run_owner_probe() -> dict[str, object]:
             })
         return hook
 
+    def capture_mat_constructor(ld: AexLoader, _address: int, _size: int) -> None:
+        args = [ld.uc.reg_read(reg) for reg in (UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8)]
+        entry = {"address": "0x181157450", "args": [hex(value) for value in args]}
+        entry["source_mat"] = mat_snapshot(ld, args[1])
+        ranges = args[2]
+        dims = struct.unpack("<i", ld.read_bytes(args[1] + 0x4, 4))[0]
+        if ranges and 0 <= dims <= 32:
+            entry["ranges"] = [
+                hex(read_u64(ld, ranges + i * 8)) for i in range(dims)
+            ]
+        mat_trace.append(entry)
+
+    def capture_mat_copy(ld: AexLoader, _address: int, _size: int) -> None:
+        args = [ld.uc.reg_read(reg) for reg in (UC_X86_REG_RCX, UC_X86_REG_RDX)]
+        mat_trace.append({
+            "address": "0x181157ed0",
+            "destination": mat_snapshot(ld, args[0]),
+            "source": mat_snapshot(ld, args[1]),
+        })
+
+    def capture_allocation_request(ld: AexLoader, _address: int, _size: int) -> None:
+        request = ld.uc.reg_read(UC_X86_REG_RCX)
+        allocation_trace.append({
+            "allocator": "FUN_18115eb30",
+            "mat_storage_request": request,
+            "malloc_request_if_memalign_disabled": request + 0x48,
+            "aligned_malloc_request_if_memalign_enabled": request,
+            "alignment": 0x40,
+        })
+
+    def capture_oom_request(ld: AexLoader, _address: int, _size: int) -> None:
+        request = ld.uc.reg_read(UC_X86_REG_RCX)
+        oom_request.update({
+            "address": "0x18115ea40",
+            "requested_bytes": request,
+            "message": f"Failed to allocate {request} bytes",
+        })
+
+    def capture_error_message(ld: AexLoader, _address: int, _size: int) -> None:
+        message_address = ld.uc.reg_read(UC_X86_REG_RDX)
+        try:
+            message = read_std_string(ld, message_address)
+        except Exception as exc:
+            message = f"<unreadable std::string: {type(exc).__name__}: {exc}>"
+        runtime_error_boundary["message"] = message
+
     loader.add_code_hook(0x1811542B0, capture_internal(0x1811542B0, "FUN_1811542b0 entry"))
     loader.add_code_hook(0x181154300, capture_internal(0x181154300, "parameter-table compare before invalid read"))
     loader.add_code_hook(0x1812326E0, capture_internal(0x1812326E0, "PF_ParamCheckout callback pointer before CALL R10"))
     loader.add_code_hook(0x181232350, capture_internal(0x181232350, "PF ColorParamSuite acquire path"))
     loader.add_code_hook(0x181232760, capture_internal(0x181232760, "context callback pointer before CALL RAX"))
+    loader.add_code_hook(0x181159deb, capture_internal(0x181159deb, "lazy runtime TLS epoch read"))
+    loader.add_code_hook(0x181162610, capture_internal(0x181162610, "next runtime exception boundary"))
+
+    def capture_control_flow(label: str, address: int):
+        def hook(ld: AexLoader, _address: int, _size: int) -> None:
+            rdi = ld.uc.reg_read(UC_X86_REG_RDI)
+            entry: dict[str, object] = {
+                "address": hex(address),
+                "label": label,
+                "registers_rcx_rdx_r8_r9_rax_rdi": [hex(ld.uc.reg_read(reg)) for reg in (UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_RAX, UC_X86_REG_RDI)],
+            }
+            if label.startswith("PF32 mode compare"):
+                mode_value = struct.unpack("<i", ld.read_bytes(rdi + 0x40, 4))[0]
+                entry.update({
+                    "mode_field_address": hex(rdi + 0x40),
+                    "mode_value": mode_value,
+                    "binary_branch": {"1": "FUN_18114edb0", "2": "FUN_1811505c0", "4": "FUN_18114ec20", "other": "FUN_18114eed0"}.get(str(mode_value), "ambiguous"),
+                })
+            if label.startswith("Mode2 inner mode"):
+                rbp = ld.uc.reg_read(UC_X86_REG_RBP)
+                inner_value = struct.unpack("<i", ld.read_bytes(rbp + 0x198, 4))[0]
+                entry.update({
+                    "inner_mode_field_address": hex(rbp + 0x198),
+                    "inner_mode_value": inner_value,
+                    "binary_branch": {"1": "0x18115122e", "2": "0x18115110a", "3": "0x1811510a9", "other": "0x181150f3d"}.get(str(inner_value), "ambiguous"),
+                })
+            control_flow_trace.append(entry)
+        return hook
+
+    loader.add_code_hook(0x18114c924, capture_control_flow("common PF depth read/dispatch compare", 0x18114c924))
+    loader.add_code_hook(0x18114c9a4, capture_control_flow("common PF depth branch", 0x18114c9a4))
+    loader.add_code_hook(0x18114c9cc, capture_control_flow("common PF depth branch", 0x18114c9cc))
+    loader.add_code_hook(0x18114c9f4, capture_control_flow("common PF depth branch", 0x18114c9f4))
+    loader.add_code_hook(0x18114ca15, capture_control_flow("PF32 owner entry", 0x18114ca15))
+    loader.add_code_hook(0x18114daeb, capture_control_flow("PF32 mode compare value load", 0x18114daeb))
+    loader.add_code_hook(0x18114daf3, capture_control_flow("PF32 mode compare branch 1", 0x18114daf3))
+    loader.add_code_hook(0x18114db13, capture_control_flow("PF32 mode compare branch 2", 0x18114db13))
+    loader.add_code_hook(0x18114db33, capture_control_flow("PF32 mode compare branch 4", 0x18114db33))
+    loader.add_code_hook(MODE2_DISPATCH, capture_control_flow("Mode2 dispatch entry", MODE2_DISPATCH))
+    loader.add_code_hook(PF32_TYPED_OWNER, capture_control_flow("PF32 typed owner entry", PF32_TYPED_OWNER))
+    for writer_address in PF32_CALLSITES:
+        loader.add_code_hook(writer_address, capture_control_flow("PF32 typed writer callsite", writer_address))
+
+    def capture_mode2_entry(ld: AexLoader, _address: int, _size: int) -> None:
+        rsp = ld.uc.reg_read(UC_X86_REG_RSP)
+        mode2_call_args.update({
+            "entry_stack": {f"+0x{offset:x}": hex(read_u64(ld, rsp + offset)) for offset in range(0x20, 0x58, 8)},
+            "param10_stack_value": struct.unpack("<i", ld.read_bytes(rsp + 0x50, 4))[0],
+            "param10_source": "FUN_18114d7f0 caller [RSP+0x50] = PF32 local param_5 + 0x4c",
+        })
+    loader.add_code_hook(MODE2_DISPATCH, capture_mode2_entry)
+
+    def capture_mode2_branch(label: str, address: int):
+        def hook(ld: AexLoader, _address: int, _size: int) -> None:
+            entry: dict[str, object] = {
+                "address": hex(address),
+                "label": label,
+                "registers_rcx_rdx_r8_r9_rax_rbx_rsi_rdi": [hex(ld.uc.reg_read(reg)) for reg in (UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_RAX, UC_X86_REG_RBX, UC_X86_REG_RSI, UC_X86_REG_RDI)],
+            }
+            if label == "Mode2 plane branch":
+                entry["plane_test_value"] = ld.uc.reg_read(UC_X86_REG_RDX) & 0xFFFFFFFF
+            control_flow_trace.append(entry)
+        return hook
+    loader.add_code_hook(0x18114dc01, capture_control_flow("Mode2 dispatch return site", 0x18114dc01))
+    loader.add_code_hook(0x18114dd0d, capture_control_flow("PF32 typed owner callsite", 0x18114dd0d))
+    loader.add_code_hook(0x18114f760, capture_mode2_branch("Mode2 plane branch", 0x18114f760))
+    loader.add_code_hook(0x18114f770, capture_mode2_branch("Mode2 special-plane branch", 0x18114f770))
+    loader.add_code_hook(0x18114f9a1, capture_mode2_branch("Mode2 early-exit target", 0x18114f9a1))
+    loader.add_code_hook(0x18114fd54, capture_control_flow("Mode2 epilogue before return", 0x18114fd54))
+    for address, label in (
+        (0x181150790, "Mode2 inner helper entry"),
+        (0x18115094f, "Mode2 inner mode value load"),
+        (0x181150955, "Mode2 inner mode branch 1"),
+        (0x18115095e, "Mode2 inner mode branch 2"),
+        (0x181150967, "Mode2 inner mode branch 3"),
+        (0x181150970, "Mode2 inner mode branch 4"),
+    ):
+        loader.add_code_hook(address, capture_control_flow(label, address))
+
+    mode2_asm = slice_between(ASM.read_text(encoding="utf-8"), "; === FUN_18114f4a0", "; === FUN_18114fd90")
+    for line in mode2_asm.splitlines():
+        match = re.match(r"([0-9a-f]+)\s+(.+)$", line)
+        if not match:
+            continue
+        address = int(match.group(1), 16)
+        if not 0x18114f770 <= address <= 0x18114fd54:
+            continue
+        mnemonic = match.group(2).strip()
+
+        def trace_mode2_instruction(ld: AexLoader, _address: int, _size: int, *, address=address, mnemonic=mnemonic) -> None:
+            if len(mode2_instruction_trace) < 512:
+                mode2_instruction_trace.append({
+                    "address": hex(address),
+                    "instruction": mnemonic,
+                    "rip": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
+                    "rax": hex(ld.uc.reg_read(UC_X86_REG_RAX)),
+                    "rcx": hex(ld.uc.reg_read(UC_X86_REG_RCX)),
+                    "rdx": hex(ld.uc.reg_read(UC_X86_REG_RDX)),
+                    "r8": hex(ld.uc.reg_read(UC_X86_REG_R8)),
+                    "r9": hex(ld.uc.reg_read(UC_X86_REG_R9)),
+                })
+        loader.add_code_hook(address, trace_mode2_instruction)
+
+    inner_asm = slice_between(ASM.read_text(encoding="utf-8"), "; === FUN_181150790", "; === FUN_1811512a0")
+    for line in inner_asm.splitlines():
+        match = re.match(r"([0-9a-f]+)\s+(.+)$", line)
+        if not match:
+            continue
+        address = int(match.group(1), 16)
+        mnemonic = match.group(2).strip()
+
+        def trace_inner_instruction(ld: AexLoader, _address: int, _size: int, *, address=address, mnemonic=mnemonic) -> None:
+            if len(inner_instruction_trace) < 512:
+                inner_instruction_trace.append({
+                    "address": hex(address),
+                    "instruction": mnemonic,
+                    "rip": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
+                    "rax": hex(ld.uc.reg_read(UC_X86_REG_RAX)),
+                    "rcx": hex(ld.uc.reg_read(UC_X86_REG_RCX)),
+                    "rdx": hex(ld.uc.reg_read(UC_X86_REG_RDX)),
+                    "r8": hex(ld.uc.reg_read(UC_X86_REG_R8)),
+                    "r9": hex(ld.uc.reg_read(UC_X86_REG_R9)),
+                    "kind": "branch_or_call" if mnemonic.startswith(("CALL", "J", "RET")) else "instruction",
+                })
+        loader.add_code_hook(address, trace_inner_instruction)
+
+    def capture_inner_entry(ld: AexLoader, _address: int, _size: int) -> None:
+        rsp = ld.uc.reg_read(UC_X86_REG_RSP)
+        inner_entry.update({
+            "address": "0x181150790",
+            "registers_rcx_rdx_r8_r9": [hex(ld.uc.reg_read(reg)) for reg in (UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9)],
+            "stack_args": {f"+0x{offset:x}": hex(read_u64(ld, rsp + offset)) for offset in range(0x20, 0x50, 8)},
+            "rip": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
+        })
+    loader.add_code_hook(0x181150790, capture_inner_entry)
+    loader.add_code_hook(0x181157450, capture_mat_constructor)
+    loader.add_code_hook(0x181157ed0, capture_mat_copy)
+    loader.add_code_hook(0x18115eb30, capture_allocation_request)
+    loader.add_code_hook(0x18115ea40, capture_oom_request)
+    loader.add_code_hook(0x181162610, capture_error_message)
+
+    runtime_error_boundary: dict[str, object] = {}
+
+    def capture_runtime_error(ld: AexLoader, _address: int, _size: int) -> None:
+        rsp = ld.uc.reg_read(UC_X86_REG_RSP)
+        error_code = ld.uc.reg_read(UC_X86_REG_RCX) & 0xFFFFFFFF
+        if error_code & 0x80000000:
+            error_code -= 0x100000000
+        runtime_error_boundary.update({
+            "address": "0x181162610",
+            "kind": "cv::Exception construction and non-returning throw path",
+            "error_code": error_code,
+            "exception_class": read_c_string(ld, ld.uc.reg_read(UC_X86_REG_R8)),
+            "source_file": read_c_string(ld, ld.uc.reg_read(UC_X86_REG_R9)),
+            "line": struct.unpack("<I", ld.read_bytes(rsp + 0x170, 4))[0],
+            "throw_helper": "FUN_181162500 -> _CxxThrowException; 0x181162672 INT3 fallback",
+        })
+
+    loader.add_code_hook(0x181162610, capture_runtime_error)
+    loader.add_code_hook(0x18132c184, lambda ld, _address, _size: next_runtime_boundary.update({
+        "address": "0x18132c184",
+        "kind": "CRT exception object construction before _CxxThrowException",
+        "registers_rcx_rdx_r8_r9": [hex(ld.uc.reg_read(reg)) for reg in (UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9)],
+    }))
+    loader.add_code_hook(0x18132d5d6, lambda ld, _address, _size: next_runtime_boundary.update({
+        "address": "0x18132d5d6",
+        "kind": "_CxxThrowException import boundary",
+        "registers_rcx_rdx_r8_r9": [hex(ld.uc.reg_read(reg)) for reg in (UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9)],
+        "caller_return_address": hex(read_u64(ld, ld.uc.reg_read(UC_X86_REG_RSP))),
+    }))
+
+    def runtime_imports() -> list[dict[str, object]]:
+        return [
+            {"name": item.name, "args": [hex(arg) for arg in item.args], "ret": hex(item.ret)}
+            for item in loader.import_log
+            if item.name in {"malloc", "_aligned_malloc", "_aligned_free", "free", "FlsAlloc", "FlsGetValue", "FlsSetValue", "FlsFree", "_CxxThrowException"}
+        ]
+
+    def unimplemented_imports() -> list[str]:
+        return sorted({
+            item.name for item in loader.import_log
+            if item.name not in loader.import_impls
+        })
+
+    def aligned_request_trace() -> list[dict[str, object]]:
+        return [
+            {
+                "requested_bytes": event["requested_bytes"],
+                "alignment": event["alignment"],
+                "accepted": event["accepted"],
+                "return": event["return"],
+            }
+            for event in aligned_lifecycle
+            if event["operation"] == "_aligned_malloc"
+        ]
+
+    def selector_diagnosis() -> dict[str, object]:
+        mode_compares = [item for item in control_flow_trace if item["label"] == "PF32 mode compare value load"]
+        blur_readbacks = [
+            item for item in callback_state.get("param_checkout", [])
+            if item.get("disk_id") == 9
+        ]
+        mode_values = [item.get("mode_value") for item in mode_compares]
+        ambiguous = [item for item in mode_compares if item.get("binary_branch") == "ambiguous"]
+        inner_modes = [item for item in control_flow_trace if item["label"] == "Mode2 inner mode value load"]
+        inner_ambiguous = [item for item in inner_modes if item.get("binary_branch") == "ambiguous"]
+        mode2_entered = any(item["label"] == "Mode2 dispatch entry" for item in control_flow_trace)
+        typed_entered = any(item["label"] == "PF32 typed owner entry" for item in control_flow_trace)
+        return {
+            "parameter_disk_id": 9,
+            "parameter_name": "Blur Mode",
+            "checkout_readback": blur_readbacks,
+            "pf32_mode_field_values": mode_values,
+            "mode2_dispatch_entered": mode2_entered,
+            "typed_owner_entered": typed_entered,
+            "mode2_epilogue_reached": any(item["label"] == "Mode2 epilogue before return" for item in control_flow_trace),
+            "ambiguous_branch": bool(ambiguous or inner_ambiguous),
+            "ambiguous_branch_trace": ambiguous + inner_ambiguous,
+            "mode2_inner_selector_values": [item.get("inner_mode_value") for item in inner_modes],
+            "mode2_inner_selector_trace": inner_modes,
+            "fixture_intended_mode2_selected": bool(mode2_entered and not ambiguous and mode_values and all(value == 2 for value in mode_values)),
+            "binary_grounding": "PF32 owner compares [param_5+0x40] against 1, 2, and 4; value 2 selects FUN_1811505c0 before FUN_18114f4a0 Mode2 dispatch",
+        }
+
+    def allocation_diagnosis() -> dict[str, object]:
+        source = mat_trace[0].get("source", {}) if mat_trace else {}
+        flags = int(source.get("flags", "0"), 16) if isinstance(source, dict) else 0
+        type_code = flags & 0xFFF
+        aligned_return = next(
+            (event.get("return") for event in aligned_lifecycle if event.get("operation") == "_aligned_malloc"),
+            "0x0",
+        )
+        if oom_request:
+            requested = int(oom_request["requested_bytes"])
+            next_contract: object = {
+                "kind": "bounded aligned allocator extension",
+                "boundary": "FUN_18115eb30 -> _aligned_malloc",
+                "requested_bytes": requested,
+                "alignment": 64,
+                "success_return": "aligned writable storage",
+                "lifecycle": "match _aligned_free; reject unknown or double-freed pointers",
+                "fail_closed": True,
+            }
+            classification = "bounded_fls_lifecycle_crossed_next_aligned_allocator_boundary"
+            owner_tail = "FUN_18115ea40 OOM constructor (requested bytes recorded below)"
+        elif runtime_error_boundary:
+            next_contract = {
+                "kind": "OpenCV TLS/FLS setData",
+                "boundary": "FUN_181162610",
+                "error_code": -215,
+                "assertion": "FlsSetValue(tlsKey, pData) == TRUE",
+                "required_import": "FlsSetValue",
+                "success_return": 1,
+                "lifecycle": "preserve the existing TLS/FLS key and value; reject unknown keys or invalid lifecycle",
+                "fail_closed": True,
+            }
+            classification = "bounded_aligned_allocator_contract_crossed_next_fls_boundary"
+            owner_tail = "FUN_181162610 TLS/FLS cv::Exception throw path"
+        else:
+            next_contract = {
+                "kind": "common-owner return / natural writer gate",
+                "boundary": "FUN_18114c8f0 return",
+                "condition": "required PF32 typed writer callsite was not reached",
+                "fail_closed": True,
+            }
+            classification = "bounded_allocator_and_fls_lifecycle_crossed_writer_gate"
+            owner_tail = "FUN_18114c8f0 returned without typed writer call"
+        return {
+            "classification": classification,
+            "owner_chain": [
+                "FUN_181157ed0 cv::Mat copy",
+                "FUN_181159ff0 / cv::Mat storage creation",
+                "FUN_18115eb30 allocation wrapper",
+                owner_tail,
+            ],
+            "source_geometry": {
+                "rows": source.get("rows") if isinstance(source, dict) else None,
+                "cols": source.get("cols") if isinstance(source, dict) else None,
+                "flags": source.get("flags") if isinstance(source, dict) else None,
+                "type_code": type_code,
+                "depth_code": type_code & 0x7,
+                "channels": ((type_code >> 3) & 0x1FF) + 1,
+                "step_values": source.get("step_values") if isinstance(source, dict) else None,
+                "data_bytes": 16,
+            },
+            "allocation_request": oom_request,
+            "allocator_import": {
+                "name": "_aligned_malloc",
+                "requested_bytes": 16,
+                "alignment": 64,
+                "returned": aligned_return,
+                "all_requests": aligned_request_trace(),
+                "grounding": "FUN_18115eb30 selects _aligned_malloc(size, 0x40) when OPENCV_ENABLE_MEMALIGN is enabled",
+            },
+            "next_contract": next_contract,
+            "fail_closed": True,
+        }
     try:
-        loader.call_function(
+        call_result = loader.call_function(
             COMMON_OWNER,
             int_args=[param_table, context, 0, descriptor],
             max_instructions=50_000,
         )
+        stop_rip = loader.uc.reg_read(UC_X86_REG_RIP)
+        stop_condition = "instruction budget exhausted" if call_result.get("instructions") == 50_000 else "RETURN_TRAMPOLINE emulation stop"
+        execution_stop.update({
+            "condition": stop_condition,
+            "rip": hex(loader.uc.reg_read(UC_X86_REG_RIP)),
+            "rsp": hex(loader.uc.reg_read(UC_X86_REG_RSP)),
+            "instructions": call_result.get("instructions"),
+            "rax": hex(call_result.get("rax", 0)),
+            "registers_rcx_rdx_r8_r9_rbp_rsi_rdi": [hex(loader.uc.reg_read(reg)) for reg in (UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_RBP, UC_X86_REG_RSI, UC_X86_REG_RDI)],
+            "grounded_location": "FUN_181294950 dispatch loop at 0x181294ad5" if stop_rip == 0x181294AD5 else None,
+        })
         return {
             "status": "FAILED",
             "events": events,
@@ -439,28 +1006,28 @@ def run_owner_probe() -> dict[str, object]:
             "suite_events": suite_events,
             "suite_call_trace": suite_call_trace,
             "internal_boundary_trace": internal_boundary_trace,
-            "natural_writer_reached": False,
-            "worlds": {
-                "input": {"pointer": hex(input_world), "payload": hex(input_payload), "rowbytes": rowbytes},
-                "output": {"pointer": hex(output_world), "payload": hex(output_payload), "rowbytes": rowbytes},
-            },
-            "parameter_table": {
-                "pointer": hex(param_table),
-                "size": "0xb0",
-                "proven_entries": {"address": hex(param_table + 0x8), "count": len(PARAM_SELECTOR_ORDER), "disk_ids": list(PARAM_SELECTOR_ORDER), "source": "mac/OLMKiraKira/OLMKiraKira.h disk IDs; first request FUN_18114e860 0x18114e87f MOV R8D,0x1"},
-                "context_defaults": {"+0xe0": 0, "+0xe4": 0, "+0xf0": 0, "source": "zero-initialized fixture; exact FUN_1811542b0 reads"},
-            },
-            "reason": "common owner returned without reaching the required natural PF32 writer callsite",
-        }
-    except Exception as exc:
-        return {
-            "status": "BLOCKED",
-            "events": events,
-            "callback": callback_state,
-            "handle_events": handle_events,
-            "suite_events": suite_events,
-            "suite_call_trace": suite_call_trace,
-            "internal_boundary_trace": internal_boundary_trace,
+            "runtime_tls": runtime_state,
+            "runtime_error_boundary": runtime_error_boundary,
+            "allocation_trace": allocation_trace,
+            "mat_trace": mat_trace,
+            "oom_request": oom_request,
+            "aligned_lifecycle": aligned_lifecycle,
+            "aligned_request_trace": aligned_request_trace(),
+            "aligned_live": {hex(pointer): spec for pointer, spec in aligned_live.items()},
+            "control_flow_trace": control_flow_trace,
+            "mode2_call_args": mode2_call_args,
+            "mode2_instruction_trace": mode2_instruction_trace,
+            "inner_entry": inner_entry,
+            "inner_instruction_trace": inner_instruction_trace,
+            "execution_stop": execution_stop,
+            "selector_diagnosis": selector_diagnosis(),
+            "fls_lifecycle": fls_lifecycle,
+            "fls_live_keys": {str(key): spec for key, spec in fls_live_keys.items()},
+            "fls_thread_values": {hex(thread): {str(key): hex(value) for key, value in values.items()} for thread, values in fls_thread_values.items()},
+            "next_runtime_boundary": next_runtime_boundary,
+            "runtime_imports": runtime_imports(),
+            "unimplemented_imports": unimplemented_imports(),
+            "allocation_diagnosis": allocation_diagnosis(),
             "natural_writer_reached": False,
             "worlds": {
                 "input": {"pointer": hex(input_world), "payload": hex(input_payload), "rowbytes": rowbytes,
@@ -476,7 +1043,72 @@ def run_owner_probe() -> dict[str, object]:
                 "proven_entries": {"address": hex(param_table + 0x8), "count": len(PARAM_SELECTOR_ORDER), "disk_ids": list(PARAM_SELECTOR_ORDER), "source": "mac/OLMKiraKira/OLMKiraKira.h disk IDs; first request FUN_18114e860 0x18114e87f MOV R8D,0x1"},
                 "context_defaults": {"+0xe0": 0, "+0xe4": 0, "+0xf0": 0, "source": "zero-initialized fixture; exact FUN_1811542b0 reads"},
             },
-            "first_unavailable_boundary": "PF Handle Suite v2 new(16)/lock completed; next natural boundary is FUN_181159da0 +0x4b at 0x181159deb during lazy runtime singleton TLS initialization, before unlock/dispose or typed writer",
+            "reason": "common owner returned without reaching the required natural PF32 writer callsite",
+            "first_unavailable_boundary": (
+                f"exact stop: FUN_181150790 entered; instruction budget exhausted at RIP={execution_stop.get('rip')} in FUN_181294950 dispatch loop; no unimplemented import observed, no typed writer claim"
+                if execution_stop.get("condition") == "instruction budget exhausted"
+                else "ambiguous control-flow boundary: Mode2 entered FUN_181150790, but no return or inner mode-selector branch was observed before the natural owner return; fail closed, no typed writer claim"
+                if any(item["label"] == "Mode2 inner helper entry" for item in control_flow_trace)
+                else "common owner returned at 0x18114c8f0 without reaching the required PF32 typed writer callsite; no further host/runtime boundary was entered"
+            ),
+        }
+    except Exception as exc:
+        execution_stop.update({
+            "condition": "exception",
+            "rip": hex(loader.uc.reg_read(UC_X86_REG_RIP)),
+            "rsp": hex(loader.uc.reg_read(UC_X86_REG_RSP)),
+            "registers_rcx_rdx_r8_r9_rbp_rsi_rdi": [hex(loader.uc.reg_read(reg)) for reg in (UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_RBP, UC_X86_REG_RSI, UC_X86_REG_RDI)],
+        })
+        return {
+            "status": "BLOCKED",
+            "events": events,
+            "callback": callback_state,
+            "handle_events": handle_events,
+            "suite_events": suite_events,
+            "suite_call_trace": suite_call_trace,
+            "internal_boundary_trace": internal_boundary_trace,
+            "runtime_tls": runtime_state,
+            "runtime_error_boundary": runtime_error_boundary,
+            "allocation_trace": allocation_trace,
+            "mat_trace": mat_trace,
+            "oom_request": oom_request,
+            "aligned_lifecycle": aligned_lifecycle,
+            "aligned_request_trace": aligned_request_trace(),
+            "aligned_live": {hex(pointer): spec for pointer, spec in aligned_live.items()},
+            "control_flow_trace": control_flow_trace,
+            "mode2_call_args": mode2_call_args,
+            "mode2_instruction_trace": mode2_instruction_trace,
+            "inner_entry": inner_entry,
+            "inner_instruction_trace": inner_instruction_trace,
+            "execution_stop": execution_stop,
+            "selector_diagnosis": selector_diagnosis(),
+            "fls_lifecycle": fls_lifecycle,
+            "fls_live_keys": {str(key): spec for key, spec in fls_live_keys.items()},
+            "fls_thread_values": {hex(thread): {str(key): hex(value) for key, value in values.items()} for thread, values in fls_thread_values.items()},
+            "next_runtime_boundary": next_runtime_boundary,
+            "runtime_imports": runtime_imports(),
+            "unimplemented_imports": unimplemented_imports(),
+            "allocation_diagnosis": allocation_diagnosis(),
+            "natural_writer_reached": False,
+            "worlds": {
+                "input": {"pointer": hex(input_world), "payload": hex(input_payload), "rowbytes": rowbytes,
+                           "raw_after": loader.read_bytes(input_payload, rowbytes).hex(),
+                           "padding_preserved": loader.read_bytes(input_payload + pixel_size, 8) == input_canary},
+                "output": {"pointer": hex(output_world), "payload": hex(output_payload), "rowbytes": rowbytes,
+                           "raw_after": loader.read_bytes(output_payload, rowbytes).hex(),
+                           "padding_preserved": loader.read_bytes(output_payload + pixel_size, 8) == output_canary},
+            },
+            "parameter_table": {
+                "pointer": hex(param_table),
+                "size": "0xb0",
+                "proven_entries": {"address": hex(param_table + 0x8), "count": len(PARAM_SELECTOR_ORDER), "disk_ids": list(PARAM_SELECTOR_ORDER), "source": "mac/OLMKiraKira/OLMKiraKira.h disk IDs; first request FUN_18114e860 0x18114e87f MOV R8D,0x1"},
+                "context_defaults": {"+0xe0": 0, "+0xe4": 0, "+0xf0": 0, "source": "zero-initialized fixture; exact FUN_1811542b0 reads"},
+            },
+            "first_unavailable_boundary": (
+                f"next exact boundary after one-key FLS/TLS lifecycle: FUN_18115eb30 -> _aligned_malloc({oom_request['requested_bytes']}, 64) returned null and reached FUN_18115ea40; no typed writer claim"
+                if oom_request else
+                "next exact boundary after bounded aligned allocation: FUN_181162610 TLS/FLS setData failure, FlsSetValue(tlsKey,pData) == TRUE, error -215; CRT _CxxThrowException is only the physical throw fallback; no typed writer claim"
+            ),
             "exception": f"{type(exc).__name__}: {exc}",
         }
 

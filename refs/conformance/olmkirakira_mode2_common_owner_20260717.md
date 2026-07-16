@@ -106,18 +106,75 @@ The rerun stops at the next exact unavailable boundary:
 PF Handle Suite v2: new(16) -> lock(handle) completed
 next call: FUN_181159da0 +0x4b at 0x181159deb
 operation: lazy runtime singleton / TLS epoch read
-result: Invalid memory read / UC_ERR_READ_UNMAPPED
+fixture: GS:[0x58] -> one-entry TLS table -> slot +0x04, with _tls_index=0 and epoch=-1
+result: TLS read crossed; natural execution continued to 0x181162610
 ```
+
+## FACT
+
+`FUN_181162610` is not an unavailable host callback. Its grounded binary
+contract constructs a `cv::Exception` from the supplied error code, message,
+class, source file, and line, then calls `FUN_181162500`. That helper reaches
+`_CxxThrowException`; the instruction at `0x181162672` is only the
+non-returning fallback trap. A prior run reached this same exception
+constructor with error code `-215`,
+class `cv::details::TlsAbstraction::setData`, and source `system.cpp`; the
+current one-key FLS contract crosses that boundary.
+
+The allocation backtrace is:
+
+```text
+FUN_181157ed0 cv::Mat copy
+  source geometry: rows=1, cols=1, flags=0x42ff401d
+  decoded type: CV_32FC4, step=16, data bytes=16
+FUN_18115eb30
+  storage requests: 16, 48, 100 bytes
+  selected callback: _aligned_malloc(size, 0x40)
+  returns: 0x40000580, 0x40000600, 0x40000640
+_aligned_free
+  pointer: 0x40000580, size=16, alignment=64, lifecycle=freed
+common owner
+  returned at 0x18114c8f0 without reaching the PF32 typed writer callsite
+```
+
+The request is a genuine bounded `CV_32FC4` Mat allocation: rows=1, cols=1,
+type `CV_32FC4`, step=16, and 16 data bytes. The allocator callback is
+generalized to positive bounded requests from 1 through `0x100000`, with
+power-of-two alignments from 8 through `0x1000`. Each returned pointer is
+checked for the requested alignment, and `_aligned_free` validates live
+ownership, recorded alignment, and double-free rejection. The run records all
+three accepted sizes: 16, 48, and 100 bytes. The 48- and 100-byte allocations
+remain live when the owner returns because no natural free was reached.
+
+The one-key FLS/TLS contract then crosses successfully: `FlsAlloc` returns key
+`0` for thread `0x50000000`, both `FlsGetValue(0)` calls return null, and
+`FlsSetValue(0, 0x20000870)` returns `1`, followed by successful reads of the
+stored per-thread value. The selector trace proves that the fixture's intended
+Mode2 contract is selected: PF depth `0x20` reaches `FUN_18114d7f0`, Blur Mode
+disk ID `9` is checked out at selector index `8` with raw value `02 00 00 00`,
+and the PF32 mode field at `0xf0fe770` is `2`, selecting the binary value-2
+branch and entering `FUN_18114f4a0`.
+
+Mode2 then enters `FUN_181150790`, but no return or inner mode-selector branch
+is observed before the harness exits. This is the first ambiguous control-flow
+boundary. It is recorded fail-closed; it is not labeled as a Mode2 bypass, and
+the writer is not called directly.
+
+The exact next boundary is `FUN_181150790` entry with no observed return. No
+additional host/runtime callback is entered, so the harness stops there.
 
 ## INFERENCE
 
-The ColorParamSuite and the first PF Handle Suite v2 lifecycle boundary are
-now crossed in the existing common-owner harness, but the natural PF32 owner
-does not yet reach a typed writer. The next Mac-only action is the bounded
-runtime/TLS singleton contract, not a direct writer invocation or
-Python-mediated output transfer. No Windows execution, After Effects host
-binding, final pixel, or AE exactness claim is made.
+The ColorParamSuite, the first PF Handle Suite v2 lifecycle boundary, the
+minimal lazy TLS/runtime contract, the generalized bounded aligned allocation
+contract, and the one-key FLS/TLS lifecycle are crossed in the existing
+common-owner harness. Natural execution confirms Mode2 selection and stops at
+the first ambiguous inner helper control-flow boundary. The natural PF32 owner
+does not reach a typed writer.
+No direct writer invocation or Python-mediated output transfer is used. No
+Windows execution, After Effects host binding, final pixel, or AE exactness
+claim is made.
 
-The harness remains fail-closed and exits `2`; the machine-readable details
+The harness remains fail-closed; the machine-readable details
 are in
 `refs/conformance/olmkirakira_mode2_common_owner_20260717.json`.

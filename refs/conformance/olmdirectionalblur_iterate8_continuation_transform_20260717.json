@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "kind": "olmdirectionalblur_iterate8_continuation_transform_checkpoint",
+  "status": "blocked",
+  "scope": "Mac-local Unicorn natural angle-0 8bpc path with continuation-safe actual populate",
+  "claim_scope": "First grounded downstream target-cell write only; no Windows or AE-exact claim",
+  "provenance": {
+    "aex": "plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "fixture": "tools/emulation/dblur_fullrender_host_fixture_20260711.py",
+    "fixture_sha256": "e3216aa5a213efaf2129dd11bf9c4a5e6e4a5c162d034c607df6e0bda1fba80a",
+    "source": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png",
+    "source_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4"
+  },
+  "continuation": {
+    "callback": "0x180006980",
+    "private_return": "0x90001000",
+    "context_save_restore": true,
+    "natural_callback_continued": true,
+    "fixture_status": "blocked",
+    "fixture_blocker": "pre-render-return",
+    "fixture_blocker_message": "FUN_180007bd0 returned without entering PF Iterate8 or 0x180005628",
+    "write_events": []
+  },
+  "target": {
+    "before": {
+      "event": "actual_populate_return",
+      "entry": "0x180006980",
+      "xy": [
+        0,
+        0
+      ],
+      "params": "0xf0f6e60",
+      "source_base_0x8078": "0x20000980",
+      "writer_base_0x8090": "0x200033c0",
+      "width": 26,
+      "row0": 5,
+      "col0": 5,
+      "source_cell": "0x200011f0",
+      "writer_cell": "0x20003c30",
+      "source_rgba_f32": [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "writer_rgba_f32_before_downstream": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "downstream_first_write": null,
+    "all_downstream_writes": [],
+    "writer_transform_entry": "0x180001ec0",
+    "writer_callback": "0x180006b30",
+    "alias_assessment": "natural source/writer pointers are distinct"
+  },
+  "nearest_function": {
+    "function": null,
+    "entry": "0x180001ec0",
+    "first_write_instruction": null,
+    "classification": "no downstream write observed"
+  },
+  "fail_closed": {
+    "status": "blocked",
+    "next_unresolved_boundary": "pre-render-return",
+    "reason": "no downstream write before fixture pre-render-return",
+    "production_source_edited": false,
+    "ledger_edited": false,
+    "windows_values_fabricated": false,
+    "ae_exact_claim": false
+  },
+  "command": "python3 tools/emulation/test_olmdirectionalblur_iterate8_continuation_transform_20260717.py"
+}

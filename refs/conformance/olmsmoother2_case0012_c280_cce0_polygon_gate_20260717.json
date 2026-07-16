@@ -1,0 +1,1887 @@
+{
+  "actual_cases": [
+    {
+      "ada_instructions": 96285,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 0.0,
+      "raw": 200
+    },
+    {
+      "ada_instructions": 96285,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 1.0,
+      "raw": 200
+    },
+    {
+      "ada_instructions": 96285,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 2.0,
+      "raw": 200
+    },
+    {
+      "ada_instructions": 97309,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 0.0,
+      "raw": 200
+    },
+    {
+      "ada_instructions": 97309,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 1.0,
+      "raw": 200
+    },
+    {
+      "ada_instructions": 97309,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 2.0,
+      "raw": 200
+    },
+    {
+      "ada_instructions": 96285,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 0.0,
+      "raw": 100
+    },
+    {
+      "ada_instructions": 96285,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 1.0,
+      "raw": 100
+    },
+    {
+      "ada_instructions": 96285,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 2.0,
+      "raw": 100
+    },
+    {
+      "ada_instructions": 97309,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 0.0,
+      "raw": 100
+    },
+    {
+      "ada_instructions": 97309,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 1.0,
+      "raw": 100
+    },
+    {
+      "ada_instructions": 97309,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 2.0,
+      "raw": 100
+    },
+    {
+      "ada_instructions": 96285,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 0.0,
+      "raw": 10
+    },
+    {
+      "ada_instructions": 96285,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 1.0,
+      "raw": 10
+    },
+    {
+      "ada_instructions": 96285,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 2.0,
+      "raw": 10
+    },
+    {
+      "ada_instructions": 97309,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 0.0,
+      "raw": 10
+    },
+    {
+      "ada_instructions": 97309,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 1.0,
+      "raw": 10
+    },
+    {
+      "ada_instructions": 97309,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 2.0,
+      "raw": 10
+    },
+    {
+      "ada_instructions": 96285,
+      "c280": {
+        "count": 12,
+        "vertices": [
+          {
+            "rgba": [
+              0.28125,
+              0.109375,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.2734375,
+              0.109375,
+              0.1640625,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.3046875,
+              0.125,
+              0.1640625,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3046875,
+              0.125,
+              0.1640625,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3359375,
+              0.140625,
+              0.1640625,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.34375,
+              0.140625,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3203125,
+              0.125,
+              0.2109375,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3515625,
+              0.140625,
+              0.2109375,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.34375,
+              0.140625,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.28125,
+              0.109375,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.2890625,
+              0.109375,
+              0.2109375,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.3203125,
+              0.125,
+              0.2109375,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          }
+        ]
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "6cbbe7a8a234e43b968d29515c6d143522f693bcba857d8872d40d5bbfcd73fc",
+      "classifier_index": 0,
+      "gate": 0,
+      "multiplier": 0.0,
+      "raw": 0
+    },
+    {
+      "ada_instructions": 96285,
+      "c280": {
+        "count": 12,
+        "vertices": [
+          {
+            "rgba": [
+              0.28125,
+              0.109375,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.2734375,
+              0.109375,
+              0.1640625,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.3046875,
+              0.125,
+              0.1640625,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3046875,
+              0.125,
+              0.1640625,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3359375,
+              0.140625,
+              0.1640625,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.34375,
+              0.140625,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3203125,
+              0.125,
+              0.2109375,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3515625,
+              0.140625,
+              0.2109375,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.34375,
+              0.140625,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.28125,
+              0.109375,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.2890625,
+              0.109375,
+              0.2109375,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.3203125,
+              0.125,
+              0.2109375,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          }
+        ]
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "6cbbe7a8a234e43b968d29515c6d143522f693bcba857d8872d40d5bbfcd73fc",
+      "classifier_index": 0,
+      "gate": 0,
+      "multiplier": 1.0,
+      "raw": 0
+    },
+    {
+      "ada_instructions": 96285,
+      "c280": {
+        "count": 12,
+        "vertices": [
+          {
+            "rgba": [
+              0.28125,
+              0.109375,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.2734375,
+              0.109375,
+              0.1640625,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.3046875,
+              0.125,
+              0.1640625,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3046875,
+              0.125,
+              0.1640625,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3359375,
+              0.140625,
+              0.1640625,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.34375,
+              0.140625,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3203125,
+              0.125,
+              0.2109375,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3515625,
+              0.140625,
+              0.2109375,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.34375,
+              0.140625,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.28125,
+              0.109375,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.2890625,
+              0.109375,
+              0.2109375,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.3203125,
+              0.125,
+              0.2109375,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          }
+        ]
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "6cbbe7a8a234e43b968d29515c6d143522f693bcba857d8872d40d5bbfcd73fc",
+      "classifier_index": 0,
+      "gate": 0,
+      "multiplier": 2.0,
+      "raw": 0
+    },
+    {
+      "ada_instructions": 175289,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "a7dfa814e01529d8afd5c0420992b0103301b6dbe8d513b687f39d985ea0bef6",
+      "classifier_index": 90,
+      "gate": 1,
+      "multiplier": 0.0,
+      "raw": 0
+    },
+    {
+      "ada_instructions": 175065,
+      "c280": {
+        "count": 2,
+        "vertices": [
+          {
+            "rgba": [
+              0.25,
+              0.125,
+              0.0,
+              1.0
+            ],
+            "weight": 0.24999845027923584
+          },
+          {
+            "rgba": [
+              0.25,
+              0.125,
+              0.0,
+              1.0
+            ],
+            "weight": 0.24999845027923584
+          }
+        ]
+      },
+      "cce0": {
+        "rgba": [
+          0.2812501788139343,
+          0.125,
+          0.09375058114528656,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "087610790b54818d2a3623478246557105a877d84c309ce6dbcad584eda8a7e0",
+      "classifier_index": 66,
+      "gate": 1,
+      "multiplier": 1.0,
+      "raw": 0
+    },
+    {
+      "ada_instructions": 174617,
+      "c280": {
+        "count": 12,
+        "vertices": [
+          {
+            "rgba": [
+              0.28125,
+              0.109375,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.2734375,
+              0.109375,
+              0.1640625,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.3046875,
+              0.125,
+              0.1640625,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3046875,
+              0.125,
+              0.1640625,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3359375,
+              0.140625,
+              0.1640625,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.34375,
+              0.140625,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3203125,
+              0.125,
+              0.2109375,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3515625,
+              0.140625,
+              0.2109375,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.34375,
+              0.140625,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.28125,
+              0.109375,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.2890625,
+              0.109375,
+              0.2109375,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.3203125,
+              0.125,
+              0.2109375,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          }
+        ]
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "6cbbe7a8a234e43b968d29515c6d143522f693bcba857d8872d40d5bbfcd73fc",
+      "classifier_index": 0,
+      "gate": 1,
+      "multiplier": 2.0,
+      "raw": 0
+    },
+    {
+      "ada_instructions": 96285,
+      "c280": {
+        "count": 12,
+        "vertices": [
+          {
+            "rgba": [
+              0.28125,
+              0.109375,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.2734375,
+              0.109375,
+              0.1640625,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.3046875,
+              0.125,
+              0.1640625,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3046875,
+              0.125,
+              0.1640625,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3359375,
+              0.140625,
+              0.1640625,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.34375,
+              0.140625,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3203125,
+              0.125,
+              0.2109375,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3515625,
+              0.140625,
+              0.2109375,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.34375,
+              0.140625,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.28125,
+              0.109375,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.2890625,
+              0.109375,
+              0.2109375,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.3203125,
+              0.125,
+              0.2109375,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          }
+        ]
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "6cbbe7a8a234e43b968d29515c6d143522f693bcba857d8872d40d5bbfcd73fc",
+      "classifier_index": 0,
+      "gate": 0,
+      "multiplier": 0.0,
+      "raw": 1
+    },
+    {
+      "ada_instructions": 96285,
+      "c280": {
+        "count": 12,
+        "vertices": [
+          {
+            "rgba": [
+              0.28125,
+              0.109375,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.2734375,
+              0.109375,
+              0.1640625,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.3046875,
+              0.125,
+              0.1640625,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3046875,
+              0.125,
+              0.1640625,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3359375,
+              0.140625,
+              0.1640625,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.34375,
+              0.140625,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3203125,
+              0.125,
+              0.2109375,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3515625,
+              0.140625,
+              0.2109375,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.34375,
+              0.140625,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.28125,
+              0.109375,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.2890625,
+              0.109375,
+              0.2109375,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.3203125,
+              0.125,
+              0.2109375,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          }
+        ]
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "6cbbe7a8a234e43b968d29515c6d143522f693bcba857d8872d40d5bbfcd73fc",
+      "classifier_index": 0,
+      "gate": 0,
+      "multiplier": 1.0,
+      "raw": 1
+    },
+    {
+      "ada_instructions": 96285,
+      "c280": {
+        "count": 12,
+        "vertices": [
+          {
+            "rgba": [
+              0.28125,
+              0.109375,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.2734375,
+              0.109375,
+              0.1640625,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.3046875,
+              0.125,
+              0.1640625,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3046875,
+              0.125,
+              0.1640625,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3359375,
+              0.140625,
+              0.1640625,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.34375,
+              0.140625,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3203125,
+              0.125,
+              0.2109375,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3515625,
+              0.140625,
+              0.2109375,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.34375,
+              0.140625,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.28125,
+              0.109375,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.2890625,
+              0.109375,
+              0.2109375,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.3203125,
+              0.125,
+              0.2109375,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          }
+        ]
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "6cbbe7a8a234e43b968d29515c6d143522f693bcba857d8872d40d5bbfcd73fc",
+      "classifier_index": 0,
+      "gate": 0,
+      "multiplier": 2.0,
+      "raw": 1
+    },
+    {
+      "ada_instructions": 175289,
+      "c280": {
+        "count": 0,
+        "vertices": []
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "a7dfa814e01529d8afd5c0420992b0103301b6dbe8d513b687f39d985ea0bef6",
+      "classifier_index": 90,
+      "gate": 1,
+      "multiplier": 0.0,
+      "raw": 1
+    },
+    {
+      "ada_instructions": 175065,
+      "c280": {
+        "count": 2,
+        "vertices": [
+          {
+            "rgba": [
+              0.25,
+              0.125,
+              0.0,
+              1.0
+            ],
+            "weight": 0.24999845027923584
+          },
+          {
+            "rgba": [
+              0.25,
+              0.125,
+              0.0,
+              1.0
+            ],
+            "weight": 0.24999845027923584
+          }
+        ]
+      },
+      "cce0": {
+        "rgba": [
+          0.2812501788139343,
+          0.125,
+          0.09375058114528656,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "087610790b54818d2a3623478246557105a877d84c309ce6dbcad584eda8a7e0",
+      "classifier_index": 66,
+      "gate": 1,
+      "multiplier": 1.0,
+      "raw": 1
+    },
+    {
+      "ada_instructions": 174617,
+      "c280": {
+        "count": 12,
+        "vertices": [
+          {
+            "rgba": [
+              0.28125,
+              0.109375,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.2734375,
+              0.109375,
+              0.1640625,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.3046875,
+              0.125,
+              0.1640625,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3046875,
+              0.125,
+              0.1640625,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3359375,
+              0.140625,
+              0.1640625,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.34375,
+              0.140625,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3203125,
+              0.125,
+              0.2109375,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.3515625,
+              0.140625,
+              0.2109375,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.34375,
+              0.140625,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.28125,
+              0.109375,
+              0.1875,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          },
+          {
+            "rgba": [
+              0.2890625,
+              0.109375,
+              0.2109375,
+              1.0
+            ],
+            "weight": 16.384000778198242
+          },
+          {
+            "rgba": [
+              0.3203125,
+              0.125,
+              0.2109375,
+              1.0
+            ],
+            "weight": 32.768001556396484
+          }
+        ]
+      },
+      "cce0": {
+        "rgba": [
+          0.3125,
+          0.125,
+          0.1875,
+          1.0
+        ]
+      },
+      "class_plane_sha256": "6cbbe7a8a234e43b968d29515c6d143522f693bcba857d8872d40d5bbfcd73fc",
+      "classifier_index": 0,
+      "gate": 1,
+      "multiplier": 2.0,
+      "raw": 1
+    }
+  ],
+  "claims_not_made": [
+    "No portable geometry claim for non-empty dispatch",
+    "No Windows/AE execution claim",
+    "No production Mac source or ledger edit"
+  ],
+  "first_missing_semantic": {
+    "case": {
+      "classifier_index": 0,
+      "gate": 0,
+      "multiplier": 0.0,
+      "raw": 0
+    },
+    "owner": "FUN_18000c280 switch case plus helper chain",
+    "reason": "FUN_18000c280 dispatch index 0x00 is non-empty, but its helper composition and vertex geometry are not independently grounded for this portable oracle."
+  },
+  "portable_checks": [
+    {
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 0.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 200,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 1.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 200,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 2.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 200,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 0.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 200,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 1.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 200,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 2.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 200,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 0.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 100,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 1.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 100,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 2.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 100,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 0.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 100,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 1.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 100,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 2.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 100,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 0.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 10,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 1.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 10,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 255,
+      "gate": 0,
+      "multiplier": 2.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 10,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 0.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 10,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 1.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 10,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 255,
+      "gate": 1,
+      "multiplier": 2.0,
+      "portable_cce0_rgba": [
+        0.3125,
+        0.125,
+        0.1875,
+        1.0
+      ],
+      "portable_count": 0,
+      "portable_vertices": [],
+      "raw": 10,
+      "status": "exact"
+    },
+    {
+      "classifier_index": 0,
+      "gate": 0,
+      "multiplier": 0.0,
+      "raw": 0,
+      "status": "stopped_first_missing_semantic"
+    },
+    {
+      "classifier_index": 0,
+      "gate": 0,
+      "multiplier": 1.0,
+      "raw": 0,
+      "status": "not_evaluated_after_first_missing_semantic"
+    },
+    {
+      "classifier_index": 0,
+      "gate": 0,
+      "multiplier": 2.0,
+      "raw": 0,
+      "status": "not_evaluated_after_first_missing_semantic"
+    },
+    {
+      "classifier_index": 90,
+      "gate": 1,
+      "multiplier": 0.0,
+      "raw": 0,
+      "status": "not_evaluated_after_first_missing_semantic"
+    },
+    {
+      "classifier_index": 66,
+      "gate": 1,
+      "multiplier": 1.0,
+      "raw": 0,
+      "status": "not_evaluated_after_first_missing_semantic"
+    },
+    {
+      "classifier_index": 0,
+      "gate": 1,
+      "multiplier": 2.0,
+      "raw": 0,
+      "status": "not_evaluated_after_first_missing_semantic"
+    },
+    {
+      "classifier_index": 0,
+      "gate": 0,
+      "multiplier": 0.0,
+      "raw": 1,
+      "status": "not_evaluated_after_first_missing_semantic"
+    },
+    {
+      "classifier_index": 0,
+      "gate": 0,
+      "multiplier": 1.0,
+      "raw": 1,
+      "status": "not_evaluated_after_first_missing_semantic"
+    },
+    {
+      "classifier_index": 0,
+      "gate": 0,
+      "multiplier": 2.0,
+      "raw": 1,
+      "status": "not_evaluated_after_first_missing_semantic"
+    },
+    {
+      "classifier_index": 90,
+      "gate": 1,
+      "multiplier": 0.0,
+      "raw": 1,
+      "status": "not_evaluated_after_first_missing_semantic"
+    },
+    {
+      "classifier_index": 66,
+      "gate": 1,
+      "multiplier": 1.0,
+      "raw": 1,
+      "status": "not_evaluated_after_first_missing_semantic"
+    },
+    {
+      "classifier_index": 0,
+      "gate": 1,
+      "multiplier": 2.0,
+      "raw": 1,
+      "status": "not_evaluated_after_first_missing_semantic"
+    }
+  ],
+  "scope": "actual AEX c280/cce0 over all 30 natural class planes; portable comparison only for grounded default dispatch",
+  "verdict": "PASS_ACTUAL_C280_CCE0_WITH_FAIL_CLOSED_PORTABLE_POLYGON_BOUNDARY"
+}

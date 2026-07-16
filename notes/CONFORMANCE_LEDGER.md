@@ -1,5 +1,58 @@
 # OLM Conformance Ledger
 
+- 2026-07-17 `OLMRadialBlur natural B150 span matrix` (latest override): no
+  correctness status is promoted. The natural reader-owned caller reaches
+  actual `FUN_18000B150` for Outer Edge Fade spans 1, 2, and 3 and Inner Edge
+  Fade span 1. The AEX-generated Gaussian tables and all 196 RGBA/scalar work
+  cells match an independent per-operation float32 oracle by raw words in
+  every fixture. This closes the B150 table/population operation for these
+  naturally reachable nonzero spans; do not reopen it from broad PNG
+  residuals. A fail-closed full-size pre-collapse attempt proves that the
+  retained setup checkpoint is only 32x32 and cannot resume the 250M
+  case_0009 path, so no four-cell full-size state was fabricated. Windows
+  equivalence and AE exact remain open. Next action requires either a new
+  resumable full-size checkpoint at `0x180005c9f` or a same-run Windows witness;
+  further bounded B150 tuning is forbidden. Evidence:
+  `refs/conformance/olmradialblur_natural_b150_replay_oracle_20260717.json`
+  and `refs/conformance/olmradialblur_natural_fullsize_precollapse_witness_20260717.json`.
+
+- 2026-07-17 `OLMSmoother2 natural classifier matrix and polygon gate`
+  (latest override): no correctness status is promoted. The actual AEX path
+  `ada0 -> ac00 -> ae10` matches an independent class-plane oracle byte for
+  byte across 30 fixtures spanning threshold raw values 0/1/10/100/200,
+  hysteresis 0/1, and multipliers 0/1/2, with 256 classifier calls per case.
+  All 30 generated planes execute actual c280/cce0; the 18 default-dispatch
+  `0xff` cases match the portable empty-polygon/center-sample oracle exactly.
+  All unique classifier families in the 30-case matrix are now independently
+  grounded. Index `0x00` uses:
+  helper chain `0x134c0 -> 0x13570 -> 0x12ce0 -> 0x12c20`, append owner
+  `FUN_1800104d0`, vertex stride `0x14`, weight at `+0x10`, and the 12-vertex
+  cap; all eight cases match count/order/RGBA/raw weights. Index `0x42` grounds
+  `FUN_180013630` with a bit-precise SSE float32 weight oracle and both cases
+  match. Index `0x5a` grounds the `ec40 -> e0e0 -> dbd0 -> d230 -> e430`
+  empty path and both cases match; all 18 `0xff` cases also match the empty
+  path. This closes the local classifier/c280 family matrix, not the retained
+  Windows case0012 host state or AE exact. Evidence:
+  `refs/conformance/olmsmoother2_case0012_ada0_matrix_oracle_20260717.json`
+  and `refs/conformance/olmsmoother2_case0012_c280_5a_oracle_20260717.json`.
+
+- 2026-07-17 `OLMDirectionalBlur writer buffer provenance` (latest
+  override): no correctness status is promoted. The natural angle-0 caller
+  proves that output `PF Iterate8` refcon field `params+0x8090` owns the
+  writer-entry float RGBA. Static and dynamic write tracing identify
+  `FUN_180004A20` as the nearest producer: its final-path store at
+  `0x18000562d` writes `R15` to that field immediately before constructing the
+  output callback and entering `FUN_180006700`. `R15` is a HandleSuite-backed
+  26x26x4 float plane (2704 bytes); target `(0,0)` is cell 135 at byte offset
+  2160. Actual callback `0x180006980` now runs with grounded ABI and produces
+  source RGBA `[1,0,0,1]` in `params+0x8078`; the separate writer plane at
+  `params+0x8090` remains zero before downstream processing. A
+  continuation-safe attempt stops at `pre-render-return` before any downstream
+  write, so the exact render-branch/PF Iterate8 state remains the next
+  boundary. Do not change the proven `0x180006b30` writer. Evidence:
+  `refs/conformance/olmdirectionalblur_natural_writer_owner_20260717.json`
+  and `refs/conformance/olmdirectionalblur_iterate8_continuation_transform_20260717.json`.
+
 - 2026-07-17 `OLMDistanceGradation PF16 bounded full-chain exact` (latest
   override): no AE correctness status is promoted. The earlier
   `fieldgen_or_staging` result was caused by a harness contract error:
@@ -10,10 +63,13 @@
   match all 40 field words. Decomp of `FUN_181170480` proves PF16 truncating
   float-to-int stores; removing the Mac-only `+0.5` closes the complete
   40-pixel output at byte_diff=0. Universal Debug build and all focused
-  harnesses pass. The new binary is installed at the sole MediaCore path, but
-  AE PID 7653 still holds the previous module because graceful quit was
-  cancelled. Next allowed action: after a safe AE restart, rerun the canonical
-  16bpc batch with loaded-module SHA binding. Evidence:
+  harnesses pass. The new binary is installed at the sole MediaCore path with
+  SHA-256 `af328fae...f64232fd`. AE PID 7653 is running but does not currently
+  map OLMDistanceGradation, so no stale loaded DG module is present. The proof
+  render still requires a disposable/fresh AE project because the safe runner
+  resets renderer, color state, and project depth. Next allowed action: rerun
+  canonical 16bpc cases 0012/0014 with loaded-module SHA binding after the
+  current AE project can be replaced safely. Evidence:
   `refs/conformance/olmdistancegradation_pf16_field_staging_exact_20260717.json`.
 
 - 2026-07-17 `OLMBlur 32bpc source/AEX adapter` (latest override): no AE
@@ -69,10 +125,17 @@
   `PF ColorParamSuite` v1 acquisitions, conversions, and releases while
   preserving both PF32 world canaries. `PF Handle Suite` v2 acquisition,
   16-byte allocation, and lock now also execute with recorded pointers. The
-  run stops fail-closed at the lazy runtime/TLS initialization inside
-  `FUN_181159da0+0x4b` before unlock/dispose; no natural typed writer has been
-  reached. Next Mac-only action is the minimum TLS/runtime contract at RIP
-  `0x181159deb`, not a direct writer invocation. Evidence:
+  minimal `GS:[0x58]` TLS epoch contract and bounded
+  aligned allocation/free plus one-key FLS set/get lifecycle are crossed.
+  Observed aligned requests 16/48/100 bytes are valid and guarded; the former
+  OOM was only a null allocator callback. PF depth `0x20` selects PF32, Blur
+  Mode disk ID 9/index 8 reads back 2, and the Mode2 branch enters
+  `FUN_18114f4a0` then `FUN_181150790`. The latter enters the dispatch loop at
+  `FUN_181294950`; the bounded run exhausts its instruction budget at
+  `0x181294ad5` without hitting an unimplemented import, returning, or reaching
+  the typed writer. Next Mac-only action is a resumable/checkpointed audit of
+  that dispatch loop, not a parameter remap, exception suppression, or direct
+  writer invocation. Evidence:
   `refs/conformance/olmkirakira_mode2_common_owner_20260717.json`.
 
 - 2026-07-17 `OLMRadialBlur reconstructed B150 population` (latest override):

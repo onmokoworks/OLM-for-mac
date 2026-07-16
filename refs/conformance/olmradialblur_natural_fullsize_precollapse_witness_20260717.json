@@ -1,0 +1,81 @@
+{
+  "blocker": "setup checkpoint has no resumable full-size worker state; refusing to rerun the unchanged unprefilled 250M path",
+  "checkpoint_scope": {
+    "has_resumable_full_size_state": false,
+    "max_instructions": 2000000,
+    "python_prefill": false,
+    "source_geometry": [
+      32,
+      32
+    ],
+    "worker_detour": false
+  },
+  "checkpoint_status": "pass",
+  "claim_boundary": "natural case_0009 full-size pre-collapse witness only; no production, Windows, or AE-exact claim",
+  "classification": "blocked-fail-closed-no-resumable-full-size-checkpoint",
+  "kind": "olmradialblur_natural_fullsize_precollapse_witness_20260717",
+  "provenance": {
+    "checkpoint": "refs/conformance/olmradialblur_natural_b150_checkpoint_20260717.json",
+    "checkpoint_sha256": "31da4df2e822e252076fb4e4cea4e1933c0fa19f60f0a91d3ba033aae08adb9d"
+  },
+  "required_observation": {
+    "actual_calls": [
+      "0x18000b150",
+      "0x18000a9d0"
+    ],
+    "cells": [
+      [
+        1047,
+        1095
+      ],
+      [
+        1047,
+        1096
+      ],
+      [
+        1048,
+        1095
+      ],
+      [
+        1048,
+        1096
+      ]
+    ],
+    "classification_rule": "residual-driving only if all four RGBA/scalar rows are captured before collapse and the state is nonzero or differs from the accepted upstream baseline",
+    "raw_float32": [
+      "work+0x4210",
+      "work+0x4218"
+    ],
+    "stop_rip": "0x180005c9f"
+  },
+  "schema": 1,
+  "status": "blocked",
+  "target": {
+    "a9d0": "0x18000a9d0",
+    "b150": "0x18000b150",
+    "case_id": "case_0009",
+    "cells": [
+      [
+        1047,
+        1095
+      ],
+      [
+        1047,
+        1096
+      ],
+      [
+        1048,
+        1095
+      ],
+      [
+        1048,
+        1096
+      ]
+    ],
+    "entry": "0x1800056f0",
+    "max_instructions": 2000000,
+    "rgba_plane": "work+0x4210",
+    "scalar_plane": "work+0x4218",
+    "stop_before_collapse": "0x180005c9f"
+  }
+}

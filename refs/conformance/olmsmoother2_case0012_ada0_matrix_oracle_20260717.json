@@ -1,0 +1,329 @@
+{
+  "claims_not_made": [
+    "No Windows/AE execution claim",
+    "No production Mac source or ledger edit"
+  ],
+  "coverage": {
+    "fixtures": 30,
+    "gate": [
+      0,
+      1
+    ],
+    "multiplier": [
+      0.0,
+      1.0,
+      2.0
+    ],
+    "threshold_raw": [
+      0,
+      1,
+      10,
+      100,
+      200
+    ]
+  },
+  "matrix": [
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 0,
+      "instructions": 96285,
+      "multiplier": 0.0,
+      "raw": 0,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 0,
+      "instructions": 96285,
+      "multiplier": 1.0,
+      "raw": 0,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 0,
+      "instructions": 96285,
+      "multiplier": 2.0,
+      "raw": 0,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 1,
+      "instructions": 175289,
+      "multiplier": 0.0,
+      "raw": 0,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 1,
+      "instructions": 175065,
+      "multiplier": 1.0,
+      "raw": 0,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 1,
+      "instructions": 174617,
+      "multiplier": 2.0,
+      "raw": 0,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 0,
+      "instructions": 96285,
+      "multiplier": 0.0,
+      "raw": 1,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 0,
+      "instructions": 96285,
+      "multiplier": 1.0,
+      "raw": 1,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 0,
+      "instructions": 96285,
+      "multiplier": 2.0,
+      "raw": 1,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 1,
+      "instructions": 175289,
+      "multiplier": 0.0,
+      "raw": 1,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 1,
+      "instructions": 175065,
+      "multiplier": 1.0,
+      "raw": 1,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 1,
+      "instructions": 174617,
+      "multiplier": 2.0,
+      "raw": 1,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 0,
+      "instructions": 96285,
+      "multiplier": 0.0,
+      "raw": 10,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 0,
+      "instructions": 96285,
+      "multiplier": 1.0,
+      "raw": 10,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 0,
+      "instructions": 96285,
+      "multiplier": 2.0,
+      "raw": 10,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 1,
+      "instructions": 97309,
+      "multiplier": 0.0,
+      "raw": 10,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 1,
+      "instructions": 97309,
+      "multiplier": 1.0,
+      "raw": 10,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 1,
+      "instructions": 97309,
+      "multiplier": 2.0,
+      "raw": 10,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 0,
+      "instructions": 96285,
+      "multiplier": 0.0,
+      "raw": 100,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 0,
+      "instructions": 96285,
+      "multiplier": 1.0,
+      "raw": 100,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 0,
+      "instructions": 96285,
+      "multiplier": 2.0,
+      "raw": 100,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 1,
+      "instructions": 97309,
+      "multiplier": 0.0,
+      "raw": 100,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 1,
+      "instructions": 97309,
+      "multiplier": 1.0,
+      "raw": 100,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 1,
+      "instructions": 97309,
+      "multiplier": 2.0,
+      "raw": 100,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 0,
+      "instructions": 96285,
+      "multiplier": 0.0,
+      "raw": 200,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 0,
+      "instructions": 96285,
+      "multiplier": 1.0,
+      "raw": 200,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 0,
+      "instructions": 96285,
+      "multiplier": 2.0,
+      "raw": 200,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 1,
+      "instructions": 97309,
+      "multiplier": 0.0,
+      "raw": 200,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 1,
+      "instructions": 97309,
+      "multiplier": 1.0,
+      "raw": 200,
+      "status": "exact",
+      "worker_entries": 1
+    },
+    {
+      "classifier_entries": 256,
+      "differing_bytes": 0,
+      "gate": 1,
+      "instructions": 97309,
+      "multiplier": 2.0,
+      "raw": 200,
+      "status": "exact",
+      "worker_entries": 1
+    }
+  ],
+  "scope": "local actual-AEX class-plane generation versus independent portable oracle",
+  "verdict": "PASS_EXACT_AEX_AE10_PORTABLE_MATRIX_15_BOUNDARY_FIXTURES"
+}
