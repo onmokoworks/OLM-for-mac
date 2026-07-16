@@ -1,0 +1,1432 @@
+{
+  "status": "PASS_NO_COPY_HELPER_PREMULTIPLY_OBSERVED",
+  "aex": "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex",
+  "workers": [
+    {
+      "depth": 8,
+      "selected": "premult-looking",
+      "helper_source_slot": 3,
+      "selected_raw": [
+        128,
+        64,
+        32,
+        16
+      ],
+      "worker": "0x1801a6150",
+      "helper": "0x1801ac880",
+      "input_raw": [
+        255,
+        31,
+        127,
+        223,
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_raw": [
+        255,
+        31,
+        127,
+        223,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "RETURN",
+      "instructions": 1431,
+      "events": [
+        {
+          "kind": "pf_copy_callback_entry",
+          "args": [
+            "0x1234",
+            "0x20000010",
+            "0x20000050",
+            "0x0",
+            "0x0"
+          ],
+          "world_keys": [
+            "0x20000010",
+            "0x20000050"
+          ]
+        },
+        {
+          "kind": "pf_copy_callback",
+          "abi": "5 args",
+          "args": [
+            "0x1234",
+            "0x20000010",
+            "0x20000050",
+            "0x0",
+            "0x0"
+          ],
+          "return_address": "0x1801a6221",
+          "source_world": "0x20000010",
+          "destination_world": "0x20000050",
+          "source_payload": "0x20000000",
+          "destination_payload": "0x20000040",
+          "width": 4,
+          "height": 1,
+          "source_rowbytes": 8,
+          "destination_rowbytes": 8,
+          "visible_bytes_per_row": 8,
+          "copied_rows": [
+            {
+              "source": 536870912,
+              "destination": 536870976,
+              "bytes": 8
+            }
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0xf0fecc8",
+            "0x20"
+          ]
+        },
+        {
+          "kind": "suite_alloc",
+          "size": 16,
+          "result": "0x400002b0"
+        },
+        {
+          "kind": "suite_free",
+          "ptr": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0x1",
+            "0x2"
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fee08",
+            "0xffffffffffffffff"
+          ]
+        },
+        {
+          "kind": "suite_handle_slot10",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_handle_slot18",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fee08",
+            "0xffffffffffffffff"
+          ]
+        }
+      ],
+      "captures": [
+        {
+          "source": "0x20000040",
+          "destination": "0x20000044",
+          "before_source": [
+            128,
+            64,
+            32,
+            16
+          ],
+          "before_destination": [
+            128,
+            64,
+            32,
+            16
+          ],
+          "return_address": "0x1801a64e2",
+          "after_source": [
+            128,
+            64,
+            32,
+            16
+          ],
+          "after_destination": [
+            128,
+            64,
+            32,
+            16
+          ],
+          "raw_four_channel_preserved": true
+        }
+      ],
+      "output_raw": [
+        128,
+        64,
+        32,
+        16,
+        128,
+        64,
+        32,
+        16
+      ],
+      "helper_reached": true,
+      "helper_source_matches_selected": true,
+      "raw_four_channel_preserved": true
+    },
+    {
+      "depth": 8,
+      "selected": "straight-looking",
+      "helper_source_slot": 3,
+      "selected_raw": [
+        128,
+        200,
+        100,
+        50
+      ],
+      "worker": "0x1801a6150",
+      "helper": "0x1801ac880",
+      "input_raw": [
+        255,
+        31,
+        127,
+        223,
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_raw": [
+        255,
+        31,
+        127,
+        223,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "RETURN",
+      "instructions": 1431,
+      "events": [
+        {
+          "kind": "pf_copy_callback_entry",
+          "args": [
+            "0x1234",
+            "0x20000010",
+            "0x20000050",
+            "0x0",
+            "0x0"
+          ],
+          "world_keys": [
+            "0x20000010",
+            "0x20000050"
+          ]
+        },
+        {
+          "kind": "pf_copy_callback",
+          "abi": "5 args",
+          "args": [
+            "0x1234",
+            "0x20000010",
+            "0x20000050",
+            "0x0",
+            "0x0"
+          ],
+          "return_address": "0x1801a6221",
+          "source_world": "0x20000010",
+          "destination_world": "0x20000050",
+          "source_payload": "0x20000000",
+          "destination_payload": "0x20000040",
+          "width": 4,
+          "height": 1,
+          "source_rowbytes": 8,
+          "destination_rowbytes": 8,
+          "visible_bytes_per_row": 8,
+          "copied_rows": [
+            {
+              "source": 536870912,
+              "destination": 536870976,
+              "bytes": 8
+            }
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0xf0fecc8",
+            "0x20"
+          ]
+        },
+        {
+          "kind": "suite_alloc",
+          "size": 16,
+          "result": "0x400002b0"
+        },
+        {
+          "kind": "suite_free",
+          "ptr": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0x1",
+            "0x2"
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fee08",
+            "0xffffffffffffffff"
+          ]
+        },
+        {
+          "kind": "suite_handle_slot10",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_handle_slot18",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fee08",
+            "0xffffffffffffffff"
+          ]
+        }
+      ],
+      "captures": [
+        {
+          "source": "0x20000040",
+          "destination": "0x20000044",
+          "before_source": [
+            128,
+            200,
+            100,
+            50
+          ],
+          "before_destination": [
+            128,
+            200,
+            100,
+            50
+          ],
+          "return_address": "0x1801a64e2",
+          "after_source": [
+            128,
+            200,
+            100,
+            50
+          ],
+          "after_destination": [
+            128,
+            200,
+            100,
+            50
+          ],
+          "raw_four_channel_preserved": true
+        }
+      ],
+      "output_raw": [
+        128,
+        200,
+        100,
+        50,
+        128,
+        200,
+        100,
+        50
+      ],
+      "helper_reached": true,
+      "helper_source_matches_selected": true,
+      "raw_four_channel_preserved": true
+    },
+    {
+      "depth": 16,
+      "selected": "premult-looking",
+      "helper_source_slot": 0,
+      "selected_raw": [
+        0,
+        128,
+        0,
+        64,
+        0,
+        32,
+        0,
+        16
+      ],
+      "worker": "0x1801a5a90",
+      "helper": "0x1801ac8b0",
+      "input_raw": [
+        0,
+        128,
+        0,
+        64,
+        0,
+        32,
+        0,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_raw": [
+        0,
+        128,
+        0,
+        64,
+        0,
+        32,
+        0,
+        16,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "RETURN",
+      "instructions": 1438,
+      "events": [
+        {
+          "kind": "pf_copy_callback_entry",
+          "args": [
+            "0x1234",
+            "0x20000020",
+            "0x200000a0",
+            "0x0",
+            "0x0"
+          ],
+          "world_keys": [
+            "0x20000020",
+            "0x200000a0"
+          ]
+        },
+        {
+          "kind": "pf_copy_callback",
+          "abi": "5 args",
+          "args": [
+            "0x1234",
+            "0x20000020",
+            "0x200000a0",
+            "0x0",
+            "0x0"
+          ],
+          "return_address": "0x1801a5b61",
+          "source_world": "0x20000020",
+          "destination_world": "0x200000a0",
+          "source_payload": "0x20000000",
+          "destination_payload": "0x20000080",
+          "width": 4,
+          "height": 1,
+          "source_rowbytes": 16,
+          "destination_rowbytes": 16,
+          "visible_bytes_per_row": 16,
+          "copied_rows": [
+            {
+              "source": 536870912,
+              "destination": 536871040,
+              "bytes": 16
+            }
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0xf0fecb8",
+            "0x20"
+          ]
+        },
+        {
+          "kind": "suite_alloc",
+          "size": 16,
+          "result": "0x400002b0"
+        },
+        {
+          "kind": "suite_free",
+          "ptr": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0x1",
+            "0x2"
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fedf8",
+            "0xffffffffffffffff"
+          ]
+        },
+        {
+          "kind": "suite_handle_slot10",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_handle_slot18",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fedf8",
+            "0xffffffffffffffff"
+          ]
+        }
+      ],
+      "captures": [
+        {
+          "source": "0x20000080",
+          "destination": "0x20000088",
+          "before_source": [
+            0,
+            128,
+            0,
+            64,
+            0,
+            32,
+            0,
+            16
+          ],
+          "before_destination": [
+            0,
+            128,
+            0,
+            64,
+            0,
+            32,
+            0,
+            16
+          ],
+          "return_address": "0x1801a5e22",
+          "after_source": [
+            0,
+            128,
+            0,
+            64,
+            0,
+            32,
+            0,
+            16
+          ],
+          "after_destination": [
+            0,
+            128,
+            0,
+            64,
+            0,
+            32,
+            0,
+            16
+          ],
+          "raw_four_channel_preserved": true
+        }
+      ],
+      "output_raw": [
+        0,
+        128,
+        0,
+        64,
+        0,
+        32,
+        0,
+        16,
+        0,
+        128,
+        0,
+        64,
+        0,
+        32,
+        0,
+        16
+      ],
+      "helper_reached": true,
+      "helper_source_matches_selected": true,
+      "raw_four_channel_preserved": true
+    },
+    {
+      "depth": 16,
+      "selected": "straight-looking",
+      "helper_source_slot": 0,
+      "selected_raw": [
+        0,
+        128,
+        80,
+        195,
+        48,
+        117,
+        32,
+        78
+      ],
+      "worker": "0x1801a5a90",
+      "helper": "0x1801ac8b0",
+      "input_raw": [
+        0,
+        128,
+        80,
+        195,
+        48,
+        117,
+        32,
+        78,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_raw": [
+        0,
+        128,
+        80,
+        195,
+        48,
+        117,
+        32,
+        78,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "RETURN",
+      "instructions": 1438,
+      "events": [
+        {
+          "kind": "pf_copy_callback_entry",
+          "args": [
+            "0x1234",
+            "0x20000020",
+            "0x200000a0",
+            "0x0",
+            "0x0"
+          ],
+          "world_keys": [
+            "0x20000020",
+            "0x200000a0"
+          ]
+        },
+        {
+          "kind": "pf_copy_callback",
+          "abi": "5 args",
+          "args": [
+            "0x1234",
+            "0x20000020",
+            "0x200000a0",
+            "0x0",
+            "0x0"
+          ],
+          "return_address": "0x1801a5b61",
+          "source_world": "0x20000020",
+          "destination_world": "0x200000a0",
+          "source_payload": "0x20000000",
+          "destination_payload": "0x20000080",
+          "width": 4,
+          "height": 1,
+          "source_rowbytes": 16,
+          "destination_rowbytes": 16,
+          "visible_bytes_per_row": 16,
+          "copied_rows": [
+            {
+              "source": 536870912,
+              "destination": 536871040,
+              "bytes": 16
+            }
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0xf0fecb8",
+            "0x20"
+          ]
+        },
+        {
+          "kind": "suite_alloc",
+          "size": 16,
+          "result": "0x400002b0"
+        },
+        {
+          "kind": "suite_free",
+          "ptr": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0x1",
+            "0x2"
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fedf8",
+            "0xffffffffffffffff"
+          ]
+        },
+        {
+          "kind": "suite_handle_slot10",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_handle_slot18",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fedf8",
+            "0xffffffffffffffff"
+          ]
+        }
+      ],
+      "captures": [
+        {
+          "source": "0x20000080",
+          "destination": "0x20000088",
+          "before_source": [
+            0,
+            128,
+            80,
+            195,
+            48,
+            117,
+            32,
+            78
+          ],
+          "before_destination": [
+            0,
+            128,
+            80,
+            195,
+            48,
+            117,
+            32,
+            78
+          ],
+          "return_address": "0x1801a5e22",
+          "after_source": [
+            0,
+            128,
+            80,
+            195,
+            48,
+            117,
+            32,
+            78
+          ],
+          "after_destination": [
+            0,
+            128,
+            80,
+            195,
+            48,
+            117,
+            32,
+            78
+          ],
+          "raw_four_channel_preserved": true
+        }
+      ],
+      "output_raw": [
+        0,
+        128,
+        80,
+        195,
+        48,
+        117,
+        32,
+        78,
+        0,
+        128,
+        80,
+        195,
+        48,
+        117,
+        32,
+        78
+      ],
+      "helper_reached": true,
+      "helper_source_matches_selected": true,
+      "raw_four_channel_preserved": true
+    },
+    {
+      "depth": 32,
+      "selected": "premult-looking",
+      "helper_source_slot": 3,
+      "selected_raw": [
+        0,
+        0,
+        0,
+        63,
+        0,
+        0,
+        128,
+        62,
+        0,
+        0,
+        0,
+        62,
+        0,
+        0,
+        128,
+        61
+      ],
+      "worker": "0x1801a6800",
+      "helper": "0x1801ac8e0",
+      "input_raw": [
+        0,
+        0,
+        128,
+        63,
+        0,
+        0,
+        0,
+        62,
+        0,
+        0,
+        128,
+        62,
+        0,
+        0,
+        0,
+        63,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_raw": [
+        0,
+        0,
+        128,
+        63,
+        0,
+        0,
+        0,
+        62,
+        0,
+        0,
+        128,
+        62,
+        0,
+        0,
+        0,
+        63,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "RETURN",
+      "instructions": 1396,
+      "events": [
+        {
+          "kind": "pf_copy_callback_entry",
+          "args": [
+            "0x1234",
+            "0x20000040",
+            "0x200000c0",
+            "0x0",
+            "0x0"
+          ],
+          "world_keys": [
+            "0x20000040",
+            "0x200000c0"
+          ]
+        },
+        {
+          "kind": "pf_copy_callback",
+          "abi": "5 args",
+          "args": [
+            "0x1234",
+            "0x20000040",
+            "0x200000c0",
+            "0x0",
+            "0x0"
+          ],
+          "return_address": "0x1801a68d1",
+          "source_world": "0x20000040",
+          "destination_world": "0x200000c0",
+          "source_payload": "0x20000000",
+          "destination_payload": "0x20000080",
+          "width": 4,
+          "height": 1,
+          "source_rowbytes": 32,
+          "destination_rowbytes": 32,
+          "visible_bytes_per_row": 32,
+          "copied_rows": [
+            {
+              "source": 536870912,
+              "destination": 536871040,
+              "bytes": 32
+            }
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0xf0fecb8",
+            "0x20"
+          ]
+        },
+        {
+          "kind": "suite_alloc",
+          "size": 16,
+          "result": "0x400002b0"
+        },
+        {
+          "kind": "suite_free",
+          "ptr": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0x1",
+            "0x2"
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fedf8",
+            "0xffffffffffffffff"
+          ]
+        },
+        {
+          "kind": "suite_handle_slot10",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_handle_slot18",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fedf8",
+            "0xffffffffffffffff"
+          ]
+        }
+      ],
+      "captures": [
+        {
+          "source": "0x20000080",
+          "destination": "0x20000090",
+          "before_source": [
+            0,
+            0,
+            0,
+            63,
+            0,
+            0,
+            128,
+            62,
+            0,
+            0,
+            0,
+            62,
+            0,
+            0,
+            128,
+            61
+          ],
+          "before_destination": [
+            0,
+            0,
+            0,
+            63,
+            0,
+            0,
+            128,
+            62,
+            0,
+            0,
+            0,
+            62,
+            0,
+            0,
+            128,
+            61
+          ],
+          "return_address": "0x1801a6b9f",
+          "after_source": [
+            0,
+            0,
+            0,
+            63,
+            0,
+            0,
+            128,
+            62,
+            0,
+            0,
+            0,
+            62,
+            0,
+            0,
+            128,
+            61
+          ],
+          "after_destination": [
+            0,
+            0,
+            0,
+            63,
+            0,
+            0,
+            128,
+            62,
+            0,
+            0,
+            0,
+            62,
+            0,
+            0,
+            128,
+            61
+          ],
+          "raw_four_channel_preserved": true
+        }
+      ],
+      "output_raw": [
+        0,
+        0,
+        0,
+        63,
+        0,
+        0,
+        128,
+        62,
+        0,
+        0,
+        0,
+        62,
+        0,
+        0,
+        128,
+        61,
+        0,
+        0,
+        0,
+        63,
+        0,
+        0,
+        128,
+        62,
+        0,
+        0,
+        0,
+        62,
+        0,
+        0,
+        128,
+        61
+      ],
+      "helper_reached": true,
+      "helper_source_matches_selected": true,
+      "raw_four_channel_preserved": true
+    },
+    {
+      "depth": 32,
+      "selected": "straight-looking",
+      "helper_source_slot": 3,
+      "selected_raw": [
+        0,
+        0,
+        0,
+        63,
+        205,
+        204,
+        76,
+        63,
+        154,
+        153,
+        25,
+        63,
+        205,
+        204,
+        204,
+        62
+      ],
+      "worker": "0x1801a6800",
+      "helper": "0x1801ac8e0",
+      "input_raw": [
+        0,
+        0,
+        128,
+        63,
+        0,
+        0,
+        0,
+        62,
+        0,
+        0,
+        128,
+        62,
+        0,
+        0,
+        0,
+        63,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "source_raw": [
+        0,
+        0,
+        128,
+        63,
+        0,
+        0,
+        0,
+        62,
+        0,
+        0,
+        128,
+        62,
+        0,
+        0,
+        0,
+        63,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "RETURN",
+      "instructions": 1396,
+      "events": [
+        {
+          "kind": "pf_copy_callback_entry",
+          "args": [
+            "0x1234",
+            "0x20000040",
+            "0x200000c0",
+            "0x0",
+            "0x0"
+          ],
+          "world_keys": [
+            "0x20000040",
+            "0x200000c0"
+          ]
+        },
+        {
+          "kind": "pf_copy_callback",
+          "abi": "5 args",
+          "args": [
+            "0x1234",
+            "0x20000040",
+            "0x200000c0",
+            "0x0",
+            "0x0"
+          ],
+          "return_address": "0x1801a68d1",
+          "source_world": "0x20000040",
+          "destination_world": "0x200000c0",
+          "source_payload": "0x20000000",
+          "destination_payload": "0x20000080",
+          "width": 4,
+          "height": 1,
+          "source_rowbytes": 32,
+          "destination_rowbytes": 32,
+          "visible_bytes_per_row": 32,
+          "copied_rows": [
+            {
+              "source": 536870912,
+              "destination": 536871040,
+              "bytes": 32
+            }
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0xf0fecb8",
+            "0x20"
+          ]
+        },
+        {
+          "kind": "suite_alloc",
+          "size": 16,
+          "result": "0x400002b0"
+        },
+        {
+          "kind": "suite_free",
+          "ptr": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311f10",
+            "0x2",
+            "0x1",
+            "0x2"
+          ]
+        },
+        {
+          "kind": "suite",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fedf8",
+            "0xffffffffffffffff"
+          ]
+        },
+        {
+          "kind": "suite_handle_slot10",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_handle_slot18",
+          "handle": "0x400002b0"
+        },
+        {
+          "kind": "suite_release",
+          "args": [
+            "0x180311ef0",
+            "0x2",
+            "0xf0fedf8",
+            "0xffffffffffffffff"
+          ]
+        }
+      ],
+      "captures": [
+        {
+          "source": "0x20000080",
+          "destination": "0x20000090",
+          "before_source": [
+            0,
+            0,
+            0,
+            63,
+            205,
+            204,
+            76,
+            63,
+            154,
+            153,
+            25,
+            63,
+            205,
+            204,
+            204,
+            62
+          ],
+          "before_destination": [
+            0,
+            0,
+            0,
+            63,
+            205,
+            204,
+            76,
+            63,
+            154,
+            153,
+            25,
+            63,
+            205,
+            204,
+            204,
+            62
+          ],
+          "return_address": "0x1801a6b9f",
+          "after_source": [
+            0,
+            0,
+            0,
+            63,
+            205,
+            204,
+            76,
+            63,
+            154,
+            153,
+            25,
+            63,
+            205,
+            204,
+            204,
+            62
+          ],
+          "after_destination": [
+            0,
+            0,
+            0,
+            63,
+            205,
+            204,
+            76,
+            63,
+            154,
+            153,
+            25,
+            63,
+            205,
+            204,
+            204,
+            62
+          ],
+          "raw_four_channel_preserved": true
+        }
+      ],
+      "output_raw": [
+        0,
+        0,
+        0,
+        63,
+        205,
+        204,
+        76,
+        63,
+        154,
+        153,
+        25,
+        63,
+        205,
+        204,
+        204,
+        62,
+        0,
+        0,
+        0,
+        63,
+        205,
+        204,
+        76,
+        63,
+        154,
+        153,
+        25,
+        63,
+        205,
+        204,
+        204,
+        62
+      ],
+      "helper_reached": true,
+      "helper_source_matches_selected": true,
+      "raw_four_channel_preserved": true
+    }
+  ],
+  "input_encoding": "ARGB; partial alpha with RGB <= alpha (premult-looking) or RGB > alpha (straight-looking)",
+  "raw_output_encoding": "raw bytes at actual-AEX depth-specific copy-helper boundary",
+  "boundary_intervention": "at each actual PF_COPY resume address, restore selected semialpha bytes across the four-pixel worker-source row before AEX pixel propagation continues",
+  "exact_checks": {
+    "all_six_runs_return": true,
+    "both_input_orientations_per_depth": true,
+    "all_helpers_reached": true,
+    "all_helper_sources_match_explicit_selected_raw": true,
+    "all_raw_four_channels_preserved": true
+  },
+  "interpretation": "The actual-AEX typed copy helpers preserve injected semialpha ARGB bytes exactly after the PF_COPY resume intervention. This does not prove the full worker has no earlier premultiply stage and does not establish AE host conventions.",
+  "claim_boundary": "actual-AEX typed copy-helper boundary after explicit PF_COPY-resume injection; no full-worker, AE, Windows-runtime, or host-convention claim"
+}
