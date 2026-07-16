@@ -2,25 +2,29 @@
   "kind": "olmblur_16bpc_candidates_mac_validation_contract",
   "schema": 1,
   "record_id": "olmblur_16bpc_candidates_mac_validation_20260716",
-  "status": "pending_live_loaded_module_proof",
+  "status": "superseded_by_ae_exact_record",
   "platform": "macOS-only",
-  "ae_execution": "not_run_by_this_wrapper",
+  "ae_execution": "completed_20260717",
   "source_identity": {
-    "git_revision_required": "26e2bfc98e0d9c7b4d3b747687aa48805f881d69",
+    "git_revision_required": "e053c3dc",
     "files": [
       {
         "path": "mac/OLMBlur/OLMBlur.cpp",
-        "sha256": "6ecf1189393c072190e29ba964e4c7dbbb6a33b31c7a491738a2d40d739f1995"
+        "sha256": "55def455a29f72c04748a784bcd598ddeecb84ec25d475376ea93b6e838e3b02"
       },
       {
         "path": "core/olmblur_worker16_legacy.cpp",
         "sha256": "b20228bf8c987940d1dd2922eec9984ac9fbcfbb1450f46a28e44fcf857d90da"
+      },
+      {
+        "path": "core/olmblur_worker16_nonlegacy.cpp",
+        "sha256": "f68da5edfa05f415c2345fa12faa8fc33a91468f1fe0f83b92c4cd75e6c422f6"
       }
     ]
   },
   "binary_identity": {
     "path": "mac/OLMBlur/Mac/build/Debug/OLMBlur.plugin/Contents/MacOS/OLMBlur",
-    "sha256": "80cfee9c244f6548775db1cb3e8be87067b7676af40f8841902e9e16aab727b5",
+    "sha256": "71df7efc027b463327fefa23575fff5f80d4b38ff529ae97418d79297f4f0d72",
     "hash_algorithm": "sha256"
   },
   "request_identity": {
@@ -59,10 +63,11 @@
       "reference_manifest_case": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0004.png"
     }
   ],
-  "required_future_proof": {
-    "loaded_module": "explicit runtime proof of the exact hashed binary, path, PID, AE session, and render nonce",
-    "comparison": "authoritative true16 channel words for both selected outputs against the pinned references",
-    "promotion": "exact is permitted only when loaded-module identity and raw true16 equality both pass"
+  "completion": {
+    "record": "refs/conformance/olmblur_16bpc_fixed_worker_mac_ae_exact_20260717.json",
+    "loaded_module_proof": true,
+    "selected_cases_exact": true,
+    "full_declared_slice": "7/7 AE exact"
   },
   "fail_closed": [
     "missing source git revision",
