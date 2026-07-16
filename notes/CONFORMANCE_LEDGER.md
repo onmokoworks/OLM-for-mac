@@ -1,5 +1,20 @@
 # OLM Conformance Ledger
 
+- 2026-07-17 `DistanceGradation embedded OpenCV GATE C` (latest override): no
+  correctness status is promoted. An opt-in single-thread TLS/FLS/aligned-
+  allocation scaffold now lets the hash-pinned AEX execute its embedded
+  `cvThreshold`, `cvDistTransform`, and complete `FUN_181174760` field-generator
+  paths without OpenCV detours. Threshold is bit-exact with the independent
+  OpenCV 4.5.5 sidecar. Ten distance geometries expose six exact relations,
+  two pinned x86-SIMD one-ULP families, and the no-source `0x5f7fffff` sentinel.
+  Three complete field-generator fixtures are byte-exact against the validated
+  detour pipeline. This closes the former `RIP=0x181187e41` static-init blocker
+  for these bounded paths, but optional Windows/CRT imports remain explicit
+  zero-return stubs, so the result is not a full Windows runtime or `AE exact`.
+  Next expand the embedded field-generator matrix around final-pixel-sensitive
+  thresholds before changing the production EDT. Evidence:
+  `refs/conformance/olmdistancegradation_embedded_opencv_gate_c_20260717.md`.
+
 - 2026-07-16 `classic PF_Cmd_RENDER bit-depth dispatch` (latest override):
   no correctness status is promoted. All eight classic render entry points now
   query `PF_WorldSuite2::PF_GetPixelFormat` and map ARGB32/ARGB64/ARGB128 to

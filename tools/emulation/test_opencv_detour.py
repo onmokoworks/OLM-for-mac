@@ -24,16 +24,14 @@ Validation gates, most-to-least grounded:
     (SSE minps returns thresh for NaN lanes; NEON/numpy pass NaN through) —
     see OPENCV_DETOUR_P0B_REPORT.md Known Limitations.
 
-  GATE C (emulated-equivalence, GOLD) — run the *real* emulated cvThreshold and
-    compare to the detour. This is the strongest gate but is currently BLOCKED:
-    the emulated OpenCV lazily runs its global initializer (env-var reads,
-    error-handler setup) on first call, which normally happens via the CRT
-    static-init at DLL load — never executed here. A TLS array in the TEB
-    (setup_tls below) clears the first fault (GS:[0x58]) but the path then needs
-    OpenCV's static constructors. Building that scaffolding is a separate infra
-    task; until then GATE C is reported SKIPPED, never faked (design §9,
-    GOTCHAS fact-discipline). GATE C matters most for FLOAT ops (P3), where
-    SSE-vs-numpy could differ; for exact-integer threshold, GATE B suffices.
+  GATE C (bounded embedded-body equivalence) — run the *real* emulated
+    cvThreshold and
+    compare it with the independent OpenCV 4.5.5 sidecar. The opt-in Windows
+    runtime scaffold supplies the TEB TLS epoch, FLS value storage, and aligned
+    allocator while the AEX executes its own OpenCV lazy initialization and
+    threshold body. It is required to pass, but it is not a substitute for a
+    Windows host capture: optional environment/dispatch and single-thread lock
+    imports remain bounded stubs in AexLoader.
 
 Run:
     tools/emulation/.venv/bin/python tools/emulation/test_opencv_detour.py
@@ -49,9 +47,10 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from aex_loader import AexLoader, TEB_BASE  # noqa: E402
+from aex_loader import AexLoader  # noqa: E402
 import cv_bridge as cvb  # noqa: E402
 import opencv_impls as ocv  # noqa: E402
+from windows_runtime import WindowsOpenCVRuntime  # noqa: E402
 
 AEX = str(Path(__file__).resolve().parents[2] / "plugins_2025" / "DistanceGradation.aex")
 CVTHRESHOLD = ocv.CVTHRESHOLD_ADDR["DistanceGradation"]
@@ -74,6 +73,11 @@ def _bits_equal(a: np.ndarray, b: np.ndarray) -> bool:
     if a.shape != b.shape or a.dtype != b.dtype:
         return False
     return a.tobytes() == b.tobytes()
+
+
+def _unimplemented_import_names(loader: AexLoader) -> list[str]:
+    """Imports reached through AexLoader's explicit log-and-return-zero path."""
+    return sorted({call.name for call in loader.import_log if call.name not in loader.import_impls})
 
 
 def run_sidecar_oracle(payload: dict) -> dict[str, np.ndarray]:
@@ -234,6 +238,89 @@ def run_dist_transform_case(kind: str):
     detail = (f"instr={res['instructions']} bypassed={bypassed} written={written} "
               f"header_intact={header_intact} native_exact={native_exact} "
               f"cv455_exact={cv455_exact} max_abs={max_abs:g} align_step={align_step}")
+    return "PASS" if ok else "FAIL", detail
+
+
+def run_real_dist_transform_case(kind: str):
+    """GATE C: execute the embedded AEX OpenCV body without a detour.
+
+    The arm64 cv455 sidecar is an independent semantic oracle, but not a byte
+    oracle for x86 SIMD. Known relations are pinned explicitly so a new pattern
+    fails instead of being hidden behind a tolerance.
+    """
+    ld = _fresh_loader()
+    WindowsOpenCVRuntime(ld).install()
+
+    src = make_distance_case(kind)
+    poison = np.full(src.shape, -999.0, dtype=np.float32)
+    src_ipl = cvb.build_ipl(ld, src)
+    dst_ipl = cvb.build_ipl(ld, poison, align_step=16)
+    hdr_before = ld.read_bytes(dst_ipl, cvb.IPL_SIZE)
+
+    try:
+        res = ld.call_function(
+            CVDISTTRANSFORM,
+            int_args=[
+                src_ipl,
+                dst_ipl,
+                ocv.CV_DIST_L2,
+                ocv.CV_DIST_MASK_PRECISE,
+                0,
+                0,
+                0,
+            ],
+            max_instructions=100_000_000,
+        )
+    except RuntimeError as exc:
+        return "FAIL", f"embedded OpenCV execution fault: {exc}"
+
+    out = cvb.read_ipl(ld, dst_ipl)
+    hdr_after = ld.read_bytes(dst_ipl, cvb.IPL_SIZE)
+    try:
+        ref = run_sidecar_oracle({
+            "op": np.array(["distance_transform_l2_precise"]),
+            "src": src,
+        })["dst"]
+    except FileNotFoundError:
+        return "SKIP", "sidecar venv not found; GATE C oracle skipped"
+
+    fls_created = any(call.name == "FlsSetValue" and call.ret == 1 for call in ld.import_log)
+    body_executed = res["instructions"] > 100
+    header_intact = hdr_before == hdr_after
+    out_bits = out.view(np.uint32)
+    ref_bits = ref.view(np.uint32)
+    bit_exact = _bits_equal(out, ref)
+    max_abs = float(np.max(np.abs(out.astype(np.float64) - ref.astype(np.float64))))
+    mismatch = out_bits != ref_bits
+    mismatch_count = int(np.count_nonzero(mismatch))
+    if bit_exact:
+        relation = "cv455_exact"
+        relation_ok = True
+    elif kind in {"single_zero", "box"}:
+        expected_count = {"single_zero": 44, "box": 19}[kind]
+        relation = "embedded_x86_simd_one_ulp_below_arm64_cv455"
+        relation_ok = (
+            mismatch_count == expected_count
+            and bool(np.all(out_bits[mismatch] + np.uint32(1) == ref_bits[mismatch]))
+        )
+    elif kind in {"all_nonzero", "one_by_one_nonzero"}:
+        relation = "embedded_no_source_sentinel_0x5f7fffff"
+        relation_ok = bool(
+            np.all(out_bits == np.uint32(0x5F7FFFFF))
+            and np.all(ref_bits == np.uint32(0x4BF1433C))
+        )
+    else:
+        relation = "unexpected_divergence"
+        relation_ok = False
+    ok = body_executed and fls_created and header_intact and relation_ok
+    unresolved = _unimplemented_import_names(ld)
+    detail = (
+        f"instr={res['instructions']} body_executed={body_executed} "
+        f"fls_created={fls_created} header_intact={header_intact} "
+        f"cv455_exact={bit_exact} relation={relation} mismatches={mismatch_count} "
+        f"max_abs={max_abs:g} "
+        f"bounded_stub_imports={','.join(unresolved)}"
+    )
     return "PASS" if ok else "FAIL", detail
 
 
@@ -441,29 +528,16 @@ def run_roundtrip_case():
     return True, "bridge round-trip ok (uint8/uint16/float32 + 3ch)"
 
 
-def setup_tls(ld, n_slots=256, block_size=0x4000):
-    """
-    Point TEB.ThreadLocalStoragePointer (TEB+0x58) at a zeroed TLS array so the
-    emulated OpenCV's `MOV RAX,GS:[0x58]; MOV RBX,[RAX+idx*8]` TLS read does not
-    fault. Necessary-but-not-sufficient for GATE C (see module docstring).
-    """
-    block = ld.host_alloc(block_size, align=16)
-    ld.write_bytes(block, b"\x00" * block_size)
-    arr = ld.host_alloc(n_slots * 8, align=16)
-    for i in range(n_slots):
-        ld.write_bytes(arr + i * 8, struct.pack("<Q", block))
-    ld.write_bytes(TEB_BASE + 0x58, struct.pack("<Q", arr))
-    return arr
-
-
 def probe_gate_c():
     """
-    Attempt GATE C (emulated ground truth). Returns (status, detail) where status
-    is 'PASS' | 'BLOCKED'. Never asserts — documents how far the emulated path
-    gets, so a future OpenCV-static-init scaffold can pick up from the exact wall.
+    Execute the embedded threshold body under the bounded runtime scaffold.
+
+    The independent sidecar comparison, instruction-count guard, and successful
+    FLS publication are all required. Reached zero-return host imports remain
+    visible in the result and prevent treating this as a Windows-host oracle.
     """
     ld = _fresh_loader()
-    setup_tls(ld)
+    WindowsOpenCVRuntime(ld).install()
     src = (np.arange(256, dtype=np.float32).reshape(16, 16) / 255.0)
     dst = np.zeros((16, 16), np.float32)
     s = cvb.build_ipl(ld, src)
@@ -492,14 +566,20 @@ def probe_gate_c():
             subprocess.run([str(sidecar_python), str(oracle_script), in_path, out_path], check=True)
             ref = np.load(out_path)["dst"]
             
-        ok = _bits_equal(out, ref)
+        body_executed = res["instructions"] > 100
+        fls_created = any(call.name == "FlsSetValue" and call.ret == 1 for call in ld.import_log)
+        bit_exact = _bits_equal(out, ref)
+        unresolved = _unimplemented_import_names(ld)
+        ok = body_executed and fls_created and bit_exact
         return ("PASS" if ok else "BLOCKED",
                 f"emulated cvThreshold completed in {res['instructions']} instr; "
-                f"bit-exact vs reference={ok}")
-    except RuntimeError as e:
-        msg = str(e)
+                f"body_executed={body_executed}; fls_created={fls_created}; "
+                f"bit-exact vs reference={bit_exact}; "
+                f"bounded_stub_imports={','.join(unresolved)}")
+    except RuntimeError as exc:
+        msg = str(exc)
         rip = msg.split("RIP=")[-1].split(":")[0] if "RIP=" in msg else "?"
-        return "BLOCKED", f"emulated path faults at RIP={rip} (OpenCV static-init not scaffolded)"
+        return "FAIL", f"embedded OpenCV path faults at RIP={rip}"
 
 
 def run_p1_only() -> int:
@@ -610,6 +690,24 @@ def main():
         failures += 1
 
     print()
+    for kind in (
+        "single_zero",
+        "cross",
+        "box",
+        "diagonal",
+        "all_nonzero",
+        "all_zero",
+        "one_by_one_zero",
+        "one_by_one_nonzero",
+        "one_by_n",
+        "n_by_one",
+    ):
+        status, detail = run_real_dist_transform_case(kind)
+        print(f"[{status:4}] GATE C embedded dist_transform/{kind:16} {detail}")
+        if status != "PASS":
+            failures += 1
+
+    print()
     for dtype, shape, interp in (
         (np.uint8, (11, 17), 0),
         (np.float32, (11, 17), 1),
@@ -633,18 +731,17 @@ def main():
         if status == "FAIL":
             failures += 1
 
-    # GATE C (informational, never fails the suite)
+    # GATE C executes the embedded OpenCV body under an explicit bounded host scaffold.
     status, detail = probe_gate_c()
     print(f"\n[GATE C {status}] emulated-equivalence: {detail}")
-    if status == "BLOCKED":
-        print("            (expected: exact-reference GATE B is authoritative for threshold; "
-              "GATE C is the gold gate reserved for float ops / P3)")
+    if status != "PASS":
+        failures += 1
 
     print()
     if failures:
         print(f"RESULT: {failures} FAIL")
         return 1
-    print("RESULT: all detour + bridge gates PASS (GATE A+B). GATE C blocked as documented.")
+    print("RESULT: all detour + bridge gates PASS (GATE A+B + bounded C relations).")
     return 0
 
 

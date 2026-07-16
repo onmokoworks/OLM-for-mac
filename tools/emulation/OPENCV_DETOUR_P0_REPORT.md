@@ -1,5 +1,18 @@
 # OpenCV detour layer — P0 implementation report (2026-07-07, Opus 4.8)
 
+## 2026-07-17 superseding GATE C addendum
+
+The historical GATE C blocker below is resolved for the bounded
+DistanceGradation fixtures. `windows_runtime.py` now supplies an opt-in
+single-thread TLS/FLS/aligned-allocation scaffold. The embedded `cvThreshold`
+body and ten embedded `cvDistTransform` fixtures execute without detours, and
+three complete `FUN_181174760` field-generator fixtures match their detoured
+counterparts byte-for-byte. This remains a bounded host-stub execution, not a
+full Windows CRT or AE-host oracle. See
+`refs/conformance/olmdistancegradation_embedded_opencv_gate_c_20260717.md`.
+
+The original blocked analysis is retained below as historical provenance.
+
 Implements OPENCV_DETOUR_DESIGN.md rev 2 §8/§10 P0 (cvThreshold). Written after a
 review found the prior agy/Gemini "implementation" had produced **nothing**.
 
