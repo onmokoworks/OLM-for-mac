@@ -1,0 +1,242 @@
+{
+  "schema": 1,
+  "kind": "olmdistancegradation_16bpc_case0012_case0014_proof_render_preflight",
+  "generated_at": "2026-07-17T06:01:25+09:00",
+  "status": "blocked_refused_missing_disposable_project_flag",
+  "claim_boundary": "non-destructive local preflight only; no AE launch, no AE quit, no render execution, and no AE exact claim",
+  "ae_exact_claim": false,
+  "canonical_request_id": "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625",
+  "canonical_cases": [
+    "olmdistancegradation_extended__case_0012",
+    "olmdistancegradation_extended__case_0014"
+  ],
+  "canonical_request_identity": {
+    "request_id": "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625",
+    "request_manifest_sha256": "7c4761b3b4de904c2a8baa8883c964f234943604414d2cd34bab107ccc43cf29",
+    "reference_manifest_sha256": "c4378358c8b4db2b2d5d12d0bf0b4142f141963538ca5ec4d86a49eeb8b9e71e",
+    "cases": {
+      "olmdistancegradation_extended__case_0012": {
+        "before_effects_frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012_before_effects.png",
+        "before_effects_frame_sha256": "4df66ca58088631115a48a7396d5f7f5b272866f8f6444a02c996751d1afc43c",
+        "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+        "frame_sha256": "72034695ab9bc4202638bc3716e311397956625f97e7d64c87725c75d2e70716",
+        "reference_comp_name": "olmdistancegradation_extended__case_0012_software_16bpc_24",
+        "requested_effect_match_name": "OLM Distance Gradation",
+        "project_gpu_accel_type": "SOFTWARE",
+        "bits_per_channel": 16
+      },
+      "olmdistancegradation_extended__case_0014": {
+        "before_effects_frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0014_before_effects.png",
+        "before_effects_frame_sha256": "4df66ca58088631115a48a7396d5f7f5b272866f8f6444a02c996751d1afc43c",
+        "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0014.png",
+        "frame_sha256": "5d5902e2ec453ef5275672433d4a0acdd2df29e94deef35d22c717356b32134a",
+        "reference_comp_name": "olmdistancegradation_extended__case_0014_software_16bpc_24",
+        "requested_effect_match_name": "OLM Distance Gradation",
+        "project_gpu_accel_type": "SOFTWARE",
+        "bits_per_channel": 16
+      }
+    }
+  },
+  "request_checks": {
+    "request_dir": "$REPO/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625",
+    "request_manifest_path": "$REPO/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/request_manifest.json",
+    "reference_manifest_path": "$REPO/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/reference_manifest.json",
+    "input_dir": "$REPO/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input",
+    "expected_dir": "$REPO/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected",
+    "exists": {
+      "request_dir": true,
+      "request_manifest": true,
+      "reference_manifest": true,
+      "input_dir": true,
+      "expected_dir": true
+    },
+    "canonical_identity": {
+      "request_id": "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625",
+      "request_manifest_sha256": "7c4761b3b4de904c2a8baa8883c964f234943604414d2cd34bab107ccc43cf29",
+      "reference_manifest_sha256": "c4378358c8b4db2b2d5d12d0bf0b4142f141963538ca5ec4d86a49eeb8b9e71e",
+      "cases": {
+        "olmdistancegradation_extended__case_0012": {
+          "before_effects_frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012_before_effects.png",
+          "before_effects_frame_sha256": "4df66ca58088631115a48a7396d5f7f5b272866f8f6444a02c996751d1afc43c",
+          "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+          "frame_sha256": "72034695ab9bc4202638bc3716e311397956625f97e7d64c87725c75d2e70716",
+          "reference_comp_name": "olmdistancegradation_extended__case_0012_software_16bpc_24",
+          "requested_effect_match_name": "OLM Distance Gradation",
+          "project_gpu_accel_type": "SOFTWARE",
+          "bits_per_channel": 16
+        },
+        "olmdistancegradation_extended__case_0014": {
+          "before_effects_frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0014_before_effects.png",
+          "before_effects_frame_sha256": "4df66ca58088631115a48a7396d5f7f5b272866f8f6444a02c996751d1afc43c",
+          "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0014.png",
+          "frame_sha256": "5d5902e2ec453ef5275672433d4a0acdd2df29e94deef35d22c717356b32134a",
+          "reference_comp_name": "olmdistancegradation_extended__case_0014_software_16bpc_24",
+          "requested_effect_match_name": "OLM Distance Gradation",
+          "project_gpu_accel_type": "SOFTWARE",
+          "bits_per_channel": 16
+        }
+      }
+    },
+    "request_manifest_sha256": "7c4761b3b4de904c2a8baa8883c964f234943604414d2cd34bab107ccc43cf29",
+    "reference_manifest_sha256": "c4378358c8b4db2b2d5d12d0bf0b4142f141963538ca5ec4d86a49eeb8b9e71e",
+    "request_manifest_sha256_matches_canonical": true,
+    "reference_manifest_sha256_matches_canonical": true,
+    "request_manifest_load_status": "ok",
+    "reference_manifest_load_status": "ok",
+    "request_id": "ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625",
+    "request_kind": "olm_ae_pixel_validation_request",
+    "reference_project_bits_per_channel": 16,
+    "reference_manifest_name": "reference_manifest.json",
+    "cases": [
+      {
+        "case_id": "olmdistancegradation_extended__case_0012",
+        "present_in_request_manifest": true,
+        "present_in_reference_manifest": true,
+        "before_effects_frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012_before_effects.png",
+        "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+        "before_effects_path": "$REPO/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012_before_effects.png",
+        "expected_frame_path": "$REPO/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0012.png",
+        "before_effects_path_status": "ok",
+        "expected_frame_path_status": "ok",
+        "before_effects_exists": true,
+        "expected_frame_exists": true,
+        "reference_case_bits_per_channel": 16,
+        "reference_comp_name": "olmdistancegradation_extended__case_0012_software_16bpc_24",
+        "requested_effect_name": "Distance Gradation",
+        "requested_effect_match_name": "OLM Distance Gradation",
+        "project_gpu_accel_type": "SOFTWARE",
+        "before_effects_sha256": "4df66ca58088631115a48a7396d5f7f5b272866f8f6444a02c996751d1afc43c",
+        "before_effects_sha256_matches_canonical": true,
+        "expected_frame_sha256": "72034695ab9bc4202638bc3716e311397956625f97e7d64c87725c75d2e70716",
+        "expected_frame_sha256_matches_canonical": true
+      },
+      {
+        "case_id": "olmdistancegradation_extended__case_0014",
+        "present_in_request_manifest": true,
+        "present_in_reference_manifest": true,
+        "before_effects_frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0014_before_effects.png",
+        "frame": "olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0014.png",
+        "before_effects_path": "$REPO/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0014_before_effects.png",
+        "expected_frame_path": "$REPO/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625/expected/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmdistancegradation_extended__case_0014.png",
+        "before_effects_path_status": "ok",
+        "expected_frame_path_status": "ok",
+        "before_effects_exists": true,
+        "expected_frame_exists": true,
+        "reference_case_bits_per_channel": 16,
+        "reference_comp_name": "olmdistancegradation_extended__case_0014_software_16bpc_24",
+        "requested_effect_name": "Distance Gradation",
+        "requested_effect_match_name": "OLM Distance Gradation",
+        "project_gpu_accel_type": "SOFTWARE",
+        "before_effects_sha256": "4df66ca58088631115a48a7396d5f7f5b272866f8f6444a02c996751d1afc43c",
+        "before_effects_sha256_matches_canonical": true,
+        "expected_frame_sha256": "5d5902e2ec453ef5275672433d4a0acdd2df29e94deef35d22c717356b32134a",
+        "expected_frame_sha256_matches_canonical": true
+      }
+    ],
+    "status": "ok"
+  },
+  "installed_plugin_checks": {
+    "media_core_dir": "$HOME/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore",
+    "bundle_name": "OLMDistanceGradation.plugin",
+    "binary_name": "OLMDistanceGradation",
+    "expected_sha256": "af328faed0fcfbdefac7618d1218c2e5e5c9c0420c3bc58cdde7a7b6f64232fd",
+    "direct_bundle_path": "$HOME/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin",
+    "direct_bundle_exists": true,
+    "bundle_candidates": [
+      "$HOME/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin"
+    ],
+    "bundle_count": 1,
+    "recursive_descendant_candidates": [],
+    "bundle_path": "$HOME/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin",
+    "binary_path": "$HOME/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation",
+    "binary_exists": true,
+    "actual_sha256": "af328faed0fcfbdefac7618d1218c2e5e5c9c0420c3bc58cdde7a7b6f64232fd",
+    "sha256_matches_expected": true,
+    "status": "ok"
+  },
+  "running_ae_checks": {
+    "process_name": "After Effects",
+    "status": "running",
+    "pids": [
+      7653
+    ],
+    "process_count": 1,
+    "plugin_binary_path": "$HOME/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation",
+    "mapping_method": "vmmap_exact_path_suffix",
+    "processes": [
+      {
+        "pid": 7653,
+        "vmmap_returncode": 0,
+        "dg_binary_mapped_exact_path": false,
+        "status": "ok"
+      }
+    ],
+    "dg_binary_mapped_in_any_running_ae": false,
+    "single_running_pid": 7653,
+    "dg_binary_mapped_in_single_running_ae": false
+  },
+  "proof_render_guard": {
+    "disposable_project_flag_required": true,
+    "disposable_project_flag_supplied": false,
+    "existing_runner_api": "$REPO/scripts/run_ae_single_case.py",
+    "preview_commands": [
+      {
+        "case_id": "olmdistancegradation_extended__case_0012",
+        "output_dir": "$TMP/olmdg_16bpc_case0012_case0014_proof_render_20260716/olmdistancegradation_extended__case_0012",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "$REPO/scripts/run_ae_single_case.py",
+          "--request-dir",
+          "$REPO/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625",
+          "--case-id",
+          "olmdistancegradation_extended__case_0012",
+          "--output-dir",
+          "$TMP/olmdg_16bpc_case0012_case0014_proof_render_20260716/olmdistancegradation_extended__case_0012",
+          "--app-name",
+          "Adobe After Effects 2026",
+          "--timeout",
+          "1200",
+          "--ae-env",
+          "OLM_AE_FORCE_NEW_PROJECT=1",
+          "--ae-env",
+          "OLM_AE_FORCE_SOFTWARE=1",
+          "--ae-env",
+          "OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT=1"
+        ],
+        "shell_command": "/opt/homebrew/opt/python@3.14/bin/python3.14 '$REPO/scripts/run_ae_single_case.py' --request-dir '$REPO/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625' --case-id olmdistancegradation_extended__case_0012 --output-dir $TMP/olmdg_16bpc_case0012_case0014_proof_render_20260716/olmdistancegradation_extended__case_0012 --app-name 'Adobe After Effects 2026' --timeout 1200 --ae-env OLM_AE_FORCE_NEW_PROJECT=1 --ae-env OLM_AE_FORCE_SOFTWARE=1 --ae-env OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT=1"
+      },
+      {
+        "case_id": "olmdistancegradation_extended__case_0014",
+        "output_dir": "$TMP/olmdg_16bpc_case0012_case0014_proof_render_20260716/olmdistancegradation_extended__case_0014",
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "$REPO/scripts/run_ae_single_case.py",
+          "--request-dir",
+          "$REPO/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625",
+          "--case-id",
+          "olmdistancegradation_extended__case_0014",
+          "--output-dir",
+          "$TMP/olmdg_16bpc_case0012_case0014_proof_render_20260716/olmdistancegradation_extended__case_0014",
+          "--app-name",
+          "Adobe After Effects 2026",
+          "--timeout",
+          "1200",
+          "--ae-env",
+          "OLM_AE_FORCE_NEW_PROJECT=1",
+          "--ae-env",
+          "OLM_AE_FORCE_SOFTWARE=1",
+          "--ae-env",
+          "OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT=1"
+        ],
+        "shell_command": "/opt/homebrew/opt/python@3.14/bin/python3.14 '$REPO/scripts/run_ae_single_case.py' --request-dir '$REPO/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625' --case-id olmdistancegradation_extended__case_0014 --output-dir $TMP/olmdg_16bpc_case0012_case0014_proof_render_20260716/olmdistancegradation_extended__case_0014 --app-name 'Adobe After Effects 2026' --timeout 1200 --ae-env OLM_AE_FORCE_NEW_PROJECT=1 --ae-env OLM_AE_FORCE_SOFTWARE=1 --ae-env OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT=1"
+      }
+    ],
+    "status": "refused_no_execution"
+  },
+  "failures": {
+    "structural": [],
+    "guard": [
+      "proof_render:explicit_disposable_project_flag_required"
+    ]
+  }
+}

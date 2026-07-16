@@ -27,6 +27,7 @@ from unicorn.x86_const import (
     UC_X86_REG_RIP,
     UC_X86_REG_RSI,
     UC_X86_REG_RSP,
+    UC_X86_REG_XMM2,
 )
 from aex_loader import TEB_BASE
 
@@ -44,6 +45,34 @@ PF32_OWNER = 0x18114D7F0
 MODE2_DISPATCH = 0x18114F4A0
 PF32_TYPED_OWNER = 0x18114E460
 PF32_CALLSITES = (0x18114E5D7, 0x18114E739)
+DISPATCH_LOOP_ENTRY = 0x181294AD5
+DISPATCH_PROGRESS = 0x181294C2E
+DISPATCH_CHUNK_INSTRUCTIONS = 10_000
+DISPATCH_MAX_CHUNKS = 64
+OPENCV_DISPATCH_GLOBAL = 0x181843990
+OPENCV_DISPATCH_TABLE_BYTES = 0x10000
+OPENCV_DISPATCH_READY_FLAG = 0x181843998
+
+FILTER_SIZE_PRIMARY_ZERO_WIDTH = 0x1812982EC
+FILTER_SIZE_PRIMARY_HEIGHT_LOAD = 0x1812982F1
+FILTER_SIZE_PRIMARY_CALL = 0x1812983B4
+FILTER_SIZE_SIBLING_ZERO_WIDTH = 0x1812977B8
+FILTER_SIZE_SIBLING_HEIGHT_LOAD = 0x1812977C0
+FILTER_SIZE_SIBLING_CALL = 0x181297811
+OPENCV_DISPATCH_BOOTSTRAP = 0x18114BE60
+
+FILTER_SIZE_PRIMARY_BYTES = bytes.fromhex(
+    "4533c9418bd1488bbdf805000085c97e51488bce4c8bc3f20f101d7f6b24000f1f8000000000"
+    "660f6ed2f30fe6d20f28c2f20f5907f20f59c3f20f2dc0418900f20f595718f20f59d30f28c2f2"
+    "0f2dc08901ffc24d8d4004488d49043b54244c7cc444894c24388b4424488944243c48"
+)
+FILTER_SIZE_SIBLING_BYTES = bytes.fromhex("c7442458000000008b8424280100008944245c488d8c2420")
+FILTER_SIZE_SIBLING_CALL_BYTES = bytes.fromhex("488d9424a0010000488d4c2458e8aa10")
+OPENCV_DISPATCH_BOOTSTRAP_BYTES = bytes.fromhex(
+    "4883ec2833d28d4a01e8e28a14004885c0745db201b901000000e8d18a14004885c0744c33d28d4a02"
+    "e8c28a14004885c0743db201b902000000e8b18a14004885c0742c33d28d4a04e8a28a14004885c074"
+    "1db201b904000000e8918a14004885c0740cc605cd7a6f000148"
+)
 
 TLS_INDEX_GLOBAL = 0x1818C3EA8
 GS_TLS_OFFSET = 0x58
@@ -136,9 +165,104 @@ def read_std_string(loader: AexLoader, address: int) -> str:
     return loader.read_bytes(source, min(size, 4096)).decode("ascii", errors="replace")
 
 
+def collect_static_fact_witnesses() -> dict[str, dict[str, object]]:
+    asm = ASM.read_text(encoding="utf-8")
+    decomp = DECOMP.read_text(encoding="utf-8")
+    loader = AexLoader(str(AEX), verbose=False, fast=True)
+    return {
+        "filter_size_primary": {
+            "function": "FUN_181298180",
+            "bytes": {
+                "address": hex(0x18129828A),
+                "hex": loader.read_bytes(0x18129828A, len(FILTER_SIZE_PRIMARY_BYTES)).hex(),
+                "expected_hex": FILTER_SIZE_PRIMARY_BYTES.hex(),
+            },
+            "disasm": [
+                "18129828a  XOR R9D,R9D",
+                "1812982ec  MOV dword ptr [RSP + 0x38],R9D",
+                "1812982f1  MOV EAX,dword ptr [RSP + 0x48]",
+                "1812982f5  MOV dword ptr [RSP + 0x3c],EAX",
+                "1812983af  LEA RCX,[RSP + 0x38]",
+                "1812983b4  CALL 0x1811d88c0",
+            ],
+            "semantics": "FUN_181298180 explicitly zeroes Size.width/x at [RSP+0x38] after XOR R9D,R9D, then copies Size.height/y from [RSP+0x48] into [RSP+0x3c] before calling FUN_1811d88c0.",
+            "decomp_grounding": "local_670 = 0; local_66c = local_660; ... FUN_1811d88c0(&local_670,&local_608,...)",
+            "decomp_present": "local_670 = 0;" in decomp and "local_66c = local_660;" in decomp and "FUN_1811d88c0(&local_670,&local_608,(double)uVar9 * DAT_1814d6750);" in decomp,
+            "asm_present": all(line in asm for line in (
+                "18129828a  XOR R9D,R9D",
+                "1812982ec  MOV dword ptr [RSP + 0x38],R9D",
+                "1812982f1  MOV EAX,dword ptr [RSP + 0x48]",
+                "1812982f5  MOV dword ptr [RSP + 0x3c],EAX",
+                "1812983af  LEA RCX,[RSP + 0x38]",
+                "1812983b4  CALL 0x1811d88c0",
+            )),
+        },
+        "filter_size_sibling": {
+            "function": "FUN_181297ac0 caller frame before return 0x181297816",
+            "bytes": {
+                "setup_address": hex(FILTER_SIZE_SIBLING_ZERO_WIDTH),
+                "setup_hex": loader.read_bytes(FILTER_SIZE_SIBLING_ZERO_WIDTH, len(FILTER_SIZE_SIBLING_BYTES)).hex(),
+                "setup_expected_hex": FILTER_SIZE_SIBLING_BYTES.hex(),
+                "call_address": hex(FILTER_SIZE_SIBLING_CALL - 0xD),
+                "call_hex": loader.read_bytes(FILTER_SIZE_SIBLING_CALL - 0xD, len(FILTER_SIZE_SIBLING_CALL_BYTES)).hex(),
+                "call_expected_hex": FILTER_SIZE_SIBLING_CALL_BYTES.hex(),
+            },
+            "disasm": [
+                "1812977b8  MOV dword ptr [RSP + 0x58],0x0",
+                "1812977c0  MOV EAX,dword ptr [RSP + 0x128]",
+                "1812977c7  MOV dword ptr [RSP + 0x5c],EAX",
+                "181297804  LEA RDX,[RSP + 0x1a0]",
+                "18129780c  LEA RCX,[RSP + 0x58]",
+                "181297811  CALL 0x1811d88c0",
+            ],
+            "semantics": "The sibling setup repeats the same pattern: width/x is written as 0, height/y is copied from a caller local at [RSP+0x128], then FUN_1811d88c0 consumes the resulting Size from [RSP+0x58].",
+            "decomp_grounding": "local_320 = 0; local_31c = local_250; ... FUN_1811d88c0(&local_320,&local_1d8,...)",
+            "decomp_present": "local_320 = 0;" in decomp and "local_31c = local_250;" in decomp and "FUN_1811d88c0(&local_320,&local_1d8,(double)uVar5 * DAT_1814d6750);" in decomp,
+            "asm_present": all(line in asm for line in (
+                "1812977b8  MOV dword ptr [RSP + 0x58],0x0",
+                "1812977c0  MOV EAX,dword ptr [RSP + 0x128]",
+                "1812977c7  MOV dword ptr [RSP + 0x5c],EAX",
+                "181297804  LEA RDX,[RSP + 0x1a0]",
+                "18129780c  LEA RCX,[RSP + 0x58]",
+                "181297811  CALL 0x1811d88c0",
+            )),
+        },
+        "opencv_dispatch_state": {
+            "bootstrap_function": "FUN_18114be60",
+            "bytes": {
+                "address": hex(OPENCV_DISPATCH_BOOTSTRAP),
+                "hex": loader.read_bytes(OPENCV_DISPATCH_BOOTSTRAP, len(OPENCV_DISPATCH_BOOTSTRAP_BYTES)).hex(),
+                "expected_hex": OPENCV_DISPATCH_BOOTSTRAP_BYTES.hex(),
+            },
+            "disasm": [
+                "18114be69  CALL 0x181294950",
+                "18114be7a  CALL 0x181294950",
+                "18114be89  CALL 0x181294950",
+                "18114be9a  CALL 0x181294950",
+                "18114bea9  CALL 0x181294950",
+                "18114beba  CALL 0x181294950",
+                "18114bec4  MOV byte ptr [0x181843998],0x1",
+                "181292f59  MOV RAX,qword ptr [0x181843990]",
+            ],
+            "semantics": "OpenCV bootstrap probes FUN_181294950 across the 1/2/4 modes and later code reads qword ptr [0x181843990]. The exact implementation state behind 0x181843990 remains unproven here.",
+            "asm_present": all(line in asm for line in (
+                "18114be69  CALL 0x181294950",
+                "18114be7a  CALL 0x181294950",
+                "18114be89  CALL 0x181294950",
+                "18114be9a  CALL 0x181294950",
+                "18114bea9  CALL 0x181294950",
+                "18114beba  CALL 0x181294950",
+                "18114bec4  MOV byte ptr [0x181843998],0x1",
+                "181292f59  MOV RAX,qword ptr [0x181843990]",
+            )),
+        },
+    }
+
+
 def static_checks() -> dict[str, bool]:
     decomp = DECOMP.read_text(encoding="utf-8")
     asm = ASM.read_text(encoding="utf-8")
+    static_facts = collect_static_fact_witnesses()
     owner = slice_between(asm, "; === FUN_18114c8f0", "; === FUN_18114ca70")
     owner_c = slice_between(decomp, "// === FUN_18114c8f0", "// === FUN_18114ca70")
     pf32 = slice_between(asm, "; === FUN_18114d7f0", "; === FUN_18114ddc0")
@@ -159,6 +283,9 @@ def static_checks() -> dict[str, bool]:
         "pf32_owner_enters_typed_owner": "18114dd0d  CALL 0x18114e460" in pf32,
         "typed_owner_has_pf32_sites": all(f"{address:x}  CALL 0x181230c20" in typed for address in PF32_CALLSITES),
         "typed_writer_uses_rsp_plus_0x28": "181230c20  MOV RAX,qword ptr [RSP + 0x28]" in asm,
+        "filter_size_primary_static_bytes_and_semantics_are_grounded": static_facts["filter_size_primary"]["bytes"]["hex"] == static_facts["filter_size_primary"]["bytes"]["expected_hex"] and static_facts["filter_size_primary"]["asm_present"] and static_facts["filter_size_primary"]["decomp_present"],
+        "filter_size_sibling_static_bytes_and_semantics_are_grounded": static_facts["filter_size_sibling"]["bytes"]["setup_hex"] == static_facts["filter_size_sibling"]["bytes"]["setup_expected_hex"] and static_facts["filter_size_sibling"]["bytes"]["call_hex"] == static_facts["filter_size_sibling"]["bytes"]["call_expected_hex"] and static_facts["filter_size_sibling"]["asm_present"] and static_facts["filter_size_sibling"]["decomp_present"],
+        "opencv_dispatch_state_reference_is_grounded": static_facts["opencv_dispatch_state"]["bytes"]["hex"] == static_facts["opencv_dispatch_state"]["bytes"]["expected_hex"] and static_facts["opencv_dispatch_state"]["asm_present"],
     }
 
 
@@ -188,6 +315,32 @@ def run_owner_probe() -> dict[str, object]:
     inner_instruction_trace: list[dict[str, object]] = []
     execution_stop: dict[str, object] = {}
     next_runtime_boundary: dict[str, object] = {}
+    dispatch_checkpoints: list[dict[str, object]] = []
+    filter_setup_trace: list[dict[str, object]] = []
+
+    def dispatch_checkpoint(ld: AexLoader, label: str) -> dict[str, object]:
+        rsp = ld.uc.reg_read(UC_X86_REG_RSP)
+        inner = struct.unpack("<I", ld.read_bytes(rsp + 0x38, 4))[0]
+        outer = struct.unpack("<I", ld.read_bytes(rsp + 0x3C, 4))[0]
+        return {
+            "label": label,
+            "rip": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
+            "rsp": hex(rsp),
+            "inner": inner,
+            "outer": outer,
+            "work_coordinate": outer * 0x20 + inner,
+            "work_source": hex(read_u64(ld, rsp + 0x68)),
+            "work_destination": hex(read_u64(ld, rsp + 0x70)),
+        }
+
+    def capture_dispatch_checkpoint(label: str):
+        def hook(ld: AexLoader, _address: int, _size: int) -> None:
+            if len(dispatch_checkpoints) < DISPATCH_MAX_CHUNKS * 2:
+                dispatch_checkpoints.append(dispatch_checkpoint(ld, label))
+        return hook
+
+    loader.add_code_hook(DISPATCH_LOOP_ENTRY, capture_dispatch_checkpoint("dispatch_loop_entry"))
+    loader.add_code_hook(DISPATCH_PROGRESS, capture_dispatch_checkpoint("dispatch_outer_progress"))
 
     def aligned_malloc_probe(_uc: object, args: list[int]) -> int:
         requested, alignment = int(args[0]), int(args[1])
@@ -510,6 +663,11 @@ def run_owner_probe() -> dict[str, object]:
     loader.write_bytes(tls_slot, b"\0" * TLS_SLOT_SIZE)
     loader.write_bytes(tls_slot + TLS_EPOCH_OFFSET, struct.pack("<i", TLS_UNINITIALIZED_EPOCH))
     loader.write_bytes(TEB_BASE + GS_TLS_OFFSET, struct.pack("<Q", tls_table))
+    # The actual-AEX OpenCV CPU-dispatch initializer requires this process
+    # global to name writable backing storage before FUN_181294950 runs.
+    opencv_dispatch_table = loader.host_alloc(OPENCV_DISPATCH_TABLE_BYTES, align=64)
+    loader.write_bytes(opencv_dispatch_table, b"\0" * OPENCV_DISPATCH_TABLE_BYTES)
+    loader.write_bytes(OPENCV_DISPATCH_GLOBAL, struct.pack("<Q", opencv_dispatch_table))
     runtime_state = {
         "tls_index_global": hex(TLS_INDEX_GLOBAL),
         "tls_index_value": struct.unpack("<I", loader.read_bytes(TLS_INDEX_GLOBAL, 4))[0],
@@ -519,6 +677,10 @@ def run_owner_probe() -> dict[str, object]:
         "tls_epoch_address": hex(tls_slot + TLS_EPOCH_OFFSET),
         "tls_epoch_initial": TLS_UNINITIALIZED_EPOCH,
         "contract": "GS:[0x58] -> TLS table; table[0] -> slot; slot+0x04 -> lazy-init epoch",
+        "opencv_dispatch_global": hex(OPENCV_DISPATCH_GLOBAL),
+        "opencv_dispatch_table": hex(opencv_dispatch_table),
+        "opencv_dispatch_table_bytes": OPENCV_DISPATCH_TABLE_BYTES,
+        "opencv_dispatch_table_contract": "emulated writable zero-initialized 0x10000-byte backing store, 64-byte aligned; bounded hypothesis for the 0x181843990 global only, not proof that the exact OpenCV dispatch/implementation state now matches Mode2 expectations",
     }
 
     def param_checkin(current: AexLoader, args: list[int]) -> int:
@@ -839,10 +1001,64 @@ def run_owner_probe() -> dict[str, object]:
             "exception_class": read_c_string(ld, ld.uc.reg_read(UC_X86_REG_R8)),
             "source_file": read_c_string(ld, ld.uc.reg_read(UC_X86_REG_R9)),
             "line": struct.unpack("<I", ld.read_bytes(rsp + 0x170, 4))[0],
+            "caller_return_address": hex(read_u64(ld, rsp)),
             "throw_helper": "FUN_181162500 -> _CxxThrowException; 0x181162672 INT3 fallback",
         })
 
     loader.add_code_hook(0x181162610, capture_runtime_error)
+    def capture_filter_setup(label: str):
+        def hook(ld: AexLoader, _address: int, _size: int) -> None:
+            rsp = ld.uc.reg_read(UC_X86_REG_RSP)
+            rcx = ld.uc.reg_read(UC_X86_REG_RCX)
+            rdx = ld.uc.reg_read(UC_X86_REG_RDX)
+            entry: dict[str, object] = {
+                "label": label,
+                "rip": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
+                "return_address": hex(read_u64(ld, rsp)),
+                "rcx": hex(rcx),
+                "rdx": hex(rdx),
+                "xmm2_f64": struct.unpack("<d", int(ld.uc.reg_read(UC_X86_REG_XMM2) & ((1 << 64) - 1)).to_bytes(8, "little"))[0],
+            }
+            if label == "FilterEngine setup entry":
+                entry.update({
+                    "rcx_size_xy_i32": [struct.unpack("<i", ld.read_bytes(rcx + offset, 4))[0] for offset in (0, 4)],
+                    "rdx_structure_0x00_0x40": ld.read_bytes(rdx, 0x40).hex(),
+                })
+            filter_setup_trace.append(entry)
+        return hook
+
+    loader.add_code_hook(0x1811D88C0, capture_filter_setup("FilterEngine setup entry"))
+    loader.add_code_hook(0x1811D8A50, capture_filter_setup("FilterEngine init body"))
+
+    def capture_filter_engine_init(ld: AexLoader, _address: int, _size: int) -> None:
+        rsp = ld.uc.reg_read(UC_X86_REG_RSP)
+        structure = ld.uc.reg_read(UC_X86_REG_RCX)
+        filter_setup_trace.append({
+            "label": "FilterEngine::init entry",
+            "rip": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
+            "return_address": hex(read_u64(ld, rsp)),
+            "structure": hex(structure),
+            "structure_i32": {
+                f"+0x{offset:x}": struct.unpack("<i", ld.read_bytes(structure + offset, 4))[0]
+                for offset in (0x8, 0xc, 0x10, 0x14, 0x18, 0x1c, 0x20, 0x60)
+            },
+            "rdx": hex(ld.uc.reg_read(UC_X86_REG_RDX)),
+            "r8": hex(ld.uc.reg_read(UC_X86_REG_R8)),
+            "r9": hex(ld.uc.reg_read(UC_X86_REG_R9)),
+        })
+
+    loader.add_code_hook(0x1812B9DB0, capture_filter_engine_init)
+    loader.add_code_hook(0x1812AEB72, capture_filter_engine_init)
+    loader.add_code_hook(0x1812B9DA8, lambda ld, _address, _size: filter_setup_trace.append({
+        "label": "FilterEngine assertion callsite",
+        "rip": hex(ld.uc.reg_read(UC_X86_REG_RIP)),
+        "return_address": hex(read_u64(ld, ld.uc.reg_read(UC_X86_REG_RSP))),
+        "rcx": hex(ld.uc.reg_read(UC_X86_REG_RCX)),
+        "rdx": hex(ld.uc.reg_read(UC_X86_REG_RDX)),
+        "r8": hex(ld.uc.reg_read(UC_X86_REG_R8)),
+        "r9": hex(ld.uc.reg_read(UC_X86_REG_R9)),
+        "rbp": hex(ld.uc.reg_read(UC_X86_REG_RBP)),
+    }))
     loader.add_code_hook(0x18132c184, lambda ld, _address, _size: next_runtime_boundary.update({
         "address": "0x18132c184",
         "kind": "CRT exception object construction before _CxxThrowException",
@@ -929,19 +1145,32 @@ def run_owner_probe() -> dict[str, object]:
             }
             classification = "bounded_fls_lifecycle_crossed_next_aligned_allocator_boundary"
             owner_tail = "FUN_18115ea40 OOM constructor (requested bytes recorded below)"
-        elif runtime_error_boundary:
+        elif runtime_error_boundary.get("exception_class") == "cv::FilterEngine::init":
             next_contract = {
-                "kind": "OpenCV TLS/FLS setData",
+                "kind": "OpenCV dispatch/implementation state",
                 "boundary": "FUN_181162610",
-                "error_code": -215,
-                "assertion": "FlsSetValue(tlsKey, pData) == TRUE",
-                "required_import": "FlsSetValue",
-                "success_return": 1,
-                "lifecycle": "preserve the existing TLS/FLS key and value; reject unknown keys or invalid lifecycle",
+                "exception_class": runtime_error_boundary.get("exception_class"),
+                "source_file": runtime_error_boundary.get("source_file"),
+                "line": runtime_error_boundary.get("line"),
+                "assertion": runtime_error_boundary.get("message"),
+                "static_size_fact": "Size=(0,5) is binary-generated here: width/x is explicitly zeroed and height/y is loaded from the stack local observed as 5; do not classify it as missing fixture geometry and do not invent width",
+                "inference_only": "The 0x181843990 dispatch/implementation table may be implicated, but that remains inference unless a stronger witness proves the exact expected state",
                 "fail_closed": True,
             }
-            classification = "bounded_aligned_allocator_contract_crossed_next_fls_boundary"
-            owner_tail = "FUN_181162610 TLS/FLS cv::Exception throw path"
+            classification = "bounded_aligned_allocator_contract_crossed_next_opencv_dispatch_state_boundary"
+            owner_tail = "FUN_181162610 cv::FilterEngine::init throw path from filter.dispatch.cpp:5"
+        elif runtime_error_boundary:
+            next_contract = {
+                "kind": "OpenCV cv::Exception boundary",
+                "boundary": "FUN_181162610",
+                "exception_class": runtime_error_boundary.get("exception_class"),
+                "source_file": runtime_error_boundary.get("source_file"),
+                "line": runtime_error_boundary.get("line"),
+                "assertion": runtime_error_boundary.get("message"),
+                "fail_closed": True,
+            }
+            classification = "bounded_aligned_allocator_contract_crossed_next_opencv_exception_boundary"
+            owner_tail = "FUN_181162610 cv::Exception throw path"
         else:
             next_contract = {
                 "kind": "common-owner return / natural writer gate",
@@ -985,19 +1214,162 @@ def run_owner_probe() -> dict[str, object]:
         call_result = loader.call_function(
             COMMON_OWNER,
             int_args=[param_table, context, 0, descriptor],
-            max_instructions=50_000,
+            max_instructions=DISPATCH_CHUNK_INSTRUCTIONS,
         )
+        chunk_results = [{"chunk": 1, "instructions": call_result.get("instructions"), "rip": hex(loader.uc.reg_read(UC_X86_REG_RIP))}]
+        progress_history: list[dict[str, object]] = []
+        previous_progress: tuple[int, int, int, int] | None = None
+        repeated_checkpoint: dict[str, object] | None = None
+        dispatch_fault: dict[str, object] | None = None
+        while loader.uc.reg_read(UC_X86_REG_RIP) != 0x90000000 and len(chunk_results) < DISPATCH_MAX_CHUNKS:
+            current_rip = loader.uc.reg_read(UC_X86_REG_RIP)
+            if current_rip == DISPATCH_LOOP_ENTRY:
+                checkpoint = dispatch_checkpoint(loader, "chunk_boundary")
+                progress = (
+                    int(checkpoint["work_coordinate"]),
+                    int(checkpoint["inner"]),
+                    int(checkpoint["outer"]),
+                    int(checkpoint["work_source"], 16),
+                )
+                if previous_progress is not None and progress <= previous_progress:
+                    repeated_checkpoint = checkpoint
+                    break
+                previous_progress = progress
+                progress_history.append(checkpoint)
+            before = loader.instructions_executed
+            try:
+                loader.uc.emu_start(current_rip, 0x90000000, count=DISPATCH_CHUNK_INSTRUCTIONS)
+            except Exception as exc:
+                dispatch_fault = {
+                    "type": type(exc).__name__,
+                    "message": str(exc),
+                    "rip": hex(loader.uc.reg_read(UC_X86_REG_RIP)),
+                    "registers_rcx_rdx_r8_r9": [hex(loader.uc.reg_read(reg)) for reg in (UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9)],
+                }
+                break
+            chunk_results.append({
+                "chunk": len(chunk_results) + 1,
+                "instructions": loader.instructions_executed - before,
+                "rip": hex(loader.uc.reg_read(UC_X86_REG_RIP)),
+            })
+        terminal_rip = loader.uc.reg_read(UC_X86_REG_RIP)
+        if repeated_checkpoint:
+            execution_stop.update({
+                "condition": "repeated checkpoint; fail closed",
+                "rip": hex(terminal_rip),
+                "dispatch": {
+                    "chunk_instructions": DISPATCH_CHUNK_INSTRUCTIONS,
+                    "max_chunks": DISPATCH_MAX_CHUNKS,
+                    "chunks": chunk_results,
+                    "progress_history": progress_history,
+                    "repeated_checkpoint": repeated_checkpoint,
+                },
+            })
+        elif dispatch_fault:
+            terminal = "fixture_state_fault"
+            condition = "dispatch fixture-state fault; fail closed"
+            if runtime_error_boundary.get("exception_class") == "cv::FilterEngine::init":
+                terminal = "opencv_dispatch_or_implementation_state_unavailable"
+                condition = "dispatch OpenCV dispatch/implementation-state fault; fail closed"
+            execution_stop.update({
+                "condition": condition,
+                "rip": dispatch_fault["rip"],
+                "dispatch_fault": dispatch_fault,
+                "dispatch": {
+                    "chunk_instructions": DISPATCH_CHUNK_INSTRUCTIONS,
+                    "max_chunks": DISPATCH_MAX_CHUNKS,
+                    "chunks": chunk_results,
+                    "progress_history": progress_history,
+                    "terminal": terminal,
+                },
+            })
+        elif terminal_rip == 0x90000000:
+            execution_stop.update({
+                "condition": "RETURN_TRAMPOLINE emulation stop",
+                "rip": hex(terminal_rip),
+                "dispatch": {
+                    "chunk_instructions": DISPATCH_CHUNK_INSTRUCTIONS,
+                    "max_chunks": DISPATCH_MAX_CHUNKS,
+                    "chunks": chunk_results,
+                    "progress_history": progress_history,
+                    "terminal": "returned",
+                },
+            })
+        elif len(chunk_results) >= DISPATCH_MAX_CHUNKS:
+            execution_stop.update({
+                "condition": "dispatch chunk cap exhausted; fail closed",
+                "rip": hex(terminal_rip),
+                "dispatch": {
+                    "chunk_instructions": DISPATCH_CHUNK_INSTRUCTIONS,
+                    "max_chunks": DISPATCH_MAX_CHUNKS,
+                    "chunks": chunk_results,
+                    "progress_history": progress_history,
+                    "terminal": "chunk_cap",
+                },
+            })
         stop_rip = loader.uc.reg_read(UC_X86_REG_RIP)
-        stop_condition = "instruction budget exhausted" if call_result.get("instructions") == 50_000 else "RETURN_TRAMPOLINE emulation stop"
         execution_stop.update({
-            "condition": stop_condition,
-            "rip": hex(loader.uc.reg_read(UC_X86_REG_RIP)),
+            "rip": hex(stop_rip),
             "rsp": hex(loader.uc.reg_read(UC_X86_REG_RSP)),
-            "instructions": call_result.get("instructions"),
-            "rax": hex(call_result.get("rax", 0)),
+            "instructions": sum(item["instructions"] for item in chunk_results),
+            "rax": hex(loader.uc.reg_read(UC_X86_REG_RAX)),
             "registers_rcx_rdx_r8_r9_rbp_rsi_rdi": [hex(loader.uc.reg_read(reg)) for reg in (UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_RBP, UC_X86_REG_RSI, UC_X86_REG_RDI)],
-            "grounded_location": "FUN_181294950 dispatch loop at 0x181294ad5" if stop_rip == 0x181294AD5 else None,
+            "grounded_location": "FUN_181294950 dispatch loop at 0x181294ad5" if stop_rip == DISPATCH_LOOP_ENTRY else None,
         })
+        dispatch_terminal = execution_stop.get("dispatch", {}).get("terminal")
+        dispatch_diagnosis = {
+            "strategy": "resume the original call frame at the current RIP; do not re-enter FUN_181150790",
+            "chunk_instructions": DISPATCH_CHUNK_INSTRUCTIONS,
+            "max_chunks": DISPATCH_MAX_CHUNKS,
+            "progress_invariant": "work_coordinate = outer*0x20 + inner; each dispatch_loop_entry checkpoint must strictly increase it",
+            "terminal_classification": {
+                "typed_writer": False,
+                "returned": dispatch_terminal == "returned",
+                "repeated_fixture_state": execution_stop.get("condition") == "repeated checkpoint; fail closed",
+                "fixture_state_fault": dispatch_terminal == "fixture_state_fault",
+                "classification": dispatch_terminal or "unknown",
+            },
+        }
+        filter_failure = None
+        if runtime_error_boundary.get("exception_class") == "cv::FilterEngine::init":
+            size_entry = next((item for item in filter_setup_trace if item.get("label") == "FilterEngine setup entry"), {})
+            filter_failure = {
+                "smallest_invalid_state": {
+                    "kind": "generated cv::Size kernel geometry",
+                    "owner": "FUN_181298180 / sibling stack locals passed to FUN_1811d88c0",
+                    "passed_to": "FUN_1811d88c0 RCX",
+                    "observed_xy": size_entry.get("rcx_size_xy_i32"),
+                    "observed_height_y": size_entry.get("rcx_size_xy_i32", [None, None])[1],
+                    "invalid_field": "binary-generated width/x == 0",
+                },
+                "associated_mat": {
+                    "owner": "FUN_1811d88c0 RDX structure",
+                    "observed_shape": "5x5",
+                    "observed_header_hex": size_entry.get("rdx_structure_0x00_0x40"),
+                },
+                "static_fact_witness_keys": ["filter_size_primary", "filter_size_sibling", "opencv_dispatch_state"],
+                "derivable_from_current_mat_tls_parameter_contracts": False,
+                "reason": "Size=(0,5) is generated inside the binary filter path itself. The fixture did not omit kernel geometry, and this harness must not invent a replacement width.",
+                "next_unavailable_boundary": {
+                    "kind": "OpenCV dispatch/implementation state",
+                    "boundary": "FUN_181162610",
+                    "exception_class": runtime_error_boundary.get("exception_class"),
+                    "source_file": runtime_error_boundary.get("source_file"),
+                    "line": runtime_error_boundary.get("line"),
+                    "assertion": runtime_error_boundary.get("message"),
+                    "inference_only": "The zero-initialized 0x181843990 table may be implicated, but that remains inference unless proven by a stronger witness",
+                },
+                "call_chain": [
+                    "FUN_181150790",
+                    "FUN_181294950",
+                    "FUN_181298180 + 0x234 callsite 0x1812983b4",
+                    "FUN_1811d88c0",
+                    "FUN_1812b9db0 assertion callsite 0x1812b9da8",
+                    "FUN_181162610",
+                ],
+                "assertion": runtime_error_boundary,
+                "stop_without_mutation": True,
+            }
         return {
             "status": "FAILED",
             "events": events,
@@ -1019,6 +1391,10 @@ def run_owner_probe() -> dict[str, object]:
             "mode2_instruction_trace": mode2_instruction_trace,
             "inner_entry": inner_entry,
             "inner_instruction_trace": inner_instruction_trace,
+            "filter_setup_trace": filter_setup_trace,
+            "dispatch_checkpoints": dispatch_checkpoints,
+            "dispatch_diagnosis": dispatch_diagnosis,
+            "filter_failure": filter_failure,
             "execution_stop": execution_stop,
             "selector_diagnosis": selector_diagnosis(),
             "fls_lifecycle": fls_lifecycle,
@@ -1045,8 +1421,14 @@ def run_owner_probe() -> dict[str, object]:
             },
             "reason": "common owner returned without reaching the required natural PF32 writer callsite",
             "first_unavailable_boundary": (
-                f"exact stop: FUN_181150790 entered; instruction budget exhausted at RIP={execution_stop.get('rip')} in FUN_181294950 dispatch loop; no unimplemented import observed, no typed writer claim"
-                if execution_stop.get("condition") == "instruction budget exhausted"
+                f"exact stop: FUN_181150790 entered; dispatch checkpoint repeated at RIP={execution_stop.get('rip')}; fixture state made no progress; no unimplemented import observed, no typed writer claim"
+                if execution_stop.get("condition") == "repeated checkpoint; fail closed"
+                else "exact stop: FUN_181150790 entered; FUN_181162610 cv::FilterEngine::init throw path from filter.dispatch.cpp:5 was reached after the binary-generated Size=(0,5) setup; do not treat that geometry as missing fixture state; next unavailable boundary is OpenCV dispatch/implementation state, with 0x181843990 implicated only as inference; no typed writer claim"
+                if execution_stop.get("condition") == "dispatch OpenCV dispatch/implementation-state fault; fail closed"
+                else f"exact stop: FUN_181150790 entered; FUN_181294950 fixture-state fault at RIP={execution_stop.get('rip')}; bounded execution failed closed; no typed writer claim"
+                if execution_stop.get("condition") == "dispatch fixture-state fault; fail closed"
+                else f"exact stop: FUN_181150790 entered; bounded dispatch chunks exhausted at RIP={execution_stop.get('rip')}; no unimplemented import observed, no typed writer claim"
+                if execution_stop.get("condition") == "dispatch chunk cap exhausted; fail closed"
                 else "ambiguous control-flow boundary: Mode2 entered FUN_181150790, but no return or inner mode-selector branch was observed before the natural owner return; fail closed, no typed writer claim"
                 if any(item["label"] == "Mode2 inner helper entry" for item in control_flow_trace)
                 else "common owner returned at 0x18114c8f0 without reaching the required PF32 typed writer callsite; no further host/runtime boundary was entered"
@@ -1080,6 +1462,16 @@ def run_owner_probe() -> dict[str, object]:
             "mode2_instruction_trace": mode2_instruction_trace,
             "inner_entry": inner_entry,
             "inner_instruction_trace": inner_instruction_trace,
+            "filter_setup_trace": filter_setup_trace,
+            "dispatch_checkpoints": dispatch_checkpoints,
+            "dispatch_diagnosis": {
+                "strategy": "resume the original call frame at the current RIP; do not re-enter FUN_181150790",
+                "chunk_instructions": DISPATCH_CHUNK_INSTRUCTIONS,
+                "max_chunks": DISPATCH_MAX_CHUNKS,
+                "progress_invariant": "work_coordinate = outer*0x20 + inner; each dispatch_loop_entry checkpoint must strictly increase it",
+                "terminal_classification": {"typed_writer": False, "classification": "exception_before_dispatch_completion"},
+            },
+            "filter_failure": None,
             "execution_stop": execution_stop,
             "selector_diagnosis": selector_diagnosis(),
             "fls_lifecycle": fls_lifecycle,
@@ -1107,13 +1499,14 @@ def run_owner_probe() -> dict[str, object]:
             "first_unavailable_boundary": (
                 f"next exact boundary after one-key FLS/TLS lifecycle: FUN_18115eb30 -> _aligned_malloc({oom_request['requested_bytes']}, 64) returned null and reached FUN_18115ea40; no typed writer claim"
                 if oom_request else
-                "next exact boundary after bounded aligned allocation: FUN_181162610 TLS/FLS setData failure, FlsSetValue(tlsKey,pData) == TRUE, error -215; CRT _CxxThrowException is only the physical throw fallback; no typed writer claim"
+                "next exact boundary after bounded aligned allocation: FUN_181162610 cv::FilterEngine::init throw path from filter.dispatch.cpp:5; Size=(0,5) was binary-generated, so the remaining unavailable boundary is OpenCV dispatch/implementation state, with 0x181843990 implicated only as inference; no typed writer claim"
             ),
             "exception": f"{type(exc).__name__}: {exc}",
         }
 
 
 def main() -> int:
+    static_facts = collect_static_fact_witnesses()
     static = static_checks()
     runtime = run_owner_probe()
     report = {
@@ -1136,6 +1529,7 @@ def main() -> int:
             "aex_sha256": hashlib.sha256(AEX.read_bytes()).hexdigest(),
             "fixture": "1x1 PF32 descriptor attempt; no Python world/data copying",
         },
+        "static_fact_witnesses": static_facts,
         "static_checks": static,
         "runtime": runtime,
         "lineage_gate": {

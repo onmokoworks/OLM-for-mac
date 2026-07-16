@@ -1,5 +1,48 @@
 # OLM Conformance Ledger
 
+- 2026-07-17 `OLMKiraKira Mode2 dispatch Size boundary` (latest override):
+  no correctness status is promoted. A resumable natural run advances
+  `FUN_181150790 -> FUN_181294950` through 200,000 instructions after grounding
+  the aligned dispatch table at `0x181843990`. It now fails closed in the
+  actual OpenCV path after `FUN_181298180` supplies `cv::Size=(0,5)` to the
+  filter chain. Static assembly proves the zero width is intentional AEX
+  state: `XOR R9D,R9D` followed by the store at `0x1812982ec`; height 5 comes
+  from `RSP+0x48`, and the sibling setup repeats the same zero-width pattern.
+  Therefore this is not missing host geometry and the width must not be
+  patched. The exact call chain is `FUN_181150790 -> FUN_181294950 ->
+  FUN_181298180 -> FUN_1811d88c0 -> FUN_1812b9db0 -> FUN_181162610`.
+  Next Mac-only action: reconstruct the embedded OpenCV dispatch/implementation
+  state selected before the assertion. The zero-initialized dispatch table is
+  a candidate cause, not yet a fact. Do not suppress the assertion or claim a
+  typed writer. Evidence:
+  `refs/conformance/olmkirakira_mode2_common_owner_20260717.json`.
+
+- 2026-07-17 `OLMDistanceGradation 16bpc proof-render preflight` (latest
+  override): no correctness status is promoted. A non-destructive preflight
+  validates canonical case0012/case0014 request paths, 16bpc manifests, the
+  sole installed plugin path and SHA-256
+  `af328faed0fcfbdefac7618d1218c2e5e5c9c0420c3bc58cdde7a7b6f64232fd`,
+  and the live AE module map. It emits guarded preview commands but does not
+  launch or quit AE, mutate a project, or render unless
+  `--disposable-project` is explicit. The retained run found AE PID 7653 with
+  DG not mapped and therefore refused the proof render only at the disposable
+  project gate. Next action remains a fresh/disposable-project render of
+  canonical 0012/0014; no AE exact claim is made. Evidence:
+  `refs/conformance/olmdistancegradation_16bpc_case0012_case0014_proof_render_preflight_20260716.json`.
+
+- 2026-07-17 `OLMDirectionalBlur natural pre-render continuation` (latest
+  override): no correctness status is promoted. The nested synthetic
+  `PF_Iterate8` continuation now uses a grounded trampoline and no longer
+  faults at callback slot `0x820000e0`. The natural 8bpc owner passes checkout,
+  depth, and parameter-materialization gates, reaches the first Iterate8 and
+  actual transform helper `FUN_180001ec0`, then fails closed at `0x180002064`
+  before a downstream Iterate8/output callback. No distinct write from source
+  plane `params+0x8078` to writer plane `params+0x8090` is observed. Next
+  Mac-only action: reconstruct the transform helper state at that exact
+  boundary; do not alter the proven writer or fabricate output values.
+  Evidence:
+  `refs/conformance/olmdirectionalblur_iterate8_natural_prerender_followup_20260717.json`.
+
 - 2026-07-17 `OLMRadialBlur natural B150 span matrix` (latest override): no
   correctness status is promoted. The natural reader-owned caller reaches
   actual `FUN_18000B150` for Outer Edge Fade spans 1, 2, and 3 and Inner Edge
