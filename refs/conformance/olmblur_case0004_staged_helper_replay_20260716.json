@@ -285,6 +285,7 @@
     "plane_sha256": "27608b53af59df36d87a449c80d677b937c337532c2eb9c7ad52dbc73498507f",
     "flags_sha256": "5a890a5344061171dfad9fe3d5531c0212bb47a505985d2b55dc6704d711a3df",
     "full_plane_matches_pf16_decode": true,
+    "math_backend": "AEX guest control flow with AexLoader host-backed Python math callbacks; not Windows CRT",
     "helper_body_detour": "first byte of each helper patched to RET in schedule-capture loader only",
     "helper_calls_captured": [
       {

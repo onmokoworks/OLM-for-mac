@@ -458,6 +458,7 @@ def run_probe() -> dict:
             "plane_bytes": len(capture["plane"]), "flags_bytes": len(capture["flags"]),
             "plane_sha256": sha256(capture["plane"]), "flags_sha256": sha256(capture["flags"]),
             "full_plane_matches_pf16_decode": True,
+            "math_backend": "AEX guest control flow with AexLoader host-backed Python math callbacks; not Windows CRT",
             "helper_body_detour": "first byte of each helper patched to RET in schedule-capture loader only",
             "helper_calls_captured": capture["calls"],
         },
