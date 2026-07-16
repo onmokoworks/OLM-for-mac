@@ -1,0 +1,434 @@
+{
+  "claim_boundary": "bounded actual-AEX worker/scatter/sampler evidence only; never AE exact",
+  "classification": "bounded-reconstructed-caller-state-proven",
+  "entries": {
+    "inverse_sampler": "0x180009d80",
+    "scatter": "0x18000a9d0",
+    "worker": "0x18000b150"
+  },
+  "geometry": {
+    "height": 1,
+    "row_end": 1,
+    "row_start": 0,
+    "width": 32
+  },
+  "issues": [],
+  "kind": "olmradialblur_reconstructed_caller_state_witness_20260716",
+  "provenance": {
+    "aex_path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "input_path": "refs/win_references/20260604_olm/OLMRadialBlur/case_0009_before_effects.png",
+    "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4"
+  },
+  "runs": [
+    {
+      "bindings": {
+        "param_plus_0x08_geometry": 536888320,
+        "param_plus_0x98_source": 536888384,
+        "work_plus_0x38_final": 536890048,
+        "work_plus_0x4210_accum": 536889408,
+        "work_plus_0x4218_denom": 536889920,
+        "work_plus_0x50_scalar_a": 536888896
+      },
+      "context_fields": {
+        "left_span_i32": 0,
+        "left_table": 0,
+        "right_span_i32": 0,
+        "right_table": 0
+      },
+      "entry_captures": {
+        "inverse_sampler": [
+          {
+            "register_args": [
+              536890048,
+              536890560,
+              32,
+              1
+            ],
+            "return_address": "0x90000000",
+            "stack_args": [
+              128,
+              1088946176,
+              0
+            ]
+          }
+        ],
+        "scatter": [
+          {
+            "register_args": [
+              536870912,
+              536888384,
+              536888896,
+              536889152
+            ],
+            "return_address": "0x90000000",
+            "stack_args": [
+              536889280,
+              32,
+              1,
+              0,
+              1,
+              536889408,
+              536889920
+            ]
+          }
+        ],
+        "worker": [
+          {
+            "register_args": [
+              536870912,
+              536888384,
+              536888896,
+              536889024
+            ],
+            "return_address": "0x90000000",
+            "stack_args": [
+              32,
+              1,
+              0,
+              1,
+              536889408,
+              536889920
+            ]
+          }
+        ]
+      },
+      "initial_state_sha256": "3862709836bf988d2988c2272dbdebc3dcf1cd90158d43be2e6c36a1e30e883d",
+      "instructions": {
+        "budget": 2000000,
+        "inverse_sampler": 126,
+        "scatter": 646,
+        "total": 3147,
+        "worker": 2375
+      },
+      "noop_detour_calls": 0,
+      "planes": {
+        "after_scatter": {
+          "all_finite": true,
+          "rgba_sha256": "a78faa12f2e588ba31474f51f82a8e76832f0f55613d1b28de40401afa93427e",
+          "scalar_sha256": "b638277a8690e175a9137feff1e43c067f9faf4e2f600caf468fb05b0403b717"
+        },
+        "after_worker": {
+          "all_finite": true,
+          "rgba_sha256": "a78faa12f2e588ba31474f51f82a8e76832f0f55613d1b28de40401afa93427e",
+          "scalar_sha256": "b638277a8690e175a9137feff1e43c067f9faf4e2f600caf468fb05b0403b717"
+        },
+        "before": {
+          "all_finite": true,
+          "rgba_sha256": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560",
+          "scalar_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca"
+        },
+        "final_all_finite": true,
+        "final_sha256": "a78faa12f2e588ba31474f51f82a8e76832f0f55613d1b28de40401afa93427e"
+      },
+      "pointers": {
+        "accum_rgba": 536889408,
+        "denom": 536889920,
+        "final_rgba": 536890048,
+        "geometry": 536888320,
+        "param": 536888064,
+        "scalar_a": 536888896,
+        "scalar_b": 536889024,
+        "scatter_b": 536889152,
+        "scatter_c": 536889280,
+        "source_rgba": 536888384,
+        "work": 536870912
+      },
+      "returns": {
+        "inverse_sampler": 1,
+        "scatter": 1,
+        "worker": 1
+      },
+      "sample": {
+        "actual_f32": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "actual_f32_words": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000",
+          "0x3f800000"
+        ],
+        "angle_index": 0.0,
+        "exact_float32_words": true,
+        "portable": {
+          "angle_indices": [
+            0,
+            0
+          ],
+          "cells": {
+            "a0_r0": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "a0_r1": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "a1_r0": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "a1_r1": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "radius_indices": [
+            7,
+            8
+          ],
+          "round_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "sample_float": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "trunc_u8": [
+            0,
+            0,
+            0,
+            255
+          ],
+          "weights": [
+            0.75,
+            0.25,
+            0.0,
+            0.0
+          ]
+        },
+        "portable_f32_words": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000",
+          "0x3f800000"
+        ],
+        "radius_index": 7.25
+      },
+      "side": "live"
+    },
+    {
+      "bindings": {
+        "param_plus_0x08_geometry": 536888320,
+        "param_plus_0x98_source": 536888384,
+        "work_plus_0x38_final": 536890048,
+        "work_plus_0x4210_accum": 536889408,
+        "work_plus_0x4218_denom": 536889920,
+        "work_plus_0x50_scalar_a": 536888896
+      },
+      "context_fields": {
+        "left_span_i32": 0,
+        "left_table": 0,
+        "right_span_i32": 0,
+        "right_table": 0
+      },
+      "entry_captures": {
+        "inverse_sampler": [
+          {
+            "register_args": [
+              536890048,
+              536890560,
+              32,
+              1
+            ],
+            "return_address": "0x90000000",
+            "stack_args": [
+              128,
+              1088946176,
+              0
+            ]
+          }
+        ],
+        "scatter": [
+          {
+            "register_args": [
+              536870912,
+              536888384,
+              536888896,
+              536889152
+            ],
+            "return_address": "0x90000000",
+            "stack_args": [
+              536889280,
+              32,
+              1,
+              0,
+              1,
+              536889408,
+              536889920
+            ]
+          }
+        ],
+        "worker": [
+          {
+            "register_args": [
+              536870912,
+              536888384,
+              536888896,
+              536889024
+            ],
+            "return_address": "0x90000000",
+            "stack_args": [
+              32,
+              1,
+              0,
+              1,
+              536889408,
+              536889920
+            ]
+          }
+        ]
+      },
+      "initial_state_sha256": "3862709836bf988d2988c2272dbdebc3dcf1cd90158d43be2e6c36a1e30e883d",
+      "instructions": {
+        "budget": 2000000,
+        "inverse_sampler": 119,
+        "scatter": 646,
+        "total": 768,
+        "worker": 3
+      },
+      "noop_detour_calls": 1,
+      "planes": {
+        "after_scatter": {
+          "all_finite": true,
+          "rgba_sha256": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560",
+          "scalar_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca"
+        },
+        "after_worker": {
+          "all_finite": true,
+          "rgba_sha256": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560",
+          "scalar_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca"
+        },
+        "before": {
+          "all_finite": true,
+          "rgba_sha256": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560",
+          "scalar_sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca"
+        },
+        "final_all_finite": true,
+        "final_sha256": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560"
+      },
+      "pointers": {
+        "accum_rgba": 536889408,
+        "denom": 536889920,
+        "final_rgba": 536890048,
+        "geometry": 536888320,
+        "param": 536888064,
+        "scalar_a": 536888896,
+        "scalar_b": 536889024,
+        "scatter_b": 536889152,
+        "scatter_c": 536889280,
+        "source_rgba": 536888384,
+        "work": 536870912
+      },
+      "returns": {
+        "inverse_sampler": 1,
+        "scatter": 1,
+        "worker": 1
+      },
+      "sample": {
+        "actual_f32": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "actual_f32_words": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "angle_index": 0.0,
+        "exact_float32_words": true,
+        "portable": {
+          "angle_indices": [
+            0,
+            0
+          ],
+          "cells": {
+            "a0_r0": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "a0_r1": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "a1_r0": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "a1_r1": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "radius_indices": [
+            7,
+            8
+          ],
+          "round_u8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "sample_float": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "trunc_u8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "weights": [
+            0.75,
+            0.25,
+            0.0,
+            0.0
+          ]
+        },
+        "portable_f32_words": [
+          "0x00000000",
+          "0x00000000",
+          "0x00000000",
+          "0x00000000"
+        ],
+        "radius_index": 7.25
+      },
+      "side": "noop"
+    }
+  ],
+  "schema": 1,
+  "status": "pass",
+  "typed_crop_sha256": "a78faa12f2e588ba31474f51f82a8e76832f0f55613d1b28de40401afa93427e"
+}
