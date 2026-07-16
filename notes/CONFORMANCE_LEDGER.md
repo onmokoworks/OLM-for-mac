@@ -34,11 +34,14 @@
   RGBA output and the actual PF32 leaf records matching XMM inputs and ARGB
   destination mutation in one Unicorn instance, but the value transfer between
   them is Python-mediated. Static and runtime checks confirm the Mode2 target
-  returns without a typed-writer call edge, so the harness correctly exits `2`
-  with `BLOCKED` instead of promoting synthetic lineage. The next Mac-only
-  boundary is their common upper caller/orchestrator, not another direct leaf
-  invocation. Evidence:
-  `refs/conformance/olmkirakira_mode2_pointer_lineage_20260717.json`.
+  returns without a typed-writer call edge, so synthetic lineage is rejected.
+  A natural run now enters common owner `FUN_18114c8f0`, executes both PF32
+  world callbacks with preserved canaries, grounds the 25-entry disk-ID table,
+  and observes six parameter checkouts/five checkins. It still exits `2` before
+  Mode2 at the next exact host boundary: `outer_context+0x180` must provide an
+  SPBasicSuite that acquires `PF ColorParamSuite1`. The next Mac-only action is
+  that suite contract, not another direct leaf invocation. Evidence:
+  `refs/conformance/olmkirakira_mode2_common_owner_20260717.json`.
 
 - 2026-07-17 `OLMDirectionalBlur Mac SmartRender adapter` (latest override):
   no correctness status is promoted. A source-included arm64 adapter executes

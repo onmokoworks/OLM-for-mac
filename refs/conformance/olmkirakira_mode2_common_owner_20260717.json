@@ -1,0 +1,586 @@
+{
+  "ae_exact_claim": false,
+  "common_owner": {
+    "function": "FUN_18114c8f0",
+    "mode2_dispatch": "FUN_18114d7f0 -> FUN_18114f4a0",
+    "pf32_selection": "PF depth 0x20 -> FUN_18114d7f0",
+    "role": "reads PF depth, obtains source/output worlds through host suite, selects PF8/PF16/PF32 owner",
+    "typed_owner": "FUN_18114d7f0 -> FUN_18114e460",
+    "writer_callsites": [
+      "0x18114e5d7",
+      "0x18114e739"
+    ]
+  },
+  "date": "2026-07-17",
+  "inputs": {
+    "aex": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "fixture": "1x1 PF32 descriptor attempt; no Python world/data copying"
+  },
+  "kind": "olmkirakira_mode2_common_owner_natural_lineage_attempt",
+  "limits": [
+    "The host PF world-suite callback ABI was not fabricated.",
+    "No Mode2 output pointer reached a typed writer in this run.",
+    "No Windows execution, After Effects host binding, final pixel, or AE exactness claim.",
+    "No production source or ledger was changed."
+  ],
+  "lineage_gate": {
+    "fail_closed": true,
+    "natural_writer_reached": false,
+    "passed": false
+  },
+  "platform_scope": "Mac-only Unicorn execution of the checked-in Windows PE AEX; no Windows/AE claim",
+  "runtime": {
+    "callback": {
+      "callbacks": [
+        {
+          "abi_registers_rcx_rdx_r8_r9": [
+            "0x400000c0",
+            "0x0",
+            "0xf0fe728",
+            "0x82000020"
+          ],
+          "label": "PFWorldSuite.param4[1] slot +0x0",
+          "out_pointer_address": "0xf0fe728",
+          "returned_world_pointer": "0x40000060",
+          "rsp": "0xf0fe6d8",
+          "stack_at_callback_entry": "48c914810100000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        },
+        {
+          "abi_registers_rcx_rdx_r8_r9": [
+            "0x400000c0",
+            "0xf0fe720",
+            "0xf0fe728",
+            "0x82000030"
+          ],
+          "label": "PFWorldSuite.param4[1] slot +0x10",
+          "out_pointer_address": "0xf0fe720",
+          "returned_world_pointer": "0x40000090",
+          "rsp": "0xf0fe6d8",
+          "stack_at_callback_entry": "66c914810100000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "param_checkin": [
+        {
+          "abi_registers_rcx_rdx_r8_r9": [
+            "0x400000c0",
+            "0xf0fe5c0",
+            "0x0",
+            "0x0"
+          ],
+          "refcon": "0x400000c0",
+          "return": 0,
+          "return_semantics": "PF_Err_NONE",
+          "source": "tools/emulation/test_dblur_case0001_rowdriver.py:91-100"
+        },
+        {
+          "abi_registers_rcx_rdx_r8_r9": [
+            "0x400000c0",
+            "0xf0fe5c0",
+            "0x0",
+            "0x0"
+          ],
+          "refcon": "0x400000c0",
+          "return": 0,
+          "return_semantics": "PF_Err_NONE",
+          "source": "tools/emulation/test_dblur_case0001_rowdriver.py:91-100"
+        },
+        {
+          "abi_registers_rcx_rdx_r8_r9": [
+            "0x400000c0",
+            "0xf0fe5c0",
+            "0x0",
+            "0x0"
+          ],
+          "refcon": "0x400000c0",
+          "return": 0,
+          "return_semantics": "PF_Err_NONE",
+          "source": "tools/emulation/test_dblur_case0001_rowdriver.py:91-100"
+        },
+        {
+          "abi_registers_rcx_rdx_r8_r9": [
+            "0x400000c0",
+            "0xf0fe5c0",
+            "0x0",
+            "0x0"
+          ],
+          "refcon": "0x400000c0",
+          "return": 0,
+          "return_semantics": "PF_Err_NONE",
+          "source": "tools/emulation/test_dblur_case0001_rowdriver.py:91-100"
+        },
+        {
+          "abi_registers_rcx_rdx_r8_r9": [
+            "0x400000c0",
+            "0xf0fe5c0",
+            "0x0",
+            "0x0"
+          ],
+          "refcon": "0x400000c0",
+          "return": 0,
+          "return_semantics": "PF_Err_NONE",
+          "source": "tools/emulation/test_dblur_case0001_rowdriver.py:91-100"
+        }
+      ],
+      "param_checkout": [
+        {
+          "abi_registers_rcx_rdx_r8_r9": [
+            "0x400000c0",
+            "0x0",
+            "0x0",
+            "0x0"
+          ],
+          "disk_id": 1,
+          "enum": null,
+          "grounded_value": 0.0,
+          "kind": "double",
+          "match_name": "OLM OLM Kira Kira-0001",
+          "name": "Glow Rotation",
+          "param_def_pointer": "0xf0fe5c0",
+          "param_def_size": "0xb0",
+          "param_def_u_plus_0x38_raw": "00000000000000000000000000000000",
+          "requested_disk_id": 1,
+          "return": 0,
+          "return_semantics": "PF_Err_NONE",
+          "selector_index": 0,
+          "source": {
+            "checkout_shape": "tools/emulation/test_dblur_case0001_rowdriver.py:84-100",
+            "defaults": "refs/win_references/20260604_olm/OLMKiraKira/reference_manifest.json case_0001",
+            "selectors": "mac/OLMKiraKira/OLMKiraKira.h disk IDs"
+          },
+          "stack_time_scale": "0x0"
+        },
+        {
+          "abi_registers_rcx_rdx_r8_r9": [
+            "0x400000c0",
+            "0x1",
+            "0x0",
+            "0x0"
+          ],
+          "disk_id": 2,
+          "enum": null,
+          "grounded_value": 1.0,
+          "kind": "double",
+          "match_name": "OLM OLM Kira Kira-0002",
+          "name": "Brightness Gain",
+          "param_def_pointer": "0xf0fe5c0",
+          "param_def_size": "0xb0",
+          "param_def_u_plus_0x38_raw": "000000000000f03f0000000000000000",
+          "requested_disk_id": 2,
+          "return": 0,
+          "return_semantics": "PF_Err_NONE",
+          "selector_index": 1,
+          "source": {
+            "checkout_shape": "tools/emulation/test_dblur_case0001_rowdriver.py:84-100",
+            "defaults": "refs/win_references/20260604_olm/OLMKiraKira/reference_manifest.json case_0001",
+            "selectors": "mac/OLMKiraKira/OLMKiraKira.h disk IDs"
+          },
+          "stack_time_scale": "0x0"
+        },
+        {
+          "abi_registers_rcx_rdx_r8_r9": [
+            "0x400000c0",
+            "0xa",
+            "0x0",
+            "0x0"
+          ],
+          "disk_id": 11,
+          "enum": null,
+          "grounded_value": 100,
+          "kind": "int32",
+          "match_name": "OLM OLM Kira Kira-0011",
+          "name": "Strength multiplier",
+          "param_def_pointer": "0xf0fe5c0",
+          "param_def_size": "0xb0",
+          "param_def_u_plus_0x38_raw": "64000000000000000000000000000000",
+          "requested_disk_id": 11,
+          "return": 0,
+          "return_semantics": "PF_Err_NONE",
+          "selector_index": 10,
+          "source": {
+            "checkout_shape": "tools/emulation/test_dblur_case0001_rowdriver.py:84-100",
+            "defaults": "refs/win_references/20260604_olm/OLMKiraKira/reference_manifest.json case_0001",
+            "selectors": "mac/OLMKiraKira/OLMKiraKira.h disk IDs"
+          },
+          "stack_time_scale": "0x0"
+        },
+        {
+          "abi_registers_rcx_rdx_r8_r9": [
+            "0x400000c0",
+            "0x16",
+            "0x0",
+            "0x0"
+          ],
+          "disk_id": 27,
+          "enum": null,
+          "grounded_value": 0,
+          "kind": "int32",
+          "match_name": "OLM OLM Kira Kira-0027",
+          "name": "Fade Out",
+          "param_def_pointer": "0xf0fe5c0",
+          "param_def_size": "0xb0",
+          "param_def_u_plus_0x38_raw": "00000000000000000000000000000000",
+          "requested_disk_id": 27,
+          "return": 0,
+          "return_semantics": "PF_Err_NONE",
+          "selector_index": 22,
+          "source": {
+            "checkout_shape": "tools/emulation/test_dblur_case0001_rowdriver.py:84-100",
+            "defaults": "refs/win_references/20260604_olm/OLMKiraKira/reference_manifest.json case_0001",
+            "selectors": "mac/OLMKiraKira/OLMKiraKira.h disk IDs"
+          },
+          "stack_time_scale": "0x0"
+        },
+        {
+          "abi_registers_rcx_rdx_r8_r9": [
+            "0x400000c0",
+            "0x2",
+            "0x0",
+            "0x0"
+          ],
+          "disk_id": 3,
+          "enum": null,
+          "grounded_value": 50,
+          "kind": "int32",
+          "match_name": "OLM OLM Kira Kira-0003",
+          "name": "Vertical Length",
+          "param_def_pointer": "0xf0fe5c0",
+          "param_def_size": "0xb0",
+          "param_def_u_plus_0x38_raw": "32000000000000000000000000000000",
+          "requested_disk_id": 3,
+          "return": 0,
+          "return_semantics": "PF_Err_NONE",
+          "selector_index": 2,
+          "source": {
+            "checkout_shape": "tools/emulation/test_dblur_case0001_rowdriver.py:84-100",
+            "defaults": "refs/win_references/20260604_olm/OLMKiraKira/reference_manifest.json case_0001",
+            "selectors": "mac/OLMKiraKira/OLMKiraKira.h disk IDs"
+          },
+          "stack_time_scale": "0x0"
+        },
+        {
+          "abi_registers_rcx_rdx_r8_r9": [
+            "0x400000c0",
+            "0xc",
+            "0x0",
+            "0x0"
+          ],
+          "disk_id": 13,
+          "enum": null,
+          "grounded_value": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "kind": "color",
+          "match_name": "OLM OLM Kira Kira-0013",
+          "name": "Vertical Color",
+          "param_def_pointer": "0xf0fe5c0",
+          "param_def_size": "0xb0",
+          "param_def_u_plus_0x38_raw": "ffffffff000000000000000000000000",
+          "requested_disk_id": 13,
+          "return": 0,
+          "return_semantics": "PF_Err_NONE",
+          "selector_index": 12,
+          "source": {
+            "checkout_shape": "tools/emulation/test_dblur_case0001_rowdriver.py:84-100",
+            "defaults": "refs/win_references/20260604_olm/OLMKiraKira/reference_manifest.json case_0001",
+            "selectors": "mac/OLMKiraKira/OLMKiraKira.h disk IDs"
+          },
+          "stack_time_scale": "0x0"
+        }
+      ]
+    },
+    "events": [
+      {
+        "event": "common_owner_entry",
+        "register_args": [
+          "0x400002e0",
+          "0x400000e0",
+          "0x0",
+          "0x400003d0"
+        ]
+      }
+    ],
+    "exception": "RuntimeError: emulation faulted at RIP=0x18123238b: Invalid memory read (UC_ERR_READ_UNMAPPED)",
+    "first_unavailable_boundary": "unprovided PF ColorParamSuite/SPBasic suite at FUN_181232350 +0x3b (MOV RAX,[RBX]); RBX=[outer context+0x180]=0; required AcquireSuite output at RSP+0x78",
+    "internal_boundary_trace": [
+      {
+        "address": "0x1811542b0",
+        "label": "FUN_1811542b0 entry",
+        "registers_rcx_rdx_r8_r9_rax_rbx": [
+          "0x400002e0",
+          "0x400000e0",
+          "0x1",
+          "0xf0fe730",
+          "0x40000060",
+          "0x400002e0"
+        ],
+        "rsp": "0xf0fe698"
+      },
+      {
+        "address": "0x181154300",
+        "label": "parameter-table compare before invalid read",
+        "registers_rcx_rdx_r8_r9_rax_rbx": [
+          "0x4000038c",
+          "0x0",
+          "0x1",
+          "0xf0fe730",
+          "0x400002e8",
+          "0x400002e8"
+        ],
+        "rsp": "0xf0fe590"
+      },
+      {
+        "address": "0x1812326e0",
+        "label": "PF_ParamCheckout callback pointer before CALL R10",
+        "registers_rcx_rdx_r8_r9_rax_rbx": [
+          "0x400000e0",
+          "0x0",
+          "0x0",
+          "0x0",
+          "0x0",
+          "0x400002e8"
+        ],
+        "rsp": "0xf0fe588"
+      },
+      {
+        "address": "0x181232760",
+        "label": "context callback pointer before CALL RAX",
+        "registers_rcx_rdx_r8_r9_rax_rbx": [
+          "0x400000e0",
+          "0xf0fe5c0",
+          "0x0",
+          "0x0",
+          "0x0",
+          "0x400002e8"
+        ],
+        "rsp": "0xf0fe588"
+      },
+      {
+        "address": "0x1812326e0",
+        "label": "PF_ParamCheckout callback pointer before CALL R10",
+        "registers_rcx_rdx_r8_r9_rax_rbx": [
+          "0x400000e0",
+          "0x1",
+          "0x0",
+          "0x0",
+          "0x1",
+          "0x400002e8"
+        ],
+        "rsp": "0xf0fe588"
+      },
+      {
+        "address": "0x181232760",
+        "label": "context callback pointer before CALL RAX",
+        "registers_rcx_rdx_r8_r9_rax_rbx": [
+          "0x400000e0",
+          "0xf0fe5c0",
+          "0x0",
+          "0x0",
+          "0x0",
+          "0x400002e8"
+        ],
+        "rsp": "0xf0fe588"
+      },
+      {
+        "address": "0x1812326e0",
+        "label": "PF_ParamCheckout callback pointer before CALL R10",
+        "registers_rcx_rdx_r8_r9_rax_rbx": [
+          "0x400000e0",
+          "0xa",
+          "0x0",
+          "0x0",
+          "0xa",
+          "0x400002e8"
+        ],
+        "rsp": "0xf0fe588"
+      },
+      {
+        "address": "0x181232760",
+        "label": "context callback pointer before CALL RAX",
+        "registers_rcx_rdx_r8_r9_rax_rbx": [
+          "0x400000e0",
+          "0xf0fe5c0",
+          "0x0",
+          "0x0",
+          "0x64",
+          "0x400002e8"
+        ],
+        "rsp": "0xf0fe588"
+      },
+      {
+        "address": "0x1812326e0",
+        "label": "PF_ParamCheckout callback pointer before CALL R10",
+        "registers_rcx_rdx_r8_r9_rax_rbx": [
+          "0x400000e0",
+          "0x16",
+          "0x0",
+          "0x0",
+          "0x16",
+          "0x400002e8"
+        ],
+        "rsp": "0xf0fe588"
+      },
+      {
+        "address": "0x181232760",
+        "label": "context callback pointer before CALL RAX",
+        "registers_rcx_rdx_r8_r9_rax_rbx": [
+          "0x400000e0",
+          "0xf0fe5c0",
+          "0x0",
+          "0x0",
+          "0x0",
+          "0x400002e8"
+        ],
+        "rsp": "0xf0fe588"
+      },
+      {
+        "address": "0x1812326e0",
+        "label": "PF_ParamCheckout callback pointer before CALL R10",
+        "registers_rcx_rdx_r8_r9_rax_rbx": [
+          "0x400000e0",
+          "0x2",
+          "0x0",
+          "0x0",
+          "0x2",
+          "0x400002e8"
+        ],
+        "rsp": "0xf0fe588"
+      },
+      {
+        "address": "0x181232760",
+        "label": "context callback pointer before CALL RAX",
+        "registers_rcx_rdx_r8_r9_rax_rbx": [
+          "0x400000e0",
+          "0xf0fe5c0",
+          "0x0",
+          "0x0",
+          "0x32",
+          "0x400002e8"
+        ],
+        "rsp": "0xf0fe588"
+      },
+      {
+        "address": "0x1812326e0",
+        "label": "PF_ParamCheckout callback pointer before CALL R10",
+        "registers_rcx_rdx_r8_r9_rax_rbx": [
+          "0x400000e0",
+          "0xc",
+          "0x0",
+          "0x0",
+          "0xc",
+          "0x400002e8"
+        ],
+        "rsp": "0xf0fe588"
+      },
+      {
+        "address": "0x181232350",
+        "label": "PF ColorParamSuite acquire path",
+        "registers_rcx_rdx_r8_r9_rax_rbx": [
+          "0xf0fe5c0",
+          "0x400000e0",
+          "0xf0fe8c8",
+          "0x0",
+          "0x0",
+          "0x400002e8"
+        ],
+        "rsp": "0xf0fe588"
+      }
+    ],
+    "natural_writer_reached": false,
+    "parameter_table": {
+      "context_defaults": {
+        "+0xe0": 0,
+        "+0xe4": 0,
+        "+0xf0": 0,
+        "source": "zero-initialized fixture; exact FUN_1811542b0 reads"
+      },
+      "pointer": "0x400002e0",
+      "proven_entries": {
+        "address": "0x400002e8",
+        "count": 25,
+        "disk_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          20,
+          22,
+          24,
+          26,
+          27,
+          28,
+          35
+        ],
+        "source": "mac/OLMKiraKira/OLMKiraKira.h disk IDs; first request FUN_18114e860 0x18114e87f MOV R8D,0x1"
+      },
+      "size": "0xb0"
+    },
+    "status": "BLOCKED",
+    "suite_call_trace": [
+      {
+        "callsite": "0x18114c945",
+        "r9": "0x82000020",
+        "suite_slot0": "0x82000020",
+        "suite_slot1": "0x82000030"
+      },
+      {
+        "callsite": "0x18114c963",
+        "r9": "0x82000030",
+        "suite_slot0": "0x82000020",
+        "suite_slot1": "0x82000030"
+      }
+    ],
+    "worlds": {
+      "input": {
+        "padding_preserved": true,
+        "payload": "0x40000000",
+        "pointer": "0x40000060",
+        "raw_after": "0000803f0000803e0000003f0000403f3c3c3c3c3c3c3c3c",
+        "rowbytes": 24
+      },
+      "output": {
+        "padding_preserved": true,
+        "payload": "0x40000040",
+        "pointer": "0x40000090",
+        "raw_after": "a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5c3c3c3c3c3c3c3c3",
+        "rowbytes": 24
+      }
+    }
+  },
+  "schema": 1,
+  "static_checks": {
+    "common_owner_obtains_worlds_via_suite": true,
+    "common_owner_present": true,
+    "common_owner_reads_pf_depth": true,
+    "common_owner_selects_pf32_owner": true,
+    "kira_defaults_are_grounded": true,
+    "next_callback_pointer_abi_is_grounded": true,
+    "param_checkin_contract_is_grounded": true,
+    "param_checkout_contract_is_grounded": true,
+    "param_context_fields_are_grounded": true,
+    "param_table_request_id_is_grounded": true,
+    "param_table_scan_is_grounded": true,
+    "pf32_owner_enters_mode2_dispatch": true,
+    "pf32_owner_enters_typed_owner": true,
+    "typed_owner_has_pf32_sites": true,
+    "typed_writer_uses_rsp_plus_0x28": true
+  },
+  "status": "BLOCKED"
+}
