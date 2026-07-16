@@ -867,19 +867,31 @@ treating a mismatch as algorithm drift.
   inline-erode path in `FUN_1800094B0`; the latter never calls `8320`. The
   pinned constant at `0x18001f754` is `4000.0f`, not `0.5f`. A bounded direct
   pipeline preserves the generated distance world and matches the portable
-  terminal oracle, but neither complete caller function has executed. Host
-  orchestration and the full amount-normalization boundary therefore remain
-  open; do not patch the production threshold from the leaf alone.
+  terminal oracle. A bounded hash-pinned `FUN_180009000` run now reaches the
+  native type-2 ERODE seam with paired amounts `-1/-3`, records the native
+  stack/register ABI, and preserves the distance world. Because volatile
+  `RDX` is explicitly rebound at the callsite and selected worlds are repaired
+  after the raw seam snapshot, this is not untouched full caller-to-leaf
+  execution. Host orchestration and the full amount-normalization boundary
+  therefore remain open; do not patch the production threshold from the leaf
+  or repaired seam alone. Evidence:
+  `refs/conformance/olmcolorkey_edge_thin_actual_caller_20260717.md` / `.json`.
 
-- 2026-07-17 `OLMRadialBlur scatter-tail core`: use
+- 2026-07-17 `OLMRadialBlur scatter caller and tail core`: use
+  `refs/conformance/olmradialblur_scatter_caller_20260717.md` /
+  `.json` and
   `refs/conformance/olmradialblur_scatter_tail_equivalence_20260717.md` /
-  `.json`. The unwired portable `FUN_180001c90` core matches ten actual-AEX
-  fixtures byte-for-byte, including mode 2, the 3000 clamp, table origin,
-  inner row-tail underflow, persistent max-alpha, source NaN payload, and
-  `CVTTSS2SI` exceptional sentinels. UBSan is clean. This is function-level
-  evidence only; production wiring and full-frame host/output binding remain
-  open, and the portable bounds bailout is an explicit safety divergence
-  outside the fixture domain.
+  `.json`. The bounded actual-AEX `FUN_1800024c0` caller and portable caller
+  agree on absolute-radius source-plane indexing for nonzero start radii,
+  zero/NaN skip versus negative-finite activation, and outer-before-inner
+  call order. Mode-1 integer accumulation is pinned to x86 two's-complement
+  wrap, including `INT_MAX + 1 -> INT_MIN`. The portable `FUN_180001c90` tail
+  also matches ten actual-AEX fixtures byte-for-byte, including mode 2, the
+  3000 clamp, table origin, inner row-tail underflow, persistent max-alpha,
+  source NaN payload, and `CVTTSS2SI` exceptional sentinels. UBSan is clean.
+  This is bounded function-level evidence only; production wiring and
+  full-frame host/output binding remain open, and the portable bounds bailout
+  is an explicit safety divergence outside the fixture domain.
 
 - 2026-07-17 `OLMToonDilate raw semi-alpha candidate`: use
   `refs/conformance/olmtoondilate_pf32_raw_copy_witness_20260717.md` and
@@ -893,10 +905,14 @@ treating a mismatch as algorithm drift.
   all three covered 16bpc exact cases. A paired hash-pinned native PF8 worker
   fixture further proves that alpha `254` is not a propagation seed while
   alpha `255` is; both runs reach the live copy helper and preserve padded
-  rowbytes. Do not revisit the PF8 opaque-seed threshold for `case_0003`;
-  narrow the residual at propagation distance, tie-break, or transparent-cell
-  candidate selection. Keep the status candidate / binary-grounded until Mac
-  AE regression and 32bpc cross-host validation.
+  rowbytes. A paired `3x1` actual-worker fixture also proves equal-distance
+  forward propagation keeps the first winner (`x=0`) under both endpoint
+  permutations while reaching the native tie branch, copy helper, and resume
+  address. Do not revisit the PF8 opaque-seed threshold or this bounded
+  equal-distance forward tie rule for `case_0003`; narrow the residual at
+  radius scaling, host staging, propagation order outside this fixture, or
+  transparent-cell candidate selection. Keep the status candidate /
+  binary-grounded until Mac AE regression and 32bpc cross-host validation.
 
 - 2026-07-17 `OLMDistanceGradation RenderBits staging boundary`: use
   `refs/conformance/olmdistancegradation_renderbits_host_resize_staging_audit_20260717.md`

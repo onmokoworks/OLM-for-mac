@@ -1,0 +1,288 @@
+{
+  "chain": [
+    "0x180008ad0",
+    "0x1800058a0",
+    "0x180008320"
+  ],
+  "claim_boundary": "Native FUN_180009000 reaches the ERODE seam and exposes the reported raw ABI after the explicitly reported callsite RDX binding. Selected world arguments are then repaired before native FUN_180008320. This is not untouched full caller-to-leaf execution and makes no AE exact, threshold, full-host, PNG, or general semantic claim.",
+  "classification": "Mac-local bounded Unicorn execution of hash-pinned FUN_180009000 to the native ERODE seam; the harness binds volatile RDX at 0x18000941D and repairs selected worlds after the raw ERODE-entry snapshot before executing the native leaf",
+  "fixture": {
+    "dimensions": [
+      5,
+      1
+    ],
+    "pixel_format": "PF16",
+    "record": {
+      "0x20": 8,
+      "0x24": 1,
+      "0x28": 0,
+      "0x2c": 2,
+      "0x40": -2.0,
+      "0x44": 2,
+      "0x48": 2
+    }
+  },
+  "kind": "olmcolorkey_edge_thin_actual_caller_20260717",
+  "paired_amount_forwarding": {
+    "amounts": [
+      -1.0,
+      -3.0
+    ],
+    "exact_forwarding": true,
+    "observed_raw_xmm1": [
+      -1.0,
+      -3.0
+    ]
+  },
+  "provenance": {
+    "aex": "aex/OLMColorKey/Plugins/64/2025/OLMColorKey.aex",
+    "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "constant_0x18001f754_float32": 4000.0
+  },
+  "runs": [
+    {
+      "amount": -1.0,
+      "destination_actual_hex": "ff7fccccccccccccff7fccccccccccccff7fccccccccccccff7fccccccccccccff7fcccccccccccc",
+      "destination_actual_sha256": "ef1efe1cd74a44403dbae03660822eca409193d569a78201056179d3a0a00197",
+      "destination_initial_hex": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "destination_initial_sha256": "162b2107d90786ef8fd041e8c5f05c3630b5ef7344b3207144a9643af46cefd3",
+      "destination_sentinel_integrity": true,
+      "distance_after_hex": "00f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f07945",
+      "distance_before_hex": "00f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f07945",
+      "distance_identity_preserved": true,
+      "hits": {
+        "boundary": 1,
+        "caller_callsite": 1,
+        "distance": 1,
+        "erode": 1
+      },
+      "invariants": {
+        "bound_rdx_equals_native_stack5": true,
+        "destination_sentinel_integrity": true,
+        "distance_identity_preserved": true,
+        "distance_xmm3_4000": true,
+        "exact_dimensions_5x1": true,
+        "native_and_repaired_stacks_are_distinct": true,
+        "native_chain_hits_once": true,
+        "native_r8d_is_2": true,
+        "native_r9_equals_original_r8_source": true,
+        "native_stack6_is_exact_distance_world": true,
+        "native_stack7_equals_original_r9_matched": true,
+        "native_xmm1_equals_record_amount": true
+      },
+      "observations": {
+        "caller_callsite": {
+          "R8": "0x2",
+          "R9": "0x20000030",
+          "RCX": "0x40000060",
+          "RDX_before_binding": "0x0",
+          "RDX_bound_for_seam": "0xf0fedc0",
+          "stack5": "0xf0fedc0"
+        },
+        "destination_before_hex": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "destination_payload": "0x200000c0",
+        "distance": {
+          "XMM3": 4000.0
+        },
+        "distance_before_hex": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "distance_before_leaf_hex": "00f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f07945",
+        "distance_entry_payload": "0x20000200",
+        "distance_entry_world": "0xf0fee40",
+        "erode": {
+          "raw": {
+            "R8D_native": 2,
+            "R9_native": "0x20000030",
+            "RDX_after_callsite_binding": "0xf0fedc0",
+            "XMM1_native": -1.0,
+            "stack5_native": "0xf0fedc0",
+            "stack6_native": "0xf0fee40",
+            "stack7_native": "0x20000090"
+          },
+          "repaired": {
+            "R9": "0x20000090",
+            "RDX": "0x20000030",
+            "stack5": "0x20000030",
+            "stack6": "0xf0fee40",
+            "stack7": "0x20000120"
+          }
+        },
+        "raw_stack6_payload": "0x20000200",
+        "raw_stack6_world": "0xf0fee40"
+      },
+      "original_arguments": {
+        "R8_source_world": "0x20000030",
+        "R9_matched_world": "0x20000090"
+      },
+      "record_amount": -1.0,
+      "repaired_leaf_observation": {
+        "actual_hex": "ff7fccccccccccccff7fccccccccccccff7fccccccccccccff7fccccccccccccff7fcccccccccccc",
+        "classification": "observed native leaf output after explicit world repairs; no independent semantic oracle is claimed",
+        "sentinel_integrity": true
+      },
+      "returns": {
+        "caller_instructions": 3094,
+        "caller_rax": "0x0"
+      },
+      "status": "pass",
+      "suite_callbacks": [
+        "OLMColorKey.prepare",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.new_handle.caller",
+        "PF_HandleSuite.release_suite",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.new_handle.caller",
+        "PF_HandleSuite.release_suite",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.new_handle.caller",
+        "PF_HandleSuite.release_suite",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.new_handle.caller",
+        "PF_HandleSuite.release_suite",
+        "OLMColorKey.prepare",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.new_handle.caller",
+        "PF_HandleSuite.new_handle",
+        "PF_HandleSuite.lock_handle",
+        "PF_HandleSuite.release_suite",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.unlock_handle",
+        "PF_HandleSuite.dispose_handle",
+        "PF_HandleSuite.release_suite",
+        "PF_HandleSuite.release_suite",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.lock_handle",
+        "PF_HandleSuite.release_suite",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.lock_handle",
+        "PF_HandleSuite.release_suite",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.lock_handle",
+        "PF_HandleSuite.release_suite"
+      ]
+    },
+    {
+      "amount": -3.0,
+      "destination_actual_hex": "ff7fccccccccccccff7fccccccccccccff7fccccccccccccff7fccccccccccccff7fcccccccccccc",
+      "destination_actual_sha256": "ef1efe1cd74a44403dbae03660822eca409193d569a78201056179d3a0a00197",
+      "destination_initial_hex": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "destination_initial_sha256": "162b2107d90786ef8fd041e8c5f05c3630b5ef7344b3207144a9643af46cefd3",
+      "destination_sentinel_integrity": true,
+      "distance_after_hex": "00f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f07945",
+      "distance_before_hex": "00f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f07945",
+      "distance_identity_preserved": true,
+      "hits": {
+        "boundary": 1,
+        "caller_callsite": 1,
+        "distance": 1,
+        "erode": 1
+      },
+      "invariants": {
+        "bound_rdx_equals_native_stack5": true,
+        "destination_sentinel_integrity": true,
+        "distance_identity_preserved": true,
+        "distance_xmm3_4000": true,
+        "exact_dimensions_5x1": true,
+        "native_and_repaired_stacks_are_distinct": true,
+        "native_chain_hits_once": true,
+        "native_r8d_is_2": true,
+        "native_r9_equals_original_r8_source": true,
+        "native_stack6_is_exact_distance_world": true,
+        "native_stack7_equals_original_r9_matched": true,
+        "native_xmm1_equals_record_amount": true
+      },
+      "observations": {
+        "caller_callsite": {
+          "R8": "0x2",
+          "R9": "0x20000030",
+          "RCX": "0x40000060",
+          "RDX_before_binding": "0x0",
+          "RDX_bound_for_seam": "0xf0fedc0",
+          "stack5": "0xf0fedc0"
+        },
+        "destination_before_hex": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "destination_payload": "0x200000c0",
+        "distance": {
+          "XMM3": 4000.0
+        },
+        "distance_before_hex": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "distance_before_leaf_hex": "00f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f0794500f07945",
+        "distance_entry_payload": "0x20000200",
+        "distance_entry_world": "0xf0fee40",
+        "erode": {
+          "raw": {
+            "R8D_native": 2,
+            "R9_native": "0x20000030",
+            "RDX_after_callsite_binding": "0xf0fedc0",
+            "XMM1_native": -3.0,
+            "stack5_native": "0xf0fedc0",
+            "stack6_native": "0xf0fee40",
+            "stack7_native": "0x20000090"
+          },
+          "repaired": {
+            "R9": "0x20000090",
+            "RDX": "0x20000030",
+            "stack5": "0x20000030",
+            "stack6": "0xf0fee40",
+            "stack7": "0x20000120"
+          }
+        },
+        "raw_stack6_payload": "0x20000200",
+        "raw_stack6_world": "0xf0fee40"
+      },
+      "original_arguments": {
+        "R8_source_world": "0x20000030",
+        "R9_matched_world": "0x20000090"
+      },
+      "record_amount": -3.0,
+      "repaired_leaf_observation": {
+        "actual_hex": "ff7fccccccccccccff7fccccccccccccff7fccccccccccccff7fccccccccccccff7fcccccccccccc",
+        "classification": "observed native leaf output after explicit world repairs; no independent semantic oracle is claimed",
+        "sentinel_integrity": true
+      },
+      "returns": {
+        "caller_instructions": 3094,
+        "caller_rax": "0x0"
+      },
+      "status": "pass",
+      "suite_callbacks": [
+        "OLMColorKey.prepare",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.new_handle.caller",
+        "PF_HandleSuite.release_suite",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.new_handle.caller",
+        "PF_HandleSuite.release_suite",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.new_handle.caller",
+        "PF_HandleSuite.release_suite",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.new_handle.caller",
+        "PF_HandleSuite.release_suite",
+        "OLMColorKey.prepare",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.new_handle.caller",
+        "PF_HandleSuite.new_handle",
+        "PF_HandleSuite.lock_handle",
+        "PF_HandleSuite.release_suite",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.unlock_handle",
+        "PF_HandleSuite.dispose_handle",
+        "PF_HandleSuite.release_suite",
+        "PF_HandleSuite.release_suite",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.lock_handle",
+        "PF_HandleSuite.release_suite",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.lock_handle",
+        "PF_HandleSuite.release_suite",
+        "PF_HandleSuite.acquire",
+        "PF_HandleSuite.lock_handle",
+        "PF_HandleSuite.release_suite"
+      ]
+    }
+  ],
+  "schema": 2,
+  "status": "pass"
+}
