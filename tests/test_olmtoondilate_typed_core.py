@@ -11,8 +11,8 @@ def render_typed(source, depth, search_radius=1.0, comp_width=None):
     height = len(source)
     width = len(source[0])
     output = [[pixel for pixel in row] for row in source]
-    maximum = {16: 32768, 32: 1.0}[depth]
-    opaque = lambda pixel: pixel[3] == maximum if depth == 16 else pixel[3] >= 1.0
+    maximum = {8: 255, 16: 32768, 32: 1.0}[depth]
+    opaque = lambda pixel: pixel[3] == maximum if depth in (8, 16) else pixel[3] >= 1.0
     radius = int(__import__("math").ceil(search_radius * width / (comp_width or width)))
     distances = [[2**32 - 1] * width for _ in range(height)]
 
@@ -47,17 +47,6 @@ def render_typed(source, depth, search_radius=1.0, comp_width=None):
         for x in range(width - 1, -1, -1):
             relax(x, y, ((x + 1, y), (x + 1, y + 1), (x, y + 1), (x - 1, y + 1)))
 
-    for y in range(height):
-        for x in range(width):
-            red, green, blue, alpha = output[y][x]
-            if depth == 16:
-                if alpha not in (0, 32768):
-                    red = (red * alpha + 16383) // 32768
-                    green = (green * alpha + 16383) // 32768
-                    blue = (blue * alpha + 16383) // 32768
-            elif 0.0 < alpha < 1.0:
-                red, green, blue = red * alpha, green * alpha, blue * alpha
-            output[y][x] = (red, green, blue, alpha)
     return output
 
 
@@ -68,7 +57,10 @@ class ToonDilateTypedCoreTests(unittest.TestCase):
         self.assertIn("RenderTyped<PF_Pixel16>", source)
         self.assertIn("RenderTyped<PF_PixelFloat>", source)
         self.assertIn("RenderWorld(input_world, output_world, info, extra->input->bitdepth)", source)
-        self.assertIn("short bitdepth = PF_WORLD_IS_DEEP(output) ? 16 : 8;", source)
+        self.assertIn("PF_PixelFormat_ARGB32", source)
+        self.assertIn("PF_PixelFormat_ARGB64", source)
+        self.assertIn("PF_PixelFormat_ARGB128", source)
+        self.assertNotIn("premultiply_semi_alpha", source)
 
     def test_16bpc_opaque_seed_and_boundary_are_integer_exact(self):
         transparent = (0, 0, 0, 0)
@@ -85,19 +77,25 @@ class ToonDilateTypedCoreTests(unittest.TestCase):
         self.assertEqual(corner[1][1], seed)
         self.assertEqual(corner[2][2], transparent)
 
-    def test_16bpc_semi_alpha_is_not_seed_and_uses_half_up_rounding(self):
+    def test_8bpc_semi_alpha_rgb_survives_without_postpass(self):
+        semi = (201, 101, 51, 128)
+        source = [[semi, semi]]
+        self.assertEqual(render_typed(source, 8), source)
+
+    def test_16bpc_semi_alpha_is_not_seed_and_rgb_survives(self):
         semi = (32767, 32769, 65535, 16384)
         source = [[semi, (0, 0, 0, 0), (100, 200, 300, 32768)]]
         result = render_typed(source, 16)
-        self.assertEqual(result[0][0], (16383, 16384, 32767, 16384))
+        self.assertEqual(result[0][0], semi)
         self.assertEqual(result[0][1], source[0][2])
 
-    def test_float_alpha_is_exactly_float_semantics(self):
+    def test_float_seeded_live_pattern_preserves_out_of_radius_semi_rgb(self):
         semi = (0.8, 0.4, 0.2, 0.25)
-        source = [[semi, (0.0, 0.0, 0.0, 0.0), (0.1, 0.2, 0.3, 1.0)]]
+        opaque = (0.1, 0.2, 0.3, 1.0)
+        source = [[opaque, (0.6, 0.3, 0.15, 0.5), semi]]
         result = render_typed(source, 32)
-        self.assertEqual(result[0][0], (0.2, 0.1, 0.05, 0.25))
-        self.assertEqual(result[0][1], source[0][2])
+        self.assertEqual(result[0][1], opaque)
+        self.assertEqual(result[0][2], semi)
 
 
 if __name__ == "__main__":
