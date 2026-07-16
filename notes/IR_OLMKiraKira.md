@@ -96,6 +96,13 @@ contiguous `0x144`-byte state blocks. The payload field semantics and a direct
 opaque-handle-to-RGBA lookup routine remain unresolved; do not treat the
 current Mac ramp/UI gap as evidence for a serialized schema.
 
+The separate post-checkout render-consumption audit is recorded in
+`refs/conformance/olmkirakira_ramp_render_consumption_static_20260717.md`.
+The recovered binary path threads the first ramp-block pointer through the
+three bit-depth render entries into `FUN_18114f4a0`, but the recovered ray
+driver does not dereference it. This is a static result for the recovered path,
+not a proof that no hidden, indirect, or future path can consume the blocks.
+
 ## Algorithm IR
 
 1. Build seed from input according to Channel and Strength.
