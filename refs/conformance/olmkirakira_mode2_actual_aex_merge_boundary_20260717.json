@@ -1,0 +1,117 @@
+{
+  "actual_aex_checks": {
+    "five_active_ray_clamp": true,
+    "merge_flag_color_helper": true,
+    "raw_accumulation_control": true
+  },
+  "ae_exact_claim": false,
+  "cases": {
+    "five_active_ray_clamp": {
+      "flags_hex": "0000000000",
+      "instructions": 269,
+      "observed_output_rgba_f32": [
+        1.0,
+        0.5,
+        0.0,
+        1.0
+      ],
+      "observed_output_rgba_f32_bits": [
+        "0x3f800000",
+        "0x3f000000",
+        "0x00000000",
+        "0x3f800000"
+      ],
+      "rays_f32_bits": [
+        "0x3f4ccccd",
+        "0x3f4ccccd",
+        "0x3f4ccccd",
+        "0x3f4ccccd",
+        "0x3f4ccccd"
+      ]
+    },
+    "merge_flag_color_helper": {
+      "flags_hex": "0100000000",
+      "instructions": 266,
+      "observed_output_rgba_f32": [
+        1.0,
+        0.0,
+        0.0,
+        0.20000000298023224
+      ],
+      "observed_output_rgba_f32_bits": [
+        "0x3f800000",
+        "0x00000000",
+        "0x00000000",
+        "0x3e4ccccd"
+      ],
+      "rays_f32_bits": [
+        "0x3e4ccccd",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ]
+    },
+    "raw_accumulation_control": {
+      "flags_hex": "0000000000",
+      "instructions": 209,
+      "observed_output_rgba_f32": [
+        0.5,
+        0.75,
+        1.0,
+        0.20000000298023224
+      ],
+      "observed_output_rgba_f32_bits": [
+        "0x3f000000",
+        "0x3f400000",
+        "0x3f800000",
+        "0x3e4ccccd"
+      ],
+      "rays_f32_bits": [
+        "0x3e4ccccd",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ]
+    }
+  },
+  "date": "2026-07-17",
+  "evidence_class": "actual checked-in AEX direct-call execution plus decomp/disassembly correlation",
+  "facts": [
+    "FACT: the actual pinned AEX Mode-2 target executes with one pixel and five ray slots.",
+    "FACT: with flags clear, the active ray contributes selected RGB directly and raw ray value to alpha.",
+    "FACT: setting one per-ray flag executes FUN_181232080 before the same accumulation site and changes the selected color.",
+    "FACT: the target applies four clamps and returns float RGBA; it contains no PF8/PF16/PF32 writer call.",
+    "FACT: the target compares ray values against DAT_181489990, which is 0.001 in the pinned AEX."
+  ],
+  "inferences": [
+    "INFERENCE: Merge Mode 2 is proven to affect aggregation dispatch and, within this target, the conditional per-ray color path.",
+    "INFERENCE: this fixture does not establish a later host compose formula or typed writer selection."
+  ],
+  "inputs": {
+    "aex": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "conditional_color_helper": "FUN_181232080 @ 0x181232080",
+    "fixture_shape": "one pixel, five one-float ray planes, five inline RGBA colors, five merge flags",
+    "target": "FUN_18114ffd0 @ 0x18114ffd0"
+  },
+  "kind": "olmkirakira_mode2_actual_aex_merge_boundary",
+  "limits": [
+    "Direct Unicorn invocation is not Windows/After Effects host execution.",
+    "Final PNG bytes and AE exactness are intentionally not claimed.",
+    "No production source or ledger was changed."
+  ],
+  "schema": 1,
+  "static_checks": {
+    "actual_aex_target_entry": true,
+    "conditional_merge_helper": true,
+    "five_ray_loop": true,
+    "four_clamps": true,
+    "mode2_target_and_dispatch": true,
+    "no_typed_writer_call": true,
+    "raw_rgb_alpha_accumulation": true,
+    "threshold_branch": true
+  },
+  "status": "pass"
+}
