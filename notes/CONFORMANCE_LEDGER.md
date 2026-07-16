@@ -1,5 +1,36 @@
 # OLM Conformance Ledger
 
+- 2026-07-17 `OLMRadialBlur chained natural-render checkpoints` (latest
+  override): no correctness status is promoted. `test_zoom_case0009.py` can
+  now resume a saved actual-AEX state while saving either a later target-RIP
+  checkpoint or the state reached at the instruction budget. A natural
+  caller run saves at staging RIP `0x180007811`; two fresh-process progress
+  hops preserve the same host/AEX state and advance the live RIP. This removes
+  the prior need to restart the 960x540 staging path for every observation and
+  enables bounded continuation through core `0x1800056f0` and prefill start
+  `0x180005a00`, both now reached without Python/synthetic prefill or worker
+  detours. Final sampler `0x180005e68` and host writeback `0x180007c14` remain
+  unreached. Evidence:
+  `refs/conformance/olmradialblur_natural_checkpoint_journey_20260717.json`
+  and `refs/conformance/olmradialblur_zoom_checkpoint_chain_20260717.json`.
+
+- 2026-07-17 `OLMSmoother2 post-cce0 typed writeback` (latest override): no
+  correctness status is promoted. The actual AEX PF8, PF16, and PF32 typed
+  workers match an independent raw ARGB byte/word/float32 oracle in all three
+  bounded fixtures. This closes only the depth-specific store boundary after
+  cce0 for a center-sample fixture; classifier/c280/cce0, retained case0012
+  host state, Windows behavior, and AE exact remain outside this proof.
+  Evidence: `refs/conformance/olmsmoother2_typed_writeback_20260717.json`.
+
+- 2026-07-17 `OLMKiraKira FilterEngine size/anchor lineage` (latest override):
+  no correctness status is promoted. The failing `ksize.width=0x80000000` and
+  `anchor.x=0xc0000000` are written into the FilterEngine object at
+  `0x1812b9b38/0x1812b9b4d`. Their dynamic source is the AEX object populated
+  by `FUN_181281e90` stores `0x18128257a/0x18128257e`; host parameter checkout
+  contains neither raw word. The unmodified assertion remains fail-closed, so
+  no writer or output claim follows. Evidence:
+  `refs/conformance/olmkirakira_filterengine_size_anchor_lineage_20260717.json`.
+
 - 2026-07-17 `OLMKiraKira Mode2 special-value lineage` (latest override): no
   correctness status is promoted. At `FUN_18114f4a0` entry, the caller-provided
   value at original `RSP+0x50` is `2`, and `0x18114f8f2` reads the same value.

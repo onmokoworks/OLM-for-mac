@@ -1,0 +1,36 @@
+{
+  "aex": {
+    "path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+  },
+  "checks": {
+    "checkpoint_files_nonempty": true,
+    "fresh_process_resume_twice": true,
+    "rip_advanced_between_hops": true
+  },
+  "claims_not_made": [
+    "No full-frame core, sampler, writer, Windows, or AE-exact claim",
+    "No synthetic prefill or worker detour"
+  ],
+  "entry_checkpoint": {
+    "rip": "0x180007811",
+    "sha256": "bcafa4313a809f8bd1ad7acc76b728f772bea93707a77bed8c39d5b64b1f7c91",
+    "size": 222763
+  },
+  "kind": "olmradialblur_zoom_checkpoint_chain_20260717",
+  "progress_hops": [
+    {
+      "instruction_budget": 100000,
+      "rip": "0x180017267",
+      "sha256": "598651207cd16e0522696c3618dc094e9c4e531c68a3b2cc23fa93518d00730c",
+      "size": 222942
+    },
+    {
+      "instruction_budget": 100000,
+      "rip": "0x18001726c",
+      "sha256": "daa97ca46ff48edfd6cb05b5ac4af1ba22abb37260ed1855e45fec278c1bc154",
+      "size": 223055
+    }
+  ],
+  "status": "pass_local_transport_only"
+}

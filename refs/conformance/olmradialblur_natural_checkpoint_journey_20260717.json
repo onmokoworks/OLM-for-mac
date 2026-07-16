@@ -1,0 +1,68 @@
+{
+  "checkpoints": [
+    {
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "case_id": "case_0009",
+      "file_sha256": "bcafa4313a809f8bd1ad7acc76b728f772bea93707a77bed8c39d5b64b1f7c91",
+      "file_size": 222763,
+      "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+      "instructions_executed": 908,
+      "label": "staging",
+      "manifest_sha256": "7ec542fad64cc210474c6309c3e48c9f12bd0885f54d31943da873d94024b565",
+      "python_prefill": false,
+      "rip": "0x180007811",
+      "synthetic_prefill": false,
+      "worker_detours": false
+    },
+    {
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "case_id": "case_0009",
+      "file_sha256": "f0891ff1479a615c75042fca688721048cbd99ef73549913acb218fd1306e3ac",
+      "file_size": 360592,
+      "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+      "instructions_executed": 102000908,
+      "label": "progress",
+      "manifest_sha256": "7ec542fad64cc210474c6309c3e48c9f12bd0885f54d31943da873d94024b565",
+      "python_prefill": false,
+      "rip": "0x180017345",
+      "synthetic_prefill": false,
+      "worker_detours": false
+    },
+    {
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "case_id": "case_0009",
+      "file_sha256": "3a768d97c05580120efe22354cbec568b85b95ebe48bb7eb6f4ed544f02484fc",
+      "file_size": 468155,
+      "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+      "instructions_executed": 340360724,
+      "label": "core",
+      "manifest_sha256": "7ec542fad64cc210474c6309c3e48c9f12bd0885f54d31943da873d94024b565",
+      "python_prefill": false,
+      "rip": "0x1800056f0",
+      "synthetic_prefill": false,
+      "worker_detours": false
+    },
+    {
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "case_id": "case_0009",
+      "file_sha256": "858812fc92518689ca2e197cb2f5368edfba3802fe46f2d1a35b0b2a65fd7e1f",
+      "file_size": 570916,
+      "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+      "instructions_executed": 340385693,
+      "label": "prefill_start",
+      "manifest_sha256": "7ec542fad64cc210474c6309c3e48c9f12bd0885f54d31943da873d94024b565",
+      "python_prefill": false,
+      "rip": "0x180005a00",
+      "synthetic_prefill": false,
+      "worker_detours": false
+    }
+  ],
+  "checks": {
+    "instruction_count_monotonic": true,
+    "no_prefill_or_worker_detour": true,
+    "single_case_identity": true
+  },
+  "claim_boundary": "actual-AEX checkpoint transport and reached RIPs only; no Windows or AE-exact claim",
+  "kind": "olmradialblur_natural_checkpoint_journey_20260717",
+  "status": "pass_local_natural_checkpoint_journey"
+}

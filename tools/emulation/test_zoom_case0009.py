@@ -181,6 +181,11 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         help="Resume the primary render from an AexLoader checkpoint created by this runner.",
     )
+    parser.add_argument(
+        "--save-progress-checkpoint",
+        type=Path,
+        help="Save the current primary-render state after the instruction budget is exhausted.",
+    )
     return parser.parse_args()
 
 
@@ -747,8 +752,6 @@ def build_markdown(report: dict[str, Any]) -> str:
 
 def main() -> int:
     args = parse_args()
-    if args.save_checkpoint_at_rip and args.resume_checkpoint:
-        raise SystemExit("--save-checkpoint-at-rip and --resume-checkpoint are mutually exclusive")
     checkpoint_path = None
     checkpoint_rip = None
     if args.save_checkpoint_at_rip:
@@ -1046,10 +1049,8 @@ def main() -> int:
             return 0
         loader.detour_function(FUN_18000A9D0, "RadialBlur.Zoom.a9d0.noop", detour_scatter)
 
-    def save_primary_render_checkpoint(ld: AexLoader, address: int, size: int) -> None:
-        if not execution_state["checkpoint_enabled"] or execution_state["checkpoint_saved"]:
-            return
-        metadata = {
+    def build_checkpoint_metadata() -> dict[str, Any]:
+        return {
             "harness": "test_zoom_case0009",
             "harness_checkpoint_version": 1,
             "config": checkpoint_config,
@@ -1063,6 +1064,11 @@ def main() -> int:
             "direct_context": execution_state["direct_context"],
             "param_ctx_dump": execution_state["param_ctx_dump"],
         }
+
+    def save_primary_render_checkpoint(ld: AexLoader, address: int, size: int) -> None:
+        if not execution_state["checkpoint_enabled"] or execution_state["checkpoint_saved"]:
+            return
+        metadata = build_checkpoint_metadata()
         ld.save_checkpoint(checkpoint_path, metadata=metadata)
         execution_state["checkpoint_saved"] = True
         ld.uc.emu_stop()
@@ -1092,12 +1098,17 @@ def main() -> int:
         captured.update(checkpoint_metadata["captured"])
         direct_context = checkpoint_metadata.get("direct_context")
         param_ctx_dump = checkpoint_metadata.get("param_ctx_dump")
+        execution_state["direct_context"] = direct_context
+        execution_state["param_ctx_dump"] = param_ctx_dump
         render_fault = ""
+        execution_state["checkpoint_enabled"] = True
         try:
             render_result = loader.resume_execution(max_instructions=args.max_instructions)
         except RuntimeError as exc:
             render_fault = str(exc)
             render_result = {"instructions": 0, "fault": render_fault}
+        finally:
+            execution_state["checkpoint_enabled"] = False
     else:
         loader.call_function(FUN_180008690, int_args=[0, 0, 0, param_ctx, render_ctx], max_instructions=5_000_000)
         param_ctx_dump = read_param_ctx(loader, param_ctx)
@@ -1151,6 +1162,13 @@ def main() -> int:
     if execution_state["checkpoint_saved"]:
         print(f"checkpoint_saved={checkpoint_path}")
         print(f"checkpoint_rip=0x{checkpoint_rip:x}")
+        return 0
+    if args.save_progress_checkpoint is not None and render_stop_rip != RETURN_TRAMPOLINE:
+        if render_fault:
+            raise SystemExit(f"refusing to checkpoint a faulted render: {render_fault}")
+        loader.save_checkpoint(args.save_progress_checkpoint, metadata=build_checkpoint_metadata())
+        print(f"progress_checkpoint_saved={args.save_progress_checkpoint}")
+        print(f"progress_checkpoint_rip=0x{render_stop_rip:x}")
         return 0
     if checkpoint_path is not None:
         raise SystemExit(

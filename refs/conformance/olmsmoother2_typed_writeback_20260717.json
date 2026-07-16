@@ -1,0 +1,101 @@
+{
+  "aex": {
+    "path": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
+    "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+  },
+  "boundary": {
+    "center_sample_only": true,
+    "workers": {
+      "PF16": "0x180003990",
+      "PF32": "0x1800036e0",
+      "PF8": "0x180003370"
+    },
+    "wrappers": {
+      "PF16": "0x180003e20",
+      "PF32": "0x180003d90",
+      "PF8": "0x180003d00"
+    }
+  },
+  "cases": [
+    {
+      "actual_raw_hex": "9f1f80e0",
+      "depth": "PF8",
+      "dynamic_next_calls": 2,
+      "dynamic_ranges": [
+        {
+          "first": 0,
+          "last": 0,
+          "step": 1
+        }
+      ],
+      "instructions": 292,
+      "invocation": "direct nine-argument worker ABI; wrapper dispatch statically grounded",
+      "oracle_raw_hex": "9f1f80e0",
+      "raw_equal": true,
+      "source_rgba_f32": [
+        0.1234567,
+        0.5,
+        0.8765432,
+        0.625
+      ],
+      "worker": "0x180003370",
+      "wrapper": "0x180003d00"
+    },
+    {
+      "actual_raw_hex": "0050cd0f00403370",
+      "depth": "PF16",
+      "dynamic_next_calls": 2,
+      "dynamic_ranges": [
+        {
+          "first": 0,
+          "last": 0,
+          "step": 1
+        }
+      ],
+      "instructions": 293,
+      "invocation": "direct nine-argument worker ABI; wrapper dispatch statically grounded",
+      "oracle_raw_hex": "0050cd0f00403370",
+      "raw_equal": true,
+      "source_rgba_f32": [
+        0.1234567,
+        0.5,
+        0.8765432,
+        0.625
+      ],
+      "worker": "0x180003990",
+      "wrapper": "0x180003e20"
+    },
+    {
+      "actual_raw_hex": "0000203fded6fc3d0000003f2365603f",
+      "depth": "PF32",
+      "dynamic_next_calls": 2,
+      "dynamic_ranges": [
+        {
+          "first": 0,
+          "last": 0,
+          "step": 1
+        }
+      ],
+      "instructions": 277,
+      "invocation": "direct nine-argument worker ABI; wrapper dispatch statically grounded",
+      "oracle_raw_hex": "0000203fded6fc3d0000003f2365603f",
+      "raw_equal": true,
+      "source_rgba_f32": [
+        0.1234567,
+        0.5,
+        0.8765432,
+        0.625
+      ],
+      "worker": "0x1800036e0",
+      "wrapper": "0x180003d90"
+    }
+  ],
+  "claims_not_made": [
+    "No classifier/c280/cce0 correctness claim",
+    "No case0012 host-state claim",
+    "No Windows or AE exact claim",
+    "No production or ledger edit"
+  ],
+  "scope": "Mac-local actual-AEX typed writeback workers versus independent raw-byte/word/float32 oracle",
+  "verdict": "PASS_ACTUAL_AEX_POST_CCE0_TYPED_WRITEBACK_ORACLE"
+}
