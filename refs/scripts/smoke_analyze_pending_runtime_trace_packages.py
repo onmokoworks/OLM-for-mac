@@ -87,8 +87,8 @@ def main() -> int:
                 "refs/runtime_trace_packages/windows_witness_olmradialblur_case0009_fullframe_postnorm_typed_common_core_20260713.zip",
                 18,
             ),
-            "olmsmoother2_case0012_current_aex_20260713": (
-                "refs/runtime_trace_packages/windows_witness_olmsmoother2_case0012_20260713.zip",
+            "olmsmoother2_legacy_key_producer_common_core_20260716": (
+                "refs/runtime_trace_packages/windows_witness_olmsmoother2_legacy_key_producer_common_core_20260716.zip",
                 214,
             ),
             "olmkirakira_mode2_compose_writeback_20260716": (
@@ -112,6 +112,7 @@ def main() -> int:
             "olmdirectionalblur_row755_20260713",
             "olmradialblur_case0009_fullframe_postnorm_typed_20260710",
             "olmsmoother2_case0012_live_config_binding_20260713",
+            "olmsmoother2_case0012_current_aex_20260713",
         ):
             row = by_id.get(request_id)
             if row is None or row["status"] != "superseded":

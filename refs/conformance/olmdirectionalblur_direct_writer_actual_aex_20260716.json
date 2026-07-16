@@ -1,0 +1,230 @@
+{
+  "schema": 1,
+  "kind": "olmdirectionalblur_direct_writer_actual_aex_regression",
+  "date": "2026-07-16",
+  "status": "pass_actual_aex_writer_contract",
+  "scope": "isolated actual-AEX 8bpc output callback only; not AE exact",
+  "binary": "plugins_2025/OLMDirectionalBlur.aex",
+  "binary_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "entry": "0x180006b30",
+  "static": {
+    "command": "objdump -d --start-address=0x180006b30 --stop-address=0x180006bd0 plugins_2025/OLMDirectionalBlur.aex",
+    "matched_lines": [
+      "movq\t0x8090(%rcx), %r9",
+      "movss\t0x28(%rcx), %xmm5",
+      "imull\t0x80a0(%rcx), %eax",
+      "addl\t0x809c(%rcx), %eax",
+      "addl\t%edx, %eax",
+      "shll\t$0x2, %eax",
+      "minss\t%xmm0, %xmm5",
+      "movss\t0xc(%r9,%rcx,4), %xmm3",
+      "cvttss2si\t%xmm5, %eax",
+      "cvttss2si\t%xmm3, %eax",
+      "movb\t%al, 0x1(%rcx)",
+      "movb\t%al, 0x3(%rcx)",
+      "movb\t%al, 0x2(%rcx)",
+      "movb\t%al, (%rcx)"
+    ],
+    "missing_lines": []
+  },
+  "cases": [
+    {
+      "id": "rgb_half_tie_truncation",
+      "description": "0.5-byte boundaries truncate via CVTTSS2SI instead of rounding up.",
+      "target_xy": [
+        0,
+        0
+      ],
+      "bias": {
+        "row0": 0,
+        "col0": 0,
+        "stride": 4
+      },
+      "gain": 1.0,
+      "target_guest_pixel_index": 0,
+      "target_guest_byte_offset": 0,
+      "target_rgba_f32": [
+        0.5,
+        0.5,
+        0.5,
+        0.6705882549285889
+      ],
+      "expected_argb8": [
+        171,
+        127,
+        127,
+        127
+      ],
+      "observed_argb8": [
+        171,
+        127,
+        127,
+        127
+      ],
+      "matches_expected": true,
+      "all_four_bytes_overwritten": true,
+      "instructions": 35,
+      "coverage": {
+        "rgb_half_tie": true,
+        "rgb_upper_clamp": false,
+        "alpha_ungained": false,
+        "biased_indexing": false,
+        "complete_overwrite": true
+      },
+      "decoy_pixels": []
+    },
+    {
+      "id": "rgb_clamp_alpha_unclamped_store",
+      "description": "RGB clamps after gain while alpha remains ungained and unclamped before byte store.",
+      "target_xy": [
+        0,
+        0
+      ],
+      "bias": {
+        "row0": 0,
+        "col0": 0,
+        "stride": 4
+      },
+      "gain": 2.0,
+      "target_guest_pixel_index": 0,
+      "target_guest_byte_offset": 0,
+      "target_rgba_f32": [
+        0.75,
+        0.30000001192092896,
+        0.8999999761581421,
+        1.25
+      ],
+      "expected_argb8": [
+        62,
+        255,
+        153,
+        255
+      ],
+      "observed_argb8": [
+        62,
+        255,
+        153,
+        255
+      ],
+      "matches_expected": true,
+      "all_four_bytes_overwritten": true,
+      "instructions": 35,
+      "coverage": {
+        "rgb_half_tie": false,
+        "rgb_upper_clamp": true,
+        "alpha_ungained": true,
+        "biased_indexing": false,
+        "complete_overwrite": true
+      },
+      "decoy_pixels": []
+    },
+    {
+      "id": "biased_index_complete_overwrite",
+      "description": "Non-zero row and column bias select the intended source cell and overwrite all four bytes.",
+      "target_xy": [
+        2,
+        4
+      ],
+      "bias": {
+        "row0": 3,
+        "col0": 5,
+        "stride": 11
+      },
+      "gain": 1.0,
+      "target_guest_pixel_index": 84,
+      "target_guest_byte_offset": 1344,
+      "target_rgba_f32": [
+        0.5,
+        1.0,
+        0.0,
+        0.25
+      ],
+      "expected_argb8": [
+        63,
+        127,
+        255,
+        0
+      ],
+      "observed_argb8": [
+        63,
+        127,
+        255,
+        0
+      ],
+      "matches_expected": true,
+      "all_four_bytes_overwritten": true,
+      "instructions": 35,
+      "coverage": {
+        "rgb_half_tie": false,
+        "rgb_upper_clamp": false,
+        "alpha_ungained": false,
+        "biased_indexing": true,
+        "complete_overwrite": true
+      },
+      "decoy_pixels": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "rgba": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "expected_argb": [
+            255,
+            255,
+            0,
+            0
+          ]
+        },
+        {
+          "xy": [
+            2,
+            3
+          ],
+          "rgba": [
+            0.0,
+            1.0,
+            0.0,
+            1.0
+          ],
+          "expected_argb": [
+            255,
+            0,
+            255,
+            0
+          ]
+        },
+        {
+          "xy": [
+            1,
+            4
+          ],
+          "rgba": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "expected_argb": [
+            255,
+            0,
+            0,
+            255
+          ]
+        }
+      ]
+    }
+  ],
+  "remaining_windows_same_run_blocker": {
+    "status": "open",
+    "required_live_site": "OLMDirectionalBlur+0x6b30",
+    "missing_fact": "same-run live writer-entry RGBA floats for the real residual lane",
+    "why_it_matters": "the microfixture proves callback semantics but not the full-render values that reach the callback",
+    "current_lane": "row-755 / host-column-1308 residual family remains upstream-boundary blocked"
+  },
+  "production_changed": false
+}

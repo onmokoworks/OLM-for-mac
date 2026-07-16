@@ -186,18 +186,18 @@ template <>
 struct PixelTraits<PF_Pixel16> {
 	static FloatRGBA Read(const PF_Pixel16 &p) {
 		return {
-			p.red / 65535.0f,
-			p.green / 65535.0f,
-			p.blue / 65535.0f,
-			p.alpha / 65535.0f
+			p.red / static_cast<float>(PF_MAX_CHAN16),
+			p.green / static_cast<float>(PF_MAX_CHAN16),
+			p.blue / static_cast<float>(PF_MAX_CHAN16),
+			p.alpha / static_cast<float>(PF_MAX_CHAN16)
 		};
 	}
 	static PF_Pixel16 Write(const FloatRGBA &p) {
 		PF_Pixel16 out;
-		out.alpha = static_cast<A_u_short>(std::lround(Clamp01(p.a) * 65535.0f));
-		out.red   = static_cast<A_u_short>(std::lround(Clamp01(p.r) * 65535.0f));
-		out.green = static_cast<A_u_short>(std::lround(Clamp01(p.g) * 65535.0f));
-		out.blue  = static_cast<A_u_short>(std::lround(Clamp01(p.b) * 65535.0f));
+		out.alpha = static_cast<A_u_short>(std::lround(Clamp01(p.a) * PF_MAX_CHAN16));
+		out.red   = static_cast<A_u_short>(std::lround(Clamp01(p.r) * PF_MAX_CHAN16));
+		out.green = static_cast<A_u_short>(std::lround(Clamp01(p.g) * PF_MAX_CHAN16));
+		out.blue  = static_cast<A_u_short>(std::lround(Clamp01(p.b) * PF_MAX_CHAN16));
 		return out;
 	}
 };

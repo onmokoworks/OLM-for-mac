@@ -81,6 +81,7 @@ PRIORITY_PROFILES = {
     "smoother2-current-aex-producer-bytes-20260708": 213,
     "smoother2-current-aex-0012-bind-then-read-20260708": 214,
     "olmsmoother2-case0012-current-aex-common-core": 214,
+    "olmsmoother2-legacy-key-producer-common-core": 214,
     "windows-ae-addproperty-stall-diagnostics": 900,
     "windows-ae-runner-startup-diagnostics": 901,
 }
@@ -431,6 +432,10 @@ HARD_LANE_CONTEXTS = {
     "olmsmoother2_current_aex_0012_bind_then_read_20260708": {
         "note": "refs/conformance/olmsmoother2_current_aex_0012_bind_then_read_contract_20260708.md",
         "summary": "Narrow the next Windows request to one same-run `0012 (91,841)` bind-then-read witness: first bind the live producer/class buffer, then read `center_b0`, `prev_b0`, `left_b1`, and observed `e170 c`.",
+    },
+    "olmsmoother2_legacy_key_producer_common_core_20260716": {
+        "note": "refs/conformance/olmsmoother2_legacy_key_producer_request_contract_20260716.md",
+        "summary": "Run the real AE case0012 and bind the exact f270 callsite before reading class bytes and producer return values; entry-register guesses and final-writer recapture are forbidden.",
     },
 }
 
