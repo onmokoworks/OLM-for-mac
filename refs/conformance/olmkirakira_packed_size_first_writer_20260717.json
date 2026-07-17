@@ -1,0 +1,228 @@
+{
+  "ae_exact_claim": false,
+  "classification": "B",
+  "classification_basis": "The caller constructs the packed R9 value in checked-in AEX arithmetic and the callee ABI spill/load preserves it.",
+  "date": "2026-07-17",
+  "gates": {
+    "abi_spill_expected_packed_raw": true,
+    "actual_abi_argument_spill_observed": true,
+    "actual_aex_load_observed": true,
+    "actual_aex_packed_input_call_observed": true,
+    "filterengine_stop_without_mutation": true,
+    "loaded_expected_packed_raw": true,
+    "static_aex_packed_arithmetic_present": true,
+    "static_load_present": true
+  },
+  "kind": "olmkirakira_packed_size_argument_lineage",
+  "limits": [
+    "No value was patched into the stack slot, object, source plane, or argument.",
+    "The cv::FilterEngine assertion was not bypassed or suppressed.",
+    "Classification is fail-closed; missing or contradictory evidence is ambiguous.",
+    "The callee prologue spill at 0x181280bc0 is continuity evidence, not the semantic origin of the value.",
+    "No Windows execution, After Effects host binding, final pixel, or AE-exactness claim."
+  ],
+  "platform_scope": "Mac-only Unicorn actual-AEX execution of checked-in Windows PE; no Windows/AE claim",
+  "question": "Does checked-in AEX arithmetic construct the packed-size argument, and is that exact value preserved through the callee ABI spill to the 0x181280e92 load?",
+  "runtime": {
+    "abi_argument_spill_not_semantic_first_writer": {
+      "address": "0xf0fda18",
+      "instruction_rip": "0x181280bc0",
+      "registers": {
+        "R8": "0x5",
+        "R9": "0x180000000",
+        "RAX": "0x100000000",
+        "RBX": "0x1",
+        "RCX": "0xf0fda40",
+        "RDX": "0xf0fda58"
+      },
+      "rsp": "0xf0fd9f8",
+      "size": 8,
+      "value_raw_hex": "0000008001000000"
+    },
+    "common_owner_status": "FAILED",
+    "execution_stop": {
+      "condition": "FilterEngine anchor assertion persisted after verified bootstrap; fail closed",
+      "dispatch": {
+        "chunk_instructions": 10000,
+        "chunks": [
+          {
+            "chunk": 1,
+            "instructions": 10000,
+            "rip": "0x181322e86"
+          },
+          {
+            "chunk": 2,
+            "instructions": 10000,
+            "rip": "0x181160cab"
+          },
+          {
+            "chunk": 3,
+            "instructions": 10000,
+            "rip": "0x181156bb8"
+          },
+          {
+            "chunk": 4,
+            "instructions": 10000,
+            "rip": "0x18132b27c"
+          }
+        ],
+        "max_chunks": 64,
+        "progress_history": [],
+        "terminal": "filterengine_anchor_assertion_after_verified_bootstrap"
+      },
+      "dispatch_fault": {
+        "message": "Unhandled CPU exception (UC_ERR_EXCEPTION)",
+        "registers_rcx_rdx_r8_r9": [
+          "0xf0fd320",
+          "0x18181e9d8",
+          "0x52",
+          "0xffffffffffffffff"
+        ],
+        "rip": "0x181162610",
+        "type": "UcError"
+      },
+      "grounded_location": null,
+      "instructions": 40000,
+      "rax": "0x0",
+      "registers_rcx_rdx_r8_r9_rbp_rsi_rdi": [
+        "0xf0fd320",
+        "0x18181e9d8",
+        "0x52",
+        "0xffffffffffffffff",
+        "0x0",
+        "0xf0fd450",
+        "0x18152bfd8"
+      ],
+      "rip": "0x181162610",
+      "rsp": "0xf0fd2e0"
+    },
+    "filterengine_assertion": {
+      "anchor": {
+        "x": -1073741824,
+        "y": 0
+      },
+      "compare_path": "0x1812b9b6f..0x1812b9b92",
+      "compared_fields": {
+        "+0x14 ksize.width": -2147483648,
+        "+0x18 ksize.height": 1,
+        "+0x1c anchor.x": -1073741824,
+        "+0x20 anchor.y": 0
+      },
+      "failed_predicates": [
+        "0 <= anchor.x",
+        "anchor.x < ksize.width"
+      ],
+      "ksize": {
+        "height": 1,
+        "width": -2147483648
+      },
+      "label": "FilterEngine::init anchor assertion throw callsite",
+      "object_pointer": "0x20006d70",
+      "object_register": "RDI",
+      "predicates": {
+        "0 <= anchor.x": false,
+        "0 <= anchor.y": true,
+        "anchor.x < ksize.width": false,
+        "anchor.y < ksize.height": true
+      },
+      "rip": "0x1812b9da8",
+      "stop_without_mutation": true,
+      "throw_target": "FUN_181162610"
+    },
+    "load_events": [
+      {
+        "loaded_raw_hex": "0000008001000000",
+        "loaded_raw_u64": 6442450944,
+        "rip": "0x181280e92",
+        "rsp": "0xf0fd820",
+        "target_address": "0xf0fda18",
+        "target_offset": "0x1f8"
+      }
+    ],
+    "packed_input_call_with_expected_raw": {
+      "r9_raw_hex": "0x0000000180000000",
+      "rax_raw_hex": "0x0000000100000000",
+      "rdx_raw_hex": "0x000000000f0fda58",
+      "rip": "0x18115116f",
+      "rsi_raw_hex": "0x0000000080000000",
+      "rsp": "0xf0fda00"
+    },
+    "packed_input_callsites": [
+      {
+        "r9_raw_hex": "0x0000000180000000",
+        "rax_raw_hex": "0x0000000100000000",
+        "rdx_raw_hex": "0x000000000f0fda58",
+        "rip": "0x18115116f",
+        "rsi_raw_hex": "0x0000000080000000",
+        "rsp": "0xf0fda00"
+      }
+    ],
+    "target_writes_in_observation_order": [
+      {
+        "address": "0xf0fda18",
+        "instruction_rip": "0x181280bc0",
+        "registers": {
+          "R8": "0x5",
+          "R9": "0x180000000",
+          "RAX": "0x100000000",
+          "RBX": "0x1",
+          "RCX": "0xf0fda40",
+          "RDX": "0xf0fda58"
+        },
+        "rsp": "0xf0fd9f8",
+        "size": 8,
+        "value_raw_hex": "0000008001000000"
+      }
+    ]
+  },
+  "schema": 1,
+  "slot": {
+    "address": "[RSP+0x1f8]",
+    "expected_packed_raw": "0x0000000180000000",
+    "reader": "0x181280e92"
+  },
+  "static": {
+    "aex_packed_arithmetic_present": true,
+    "aex_packed_arithmetic_sequence": [
+      "18114fa31  MOV EAX,EDX",
+      "18114fa35  SHL RBX,0x20",
+      "18114fa39  OR RBX,RAX",
+      "18114fa88  MOV R9,RBX",
+      "18115110a  MOV RDI,RSI",
+      "18115110d  MOV RAX,0x100000000",
+      "181151117  OR RDI,RAX",
+      "18115111a  MOV R8D,dword ptr [R12]",
+      "181151162  MOV R9,RDI"
+    ],
+    "aex_packed_source_sequences": [
+      [
+        "18114fa31  MOV EAX,EDX",
+        "18114fa35  SHL RBX,0x20",
+        "18114fa39  OR RBX,RAX",
+        "18114fa88  MOV R9,RBX"
+      ],
+      [
+        "18115110a  MOV RDI,RSI",
+        "18115110d  MOV RAX,0x100000000",
+        "181151117  OR RDI,RAX",
+        "181151162  MOV R9,RDI"
+      ]
+    ],
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "asm_sha256": "d23c749d225a934580c96f2929fb9d7253d07b1be208faa9de6ff89efc1f89b3",
+    "decomp_has_boxfilter_entry": true,
+    "decomp_sha256": "990693e95695cd83032764f0452fbbe336b8f910ce4d9f5af94a2094c7f6328a",
+    "exact_load": "181280e92  MOV R9,qword ptr [RSP + 0x1f8]",
+    "load_present": true,
+    "relevant_slot_references": [
+      "181280c79  MOV R9,qword ptr [RSP + 0x1f8]",
+      "181280cfc  MOV R9,qword ptr [RSP + 0x1f8]",
+      "181280e08  MOV dword ptr [RSP + 0x1f8],EDX",
+      "181280e92  MOV R9,qword ptr [RSP + 0x1f8]"
+    ],
+    "static_store_candidates_in_nearby_functions": [
+      "181280e08  MOV dword ptr [RSP + 0x1f8],EDX"
+    ]
+  },
+  "status": "PASS_CLASSIFIED_FAIL_CLOSED_STOP"
+}

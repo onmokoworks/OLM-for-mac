@@ -811,6 +811,7 @@ def main() -> int:
         "checkpoint_saved": False,
         "direct_context": None,
         "param_ctx_dump": None,
+        "checkpoint_lineage": [],
     }
 
     checkpoint_config = {
@@ -1119,6 +1120,7 @@ def main() -> int:
             },
             "direct_context": execution_state["direct_context"],
             "param_ctx_dump": execution_state["param_ctx_dump"],
+            "checkpoint_lineage": execution_state["checkpoint_lineage"],
         }
 
     def save_primary_render_checkpoint(ld: AexLoader, address: int, size: int) -> None:
@@ -1156,6 +1158,15 @@ def main() -> int:
         param_ctx_dump = checkpoint_metadata.get("param_ctx_dump")
         execution_state["direct_context"] = direct_context
         execution_state["param_ctx_dump"] = param_ctx_dump
+        parent_registers = checkpoint_header.get("registers", {}).get("gp", {})
+        execution_state["checkpoint_lineage"] = [
+            *checkpoint_metadata.get("checkpoint_lineage", []),
+            {
+                "sha256": sha256_file(args.resume_checkpoint),
+                "rip": f"0x{int(parent_registers['rip']):x}",
+                "instructions_executed": int(checkpoint_header["instructions_executed"]),
+            },
+        ]
         render_fault = ""
         execution_state["checkpoint_enabled"] = True
         try:

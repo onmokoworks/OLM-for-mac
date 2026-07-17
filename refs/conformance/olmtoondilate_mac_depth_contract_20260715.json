@@ -3,10 +3,12 @@
   "schema": 1,
   "status": "pass",
   "facts": {
-    "legacy_pf_cmd_render_depths": [
+    "classic_pf_cmd_render_depths": [
       8,
-      16
+      16,
+      32
     ],
+    "classic_depth_source": "PF_WorldSuite2::PF_GetPixelFormat",
     "smart_render_depth_source": "extra->input->bitdepth",
     "smart_render_float_branch": true,
     "float_color_aware": true,
@@ -15,7 +17,7 @@
   },
   "inferences": [
     "Mac 32bpc execution is evidence-backed only on the advertised Smart Render path.",
-    "The legacy PF_Cmd_RENDER callback must not be used as proof of 32bpc support.",
+    "A correct classic callback boundary is still not cross-host proof of 32bpc exactness.",
     "The current 32bpc float return remains a host/input probe, not AE exact evidence."
   ]
 }

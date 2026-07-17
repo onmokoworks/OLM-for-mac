@@ -57,6 +57,7 @@ def main() -> int:
     for label, path in args.checkpoint:
         header = read_header(path)
         metadata = header.get("metadata", {})
+        config = metadata.get("config", {})
         registers = header.get("registers", {}).get("gp", {})
         rows.append(
             {
@@ -66,15 +67,16 @@ def main() -> int:
                 "rip": f"0x{int(registers['rip']):x}",
                 "instructions_executed": int(header["instructions_executed"]),
                 "aex_sha256": header["aex"]["sha256"],
-                "case_id": metadata.get("config", {}).get("case_id"),
-                "input_sha256": metadata.get("config", {}).get("input_sha256"),
-                "manifest_sha256": metadata.get("config", {}).get("manifest_sha256"),
-                "synthetic_prefill": bool(metadata.get("config", {}).get("direct_fast_forward_prefill")),
-                "python_prefill": bool(metadata.get("config", {}).get("direct_python_prefill")),
+                "case_id": config.get("case_id"),
+                "input_sha256": config.get("input_sha256"),
+                "manifest_sha256": config.get("manifest_sha256"),
+                "direct_zoom_core": bool(config.get("direct_zoom_core")),
+                "synthetic_prefill": bool(config.get("direct_fast_forward_prefill")),
+                "python_prefill": bool(config.get("direct_python_prefill")),
                 "worker_detours": bool(
-                    metadata.get("config", {}).get("direct_detour_prepass")
-                    or metadata.get("config", {}).get("direct_detour_scatter")
+                    config.get("direct_detour_prepass") or config.get("direct_detour_scatter")
                 ),
+                "checkpoint_lineage": metadata.get("checkpoint_lineage", []),
             }
         )
 
@@ -82,6 +84,26 @@ def main() -> int:
         (row["aex_sha256"], row["case_id"], row["input_sha256"], row["manifest_sha256"])
         for row in rows
     }
+    expected_lineage = []
+    causal_links = []
+    for index, row in enumerate(rows):
+        actual_lineage = row["checkpoint_lineage"]
+        link = {
+            "label": row["label"],
+            "expected_ancestor_count": len(expected_lineage),
+            "actual_ancestor_count": len(actual_lineage),
+            "matches_expected_ancestry": actual_lineage == expected_lineage,
+        }
+        causal_links.append(link)
+        expected_lineage = [
+            *expected_lineage,
+            {
+                "sha256": row["file_sha256"],
+                "rip": row["rip"],
+                "instructions_executed": row["instructions_executed"],
+            },
+        ]
+
     checks = {
         "single_case_identity": len(identity) == 1,
         "instruction_count_monotonic": all(
@@ -92,16 +114,19 @@ def main() -> int:
             not row["synthetic_prefill"] and not row["python_prefill"] and not row["worker_detours"]
             for row in rows
         ),
+        "no_direct_zoom_core": all(not row["direct_zoom_core"] for row in rows),
+        "causal_parent_chain": all(link["matches_expected_ancestry"] for link in causal_links),
     }
     if not all(checks.values()):
         raise SystemExit(f"checkpoint journey failed: {checks}")
 
     report = {
         "kind": "olmradialblur_natural_checkpoint_journey_20260717",
-        "status": "pass_local_natural_checkpoint_journey",
+        "status": "pass_local_causal_natural_checkpoint_journey",
         "checkpoints": rows,
+        "causal_links": causal_links,
         "checks": checks,
-        "claim_boundary": "actual-AEX checkpoint transport and reached RIPs only; no Windows or AE-exact claim",
+        "claim_boundary": "fresh-process actual-AEX checkpoint ancestry and reached RIPs only; modeled loader state, no Windows or AE-exact claim",
     }
     args.output_json.parent.mkdir(parents=True, exist_ok=True)
     args.output_md.parent.mkdir(parents=True, exist_ok=True)
@@ -110,7 +135,8 @@ def main() -> int:
         "# OLMRadialBlur natural checkpoint journey",
         "",
         f"- Status: `{report['status']}`",
-        "- No Python/synthetic prefill and no worker detour were used.",
+        "- Every child embeds and matches the complete SHA/RIP/instruction ancestry of the supplied parent sequence.",
+        "- No direct-core entry, Python/synthetic prefill, or worker detour was used.",
         "",
         "| Label | RIP | cumulative instructions | checkpoint SHA-256 |",
         "| --- | --- | ---: | --- |",

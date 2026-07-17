@@ -1,8 +1,36 @@
 {
+  "causal_links": [
+    {
+      "actual_ancestor_count": 0,
+      "expected_ancestor_count": 0,
+      "label": "staging",
+      "matches_expected_ancestry": true
+    },
+    {
+      "actual_ancestor_count": 1,
+      "expected_ancestor_count": 1,
+      "label": "core",
+      "matches_expected_ancestry": true
+    },
+    {
+      "actual_ancestor_count": 2,
+      "expected_ancestor_count": 2,
+      "label": "prefill_start",
+      "matches_expected_ancestry": true
+    },
+    {
+      "actual_ancestor_count": 3,
+      "expected_ancestor_count": 3,
+      "label": "prefill_end",
+      "matches_expected_ancestry": true
+    }
+  ],
   "checkpoints": [
     {
       "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
       "case_id": "case_0009",
+      "checkpoint_lineage": [],
+      "direct_zoom_core": false,
       "file_sha256": "bcafa4313a809f8bd1ad7acc76b728f772bea93707a77bed8c39d5b64b1f7c91",
       "file_size": 222763,
       "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
@@ -17,22 +45,16 @@
     {
       "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
       "case_id": "case_0009",
-      "file_sha256": "f0891ff1479a615c75042fca688721048cbd99ef73549913acb218fd1306e3ac",
-      "file_size": 360592,
-      "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
-      "instructions_executed": 102000908,
-      "label": "progress",
-      "manifest_sha256": "7ec542fad64cc210474c6309c3e48c9f12bd0885f54d31943da873d94024b565",
-      "python_prefill": false,
-      "rip": "0x180017345",
-      "synthetic_prefill": false,
-      "worker_detours": false
-    },
-    {
-      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
-      "case_id": "case_0009",
-      "file_sha256": "3a768d97c05580120efe22354cbec568b85b95ebe48bb7eb6f4ed544f02484fc",
-      "file_size": 468155,
+      "checkpoint_lineage": [
+        {
+          "instructions_executed": 908,
+          "rip": "0x180007811",
+          "sha256": "bcafa4313a809f8bd1ad7acc76b728f772bea93707a77bed8c39d5b64b1f7c91"
+        }
+      ],
+      "direct_zoom_core": false,
+      "file_sha256": "4b5af5087e656441cfba2c81589a2e91c7ec3ecd640e889c4cb9079b7a796dec",
+      "file_size": 468304,
       "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
       "instructions_executed": 340360724,
       "label": "core",
@@ -45,8 +67,21 @@
     {
       "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
       "case_id": "case_0009",
-      "file_sha256": "858812fc92518689ca2e197cb2f5368edfba3802fe46f2d1a35b0b2a65fd7e1f",
-      "file_size": 570916,
+      "checkpoint_lineage": [
+        {
+          "instructions_executed": 908,
+          "rip": "0x180007811",
+          "sha256": "bcafa4313a809f8bd1ad7acc76b728f772bea93707a77bed8c39d5b64b1f7c91"
+        },
+        {
+          "instructions_executed": 340360724,
+          "rip": "0x1800056f0",
+          "sha256": "4b5af5087e656441cfba2c81589a2e91c7ec3ecd640e889c4cb9079b7a796dec"
+        }
+      ],
+      "direct_zoom_core": false,
+      "file_sha256": "27b907b4e12ed463cfb71f4dabb3bdd2714da0d7934672f721ec2d3d2ec1f523",
+      "file_size": 571197,
       "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
       "instructions_executed": 340385693,
       "label": "prefill_start",
@@ -59,8 +94,26 @@
     {
       "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
       "case_id": "case_0009",
-      "file_sha256": "60a1997482da48248b3e49e820506a1d8f2bcc38114e07bb37f36b656e3af287",
-      "file_size": 1014977,
+      "checkpoint_lineage": [
+        {
+          "instructions_executed": 908,
+          "rip": "0x180007811",
+          "sha256": "bcafa4313a809f8bd1ad7acc76b728f772bea93707a77bed8c39d5b64b1f7c91"
+        },
+        {
+          "instructions_executed": 340360724,
+          "rip": "0x1800056f0",
+          "sha256": "4b5af5087e656441cfba2c81589a2e91c7ec3ecd640e889c4cb9079b7a796dec"
+        },
+        {
+          "instructions_executed": 340385693,
+          "rip": "0x180005a00",
+          "sha256": "27b907b4e12ed463cfb71f4dabb3bdd2714da0d7934672f721ec2d3d2ec1f523"
+        }
+      ],
+      "direct_zoom_core": false,
+      "file_sha256": "de1fac456754d1f3a6cbdd1abf2762cbcd936c45e63e59831e18d24d9b3e86bd",
+      "file_size": 1015390,
       "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
       "instructions_executed": 954651817,
       "label": "prefill_end",
@@ -72,11 +125,13 @@
     }
   ],
   "checks": {
+    "causal_parent_chain": true,
     "instruction_count_monotonic": true,
+    "no_direct_zoom_core": true,
     "no_prefill_or_worker_detour": true,
     "single_case_identity": true
   },
-  "claim_boundary": "actual-AEX checkpoint transport and reached RIPs only; no Windows or AE-exact claim",
+  "claim_boundary": "fresh-process actual-AEX checkpoint ancestry and reached RIPs only; modeled loader state, no Windows or AE-exact claim",
   "kind": "olmradialblur_natural_checkpoint_journey_20260717",
-  "status": "pass_local_natural_checkpoint_journey"
+  "status": "pass_local_causal_natural_checkpoint_journey"
 }

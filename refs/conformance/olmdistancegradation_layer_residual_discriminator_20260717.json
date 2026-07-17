@@ -1,0 +1,89 @@
+{
+  "anchors": {
+    "aex_pf16_store": 3540438,
+    "mac_clamp16": 329,
+    "mac_debug_store": 728,
+    "mac_layer_no_bg": 746
+  },
+  "claims": {
+    "ae_exact_claim": false,
+    "next_action": "run the two commands with a fresh AE project and return the six-stage chain for both failing points and controls",
+    "safe_patch_identified": false,
+    "windows_claim": false
+  },
+  "classification": "Mac_AE_pre_store_store_export_boundary",
+  "commands": {
+    "olmdistancegradation_extended__case_0012": "python3 scripts/run_ae_single_case.py --request-dir /Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625 --case-id olmdistancegradation_extended__case_0012 --output-dir $TMP/olmdg_layer_residual_discriminator_20260717/olmdistancegradation_extended__case_0012 --app-name 'Adobe After Effects 2026' --timeout 1200 --ae-env OLM_AE_FORCE_NEW_PROJECT=1 --ae-env OLM_AE_FORCE_SOFTWARE=1 --ae-env OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT=1 --ae-env OLM_DG_DEBUG_POINTS=165,10;164,10;1035,1;1034,1 --ae-env OLM_DG_DEBUG_DUMP_PATH=$TMP/olmdg_layer_residual_discriminator_20260717/olmdistancegradation_extended__case_0012/field_debug.txt --ae-env OLM_DG_SHADE_DEBUG_PATH=$TMP/olmdg_layer_residual_discriminator_20260717/olmdistancegradation_extended__case_0012/shade_debug.txt",
+    "olmdistancegradation_extended__case_0014": "python3 scripts/run_ae_single_case.py --request-dir /Users/onmk/Documents/Projects/Personal/OLM as/handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmdistancegradation_extended_exact_20260625 --case-id olmdistancegradation_extended__case_0014 --output-dir $TMP/olmdg_layer_residual_discriminator_20260717/olmdistancegradation_extended__case_0014 --app-name 'Adobe After Effects 2026' --timeout 1200 --ae-env OLM_AE_FORCE_NEW_PROJECT=1 --ae-env OLM_AE_FORCE_SOFTWARE=1 --ae-env OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT=1 --ae-env OLM_DG_DEBUG_POINTS=165,10;164,10;1035,1;1034,1 --ae-env OLM_DG_DEBUG_DUMP_PATH=$TMP/olmdg_layer_residual_discriminator_20260717/olmdistancegradation_extended__case_0014/field_debug.txt --ae-env OLM_DG_SHADE_DEBUG_PATH=$TMP/olmdg_layer_residual_discriminator_20260717/olmdistancegradation_extended__case_0014/shade_debug.txt"
+  },
+  "date": "2026-07-17",
+  "decision_rule": {
+    "host_export": "make no production change if Mac PF16 store matches the Windows target and only exported true16 differs",
+    "mac_store": "change only if Mac pre-store matches the Windows target but Mac PF16 store does not",
+    "source_or_field": "change only if source/field/compose differs at the failing point while the exact control remains aligned"
+  },
+  "decomp_sha256": "de3c54f040e4b83aee0f13d9c9bccfaee8509ac7ab09d7aa2d1a41ec2229b59d",
+  "observed_residual": {
+    "olmdistancegradation_extended__case_0012": {
+      "exact_control": [
+        164,
+        10
+      ],
+      "failing_point": [
+        165,
+        10
+      ],
+      "max_diff": 1,
+      "nonzero_pixels": 39,
+      "nonzero_samples": 95,
+      "nonzero_samples_by_channel": {
+        "A": 0,
+        "B": 28,
+        "G": 28,
+        "R": 39
+      },
+      "signed_delta_histogram": {
+        "-1": 95
+      }
+    },
+    "olmdistancegradation_extended__case_0014": {
+      "exact_control": [
+        1034,
+        1
+      ],
+      "failing_point": [
+        1035,
+        1
+      ],
+      "max_diff": 1,
+      "nonzero_pixels": 35,
+      "nonzero_samples": 104,
+      "nonzero_samples_by_channel": {
+        "A": 0,
+        "B": 35,
+        "G": 35,
+        "R": 34
+      },
+      "signed_delta_histogram": {
+        "-1": 104
+      }
+    }
+  },
+  "production_source_edited": false,
+  "rejected_patch_hypotheses": [
+    "global PF16 rounding change: current Mac source and bounded actual-AEX PF16 fixture both use truncating float-to-int stores",
+    "neighbor inheritance change at selected witnesses: both failing source pixels are nonzero RGB, so the extra black-pixel inheritance branch is not entered",
+    "distance-field retune: alpha is exact and the residual is sparse RGB-only with a single sign"
+  ],
+  "required_capture_per_point": [
+    "input PF_Pixel16 ARGB words and normalized source RGBA",
+    "field X and d_alpha",
+    "compose RGBA float immediately before PF16 conversion",
+    "PF_Pixel16 words immediately after store",
+    "same-run exported true16 value"
+  ],
+  "residual_sha256": "0aaa0037dd18bf2028122cd1527e39f72be4bc909420a599c032222f449ae31e",
+  "schema": "olmdistancegradation.layer-residual-discriminator/1",
+  "source_sha256": "6cf94450a0c662fc39faeb5076ba86776ff716ebe3bba7e58fdfd42accd8f459",
+  "status": "probe_required"
+}

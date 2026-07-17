@@ -1,0 +1,183 @@
+{
+  "answer": {
+    "bit31": "set by the observed param_7 value 0x80000000; the literal 0x100000000 separately sets bit 32 for height=1.",
+    "packed_encoding": "R9 = zero-extended param_7 in the low dword | (1 << 32), i.e. packed width=param_7 and height=1.",
+    "rsi_semantics": "FUN_181150790 param_7, the horizontal packed-size/kernel-width input; the separate param_8 branch selector is 2 in this path."
+  },
+  "callsite": "0x18115116f",
+  "classification": "R9_PACKED_SIZE_FROM_PARAM7_KERNEL_WIDTH",
+  "date": "2026-07-17",
+  "expected_raw": "0x180000000",
+  "gates": {
+    "actual_builder_call_observed": true,
+    "actual_load_expected": true,
+    "actual_r9_expected": true,
+    "actual_rsi_is_param7_intmin": true,
+    "actual_spill_expected": true,
+    "filterengine_stop_without_mutation": true,
+    "static_builder_sequence": true,
+    "static_decomp_semantics": true
+  },
+  "kind": "olmkirakira_packed_r9_semantics",
+  "limits": [
+    "Mac-only Unicorn execution of the pinned Windows PE; no Windows or After Effects host claim.",
+    "No argument, object, source, or assertion value was patched or suppressed.",
+    "Missing or contradictory evidence returns FAIL_CLOSED."
+  ],
+  "runtime": {
+    "abi_spill": {
+      "address": "0xf0fda18",
+      "instruction_rip": "0x181280bc0",
+      "registers": {
+        "R8": "0x5",
+        "R9": "0x180000000",
+        "RAX": "0x100000000",
+        "RBX": "0x1",
+        "RCX": "0xf0fda40",
+        "RDX": "0xf0fda58"
+      },
+      "rsp": "0xf0fd9f8",
+      "size": 8,
+      "value_raw_hex": "0000008001000000"
+    },
+    "builder_call": {
+      "r9_raw_hex": "0x0000000180000000",
+      "rax_raw_hex": "0x0000000100000000",
+      "rdx_raw_hex": "0x000000000f0fda58",
+      "rip": "0x18115116f",
+      "rsi_raw_hex": "0x0000000080000000",
+      "rsp": "0xf0fda00"
+    },
+    "common_owner_status": "FAILED",
+    "execution_stop": {
+      "condition": "FilterEngine anchor assertion persisted after verified bootstrap; fail closed",
+      "dispatch": {
+        "chunk_instructions": 10000,
+        "chunks": [
+          {
+            "chunk": 1,
+            "instructions": 10000,
+            "rip": "0x181322e86"
+          },
+          {
+            "chunk": 2,
+            "instructions": 10000,
+            "rip": "0x181160cab"
+          },
+          {
+            "chunk": 3,
+            "instructions": 10000,
+            "rip": "0x181156bb8"
+          },
+          {
+            "chunk": 4,
+            "instructions": 10000,
+            "rip": "0x18132b27c"
+          }
+        ],
+        "max_chunks": 64,
+        "progress_history": [],
+        "terminal": "filterengine_anchor_assertion_after_verified_bootstrap"
+      },
+      "dispatch_fault": {
+        "message": "Unhandled CPU exception (UC_ERR_EXCEPTION)",
+        "registers_rcx_rdx_r8_r9": [
+          "0xf0fd320",
+          "0x18181e9d8",
+          "0x52",
+          "0xffffffffffffffff"
+        ],
+        "rip": "0x181162610",
+        "type": "UcError"
+      },
+      "grounded_location": null,
+      "instructions": 40000,
+      "rax": "0x0",
+      "registers_rcx_rdx_r8_r9_rbp_rsi_rdi": [
+        "0xf0fd320",
+        "0x18181e9d8",
+        "0x52",
+        "0xffffffffffffffff",
+        "0x0",
+        "0xf0fd450",
+        "0x18152bfd8"
+      ],
+      "rip": "0x181162610",
+      "rsp": "0xf0fd2e0"
+    },
+    "filterengine_assertion": {
+      "anchor": {
+        "x": -1073741824,
+        "y": 0
+      },
+      "compare_path": "0x1812b9b6f..0x1812b9b92",
+      "compared_fields": {
+        "+0x14 ksize.width": -2147483648,
+        "+0x18 ksize.height": 1,
+        "+0x1c anchor.x": -1073741824,
+        "+0x20 anchor.y": 0
+      },
+      "failed_predicates": [
+        "0 <= anchor.x",
+        "anchor.x < ksize.width"
+      ],
+      "ksize": {
+        "height": 1,
+        "width": -2147483648
+      },
+      "label": "FilterEngine::init anchor assertion throw callsite",
+      "object_pointer": "0x20006d70",
+      "object_register": "RDI",
+      "predicates": {
+        "0 <= anchor.x": false,
+        "0 <= anchor.y": true,
+        "anchor.x < ksize.width": false,
+        "anchor.y < ksize.height": true
+      },
+      "rip": "0x1812b9da8",
+      "stop_without_mutation": true,
+      "throw_target": "FUN_181162610"
+    },
+    "load": {
+      "loaded_raw_hex": "0000008001000000",
+      "loaded_raw_u64": 6442450944,
+      "rip": "0x181280e92",
+      "rsp": "0xf0fd820",
+      "target_address": "0xf0fda18",
+      "target_offset": "0x1f8"
+    }
+  },
+  "schema": 1,
+  "static": {
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "asm_sequence": [
+      "18115110a  MOV RDI,RSI",
+      "18115110d  MOV RAX,0x100000000",
+      "181151117  OR RDI,RAX",
+      "181151162  MOV R9,RDI",
+      "18115116f  CALL 0x181280bc0"
+    ],
+    "asm_sequence_present": true,
+    "asm_sha256": "d23c749d225a934580c96f2929fb9d7253d07b1be208faa9de6ff89efc1f89b3",
+    "decomp_semantic_tokens": [
+      "void FUN_181150790(",
+      "int param_6",
+      "uint param_7",
+      "int param_8",
+      "if (param_8 == 1)",
+      "else if (param_8 == 2)",
+      "else if (param_8 == 3)",
+      "else if (param_8 == 4)",
+      "(ulonglong)param_7 | 0x100000000"
+    ],
+    "decomp_semantic_tokens_present": true,
+    "decomp_sha256": "990693e95695cd83032764f0452fbbe336b8f910ce4d9f5af94a2094c7f6328a",
+    "function_semantics": {
+      "bit_wording": "0x100000000 sets bit 32; the observed param_7=0x80000000 independently sets bit 31",
+      "high_dword": "constant 1 / vertical packed-size lane",
+      "low_dword": "param_7 / horizontal packed-size (kernel width) lane",
+      "rsi_at_builder": "FUN_181150790 param_7, loaded from the caller's original RSP+0x30; param_8 is the separate 1..4 branch selector at original RSP+0x38"
+    }
+  },
+  "status": "PASS_CLASSIFIED_FAIL_CLOSED_STOP"
+}

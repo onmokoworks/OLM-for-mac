@@ -1,6 +1,6 @@
 # OLM Parameter Source of Truth
 
-Updated: 2026-07-03
+Updated: 2026-07-17
 
 ## Purpose
 
@@ -252,8 +252,12 @@ When in doubt, the code link above is the canonical source.
 - Force Lower Precision: popup default `1`
 - Per Color: default `off`
 - Per Component: default `off`
-- Edge Thin Amount: default `0.0`, range `-100.0..100.0`
-- Edge Blur Amount: default `0.0`, range `0.0..100.0`
+- Edge Thin Amount: default `0.0`, Mac source range `-4000.0..4000.0`
+- Edge Blur Amount: default `0.0`, Mac source range `0.0..4000.0`
+- Windows fresh-instance range capture exposes no readable min/max for either
+  edge amount (`None..None`). Returned Windows references apply Edge Thin values
+  from `-3841` to `2902` and Edge Blur values from `0` to `3574`, which stay
+  within the Mac source ranges but do not prove the Windows endpoints.
 - Number of Colors: default `1`, range `1..OLMCOLORKEY_MAX_COLORS`
 - Enable Replace: default `off`
 - Use Color 1: default `on`

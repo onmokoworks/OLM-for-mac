@@ -1,0 +1,190 @@
+{
+  "schema": 1,
+  "kind": "olmdirectionalblur_callback_boundary_actual_aex",
+  "status": "pass",
+  "scope": "Mac-local Unicorn direct actual-AEX callback boundary; in-memory ARGB matrix",
+  "claim_scope": "Populate channel normalization and writer packing only; no render, Windows, or AE-exact claim",
+  "provenance": {
+    "aex": "plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+  },
+  "callbacks": {
+    "populate": {
+      "entry": "0x180006980",
+      "abi": "(params, x=RDX, y=R8, source_pixel=R9)",
+      "cases": [
+        {
+          "argb8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "rgba_f32": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rgba_f32_bits": [
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000"
+          ]
+        },
+        {
+          "argb8": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "rgba_f32": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "rgba_f32_bits": [
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x3f800000"
+          ]
+        },
+        {
+          "argb8": [
+            0,
+            255,
+            0,
+            0
+          ],
+          "rgba_f32": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rgba_f32_bits": [
+            "0x3f800000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000"
+          ]
+        },
+        {
+          "argb8": [
+            127,
+            128,
+            1,
+            254
+          ],
+          "rgba_f32": [
+            0.501960813999176,
+            0.003921568859368563,
+            0.9960784316062927,
+            0.49803921580314636
+          ],
+          "rgba_f32_bits": [
+            "0x3f008081",
+            "0x3b808081",
+            "0x3f7efeff",
+            "0x3efefeff"
+          ]
+        },
+        {
+          "argb8": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "rgba_f32": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "rgba_f32_bits": [
+            "0x3f800000",
+            "0x3f800000",
+            "0x3f800000",
+            "0x3f800000"
+          ]
+        }
+      ]
+    },
+    "writer": {
+      "entry": "0x180006b30",
+      "abi": "(params, x=RDX, y=R8, ignored=R9, output=stack)",
+      "cases": [
+        {
+          "rgba_f32": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "argb8": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "argb8_word_le": "0x00000000"
+        },
+        {
+          "rgba_f32": [
+            0.25,
+            0.5,
+            0.75,
+            1.0
+          ],
+          "argb8": [
+            255,
+            63,
+            127,
+            191
+          ],
+          "argb8_word_le": "0xbf7f3fff"
+        },
+        {
+          "rgba_f32": [
+            1.25,
+            -0.25,
+            0.5,
+            1.25
+          ],
+          "argb8": [
+            62,
+            255,
+            193,
+            127
+          ],
+          "argb8_word_le": "0x7fc1ff3e"
+        }
+      ]
+    }
+  },
+  "plane_contract": {
+    "source_base": "0x40008200",
+    "writer_base": "0x40008300",
+    "row0": 2,
+    "col0": 3,
+    "stride": 4,
+    "cell_xy": [
+      1,
+      2
+    ]
+  },
+  "fail_closed": {
+    "png_read": false,
+    "host_render": false,
+    "production_source_edited": false,
+    "ledger_edited": false,
+    "windows_values_fabricated": false,
+    "ae_exact_claim": false
+  },
+  "command": "python3 tools/emulation/test_olmdirectionalblur_callback_boundary_20260717.py"
+}

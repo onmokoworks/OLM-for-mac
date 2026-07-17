@@ -34,9 +34,13 @@ def main() -> int:
     render_text = render.group(0)
     smart_text = smart_render.group(0)
 
-    require("PF_WORLD_IS_DEEP(output) ? 16 : 8" in render_text, "legacy callback depth boundary changed")
-    require("RenderWorld(&params[OLMTOONDILATE_INPUT]->u.ld, output, info, bitdepth)" in render_text,
-            "legacy callback no longer uses the typed renderer")
+    require("PF_GetPixelFormat(input, &format)" in render_text, "classic callback no longer queries explicit pixel format")
+    require(all(token in render_text for token in (
+        "PF_PixelFormat_ARGB32", "PF_PixelFormat_ARGB64", "PF_PixelFormat_ARGB128"
+    )), "classic callback is missing an 8/16/32bpc format branch")
+    require("PF_Err_BAD_CALLBACK_PARAM" in render_text, "classic callback no longer rejects unknown formats")
+    require("RenderWorld(input, output, info, bitdepth)" in render_text,
+            "classic callback no longer uses the typed renderer")
     require("extra->input->bitdepth" in smart_text, "Smart Render no longer supplies explicit depth")
     require("RenderWorld(input_world, output_world, info, extra->input->bitdepth)" in smart_text,
             "Smart Render no longer dispatches through the typed renderer")
@@ -57,7 +61,8 @@ def main() -> int:
         "schema": 1,
         "status": "pass",
         "facts": {
-            "legacy_pf_cmd_render_depths": [8, 16],
+            "classic_pf_cmd_render_depths": [8, 16, 32],
+            "classic_depth_source": "PF_WorldSuite2::PF_GetPixelFormat",
             "smart_render_depth_source": "extra->input->bitdepth",
             "smart_render_float_branch": True,
             "float_color_aware": True,
@@ -66,7 +71,7 @@ def main() -> int:
         },
         "inferences": [
             "Mac 32bpc execution is evidence-backed only on the advertised Smart Render path.",
-            "The legacy PF_Cmd_RENDER callback must not be used as proof of 32bpc support.",
+            "A correct classic callback boundary is still not cross-host proof of 32bpc exactness.",
             "The current 32bpc float return remains a host/input probe, not AE exact evidence.",
         ],
     }
@@ -74,13 +79,13 @@ def main() -> int:
     OUT_MD.write_text(
         "# OLMToonDilate Mac Depth Contract Audit - 2026-07-15\n\n"
         "## FACT\n\n"
-        "- The legacy `PF_Cmd_RENDER` callback selects only 8/16bpc via `PF_WORLD_IS_DEEP(output)`.\n"
+        "- The classic `PF_Cmd_RENDER` callback queries `PF_WorldSuite2::PF_GetPixelFormat` and explicitly dispatches ARGB32/64/128.\n"
         "- The advertised Smart Render callback dispatches the explicit `extra->input->bitdepth`, including `PF_PixelFloat` for 32bpc.\n"
         "- The Mac 32bpc effect/control pair is classified `blocked-by-host-input-conversion`; it is not `AE exact`.\n"
         "- The existing 32bpc probe evidence is PNG-only/non-float-preserving and remains probe-only.\n\n"
         "## INFERENCE\n\n"
         "- Mac 32bpc support is evidenced only when AE invokes the float-aware Smart Render path.\n"
-        "- The legacy callback boundary cannot promote a 32bpc probe to an exact claim.\n\n"
+        "- A correct classic callback boundary cannot promote a 32bpc probe to an exact claim without cross-host pixels.\n\n"
         "## Gate\n\n"
         "`python3 refs/scripts/smoke_audit_olmtoondilate_mac_depth_contract_20260715.py`\n",
         encoding="utf-8",

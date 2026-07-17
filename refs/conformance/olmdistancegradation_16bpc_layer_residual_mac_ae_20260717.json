@@ -1,0 +1,840 @@
+{
+  "ae_exact_claim": false,
+  "cases": [
+    {
+      "ae_version": "26.3x87",
+      "case_id": "olmdistancegradation_extended__case_0012",
+      "diff_bbox_xyxy": [
+        19,
+        10,
+        1854,
+        606
+      ],
+      "expected_sha256": "72034695ab9bc4202638bc3716e311397956625f97e7d64c87725c75d2e70716",
+      "first_diff_samples": [
+        {
+          "mac_rgba": [
+            226,
+            226,
+            226,
+            253
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            227,
+            227,
+            227,
+            253
+          ],
+          "xy": [
+            165,
+            10
+          ]
+        },
+        {
+          "mac_rgba": [
+            234,
+            234,
+            234,
+            251
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            235,
+            235,
+            235,
+            251
+          ],
+          "xy": [
+            1566,
+            18
+          ]
+        },
+        {
+          "mac_rgba": [
+            227,
+            227,
+            227,
+            253
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            228,
+            228,
+            228,
+            253
+          ],
+          "xy": [
+            278,
+            30
+          ]
+        },
+        {
+          "mac_rgba": [
+            224,
+            224,
+            224,
+            253
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            225,
+            225,
+            225,
+            253
+          ],
+          "xy": [
+            677,
+            55
+          ]
+        },
+        {
+          "mac_rgba": [
+            234,
+            234,
+            234,
+            251
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            235,
+            235,
+            235,
+            251
+          ],
+          "xy": [
+            1240,
+            93
+          ]
+        },
+        {
+          "mac_rgba": [
+            226,
+            226,
+            226,
+            253
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            227,
+            227,
+            227,
+            253
+          ],
+          "xy": [
+            1854,
+            100
+          ]
+        },
+        {
+          "mac_rgba": [
+            227,
+            227,
+            227,
+            253
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            228,
+            228,
+            228,
+            253
+          ],
+          "xy": [
+            524,
+            125
+          ]
+        },
+        {
+          "mac_rgba": [
+            227,
+            227,
+            227,
+            253
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            228,
+            228,
+            228,
+            253
+          ],
+          "xy": [
+            728,
+            153
+          ]
+        },
+        {
+          "mac_rgba": [
+            224,
+            224,
+            224,
+            253
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            225,
+            225,
+            225,
+            253
+          ],
+          "xy": [
+            1487,
+            155
+          ]
+        },
+        {
+          "mac_rgba": [
+            227,
+            227,
+            227,
+            253
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            228,
+            228,
+            228,
+            253
+          ],
+          "xy": [
+            231,
+            157
+          ]
+        },
+        {
+          "mac_rgba": [
+            224,
+            224,
+            224,
+            253
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            225,
+            225,
+            225,
+            253
+          ],
+          "xy": [
+            436,
+            164
+          ]
+        },
+        {
+          "mac_rgba": [
+            227,
+            227,
+            227,
+            253
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            228,
+            228,
+            228,
+            253
+          ],
+          "xy": [
+            463,
+            213
+          ]
+        },
+        {
+          "mac_rgba": [
+            224,
+            224,
+            224,
+            253
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            225,
+            225,
+            225,
+            253
+          ],
+          "xy": [
+            1508,
+            214
+          ]
+        },
+        {
+          "mac_rgba": [
+            234,
+            234,
+            234,
+            251
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            235,
+            235,
+            235,
+            251
+          ],
+          "xy": [
+            447,
+            242
+          ]
+        },
+        {
+          "mac_rgba": [
+            226,
+            226,
+            226,
+            253
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            227,
+            227,
+            227,
+            253
+          ],
+          "xy": [
+            19,
+            247
+          ]
+        },
+        {
+          "mac_rgba": [
+            234,
+            234,
+            234,
+            251
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            235,
+            235,
+            235,
+            251
+          ],
+          "xy": [
+            1220,
+            261
+          ]
+        }
+      ],
+      "max_diff": 1,
+      "mean_abs_diff": 1.1453510802469137e-05,
+      "nonzero_pixels": 39,
+      "nonzero_samples": 95,
+      "nonzero_samples_by_channel": {
+        "A": 0,
+        "B": 28,
+        "G": 28,
+        "R": 39
+      },
+      "output_sha256": "282d7ab9ca38ddc30f531e537defbdcb3c0b7c88ff70d88a1e0eb0459cd9feae",
+      "project_bits_per_channel": 16,
+      "project_linear_blending": false,
+      "project_working_space": "None",
+      "signed_delta_histogram": {
+        "-1": 95
+      }
+    },
+    {
+      "ae_version": "26.3x87",
+      "case_id": "olmdistancegradation_extended__case_0014",
+      "diff_bbox_xyxy": [
+        143,
+        1,
+        1784,
+        1047
+      ],
+      "expected_sha256": "5d5902e2ec453ef5275672433d4a0acdd2df29e94deef35d22c717356b32134a",
+      "first_diff_samples": [
+        {
+          "mac_rgba": [
+            177,
+            177,
+            177,
+            213
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            178,
+            178,
+            178,
+            213
+          ],
+          "xy": [
+            1035,
+            1
+          ]
+        },
+        {
+          "mac_rgba": [
+            177,
+            177,
+            177,
+            213
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            178,
+            178,
+            178,
+            213
+          ],
+          "xy": [
+            1654,
+            3
+          ]
+        },
+        {
+          "mac_rgba": [
+            177,
+            177,
+            177,
+            213
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            178,
+            178,
+            178,
+            213
+          ],
+          "xy": [
+            1140,
+            10
+          ]
+        },
+        {
+          "mac_rgba": [
+            177,
+            177,
+            177,
+            213
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            178,
+            178,
+            178,
+            213
+          ],
+          "xy": [
+            1312,
+            16
+          ]
+        },
+        {
+          "mac_rgba": [
+            177,
+            177,
+            177,
+            213
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            178,
+            178,
+            178,
+            213
+          ],
+          "xy": [
+            620,
+            20
+          ]
+        },
+        {
+          "mac_rgba": [
+            177,
+            177,
+            177,
+            213
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            178,
+            178,
+            178,
+            213
+          ],
+          "xy": [
+            1096,
+            20
+          ]
+        },
+        {
+          "mac_rgba": [
+            177,
+            177,
+            177,
+            213
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            178,
+            178,
+            178,
+            213
+          ],
+          "xy": [
+            1484,
+            27
+          ]
+        },
+        {
+          "mac_rgba": [
+            177,
+            177,
+            177,
+            213
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            178,
+            178,
+            178,
+            213
+          ],
+          "xy": [
+            446,
+            29
+          ]
+        },
+        {
+          "mac_rgba": [
+            177,
+            177,
+            177,
+            213
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            178,
+            178,
+            178,
+            213
+          ],
+          "xy": [
+            1197,
+            37
+          ]
+        },
+        {
+          "mac_rgba": [
+            177,
+            177,
+            177,
+            213
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            178,
+            178,
+            178,
+            213
+          ],
+          "xy": [
+            1620,
+            66
+          ]
+        },
+        {
+          "mac_rgba": [
+            177,
+            177,
+            177,
+            213
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            178,
+            178,
+            178,
+            213
+          ],
+          "xy": [
+            931,
+            118
+          ]
+        },
+        {
+          "mac_rgba": [
+            177,
+            177,
+            177,
+            213
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            178,
+            178,
+            178,
+            213
+          ],
+          "xy": [
+            598,
+            151
+          ]
+        },
+        {
+          "mac_rgba": [
+            177,
+            177,
+            177,
+            213
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            178,
+            178,
+            178,
+            213
+          ],
+          "xy": [
+            389,
+            156
+          ]
+        },
+        {
+          "mac_rgba": [
+            177,
+            177,
+            177,
+            213
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            178,
+            178,
+            178,
+            213
+          ],
+          "xy": [
+            808,
+            167
+          ]
+        },
+        {
+          "mac_rgba": [
+            177,
+            177,
+            177,
+            213
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            178,
+            178,
+            178,
+            213
+          ],
+          "xy": [
+            242,
+            195
+          ]
+        },
+        {
+          "mac_rgba": [
+            177,
+            177,
+            177,
+            213
+          ],
+          "signed_delta_rgba": [
+            -1,
+            -1,
+            -1,
+            0
+          ],
+          "windows_rgba": [
+            178,
+            178,
+            178,
+            213
+          ],
+          "xy": [
+            763,
+            203
+          ]
+        }
+      ],
+      "max_diff": 1,
+      "mean_abs_diff": 1.253858024691358e-05,
+      "nonzero_pixels": 35,
+      "nonzero_samples": 104,
+      "nonzero_samples_by_channel": {
+        "A": 0,
+        "B": 35,
+        "G": 35,
+        "R": 34
+      },
+      "output_sha256": "7152951b803fbf4fc0d48b82267d5c1549ad28252acec3ef531ff9139c6e8b06",
+      "project_bits_per_channel": 16,
+      "project_linear_blending": false,
+      "project_working_space": "None",
+      "signed_delta_histogram": {
+        "-1": 104
+      }
+    }
+  ],
+  "claim_boundary": "real Mac AE pixel comparison; max_diff=0 only would be exact",
+  "date": "2026-07-17",
+  "kind": "olmdistancegradation_16bpc_layer_residual_mac_ae",
+  "plugin_sha256": "af328faed0fcfbdefac7618d1218c2e5e5c9c0420c3bc58cdde7a7b6f64232fd",
+  "reference_kind": "Windows AE 25.2 Software 16bpc PNG",
+  "runner_kind": "Mac AE single-case disposable project",
+  "status": "known_red_narrow_layer_family"
+}

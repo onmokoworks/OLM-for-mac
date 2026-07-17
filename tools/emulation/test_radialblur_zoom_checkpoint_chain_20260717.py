@@ -14,6 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 RUNNER = ROOT / "tools/emulation/test_zoom_case0009.py"
+MATERIALIZER = ROOT / "tools/emulation/materialize_radialblur_checkpoint_journey_20260717.py"
 AEX = ROOT / "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex"
 DEFAULT_JSON = ROOT / "refs/conformance/olmradialblur_zoom_checkpoint_chain_20260717.json"
 DEFAULT_MD = ROOT / "refs/conformance/olmradialblur_zoom_checkpoint_chain_20260717.md"
@@ -30,6 +31,21 @@ def run(*args: str) -> str:
     if process.returncode != 0:
         raise AssertionError(
             f"runner failed with {process.returncode}\nstdout:\n{process.stdout}\nstderr:\n{process.stderr}"
+        )
+    return process.stdout
+
+
+def run_materializer(*args: str) -> str:
+    process = subprocess.run(
+        [sys.executable, str(MATERIALIZER), *args],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if process.returncode != 0:
+        raise AssertionError(
+            f"materializer failed with {process.returncode}\nstdout:\n{process.stdout}\nstderr:\n{process.stderr}"
         )
     return process.stdout
 
@@ -86,6 +102,20 @@ def main() -> int:
         second_progress_rip = output_rip(third, "progress_checkpoint_rip")
         assert first_progress_rip != second_progress_rip
 
+        journey_json = work / "journey.json"
+        journey_md = work / "journey.md"
+        materialized = run_materializer(
+            "--checkpoint", f"staging={staging}",
+            "--checkpoint", f"progress1={progress1}",
+            "--checkpoint", f"progress2={progress2}",
+            "--output-json", str(journey_json),
+            "--output-md", str(journey_md),
+        )
+        assert "PASS checkpoint journey: 3 stages" in materialized
+        journey = json.loads(journey_json.read_text(encoding="utf-8"))
+        assert journey["checks"]["causal_parent_chain"] is True
+        assert journey["checks"]["no_direct_zoom_core"] is True
+
         report = {
             "kind": "olmradialblur_zoom_checkpoint_chain_20260717",
             "status": "pass_local_transport_only",
@@ -115,6 +145,8 @@ def main() -> int:
             "checks": {
                 "fresh_process_resume_twice": True,
                 "rip_advanced_between_hops": True,
+                "complete_sha_ancestry_verified": journey["checks"]["causal_parent_chain"],
+                "no_direct_zoom_core": journey["checks"]["no_direct_zoom_core"],
                 "checkpoint_files_nonempty": all(path.stat().st_size > 0 for path in (staging, progress1, progress2)),
             },
             "claims_not_made": [

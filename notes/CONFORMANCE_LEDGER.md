@@ -1,5 +1,45 @@
 # OLM Conformance Ledger
 
+- 2026-07-17 `OLMDistanceGradation 16bpc Layer-family Mac AE proof`
+  (latest override): no correctness status is promoted. Disposable-project
+  Mac AE 26.3 Software renders against the canonical Windows AE 25.2
+  references leave `case_0012` at `max_diff=1`/39 pixels and `case_0014` at
+  `max_diff=1`/35 pixels. Every differing sample is Mac-minus-Windows `-1`,
+  only RGB differs, and alpha is exact. This narrows the live family to an
+  RGB pre-store/store/export rounding boundary; it is not AE exact and does
+  not justify broad field or mask tuning. Evidence:
+  `refs/conformance/olmdistancegradation_16bpc_layer_residual_mac_ae_20260717.json`.
+
+- 2026-07-17 `OLMSmoother2 legacy/gamma Mac AE boundary` (latest override):
+  no correctness status is promoted. At the accepted current-AEX witness
+  `(92,841)`, Windows is `[233,233,233,237]` while the installed Mac plug-in
+  renders `[218,218,218,238]`; the complete 3x3 neighborhood also differs.
+  This is not a final-writer off-by-one family. Next local boundary is the
+  Mac producer/class plane followed by c280 input and cce0 output at the same
+  descriptor; do not retune gamma or global fallback. Evidence:
+  `refs/conformance/olmsmoother2_mac_actual_ae_boundary_20260717.json`.
+
+- 2026-07-17 `OLMDirectionalBlur callback boundary` (latest override): no
+  correctness status is promoted. Five actual-AEX populate vectors and three
+  typed writer vectors pass the bounded in-memory callback oracle. This adds
+  a binary-grounded callback boundary without PNG tuning; the shipped Mac AE
+  output and Windows Software equality remain outside the proof. Evidence:
+  `refs/conformance/olmdirectionalblur_callback_boundary_20260717.json`.
+
+- 2026-07-17 `OLMKiraKira packed-size argument lineage` (latest override):
+  no correctness status is promoted. The checked-in AEX constructs
+  `R9 = RSI | 0x100000000` at `0x18115110a..0x18115116f`. `RSI` is
+  `FUN_181150790`'s `param_7`, the packed kernel-width lane loaded from the
+  caller's original `RSP+0x30`; the separate `param_8` branch selector is `2`
+  at original `RSP+0x38`. The observed `param_7=0x80000000` sets bit 31 while
+  the literal sets bit 32 for height 1. The callee prologue
+  at `0x181280bc0` only spills that ABI argument and the later
+  `0x181280e92` stack load preserves it. The prologue spill is continuity
+  evidence, not the semantic first writer. The unmodified FilterEngine
+  assertion remains fail-closed. Evidence:
+  `refs/conformance/olmkirakira_packed_size_first_writer_20260717.json` and
+  `refs/conformance/olmkirakira_packed_r9_semantics_20260717.json`.
+
 - 2026-07-17 `OLMKiraKira boxFilter packed-size lineage` (latest override):
   no correctness status is promoted. The packed width/height argument passed
   through `FUN_181280fa0` is already `(-2147483648, 1)` at its actual-AEX
@@ -19,9 +59,13 @@
   hops preserve the same host/AEX state and advance the live RIP. This removes
   the prior need to restart the 960x540 staging path for every observation and
   enables bounded continuation through core `0x1800056f0`, prefill start
-  `0x180005a00`, and prefill end `0x180005ba2`, all now reached without
-  Python/synthetic prefill or worker detours. Final sampler `0x180005e68` and
-  host writeback `0x180007c14` remain unreached. Evidence:
+  `0x180005a00`, and prefill end `0x180005ba2` with complete parent
+  SHA/RIP/instruction ancestry and without
+  direct-core entry, Python/synthetic prefill, or worker detours. The older
+  header-only staging-to-prefill-end inventory is explicitly downgraded
+  because it did not embed causal lineage or record `direct_zoom_core`.
+  Final sampler `0x180005e68` and host writeback `0x180007c14` remain pending.
+  Evidence:
   `refs/conformance/olmradialblur_natural_checkpoint_journey_20260717.json`
   and `refs/conformance/olmradialblur_zoom_checkpoint_chain_20260717.json`.
 
