@@ -63,6 +63,8 @@ def main() -> int:
     })
     assert portable["repo"] == "aex/example.aex"
     assert portable["temporary"] == "<temporary>/radial/example.aexcp"
+    embedded = runner.portable("checkpoint_saved=/private/tmp/radial/example.aexcp")
+    assert embedded == "checkpoint_saved=<temporary>/radial/example.aexcp"
     old_result = Path("/tmp/olmradialblur_a9d0_boundary_fork_20260718/full_left_result_20260718.aexcp")
     if old_result.exists():
         assert old_result != Path("/tmp/result.aexcp")

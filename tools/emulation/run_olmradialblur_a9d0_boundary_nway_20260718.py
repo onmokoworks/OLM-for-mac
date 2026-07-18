@@ -51,11 +51,13 @@ def portable(value: Any) -> Any:
         return [portable(item) for item in value]
     if isinstance(value, str):
         root = str(ROOT)
-        if value == root or value.startswith(root + "/"):
-            return value[len(root) + 1:]
-        for prefix in ("/private/tmp/", "/tmp/"):
-            if value.startswith(prefix):
-                return "<temporary>/" + value[len(prefix):]
+        value = value.replace(root + "/", "")
+        value = value.replace(str(Path(sys.executable)), "<python>")
+        value = value.replace("/private/tmp/", "<temporary>/")
+        value = value.replace("/tmp/", "<temporary>/")
+        if value == root:
+            return "."
+        return value
     return value
 
 

@@ -1,6 +1,6 @@
 # OLMRadialBlur A9D0 boundary N-way proof (2026-07-18)
 
-- Status: `pass_nway_prepared`
+- Status: `pass_nway_merged_to_normalization`
 - Partitions: `8`
 - Boundary SHA-256: `65a406395f067a4aa63c1b25f14604216577ac29d914bb2d65ccba8e0d6401ca`
 - Protected PID interactions: `0`
@@ -11,11 +11,11 @@
 | Gate | Result |
 | --- | --- |
 | `boundary_rip` | `True` |
-| `half_open_complete_partition` | `True` |
 | `fresh_unique_slice_inputs` | `True` |
 | `fresh_unique_slice_results` | `True` |
-| `source_hash_unchanged` | `True` |
+| `half_open_complete_partition` | `True` |
 | `protected_pid_untouched` | `True` |
+| `source_hash_unchanged` | `True` |
 
 ## Slices
 

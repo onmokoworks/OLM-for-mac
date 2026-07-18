@@ -59,7 +59,325 @@
     "width": 1104,
     "work": 252454336
   },
-  "full_execution_requested": false,
+  "full_execution": {
+    "continuation": {
+      "command": [
+        "<python>",
+        "tools/emulation/test_zoom_case0009.py",
+        "--resume-checkpoint",
+        "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_merged_at_c95_20260718.aexcp",
+        "--save-checkpoint-at-rip",
+        "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_merged_at_normalization_20260718.aexcp",
+        "0x180005c9f",
+        "--max-instructions",
+        "4000000000",
+        "--output-json",
+        "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_99_runner_20260718.json",
+        "--output-md",
+        "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_99_runner_20260718.md"
+      ],
+      "sha256": "480a7b012441b5863418835a8caf2fe16231dc8d7c59252fc05b69ec0407a909",
+      "stdout": "checkpoint_saved=<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_merged_at_normalization_20260718.aexcp\ncheckpoint_rip=0x180005c9f"
+    },
+    "merge": {
+      "merged_heap_sha256": "5bdb3117a8969650cec31396e6145ea014cddfb20f0c952c9d69a6e6655f88cf",
+      "output": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_merged_at_c95_20260718.aexcp",
+      "output_sha256": "f576186c60a1174ee70aa1da714af67c7e93788dcab5ca8fcfe9bc7c3bf7bd21",
+      "slice_checks": [
+        {
+          "bounded": true,
+          "index": 0,
+          "range": [
+            721,
+            856
+          ]
+        },
+        {
+          "bounded": true,
+          "index": 1,
+          "range": [
+            856,
+            991
+          ]
+        },
+        {
+          "bounded": true,
+          "index": 2,
+          "range": [
+            991,
+            1126
+          ]
+        },
+        {
+          "bounded": true,
+          "index": 3,
+          "range": [
+            1126,
+            1261
+          ]
+        },
+        {
+          "bounded": true,
+          "index": 4,
+          "range": [
+            1261,
+            1396
+          ]
+        },
+        {
+          "bounded": true,
+          "index": 5,
+          "range": [
+            1396,
+            1531
+          ]
+        },
+        {
+          "bounded": true,
+          "index": 6,
+          "range": [
+            1531,
+            1666
+          ]
+        },
+        {
+          "bounded": true,
+          "index": 7,
+          "range": [
+            1666,
+            1800
+          ]
+        }
+      ]
+    },
+    "results": [
+      {
+        "boundary_sha256": "65a406395f067a4aa63c1b25f14604216577ac29d914bb2d65ccba8e0d6401ca",
+        "command": [
+          "<python>",
+          "tools/emulation/test_zoom_case0009.py",
+          "--resume-checkpoint",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_00_input_20260718.aexcp",
+          "--save-checkpoint-at-rip",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_00_result_20260718.aexcp",
+          "0x180005c95",
+          "--max-instructions",
+          "4000000000",
+          "--output-json",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_00_runner_20260718.json",
+          "--output-md",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_00_runner_20260718.md"
+        ],
+        "index": 0,
+        "input": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_00_input_20260718.aexcp",
+        "input_sha256": "c6766286dc7e63af695899aafc7c38784b4938ef8c6312b80f7f7bb8ce2b290b",
+        "range": [
+          721,
+          856
+        ],
+        "result": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_00_result_20260718.aexcp",
+        "result_sha256": "d16e7d0b35f7e543d7ed19db685753eda08963fbce8c618d867cd997b3761e2a",
+        "stdout": "checkpoint_saved=<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_00_result_20260718.aexcp\ncheckpoint_rip=0x180005c95"
+      },
+      {
+        "boundary_sha256": "65a406395f067a4aa63c1b25f14604216577ac29d914bb2d65ccba8e0d6401ca",
+        "command": [
+          "<python>",
+          "tools/emulation/test_zoom_case0009.py",
+          "--resume-checkpoint",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_01_input_20260718.aexcp",
+          "--save-checkpoint-at-rip",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_01_result_20260718.aexcp",
+          "0x180005c95",
+          "--max-instructions",
+          "4000000000",
+          "--output-json",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_01_runner_20260718.json",
+          "--output-md",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_01_runner_20260718.md"
+        ],
+        "index": 1,
+        "input": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_01_input_20260718.aexcp",
+        "input_sha256": "fc8747a2ce92b24a39a058df7d860bb9135e117cfaff1cb2d3be4bdff0582f86",
+        "range": [
+          856,
+          991
+        ],
+        "result": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_01_result_20260718.aexcp",
+        "result_sha256": "3aa628ddaa0bb1bf2f2af8ae71ce53e99a19a0d256b97211d210e427598b77b5",
+        "stdout": "checkpoint_saved=<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_01_result_20260718.aexcp\ncheckpoint_rip=0x180005c95"
+      },
+      {
+        "boundary_sha256": "65a406395f067a4aa63c1b25f14604216577ac29d914bb2d65ccba8e0d6401ca",
+        "command": [
+          "<python>",
+          "tools/emulation/test_zoom_case0009.py",
+          "--resume-checkpoint",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_02_input_20260718.aexcp",
+          "--save-checkpoint-at-rip",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_02_result_20260718.aexcp",
+          "0x180005c95",
+          "--max-instructions",
+          "4000000000",
+          "--output-json",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_02_runner_20260718.json",
+          "--output-md",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_02_runner_20260718.md"
+        ],
+        "index": 2,
+        "input": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_02_input_20260718.aexcp",
+        "input_sha256": "902dcbd991e8c0a62e75b26d7bd4409d9a59b8a616781e55b33426b8863c9a60",
+        "range": [
+          991,
+          1126
+        ],
+        "result": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_02_result_20260718.aexcp",
+        "result_sha256": "93e94b414df10e25f0ce041b868b8610d67152734dd38be76eaf62b49eb48768",
+        "stdout": "checkpoint_saved=<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_02_result_20260718.aexcp\ncheckpoint_rip=0x180005c95"
+      },
+      {
+        "boundary_sha256": "65a406395f067a4aa63c1b25f14604216577ac29d914bb2d65ccba8e0d6401ca",
+        "command": [
+          "<python>",
+          "tools/emulation/test_zoom_case0009.py",
+          "--resume-checkpoint",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_03_input_20260718.aexcp",
+          "--save-checkpoint-at-rip",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_03_result_20260718.aexcp",
+          "0x180005c95",
+          "--max-instructions",
+          "4000000000",
+          "--output-json",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_03_runner_20260718.json",
+          "--output-md",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_03_runner_20260718.md"
+        ],
+        "index": 3,
+        "input": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_03_input_20260718.aexcp",
+        "input_sha256": "06ae333ffb0bc6f350719bd33e89975ef5418adbebfe2178d848a5811cbf3aec",
+        "range": [
+          1126,
+          1261
+        ],
+        "result": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_03_result_20260718.aexcp",
+        "result_sha256": "61f7b41802b97446de9e877cd5702cbee545c99b07109096ae7c3051d630b692",
+        "stdout": "checkpoint_saved=<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_03_result_20260718.aexcp\ncheckpoint_rip=0x180005c95"
+      },
+      {
+        "boundary_sha256": "65a406395f067a4aa63c1b25f14604216577ac29d914bb2d65ccba8e0d6401ca",
+        "command": [
+          "<python>",
+          "tools/emulation/test_zoom_case0009.py",
+          "--resume-checkpoint",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_04_input_20260718.aexcp",
+          "--save-checkpoint-at-rip",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_04_result_20260718.aexcp",
+          "0x180005c95",
+          "--max-instructions",
+          "4000000000",
+          "--output-json",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_04_runner_20260718.json",
+          "--output-md",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_04_runner_20260718.md"
+        ],
+        "index": 4,
+        "input": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_04_input_20260718.aexcp",
+        "input_sha256": "024f023268d1b3dc56363c931ee283c5c28be4aa57831d21a7a91eb91ff2c025",
+        "range": [
+          1261,
+          1396
+        ],
+        "result": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_04_result_20260718.aexcp",
+        "result_sha256": "51b49d912da83c9055ea8072c909596378b872867d4304b58e06a7a8ef461b64",
+        "stdout": "checkpoint_saved=<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_04_result_20260718.aexcp\ncheckpoint_rip=0x180005c95"
+      },
+      {
+        "boundary_sha256": "65a406395f067a4aa63c1b25f14604216577ac29d914bb2d65ccba8e0d6401ca",
+        "command": [
+          "<python>",
+          "tools/emulation/test_zoom_case0009.py",
+          "--resume-checkpoint",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_05_input_20260718.aexcp",
+          "--save-checkpoint-at-rip",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_05_result_20260718.aexcp",
+          "0x180005c95",
+          "--max-instructions",
+          "4000000000",
+          "--output-json",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_05_runner_20260718.json",
+          "--output-md",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_05_runner_20260718.md"
+        ],
+        "index": 5,
+        "input": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_05_input_20260718.aexcp",
+        "input_sha256": "6e3adc3e19fc6323b62d38fabb31f78365cbe3a6e8eb6fea4cef84518621692e",
+        "range": [
+          1396,
+          1531
+        ],
+        "result": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_05_result_20260718.aexcp",
+        "result_sha256": "7b452155858e51284bd4d7f09aeb8811c6f4851aeac38a7c06a79f40fbb4cdf8",
+        "stdout": "checkpoint_saved=<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_05_result_20260718.aexcp\ncheckpoint_rip=0x180005c95"
+      },
+      {
+        "boundary_sha256": "65a406395f067a4aa63c1b25f14604216577ac29d914bb2d65ccba8e0d6401ca",
+        "command": [
+          "<python>",
+          "tools/emulation/test_zoom_case0009.py",
+          "--resume-checkpoint",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_06_input_20260718.aexcp",
+          "--save-checkpoint-at-rip",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_06_result_20260718.aexcp",
+          "0x180005c95",
+          "--max-instructions",
+          "4000000000",
+          "--output-json",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_06_runner_20260718.json",
+          "--output-md",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_06_runner_20260718.md"
+        ],
+        "index": 6,
+        "input": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_06_input_20260718.aexcp",
+        "input_sha256": "a6d78d72bfafdc04ae1491b60d29c7f6c13942a4bc8c586a103423205fc5ffc4",
+        "range": [
+          1531,
+          1666
+        ],
+        "result": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_06_result_20260718.aexcp",
+        "result_sha256": "79e101c796e6bd5feeab3f1da49798e4e5721e0bff3f79693beda0743022035e",
+        "stdout": "checkpoint_saved=<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_06_result_20260718.aexcp\ncheckpoint_rip=0x180005c95"
+      },
+      {
+        "boundary_sha256": "65a406395f067a4aa63c1b25f14604216577ac29d914bb2d65ccba8e0d6401ca",
+        "command": [
+          "<python>",
+          "tools/emulation/test_zoom_case0009.py",
+          "--resume-checkpoint",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_07_input_20260718.aexcp",
+          "--save-checkpoint-at-rip",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_07_result_20260718.aexcp",
+          "0x180005c95",
+          "--max-instructions",
+          "4000000000",
+          "--output-json",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_07_runner_20260718.json",
+          "--output-md",
+          "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/slice_07_runner_20260718.md"
+        ],
+        "index": 7,
+        "input": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_07_input_20260718.aexcp",
+        "input_sha256": "b3a8efba7ff3319e2808e77a55ca8f449970977627e25268dcf919d47a64cd1b",
+        "range": [
+          1666,
+          1800
+        ],
+        "result": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_07_result_20260718.aexcp",
+        "result_sha256": "16c8248c55f2c3ccaddae6da9e0b3417add1e7ed152cc82d27445c85a2600592",
+        "stdout": "checkpoint_saved=<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_07_result_20260718.aexcp\ncheckpoint_rip=0x180005c95"
+      }
+    ]
+  },
+  "full_execution_requested": true,
   "gates": {
     "boundary_rip": true,
     "fresh_unique_slice_inputs": true,
@@ -162,5 +480,5 @@
       "result": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_07_result_20260718.aexcp"
     }
   ],
-  "status": "pass_nway_prepared"
+  "status": "pass_nway_merged_to_normalization"
 }
