@@ -1,0 +1,381 @@
+{
+  "actual_aex": {
+    "cce0_input": {
+      "count": 2,
+      "vertices": [
+        {
+          "rgba": [
+            0.18447498977184296,
+            0.18447498977184296,
+            0.18447498977184296,
+            0.6823529601097107
+          ],
+          "rgba_u32": [
+            1044178691,
+            1044178691,
+            1044178691,
+            1060023983
+          ],
+          "weight": 0.1618608683347702,
+          "weight_u32": 1042661083
+        },
+        {
+          "rgba": [
+            0.19120168685913086,
+            0.19120168685913086,
+            0.19120168685913086,
+            0.6901960968971252
+          ],
+          "rgba_u32": [
+            1044630112,
+            1044630112,
+            1044630112,
+            1060155569
+          ],
+          "weight": 6.0879836382810026e-05,
+          "weight_u32": 947870010
+        }
+      ]
+    },
+    "cce0_output": {
+      "rgba": [
+        0.8575195670127869,
+        0.8575195670127869,
+        0.8575195670127869,
+        0.9387068152427673
+      ],
+      "rgba_u32": [
+        1062962791,
+        1062962791,
+        1062962791,
+        1064324887
+      ]
+    },
+    "post_f130_post_boost": {
+      "count": 2,
+      "vertices": [
+        {
+          "rgba": [
+            0.18447498977184296,
+            0.18447498977184296,
+            0.18447498977184296,
+            0.6823529601097107
+          ],
+          "rgba_u32": [
+            1044178691,
+            1044178691,
+            1044178691,
+            1060023983
+          ],
+          "weight": 0.1618608683347702,
+          "weight_u32": 1042661083
+        },
+        {
+          "rgba": [
+            0.19120168685913086,
+            0.19120168685913086,
+            0.19120168685913086,
+            0.6901960968971252
+          ],
+          "rgba_u32": [
+            1044630112,
+            1044630112,
+            1044630112,
+            1060155569
+          ],
+          "weight": 6.0879836382810026e-05,
+          "weight_u32": 947870010
+        }
+      ]
+    }
+  },
+  "binary": {
+    "path": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
+    "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+  },
+  "boundary": {
+    "actual_cce0_input_count": 2,
+    "actual_chain": [
+      "PF8 host adapter",
+      "0x180002a70",
+      "0x180002ba0",
+      "0x18000ada0",
+      "VCOMP140!_vcomp_fork",
+      "0x18000ac00",
+      "0x18000ae10",
+      "0x18000cce0",
+      "0x18000c280",
+      "0x18000fef0",
+      "0x18000f270",
+      "0x18000f130"
+    ],
+    "descriptor": [
+      92,
+      841,
+      1,
+      92,
+      842,
+      2
+    ],
+    "dispatch_key": 20,
+    "mac_helper_count": 2
+  },
+  "claims_not_made": [
+    "No Windows/After Effects host execution claim",
+    "No production edit",
+    "No writer or exported-byte attribution"
+  ],
+  "comparisons": [
+    {
+      "actual": 0.18447498977184296,
+      "actual_u32": 1044178691,
+      "equal": true,
+      "field": "r",
+      "mac": 0.18447499,
+      "mac_u32": 1044178691,
+      "stage": "c280_or_post_f130",
+      "vertex": 0
+    },
+    {
+      "actual": 0.18447498977184296,
+      "actual_u32": 1044178691,
+      "equal": true,
+      "field": "g",
+      "mac": 0.18447499,
+      "mac_u32": 1044178691,
+      "stage": "c280_or_post_f130",
+      "vertex": 0
+    },
+    {
+      "actual": 0.18447498977184296,
+      "actual_u32": 1044178691,
+      "equal": true,
+      "field": "b",
+      "mac": 0.18447499,
+      "mac_u32": 1044178691,
+      "stage": "c280_or_post_f130",
+      "vertex": 0
+    },
+    {
+      "actual": 0.6823529601097107,
+      "actual_u32": 1060023983,
+      "equal": true,
+      "field": "a",
+      "mac": 0.68235296,
+      "mac_u32": 1060023983,
+      "stage": "c280_or_post_f130",
+      "vertex": 0
+    },
+    {
+      "actual": 0.1618608683347702,
+      "actual_u32": 1042661083,
+      "equal": true,
+      "field": "weight",
+      "mac": 0.161860868,
+      "mac_u32": 1042661083,
+      "stage": "c280_or_post_f130",
+      "vertex": 0
+    },
+    {
+      "actual": 0.19120168685913086,
+      "actual_u32": 1044630112,
+      "equal": true,
+      "field": "r",
+      "mac": 0.191201687,
+      "mac_u32": 1044630112,
+      "stage": "c280_or_post_f130",
+      "vertex": 1
+    },
+    {
+      "actual": 0.19120168685913086,
+      "actual_u32": 1044630112,
+      "equal": true,
+      "field": "g",
+      "mac": 0.191201687,
+      "mac_u32": 1044630112,
+      "stage": "c280_or_post_f130",
+      "vertex": 1
+    },
+    {
+      "actual": 0.19120168685913086,
+      "actual_u32": 1044630112,
+      "equal": true,
+      "field": "b",
+      "mac": 0.191201687,
+      "mac_u32": 1044630112,
+      "stage": "c280_or_post_f130",
+      "vertex": 1
+    },
+    {
+      "actual": 0.6901960968971252,
+      "actual_u32": 1060155569,
+      "equal": true,
+      "field": "a",
+      "mac": 0.690196097,
+      "mac_u32": 1060155569,
+      "stage": "c280_or_post_f130",
+      "vertex": 1
+    },
+    {
+      "actual": 6.0879836382810026e-05,
+      "actual_u32": 947870010,
+      "equal": true,
+      "field": "weight",
+      "mac": 6.08798364e-05,
+      "mac_u32": 947870010,
+      "stage": "c280_or_post_f130",
+      "vertex": 1
+    },
+    {
+      "actual": 0.18447498977184296,
+      "actual_u32": 1044178691,
+      "equal": true,
+      "field": "r",
+      "mac": 0.18447499,
+      "mac_u32": 1044178691,
+      "stage": "cce0_input",
+      "vertex": 0
+    },
+    {
+      "actual": 0.18447498977184296,
+      "actual_u32": 1044178691,
+      "equal": true,
+      "field": "g",
+      "mac": 0.18447499,
+      "mac_u32": 1044178691,
+      "stage": "cce0_input",
+      "vertex": 0
+    },
+    {
+      "actual": 0.18447498977184296,
+      "actual_u32": 1044178691,
+      "equal": true,
+      "field": "b",
+      "mac": 0.18447499,
+      "mac_u32": 1044178691,
+      "stage": "cce0_input",
+      "vertex": 0
+    },
+    {
+      "actual": 0.6823529601097107,
+      "actual_u32": 1060023983,
+      "equal": true,
+      "field": "a",
+      "mac": 0.68235296,
+      "mac_u32": 1060023983,
+      "stage": "cce0_input",
+      "vertex": 0
+    },
+    {
+      "actual": 0.1618608683347702,
+      "actual_u32": 1042661083,
+      "equal": true,
+      "field": "weight",
+      "mac": 0.161860868,
+      "mac_u32": 1042661083,
+      "stage": "cce0_input",
+      "vertex": 0
+    },
+    {
+      "actual": 0.19120168685913086,
+      "actual_u32": 1044630112,
+      "equal": true,
+      "field": "r",
+      "mac": 0.191201687,
+      "mac_u32": 1044630112,
+      "stage": "cce0_input",
+      "vertex": 1
+    },
+    {
+      "actual": 0.19120168685913086,
+      "actual_u32": 1044630112,
+      "equal": true,
+      "field": "g",
+      "mac": 0.191201687,
+      "mac_u32": 1044630112,
+      "stage": "cce0_input",
+      "vertex": 1
+    },
+    {
+      "actual": 0.19120168685913086,
+      "actual_u32": 1044630112,
+      "equal": true,
+      "field": "b",
+      "mac": 0.191201687,
+      "mac_u32": 1044630112,
+      "stage": "cce0_input",
+      "vertex": 1
+    },
+    {
+      "actual": 0.6901960968971252,
+      "actual_u32": 1060155569,
+      "equal": true,
+      "field": "a",
+      "mac": 0.690196097,
+      "mac_u32": 1060155569,
+      "stage": "cce0_input",
+      "vertex": 1
+    },
+    {
+      "actual": 6.0879836382810026e-05,
+      "actual_u32": 947870010,
+      "equal": true,
+      "field": "weight",
+      "mac": 6.08798364e-05,
+      "mac_u32": 947870010,
+      "stage": "cce0_input",
+      "vertex": 1
+    }
+  ],
+  "first_divergence": null,
+  "mac_helper": {
+    "count": 2,
+    "orchestrated": [
+      0.857519567,
+      0.857519567,
+      0.857519567,
+      0.938706815
+    ],
+    "vertices": [
+      {
+        "rgba": [
+          0.18447499,
+          0.18447499,
+          0.18447499,
+          0.68235296
+        ],
+        "rgba_u32": [
+          1044178691,
+          1044178691,
+          1044178691,
+          1060023983
+        ],
+        "weight": 0.161860868,
+        "weight_u32": 1042661083
+      },
+      {
+        "rgba": [
+          0.191201687,
+          0.191201687,
+          0.191201687,
+          0.690196097
+        ],
+        "rgba_u32": [
+          1044630112,
+          1044630112,
+          1044630112,
+          1060155569
+        ],
+        "weight": 6.08798364e-05,
+        "weight_u32": 947870010
+      }
+    ]
+  },
+  "mac_source": {
+    "path": "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp",
+    "sha256": "344688bcaafa72e0dbe6938d3e671f0adf4bf8fa49b871f15c8573b39523960d"
+  },
+  "schema": 1,
+  "scope": "retained case0012 natural checked-in AEX c280/cce0 input versus current Mac build_polygon helper",
+  "verdict": "PASS_NO_C280_CCE0_MAC_HELPER_DIVERGENCE"
+}
