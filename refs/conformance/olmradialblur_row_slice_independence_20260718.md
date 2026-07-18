@@ -41,4 +41,4 @@
 - Natural span matrix: Outer spans 2 and 3 plus Inner span 1 matched the bounded oracle.
 - These are bounded emulator facts, not Windows or Mac AE exactness.
 
-Report JSON: `/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmradialblur_row_slice_independence_20260718.json`
+Report JSON: `refs/conformance/olmradialblur_row_slice_independence_20260718.json`

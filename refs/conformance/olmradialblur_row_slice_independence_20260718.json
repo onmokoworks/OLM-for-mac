@@ -48,22 +48,22 @@
   },
   "bounded_evidence": {
     "natural_b150_checkpoint": {
-      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmradialblur_natural_b150_checkpoint_20260717.json",
+      "path": "refs/conformance/olmradialblur_natural_b150_checkpoint_20260717.json",
       "sha256": "31da4df2e822e252076fb4e4cea4e1933c0fa19f60f0a91d3ba033aae08adb9d",
       "status": "pass"
     },
     "natural_b150_replay": {
-      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmradialblur_natural_b150_replay_oracle_20260717.json",
+      "path": "refs/conformance/olmradialblur_natural_b150_replay_oracle_20260717.json",
       "sha256": "818c06336066ceb7f951b60c1df9733bae919c6d73bdc753333b183c0b0f7b03",
       "status": "pass"
     },
     "natural_b150_span_matrix": {
-      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmradialblur_natural_b150_span_matrix_20260717.json",
+      "path": "refs/conformance/olmradialblur_natural_b150_span_matrix_20260717.json",
       "sha256": "b14125965a3262f476324c7d2fcdbe3112ceed0824000c1f73c0387747536672",
       "status": "pass"
     },
     "natural_sampler_strategy": {
-      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmradialblur_natural_sampler_strategy_20260718.json",
+      "path": "refs/conformance/olmradialblur_natural_sampler_strategy_20260718.json",
       "sha256": "f9159e96cfdcfc1613647be59ad414e4aab8e724e131da59c9f59e4333f4723a",
       "status": "pass_read_only_strategy_gate"
     }
@@ -134,12 +134,12 @@
   "protected_process": {
     "alive": true,
     "pid": 59481,
-    "ps_line": "59481 Rs   18:07 /opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python tools/emulation/run_radialblur_natural_progress_hook_20260718.py --hook-mode row --progress-json /tmp/olm_radialblur_natural_progress_row_long_20260718.json --sample-every 16 --max-samples 128 --resume-checkpoint /tmp/olm_radial_case0009_workers_progress6_20260718.aexcp --max-instructions 10000000000 --save-progress-checkpoint /tmp/olm_radial_case0009_workers_progress7_row_20260718.aexcp"
+    "ps_line": "59481 Rs   42:00 /opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python tools/emulation/run_radialblur_natural_progress_hook_20260718.py --hook-mode row --progress-json /tmp/olm_radialblur_natural_progress_row_long_20260718.json --sample-every 16 --max-samples 128 --resume-checkpoint /tmp/olm_radial_case0009_workers_progress6_20260718.aexcp --max-instructions 10000000000 --save-progress-checkpoint /tmp/olm_radial_case0009_workers_progress7_row_20260718.aexcp"
   },
   "provenance": {
-    "aex": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "aex": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
     "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
-    "disasm": "/Users/onmk/Documents/Projects/Personal/OLM as/disasm/OLMRadialBlur.aex.asm.txt",
+    "disasm": "disasm/OLMRadialBlur.aex.asm.txt",
     "disasm_sha256": "feaf9366c4cff7fc726bea62af94f8b6a638d08fb597844463e3a6274c0b3971"
   },
   "rejected_shortcuts": [

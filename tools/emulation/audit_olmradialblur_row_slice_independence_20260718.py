@@ -46,6 +46,14 @@ def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def repo_rel(path: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return str(resolved.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 def address_lines(text: str, start: int, end: int) -> str:
     lines: list[str] = []
     for line in text.splitlines():
@@ -250,9 +258,9 @@ def main() -> int:
         "production_source_changed": False,
         "parallel_runner_started": False,
         "provenance": {
-            "aex": str(args.aex),
+            "aex": repo_rel(args.aex),
             "aex_sha256": sha256(args.aex),
-            "disasm": str(args.disasm),
+            "disasm": repo_rel(args.disasm),
             "disasm_sha256": sha256(args.disasm),
         },
         "addresses": {
@@ -288,7 +296,7 @@ def main() -> int:
         },
         "bounded_evidence": {
             name: {
-                "path": str(path),
+                "path": repo_rel(path),
                 "sha256": sha256(path),
                 "status": evidence[name].get("status"),
             }
@@ -354,7 +362,7 @@ def main() -> int:
         "- Natural span matrix: Outer spans 2 and 3 plus Inner span 1 matched the bounded oracle.",
         "- These are bounded emulator facts, not Windows or Mac AE exactness.",
         "",
-        f"Report JSON: `{args.output_json}`",
+        f"Report JSON: `{repo_rel(args.output_json)}`",
         "",
     ]
     args.output_md.write_text("\n".join(lines), encoding="utf-8")

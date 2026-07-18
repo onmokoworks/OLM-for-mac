@@ -1,0 +1,240 @@
+{
+  "schema": 1,
+  "kind": "olmdirectionalblur_final_pf_output_contract_20260718",
+  "status": "pass",
+  "created_at_utc": "2026-07-18T01:32:32+00:00",
+  "scope": "Mac-local bounded PF8 final-store contract joined to the natural continuation; not full-frame equivalence",
+  "claim_scope": "The actual AEX output callback writes PF8 A/R/G/B words for natural output-callback samples; no AE exact claim",
+  "provenance": {
+    "aex": "plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "fixture": "tools/emulation/dblur_fullrender_host_fixture_20260711.py",
+    "fixture_sha256": "e3216aa5a213efaf2129dd11bf9c4a5e6e4a5c162d034c607df6e0bda1fba80a",
+    "source": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png",
+    "source_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+    "continuation_report": "refs/conformance/olmdirectionalblur_natural_continuation_20260718.json",
+    "continuation_report_sha256": "41e36d21bd7fe8eb375ad23a3ada896db19d7c1ccf932f7c3dbfe509f159d11b",
+    "writer_probe": "tools/emulation/test_olmdirectionalblur_natural_writer_owner_20260717.py",
+    "writer_probe_sha256": "8ac1fa5f554bcd6c967020e5e7fbf2fb373958c4cbd726081c010c05d14c34f8",
+    "writer_report": "refs/conformance/olmdirectionalblur_natural_writer_owner_20260717.json",
+    "writer_report_sha256_before": "cca3ab39553ed7a8435c6be1b24b96d07a9e3d8eb6d0491390489e8c1bbaa023",
+    "writer_report_sha256_after": "cca3ab39553ed7a8435c6be1b24b96d07a9e3d8eb6d0491390489e8c1bbaa023"
+  },
+  "checks": {
+    "continuation_pass": true,
+    "writer_probe_pass": true,
+    "same_aex": true,
+    "same_fixture": true,
+    "same_source": true,
+    "actual_output_callback": true,
+    "final_store_samples": true,
+    "nontrivial_store": true,
+    "fail_closed_probe": true
+  },
+  "observed": {
+    "continuation_status": "pass",
+    "writer_status": "pass",
+    "subprocess_returncode": 0,
+    "iterate_callbacks": [
+      "0x180006980",
+      "0x180006b30"
+    ],
+    "sample_count": 7,
+    "writer_entry_samples": [
+      {
+        "xy": [
+          0,
+          0
+        ],
+        "params": "0xf0f6e60",
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "float_cell_index": 135,
+        "float_byte_offset": 2160,
+        "writer_entry_rgba_f32": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "writer_entry_argb8": [
+          255,
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "xy": [
+          1,
+          0
+        ],
+        "params": "0xf0f6e60",
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "float_cell_index": 136,
+        "float_byte_offset": 2176,
+        "writer_entry_rgba_f32": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "writer_entry_argb8": [
+          255,
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "xy": [
+          2,
+          0
+        ],
+        "params": "0xf0f6e60",
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "float_cell_index": 137,
+        "float_byte_offset": 2192,
+        "writer_entry_rgba_f32": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "writer_entry_argb8": [
+          255,
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "xy": [
+          3,
+          0
+        ],
+        "params": "0xf0f6e60",
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "float_cell_index": 138,
+        "float_byte_offset": 2208,
+        "writer_entry_rgba_f32": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "writer_entry_argb8": [
+          255,
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "xy": [
+          4,
+          0
+        ],
+        "params": "0xf0f6e60",
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "float_cell_index": 139,
+        "float_byte_offset": 2224,
+        "writer_entry_rgba_f32": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "writer_entry_argb8": [
+          255,
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "xy": [
+          5,
+          0
+        ],
+        "params": "0xf0f6e60",
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "float_cell_index": 140,
+        "float_byte_offset": 2240,
+        "writer_entry_rgba_f32": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "writer_entry_argb8": [
+          255,
+          255,
+          0,
+          0
+        ]
+      },
+      {
+        "xy": [
+          6,
+          0
+        ],
+        "params": "0xf0f6e60",
+        "float_base": "0x2002ac88",
+        "row0": 5,
+        "col0": 5,
+        "stride_floats": 26,
+        "float_cell_index": 141,
+        "float_byte_offset": 2256,
+        "writer_entry_rgba_f32": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "writer_entry_argb8": [
+          255,
+          255,
+          0,
+          0
+        ]
+      }
+    ],
+    "output_callback": "0x180006b30",
+    "store_order": "PF8 bytes at destination pointer [RSP+0x28] are A/R/G/B"
+  },
+  "boundary": {
+    "status": "bounded-contract-only",
+    "full_frame_equivalence": false,
+    "same_run_natural_full_frame": false,
+    "next_missing_proof": "same-run natural output buffer capture covering the complete requested frame"
+  },
+  "run": {
+    "command": "python3 tools/emulation/test_olmdirectionalblur_natural_writer_owner_20260717.py",
+    "stdout_tail": "{\"status\": \"blocked\", \"output\": \"/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_directionalblur_natural_owner_zm8wyg65/fixture.json\", \"iterate_calls\": 2, \"rotate_calls\": 1, \"complete_output\": true}\n{\"status\": \"pass\", \"report\": \"refs/conformance/olmdirectionalblur_natural_writer_owner_20260717.json\", \"samples\": 7}\n",
+    "stderr_tail": ""
+  },
+  "fail_closed": {
+    "production_source_edited": false,
+    "windows_values_fabricated": false,
+    "png_tuning": false,
+    "ae_exact_claim": false
+  }
+}
