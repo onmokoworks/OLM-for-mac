@@ -105,10 +105,10 @@ int main(int argc, char **argv)
     const std::vector<char> plane_bytes = read_all(argv[1]);
     const std::vector<char> oracle = read_all(argv[2]);
     constexpr std::size_t output_size = static_cast<std::size_t>(kOutputWidth) * kOutputHeight * 4 * sizeof(float);
-    constexpr std::size_t polar_min_size = static_cast<std::size_t>(kPolarWidth) * kPolarHeight * 4 * sizeof(float);
-    if (plane_bytes.size() < polar_min_size || oracle.size() != output_size) {
-        std::fprintf(stderr, "invalid_size plane=%zu minimum=%zu oracle=%zu expected=%zu\n",
-                     plane_bytes.size(), polar_min_size, oracle.size(), output_size);
+    constexpr std::size_t polar_size = static_cast<std::size_t>(kPolarWidth) * kPolarHeight * 4 * sizeof(float);
+    if (plane_bytes.size() != polar_size || oracle.size() != output_size) {
+        std::fprintf(stderr, "invalid_size plane=%zu expected=%zu oracle=%zu expected=%zu\n",
+                     plane_bytes.size(), polar_size, oracle.size(), output_size);
         return 2;
     }
 

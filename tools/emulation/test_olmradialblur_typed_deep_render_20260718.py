@@ -4,8 +4,10 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 import re
+import struct
 import subprocess
 import tempfile
 from pathlib import Path
@@ -23,6 +25,10 @@ ORACLE = RAW_ROOT / "complete_pf32_frame.f32rgba"
 INPUT_PNG = ROOT / "refs/win_references/20260604_olm/OLMRadialBlur/case_0009_before_effects.png"
 EXPECTED_BYTES = 1920 * 1080 * 4 * 4
 POLAR_BYTES = 1104 * 1800 * 4 * 4
+POLAR_FLOATS = POLAR_BYTES // 4
+POLAR_WIDTH = 1104
+POLAR_HEIGHT = 1800
+EXPECTED_POLAR_SHA256 = "c8037b713512573f8b4346a5e0efc6dd1862f0a53da39d673b005f15a06469f8"
 
 
 def sha256(path: Path) -> str:
@@ -33,11 +39,44 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def run_production_adapter(temp: Path) -> tuple[int, int | None]:
+def compare_bytes(actual: bytes, oracle: bytes) -> tuple[int, int | None]:
+    if len(actual) != len(oracle):
+        raise AssertionError(f"byte comparison size mismatch: {len(actual)} != {len(oracle)}")
+    differing = sum(a != b for a, b in zip(actual, oracle))
+    first = next((index for index, pair in enumerate(zip(actual, oracle)) if pair[0] != pair[1]), None)
+    return differing, first
+
+
+def polar_first_difference(actual: bytes, oracle: bytes, first_byte: int | None) -> dict[str, object] | None:
+    if first_byte is None:
+        return None
+    word_index = first_byte // 4
+    cell_index, channel = divmod(word_index, 4)
+    angle_index, radius_index = divmod(cell_index, POLAR_WIDTH)
+    word_offset = word_index * 4
+    actual_bits = struct.unpack_from("<I", actual, word_offset)[0]
+    oracle_bits = struct.unpack_from("<I", oracle, word_offset)[0]
+    actual_value = struct.unpack_from("<f", actual, word_offset)[0]
+    oracle_value = struct.unpack_from("<f", oracle, word_offset)[0]
+    return {
+        "byte_offset": first_byte,
+        "float_word_index": word_index,
+        "angle_index": angle_index,
+        "radius_index": radius_index,
+        "channel": "RGBA"[channel],
+        "actual_value": actual_value,
+        "oracle_value": oracle_value,
+        "actual_bits": f"0x{actual_bits:08x}",
+        "oracle_bits": f"0x{oracle_bits:08x}",
+    }
+
+
+def run_production_adapter(temp: Path) -> dict[str, object]:
     rgba = np.asarray(Image.open(INPUT_PNG).convert("RGBA"), dtype=np.float32) / np.float32(255.0)
     argb = rgba[:, :, [3, 0, 1, 2]].copy()
     input_raw = temp / "input_pf32.argb"
     output_raw = temp / "output_pf32.argb"
+    polar_raw = temp / "production_normalized_polar.f32rgba"
     argb.tofile(input_raw)
     production = str(SOURCE).replace("\\", "\\\\").replace('"', '\\"')
     probe = temp / "radialblur_pf32_host_probe.cpp"
@@ -48,9 +87,10 @@ def run_production_adapter(temp: Path) -> tuple[int, int | None]:
 #include <fstream>
 #include <vector>
 int main(int argc, char **argv) {{
-  if (argc != 3) return 2;
+  if (argc != 4) return 2;
   constexpr int W=1920, H=1080;
   std::vector<PF_PixelFloat> input(W*H), output(W*H);
+  std::vector<float> polar({POLAR_FLOATS});
   std::ifstream in_file(argv[1], std::ios::binary);
   in_file.read(reinterpret_cast<char *>(input.data()), input.size()*sizeof(PF_PixelFloat));
   if (!in_file || in_file.gcount() != static_cast<std::streamsize>(input.size()*sizeof(PF_PixelFloat))) return 3;
@@ -62,10 +102,15 @@ int main(int argc, char **argv) {{
   info.outer_strength=1717; info.outer_offset_mode=1; info.inner_offset_mode=1;
   info.repeat_border=TRUE; info.ratio=1; info.quality=5; info.brightness_gain=1;
   info.noise_type=1; info.seed=1; info.thickness=10; info.comp_width=W; info.comp_height=H;
-  if (OLMRadialBlurTestRenderWorld(&in,&out,&info,32) != PF_Err_NONE) return 4;
+  size_t written_floats=0; A_long polar_width=0, polar_height=0;
+  if (OLMRadialBlurTestRenderFloatAndCaptureNormalizedPolar(
+        &in,&out,&info,polar.data(),polar.size(),&written_floats,&polar_width,&polar_height) != PF_Err_NONE) return 4;
+  if (written_floats != polar.size() || polar_width != {POLAR_WIDTH} || polar_height != {POLAR_HEIGHT}) return 5;
   std::ofstream out_file(argv[2], std::ios::binary);
   out_file.write(reinterpret_cast<const char *>(output.data()), output.size()*sizeof(PF_PixelFloat));
-  return out_file ? 0 : 5;
+  std::ofstream polar_file(argv[3], std::ios::binary);
+  polar_file.write(reinterpret_cast<const char *>(polar.data()), polar.size()*sizeof(float));
+  return out_file && polar_file ? 0 : 6;
 }}
 ''', encoding="utf-8")
     sdk = subprocess.run(["xcrun", "--show-sdk-path"], capture_output=True, text=True, check=True).stdout.strip()
@@ -77,15 +122,28 @@ int main(int argc, char **argv) {{
     build = subprocess.run(command, cwd=ROOT, text=True, capture_output=True)
     if build.returncode != 0:
         raise AssertionError("production adapter compile failed\n" + build.stderr)
-    run = subprocess.run([str(binary), str(input_raw), str(output_raw)], cwd=ROOT, text=True, capture_output=True)
-    if run.returncode != 0 or output_raw.stat().st_size != EXPECTED_BYTES:
+    run = subprocess.run(
+        [str(binary), str(input_raw), str(output_raw), str(polar_raw)],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+    )
+    if (run.returncode != 0 or output_raw.stat().st_size != EXPECTED_BYTES or
+            polar_raw.stat().st_size != POLAR_BYTES):
         raise AssertionError(f"production adapter failed closed rc={run.returncode}\n{run.stdout}{run.stderr}")
     host_argb = np.fromfile(output_raw, dtype=np.float32).reshape(1080, 1920, 4)
     host_rgba = host_argb[:, :, [1, 2, 3, 0]].copy().tobytes()
-    oracle = ORACLE.read_bytes()
-    differing = sum(a != b for a, b in zip(host_rgba, oracle))
-    first = next((index for index, pair in enumerate(zip(host_rgba, oracle)) if pair[0] != pair[1]), None)
-    return differing, first
+    frame_differing, frame_first = compare_bytes(host_rgba, ORACLE.read_bytes())
+    production_polar = polar_raw.read_bytes()
+    oracle_polar = PLANE.read_bytes()
+    polar_differing, polar_first = compare_bytes(production_polar, oracle_polar)
+    return {
+        "frame_differing_bytes": frame_differing,
+        "frame_first_difference": frame_first,
+        "polar_differing_bytes": polar_differing,
+        "polar_first_difference": polar_first_difference(production_polar, oracle_polar, polar_first),
+        "production_polar_sha256": sha256(polar_raw),
+    }
 
 
 def main() -> int:
@@ -100,6 +158,7 @@ def main() -> int:
         "RadialF32Mul(value, 32768.0f)",
         "pixel.red = state.final_rgb[0];",
         "strict_nonzero_alpha ? state.alpha != 0.0f",
+        "OLMRadialBlurTestRenderFloatAndCaptureNormalizedPolar",
     )
     missing = [token for token in required if token not in source]
     if missing:
@@ -115,6 +174,8 @@ def main() -> int:
         return 0
     if PLANE.stat().st_size != POLAR_BYTES or ORACLE.stat().st_size != EXPECTED_BYTES:
         raise AssertionError("local oracle has an unexpected byte size")
+    if sha256(PLANE) != EXPECTED_POLAR_SHA256:
+        raise AssertionError("corrected normalized polar oracle hash mismatch")
 
     with tempfile.TemporaryDirectory(prefix="olmradialblur_typed_deep_20260718_") as tmp:
         binary = Path(tmp) / "audit"
@@ -141,11 +202,19 @@ def main() -> int:
         print(f"normalized_plane_sha256={sha256(PLANE)}")
         print(f"complete_frame_sha256={sha256(ORACLE)}")
         print("raw_frame_comparison=pass_exact" if run.returncode == 0 else "raw_frame_comparison=known_red_fail_closed")
-        production_differing, production_first = run_production_adapter(Path(tmp))
+        production = run_production_adapter(Path(tmp))
+        print(f"production_polar_compared_bytes={POLAR_BYTES}")
+        print(f"production_polar_differing_bytes={production['polar_differing_bytes']}")
+        print("production_polar_first_difference=" + json.dumps(
+            production["polar_first_difference"], sort_keys=True, separators=(",", ":")))
+        print(f"production_polar_sha256={production['production_polar_sha256']}")
+        print("production_polar_comparison=pass_exact" if production["polar_differing_bytes"] == 0
+              else "production_polar_comparison=known_red_fail_closed")
         print(f"production_adapter_compared_bytes={EXPECTED_BYTES}")
-        print(f"production_adapter_differing_bytes={production_differing}")
-        print(f"production_adapter_first_difference={production_first}")
-        print("production_adapter_comparison=pass_exact" if production_differing == 0 else "production_adapter_comparison=known_red_fail_closed")
+        print(f"production_adapter_differing_bytes={production['frame_differing_bytes']}")
+        print(f"production_adapter_first_difference={production['frame_first_difference']}")
+        print("production_adapter_comparison=pass_exact" if production["frame_differing_bytes"] == 0
+              else "production_adapter_comparison=known_red_fail_closed")
         print("ae_exact_claim=false")
     return 0
 

@@ -937,8 +937,25 @@ struct RadialZoomPixelTraits<PF_PixelFloat> {
 	}
 };
 
+#if defined(OLM_RADIALBLUR_TEST_SEAM)
+struct RadialBlurTestPolarCapture {
+	float *rgba = nullptr;
+	size_t capacity_floats = 0;
+	size_t written_floats = 0;
+	A_long width = 0;
+	A_long height = 0;
+};
+#endif
+
 template <typename PixelT>
-static PF_Err RenderZoomTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMRadialBlurInfo &info)
+static PF_Err RenderZoomTyped(
+	PF_EffectWorld *input,
+	PF_EffectWorld *output,
+	const OLMRadialBlurInfo &info
+#if defined(OLM_RADIALBLUR_TEST_SEAM)
+	, RadialBlurTestPolarCapture *test_polar_capture = nullptr
+#endif
+)
 {
 	if (info.blur_type != 1 || info.inner_strength != 0 ||
 	    info.noise_variation != 0.0) {
@@ -1086,6 +1103,22 @@ static PF_Err RenderZoomTyped(PF_EffectWorld *input, PF_EffectWorld *output, con
 			}
 		}
 	}
+
+#if defined(OLM_RADIALBLUR_TEST_SEAM)
+	if (test_polar_capture) {
+		test_polar_capture->width = radius_count;
+		test_polar_capture->height = angular_count;
+		test_polar_capture->written_floats = blurred.rgba.size();
+		if (!test_polar_capture->rgba ||
+		    test_polar_capture->capacity_floats < blurred.rgba.size()) {
+			return PF_Err_BAD_CALLBACK_PARAM;
+		}
+		std::memcpy(
+			test_polar_capture->rgba,
+			blurred.rgba.data(),
+			blurred.rgba.size() * sizeof(float));
+	}
+#endif
 
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
@@ -1495,6 +1528,30 @@ extern "C" PF_Err OLMRadialBlurTestRenderWorld(
 {
 	if (!input || !output || !info) return PF_Err_BAD_CALLBACK_PARAM;
 	return RenderWorld(input, output, *info, bitdepth);
+}
+
+extern "C" PF_Err OLMRadialBlurTestRenderFloatAndCaptureNormalizedPolar(
+	PF_EffectWorld *input,
+	PF_EffectWorld *output,
+	const OLMRadialBlurInfo *info,
+	float *polar_rgba,
+	size_t capacity_floats,
+	size_t *written_floats,
+	A_long *polar_width,
+	A_long *polar_height)
+{
+	if (!input || !output || !info || !polar_rgba || !written_floats ||
+	    !polar_width || !polar_height) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	RadialBlurTestPolarCapture capture;
+	capture.rgba = polar_rgba;
+	capture.capacity_floats = capacity_floats;
+	const PF_Err err = RenderZoomTyped<PF_PixelFloat>(input, output, *info, &capture);
+	*written_floats = capture.written_floats;
+	*polar_width = capture.width;
+	*polar_height = capture.height;
+	return err;
 }
 #endif
 

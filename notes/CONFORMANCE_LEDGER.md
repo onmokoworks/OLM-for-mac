@@ -1,5 +1,18 @@
 # OLM Conformance Ledger
 
+- 2026-07-18 `OLMRadialBlur PF32 normalized-polar boundary` (latest
+  override): no correctness status is promoted. A PF32-only test seam captures
+  the production `blurred.rgba` plane immediately before Cartesian resampling.
+  Its geometry and layout match the actual-AEX `work+0x38` plane
+  (`1104x1800`, angle-major/radius-minor RGBA float, `31,795,200` bytes), but
+  the planes differ in `13,953,051` bytes. The first difference is
+  `(angle=0, radius=0, G)`: production `0x273c0000`, AEX `0x00000000`.
+  Therefore the PF32 Zoom residual exists before the final inverse sampler and
+  writeback. The next allowed action is a test-only pre-blur `polar.rgba`
+  capture to separate Cartesian-to-polar sampling from convolution and
+  normalization; do not tune the final sampler from this result. Evidence:
+  `refs/conformance/olmradialblur_typed_deep_render_20260718.md`.
+
 - 2026-07-18 `OLMColorKey 16bpc case_0005/case_0006 provenance review`
   (latest override): `case_0005` and `case_0006` qualify as `AE exact` for
   the repository's declared covered 16bpc `OLMColorKey` slice under the

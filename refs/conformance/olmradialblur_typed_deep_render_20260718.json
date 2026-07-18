@@ -2,9 +2,9 @@
   "schema": 1,
   "kind": "olmradialblur_typed_deep_render",
   "date": "2026-07-18",
-  "status": "known_red_internal_pf32_frame",
+  "status": "known_red_production_polar_and_internal_pf32_frame",
   "ae_exact_claim": false,
-  "production_source_sha256": "bdc051f0ea02f8d62eb0ed25ccf64ac9ef02e01a3238a82765b2ea34d7826278",
+  "production_source_sha256": "841336fbab69b8dfa7ac5c81d30f19a2eec075d24fce3b7a5ff146db289b042a",
   "built_plugin_sha256": "7e794ee6c8eb8f16c0a8081eaede5cdf9973d7b7ebc16047047f75ae78d6fee5",
   "built_architectures": ["x86_64", "arm64"],
   "actual_aex_oracle": {
@@ -14,6 +14,20 @@
     "complete_pf32_frame_bytes": 33177600
   },
   "results": {
+    "production_normalized_polar_plane_sha256": "64b237cd1e46d65aef300f94caf5bec1b45bfac9a2b9b945f86780f435e64cdd",
+    "production_normalized_polar_plane_bytes": 31795200,
+    "production_normalized_polar_plane_differing_bytes": 13953051,
+    "production_normalized_polar_plane_first_difference": {
+      "byte_offset": 6,
+      "float_word_index": 1,
+      "angle_index": 0,
+      "radius_index": 0,
+      "channel": "G",
+      "production_value": 2.609024107869118e-15,
+      "oracle_value": 0.0,
+      "production_bits": "0x273c0000",
+      "oracle_bits": "0x00000000"
+    },
     "reconstructed_final_sampler_differing_bytes": 144584,
     "production_typed_pf32_differing_bytes": 10047226,
     "production_typed_pf32_first_difference": 0,
@@ -24,12 +38,17 @@
     "PF16 uses the binary-grounded 1/32768 reader and multiply-by-32768 truncate writer.",
     "PF32 uses native float input and direct float output.",
     "The typed Zoom production path builds as a universal x86_64/arm64 plug-in.",
+    "The test seam is preprocessor-gated and leaves the production plug-in binary SHA-256 unchanged.",
+    "The PF32-only test seam copied exactly 1104x1800 RGBA float cells from blurred.rgba after normalization.",
+    "The production normalized polar plane differs from the corrected actual-AEX oracle in 13,953,051 of 31,795,200 bytes.",
+    "The first polar difference is angle 0, radius 0, G: production 0x273c0000 versus oracle 0x00000000.",
     "The production PF32 frame is still not byte-identical to the actual-AEX internal frame."
   ],
-  "next_boundary": "Compare the production normalized polar plane to the actual-AEX normalized polar plane before changing final sampling again.",
+  "next_boundary": "Split the pre-sampler residual by capturing the pre-blur polar.rgba plane, then classify Cartesian-to-polar sampling versus convolution/normalization.",
   "limits": [
     "No Mac AE render was executed.",
     "No Windows execution was used.",
+    "The test capture entrypoint and its 31.8 MB copy exist only under OLM_RADIALBLUR_TEST_SEAM.",
     "Rotation and unsupported feature combinations still retain their existing copy behavior in deep color.",
     "This does not establish AE exactness or whole-plugin deep-color compatibility."
   ]
