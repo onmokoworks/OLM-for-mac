@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "kind": "olmdirectionalblur_natural_continuation_review_20260718",
+  "created_at": "2026-07-18",
+  "scope": [
+    "refs/conformance/olmdirectionalblur_natural_continuation_20260718.json",
+    "refs/conformance/olmdirectionalblur_natural_continuation_20260718.md",
+    "tools/emulation/run_olmdirectionalblur_natural_continuation_20260718.py",
+    "tools/emulation/test_olmdirectionalblur_natural_continuation_20260718.py"
+  ],
+  "commands_run": [
+    "python3 tools/emulation/test_olmdirectionalblur_natural_continuation_20260718.py",
+    "objdump -d --start-address=0x180002170 --stop-address=0x1800021b0 plugins_2025/OLMDirectionalBlur.aex",
+    "python3 - <<'PY' ... inspect refs/conformance/olmdirectionalblur_iterate8_natural_prerender_followup_20260717.json ... PY"
+  ],
+  "validation": {
+    "downstream_write_actual_aex": {
+      "result": "confirmed",
+      "summary": "The claimed downstream write is grounded in a live Unicorn memory-write hook and the first overlapping write resolves to a real plugin instruction at 0x180002196.",
+      "evidence": [
+        "tools/emulation/test_olmdirectionalblur_iterate8_natural_prerender_followup_20260717.py:117-125 records overlapping writes to the selected writer cell from the live emulator state.",
+        "refs/conformance/olmdirectionalblur_iterate8_natural_prerender_followup_20260717.json stores first_distinct_write_0x8078_to_0x8090 at address 0x2002df4c with rip 0x180002196.",
+        "objdump shows 0x180002196 inside plugins_2025/OLMDirectionalBlur.aex as movss %xmm3, 0x4(%r9)."
+      ],
+      "caveat": "This is an internal float-buffer write in AEX code, not the later PF output callback store."
+    },
+    "output_callback_actual_aex": {
+      "result": "confirmed-with-bounded-host-model",
+      "summary": "The claimed output callback executes the real AEX body at 0x180006b30, but it does so via the fixture's PF_Iterate8 shim calling the real callback on a private stack.",
+      "evidence": [
+        "tools/emulation/test_olmdirectionalblur_iterate8_natural_prerender_followup_20260717.py:149-190 runs the real callback entry with context_save/context_restore and requires return to PRIVATE_RETURN while preserving the outer Iterate8 frame.",
+        "tools/emulation/test_olmdirectionalblur_iterate8_natural_prerender_followup_20260717.py:228-236 records the real_output_callback_0x180006b30 checkpoint only after call_actual_callback(loader, OUTPUT, ...).",
+        "tools/emulation/dblur_fullrender_host_fixture_20260711.py:922-929 shows PF_Iterate8 dispatches to model_output, so the host-side Iterate8 callback is shimmed even though the callback body itself is real AEX.",
+        "refs/conformance/olmdirectionalblur_caller_contract_20260717.json states the real 0x180006b30 entry observed the expected callback ABI and returned zero."
+      ],
+      "caveat": "This supports a bounded actual-AEX callback claim, not a full actual-AE-host output-path claim."
+    },
+    "fixture_status_blocked_false_pass": {
+      "result": "not-supported",
+      "summary": "fixture_status=blocked does not by itself make the final pass false in this harness; the blocked status is explicitly the pre-continuation fixture phase, and the kernel report records a subsequent live continuation to the global return sentinel.",
+      "evidence": [
+        "refs/conformance/olmdirectionalblur_iterate8_natural_prerender_followup_20260717.json sets natural_prerender_owner.fixture_status to blocked but also sets fixture_report_phase to before explicit live-state continuation.",
+        "The same report records outer_continuations[0] from start_rip 0x180002068 to end_rip 0x90000000 and report.status pass with blocked null.",
+        "tools/emulation/run_olmdirectionalblur_natural_continuation_20260718.py:114-119 preserves the initial blocked fixture reason as historical context rather than treating it as the final blocker."
+      ]
+    }
+  },
+  "findings": [
+    {
+      "severity": "medium",
+      "status": "resolved_after_review",
+      "title": "Pass classification is detached from the current kernel execution",
+      "summary": "The runner can emit status=pass from a previously written kernel report even if the current kernel subprocess fails or returns blocked, because it always reads the fixed report path and computes pass solely from checkpoint content.",
+      "evidence": [
+        "tools/emulation/run_olmdirectionalblur_natural_continuation_20260718.py:93-96 loads refs/conformance/olmdirectionalblur_iterate8_natural_prerender_followup_20260717.json unconditionally when it exists.",
+        "tools/emulation/run_olmdirectionalblur_natural_continuation_20260718.py:187-190 ignores subprocess returncode and kernel_report.status when deriving status=pass.",
+        "tools/emulation/test_olmdirectionalblur_natural_continuation_20260718.py:25-26 explicitly allows either pass or blocked, and lines 42-49 only compare provenance/blocker fields after resume instead of asserting a fresh kernel pass."
+      ],
+      "impact": "The reviewed concern about fixture_status=blocked is not the false-pass mechanism. The actual false-pass risk was stale or mismatched kernel evidence being re-labeled as a fresh pass.",
+      "resolution": "The runner now removes the fixed report before execution, accepts only a report generated by a successful current subprocess, restores prior evidence on failure, and requires returncode=0 plus kernel status=pass. The regression test injects a stale pass report and a failing kernel command and verifies fail-closed behavior."
+    }
+  ],
+  "overall_conclusion": {
+    "requested_claims": "The downstream write and output callback claims are materially grounded as bounded actual-AEX events. The specific concern that fixture_status=blocked alone causes a false pass is not borne out by the evidence.",
+    "review_outcome": "The independent harness-classification weakness was reproduced and resolved after review; the bounded actual-AEX claims remain supported."
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "kind": "olmradialblur_case0009_zero_variation_rule_20260718",
+  "status": "pass",
+  "claim": "For case_0009, SV=NV=0 makes the source size map constant 1.0, the combined span/factor plane exactly 1.0, and the scatter helper use effective_len=int(base_len), independent of the generated noise values.",
+  "case": {
+    "id": "case_0009",
+    "blur_type": 1,
+    "outer_strength": 1717,
+    "inner_strength": 0,
+    "size_variation_ui": 0,
+    "noise_variation_ui": 0,
+    "noise_type": 1
+  },
+  "derived": {
+    "size_variation_scaled": 0.0,
+    "noise_variation_scaled": 0.0,
+    "size_map_value": 1.0,
+    "span_factor_value": 1.0,
+    "scatter_length_rule": "int(base_len * 1.0) == int(base_len)"
+  },
+  "evidence": {
+    "manifest": "refs/win_references/20260604_olm/OLMRadialBlur/reference_manifest.json",
+    "decomp": "decomp/OLMRadialBlur.aex.c.txt",
+    "asm_facts": "notes/OLMRadialBlur_ASM_FACTS.md",
+    "manifest_sha256": "7ec542fad64cc210474c6309c3e48c9f12bd0885f54d31943da873d94024b565",
+    "decomp_sha256": "6d3f0cfc60883762d129940de2a717b8c6dd1efea7e06c254da259fef6b0e2f1",
+    "asm_facts_sha256": "91ec431cbe1c3a6e44ec5d3871a473aaccd4ee1e61da2b92bb893644c3cddb3b",
+    "decomp_lines": [
+      4031,
+      4062,
+      4065,
+      4066,
+      4067,
+      3528,
+      3561,
+      3563,
+      3609,
+      3620
+    ],
+    "asm_facts_lines": [
+      94,
+      98,
+      103,
+      108,
+      114
+    ]
+  },
+  "boundaries": [
+    "Static rule only; no Windows/AE exactness claim.",
+    "Noise generation may still be entered for Noise Type=1; NV=0 masks its value in the span factor.",
+    "No PNG or active checkpoint artifact is read or written."
+  ]
+}

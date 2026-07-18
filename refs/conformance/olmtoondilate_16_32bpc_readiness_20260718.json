@@ -1,4 +1,22 @@
 {
+  "checked_in_package": {
+    "binary_sha_matches_current": true,
+    "build_architectures_match_current": true,
+    "current_binary_path": "mac/OLMToonDilate/Mac/build/Debug/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate",
+    "current_binary_sha256": "731798e1386f04afd181523e3fd55fbf5824a89b7ea97493281217ed5882c36e",
+    "current_build_architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "packaged_binary_sha256": "731798e1386f04afd181523e3fd55fbf5824a89b7ea97493281217ed5882c36e",
+    "packaged_build_architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "path": "refs/runtime_trace_packages/olmtoondilate_mac_32bpc_validation_20260715/request_manifest.json",
+    "present": true,
+    "source_sha_matches_current": true
+  },
   "classification": {
     "16bpc": "AE exact for the declared 3-case slice; broader coverage not claimed",
     "32bpc": "Windows float-preserving EXR evidence exists for 3 cases, but Mac candidate EXR and cross-host comparison are absent",
@@ -6,7 +24,7 @@
     "highest_value_mac_only_action": "build the current ToonDilate plugin, refresh the 32bpc validation package provenance, run its isolated AE fixture, and retain no-effect/effect FLOAT EXRs plus output-module settings"
   },
   "existing_evidence": {
-    "16bpc_declared_exact": false,
+    "16bpc_declared_exact": true,
     "mac_32bpc_candidate_exr_count": 0,
     "pf16_actual_aex_stage": "tools/emulation/test_olmtoondilate_pf16_actual_aex_cli_differential_20260716.py",
     "pf32_actual_aex_matrix": "tools/emulation/test_olmtoondilate_pf32_seed_propagation_matrix_20260717.py"
@@ -25,7 +43,7 @@
     "package_smoke_returncode": 0
   },
   "package_contract": {
-    "known_issue": "no Mac 32bpc candidate EXR or cross-host comparison exists; package provenance now binds the current binary SHA at generation time",
+    "known_issue": "no Mac 32bpc candidate EXR or cross-host comparison exists; checked-in package snapshots can also drift from the current local candidate until regenerated",
     "package_smoke_path": "refs/scripts/smoke_package_olmtoondilate_mac_32bpc_validation_20260715.py"
   },
   "reproducible_checks": [
@@ -51,7 +69,7 @@
       "command": "python3 tools/emulation/test_olmtoondilate_mac_smartrender_adapter_20260717.py",
       "returncode": 0,
       "stderr_tail": "",
-      "stdout_tail": "{\"build\": {\"arch\": \"arm64\", \"compiler\": \"/usr/bin/clang++\", \"flags\": [\"-std=c++17\", \"-arch\", \"arm64\", \"-O2\", \"-fno-fast-math\", \"-ffp-contract=off\", \"-isysroot\", \"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk\", \"-I\", \"/Users/onmk/Documents/Projects/Personal/OLM as/Headers\", \"-I\", \"/Users/onmk/Documents/Projects/Personal/OLM as/Headers/SP\", \"-I\", \"/Users/onmk/Documents/Projects/Personal/OLM as/Util\", \"-I\", \"/Users/onmk/Documents/Projects/Personal/OLM as/Resources\", \"/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_toondilate_mac_smartrender_pkjpbdpm/toondilate_mac_smartrender_adapter_probe.cpp\", \"-framework\", \"Cocoa\", \"-o\", \"/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_toondilate_mac_smartrender_pkjpbdpm/toondilate_mac_smartrender_adapter_probe\"]}, \"cases\": [{\"bitdepth\": 16, \"checkin_layer_pixels_once\": true, \"checkout_layer_once\": true, \"checkout_layer_pixels_once\": true, \"checkout_output_once\": true, \"input_padding_preserved\": true, \"output_padding_preserved\": true, \"pf_cmd_render_fallbacks\": 0, \"pixel_format\": \"PF16\", \"preserve_rgb_of_zero_alpha\": true, \"search_radius\": 0, \"visible_output_bit_identical\": true, \"zero_alpha_rgb_preserved\": true}, {\"bitdepth\": 32, \"checkin_layer_pixels_once\": true, \"checkout_layer_once\": true, \"checkout_layer_pixels_once\": true, \"checkout_output_once\": true, \"input_padding_preserved\": true, \"output_padding_preserved\": true, \"pf_cmd_render_fallbacks\": 0, \"pixel_format\": \"PF32\", \"preserve_rgb_of_zero_alpha\": true, \"search_radius\": 0, \"visible_output_bit_identical\": true, \"zero_alpha_rgb_preserved\": true}], \"claim_boundary\": \"Mac-local source-included PF adapter proof; no AE exact or Windows claim\", \"production_source\": \"mac/OLMToonDilate/OLMToonDilate.cpp\", \"status\": \"ok\"}\n"
+      "stdout_tail": "{\"build\": {\"arch\": \"arm64\", \"compiler\": \"/usr/bin/clang++\", \"flags\": [\"-std=c++17\", \"-arch\", \"arm64\", \"-O2\", \"-fno-fast-math\", \"-ffp-contract=off\", \"-isysroot\", \"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk\", \"-I\", \"<repo>/Headers\", \"-I\", \"<repo>/Headers/SP\", \"-I\", \"<repo>/Util\", \"-I\", \"<repo>/Resources\", \"/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_toondilate_mac_smartrender_zwep17fp/toondilate_mac_smartrender_adapter_probe.cpp\", \"-framework\", \"Cocoa\", \"-o\", \"/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_toondilate_mac_smartrender_zwep17fp/toondilate_mac_smartrender_adapter_probe\"]}, \"cases\": [{\"bitdepth\": 16, \"checkin_layer_pixels_once\": true, \"checkout_layer_once\": true, \"checkout_layer_pixels_once\": true, \"checkout_output_once\": true, \"input_padding_preserved\": true, \"output_padding_preserved\": true, \"pf_cmd_render_fallbacks\": 0, \"pixel_format\": \"PF16\", \"preserve_rgb_of_zero_alpha\": true, \"search_radius\": 0, \"visible_output_bit_identical\": true, \"zero_alpha_rgb_preserved\": true}, {\"bitdepth\": 32, \"checkin_layer_pixels_once\": true, \"checkout_layer_once\": true, \"checkout_layer_pixels_once\": true, \"checkout_output_once\": true, \"input_padding_preserved\": true, \"output_padding_preserved\": true, \"pf_cmd_render_fallbacks\": 0, \"pixel_format\": \"PF32\", \"preserve_rgb_of_zero_alpha\": true, \"search_radius\": 0, \"visible_output_bit_identical\": true, \"zero_alpha_rgb_preserved\": true}], \"claim_boundary\": \"Mac-local source-included PF adapter proof; no AE exact or Windows claim\", \"production_source\": \"mac/OLMToonDilate/OLMToonDilate.cpp\", \"status\": \"ok\"}\n"
     }
   ],
   "schema": 1,

@@ -95,8 +95,15 @@ def display_kernel_command() -> str:
 
 
 def run_kernel() -> tuple[int, dict, str, str]:
+    previous_report = KERNEL_REPORT.read_bytes() if KERNEL_REPORT.exists() else None
+    KERNEL_REPORT.unlink(missing_ok=True)
     process = subprocess.run(kernel_command(), cwd=ROOT, capture_output=True, text=True)
-    kernel_report = load_json(KERNEL_REPORT) if KERNEL_REPORT.exists() else {}
+    generated = KERNEL_REPORT.exists()
+    kernel_report = load_json(KERNEL_REPORT) if generated else {}
+    if process.returncode != 0 or not generated:
+        KERNEL_REPORT.unlink(missing_ok=True)
+        if previous_report is not None:
+            KERNEL_REPORT.write_bytes(previous_report)
     return process.returncode, kernel_report, process.stdout, process.stderr
 
 
@@ -190,7 +197,13 @@ def main() -> int:
 
     returncode, kernel_report, stdout, stderr = run_kernel()
     state = checkpoint_summary(kernel_report)
-    complete = state["first_missing"] is None and bool(state["downstream_write"]) and state["output_callback"]
+    complete = (
+        returncode == 0
+        and kernel_report.get("status") == "pass"
+        and state["first_missing"] is None
+        and bool(state["downstream_write"])
+        and state["output_callback"]
+    )
     status = "pass" if complete else "blocked"
     report = {
         "schema": 1,

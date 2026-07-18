@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import runpy
 import subprocess
 import sys
 import tempfile
@@ -49,6 +50,27 @@ def main() -> int:
             raise AssertionError("resume changed blocker classification")
         if not report_md.exists() or "FACT" not in report_md.read_text(encoding="utf-8"):
             raise AssertionError("FACT/INFERENCE report was not written")
+
+        namespace = runpy.run_path(str(RUNNER), run_name="directional_continuation_test")
+        stale = {"status": "pass", "target": {"real_populate": True}}
+        kernel_report_path = namespace["KERNEL_REPORT"]
+        original_report = kernel_report_path.read_bytes() if kernel_report_path.exists() else None
+        kernel_report_path.write_text(json.dumps(stale), encoding="utf-8")
+        runner_globals = namespace["run_kernel"].__globals__
+        original_command = runner_globals["kernel_command"]
+        runner_globals["kernel_command"] = lambda: [sys.executable, "-c", "raise SystemExit(9)"]
+        try:
+            returncode, kernel_report, _, _ = namespace["run_kernel"]()
+            restored = json.loads(kernel_report_path.read_text(encoding="utf-8"))
+        finally:
+            runner_globals["kernel_command"] = original_command
+            kernel_report_path.unlink(missing_ok=True)
+            if original_report is not None:
+                kernel_report_path.write_bytes(original_report)
+        if returncode != 9 or kernel_report:
+            raise AssertionError("failed kernel execution reused stale pass evidence")
+        if restored != stale:
+            raise AssertionError("failed kernel execution did not restore prior evidence")
     print("PASS_OLMDIRECTIONALBLUR_NATURAL_CONTINUATION_FAIL_CLOSED")
     return 0
 

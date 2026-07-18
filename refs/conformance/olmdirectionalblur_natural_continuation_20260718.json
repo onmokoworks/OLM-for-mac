@@ -2,7 +2,7 @@
   "schema": 1,
   "kind": "olmdirectionalblur_natural_continuation_20260718",
   "status": "pass",
-  "created_at_utc": "2026-07-18T01:16:29+00:00",
+  "created_at_utc": "2026-07-18T01:19:55+00:00",
   "input": {
     "path": "refs/conformance/olmdirectionalblur_actual_populate_checkpoint_20260717.json",
     "sha256": "99c3ef367f9763120d6bdce9062a5e1d9345f81f8e4de9ceaa17540fa0fa2111",
@@ -23,7 +23,7 @@
     "returncode": 0,
     "kernel_status": "pass",
     "command": "python3 tools/emulation/test_olmdirectionalblur_iterate8_natural_prerender_followup_20260717.py",
-    "stdout_tail": "{\"status\": \"blocked\", \"output\": \"/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_directionalblur_prerender_followup_vwy6lzni/fixture.json\", \"iterate_calls\": 1, \"rotate_calls\": 0, \"complete_output\": false}\n{\"status\": \"pass\", \"report\": \"refs/conformance/olmdirectionalblur_iterate8_natural_prerender_followup_20260717.json\", \"fixture_status\": 0, \"first_write_rip\": \"0x180002196\"}\n",
+    "stdout_tail": "{\"status\": \"blocked\", \"output\": \"/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_directionalblur_prerender_followup_w1gisbrq/fixture.json\", \"iterate_calls\": 1, \"rotate_calls\": 0, \"complete_output\": false}\n{\"status\": \"pass\", \"report\": \"refs/conformance/olmdirectionalblur_iterate8_natural_prerender_followup_20260717.json\", \"fixture_status\": 0, \"first_write_rip\": \"0x180002196\"}\n",
     "stderr_tail": ""
   },
   "checkpoint_state": {

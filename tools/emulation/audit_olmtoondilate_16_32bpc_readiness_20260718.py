@@ -16,6 +16,9 @@ WIN_ROOT = ROOT / "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbi
 WIN_MANIFEST = WIN_ROOT / "reference_manifest.json"
 EXACT16 = ROOT / "refs/conformance/bitdepth_16bpc_exact_manifest_20260703.md"
 PACKAGE_SMOKE = ROOT / "refs/scripts/smoke_package_olmtoondilate_mac_32bpc_validation_20260715.py"
+PACKAGE_DIR = ROOT / "refs/runtime_trace_packages/olmtoondilate_mac_32bpc_validation_20260715"
+PACKAGE_MANIFEST = PACKAGE_DIR / "request_manifest.json"
+PLUGIN_BINARY = ROOT / "mac/OLMToonDilate/Mac/build/Debug/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate"
 
 
 def sha256(path: Path) -> str:
@@ -28,12 +31,31 @@ def sha256(path: Path) -> str:
 
 def run(command: list[str]) -> dict:
     proc = subprocess.run(command, cwd=ROOT, text=True, capture_output=True)
+    def portable(text: str) -> str:
+        return text.replace(str(ROOT), "<repo>")
     return {
         "command": " ".join(command),
         "returncode": proc.returncode,
-        "stdout_tail": proc.stdout[-2000:],
-        "stderr_tail": proc.stderr[-2000:],
+        "stdout_tail": portable(proc.stdout[-2000:]),
+        "stderr_tail": portable(proc.stderr[-2000:]),
     }
+
+
+def binary_architectures(path: Path) -> list[str]:
+    proc = subprocess.run(["lipo", "-archs", str(path)], cwd=ROOT, text=True, capture_output=True)
+    if proc.returncode != 0:
+        return []
+    return sorted({token for token in proc.stdout.split() if token})
+
+
+def exact16_declared_exact() -> bool:
+    text = EXACT16.read_text(encoding="utf-8")
+    marker = "### OLMToonDilate"
+    try:
+        section = text[text.index(marker): text.index("## Interpretation")]
+    except ValueError:
+        return False
+    return "Counts: `{'AE exact': 3}`" in section and "passes 3/3 with max_diff=0" in section
 
 
 def source_facts() -> dict:
@@ -84,6 +106,40 @@ def manifest_facts() -> dict:
     }
 
 
+def current_package_facts() -> dict:
+    if not PACKAGE_MANIFEST.is_file():
+        return {
+            "path": str(PACKAGE_MANIFEST.relative_to(ROOT)),
+            "present": False,
+        }
+    manifest = json.loads(PACKAGE_MANIFEST.read_text(encoding="utf-8"))
+    plugin = manifest.get("case", {}).get("plugin", {})
+    current_sources = {str(path.relative_to(ROOT)): sha256(path) for path in (
+        ROOT / "mac/OLMToonDilate/OLMToonDilate.cpp",
+        ROOT / "mac/OLMToonDilate/OLMToonDilate.h",
+        ROOT / "mac/OLMToonDilate/OLMToonDilatePiPL.r",
+        ROOT / "mac/OLMToonDilate/Mac/OLMToonDilate.xcodeproj/project.pbxproj",
+    )}
+    current_binary_sha = sha256(PLUGIN_BINARY)
+    current_binary_path = str(PLUGIN_BINARY.relative_to(ROOT))
+    current_archs = binary_architectures(PLUGIN_BINARY)
+    packaged_sources = plugin.get("candidate_provenance", {}).get("source_sha256", {})
+    packaged_archs = plugin.get("candidate_provenance", {}).get("build_architectures", [])
+    packaged_binary_sha = plugin.get("sha256")
+    return {
+        "path": str(PACKAGE_MANIFEST.relative_to(ROOT)),
+        "present": True,
+        "current_binary_path": current_binary_path,
+        "current_binary_sha256": current_binary_sha,
+        "packaged_binary_sha256": packaged_binary_sha,
+        "binary_sha_matches_current": packaged_binary_sha == current_binary_sha,
+        "current_build_architectures": current_archs,
+        "packaged_build_architectures": packaged_archs,
+        "build_architectures_match_current": packaged_archs == current_archs,
+        "source_sha_matches_current": packaged_sources == current_sources,
+    }
+
+
 def main() -> int:
     binary_candidates = sorted(ROOT.glob("mac/OLMToonDilate/Mac/build/**/Contents/MacOS/OLMToonDilate"))
     binary_facts = [{"path": str(path.relative_to(ROOT)), "sha256": sha256(path)} for path in binary_candidates]
@@ -101,11 +157,12 @@ def main() -> int:
                                   "package_smoke_returncode": package_smoke["returncode"],
                                   "hash_matches_package": package_smoke["returncode"] == 0},
         "existing_evidence": {
-            "16bpc_declared_exact": "AE exact: 3" in EXACT16.read_text(encoding="utf-8"),
+            "16bpc_declared_exact": exact16_declared_exact(),
             "pf16_actual_aex_stage": "tools/emulation/test_olmtoondilate_pf16_actual_aex_cli_differential_20260716.py",
             "pf32_actual_aex_matrix": "tools/emulation/test_olmtoondilate_pf32_seed_propagation_matrix_20260717.py",
             "mac_32bpc_candidate_exr_count": len(list((ROOT / "refs/reports").rglob("*toondilate*.exr"))),
         },
+        "checked_in_package": current_package_facts(),
         "reproducible_checks": [
             run(["python3", "refs/scripts/smoke_olmtoondilate_bitdepth_conformance.py"]),
             run(["python3", "tools/emulation/test_olmtoondilate_pf16_actual_aex_cli_differential_20260716.py"]),
@@ -114,7 +171,7 @@ def main() -> int:
         ],
         "package_contract": {
             "package_smoke_path": str(PACKAGE_SMOKE.relative_to(ROOT)),
-            "known_issue": "no Mac 32bpc candidate EXR or cross-host comparison exists; package provenance now binds the current binary SHA at generation time",
+            "known_issue": "no Mac 32bpc candidate EXR or cross-host comparison exists; checked-in package snapshots can also drift from the current local candidate until regenerated",
         },
         "classification": {
             "16bpc": "AE exact for the declared 3-case slice; broader coverage not claimed",

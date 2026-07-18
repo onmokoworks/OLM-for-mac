@@ -1,18 +1,26 @@
 #!/usr/bin/env python3
 """Smoke the Mac ToonDilate package without launching AE."""
 from __future__ import annotations
-import json, subprocess, sys, tempfile
+import importlib.util, json, subprocess, sys, tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 GEN=ROOT/"scripts/package_olmtoondilate_mac_32bpc_validation_20260715.py"
 RUN=ROOT/"refs/scripts/run_olmtoondilate_mac_32bpc_validation_20260715.py"
 COMPARE=ROOT/"refs/scripts/compare_olmtoondilate_mac_32bpc_validation_20260715.py"
+PLUGIN_BINARY=ROOT/"mac/OLMToonDilate/Mac/build/Debug/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate"
+
+def archs(path):
+  proc=subprocess.run(["lipo","-archs",str(path)],cwd=ROOT,check=True,text=True,capture_output=True)
+  return sorted({token for token in proc.stdout.split() if token})
+
 def main():
   with tempfile.TemporaryDirectory(prefix="toondilate_mac_smoke_") as d:
+    spec=importlib.util.spec_from_file_location("olmtoondilate_run_validation",RUN); module=importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    assert Path(module.PACKAGE)==ROOT/"refs/runtime_trace_packages/olmtoondilate_mac_32bpc_validation_20260715"
     out=Path(d)/"package"; subprocess.run([sys.executable,str(GEN),"--output-dir",str(out)],cwd=ROOT,check=True,capture_output=True,text=True)
     req=json.loads((out/"request_manifest.json").read_text()); assert req["case"]["effect"]=="OLM Toon Dilate"; assert req["project"]=={"bits_per_channel":32,"working_space":"None","linear_blending":False}
     plugin=req["case"]["plugin"]; assert plugin["binary"]=="Contents/MacOS/OLMToonDilate"; assert len(plugin["sha256"])==64
-    provenance=plugin["candidate_provenance"]; assert provenance["build_architectures"]==["arm64","x86_64"]
+    provenance=plugin["candidate_provenance"]; assert provenance["build_architectures"]==archs(PLUGIN_BINARY)
     assert set(provenance["source_sha256"])=={
       "mac/OLMToonDilate/OLMToonDilate.cpp","mac/OLMToonDilate/OLMToonDilate.h",
       "mac/OLMToonDilate/OLMToonDilatePiPL.r","mac/OLMToonDilate/Mac/OLMToonDilate.xcodeproj/project.pbxproj",

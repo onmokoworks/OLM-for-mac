@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import subprocess
 import shutil
 import tempfile
 import zipfile
@@ -52,6 +53,16 @@ def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def binary_architectures(path: Path) -> list[str]:
+    proc = subprocess.run(["lipo", "-archs", str(path)], capture_output=True, text=True, check=False)
+    if proc.returncode != 0:
+        raise RuntimeError(f"cannot determine candidate binary architectures: {proc.stderr.strip() or proc.stdout.strip()}")
+    archs = sorted({token.strip() for token in proc.stdout.split() if token.strip()})
+    if not archs:
+        raise RuntimeError("cannot determine candidate binary architectures: no architectures reported")
+    return archs
+
+
 def fixture_source() -> str:
     source = (SOURCE_PACKAGE / "request/fixture/ae_generate_32bpc_typed_procedural_fixture.jsx").read_text(encoding="utf-8")
     source = source.replace('var effectName = getenv("OLM_AE_TYPED_FIXTURE_EFFECT") || "OLM Color Key";',
@@ -87,6 +98,7 @@ def write_package(root: Path) -> dict:
     # A fixed digest here made every later rebuild look invalid even when the
     # source and candidate were deliberately changed together.
     plugin_sha256 = digest(PLUGIN_BINARY)
+    plugin_architectures = binary_architectures(PLUGIN_BINARY)
     (root / "fixture").mkdir(parents=True)
     fixture = root / "fixture/ae_generate_32bpc_olmtoondilate_fixture.jsx"
     fixture.write_text(fixture_source(), encoding="utf-8")
@@ -106,7 +118,7 @@ def write_package(root: Path) -> dict:
                             "sha256": plugin_sha256,
                             "candidate_provenance": {"source_sha256": {
                                 str(path.relative_to(ROOT)): digest(path) for path in PLUGIN_SOURCE_PATHS
-                            }, "build_architectures": ["arm64", "x86_64"]}},
+                            }, "build_architectures": plugin_architectures}},
                  "parameters": PARAMETERS, "outputs": CONTRACT["output_names"]},
         "acceptance_gate": {"comparison": "Mac AE vs Windows AE Software", "required": "raw FLOAT EXR bits exact",
                              "evidence_boundary": "AE render records only; CLI/emulation is intermediate evidence"},

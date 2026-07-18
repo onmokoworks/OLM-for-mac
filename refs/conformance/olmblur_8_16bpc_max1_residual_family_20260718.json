@@ -1,0 +1,305 @@
+{
+  "schema": "olmblur.8-16bpc-max1-residual-family/1",
+  "scope": "Mac-only actual-AEX radius-1 fixture plus retained 8/16bpc CLI evidence",
+  "aex": {
+    "path": "plugins_2025/OLMBlur.aex",
+    "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+    "entry": "0x180002280"
+  },
+  "static_contract": {
+    "aex_16_writer_add_half_floor": true,
+    "aex_8_writer_add_half_floor": true,
+    "aex_pf16_cvttss2si": true,
+    "aex_exp_coefficients": true,
+    "cpp16_add_half_floor": true,
+    "cpp8_add_half_floor": true
+  },
+  "retained_residuals": {
+    "8bpc": {
+      "case": "case_0007",
+      "xy": [
+        488,
+        941
+      ],
+      "pre_store": "250.499985",
+      "stored_candidate": 250,
+      "reference": 251
+    },
+    "16bpc": {
+      "case": "case_0007",
+      "xy": [
+        345,
+        672
+      ],
+      "pre_store": "12544.5",
+      "stored_word_candidate": "12545",
+      "stored_word_reference": 12544,
+      "reference_png": 25087
+    },
+    "retained_cli_max_diff": 1
+  },
+  "actual_aex_radius_one": {
+    "interior_order": {
+      "geometry": [
+        9,
+        7
+      ],
+      "parameters": {
+        "blur_amount": 1.0,
+        "repeat": 1,
+        "bias_direction": 1
+      },
+      "instructions": 26044,
+      "source_sha256": "0965554848d1ab0ddd6d6ccad337658b2c5a6942b4ee169bdbbfe8e4767fbdd7",
+      "actual_sha256": "c0cef10e6c119555fa9ae337cb6902853cc2ff45a508aebc9a2c0be620995b93",
+      "truncated_edge_cpp_model": {
+        "equal": true,
+        "different_words": 0,
+        "first_diffs": []
+      },
+      "reverse_accumulation_cpp_model": {
+        "equal": true,
+        "different_words": 0,
+        "first_diffs": []
+      }
+    },
+    "edge_border": {
+      "geometry": [
+        7,
+        5
+      ],
+      "parameters": {
+        "blur_amount": 1.0,
+        "repeat": 1,
+        "bias_direction": 1
+      },
+      "instructions": 17371,
+      "source_sha256": "5faee8f036157e787ab66a48553da63cc3d4b3bacd678c53ac12a9fe6ef0117b",
+      "actual_sha256": "fabd651bff0e098148a64985d79f634205dbf64c81f96f5eebdd8c5f751533f5",
+      "truncated_edge_cpp_model": {
+        "equal": false,
+        "different_words": 7,
+        "first_diffs": [
+          {
+            "pixel": 28,
+            "actual": [
+              32768,
+              1076,
+              33236,
+              321
+            ],
+            "candidate": [
+              32768,
+              1076,
+              32768,
+              321
+            ]
+          },
+          {
+            "pixel": 29,
+            "actual": [
+              32768,
+              1769,
+              33272,
+              819
+            ],
+            "candidate": [
+              32768,
+              1769,
+              32768,
+              819
+            ]
+          },
+          {
+            "pixel": 30,
+            "actual": [
+              32768,
+              2470,
+              33309,
+              1322
+            ],
+            "candidate": [
+              32768,
+              2470,
+              32768,
+              1322
+            ]
+          },
+          {
+            "pixel": 31,
+            "actual": [
+              32768,
+              3171,
+              33346,
+              1825
+            ],
+            "candidate": [
+              32768,
+              3171,
+              32768,
+              1825
+            ]
+          },
+          {
+            "pixel": 32,
+            "actual": [
+              32768,
+              3872,
+              33383,
+              2328
+            ],
+            "candidate": [
+              32768,
+              3872,
+              32768,
+              2328
+            ]
+          },
+          {
+            "pixel": 33,
+            "actual": [
+              32768,
+              4573,
+              33420,
+              2831
+            ],
+            "candidate": [
+              32768,
+              4573,
+              32768,
+              2831
+            ]
+          },
+          {
+            "pixel": 34,
+            "actual": [
+              32768,
+              5266,
+              33457,
+              3328
+            ],
+            "candidate": [
+              32768,
+              5266,
+              32768,
+              3328
+            ]
+          }
+        ]
+      },
+      "reverse_accumulation_cpp_model": {
+        "equal": false,
+        "different_words": 7,
+        "first_diffs": [
+          {
+            "pixel": 28,
+            "actual": [
+              32768,
+              1076,
+              33236,
+              321
+            ],
+            "candidate": [
+              32768,
+              1076,
+              32768,
+              321
+            ]
+          },
+          {
+            "pixel": 29,
+            "actual": [
+              32768,
+              1769,
+              33272,
+              819
+            ],
+            "candidate": [
+              32768,
+              1769,
+              32768,
+              819
+            ]
+          },
+          {
+            "pixel": 30,
+            "actual": [
+              32768,
+              2470,
+              33309,
+              1322
+            ],
+            "candidate": [
+              32768,
+              2470,
+              32768,
+              1322
+            ]
+          },
+          {
+            "pixel": 31,
+            "actual": [
+              32768,
+              3171,
+              33346,
+              1825
+            ],
+            "candidate": [
+              32768,
+              3171,
+              32768,
+              1825
+            ]
+          },
+          {
+            "pixel": 32,
+            "actual": [
+              32768,
+              3872,
+              33383,
+              2328
+            ],
+            "candidate": [
+              32768,
+              3872,
+              32768,
+              2328
+            ]
+          },
+          {
+            "pixel": 33,
+            "actual": [
+              32768,
+              4573,
+              33420,
+              2831
+            ],
+            "candidate": [
+              32768,
+              4573,
+              32768,
+              2831
+            ]
+          },
+          {
+            "pixel": 34,
+            "actual": [
+              32768,
+              5266,
+              33457,
+              3328
+            ],
+            "candidate": [
+              32768,
+              5266,
+              32768,
+              3328
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "bounded_fact": "The radius-1 interior/order fixture is exact under the current C++ model and its reversed accumulation variant, but the radius-1 edge fixture is not exact and exposes out-of-range PF16 words; therefore the 8/16bpc max=1 family is not classified as a final-writer-only issue and border/helper state remains live.",
+  "claim_boundary": "This is not AE exactness and does not identify the exact border rule or justify a source change."
+}

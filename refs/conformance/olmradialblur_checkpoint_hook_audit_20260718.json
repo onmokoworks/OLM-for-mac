@@ -1,0 +1,183 @@
+{
+  "checkpoints": [
+    {
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "direct_zoom_core": false,
+      "index": 1,
+      "instructions_executed": 1954651817,
+      "lineage": [],
+      "natural_harness": true,
+      "path": "/tmp/olm_radial_case0009_workers_progress1_20260717.aexcp",
+      "present": true,
+      "rip": "0x18000af57",
+      "sha256": "4c7a628bd538d2eb509688cd15fa35f167a064cc5054ff09f91dd26e85d56e99",
+      "size": 1997515,
+      "synthetic_prefill": false,
+      "target_entry": false,
+      "worker_detours": false
+    },
+    {
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "direct_zoom_core": false,
+      "index": 2,
+      "instructions_executed": 2954651817,
+      "lineage": [],
+      "natural_harness": true,
+      "path": "/tmp/olm_radial_case0009_workers_progress2_20260717.aexcp",
+      "present": true,
+      "rip": "0x18000af50",
+      "sha256": "207fe7cff8ddcf9db2bc37d092b2c69086378476abfd5465fae2adf73750f4ec",
+      "size": 2547852,
+      "synthetic_prefill": false,
+      "target_entry": false,
+      "worker_detours": false
+    },
+    {
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "direct_zoom_core": false,
+      "index": 3,
+      "instructions_executed": 3954651817,
+      "lineage": [
+        {
+          "instructions_executed": 2954651817,
+          "rip": "0x18000af50",
+          "sha256": "207fe7cff8ddcf9db2bc37d092b2c69086378476abfd5465fae2adf73750f4ec"
+        }
+      ],
+      "natural_harness": true,
+      "path": "/tmp/olm_radial_case0009_workers_progress3_20260717.aexcp",
+      "present": true,
+      "rip": "0x18000af04",
+      "sha256": "ad8f11377bb4665d9d128c33f417bf6bdea4f0595eafb59a54c30c62bb2a480a",
+      "size": 3097247,
+      "synthetic_prefill": false,
+      "target_entry": false,
+      "worker_detours": false
+    },
+    {
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "direct_zoom_core": false,
+      "index": 4,
+      "instructions_executed": 5954651817,
+      "lineage": [
+        {
+          "instructions_executed": 2954651817,
+          "rip": "0x18000af50",
+          "sha256": "207fe7cff8ddcf9db2bc37d092b2c69086378476abfd5465fae2adf73750f4ec"
+        },
+        {
+          "instructions_executed": 3954651817,
+          "rip": "0x18000af04",
+          "sha256": "ad8f11377bb4665d9d128c33f417bf6bdea4f0595eafb59a54c30c62bb2a480a"
+        }
+      ],
+      "natural_harness": true,
+      "path": "/tmp/olm_radial_case0009_workers_progress4_20260718.aexcp",
+      "present": true,
+      "rip": "0x18000afd4",
+      "sha256": "e5a5575a4f83507b433045ace8e48509ef5a2a3fe196909246eccd8a1240220b",
+      "size": 4446944,
+      "synthetic_prefill": false,
+      "target_entry": false,
+      "worker_detours": false
+    },
+    {
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "direct_zoom_core": false,
+      "index": 5,
+      "instructions_executed": 5974651817,
+      "lineage": [
+        {
+          "instructions_executed": 2954651817,
+          "rip": "0x18000af50",
+          "sha256": "207fe7cff8ddcf9db2bc37d092b2c69086378476abfd5465fae2adf73750f4ec"
+        },
+        {
+          "instructions_executed": 3954651817,
+          "rip": "0x18000af04",
+          "sha256": "ad8f11377bb4665d9d128c33f417bf6bdea4f0595eafb59a54c30c62bb2a480a"
+        },
+        {
+          "instructions_executed": 5954651817,
+          "rip": "0x18000afd4",
+          "sha256": "e5a5575a4f83507b433045ace8e48509ef5a2a3fe196909246eccd8a1240220b"
+        }
+      ],
+      "natural_harness": true,
+      "path": "/tmp/olm_radial_case0009_workers_progress5_20260718.aexcp",
+      "present": true,
+      "rip": "0x18000affd",
+      "sha256": "a802946c5572117414aa6f59daaf90ba564f0f57cd326c6d59c8879e1b8e54bc",
+      "size": 4464374,
+      "synthetic_prefill": false,
+      "target_entry": false,
+      "worker_detours": false
+    },
+    {
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "direct_zoom_core": false,
+      "index": 6,
+      "instructions_executed": 10974651817,
+      "lineage": [
+        {
+          "instructions_executed": 2954651817,
+          "rip": "0x18000af50",
+          "sha256": "207fe7cff8ddcf9db2bc37d092b2c69086378476abfd5465fae2adf73750f4ec"
+        },
+        {
+          "instructions_executed": 3954651817,
+          "rip": "0x18000af04",
+          "sha256": "ad8f11377bb4665d9d128c33f417bf6bdea4f0595eafb59a54c30c62bb2a480a"
+        },
+        {
+          "instructions_executed": 5954651817,
+          "rip": "0x18000afd4",
+          "sha256": "e5a5575a4f83507b433045ace8e48509ef5a2a3fe196909246eccd8a1240220b"
+        },
+        {
+          "instructions_executed": 5974651817,
+          "rip": "0x18000affd",
+          "sha256": "a802946c5572117414aa6f59daaf90ba564f0f57cd326c6d59c8879e1b8e54bc"
+        }
+      ],
+      "natural_harness": true,
+      "path": "/tmp/olm_radial_case0009_workers_progress6_20260718.aexcp",
+      "present": true,
+      "rip": "0x18000af9a",
+      "sha256": "e79e1972df097588a12af17d5510be6104f02ec98cc4ce139af96634bb3520cc",
+      "size": 8193755,
+      "synthetic_prefill": false,
+      "target_entry": false,
+      "worker_detours": false
+    }
+  ],
+  "checks": {
+    "all_natural": true,
+    "all_no_direct_core": true,
+    "all_no_synthetic_prefill": true,
+    "all_no_worker_detours": true,
+    "all_six_present": true,
+    "caller_callsite_is_real_a9d0_entry": true,
+    "no_existing_target_entry": true,
+    "normalization_follows_call": true,
+    "progress_hook_is_observational": true,
+    "save_hook_is_before_rip": true
+  },
+  "claim_boundary": "serialized-header and source-contract audit only; no AEX execution",
+  "earliest_reproducible_route": {
+    "alternative_entry_rip": "0x18000a9d0",
+    "constraint": "must start from a genuine natural pre-call state; do not use direct-core, synthetic-prefill, worker-detour, or register/state editing",
+    "reason": "progress1..6 are all inside FUN_18000a9d0; a forward resume cannot create an entry checkpoint",
+    "required_checkpoint_rip": "0x180005c90",
+    "result": "not_available_from_existing_checkpoints",
+    "runner_command_shape": "python3 tools/emulation/test_zoom_case0009.py --save-checkpoint-at-rip /tmp/olm_radial_case0009_a9d0_entry_20260718.aexcp 0x180005c90 ..."
+  },
+  "kind": "olmradialblur_checkpoint_hook_audit_20260718",
+  "rejected_shortcuts": [
+    "resume progress6 and edit RIP backward",
+    "resume any mid-A9D0 checkpoint and label it an entry checkpoint",
+    "direct-core or synthetic-prefill setup",
+    "worker detour or no-op substitution"
+  ],
+  "status": "pass_audit_no_existing_entry_checkpoint"
+}

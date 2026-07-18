@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = (Path(__file__).resolve().parent if Path(__file__).resolve().parent.name == "olmtoondilate_mac_32bpc_validation_20260715"
-           else ROOT / "refs/runtime_trace_packages/olmtoondilate_mac_32bpc_validation_20260715")
+           else ROOT / "runtime_trace_packages/olmtoondilate_mac_32bpc_validation_20260715")
 _here = Path(__file__).resolve().parent
 _helper = _here if _here.name == "olmtoondilate_mac_32bpc_validation_20260715" else ROOT / "runtime_trace_packages/olmtoondilate_mac_32bpc_validation_20260715"
 sys.path.insert(0, str(_helper))
