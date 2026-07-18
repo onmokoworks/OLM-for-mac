@@ -1,0 +1,154 @@
+{
+  "schema": 1,
+  "kind": "olmdirectionalblur_complete_pf8_compare_20260718",
+  "status": "pass",
+  "created_at_utc": "2026-07-18T01:46:12+00:00",
+  "scope": "same-run bounded actual-AEX natural PF8 output versus current Mac adapter",
+  "dimensions": [
+    16,
+    16
+  ],
+  "packed_layout": "A/R/G/B",
+  "byte_count": 1024,
+  "actual_aex": {
+    "fixture_status": "blocked",
+    "iterate_calls": [
+      {
+        "callback": "0x180006980",
+        "params": "0xf0f6e60",
+        "start": 0,
+        "end": 16,
+        "regs": [
+          "0x40000060",
+          "0x0",
+          "0x10",
+          "0x400002f0"
+        ],
+        "return_rip": "0x1800067c8",
+        "raw_stack": {
+          "0x20": "0x180006567",
+          "0x28": "0x4000041c",
+          "0x30": "0xf0f6e60",
+          "0x38": "0x180006980",
+          "0x40": "0x400003f0",
+          "0x48": "0x40000000",
+          "0x50": "0x0",
+          "0x58": "0x0",
+          "0x60": "0x0"
+        },
+        "source_world": "0x400002f0",
+        "rect": "0x4000041c",
+        "area_words": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "area_bounds": {
+          "start": 0,
+          "end": 16,
+          "width": 26,
+          "height": 26
+        },
+        "dst_world": "0x400003f0",
+        "refcon": "0xf0f6e60",
+        "wrapper_call": {
+          "rip": "0x1800067c5",
+          "stack_slots_at_callback": {
+            "0x20": "0x180006567",
+            "0x28": "0x4000041c",
+            "0x30": "0xf0f6e60",
+            "0x38": "0x180006980",
+            "0x40": "0x400003f0",
+            "0x48": "0x40000000",
+            "0x50": "0x0",
+            "0x58": "0x0",
+            "0x60": "0x0"
+          }
+        },
+        "param_stride": 26,
+        "param_height": 26,
+        "callback_error": 0
+      },
+      {
+        "callback": "0x180006b30",
+        "params": "0xf0f6e60",
+        "start": 0,
+        "end": 16,
+        "regs": [
+          "0x40000060",
+          "0x0",
+          "0x10",
+          "0x400002f0"
+        ],
+        "return_rip": "0x1800067c8",
+        "raw_stack": {
+          "0x20": "0x180006567",
+          "0x28": "0x4000041c",
+          "0x30": "0xf0f6e60",
+          "0x38": "0x180006b30",
+          "0x40": "0x400003f0",
+          "0x48": "0x40000000",
+          "0x50": "0x0",
+          "0x58": "0x0",
+          "0x60": "0x0"
+        },
+        "source_world": "0x400002f0",
+        "rect": "0x4000041c",
+        "area_words": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "area_bounds": {
+          "start": 0,
+          "end": 16,
+          "width": 26,
+          "height": 26
+        },
+        "dst_world": "0x400003f0",
+        "refcon": "0xf0f6e60",
+        "wrapper_call": {
+          "rip": "0x1800067c5",
+          "stack_slots_at_callback": {
+            "0x20": "0x180006567",
+            "0x28": "0x4000041c",
+            "0x30": "0xf0f6e60",
+            "0x38": "0x180006b30",
+            "0x40": "0x400003f0",
+            "0x48": "0x40000000",
+            "0x50": "0x0",
+            "0x58": "0x0",
+            "0x60": "0x0"
+          }
+        },
+        "param_stride": 26,
+        "param_height": 26,
+        "callback_error": 0
+      }
+    ],
+    "output_complete": true,
+    "writer": "0x180006b30",
+    "sha256": "8b8a28887908f089024bc38f69221148b612adfdcf44afc63d282216a0d7d3ae",
+    "raw": "refs/conformance/olmdirectionalblur_actual_aex_pf8_frame_20260718.argb8"
+  },
+  "mac_adapter": {
+    "exact": 1,
+    "rowbytes": 76,
+    "production_source": "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
+    "sha256": "8b8a28887908f089024bc38f69221148b612adfdcf44afc63d282216a0d7d3ae",
+    "raw": "refs/conformance/olmdirectionalblur_mac_adapter_pf8_frame_20260718.argb8"
+  },
+  "comparison": {
+    "byte_for_byte": true,
+    "mismatch_count": 0,
+    "first_mismatch_byte": null
+  },
+  "fail_closed": {
+    "production_source_edited": false,
+    "windows_values_fabricated": false,
+    "ae_exact_claim": false,
+    "complete_frame_required": true
+  }
+}
