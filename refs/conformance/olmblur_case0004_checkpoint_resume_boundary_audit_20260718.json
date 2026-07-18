@@ -1,0 +1,69 @@
+{
+  "schema": "olmblur.case0004.checkpoint-resume-boundary-audit/1",
+  "status": "pass",
+  "classification": "helper_entry_observed_helper_output_incomplete",
+  "scope": "Mac-only actual-AEX checkpoint/resume boundary evidence",
+  "fact": {
+    "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+    "manifest_sha256": "c4378358c8b4db2b2d5d12d0bf0b4142f141963538ca5ec4d86a49eeb8b9e71e",
+    "input_png_sha256": "930317e23068ea93bfd72961c2215e755e73cfd4ec784d97bccca223ed94e30a",
+    "checkpoint_rip": "0x180001000",
+    "checkpoint_path": "<temporary>/olmblur_case0004_helper_entry.aexcp",
+    "resume_instruction_cap": 100000000,
+    "saved": {
+      "status": "pass",
+      "instructions": 15958497,
+      "checkpoint_rip": "0x180001000",
+      "checkpoint_sha256": "3504afcb2c37d72f2cd13ca16d7ce2dd5205315a58ba13a6d203275dffd897bb"
+    },
+    "resumed": {
+      "identity": {
+        "path": "handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmblur_exact_20260625/input/olm_bitdepth_16bpc_normalized_exact_20260625__software_16bpc__fr24__olmblur__case_0004_before_effects.png",
+        "png_sha256": "930317e23068ea93bfd72961c2215e755e73cfd4ec784d97bccca223ed94e30a",
+        "pf16_sha256": "afd4269575102eda52e581cec8e77fe62f5f7e808e33cf64d6baf186c81b70aa"
+      },
+      "checkpoint_metadata": {
+        "checkpoint_rip": "0x180001000",
+        "entry": "0x180002280",
+        "helper": "0x180001000",
+        "probe": "olmblur.case0004.natural-helper-checkpoint"
+      },
+      "resume": {
+        "rax": 122,
+        "rip": 6442455591,
+        "instructions": 100000000
+      },
+      "helpers": [
+        {
+          "call_index": 0,
+          "direction": "horizontal",
+          "rip": "0x180001000",
+          "return_address": "0x1800029f5",
+          "abi": {
+            "width": 960,
+            "height": 540,
+            "passes": 90,
+            "offset": 0,
+            "radius": 125
+          },
+          "planes": {
+            "src": "0x207e9000",
+            "dst": "0x20dd7c00"
+          },
+          "witnesses_before": {}
+        }
+      ],
+      "staging_hits": [],
+      "writer": [],
+      "returned_to_trampoline": false
+    }
+  },
+  "inference": {
+    "helper_entry": true,
+    "helper_output": false,
+    "writer_pre_store": false,
+    "writer_post_store": false,
+    "mac_comparison": "not performed by this audit; no AE exactness claim"
+  },
+  "claim_limit": "FACT is actual-AEX Unicorn boundary observation only. INFERENCE is classification of the observed boundary. This report does not claim AE exact, Windows exact, or production-source correctness."
+}
