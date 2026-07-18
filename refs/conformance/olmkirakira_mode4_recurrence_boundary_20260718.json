@@ -1,0 +1,221 @@
+{
+  "actual_aex": {
+    "execution": {
+      "FACT": [
+        "The probe requests Blur Mode 3 at the FUN_181150790 helper boundary.",
+        "The target hook is installed at FUN_181272ec0, the recovered GaussianBlur wrapper target.",
+        "FUN_181163706 loads TLS index 0 from GS:[0x58], and FUN_1811637D1 reads the selected runtime object's generation at +0x8.",
+        "The observed OpenCV error callback uses the Windows x64 RCX/RDX/R8/R9 register ABI; its error path returns to an intentional int3 and is not detoured.",
+        "The AEX's own MSVC local-static guard initialized the OpenCV runtime singleton and its per-thread TLS vector before the downstream OpenCV allocation failure."
+      ],
+      "INFERENCE": [
+        "A Mat header is decoded from the wrapper argument only when its OpenCV magic/shape checks pass.",
+        "A sidecar comparison is optional and is not evidence that the AEX used that exact OpenCV build unless the target hook is captured.",
+        "The probe uses MSVC's uninitialized TLS epoch (-1) and leaves singleton construction, guard epochs, and per-thread vector creation to the AEX.",
+        "The singleton restoration is semantically active, but the probe still does not reach the Gaussian boundary; no OpenCV call arguments are claimed."
+      ],
+      "aex": "<repo>/aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+      "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+      "aligned_allocations_live": {},
+      "entry": {
+        "address": "0x181150790",
+        "name": "FUN_181150790"
+      },
+      "error_callback_contract": {
+        "abi": "windows-x64",
+        "caller_return_site": "0x18115ea8b",
+        "name": "FUN_181162610",
+        "observed_error_code": "0xfffffffc",
+        "post_call_trap": "int3",
+        "registers": [
+          "RCX",
+          "RDX",
+          "R8",
+          "R9"
+        ]
+      },
+      "fault_boundary": {
+        "generation_check": {
+          "generation_at_plus8": 1,
+          "object": "0x20000920",
+          "qword_at_plus0": "0x181491c68",
+          "qword_at_plus8": "0x1",
+          "rip": "0x1811637d1"
+        },
+        "tls_container_accessor": {
+          "global_container": "0x200005e0",
+          "guard_218": 2147483651,
+          "rip": "0x181163c80",
+          "tls_epoch": 2147483661
+        },
+        "tls_data_accessor": {
+          "global_data": "0x20000670",
+          "guard_1f8": 2147483649,
+          "guard_208": 2147483650,
+          "rax_return": null,
+          "rip": "0x181163b40",
+          "tls_epoch": 2147483661
+        },
+        "tls_data_create": {
+          "r8": "0x20000bf0",
+          "rcx": "0x200005e0",
+          "rdx": "0x0",
+          "rip": "0x181165220"
+        },
+        "tls_lookup": {
+          "gs_0x58": "0x40000000",
+          "rip": "0x181163706",
+          "selected_generation_at_plus4": 2147483661,
+          "selected_object": "0x40000100",
+          "tls_index": 0
+        },
+        "tls_selected": {
+          "generation_at_plus4": 2147483661,
+          "global_generation": 2147483656,
+          "rip": "0x18116371e",
+          "selected_object": "0x40000100"
+        },
+        "vector_compare": {
+          "requested_entry": "0x20000920",
+          "requested_generation": 1,
+          "rip": "0x1811637e6",
+          "vector_begin": "0x20000680",
+          "vector_capacity": "0x20000780",
+          "vector_end": "0x20000698",
+          "vector_end_or_count": "0x3",
+          "vector_field_plus50": 3,
+          "vector_object": "0x200005e0"
+        }
+      },
+      "helper_result": {
+        "instructions": 217272,
+        "xmm0_f32": 5.0
+      },
+      "input": {
+        "blur_mode": 3,
+        "height": 7,
+        "length": 5,
+        "sigma": 0.0,
+        "type": "CV_32FC1",
+        "width": 9
+      },
+      "post_sample": {
+        "center_f32": 0.48826363682746887,
+        "center_xy": [
+          4,
+          3
+        ],
+        "first_row_f32": [
+          0.1711871325969696,
+          0.23555484414100647,
+          0.23548518121242523,
+          0.23693668842315674,
+          0.22285473346710205,
+          0.2033049464225769,
+          0.17775893211364746,
+          0.14732816815376282,
+          0.13660812377929688
+        ]
+      },
+      "runtime_singleton": {
+        "generation": "0x1",
+        "object": "0x20000920",
+        "per_thread_data": "0x20000960",
+        "status": "initialized_before_downstream_fault",
+        "tls_container": "0x200005e0",
+        "tls_vector_begin": "0x20000680",
+        "tls_vector_end": "0x20000698",
+        "vtable": "0x181491c68"
+      },
+      "schema": "olmkirakira-mode3-actual-aex-probe/1",
+      "status": "completed_without_target_hit",
+      "target": {
+        "address": "0x181272ec0",
+        "name": "FUN_181272ec0"
+      },
+      "target_capture": {
+        "hits": []
+      },
+      "tls_scaffold": {
+        "aligned_allocator": "probe-local host_alloc with requested power-of-two alignment",
+        "fls_slot": 0,
+        "gs_0x58": "0x50000058",
+        "mode": "probe-local-windows-tls-fls",
+        "opencv_cpu_dispatch_table": "0x40000200",
+        "opencv_cpu_dispatch_table_global": "0x181843990",
+        "tls_generation_dword": -1,
+        "tls_slot": "0x40000100",
+        "tls_table": "0x40000000"
+      }
+    },
+    "gain_boundary": [
+      {
+        "r15_before_neg": "0x5",
+        "return_address": "0x0",
+        "rip": "0x181150f3d",
+        "stack_plus_20_38": [
+          "0x1",
+          "0x0",
+          "0xf0fee28",
+          "0x0"
+        ]
+      }
+    ],
+    "helper": "0x181150790",
+    "mode4_entry": [
+      {
+        "length_register_esi": 5,
+        "rip": "0x181150979",
+        "working_register_r15": 5
+      }
+    ]
+  },
+  "ae_exact_claim": false,
+  "answer": {
+    "edge_writeback_boundary": "The actual-AEX witness reaches the inline recurrence and its scalar gain boundary; edge policy and final pixel writeback are intentionally outside this proof.",
+    "semantic": "Mode4's inline recurrence uses fVar18 = r/(r+1) and fVar20 = r/(r+1)^2, updating each cell as fVar20*source + fVar18*prior; the actual AEX reaches the recovered scalar/gain boundary."
+  },
+  "binary": {
+    "path": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+    "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+  },
+  "checks": {
+    "actual_aex_gain_boundary": true,
+    "actual_aex_mode4_entry": true,
+    "actual_mode4_length5": true,
+    "actual_mode_selector_overridden_only_in_harness": true,
+    "mode3_prior_geometry_present": true,
+    "no_production_edit": true,
+    "static_asm": true,
+    "static_decomp": true
+  },
+  "date": "2026-07-18",
+  "kind": "olmkirakira_mode4_recurrence_boundary",
+  "limits": [
+    "Mac-only Unicorn execution of the checked-in Windows PE; no Windows or AE-host claim.",
+    "The actual-AEX witness observes the inline recurrence and gain boundaries; edge policy, later recurrence values, and final writeback remain unproven.",
+    "No production source, OpenCV assertion, input value, or output value was patched."
+  ],
+  "prior_mode3_geometry": {
+    "path": "refs/conformance/olmkirakira_mode3_gaussian_geometry_20260718.json",
+    "status": "bounded_geometry_shape_proven"
+  },
+  "production_edit": false,
+  "question": "What bounded Mode4 recurrence/gain/edge/writeback semantic is proven across decomp, asm, and actual AEX?",
+  "schema": 1,
+  "static": {
+    "asm": {
+      "gain_boundary": true,
+      "inline_entry": true,
+      "recurrence_factors": true
+    },
+    "decomp": {
+      "first_src_to_temp": true,
+      "inline_no_subordinate_filter": true,
+      "odd_kernel": true,
+      "recurrence_factors": true,
+      "second_in_place": true
+    }
+  },
+  "status": "PASS_MODE4_BOUNDED_RECURRENCE_GEOMETRY"
+}

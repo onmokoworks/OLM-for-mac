@@ -1,0 +1,276 @@
+{
+  "advance": {
+    "command": [
+      "<repo>/tools/emulation/.venv/bin/python",
+      "<repo>/tools/emulation/test_zoom_case0009.py",
+      "--resume-checkpoint",
+      "/tmp/olmradialblur_a9d0_boundary_fork_20260718/checkpoint6_copy_20260718.aexcp",
+      "--save-checkpoint-at-rip",
+      "/tmp/olmradialblur_a9d0_boundary_fork_20260718/next_row_boundary_20260718.aexcp",
+      "0x18000b0f9",
+      "--max-instructions",
+      "100000000",
+      "--output-json",
+      "/tmp/olmradialblur_a9d0_boundary_fork_20260718/unused_output_20260718.json",
+      "--output-md",
+      "/tmp/olmradialblur_a9d0_boundary_fork_20260718/unused_output_20260718.md"
+    ],
+    "sha256": "65a406395f067a4aa63c1b25f14604216577ac29d914bb2d65ccba8e0d6401ca",
+    "stdout": "checkpoint_saved=/tmp/olmradialblur_a9d0_boundary_fork_20260718/next_row_boundary_20260718.aexcp\ncheckpoint_rip=0x18000b0f9"
+  },
+  "boundary": "/tmp/olmradialblur_a9d0_boundary_fork_20260718/next_row_boundary_20260718.aexcp",
+  "boundary_rip": "0x18000b0f9",
+  "boundary_sha256": "65a406395f067a4aa63c1b25f14604216577ac29d914bb2d65ccba8e0d6401ca",
+  "bounded_proof": {
+    "merge": {
+      "left_writes_within_owned_planes": true,
+      "merged_checkpoint": "/tmp/olmradialblur_a9d0_boundary_fork_20260718/bounded_merged_result_20260718.aexcp",
+      "merged_checkpoint_sha256": "5bf3c38dc77edd250e0847c1967b537714485acf9210a9f1a5ee9ded1170ca3b",
+      "merged_heap_sha256": "64e9d34a9a3be2f2267aa90f1af1ca29353e40a947dc4d336d93cee544fc47f0",
+      "right_writes_within_owned_planes": true,
+      "serial_heap_sha256": "64e9d34a9a3be2f2267aa90f1af1ca29353e40a947dc4d336d93cee544fc47f0",
+      "serial_vs_two_slice_heap_equal": true
+    },
+    "normalization_reached": true,
+    "normalization_run": {
+      "command": [
+        "<repo>/tools/emulation/.venv/bin/python",
+        "<repo>/tools/emulation/test_zoom_case0009.py",
+        "--resume-checkpoint",
+        "/tmp/olmradialblur_a9d0_boundary_fork_20260718/bounded_merged_result_20260718.aexcp",
+        "--save-checkpoint-at-rip",
+        "/tmp/olmradialblur_a9d0_boundary_fork_20260718/bounded_normalization_entry_20260718.aexcp",
+        "0x180005c9f",
+        "--max-instructions",
+        "100000000",
+        "--output-json",
+        "/tmp/olmradialblur_a9d0_boundary_fork_20260718/unused_output_20260718.json",
+        "--output-md",
+        "/tmp/olmradialblur_a9d0_boundary_fork_20260718/unused_output_20260718.md"
+      ],
+      "sha256": "4f4f5bb067c16640316ae55e2f12eeeef9133896f58c4ca7f99fd6dfdf2a2751",
+      "stdout": "checkpoint_saved=/tmp/olmradialblur_a9d0_boundary_fork_20260718/bounded_normalization_entry_20260718.aexcp\ncheckpoint_rip=0x180005c9f"
+    },
+    "range": [
+      721,
+      723
+    ],
+    "serial_run": {
+      "command": [
+        "<repo>/tools/emulation/.venv/bin/python",
+        "<repo>/tools/emulation/test_zoom_case0009.py",
+        "--resume-checkpoint",
+        "/tmp/olmradialblur_a9d0_boundary_fork_20260718/bounded_serial_input_20260718.aexcp",
+        "--save-checkpoint-at-rip",
+        "/tmp/olmradialblur_a9d0_boundary_fork_20260718/bounded_serial_result_20260718.aexcp",
+        "0x180005c95",
+        "--max-instructions",
+        "100000000",
+        "--output-json",
+        "/tmp/olmradialblur_a9d0_boundary_fork_20260718/unused_output_20260718.json",
+        "--output-md",
+        "/tmp/olmradialblur_a9d0_boundary_fork_20260718/unused_output_20260718.md"
+      ],
+      "sha256": "344a5fae842f2ef5cc5efb607c7f73b646b09b5b7b2b594e8011064920134910",
+      "stdout": "checkpoint_saved=/tmp/olmradialblur_a9d0_boundary_fork_20260718/bounded_serial_result_20260718.aexcp\ncheckpoint_rip=0x180005c95"
+    },
+    "slice_runs": [
+      {
+        "command": [
+          "<repo>/tools/emulation/.venv/bin/python",
+          "<repo>/tools/emulation/test_zoom_case0009.py",
+          "--resume-checkpoint",
+          "/tmp/olmradialblur_a9d0_boundary_fork_20260718/bounded_left_input_20260718.aexcp",
+          "--save-checkpoint-at-rip",
+          "/tmp/olmradialblur_a9d0_boundary_fork_20260718/bounded_left_result_20260718.aexcp",
+          "0x180005c95",
+          "--max-instructions",
+          "100000000",
+          "--output-json",
+          "/tmp/olmradialblur_a9d0_boundary_fork_20260718/unused_output_20260718.json",
+          "--output-md",
+          "/tmp/olmradialblur_a9d0_boundary_fork_20260718/unused_output_20260718.md"
+        ],
+        "sha256": "080924386052bd40e1b5da0b0d55ef954615d05da4190e780a360ae8b418b067",
+        "stdout": "checkpoint_saved=/tmp/olmradialblur_a9d0_boundary_fork_20260718/bounded_left_result_20260718.aexcp\ncheckpoint_rip=0x180005c95"
+      },
+      {
+        "command": [
+          "<repo>/tools/emulation/.venv/bin/python",
+          "<repo>/tools/emulation/test_zoom_case0009.py",
+          "--resume-checkpoint",
+          "/tmp/olmradialblur_a9d0_boundary_fork_20260718/bounded_right_input_20260718.aexcp",
+          "--save-checkpoint-at-rip",
+          "/tmp/olmradialblur_a9d0_boundary_fork_20260718/bounded_right_result_20260718.aexcp",
+          "0x180005c95",
+          "--max-instructions",
+          "100000000",
+          "--output-json",
+          "/tmp/olmradialblur_a9d0_boundary_fork_20260718/unused_output_20260718.json",
+          "--output-md",
+          "/tmp/olmradialblur_a9d0_boundary_fork_20260718/unused_output_20260718.md"
+        ],
+        "sha256": "5c11a19d0eea266c15e5e42446347c3b9864003d334a04ab51fdce4f7c660169",
+        "stdout": "checkpoint_saved=/tmp/olmradialblur_a9d0_boundary_fork_20260718/bounded_right_result_20260718.aexcp\ncheckpoint_rip=0x180005c95"
+      }
+    ],
+    "slices": [
+      [
+        721,
+        722
+      ],
+      [
+        722,
+        723
+      ]
+    ]
+  },
+  "contract": {
+    "caller_count": 1,
+    "caller_ebx": 1,
+    "caller_return": 6442474645,
+    "end": 1800,
+    "heap_base": 536870912,
+    "heap_size": 207360640,
+    "height": 1800,
+    "live_pointer_gates": {
+      "r10_row_index": true,
+      "r11_next_row": true,
+      "r12_source_scalar_3": true,
+      "r13_source_scalar_4": true,
+      "rbp_source_rgba": true,
+      "rcx_valid": true,
+      "rdi_rgba_index": true
+    },
+    "plane_ranges": {
+      "output_rgba": [
+        646858752,
+        678653952
+      ],
+      "output_scalar": [
+        678653952,
+        686602752
+      ],
+      "source_rgba": [
+        686602752,
+        718397952
+      ],
+      "source_scalar_3": [
+        734295552,
+        742244352
+      ],
+      "source_scalar_4": [
+        718397952,
+        726346752
+      ],
+      "valid": [
+        742244352,
+        744231552
+      ]
+    },
+    "pointers": {
+      "output_rgba": 646858752,
+      "output_scalar": 678653952,
+      "source_rgba": 686602752,
+      "source_scalar_3": 734295552,
+      "source_scalar_4": 718397952,
+      "valid": 742244352
+    },
+    "raw_end": 1801,
+    "rsp": 252453504,
+    "stack_base": 251658240,
+    "start": 721,
+    "width": 1104,
+    "work": 252454336
+  },
+  "copy": "/tmp/olmradialblur_a9d0_boundary_fork_20260718/checkpoint6_copy_20260718.aexcp",
+  "copy_sha256": "e79e1972df097588a12af17d5510be6104f02ec98cc4ce139af96634bb3520cc",
+  "full_fork": {
+    "concurrent_commands": [
+      [
+        "<repo>/tools/emulation/.venv/bin/python",
+        "<repo>/tools/emulation/test_zoom_case0009.py",
+        "--resume-checkpoint",
+        "/tmp/olmradialblur_a9d0_boundary_fork_20260718/full_left_input_20260718.aexcp",
+        "--save-checkpoint-at-rip",
+        "/tmp/olmradialblur_a9d0_boundary_fork_20260718/full_left_result_20260718.aexcp",
+        "0x180005c95",
+        "--max-instructions",
+        "2500000000",
+        "--output-json",
+        "/tmp/olmradialblur_a9d0_boundary_fork_20260718/unused_output_20260718.json",
+        "--output-md",
+        "/tmp/olmradialblur_a9d0_boundary_fork_20260718/unused_output_20260718.md"
+      ],
+      [
+        "<repo>/tools/emulation/.venv/bin/python",
+        "<repo>/tools/emulation/test_zoom_case0009.py",
+        "--resume-checkpoint",
+        "/tmp/olmradialblur_a9d0_boundary_fork_20260718/full_right_input_20260718.aexcp",
+        "--save-checkpoint-at-rip",
+        "/tmp/olmradialblur_a9d0_boundary_fork_20260718/full_right_result_20260718.aexcp",
+        "0x180005c95",
+        "--max-instructions",
+        "2500000000",
+        "--output-json",
+        "/tmp/olmradialblur_a9d0_boundary_fork_20260718/unused_output_20260718.json",
+        "--output-md",
+        "/tmp/olmradialblur_a9d0_boundary_fork_20260718/unused_output_20260718.md"
+      ]
+    ],
+    "normalization_resume_rip": "0x180005c9f",
+    "ranges": [
+      [
+        721,
+        1260
+      ],
+      [
+        1260,
+        1800
+      ]
+    ],
+    "run_full_flag": "--run-full",
+    "slices": [
+      {
+        "checkpoint": "/tmp/olmradialblur_a9d0_boundary_fork_20260718/full_left_input_20260718.aexcp",
+        "range": [
+          721,
+          1260
+        ],
+        "sha256": "908ba32e171792767bef8a4f5da58d45946c7b5eb686234be91c1e36df9fac15"
+      },
+      {
+        "checkpoint": "/tmp/olmradialblur_a9d0_boundary_fork_20260718/full_right_input_20260718.aexcp",
+        "range": [
+          1260,
+          1800
+        ],
+        "sha256": "8262f8811236d5a99afbc99077db8341523bfa10d22b103ba5ed16433193bb54"
+      }
+    ]
+  },
+  "gates": {
+    "aex_identity": true,
+    "bounded_serial_vs_two_slice_equal": true,
+    "final_caller_invocation": true,
+    "half_open_complete_partition": true,
+    "left_plane_write_bounded": true,
+    "natural_undetoured_lineage": true,
+    "normalization_continuation_preserved": true,
+    "plane_non_alias": true,
+    "pointer_identity": true,
+    "protected_pid_untouched": true,
+    "right_plane_write_bounded": true,
+    "row_boundary_reached": true,
+    "source_copy_hash_identity": true
+  },
+  "kind": "olmradialblur_a9d0_boundary_fork_20260718",
+  "protected_pid": 59481,
+  "protected_pid_interactions": 0,
+  "schema": 1,
+  "source": "/private/tmp/olm_radial_case0009_workers_progress6_20260718.aexcp",
+  "source_sha256": "e79e1972df097588a12af17d5510be6104f02ec98cc4ce139af96634bb3520cc",
+  "source_sha256_after": "e79e1972df097588a12af17d5510be6104f02ec98cc4ce139af96634bb3520cc",
+  "source_unchanged": true,
+  "status": "pass_boundary_fork_prepared"
+}
