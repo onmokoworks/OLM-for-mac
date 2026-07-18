@@ -1,0 +1,67 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "cases": [
+    {
+      "aex_observed_pf8_argb_hex": "71cecece",
+      "case_id": "legacy_case_0004_writer_frame",
+      "dynamic_next_calls": 2,
+      "dynamic_ranges": [
+        {
+          "first": 0,
+          "last": 0,
+          "step": 1
+        }
+      ],
+      "raw_equal": false,
+      "windows_pf8_argb_hex": "e8e8e871",
+      "windows_pf8_argb_memory_hex": "71e8e8e8",
+      "windows_writer_frame_rgba_f32": [
+        0.80824906,
+        0.80824906,
+        0.80824906,
+        0.44156867
+      ],
+      "worker": "0x180003370",
+      "writer_replay_classification": "not_reproduced_from_supplied_float_tuple"
+    },
+    {
+      "aex_observed_pf8_argb_hex": "00ffffff",
+      "case_id": "legacy_case_0012_writer_frame",
+      "dynamic_next_calls": 2,
+      "dynamic_ranges": [
+        {
+          "first": 0,
+          "last": 0,
+          "step": 1
+        }
+      ],
+      "raw_equal": true,
+      "windows_pf8_argb_hex": "ffffff00",
+      "windows_pf8_argb_memory_hex": "00ffffff",
+      "windows_writer_frame_rgba_f32": [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ],
+      "worker": "0x180003370",
+      "writer_replay_classification": "reproduced"
+    }
+  ],
+  "claims_not_made": [
+    "AE exactness",
+    "Mac host equivalence",
+    "full-frame equivalence",
+    "upstream producer equivalence"
+  ],
+  "facts": [
+    "The AEX PF8 worker replayed both supplied tuples; only the 0012 packed record reproduced.",
+    "No production plugin source was changed."
+  ],
+  "inferences": [
+    "The PF8 writer/store remains unresolved because the 0004 supplied tuple did not reproduce its Windows packed record.",
+    "Upstream config/crop/classifier/c280/cce0 semantics remain unresolved."
+  ],
+  "scope": "Mac-local Unicorn replay of Windows-observed PF8 writer-frame tuples",
+  "verdict": "PARTIAL_SMOOTHER2_OBSERVED_WRITER_FRAME_REPLAY"
+}

@@ -49,6 +49,9 @@
 | Blur Mode 4 | Inline recursive/separable accumulation body at `0x181150979..0x181150f3a`; no subordinate filter call. The UI label “Exponential” is semantic metadata, not derived from the body alone. | static binary dispatch/body |
 | Merge Mode 1/2 | `param_15==1` selects `FUN_18114fd90`; `==2` selects `FUN_18114ffd0`. | static vtable dispatch |
 | Channel | Seed function; current traced `Channel=2` vtable normalize byte returns `1`. | vtable / refs |
+| Fade Out | Disk ID `27` is checked out as float, multiplied by binary constant `0.2f`, and passed to the seed vtable. Channel 2 (Luminance) and 4 (Brightness) use it as the knee threshold in `FUN_1811501b0`: above the threshold use `pow(v,strength)`; at/below use `pow(v/fade,2) * pow(fade,strength)`. Channel 1 and 3 ignore it. | `FUN_18114e860`, `FUN_1811501b0`, channel vtables / asm |
+| Highlight Radius | Disk ID `6` becomes the fifth layer. Radius `r` forms an odd square kernel `(2r+1,2r+1)`; Blur Mode 1 calls boxFilter once and Mode 2 three times. | `FUN_18114e860`, `FUN_18114f4a0` / asm |
+| Approximated Input | Disk ID `10` controls a half-resolution working path when the render-scale ratio is strictly above `0.5`; at `<=0.5` the flag is cleared. Enabled typed owners truncate working dimensions to `int(src_dim * 0.5)` and each ray length to `int(length * ratio * 0.5)`, resize down before seed/rays, then resize back to the original dsize before writeback. Both resize calls pass explicit dsize and final interpolation literal `0`, i.e. OpenCV `INTER_NEAREST`; there is no border argument or alpha/premultiply branch. | `FUN_18114cc50/18114d220/18114d7f0`, `FUN_1812639f0`, `FUN_181263fb0`, `refs/conformance/olmkirakira_approximated_input_20260718.md` |
 
 ## Current Mac Source Gap Audit
 
@@ -63,15 +66,21 @@ Windows behavior.
     host-control unit mapping is still unresolved
 - `Fade Out`
   - current Mac host range now matches the Windows fresh capture `0..1`
-  - but the render path still does not consume a Fade Out value at all
+  - 2026-07-18: the control is now a float slider, both render paths read it,
+    and Channel 2/4 use the binary-grounded `value * 0.2` knee formula
 - `Highlight Radius`
-  - current Mac source registers the parameter, but the render path does not
-    consume it
+  - 2026-07-18: both render paths read it and Blur Mode 1/2 feed the fifth
+    isotropic layer into Highlight Color
   - Windows fresh range says `0..500`, while the official manual/source shape
     still suggests `0..1000`
 - `Approximated Input`
-  - exposed in the Windows UI and current Mac UI, but not consumed in the
-    current Mac render path
+  - 2026-07-18: both render paths read and retain the flag
+  - 2026-07-18: the Windows contract is binary-grounded as explicit-dsize
+    `INTER_NEAREST` downsample/upscale with no alpha-specific handling
+  - the bounded actual-AEX owner harness reaches an earlier FilterEngine
+    assertion before `FUN_1812639f0`; no runtime resize pixels are claimed
+  - Mac production implementation remains intentionally unwired until a
+    Windows/Mac AE differential validates the primitive and writeback
 - `Merge Mode`
   - current Mac source always composes with the merge-mode-1 screen-over path;
     it does not branch on the UI Merge Mode control yet

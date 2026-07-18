@@ -1,0 +1,39 @@
+{
+  "kind": "olmblur_32bpc_mac_validation_provenance",
+  "schema_version": 1,
+  "status": "prepared_fail_closed",
+  "ae_exact_claim": false,
+  "blocker": "After Effects was not running during preparation; the dated launcher refuses to start or attach to an unknown AE process.",
+  "request": {
+    "path": "refs/mac_validation_requests/olmblur_32bpc_mac_validation_20260715.json",
+    "sha256": "dea49cdf4b6504a8080b351f38a1c11cf1be226776dc46ca38b8add6cd0d526d"
+  },
+  "input": {
+    "path": "refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMBlur/case_0001_before_effects.png",
+    "sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4"
+  },
+  "contract": {
+    "ae_version": "26.3",
+    "bits_per_channel": 32,
+    "renderer": "SOFTWARE",
+    "working_space": "None",
+    "linear_blending": false,
+    "frame": 0,
+    "output_template": "OLM EXR 32 Float",
+    "output_format": "OpenEXR",
+    "channels": ["A", "B", "G", "R"],
+    "sample_type": "FLOAT",
+    "compression": "none"
+  },
+  "plugin": {
+    "bundle_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin",
+    "binary_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin/Contents/MacOS/OLMBlur",
+    "binary_sha256": "71df7efc027b463327fefa23575fff5f80d4b38ff529ae97418d79297f4f0d72",
+    "build_and_installed_sha_match": true
+  },
+  "runner": {
+    "path": "scripts/run_olmblur_32bpc_mac_validation_20260718.py",
+    "delegates_to": "scripts/run_olmblur_32bpc_mac_validation_20260715.py",
+    "requires_exactly_one_preexisting_ae_process": true
+  }
+}

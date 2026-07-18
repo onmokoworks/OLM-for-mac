@@ -1,0 +1,549 @@
+{
+  "kind": "olmcolorkey_edge_thin_caller_amount_20260718",
+  "schema": 1,
+  "status": "pass",
+  "provenance": {
+    "aex": "aex/OLMColorKey/Plugins/64/2025/OLMColorKey.aex",
+    "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "asm": "disasm/OLMColorKey.aex.asm.txt"
+  },
+  "ownership_correction": {
+    "edge_thin": "record+0x28 int32, inline caller compare loops",
+    "edge_blur": "record+0x40 float32, FUN_180008320 apply leaf",
+    "superseded_claim": "FUN_180008320 is not the Edge Thin threshold leaf"
+  },
+  "normalization_formula": {
+    "host_parameter": "signed integer slider in [-4000, 4000]",
+    "record": "int32 value copied without scaling",
+    "caller": "float32(record_int32) exactly once via CVTDQ2PS",
+    "positive": "copy unmatched source iff distance <= amount",
+    "negative": "zero matched matte iff distance < abs(amount); equality remains matched",
+    "distance_type_effect": "selects the distance primitive only; comparator and amount conversion are identical for types 1/2/3"
+  },
+  "static_actual_aex": {
+    "checks": {
+      "edge_thin_loader_uses_int_accessor": true,
+      "int_accessor_reads_dword": true,
+      "edge_blur_loader_uses_float_accessor": true,
+      "caller_loads_edge_thin_int": true,
+      "caller_converts_edge_thin_once": true,
+      "edge_blur_amount_is_separate": true
+    },
+    "required_instructions": {
+      "edge_thin_loader_uses_int_accessor": "18000a438  CALL 0x18000dcd0",
+      "int_accessor_reads_dword": "180013b00  MOV EAX,dword ptr [RCX + 0x38]",
+      "edge_blur_loader_uses_float_accessor": "18000a462  CALL 0x18000de90",
+      "caller_loads_edge_thin_int": "1800091df  MOVD XMM6,dword ptr [R14 + 0x28]",
+      "caller_converts_edge_thin_once": "1800091e5  CVTDQ2PS XMM6,XMM6",
+      "edge_blur_amount_is_separate": "180009414  MOVSS XMM1,dword ptr [R14 + 0x40]"
+    }
+  },
+  "distance_dispatch_matrix": [
+    {
+      "distance_type": 1,
+      "target": "type1"
+    },
+    {
+      "distance_type": 2,
+      "target": "type2"
+    },
+    {
+      "distance_type": 3,
+      "target": "type3"
+    }
+  ],
+  "amount_conversion_matrix": [
+    {
+      "record_int32": -4000,
+      "xmm6_float32": -4000.0,
+      "branch": "nonpositive",
+      "exact_int32_to_float32": true
+    },
+    {
+      "record_int32": -2,
+      "xmm6_float32": -2.0,
+      "branch": "nonpositive",
+      "exact_int32_to_float32": true
+    },
+    {
+      "record_int32": -1,
+      "xmm6_float32": -1.0,
+      "branch": "nonpositive",
+      "exact_int32_to_float32": true
+    },
+    {
+      "record_int32": 0,
+      "xmm6_float32": 0.0,
+      "branch": "nonpositive",
+      "exact_int32_to_float32": true
+    },
+    {
+      "record_int32": 1,
+      "xmm6_float32": 1.0,
+      "branch": "positive",
+      "exact_int32_to_float32": true
+    },
+    {
+      "record_int32": 2,
+      "xmm6_float32": 2.0,
+      "branch": "positive",
+      "exact_int32_to_float32": true
+    },
+    {
+      "record_int32": 4000,
+      "xmm6_float32": 4000.0,
+      "branch": "positive",
+      "exact_int32_to_float32": true
+    }
+  ],
+  "comparison_matrix": [
+    {
+      "distance_type": 1,
+      "amount": -4000,
+      "distance": 3999.0,
+      "path": "negative",
+      "result": "zero",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 1,
+      "amount": -4000,
+      "distance": 4000.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 1,
+      "amount": -4000,
+      "distance": 4001.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 1,
+      "amount": -2,
+      "distance": 1.0,
+      "path": "negative",
+      "result": "zero",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 1,
+      "amount": -2,
+      "distance": 2.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 1,
+      "amount": -2,
+      "distance": 3.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 1,
+      "amount": -1,
+      "distance": 0.0,
+      "path": "negative",
+      "result": "zero",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 1,
+      "amount": -1,
+      "distance": 1.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 1,
+      "amount": -1,
+      "distance": 2.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 1,
+      "amount": 1,
+      "distance": 0.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 1,
+      "amount": 1,
+      "distance": 1.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 1,
+      "amount": 1,
+      "distance": 2.0,
+      "path": "positive",
+      "result": "no_copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 1,
+      "amount": 2,
+      "distance": 1.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 1,
+      "amount": 2,
+      "distance": 2.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 1,
+      "amount": 2,
+      "distance": 3.0,
+      "path": "positive",
+      "result": "no_copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 1,
+      "amount": 4000,
+      "distance": 3999.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 1,
+      "amount": 4000,
+      "distance": 4000.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 1,
+      "amount": 4000,
+      "distance": 4001.0,
+      "path": "positive",
+      "result": "no_copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 2,
+      "amount": -4000,
+      "distance": 3999.0,
+      "path": "negative",
+      "result": "zero",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 2,
+      "amount": -4000,
+      "distance": 4000.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 2,
+      "amount": -4000,
+      "distance": 4001.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 2,
+      "amount": -2,
+      "distance": 1.0,
+      "path": "negative",
+      "result": "zero",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 2,
+      "amount": -2,
+      "distance": 2.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 2,
+      "amount": -2,
+      "distance": 3.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 2,
+      "amount": -1,
+      "distance": 0.0,
+      "path": "negative",
+      "result": "zero",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 2,
+      "amount": -1,
+      "distance": 1.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 2,
+      "amount": -1,
+      "distance": 2.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 2,
+      "amount": 1,
+      "distance": 0.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 2,
+      "amount": 1,
+      "distance": 1.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 2,
+      "amount": 1,
+      "distance": 2.0,
+      "path": "positive",
+      "result": "no_copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 2,
+      "amount": 2,
+      "distance": 1.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 2,
+      "amount": 2,
+      "distance": 2.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 2,
+      "amount": 2,
+      "distance": 3.0,
+      "path": "positive",
+      "result": "no_copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 2,
+      "amount": 4000,
+      "distance": 3999.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 2,
+      "amount": 4000,
+      "distance": 4000.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 2,
+      "amount": 4000,
+      "distance": 4001.0,
+      "path": "positive",
+      "result": "no_copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 3,
+      "amount": -4000,
+      "distance": 3999.0,
+      "path": "negative",
+      "result": "zero",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 3,
+      "amount": -4000,
+      "distance": 4000.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 3,
+      "amount": -4000,
+      "distance": 4001.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 3,
+      "amount": -2,
+      "distance": 1.0,
+      "path": "negative",
+      "result": "zero",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 3,
+      "amount": -2,
+      "distance": 2.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 3,
+      "amount": -2,
+      "distance": 3.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 3,
+      "amount": -1,
+      "distance": 0.0,
+      "path": "negative",
+      "result": "zero",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 3,
+      "amount": -1,
+      "distance": 1.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 3,
+      "amount": -1,
+      "distance": 2.0,
+      "path": "negative",
+      "result": "keep",
+      "oracle": "zero iff distance < abs(amount); equality keeps"
+    },
+    {
+      "distance_type": 3,
+      "amount": 1,
+      "distance": 0.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 3,
+      "amount": 1,
+      "distance": 1.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 3,
+      "amount": 1,
+      "distance": 2.0,
+      "path": "positive",
+      "result": "no_copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 3,
+      "amount": 2,
+      "distance": 1.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 3,
+      "amount": 2,
+      "distance": 2.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 3,
+      "amount": 2,
+      "distance": 3.0,
+      "path": "positive",
+      "result": "no_copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 3,
+      "amount": 4000,
+      "distance": 3999.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 3,
+      "amount": 4000,
+      "distance": 4000.0,
+      "path": "positive",
+      "result": "copy",
+      "oracle": "copy iff distance <= amount"
+    },
+    {
+      "distance_type": 3,
+      "amount": 4000,
+      "distance": 4001.0,
+      "path": "positive",
+      "result": "no_copy",
+      "oracle": "copy iff distance <= amount"
+    }
+  ],
+  "matrix_counts": {
+    "amounts": 7,
+    "comparisons": 54,
+    "distance_types": 3
+  },
+  "current_source": {
+    "checks": {
+      "integer_slider": true,
+      "integer_param_reads": true,
+      "integer_info_field": true,
+      "positive_predicate": true,
+      "negative_translation_remains_explicit": true
+    },
+    "all_pass": true
+  },
+  "claim_boundary": "Actual-AEX caller arithmetic and branch semantics only. Distance primitive output, AE host rendering, and PNG/EXR export are outside this fixture; no AE exact claim."
+}

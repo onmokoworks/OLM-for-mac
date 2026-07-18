@@ -1,0 +1,146 @@
+{
+  "request_id": "olmblur_32bpc_case0001_repeat1_provenance_request_20260718",
+  "scope": {
+    "bit_depth": "32bpc",
+    "plugin_filters": [
+      "OLMBlur"
+    ],
+    "feature_filters": [
+      "case_0001",
+      "repeat=1",
+      "same-run-effect-control-float-exr",
+      "loaded-aex-provenance"
+    ],
+    "plugin_count": 1,
+    "case_count": 1
+  },
+  "effect": {
+    "name": "OLM Blur",
+    "match_name": "OLM OLM Blur"
+  },
+  "why": [
+    "Narrow follow-up for the 32bpc repeat=1 aligned tuple that is locally exact against the current Mac PF32 core.",
+    "The only live lane is provenance: same-run Windows SOFTWARE control/effect FLOAT EXR plus loaded AEX path and SHA-256.",
+    "The request is fail-closed and must not answer partial PNG-only or mixed-run evidence."
+  ],
+  "source_provenance": {
+    "parent_request": "refs/reference_requests/olmblur_32bpc_mac_windows_float_focus_20260711.json",
+    "normalized_input_manifest": "refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMBlur/reference_manifest.json",
+    "normalized_input_manifest_sha256": "42dc18ec6e6a6b095800ed0e253372f6206de45e38459fb2e04099c4512dd2f0",
+    "current_aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+    "aligned_tuple_note": "repeat=1 / bias=1 / legacy=0 is the current aligned tuple for case_0001."
+  },
+  "render_sets": [
+    {
+      "id": "software_32bpc",
+      "project_gpu_accel_type.current_name": "SOFTWARE",
+      "project_gpu_accel_type.raw": "GpuAccelType.SOFTWARE",
+      "bit_depth": "32bpc",
+      "bits_per_channel": 32,
+      "required": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "olmblur_case_0001_source",
+      "description": "Use the normalized OLMBlur case_0001 before-effects frame.",
+      "source_manifest": "refs/reports/ae_host_validation_20260618_232926/normalized_refs/OLMBlur/reference_manifest.json",
+      "source_case_id": "case_0001",
+      "before_effects_frame": "case_0001_before_effects.png",
+      "sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+      "hash_algorithm": "sha256",
+      "source_manifest_sha256": "42dc18ec6e6a6b095800ed0e253372f6206de45e38459fb2e04099c4512dd2f0"
+    }
+  ],
+  "cases": [
+    {
+      "id": "olmblur__case_0001",
+      "feature": "OLMBlur",
+      "plugin": "OLMBlur",
+      "source_case_id": "case_0001",
+      "input": "olmblur_case_0001_source",
+      "reason": "Repeat=1 provenance recapture for the red-only 32bpc residual lane. Same-run no-effect/effect FLOAT EXR pair only.",
+      "effect": {
+        "name": "OLM Blur",
+        "match_name": "OLM OLM Blur"
+      },
+      "params": {
+        "Blur Amount": 129.4,
+        "Blur Smoothness": 100,
+        "Number of Repeat": 1,
+        "Bias Direction": 1,
+        "Legacy": 0,
+        "Effect Opacity": 100,
+        "GPU Rendering": 1
+      },
+      "params_full": [
+        {
+          "name": "Blur Amount",
+          "match_name": "OLM OLM Blur-0005",
+          "property_index": 1,
+          "property_value_type": "OneD",
+          "value": 129.4
+        },
+        {
+          "name": "Blur Smoothness",
+          "match_name": "OLM OLM Blur-0006",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "Number of Repeat",
+          "match_name": "OLM OLM Blur-0003",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Bias Direction",
+          "match_name": "OLM OLM Blur-0004",
+          "property_index": 4,
+          "property_value_type": "OneD",
+          "value": 1
+        },
+        {
+          "name": "Legacy",
+          "match_name": "OLM OLM Blur-0007",
+          "property_index": 5,
+          "property_value_type": "OneD",
+          "value": 0
+        },
+        {
+          "name": "Effect Opacity",
+          "match_name": "ADBE Effect Mask Opacity",
+          "property_index": 2,
+          "property_value_type": "OneD",
+          "value": 100
+        },
+        {
+          "name": "GPU Rendering",
+          "match_name": "ADBE Force CPU GPU",
+          "property_index": 3,
+          "property_value_type": "OneD",
+          "value": 1
+        }
+      ]
+    }
+  ],
+  "runtime_contract": {
+    "same_ae_process_pair_required": true,
+    "loaded_aex_path_and_sha256_required": true,
+    "project_readback_required": [
+      "bits_per_channel",
+      "project_gpu_accel_type_raw",
+      "working_space",
+      "linear_blending"
+    ],
+    "output_module_readback_required": true,
+    "outputs_required": [
+      "effect_on.exr",
+      "effect_no_effect.exr"
+    ],
+    "fail_closed": true,
+    "accept_partial": false
+  }
+}

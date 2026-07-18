@@ -11,8 +11,6 @@ _here = Path(__file__).resolve().parent
 _helper = _here if _here.name == "olmtoondilate_mac_32bpc_validation_20260715" else ROOT / "runtime_trace_packages/olmtoondilate_mac_32bpc_validation_20260715"
 sys.path.insert(0, str(_helper))
 from verify_32bpc_float_return import VerificationError, inspect_float_rgba_exr
-PLUGIN_SHA = "d47a81bd8259bd5ca0db31b71a4e0ffd4fef1c037ef31ffd1a922de1775954de"
-
 def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
 def read(path): return json.loads(path.read_text(encoding="utf-8-sig"))
 def fail(message): raise SystemExit("FAIL CLOSED: " + message)
@@ -63,7 +61,9 @@ def main():
     p.add_argument("--plugin-binary", type=Path, help="OLMToonDilate.plugin bundle or its Mach-O executable")
     p.add_argument("--windows-return", type=Path)
     args = p.parse_args(); package = args.package.resolve(); request = read(package / "request_manifest.json")
-    if request["case"]["plugin"]["sha256"] != PLUGIN_SHA: fail("request plugin hash drifted")
+    expected_plugin_sha = request["case"]["plugin"]["sha256"]
+    if not isinstance(expected_plugin_sha, str) or len(expected_plugin_sha) != 64:
+        fail("request plugin hash is missing or invalid")
     fixture = package / "fixture/ae_generate_32bpc_olmtoondilate_fixture.jsx"
     if not fixture.is_file(): fail("fixture missing")
     output_dir = package / "mac_run"; output_dir.mkdir(exist_ok=True)
@@ -74,7 +74,7 @@ def main():
         if subprocess.run(["pgrep", "-x", "After Effects"], stdout=subprocess.DEVNULL).returncode == 0: fail("After Effects is already running; use a fresh process for loaded-module proof")
         supplied = args.plugin_binary or Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin"
         plugin_bundle, plugin = resolve_plugin_binary(supplied)
-        if sha(plugin) != PLUGIN_SHA: fail("exact ToonDilate plugin binary/hash is unavailable")
+        if sha(plugin) != expected_plugin_sha: fail("exact ToonDilate plugin binary/hash is unavailable")
         env = dict(os.environ); env.update({"OLM_AE_TYPED_FIXTURE_OUTPUT_DIR": str(output_dir), "OLM_AE_TYPED_FIXTURE_TEMPLATE": "OLM EXR 32 Float",
             "OLM_AE_TYPED_FIXTURE_PROJECT_PATH": str(output_dir / "fixture.aep"), "OLM_AE_TYPED_FIXTURE_EFFECT": "OLM Toon Dilate",
             "OLM_AE_TYPED_FIXTURE_OVERWRITE": "0"})

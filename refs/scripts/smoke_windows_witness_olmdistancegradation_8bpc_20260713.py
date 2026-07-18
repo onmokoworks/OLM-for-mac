@@ -117,10 +117,7 @@ def main() -> int:
             return fail("fresh-process serial readiness contract is missing")
         for token in (
             "function ConvertTo-WindowsCommandLineArgument",
-            "$directQueueLaunch = [string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1'",
             "$launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)",
-            "Join-WindowsCommandLine @($AfterFxPath, '-m')",
-            "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
             "Read-QueueBootstrapBinding $queueBootstrap",
             "'queue_binding'",
             "('OLMWitness\\w_' + $shortId)",
@@ -133,6 +130,30 @@ def main() -> int:
         ):
             if token not in launcher:
                 return fail(f"launcher is missing CDB/AfterFX transport guard: {token}")
+        if not any(
+            token in launcher
+            for token in (
+                "$directQueueLaunch = [string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1'",
+                "$directQueueLaunch = ([string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1') -or ($transportKind -eq 'in_process_collector')",
+            )
+        ):
+            return fail("launcher is missing CDB/AfterFX transport guard: direct queue toggle")
+        if not any(
+            token in launcher
+            for token in (
+                "Join-WindowsCommandLine @($AfterFxPath, '-m')",
+                "Join-WindowsCommandLine @($AfterFxPath)",
+            )
+        ):
+            return fail("launcher is missing CDB/AfterFX transport guard: initial AE launch command")
+        if not any(
+            token in launcher
+            for token in (
+                "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
+                "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-ro', $normalizedQueuePath)",
+            )
+        ):
+            return fail("launcher is missing CDB/AfterFX transport guard: queue dispatch command")
         required_logs = {
             "afterfx_launcher_stdout.txt",
             "afterfx_launcher_stderr.txt",

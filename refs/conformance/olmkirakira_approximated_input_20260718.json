@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "kind": "olmkirakira_approximated_input_contract_audit",
+  "date": "2026-07-18",
+  "status": "binary_grounded_runtime_boundary_before_resize",
+  "ae_exact_claim": false,
+  "binary": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+  "binary_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+  "static_contract": {
+    "render_scale_ratio": "float(render_info+0x11c) / uint(render_info+0x120)",
+    "gate": "strict ratio > float32(0.5)",
+    "effective_scale_when_enabled": "ratio * float32(0.5)",
+    "effective_scale_when_disabled_or_ratio_le_half": "ratio; checkbox is cleared when ratio <= 0.5",
+    "working_dimensions": "int_truncate(source_width * 0.5), int_truncate(source_height * 0.5)",
+    "working_ray_lengths": "int_truncate(each_length * effective_scale)",
+    "pre_resize": "source Mat -> working Mat, explicit dsize=(working_width, working_height)",
+    "post_resize": "working Mat -> original-size Mat, explicit dsize=(source_width, source_height)",
+    "interpolation": "OpenCV INTER_NEAREST (0), from both typed-owner calls' final literal 0",
+    "border": "no border mode is passed to cv::resize; no separate border policy in this path",
+    "alpha": "no alpha/premultiply branch in resize wrapper; channels are resized as Mat channels",
+    "rounding_inside_resize_wrapper": "when dsize is supplied, scale is recomputed as dsize/src_dim; internal fallback uses cvRound, but typed owners supply dsize",
+    "type_special_case": "resize wrapper rewrites interpolation 5 to 1 only for source depth 5/6; typed owners pass 0, so this does not apply"
+  },
+  "runtime": {
+    "fixture": "existing FUN_18114c8f0 common-owner probe; Approximated Input=1 injected in memory",
+    "resize_function": "0x1812639f0",
+    "resize_entry_hits": [],
+    "resize_entry_reached": false,
+    "owner_status": "FAILED",
+    "first_unavailable_boundary": "exact stop after actual FUN_18114be60 bootstrap returned with DAT_181843998=1 and nonzero coefficients: FUN_181162610 cv::FilterEngine::init asserted with anchor.x=-1073741824, anchor.y=0, ksize.width=-2147483648, ksize.height=1; failed predicates=['0 <= anchor.x', 'anchor.x < ksize.width']; FUN_1811d88c0 RCX=(0,5) is scheduler range [0,dst.rows); no values were patched and there is no writer or AE claim",
+    "execution_exception": null,
+    "event_count": 1,
+    "production_files_modified": false
+  },
+  "fact": [
+    "The gate is strict render-scale ratio > 0.5; ratio <= 0.5 clears the checkbox state.",
+    "Enabled working dimensions and the five ray lengths use float multiplication followed by int conversion in the typed owners.",
+    "Both pre- and post-resize calls pass explicit dsize values and a final interpolation literal of 0.",
+    "FUN_1812639f0 is the OpenCV 4.5.5 resize wrapper and FUN_181263fb0 is its resize implementation path.",
+    "The bounded actual-AEX owner run enabled the checkbox in memory and stopped at an existing FilterEngine assertion before the resize entry."
+  ],
+  "inference": [
+    "OpenCV INTER_NEAREST is the typed-owner interpolation contract because the last call argument is literal 0.",
+    "Alpha follows ordinary per-channel nearest-neighbor copy for the typed Mat; there is no plugin-level alpha conversion in the wrapper."
+  ],
+  "limits": [
+    "No production plugin source was changed.",
+    "The bounded owner harness did not reach FUN_1812639f0, so runtime resize output pixels were not claimed.",
+    "The static contract does not by itself prove Mac AE exactness."
+  ]
+}

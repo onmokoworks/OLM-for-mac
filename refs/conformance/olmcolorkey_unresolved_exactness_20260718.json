@@ -1,0 +1,55 @@
+{
+  "audit": "olmcolorkey_unresolved_exactness_20260718",
+  "scope": "Mac-only read-only audit; no source, ledger, AE, or Windows mutation",
+  "source": {
+    "path": "mac/OLMColorKey/OLMColorKey.cpp",
+    "sha256": "4aefec0647cae059ca4ed0770df36f36441efea8eab3f5a756b1cebe933eba11"
+  },
+  "evidence_files_present": {
+    "legacy_misnamed_edge_blur_leaf": true,
+    "legacy_misnamed_edge_blur_caller": true,
+    "edge_thin_caller_amount": true,
+    "distance_type3": true,
+    "host_32bpc": true
+  },
+  "ownership_correction": {
+    "edge_thin": "record+0x28 int32 and inline FUN_180009000 compare loops",
+    "edge_blur": "record+0x40 float32 and FUN_180008320 apply leaf",
+    "legacy_edge_thin_leaf_files_are_misnamed": true
+  },
+  "retained_aex_edge_thin_caller": {
+    "status": "pass",
+    "normalization_formula": {
+      "host_parameter": "signed integer slider in [-4000, 4000]",
+      "record": "int32 value copied without scaling",
+      "caller": "float32(record_int32) exactly once via CVTDQ2PS",
+      "positive": "copy unmatched source iff distance <= amount",
+      "negative": "zero matched matte iff distance < abs(amount); equality remains matched",
+      "distance_type_effect": "selects the distance primitive only; comparator and amount conversion are identical for types 1/2/3"
+    },
+    "matrix_counts": {
+      "amounts": 7,
+      "comparisons": 54,
+      "distance_types": 3
+    }
+  },
+  "current_source_boundary": {
+    "caller_applies_distance_threshold": true,
+    "adds_one_for_distance_types_0_or_2": true,
+    "integer_amount_boundary": true
+  },
+  "finding": {
+    "status": "caller_amount_normalization_closed",
+    "highest_value_next_action": "preserve the integer host boundary and validate distance primitive outputs separately; do not tune PNG output",
+    "why": "The actual-AEX matrix proves direct int32-to-float32 conversion and both threshold predicates across all three distance-type dispatches",
+    "next_evidence_needed": "distance primitive output or Mac AE conformance evidence, not another amount-normalization witness"
+  },
+  "checks": {
+    "all_evidence_present": true,
+    "source_keeps_threshold_outside_leaf": true,
+    "source_contains_distance_type_offset": true,
+    "source_uses_integer_amount_boundary": true,
+    "caller_amount_fixture_passes": true
+  },
+  "pass": true
+}

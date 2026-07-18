@@ -1,0 +1,75 @@
+{
+  "schema": "olmdistancegradation.16bpc-nearmiss-boundary-audit/1",
+  "generated_on": "2026-07-18",
+  "status": "classified_not_separable_locally",
+  "scope": [
+    "case_0012",
+    "case_0014"
+  ],
+  "ae_exact_claim": false,
+  "production_source_changed": false,
+  "fact": {
+    "depth_gate_batch": {
+      "case_0012": {
+        "nonzero_px": 272839,
+        "max_diff": 64
+      },
+      "case_0014": {
+        "nonzero_px": 377093,
+        "max_diff": 64
+      }
+    },
+    "returned_windows_package": {
+      "status": "failed_partial",
+      "project_renderer": "SOFTWARE",
+      "bit_depth": "16bpc",
+      "same_run_windows_pre_store_float": false,
+      "same_run_windows_pf16_store_word": false,
+      "same_run_true16_export": false,
+      "only_directly_observed": [
+        "package-local PNG bytes for the requested case_0012 representatives",
+        "package-local PNG bytes for the requested case_0014 representatives"
+      ]
+    },
+    "mac_local_aex_writer": {
+      "classification": "Mac-local Unicorn execution of checked-in Windows 2025 AEX leaves; direct writer code-domain evidence only, not AE-host execution and not candidate production behavior",
+      "rounding_instruction_observed": "AEX uses CVTSS2SI/CVTPS2DQ under the emulated MXCSR; this is recorded as an observation, not replaced by the Mac half-up model",
+      "upstream_scale": "unproven",
+      "direct_call_xrefs": {
+        "FUN_181458030": [],
+        "FUN_1814581a0": []
+      }
+    },
+    "mac_local_active_path": {
+      "status": "inactive_for_fixture",
+      "writer_hits": [],
+      "final_output_written": true
+    },
+    "mac_local_synthetic_boundary": {
+      "pf16_matrix_script": "tools/emulation/test_dg_pf16_boundary_matrix_20260717.py",
+      "field_staging_script": "tools/emulation/test_dg_pf16_field_staging_differential_20260717.py",
+      "interpretation": "existing scripts assert actual-AEX/source equality on bounded synthetic PF16 fixtures; they do not assert target-case equality against Windows AE"
+    }
+  },
+  "inference": {
+    "host_conversion_vs_final_store": "not separable from existing Mac-only evidence",
+    "host_conversion_only_explanation": "not proven",
+    "final_pf16_store_only_explanation": "not proven",
+    "final_writer_global_rounding_fix": "not authorized; adjacent 0010/0011 evidence has sign-flipped deltas and the target cases lack a live Windows store word",
+    "safe_boundary": "upstream field/pre-store/store boundary remains unresolved for both target cases"
+  },
+  "required_next_evidence": [
+    "For one coordinate in case_0012 and one in case_0014, capture in one Windows Software AE run: source PF16 words, field raw word or field float, compose pre-store float, PF16 stored word, and same-run true16 TIFF/EXR word.",
+    "Capture the Mac AE counterpart at the same coordinates and parameters, preserving the same five boundaries.",
+    "Only then compare host input conversion, compose pre-store value, PF16 writer result, and export independently."
+  ],
+  "evidence_sha256": {
+    "refs/conformance/olmdistancegradation_depth_gate_result_20260708.md": "fd639a9ff4fcec180cc8c3d92b61317caed40545695e9b38530ae02c35d57cdc",
+    "refs/reports/runtime_trace_summary_distancegradation_case0012_case0014_store_export_rounding_20260708_213751.json": "1d813333e0e18ce13c13923a5b20e6044566807785c24f853eca1e301d02fb42",
+    "refs/conformance/dg_pf16_writer_boundary_20260716.json": "dc00e668aba5cbaacf3aed2bfd055713de302406c434d9b96eca8beef5b4e213",
+    "refs/conformance/dg_pf16_writer_active_path_20260716.json": "99fd108902e8a0237b3116a4b87b66dabb0a71e17398b0387a878263cebc8360",
+    "tools/emulation/test_dg_pf16_boundary_matrix_20260717.py": "d9f8a64b01648694b0b34eec1fac245f3286652dabbedb7166039495ff7defc5",
+    "tools/emulation/test_dg_pf16_field_staging_differential_20260717.py": "8d18b49f59a5b7d97cddafc851278de6d67fb7e0955aae91d9fc8f3859e1c3af",
+    "tools/emulation/test_olmdistancegradation_alpha_store_residual_20260716.py": "f7de82553a93fd3e758e1e6128a20a8069182df66b77da9e4241247dadec8a2d"
+  }
+}

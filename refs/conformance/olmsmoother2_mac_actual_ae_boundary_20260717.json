@@ -177,18 +177,62 @@
     }
   },
   "claims_not_made": [
-    "No Mac internal class-plane or producer return capture",
     "No AE exactness",
-    "No claim that a final-pixel residual identifies c280, cce0, or the writer",
-    "No modification to shared files"
+    "No claim that a final-pixel residual alone identifies c280, cce0, or the writer",
+    "No modification to shared request or reference files"
   ],
   "inputs": {
     "mac_output_png_sha256": "a07cbca0beb6a829759e0edb8d82e0b70e205ec2387f6a81147d68e217372c0b",
     "source_png_sha256": "9d96a359d987774a398ec27e224650fda83fa00ae3c14bd04b87e2402ea34265",
     "windows_output_png_sha256": "a90079741c9e065f762274d79bbbe81976da06d18682af1eac3073c5f61f60d7"
   },
+  "mac_internal_trace": {
+    "lines": [
+      "trace class_threshold mode=0 field=88 threshold=0.88099998 enable_key=1 invert_key=0 smooth_range=88 key_pred=1",
+      "trace build_polygon x=92 y=841 idx=67 c=ff0000ff eR0=0 bSW=1 bSE=0 uVar7=0 bits=0,0,2,0,1",
+      "trace neighborhood sample (91,840)=0.99113679,0.99113679,0.99113679,0.99609375 class=ffffffff",
+      "trace neighborhood sample (92,840)=0.42325333,0.42325333,0.42325333,0.68234253 class=ffff00ff",
+      "trace neighborhood sample (93,840)=0.00518142,0.00518142,0.00518142,0.06274414 class=ff000000",
+      "trace neighborhood sample (91,841)=1.00000000,1.00000000,1.00000000,0.00000000 class=00ff00ff",
+      "trace neighborhood sample (92,841)=0.97341150,0.97341150,0.97341150,0.98822021 class=ff0000ff",
+      "trace neighborhood sample (93,841)=0.11192886,0.11192886,0.11192886,0.36862183 class=ff000000",
+      "trace neighborhood sample (91,842)=1.00000000,1.00000000,1.00000000,0.00000000 class=000000ff",
+      "trace neighborhood sample (92,842)=0.98225081,0.98225081,0.98225081,0.99215698 class=ff00ffff",
+      "trace neighborhood sample (93,842)=0.11444152,0.11444152,0.11444152,0.37255859 class=ff00ff00",
+      "trace cardinal6 cplane y=839 x=92 bytes=0,0,0,0 x1=93 bytes=0,0,0,0",
+      "trace cardinal6 cplane y=840 x=92 bytes=255,255,0,255 x1=93 bytes=255,0,0,0",
+      "trace cardinal6 cplane y=841 x=92 bytes=255,0,0,255 x1=93 bytes=255,0,0,0",
+      "trace cardinal6 cplane y=842 x=92 bytes=255,0,255,255 x1=93 bytes=255,0,255,0",
+      "trace cardinal6 cplane y=843 x=92 bytes=255,0,255,0 x1=93 bytes=255,0,255,0",
+      "trace cardinal6 cplane y=844 x=92 bytes=0,255,255,0 x1=93 bytes=0,0,255,0",
+      "trace cardinal6 desc=(92,840,1,92,843,2) key=20 count_before=0",
+      "trace e170 p2=(92,840,1,92,843,2) bits Axy-1=0 R x-1y=1 Axy=1 -> c=5",
+      "trace f270 c=5 p3=1 extra_n=0.40000001 count_before=0",
+      "trace e3a0 p2=(92,840,1,92,843,2) scale_m=0.57999998 scale_h=1 trap=(2.3199999,1,0.5) weight=0.17672412",
+      "trace append src=(92,839) dst_center=(92,841) rgba=(0.0060487087,0.0060487087,0.0060487087,0.070587158) w=0.17672412 before_count=0",
+      "trace f270 emitted=1 count_after=1",
+      "trace append src=(92,844) dst_center=(92,841) rgba=(0.0080230134,0.0080230134,0.0080230134,0.086273193) w=0.011034477 before_count=1",
+      "trace cardinal6 count_after=2",
+      "trace build_polygon_done x=92 y=841 idx=67 count=2",
+      "trace sample[0] rgba=(0.0060487087,0.0060487087,0.0060487087,0.070587158) w=0.062462829",
+      "trace sample[1] rgba=(0.0080230134,0.0080230134,0.0080230134,0.086273193) w=0.00024351935",
+      "trace cce0_entry x=92 y=841 center=0.97341150,0.97341150,0.97341150,0.98822021 poly_count=2",
+      "trace cce0_poly[0]=0.00604871,0.00604871,0.00604871,0.07058716 w=0.06246283",
+      "trace cce0_poly[1]=0.00802301,0.00802301,0.00802301,0.08627319 w=0.00024352",
+      "trace cce0_bb10 apply=0 gamma=2.16954732 curve=5",
+      "trace cce0_after_c0d0 center=0.96194494,0.96194494,0.96194494,0.98822021",
+      "trace cce0_after_c0d0_poly[0]=0.00042696,0.00042696,0.00042696,0.07058716 w=0.06246283",
+      "trace cce0_after_c0d0_poly[1]=0.00069217,0.00069217,0.00069217,0.08627319 w=0.00024352",
+      "trace cce0_after_ab00 accum=0.90165168,0.90165168,0.90165168,0.93068260",
+      "trace cce0_after_b120 out=0.96880686,0.96880686,0.96880686,0.93068260"
+    ],
+    "pixel": [
+      92,
+      841
+    ]
+  },
   "mac_plugin": {
-    "binary_sha256": "a7b9747dec20e97c019de8ffd402c6476eb39dcab14a6b8648772e0af1539c69",
+    "binary_sha256": "f1f2b43aed76f208e794f3b45d366f4628ae9b6ea8a1bd471522da96b2fcad7e",
     "bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother2.plugin"
   },
   "platform": {

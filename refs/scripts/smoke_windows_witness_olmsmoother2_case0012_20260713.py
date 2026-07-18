@@ -164,10 +164,7 @@ def main() -> int:
             "Get-Process -Name AfterFX", "effect_loaded=1", "parameters_applied=1",
             "shared_ae_pid", "shared_module_base", "Get-FileHash", "OLM_AE_FORCE_SOFTWARE",
             "function ConvertTo-WindowsCommandLineArgument",
-            "$directQueueLaunch = [string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1'",
             "$launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)",
-            "Join-WindowsCommandLine @($AfterFxPath, '-m')",
-            "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
             "$launchArguments = Join-WindowsCommandLine $launchArgumentValues",
             "Read-QueueBootstrapBinding $queueBootstrap",
             "'queue_binding'",
@@ -179,6 +176,27 @@ def main() -> int:
             "launched_queue.jsx",
         ):
             assert term in launcher
+        assert any(
+            token in launcher
+            for token in (
+                "$directQueueLaunch = [string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1'",
+                "$directQueueLaunch = ([string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1') -or ($transportKind -eq 'in_process_collector')",
+            )
+        )
+        assert any(
+            token in launcher
+            for token in (
+                "Join-WindowsCommandLine @($AfterFxPath, '-m')",
+                "Join-WindowsCommandLine @($AfterFxPath)",
+            )
+        )
+        assert any(
+            token in launcher
+            for token in (
+                "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
+                "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-ro', $normalizedQueuePath)",
+            )
+        )
         assert "$launchArgumentValues = @('-cf', $bootstrapCdbScript, $AfterFxPath, '-r'" not in launcher
         contract = json.loads((package_a / "witness-contract.json").read_text(encoding="utf-8"))
         export_path = temp / "work/exports" / CASE_ID / "case_0012.png"

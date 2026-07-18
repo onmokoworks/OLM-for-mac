@@ -1,0 +1,69 @@
+{
+  "binary": {
+    "path": "plugins_2025/OLMSmoother2.aex",
+    "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+  },
+  "binary_contract": {
+    "abi": "Windows x64 double pow(double XMM0, double XMM1), double XMM0 return",
+    "callsite": "0x180002d23",
+    "import": {
+      "dll": "api-ms-win-crt-math-l1-1-0.dll",
+      "iat_rva": 139728,
+      "iat_va": 6442590672,
+      "name": "pow"
+    },
+    "post_call_conversion": "0x180002d28 CVTSD2SS XMM0,XMM0",
+    "thunk": "0x180020f76 -> IAT 0x1800221d0"
+  },
+  "bounded_sensitivity": {
+    "baseline_previous_red_word": "0x3e3ce703",
+    "cce0_output_bitwise_equal": true,
+    "class_plane_bitwise_equal": true,
+    "descriptor_equal": true,
+    "forced_previous_red_word": "0x3e3ce706",
+    "forced_witness_calls": 3,
+    "pf8_witness_conclusion": "For this bounded case_0012 witness, the retained three-ULP RGB difference does not reach cce0 output and therefore cannot change its PF8 writer result.",
+    "polygon_rgb_difference_preserved": true,
+    "polygon_weights_bitwise_equal": true,
+    "pow_calls": 45
+  },
+  "claims_not_made": [
+    "No Mac plug-in source change",
+    "No claim that UCRT pow equals Darwin libm for all inputs",
+    "No AE exact claim"
+  ],
+  "facts": [
+    "The AEX imports double pow from the Universal CRT API-set and converts its double return to float32.",
+    "The actual-AEX runner currently substitutes Python math.pow backed by Darwin libm.",
+    "For the captured runner input, Darwin libm agrees with a high-precision oracle and rounds to 0x3e3ce703.",
+    "The retained 0x3e3ce706 word is not evidence of a three-float-ULP UCRT error for that same input.",
+    "Injecting 0x3e3ce706 into the bounded witness leaves class, descriptor, weights, and cce0 output unchanged."
+  ],
+  "inferences": [
+    "The remaining provenance gap is upstream of or at the imported pow call: Windows input bits and UCRT return bits were not captured in the same run.",
+    "A PF8-wide deterministic LUT is safer than platform libm only after its entries are grounded by same-run Windows input/output captures."
+  ],
+  "numerical_oracle": {
+    "conclusion": "The retained Windows word cannot be attributed to a three-float-ULP UCRT error for this same input; upstream input/provenance remains unproven.",
+    "exponent": 2.4,
+    "exponent_f64_word": "0x4003333333333333",
+    "high_precision_result": "0.18447499618666195541474257851663477693403869623760908077568378350734863722717357712741169333052772221588685979",
+    "host_after_cvtsd2ss_word": "0x3e3ce703",
+    "host_pow_double": 0.18447499618666197,
+    "host_pow_double_word": "0x3fc79ce06dc69584",
+    "input_x": 0.49447077597487027,
+    "input_x_f64_word": "0x3fdfa568c0e8f2a7",
+    "retained_delta_f32_ulp": 3,
+    "retained_error_from_mathematical_in_f32_ulp": 2.569508784220098,
+    "windows_retained_word": "0x3e3ce706"
+  },
+  "recommended_strategy": [
+    "Capture XMM0/XMM1 at 0x180002d23 and XMM0 before 0x180002d28 on Windows for the accepted pixel.",
+    "If the input bits match, store a keyed UCRT return oracle and investigate the unexpected error before production use.",
+    "If the input bits differ, fix the PF8 host adapter/conversion provenance rather than compensating in pow.",
+    "For PF8 production, generate a 256-code (or premultiplied code-pair) Windows-grounded sRGB decode table and verify full AE cases.",
+    "For PF16/PF32, use captured UCRT boundary vectors plus a deterministic implementation; do not reuse a PF8 LUT as a broad fix."
+  ],
+  "schema": 1,
+  "verdict": "PASS_IMPORTED_POW_BOUNDARY_CLASSIFIED_NOT_UCRT_ONLY"
+}

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import importlib.util
 import json
 import struct
 import subprocess
@@ -14,17 +15,21 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+GENERATOR = ROOT / "scripts/package_windows_witness_olmblur_case0006_20260713.py"
 sys.path.insert(0, str(ROOT))
 
 from tools.windows_witness.runtime import bundle_return, validate_trace  # noqa: E402
 
+_GENERATOR_MODULE_SPEC = importlib.util.spec_from_file_location("case0006_generator", GENERATOR)
+assert _GENERATOR_MODULE_SPEC and _GENERATOR_MODULE_SPEC.loader
+_GENERATOR_MODULE = importlib.util.module_from_spec(_GENERATOR_MODULE_SPEC)
+_GENERATOR_MODULE_SPEC.loader.exec_module(_GENERATOR_MODULE)
+publish_transaction = _GENERATOR_MODULE.publish_transaction
 
-GENERATOR = ROOT / "scripts/package_windows_witness_olmblur_case0006_20260713.py"
+
 SPEC_ROOT = ROOT / "refs/windows_witness_specs/olmblur_case0006_same_run_20260713"
 SPEC = SPEC_ROOT / "witness-spec.json"
 CANONICAL = ROOT / "refs/runtime_trace_packages/olm_runtime_trace_olmblur_case0006_same_run_internal_20260713"
-GENERATED_PACKAGE = ROOT / "refs/runtime_trace_packages/windows_witness_olmblur_case0006_20260713"
-GENERATED_ZIP = GENERATED_PACKAGE.with_suffix(".zip")
 HASH = "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
 CASE_ID = "olmblur__case_0006"
 WITNESS_ID = "olmblur-case0006-rgb16-common-core-v1"
@@ -36,8 +41,8 @@ def digest(path: Path) -> str:
 
 
 def compile_package(temp: Path, name: str) -> tuple[Path, Path]:
-    package = temp / name
-    archive = temp / f"{name}.zip"
+    package = temp / "missing" / "package" / "deep" / name
+    archive = temp / "separate" / "archive" / "deep" / f"{name}.zip"
     completed = subprocess.run(
         [sys.executable, str(GENERATOR), "--output-dir", str(package), "--zip", str(archive)],
         cwd=ROOT,
@@ -83,10 +88,94 @@ def assert_png16(path: Path) -> None:
     assert color_type in (2, 6)
 
 
+def assert_transaction_publication() -> None:
+    with tempfile.TemporaryDirectory(prefix="olmblur_publication_smoke_") as raw:
+        root = Path(raw)
+        package = root / "canonical-package"
+        archive = root / "canonical.zip"
+        staged_package = root / "staged-package"
+        staged_archive = root / "staged.zip"
+        package.mkdir()
+        (package / "launcher.ps1").write_text("old-launcher\n", encoding="ascii")
+        archive.write_bytes(b"old-zip")
+        staged_package.mkdir()
+        (staged_package / "launcher.ps1").write_text("new-launcher\n", encoding="ascii")
+        staged_archive.write_bytes(b"new-zip")
+
+        publish_transaction(staged_package, staged_archive, package, archive)
+        assert (package / "launcher.ps1").read_text(encoding="ascii") == "new-launcher\n"
+        assert archive.read_bytes() == b"new-zip"
+        assert not any(path.name.startswith(f".{package.name}.backup.") for path in root.iterdir())
+
+        old_package = root / "rollback-package"
+        old_archive = root / "rollback.zip"
+        next_package = root / "rollback-staged-package"
+        next_archive = root / "rollback-staged.zip"
+        old_package.mkdir()
+        (old_package / "launcher.ps1").write_bytes(b"old-launcher")
+        old_package_bytes = (old_package / "launcher.ps1").read_bytes()
+        old_archive.write_bytes(b"old-zip")
+        next_package.mkdir()
+        (next_package / "launcher.ps1").write_bytes(b"new-launcher")
+        next_archive.write_bytes(b"new-zip")
+
+        real_replace = Path.replace
+
+        def fail_archive_replace(source: Path, destination: Path) -> Path:
+            if source == next_archive and destination == old_archive:
+                raise OSError("injected archive replace failure")
+            return real_replace(source, destination)
+
+        try:
+            publish_transaction(next_package, next_archive, old_package, old_archive, replace=fail_archive_replace)
+        except OSError as error:
+            assert str(error) == "injected archive replace failure"
+        else:
+            raise AssertionError("forced publication failure was not raised")
+        assert (old_package / "launcher.ps1").read_bytes() == old_package_bytes
+        assert old_archive.read_bytes() == b"old-zip"
+        assert not any(path.name.startswith(f".{old_package.name}.backup.") for path in root.iterdir())
+        assert not next_package.exists() and next_archive.is_file()
+
+        diagnostic_package = root / "diagnostic-package"
+        diagnostic_archive = root / "diagnostic.zip"
+        diagnostic_staged_package = root / "diagnostic-staged-package"
+        diagnostic_staged_archive = root / "diagnostic-staged.zip"
+        diagnostic_package.mkdir()
+        (diagnostic_package / "launcher.ps1").write_bytes(b"old-launcher")
+        diagnostic_archive.write_bytes(b"old-zip")
+        diagnostic_staged_package.mkdir()
+        diagnostic_staged_archive.write_bytes(b"new-zip")
+
+        def fail_publish_and_restore(source: Path, destination: Path) -> Path:
+            if source == diagnostic_staged_archive and destination == diagnostic_archive:
+                raise OSError("injected archive replace failure")
+            if source.name == "package" and destination == diagnostic_package:
+                raise OSError("injected package restore failure")
+            return real_replace(source, destination)
+
+        try:
+            publish_transaction(
+                diagnostic_staged_package,
+                diagnostic_staged_archive,
+                diagnostic_package,
+                diagnostic_archive,
+                replace=fail_publish_and_restore,
+            )
+        except OSError as error:
+            assert str(error) == "injected archive replace failure"
+            assert any("restore package backup" in note for note in error.__notes__)
+        else:
+            raise AssertionError("rollback diagnostic failure was not raised")
+        assert diagnostic_archive.read_bytes() == b"old-zip"
+
+
 def main() -> int:
     source = GENERATOR.read_text(encoding="utf-8")
     assert '"-m"' in source and '"tools.windows_witness.compile"' in source
     assert "compile_witness" not in source
+    assert "publish_transaction" in source
+    assert_transaction_publication()
 
     spec = json.loads(SPEC.read_text(encoding="utf-8"))
     assert spec["plugin"]["aex_sha256"] == HASH
@@ -147,10 +236,7 @@ def main() -> int:
         package_a, zip_a = compile_package(temp, "package-a")
         package_b, zip_b = compile_package(temp, "package-b")
         assert zip_a.read_bytes() == zip_b.read_bytes()
-        assert GENERATED_PACKAGE.is_dir()
-        assert GENERATED_ZIP.is_file()
-        assert GENERATED_ZIP.read_bytes() == zip_a.read_bytes()
-        launcher = (GENERATED_PACKAGE / "artifacts/run_witness.ps1").read_text(encoding="utf-8")
+        launcher = (package_a / "artifacts/run_witness.ps1").read_text(encoding="utf-8")
         assert launcher == (package_a / "artifacts/run_witness.ps1").read_text(encoding="utf-8")
         package_manifest = json.loads((package_a / "package-manifest.json").read_text(encoding="utf-8"))
         assert package_manifest["kind"] == "windows_witness_generated_package"
@@ -171,9 +257,9 @@ def main() -> int:
             "bundle --contract",
             "function ConvertTo-WindowsCommandLineArgument",
             "$launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)",
-            "$directQueueLaunch = [string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1'",
-            "Join-WindowsCommandLine @($AfterFxPath, '-m')",
-            "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
+            "$directQueueLaunch = ([string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1') -or ($transportKind -eq 'in_process_collector')",
+            "Join-WindowsCommandLine @($AfterFxPath, '-ro', $normalizedQueuePath)",
+            "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-ro', $normalizedQueuePath)",
             "$launchArguments = Join-WindowsCommandLine $launchArgumentValues",
             "Read-QueueBootstrapBinding $queueBootstrap",
             "'queue_binding'",

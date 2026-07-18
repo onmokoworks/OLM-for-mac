@@ -1,0 +1,1158 @@
+{
+  "ae_exact_claim": false,
+  "answer": {
+    "anchor_x": "FUN_181281e90 default-anchor branch: param_5 < 0 -> param_4 / 2 -> R14D=0xc0000000, then source object +0x0c -> FilterEngine anchor.x=-1073741824",
+    "interpretation_boundary": "The first proven generation of 0xc0000000 is FUN_181281e90's default-anchor calculation. The row-geometry object store is the next observed boundary, and later FilterEngine fields preserve the same 32-bit words as signed int32 values.",
+    "not_host_parameter": "The observed geometry words are register/object values in the AEX lineage, not a parameter checkout value.",
+    "width": "R15D=0x80000000 -> source object +0x08 -> FilterEngine ksize.width=-2147483648"
+  },
+  "checks": {
+    "assertion_signed_fields": true,
+    "assertion_unmodified_fail_closed": true,
+    "default_anchor_generation_present": true,
+    "filterengine_anchor_store_raw": true,
+    "filterengine_width_store_raw": true,
+    "row_register_anchor_raw": true,
+    "row_register_width_raw": true,
+    "source_object_signed_anchor": true,
+    "source_object_signed_width": true,
+    "static_asm_boundary_present": true,
+    "static_decomp_context_present": true
+  },
+  "classification": "AEX_GENERATED_SIGNED_FILTER_GEOMETRY",
+  "date": "2026-07-18",
+  "fact_inference": {
+    "FACT": [
+      "The checked-in assembly contains the listed register stores, object stores, FilterEngine stores, and assertion compare.",
+      "The natural actual-AEX run observed the raw register words and the signed assertion fields without mutation."
+    ],
+    "INFERENCE": [
+      "The invalid geometry is generated inside the AEX row-geometry path rather than being directly copied from the host parameter surface.",
+      "A future fix must explain or replace this upstream geometry construction; changing only the assertion or final pixels would violate the evidence boundary."
+    ]
+  },
+  "kind": "olmkirakira_signed_geometry_boundary",
+  "limits": [
+    "No argument, object, source, or assertion value was patched.",
+    "The FilterEngine assertion remained the terminal boundary.",
+    "No Windows execution, After Effects host binding, final pixel, or AE-exactness claim.",
+    "This proof does not establish why the upstream algorithm intentionally produced these words; it only fixes their first observed AEX geometry boundary."
+  ],
+  "platform_scope": "Mac-only Unicorn actual-AEX execution of checked-in Windows PE; no Windows/After Effects claim",
+  "question": "Where is 0xc0000000 first generated, and how does it reach the signed FilterEngine geometry that fails the assertion?",
+  "runtime": {
+    "execution_stop": {
+      "condition": "FilterEngine anchor assertion persisted after verified bootstrap; fail closed",
+      "dispatch": {
+        "chunk_instructions": 10000,
+        "chunks": [
+          {
+            "chunk": 1,
+            "instructions": 10000,
+            "rip": "0x181322e86"
+          },
+          {
+            "chunk": 2,
+            "instructions": 10000,
+            "rip": "0x181160cab"
+          },
+          {
+            "chunk": 3,
+            "instructions": 10000,
+            "rip": "0x181156bb8"
+          },
+          {
+            "chunk": 4,
+            "instructions": 10000,
+            "rip": "0x18132b27c"
+          }
+        ],
+        "max_chunks": 64,
+        "progress_history": [],
+        "terminal": "filterengine_anchor_assertion_after_verified_bootstrap"
+      },
+      "dispatch_fault": {
+        "message": "Unhandled CPU exception (UC_ERR_EXCEPTION)",
+        "registers_rcx_rdx_r8_r9": [
+          "0xf0fd320",
+          "0x18181e9d8",
+          "0x52",
+          "0xffffffffffffffff"
+        ],
+        "rip": "0x181162610",
+        "type": "UcError"
+      },
+      "grounded_location": null,
+      "instructions": 40000,
+      "rax": "0x0",
+      "registers_rcx_rdx_r8_r9_rbp_rsi_rdi": [
+        "0xf0fd320",
+        "0x18181e9d8",
+        "0x52",
+        "0xffffffffffffffff",
+        "0x0",
+        "0xf0fd450",
+        "0x18152bfd8"
+      ],
+      "rip": "0x181162610",
+      "rsp": "0xf0fd2e0"
+    },
+    "filterengine_assertion": {
+      "anchor": {
+        "x": -1073741824,
+        "y": 0
+      },
+      "compare_path": "0x1812b9b6f..0x1812b9b92",
+      "compared_fields": {
+        "+0x14 ksize.width": -2147483648,
+        "+0x18 ksize.height": 1,
+        "+0x1c anchor.x": -1073741824,
+        "+0x20 anchor.y": 0
+      },
+      "failed_predicates": [
+        "0 <= anchor.x",
+        "anchor.x < ksize.width"
+      ],
+      "ksize": {
+        "height": 1,
+        "width": -2147483648
+      },
+      "label": "FilterEngine::init anchor assertion throw callsite",
+      "object_pointer": "0x20006d70",
+      "object_register": "RDI",
+      "predicates": {
+        "0 <= anchor.x": false,
+        "0 <= anchor.y": true,
+        "anchor.x < ksize.width": false,
+        "anchor.y < ksize.height": true
+      },
+      "rip": "0x1812b9da8",
+      "stop_without_mutation": true,
+      "throw_target": "FUN_181162610"
+    },
+    "filterengine_stores": [
+      {
+        "address": "0x1812b9b3c",
+        "instruction_length": 4,
+        "kind": "filterengine_store_post",
+        "label": "ksize.width/height store immediately after",
+        "object_fields_after": {
+          "+0x14": -2147483648,
+          "+0x18": 1,
+          "+0x1c": 0,
+          "+0x20": 0
+        },
+        "object_fields_before": {
+          "+0x14": 0,
+          "+0x18": 0,
+          "+0x1c": 0,
+          "+0x20": 0
+        },
+        "object_pointer": "0x20006d70",
+        "object_register": "RDI",
+        "post_store_hook": "0x1812b9b3c",
+        "source_objects": {
+          "R8": "0x20006d00",
+          "RDX": "0x20006d20"
+        },
+        "store_source": "0x180000000",
+        "store_source_register": "RAX"
+      },
+      {
+        "address": "0x1812b9b51",
+        "instruction_length": 4,
+        "kind": "filterengine_store_post",
+        "label": "anchor.x/y store immediately after",
+        "object_fields_after": {
+          "+0x14": -2147483648,
+          "+0x18": 1,
+          "+0x1c": -1073741824,
+          "+0x20": 0
+        },
+        "object_fields_before": {
+          "+0x14": -2147483648,
+          "+0x18": 1,
+          "+0x1c": 0,
+          "+0x20": 0
+        },
+        "object_pointer": "0x20006d70",
+        "object_register": "RDI",
+        "post_store_hook": "0x1812b9b51",
+        "source_objects": {
+          "R8": "0x20006d00",
+          "RDX": "0x20006d20"
+        },
+        "store_source": "0xc0000000",
+        "store_source_register": "RAX"
+      }
+    ],
+    "row_geometry_register_store": [
+      {
+        "address": "0x18128257a",
+        "capture_phase": "immediately_before_instruction",
+        "function": "FUN_181281e90",
+        "instruction": "MOV dword ptr [RBX + 0x8],R15D",
+        "object_pointer": "0x20006d00",
+        "object_register": "RBX",
+        "object_window": {
+          "f32": {
+            "+0x00": -3.77981539404136e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": NaN,
+            "+0x0c": NaN,
+            "+0x10": 0.0,
+            "+0x14": 0.0,
+            "+0x18": 0.0,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125608208,
+            "+0x04": 1,
+            "+0x08": -1,
+            "+0x0c": -1,
+            "+0x10": 0,
+            "+0x14": 0,
+            "+0x18": 0,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d00",
+          "range": "+0x00..+0x20",
+          "raw_hex": "f0ca4d8101000000ffffffffffffffff0000000000000000000000000000000000000000"
+        },
+        "r14d_before_store": 3221225472,
+        "r15d_before_store": 2147483648,
+        "registers": {
+          "R14": "0xc0000000",
+          "R15": "0x80000000",
+          "R8": "0x5",
+          "R9": "0x80000000",
+          "RAX": "0x1814dcaf0",
+          "RBX": "0x20006d00",
+          "RCX": "0x20006d00",
+          "RDX": "0xffffffff"
+        },
+        "rip": "0x18128257a",
+        "rsp": "0xf0fd5d0",
+        "stack_args": {
+          "+0x20": "0x242ff4006",
+          "+0x28": "0x181184a5a",
+          "+0x30": "0x0",
+          "+0x38": "0x20006d00",
+          "+0x40": "0x2b9922d077f2",
+          "+0x48": "0x0",
+          "+0x50": "0x0",
+          "+0x58": "0xf0fd718"
+        },
+        "value_sources": {
+          "object_plus_0x8": "R15D",
+          "object_plus_0xc_next_instruction": "R14D"
+        }
+      }
+    ],
+    "source_reads": [
+      {
+        "filterengine_rdi": {
+          "f32": {
+            "+0x00": -3.8692765300813995e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 7.006492321624085e-45,
+            "+0x0c": 7.006492321624085e-45,
+            "+0x10": 8.407790785948902e-45,
+            "+0x14": 0.0,
+            "+0x18": 0.0,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125289000,
+            "+0x04": 1,
+            "+0x08": 5,
+            "+0x0c": 5,
+            "+0x10": 6,
+            "+0x14": 0,
+            "+0x18": 0,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d70",
+          "range": "+0x00..+0x20",
+          "raw_hex": "d8a952810100000005000000050000000600000000000000000000000000000000000000"
+        },
+        "instruction_rip": "0x1812b9b27",
+        "kind": "filterengine_source_read_site",
+        "last_filterengine_writes": {},
+        "last_source_writes": {
+          "R8": {
+            "+0x00": {
+              "address": "0x20006d00",
+              "instruction_rip": "0x181282577",
+              "size": 8,
+              "value_raw_hex": "f0ca4d8101000000"
+            },
+            "+0x04": {
+              "address": "0x20006d00",
+              "instruction_rip": "0x181282577",
+              "size": 8,
+              "value_raw_hex": "f0ca4d8101000000"
+            },
+            "+0x08": {
+              "address": "0x20006d08",
+              "instruction_rip": "0x18128257a",
+              "size": 4,
+              "value_raw_hex": "00000080"
+            },
+            "+0x0c": {
+              "address": "0x20006d0c",
+              "instruction_rip": "0x18128257e",
+              "size": 4,
+              "value_raw_hex": "000000c0"
+            },
+            "+0x10": {
+              "address": "0x20006d10",
+              "instruction_rip": "0x181281b94",
+              "size": 8,
+              "value_raw_hex": "a0e34d8101000000"
+            },
+            "+0x14": {
+              "address": "0x20006d10",
+              "instruction_rip": "0x181281b94",
+              "size": 8,
+              "value_raw_hex": "a0e34d8101000000"
+            },
+            "+0x18": {
+              "address": "0x20006d18",
+              "instruction_rip": "0x1812b9a6e",
+              "size": 4,
+              "value_raw_hex": "02000000"
+            },
+            "+0x1c": {
+              "address": "0x20006d1c",
+              "instruction_rip": "0x181281b86",
+              "size": 4,
+              "value_raw_hex": "01000000"
+            },
+            "+0x20": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            }
+          },
+          "RDX": {
+            "+0x00": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            },
+            "+0x04": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            },
+            "+0x08": {
+              "address": "0x20006d28",
+              "instruction_rip": "0x181281bbe",
+              "size": 4,
+              "value_raw_hex": "01000000"
+            },
+            "+0x0c": {
+              "address": "0x20006d2c",
+              "instruction_rip": "0x181281bc2",
+              "size": 4,
+              "value_raw_hex": "00000000"
+            },
+            "+0x10": {
+              "address": "0x20006d30",
+              "instruction_rip": "0x181281bcb",
+              "size": 8,
+              "value_raw_hex": "00000000000000be"
+            },
+            "+0x14": {
+              "address": "0x20006d30",
+              "instruction_rip": "0x181281bcb",
+              "size": 8,
+              "value_raw_hex": "00000000000000be"
+            },
+            "+0x18": {
+              "address": "0x20006d38",
+              "instruction_rip": "0x181281bd0",
+              "size": 4,
+              "value_raw_hex": "00000000"
+            },
+            "+0x20": {
+              "address": "0x20006d40",
+              "instruction_rip": "0x181281bb2",
+              "size": 8,
+              "value_raw_hex": "0000000000000000"
+            }
+          }
+        },
+        "object_register": "RDX/R8",
+        "r8": {
+          "f32": {
+            "+0x00": -3.77981539404136e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": -0.0,
+            "+0x0c": -2.0,
+            "+0x10": -3.781586635300267e-38,
+            "+0x14": 1.401298464324817e-45,
+            "+0x18": 2.802596928649634e-45,
+            "+0x1c": 1.401298464324817e-45,
+            "+0x20": -3.7799431924613067e-38
+          },
+          "i32": {
+            "+0x00": -2125608208,
+            "+0x04": 1,
+            "+0x08": -2147483648,
+            "+0x0c": -1073741824,
+            "+0x10": -2125601888,
+            "+0x14": 1,
+            "+0x18": 2,
+            "+0x1c": 1,
+            "+0x20": -2125607752
+          },
+          "pointer": "0x20006d00",
+          "range": "+0x00..+0x20",
+          "raw_hex": "f0ca4d810100000000000080000000c0a0e34d81010000000200000001000000b8cc4d81"
+        },
+        "rdx": {
+          "f32": {
+            "+0x00": -3.7799431924613067e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 1.401298464324817e-45,
+            "+0x0c": 0.0,
+            "+0x10": 0.0,
+            "+0x14": -0.125,
+            "+0x18": 0.0,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125607752,
+            "+0x04": 1,
+            "+0x08": 1,
+            "+0x0c": 0,
+            "+0x10": 0,
+            "+0x14": -1107296256,
+            "+0x18": 0,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d20",
+          "range": "+0x00..+0x20",
+          "raw_hex": "b8cc4d8101000000010000000000000000000000000000be000000000000000000000000"
+        },
+        "unresolved_source_offsets": {
+          "R8": [],
+          "RDX": [
+            "+0x1c"
+          ]
+        }
+      },
+      {
+        "filterengine_rdi": {
+          "f32": {
+            "+0x00": -3.8692765300813995e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 7.006492321624085e-45,
+            "+0x0c": 7.006492321624085e-45,
+            "+0x10": 8.407790785948902e-45,
+            "+0x14": -0.0,
+            "+0x18": 1.401298464324817e-45,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125289000,
+            "+0x04": 1,
+            "+0x08": 5,
+            "+0x0c": 5,
+            "+0x10": 6,
+            "+0x14": -2147483648,
+            "+0x18": 1,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d70",
+          "range": "+0x00..+0x20",
+          "raw_hex": "d8a952810100000005000000050000000600000000000080010000000000000000000000"
+        },
+        "instruction_rip": "0x1812b9b3c",
+        "kind": "filterengine_source_read_site",
+        "last_filterengine_writes": {
+          "+0x14": {
+            "address": "0x20006d84",
+            "instruction_rip": "0x1812b9b38",
+            "size": 8,
+            "target": "FilterEngine.RDI"
+          },
+          "+0x18": {
+            "address": "0x20006d84",
+            "instruction_rip": "0x1812b9b38",
+            "size": 8,
+            "target": "FilterEngine.RDI"
+          }
+        },
+        "last_source_writes": {
+          "R8": {
+            "+0x00": {
+              "address": "0x20006d00",
+              "instruction_rip": "0x181282577",
+              "size": 8,
+              "value_raw_hex": "f0ca4d8101000000"
+            },
+            "+0x04": {
+              "address": "0x20006d00",
+              "instruction_rip": "0x181282577",
+              "size": 8,
+              "value_raw_hex": "f0ca4d8101000000"
+            },
+            "+0x08": {
+              "address": "0x20006d08",
+              "instruction_rip": "0x18128257a",
+              "size": 4,
+              "value_raw_hex": "00000080"
+            },
+            "+0x0c": {
+              "address": "0x20006d0c",
+              "instruction_rip": "0x18128257e",
+              "size": 4,
+              "value_raw_hex": "000000c0"
+            },
+            "+0x10": {
+              "address": "0x20006d10",
+              "instruction_rip": "0x181281b94",
+              "size": 8,
+              "value_raw_hex": "a0e34d8101000000"
+            },
+            "+0x14": {
+              "address": "0x20006d10",
+              "instruction_rip": "0x181281b94",
+              "size": 8,
+              "value_raw_hex": "a0e34d8101000000"
+            },
+            "+0x18": {
+              "address": "0x20006d18",
+              "instruction_rip": "0x1812b9a6e",
+              "size": 4,
+              "value_raw_hex": "02000000"
+            },
+            "+0x1c": {
+              "address": "0x20006d1c",
+              "instruction_rip": "0x181281b86",
+              "size": 4,
+              "value_raw_hex": "01000000"
+            },
+            "+0x20": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            }
+          },
+          "RDX": {
+            "+0x00": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            },
+            "+0x04": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            },
+            "+0x08": {
+              "address": "0x20006d28",
+              "instruction_rip": "0x181281bbe",
+              "size": 4,
+              "value_raw_hex": "01000000"
+            },
+            "+0x0c": {
+              "address": "0x20006d2c",
+              "instruction_rip": "0x181281bc2",
+              "size": 4,
+              "value_raw_hex": "00000000"
+            },
+            "+0x10": {
+              "address": "0x20006d30",
+              "instruction_rip": "0x181281bcb",
+              "size": 8,
+              "value_raw_hex": "00000000000000be"
+            },
+            "+0x14": {
+              "address": "0x20006d30",
+              "instruction_rip": "0x181281bcb",
+              "size": 8,
+              "value_raw_hex": "00000000000000be"
+            },
+            "+0x18": {
+              "address": "0x20006d38",
+              "instruction_rip": "0x181281bd0",
+              "size": 4,
+              "value_raw_hex": "00000000"
+            },
+            "+0x20": {
+              "address": "0x20006d40",
+              "instruction_rip": "0x181281bb2",
+              "size": 8,
+              "value_raw_hex": "0000000000000000"
+            }
+          }
+        },
+        "object_register": "RDX/R8",
+        "r8": {
+          "f32": {
+            "+0x00": -3.77981539404136e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": -0.0,
+            "+0x0c": -2.0,
+            "+0x10": -3.781586635300267e-38,
+            "+0x14": 1.401298464324817e-45,
+            "+0x18": 2.802596928649634e-45,
+            "+0x1c": 1.401298464324817e-45,
+            "+0x20": -3.7799431924613067e-38
+          },
+          "i32": {
+            "+0x00": -2125608208,
+            "+0x04": 1,
+            "+0x08": -2147483648,
+            "+0x0c": -1073741824,
+            "+0x10": -2125601888,
+            "+0x14": 1,
+            "+0x18": 2,
+            "+0x1c": 1,
+            "+0x20": -2125607752
+          },
+          "pointer": "0x20006d00",
+          "range": "+0x00..+0x20",
+          "raw_hex": "f0ca4d810100000000000080000000c0a0e34d81010000000200000001000000b8cc4d81"
+        },
+        "rdx": {
+          "f32": {
+            "+0x00": -3.7799431924613067e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 1.401298464324817e-45,
+            "+0x0c": 0.0,
+            "+0x10": 0.0,
+            "+0x14": -0.125,
+            "+0x18": 0.0,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125607752,
+            "+0x04": 1,
+            "+0x08": 1,
+            "+0x0c": 0,
+            "+0x10": 0,
+            "+0x14": -1107296256,
+            "+0x18": 0,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d20",
+          "range": "+0x00..+0x20",
+          "raw_hex": "b8cc4d8101000000010000000000000000000000000000be000000000000000000000000"
+        },
+        "unresolved_source_offsets": {
+          "R8": [],
+          "RDX": [
+            "+0x1c"
+          ]
+        }
+      },
+      {
+        "filterengine_rdi": {
+          "f32": {
+            "+0x00": -3.8692765300813995e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 7.006492321624085e-45,
+            "+0x0c": 7.006492321624085e-45,
+            "+0x10": 8.407790785948902e-45,
+            "+0x14": -0.0,
+            "+0x18": 1.401298464324817e-45,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125289000,
+            "+0x04": 1,
+            "+0x08": 5,
+            "+0x0c": 5,
+            "+0x10": 6,
+            "+0x14": -2147483648,
+            "+0x18": 1,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d70",
+          "range": "+0x00..+0x20",
+          "raw_hex": "d8a952810100000005000000050000000600000000000080010000000000000000000000"
+        },
+        "instruction_rip": "0x1812b9b3f",
+        "kind": "filterengine_source_read_site",
+        "last_filterengine_writes": {
+          "+0x14": {
+            "address": "0x20006d84",
+            "instruction_rip": "0x1812b9b38",
+            "size": 8,
+            "target": "FilterEngine.RDI"
+          },
+          "+0x18": {
+            "address": "0x20006d84",
+            "instruction_rip": "0x1812b9b38",
+            "size": 8,
+            "target": "FilterEngine.RDI"
+          }
+        },
+        "last_source_writes": {
+          "R8": {
+            "+0x00": {
+              "address": "0x20006d00",
+              "instruction_rip": "0x181282577",
+              "size": 8,
+              "value_raw_hex": "f0ca4d8101000000"
+            },
+            "+0x04": {
+              "address": "0x20006d00",
+              "instruction_rip": "0x181282577",
+              "size": 8,
+              "value_raw_hex": "f0ca4d8101000000"
+            },
+            "+0x08": {
+              "address": "0x20006d08",
+              "instruction_rip": "0x18128257a",
+              "size": 4,
+              "value_raw_hex": "00000080"
+            },
+            "+0x0c": {
+              "address": "0x20006d0c",
+              "instruction_rip": "0x18128257e",
+              "size": 4,
+              "value_raw_hex": "000000c0"
+            },
+            "+0x10": {
+              "address": "0x20006d10",
+              "instruction_rip": "0x181281b94",
+              "size": 8,
+              "value_raw_hex": "a0e34d8101000000"
+            },
+            "+0x14": {
+              "address": "0x20006d10",
+              "instruction_rip": "0x181281b94",
+              "size": 8,
+              "value_raw_hex": "a0e34d8101000000"
+            },
+            "+0x18": {
+              "address": "0x20006d18",
+              "instruction_rip": "0x1812b9a6e",
+              "size": 4,
+              "value_raw_hex": "02000000"
+            },
+            "+0x1c": {
+              "address": "0x20006d1c",
+              "instruction_rip": "0x181281b86",
+              "size": 4,
+              "value_raw_hex": "01000000"
+            },
+            "+0x20": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            }
+          },
+          "RDX": {
+            "+0x00": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            },
+            "+0x04": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            },
+            "+0x08": {
+              "address": "0x20006d28",
+              "instruction_rip": "0x181281bbe",
+              "size": 4,
+              "value_raw_hex": "01000000"
+            },
+            "+0x0c": {
+              "address": "0x20006d2c",
+              "instruction_rip": "0x181281bc2",
+              "size": 4,
+              "value_raw_hex": "00000000"
+            },
+            "+0x10": {
+              "address": "0x20006d30",
+              "instruction_rip": "0x181281bcb",
+              "size": 8,
+              "value_raw_hex": "00000000000000be"
+            },
+            "+0x14": {
+              "address": "0x20006d30",
+              "instruction_rip": "0x181281bcb",
+              "size": 8,
+              "value_raw_hex": "00000000000000be"
+            },
+            "+0x18": {
+              "address": "0x20006d38",
+              "instruction_rip": "0x181281bd0",
+              "size": 4,
+              "value_raw_hex": "00000000"
+            },
+            "+0x20": {
+              "address": "0x20006d40",
+              "instruction_rip": "0x181281bb2",
+              "size": 8,
+              "value_raw_hex": "0000000000000000"
+            }
+          }
+        },
+        "object_register": "RDX/R8",
+        "r8": {
+          "f32": {
+            "+0x00": -3.77981539404136e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": -0.0,
+            "+0x0c": -2.0,
+            "+0x10": -3.781586635300267e-38,
+            "+0x14": 1.401298464324817e-45,
+            "+0x18": 2.802596928649634e-45,
+            "+0x1c": 1.401298464324817e-45,
+            "+0x20": -3.7799431924613067e-38
+          },
+          "i32": {
+            "+0x00": -2125608208,
+            "+0x04": 1,
+            "+0x08": -2147483648,
+            "+0x0c": -1073741824,
+            "+0x10": -2125601888,
+            "+0x14": 1,
+            "+0x18": 2,
+            "+0x1c": 1,
+            "+0x20": -2125607752
+          },
+          "pointer": "0x20006d00",
+          "range": "+0x00..+0x20",
+          "raw_hex": "f0ca4d810100000000000080000000c0a0e34d81010000000200000001000000b8cc4d81"
+        },
+        "rdx": {
+          "f32": {
+            "+0x00": -3.7799431924613067e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 1.401298464324817e-45,
+            "+0x0c": 0.0,
+            "+0x10": 0.0,
+            "+0x14": -0.125,
+            "+0x18": 0.0,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125607752,
+            "+0x04": 1,
+            "+0x08": 1,
+            "+0x0c": 0,
+            "+0x10": 0,
+            "+0x14": -1107296256,
+            "+0x18": 0,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d20",
+          "range": "+0x00..+0x20",
+          "raw_hex": "b8cc4d8101000000010000000000000000000000000000be000000000000000000000000"
+        },
+        "unresolved_source_offsets": {
+          "R8": [],
+          "RDX": [
+            "+0x1c"
+          ]
+        }
+      },
+      {
+        "filterengine_rdi": {
+          "f32": {
+            "+0x00": -3.8692765300813995e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 7.006492321624085e-45,
+            "+0x0c": 7.006492321624085e-45,
+            "+0x10": 8.407790785948902e-45,
+            "+0x14": -0.0,
+            "+0x18": 1.401298464324817e-45,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125289000,
+            "+0x04": 1,
+            "+0x08": 5,
+            "+0x0c": 5,
+            "+0x10": 6,
+            "+0x14": -2147483648,
+            "+0x18": 1,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d70",
+          "range": "+0x00..+0x20",
+          "raw_hex": "d8a952810100000005000000050000000600000000000080010000000000000000000000"
+        },
+        "instruction_rip": "0x1812b9b46",
+        "kind": "filterengine_source_read_site",
+        "last_filterengine_writes": {
+          "+0x14": {
+            "address": "0x20006d84",
+            "instruction_rip": "0x1812b9b38",
+            "size": 8,
+            "target": "FilterEngine.RDI"
+          },
+          "+0x18": {
+            "address": "0x20006d84",
+            "instruction_rip": "0x1812b9b38",
+            "size": 8,
+            "target": "FilterEngine.RDI"
+          }
+        },
+        "last_source_writes": {
+          "R8": {
+            "+0x00": {
+              "address": "0x20006d00",
+              "instruction_rip": "0x181282577",
+              "size": 8,
+              "value_raw_hex": "f0ca4d8101000000"
+            },
+            "+0x04": {
+              "address": "0x20006d00",
+              "instruction_rip": "0x181282577",
+              "size": 8,
+              "value_raw_hex": "f0ca4d8101000000"
+            },
+            "+0x08": {
+              "address": "0x20006d08",
+              "instruction_rip": "0x18128257a",
+              "size": 4,
+              "value_raw_hex": "00000080"
+            },
+            "+0x0c": {
+              "address": "0x20006d0c",
+              "instruction_rip": "0x18128257e",
+              "size": 4,
+              "value_raw_hex": "000000c0"
+            },
+            "+0x10": {
+              "address": "0x20006d10",
+              "instruction_rip": "0x181281b94",
+              "size": 8,
+              "value_raw_hex": "a0e34d8101000000"
+            },
+            "+0x14": {
+              "address": "0x20006d10",
+              "instruction_rip": "0x181281b94",
+              "size": 8,
+              "value_raw_hex": "a0e34d8101000000"
+            },
+            "+0x18": {
+              "address": "0x20006d18",
+              "instruction_rip": "0x1812b9a6e",
+              "size": 4,
+              "value_raw_hex": "02000000"
+            },
+            "+0x1c": {
+              "address": "0x20006d1c",
+              "instruction_rip": "0x181281b86",
+              "size": 4,
+              "value_raw_hex": "01000000"
+            },
+            "+0x20": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            }
+          },
+          "RDX": {
+            "+0x00": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            },
+            "+0x04": {
+              "address": "0x20006d20",
+              "instruction_rip": "0x181281baf",
+              "size": 8,
+              "value_raw_hex": "b8cc4d8101000000"
+            },
+            "+0x08": {
+              "address": "0x20006d28",
+              "instruction_rip": "0x181281bbe",
+              "size": 4,
+              "value_raw_hex": "01000000"
+            },
+            "+0x0c": {
+              "address": "0x20006d2c",
+              "instruction_rip": "0x181281bc2",
+              "size": 4,
+              "value_raw_hex": "00000000"
+            },
+            "+0x10": {
+              "address": "0x20006d30",
+              "instruction_rip": "0x181281bcb",
+              "size": 8,
+              "value_raw_hex": "00000000000000be"
+            },
+            "+0x14": {
+              "address": "0x20006d30",
+              "instruction_rip": "0x181281bcb",
+              "size": 8,
+              "value_raw_hex": "00000000000000be"
+            },
+            "+0x18": {
+              "address": "0x20006d38",
+              "instruction_rip": "0x181281bd0",
+              "size": 4,
+              "value_raw_hex": "00000000"
+            },
+            "+0x20": {
+              "address": "0x20006d40",
+              "instruction_rip": "0x181281bb2",
+              "size": 8,
+              "value_raw_hex": "0000000000000000"
+            }
+          }
+        },
+        "object_register": "RDX/R8",
+        "r8": {
+          "f32": {
+            "+0x00": -3.77981539404136e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": -0.0,
+            "+0x0c": -2.0,
+            "+0x10": -3.781586635300267e-38,
+            "+0x14": 1.401298464324817e-45,
+            "+0x18": 2.802596928649634e-45,
+            "+0x1c": 1.401298464324817e-45,
+            "+0x20": -3.7799431924613067e-38
+          },
+          "i32": {
+            "+0x00": -2125608208,
+            "+0x04": 1,
+            "+0x08": -2147483648,
+            "+0x0c": -1073741824,
+            "+0x10": -2125601888,
+            "+0x14": 1,
+            "+0x18": 2,
+            "+0x1c": 1,
+            "+0x20": -2125607752
+          },
+          "pointer": "0x20006d00",
+          "range": "+0x00..+0x20",
+          "raw_hex": "f0ca4d810100000000000080000000c0a0e34d81010000000200000001000000b8cc4d81"
+        },
+        "rdx": {
+          "f32": {
+            "+0x00": -3.7799431924613067e-38,
+            "+0x04": 1.401298464324817e-45,
+            "+0x08": 1.401298464324817e-45,
+            "+0x0c": 0.0,
+            "+0x10": 0.0,
+            "+0x14": -0.125,
+            "+0x18": 0.0,
+            "+0x1c": 0.0,
+            "+0x20": 0.0
+          },
+          "i32": {
+            "+0x00": -2125607752,
+            "+0x04": 1,
+            "+0x08": 1,
+            "+0x0c": 0,
+            "+0x10": 0,
+            "+0x14": -1107296256,
+            "+0x18": 0,
+            "+0x1c": 0,
+            "+0x20": 0
+          },
+          "pointer": "0x20006d20",
+          "range": "+0x00..+0x20",
+          "raw_hex": "b8cc4d8101000000010000000000000000000000000000be000000000000000000000000"
+        },
+        "unresolved_source_offsets": {
+          "R8": [],
+          "RDX": [
+            "+0x1c"
+          ]
+        }
+      }
+    ],
+    "status": "FAILED"
+  },
+  "schema": 1,
+  "static": {
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "asm_sha256": "d23c749d225a934580c96f2929fb9d7253d07b1be208faa9de6ff89efc1f89b3",
+    "asm_tokens": [
+      "181281ef8  MOV R14D,dword ptr [RBP + 0x7f]",
+      "181281efc  TEST R14D,R14D",
+      "181281eff  JNS 0x181281f0c",
+      "181281f01  MOV EAX,R15D",
+      "181281f04  CDQ",
+      "181281f05  SUB EAX,EDX",
+      "181281f07  SAR EAX,0x1",
+      "181281f09  MOV R14D,EAX",
+      "18128257a  MOV dword ptr [RBX + 0x8],R15D",
+      "18128257e  MOV dword ptr [RBX + 0xc],R14D",
+      "1812b9b38  MOV qword ptr [RDI + 0x14],RAX",
+      "1812b9b4d  MOV qword ptr [RDI + 0x1c],RAX",
+      "1812b9b77  MOV R14D,dword ptr [RDI + 0x14]",
+      "1812b9b7b  CMP EAX,R14D"
+    ],
+    "asm_tokens_present": {
+      "181281ef8  MOV R14D,dword ptr [RBP + 0x7f]": true,
+      "181281efc  TEST R14D,R14D": true,
+      "181281eff  JNS 0x181281f0c": true,
+      "181281f01  MOV EAX,R15D": true,
+      "181281f04  CDQ": true,
+      "181281f05  SUB EAX,EDX": true,
+      "181281f07  SAR EAX,0x1": true,
+      "181281f09  MOV R14D,EAX": true,
+      "18128257a  MOV dword ptr [RBX + 0x8],R15D": true,
+      "18128257e  MOV dword ptr [RBX + 0xc],R14D": true,
+      "1812b9b38  MOV qword ptr [RDI + 0x14],RAX": true,
+      "1812b9b4d  MOV qword ptr [RDI + 0x1c],RAX": true,
+      "1812b9b77  MOV R14D,dword ptr [RDI + 0x14]": true,
+      "1812b9b7b  CMP EAX,R14D": true
+    },
+    "decomp_sha256": "990693e95695cd83032764f0452fbbe336b8f910ce4d9f5af94a2094c7f6328a",
+    "decomp_tokens": [
+      "FUN_181281e90",
+      "if (param_5 < 0)",
+      "param_5 = param_4 / 2",
+      "FUN_1812b98e0",
+      "FUN_181280fa0"
+    ],
+    "decomp_tokens_present": {
+      "FUN_181280fa0": true,
+      "FUN_181281e90": true,
+      "FUN_1812b98e0": true,
+      "if (param_5 < 0)": true,
+      "param_5 = param_4 / 2": true
+    },
+    "raw_to_signed_i32": {
+      "0x80000000": -2147483648,
+      "0xc0000000": -1073741824
+    }
+  },
+  "status": "PASS_SIGNED_GEOMETRY_BOUNDARY_FAIL_CLOSED"
+}

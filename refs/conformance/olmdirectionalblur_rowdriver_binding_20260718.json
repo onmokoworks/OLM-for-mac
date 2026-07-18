@@ -1,0 +1,370 @@
+{
+  "schema": 1,
+  "kind": "olmdirectionalblur_rowdriver_binding_actual_aex_20260718",
+  "status": "pass",
+  "scope": "Mac-local Unicorn direct actual-AEX one-row PF8 rowdriver/helper binding",
+  "claim_scope": "Binary ABI and buffer ownership only; no Windows live values, PNG tuning, or AE-exact claim",
+  "provenance": {
+    "aex": "plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "source": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png",
+    "source_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4"
+  },
+  "rowdriver_entry": {
+    "row_start": 169,
+    "row_end": 170,
+    "source_slot": "0x21baf800",
+    "destination_slot": "0x21baf808",
+    "source": "0x20000000",
+    "destination": "0x207e9000",
+    "width": 960,
+    "params": "0x21baf810"
+  },
+  "helper_entries": [
+    {
+      "source_x": 0,
+      "row_base": 162240,
+      "direction": 1,
+      "source": "0x20000000",
+      "destination": "0x207e9000",
+      "denominator": "0x20fd2000",
+      "alpha_or_valid": "0x211cc400",
+      "table": "0x21baf868",
+      "strength": 8,
+      "width": 960,
+      "coefficient": 0.6296296119689941,
+      "source_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_alpha_or_valid": 1.0
+    },
+    {
+      "source_x": 0,
+      "row_base": 162240,
+      "direction": 0,
+      "source": "0x20000000",
+      "destination": "0x207e9000",
+      "denominator": "0x20fd2000",
+      "alpha_or_valid": "0x211cc400",
+      "table": "0x21bb3878",
+      "strength": 0,
+      "width": 960,
+      "coefficient": 0.6296296119689941,
+      "source_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_alpha_or_valid": 1.0
+    },
+    {
+      "source_x": 1,
+      "row_base": 162240,
+      "direction": 1,
+      "source": "0x20000000",
+      "destination": "0x207e9000",
+      "denominator": "0x20fd2000",
+      "alpha_or_valid": "0x211cc400",
+      "table": "0x21baf868",
+      "strength": 8,
+      "width": 960,
+      "coefficient": 0.6296296119689941,
+      "source_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_alpha_or_valid": 1.0
+    },
+    {
+      "source_x": 1,
+      "row_base": 162240,
+      "direction": 0,
+      "source": "0x20000000",
+      "destination": "0x207e9000",
+      "denominator": "0x20fd2000",
+      "alpha_or_valid": "0x211cc400",
+      "table": "0x21bb3878",
+      "strength": 0,
+      "width": 960,
+      "coefficient": 0.6296296119689941,
+      "source_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_alpha_or_valid": 1.0
+    },
+    {
+      "source_x": 2,
+      "row_base": 162240,
+      "direction": 1,
+      "source": "0x20000000",
+      "destination": "0x207e9000",
+      "denominator": "0x20fd2000",
+      "alpha_or_valid": "0x211cc400",
+      "table": "0x21baf868",
+      "strength": 8,
+      "width": 960,
+      "coefficient": 0.6296296119689941,
+      "source_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_alpha_or_valid": 1.0
+    },
+    {
+      "source_x": 2,
+      "row_base": 162240,
+      "direction": 0,
+      "source": "0x20000000",
+      "destination": "0x207e9000",
+      "denominator": "0x20fd2000",
+      "alpha_or_valid": "0x211cc400",
+      "table": "0x21bb3878",
+      "strength": 0,
+      "width": 960,
+      "coefficient": 0.6296296119689941,
+      "source_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_alpha_or_valid": 1.0
+    },
+    {
+      "source_x": 3,
+      "row_base": 162240,
+      "direction": 1,
+      "source": "0x20000000",
+      "destination": "0x207e9000",
+      "denominator": "0x20fd2000",
+      "alpha_or_valid": "0x211cc400",
+      "table": "0x21baf868",
+      "strength": 8,
+      "width": 960,
+      "coefficient": 0.6296296119689941,
+      "source_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_alpha_or_valid": 1.0
+    },
+    {
+      "source_x": 3,
+      "row_base": 162240,
+      "direction": 0,
+      "source": "0x20000000",
+      "destination": "0x207e9000",
+      "denominator": "0x20fd2000",
+      "alpha_or_valid": "0x211cc400",
+      "table": "0x21bb3878",
+      "strength": 0,
+      "width": 960,
+      "coefficient": 0.6296296119689941,
+      "source_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_alpha_or_valid": 1.0
+    },
+    {
+      "source_x": 4,
+      "row_base": 162240,
+      "direction": 1,
+      "source": "0x20000000",
+      "destination": "0x207e9000",
+      "denominator": "0x20fd2000",
+      "alpha_or_valid": "0x211cc400",
+      "table": "0x21baf868",
+      "strength": 8,
+      "width": 960,
+      "coefficient": 0.6296296119689941,
+      "source_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_alpha_or_valid": 1.0
+    },
+    {
+      "source_x": 4,
+      "row_base": 162240,
+      "direction": 0,
+      "source": "0x20000000",
+      "destination": "0x207e9000",
+      "denominator": "0x20fd2000",
+      "alpha_or_valid": "0x211cc400",
+      "table": "0x21bb3878",
+      "strength": 0,
+      "width": 960,
+      "coefficient": 0.6296296119689941,
+      "source_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_alpha_or_valid": 1.0
+    },
+    {
+      "source_x": 5,
+      "row_base": 162240,
+      "direction": 1,
+      "source": "0x20000000",
+      "destination": "0x207e9000",
+      "denominator": "0x20fd2000",
+      "alpha_or_valid": "0x211cc400",
+      "table": "0x21baf868",
+      "strength": 8,
+      "width": 960,
+      "coefficient": 0.6296296119689941,
+      "source_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_alpha_or_valid": 1.0
+    },
+    {
+      "source_x": 5,
+      "row_base": 162240,
+      "direction": 0,
+      "source": "0x20000000",
+      "destination": "0x207e9000",
+      "denominator": "0x20fd2000",
+      "alpha_or_valid": "0x211cc400",
+      "table": "0x21bb3878",
+      "strength": 0,
+      "width": 960,
+      "coefficient": 0.6296296119689941,
+      "source_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_alpha_or_valid": 1.0
+    },
+    {
+      "source_x": 6,
+      "row_base": 162240,
+      "direction": 1,
+      "source": "0x20000000",
+      "destination": "0x207e9000",
+      "denominator": "0x20fd2000",
+      "alpha_or_valid": "0x211cc400",
+      "table": "0x21baf868",
+      "strength": 8,
+      "width": 960,
+      "coefficient": 0.6296296119689941,
+      "source_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_alpha_or_valid": 1.0
+    },
+    {
+      "source_x": 6,
+      "row_base": 162240,
+      "direction": 0,
+      "source": "0x20000000",
+      "destination": "0x207e9000",
+      "denominator": "0x20fd2000",
+      "alpha_or_valid": "0x211cc400",
+      "table": "0x21bb3878",
+      "strength": 0,
+      "width": 960,
+      "coefficient": 0.6296296119689941,
+      "source_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_alpha_or_valid": 1.0
+    },
+    {
+      "source_x": 7,
+      "row_base": 162240,
+      "direction": 1,
+      "source": "0x20000000",
+      "destination": "0x207e9000",
+      "denominator": "0x20fd2000",
+      "alpha_or_valid": "0x211cc400",
+      "table": "0x21baf868",
+      "strength": 8,
+      "width": 960,
+      "coefficient": 0.6296296119689941,
+      "source_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_alpha_or_valid": 1.0
+    },
+    {
+      "source_x": 7,
+      "row_base": 162240,
+      "direction": 0,
+      "source": "0x20000000",
+      "destination": "0x207e9000",
+      "denominator": "0x20fd2000",
+      "alpha_or_valid": "0x211cc400",
+      "table": "0x21bb3878",
+      "strength": 0,
+      "width": 960,
+      "coefficient": 0.6296296119689941,
+      "source_rgba": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "source_alpha_or_valid": 1.0
+    }
+  ],
+  "invariants": {
+    "source_A": "0x20000000",
+    "destination_B": "0x207e9000",
+    "denominator": "0x20fd2000",
+    "alpha_or_valid": "0x211cc400",
+    "front_table": "0x21baf868",
+    "back_table": "0x21bb3878",
+    "front_direction": 1,
+    "decomp_stack_contract": "callee entry [RSP+28]=B, +30=denom, +38=alpha_or_valid, +40=table, +48=strength, +50=width, +58=coeff"
+  },
+  "next_unresolved_boundary": {
+    "status": "blocked",
+    "boundary": "natural worker scheduling and its real rowdriver parameter values",
+    "reason": "the bounded natural fixture exits through rotate/output without entering 0x1800038d0; this direct call proves the binary ABI but not natural dispatch",
+    "required_future_evidence": "one Windows or successfully continued natural-AEX run capturing rowdriver entry plus helper values for case_0001 angle=0"
+  },
+  "fail_closed": {
+    "production_source_edited": false,
+    "ledger_edited": false,
+    "windows_values_fabricated": false,
+    "png_tuned": false,
+    "ae_exact_claim": false
+  },
+  "errors": [],
+  "command": "python3 tools/emulation/audit_olmdirectionalblur_rowdriver_binding_20260718.py"
+}

@@ -17,6 +17,8 @@ import io
 import json
 import os
 import shutil
+import subprocess
+import sys
 import tempfile
 import zipfile
 from pathlib import Path, PurePosixPath
@@ -433,6 +435,22 @@ def staging_zip_paths(staging_dir: Path) -> list[Path]:
     for lane in split_lanes:
         zip_paths.extend(path for path in sorted(lane.glob("*.zip")) if path.is_file())
     return zip_paths
+
+
+def refresh_project_send_first_staging(repo: Path, staging_dir: Path) -> None:
+    subprocess.run(
+        [
+            sys.executable,
+            "scripts/materialize_windows_send_first_staging.py",
+            "--staging-dir",
+            str(staging_dir),
+        ],
+        cwd=repo,
+        check=True,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    )
 
 
 def validate_project_send_first(rows: list[dict[str, Any]], staging_dir: Path, repo: Path, readme_path: Path | None) -> tuple[bool, str]:
@@ -945,12 +963,25 @@ def main(argv: list[str] | None = None) -> int:
         mounted_share_dirs[0] if len(mounted_share_dirs) == 1 else project_staging_dir
     )
     staging_dir = share_staging_dir if share_staging_dir.is_dir() else project_staging_dir
-    readme_candidates = [staging_dir / "README.md", *sorted(staging_dir.glob("*README*.txt"))]
-    readme_path = next((path for path in readme_candidates if path.is_file()), None)
 
     pending = json.loads(pending_path.read_text(encoding="utf-8"))
     rows = [row for row in pending.get("requests", []) if isinstance(row, dict) and row.get("status") == "pending"]
     rows.sort(key=lambda row: (int(row.get("priority") or 999999), str(row.get("request_id") or "")))
+    using_project_staging = staging_dir == project_staging_dir
+    temporary_staging: tempfile.TemporaryDirectory[str] | None = None
+    if using_project_staging:
+        temporary_staging = tempfile.TemporaryDirectory(prefix="olm_send_first_smoke_")
+        staging_dir = Path(temporary_staging.name)
+        try:
+            refresh_project_send_first_staging(repo, staging_dir)
+        except subprocess.CalledProcessError as exc:
+            output = (exc.stdout or "").strip()
+            detail = f"\n{output}" if output else ""
+            print(f"[FAIL] could not refresh project-local Send First staging{detail}")
+            return 1
+
+    readme_candidates = [staging_dir / "README.md", *sorted(staging_dir.glob("*README*.txt"))]
+    readme_path = next((path for path in readme_candidates if path.is_file()), None)
     if not rows:
         stale_artifacts = []
         try:
@@ -970,7 +1001,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     try:
-        if staging_dir == project_staging_dir:
+        if using_project_staging:
             ok, message = validate_project_send_first(rows, staging_dir, repo, readme_path)
         else:
             ok, message = validate_nas_staging(rows, staging_dir, repo)

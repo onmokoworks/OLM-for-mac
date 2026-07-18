@@ -15,7 +15,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-REQUEST = ROOT / "refs/mac_validation_requests/olmblur_32bpc_mac_validation_20260715.json"
+DEFAULT_REQUEST = ROOT / "refs/mac_validation_requests/olmblur_32bpc_mac_validation_20260715.json"
 STEM = "olmblur_32bpc_mac_validation_20260715"
 TEMPLATE = "OLM EXR 32 Float"
 CAPTURE_API = "OutputModule.getSettings(GetSettingsFormat.STRING)"
@@ -25,8 +25,8 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def load_request() -> dict:
-    data = json.loads(REQUEST.read_text(encoding="utf-8"))
+def load_request(path: Path) -> dict:
+    data = json.loads(path.read_text(encoding="utf-8"))
     if data["status"] != "request_only_no_ae_exact_claim" or data["case"]["id"] != "olmblur__case_0001":
         raise ValueError("request metadata drifted")
     return data
@@ -79,8 +79,8 @@ def jsx_source(data: dict) -> str:
 '''.replace("CASE_JSON", case_json).replace("TEMPLATE_JSON", json.dumps(TEMPLATE)).replace("CAPTURE_JSON", json.dumps(CAPTURE_API))
 
 
-def prepare(support: Path) -> tuple[dict, Path]:
-    data = load_request(); case = data["case"]; source = ROOT / case["input"]["path"]
+def prepare(support: Path, request_path: Path) -> tuple[dict, Path]:
+    data = load_request(request_path); case = data["case"]; source = ROOT / case["input"]["path"]
     if not source.exists() or sha256(source) != case["input"]["sha256"]: raise ValueError("input missing or hash mismatch")
     input_dir = support / "input"; input_dir.mkdir(parents=True, exist_ok=True); shutil.copy2(source, input_dir / "case_0001_before_effects.png")
     (support / "request_manifest.json").write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
@@ -117,14 +117,14 @@ def ae_process_proof(plugin_binary: Path) -> dict[str, object]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__); parser.add_argument("--plugin-path", type=Path, required=True); parser.add_argument("--support-dir", type=Path); parser.add_argument("--output-dir", type=Path); parser.add_argument("--result-json", type=Path); parser.add_argument("--dump-js", type=Path); parser.add_argument("--app-name", default="Adobe After Effects 2026")
+    parser = argparse.ArgumentParser(description=__doc__); parser.add_argument("--plugin-path", type=Path, required=True); parser.add_argument("--request", type=Path, default=DEFAULT_REQUEST); parser.add_argument("--support-dir", type=Path); parser.add_argument("--output-dir", type=Path); parser.add_argument("--result-json", type=Path); parser.add_argument("--dump-js", type=Path); parser.add_argument("--app-name", default="Adobe After Effects 2026")
     args = parser.parse_args()
     plugin_binary = args.plugin_path / "Contents" / "MacOS" / "OLMBlur"
     if args.plugin_path.name != "OLMBlur.plugin" or not args.plugin_path.is_dir() or not plugin_binary.is_file():
         print("[FAIL_CLOSED] --plugin-path must name an existing OLMBlur.plugin bundle")
         return 2
     support = args.support_dir or Path(tempfile.mkdtemp(prefix=STEM+"_")); output = args.output_dir or support / "return"; output.mkdir(parents=True, exist_ok=True); result = args.result_json or output / "mac_validation_return.json"
-    try: _, jsx = prepare(support)
+    try: _, jsx = prepare(support, args.request.resolve())
     except (OSError, ValueError, json.JSONDecodeError) as exc: print(f"[FAIL_CLOSED] {exc}"); return 1
     wrapper = support / "run_mac_wrapper.jsx"; env={"OLM_AE_MAC_INPUT_DIR":str((support/"input").resolve()),"OLM_AE_MAC_OUTPUT_DIR":str(output.resolve()),"OLM_AE_MAC_RESULT_JSON":str(result.resolve()),"OLM_AE_MAC_PLUGIN_PATH":str(args.plugin_path.resolve()),"OLM_AE_MAC_PLUGIN_BINARY":str(plugin_binary.resolve())}
     error_path = result.with_suffix(result.suffix + ".error.txt")

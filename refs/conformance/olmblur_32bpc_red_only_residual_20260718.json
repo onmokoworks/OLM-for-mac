@@ -1,0 +1,83 @@
+{
+  "schema": "olmblur.32bpc-red-only-residual-audit/1",
+  "date": "2026-07-18",
+  "plugin": "OLMBlur",
+  "case_id": "olmblur__case_0001",
+  "parameters": {
+    "blur_amount_f32": 129.39999389648438,
+    "blur_smoothness": 100.0,
+    "repeat": 1,
+    "bias_direction": 1,
+    "legacy": 0
+  },
+  "artifacts": {
+    "windows_effect": {
+      "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0001.exr",
+      "sha256": "fd2e2020720513e7590d32fadfbb1acb1a25fa551b11d0c440f6e3391ded38b6"
+    },
+    "windows_control": {
+      "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmblur__case_0001_before_effects.exr",
+      "sha256": "d9d18cfac512f14f2f7eefcd0a6d12eede07a0105538c5dc61e2b70eeb26533d"
+    },
+    "mac_effect": {
+      "path": "/private/tmp/olmblur_32bpc_repeat1_20260718_092625_return/olmblur__case_0001__effect_on.exr",
+      "sha256": "b533a4ca6bd0afd495144de5df0f5819991d67cabb5f859998d673ec22842f9e"
+    },
+    "mac_control": {
+      "path": "/private/tmp/olmblur_32bpc_repeat1_20260718_092625_return/olmblur__case_0001__no_effect.exr",
+      "sha256": "ccd01840782ee5e77211a82b585beafc6790e96bf08b6598a69d10c9d4276854"
+    },
+    "actual_aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+  },
+  "facts": {
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "control_mismatches_by_channel": {
+      "A": 0,
+      "B": 0,
+      "G": 0,
+      "R": 0
+    },
+    "effect_mismatches_by_channel": {
+      "A": 0,
+      "B": 0,
+      "G": 0,
+      "R": 201576
+    },
+    "windows_control_nonzero_by_channel": {
+      "A": 518400,
+      "B": 0,
+      "G": 0,
+      "R": 31812
+    },
+    "windows_effect_nonzero_by_channel": {
+      "A": 518400,
+      "B": 0,
+      "G": 0,
+      "R": 201576
+    },
+    "mac_effect_nonzero_by_channel": {
+      "A": 518400,
+      "B": 0,
+      "G": 0,
+      "R": 201576
+    },
+    "full_mac_effect_equals_current_core": true,
+    "full_current_core_vs_windows_mismatched_words": 201576,
+    "bounded_current_aex_repeat1_equals_current_core": true,
+    "bounded_actual_aex_instructions": 11643,
+    "bounded_actual_aex_callback_count": 48
+  },
+  "hypotheses": {
+    "channel_mapping": "rejected",
+    "source_stride": "rejected",
+    "simd_lane": "rejected_at_worker_boundary_for_the_exact_parameter_tuple",
+    "reference_provenance": "only_remaining_live_explanation; not proven because the Windows loaded-AEX hash and environment attestations are missing"
+  },
+  "classification": "reference_provenance_unresolved",
+  "ae_exact_claim": false,
+  "plugin_source_change": false,
+  "next_required_evidence": "same-run Windows effect/control FLOAT EXR bound to loaded OLMBlur AEX SHA-256 and complete color/output environment readback"
+}

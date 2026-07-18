@@ -1,0 +1,60 @@
+{
+  "candidate_results": {
+    "float_normalized_then_nearest": 119,
+    "nearest_integer_plus_127": 119,
+    "truncate_floor": 118
+  },
+  "claims_not_made": [
+    "No edit to OLMSmoother2_port.cpp",
+    "No Mac AE exactness claim",
+    "No claim that this single witness closes the Smoother2 classifier or writer residual"
+  ],
+  "date": "2026-07-18",
+  "fact": {
+    "exhaustive_integer_vs_float_pairs": {
+      "equivalent": true,
+      "mismatches": 0,
+      "pairs": 65536
+    },
+    "product_rgb_times_alpha": 30276,
+    "quotient": 118,
+    "remainder": 186,
+    "source_rgba": [
+      174,
+      174,
+      174,
+      174
+    ],
+    "source_sha256": "9d96a359d987774a398ec27e224650fda83fa00ae3c14bd04b87e2402ea34265",
+    "trace_fragments_present": {
+      "trace append src=(92,839) dst_center=(92,841)": true,
+      "trace neighborhood sample (92,840)=0.42325333,0.42325333,0.42325333,0.68234253": true
+    },
+    "windows_before_effects_rgba": [
+      119,
+      119,
+      119,
+      174
+    ],
+    "windows_before_effects_sha256": "c58d244c327486b689a4a06500c2bc3217216b652aefeea11c1fbcfcee26c520"
+  },
+  "identified_rule": {
+    "expression": "(rgb * alpha + 127) // 255",
+    "mathematical_form": "nearest_integer(rgb * alpha / 255)",
+    "why_plus_127_is_exact_for_integer_products": "255 is odd, so product/255 cannot have fractional part exactly 0.5; +127 selects remainder >= 128.",
+    "witness_result": 119
+  },
+  "inference": [
+    "The retained witness requires integer nearest-code premultiplication, not truncation.",
+    "Across all 65,536 PF8 value/alpha pairs, the tested normalized-float-nearest and integer +127 mappings are byte-equivalent; the byte mapping is identified even though the internal implementation order is not.",
+    "The witness alone cannot prove that every AE host path uses this rule for every pixel format; PF16 and PF32 remain separate contracts.",
+    "The rule is a host-boundary correction candidate for Smoother2 and is not yet a permanent Mac plug-in change."
+  ],
+  "matching_candidates": [
+    "nearest_integer_plus_127",
+    "float_normalized_then_nearest"
+  ],
+  "schema": 1,
+  "scope": "OLMSmoother2 PF_Pixel8 host-premultiply byte rounding at one accepted witness",
+  "verdict": "REQUIRED_BYTE_RULE_IDENTIFIED_NOT_AE_EXACT"
+}

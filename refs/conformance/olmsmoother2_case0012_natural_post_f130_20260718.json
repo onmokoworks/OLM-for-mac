@@ -1,0 +1,297 @@
+{
+  "binary": {
+    "path": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
+    "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+  },
+  "cce0_output": {
+    "rgba": [
+      0.8575195670127869,
+      0.8575195670127869,
+      0.8575195670127869,
+      0.9387068152427673
+    ],
+    "rgba_u32": [
+      1062962791,
+      1062962791,
+      1062962791,
+      1064324887
+    ]
+  },
+  "claims_not_made": [
+    "No Mac plug-in source change",
+    "No Windows package change",
+    "No AE exactness or final writer exactness claim"
+  ],
+  "class_witness": {
+    "center": [
+      255,
+      255,
+      0,
+      255
+    ],
+    "previous": [
+      255,
+      0,
+      0,
+      0
+    ]
+  },
+  "crop": {
+    "host_origin": [
+      84,
+      833
+    ],
+    "host_target": [
+      92,
+      841
+    ],
+    "local_target": [
+      8,
+      8
+    ],
+    "size": [
+      16,
+      16
+    ]
+  },
+  "events": {
+    "cce0_input": {
+      "count": 2,
+      "vertices": [
+        {
+          "rgba": [
+            0.18447498977184296,
+            0.18447498977184296,
+            0.18447498977184296,
+            0.6823529601097107
+          ],
+          "rgba_u32": [
+            1044178691,
+            1044178691,
+            1044178691,
+            1060023983
+          ],
+          "weight": 0.1618608683347702,
+          "weight_u32": 1042661083
+        },
+        {
+          "rgba": [
+            0.19120168685913086,
+            0.19120168685913086,
+            0.19120168685913086,
+            0.6901960968971252
+          ],
+          "rgba_u32": [
+            1044630112,
+            1044630112,
+            1044630112,
+            1060155569
+          ],
+          "weight": 6.0879836382810026e-05,
+          "weight_u32": 947870010
+        }
+      ]
+    },
+    "descriptor": {
+      "host_translated": [
+        92,
+        841,
+        1,
+        92,
+        842,
+        2
+      ],
+      "key": 20,
+      "local": [
+        8,
+        8,
+        1,
+        8,
+        9,
+        2
+      ]
+    },
+    "post_f130_post_boost": {
+      "count": 2,
+      "vertices": [
+        {
+          "rgba": [
+            0.18447498977184296,
+            0.18447498977184296,
+            0.18447498977184296,
+            0.6823529601097107
+          ],
+          "rgba_u32": [
+            1044178691,
+            1044178691,
+            1044178691,
+            1060023983
+          ],
+          "weight": 0.1618608683347702,
+          "weight_u32": 1042661083
+        },
+        {
+          "rgba": [
+            0.19120168685913086,
+            0.19120168685913086,
+            0.19120168685913086,
+            0.6901960968971252
+          ],
+          "rgba_u32": [
+            1044630112,
+            1044630112,
+            1044630112,
+            1060155569
+          ],
+          "weight": 6.0879836382810026e-05,
+          "weight_u32": 947870010
+        }
+      ]
+    },
+    "post_f130_pre_boost": {
+      "count": 2,
+      "vertices": [
+        {
+          "rgba": [
+            0.18447498977184296,
+            0.18447498977184296,
+            0.18447498977184296,
+            0.6823529601097107
+          ],
+          "rgba_u32": [
+            1044178691,
+            1044178691,
+            1044178691,
+            1060023983
+          ],
+          "weight": 0.1618608683347702,
+          "weight_u32": 1042661083
+        },
+        {
+          "rgba": [
+            0.19120168685913086,
+            0.19120168685913086,
+            0.19120168685913086,
+            0.6901960968971252
+          ],
+          "rgba_u32": [
+            1044630112,
+            1044630112,
+            1044630112,
+            1060155569
+          ],
+          "weight": 0.005517238285392523,
+          "weight_u32": 1001703923
+        }
+      ]
+    }
+  },
+  "execution": {
+    "cce0_instructions": 1859,
+    "class_plane_instructions": 57082,
+    "classifier_entries": 256,
+    "key_remove_instructions": 3447,
+    "srgb_decode_instructions": 8499,
+    "vcomp_forks": [
+      {
+        "captured_argument_count": 7,
+        "if_value": 1,
+        "private_continuation": true,
+        "serial_worker_invocations": 1,
+        "worker": "0x18000ac00"
+      }
+    ],
+    "vcomp_static_schedules": [
+      {
+        "first": 0,
+        "increment": 1,
+        "last": 15,
+        "step": 1
+      },
+      {
+        "first": 0,
+        "increment": 1,
+        "last": 15,
+        "step": 1
+      },
+      {
+        "first": 0,
+        "increment": 1,
+        "last": 15,
+        "step": 1
+      }
+    ]
+  },
+  "fact": [
+    "The accepted host descriptor is reproduced after coordinate translation.",
+    "The actual AEX reaches f130 and yields a two-vertex polygon in the natural cce0->c280 dispatch.",
+    "The completed builder polygon is byte-identical to the compact polygon consumed by cce0."
+  ],
+  "fixtures": {
+    "params": "refs/reports/olmsmoother2_current_aex_residual_audit_latest/run/candidate/_params/smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0012_gamma5_red_blue_current_aex.json",
+    "params_sha256": "de4c4f301fd2cda43d67bbcc13a75dd6200b3a10abea6b11d0f39b11bf467fe2",
+    "source": "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/OLMSmootherv2/input\\current_olm_cells.png",
+    "source_sha256": "9d96a359d987774a398ec27e224650fda83fa00ae3c14bd04b87e2402ea34265",
+    "windows_before_effects": "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/OLMSmootherv2/smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0012_gamma5_red_blue_current_aex_before_effects.png",
+    "windows_before_effects_sha256": "c58d244c327486b689a4a06500c2bc3217216b652aefeea11c1fbcfcee26c520"
+  },
+  "host_adapter": {
+    "pf8_rule": "(channel * alpha + 127) // 255",
+    "raw_witness": [
+      174,
+      174,
+      174,
+      174
+    ],
+    "windows_before_effects_witness": [
+      119,
+      119,
+      119,
+      174
+    ]
+  },
+  "limitations": [
+    "The PF8 AE host premultiply operation is translated with the independently audited nearest-code byte rule.",
+    "AexLoader implements the imported Windows pow with the Mac Python/libm oracle; the retained Windows setup red differs by the recorded ULP count.",
+    "This is a bounded crop, not a full-frame AE render and not an AE-exact claim."
+  ],
+  "natural_chain": [
+    "PF8 host adapter",
+    "0x180002a70",
+    "0x180002ba0",
+    "0x18000ada0",
+    "VCOMP140!_vcomp_fork",
+    "0x18000ac00",
+    "0x18000ae10",
+    "0x18000cce0",
+    "0x18000c280",
+    "0x18000fef0",
+    "0x18000f270",
+    "0x18000f130"
+  ],
+  "post_setup": {
+    "center_rgba": [
+      0.9473065137863159,
+      0.9473065137863159,
+      0.9473065137863159,
+      0.9882352948188782
+    ],
+    "mac_libm_vs_windows_retained_red_ulp_delta": 3,
+    "previous_rgba": [
+      0.18447498977184296,
+      0.18447498977184296,
+      0.18447498977184296,
+      0.6823529601097107
+    ],
+    "previous_rgba_u32": [
+      1044178691,
+      1044178691,
+      1044178691,
+      1060023983
+    ],
+    "windows_retained_previous_red": 0.18447503447532654
+  },
+  "schema": 1,
+  "scope": "Mac-local Unicorn actual-AEX run on a 16x16 case_0012 crop; PF8 host premultiply is translated, downstream stages execute from the AEX",
+  "verdict": "PASS_BOUNDED_NATURAL_ACTUAL_AEX_POST_F130_AND_CCE0_INPUT"
+}

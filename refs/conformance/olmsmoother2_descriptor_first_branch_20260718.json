@@ -1,0 +1,65 @@
+{
+  "descriptor": {
+    "windows": [
+      92,
+      841,
+      1,
+      92,
+      842,
+      2
+    ],
+    "mac": [
+      92,
+      840,
+      1,
+      92,
+      843,
+      2
+    ],
+    "first_differing_fields": [
+      1,
+      4
+    ]
+  },
+  "facts": {
+    "center_y841_argb": [
+      255,
+      0,
+      0,
+      255
+    ],
+    "left_y841_argb": [
+      255,
+      0,
+      0,
+      255
+    ],
+    "left_y840_argb": [
+      255,
+      255,
+      0,
+      255
+    ]
+  },
+  "source_locations": {
+    "cardinal6_descriptor_composition": 3154,
+    "d3b0_a0_stop": 1378,
+    "d3b0_right_r_stop": 1379,
+    "d3b0_left_r_stop": 1380,
+    "d3b0_decrement": 1381,
+    "da50_a0_stop": 1463
+  },
+  "classification": {
+    "status": "source_branch_identified_upstream_class_plane_witness_needed",
+    "first_mac_branch": "scan_d3b0 left-column R stop at (x=92,y=840)",
+    "not_claimed": [
+      "AE exact",
+      "Windows class-plane bytes at the same point",
+      "root cause of class-plane divergence"
+    ]
+  },
+  "inference": {
+    "d3b0_second_iteration_stop": "At y=840, the observed left-column R byte is nonzero, so the source condition at the left-column R stop is the first decisive branch.",
+    "windows_implication": "Windows returning y=841 means the same stop is not reached in the same way, or the Windows class-plane byte at that coordinate differs."
+  }
+}

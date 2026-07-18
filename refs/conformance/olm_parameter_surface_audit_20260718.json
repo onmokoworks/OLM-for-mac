@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "kind": "olm_parameter_surface_audit",
+  "date": "2026-07-18",
+  "windows_defaults": "refs/win_references/olm_fresh_instance_defaults_20260629/OLMmulti-effectdefaultcapture/reference_manifest.json",
+  "windows_ranges": "refs/win_references/olm_fresh_instance_ranges_20260629/OLMmulti-effectrangecapture/reference_manifest.json",
+  "excluded_from_source_edits": ["OLMSmoother2", "OLMRadialBlur"],
+  "implemented": [
+    {
+      "plugin": "OLMColorKey",
+      "kind": "order_verified_no_source_change",
+      "evidence": "Windows topic row is property_index=3, while leaf rows 4..8 precede threshold leaf rows 9..11; Mac leaf registration and enum remain coupled",
+      "files": ["mac/OLMColorKey/OLMColorKey.h", "mac/OLMColorKey/OLMColorKey.cpp"]
+    },
+    {
+      "plugin": "OLMKiraKira",
+      "kind": "property_order",
+      "evidence": "Windows Channel/Blur/Merge lead the scalar tree and Glow Rotation is property_index=40",
+      "files": ["mac/OLMKiraKira/OLMKiraKira.h", "mac/OLMKiraKira/OLMKiraKira.cpp"]
+    }
+  ],
+  "reviewed_no_edit": [
+    "OLMBlur",
+    "OLMDistanceGradation",
+    "OLMToonDilate",
+    "OLMDirectionalBlur",
+    "ColorKeep"
+  ],
+  "source_reference_findings": {
+    "OLMKiraKira_registered_but_unconsumed": ["Approximated Input", "Fade Out", "Highlight Radius"]
+  },
+  "regression_test": "refs/scripts/smoke_validate_olm_parameter_order_20260718.py",
+  "version_consistency": "pass",
+  "ae_exact_claim": false
+}

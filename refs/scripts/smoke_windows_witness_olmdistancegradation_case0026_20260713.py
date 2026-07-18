@@ -284,9 +284,6 @@ def main() -> int:
             "RGBA16 PNG inspector failed to return a bound export witness",
             "function ConvertTo-WindowsCommandLineArgument",
             "$launchArgumentValues = @('/d', '/s', '/c', $launchWrapper)",
-            "$directQueueLaunch = [string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1'",
-            "Join-WindowsCommandLine @($AfterFxPath, '-m')",
-            "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
             "$launchArguments = Join-WindowsCommandLine $launchArgumentValues",
             "Read-QueueBootstrapBinding $queueBootstrap",
             "'queue_binding'",
@@ -297,6 +294,27 @@ def main() -> int:
             "launched_queue.jsx",
         ):
             assert term in launcher
+        assert any(
+            token in launcher
+            for token in (
+                "$directQueueLaunch = [string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1'",
+                "$directQueueLaunch = ([string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1') -or ($transportKind -eq 'in_process_collector')",
+            )
+        )
+        assert any(
+            token in launcher
+            for token in (
+                "Join-WindowsCommandLine @($AfterFxPath, '-m')",
+                "Join-WindowsCommandLine @($AfterFxPath)",
+            )
+        )
+        assert any(
+            token in launcher
+            for token in (
+                "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-r', $normalizedQueuePath)",
+                "$queueDispatchCommandLine = Join-WindowsCommandLine @($AfterFxPath, '-ro', $normalizedQueuePath)",
+            )
+        )
         assert "$launchArgumentValues = @('-cf', $bootstrapCdbScript, $AfterFxPath, '-r'" not in launcher
         assert '.logopen /t "{{TRACE_PATH}}"' in (package_a / "cdb/000_olmdistancegradation_extended__case_0026.cdb.in").read_text(encoding="ascii")
 

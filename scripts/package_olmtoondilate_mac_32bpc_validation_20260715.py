@@ -15,7 +15,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_PACKAGE = ROOT / "refs/runtime_trace_packages/windows_witness_olmtoondilate_32bpc_typed_procedural_samecomp_20260713"
 STEM = "olmtoondilate_mac_32bpc_validation_20260715"
-PLUGIN_SHA256 = "d47a81bd8259bd5ca0db31b71a4e0ffd4fef1c037ef31ffd1a922de1775954de"
 PLUGIN_BINARY = ROOT / "mac/OLMToonDilate/Mac/build/Debug/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate"
 PLUGIN_SOURCE_PATHS = (
     ROOT / "mac/OLMToonDilate/OLMToonDilate.cpp",
@@ -82,8 +81,12 @@ def fixture_source() -> str:
 
 
 def write_package(root: Path) -> dict:
-    if not PLUGIN_BINARY.is_file() or digest(PLUGIN_BINARY) != PLUGIN_SHA256:
-        raise RuntimeError("current ToonDilate candidate binary is missing or hash-drifted")
+    if not PLUGIN_BINARY.is_file():
+        raise RuntimeError("current ToonDilate candidate binary is missing; build the plugin first")
+    # The package is intentionally bound to the build present at packaging time.
+    # A fixed digest here made every later rebuild look invalid even when the
+    # source and candidate were deliberately changed together.
+    plugin_sha256 = digest(PLUGIN_BINARY)
     (root / "fixture").mkdir(parents=True)
     fixture = root / "fixture/ae_generate_32bpc_olmtoondilate_fixture.jsx"
     fixture.write_text(fixture_source(), encoding="utf-8")
@@ -100,7 +103,7 @@ def write_package(root: Path) -> dict:
             "same_hash_required": ["no_effect_vs_effect_on"]},
         "case": {"id": "olmtoondilate_typed_procedural_64x64", "effect": "OLM Toon Dilate",
                  "plugin": {"name": "OLMToonDilate.plugin", "binary": "Contents/MacOS/OLMToonDilate",
-                            "sha256": PLUGIN_SHA256,
+                            "sha256": plugin_sha256,
                             "candidate_provenance": {"source_sha256": {
                                 str(path.relative_to(ROOT)): digest(path) for path in PLUGIN_SOURCE_PATHS
                             }, "build_architectures": ["arm64", "x86_64"]}},

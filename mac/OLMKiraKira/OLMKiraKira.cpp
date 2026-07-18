@@ -250,6 +250,38 @@ static std::vector<float> DirectionBoxBlur(
 	return src;
 }
 
+static std::vector<float> SquareBoxBlur(
+	const std::vector<float> &input,
+	A_long width,
+	A_long height,
+	A_long kernel_size,
+	A_long passes)
+{
+	std::vector<float> result = input;
+	if (kernel_size <= 1) return result;
+	const A_long left = kernel_size / 2;
+	const A_long right = kernel_size - left - 1;
+	for (A_long pass = 0; pass < passes; ++pass) {
+		std::vector<float> next(result.size(), 0.0f);
+		for (A_long y = 0; y < height; ++y) {
+			for (A_long x = 0; x < width; ++x) {
+				double sum = 0.0;
+				for (A_long ky = -left; ky <= right; ++ky) {
+					const A_long sy = Reflect101Index((int)(y + ky), (int)height);
+					for (A_long kx = -left; kx <= right; ++kx) {
+						const A_long sx = Reflect101Index((int)(x + kx), (int)width);
+						sum += result[(size_t)sy * width + sx];
+					}
+				}
+				next[(size_t)y * width + x] =
+					(float)(sum / (double)(kernel_size * kernel_size));
+			}
+		}
+		result.swap(next);
+	}
+	return result;
+}
+
 // OLMKIRAKIRA_FORWARD_WARP_HELPERS_BEGIN
 static A_long FloorShiftRight(A_long value, A_long shift)
 {
@@ -406,6 +438,13 @@ static std::vector<float> MakeSeed(PF_EffectWorld *input, const OLMKiraKiraInfo 
 	const A_long h = input->height;
 	std::vector<float> seed((size_t)w * h);
 	const double exponent = std::max<PF_FpLong>(1.0e-6, info.strength_multiplier);
+	const float fade_threshold = (float)info.fade_out;
+	auto apply_fade = [&](float value) -> float {
+		if (value == 0.0f) return 0.0f;
+		if (fade_threshold < value) return (float)std::pow(value, exponent);
+		const float normalized = value / fade_threshold;
+		return normalized * normalized * (float)std::pow(fade_threshold, exponent);
+	};
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
 			FloatRGBA p = PixelTraits<PixelT>::Read(*PixelAtConst<PixelT>(input, x, y));
@@ -414,9 +453,9 @@ static std::vector<float> MakeSeed(PF_EffectWorld *input, const OLMKiraKiraInfo 
 				v = (float)std::pow(p.a, exponent);
 			} else if (info.channel == 2) {
 				float luma = p.r * 0.2126f + p.g * 0.7152f + p.b * 0.0722f;
-				v = (float)std::pow(luma, exponent) * p.a;
+				v = apply_fade(luma) * p.a;
 			} else if (info.channel == 4) {
-				v = (float)std::pow(std::max({p.r, p.g, p.b}), exponent) * p.a;
+				v = apply_fade(std::max({p.r, p.g, p.b})) * p.a;
 			} else {
 				v = std::max({
 					(float)std::pow(p.r, exponent),
@@ -477,6 +516,13 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	std::vector<float> horizontal = make_ray(info.horizontal_length, glow_rotation);
 	std::vector<float> diagonal = make_ray(info.diagonal_length, 45.0 + glow_rotation);
 	std::vector<float> diagonal2 = make_ray(info.diagonal2_length, -45.0 + glow_rotation);
+	std::vector<float> highlight = zero_ray;
+	const A_long highlight_radius = scaled_len(info.highlight_radius);
+	if (highlight_radius > 0 && (info.blur_mode == 1 || info.blur_mode == 2)) {
+		const A_long highlight_passes = info.blur_mode == 1 ? 1 : 3;
+		highlight = SquareBoxBlur(
+			seed, w, h, highlight_radius * 2 + 1, highlight_passes);
+	}
 
 	const double gain_scale = 0.62;
 	double scale = info.brightness_gain * gain_scale;
@@ -488,6 +534,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	AddColoredUnion(glow, horizontal, info.horizontal_color, scale);
 	AddColoredUnion(glow, diagonal, info.diagonal_color, scale);
 	AddColoredUnion(glow, diagonal2, info.diagonal2_color, scale);
+	AddColoredUnion(glow, highlight, info.highlight_color, scale);
 
 	for (FloatRGBA &g : glow) {
 		if (g.a > 1.0e-6f) {
@@ -545,14 +592,17 @@ static void ReadRenderInfo(PF_InData *in_data, PF_ParamDef *params[], OLMKiraKir
 	AEFX_CLR_STRUCT(*info);
 	info->glow_rotation = params[OLMKIRAKIRA_GLOW_ROTATION]->u.fs_d.value;
 	info->brightness_gain = params[OLMKIRAKIRA_BRIGHTNESS_GAIN]->u.fs_d.value;
+	info->fade_out = params[OLMKIRAKIRA_FADE_OUT]->u.fs_d.value * 0.2;
 	info->vertical_length = params[OLMKIRAKIRA_VERTICAL_LENGTH]->u.sd.value;
 	info->horizontal_length = params[OLMKIRAKIRA_HORIZONTAL_LENGTH]->u.sd.value;
 	info->diagonal_length = params[OLMKIRAKIRA_DIAGONAL_LENGTH]->u.sd.value;
 	info->diagonal2_length = params[OLMKIRAKIRA_DIAGONAL2_LENGTH]->u.sd.value;
+	info->highlight_radius = params[OLMKIRAKIRA_HIGHLIGHT_RADIUS]->u.sd.value;
 	info->glow_opacity = params[OLMKIRAKIRA_GLOW_OPACITY]->u.sd.value / 100.0;
 	info->channel = params[OLMKIRAKIRA_CHANNEL]->u.pd.value;
 	info->blur_mode = params[OLMKIRAKIRA_BLUR_MODE]->u.pd.value;
 	info->merge_mode = params[OLMKIRAKIRA_MERGE_MODE]->u.pd.value;
+	info->approximated_input = params[OLMKIRAKIRA_APPROX_INPUT]->u.bd.value;
 	info->strength_multiplier = params[OLMKIRAKIRA_STRENGTH_MULTIPLIER]->u.sd.value / 100.0;
 	info->source_opacity = params[OLMKIRAKIRA_SOURCE_OPACITY]->u.sd.value / 100.0;
 	CopyColorParam(in_data, params[OLMKIRAKIRA_VERTICAL_COLOR], &info->vertical_color);
@@ -581,13 +631,16 @@ static PF_Err CheckoutSmartInfo(PF_InData *in_data, OLMKiraKiraInfo *info)
 	PF_ParamDef p;
 	ERR(checkout(OLMKIRAKIRA_GLOW_ROTATION, &p)); info->glow_rotation = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_BRIGHTNESS_GAIN, &p)); info->brightness_gain = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMKIRAKIRA_FADE_OUT, &p)); info->fade_out = p.u.fs_d.value * 0.2; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_VERTICAL_LENGTH, &p)); info->vertical_length = p.u.sd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_HORIZONTAL_LENGTH, &p)); info->horizontal_length = p.u.sd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_DIAGONAL_LENGTH, &p)); info->diagonal_length = p.u.sd.value; PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMKIRAKIRA_HIGHLIGHT_RADIUS, &p)); info->highlight_radius = p.u.sd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_GLOW_OPACITY, &p)); info->glow_opacity = p.u.sd.value / 100.0; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_CHANNEL, &p)); info->channel = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_BLUR_MODE, &p)); info->blur_mode = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_MERGE_MODE, &p)); info->merge_mode = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMKIRAKIRA_APPROX_INPUT, &p)); info->approximated_input = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_STRENGTH_MULTIPLIER, &p)); info->strength_multiplier = p.u.sd.value / 100.0; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_SOURCE_OPACITY, &p)); info->source_opacity = p.u.sd.value / 100.0; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_VERTICAL_COLOR, &p)); CopyColorParam(in_data, &p, &info->vertical_color); PF_CHECKIN_PARAM(in_data, &p);
@@ -630,9 +683,20 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	PF_ParamDef def;
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_GlowRotation_Param_Name),
-	                     -360.0, 360.0, -180.0, 180.0, 0.0,
-	                     PF_Precision_TENTHS, 0, 0, GLOW_ROTATION_DISK_ID);
+	PF_ADD_POPUP(GetStringPtr(StrID_Channel_Param_Name), 4, 1,
+	             GetStringPtr(StrID_Channel_Choices), CHANNEL_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_POPUP(GetStringPtr(StrID_BlurMode_Param_Name), 4, 2,
+	             GetStringPtr(StrID_BlurMode_Choices), BLUR_MODE_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_POPUP(GetStringPtr(StrID_MergeMode_Param_Name), 2, 1,
+	             GetStringPtr(StrID_MergeMode_Choices), MERGE_MODE_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_CHECKBOX(GetStringPtr(StrID_ApproximatedInput_Param_Name), "", FALSE, 0,
+	                APPROX_INPUT_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_BrightnessGain_Param_Name),
@@ -640,51 +704,85 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	                     PF_Precision_TENTHS, 0, 0, BRIGHTNESS_GAIN_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(GetStringPtr(StrID_VerticalLength_Param_Name), 0, 1000, 0, 300, 50, VERTICAL_LENGTH_DISK_ID);
+	PF_ADD_SLIDER(GetStringPtr(StrID_StrengthMultiplier_Param_Name), 0, 1000, 0, 200, 100,
+	              STRENGTH_MULTIPLIER_DISK_ID);
+
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(GetStringPtr(StrID_HorizontalLength_Param_Name), 0, 1000, 0, 300, 50, HORIZONTAL_LENGTH_DISK_ID);
+	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_FadeOut_Param_Name),
+	                     0.0, 1.0, 0.0, 1.0, 0.0,
+	                     PF_Precision_TENTHS, 0, 0, FADE_OUT_DISK_ID);
+
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(GetStringPtr(StrID_DiagonalLength_Param_Name), 0, 1000, 0, 300, 50, DIAGONAL_LENGTH_DISK_ID);
+	PF_ADD_SLIDER(GetStringPtr(StrID_GlowOpacity_Param_Name), 0, 10000, 0, 100, 100,
+	              GLOW_OPACITY_DISK_ID);
+
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(GetStringPtr(StrID_HighlightRadius_Param_Name), 0, 500, 0, 500, 0, HIGHLIGHT_RADIUS_DISK_ID);
+	PF_ADD_SLIDER(GetStringPtr(StrID_SourceOpacity_Param_Name), 0, 100, 0, 100, 100,
+	              SOURCE_OPACITY_DISK_ID);
+
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(GetStringPtr(StrID_GlowOpacity_Param_Name), 0, 10000, 0, 100, 100, GLOW_OPACITY_DISK_ID);
+	PF_ADD_SLIDER(GetStringPtr(StrID_VerticalLength_Param_Name), 0, 1000, 0, 300, 50,
+	              VERTICAL_LENGTH_DISK_ID);
+
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_POPUP(GetStringPtr(StrID_Channel_Param_Name), 4, 1, GetStringPtr(StrID_Channel_Choices), CHANNEL_DISK_ID);
+	PF_ADD_COLOR(GetStringPtr(StrID_VerticalColor_Param_Name), 255, 255, 255,
+	             VERTICAL_COLOR_DISK_ID);
+
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_POPUP(GetStringPtr(StrID_BlurMode_Param_Name), 4, 2, GetStringPtr(StrID_BlurMode_Choices), BLUR_MODE_DISK_ID);
+	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0,
+	                VERTICAL_USE_RAMP_DISK_ID);
+
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_CHECKBOX(GetStringPtr(StrID_ApproximatedInput_Param_Name), "", FALSE, 0, APPROX_INPUT_DISK_ID);
+	PF_ADD_SLIDER(GetStringPtr(StrID_HorizontalLength_Param_Name), 0, 1000, 0, 300, 50,
+	              HORIZONTAL_LENGTH_DISK_ID);
+
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(GetStringPtr(StrID_StrengthMultiplier_Param_Name), 0, 1000, 0, 200, 100, STRENGTH_MULTIPLIER_DISK_ID);
+	PF_ADD_COLOR(GetStringPtr(StrID_HorizontalColor_Param_Name), 255, 255, 255,
+	             HORIZONTAL_COLOR_DISK_ID);
+
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(GetStringPtr(StrID_SourceOpacity_Param_Name), 0, 100, 0, 100, 100, SOURCE_OPACITY_DISK_ID);
+	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0,
+	                HORIZONTAL_USE_RAMP_DISK_ID);
+
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_COLOR(GetStringPtr(StrID_VerticalColor_Param_Name), 255, 255, 255, VERTICAL_COLOR_DISK_ID);
+	PF_ADD_SLIDER(GetStringPtr(StrID_DiagonalLength_Param_Name), 0, 1000, 0, 300, 50,
+	              DIAGONAL_LENGTH_DISK_ID);
+
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_COLOR(GetStringPtr(StrID_HorizontalColor_Param_Name), 255, 255, 255, HORIZONTAL_COLOR_DISK_ID);
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_COLOR(GetStringPtr(StrID_DiagonalColor_Param_Name), 255, 255, 255, DIAGONAL_COLOR_DISK_ID);
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_COLOR(GetStringPtr(StrID_HighlightColor_Param_Name), 255, 255, 255, HIGHLIGHT_COLOR_DISK_ID);
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_POPUP(GetStringPtr(StrID_MergeMode_Param_Name), 2, 1, GetStringPtr(StrID_MergeMode_Choices), MERGE_MODE_DISK_ID);
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0, VERTICAL_USE_RAMP_DISK_ID);
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0, HORIZONTAL_USE_RAMP_DISK_ID);
+	PF_ADD_COLOR(GetStringPtr(StrID_DiagonalColor_Param_Name), 255, 255, 255,
+	             DIAGONAL_COLOR_DISK_ID);
+
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0, DIAGONAL_USE_RAMP_DISK_ID);
+
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0, HIGHLIGHT_USE_RAMP_DISK_ID);
+	PF_ADD_SLIDER(GetStringPtr(StrID_Diagonal2Length_Param_Name), 0, 1000, 0, 300, 50,
+	              DIAGONAL2_LENGTH_DISK_ID);
+
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(GetStringPtr(StrID_Diagonal2Length_Param_Name), 0, 1000, 0, 300, 50, DIAGONAL2_LENGTH_DISK_ID);
+	PF_ADD_COLOR(GetStringPtr(StrID_Diagonal2Color_Param_Name), 255, 255, 255,
+	             DIAGONAL2_COLOR_DISK_ID);
+
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(GetStringPtr(StrID_FadeOut_Param_Name), 0, 1, 0, 1, 0, FADE_OUT_DISK_ID);
+	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0,
+	                DIAGONAL2_USE_RAMP_DISK_ID);
+
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_COLOR(GetStringPtr(StrID_Diagonal2Color_Param_Name), 255, 255, 255, DIAGONAL2_COLOR_DISK_ID);
+	PF_ADD_SLIDER(GetStringPtr(StrID_HighlightRadius_Param_Name), 0, 500, 0, 500, 0,
+	              HIGHLIGHT_RADIUS_DISK_ID);
+
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0, DIAGONAL2_USE_RAMP_DISK_ID);
+	PF_ADD_COLOR(GetStringPtr(StrID_HighlightColor_Param_Name), 255, 255, 255,
+	             HIGHLIGHT_COLOR_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0,
+	                HIGHLIGHT_USE_RAMP_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
+	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_GlowRotation_Param_Name),
+	                     -360.0, 360.0, -180.0, 180.0, 0.0,
+	                     PF_Precision_TENTHS, 0, 0, GLOW_ROTATION_DISK_ID);
 
 	out_data->num_params = OLMKIRAKIRA_NUM_PARAMS;
 	return err;

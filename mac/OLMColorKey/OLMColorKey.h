@@ -126,7 +126,7 @@ typedef struct {
 	PF_FpLong threshold_r;
 	PF_FpLong threshold_g;
 	PF_FpLong threshold_b;
-	PF_FpLong edge_thin_amount;
+	A_long edge_thin_amount;
 	A_long edge_thin_distance_type;
 	PF_FpLong edge_blur_amount;
 	A_long edge_blur_distance_type;

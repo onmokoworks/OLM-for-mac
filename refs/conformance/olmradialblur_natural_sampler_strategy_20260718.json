@@ -1,0 +1,142 @@
+{
+  "addresses": {
+    "cell_completion_before_increment": "0x18000b0b4",
+    "cell_progress_after_increment": "0x18000b0b7",
+    "final_sampler": "0x180005e68",
+    "row_progress_after_store": "0x18000b0f9",
+    "row_store": "0x18000b0f1",
+    "worker": [
+      "0x18000a9d0",
+      "0x18000b14f"
+    ]
+  },
+  "checkpoint": {
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "config": {
+      "case_id": "case_0009",
+      "direct_debug_quality_step": 90.0,
+      "direct_debug_size": "",
+      "direct_detour_prepass": false,
+      "direct_detour_scatter": false,
+      "direct_fast_forward_prefill": false,
+      "direct_python_prefill": false,
+      "direct_stop_after_prefill": false,
+      "direct_zoom_core": false,
+      "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+      "manifest_sha256": "7ec542fad64cc210474c6309c3e48c9f12bd0885f54d31943da873d94024b565",
+      "trace_staging_loop": false
+    },
+    "instructions_executed": 10974651817,
+    "path": "/tmp/olm_radial_case0009_workers_progress6_20260718.aexcp",
+    "registers": {
+      "r10": 59,
+      "r11": 467,
+      "r12": 737477624,
+      "r13": 721580024,
+      "r14": 637,
+      "r15": 467,
+      "r8": 681836248,
+      "r9": 57,
+      "rax": 59,
+      "rbp": 699331040,
+      "rbx": 252454336,
+      "rcx": 59,
+      "rdi": 464,
+      "rdx": 659587936,
+      "rip": 6442495898,
+      "rsi": 794880,
+      "rsp": 252453504
+    },
+    "rip": "0x18000af9a",
+    "sha256": "e79e1972df097588a12af17d5510be6104f02ec98cc4ce139af96634bb3520cc"
+  },
+  "checks": {
+    "aex_sha_matches_checkpoint": true,
+    "boundary_increments_cell": true,
+    "boundary_updates_row": true,
+    "bounded_progress_observation_monotonic": true,
+    "cell_completion_before_increment_in_disassembly": true,
+    "cell_progress_after_increment_in_disassembly": true,
+    "checkpoint_header_valid": true,
+    "natural_render_config": true,
+    "progress_code_hooks_not_serialized": true,
+    "progress_hook_is_after_increment": true,
+    "rip_inside_scatter_worker": true,
+    "row_progress_hook_is_after_store": true,
+    "sampler_in_disassembly": true
+  },
+  "claim_boundary": "Natural checkpoint state and worker boundary are verified; this is not sampler reachability, Windows equivalence, or AE exactness.",
+  "facts": [
+    "The checkpoint uses the natural full render path.",
+    "The current RIP is inside the scatter worker, not the final sampler.",
+    "The worker increments R14D at 0x18000b0b4; the runner observes at 0x18000b0b7 after that increment and before DEC R15D.",
+    "The worker stores the next outer row at 0x18000b0f1; the low-overhead row mode observes at 0x18000b0f9 after that store and before the next row-loop compare.",
+    "The final sampler callsite is downstream of worker completion and is present in the disassembly.",
+    "The checkpoint header does not contain the outer worker row; the row used for the estimate is an external witness supplied to this audit.",
+    "The checkpoint callback list contains no progress code-hook address; AexLoader validates host callbacks, while the cell/row observation hook is installed by the fresh runner."
+  ],
+  "inferences": [
+    "A single uninterrupted resume is the only direct route to an unmodified final sampler call.",
+    "Checkpoint frequency alone cannot reduce CPU work; it only improves restartability.",
+    "A safe acceleration candidate is row-slice parallelism, but it requires a new proof that worker slices write disjoint planes and have no shared reduction or synchronization.",
+    "The natural runner can reduce its own callback overhead with --hook-mode row, which observes 0x18000b0f9 once per outer-row transition; this changes observability only and does not accelerate the AEX algorithm itself.",
+    "Because the observation code hook is not serialized in the checkpoint callback list, switching from cell to row mode on a compatible checkpoint is a loader-topology-neutral observation change; the AEX memory/register state remains the checkpoint source of truth.",
+    "Until row-slice independence is proven, no worker detour, state rewrite, or parallel fresh process is safe."
+  ],
+  "kind": "olmradialblur_natural_sampler_strategy_20260718",
+  "progress_observation": {
+    "boundary_hits": 14,
+    "hook": "0x18000b0f9",
+    "hook_mode": "row",
+    "live_run": true,
+    "monotonic_check": true,
+    "path": "/tmp/olm_radialblur_natural_progress_long2_row_20260718.json",
+    "present": true,
+    "samples": 14
+  },
+  "recommended_sequence": [
+    {
+      "action": "Use the Radial-only runner's read-only hook at 0x18000b0b7 for cell witnesses, or --hook-mode row at 0x18000b0f9 for low-overhead progress; both use the existing checkpoint mechanism for any stop.",
+      "preserves_algorithm": true,
+      "requires_existing_runner_edit": false,
+      "stage": "A",
+      "status": "completed_in_runner"
+    },
+    {
+      "action": "Run a short continuation from this checkpoint to confirm the post-increment hook sees monotonically increasing row/cell state and does not change memory or registers.",
+      "preserves_algorithm": true,
+      "requires_existing_runner_edit": false,
+      "stage": "B",
+      "status": "completed"
+    },
+    {
+      "action": "Use disassembly plus two bounded differential runs to prove whether row slices are disjoint. Only then consider parallel fresh processes from the same natural pre-worker checkpoint.",
+      "preserves_algorithm": "conditional",
+      "requires_existing_runner_edit": false,
+      "stage": "C",
+      "status": "blocked_on_B"
+    },
+    {
+      "action": "Resume the natural path to 0x180005e68 only after A-C pass; record the sampler call arguments and final writer separately.",
+      "preserves_algorithm": true,
+      "requires_existing_runner_edit": false,
+      "stage": "D",
+      "status": "blocked_on_B_C"
+    }
+  ],
+  "status": "pass_read_only_strategy_gate",
+  "worker_state": {
+    "current_cell": 637,
+    "current_row": 181,
+    "r11_inner_bound": 467,
+    "reached_cells_estimate": 637,
+    "remaining_cells_estimate": 1786739,
+    "row_range": [
+      181,
+      1800
+    ],
+    "row_source": "external witness supplied via --worker-row; not stored in checkpoint header",
+    "total_cells": 1787376,
+    "width": 1104
+  }
+}

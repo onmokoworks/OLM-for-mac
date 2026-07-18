@@ -244,10 +244,9 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	             EDGE_THIN_GROUP_START_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_Amount_Param_Name),
-	                     -4000.0, 4000.0, -4000.0, 4000.0, 0.0,
-	                     PF_Precision_TENTHS, 0, 0,
-	                     EDGE_THIN_AMOUNT_DISK_ID);
+	PF_ADD_SLIDER(GetStringPtr(StrID_Amount_Param_Name),
+	              -4000, 4000, -4000, 4000, 0,
+	              EDGE_THIN_AMOUNT_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_POPUP(GetStringPtr(StrID_DistanceType_Param_Name),
@@ -363,7 +362,7 @@ CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], OLMColorKeyInfo *info)
 	info->threshold_r = params[OLMCOLORKEY_THRESHOLD_R]->u.fs_d.value;
 	info->threshold_g = params[OLMCOLORKEY_THRESHOLD_G]->u.fs_d.value;
 	info->threshold_b = params[OLMCOLORKEY_THRESHOLD_B]->u.fs_d.value;
-	info->edge_thin_amount = params[OLMCOLORKEY_EDGE_THIN_AMOUNT]->u.fs_d.value;
+	info->edge_thin_amount = params[OLMCOLORKEY_EDGE_THIN_AMOUNT]->u.sd.value;
 	info->edge_thin_distance_type = params[OLMCOLORKEY_EDGE_THIN_DISTANCE_TYPE]->u.pd.value;
 	info->edge_blur_amount = params[OLMCOLORKEY_EDGE_BLUR_AMOUNT]->u.fs_d.value;
 	info->edge_blur_distance_type = params[OLMCOLORKEY_EDGE_BLUR_DISTANCE_TYPE]->u.pd.value;
@@ -418,7 +417,7 @@ CheckoutSmartInfo(PF_InData *in_data, OLMColorKeyInfo *info)
 	ERR(checkout(OLMCOLORKEY_THRESHOLD_R, &p)); info->threshold_r = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMCOLORKEY_THRESHOLD_G, &p)); info->threshold_g = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMCOLORKEY_THRESHOLD_B, &p)); info->threshold_b = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_EDGE_THIN_AMOUNT, &p)); info->edge_thin_amount = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMCOLORKEY_EDGE_THIN_AMOUNT, &p)); info->edge_thin_amount = p.u.sd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMCOLORKEY_EDGE_THIN_DISTANCE_TYPE, &p)); info->edge_thin_distance_type = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMCOLORKEY_EDGE_BLUR_AMOUNT, &p)); info->edge_blur_amount = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMCOLORKEY_EDGE_BLUR_DISTANCE_TYPE, &p)); info->edge_blur_distance_type = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p);

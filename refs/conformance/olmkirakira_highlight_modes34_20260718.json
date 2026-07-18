@@ -1,0 +1,69 @@
+{
+  "FACT": [
+    "FUN_18114f4a0 treats uVar11 == 4 as the fifth layer, derives an odd square size (2r+1)^2, and stores that layer's scalar factor before blur dispatch.",
+    "Mode 3 dispatches the fifth layer to FUN_181272ec0, whose embedded error path identifies it as OpenCV 4.5.5 GaussianBlur.",
+    "The bounded actual-AEX Mode 3 helper witness reaches the Gaussian call and captures the returned CV_32FC1 buffer; it does not execute the full fifth-layer caller end-to-end.",
+    "Mode 4 stays in FUN_18114f4a0's inline path and invokes FUN_181280bc0 three times, followed by a scalar gain update.",
+    "Highlight Color is consumed by the later aggregation step, not by the mode-specific blur helper."
+  ],
+  "INFERENCE": [
+    "Mode 3 Highlight Radius requires GaussianBlur kernel/border/writeback equivalence; the current Mac box scaffold is not a grounded implementation of that mode.",
+    "Mode 4 Highlight Radius requires the inline recurrence, pass order, edge policy, and gain/writeback semantics; the three-call observation is insufficient to implement it safely.",
+    "No Mode 3/4-specific Highlight Color transform is justified by the recovered helper; color should remain a shared aggregation contract until a caller witness proves otherwise."
+  ],
+  "actual_aex_witness": {
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "caller_return": "0x181151105",
+    "entry_hit_count": 1,
+    "gaussian_entry": "0x181272ec0",
+    "helper": "0x181150790",
+    "input_shape": [
+      7,
+      9
+    ],
+    "output_nonzero_word_count": 63,
+    "output_word_count": 63,
+    "return_hit_count": 1,
+    "scope": "direct_FUN_181150790_helper_witness_not_full_fifth_layer_end_to_end",
+    "sigma_x": 2.5,
+    "size": [
+      0,
+      1
+    ],
+    "status": "captured"
+  },
+  "ae_exact_claim": false,
+  "binary": {
+    "path": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+    "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+  },
+  "date": "2026-07-18",
+  "highlight_color_boundary": {
+    "helper_contains_highlight_color_load": false,
+    "helper_reads_radius_layer_only": true,
+    "mode_specific_color_transform_proven": false,
+    "source_color_application": "AddColoredUnion(glow, highlight, info.highlight_color, scale)"
+  },
+  "kind": "olmkirakira_highlight_modes34_audit",
+  "next_evidence": {
+    "color": "one caller/aggregation witness varying only Highlight Color while holding the fifth-layer scalar fixed",
+    "mode3": "same-run actual-AEX capture with Highlight Radius values 0, 1, 2 and output of the fifth-layer buffer before color aggregation",
+    "mode4": "same-run actual-AEX capture at the inline three-call body with radius and scalar/gain state at each writeback"
+  },
+  "production_edit": false,
+  "schema": 1,
+  "static": {
+    "asm_anchors": {
+      "mode3_call": true,
+      "mode3_return_jump": true,
+      "mode4_gain_update": true,
+      "mode4_odd_kernel": true,
+      "mode4_three_box_calls": true
+    },
+    "highlight_common": true,
+    "mode3_dispatch": true,
+    "mode4_dispatch": true,
+    "mode4_gain_update": true
+  },
+  "status": "blocked_mode34_radius_semantics_color_shared_boundary"
+}

@@ -1,0 +1,188 @@
+{
+  "kind": "olmdirectionalblur_angle0_diagonal_actual_aex_port_differential",
+  "schema": 1,
+  "status": "pass",
+  "claim_scope": "bounded actual-AEX rowdriver proof; not AE exact",
+  "provenance": {
+    "aex": "plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "fixture": "tools/emulation/dblur_fullrender_host_fixture_20260711.py",
+    "source": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0005_before_effects.png",
+    "source_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4"
+  },
+  "contract": {
+    "case_id": "case_0005",
+    "world": [
+      16,
+      16
+    ],
+    "area": [
+      2,
+      1,
+      14,
+      15
+    ],
+    "downsample": [
+      1,
+      2
+    ],
+    "rowdriver": "0x1800038d0",
+    "rotate": "0x180001ec0"
+  },
+  "cases": {
+    "0": {
+      "actual": {
+        "angle_degrees": 0,
+        "output_sha256": "9a3c02edf3ca268adba2ccbbcfb16b98775e1f78b022ed2bea8694cd3d809d65",
+        "rotate_angle_bits": [
+          "0x3fc90fdb",
+          "0xbfc90fdb"
+        ],
+        "rotate_dimensions": [
+          [
+            26,
+            26
+          ],
+          [
+            26,
+            26
+          ]
+        ],
+        "iterate_areas": [
+          [
+            2,
+            1,
+            14,
+            15
+          ],
+          [
+            2,
+            1,
+            14,
+            15
+          ]
+        ],
+        "rowdriver_calls": 0,
+        "normalization": {
+          "after_rotateback": true
+        },
+        "typed_rowdriver_complete": false
+      },
+      "typed": {
+        "angle_degrees": 0,
+        "output_sha256": "9a3c02edf3ca268adba2ccbbcfb16b98775e1f78b022ed2bea8694cd3d809d65",
+        "rotate_angle_bits": [
+          "0x3fc90fdb",
+          "0xbfc90fdb"
+        ],
+        "rotate_dimensions": [
+          [
+            26,
+            26
+          ],
+          [
+            26,
+            26
+          ]
+        ],
+        "iterate_areas": [
+          [
+            2,
+            1,
+            14,
+            15
+          ],
+          [
+            2,
+            1,
+            14,
+            15
+          ]
+        ],
+        "rowdriver_calls": 26,
+        "normalization": {
+          "after_rotateback": true
+        },
+        "typed_rowdriver_complete": true
+      },
+      "equal_output": true
+    },
+    "45": {
+      "actual": {
+        "angle_degrees": 45,
+        "output_sha256": "d1e80171e1b25e9153641121347caf93d0ac389d42479ec15d5ec034ce60a322",
+        "rotate_angle_bits": [
+          "0x4016cbe4",
+          "0xc016cbe4"
+        ],
+        "rotate_dimensions": [
+          [
+            26,
+            26
+          ],
+          [
+            26,
+            26
+          ]
+        ],
+        "iterate_areas": [
+          [
+            2,
+            1,
+            14,
+            15
+          ],
+          [
+            2,
+            1,
+            14,
+            15
+          ]
+        ],
+        "rowdriver_calls": 0,
+        "normalization": {
+          "after_rotateback": true
+        },
+        "typed_rowdriver_complete": false
+      },
+      "typed": {
+        "angle_degrees": 45,
+        "output_sha256": "d1e80171e1b25e9153641121347caf93d0ac389d42479ec15d5ec034ce60a322",
+        "rotate_angle_bits": [
+          "0x4016cbe4",
+          "0xc016cbe4"
+        ],
+        "rotate_dimensions": [
+          [
+            26,
+            26
+          ],
+          [
+            26,
+            26
+          ]
+        ],
+        "iterate_areas": [
+          [
+            2,
+            1,
+            14,
+            15
+          ],
+          [
+            2,
+            1,
+            14,
+            15
+          ]
+        ],
+        "rowdriver_calls": 26,
+        "normalization": {
+          "after_rotateback": true
+        },
+        "typed_rowdriver_complete": true
+      },
+      "equal_output": true
+    }
+  }
+}

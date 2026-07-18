@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "scope": {"bit_depth": "32bpc", "plugin_filters": ["OLMBlur"], "case_count": 1},
+  "effect": {"name": "OLM Blur", "match_name": "OLM OLM Blur"},
+  "cases": [
+    {
+      "id": "olmblur__case_0001",
+      "source_case_id": "case_0001",
+      "params_full": [
+        {"name": "Blur Amount", "match_name": "OLM OLM Blur-0005", "value": 129.4},
+        {"name": "Blur Smoothness", "match_name": "OLM OLM Blur-0006", "value": 100},
+        {"name": "Number of Repeat", "match_name": "OLM OLM Blur-0003", "value": 1},
+        {"name": "Bias Direction", "match_name": "OLM OLM Blur-0004", "value": 1},
+        {"name": "Legacy", "match_name": "OLM OLM Blur-0007", "value": 0}
+      ]
+    }
+  ]
+}

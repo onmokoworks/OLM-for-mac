@@ -27,6 +27,7 @@ WINDOWS_MANIFEST = ROOT / "refs/win_references/olm_reference_return_windows_smoo
 WINDOWS_ROOT = WINDOWS_MANIFEST.parent
 SOURCE = WINDOWS_ROOT / "input\\current_olm_cells.png"
 WINDOWS_OUTPUT = WINDOWS_ROOT / "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0012_gamma5_red_blue_current_aex.png"
+WINDOWS_BEFORE = WINDOWS_ROOT / "smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0012_gamma5_red_blue_current_aex_before_effects.png"
 MAC_PLUGIN = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother2.plugin"
 MAC_BINARY = MAC_PLUGIN / "Contents/MacOS/OLMSmoother2"
 
@@ -45,7 +46,7 @@ def load_case() -> dict[str, Any]:
     case = next((item for item in data["cases"] if item["id"] == CASE_ID), None)
     require(case is not None, "case-0012 is missing from the retained Windows manifest")
     require(case["project_gpu_accel_type"]["current_name"] == "SOFTWARE", "Windows reference is not Software")
-    require(SOURCE.is_file() and WINDOWS_OUTPUT.is_file(), "retained source or Windows output is missing")
+    require(SOURCE.is_file() and WINDOWS_OUTPUT.is_file() and WINDOWS_BEFORE.is_file(), "retained source or Windows output is missing")
     return case
 
 
@@ -74,7 +75,8 @@ def stage_request(root: Path, case: dict[str, Any]) -> Path:
     return request
 
 
-def run_ae(request: Path, output_dir: Path) -> Path:
+def run_ae(request: Path, output_dir: Path, class_threshold_diag: int, plane_split_diag: int, input_alpha_mode: str, force_input_premultiply: bool) -> tuple[Path, list[str]]:
+    trace_log = output_dir / "OLMSMOOTHER2_INTERNAL_TRACE.log"
     command = [
         sys.executable,
         str(ROOT / "scripts/run_ae_single_case.py"),
@@ -86,7 +88,12 @@ def run_ae(request: Path, output_dir: Path) -> Path:
         "--ae-env", "OLM_AE_FORCE_NEW_PROJECT=1",
         "--ae-env", "OLM_AE_FORCE_SOFTWARE=1",
         "--ae-env", "OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT=1",
-        "--ae-env", "OLM_AE_INPUT_ALPHA_MODE=STRAIGHT",
+        "--ae-env", f"OLM_AE_INPUT_ALPHA_MODE={input_alpha_mode}",
+        "--ae-env", f"OLMSMOOTHER2_TRACE_PIXEL={X},{Y}",
+        "--ae-env", f"OLMSMOOTHER2_TRACE_LOG={trace_log}",
+        "--ae-env", f"OLMSMOOTHER2_CLASS_THRESHOLD_DIAG={class_threshold_diag}",
+        "--ae-env", f"OLMSMOOTHER2_PLANE_SPLIT_DIAG={plane_split_diag}",
+        "--ae-env", f"OLMSMOOTHER2_FORCE_INPUT_PREMULTIPLY={1 if force_input_premultiply else 0}",
     ]
     result = subprocess.run(command, cwd=ROOT, text=True, capture_output=True, timeout=1830)
     require(result.returncode == 0, (result.stdout + result.stderr)[-4000:])
@@ -96,6 +103,35 @@ def run_ae(request: Path, output_dir: Path) -> Path:
     require(result_data.get("status") == "ok", f"AE status is {result_data.get('status')}: {result_data.get('error')}")
     output = Path(result_data["output_png"])
     require(output.is_file(), f"AE output PNG missing; render files={[str(p) for p in output_dir.rglob('*')]}")
+    require(trace_log.is_file(), "Mac internal trace log missing")
+    trace_lines = [line for line in trace_log.read_text(encoding="utf-8", errors="replace").splitlines() if line.startswith("trace ")]
+    require(trace_lines, "Mac internal trace log contains no target-pixel records")
+    return output, trace_lines
+
+
+def run_ae_no_effect(request: Path, output_dir: Path, input_alpha_mode: str) -> Path:
+    command = [
+        sys.executable,
+        str(ROOT / "scripts/run_ae_single_case.py"),
+        "--request-dir", str(request),
+        "--case-id", CASE_ID,
+        "--output-dir", str(output_dir),
+        "--app-name", "Adobe After Effects 2026",
+        "--timeout", "1800",
+        "--ae-env", "OLM_AE_FORCE_NEW_PROJECT=1",
+        "--ae-env", "OLM_AE_FORCE_SOFTWARE=1",
+        "--ae-env", "OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT=1",
+        "--ae-env", f"OLM_AE_INPUT_ALPHA_MODE={input_alpha_mode}",
+        "--ae-env", "OLM_AE_DISABLE_EFFECT=1",
+    ]
+    result = subprocess.run(command, cwd=ROOT, text=True, capture_output=True, timeout=1830)
+    require(result.returncode == 0, (result.stdout + result.stderr)[-4000:])
+    result_json = output_dir / "AE_SINGLE_CASE_RESULT.json"
+    require(result_json.is_file(), "Mac no-effect result JSON missing")
+    result_data = json.loads(result_json.read_text(encoding="utf-8-sig"))
+    require(result_data.get("status") == "ok", f"Mac no-effect status is {result_data.get('status')}: {result_data.get('error')}")
+    output = Path(result_data["output_png"])
+    require(output.is_file(), "Mac no-effect output PNG missing")
     return output
 
 
@@ -112,6 +148,10 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-json", type=Path, default=ROOT / "refs/conformance/olmsmoother2_mac_actual_ae_boundary_20260717.json")
     parser.add_argument("--output-md", type=Path, default=ROOT / "refs/conformance/olmsmoother2_mac_actual_ae_boundary_20260717.md")
+    parser.add_argument("--class-threshold-diag", type=int, choices=range(4), default=0)
+    parser.add_argument("--plane-split-diag", type=int, choices=range(5), default=0)
+    parser.add_argument("--input-alpha-mode", choices=("STRAIGHT", "PREMULTIPLIED"), default="STRAIGHT")
+    parser.add_argument("--force-input-premultiply", action="store_true")
     args = parser.parse_args()
     case = load_case()
     require(MAC_PLUGIN.is_dir() and MAC_BINARY.is_file(), "installed Mac OLMSmoother2.plugin is missing")
@@ -119,14 +159,17 @@ def main() -> int:
         with tempfile.TemporaryDirectory(prefix="olmsmoother2_mac_boundary_20260717_") as temp:
             temp_root = Path(temp)
             request = stage_request(temp_root, case)
-            output = run_ae(request, temp_root / "render")
+            no_effect_output = run_ae_no_effect(request, temp_root / "no_effect", args.input_alpha_mode)
+            output, trace_lines = run_ae(request, temp_root / "render", args.class_threshold_diag, args.plane_split_diag, args.input_alpha_mode, args.force_input_premultiply)
             mac_px = pixels(output)
+            mac_no_effect_px = pixels(no_effect_output)
             mac_output_sha256 = sha256(output)
+            mac_no_effect_sha256 = sha256(no_effect_output)
     except Exception as exc:
         report = {
             "verdict": "BLOCKED_MAC_AE_BOUNDARY_RENDER_EMPTY",
             "scope": "Mac After Effects host render at the accepted Windows actual-AEX legacy producer witness",
-            "platform": {"host": "macOS", "ae_app": "Adobe After Effects 2026", "renderer": "SOFTWARE", "project_bpc": 8, "input_alpha_mode": "STRAIGHT"},
+            "platform": {"host": "macOS", "ae_app": "Adobe After Effects 2026", "renderer": "SOFTWARE", "project_bpc": 8, "input_alpha_mode": args.input_alpha_mode},
             "case": {"id": CASE_ID, "coordinate": [X, Y]},
             "mac_plugin": {"bundle": str(MAC_PLUGIN), "binary_sha256": sha256(MAC_BINARY)},
             "windows_actual_aex_witness": {"descriptor": [92, 841, 1, 92, 842, 2], "e170_c": 7, "first_append": True},
@@ -140,15 +183,18 @@ def main() -> int:
         print(json.dumps(report, indent=2, sort_keys=True))
         return 1
     windows_px = pixels(WINDOWS_OUTPUT)
+    windows_before_px = pixels(WINDOWS_BEFORE)
     report: dict[str, Any] = {
         "verdict": "MAC_AE_BOUNDARY_RENDER_COMPLETED_NOT_AE_EXACT",
         "scope": "Mac After Effects host render at the accepted Windows actual-AEX legacy producer witness",
-        "platform": {"host": "macOS", "ae_app": "Adobe After Effects 2026", "renderer": "SOFTWARE", "project_bpc": 8, "input_alpha_mode": "STRAIGHT"},
-        "case": {"id": CASE_ID, "coordinate": [X, Y], "parameters": {"enable_color_key": 1, "smoothness": 100, "extra_smooth": 40, "smooth_range": 88, "smoother_version": 2, "gamma_correction": 2, "gamma_value": 2.16954731941223, "num_gamma_colors": 5, "gamma_colors": [[1, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 1, 1]]}},
+        "platform": {"host": "macOS", "ae_app": "Adobe After Effects 2026", "renderer": "SOFTWARE", "project_bpc": 8, "input_alpha_mode": args.input_alpha_mode},
+        "case": {"id": CASE_ID, "coordinate": [X, Y], "class_threshold_diag": args.class_threshold_diag, "plane_split_diag": args.plane_split_diag, "force_input_premultiply": args.force_input_premultiply, "parameters": {"enable_color_key": 1, "smoothness": 100, "extra_smooth": 40, "smooth_range": 88, "smoother_version": 2, "gamma_correction": 2, "gamma_value": 2.16954731941223, "num_gamma_colors": 5, "gamma_colors": [[1, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 1], [0, 0, 1, 1]]}},
         "mac_plugin": {"bundle": str(MAC_PLUGIN), "binary_sha256": sha256(MAC_BINARY)},
-        "inputs": {"source_png_sha256": sha256(SOURCE), "windows_output_png_sha256": sha256(WINDOWS_OUTPUT), "mac_output_png_sha256": mac_output_sha256},
+        "inputs": {"source_png_sha256": sha256(SOURCE), "windows_before_effects_png_sha256": sha256(WINDOWS_BEFORE), "mac_no_effect_png_sha256": mac_no_effect_sha256, "windows_output_png_sha256": sha256(WINDOWS_OUTPUT), "mac_output_png_sha256": mac_output_sha256},
+        "host_input_boundary": {"windows_before_effects_rgba_3x3": windows_before_px, "mac_no_effect_rgba_3x3": mac_no_effect_px, "center_equal": mac_no_effect_px[f"{X},{Y}"] == windows_before_px[f"{X},{Y}"], "neighborhood_equal": mac_no_effect_px == windows_before_px},
         "boundary": {"windows_actual_aex_witness": {"descriptor": [92, 841, 1, 92, 842, 2], "e170_c": 7, "first_append": True}, "windows_rgba_3x3": windows_px, "mac_rgba_3x3": mac_px, "center_equal": mac_px[f"{X},{Y}"] == windows_px[f"{X},{Y}"], "neighborhood_equal": mac_px == windows_px},
-        "claims_not_made": ["No Mac internal class-plane or producer return capture", "No AE exactness", "No claim that a final-pixel residual identifies c280, cce0, or the writer", "No modification to shared files"],
+        "mac_internal_trace": {"pixel": [X, Y], "lines": trace_lines},
+        "claims_not_made": ["No AE exactness", "No claim that a final-pixel residual alone identifies c280, cce0, or the writer", "No modification to shared request or reference files"],
     }
     args.output_json.parent.mkdir(parents=True, exist_ok=True)
     args.output_json.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -156,7 +202,7 @@ def main() -> int:
     center_mac = mac_px[f"{X},{Y}"]
     args.output_md.parent.mkdir(parents=True, exist_ok=True)
     args.output_md.write_text("\n".join([
-        "# OLMSmoother2 Mac actual-AE boundary probe - 2026-07-17", "", f"- Verdict: `{report['verdict']}`", f"- Case: `{CASE_ID}`; witness pixel `(x={X}, y={Y})`.", "- Mac run: After Effects 2026, Software renderer, 8bpc, straight-alpha input, Gamma Correction `2`, Gamma Value `2.16954731941223`, five gamma colors.", f"- Installed Mac plug-in binary SHA-256: `{report['mac_plugin']['binary_sha256']}`.", "", "## Boundary", "", "- Windows actual-AEX witness: descriptor `[92,841,1,92,842,2]`, `e170 c=7`, first append observed.", f"- Windows center RGBA: `{center_win}`.", f"- Mac center RGBA: `{center_mac}`.", f"- Center equal: `{report['boundary']['center_equal']}`; 3x3 neighborhood equal: `{report['boundary']['neighborhood_equal']}`.", "", "The render completed through the Mac AE host and installed Mac plug-in. This is a host-boundary residual measurement, not an internal Mac producer trace and not AE exactness.", "", "## Reproduction", "", "```sh", "python3 tools/emulation/probe_olmsmoother2_mac_actual_ae_boundary_20260717.py", "```", ""]), encoding="utf-8")
+        "# OLMSmoother2 Mac actual-AE boundary probe - 2026-07-17", "", f"- Verdict: `{report['verdict']}`", f"- Case: `{CASE_ID}`; witness pixel `(x={X}, y={Y})`.", "- Mac run: After Effects 2026, Software renderer, 8bpc, straight-alpha input, Gamma Correction `2`, Gamma Value `2.16954731941223`, five gamma colors.", f"- Installed Mac plug-in binary SHA-256: `{report['mac_plugin']['binary_sha256']}`.", "", "## Boundary", "", "- Windows actual-AEX witness: descriptor `[92,841,1,92,842,2]`, `e170 c=7`, first append observed.", f"- Windows center RGBA: `{center_win}`.", f"- Mac center RGBA: `{center_mac}`.", f"- Center equal: `{report['boundary']['center_equal']}`; 3x3 neighborhood equal: `{report['boundary']['neighborhood_equal']}`.", f"- Internal target-pixel trace records: `{len(trace_lines)}`.", "", "The render completed through the Mac AE host and installed Mac plug-in. The environment-gated trace records the Mac internal path for the accepted witness; this is not AE exactness.", "", "## Reproduction", "", "```sh", "python3 tools/emulation/probe_olmsmoother2_mac_actual_ae_boundary_20260717.py", "```", ""]), encoding="utf-8")
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0
 

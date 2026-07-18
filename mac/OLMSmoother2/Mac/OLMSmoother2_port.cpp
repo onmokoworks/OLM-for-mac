@@ -96,6 +96,7 @@ static uint64_t g_olmsmoother2_idx18_cardinal3_key_hist[128] = {};
 static uint64_t g_olmsmoother2_idx18_cardinal12_key_hist[128] = {};
 static int g_olmsmoother2_trace_x = -1;
 static int g_olmsmoother2_trace_y = -1;
+static bool g_olmsmoother2_force_input_premultiply = false;
 
 static void OLMSmoother2ResetIndexHistogram(bool enabled)
 {
@@ -145,6 +146,44 @@ static void OLMSmoother2SetTracePixel(int x, int y)
 {
 	g_olmsmoother2_trace_x = x;
 	g_olmsmoother2_trace_y = y;
+}
+
+static void OLMSmoother2ConfigureTracePixelFromEnvironment()
+{
+	const char *value = std::getenv("OLMSMOOTHER2_TRACE_PIXEL");
+	const char *log_path = std::getenv("OLMSMOOTHER2_TRACE_LOG");
+	const char *threshold_diag = std::getenv("OLMSMOOTHER2_CLASS_THRESHOLD_DIAG");
+	const char *plane_split_diag = std::getenv("OLMSMOOTHER2_PLANE_SPLIT_DIAG");
+	const char *force_input_premultiply = std::getenv("OLMSMOOTHER2_FORCE_INPUT_PREMULTIPLY");
+	static char opened_log_path[1024] = {};
+	if (log_path && *log_path && std::strcmp(log_path, opened_log_path) != 0) {
+		if (std::freopen(log_path, "a", stderr)) {
+			std::setvbuf(stderr, nullptr, _IOLBF, 0);
+			std::snprintf(opened_log_path, sizeof(opened_log_path), "%s", log_path);
+		}
+	}
+	int x = -1;
+	int y = -1;
+	char trailing = '\0';
+	if (value) {
+		if (std::sscanf(value, "%d,%d%c", &x, &y, &trailing) == 2) {
+			OLMSmoother2SetTracePixel(x, y);
+		} else {
+			OLMSmoother2SetTracePixel(-1, -1);
+		}
+	}
+	int mode = 0;
+	if (threshold_diag) {
+		g_olmsmoother2_class_threshold_diag_mode =
+		    std::sscanf(threshold_diag, "%d%c", &mode, &trailing) == 1 && mode >= 0 && mode <= 3 ? mode : 0;
+	}
+	mode = 0;
+	if (plane_split_diag) {
+		g_olmsmoother2_plane_split_diag_mode =
+		    std::sscanf(plane_split_diag, "%d%c", &mode, &trailing) == 1 && mode >= 0 && mode <= 4 ? mode : 0;
+	}
+	g_olmsmoother2_force_input_premultiply =
+	    force_input_premultiply && std::strcmp(force_input_premultiply, "1") == 0;
 }
 
 // ============================================================================
@@ -231,6 +270,28 @@ template<> inline void load_rgba<PF_Pixel16>(const PF_Pixel16 *p, float &a, floa
 }
 template<> inline void load_rgba<PF_PixelFloat>(const PF_PixelFloat *p, float &a, float &r, float &g, float &b) {
 	a = p->alpha; r = p->red; g = p->green; b = p->blue;
+}
+
+// Diagnostic host-boundary adapter. Integer AE worlds premultiply in their
+// native code domain before conversion to normalized float; multiplying the
+// normalized values directly loses the byte/word rounding witness.
+template<typename P>
+static inline void diagnostic_premultiply_input(const P *, float &a, float &r, float &g, float &b) {
+	r *= a; g *= a; b *= a;
+}
+template<>
+inline void diagnostic_premultiply_input<PF_Pixel8>(const PF_Pixel8 *p, float &, float &r, float &g, float &b) {
+	const uint32_t a = p->alpha;
+	r = ((uint32_t)p->red   * a + 127u) / 255u / K_255;
+	g = ((uint32_t)p->green * a + 127u) / 255u / K_255;
+	b = ((uint32_t)p->blue  * a + 127u) / 255u / K_255;
+}
+template<>
+inline void diagnostic_premultiply_input<PF_Pixel16>(const PF_Pixel16 *p, float &, float &r, float &g, float &b) {
+	const uint64_t a = p->alpha;
+	r = ((uint64_t)p->red   * a + 16384u) / 32768u / K_32768;
+	g = ((uint64_t)p->green * a + 16384u) / 32768u / K_32768;
+	b = ((uint64_t)p->blue  * a + 16384u) / 32768u / K_32768;
 }
 
 static inline u_char  clamp8 (float v) { v = v * K_255   + K_HALF; return v < 0 ? 0 : (v > 255.f   ? (u_char)255    : (u_char )v); }
@@ -3911,6 +3972,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
            PF_LayerDef *input, PF_LayerDef *output)
 {
 	PF_Err err = PF_Err_NONE;
+	OLMSmoother2ConfigureTracePixelFromEnvironment();
 
 	SMParams p; AEFX_CLR_STRUCT(p);
 	ERR(FetchParams(in_data, params, &p));
@@ -3930,6 +3992,9 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 		for (int32_t x = 0; x < w; ++x) {
 			float a, r, g, b;
 			load_rgba(&row[x], a, r, g, b);
+			if (g_olmsmoother2_force_input_premultiply) {
+				diagnostic_premultiply_input(&row[x], a, r, g, b);
+			}
 			dst[x].r = r; dst[x].g = g; dst[x].b = b; dst[x].a = a;
 		}
 	}
@@ -4107,6 +4172,23 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 			row[x * 4 + 1] = b1;
 			row[x * 4 + 2] = b2;
 			row[x * 4 + 3] = b3;
+		}
+	}
+	if (g_olmsmoother2_trace_x >= 0 && g_olmsmoother2_trace_y >= 0) {
+		for (int yy = g_olmsmoother2_trace_y - 1; yy <= g_olmsmoother2_trace_y; ++yy) {
+			for (int xx = g_olmsmoother2_trace_x - 1; xx <= g_olmsmoother2_trace_x + 1; ++xx) {
+				if (xx < 0 || xx >= w || yy < 0 || yy >= h) continue;
+				const FPix &self = fpix_at(xx, yy);
+				const float left = xx > 0 ? color_dist(self, fpix_at(xx - 1, yy)) : -1.0f;
+				const float top = yy > 0 ? color_dist(self, fpix_at(xx, yy - 1)) : -1.0f;
+				const float top_left = xx > 0 && yy > 0 ? color_dist(self, fpix_at(xx - 1, yy - 1)) : -1.0f;
+				const float top_right = xx + 1 < w - 1 && yy > 0 ? color_dist(self, fpix_at(xx + 1, yy - 1)) : -1.0f;
+				const uint8_t *bits = class_plane.data() + ((size_t)yy * w + xx) * 4;
+				std::fprintf(stderr,
+				             "trace class_metric x=%d y=%d left=%.9g top=%.9g top_left=%.9g top_right=%.9g threshold=%.9g bits=%u,%u,%u,%u\n",
+				             xx, yy, left, top, top_left, top_right, threshold,
+				             (unsigned)bits[0], (unsigned)bits[1], (unsigned)bits[2], (unsigned)bits[3]);
+			}
 		}
 	}
 	p.class_plane = class_plane.data();

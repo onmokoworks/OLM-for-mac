@@ -1,0 +1,151 @@
+{
+  "classification": {
+    "16bpc": "AE exact for the declared 3-case slice; broader coverage not claimed",
+    "32bpc": "Windows float-preserving EXR evidence exists for 3 cases, but Mac candidate EXR and cross-host comparison are absent",
+    "forbidden_action": "do not change ToonDilate source or infer 32bpc AE exactness from PNG, CLI, PF16/PF32 worker fixtures, or a no-effect-only render",
+    "highest_value_mac_only_action": "build the current ToonDilate plugin, refresh the 32bpc validation package provenance, run its isolated AE fixture, and retain no-effect/effect FLOAT EXRs plus output-module settings"
+  },
+  "existing_evidence": {
+    "16bpc_declared_exact": false,
+    "mac_32bpc_candidate_exr_count": 0,
+    "pf16_actual_aex_stage": "tools/emulation/test_olmtoondilate_pf16_actual_aex_cli_differential_20260716.py",
+    "pf32_actual_aex_matrix": "tools/emulation/test_olmtoondilate_pf32_seed_propagation_matrix_20260717.py"
+  },
+  "generated_at": "2026-07-18",
+  "kind": "olmtoondilate_depth_readiness_audit",
+  "mac_candidate_binary": {
+    "candidates": [
+      {
+        "path": "mac/OLMToonDilate/Mac/build/Debug/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate",
+        "sha256": "731798e1386f04afd181523e3fd55fbf5824a89b7ea97493281217ed5882c36e"
+      }
+    ],
+    "hash_matches_package": true,
+    "package_hash_binding": "generated_from_current_binary_at_package_time",
+    "package_smoke_returncode": 0
+  },
+  "package_contract": {
+    "known_issue": "no Mac 32bpc candidate EXR or cross-host comparison exists; package provenance now binds the current binary SHA at generation time",
+    "package_smoke_path": "refs/scripts/smoke_package_olmtoondilate_mac_32bpc_validation_20260715.py"
+  },
+  "reproducible_checks": [
+    {
+      "command": "python3 refs/scripts/smoke_olmtoondilate_bitdepth_conformance.py",
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\"16bpc\": {\"cases\": 3, \"exact\": 3}, \"32bpc\": {\"ae_exact\": false, \"cases\": 1, \"status\": \"typed-procedural-contract-ready\"}, \"8bpc\": {\"cases\": 3, \"exact\": 3}}\n[OK] ToonDilate 8/16bpc exact slices and 32bpc typed witness contract\n"
+    },
+    {
+      "command": "python3 tools/emulation/test_olmtoondilate_pf16_actual_aex_cli_differential_20260716.py",
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "     \"destination\": 536871040,\n          \"bytes\": 16\n        }\n      ]\n    },\n    \"callback_resume\": {\n      \"address\": \"0x1801a5b61\",\n      \"input_visible_after_callback\": [\n        0,\n        64,\n        192,\n        93,\n        64,\n        31,\n        160,\n        15,\n        0,\n        128,\n        210,\n        4,\n        41,\n        9,\n        128,\n        13\n      ],\n      \"output_visible_after_callback\": [\n        0,\n        64,\n        192,\n        93,\n        64,\n        31,\n        160,\n        15,\n        0,\n        128,\n        210,\n        4,\n        41,\n        9,\n        128,\n        13\n      ],\n      \"output_padding_after_callback\": [\n        165,\n        165,\n        165,\n        165\n      ],\n      \"output_visible_equals_input\": true\n    },\n    \"pf16_alpha_matrix\": [\n      {\n        \"alpha\": 1,\n        \"seed_or_propagate_observed\": false,\n        \"callback_resume_confirmed\": true,\n        \"callback_output_equals_raw_input\": true\n      },\n      {\n        \"alpha\": 16384,\n        \"seed_or_propagate_observed\": false,\n        \"callback_resume_confirmed\": true,\n        \"callback_output_equals_raw_input\": true\n      },\n      {\n        \"alpha\": 32767,\n        \"seed_or_propagate_observed\": false,\n        \"callback_resume_confirmed\": true,\n        \"callback_output_equals_raw_input\": true\n      },\n      {\n        \"alpha\": 32768,\n        \"seed_or_propagate_observed\": true,\n        \"callback_resume_confirmed\": true,\n        \"callback_output_equals_raw_input\": true\n      },\n      {\n        \"alpha\": 32769,\n        \"seed_or_propagate_observed\": false,\n        \"callback_resume_confirmed\": true,\n        \"callback_output_equals_raw_input\": true\n      },\n      {\n        \"alpha\": 65535,\n        \"seed_or_propagate_observed\": false,\n        \"callback_resume_confirmed\": true,\n        \"callback_output_equals_raw_input\": true\n      }\n    ]\n  },\n  \"host_pf_copy_behavior\": \"bounded fixture inference from observed callback ABI and byte effects; not an AE-exact host contract\"\n}\n"
+    },
+    {
+      "command": "python3 tools/emulation/test_olmtoondilate_pf32_seed_propagation_matrix_20260717.py",
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\"case_count\": 48, \"gates\": {\"aex_present\": true, \"aex_sha256\": \"c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3\", \"all_helpers_observed\": true, \"all_row_padding_preserved\": true, \"all_visible_4_word_exact\": true, \"all_workers_returned\": true, \"case_count_48\": true}, \"status\": \"PASS_PF32_SEED_PROPAGATION_MATRIX\"}\n"
+    },
+    {
+      "command": "python3 tools/emulation/test_olmtoondilate_mac_smartrender_adapter_20260717.py",
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\"build\": {\"arch\": \"arm64\", \"compiler\": \"/usr/bin/clang++\", \"flags\": [\"-std=c++17\", \"-arch\", \"arm64\", \"-O2\", \"-fno-fast-math\", \"-ffp-contract=off\", \"-isysroot\", \"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk\", \"-I\", \"/Users/onmk/Documents/Projects/Personal/OLM as/Headers\", \"-I\", \"/Users/onmk/Documents/Projects/Personal/OLM as/Headers/SP\", \"-I\", \"/Users/onmk/Documents/Projects/Personal/OLM as/Util\", \"-I\", \"/Users/onmk/Documents/Projects/Personal/OLM as/Resources\", \"/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_toondilate_mac_smartrender_pkjpbdpm/toondilate_mac_smartrender_adapter_probe.cpp\", \"-framework\", \"Cocoa\", \"-o\", \"/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_toondilate_mac_smartrender_pkjpbdpm/toondilate_mac_smartrender_adapter_probe\"]}, \"cases\": [{\"bitdepth\": 16, \"checkin_layer_pixels_once\": true, \"checkout_layer_once\": true, \"checkout_layer_pixels_once\": true, \"checkout_output_once\": true, \"input_padding_preserved\": true, \"output_padding_preserved\": true, \"pf_cmd_render_fallbacks\": 0, \"pixel_format\": \"PF16\", \"preserve_rgb_of_zero_alpha\": true, \"search_radius\": 0, \"visible_output_bit_identical\": true, \"zero_alpha_rgb_preserved\": true}, {\"bitdepth\": 32, \"checkin_layer_pixels_once\": true, \"checkout_layer_once\": true, \"checkout_layer_pixels_once\": true, \"checkout_output_once\": true, \"input_padding_preserved\": true, \"output_padding_preserved\": true, \"pf_cmd_render_fallbacks\": 0, \"pixel_format\": \"PF32\", \"preserve_rgb_of_zero_alpha\": true, \"search_radius\": 0, \"visible_output_bit_identical\": true, \"zero_alpha_rgb_preserved\": true}], \"claim_boundary\": \"Mac-local source-included PF adapter proof; no AE exact or Windows claim\", \"production_source\": \"mac/OLMToonDilate/OLMToonDilate.cpp\", \"status\": \"ok\"}\n"
+    }
+  ],
+  "schema": 1,
+  "scope": {
+    "depths": [
+      16,
+      32
+    ],
+    "plugin": "OLMToonDilate",
+    "windows_renderer": "SOFTWARE"
+  },
+  "source": {
+    "all_rules_present": true,
+    "path": "mac/OLMToonDilate/OLMToonDilate.cpp",
+    "rules": {
+      "effective_radius_ceil": true,
+      "pf16_opaque_seed": true,
+      "pf32_opaque_seed": true,
+      "pf8_opaque_seed": true,
+      "pre_render_comp_width": true,
+      "preserve_zero_alpha_rgb": true,
+      "two_pass_neighbor_relaxation": true,
+      "typed_pf16_dispatch": true,
+      "typed_pf32_dispatch": true,
+      "typed_pf8_dispatch": true
+    },
+    "sha256": "ea5b54e4a658a1cc092993c8d4bff1d67c08a5282a990df9f78771e69ee8f81b"
+  },
+  "windows_32bpc": {
+    "exr_headers": {
+      "count": 6,
+      "files": [
+        {
+          "bytes": 33195419,
+          "name": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmtoondilate__case_0001.exr",
+          "openexr_magic": true,
+          "sha256": "4c596c9bbd1e05e2ce28cbd314a5ad812b0beee3d538824f5f9e28166dfaaff3"
+        },
+        {
+          "bytes": 33195419,
+          "name": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmtoondilate__case_0001_before_effects.exr",
+          "openexr_magic": true,
+          "sha256": "d3bf07c241a8c6f7415898c585b988e4aeeec37c4910591573cc488ceff9341e"
+        },
+        {
+          "bytes": 33195419,
+          "name": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmtoondilate__case_0002.exr",
+          "openexr_magic": true,
+          "sha256": "477d5bd998e7db929222a133367f5c6b1976a0754ee80342464946b6410b9f3c"
+        },
+        {
+          "bytes": 33195419,
+          "name": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmtoondilate__case_0002_before_effects.exr",
+          "openexr_magic": true,
+          "sha256": "4c596c9bbd1e05e2ce28cbd314a5ad812b0beee3d538824f5f9e28166dfaaff3"
+        },
+        {
+          "bytes": 33195419,
+          "name": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmtoondilate__case_0003.exr",
+          "openexr_magic": true,
+          "sha256": "477d5bd998e7db929222a133367f5c6b1976a0754ee80342464946b6410b9f3c"
+        },
+        {
+          "bytes": 33195419,
+          "name": "olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmtoondilate__case_0003_before_effects.exr",
+          "openexr_magic": true,
+          "sha256": "477d5bd998e7db929222a133367f5c6b1976a0754ee80342464946b6410b9f3c"
+        }
+      ],
+      "root": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch"
+    },
+    "manifest": {
+      "ae_version": "26.3x87",
+      "output_capabilities": {
+        "float_preserving": true,
+        "note": "This Windows AE runner uses the specified AE output module template via render queue.",
+        "output_format": "exr",
+        "output_template": "OLM EXR 32 Float"
+      },
+      "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/reference_manifest.json",
+      "project_bits_per_channel": 32,
+      "renderer": "SOFTWARE",
+      "toondilate_before_frames_exist": true,
+      "toondilate_case_ids": [
+        "olmtoondilate__case_0001",
+        "olmtoondilate__case_0002",
+        "olmtoondilate__case_0003"
+      ],
+      "toondilate_cases": 3,
+      "toondilate_float_preserving": true,
+      "toondilate_frames_exist": true,
+      "toondilate_output_formats": [
+        "exr"
+      ]
+    }
+  }
+}

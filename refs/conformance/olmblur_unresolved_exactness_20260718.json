@@ -1,0 +1,47 @@
+{
+  "audit": "olmblur_unresolved_exactness_20260718",
+  "scope": "Mac-only read-only audit; no source, ledger, AE, or Windows mutation",
+  "source": {
+    "path": "mac/OLMBlur/OLMBlur.cpp",
+    "sha256": "55def455a29f72c04748a784bcd598ddeecb84ec25d475376ea93b6e838e3b02"
+  },
+  "evidence_files_present": {
+    "ae_exact_16bpc": true,
+    "fixture_32bpc": true,
+    "missing_32bpc_provenance": true,
+    "readiness_0003_0004": true
+  },
+  "production_dispatch_symbols_present": {
+    "pf8_legacy": true,
+    "pf16_nonlegacy": true,
+    "pf16_legacy": true,
+    "pf32_nonlegacy": true,
+    "pf32_legacy": true
+  },
+  "alpha_preservation_assignment_present": true,
+  "retained_16bpc_ae_exact_slice": {
+    "exact": 7,
+    "fail": 0,
+    "missing": 0,
+    "total": 7
+  },
+  "retained_32bpc_fixture_claim": {
+    "source_vs_actual_aex_fixtures": "12/12 byte-exact",
+    "cross_host_ae_exact": false,
+    "reason": "Windows loaded AEX hash/module binding is missing"
+  },
+  "open_local_boundaries": [
+    "32bpc Windows loaded-module provenance is absent; do not promote AE exact",
+    "case_0003/case_0004 worker/helper pre-store remains unexecuted at the retained boundary"
+  ],
+  "highest_value_mac_only_action": {
+    "action": "re-run the bounded source-vs-AEX 32bpc adapter and case_0003/0004 readiness audits, then freeze the source pending provenance",
+    "why": "It confirms the Mac production dispatch has no untested local path while avoiding an unjustified algorithm change",
+    "commands": [
+      "python3 tools/emulation/test_olmblur_32bpc_source_aex_adapter_20260717.py",
+      "python3 tools/emulation/test_olmblur_case0003_0004_readiness_audit_20260717.py"
+    ],
+    "not_done_by_this_audit": "Windows loaded-AEX/AE exact comparison"
+  },
+  "pass": true
+}

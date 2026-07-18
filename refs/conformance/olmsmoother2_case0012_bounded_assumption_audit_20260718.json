@@ -1,0 +1,302 @@
+{
+  "accepted_windows_live_boundary": {
+    "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "case_id": "legacy_case_0012_gamma5_red_blue_current_aex",
+    "class_bytes": {
+      "center": [
+        255,
+        255,
+        0,
+        255
+      ],
+      "left": [
+        0,
+        255,
+        0,
+        255
+      ],
+      "previous": [
+        255,
+        0,
+        0,
+        0
+      ]
+    },
+    "descriptor": [
+      92,
+      841,
+      1,
+      92,
+      842,
+      2
+    ],
+    "e170_c": 7,
+    "final_pf8_pixel": [
+      233,
+      233,
+      233,
+      237
+    ],
+    "first_vertex_rgba_u32": [
+      1044178694,
+      1044178694,
+      1044178694,
+      1060023983
+    ],
+    "first_vertex_weight_u32": 1049733049,
+    "not_observed": [
+      "post-f130 second vertex",
+      "cce0 config/input/output",
+      "same-chain writer input"
+    ],
+    "observed_polygon_count_after_f270": 1,
+    "project_bpc": 8,
+    "renderer": "Software"
+  },
+  "ae_exact": false,
+  "assumption_inventory": {
+    "cce0_config": {
+      "aex_instructions_execute": true,
+      "classification": "manual-struct-reconstruction",
+      "grounded": [
+        "Known manifest values are placed into offsets inferred from AEX/decomp and existing local oracles."
+      ],
+      "missing_proof": [
+        "Accepted Windows cce0 config bytes/pointers and caller argument values from the same run."
+      ],
+      "synthetic_or_manual_assumptions": [
+        "The config allocation is manually zero-filled and populated field by field.",
+        "The gamma mode byte 3 is a reconstructed mapping from UI value 2 (Gamma Colors), not a same-run config capture."
+      ],
+      "windows_live_equivalence_proved": false
+    },
+    "class_plane": {
+      "aex_instructions_execute": true,
+      "classification": "actual-aex-bounded/three-live-bytes-only",
+      "grounded": [
+        "Actual AEX ada0/ac00/ae10 produces the bounded class plane.",
+        "Accepted center, previous, and left class bytes are available; the runner asserts center and previous."
+      ],
+      "missing_proof": [
+        "Same-run Windows class-plane dependency region or a proof that the three retained pixels are sufficient."
+      ],
+      "synthetic_or_manual_assumptions": [
+        "The remaining bounded class plane is generated from translated crop input, not captured from the live Windows run."
+      ],
+      "windows_live_equivalence_proved": false
+    },
+    "crop_translation": {
+      "aex_instructions_execute": false,
+      "classification": "synthetic-coordinate-translation",
+      "grounded": [
+        "Local descriptor plus the hard-coded crop origin arithmetically equals the accepted host descriptor."
+      ],
+      "missing_proof": [
+        "Proof that full-frame worker/scan state and all reachable neighborhoods are invariant under this crop."
+      ],
+      "synthetic_or_manual_assumptions": [
+        "A 16x16 image replaces the accepted 1920x1080 plane.",
+        "Host coordinates are recovered by adding the manually selected origin (84,833)."
+      ],
+      "windows_live_equivalence_proved": false
+    },
+    "dispatcher": {
+      "aex_instructions_execute": true,
+      "classification": "actual-aex-dispatch/direct-cce0-entry",
+      "grounded": [
+        "Actual AEX cce0 calls c280/fef0 and selects key 20 from the generated descriptor.",
+        "The accepted Windows run proves descriptor, e170 c=7, and the first f270 append."
+      ],
+      "missing_proof": [
+        "Same-run Windows or full-frame actual-AEX proof of the cce0 call arguments and dispatch continuation."
+      ],
+      "synthetic_or_manual_assumptions": [
+        "The bounded runner enters cce0 directly instead of reaching it through the full-frame AE worker/caller.",
+        "The bounded first-vertex snapshot is downstream of f270/dispatcher normalization, so its weight cannot be compared to the accepted raw f270-return weight."
+      ],
+      "windows_live_equivalence_proved": false
+    },
+    "host_input": {
+      "aex_instructions_execute": false,
+      "classification": "export-grounded-translated-adapter",
+      "grounded": [
+        "The integer PF8 premultiply rule matches all 256 before-effects bytes in the crop.",
+        "The first retained source sample agrees structurally with the accepted first vertex."
+      ],
+      "missing_proof": [
+        "Same-run Windows post-host/post-sRGB float plane for the complete dependency neighborhood."
+      ],
+      "synthetic_or_manual_assumptions": [
+        "AE host checkout and PF8-to-float conversion are replaced by Python/PIL plus an integer adapter.",
+        "The retained post-sRGB sample differs by 3 float32 ULPs. Independent pow-boundary audit shows Mac libm and a high-precision oracle agree, and forcing the retained word does not change class, descriptor, weight, or cce0 output for this witness."
+      ],
+      "windows_live_equivalence_proved": false
+    },
+    "parameter_context": {
+      "aex_instructions_execute": false,
+      "classification": "fixture-grounded/manual-runtime-struct",
+      "grounded": [
+        "The manifest pins the case id, 1920x1080 comp, Software renderer, and visible AE parameter values.",
+        "The bounded runner rejects drift in the principal visible parameters."
+      ],
+      "missing_proof": [
+        "Same-run Windows dump of the complete cce0 config and sixth argument at the accepted pixel."
+      ],
+      "synthetic_or_manual_assumptions": [
+        "The runner manually writes selected fields at render_config +0x00/+0x20/+0x28/+0x30/+0x38/+0x40.",
+        "Unwritten config bytes are zeroed and the sixth cce0 argument is manually set to zero.",
+        "The retained Windows weight is captured at f270 return while the bounded snapshot is after dispatcher normalization; those weights are not a same-stage comparison."
+      ],
+      "windows_live_equivalence_proved": false
+    },
+    "second_vertex": {
+      "aex_instructions_execute": true,
+      "classification": "actual-aex-local-continuation/windows-live-unobserved",
+      "grounded": [
+        "Actual AEX f130/e290 appends a second vertex in the bounded execution."
+      ],
+      "missing_proof": [
+        "Same-run Windows post-f130 polygon including the second vertex float32 words and weight."
+      ],
+      "synthetic_or_manual_assumptions": [
+        "Windows live evidence ends after f270 with vertex_count=1; it contains no f130/e290 return or post-f130 polygon."
+      ],
+      "windows_live_equivalence_proved": false
+    },
+    "writer": {
+      "aex_instructions_execute": false,
+      "classification": "absent",
+      "grounded": [],
+      "missing_proof": [
+        "Natural continuation from this exact cce0 result through the accepted Windows writer to the final PF8 byte."
+      ],
+      "synthetic_or_manual_assumptions": [
+        "The runner stops at the cce0 float output buffer.",
+        "No full worker return, writer call, output color transform, clamp, premultiply, or PF8 pack executes."
+      ],
+      "windows_live_equivalence_proved": false
+    }
+  },
+  "bounded_execution": {
+    "cce0_output": [
+      0.8575195670127869,
+      0.8575195670127869,
+      0.8575195670127869,
+      0.9387068152427673
+    ],
+    "crop_host_adapter_check": {
+      "mismatch_count": 0,
+      "pixels_checked": 256,
+      "rule": "(channel * alpha + 127) // 255",
+      "scope": "exported before-effects PF8 bytes over the bounded 16x16 crop"
+    },
+    "descriptor": [
+      92,
+      841,
+      1,
+      92,
+      842,
+      2
+    ],
+    "first_vertex_vs_windows_live": {
+      "accepted_windows_stage": "f270_return",
+      "bounded_rgba_u32": [
+        1044178691,
+        1044178691,
+        1044178691,
+        1060023983
+      ],
+      "bounded_stage": "post_dispatch_polygon_first_vertex",
+      "bounded_weight_f32": 0.1618608683347702,
+      "bounded_weight_u32": 1042661083,
+      "numeric_comparison_allowed": false,
+      "rgba_bitwise_equal": false,
+      "rgba_u32_delta_bounded_minus_windows": [
+        -3,
+        -3,
+        -3,
+        0
+      ],
+      "semantic_stage_equal": false,
+      "weight_bitwise_equal_diagnostic_only": false,
+      "weight_u32_delta_bounded_minus_windows": -7071966,
+      "windows_rgba_u32": [
+        1044178694,
+        1044178694,
+        1044178694,
+        1060023983
+      ],
+      "windows_weight_f32": 0.2844827473163605,
+      "windows_weight_u32": 1049733049
+    },
+    "post_f130_count": 2,
+    "rerun_stdout": [
+      "PASS_BOUNDED_NATURAL_ACTUAL_AEX_POST_F130_AND_CCE0_INPUT",
+      "descriptor=[92, 841, 1, 92, 842, 2]",
+      "post_f130_count=2",
+      "cce0_input_count=2",
+      "pow_boundary_ulp=3"
+    ],
+    "verdict": "PASS_BOUNDED_NATURAL_ACTUAL_AEX_POST_F130_AND_CCE0_INPUT"
+  },
+  "comparison_to_windows_live_pixel_233": {
+    "bounded_cce0_float_rgba": [
+      0.8575195670127869,
+      0.8575195670127869,
+      0.8575195670127869,
+      0.9387068152427673
+    ],
+    "direct_numeric_comparison_allowed": false,
+    "naive_conversion_is_evidence": false,
+    "naive_linear_times_255_rgb": [
+      218.66748958826065,
+      218.66748958826065,
+      218.66748958826065
+    ],
+    "naive_rounded_rgb": [
+      219,
+      219,
+      219
+    ],
+    "reasons": [
+      "cce0 returns an internal float4 while 233 is a final exported PF8 code value.",
+      "The bounded cce0 input/config is not proved identical to the accepted Windows live cce0 state.",
+      "The only retained Windows weight and the bounded polygon weight come from different semantic stages.",
+      "The natural worker-to-writer continuation and its encode/premultiply/clamp/pack rules do not execute."
+    ],
+    "same_case_id": true,
+    "same_coordinate": true,
+    "same_semantic_stage": false,
+    "windows_live_final_pf8_rgba": [
+      233,
+      233,
+      233,
+      237
+    ],
+    "writer_bridge_present": false
+  },
+  "fail_closed_rules": [
+    "Executing actual AEX instructions does not prove that manually supplied caller state equals the accepted live state.",
+    "A crop-translated descriptor match does not prove full-frame equivalence.",
+    "An internal float may not be compared to an exported PF8 byte without a proved same-chain writer bridge.",
+    "Any future live-pixel comparison requires every required boundary to have windows_live_equivalence_proved=true."
+  ],
+  "full_windows_live_case_reproduced": false,
+  "inputs": {
+    "accepted_windows_live_fixture": "refs/conformance/fixtures/olmsmoother2_corrected_witness_20260717/RETURN_OLMSMOOTHER2_LEGACY_KEY_PRODUCER.json",
+    "accepted_windows_live_fixture_sha256": "c5f48309d9cc995f324ce7345caf8e993755db7d73e0745d36adbe252ed065bd",
+    "bounded_result": "refs/conformance/olmsmoother2_case0012_natural_post_f130_20260718.json",
+    "bounded_result_sha256": "187ab5a0acf1adfaa8045de9f90696d0eb1b831baef626004dfa2ee438380375",
+    "parameter_manifest": "refs/reports/olmsmoother2_current_aex_residual_audit_latest/run/candidate/_params/smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0012_gamma5_red_blue_current_aex.json",
+    "runner": "tools/emulation/run_olmsmoother2_case0012_natural_post_f130_20260718.py",
+    "runner_sha256": "9fc0c6dc56768d910bd42ae9a68de2bf245e7a8affd5d98d820ae1eca2e6c137",
+    "windows_output": "refs/win_references/olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621/OLMSmootherv2/smoother2_legacy_full_current_aex_recapture_20260621__software__fr24__legacy_case_0012_gamma5_red_blue_current_aex.png"
+  },
+  "next_required_evidence": [
+    "Same-run Windows post-f130 polygon capture for the accepted descriptor, including the second vertex.",
+    "Same-run Windows cce0 config bytes, arguments, input polygon, and returned float4.",
+    "Same-run natural continuation from cce0 return through the actual PF8 writer for pixel (92,841)."
+  ],
+  "schema": 1,
+  "verdict": "FAIL_CLOSED_BOUNDED_ACTUAL_AEX_NOT_LIVE_PIXEL_COMPARABLE"
+}
