@@ -40,6 +40,9 @@ EXPECTED_POLAR_SHA256 = "c8037b713512573f8b4346a5e0efc6dd1862f0a53da39d673b005f1
 EXPECTED_PREBLUR_SHA256 = "fc7b13739f081703137b771d51924e27219e34f93cc3b9ca7278fad4c46634ef"
 EXPECTED_CHECKPOINT_SHA256 = "480a7b012441b5863418835a8caf2fe16231dc8d7c59252fc05b69ec0407a909"
 EXPECTED_CHECKPOINT_RIP = 0x180005C9F
+EXPECTED_PRODUCTION_PREBLUR_SHA256 = "8e245bccbda1a856df3e079d4b49d81af256c844acee6557a1375ebebad11530"
+EXPECTED_PRODUCTION_POSTBLUR_SHA256 = "64b237cd1e46d65aef300f94caf5bec1b45bfac9a2b9b945f86780f435e64cdd"
+EXPECTED_WORKER_SHA256 = "76669d0d85dd711e73ff130335a3667bc3bbc0799ac0116c2ac17320e35e81c0"
 
 
 def sha256(path: Path) -> str:
@@ -135,6 +138,7 @@ def run_production_adapter(temp: Path) -> dict[str, object]:
     output_raw = temp / "output_pf32.argb"
     preblur_raw = temp / "production_preblur_polar.f32rgba"
     postblur_raw = temp / "production_normalized_polar.f32rgba"
+    worker_raw = temp / "production_worker_from_aex_preblur.f32rgba"
     argb.tofile(input_raw)
     production = str(SOURCE).replace("\\", "\\\\").replace('"', '\\"')
     probe = temp / "radialblur_pf32_host_probe.cpp"
@@ -145,13 +149,17 @@ def run_production_adapter(temp: Path) -> dict[str, object]:
 #include <fstream>
 #include <vector>
 int main(int argc, char **argv) {{
-  if (argc != 5) return 2;
+  if (argc != 7) return 2;
   constexpr int W=1920, H=1080;
   std::vector<PF_PixelFloat> input(W*H), output(W*H);
   std::vector<float> preblur({POLAR_FLOATS}), postblur({POLAR_FLOATS});
+  std::vector<float> aex_preblur({POLAR_FLOATS}), worker_output({POLAR_FLOATS});
   std::ifstream in_file(argv[1], std::ios::binary);
   in_file.read(reinterpret_cast<char *>(input.data()), input.size()*sizeof(PF_PixelFloat));
   if (!in_file || in_file.gcount() != static_cast<std::streamsize>(input.size()*sizeof(PF_PixelFloat))) return 3;
+  std::ifstream aex_preblur_file(argv[5], std::ios::binary);
+  aex_preblur_file.read(reinterpret_cast<char *>(aex_preblur.data()), aex_preblur.size()*sizeof(float));
+  if (!aex_preblur_file || aex_preblur_file.gcount() != static_cast<std::streamsize>(aex_preblur.size()*sizeof(float))) return 7;
   PF_EffectWorld in{{}}, out{{}};
   in.data=(PF_PixelPtr)input.data(); in.rowbytes=W*sizeof(PF_PixelFloat); in.width=W; in.height=H;
   in.extent_hint={{0,0,W,H}}; out.data=(PF_PixelPtr)output.data(); out.rowbytes=W*sizeof(PF_PixelFloat);
@@ -165,13 +173,20 @@ int main(int argc, char **argv) {{
         &in,&out,&info,preblur.data(),postblur.data(),preblur.size(),
         &written_floats,&polar_width,&polar_height) != PF_Err_NONE) return 4;
   if (written_floats != preblur.size() || polar_width != {POLAR_WIDTH} || polar_height != {POLAR_HEIGHT}) return 5;
+  size_t worker_written=0; A_Boolean worker_used_fft=FALSE;
+  if (OLMRadialBlurTestRunFloatWorker(
+        aex_preblur.data(),{POLAR_WIDTH},{POLAR_HEIGHT},&info,worker_output.data(),worker_output.size(),
+        &worker_written,&worker_used_fft) != PF_Err_NONE) return 8;
+  if (worker_written != worker_output.size() || worker_used_fft != TRUE) return 9;
   std::ofstream out_file(argv[2], std::ios::binary);
   out_file.write(reinterpret_cast<const char *>(output.data()), output.size()*sizeof(PF_PixelFloat));
   std::ofstream preblur_file(argv[3], std::ios::binary);
   preblur_file.write(reinterpret_cast<const char *>(preblur.data()), preblur.size()*sizeof(float));
   std::ofstream postblur_file(argv[4], std::ios::binary);
   postblur_file.write(reinterpret_cast<const char *>(postblur.data()), postblur.size()*sizeof(float));
-  return out_file && preblur_file && postblur_file ? 0 : 6;
+  std::ofstream worker_file(argv[6], std::ios::binary);
+  worker_file.write(reinterpret_cast<const char *>(worker_output.data()), worker_output.size()*sizeof(float));
+  return out_file && preblur_file && postblur_file && worker_file ? 0 : 6;
 }}
 ''', encoding="utf-8")
     sdk = subprocess.run(["xcrun", "--show-sdk-path"], capture_output=True, text=True, check=True).stdout.strip()
@@ -184,13 +199,15 @@ int main(int argc, char **argv) {{
     if build.returncode != 0:
         raise AssertionError("production adapter compile failed\n" + build.stderr)
     run = subprocess.run(
-        [str(binary), str(input_raw), str(output_raw), str(preblur_raw), str(postblur_raw)],
+        [str(binary), str(input_raw), str(output_raw), str(preblur_raw), str(postblur_raw),
+         str(PREBLUR_PLANE), str(worker_raw)],
         cwd=ROOT,
         text=True,
         capture_output=True,
     )
     if (run.returncode != 0 or output_raw.stat().st_size != EXPECTED_BYTES or
-            preblur_raw.stat().st_size != POLAR_BYTES or postblur_raw.stat().st_size != POLAR_BYTES):
+            preblur_raw.stat().st_size != POLAR_BYTES or postblur_raw.stat().st_size != POLAR_BYTES or
+            worker_raw.stat().st_size != POLAR_BYTES):
         raise AssertionError(f"production adapter failed closed rc={run.returncode}\n{run.stdout}{run.stderr}")
     host_argb = np.fromfile(output_raw, dtype=np.float32).reshape(1080, 1920, 4)
     host_rgba = host_argb[:, :, [1, 2, 3, 0]].copy().tobytes()
@@ -201,6 +218,8 @@ int main(int argc, char **argv) {{
     production_polar = postblur_raw.read_bytes()
     oracle_polar = PLANE.read_bytes()
     polar_differing, polar_first = compare_bytes(production_polar, oracle_polar)
+    worker_output = worker_raw.read_bytes()
+    worker_differing, worker_first = compare_bytes(worker_output, oracle_polar)
     return {
         "frame_differing_bytes": frame_differing,
         "frame_first_difference": frame_first,
@@ -210,6 +229,9 @@ int main(int argc, char **argv) {{
         "polar_differing_bytes": polar_differing,
         "polar_first_difference": polar_first_difference(production_polar, oracle_polar, polar_first),
         "production_polar_sha256": sha256(postblur_raw),
+        "worker_differing_bytes": worker_differing,
+        "worker_first_difference": polar_first_difference(worker_output, oracle_polar, worker_first),
+        "worker_sha256": sha256(worker_raw),
     }
 
 
@@ -226,10 +248,14 @@ def main() -> int:
         "pixel.red = state.final_rgb[0];",
         "strict_nonzero_alpha ? state.alpha != 0.0f",
         "OLMRadialBlurTestRenderFloatAndCapturePolarPlanes",
+        "OLMRadialBlurTestRunFloatWorker",
+        "BuildZoomBlurredPolar(polar, info, debug, &use_fft_convolution)",
     )
     missing = [token for token in required if token not in source]
     if missing:
         raise AssertionError(f"missing typed-render contract: {missing}")
+    if source.count("BuildZoomBlurredPolar(") != 3:
+        raise AssertionError("worker logic must have one definition and exactly two callers")
     dispatch = re.search(r"static PF_Err RenderWorld\(.*?\n\}", source, re.DOTALL)
     if not dispatch or "CopyWorld<PF_Pixel16>" in dispatch.group(0) or "CopyWorld<PF_PixelFloat>" in dispatch.group(0):
         raise AssertionError("deep RenderWorld dispatch still contains a no-op copy")
@@ -277,6 +303,18 @@ def main() -> int:
         print(f"complete_frame_sha256={sha256(ORACLE)}")
         print("raw_frame_comparison=pass_exact" if run.returncode == 0 else "raw_frame_comparison=known_red_fail_closed")
         production = run_production_adapter(Path(tmp))
+        expected_production = {
+            "production_preblur_sha256": EXPECTED_PRODUCTION_PREBLUR_SHA256,
+            "preblur_differing_bytes": 327417,
+            "production_polar_sha256": EXPECTED_PRODUCTION_POSTBLUR_SHA256,
+            "polar_differing_bytes": 13953051,
+            "worker_sha256": EXPECTED_WORKER_SHA256,
+            "worker_differing_bytes": 12744511,
+            "frame_differing_bytes": 10047226,
+        }
+        for key, expected in expected_production.items():
+            if production[key] != expected:
+                raise AssertionError(f"production behavior changed: {key}={production[key]!r}, expected={expected!r}")
         print(f"production_preblur_compared_bytes={POLAR_BYTES}")
         print(f"production_preblur_differing_bytes={production['preblur_differing_bytes']}")
         print("production_preblur_first_difference=" + json.dumps(
@@ -291,6 +329,13 @@ def main() -> int:
         print(f"production_polar_sha256={production['production_polar_sha256']}")
         print("production_polar_comparison=pass_exact" if production["polar_differing_bytes"] == 0
               else "production_polar_comparison=known_red_fail_closed")
+        print(f"worker_from_aex_preblur_compared_bytes={POLAR_BYTES}")
+        print(f"worker_from_aex_preblur_differing_bytes={production['worker_differing_bytes']}")
+        print("worker_from_aex_preblur_first_difference=" + json.dumps(
+            production["worker_first_difference"], sort_keys=True, separators=(",", ":")))
+        print(f"worker_from_aex_preblur_sha256={production['worker_sha256']}")
+        print("worker_from_aex_preblur_comparison=pass_exact" if production["worker_differing_bytes"] == 0
+              else "worker_from_aex_preblur_comparison=known_red_fail_closed")
         print(f"production_adapter_compared_bytes={EXPECTED_BYTES}")
         print(f"production_adapter_differing_bytes={production['frame_differing_bytes']}")
         print(f"production_adapter_first_difference={production['frame_first_difference']}")

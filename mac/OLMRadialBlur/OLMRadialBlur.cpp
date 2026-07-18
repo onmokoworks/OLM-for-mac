@@ -937,6 +937,99 @@ struct RadialZoomPixelTraits<PF_PixelFloat> {
 	}
 };
 
+static FloatImage BuildZoomBlurredPolar(
+	const FloatImage &polar,
+	const OLMRadialBlurInfo &info,
+	const RadialBlurDebugConfig &debug,
+	bool *used_fft_convolution)
+{
+	const A_long radius_count = polar.width;
+	const A_long angular_count = polar.height;
+	const std::vector<float> weights = ZoomGaussianWeights(ZoomEffectiveLength(info));
+	const bool use_fft_convolution = weights.size() > 512 && !debug.force_scalar_producer;
+	if (used_fft_convolution) *used_fft_convolution = use_fft_convolution;
+	FloatImage blurred;
+	blurred.width = radius_count;
+	blurred.height = angular_count;
+	blurred.rgba.assign((size_t)angular_count * radius_count * 4, 0.0f);
+	if (!use_fft_convolution) {
+		for (A_long ai = 0; ai < angular_count; ++ai) {
+			for (A_long ri = 0; ri < radius_count; ++ri) {
+				double accum_w_double = 0.0;
+				float accum_w_float = 0.0f;
+				float weighted_rgb[3] = {0.0f, 0.0f, 0.0f};
+				float weighted_alpha = 0.0f;
+				float accum_alpha = 0.0f;
+				const A_long limit = std::min<A_long>((A_long)weights.size(), ri + 1);
+				for (A_long k = 0; k < limit; ++k) {
+					const size_t src_idx = ((size_t)ai * radius_count + (ri - k)) * 4;
+					const float alpha = polar.rgba[src_idx + 3];
+					const float weight = weights[(size_t)k];
+					if (debug.force_scalar_producer) {
+						const float alpha_weight = RadialF32Mul(alpha, weight);
+						for (int c = 0; c < 3; ++c) {
+							weighted_rgb[c] = RadialF32Add(
+								weighted_rgb[c],
+								RadialF32Mul(polar.rgba[src_idx + c], alpha_weight));
+						}
+						weighted_alpha = RadialF32Add(weighted_alpha, alpha_weight);
+						accum_alpha = RadialF32Add(accum_alpha, alpha_weight);
+						accum_w_float = RadialF32Add(accum_w_float, weight);
+					} else {
+						for (int c = 0; c < 3; ++c) weighted_rgb[c] += polar.rgba[src_idx + c] * alpha * weight;
+						weighted_alpha += alpha * weight;
+						accum_alpha += alpha * weight;
+						accum_w_double += (double)weight;
+					}
+				}
+				const size_t dst = ((size_t)ai * radius_count + ri) * 4;
+				if (weighted_alpha > 1.0e-8f) {
+					for (int c = 0; c < 3; ++c) blurred.rgba[dst + c] = weighted_rgb[c] / weighted_alpha;
+				}
+				const float weight_sum = debug.force_scalar_producer ? accum_w_float : (float)accum_w_double;
+				blurred.rgba[dst + 3] = ClampFloat(accum_alpha / weight_sum, 0.0f, 1.0f);
+			}
+		}
+	} else {
+		ForwardConvolver convolver(radius_count, weights);
+		std::vector<double> values((size_t)radius_count);
+		std::vector<double> alpha_conv;
+		std::vector<double> rgb_conv[3];
+		std::vector<double> weight_sum_conv;
+		std::vector<double> ones((size_t)radius_count, 1.0);
+		convolver.Convolve(ones, weight_sum_conv);
+
+		for (A_long ai = 0; ai < angular_count; ++ai) {
+			for (A_long ri = 0; ri < radius_count; ++ri) {
+				const size_t src_idx = ((size_t)ai * radius_count + ri) * 4;
+				values[(size_t)ri] = polar.rgba[src_idx + 3];
+			}
+			convolver.Convolve(values, alpha_conv);
+
+			for (int c = 0; c < 3; ++c) {
+				for (A_long ri = 0; ri < radius_count; ++ri) {
+					const size_t src_idx = ((size_t)ai * radius_count + ri) * 4;
+					const double alpha = polar.rgba[src_idx + 3];
+					values[(size_t)ri] = polar.rgba[src_idx + c] * alpha;
+				}
+				convolver.Convolve(values, rgb_conv[c]);
+			}
+
+			for (A_long ri = 0; ri < radius_count; ++ri) {
+				const size_t dst = ((size_t)ai * radius_count + ri) * 4;
+				const double weighted_alpha = alpha_conv[(size_t)ri];
+				if (weighted_alpha > 1.0e-8) {
+					for (int c = 0; c < 3; ++c) {
+						blurred.rgba[dst + c] = (float)(rgb_conv[c][(size_t)ri] / weighted_alpha);
+					}
+				}
+				blurred.rgba[dst + 3] = ClampFloat((float)(weighted_alpha / weight_sum_conv[(size_t)ri]), 0.0f, 1.0f);
+			}
+		}
+	}
+	return blurred;
+}
+
 #if defined(OLM_RADIALBLUR_TEST_SEAM)
 struct RadialBlurTestPolarCapture {
 	float *pre_blur_rgba = nullptr;
@@ -1039,87 +1132,8 @@ static PF_Err RenderZoomTyped(
 	}
 #endif
 
-	const std::vector<float> weights = ZoomGaussianWeights(ZoomEffectiveLength(info));
-	const bool use_fft_convolution = weights.size() > 512 && !debug.force_scalar_producer;
-	FloatImage blurred;
-	blurred.width = radius_count;
-	blurred.height = angular_count;
-	blurred.rgba.assign((size_t)angular_count * radius_count * 4, 0.0f);
-	if (!use_fft_convolution) {
-		for (A_long ai = 0; ai < angular_count; ++ai) {
-			for (A_long ri = 0; ri < radius_count; ++ri) {
-				double accum_w_double = 0.0;
-				float accum_w_float = 0.0f;
-				float weighted_rgb[3] = {0.0f, 0.0f, 0.0f};
-				float weighted_alpha = 0.0f;
-				float accum_alpha = 0.0f;
-				const A_long limit = std::min<A_long>((A_long)weights.size(), ri + 1);
-				for (A_long k = 0; k < limit; ++k) {
-					const size_t src_idx = ((size_t)ai * radius_count + (ri - k)) * 4;
-					const float alpha = polar.rgba[src_idx + 3];
-					const float weight = weights[(size_t)k];
-					if (debug.force_scalar_producer) {
-						const float alpha_weight = RadialF32Mul(alpha, weight);
-						for (int c = 0; c < 3; ++c) {
-							weighted_rgb[c] = RadialF32Add(
-								weighted_rgb[c],
-								RadialF32Mul(polar.rgba[src_idx + c], alpha_weight));
-						}
-						weighted_alpha = RadialF32Add(weighted_alpha, alpha_weight);
-						accum_alpha = RadialF32Add(accum_alpha, alpha_weight);
-						accum_w_float = RadialF32Add(accum_w_float, weight);
-					} else {
-						for (int c = 0; c < 3; ++c) weighted_rgb[c] += polar.rgba[src_idx + c] * alpha * weight;
-						weighted_alpha += alpha * weight;
-						accum_alpha += alpha * weight;
-						accum_w_double += (double)weight;
-					}
-				}
-				const size_t dst = ((size_t)ai * radius_count + ri) * 4;
-				if (weighted_alpha > 1.0e-8f) {
-					for (int c = 0; c < 3; ++c) blurred.rgba[dst + c] = weighted_rgb[c] / weighted_alpha;
-				}
-				const float weight_sum = debug.force_scalar_producer ? accum_w_float : (float)accum_w_double;
-				blurred.rgba[dst + 3] = ClampFloat(accum_alpha / weight_sum, 0.0f, 1.0f);
-			}
-		}
-	} else {
-		ForwardConvolver convolver(radius_count, weights);
-		std::vector<double> values((size_t)radius_count);
-		std::vector<double> alpha_conv;
-		std::vector<double> rgb_conv[3];
-		std::vector<double> weight_sum_conv;
-		std::vector<double> ones((size_t)radius_count, 1.0);
-		convolver.Convolve(ones, weight_sum_conv);
-		
-		for (A_long ai = 0; ai < angular_count; ++ai) {
-			for (A_long ri = 0; ri < radius_count; ++ri) {
-				const size_t src_idx = ((size_t)ai * radius_count + ri) * 4;
-				values[(size_t)ri] = polar.rgba[src_idx + 3];
-			}
-			convolver.Convolve(values, alpha_conv);
-
-			for (int c = 0; c < 3; ++c) {
-				for (A_long ri = 0; ri < radius_count; ++ri) {
-					const size_t src_idx = ((size_t)ai * radius_count + ri) * 4;
-					const double alpha = polar.rgba[src_idx + 3];
-					values[(size_t)ri] = polar.rgba[src_idx + c] * alpha;
-				}
-				convolver.Convolve(values, rgb_conv[c]);
-			}
-
-			for (A_long ri = 0; ri < radius_count; ++ri) {
-				const size_t dst = ((size_t)ai * radius_count + ri) * 4;
-				const double weighted_alpha = alpha_conv[(size_t)ri];
-				if (weighted_alpha > 1.0e-8) {
-					for (int c = 0; c < 3; ++c) {
-						blurred.rgba[dst + c] = (float)(rgb_conv[c][(size_t)ri] / weighted_alpha);
-					}
-				}
-				blurred.rgba[dst + 3] = ClampFloat((float)(weighted_alpha / weight_sum_conv[(size_t)ri]), 0.0f, 1.0f);
-			}
-		}
-	}
+	bool use_fft_convolution = false;
+	FloatImage blurred = BuildZoomBlurredPolar(polar, info, debug, &use_fft_convolution);
 
 #if defined(OLM_RADIALBLUR_TEST_SEAM)
 	if (test_polar_capture) {
@@ -1567,6 +1581,36 @@ extern "C" PF_Err OLMRadialBlurTestRenderFloatAndCapturePolarPlanes(
 	*polar_width = capture.width;
 	*polar_height = capture.height;
 	return err;
+}
+
+extern "C" PF_Err OLMRadialBlurTestRunFloatWorker(
+	const float *pre_blur_polar_rgba,
+	A_long polar_width,
+	A_long polar_height,
+	const OLMRadialBlurInfo *info,
+	float *normalized_polar_rgba,
+	size_t capacity_floats,
+	size_t *written_floats,
+	A_Boolean *used_fft_convolution)
+{
+	if (!pre_blur_polar_rgba || !info || !normalized_polar_rgba || !written_floats ||
+	    !used_fft_convolution || polar_width <= 0 || polar_height <= 0) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	const size_t required_floats = (size_t)polar_width * polar_height * 4;
+	if (capacity_floats < required_floats) return PF_Err_BAD_CALLBACK_PARAM;
+	FloatImage polar;
+	polar.width = polar_width;
+	polar.height = polar_height;
+	polar.rgba.assign(pre_blur_polar_rgba, pre_blur_polar_rgba + required_floats);
+	bool used_fft = false;
+	const FloatImage blurred = BuildZoomBlurredPolar(
+		polar, *info, LoadRadialBlurDebugConfig(), &used_fft);
+	if (blurred.rgba.size() != required_floats) return PF_Err_BAD_CALLBACK_PARAM;
+	std::memcpy(normalized_polar_rgba, blurred.rgba.data(), required_floats * sizeof(float));
+	*written_floats = required_floats;
+	*used_fft_convolution = used_fft ? TRUE : FALSE;
+	return PF_Err_NONE;
 }
 #endif
 

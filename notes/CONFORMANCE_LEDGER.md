@@ -10,11 +10,13 @@
   `0x3e78f8fa`). The normalized planes differ in `13,953,051` bytes; their
   first difference is
   `(angle=0, radius=0, G)`: production `0x273c0000`, AEX `0x00000000`.
-  Therefore the PF32 Zoom residual exists before both the worker and final
-  inverse sampler. Because worker inputs already differ, the larger normalized
-  residual does not yet prove a worker bug. The next allowed action is to feed
-  the actual-AEX pre-blur oracle into the Mac worker and compare its normalized
-  output with the AEX normalized plane; do not tune the final sampler. Evidence:
+  A worker-only run then feeds the exact AEX pre-blur plane into the shared Mac
+  worker and still differs from the AEX normalized plane in `12,744,511`
+  bytes. This causally proves an independent worker/convolution/normalization
+  residual; the pre-blur sampling family remains a separate lane. The next
+  allowed action is to implement the AEX `FUN_18000b150` seed,
+  `FUN_18000a9d0` float32 scatter, max-alpha plane, and normalization order
+  against this worker-only oracle; do not tune the final sampler. Evidence:
   `refs/conformance/olmradialblur_typed_deep_render_20260718.md`.
 
 - 2026-07-18 `OLMColorKey 16bpc case_0005/case_0006 provenance review`
