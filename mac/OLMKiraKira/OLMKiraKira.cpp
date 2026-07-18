@@ -250,7 +250,7 @@ static std::vector<float> DirectionBoxBlur(
 	return src;
 }
 
-static std::vector<float> SquareBoxBlur(
+static std::vector<float> IsotropicBoxBlur(
 	const std::vector<float> &input,
 	A_long width,
 	A_long height,
@@ -258,26 +258,9 @@ static std::vector<float> SquareBoxBlur(
 	A_long passes)
 {
 	std::vector<float> result = input;
-	if (kernel_size <= 1) return result;
-	const A_long left = kernel_size / 2;
-	const A_long right = kernel_size - left - 1;
 	for (A_long pass = 0; pass < passes; ++pass) {
-		std::vector<float> next(result.size(), 0.0f);
-		for (A_long y = 0; y < height; ++y) {
-			for (A_long x = 0; x < width; ++x) {
-				double sum = 0.0;
-				for (A_long ky = -left; ky <= right; ++ky) {
-					const A_long sy = Reflect101Index((int)(y + ky), (int)height);
-					for (A_long kx = -left; kx <= right; ++kx) {
-						const A_long sx = Reflect101Index((int)(x + kx), (int)width);
-						sum += result[(size_t)sy * width + sx];
-					}
-				}
-				next[(size_t)y * width + x] =
-					(float)(sum / (double)(kernel_size * kernel_size));
-			}
-		}
-		result.swap(next);
+		result = DirectionBoxBlur(result, width, height, kernel_size, 1, 0, 1);
+		result = DirectionBoxBlur(result, width, height, kernel_size, 0, 1, 1);
 	}
 	return result;
 }
@@ -520,7 +503,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	const A_long highlight_radius = scaled_len(info.highlight_radius);
 	if (highlight_radius > 0 && (info.blur_mode == 1 || info.blur_mode == 2)) {
 		const A_long highlight_passes = info.blur_mode == 1 ? 1 : 3;
-		highlight = SquareBoxBlur(
+		highlight = IsotropicBoxBlur(
 			seed, w, h, highlight_radius * 2 + 1, highlight_passes);
 	}
 

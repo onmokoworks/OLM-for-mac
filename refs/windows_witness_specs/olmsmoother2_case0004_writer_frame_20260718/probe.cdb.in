@@ -1,0 +1,9 @@
+.effmach amd64
+.expr /s masm
+sxi 80000003
+.logopen /t "{{TRACE_PATH}}"
+r @$t0=0
+bp {{ADDRESS:writer_float4}} ".if (@$t0==0) {.if (dwo(@rsp+0x34)==1903) {.if (dwo(@rsp+0x38)==519) {r @$t0=1;.printf \"S2_WRITER_FLOAT4 run_id={{RUN_ID}} ae_pid={{AE_PID}} module_base={{MODULE_BASE}} aex_sha256={{AEX_SHA256}} project_bpc={{PROJECT_BPC}} renderer={{RENDERER}} case_id={{CASE_ID}} witness_id={{CASE_VALUE:witness_id}} stage=writer_float4 hook_rva=3510 x=1903 y=519 writer_frame_rgba_f32_bits=0x%08x,0x%08x,0x%08x,0x%08x typed_f32=1 same_run_key=writer-frame-1903-519\n\",dwo(@rsp+0x48),dwo(@rsp+0x4c),dwo(@rsp+0x50),dwo(@rsp+0x54)} .else {gc}} .else {gc}} .else {gc}}"
+bp {{ADDRESS:pf_store}} ".if (@$t0==1) {.if (dwo(@rsp+0x34)==1903) {.if (dwo(@rsp+0x38)==519) {.printf \"S2_PF8_STORE run_id={{RUN_ID}} ae_pid={{AE_PID}} module_base={{MODULE_BASE}} aex_sha256={{AEX_SHA256}} project_bpc={{PROJECT_BPC}} renderer={{RENDERER}} case_id={{CASE_ID}} witness_id={{CASE_VALUE:witness_id}} stage=pf8_store hook_rva=3610 x=1903 y=519 store_addr=%p packed_pf8_raw=0x%08x pf8_raw_bytes_le=%u,%u,%u,%u typed_argb8=1 same_run_key=writer-frame-1903-519\n\",@rsi,@eax,(@eax & 0xff),((@eax>>8) & 0xff),((@eax>>16) & 0xff),((@eax>>24) & 0xff);.echo S2_WRITER_FRAME_COMPLETE;.detach;q} .else {gc}} .else {gc}} .else {gc}}"
+.echo S2_WRITER_FRAME_BREAKPOINTS_READY
+g

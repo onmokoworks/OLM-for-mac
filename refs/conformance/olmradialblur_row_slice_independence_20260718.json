@@ -1,0 +1,171 @@
+{
+  "abi": {
+    "a9d0": {
+      "reads": [
+        "state +0x3ed8/+0x3edc and inline tables +0x58/+0x1f98",
+        "source RGBA plane param_2, current row only",
+        "source scalar planes param_3/param_4 and valid-byte plane param_5, current row only",
+        "param_10/param_11 current-row values before in-place accumulation/max update"
+      ],
+      "shared_reduction": false,
+      "synchronization_in_binary": false,
+      "writes": [
+        "param_10 RGBA accumulation, current row only",
+        "param_11 scalar max/denominator, current row only"
+      ]
+    },
+    "b150": {
+      "reads": [
+        "state +0x4200/+0x4204 and inline tables +0x3ee0/+0x4070",
+        "source RGBA plane param_2, current row only with horizontal same-row taps",
+        "source scalar plane param_4, current row only"
+      ],
+      "shared_reduction": false,
+      "synchronization_in_binary": false,
+      "writes": [
+        "output RGBA plane param_9, current row only",
+        "output scalar param_3, current row only",
+        "output scalar param_10, current row only"
+      ]
+    },
+    "caller": {
+      "phase_1": "serial loop calls B150 at 0x180005c1a for slices [floor(i*H/T), floor((i+1)*H/T))",
+      "phase_2": "serial loop calls A9D0 at 0x180005c90 for the same slice formula",
+      "phase_barrier_1": "the B150 loop terminates before the A9D0 loop begins",
+      "phase_barrier_2": "the A9D0 loop terminates before normalization at 0x180005c9f",
+      "post_worker": "normalization then precedes final sampler call at 0x180005e68",
+      "thread_count": "omp_get_max_threads capped at 32; used only to choose slice count"
+    }
+  },
+  "addresses": {
+    "a9d0": "0x18000a9d0",
+    "a9d0_call": "0x180005c90",
+    "b150": "0x18000b150",
+    "b150_call": "0x180005c1a",
+    "caller": "0x1800056f0",
+    "final_sampler_call": "0x180005e68",
+    "normalization_start": "0x180005c9f"
+  },
+  "bounded_evidence": {
+    "natural_b150_checkpoint": {
+      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmradialblur_natural_b150_checkpoint_20260717.json",
+      "sha256": "31da4df2e822e252076fb4e4cea4e1933c0fa19f60f0a91d3ba033aae08adb9d",
+      "status": "pass"
+    },
+    "natural_b150_replay": {
+      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmradialblur_natural_b150_replay_oracle_20260717.json",
+      "sha256": "818c06336066ceb7f951b60c1df9733bae919c6d73bdc753333b183c0b0f7b03",
+      "status": "pass"
+    },
+    "natural_b150_span_matrix": {
+      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmradialblur_natural_b150_span_matrix_20260717.json",
+      "sha256": "b14125965a3262f476324c7d2fcdbe3112ceed0824000c1f73c0387747536672",
+      "status": "pass"
+    },
+    "natural_sampler_strategy": {
+      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmradialblur_natural_sampler_strategy_20260718.json",
+      "sha256": "f9159e96cfdcfc1613647be59ad414e4aab8e724e131da59c9f59e4333f4723a",
+      "status": "pass_read_only_strategy_gate"
+    }
+  },
+  "claim_boundary": "Binary worker slices are row-disjoint and phase-parallelizable only as B150-all-slices, barrier, A9D0-all-slices, barrier, normalization. This proves an emulation scheduling contract, not Windows/AE exactness.",
+  "gates": {
+    "a9d0_cell_increment": true,
+    "a9d0_has_no_atomic_or_fence_instruction": true,
+    "a9d0_has_no_call_instruction": true,
+    "a9d0_row_increment": true,
+    "b150_has_no_atomic_or_fence_instruction": true,
+    "b150_has_no_call_instruction": true,
+    "b150_row_increment": true,
+    "caller_calls_a9d0": true,
+    "caller_calls_b150": true,
+    "caller_caps_omp_threads_at_32": true,
+    "caller_final_sampler_after_normalization": true,
+    "caller_normalization_after_a9d0": true,
+    "immutable_state_inputs_identified": true,
+    "latest_progress_observation_monotonic": true,
+    "natural_b150_checkpoint_is_nonzero_bounded": true,
+    "natural_b150_replay_all_196_words": true,
+    "natural_b150_span_matrix_2_3_inner_1": true,
+    "no_shared_reduction_identified": true,
+    "phase_barrier_required_and_present": true,
+    "protected_long_run_not_stopped": true,
+    "slice_ranges_are_disjoint_and_complete": true
+  },
+  "kind": "olmradialblur_row_slice_independence_20260718",
+  "parallel_runner_started": false,
+  "partition_contract": {
+    "complete": true,
+    "disjoint": true,
+    "height": 4,
+    "rgba16_byte_ranges": [
+      [
+        0,
+        1568
+      ],
+      [
+        1568,
+        3136
+      ]
+    ],
+    "scalar4_byte_ranges": [
+      [
+        0,
+        392
+      ],
+      [
+        392,
+        784
+      ]
+    ],
+    "slices": [
+      [
+        0,
+        2
+      ],
+      [
+        2,
+        4
+      ]
+    ],
+    "width": 49
+  },
+  "production_source_changed": false,
+  "protected_process": {
+    "alive": true,
+    "pid": 59481,
+    "ps_line": "59481 Rs   18:07 /opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python tools/emulation/run_radialblur_natural_progress_hook_20260718.py --hook-mode row --progress-json /tmp/olm_radialblur_natural_progress_row_long_20260718.json --sample-every 16 --max-samples 128 --resume-checkpoint /tmp/olm_radial_case0009_workers_progress6_20260718.aexcp --max-instructions 10000000000 --save-progress-checkpoint /tmp/olm_radial_case0009_workers_progress7_row_20260718.aexcp"
+  },
+  "provenance": {
+    "aex": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "disasm": "/Users/onmk/Documents/Projects/Personal/OLM as/disasm/OLMRadialBlur.aex.asm.txt",
+    "disasm_sha256": "feaf9366c4cff7fc726bea62af94f8b6a638d08fb597844463e3a6274c0b3971"
+  },
+  "rejected_shortcuts": [
+    "do not parallelize B150 and A9D0 as one mixed phase",
+    "do not omit the join between B150 and A9D0",
+    "do not omit the join before normalization or sampler",
+    "do not run when any input/output pointer range aliases unexpectedly",
+    "do not claim AE exactness from this artifact"
+  ],
+  "status": "pass_row_slice_independence_with_two_phase_barrier",
+  "write_set_contract": {
+    "a9d0": {
+      "phase": "A9D0",
+      "row_local_planes": [
+        "caller state +0x4210 (RGBA read/modify/write)",
+        "caller state +0x4218 (scalar read/modify/write)"
+      ]
+    },
+    "b150": {
+      "phase": "B150",
+      "row_local_planes": [
+        "caller state +0x50 (scalar output)",
+        "caller state +0x4210 (RGBA output)",
+        "caller state +0x4218 (scalar output)"
+      ]
+    },
+    "phase_dependency": "A9D0 reads B150 outputs at +0x50/+0x4210/+0x4218; join is mandatory"
+  }
+}

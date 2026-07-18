@@ -1,0 +1,177 @@
+{
+  "aex": {
+    "path": "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex",
+    "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+  },
+  "claims": {
+    "ae_exact_claim": false,
+    "production_edit": false,
+    "windows_software_claim": false
+  },
+  "facts": {
+    "actual_aex_matches_all": {
+      "half_up": false,
+      "nearest_even": false,
+      "trunc": true
+    },
+    "actual_aex_rgb_store_rule": "truncation for every bounded witness",
+    "cases": [
+      {
+        "actual_aex_agrb": [
+          32768,
+          0,
+          0,
+          30583
+        ],
+        "actual_matches": {
+          "half_up": false,
+          "nearest_even": true,
+          "trunc": true
+        },
+        "field_word": 0,
+        "field_x_f32": 0.0,
+        "grad_red_f32": 1.52587890625e-05,
+        "label": "half_code_at_zero_field",
+        "models": {
+          "half_up": 1,
+          "nearest_even": 0,
+          "trunc": 0
+        },
+        "pre_store_red_f32": 1.52587890625e-05
+      },
+      {
+        "actual_aex_agrb": [
+          32768,
+          0,
+          1,
+          30583
+        ],
+        "actual_matches": {
+          "half_up": false,
+          "nearest_even": false,
+          "trunc": true
+        },
+        "field_word": 0,
+        "field_x_f32": 0.0,
+        "grad_red_f32": 4.57763671875e-05,
+        "label": "odd_half_code_at_zero_field",
+        "models": {
+          "half_up": 2,
+          "nearest_even": 2,
+          "trunc": 1
+        },
+        "pre_store_red_f32": 4.57763671875e-05
+      },
+      {
+        "actual_aex_agrb": [
+          32768,
+          0,
+          2,
+          30583
+        ],
+        "actual_matches": {
+          "half_up": false,
+          "nearest_even": true,
+          "trunc": true
+        },
+        "field_word": 0,
+        "field_x_f32": 0.0,
+        "grad_red_f32": 7.62939453125e-05,
+        "label": "even_half_code_at_zero_field",
+        "models": {
+          "half_up": 3,
+          "nearest_even": 2,
+          "trunc": 2
+        },
+        "pre_store_red_f32": 7.62939453125e-05
+      },
+      {
+        "actual_aex_agrb": [
+          32768,
+          0,
+          2,
+          30582
+        ],
+        "actual_matches": {
+          "half_up": true,
+          "nearest_even": true,
+          "trunc": true
+        },
+        "field_word": 1,
+        "field_x_f32": 3.0517578125e-05,
+        "grad_red_f32": 4.57763671875e-05,
+        "label": "half_code_after_field_step",
+        "models": {
+          "half_up": 2,
+          "nearest_even": 2,
+          "trunc": 2
+        },
+        "pre_store_red_f32": 7.629254832863808e-05
+      },
+      {
+        "actual_aex_agrb": [
+          32768,
+          0,
+          16385,
+          15291
+        ],
+        "actual_matches": {
+          "half_up": false,
+          "nearest_even": false,
+          "trunc": true
+        },
+        "field_word": 16384,
+        "field_x_f32": 0.5,
+        "grad_red_f32": 9.1552734375e-05,
+        "label": "midfield_half_code",
+        "models": {
+          "half_up": 16386,
+          "nearest_even": 16386,
+          "trunc": 16385
+        },
+        "pre_store_red_f32": 0.5000457763671875
+      },
+      {
+        "actual_aex_agrb": [
+          32768,
+          0,
+          32768,
+          0
+        ],
+        "actual_matches": {
+          "half_up": true,
+          "nearest_even": true,
+          "trunc": true
+        },
+        "field_word": 32767,
+        "field_x_f32": 0.999969482421875,
+        "grad_red_f32": 1.5,
+        "label": "near_zero_after_inversion",
+        "models": {
+          "half_up": 32768,
+          "nearest_even": 32768,
+          "trunc": 32768
+        },
+        "pre_store_red_f32": 1.0000152587890625
+      }
+    ],
+    "production_source_changed": false
+  },
+  "fixture": {
+    "contract": "case_0023 Linear/RGB/Both/use-background with injected field and gradation red",
+    "field_word_domain": "0..32768",
+    "output_word_order": "A,G,R,B"
+  },
+  "generated_on": "2026-07-18",
+  "inference": {
+    "final_store_only_fix_for_0012_0014": "not authorized",
+    "next_boundary": "same-run Windows and Mac pre-store float plus PF16 stored word at one case_0012 and one case_0014 RGB-minus-one coordinate",
+    "reason": "The actual AEX compose/store boundary agrees with truncation on adversarial half-code witnesses; this does not identify the missing Windows target pre-store value or prove the target residual is final-store-only."
+  },
+  "schema": "olmdistancegradation.pf16-store-boundary-audit/1",
+  "scope": [
+    "actual AEX FUN_181170480",
+    "PF16 RGB compose/store boundary"
+  ],
+  "status": "pass"
+}
