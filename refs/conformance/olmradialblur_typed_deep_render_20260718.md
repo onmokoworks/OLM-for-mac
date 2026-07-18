@@ -7,7 +7,7 @@ PF32 instead of copying the input unchanged. PF8 keeps its existing path.
 
 ## Evidence
 
-- Actual-AEX normalized polar plane: `b8627f0dd4e21ea371d31400a3c6ab5b61e9f293d3cecb99dc80bc91837d7fe1`
+- Actual-AEX normalized polar plane: `31,795,200` bytes, `c8037b713512573f8b4346a5e0efc6dd1862f0a53da39d673b005f15a06469f8`
 - Actual-AEX complete PF32 frame: `7de7d9700fddce9f77261fe3e81db8b89ffc88a06c897b866ffe512392562010`
 - Compared frame bytes: `33,177,600`
 - Reconstructed final sampler differing bytes: `144,584`

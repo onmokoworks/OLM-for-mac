@@ -166,6 +166,26 @@ def geometry(loader: AexLoader, param_2: int) -> dict[str, int]:
             "cells": width * height}
 
 
+def polar_geometry(loader: AexLoader, work: int) -> dict[str, int]:
+    min_radius = struct.unpack("<i", loader.read_bytes(work + 0x18, 4))[0]
+    max_radius = struct.unpack("<i", loader.read_bytes(work + 0x1C, 4))[0]
+    width = max_radius - min_radius + 1
+    output_rgba = u64(loader, work + 0x4210)
+    output_scalar = u64(loader, work + 0x4218)
+    normalized_rgba = u64(loader, work + 0x38)
+    rgba_bytes = output_scalar - output_rgba
+    scalar_bytes = normalized_rgba - output_scalar
+    if width <= 0 or rgba_bytes <= 0 or scalar_bytes <= 0:
+        raise ValueError("invalid polar geometry pointers")
+    if rgba_bytes % 16 or scalar_bytes % 4 or rgba_bytes // 16 != scalar_bytes // 4:
+        raise ValueError("polar RGBA/scalar plane sizes disagree")
+    cells = rgba_bytes // 16
+    if cells % width:
+        raise ValueError("polar cell count is not divisible by radius width")
+    return {"width": width, "height": cells // width, "cells": cells,
+            "min_radius": min_radius, "max_radius": max_radius}
+
+
 def plane_snapshot(loader: AexLoader, address: int, cells: int,
                    pixels: list[tuple[int, int]], width: int,
                    dump_path: Path | None = None) -> dict[str, Any]:
@@ -192,13 +212,13 @@ def plane_snapshot(loader: AexLoader, address: int, cells: int,
 
 
 def capture_planes(loader: AexLoader, work: int, param_2: int,
-                   geo: dict[str, int], pixels: list[tuple[int, int]],
+                   geo: dict[str, int], polar_geo: dict[str, int], pixels: list[tuple[int, int]],
                    stage_name: str, dump_dir: Path | None) -> dict[str, Any]:
     normalized = u64(loader, work + 0x38)
     output = u64(loader, param_2 + 0xA0)
     return {
         "normalized_polar_plane": plane_snapshot(
-            loader, normalized, geo["cells"], pixels, geo["width"],
+            loader, normalized, polar_geo["cells"], pixels, polar_geo["width"],
             dump_dir / "normalized_polar_plane.f32rgba" if dump_dir is not None and stage_name == "normalized_polar_plane" else None),
         "pf32_output_frame": plane_snapshot(
             loader, output, geo["cells"], pixels, geo["width"],
@@ -242,6 +262,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     if header["metadata"].get("pointers") != expected_pointers:
         raise ValueError("checkpoint host pointer layout mismatch")
     geo = geometry(loader, identity["param_2"])
+    polar_geo = polar_geometry(loader, identity["work"])
     if (geo["width"], geo["height"]) != (pointers["width"], pointers["height"]):
         raise ValueError("checkpoint geometry differs from pinned input")
 
@@ -258,6 +279,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         ],
         "identity": identity,
         "geometry": geo,
+        "polar_geometry": polar_geo,
         "sequential_stops": [],
     }
 
@@ -276,7 +298,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         if not state["hit"] or result["rip"] != target:
             raise RuntimeError(f"did not reach sequential stop 0x{target:x}: {result}")
         return {"rip": hex(target), "instructions": result["instructions"],
-                "planes": capture_planes(loader, identity["work"], identity["param_2"], geo, args.pixel, stage_name, args.dump_dir)}
+                "planes": capture_planes(loader, identity["work"], identity["param_2"], geo, polar_geo, args.pixel, stage_name, args.dump_dir)}
 
     for name, target in STOPS:
         stage = stop_once(name, target)

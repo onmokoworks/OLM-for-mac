@@ -17,11 +17,12 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "mac/OLMRadialBlur/OLMRadialBlur.cpp"
 AUDIT_CPP = ROOT / "tools/emulation/audit_olmradialblur_pf32_host_adapter_20260718.cpp"
-RAW_ROOT = Path("/tmp/olmradialblur_continuation_dump_20260718")
+RAW_ROOT = Path("/tmp/olmradialblur_continuation_dump_20260718_corrected")
 PLANE = RAW_ROOT / "normalized_polar_plane.f32rgba"
 ORACLE = RAW_ROOT / "complete_pf32_frame.f32rgba"
 INPUT_PNG = ROOT / "refs/win_references/20260604_olm/OLMRadialBlur/case_0009_before_effects.png"
 EXPECTED_BYTES = 1920 * 1080 * 4 * 4
+POLAR_BYTES = 1104 * 1800 * 4 * 4
 
 
 def sha256(path: Path) -> str:
@@ -112,7 +113,7 @@ def main() -> int:
         print("raw_frame_comparison=skipped_missing_local_oracle")
         print("ae_exact_claim=false")
         return 0
-    if PLANE.stat().st_size != EXPECTED_BYTES or ORACLE.stat().st_size != EXPECTED_BYTES:
+    if PLANE.stat().st_size != POLAR_BYTES or ORACLE.stat().st_size != EXPECTED_BYTES:
         raise AssertionError("local oracle has an unexpected byte size")
 
     with tempfile.TemporaryDirectory(prefix="olmradialblur_typed_deep_20260718_") as tmp:

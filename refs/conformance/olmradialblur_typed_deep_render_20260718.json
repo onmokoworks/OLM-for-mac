@@ -8,9 +8,10 @@
   "built_plugin_sha256": "7e794ee6c8eb8f16c0a8081eaede5cdf9973d7b7ebc16047047f75ae78d6fee5",
   "built_architectures": ["x86_64", "arm64"],
   "actual_aex_oracle": {
-    "normalized_polar_plane_sha256": "b8627f0dd4e21ea371d31400a3c6ab5b61e9f293d3cecb99dc80bc91837d7fe1",
+    "normalized_polar_plane_sha256": "c8037b713512573f8b4346a5e0efc6dd1862f0a53da39d673b005f15a06469f8",
+    "normalized_polar_plane_bytes": 31795200,
     "complete_pf32_frame_sha256": "7de7d9700fddce9f77261fe3e81db8b89ffc88a06c897b866ffe512392562010",
-    "compared_bytes": 33177600
+    "complete_pf32_frame_bytes": 33177600
   },
   "results": {
     "reconstructed_final_sampler_differing_bytes": 144584,

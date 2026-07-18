@@ -16,13 +16,13 @@
 ## Sequential stops
 
 - `normalized_polar_plane` at `0x180005d96`; instructions `51685211`
-  - `normalized_polar_plane`: `33177600` bytes, `b8627f0dd4e21ea371d31400a3c6ab5b61e9f293d3cecb99dc80bc91837d7fe1`
+  - `normalized_polar_plane`: `31795200` bytes, `c8037b713512573f8b4346a5e0efc6dd1862f0a53da39d673b005f15a06469f8`
   - `pf32_output_frame`: `33177600` bytes, `33c9aff6d23026135eadf5cd36f5784220bf77c05ed774e7c186a0f812ba0c7b`
 - `complete_pf32_frame` at `0x180005e8e`; instructions `406445046`
-  - `normalized_polar_plane`: `33177600` bytes, `b8627f0dd4e21ea371d31400a3c6ab5b61e9f293d3cecb99dc80bc91837d7fe1`
+  - `normalized_polar_plane`: `31795200` bytes, `c8037b713512573f8b4346a5e0efc6dd1862f0a53da39d673b005f15a06469f8`
   - `pf32_output_frame`: `33177600` bytes, `7de7d9700fddce9f77261fe3e81db8b89ffc88a06c897b866ffe512392562010`
 - `pre_return` at `0x1800063a1`; instructions `388`
-  - `normalized_polar_plane`: `33177600` bytes, `b8627f0dd4e21ea371d31400a3c6ab5b61e9f293d3cecb99dc80bc91837d7fe1`
+  - `normalized_polar_plane`: `31795200` bytes, `c8037b713512573f8b4346a5e0efc6dd1862f0a53da39d673b005f15a06469f8`
   - `pf32_output_frame`: `33177600` bytes, `7de7d9700fddce9f77261fe3e81db8b89ffc88a06c897b866ffe512392562010`
 
 - Normal return: `0x90000000`

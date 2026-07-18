@@ -80,6 +80,39 @@ class ContinuationStructureTests(unittest.TestCase):
         encoded = json.dumps(report, sort_keys=True)
         self.assertIn("pass_internal_continuation_only", encoded)
 
+    def test_polar_geometry_uses_distinct_rgba_and_scalar_planes(self) -> None:
+        class FakeLoader:
+            def __init__(self):
+                self.values = {
+                    0x1018: (0).to_bytes(4, "little", signed=True),
+                    0x101C: (1103).to_bytes(4, "little", signed=True),
+                    0x5210: (0x200000).to_bytes(8, "little"),
+                    0x5218: (0x200000 + 1104 * 1800 * 16).to_bytes(8, "little"),
+                    0x1038: (0x200000 + 1104 * 1800 * 20).to_bytes(8, "little"),
+                }
+
+            def read_bytes(self, address, size):
+                return self.values[address][:size]
+
+        self.assertEqual(
+            runner.polar_geometry(FakeLoader(), 0x1000),
+            {"width": 1104, "height": 1800, "cells": 1104 * 1800,
+             "min_radius": 0, "max_radius": 1103},
+        )
+
+    def test_checked_report_keeps_polar_and_output_sizes_distinct(self) -> None:
+        report_path = ROOT / "refs/conformance/olmradialblur_continuation_20260718.json"
+        report = json.loads(report_path.read_text())
+        self.assertEqual(
+            report["polar_geometry"],
+            {"width": 1104, "height": 1800, "cells": 1104 * 1800,
+             "min_radius": 0, "max_radius": 1103},
+        )
+        for stop in report["sequential_stops"]:
+            planes = stop["planes"]
+            self.assertEqual(planes["normalized_polar_plane"]["size"], 1104 * 1800 * 16)
+            self.assertEqual(planes["pf32_output_frame"]["size"], 1920 * 1080 * 16)
+
 
 if __name__ == "__main__":
     unittest.main()

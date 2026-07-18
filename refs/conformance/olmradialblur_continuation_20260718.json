@@ -48,6 +48,13 @@
     "A matching internal plane is evidence about the AEX path, not proof of Mac AE equivalence."
   ],
   "kind": "olmradialblur_continuation_20260718",
+  "polar_geometry": {
+    "cells": 1987200,
+    "height": 1800,
+    "max_radius": 1103,
+    "min_radius": 0,
+    "width": 1104
+  },
   "return": {
     "instructions": 107847233,
     "return_trampoline": "0x90000000",
@@ -60,8 +67,8 @@
       "planes": {
         "normalized_polar_plane": {
           "address": "0x28ecba00",
-          "dump_path": "<temporary>/olmradialblur_continuation_dump_20260718/normalized_polar_plane.f32rgba",
-          "dump_sha256": "b8627f0dd4e21ea371d31400a3c6ab5b61e9f293d3cecb99dc80bc91837d7fe1",
+          "dump_path": "<temporary>/olmradialblur_continuation_dump_20260718_corrected/normalized_polar_plane.f32rgba",
+          "dump_sha256": "c8037b713512573f8b4346a5e0efc6dd1862f0a53da39d673b005f15a06469f8",
           "selected_pixels": {
             "0,0": {
               "float32": [
@@ -109,8 +116,8 @@
               "hex": "0000803f00000000000000000000803f"
             }
           },
-          "sha256": "b8627f0dd4e21ea371d31400a3c6ab5b61e9f293d3cecb99dc80bc91837d7fe1",
-          "size": 33177600
+          "sha256": "c8037b713512573f8b4346a5e0efc6dd1862f0a53da39d673b005f15a06469f8",
+          "size": 31795200
         },
         "pf32_output_frame": {
           "address": "0x22f76000",
@@ -220,12 +227,12 @@
               "hex": "0000803f00000000000000000000803f"
             }
           },
-          "sha256": "b8627f0dd4e21ea371d31400a3c6ab5b61e9f293d3cecb99dc80bc91837d7fe1",
-          "size": 33177600
+          "sha256": "c8037b713512573f8b4346a5e0efc6dd1862f0a53da39d673b005f15a06469f8",
+          "size": 31795200
         },
         "pf32_output_frame": {
           "address": "0x22f76000",
-          "dump_path": "<temporary>/olmradialblur_continuation_dump_20260718/complete_pf32_frame.f32rgba",
+          "dump_path": "<temporary>/olmradialblur_continuation_dump_20260718_corrected/complete_pf32_frame.f32rgba",
           "dump_sha256": "7de7d9700fddce9f77261fe3e81db8b89ffc88a06c897b866ffe512392562010",
           "selected_pixels": {
             "0,0": {
@@ -333,8 +340,8 @@
               "hex": "0000803f00000000000000000000803f"
             }
           },
-          "sha256": "b8627f0dd4e21ea371d31400a3c6ab5b61e9f293d3cecb99dc80bc91837d7fe1",
-          "size": 33177600
+          "sha256": "c8037b713512573f8b4346a5e0efc6dd1862f0a53da39d673b005f15a06469f8",
+          "size": 31795200
         },
         "pf32_output_frame": {
           "address": "0x22f76000",
