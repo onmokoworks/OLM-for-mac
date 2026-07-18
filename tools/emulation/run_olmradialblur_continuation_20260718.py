@@ -75,7 +75,10 @@ def portable(value: Any) -> Any:
     if isinstance(value, list):
         return [portable(item) for item in value]
     if isinstance(value, str):
-        return value.replace(str(ROOT), "<repo>")
+        value = value.replace(str(ROOT), "<repo>")
+        value = value.replace("/private/tmp/", "<temporary>/")
+        value = value.replace("/tmp/", "<temporary>/")
+        return value
     return value
 
 
@@ -98,6 +101,7 @@ def checkpoint_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--pixel", action="append", type=parse_pixel,
                         default=[(0, 0), (6, 0), (7, 0), (8, 0), (24, 0)])
     parser.add_argument("--max-instructions", type=int, default=2_000_000_000)
+    parser.add_argument("--dump-dir", type=Path)
     parser.add_argument("--output-json", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--output-md", type=Path, default=DEFAULT_MD)
 
@@ -163,7 +167,8 @@ def geometry(loader: AexLoader, param_2: int) -> dict[str, int]:
 
 
 def plane_snapshot(loader: AexLoader, address: int, cells: int,
-                   pixels: list[tuple[int, int]], width: int) -> dict[str, Any]:
+                   pixels: list[tuple[int, int]], width: int,
+                   dump_path: Path | None = None) -> dict[str, Any]:
     size = cells * 16
     raw = bytes(loader.read_bytes(address, size))
     selected = {}
@@ -176,19 +181,28 @@ def plane_snapshot(loader: AexLoader, address: int, cells: int,
             "float32": list(struct.unpack_from("<4f", raw, offset)),
             "hex": raw[offset:offset + 16].hex(),
         }
-    return {"address": hex(address), "size": size,
-            "sha256": sha256_bytes(raw), "selected_pixels": selected}
+    report = {"address": hex(address), "size": size,
+              "sha256": sha256_bytes(raw), "selected_pixels": selected}
+    if dump_path is not None:
+        dump_path.parent.mkdir(parents=True, exist_ok=True)
+        dump_path.write_bytes(raw)
+        report["dump_path"] = str(dump_path)
+        report["dump_sha256"] = sha256_file(dump_path)
+    return report
 
 
 def capture_planes(loader: AexLoader, work: int, param_2: int,
-                   geo: dict[str, int], pixels: list[tuple[int, int]]) -> dict[str, Any]:
+                   geo: dict[str, int], pixels: list[tuple[int, int]],
+                   stage_name: str, dump_dir: Path | None) -> dict[str, Any]:
     normalized = u64(loader, work + 0x38)
     output = u64(loader, param_2 + 0xA0)
     return {
         "normalized_polar_plane": plane_snapshot(
-            loader, normalized, geo["cells"], pixels, geo["width"]),
+            loader, normalized, geo["cells"], pixels, geo["width"],
+            dump_dir / "normalized_polar_plane.f32rgba" if dump_dir is not None and stage_name == "normalized_polar_plane" else None),
         "pf32_output_frame": plane_snapshot(
-            loader, output, geo["cells"], pixels, geo["width"]),
+            loader, output, geo["cells"], pixels, geo["width"],
+            dump_dir / "complete_pf32_frame.f32rgba" if dump_dir is not None and stage_name == "complete_pf32_frame" else None),
     }
 
 
@@ -247,7 +261,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "sequential_stops": [],
     }
 
-    def stop_once(target: int) -> dict[str, Any]:
+    def stop_once(stage_name: str, target: int) -> dict[str, Any]:
         state = {"hit": False, "rip": None}
 
         def hook(ld: AexLoader, address: int, _size: int) -> None:
@@ -262,10 +276,10 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         if not state["hit"] or result["rip"] != target:
             raise RuntimeError(f"did not reach sequential stop 0x{target:x}: {result}")
         return {"rip": hex(target), "instructions": result["instructions"],
-                "planes": capture_planes(loader, identity["work"], identity["param_2"], geo, args.pixel)}
+                "planes": capture_planes(loader, identity["work"], identity["param_2"], geo, args.pixel, stage_name, args.dump_dir)}
 
     for name, target in STOPS:
-        stage = stop_once(target)
+        stage = stop_once(name, target)
         stage["name"] = name
         report["sequential_stops"].append(stage)
     final = loader.resume_execution(args.max_instructions)

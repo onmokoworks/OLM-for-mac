@@ -64,9 +64,11 @@ class ContinuationStructureTests(unittest.TestCase):
             )
 
     def test_portable_removes_repo_path_recursively(self) -> None:
-        value = {"a": str(ROOT / "refs/conformance/evidence.json"), "b": [str(ROOT)]}
+        value = {"a": str(ROOT / "refs/conformance/evidence.json"), "b": [str(ROOT)],
+                 "c": "checkpoint=/private/tmp/radial/example.aexcp"}
         result = runner.portable(value)
-        self.assertEqual(result, {"a": "<repo>/refs/conformance/evidence.json", "b": ["<repo>"]})
+        self.assertEqual(result, {"a": "<repo>/refs/conformance/evidence.json", "b": ["<repo>"],
+                                  "c": "checkpoint=<temporary>/radial/example.aexcp"})
 
     def test_report_schema_is_json_safe(self) -> None:
         report = {

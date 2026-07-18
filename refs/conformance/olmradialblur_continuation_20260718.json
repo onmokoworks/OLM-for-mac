@@ -1,0 +1,396 @@
+{
+  "claims_not_made": [
+    "AE exact",
+    "Windows exact",
+    "PNG equivalence"
+  ],
+  "facts": [
+    "The continuation resumes a natural AEX checkpoint under Unicorn.",
+    "The reported planes are internal PF32 memory, not host-rendered output."
+  ],
+  "gates": {
+    "aex_hash_validated": true,
+    "checkpoint_metadata_validated": true,
+    "checkpoint_unchanged": true,
+    "geometry_validated": true,
+    "normal_return": true,
+    "three_sequential_stops_reached": true
+  },
+  "geometry": {
+    "cells": 2073600,
+    "height": 1080,
+    "pointer": 1073742528,
+    "width": 1920
+  },
+  "identity": {
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "case_id": "case_0009",
+    "checkpoint": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_merged_at_normalization_20260718.aexcp",
+    "checkpoint_sha256": "480a7b012441b5863418835a8caf2fe16231dc8d7c59252fc05b69ec0407a909",
+    "param_2": 1073742784,
+    "source_config": {
+      "case_id": "case_0009",
+      "direct_debug_quality_step": 90.0,
+      "direct_debug_size": "",
+      "direct_detour_prepass": false,
+      "direct_detour_scatter": false,
+      "direct_fast_forward_prefill": false,
+      "direct_python_prefill": false,
+      "direct_stop_after_prefill": false,
+      "direct_zoom_core": false,
+      "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+      "manifest_sha256": "7ec542fad64cc210474c6309c3e48c9f12bd0885f54d31943da873d94024b565",
+      "trace_staging_loop": false
+    },
+    "work": 252454336
+  },
+  "inferences": [
+    "A matching internal plane is evidence about the AEX path, not proof of Mac AE equivalence."
+  ],
+  "kind": "olmradialblur_continuation_20260718",
+  "return": {
+    "instructions": 107847233,
+    "return_trampoline": "0x90000000",
+    "rip": "0x90000000"
+  },
+  "sequential_stops": [
+    {
+      "instructions": 51685211,
+      "name": "normalized_polar_plane",
+      "planes": {
+        "normalized_polar_plane": {
+          "address": "0x28ecba00",
+          "dump_path": "<temporary>/olmradialblur_continuation_dump_20260718/normalized_polar_plane.f32rgba",
+          "dump_sha256": "b8627f0dd4e21ea371d31400a3c6ab5b61e9f293d3cecb99dc80bc91837d7fe1",
+          "selected_pixels": {
+            "0,0": {
+              "float32": [
+                1.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "hex": "0000803f00000000000000000000803f"
+            },
+            "24,0": {
+              "float32": [
+                1.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "hex": "0000803f00000000000000000000803f"
+            },
+            "6,0": {
+              "float32": [
+                1.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "hex": "0000803f00000000000000000000803f"
+            },
+            "7,0": {
+              "float32": [
+                1.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "hex": "0000803f00000000000000000000803f"
+            },
+            "8,0": {
+              "float32": [
+                1.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "hex": "0000803f00000000000000000000803f"
+            }
+          },
+          "sha256": "b8627f0dd4e21ea371d31400a3c6ab5b61e9f293d3cecb99dc80bc91837d7fe1",
+          "size": 33177600
+        },
+        "pf32_output_frame": {
+          "address": "0x22f76000",
+          "selected_pixels": {
+            "0,0": {
+              "float32": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "hex": "00000000000000000000000000000000"
+            },
+            "24,0": {
+              "float32": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "hex": "00000000000000000000000000000000"
+            },
+            "6,0": {
+              "float32": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "hex": "00000000000000000000000000000000"
+            },
+            "7,0": {
+              "float32": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "hex": "00000000000000000000000000000000"
+            },
+            "8,0": {
+              "float32": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "hex": "00000000000000000000000000000000"
+            }
+          },
+          "sha256": "33c9aff6d23026135eadf5cd36f5784220bf77c05ed774e7c186a0f812ba0c7b",
+          "size": 33177600
+        }
+      },
+      "rip": "0x180005d96"
+    },
+    {
+      "instructions": 406445046,
+      "name": "complete_pf32_frame",
+      "planes": {
+        "normalized_polar_plane": {
+          "address": "0x28ecba00",
+          "selected_pixels": {
+            "0,0": {
+              "float32": [
+                1.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "hex": "0000803f00000000000000000000803f"
+            },
+            "24,0": {
+              "float32": [
+                1.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "hex": "0000803f00000000000000000000803f"
+            },
+            "6,0": {
+              "float32": [
+                1.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "hex": "0000803f00000000000000000000803f"
+            },
+            "7,0": {
+              "float32": [
+                1.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "hex": "0000803f00000000000000000000803f"
+            },
+            "8,0": {
+              "float32": [
+                1.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "hex": "0000803f00000000000000000000803f"
+            }
+          },
+          "sha256": "b8627f0dd4e21ea371d31400a3c6ab5b61e9f293d3cecb99dc80bc91837d7fe1",
+          "size": 33177600
+        },
+        "pf32_output_frame": {
+          "address": "0x22f76000",
+          "dump_path": "<temporary>/olmradialblur_continuation_dump_20260718/complete_pf32_frame.f32rgba",
+          "dump_sha256": "7de7d9700fddce9f77261fe3e81db8b89ffc88a06c897b866ffe512392562010",
+          "selected_pixels": {
+            "0,0": {
+              "float32": [
+                0.08223855495452881,
+                0.010608905926346779,
+                0.010608905926346779,
+                1.0
+              ],
+              "hex": "b06ca83dfad02d3cfad02d3c0000803f"
+            },
+            "24,0": {
+              "float32": [
+                0.08548867702484131,
+                0.015811603516340256,
+                0.015811603516340256,
+                1.0
+              ],
+              "hex": "b014af3d5687813c5687813c0000803f"
+            },
+            "6,0": {
+              "float32": [
+                0.08224078267812729,
+                0.014130093157291412,
+                0.014130093157291412,
+                0.9999999403953552
+              ],
+              "hex": "db6da83de881673ce881673cffff7f3f"
+            },
+            "7,0": {
+              "float32": [
+                0.08242073655128479,
+                0.014674708247184753,
+                0.014674708247184753,
+                0.9999999403953552
+              ],
+              "hex": "34cca83d306e703c306e703cffff7f3f"
+            },
+            "8,0": {
+              "float32": [
+                0.08260129392147064,
+                0.01522124744951725,
+                0.01522124744951725,
+                1.0
+              ],
+              "hex": "de2aa93d8a62793c8a62793c0000803f"
+            }
+          },
+          "sha256": "7de7d9700fddce9f77261fe3e81db8b89ffc88a06c897b866ffe512392562010",
+          "size": 33177600
+        }
+      },
+      "rip": "0x180005e8e"
+    },
+    {
+      "instructions": 388,
+      "name": "pre_return",
+      "planes": {
+        "normalized_polar_plane": {
+          "address": "0x28ecba00",
+          "selected_pixels": {
+            "0,0": {
+              "float32": [
+                1.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "hex": "0000803f00000000000000000000803f"
+            },
+            "24,0": {
+              "float32": [
+                1.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "hex": "0000803f00000000000000000000803f"
+            },
+            "6,0": {
+              "float32": [
+                1.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "hex": "0000803f00000000000000000000803f"
+            },
+            "7,0": {
+              "float32": [
+                1.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "hex": "0000803f00000000000000000000803f"
+            },
+            "8,0": {
+              "float32": [
+                1.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              "hex": "0000803f00000000000000000000803f"
+            }
+          },
+          "sha256": "b8627f0dd4e21ea371d31400a3c6ab5b61e9f293d3cecb99dc80bc91837d7fe1",
+          "size": 33177600
+        },
+        "pf32_output_frame": {
+          "address": "0x22f76000",
+          "selected_pixels": {
+            "0,0": {
+              "float32": [
+                0.08223855495452881,
+                0.010608905926346779,
+                0.010608905926346779,
+                1.0
+              ],
+              "hex": "b06ca83dfad02d3cfad02d3c0000803f"
+            },
+            "24,0": {
+              "float32": [
+                0.08548867702484131,
+                0.015811603516340256,
+                0.015811603516340256,
+                1.0
+              ],
+              "hex": "b014af3d5687813c5687813c0000803f"
+            },
+            "6,0": {
+              "float32": [
+                0.08224078267812729,
+                0.014130093157291412,
+                0.014130093157291412,
+                0.9999999403953552
+              ],
+              "hex": "db6da83de881673ce881673cffff7f3f"
+            },
+            "7,0": {
+              "float32": [
+                0.08242073655128479,
+                0.014674708247184753,
+                0.014674708247184753,
+                0.9999999403953552
+              ],
+              "hex": "34cca83d306e703c306e703cffff7f3f"
+            },
+            "8,0": {
+              "float32": [
+                0.08260129392147064,
+                0.01522124744951725,
+                0.01522124744951725,
+                1.0
+              ],
+              "hex": "de2aa93d8a62793c8a62793c0000803f"
+            }
+          },
+          "sha256": "7de7d9700fddce9f77261fe3e81db8b89ffc88a06c897b866ffe512392562010",
+          "size": 33177600
+        }
+      },
+      "rip": "0x1800063a1"
+    }
+  ],
+  "status": "pass_internal_continuation_only"
+}
