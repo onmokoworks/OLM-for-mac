@@ -1,21 +1,32 @@
 # OLM Conformance Ledger
 
+- 2026-07-18 `OLMRadialBlur case_0009 production exact chain` (latest
+  override): eligibility (`861d873df6a1e616f356fef86524e15580558591ea93945cd7ba8662ecdee2b7`),
+  preblur (`fc7b13739f081703137b771d51924e27219e34f93cc3b9ca7278fad4c46634ef`),
+  `+0x40` span (`2af5c86165c5b96b4c686e05f9e4587b0b1b464efbd389803a9d623e69da9a1f`),
+  `+0x50` source scalar (`13a5c887cd8c8c9a6a5380bf65ed8aacebc820d0751a0be81321053a596412ce`),
+  exact 1717-entry weights (`82d66d41ebba38e15638fd369acdf3a218a9160d39b0ad12a2aad482df8242d8`),
+  normalized postblur (`c8037b713512573f8b4346a5e0efc6dd1862f0a53da39d673b005f15a06469f8`),
+  and the complete internal PF32 frame
+  (`7de7d9700fddce9f77261fe3e81db8b89ffc88a06c897b866ffe512392562010`)
+  are now exact for `case_0009` through the proven production/internal chain.
+  The final frame comparison covers `33,177,600` bytes with zero differing
+  bytes, float words, or pixels. The last residual was the embedded AEX
+  negative-angle constant `6.2831853`, not mathematical `2*pi`. AE exact is
+  NOT established and no production promotion is made. The next gate is Mac
+  AE host output versus the Windows AE Software reference; do not retune the
+  now-exact internal chain. Evidence:
+  `refs/conformance/olmradialblur_prefill_contract_20260718.md`.
+
 - 2026-07-18 `OLMRadialBlur case_0009 Zoom worker internal exact` (latest
-  override): no AE correctness status is promoted. An identity-bound test seam
-  now reproduces the actual-AEX normalized polar plane byte-for-byte across
+  override): the normalized postblur plane remains byte-exact at
   `31,795,200` bytes (`1104x1800` float RGBA, `max_diff=0`, SHA-256
-  `c8037b713512573f8b4346a5e0efc6dd1862f0a53da39d673b005f15a06469f8`).
-  The decisive inputs are the source eligibility mask at checkpoint
-  `RBP-0x60`, the `+0x40` span plane, the `+0x50` source-scalar plane, and the
-  exact 1717-entry AEX weight table. Omitting eligibility leaves 5,465,443
-  differing bytes; adding it leaves 21,375; adding the two scalar planes closes
-  the internal plane exactly. Independent reconstruction from the post-worker
-  accumulation and max-alpha planes also matches the normalized oracle exactly.
-  This result is `binary-grounded internal exact`, not Mac AE exact and not a
-  production promotion. The next allowed action is to reproduce eligibility,
-  span, and source-scalar planes from Mac production inputs and generalize the
-  proven worker to additional parameter families; keep the separate 327,417-byte
-  pre-blur sampling family isolated and do not tune the final sampler. Evidence:
+  `c8037b713512573f8b4346a5e0efc6dd1862f0a53da39d673b005f15a06469f8`) after
+  binding the exact eligibility, `+0x40` span, `+0x50` source-scalar, and
+  1717-entry weight inputs. This closes the proven production/internal chain
+  through normalized postblur. AE exact is NOT established, no production
+  promotion is made, and the final inverse sampler/host output remains
+  unresolved. Evidence:
   `refs/conformance/olmradialblur_typed_deep_render_20260718.md` and
   `refs/conformance/olmradialblur_postworker_planes_20260718.md`.
 

@@ -1,0 +1,338 @@
+{
+  "schema": "olmradialblur.prefill-focused-contract/1",
+  "generated_on": "2026-07-18",
+  "kind": "olmradialblur_prefill_contract_20260718",
+  "status": "focused_tests_verified_production_exact_internal_pf32_frame",
+  "scope": [
+    "internal CLI evidence only",
+    "current local source hash",
+    "focused sampler, zoom-weight, AEX-sincos, and prefill tests",
+    "no AE exactness claim",
+    "no production promotion"
+  ],
+  "claims": {
+    "ae_exact_claim": false,
+    "production_promotion": false,
+    "windows_reference_exact_claim": false,
+    "final_internal_pf32_frame_exact": true,
+    "mac_ae_host_output_exact": false
+  },
+  "provenance": {
+    "source": {
+      "path": "mac/OLMRadialBlur/OLMRadialBlur.cpp",
+      "sha256": "7d949919ba9bb1351969274f6f49cc1c6aceb088585043c1f7b128daeea11f38"
+    },
+    "aex": {
+      "path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+      "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+    },
+    "checkpoint": {
+      "path": "<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_merged_at_normalization_20260718.aexcp",
+      "sha256": "480a7b012441b5863418835a8caf2fe16231dc8d7c59252fc05b69ec0407a909"
+    },
+    "tests": {
+      "sampler_contract": {
+        "path": "tools/emulation/test_olmradialblur_sampler_contract_20260718.py",
+        "sha256": "c0c22eb3cdc568206782ebbcaa52b3f510b96a4c58f14c167cd8bbf1ec36b77a"
+      },
+      "zoom_weights_contract": {
+        "path": "tools/emulation/test_olmradialblur_zoom_weights_contract_20260718.py",
+        "sha256": "365e43e2c1d4d5b91c2acfd9f9953bf725f05e23c3d5c38840ac409b0e76a5da"
+      },
+      "prefill_eligibility": {
+        "path": "tools/emulation/test_olmradialblur_prefill_eligibility_20260718.py",
+        "sha256": "3b2d7decaf6d45c8145691e4ff966e9ec0ecce2905f5d55434719b6782f9f0fe"
+      },
+      "pf32_residual_localizer": {
+        "path": "tools/emulation/test_olmradialblur_case0009_pf32_residual_1313.py",
+        "sha256": "27678a4792bfe3df25cd40e76d8278a700ec440e07179e8d53f8ef95c1bb54c2"
+      },
+      "prefill_aex_sincos_candidate": {
+        "path": "tools/emulation/test_olmradialblur_prefill_aex_sincos_candidate_20260718.py",
+        "sha256": "2f97c50b77d57dd785ae0c665bf0b2ca25452ec6f61f04ff1e63537f5374860c"
+      }
+    },
+    "supporting_evidence": {
+      "sampler_oracle": {
+        "path": "refs/conformance/olmradialblur_border_sampler_semantics_actual_aex_20260716.json",
+        "sha256": "7fa8b8e50148e24a08102c26424e54d7c1eaf68f84508479609e038d2b4134e1"
+      },
+      "coordinate_order_context_json": {
+        "path": "refs/conformance/olmradialblur_case0009_production_a850_f32_mac_ae_20260713.json",
+        "sha256": "5e252a2943b6cff6ffaf86ff1036ceda6a44bb5fcba4f4e37cc7f7e90088f26d"
+      },
+      "coordinate_order_context_md": {
+        "path": "refs/conformance/olmradialblur_case0009_production_a850_f32_mac_ae_20260713.md",
+        "sha256": "8871da8ea5e9d0da52867f88e40d2d2db9ba7aacb1d66e06003bfd395cf42c64"
+      }
+    }
+  },
+  "commands": [
+    {
+      "command": "python3 tools/emulation/test_olmradialblur_sampler_contract_20260718.py",
+      "exit_code": 0,
+      "result": "pass"
+    },
+    {
+      "command": "python3 tools/emulation/test_olmradialblur_zoom_weights_contract_20260718.py",
+      "exit_code": 0,
+      "result": "pass"
+    },
+    {
+      "command": "python3 tools/emulation/test_olmradialblur_prefill_eligibility_20260718.py",
+      "exit_code": 0,
+      "result": "pass_exact_complete_internal_pf32_frame"
+    },
+    {
+      "command": "python3 tools/emulation/test_olmradialblur_case0009_pf32_residual_1313.py",
+      "exit_code": 0,
+      "result": "pass_first_divergence_localized_to_a850_negative_angle_constant"
+    },
+    {
+      "command": "python3 tools/emulation/test_olmradialblur_prefill_aex_sincos_candidate_20260718.py",
+      "exit_code": 0,
+      "result": "pass_local_prefill_mask_probe"
+    },
+    {
+      "command": "python3 - <<'PY'  # temporary production-helper vs AEX paired-sincos word probe over 1800 angles / 3600 words",
+      "exit_code": 0,
+      "result": "pass"
+    }
+  ],
+  "facts": {
+    "sampler_actual_aex_vectors_exact": {
+      "status": "pass",
+      "oracle": "refs/conformance/olmradialblur_border_sampler_semantics_actual_aex_20260716.json",
+      "records": [
+        {
+          "name": "left_loose_window",
+          "mode": "non_repeat",
+          "eligible": 1,
+          "rgba_f32_words": [
+            "0x3e6147ae",
+            "0x3ea3d70b",
+            "0x3ed70a3e",
+            "0x3f000000"
+          ]
+        },
+        {
+          "name": "left_loose_window",
+          "mode": "repeat_border",
+          "eligible": 1,
+          "rgba_f32_words": [
+            "0x3e6147b0",
+            "0x3ea3d70c",
+            "0x3ed70a40",
+            "0x3effffff"
+          ]
+        },
+        {
+          "name": "top_loose_window",
+          "mode": "non_repeat",
+          "eligible": 1,
+          "rgba_f32_words": [
+            "0x3e124925",
+            "0x3e78af8a",
+            "0x3eaf8af8",
+            "0x3f333334"
+          ]
+        },
+        {
+          "name": "top_loose_window",
+          "mode": "repeat_border",
+          "eligible": 1,
+          "rgba_f32_words": [
+            "0x3e124924",
+            "0x3e78af8a",
+            "0x3eaf8af8",
+            "0x3f333334"
+          ]
+        },
+        {
+          "name": "interior_control",
+          "mode": "non_repeat",
+          "eligible": 1,
+          "rgba_f32_words": [
+            "0x3eb5c290",
+            "0x3ed9999a",
+            "0x3efd70a4",
+            "0x3f000000"
+          ]
+        },
+        {
+          "name": "interior_control",
+          "mode": "repeat_border",
+          "eligible": 1,
+          "rgba_f32_words": [
+            "0x3eb5c290",
+            "0x3ed9999a",
+            "0x3efd70a4",
+            "0x3f000000"
+          ]
+        }
+      ]
+    },
+    "zoom_n1717_weights_exact_on_arm64_and_x86_64": {
+      "status": "pass",
+      "expected_count": 1717,
+      "expected_sha256": "82d66d41ebba38e15638fd369acdf3a218a9160d39b0ad12a2aad482df8242d8",
+      "expected_n1_bits": "0x3f800000",
+      "architectures": [
+        {
+          "arch": "arm64",
+          "count1717": 1717,
+          "sha256": "82d66d41ebba38e15638fd369acdf3a218a9160d39b0ad12a2aad482df8242d8",
+          "n1_bits": "0x3f800000"
+        },
+        {
+          "arch": "x86_64",
+          "count1717": 1717,
+          "sha256": "82d66d41ebba38e15638fd369acdf3a218a9160d39b0ad12a2aad482df8242d8",
+          "n1_bits": "0x3f800000"
+        }
+      ]
+    },
+    "production_helper_aex_paired_sincos_exact": {
+      "status": "pass",
+      "angle_count": 1800,
+      "compared_words": 3600,
+      "word_mismatch_count": 0,
+      "sin_word_mismatch_count": 0,
+      "cos_word_mismatch_count": 0,
+      "first_mismatch": null,
+      "step_rad_f32_word": "0x3b64c388",
+      "production_packed_sincos_words_sha256": "c03fc7912a15288b0c650f8b4d1dffa662248d58da5508c68c2cf5c2a97faa98",
+      "aex_packed_sincos_words_sha256": "c03fc7912a15288b0c650f8b4d1dffa662248d58da5508c68c2cf5c2a97faa98"
+    },
+    "prefill_aex_sincos_candidate_mask_proof": {
+      "status": "pass",
+      "classification": "prefill_mask_only",
+      "aex_vs_retained_checkpoint_mask": {
+        "sha256": "861d873df6a1e616f356fef86524e15580558591ea93945cd7ba8662ecdee2b7",
+        "bytes": 1987200,
+        "counts": {
+          "0": 565113,
+          "1": 1422087,
+          "other": 0
+        },
+        "differing_bytes": 0
+      },
+      "native_vs_retained_checkpoint_mask": {
+        "sha256": "75ecbe770a3ee9036bbe60d0da9c1ed43f2ab908a26d04fb38f6fc53a9c29b33",
+        "bytes": 1987200,
+        "counts": {
+          "0": 565115,
+          "1": 1422085,
+          "other": 0
+        },
+        "differing_bytes": 2,
+        "differences": [
+          {
+            "actual": 0,
+            "oracle": 1,
+            "angle_index": 900,
+            "radius_index": 962,
+            "byte_offset": 994562
+          },
+          {
+            "actual": 0,
+            "oracle": 1,
+            "angle_index": 1350,
+            "radius_index": 542,
+            "byte_offset": 1490942
+          }
+        ]
+      },
+      "conclusion": {
+        "aex_diff_count": 0,
+        "native_diff_count": 2,
+        "native_vs_aex_diff_count": 2,
+        "offset_sets_match_between_native_checkpoint_and_native_aex": true,
+        "remaining_eligibility_bytes_are_solely_trig_backend_differences": true
+      }
+    },
+    "production_prefill_exact": {
+      "status": "pass_exact",
+      "eligibility": {
+        "expected_sha256": "861d873df6a1e616f356fef86524e15580558591ea93945cd7ba8662ecdee2b7",
+        "actual_sha256": "861d873df6a1e616f356fef86524e15580558591ea93945cd7ba8662ecdee2b7",
+        "expected_counts": {
+          "0": 565113,
+          "1": 1422087
+        },
+        "actual_counts": {
+          "0": 565113,
+          "1": 1422087
+        },
+        "compared_bytes": 1987200,
+        "differing_bytes": 0,
+        "first_difference": null
+      },
+      "preblur": {
+        "expected_sha256": "fc7b13739f081703137b771d51924e27219e34f93cc3b9ca7278fad4c46634ef",
+        "actual_sha256": "fc7b13739f081703137b771d51924e27219e34f93cc3b9ca7278fad4c46634ef",
+        "compared_bytes": 31795200,
+        "differing_bytes": 0,
+        "first_difference": null
+      }
+    },
+    "case_0009_production_exact_chain": {
+      "status": "pass_exact_internal_chain",
+      "case": "case_0009",
+      "stages": {
+        "eligibility": {
+          "sha256": "861d873df6a1e616f356fef86524e15580558591ea93945cd7ba8662ecdee2b7",
+          "compared_bytes": 1987200,
+          "differing_bytes": 0
+        },
+        "preblur": {
+          "sha256": "fc7b13739f081703137b771d51924e27219e34f93cc3b9ca7278fad4c46634ef",
+          "compared_bytes": 31795200,
+          "differing_bytes": 0
+        },
+        "span_plus_0x40": {
+          "sha256": "2af5c86165c5b96b4c686e05f9e4587b0b1b464efbd389803a9d623e69da9a1f",
+          "compared_bytes": 7948800,
+          "differing_bytes": 0
+        },
+        "source_scalar_plus_0x50": {
+          "sha256": "13a5c887cd8c8c9a6a5380bf65ed8aacebc820d0751a0be81321053a596412ce",
+          "compared_bytes": 7948800,
+          "differing_bytes": 0
+        },
+        "zoom_weights": {
+          "sha256": "82d66d41ebba38e15638fd369acdf3a218a9160d39b0ad12a2aad482df8242d8",
+          "count": 1717
+        },
+        "normalized_postblur": {
+          "sha256": "c8037b713512573f8b4346a5e0efc6dd1862f0a53da39d673b005f15a06469f8",
+          "compared_bytes": 31795200,
+          "differing_bytes": 0
+        },
+        "final_internal_pf32_frame": {
+          "sha256": "7de7d9700fddce9f77261fe3e81db8b89ffc88a06c897b866ffe512392562010",
+          "compared_bytes": 33177600,
+          "differing_bytes": 0,
+          "differing_float_words": 0,
+          "differing_pixels": 0
+        }
+      },
+      "binary_grounded_constants": {
+        "negative_angle_add_double": "0x1.921fb53c8d4f1p+2",
+        "negative_angle_add_decimal": 6.2831853
+      },
+      "boundary": "The final internal PF32 frame is exact against the retained actual-AEX continuation oracle. AE exact is NOT established; Mac AE host output versus Windows AE Software remains unresolved."
+    },
+    "pf32_host_adapter_input_contract": {
+      "status": "updated",
+      "test": "tools/emulation/test_olmradialblur_prefill_eligibility_20260718.py",
+      "source_line_fact": "write_pf32_input multiplies RGBA by rounded float32 1/255 before ARGB reorder; the test comment records that float division differs by one ULP for values such as 58 and 62."
+    }
+  },
+  "inference": {
+    "summary": "For case_0009, the production reconstruction chain is exact through eligibility, preblur, +0x40 span, +0x50 source scalar, the 1717-entry Zoom weights, normalized postblur, final inverse sampling, and the complete internal PF32 frame. This is a bounded actual-AEX continuation result; AE exact is NOT established.",
+    "pf32_host_adapter_note": "The PF32 source-harness correction from float division to multiply-by-rounded-1/255 is consistent with the previously reported 32005-byte one-ULP preblur residual no longer appearing once the trig helper is AEX-compatible.",
+    "next_gate": "Mac AE host render versus Windows AE Software reference",
+    "reason": "The proven exact chain closes the local production path through the complete internal PF32 frame. The remaining boundary is host execution and cross-host AE output, with no AE exactness or production-promotion claim."
+  }
+}
