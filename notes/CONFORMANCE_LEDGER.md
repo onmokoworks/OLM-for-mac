@@ -1,23 +1,23 @@
 # OLM Conformance Ledger
 
-- 2026-07-18 `OLMRadialBlur PF32 pre/post-blur boundary` (latest
-  override): no correctness status is promoted. A PF32-only test seam captures
-  both production `polar.rgba` and `blurred.rgba` from one run. Their geometry
-  and layout match the actual-AEX `work+0x38` plane
-  (`1104x1800`, angle-major/radius-minor RGBA float, `31,795,200` bytes), but
-  the pre-blur planes already differ in `327,417` bytes. Their first difference
-  is `(angle=0, radius=262, R)`, a one-ULP split (`0x3e78f8f9` versus
-  `0x3e78f8fa`). The normalized planes differ in `13,953,051` bytes; their
-  first difference is
-  `(angle=0, radius=0, G)`: production `0x273c0000`, AEX `0x00000000`.
-  A worker-only run then feeds the exact AEX pre-blur plane into the shared Mac
-  worker and still differs from the AEX normalized plane in `12,744,511`
-  bytes. This causally proves an independent worker/convolution/normalization
-  residual; the pre-blur sampling family remains a separate lane. The next
-  allowed action is to implement the AEX `FUN_18000b150` seed,
-  `FUN_18000a9d0` float32 scatter, max-alpha plane, and normalization order
-  against this worker-only oracle; do not tune the final sampler. Evidence:
-  `refs/conformance/olmradialblur_typed_deep_render_20260718.md`.
+- 2026-07-18 `OLMRadialBlur case_0009 Zoom worker internal exact` (latest
+  override): no AE correctness status is promoted. An identity-bound test seam
+  now reproduces the actual-AEX normalized polar plane byte-for-byte across
+  `31,795,200` bytes (`1104x1800` float RGBA, `max_diff=0`, SHA-256
+  `c8037b713512573f8b4346a5e0efc6dd1862f0a53da39d673b005f15a06469f8`).
+  The decisive inputs are the source eligibility mask at checkpoint
+  `RBP-0x60`, the `+0x40` span plane, the `+0x50` source-scalar plane, and the
+  exact 1717-entry AEX weight table. Omitting eligibility leaves 5,465,443
+  differing bytes; adding it leaves 21,375; adding the two scalar planes closes
+  the internal plane exactly. Independent reconstruction from the post-worker
+  accumulation and max-alpha planes also matches the normalized oracle exactly.
+  This result is `binary-grounded internal exact`, not Mac AE exact and not a
+  production promotion. The next allowed action is to reproduce eligibility,
+  span, and source-scalar planes from Mac production inputs and generalize the
+  proven worker to additional parameter families; keep the separate 327,417-byte
+  pre-blur sampling family isolated and do not tune the final sampler. Evidence:
+  `refs/conformance/olmradialblur_typed_deep_render_20260718.md` and
+  `refs/conformance/olmradialblur_postworker_planes_20260718.md`.
 
 - 2026-07-18 `OLMColorKey 16bpc case_0005/case_0006 provenance review`
   (latest override): `case_0005` and `case_0006` qualify as `AE exact` for
