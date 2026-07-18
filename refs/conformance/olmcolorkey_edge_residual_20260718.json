@@ -1,0 +1,44 @@
+{
+  "aex": {
+    "path": "aex/OLMColorKey/Plugins/64/2025/OLMColorKey.aex",
+    "sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+  },
+  "binary_facts": {
+    "edge_blur_apply_leaf": "FUN_1800085b0",
+    "negative_edge_thin_branch_is_inline": true,
+    "negative_edge_thin_equality_is_retained": true,
+    "zero_edge_blur_bypasses_apply": true
+  },
+  "case_matrix": {
+    "case_0005": {
+      "later_validation_max_diff": 0,
+      "later_validation_nonzero_px": 0,
+      "trace_edge_blur_amount": 0,
+      "trace_edge_thin_amount": -16,
+      "trace_edge_thin_distance": 17
+    },
+    "case_0006": {
+      "later_validation_max_diff": 0,
+      "later_validation_nonzero_px": 0,
+      "trace_edge_blur_amount": 0,
+      "trace_edge_thin_amount": -16,
+      "trace_edge_thin_distance": 17
+    }
+  },
+  "claims": {
+    "ae_exact_claim": false,
+    "png_tuning": false,
+    "production_edit": false
+  },
+  "evidence": {
+    "amount_audit": "refs/conformance/olmcolorkey_edge_thin_caller_amount_20260718.json",
+    "decomp": "decomp/OLMColorKey.aex.c.txt",
+    "later_validation": "refs/reports/ae_host_validation_20260618_232926/ae_pixel_olmcolorkey_20260606/reports/ae_pixel_edgethin_residual.json",
+    "stale_trace": "refs/reports/runtime_trace_comparisons/olmcolorkey_edge_trace_latest.json"
+  },
+  "finding": "The old 9,860-pixel case_0005/0006 alpha difference is stale trace-pair evidence, not a current Edge Blur residual: both cases have Edge Blur Amount 0, the current AEX bypasses the blur apply leaf, the active negative Edge Thin witness is equality-retaining, and the later Mac validation is exact for both cases.",
+  "kind": "olmcolorkey_edge_residual_20260718",
+  "schema": 1,
+  "scope": "Mac-only provenance and current-AEX ownership test; no PNG or production-source mutation",
+  "status": "pass"
+}

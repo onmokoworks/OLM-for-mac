@@ -1,0 +1,107 @@
+{
+  "a9d0_invoked": false,
+  "checkpoint_classification": {
+    "captured_keys": [
+      "direct_core_samples",
+      "direct_prefill_fast_forward_plane",
+      "direct_prefill_fast_forwarded",
+      "direct_prefill_mode",
+      "direct_python_prefill",
+      "direct_stop_after_prefill",
+      "direct_thread_fixups",
+      "last_branch_blur_type",
+      "last_branch_ctx",
+      "prepass_calls",
+      "prepass_detour_calls",
+      "scatter_calls",
+      "scatter_detour_calls",
+      "staging_loop_hits",
+      "staging_loop_samples",
+      "zoom_branch_hits",
+      "zoom_callsite_hits",
+      "zoom_param1",
+      "zoom_param2",
+      "zoom_setup_a7e0_calls",
+      "zoom_setup_a810_calls"
+    ],
+    "gates": {
+      "a9d0_entry_or_callsite": false,
+      "aex_identity_pinned": true,
+      "caller_state_available": false,
+      "checkpoint_format": true,
+      "complete_partition_proven": false,
+      "natural_harness": true,
+      "no_direct_core": true,
+      "no_prefill_detour": true,
+      "no_worker_detour": true,
+      "pointer_non_alias_proven": false,
+      "post_a9d0_return_contract": false,
+      "two_phase_provenance_present": false
+    },
+    "normalization_start": "0x180005c9f",
+    "reasons": [
+      "checkpoint RIP 0x18000af9a is inside/after A9D0, not an A9D0 entry (required 0x18000a9d0 or caller callsite 0x180005c90)",
+      "pointer non-alias cannot be proven from the supplied checkpoint",
+      "complete row partition cannot be derived from a mid-worker checkpoint",
+      "two-phase B150->A9D0 provenance is absent from the checkpoint",
+      "post-return normalization continuation cannot be reconstructed without guessing"
+    ],
+    "required_entry_rips": [
+      "0x18000a9d0",
+      "0x180005c90"
+    ],
+    "rip": "0x18000af9a"
+  },
+  "checkpoint_copy": "/tmp/olmradialblur_a9d0_row_slice_20260718/natural_checkpoint6_copy.aexcp",
+  "claim_boundary": "No A9D0 execution or derived checkpoint is accepted until entry ABI, pointer non-alias, complete partition, two-phase provenance, serial equality, and normalization continuation are proven.",
+  "copy_sha256": "e79e1972df097588a12af17d5510be6104f02ec98cc4ce139af96634bb3520cc",
+  "derived_checkpoint_emitted": false,
+  "gates": {
+    "a9d0_entry_or_callsite": false,
+    "aex_identity_pinned": true,
+    "caller_state_available": false,
+    "checkpoint_copy_hash_equal": true,
+    "checkpoint_format": true,
+    "complete_partition_proven": false,
+    "natural_harness": true,
+    "no_direct_core": true,
+    "no_prefill_detour": true,
+    "no_worker_detour": true,
+    "pointer_non_alias_proven": false,
+    "post_a9d0_return_contract": false,
+    "protected_pid_alive_after": true,
+    "protected_pid_alive_before": true,
+    "protected_pid_state_unchanged": true,
+    "source_unchanged_after_copy": true,
+    "two_phase_provenance_present": false
+  },
+  "kind": "olmradialblur_a9d0_row_slice_acceleration_20260718",
+  "protected_pid": 59481,
+  "protected_pid_after": {
+    "alive": true,
+    "pid": 59481,
+    "ps_line": "59481 Rs   25:36 /opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python tools/emulation/run_radialblur_natural_progress_hook_20260718.py --hook-mode row --progress-json /tmp/olm_radialblur_natural_progress_row_long_20260718.json --sample-every 16 --max-samples 128 --resume-checkpoint /tmp/olm_radial_case0009_workers_progress6_20260718.aexcp --max-instructions 10000000000 --save-progress-checkpoint /tmp/olm_radial_case0009_workers_progress7_row_20260718.aexcp"
+  },
+  "protected_pid_before": {
+    "alive": true,
+    "pid": 59481,
+    "ps_line": "59481 Rs   25:36 /opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python tools/emulation/run_radialblur_natural_progress_hook_20260718.py --hook-mode row --progress-json /tmp/olm_radialblur_natural_progress_row_long_20260718.json --sample-every 16 --max-samples 128 --resume-checkpoint /tmp/olm_radial_case0009_workers_progress6_20260718.aexcp --max-instructions 10000000000 --save-progress-checkpoint /tmp/olm_radial_case0009_workers_progress7_row_20260718.aexcp"
+  },
+  "protected_pid_stopped": false,
+  "provenance": {
+    "a9d0": "0x18000a9d0",
+    "caller_a9d0_callsite": "0x180005c90",
+    "normalization_start": "0x180005c9f",
+    "row_slice_contract": "refs/conformance/olmradialblur_row_slice_independence_20260718.json"
+  },
+  "schema": 1,
+  "serial_vs_two_slice": {
+    "equal": false,
+    "status": "not_attempted"
+  },
+  "source_checkpoint": "/private/tmp/olm_radial_case0009_workers_progress6_20260718.aexcp",
+  "source_sha256": "e79e1972df097588a12af17d5510be6104f02ec98cc4ce139af96634bb3520cc",
+  "source_sha256_after_copy": "e79e1972df097588a12af17d5510be6104f02ec98cc4ce139af96634bb3520cc",
+  "source_unchanged_after_copy": true,
+  "status": "blocked_fail_closed_checkpoint_not_safe_for_a9d0_replay"
+}

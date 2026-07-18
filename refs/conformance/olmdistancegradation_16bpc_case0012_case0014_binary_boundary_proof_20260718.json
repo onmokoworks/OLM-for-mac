@@ -1,0 +1,78 @@
+{
+  "aex": {
+    "path": "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex",
+    "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "sha256_observed_by_matrix": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+  },
+  "binary_proof": {
+    "disassembly_facts": {
+      "compose_symbol_present": true,
+      "float_to_int_conversion_present": true,
+      "pf16_pack_store_sequence_present": true
+    },
+    "matrix_all_compose_raw_bytes_exact": true,
+    "matrix_all_field_raw_words_exact": true,
+    "matrix_case_count": 6,
+    "matrix_script": "tools/emulation/test_dg_pf16_boundary_matrix_20260717.py",
+    "matrix_status": "PASS",
+    "staging_compose_hits": 40,
+    "staging_field_word_diff_count": 0,
+    "staging_output_diff_count": 0,
+    "staging_padding_preserved": true,
+    "staging_script": "tools/emulation/test_dg_pf16_field_staging_differential_20260717.py",
+    "staging_status": "PASS"
+  },
+  "claims": {
+    "ae_exact": false,
+    "binary_grounded": true,
+    "mac_only": true,
+    "png_tuning": false,
+    "production_edit": false,
+    "windows_claim": false
+  },
+  "conclusion": {
+    "next_narrow_proof": "Capture one Windows Software AE same-run coordinate for each target with source PF16, field, compose pre-store float, PF16 store word, and true16 export word; compare each boundary separately.",
+    "not_proved": [
+      "No Windows live pre-store float, PF16 store word, or same-run true16 export exists for case_0012/0014.",
+      "The Mac binary fixture cannot identify whether the target residual is upstream field, pre-store conversion, final store, or host export.",
+      "No AE exactness, Windows conformance, source change, or PNG tuning claim is made."
+    ],
+    "proved": [
+      "The pinned actual AEX reaches field generation and 40 per-pixel PF16 compose calls in the bounded fixture.",
+      "Across threshold, transparency, half-step, and endpoint fixtures, AEX and production-source field/store words are exact.",
+      "The disassembly contains float-to-int conversion and packed 16-bit store operations at the relevant binary boundary."
+    ]
+  },
+  "date": "2026-07-18",
+  "input_sha256": {
+    "disassembly": "b830129adaf05dc2e32a357902b0a60d6cf8f0429340f8cbf869b8287507229c",
+    "matrix_script": "d9f8a64b01648694b0b34eec1fac245f3286652dabbedb7166039495ff7defc5",
+    "near_miss_report": "886ee60c60967448aa2ce448a9504cebcae51147c688ea130e9aec6a1bd16c42",
+    "staging_script": "8d18b49f59a5b7d97cddafc851278de6d67fb7e0955aae91d9fc8f3859e1c3af",
+    "target_residual_report": "28882632f99fbe37dac3eb88b9b33fb3b220f4427d80fb64be908811fbe141ab"
+  },
+  "schema": "olmdistancegradation.16bpc-binary-boundary-proof/1",
+  "scope": "Mac-only binary-grounded residual boundary proof for case_0012 and case_0014",
+  "status": "PASS",
+  "target_residual": {
+    "case0012": {
+      "max_diff": 1,
+      "nonzero_pixels": 39,
+      "nonzero_samples": 95
+    },
+    "case0014": {
+      "max_diff": 1,
+      "nonzero_pixels": 35,
+      "nonzero_samples": 104
+    },
+    "facts": {
+      "case0012_max1": true,
+      "case0014_max1": true,
+      "same_run_true16_missing": true,
+      "windows_pre_store_missing": true,
+      "windows_store_word_missing": true
+    },
+    "source": "refs/conformance/olmdistancegradation_16bpc_layer_residual_mac_ae_20260717.md"
+  },
+  "verdict": "binary_pf16_boundary_validated_target_attribution_still_blocked"
+}

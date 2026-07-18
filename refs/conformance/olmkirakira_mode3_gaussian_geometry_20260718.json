@@ -1,0 +1,161 @@
+{
+  "FACT": [
+    "The recovered Mode 3 caller invokes FUN_181272ec0 once with packed size 0x100000000, decoded by the actual probe as [0, 1].",
+    "The same caller multiplies the integer ray length by the .rdata double at 0x18148d670; the checked-in sweep decodes that constant as 0.5.",
+    "Actual-AEX helper captures for lengths 1, 2, 5, and 9 all report [0, 1] and sigma equal to length * 0.5.",
+    "The actual-AEX caller-return witness preserves a 7x9 CV_32FC1 matrix shape and returns 63 float32 words."
+  ],
+  "LIMIT": [
+    "This proves call geometry and one observed shape-preserving return, not the Gaussian kernel coefficients or accumulation order.",
+    "The packed [0, 1] size is recorded as the wrapper's actual captured words; this audit does not reinterpret it as a complete semantic API signature.",
+    "No Mode 4 recurrence, boundary policy, quantization rule, or production implementation change is justified."
+  ],
+  "actual_aex": {
+    "all_sigma_matches": true,
+    "all_sizes_are_0x100000000": true,
+    "all_sweep_points_captured": true,
+    "observed": [
+      {
+        "expected_sigma_x_f64": 0.5,
+        "length": 1,
+        "observed_sigma_x_f64": 0.5,
+        "observed_size_words": [
+          0,
+          1
+        ],
+        "status": "captured"
+      },
+      {
+        "expected_sigma_x_f64": 1.0,
+        "length": 2,
+        "observed_sigma_x_f64": 1.0,
+        "observed_size_words": [
+          0,
+          1
+        ],
+        "status": "captured"
+      },
+      {
+        "expected_sigma_x_f64": 2.5,
+        "length": 5,
+        "observed_sigma_x_f64": 2.5,
+        "observed_size_words": [
+          0,
+          1
+        ],
+        "status": "captured"
+      },
+      {
+        "expected_sigma_x_f64": 4.5,
+        "length": 9,
+        "observed_sigma_x_f64": 4.5,
+        "observed_size_words": [
+          0,
+          1
+        ],
+        "status": "captured"
+      }
+    ],
+    "return_input_shape": [
+      7,
+      9
+    ],
+    "return_output_shape": [
+      7,
+      9
+    ],
+    "return_output_type": {
+      "channels": 1,
+      "depth_code": 5,
+      "word_count": 63
+    },
+    "return_shape_preserved": true,
+    "return_witness_aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "return_witness_status": "captured",
+    "sweep_aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+  },
+  "ae_exact_claim": false,
+  "binary": {
+    "path": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+    "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+  },
+  "date": "2026-07-18",
+  "kind": "olmkirakira_mode3_gaussian_geometry_audit",
+  "production_edit": false,
+  "schema": "olmkirakira-mode3-gaussian-geometry/1",
+  "sources": {
+    "asm": {
+      "path": "disasm/OLMKiraKira.aex.asm.txt",
+      "sha256": "d23c749d225a934580c96f2929fb9d7253d07b1be208faa9de6ff89efc1f89b3"
+    },
+    "decomp": {
+      "path": "decomp/OLMKiraKira.aex.c.txt",
+      "sha256": "990693e95695cd83032764f0452fbbe336b8f910ce4d9f5af94a2094c7f6328a"
+    },
+    "return_witness": {
+      "path": "refs/conformance/olmkirakira_mode3_gaussian_output_actual_aex_20260713.json",
+      "sha256": "7543178b2a47dba606d06212a2751cfeab9a4910ebe42f825d542876d36fbfbe"
+    },
+    "sweep": {
+      "path": "refs/conformance/olmkirakira_mode3_sigma_sweep_actual_aex_20260713.json",
+      "sha256": "c128aa1beb826829c7c1adced6552028ac1e50ef762093a2420c2ca700b5dfd5"
+    }
+  },
+  "static": {
+    "asm_call_present": true,
+    "asm_return_jump_present": true,
+    "asm_sigma_load_present": true,
+    "asm_size_load_present": true,
+    "callsite_excerpt": [
+      "18115096a  JZ 0x1811510a9",
+      "181151001  MOV ECX,dword ptr [RBX + 0x8]",
+      "181151004  MOV EAX,dword ptr [RBX + 0xc]",
+      "181151007  MOV EDX,dword ptr [RBP + -0x64]",
+      "18115100a  MOV dword ptr [RBP + -0x50],EDX",
+      "18115100d  MOV EDX,dword ptr [RBP + -0x60]",
+      "181151010  MOV dword ptr [RBP + -0x4c],EDX",
+      "181151013  MOV dword ptr [RBP + -0x48],EAX",
+      "181151016  MOV dword ptr [RBP + -0x44],ECX",
+      "181151019  LEA R8,[RBP + -0x50]",
+      "18115101d  MOV RDX,R12",
+      "181151020  LEA RCX,[RBP]",
+      "181151024  CALL 0x181156cd0",
+      "181151029  NOP",
+      "18115102a  MOV qword ptr [RSP + 0x68],0x0",
+      "181151033  MOV dword ptr [RSP + 0x58],0x2010000",
+      "18115103b  MOV qword ptr [RSP + 0x60],RBX",
+      "181151040  LEA RDX,[RSP + 0x58]",
+      "181151045  LEA RCX,[RBP]",
+      "181151049  CALL 0x18115cfb0",
+      "18115104e  NOP",
+      "18115104f  LEA RCX,[RBP]",
+      "181151053  CALL 0x181157e40",
+      "181151058  NOP",
+      "181151059  LEA RCX,[RBP + 0x60]",
+      "18115105d  CALL 0x181157e40",
+      "181151062  MOVAPS XMM0,XMM9",
+      "181151066  MOV RCX,qword ptr [RBP + 0xc0]",
+      "18115106d  XOR RCX,RSP",
+      "181151070  CALL 0x18132b1c0",
+      "1811510a9  MOV qword ptr [RSP + 0x68],R13",
+      "1811510ae  MOV dword ptr [RSP + 0x58],0x2010000",
+      "1811510b6  MOV qword ptr [RSP + 0x60],R12",
+      "1811510bb  MOV qword ptr [RSP + 0x50],R13",
+      "1811510c0  MOV dword ptr [RSP + 0x40],0x1010000",
+      "1811510c8  MOV qword ptr [RSP + 0x48],R14",
+      "1811510cd  MOVD XMM3,ESI",
+      "1811510d1  CVTDQ2PD XMM3,XMM3",
+      "1811510d5  MULSD XMM3,qword ptr [0x18148d670]",
+      "1811510dd  MOV R8,0x100000000",
+      "1811510e7  MOV dword ptr [RSP + 0x28],0x4",
+      "1811510ef  MOVSD qword ptr [RSP + 0x20],XMM8",
+      "1811510f6  LEA RDX,[RSP + 0x58]",
+      "1811510fb  LEA RCX,[RSP + 0x40]"
+    ],
+    "decomp_helper": "0x181272ec0",
+    "decomp_mode3_call_count": 1,
+    "decomp_mode3_call_present": true,
+    "decomp_packed_size_literal": "0x100000000"
+  },
+  "status": "bounded_geometry_shape_proven"
+}

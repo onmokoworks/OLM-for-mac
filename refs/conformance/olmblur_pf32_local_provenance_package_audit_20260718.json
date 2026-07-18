@@ -1,0 +1,53 @@
+{
+  "schema": "olmblur.pf32-local-provenance-package-audit/1",
+  "audit_id": "olmblur_pf32_local_provenance_package_audit_20260718",
+  "date": "2026-07-18",
+  "scope": "Local-only audit of the narrow OLMBlur 32bpc provenance request/package and the Mac-side PF32 implementation proof boundary. No production algorithm edit.",
+  "request": {
+    "path": "refs/reference_requests/olmblur_32bpc_case0001_repeat1_provenance_20260718.json",
+    "sha256": "955007d248052b1dc2dfa809c998932a44797808f382da0a4c6efc35dde488ae",
+    "request_id": "olmblur_32bpc_case0001_repeat1_provenance_request_20260718",
+    "render_set": "software_32bpc",
+    "same_ae_process_pair_required": true,
+    "loaded_aex_path_and_sha256_required": true,
+    "accept_partial": false,
+    "workspace_paths_absent": true
+  },
+  "package": {
+    "path": "refs/reference_requests/olmblur_32bpc_case0001_repeat1_provenance_request_20260718.zip",
+    "sha256": "bcffe8ae5c77c061fd31a614f877135abd247fb45cd0d1214d30fd140602a446",
+    "size_bytes": 22439,
+    "deterministic_smoke_passed": true,
+    "same_ae_process_pair_required": true,
+    "loaded_aex_path_and_sha256_required": true,
+    "workspace_paths_absent": true,
+    "request_spec_matches_checked_in_request": true
+  },
+  "local_pf32": {
+    "adapter_source_vs_actual_aex": {
+      "command": "python3 tools/emulation/test_olmblur_32bpc_source_aex_adapter_20260717.py",
+      "status": "pass",
+      "case_count": 12,
+      "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+    },
+    "case0003_0004_readiness": {
+      "command": "python3 tools/emulation/test_olmblur_case0003_0004_readiness_audit_20260717.py",
+      "status": "pass_local_crosscheck_with_open_worker_boundary",
+      "report": "refs/conformance/olmblur_case0003_0004_readiness_audit_20260717.json"
+    }
+  },
+  "checked_commands": [
+    "python3 refs/scripts/smoke_package_olmblur_32bpc_case0001_repeat1_provenance_request_20260718.py",
+    "python3 tools/emulation/audit_olmblur_unresolved_20260718.py",
+    "python3 tools/emulation/test_olmblur_32bpc_source_aex_adapter_20260717.py",
+    "python3 tools/emulation/test_olmblur_case0003_0004_readiness_audit_20260717.py",
+    "python3 refs/scripts/smoke_audit_olmblur_pf32_local_provenance_package_20260718.py"
+  ],
+  "conclusion": {
+    "remaining_local_only_package_flaw": false,
+    "remaining_local_pf32_implementation_flaw": false,
+    "production_algorithm_change_justified": false,
+    "live_blocker": "Windows loaded-AEX provenance/return evidence remains external and unresolved",
+    "classification": "freeze_local_source_pending_external_provenance"
+  }
+}

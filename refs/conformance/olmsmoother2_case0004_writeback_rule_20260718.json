@@ -1,0 +1,167 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "candidate_replays": {
+    "premultiplied_rgb": {
+      "aex_argb_hex": "5b5b5b71",
+      "aex_memory_hex": "715b5b5b",
+      "dynamic_next_calls": 2,
+      "dynamic_ranges": [
+        {
+          "first": 0,
+          "last": 0,
+          "step": 1
+        }
+      ],
+      "input_rgba_f32": [
+        0.3568974733352661,
+        0.3568974733352661,
+        0.3568974733352661,
+        0.44156867
+      ],
+      "input_rgba_f32_bits": [
+        "0x3eb6bb44",
+        "0x3eb6bb44",
+        "0x3eb6bb44",
+        "0x3ee2154a"
+      ]
+    },
+    "straight": {
+      "aex_argb_hex": "cecece71",
+      "aex_memory_hex": "71cecece",
+      "dynamic_next_calls": 2,
+      "dynamic_ranges": [
+        {
+          "first": 0,
+          "last": 0,
+          "step": 1
+        }
+      ],
+      "input_rgba_f32": [
+        0.80824906,
+        0.80824906,
+        0.80824906,
+        0.44156867
+      ],
+      "input_rgba_f32_bits": [
+        "0x3f4ee969",
+        "0x3f4ee969",
+        "0x3f4ee969",
+        "0x3ee2154a"
+      ]
+    },
+    "unpremultiplied_rgb_clamped": {
+      "aex_argb_hex": "ffffff71",
+      "aex_memory_hex": "71ffffff",
+      "dynamic_next_calls": 2,
+      "dynamic_ranges": [
+        {
+          "first": 0,
+          "last": 0,
+          "step": 1
+        }
+      ],
+      "input_rgba_f32": [
+        1.0,
+        1.0,
+        1.0,
+        0.44156867
+      ],
+      "input_rgba_f32_bits": [
+        "0x3f800000",
+        "0x3f800000",
+        "0x3f800000",
+        "0x3ee2154a"
+      ]
+    }
+  },
+  "case0012": {
+    "aex_argb_hex": "ffffff00",
+    "aex_memory_hex": "00ffffff",
+    "dynamic_next_calls": 2,
+    "dynamic_ranges": [
+      {
+        "first": 0,
+        "last": 0,
+        "step": 1
+      }
+    ],
+    "expected_memory_hex": "00ffffff",
+    "input_rgba_f32": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ],
+    "input_rgba_f32_bits": [
+      "0x3f800000",
+      "0x3f800000",
+      "0x3f800000",
+      "0x00000000"
+    ],
+    "matches_retained_windows_record": true
+  },
+  "claims_not_made": [
+    "Windows live execution",
+    "AE host equivalence",
+    "upstream c280/cce0 producer identity",
+    "global production writeback change"
+  ],
+  "next_missing_witness": "same-run case_0004 typed PF8 worker-entry float4 bits bound to final packed raw bytes",
+  "required_writer_input": {
+    "alpha_interval": "[0.44117647409439087, 0.44509804248809814)",
+    "representative_bits": [
+      "0x3f686868",
+      "0x3f686868",
+      "0x3f686868",
+      "0x3ee1e1e2"
+    ],
+    "representative_rgba": [
+      0.9078431129455566,
+      0.9078431129455566,
+      0.9078431129455566,
+      0.44117647409439087
+    ],
+    "rgb_interval": "[0.9078431129455566, 0.9117646813392639)"
+  },
+  "retained_case0004": {
+    "straight_replay_matches": false,
+    "windows_pf8_memory_hex": "71e8e8e8",
+    "windows_writer_frame_rgba_f32": [
+      0.80824906,
+      0.80824906,
+      0.80824906,
+      0.44156867
+    ]
+  },
+  "rule": {
+    "channel_order": "A,R,G,B memory bytes from RGBA float4",
+    "formula": "clamp(trunc(float32(float32(value * 255.0) + 0.5)), 0, 255)"
+  },
+  "scope": "Mac-local checked-in actual-AEX PF8 typed worker replay",
+  "straight_case": {
+    "aex_argb_hex": "cecece71",
+    "aex_memory_hex": "71cecece",
+    "dynamic_next_calls": 2,
+    "dynamic_ranges": [
+      {
+        "first": 0,
+        "last": 0,
+        "step": 1
+      }
+    ],
+    "input_rgba_f32": [
+      0.80824906,
+      0.80824906,
+      0.80824906,
+      0.44156867
+    ],
+    "input_rgba_f32_bits": [
+      "0x3f4ee969",
+      "0x3f4ee969",
+      "0x3f4ee969",
+      "0x3ee2154a"
+    ]
+  },
+  "verdict": "PASS_BOUNDED_WRITER_RULE_NEXT_SAME_RUN_FLOAT_WITNESS",
+  "worker": "0x180003370"
+}
