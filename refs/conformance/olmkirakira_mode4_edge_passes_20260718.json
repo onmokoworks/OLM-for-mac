@@ -1,0 +1,795 @@
+{
+  "actual_aex": {
+    "execution": {
+      "FACT": [
+        "The probe requests Blur Mode 3 at the FUN_181150790 helper boundary.",
+        "The target hook is installed at FUN_181272ec0, the recovered GaussianBlur wrapper target.",
+        "FUN_181163706 loads TLS index 0 from GS:[0x58], and FUN_1811637D1 reads the selected runtime object's generation at +0x8.",
+        "The observed OpenCV error callback uses the Windows x64 RCX/RDX/R8/R9 register ABI; its error path returns to an intentional int3 and is not detoured.",
+        "The AEX's own MSVC local-static guard initialized the OpenCV runtime singleton and its per-thread TLS vector before the downstream OpenCV allocation failure."
+      ],
+      "INFERENCE": [
+        "A Mat header is decoded from the wrapper argument only when its OpenCV magic/shape checks pass.",
+        "A sidecar comparison is optional and is not evidence that the AEX used that exact OpenCV build unless the target hook is captured.",
+        "The probe uses MSVC's uninitialized TLS epoch (-1) and leaves singleton construction, guard epochs, and per-thread vector creation to the AEX.",
+        "The singleton restoration is semantically active, but the probe still does not reach the Gaussian boundary; no OpenCV call arguments are claimed."
+      ],
+      "aex": "<repo>/aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+      "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+      "aligned_allocations_live": {},
+      "entry": {
+        "address": "0x181150790",
+        "name": "FUN_181150790"
+      },
+      "error_callback_contract": {
+        "abi": "windows-x64",
+        "caller_return_site": "0x18115ea8b",
+        "name": "FUN_181162610",
+        "observed_error_code": "0xfffffffc",
+        "post_call_trap": "int3",
+        "registers": [
+          "RCX",
+          "RDX",
+          "R8",
+          "R9"
+        ]
+      },
+      "fault_boundary": {
+        "generation_check": {
+          "generation_at_plus8": 1,
+          "object": "0x20000920",
+          "qword_at_plus0": "0x181491c68",
+          "qword_at_plus8": "0x1",
+          "rip": "0x1811637d1"
+        },
+        "tls_container_accessor": {
+          "global_container": "0x200005e0",
+          "guard_218": 2147483651,
+          "rip": "0x181163c80",
+          "tls_epoch": 2147483661
+        },
+        "tls_data_accessor": {
+          "global_data": "0x20000670",
+          "guard_1f8": 2147483649,
+          "guard_208": 2147483650,
+          "rax_return": null,
+          "rip": "0x181163b40",
+          "tls_epoch": 2147483661
+        },
+        "tls_data_create": {
+          "r8": "0x20000bf0",
+          "rcx": "0x200005e0",
+          "rdx": "0x0",
+          "rip": "0x181165220"
+        },
+        "tls_lookup": {
+          "gs_0x58": "0x40000000",
+          "rip": "0x181163706",
+          "selected_generation_at_plus4": 2147483661,
+          "selected_object": "0x40000100",
+          "tls_index": 0
+        },
+        "tls_selected": {
+          "generation_at_plus4": 2147483661,
+          "global_generation": 2147483656,
+          "rip": "0x18116371e",
+          "selected_object": "0x40000100"
+        },
+        "vector_compare": {
+          "requested_entry": "0x20000920",
+          "requested_generation": 1,
+          "rip": "0x1811637e6",
+          "vector_begin": "0x20000680",
+          "vector_capacity": "0x20000780",
+          "vector_end": "0x20000698",
+          "vector_end_or_count": "0x3",
+          "vector_field_plus50": 3,
+          "vector_object": "0x200005e0"
+        }
+      },
+      "helper_result": {
+        "instructions": 217272,
+        "xmm0_f32": 5.0
+      },
+      "input": {
+        "blur_mode": 3,
+        "height": 7,
+        "length": 5,
+        "sigma": 0.0,
+        "type": "CV_32FC1",
+        "width": 9
+      },
+      "post_sample": {
+        "center_f32": 0.48826363682746887,
+        "center_xy": [
+          4,
+          3
+        ],
+        "first_row_f32": [
+          0.1711871325969696,
+          0.23555484414100647,
+          0.23548518121242523,
+          0.23693668842315674,
+          0.22285473346710205,
+          0.2033049464225769,
+          0.17775893211364746,
+          0.14732816815376282,
+          0.13660812377929688
+        ]
+      },
+      "runtime_singleton": {
+        "generation": "0x1",
+        "object": "0x20000920",
+        "per_thread_data": "0x20000960",
+        "status": "initialized_before_downstream_fault",
+        "tls_container": "0x200005e0",
+        "tls_vector_begin": "0x20000680",
+        "tls_vector_end": "0x20000698",
+        "vtable": "0x181491c68"
+      },
+      "schema": "olmkirakira-mode3-actual-aex-probe/1",
+      "status": "completed_without_target_hit",
+      "target": {
+        "address": "0x181272ec0",
+        "name": "FUN_181272ec0"
+      },
+      "target_capture": {
+        "hits": []
+      },
+      "tls_scaffold": {
+        "aligned_allocator": "probe-local host_alloc with requested power-of-two alignment",
+        "fls_slot": 0,
+        "gs_0x58": "0x50000058",
+        "mode": "probe-local-windows-tls-fls",
+        "opencv_cpu_dispatch_table": "0x40000200",
+        "opencv_cpu_dispatch_table_global": "0x181843990",
+        "tls_generation_dword": -1,
+        "tls_slot": "0x40000100",
+        "tls_table": "0x40000000"
+      }
+    },
+    "helper": "0x181150790",
+    "hits": {
+      "backward_setup": [
+        {
+          "r11": "0x20000400",
+          "r8": "0x20000280",
+          "rax": "0x20000420",
+          "rip": "0x181150a4a"
+        },
+        {
+          "r11": "0x20000424",
+          "r8": "0x200002a4",
+          "rax": "0x20000444",
+          "rip": "0x181150a4a"
+        },
+        {
+          "r11": "0x20000448",
+          "r8": "0x200002c8",
+          "rax": "0x20000468",
+          "rip": "0x181150a4a"
+        },
+        {
+          "r11": "0x2000046c",
+          "r8": "0x200002ec",
+          "rax": "0x2000048c",
+          "rip": "0x181150a4a"
+        },
+        {
+          "r11": "0x20000490",
+          "r8": "0x20000310",
+          "rax": "0x200004b0",
+          "rip": "0x181150a4a"
+        },
+        {
+          "r11": "0x200004b4",
+          "r8": "0x20000334",
+          "rax": "0x200004d4",
+          "rip": "0x181150a4a"
+        },
+        {
+          "r11": "0x200004d8",
+          "r8": "0x20000358",
+          "rax": "0x200004f8",
+          "rip": "0x181150a4a"
+        }
+      ],
+      "backward_step": [],
+      "backward_vector_step": [
+        {
+          "r11": "0x20000400",
+          "r8": "0x20000280",
+          "rax": "0x8",
+          "rip": "0x181150a90"
+        },
+        {
+          "r11": "0x20000400",
+          "r8": "0x20000280",
+          "rax": "0x8",
+          "rip": "0x181150a90"
+        },
+        {
+          "r11": "0x20000424",
+          "r8": "0x200002a4",
+          "rax": "0x8",
+          "rip": "0x181150a90"
+        },
+        {
+          "r11": "0x20000424",
+          "r8": "0x200002a4",
+          "rax": "0x8",
+          "rip": "0x181150a90"
+        },
+        {
+          "r11": "0x20000448",
+          "r8": "0x200002c8",
+          "rax": "0x8",
+          "rip": "0x181150a90"
+        },
+        {
+          "r11": "0x20000448",
+          "r8": "0x200002c8",
+          "rax": "0x8",
+          "rip": "0x181150a90"
+        },
+        {
+          "r11": "0x2000046c",
+          "r8": "0x200002ec",
+          "rax": "0x8",
+          "rip": "0x181150a90"
+        },
+        {
+          "r11": "0x2000046c",
+          "r8": "0x200002ec",
+          "rax": "0x8",
+          "rip": "0x181150a90"
+        },
+        {
+          "r11": "0x20000490",
+          "r8": "0x20000310",
+          "rax": "0x8",
+          "rip": "0x181150a90"
+        },
+        {
+          "r11": "0x20000490",
+          "r8": "0x20000310",
+          "rax": "0x8",
+          "rip": "0x181150a90"
+        },
+        {
+          "r11": "0x200004b4",
+          "r8": "0x20000334",
+          "rax": "0x8",
+          "rip": "0x181150a90"
+        },
+        {
+          "r11": "0x200004b4",
+          "r8": "0x20000334",
+          "rax": "0x8",
+          "rip": "0x181150a90"
+        },
+        {
+          "r11": "0x200004d8",
+          "r8": "0x20000358",
+          "rax": "0x8",
+          "rip": "0x181150a90"
+        },
+        {
+          "r11": "0x200004d8",
+          "r8": "0x20000358",
+          "rax": "0x8",
+          "rip": "0x181150a90"
+        }
+      ],
+      "forward_edge_init": [
+        {
+          "r11": "0x20000400",
+          "r8": "0x20000280",
+          "rax": "0x20000400",
+          "rip": "0x181150a17"
+        },
+        {
+          "r11": "0x20000424",
+          "r8": "0x200002a4",
+          "rax": "0x20000424",
+          "rip": "0x181150a17"
+        },
+        {
+          "r11": "0x20000448",
+          "r8": "0x200002c8",
+          "rax": "0x20000448",
+          "rip": "0x181150a17"
+        },
+        {
+          "r11": "0x2000046c",
+          "r8": "0x200002ec",
+          "rax": "0x2000046c",
+          "rip": "0x181150a17"
+        },
+        {
+          "r11": "0x20000490",
+          "r8": "0x20000310",
+          "rax": "0x20000490",
+          "rip": "0x181150a17"
+        },
+        {
+          "r11": "0x200004b4",
+          "r8": "0x20000334",
+          "rax": "0x200004b4",
+          "rip": "0x181150a17"
+        },
+        {
+          "r11": "0x200004d8",
+          "r8": "0x20000358",
+          "rax": "0x200004d8",
+          "rip": "0x181150a17"
+        }
+      ],
+      "forward_step": [
+        {
+          "r11": "0x20000400",
+          "r8": "0x20000280",
+          "rax": "0x20000400",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000400",
+          "r8": "0x20000280",
+          "rax": "0x20000404",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000400",
+          "r8": "0x20000280",
+          "rax": "0x20000408",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000400",
+          "r8": "0x20000280",
+          "rax": "0x2000040c",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000400",
+          "r8": "0x20000280",
+          "rax": "0x20000410",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000400",
+          "r8": "0x20000280",
+          "rax": "0x20000414",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000400",
+          "r8": "0x20000280",
+          "rax": "0x20000418",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000400",
+          "r8": "0x20000280",
+          "rax": "0x2000041c",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000424",
+          "r8": "0x200002a4",
+          "rax": "0x20000424",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000424",
+          "r8": "0x200002a4",
+          "rax": "0x20000428",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000424",
+          "r8": "0x200002a4",
+          "rax": "0x2000042c",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000424",
+          "r8": "0x200002a4",
+          "rax": "0x20000430",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000424",
+          "r8": "0x200002a4",
+          "rax": "0x20000434",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000424",
+          "r8": "0x200002a4",
+          "rax": "0x20000438",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000424",
+          "r8": "0x200002a4",
+          "rax": "0x2000043c",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000424",
+          "r8": "0x200002a4",
+          "rax": "0x20000440",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000448",
+          "r8": "0x200002c8",
+          "rax": "0x20000448",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000448",
+          "r8": "0x200002c8",
+          "rax": "0x2000044c",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000448",
+          "r8": "0x200002c8",
+          "rax": "0x20000450",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000448",
+          "r8": "0x200002c8",
+          "rax": "0x20000454",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000448",
+          "r8": "0x200002c8",
+          "rax": "0x20000458",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000448",
+          "r8": "0x200002c8",
+          "rax": "0x2000045c",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000448",
+          "r8": "0x200002c8",
+          "rax": "0x20000460",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000448",
+          "r8": "0x200002c8",
+          "rax": "0x20000464",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x2000046c",
+          "r8": "0x200002ec",
+          "rax": "0x2000046c",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x2000046c",
+          "r8": "0x200002ec",
+          "rax": "0x20000470",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x2000046c",
+          "r8": "0x200002ec",
+          "rax": "0x20000474",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x2000046c",
+          "r8": "0x200002ec",
+          "rax": "0x20000478",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x2000046c",
+          "r8": "0x200002ec",
+          "rax": "0x2000047c",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x2000046c",
+          "r8": "0x200002ec",
+          "rax": "0x20000480",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x2000046c",
+          "r8": "0x200002ec",
+          "rax": "0x20000484",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x2000046c",
+          "r8": "0x200002ec",
+          "rax": "0x20000488",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000490",
+          "r8": "0x20000310",
+          "rax": "0x20000490",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000490",
+          "r8": "0x20000310",
+          "rax": "0x20000494",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000490",
+          "r8": "0x20000310",
+          "rax": "0x20000498",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000490",
+          "r8": "0x20000310",
+          "rax": "0x2000049c",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000490",
+          "r8": "0x20000310",
+          "rax": "0x200004a0",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000490",
+          "r8": "0x20000310",
+          "rax": "0x200004a4",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000490",
+          "r8": "0x20000310",
+          "rax": "0x200004a8",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x20000490",
+          "r8": "0x20000310",
+          "rax": "0x200004ac",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x200004b4",
+          "r8": "0x20000334",
+          "rax": "0x200004b4",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x200004b4",
+          "r8": "0x20000334",
+          "rax": "0x200004b8",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x200004b4",
+          "r8": "0x20000334",
+          "rax": "0x200004bc",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x200004b4",
+          "r8": "0x20000334",
+          "rax": "0x200004c0",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x200004b4",
+          "r8": "0x20000334",
+          "rax": "0x200004c4",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x200004b4",
+          "r8": "0x20000334",
+          "rax": "0x200004c8",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x200004b4",
+          "r8": "0x20000334",
+          "rax": "0x200004cc",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x200004b4",
+          "r8": "0x20000334",
+          "rax": "0x200004d0",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x200004d8",
+          "r8": "0x20000358",
+          "rax": "0x200004d8",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x200004d8",
+          "r8": "0x20000358",
+          "rax": "0x200004dc",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x200004d8",
+          "r8": "0x20000358",
+          "rax": "0x200004e0",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x200004d8",
+          "r8": "0x20000358",
+          "rax": "0x200004e4",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x200004d8",
+          "r8": "0x20000358",
+          "rax": "0x200004e8",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x200004d8",
+          "r8": "0x20000358",
+          "rax": "0x200004ec",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x200004d8",
+          "r8": "0x20000358",
+          "rax": "0x200004f0",
+          "rip": "0x181150a20"
+        },
+        {
+          "r11": "0x200004d8",
+          "r8": "0x20000358",
+          "rax": "0x200004f4",
+          "rip": "0x181150a20"
+        }
+      ],
+      "mode4_entry": [
+        {
+          "rip": "0x181150979"
+        }
+      ],
+      "row_finish": [
+        {
+          "rip": "0x181150b50"
+        },
+        {
+          "rip": "0x181150b50"
+        },
+        {
+          "rip": "0x181150b50"
+        },
+        {
+          "rip": "0x181150b50"
+        },
+        {
+          "rip": "0x181150b50"
+        },
+        {
+          "rip": "0x181150b50"
+        },
+        {
+          "rip": "0x181150b50"
+        }
+      ],
+      "row_start": [
+        {
+          "r11": "0xf0fe900",
+          "r8": "0x18148de88",
+          "rax": "0x7",
+          "rip": "0x1811509e0"
+        },
+        {
+          "r11": "0x20000400",
+          "r8": "0x20000280",
+          "rax": "0x8",
+          "rip": "0x1811509e0"
+        },
+        {
+          "r11": "0x20000424",
+          "r8": "0x200002a4",
+          "rax": "0x8",
+          "rip": "0x1811509e0"
+        },
+        {
+          "r11": "0x20000448",
+          "r8": "0x200002c8",
+          "rax": "0x8",
+          "rip": "0x1811509e0"
+        },
+        {
+          "r11": "0x2000046c",
+          "r8": "0x200002ec",
+          "rax": "0x8",
+          "rip": "0x1811509e0"
+        },
+        {
+          "r11": "0x20000490",
+          "r8": "0x20000310",
+          "rax": "0x8",
+          "rip": "0x1811509e0"
+        },
+        {
+          "r11": "0x200004b4",
+          "r8": "0x20000334",
+          "rax": "0x8",
+          "rip": "0x1811509e0"
+        }
+      ]
+    }
+  },
+  "ae_exact_claim": false,
+  "answer": {
+    "count": {
+      "backward_steps_per_row": 8,
+      "forward_steps_per_row": 8,
+      "rows": 7
+    },
+    "edge_writeback_boundary": "This proves the bounded recurrence edge/pass shape only; it does not prove final normalization, final pixel writeback, or AE equivalence.",
+    "semantic": "For the checked CV_32FC1 scalar path, each row seeds the forward accumulator from destination element zero, performs length-1 forward recurrence steps, resets the backward accumulator to zero, and performs length-1 reverse recurrence steps."
+  },
+  "binary": {
+    "path": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+    "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+  },
+  "checks": {
+    "actual_backward_count": true,
+    "actual_edge_setup_count": true,
+    "actual_forward_count": true,
+    "actual_mode4_entry": true,
+    "actual_mode_selector_overridden_only_in_harness": true,
+    "actual_rows": true,
+    "no_production_edit": true,
+    "static_asm": true,
+    "static_decomp": true
+  },
+  "date": "2026-07-18",
+  "kind": "olmkirakira_mode4_edge_forward_backward_passes",
+  "limits": [
+    "Mac-only Unicorn execution of the checked-in Windows PE; no Windows or AE-host claim.",
+    "The witness uses a synthetic CV_32FC1 helper call with the mode selector changed only in the harness.",
+    "No numeric output, final normalization, final writeback, or AE-exact claim is made."
+  ],
+  "production_edit": false,
+  "question": "What Mode4 edge initialization and forward/backward pass count is bounded across decomp, asm, and actual AEX?",
+  "schema": 1,
+  "static": {
+    "asm": {
+      "backward_accumulator_zero": true,
+      "backward_setup": true,
+      "backward_step_loop": true,
+      "forward_edge_seed_load": true,
+      "forward_step_loop": true,
+      "row_loop": true
+    },
+    "decomp": {
+      "backward_accumulator_zero": true,
+      "backward_step_decrements": true,
+      "backward_step_reads_next_source": true,
+      "forward_edge_seed_reads_destination": true,
+      "forward_step_increments": true,
+      "forward_step_is_source_plus_prior": true,
+      "row_loop_increments": true
+    }
+  },
+  "status": "PASS_MODE4_EDGE_FORWARD_BACKWARD_PASSES"
+}

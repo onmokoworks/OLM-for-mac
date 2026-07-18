@@ -1,0 +1,452 @@
+{
+  "actual_worker": [
+    {
+      "bytes": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "offset": [
+        -1,
+        -1
+      ]
+    },
+    {
+      "bytes": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "offset": [
+        0,
+        -1
+      ]
+    },
+    {
+      "bytes": [
+        0,
+        255,
+        0,
+        255
+      ],
+      "offset": [
+        1,
+        -1
+      ]
+    },
+    {
+      "bytes": [
+        0,
+        0,
+        255,
+        255
+      ],
+      "offset": [
+        -1,
+        0
+      ]
+    },
+    {
+      "bytes": [
+        0,
+        255,
+        0,
+        255
+      ],
+      "offset": [
+        0,
+        0
+      ]
+    },
+    {
+      "bytes": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "offset": [
+        1,
+        0
+      ]
+    },
+    {
+      "bytes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        -1,
+        1
+      ]
+    },
+    {
+      "bytes": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "offset": [
+        0,
+        1
+      ]
+    },
+    {
+      "bytes": [
+        255,
+        0,
+        255,
+        255
+      ],
+      "offset": [
+        1,
+        1
+      ]
+    },
+    {
+      "bytes": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "offset": [
+        -1,
+        2
+      ]
+    },
+    {
+      "bytes": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "offset": [
+        0,
+        2
+      ]
+    },
+    {
+      "bytes": [
+        255,
+        0,
+        255,
+        0
+      ],
+      "offset": [
+        1,
+        2
+      ]
+    }
+  ],
+  "binary": {
+    "path": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
+    "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+  },
+  "boundary": {
+    "classifier": "0x18000ae10",
+    "compared_window": [
+      [
+        -1,
+        -1
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        -1,
+        2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "threshold_f32": 0.8809999823570251,
+    "worker": "0x18000ac00"
+  },
+  "claims_not_made": [
+    "No Windows/AE execution claim",
+    "No production source edit",
+    "No ledger change",
+    "No post-c280 or writer attribution"
+  ],
+  "first_divergence": null,
+  "input_witness": "refs/conformance/olmsmoother2_case0012_ada0_input_before_vcomp_20260718.json",
+  "mac_helper": [
+    {
+      "bytes": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "distances": [
+        1.2451231479644775,
+        1.2659687995910645,
+        1.0893824100494385,
+        1.2598661184310913
+      ],
+      "offset": [
+        -1,
+        -1
+      ]
+    },
+    {
+      "bytes": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "distances": [
+        1.0050113201141357,
+        1.478384256362915,
+        1.4609575271606445,
+        1.9121029376983643
+      ],
+      "offset": [
+        0,
+        -1
+      ]
+    },
+    {
+      "bytes": [
+        0,
+        255,
+        0,
+        255
+      ],
+      "distances": [
+        0.8793794512748718,
+        1.0327235460281372,
+        0.5990047454833984,
+        1.1077661514282227
+      ],
+      "offset": [
+        1,
+        -1
+      ]
+    },
+    {
+      "bytes": [
+        0,
+        0,
+        255,
+        255
+      ],
+      "distances": [
+        0.0,
+        0.0,
+        1.2451231479644775,
+        1.0050113201141357
+      ],
+      "offset": [
+        -1,
+        0
+      ]
+    },
+    {
+      "bytes": [
+        0,
+        255,
+        0,
+        255
+      ],
+      "distances": [
+        0.0,
+        1.0050113201141357,
+        0.0,
+        1.2569397687911987
+      ],
+      "offset": [
+        0,
+        0
+      ]
+    },
+    {
+      "bytes": [
+        255,
+        0,
+        0,
+        255
+      ],
+      "distances": [
+        1.0151035785675049,
+        0.853600800037384,
+        0.025778651237487793,
+        1.8934662342071533
+      ],
+      "offset": [
+        1,
+        0
+      ]
+    },
+    {
+      "bytes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "distances": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "offset": [
+        -1,
+        1
+      ]
+    },
+    {
+      "bytes": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "distances": [
+        0.0,
+        0.0,
+        0.0,
+        1.0151035785675049
+      ],
+      "offset": [
+        0,
+        1
+      ]
+    },
+    {
+      "bytes": [
+        255,
+        0,
+        255,
+        255
+      ],
+      "distances": [
+        1.0100458860397339,
+        0.012900888919830322,
+        1.0100458860397339,
+        1.4913389682769775
+      ],
+      "offset": [
+        1,
+        1
+      ]
+    },
+    {
+      "bytes": [
+        255,
+        0,
+        0,
+        0
+      ],
+      "distances": [
+        1.2420777082443237,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "offset": [
+        -1,
+        2
+      ]
+    },
+    {
+      "bytes": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "distances": [
+        0.0,
+        0.0,
+        0.0,
+        1.0100458860397339
+      ],
+      "offset": [
+        0,
+        2
+      ]
+    },
+    {
+      "bytes": [
+        255,
+        0,
+        255,
+        0
+      ],
+      "distances": [
+        1.2598026990890503,
+        0.8536783456802368,
+        1.2598026990890503,
+        0.6362388730049133
+      ],
+      "offset": [
+        1,
+        2
+      ]
+    }
+  ],
+  "mac_source": {
+    "anchors": [
+      "Frame-level u8 class plane",
+      "color_dist",
+      "Class-plane threshold =",
+      "byte[0] = LEFT edge",
+      "byte[3] = TOP-RIGHT"
+    ],
+    "path": "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp",
+    "sha256": "344688bcaafa72e0dbe6938d3e671f0adf4bf8fa49b871f15c8573b39523960d"
+  },
+  "runtime": {
+    "classifier_entries": 256,
+    "instructions": 54625,
+    "worker_entries": 1
+  },
+  "schema": 1,
+  "scope": "actual AEX FUN_18000ada0/ac00/ae10 output versus current Mac helper class-plane formula at the first post-worker boundary",
+  "verdict": "PASS_NO_POST_WORKER_DIVERGENCE_IN_COMPARED_WINDOW"
+}
