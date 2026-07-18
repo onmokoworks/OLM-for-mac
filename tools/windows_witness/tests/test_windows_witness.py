@@ -59,6 +59,28 @@ def trace_with_address_fields(contract: dict) -> str:
 
 
 class CompilerTests(unittest.TestCase):
+    def _frida_fixture(self, root: Path) -> Path:
+        fixture = root / "frida-fixture"
+        shutil.copytree(EXAMPLE, fixture)
+        spec_path = fixture / "witness-spec.json"
+        spec = json.loads(spec_path.read_text(encoding="utf-8"))
+        spec.pop("cdb")
+        for case in spec["cases"]:
+            case.pop("cdb_template")
+            case.pop("addresses")
+        spec["transport"] = {
+            "kind": "frida",
+            "agent_config": {
+                "module_name": spec["plugin"]["module_filename"],
+                "exports": [{"export": "entryPointFunc", "name": "entry", "hit_limit": 1}],
+                "internal_rvas": [{"name": "worker", "rva": 0x1234, "hit_limit": 1}],
+            },
+            "arm_timeout_seconds": 5,
+            "capture_timeout_seconds": 13,
+        }
+        spec_path.write_text(json.dumps(spec), encoding="utf-8")
+        return spec_path
+
     def _collector_fixture(self, root: Path) -> Path:
         fixture = root / "collector-fixture"
         shutil.copytree(EXAMPLE, fixture)
@@ -100,6 +122,39 @@ class CompilerTests(unittest.TestCase):
             with zipfile.ZipFile(archive) as contents:
                 self.assertIn("collector/injector.exe", contents.namelist())
                 self.assertNotIn("cdb/000_case_0001.cdb.in", contents.namelist())
+
+    def test_frida_package_reuses_ae_queue_and_packs_common_runtime(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            spec_path = self._frida_fixture(Path(temp))
+            package, archive = compile_witness(spec_path, Path(temp) / "package", Path(temp) / "package.zip")
+            contract = json.loads((package / "witness-contract.json").read_text(encoding="utf-8"))
+            self.assertEqual(contract["contract_kind"], "windows_ae_frida_witness_m1")
+            self.assertEqual(contract["transport"]["kind"], "frida")
+            self.assertEqual(contract["transport"]["arm_timeout_seconds"], 5)
+            self.assertEqual(contract["cases"][0]["package_frida_contract"], "witness-contract.json")
+            self.assertTrue((package / "scripts" / "frida_runner.py").is_file())
+            self.assertTrue((package / "frida" / "agent.js").is_file())
+            launcher = (package / "artifacts" / "run_witness.ps1").read_text(encoding="utf-8")
+            self.assertIn("--completion-marker", launcher)
+            self.assertIn("Frida runner exited before AE completed", launcher)
+            self.assertIn("Set-Content -LiteralPath $fridaCompletion", launcher)
+            with zipfile.ZipFile(archive) as contents:
+                self.assertIn("frida/agent.js", contents.namelist())
+                self.assertIn("scripts/frida_runner.py", contents.namelist())
+                self.assertNotIn("cdb/000_case_0001.cdb.in", contents.namelist())
+
+    def test_frida_transport_rejects_unbound_module_and_invalid_rva(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            for name, mutate, message in (
+                ("module", lambda spec: spec["transport"]["agent_config"].__setitem__("module_name", "Other.aex"), "must match"),
+                ("rva", lambda spec: spec["transport"]["agent_config"]["internal_rvas"][0].__setitem__("rva", -1), "nonnegative"),
+            ):
+                spec_path = self._frida_fixture(Path(temp) / name)
+                spec = json.loads(spec_path.read_text(encoding="utf-8"))
+                mutate(spec)
+                spec_path.write_text(json.dumps(spec), encoding="utf-8")
+                with self.assertRaisesRegex(SpecError, message):
+                    compile_witness(spec_path, Path(temp) / f"{name}-package", Path(temp) / f"{name}.zip")
 
     def test_in_process_collector_rejects_missing_or_unresolved_assets(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -274,7 +329,7 @@ class CompilerTests(unittest.TestCase):
     def test_all_canonical_witness_specs_compile(self) -> None:
         specs_root = Path(__file__).resolve().parents[3] / "refs" / "windows_witness_specs"
         specs = sorted(specs_root.glob("*/witness-spec.json"))
-        self.assertEqual(len(specs), 10)
+        self.assertGreaterEqual(len(specs), 10)
         with tempfile.TemporaryDirectory() as temp:
             output_root = Path(temp)
             for spec in specs:

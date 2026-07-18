@@ -1,5 +1,19 @@
 # OLM Conformance Ledger
 
+- 2026-07-18 `Windows entry-to-core tracing pivot` (latest override): no
+  correctness status is promoted. Repeated pixel-local CDB requests are no
+  longer the default discovery path. The common Windows witness framework now
+  has a Frida transport that keeps the existing hash-pinned AE Software queue,
+  attaches before the renderer continue marker, records the exported PF entry
+  command and evidence-backed internal RVAs, and stays attached until the AE
+  result marker is published. CDB remains the fallback for instruction-level
+  stepping, register-sensitive callsites, and write watchpoints after Frida has
+  narrowed the path. The checked-in profile binds all ten 2025 AEX binaries to
+  their actual SHA-256, export RVA, and conservative core-hook set. This is an
+  evidence-collection acceleration only; Frida hook hits do not establish AE
+  exactness. Evidence: `tools/windows_witness/frida_profiles/olm_entrypoints_20260718.md`
+  and `refs/conformance/windows_frida_entrypoint_batch_20260718.md`.
+
 - 2026-07-18 `OLMRadialBlur case_0009 production exact chain` (latest
   override): eligibility (`861d873df6a1e616f356fef86524e15580558591ea93945cd7ba8662ecdee2b7`),
   preblur (`fc7b13739f081703137b771d51924e27219e34f93cc3b9ca7278fad4c46634ef`),

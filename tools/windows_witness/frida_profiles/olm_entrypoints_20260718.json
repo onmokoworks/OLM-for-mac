@@ -1,0 +1,152 @@
+{
+  "profile_id": "olm_entrypoints_20260718",
+  "generated": "2026-07-18",
+  "scope": "Checked-in Windows 64-bit 2025 OLM AEX binaries and repository evidence",
+  "path_policy": "All paths are repository-relative; no personal absolute paths are recorded.",
+  "classification": {
+    "FACT": "Directly observed in a checked-in binary, PE table, decompilation/disassembly, or named witness artifact.",
+    "INFERENCE": "Conservative operational interpretation of FACT evidence; not a claim that the function is an exported ABI."
+  },
+  "plugins": [
+    {
+      "plugin": "OLMBlur",
+      "aex_relative_path": "aex/OLMBlur/Plugins/64/2025/OLMBlur.aex",
+      "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+      "exports": [{"name": "entryPointFunc", "rva": "0x0000a970", "classification": "FACT", "evidence": "PE export table; decomp/OLMBlur.aex.c.txt:4778"}],
+      "render_or_core": [
+        {"name": "entryPointFunc", "rva": "0x0000a970", "role": "PF entry dispatch", "classification": "FACT", "evidence": "decomp/OLMBlur.aex.c.txt:4811-4837"},
+        {"name": "FUN_18000a380", "rva": "0x0000a380", "role": "full-worker/depth dispatch", "classification": "FACT", "evidence": "refs/conformance/olmblur_fullworker_branch_map_20260711.md; decomp/OLMBlur.aex.c.txt:4887"},
+        {"name": "FUN_180005f20", "rva": "0x00005f20", "role": "Legacy worker entry", "classification": "FACT", "evidence": "refs/conformance/olmblur_16bpc_legacy_case0003_residual_20260715.md"},
+        {"name": "FUN_180002280", "rva": "0x00002280", "role": "Non-Legacy PF16 worker entry", "classification": "FACT", "evidence": "refs/conformance/olmblur_case0006_fullentry_probe_20260710.md"},
+        {"name": "FUN_1800086d0", "rva": "0x000086d0", "role": "PF32 Legacy worker", "classification": "FACT", "evidence": "refs/conformance/olmblur_worker32_legacy_complete_worker_20260711.md"}
+      ],
+      "initial_frida_hooks": ["0x0000a970", "0x0000a380", "0x00005f20", "0x00002280", "0x000086d0"]
+    },
+    {
+      "plugin": "OLMColorKeep",
+      "aex_relative_path": "aex/OLMColorKeep/Plugins/64/2025/ColorKeep.aex",
+      "aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+      "exports": [{"name": "entryPointFunc", "rva": "0x000025c0", "classification": "FACT", "evidence": "PE export table; decomp/ColorKeep.aex.c.txt:741"}],
+      "render_or_core": [
+        {"name": "entryPointFunc", "rva": "0x000025c0", "role": "PF entry dispatch", "classification": "FACT", "evidence": "decomp/ColorKeep.aex.c.txt:799-832"},
+        {"name": "FUN_180001000", "rva": "0x00001000", "role": "8-bit render callback", "classification": "FACT", "evidence": "decomp/ColorKeep.aex.c.txt:33; decomp/ColorKeep.aex.c.txt:876-885"},
+        {"name": "FUN_180001140", "rva": "0x00001140", "role": "16-bit render callback", "classification": "FACT", "evidence": "decomp/ColorKeep.aex.c.txt:33; decomp/ColorKeep.aex.c.txt:876-885"},
+        {"name": "FUN_180001ca0", "rva": "0x00001ca0", "role": "PF command 0x18 dispatch", "classification": "FACT", "evidence": "decomp/ColorKeep.aex.c.txt:910"}
+      ],
+      "initial_frida_hooks": ["0x000025c0", "0x00001000", "0x00001140", "0x00001ca0"]
+    },
+    {
+      "plugin": "OLMColorKey",
+      "aex_relative_path": "aex/OLMColorKey/Plugins/64/2025/OLMColorKey.aex",
+      "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "exports": [{"name": "entry_point", "rva": "0x0000ffb0", "classification": "FACT", "evidence": "PE export table; decomp/OLMColorKey.aex.c.txt:8981"}],
+      "render_or_core": [
+        {"name": "entry_point", "rva": "0x0000ffb0", "role": "PF entry dispatch", "classification": "FACT", "evidence": "decomp/OLMColorKey.aex.c.txt:9008-9060"},
+        {"name": "FUN_1800085b0", "rva": "0x000085b0", "role": "Edge orchestration callback", "classification": "FACT", "evidence": "refs/conformance/olmcolorkey_replace_edge_orchestration_callback_20260716.json"},
+        {"name": "FUN_180008c90", "rva": "0x00008c90", "role": "Edge orchestration callback", "classification": "FACT", "evidence": "refs/conformance/olmcolorkey_replace_edge_orchestration_callback_20260716.json"},
+        {"name": "FUN_180008320", "rva": "0x00008320", "role": "Edge Thin/Erode leaf", "classification": "FACT", "evidence": "refs/conformance/olmcolorkey_edge_thin_caller_amount_20260718.md"},
+        {"name": "FUN_1800049a0", "rva": "0x000049a0", "role": "Edge Blur weight helper", "classification": "FACT", "evidence": "refs/conformance/olmcolorkey_edge_blur_apply_aex_20260716.md"}
+      ],
+      "initial_frida_hooks": ["0x0000ffb0", "0x000085b0", "0x00008c90", "0x00008320", "0x000049a0"]
+    },
+    {
+      "plugin": "OLMDirectionalBlur",
+      "aex_relative_path": "aex/OLMDirectionalBlur/Plugins/64/2025/OLMDirectionalBlur.aex",
+      "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+      "exports": [{"name": "entryPointFunc", "rva": "0x000083f0", "classification": "FACT", "evidence": "PE export table; decomp/OLMDirectionalBlur.aex.c.txt:4028"}],
+      "render_or_core": [
+        {"name": "entryPointFunc", "rva": "0x000083f0", "role": "PF entry dispatch", "classification": "FACT", "evidence": "decomp/OLMDirectionalBlur.aex.c.txt:4066-4101"},
+        {"name": "FUN_180007bd0", "rva": "0x00007bd0", "role": "render owner/host path", "classification": "FACT", "evidence": "refs/conformance/olmdirectionalblur_iterate8_natural_prerender_followup_20260717.json; decomp/OLMDirectionalBlur.aex.c.txt:4131"},
+        {"name": "FUN_1800038d0", "rva": "0x000038d0", "role": "rowdriver", "classification": "FACT", "evidence": "refs/conformance/olmdirectionalblur_rowdriver_contract_20260715.md"},
+        {"name": "FUN_180001ec0", "rva": "0x00001ec0", "role": "rotate helper", "classification": "FACT", "evidence": "refs/conformance/olmdirectionalblur_iterate8_natural_prerender_followup_20260717.md"},
+        {"name": "FUN_180006700", "rva": "0x00006700", "role": "writer caller", "classification": "FACT", "evidence": "refs/conformance/olmdirectionalblur_natural_writer_owner_20260717.md"}
+      ],
+      "initial_frida_hooks": ["0x000083f0", "0x00007bd0", "0x000038d0", "0x00001ec0", "0x00006700"]
+    },
+    {
+      "plugin": "OLMDistanceGradation",
+      "aex_relative_path": "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex",
+      "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+      "exports": [{"name": "entryPointFunc", "rva": "0x01174bd0", "classification": "FACT", "evidence": "PE export table; decomp/DistanceGradation.aex.c.txt:3542638"}],
+      "render_or_core": [
+        {"name": "entryPointFunc", "rva": "0x01174bd0", "role": "PF entry dispatch", "classification": "FACT", "evidence": "decomp/DistanceGradation.aex.c.txt:3542682-3542715"},
+        {"name": "FUN_181173720", "rva": "0x01173720", "role": "PF Render command", "classification": "FACT", "evidence": "decomp/DistanceGradation.aex.c.txt:3542714"},
+        {"name": "FUN_181170ff0", "rva": "0x01170ff0", "role": "PF16 wrapper", "classification": "FACT", "evidence": "refs/conformance/olmdistancegradation_pf16_wrapper_entry_boundary_20260717.md"},
+        {"name": "FUN_181170480", "rva": "0x01170480", "role": "compose/writeback core", "classification": "FACT", "evidence": "refs/conformance/olmdistancegradation_case0023_compose_witness_20260707.md"},
+        {"name": "FUN_181174760", "rva": "0x01174760", "role": "field generation core", "classification": "FACT", "evidence": "refs/conformance/olmdistancegradation_pf8_mask_stride_field_actual_aex_20260716.md"}
+      ],
+      "initial_frida_hooks": ["0x01174bd0", "0x01173720", "0x01170ff0", "0x01170480", "0x01174760"]
+    },
+    {
+      "plugin": "OLMKiraKira",
+      "aex_relative_path": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+      "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+      "exports": [{"name": "entry_point", "rva": "0x01155f20", "classification": "FACT", "evidence": "PE export table; decomp/OLMKiraKira.aex.c.txt:3528531"}],
+      "render_or_core": [
+        {"name": "entry_point", "rva": "0x01155f20", "role": "PF entry dispatch", "classification": "FACT", "evidence": "decomp/OLMKiraKira.aex.c.txt:3528558-3528605"},
+        {"name": "FUN_18114ffd0", "rva": "0x0114ffd0", "role": "Mode-2 compose core", "classification": "FACT", "evidence": "refs/conformance/olmkirakira_mode2_compose_writeback_contract_20260716.md"},
+        {"name": "FUN_18126685c", "rva": "0x0126685c", "role": "Mode-3 Gaussian post-call return address; not a function entry", "classification": "FACT", "evidence": "notes/CONFORMANCE_LEDGER.md:1377-1387"},
+        {"name": "FUN_181272ec0", "rva": "0x01272ec0", "role": "Gaussian body", "classification": "FACT", "evidence": "refs/conformance/olmkirakira_mode3_actual_aex_20260713.md"}
+      ],
+      "initial_frida_hooks": ["0x01155f20", "0x0114ffd0", "0x01272ec0"]
+    },
+    {
+      "plugin": "OLMRadialBlur",
+      "aex_relative_path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "exports": [{"name": "entry_point", "rva": "0x00010540", "classification": "FACT", "evidence": "PE export table; decomp/OLMRadialBlur.aex.c.txt:9376"}],
+      "render_or_core": [
+        {"name": "entry_point", "rva": "0x00010540", "role": "PF entry dispatch", "classification": "FACT", "evidence": "decomp/OLMRadialBlur.aex.c.txt:9403-9450"},
+        {"name": "FUN_180004640", "rva": "0x00004640", "role": "rotation render entry", "classification": "FACT", "evidence": "tools/emulation/README.md:230; refs/conformance/olmradialblur_case0009_fullframe_typed_witness_audit_20260715.md"},
+        {"name": "FUN_1800024c0", "rva": "0x000024c0", "role": "scatter caller", "classification": "FACT", "evidence": "refs/conformance/olmradialblur_scatter_caller_and_tail_20260717.md"},
+        {"name": "FUN_1800056f0", "rva": "0x000056f0", "role": "normalization core", "classification": "FACT", "evidence": "tools/emulation/test_olmradialblur_postworker_planes_20260718.py:242"},
+        {"name": "FUN_180009d80", "rva": "0x00009d80", "role": "sampler", "classification": "FACT", "evidence": "refs/conformance/olmradialblur_zoom_caller_collapse_consistency_20260716.md"},
+        {"name": "FUN_18000a9d0", "rva": "0x0000a9d0", "role": "worker", "classification": "FACT", "evidence": "tools/emulation/probe_radialblur_final_plane_small.py:369"},
+        {"name": "FUN_18000b150", "rva": "0x0000b150", "role": "worker boundary", "classification": "FACT", "evidence": "refs/conformance/olmradialblur_b150_live_noop_detour_differential_20260715.md"}
+      ],
+      "initial_frida_hooks": ["0x00010540", "0x00004640", "0x000024c0", "0x000056f0", "0x00009d80", "0x0000a9d0", "0x0000b150"]
+    },
+    {
+      "plugin": "OLMSmoother2AE",
+      "aex_relative_path": "aex/OLMSmoother2AE/Plugins/64/2025/OLMSmoother2.aex",
+      "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+      "exports": [{"name": "entry_point", "rva": "0x00009e60", "classification": "FACT", "evidence": "PE export table; decomp/OLMSmoother2.aex.c.txt:5841"}],
+      "render_or_core": [
+        {"name": "entry_point", "rva": "0x00009e60", "role": "PF entry dispatch", "classification": "FACT", "evidence": "decomp/OLMSmoother2.aex.c.txt:5868-5915"},
+        {"name": "FUN_18000c280", "rva": "0x0000c280", "role": "producer dispatch", "classification": "FACT", "evidence": "refs/conformance/olmsmoother2_c280_cce0_replay_20260712.md"},
+        {"name": "FUN_18000cce0", "rva": "0x0000cce0", "role": "typed compose core", "classification": "FACT", "evidence": "refs/conformance/olmsmoother2_c280_cce0_replay_20260712.md"},
+        {"name": "FUN_18000ada0", "rva": "0x0000ada0", "role": "natural caller before vcomp", "classification": "FACT", "evidence": "refs/conformance/olmsmoother2_case0012_classplane_natural_caller_20260717.md"},
+        {"name": "FUN_18000f8f0", "rva": "0x0000f8f0", "role": "classifier dispatch", "classification": "FACT", "evidence": "refs/conformance/olmsmoother2_classifier40_f8f0_first_divergence_20260716.md"},
+        {"name": "FUN_18000fef0", "rva": "0x0000fef0", "role": "cardinal dispatcher", "classification": "FACT", "evidence": "refs/conformance/olmsmoother2_case0012_second_leaf_20260716.md"},
+        {"name": "FUN_18000e170", "rva": "0x0000e170", "role": "typed helper", "classification": "FACT", "evidence": "refs/conformance/olmsmoother2_typed_witness_20260710.md"}
+      ],
+      "initial_frida_hooks": ["0x00009e60", "0x0000c280", "0x0000cce0", "0x0000ada0", "0x0000f8f0", "0x0000fef0", "0x0000e170"]
+    },
+    {
+      "plugin": "OLMSmootherAE",
+      "aex_relative_path": "aex/OLMSmootherAE/Plugins/64/2025/OLMSmoother.aex",
+      "aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+      "exports": [{"name": "entryPointFunc", "rva": "0x0000a2c0", "classification": "FACT", "evidence": "PE export table; decomp/OLMSmoother.aex.c.txt:5079"}],
+      "render_or_core": [
+        {"name": "entryPointFunc", "rva": "0x0000a2c0", "role": "PF entry dispatch", "classification": "FACT", "evidence": "decomp/OLMSmoother.aex.c.txt:5117-5184"},
+        {"name": "FUN_1800096f0", "rva": "0x000096f0", "role": "render command", "classification": "FACT", "evidence": "decomp/OLMSmoother.aex.c.txt:5182-5184"},
+        {"name": "FUN_180006570", "rva": "0x00006570", "role": "8-bit dispatch/core", "classification": "FACT", "evidence": "decomp/OLMSmoother.aex.c.txt:2970-3010"},
+        {"name": "FUN_180006710", "rva": "0x00006710", "role": "16-bit dispatch/core", "classification": "FACT", "evidence": "decomp/OLMSmoother.aex.c.txt:3020-3060"}
+      ],
+      "initial_frida_hooks": ["0x0000a2c0", "0x000096f0", "0x00006570", "0x00006710"]
+    },
+    {
+      "plugin": "OLMToonDilate",
+      "aex_relative_path": "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex",
+      "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+      "exports": [{"name": "entry_point", "rva": "0x001abc00", "classification": "FACT", "evidence": "PE export table; decomp/OLMToonDilate.aex.c.txt:479910"}],
+      "render_or_core": [
+        {"name": "entry_point", "rva": "0x001abc00", "role": "PF entry dispatch", "classification": "FACT", "evidence": "decomp/OLMToonDilate.aex.c.txt:479937-480001"},
+        {"name": "FUN_1801a7850", "rva": "0x001a7850", "role": "PF command callback", "classification": "FACT", "evidence": "decomp/OLMToonDilate.aex.c.txt:480020-480023"},
+        {"name": "FUN_1801a6fe0", "rva": "0x001a6fe0", "role": "effect setup", "classification": "FACT", "evidence": "decomp/OLMToonDilate.aex.c.txt:479969-479972"},
+        {"name": "FUN_180006498", "rva": "0x00006498", "role": "typed worker candidate", "classification": "INFERENCE", "evidence": "refs/conformance/olmtoondilate_pf32_raw_copy_witness_20260717.md; aex/olm_disasm/OLMToonDilate.aex.ghidra.txt"}
+      ],
+      "initial_frida_hooks": ["0x001abc00", "0x001a7850", "0x001a6fe0"]
+    }
+  ]
+}

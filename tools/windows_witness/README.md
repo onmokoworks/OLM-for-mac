@@ -1,9 +1,8 @@
 # Windows Witness
 
 `tools/windows_witness` compiles a declarative witness-spec JSON file into a
-sendable Windows After Effects/CDB evidence package. M0 replaces plugin-specific
-PowerShell runners with one stable launcher while leaving breakpoint logic and
-event payloads in plugin-owned CDB templates.
+sendable Windows After Effects evidence package. CDB, an injected collector,
+and Frida share one hash-pinned AE queue and one fail-closed return contract.
 
 ## M0 contract
 
@@ -139,3 +138,38 @@ The tests cover strict spec validation, template safety, serial generation,
 stable launcher source invariants, field/cardinality/identity failures,
 required artifact handling, and byte-for-byte deterministic package and return
 ZIPs. The synthetic example is compile-only and does not require Windows or AE.
+
+## Frida entry-to-core transport
+
+`transport.kind = "frida"` is the default discovery tool when the unresolved
+question is which AEX path a real AE render takes. The generated package:
+
+- attaches to the exact AE PID and hash-pinned loaded AEX before releasing the
+  renderer;
+- hooks the exported PF entrypoint and conservative evidence-backed core RVAs;
+- records typed argument/return reads and bounded buffer chunks as canonical
+  JSONL;
+- remains attached until the AE renderer publishes its result marker; and
+- fails closed on module, case, run, renderer, bit-depth, cardinality, read, or
+  timeout drift.
+
+The shared 2025 AEX map is
+`frida_profiles/olm_entrypoints_20260718.json`. Broad instruction tracing is
+deliberately disabled. Use CDB after the Frida trace has selected a narrow
+callsite that needs stepping, register inspection, or a data watchpoint.
+
+Build the six-lane entry survey with:
+
+```bash
+python3 scripts/package_windows_frida_entrypoint_batch_20260718.py
+```
+
+The generated outer ZIP contains one interactive Windows launcher. Intake is
+bound to that exact request manifest and all six inner package hashes:
+
+```bash
+python3 scripts/intake_windows_frida_entrypoint_batch_20260718.py \
+  path/to/RETURN_OLM_FRIDA_ENTRYPOINT_BATCH_20260718.zip \
+  --request-batch refs/runtime_trace_packages/windows_frida_entrypoint_batch_20260718.zip \
+  --output-json refs/reports/windows_frida_entrypoint_batch_intake_20260718.json
+```

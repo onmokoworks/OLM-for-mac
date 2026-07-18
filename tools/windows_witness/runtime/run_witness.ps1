@@ -49,6 +49,8 @@ $queuePath = Join-Path $PackageRoot ([string]$contract.queue).Replace('/', '\')
 $sessionId = (Get-Process -Id $PID).SessionId
 $launch = $null
 $cdb = $null
+$fridaProcess = $null
+$activeFridaOutputDir = $null
 $injectorProcess = $null
 $launchStarted = $false
 $launchArguments = $null
@@ -79,6 +81,7 @@ $bootstrapAePid = $null
 $activeCdbTrace = $null
 $activeCdbTraceEvidence = $null
 $captureDiagnostics = @()
+$fridaAnsweredCases = @()
 
 function Failure([string]$stage, [string]$reason, [object[]]$missing, [string]$last, [object]$diagnostics = $null) {
   $body = [ordered]@{
@@ -236,6 +239,10 @@ function Stop-WitnessProcesses {
     }
   }
   Stop-CdbCapture
+  if ($fridaProcess -and !$fridaProcess.HasExited) {
+    Stop-Process -Id $fridaProcess.Id -Force -ErrorAction SilentlyContinue
+  }
+  if ($fridaProcess) { Wait-Process -Id $fridaProcess.Id -Timeout 10 -ErrorAction SilentlyContinue }
   if ($injectorProcess -and !$injectorProcess.HasExited) { Stop-Process -Id $injectorProcess.Id -Force -ErrorAction SilentlyContinue }
   if ($launch -and !$launch.HasExited) { Stop-Process -Id $launch.Id -Force -ErrorAction SilentlyContinue }
   foreach ($retry in @($queueRetryProcesses)) {
@@ -435,6 +442,60 @@ function Validate-CollectorOutputs([object]$case, [string]$outputDir, [string]$c
   Get-Content -LiteralPath $tracePath | Add-Content -LiteralPath $combinedTrace
 }
 
+function Read-FridaJson([string]$path) {
+  if (!(Test-Path -LiteralPath $path -PathType Leaf)) { return $null }
+  try { return Get-Content -LiteralPath $path -Raw | ConvertFrom-Json }
+  catch { return $null }
+}
+
+function Test-FridaIdentity([object]$value, [string]$caseId) {
+  if ($null -eq $value) { return $false }
+  foreach ($field in @('run_id', 'case_id', 'module_base')) {
+    if ($null -eq $value.$field) { throw "Frida armed.json is missing $field for $caseId" }
+  }
+  $observedPid = if ($null -ne $value.pid) { $value.pid } else { $value.ae_pid }
+  if ($null -eq $observedPid) { throw "Frida armed.json is missing pid/ae_pid for $caseId" }
+  return ([string]$value.run_id -ceq $runId -and
+    [string]$value.case_id -ceq $caseId -and
+    [int64]$observedPid -eq [int64]$boundPid -and
+    [string]$value.module_base -ieq [string]$boundBase)
+}
+
+function Copy-FridaDiagnostics([string]$caseId, [string]$outputDir, [string]$eventsPath) {
+  if (!(Test-Path -LiteralPath $outputDir -PathType Container)) { return }
+  $prefix = 'frida_' + $caseId + '_'
+  foreach ($file in @(Get-ChildItem -LiteralPath $outputDir -File -Recurse -ErrorAction SilentlyContinue | Sort-Object FullName)) {
+    $relative = $file.FullName.Substring($outputDir.Length).TrimStart('\', '/')
+    $safeRelative = ($relative -replace '[\\/]', '__' -replace '[^A-Za-z0-9_.-]', '_')
+    Copy-Item -LiteralPath $file.FullName -Destination (Join-Path $work ($prefix + $safeRelative)) -Force -ErrorAction SilentlyContinue
+  }
+  if (Test-Path -LiteralPath $eventsPath -PathType Leaf) {
+    Get-Content -LiteralPath $eventsPath | Add-Content -LiteralPath $combinedTrace
+  }
+}
+
+function Invoke-Frida([object]$case, [string]$outputDir, [string]$stdout, [string]$stderr, [string]$completionMarker) {
+  $runnerPath = Join-Path $PackageRoot ([string]$contract.transport.package_runner_path).Replace('/', '\')
+  $fridaContractPath = Join-Path $PackageRoot ([string]$case.package_frida_contract).Replace('/', '\')
+  if (!(Test-Path -LiteralPath $runnerPath -PathType Leaf)) { throw "Frida runner missing: $runnerPath" }
+  if (!(Test-Path -LiteralPath $fridaContractPath -PathType Leaf)) { throw "Frida contract missing: $fridaContractPath" }
+  $agentPath = Join-Path $PackageRoot ([string]$contract.transport.package_agent_path).Replace('/', '\')
+  if (!(Test-Path -LiteralPath $agentPath -PathType Leaf)) { throw "Frida agent missing: $agentPath" }
+  New-Item -ItemType Directory -Force -Path $outputDir | Out-Null
+  $arguments = Join-WindowsCommandLine @('-3', $runnerPath, '--contract', $fridaContractPath, '--output-dir', $outputDir, '--pid', [string]$boundPid, '--run-id', $runId, '--case-id', [string]$case.id, '--module-base', [string]$boundBase, '--aex-path', $AexPath, '--completion-marker', $completionMarker)
+  $script:activeFridaOutputDir = $outputDir
+  $script:fridaProcess = Start-Process -FilePath 'py' -ArgumentList $arguments -RedirectStandardOutput $stdout -RedirectStandardError $stderr -NoNewWindow -PassThru
+}
+
+function Read-FridaResultManifest([string]$outputDir) {
+  foreach ($name in @('result-manifest.json', 'result_manifest.json')) {
+    $candidate = Join-Path $outputDir $name
+    $value = Read-FridaJson $candidate
+    if ($null -ne $value) { return $value }
+  }
+  return $null
+}
+
 foreach ($path in @($AexPath, $AfterFxPath, $(if ($transportKind -eq 'cdb') { $CdbPath } else { $null }), $queuePath)) {
   if (!$path) { continue }
   if (!(Test-Path -LiteralPath $path -PathType Leaf)) { Finish (Failure 'preflight' "required file missing: $path" @('preflight_file') '') 2 }
@@ -481,7 +542,7 @@ if ($queueLaunch -match '\s') { Finish (Failure 'path_preflight' 'short JSX laun
 $normalizedQueuePath = [IO.Path]::GetFullPath($queueLaunch)
 $queueHash = (Get-FileHash -LiteralPath $queueLaunch -Algorithm SHA256).Hash.ToLowerInvariant()
 $env:WINDOWS_WITNESS_QUEUE_SHA256 = $queueHash
-$directQueueLaunch = ([string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1') -or ($transportKind -eq 'in_process_collector')
+$directQueueLaunch = ([string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1') -or ($transportKind -eq 'in_process_collector') -or ($transportKind -eq 'frida')
 $afterFxCommandLine = if ($directQueueLaunch) {
   # `-ro` is AE's re-entrant file-script form. It preserves the same process
   # while allowing the queue to evaluate its bundled renderer.
@@ -672,6 +733,67 @@ foreach ($case in @($contract.cases | Sort-Object order)) {
     Copy-Item -LiteralPath $shortTrace -Destination $trace -Force
     Get-Content -LiteralPath $shortTrace | Add-Content -LiteralPath $combinedTrace
   }
+  } elseif ($transportKind -eq 'frida') {
+    $fridaOutputDir = Join-Path $work ("frida_" + $caseId)
+    $fridaStdout = Join-Path $work ("frida_stdout_" + $caseId + '.txt')
+    $fridaStderr = Join-Path $work ("frida_stderr_" + $caseId + '.txt')
+    $fridaEvents = Join-Path $fridaOutputDir 'events.jsonl'
+    $fridaArmed = Join-Path $fridaOutputDir 'armed.json'
+    $fridaCompletion = Join-Path $work ("frida_complete_" + $caseId + '.marker')
+    try {
+      Remove-Item -LiteralPath $fridaArmed -Force -ErrorAction SilentlyContinue
+      Remove-Item -LiteralPath $fridaCompletion -Force -ErrorAction SilentlyContinue
+      Remove-Item -LiteralPath (Join-Path $fridaOutputDir 'result-manifest.json') -Force -ErrorAction SilentlyContinue
+      Remove-Item -LiteralPath (Join-Path $fridaOutputDir 'result_manifest.json') -Force -ErrorAction SilentlyContinue
+      Invoke-Frida $case $fridaOutputDir $fridaStdout $fridaStderr $fridaCompletion
+      $armDeadline = (Get-Date).AddSeconds([int]$contract.transport.arm_timeout_seconds)
+      $armed = $null
+      while ((Get-Date) -lt $armDeadline) {
+        $armed = Read-FridaJson $fridaArmed
+        if ($null -ne $armed -and (Test-FridaIdentity $armed $caseId)) { break }
+        if ($fridaProcess.HasExited) { break }
+        Start-Sleep -Milliseconds 250
+      }
+      if ($null -eq $armed -or !(Test-FridaIdentity $armed $caseId)) {
+        $exitCode = if ($fridaProcess.HasExited) { $fridaProcess.ExitCode } else { $null }
+        throw "Frida did not arm for $caseId (exit=$exitCode)"
+      }
+      Set-Content -LiteralPath $continue -Value 'continue' -Encoding ASCII
+      $captureDeadline = (Get-Date).AddSeconds([int]$contract.transport.capture_timeout_seconds)
+      $aeResult = $null
+      $aeResultPath = Join-Path $work ("ae_result_" + $caseId + '.json')
+      while ((Get-Date) -lt $captureDeadline -and $null -eq $aeResult) {
+        $fridaProcess.Refresh()
+        if ($fridaProcess.HasExited) { throw "Frida runner exited before AE completed for $caseId" }
+        if (Test-Path -LiteralPath $aeResultPath -PathType Leaf) {
+          try { $aeResult = Get-Content -LiteralPath $aeResultPath -Raw | ConvertFrom-Json }
+          catch { throw "AE result is not valid JSON for $caseId" }
+        }
+        if ($null -eq $aeResult) { Start-Sleep -Milliseconds 250 }
+      }
+      if ($null -eq $aeResult) { throw "AE result missing for $caseId" }
+      $aeLogPath = Join-Path $work ("ae_" + $caseId + '.log')
+      if (!(Test-Path -LiteralPath $aeLogPath -PathType Leaf) -or
+          (Get-Content -LiteralPath $aeLogPath -Raw) -notmatch '(?m)^gpuAccelType=SOFTWARE\s*$') {
+        throw "AE did not prove gpuAccelType=SOFTWARE for $caseId"
+      }
+      Set-Content -LiteralPath $fridaCompletion -Value 'renderer_complete' -Encoding ASCII
+      while ((Get-Date) -lt $captureDeadline -and !$fridaProcess.HasExited) { Start-Sleep -Milliseconds 100; $fridaProcess.Refresh() }
+      if (!$fridaProcess.HasExited) { throw "Frida capture timed out for $caseId" }
+      $fridaResult = Read-FridaResultManifest $fridaOutputDir
+      if ($fridaProcess.ExitCode -ne 0) { throw "Frida runner failed for $caseId with exit code $($fridaProcess.ExitCode)" }
+      if ($null -eq $fridaResult -or [string]$fridaResult.status -ne 'answered') {
+        throw "Frida result manifest is not answered for $caseId"
+      }
+    }
+    catch {
+      Copy-FridaDiagnostics $caseId $fridaOutputDir $fridaEvents
+      Finish (Failure 'frida_capture' $_.Exception.Message @('frida_armed_and_answered') '') 2
+    }
+    Copy-FridaDiagnostics $caseId $fridaOutputDir $fridaEvents
+    $fridaAnsweredCases += $caseId
+    $fridaProcess = $null
+    $activeFridaOutputDir = $null
   } else {
     $collectorOutputDir = Join-Path $work ("exports\" + $caseId)
     New-Item -ItemType Directory -Force -Path $collectorOutputDir | Out-Null
@@ -721,11 +843,32 @@ foreach ($case in @($contract.cases | Sort-Object order)) {
 
 $identity = [ordered]@{run_id=$runId; ae_pid=$boundPid; module_base=$boundBase}
 $identity | ConvertTo-Json | Set-Content -LiteralPath $identityPath -Encoding UTF8
-& py -3 $runtimePath validate --contract $contractPath --trace $combinedTrace --identity $identityPath --output $statusPath
-$validateCode = $LASTEXITCODE
-if (!(Test-Path -LiteralPath $statusPath -PathType Leaf)) { Finish (Failure 'trace_validation' 'validator did not produce status JSON' @('validation_status.json') '') 2 }
-$validated = Get-Content -LiteralPath $statusPath -Raw | ConvertFrom-Json
-if ($validated -is [pscustomobject]) {
-  $validated | Add-Member -NotePropertyName capture_diagnostics -NotePropertyValue @($captureDiagnostics) -Force
+if ($transportKind -eq 'frida') {
+  $fridaStatus = [ordered]@{
+    schema_version = 1
+    status = 'answered'
+    request_id = [string]$contract.request_id
+    transport = 'frida'
+    run = [ordered]@{
+      run_id = $runId
+      ae_pid = [int]$boundPid
+      module_base = $boundBase
+      aex_sha256 = $hash
+      project_bits_per_channel = [int]$contract.project.bits_per_channel
+      renderer = [string]$contract.project.renderer
+    }
+    cases = @($fridaAnsweredCases)
+    events_jsonl = 'combined_cdb_trace.txt'
+    capture_diagnostics = @($captureDiagnostics)
+  }
+  Finish $fridaStatus 0
+} else {
+  & py -3 $runtimePath validate --contract $contractPath --trace $combinedTrace --identity $identityPath --output $statusPath
+  $validateCode = $LASTEXITCODE
+  if (!(Test-Path -LiteralPath $statusPath -PathType Leaf)) { Finish (Failure 'trace_validation' 'validator did not produce status JSON' @('validation_status.json') '') 2 }
+  $validated = Get-Content -LiteralPath $statusPath -Raw | ConvertFrom-Json
+  if ($validated -is [pscustomobject]) {
+    $validated | Add-Member -NotePropertyName capture_diagnostics -NotePropertyValue @($captureDiagnostics) -Force
+  }
+  Finish $validated $(if ($validateCode -eq 0 -and $validated.status -eq 'answered') { 0 } else { 2 })
 }
-Finish $validated $(if ($validateCode -eq 0 -and $validated.status -eq 'answered') { 0 } else { 2 })
