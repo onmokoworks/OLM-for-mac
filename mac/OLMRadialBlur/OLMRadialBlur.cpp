@@ -211,7 +211,8 @@ static RadialBlurOuterSampleState ComputeRadialBlurOuterSampleState(
 	A_long y1,
 	const SampleFn &sample,
 	const SampleValidFn &sample_valid,
-	float brightness_gain)
+	float brightness_gain,
+	bool strict_nonzero_alpha = false)
 {
 	const float one_minus_fx = 1.0f - fx;
 	const float one_minus_fy = 1.0f - fy;
@@ -234,7 +235,7 @@ static RadialBlurOuterSampleState ComputeRadialBlurOuterSampleState(
 			RadialF32Mul(sample_valid(x0, y1), w01)),
 		RadialF32Mul(sample_valid(x1, y1), w11));
 
-	if (state.alpha > 1.0e-8f) {
+	if (strict_nonzero_alpha ? state.alpha != 0.0f : state.alpha > 1.0e-8f) {
 		const float reciprocal_alpha = RadialF32Div(1.0f, state.alpha);
 		for (int c = 0; c < 3; ++c) {
 			state.accum_rgb[c] = RadialF32Add(
@@ -869,11 +870,79 @@ static A_long DynamicOffsetForRadius(A_long radius_count, A_long offset, A_long 
 	return (A_long)((double)((radius_count / 2) * offset) / (double)std::max<A_long>(1, radius_index + 1));
 }
 
-static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const OLMRadialBlurInfo &info)
+template <typename PixelT>
+struct RadialZoomPixelTraits;
+
+template <>
+struct RadialZoomPixelTraits<PF_Pixel8> {
+	static float Read(const PF_Pixel8 &pixel, int channel)
+	{
+		const A_u_char values[4] = {pixel.red, pixel.green, pixel.blue, pixel.alpha};
+		return (float)values[channel] / 255.0f;
+	}
+	static A_long Index(float value) { return (A_long)std::floor(value); }
+	static constexpr bool kStrictNonzeroAlpha = false;
+	static constexpr bool kClampRadius = true;
+	static void Write(PF_Pixel8 &pixel, const RadialBlurOuterSampleState &state, bool use_fft)
+	{
+		const double rgb_epsilon = use_fft ? 0.0 : 1.0e-4;
+		pixel.red = (A_u_char)ClampFloat((float)std::floor(state.final_rgb[0] * 255.0 + rgb_epsilon), 0.0f, 255.0f);
+		pixel.green = (A_u_char)ClampFloat((float)std::floor(state.final_rgb[1] * 255.0 + rgb_epsilon), 0.0f, 255.0f);
+		pixel.blue = (A_u_char)ClampFloat((float)std::floor(state.final_rgb[2] * 255.0 + rgb_epsilon), 0.0f, 255.0f);
+		pixel.alpha = (A_u_char)ClampFloat((float)std::floor(state.alpha * 255.0), 0.0f, 255.0f);
+	}
+};
+
+template <>
+struct RadialZoomPixelTraits<PF_Pixel16> {
+	static float Read(const PF_Pixel16 &pixel, int channel)
+	{
+		const A_u_short values[4] = {pixel.red, pixel.green, pixel.blue, pixel.alpha};
+		return RadialF32Mul((float)values[channel], 1.0f / 32768.0f);
+	}
+	static A_long Index(float value) { return (A_long)value; }
+	static constexpr bool kStrictNonzeroAlpha = true;
+	static constexpr bool kClampRadius = false;
+	static A_u_short Store(float value)
+	{
+		// AEX FUN_180017440: MULSS 32768, CVTTSS2SI, then ARGB16 stores.
+		return (A_u_short)(int)RadialF32Mul(value, 32768.0f);
+	}
+	static void Write(PF_Pixel16 &pixel, const RadialBlurOuterSampleState &state, bool)
+	{
+		pixel.red = Store(state.final_rgb[0]);
+		pixel.green = Store(state.final_rgb[1]);
+		pixel.blue = Store(state.final_rgb[2]);
+		pixel.alpha = Store(state.alpha);
+	}
+};
+
+template <>
+struct RadialZoomPixelTraits<PF_PixelFloat> {
+	static float Read(const PF_PixelFloat &pixel, int channel)
+	{
+		const float values[4] = {pixel.red, pixel.green, pixel.blue, pixel.alpha};
+		return values[channel];
+	}
+	static A_long Index(float value) { return (A_long)value; }
+	static constexpr bool kStrictNonzeroAlpha = true;
+	static constexpr bool kClampRadius = false;
+	static void Write(PF_PixelFloat &pixel, const RadialBlurOuterSampleState &state, bool)
+	{
+		// AEX FUN_180017490 writes the four float channels directly as ARGB.
+		pixel.red = state.final_rgb[0];
+		pixel.green = state.final_rgb[1];
+		pixel.blue = state.final_rgb[2];
+		pixel.alpha = state.alpha;
+	}
+};
+
+template <typename PixelT>
+static PF_Err RenderZoomTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMRadialBlurInfo &info)
 {
 	if (info.blur_type != 1 || info.inner_strength != 0 ||
 	    info.noise_variation != 0.0) {
-		CopyWorld<PF_Pixel8>(input, output);
+		CopyWorld<PixelT>(input, output);
 		return PF_Err_NONE;
 	}
 
@@ -886,12 +955,9 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	src.rgba.resize((size_t)w * h * 4);
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
-			const PF_Pixel8 *p = PixelAtConst<PF_Pixel8>(input, x, y);
+			const PixelT *p = PixelAtConst<PixelT>(input, x, y);
 			size_t idx = ((size_t)y * w + x) * 4;
-			src.rgba[idx + 0] = (float)p->red / 255.0f;
-			src.rgba[idx + 1] = (float)p->green / 255.0f;
-			src.rgba[idx + 2] = (float)p->blue / 255.0f;
-			src.rgba[idx + 3] = (float)p->alpha / 255.0f;
+			for (int c = 0; c < 4; ++c) src.rgba[idx + c] = RadialZoomPixelTraits<PixelT>::Read(*p, c);
 		}
 	}
 
@@ -1021,8 +1087,6 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		}
 	}
 
-	const double rgb_quantize_epsilon = use_fft_convolution ? 0.0 : 1.0e-4;
-	const double alpha_quantize_epsilon = 0.0;
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
 			const RadialBlurAEXCoordinateCandidate coordinate_candidate =
@@ -1031,14 +1095,18 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					(float)ratio, (float)step_rad, min_r, radius_count, angular_count);
 			const float radius_index = coordinate_candidate.radius_index;
 			const float angle_index = coordinate_candidate.angle_index;
-			// Raw polar coordinates are AEX-ordered float32. Keep the existing
-			// floor-based index boundary until negative-index behavior is witnessed.
-			const A_long xi_raw = (A_long)std::floor(radius_index);
-			const A_long yi = (A_long)std::floor(angle_index);
+			// PF8 keeps its established floor/clamp behavior. Deep paths use the
+			// AEX CVTTSS2SI truncation and the sampler's unclamped radius neighbor.
+			const A_long xi_raw = RadialZoomPixelTraits<PixelT>::Index(radius_index);
+			const A_long yi = RadialZoomPixelTraits<PixelT>::Index(angle_index);
 			const float fx = RadialF32Sub(radius_index, (float)xi_raw);
 			const float fy = RadialF32Sub(angle_index, (float)yi);
-			const A_long xi = std::max<A_long>(0, std::min<A_long>(xi_raw, radius_count - 1));
-			const A_long x1 = std::max<A_long>(0, std::min<A_long>(xi_raw + 1, radius_count - 1));
+			const A_long xi = RadialZoomPixelTraits<PixelT>::kClampRadius
+				? std::max<A_long>(0, std::min<A_long>(xi_raw, radius_count - 1))
+				: xi_raw;
+			const A_long x1 = RadialZoomPixelTraits<PixelT>::kClampRadius
+				? std::max<A_long>(0, std::min<A_long>(xi_raw + 1, radius_count - 1))
+				: xi_raw + 1;
 			const A_long y0 = ((yi % angular_count) + angular_count) % angular_count;
 			const A_long y1 = (y0 + 1) % angular_count;
 			auto sample = [&](A_long px, A_long py, int c) -> float {
@@ -1051,12 +1119,10 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			// final caller-collapsed alpha, so keep those channels explicit even
 			// while the current port still writes final alpha from blurred alpha.
 			const RadialBlurOuterSampleState outer_state = ComputeRadialBlurOuterSampleState(
-				fx, fy, xi, x1, y0, y1, sample, sample_valid, (float)info.brightness_gain);
-			PF_Pixel8 *out = PixelAt<PF_Pixel8>(output, x, y);
-			out->red   = (A_u_char)ClampFloat((float)std::floor(outer_state.final_rgb[0] * 255.0 + rgb_quantize_epsilon), 0.0f, 255.0f);
-			out->green = (A_u_char)ClampFloat((float)std::floor(outer_state.final_rgb[1] * 255.0 + rgb_quantize_epsilon), 0.0f, 255.0f);
-			out->blue  = (A_u_char)ClampFloat((float)std::floor(outer_state.final_rgb[2] * 255.0 + rgb_quantize_epsilon), 0.0f, 255.0f);
-			out->alpha = (A_u_char)ClampFloat((float)std::floor(outer_state.alpha * 255.0 + alpha_quantize_epsilon), 0.0f, 255.0f);
+				fx, fy, xi, x1, y0, y1, sample, sample_valid, (float)info.brightness_gain,
+				RadialZoomPixelTraits<PixelT>::kStrictNonzeroAlpha);
+			PixelT *out = PixelAt<PixelT>(output, x, y);
+			RadialZoomPixelTraits<PixelT>::Write(*out, outer_state, use_fft_convolution);
 			if (debug.dump_path && RadialBlurDebugHasPoint(debug, x, y)) {
 				auto sample_source = [&](A_long px, A_long py, int c) -> float {
 					return polar.rgba[((size_t)py * radius_count + px) * 4 + c];
@@ -1067,7 +1133,12 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					(float)outer_state.final_rgb[2],
 					(float)outer_state.alpha
 				};
-				const A_u_char sample_u8[4] = {out->red, out->green, out->blue, out->alpha};
+				const A_u_char sample_u8[4] = {
+					(A_u_char)ClampFloat((float)std::floor(outer_state.final_rgb[0] * 255.0), 0.0f, 255.0f),
+					(A_u_char)ClampFloat((float)std::floor(outer_state.final_rgb[1] * 255.0), 0.0f, 255.0f),
+					(A_u_char)ClampFloat((float)std::floor(outer_state.final_rgb[2] * 255.0), 0.0f, 255.0f),
+					(A_u_char)ClampFloat((float)std::floor(outer_state.alpha * 255.0), 0.0f, 255.0f)
+				};
 				const float accum_rgba[4] = {
 					(float)outer_state.accum_rgb[0],
 					(float)outer_state.accum_rgb[1],
@@ -1117,6 +1188,21 @@ static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		}
 	}
 	return PF_Err_NONE;
+}
+
+static PF_Err RenderZoom8(PF_EffectWorld *input, PF_EffectWorld *output, const OLMRadialBlurInfo &info)
+{
+	return RenderZoomTyped<PF_Pixel8>(input, output, info);
+}
+
+static PF_Err RenderZoom16(PF_EffectWorld *input, PF_EffectWorld *output, const OLMRadialBlurInfo &info)
+{
+	return RenderZoomTyped<PF_Pixel16>(input, output, info);
+}
+
+static PF_Err RenderZoomFloat(PF_EffectWorld *input, PF_EffectWorld *output, const OLMRadialBlurInfo &info)
+{
+	return RenderZoomTyped<PF_PixelFloat>(input, output, info);
 }
 
 static PF_Err RenderRotation8(PF_EffectWorld *input, PF_EffectWorld *output, const OLMRadialBlurInfo &info)
@@ -1392,15 +1478,25 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		return RenderZoom8(input, output, info);
 	}
 	if (bitdepth == 16) {
-		CopyWorld<PF_Pixel16>(input, output);
-		return PF_Err_NONE;
+		return RenderZoom16(input, output, info);
 	}
 	if (bitdepth == 32) {
-		CopyWorld<PF_PixelFloat>(input, output);
-		return PF_Err_NONE;
+		return RenderZoomFloat(input, output, info);
 	}
 	return PF_Err_BAD_CALLBACK_PARAM;
 }
+
+#if defined(OLM_RADIALBLUR_TEST_SEAM)
+extern "C" PF_Err OLMRadialBlurTestRenderWorld(
+	PF_EffectWorld *input,
+	PF_EffectWorld *output,
+	const OLMRadialBlurInfo *info,
+	short bitdepth)
+{
+	if (!input || !output || !info) return PF_Err_BAD_CALLBACK_PARAM;
+	return RenderWorld(input, output, *info, bitdepth);
+}
+#endif
 
 static OLMRadialBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong comp_width, PF_FpLong comp_height)
 {

@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "kind": "olmradialblur_typed_deep_render",
+  "date": "2026-07-18",
+  "status": "known_red_internal_pf32_frame",
+  "ae_exact_claim": false,
+  "production_source_sha256": "bdc051f0ea02f8d62eb0ed25ccf64ac9ef02e01a3238a82765b2ea34d7826278",
+  "built_plugin_sha256": "7e794ee6c8eb8f16c0a8081eaede5cdf9973d7b7ebc16047047f75ae78d6fee5",
+  "built_architectures": ["x86_64", "arm64"],
+  "actual_aex_oracle": {
+    "normalized_polar_plane_sha256": "b8627f0dd4e21ea371d31400a3c6ab5b61e9f293d3cecb99dc80bc91837d7fe1",
+    "complete_pf32_frame_sha256": "7de7d9700fddce9f77261fe3e81db8b89ffc88a06c897b866ffe512392562010",
+    "compared_bytes": 33177600
+  },
+  "results": {
+    "reconstructed_final_sampler_differing_bytes": 144584,
+    "production_typed_pf32_differing_bytes": 10047226,
+    "production_typed_pf32_first_difference": 0,
+    "production_is_noop_copy": false
+  },
+  "facts": [
+    "PF8 keeps its established reader, floor/clamp, and byte writer behavior.",
+    "PF16 uses the binary-grounded 1/32768 reader and multiply-by-32768 truncate writer.",
+    "PF32 uses native float input and direct float output.",
+    "The typed Zoom production path builds as a universal x86_64/arm64 plug-in.",
+    "The production PF32 frame is still not byte-identical to the actual-AEX internal frame."
+  ],
+  "next_boundary": "Compare the production normalized polar plane to the actual-AEX normalized polar plane before changing final sampling again.",
+  "limits": [
+    "No Mac AE render was executed.",
+    "No Windows execution was used.",
+    "Rotation and unsupported feature combinations still retain their existing copy behavior in deep color.",
+    "This does not establish AE exactness or whole-plugin deep-color compatibility."
+  ]
+}
