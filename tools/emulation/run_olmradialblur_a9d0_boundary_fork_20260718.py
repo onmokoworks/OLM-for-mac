@@ -513,7 +513,7 @@ def main() -> int:
     parser.add_argument("--output-md", type=Path, default=DEFAULT_MD)
     parser.add_argument("--bounded-rows", type=int, default=2)
     parser.add_argument("--max-instructions", type=int, default=100_000_000)
-    parser.add_argument("--full-max-instructions", type=int, default=2_500_000_000)
+    parser.add_argument("--full-max-instructions", type=int, default=12_000_000_000)
     parser.add_argument("--run-full", action="store_true")
     args = parser.parse_args()
 
@@ -611,6 +611,7 @@ def main() -> int:
         make_slice(boundary_path, full_right_input, contract, *full_ranges[1])
         report["full_fork"] = {
             "ranges": [list(item) for item in full_ranges],
+            "instruction_budget_per_slice": args.full_max_instructions,
             "slices": [
                 {"range": list(full_ranges[0]), "checkpoint": str(full_left_input),
                  "sha256": file_sha256(full_left_input)},
