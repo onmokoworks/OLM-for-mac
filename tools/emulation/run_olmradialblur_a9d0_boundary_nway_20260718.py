@@ -43,6 +43,22 @@ def load_base():
     return module
 
 
+def portable(value: Any) -> Any:
+    """Remove workstation-specific absolute paths from checked-in evidence."""
+    if isinstance(value, dict):
+        return {key: portable(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [portable(item) for item in value]
+    if isinstance(value, str):
+        root = str(ROOT)
+        if value == root or value.startswith(root + "/"):
+            return value[len(root) + 1:]
+        for prefix in ("/private/tmp/", "/tmp/"):
+            if value.startswith(prefix):
+                return "<temporary>/" + value[len(prefix):]
+    return value
+
+
 def partition_rows(start: int, end: int, count: int) -> list[tuple[int, int]]:
     if count < 1 or start < 0 or start >= end:
         raise ValueError(f"invalid partition request: [{start},{end}) into {count}")
@@ -187,6 +203,7 @@ def run_to_rip(base: Any, source: Path, destination: Path, runtime: Path,
 
 
 def write_report(report: dict[str, Any], json_path: Path, md_path: Path) -> None:
+    report = portable(report)
     json_path.parent.mkdir(parents=True, exist_ok=True)
     md_path.parent.mkdir(parents=True, exist_ok=True)
     json_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")

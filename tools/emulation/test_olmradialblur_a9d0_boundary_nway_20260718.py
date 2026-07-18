@@ -57,6 +57,12 @@ def main() -> int:
     assert command[command.index("--output-json") + 1].endswith("slice_07_runner_20260718.json")
     assert command[command.index("--output-md") + 1].endswith("slice_07_runner_20260718.md")
     assert command[command.index("0x180005c95")] == "0x180005c95"
+    portable = runner.portable({
+        "repo": str(ROOT / "aex/example.aex"),
+        "temporary": "/private/tmp/radial/example.aexcp",
+    })
+    assert portable["repo"] == "aex/example.aex"
+    assert portable["temporary"] == "<temporary>/radial/example.aexcp"
     old_result = Path("/tmp/olmradialblur_a9d0_boundary_fork_20260718/full_left_result_20260718.aexcp")
     if old_result.exists():
         assert old_result != Path("/tmp/result.aexcp")

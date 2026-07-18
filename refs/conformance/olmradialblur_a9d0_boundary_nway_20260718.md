@@ -21,14 +21,14 @@
 
 | Index | Rows | Input |
 | ---: | --- | --- |
-| 0 | `[721,856)` | `/private/tmp/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_00_input_20260718.aexcp` |
-| 1 | `[856,991)` | `/private/tmp/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_01_input_20260718.aexcp` |
-| 2 | `[991,1126)` | `/private/tmp/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_02_input_20260718.aexcp` |
-| 3 | `[1126,1261)` | `/private/tmp/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_03_input_20260718.aexcp` |
-| 4 | `[1261,1396)` | `/private/tmp/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_04_input_20260718.aexcp` |
-| 5 | `[1396,1531)` | `/private/tmp/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_05_input_20260718.aexcp` |
-| 6 | `[1531,1666)` | `/private/tmp/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_06_input_20260718.aexcp` |
-| 7 | `[1666,1800)` | `/private/tmp/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_07_input_20260718.aexcp` |
+| 0 | `[721,856)` | `<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_00_input_20260718.aexcp` |
+| 1 | `[856,991)` | `<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_01_input_20260718.aexcp` |
+| 2 | `[991,1126)` | `<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_02_input_20260718.aexcp` |
+| 3 | `[1126,1261)` | `<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_03_input_20260718.aexcp` |
+| 4 | `[1261,1396)` | `<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_04_input_20260718.aexcp` |
+| 5 | `[1396,1531)` | `<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_05_input_20260718.aexcp` |
+| 6 | `[1531,1666)` | `<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_06_input_20260718.aexcp` |
+| 7 | `[1666,1800)` | `<temporary>/olmradialblur_a9d0_boundary_nway_20260718/nway_slice_07_input_20260718.aexcp` |
 
 This report covers checkpoint preparation and optional bounded execution only.
 It makes no Windows, After Effects, or AE-exactness claim.
