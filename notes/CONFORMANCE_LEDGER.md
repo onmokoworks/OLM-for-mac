@@ -1,5 +1,21 @@
 # OLM Conformance Ledger
 
+- 2026-07-18 `OLMColorKey 16bpc case_0005/case_0006 provenance review`
+  (latest override): `case_0005` and `case_0006` qualify as `AE exact` for
+  the repository's declared covered 16bpc `OLMColorKey` slice under the
+  stricter provenance rule. The older
+  `ae_pixel_edgethin_residual.json` zero-diff rows are not, by themselves, a
+  strict-provenance promotion artifact; taken alone, they only invalidate the
+  stale residual claim. The promotion is justified by the separate committed
+  request/reference/result/hash chain in
+  `refs/conformance/bitdepth_16bpc_exact_manifest_20260709.{md,json}`, which
+  binds both cases as `result_status = "AE exact"` against Windows AE
+  Software with matching Mac result, handoff `expected/`, and canonical
+  reference hashes. This corrects any stale reading that treated those two
+  later zero-diff records as non-promoted or merely provisional. Do not
+  broaden this to other bit depths or to plug-in-complete status. Evidence:
+  `refs/conformance/olmcolorkey_case0005_case0006_provenance_review_20260718.md`.
+
 - 2026-07-18 `OLMToonDilate 32bpc package provenance` (latest override): no
   correctness status is promoted. The isolated Mac package now binds the
   candidate SHA-256 present at packaging time instead of a stale fixed hash;
