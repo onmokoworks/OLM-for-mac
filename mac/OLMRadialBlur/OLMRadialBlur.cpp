@@ -939,7 +939,8 @@ struct RadialZoomPixelTraits<PF_PixelFloat> {
 
 #if defined(OLM_RADIALBLUR_TEST_SEAM)
 struct RadialBlurTestPolarCapture {
-	float *rgba = nullptr;
+	float *pre_blur_rgba = nullptr;
+	float *post_blur_rgba = nullptr;
 	size_t capacity_floats = 0;
 	size_t written_floats = 0;
 	A_long width = 0;
@@ -1021,6 +1022,22 @@ static PF_Err RenderZoomTyped(
 			polar_valid[(size_t)ai * radius_count + ri] = PolarValidSample(sx, sy, w, h, info.repeat_border != FALSE) ? 1.0f : 0.0f;
 		}
 	}
+
+#if defined(OLM_RADIALBLUR_TEST_SEAM)
+	if (test_polar_capture) {
+		test_polar_capture->width = radius_count;
+		test_polar_capture->height = angular_count;
+		test_polar_capture->written_floats = polar.rgba.size();
+		if (!test_polar_capture->pre_blur_rgba || !test_polar_capture->post_blur_rgba ||
+		    test_polar_capture->capacity_floats < polar.rgba.size()) {
+			return PF_Err_BAD_CALLBACK_PARAM;
+		}
+		std::memcpy(
+			test_polar_capture->pre_blur_rgba,
+			polar.rgba.data(),
+			polar.rgba.size() * sizeof(float));
+	}
+#endif
 
 	const std::vector<float> weights = ZoomGaussianWeights(ZoomEffectiveLength(info));
 	const bool use_fft_convolution = weights.size() > 512 && !debug.force_scalar_producer;
@@ -1106,15 +1123,11 @@ static PF_Err RenderZoomTyped(
 
 #if defined(OLM_RADIALBLUR_TEST_SEAM)
 	if (test_polar_capture) {
-		test_polar_capture->width = radius_count;
-		test_polar_capture->height = angular_count;
-		test_polar_capture->written_floats = blurred.rgba.size();
-		if (!test_polar_capture->rgba ||
-		    test_polar_capture->capacity_floats < blurred.rgba.size()) {
+		if (test_polar_capture->written_floats != blurred.rgba.size()) {
 			return PF_Err_BAD_CALLBACK_PARAM;
 		}
 		std::memcpy(
-			test_polar_capture->rgba,
+			test_polar_capture->post_blur_rgba,
 			blurred.rgba.data(),
 			blurred.rgba.size() * sizeof(float));
 	}
@@ -1530,22 +1543,24 @@ extern "C" PF_Err OLMRadialBlurTestRenderWorld(
 	return RenderWorld(input, output, *info, bitdepth);
 }
 
-extern "C" PF_Err OLMRadialBlurTestRenderFloatAndCaptureNormalizedPolar(
+extern "C" PF_Err OLMRadialBlurTestRenderFloatAndCapturePolarPlanes(
 	PF_EffectWorld *input,
 	PF_EffectWorld *output,
 	const OLMRadialBlurInfo *info,
-	float *polar_rgba,
+	float *pre_blur_polar_rgba,
+	float *post_blur_polar_rgba,
 	size_t capacity_floats,
 	size_t *written_floats,
 	A_long *polar_width,
 	A_long *polar_height)
 {
-	if (!input || !output || !info || !polar_rgba || !written_floats ||
+	if (!input || !output || !info || !pre_blur_polar_rgba || !post_blur_polar_rgba || !written_floats ||
 	    !polar_width || !polar_height) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 	RadialBlurTestPolarCapture capture;
-	capture.rgba = polar_rgba;
+	capture.pre_blur_rgba = pre_blur_polar_rgba;
+	capture.post_blur_rgba = post_blur_polar_rgba;
 	capture.capacity_floats = capacity_floats;
 	const PF_Err err = RenderZoomTyped<PF_PixelFloat>(input, output, *info, &capture);
 	*written_floats = capture.written_floats;

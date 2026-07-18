@@ -1,16 +1,20 @@
 # OLM Conformance Ledger
 
-- 2026-07-18 `OLMRadialBlur PF32 normalized-polar boundary` (latest
+- 2026-07-18 `OLMRadialBlur PF32 pre/post-blur boundary` (latest
   override): no correctness status is promoted. A PF32-only test seam captures
-  the production `blurred.rgba` plane immediately before Cartesian resampling.
-  Its geometry and layout match the actual-AEX `work+0x38` plane
+  both production `polar.rgba` and `blurred.rgba` from one run. Their geometry
+  and layout match the actual-AEX `work+0x38` plane
   (`1104x1800`, angle-major/radius-minor RGBA float, `31,795,200` bytes), but
-  the planes differ in `13,953,051` bytes. The first difference is
+  the pre-blur planes already differ in `327,417` bytes. Their first difference
+  is `(angle=0, radius=262, R)`, a one-ULP split (`0x3e78f8f9` versus
+  `0x3e78f8fa`). The normalized planes differ in `13,953,051` bytes; their
+  first difference is
   `(angle=0, radius=0, G)`: production `0x273c0000`, AEX `0x00000000`.
-  Therefore the PF32 Zoom residual exists before the final inverse sampler and
-  writeback. The next allowed action is a test-only pre-blur `polar.rgba`
-  capture to separate Cartesian-to-polar sampling from convolution and
-  normalization; do not tune the final sampler from this result. Evidence:
+  Therefore the PF32 Zoom residual exists before both the worker and final
+  inverse sampler. Because worker inputs already differ, the larger normalized
+  residual does not yet prove a worker bug. The next allowed action is to feed
+  the actual-AEX pre-blur oracle into the Mac worker and compare its normalized
+  output with the AEX normalized plane; do not tune the final sampler. Evidence:
   `refs/conformance/olmradialblur_typed_deep_render_20260718.md`.
 
 - 2026-07-18 `OLMColorKey 16bpc case_0005/case_0006 provenance review`
