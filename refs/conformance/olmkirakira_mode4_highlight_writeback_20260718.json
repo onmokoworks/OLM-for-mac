@@ -1,0 +1,548 @@
+{
+  "actual_aex": {
+    "execution": {
+      "FACT": [
+        "The probe requests Blur Mode 3 at the FUN_181150790 helper boundary.",
+        "The target hook is installed at FUN_181272ec0, the recovered GaussianBlur wrapper target.",
+        "FUN_181163706 loads TLS index 0 from GS:[0x58], and FUN_1811637D1 reads the selected runtime object's generation at +0x8.",
+        "The observed OpenCV error callback uses the Windows x64 RCX/RDX/R8/R9 register ABI; its error path returns to an intentional int3 and is not detoured.",
+        "The AEX's own MSVC local-static guard initialized the OpenCV runtime singleton and its per-thread TLS vector before the downstream OpenCV allocation failure."
+      ],
+      "INFERENCE": [
+        "A Mat header is decoded from the wrapper argument only when its OpenCV magic/shape checks pass.",
+        "A sidecar comparison is optional and is not evidence that the AEX used that exact OpenCV build unless the target hook is captured.",
+        "The probe uses MSVC's uninitialized TLS epoch (-1) and leaves singleton construction, guard epochs, and per-thread vector creation to the AEX.",
+        "The singleton restoration is semantically active, but the probe still does not reach the Gaussian boundary; no OpenCV call arguments are claimed."
+      ],
+      "aex": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+      "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+      "aligned_allocations_live": {},
+      "entry": {
+        "address": "0x181150790",
+        "name": "FUN_181150790"
+      },
+      "error_callback_contract": {
+        "abi": "windows-x64",
+        "caller_return_site": "0x18115ea8b",
+        "name": "FUN_181162610",
+        "observed_error_code": "0xfffffffc",
+        "post_call_trap": "int3",
+        "registers": [
+          "RCX",
+          "RDX",
+          "R8",
+          "R9"
+        ]
+      },
+      "fault_boundary": {
+        "generation_check": {
+          "generation_at_plus8": 1,
+          "object": "0x20000920",
+          "qword_at_plus0": "0x181491c68",
+          "qword_at_plus8": "0x1",
+          "rip": "0x1811637d1"
+        },
+        "tls_container_accessor": {
+          "global_container": "0x200005e0",
+          "guard_218": 2147483651,
+          "rip": "0x181163c80",
+          "tls_epoch": 2147483661
+        },
+        "tls_data_accessor": {
+          "global_data": "0x20000670",
+          "guard_1f8": 2147483649,
+          "guard_208": 2147483650,
+          "rax_return": null,
+          "rip": "0x181163b40",
+          "tls_epoch": 2147483661
+        },
+        "tls_data_create": {
+          "r8": "0x20000bf0",
+          "rcx": "0x200005e0",
+          "rdx": "0x0",
+          "rip": "0x181165220"
+        },
+        "tls_lookup": {
+          "gs_0x58": "0x40000000",
+          "rip": "0x181163706",
+          "selected_generation_at_plus4": 2147483661,
+          "selected_object": "0x40000100",
+          "tls_index": 0
+        },
+        "tls_selected": {
+          "generation_at_plus4": 2147483661,
+          "global_generation": 2147483656,
+          "rip": "0x18116371e",
+          "selected_object": "0x40000100"
+        },
+        "vector_compare": {
+          "requested_entry": "0x20000920",
+          "requested_generation": 1,
+          "rip": "0x1811637e6",
+          "vector_begin": "0x20000680",
+          "vector_capacity": "0x20000780",
+          "vector_end": "0x20000698",
+          "vector_end_or_count": "0x3",
+          "vector_field_plus50": 3,
+          "vector_object": "0x200005e0"
+        }
+      },
+      "helper_result": {
+        "instructions": 217272,
+        "xmm0_f32": 5.0
+      },
+      "input": {
+        "blur_mode": 3,
+        "height": 7,
+        "length": 5,
+        "sigma": 0.0,
+        "type": "CV_32FC1",
+        "width": 9
+      },
+      "post_sample": {
+        "center_f32": 0.48826363682746887,
+        "center_xy": [
+          4,
+          3
+        ],
+        "first_row_f32": [
+          0.1711871325969696,
+          0.23555484414100647,
+          0.23548518121242523,
+          0.23693668842315674,
+          0.22285473346710205,
+          0.2033049464225769,
+          0.17775893211364746,
+          0.14732816815376282,
+          0.13660812377929688
+        ]
+      },
+      "runtime_singleton": {
+        "generation": "0x1",
+        "object": "0x20000920",
+        "per_thread_data": "0x20000960",
+        "status": "initialized_before_downstream_fault",
+        "tls_container": "0x200005e0",
+        "tls_vector_begin": "0x20000680",
+        "tls_vector_end": "0x20000698",
+        "vtable": "0x181491c68"
+      },
+      "schema": "olmkirakira-mode3-actual-aex-probe/1",
+      "status": "completed_without_target_hit",
+      "target": {
+        "address": "0x181272ec0",
+        "name": "FUN_181272ec0"
+      },
+      "target_capture": {
+        "hits": []
+      },
+      "tls_scaffold": {
+        "aligned_allocator": "probe-local host_alloc with requested power-of-two alignment",
+        "fls_slot": 0,
+        "gs_0x58": "0x50000058",
+        "mode": "probe-local-windows-tls-fls",
+        "opencv_cpu_dispatch_table": "0x40000200",
+        "opencv_cpu_dispatch_table_global": "0x181843990",
+        "tls_generation_dword": -1,
+        "tls_slot": "0x40000100",
+        "tls_table": "0x40000000"
+      }
+    },
+    "helper": "0x181150790",
+    "tail": "0x181150f3d",
+    "tail_hits": [
+      {
+        "r12_mat": {
+          "channels": 1,
+          "cols": 9,
+          "data": "0x20000400",
+          "depth_code": 5,
+          "dims": 2,
+          "flags": "0x42ff4005",
+          "header": "0x20000500",
+          "rows": 7,
+          "sample_first_rows": [
+            [
+              0.13615505397319794,
+              0.1557331383228302,
+              0.17628970742225647,
+              0.19457820057868958,
+              0.20804236829280853,
+              0.21069081127643585,
+              0.19972681999206543,
+              0.183513343334198
+            ],
+            [
+              0.38727712631225586,
+              0.43736323714256287,
+              0.479356586933136,
+              0.5043423175811768,
+              0.5098854303359985,
+              0.5005619525909424,
+              0.46584877371788025,
+              0.43113136291503906
+            ]
+          ],
+          "step_bytes": 36,
+          "step_pointer": "0x20000560",
+          "values_f32": [
+            [
+              0.13615505397319794,
+              0.1557331383228302,
+              0.17628970742225647,
+              0.19457820057868958,
+              0.20804236829280853,
+              0.21069081127643585,
+              0.19972681999206543,
+              0.183513343334198,
+              0.19304078817367554
+            ],
+            [
+              0.38727712631225586,
+              0.43736323714256287,
+              0.479356586933136,
+              0.5043423175811768,
+              0.5098854303359985,
+              0.5005619525909424,
+              0.46584877371788025,
+              0.43113136291503906,
+              0.43878939747810364
+            ],
+            [
+              0.20869584381580353,
+              0.23874178528785706,
+              0.26428666710853577,
+              0.2824033498764038,
+              0.2931850850582123,
+              0.2857576310634613,
+              0.26615405082702637,
+              0.257822185754776,
+              0.22821307182312012
+            ],
+            [
+              0.38881802558898926,
+              0.4403357207775116,
+              0.4768131375312805,
+              0.49619820713996887,
+              0.4934181571006775,
+              0.46981000900268555,
+              0.42577409744262695,
+              0.46942174434661865,
+              0.3823792338371277
+            ],
+            [
+              0.2352830022573471,
+              0.27027618885040283,
+              0.2977089285850525,
+              0.31637656688690186,
+              0.3260843753814697,
+              0.3186796307563782,
+              0.31007665395736694,
+              0.2857934534549713,
+              0.24624602496623993
+            ],
+            [
+              0.37764763832092285,
+              0.41682732105255127,
+              0.44805946946144104,
+              0.45858556032180786,
+              0.4454885423183441,
+              0.4029192328453064,
+              0.46073928475379944,
+              0.3995729982852936,
+              0.32450971007347107
+            ],
+            [
+              0.2621874213218689,
+              0.29453200101852417,
+              0.3255116939544678,
+              0.34599781036376953,
+              0.35340529680252075,
+              0.3511819541454315,
+              0.337121844291687,
+              0.3110275864601135,
+              0.2688635289669037
+            ]
+          ]
+        },
+        "r14_mat": {
+          "channels": 1,
+          "cols": 9,
+          "data": "0x20000280",
+          "depth_code": 5,
+          "dims": 2,
+          "flags": "0x42ff4005",
+          "header": "0x20000380",
+          "rows": 7,
+          "sample_first_rows": [
+            [
+              0.01148897036910057,
+              0.05549173057079315,
+              0.10627298057079315,
+              0.17049632966518402,
+              0.2457490861415863,
+              0.34558823704719543,
+              0.4540441632270813,
+              0.48259422183036804
+            ],
+            [
+              0.34558823704719543,
+              0.45220592617988586,
+              0.5441176295280457,
+              0.6525735855102539,
+              0.7610294222831726,
+              0.8069853186607361,
+              0.8363969922065735,
+              0.6802045106887817
+            ]
+          ],
+          "step_bytes": 36,
+          "step_pointer": "0x200003e0",
+          "values_f32": [
+            [
+              0.01148897036910057,
+              0.05549173057079315,
+              0.10627298057079315,
+              0.17049632966518402,
+              0.2457490861415863,
+              0.34558823704719543,
+              0.4540441632270813,
+              0.48259422183036804,
+              0.23253676295280457
+            ],
+            [
+              0.34558823704719543,
+              0.45220592617988586,
+              0.5441176295280457,
+              0.6525735855102539,
+              0.7610294222831726,
+              0.8069853186607361,
+              0.8363969922065735,
+              0.6802045106887817,
+              0.1292509287595749
+            ],
+            [
+              0.24448531866073608,
+              0.27389708161354065,
+              0.2867647111415863,
+              0.3014705777168274,
+              0.31617647409439087,
+              0.39338237047195435,
+              0.4696691334247589,
+              0.3750000298023224,
+              0.3345588445663452
+            ],
+            [
+              0.39338237047195435,
+              0.4852941334247589,
+              0.5937500596046448,
+              0.7022059559822083,
+              0.8088235855102539,
+              0.8694852590560913,
+              0.8568474650382996,
+              0.11764706671237946,
+              0.21725644171237946
+            ],
+            [
+              0.2991728186607361,
+              0.3216911852359772,
+              0.33639705181121826,
+              0.35110294818878174,
+              0.3658088445663452,
+              0.4264706075191498,
+              0.4159007668495178,
+              0.4227941334247589,
+              0.4375000596046448
+            ],
+            [
+              0.3779871165752411,
+              0.5330882668495178,
+              0.6415441036224365,
+              0.7500000596046448,
+              0.8419117331504822,
+              0.9191175699234009,
+              0.16819852590560913,
+              0.1672794222831726,
+              0.27389705181121826
+            ],
+            [
+              0.29871323704719543,
+              0.3694852888584137,
+              0.3841911852359772,
+              0.39889705181121826,
+              0.4283088445663452,
+              0.4434168040752411,
+              0.45197612047195435,
+              0.4495059847831726,
+              0.45582491159439087
+            ]
+          ]
+        },
+        "r15d": 5,
+        "rip": "0x181150f3d",
+        "xmm9_f32": 5.0
+      }
+    ],
+    "writeback": {
+      "changed": true,
+      "destination": {
+        "channels": 1,
+        "cols": 9,
+        "data": "0x20000100",
+        "depth_code": 5,
+        "dims": 2,
+        "flags": "0x42ff4005",
+        "header": "0x20000570",
+        "rows": 7,
+        "sample_first_rows": [
+          [
+            0.1711871325969696,
+            0.23555484414100647,
+            0.23548518121242523,
+            0.23693668842315674,
+            0.22285473346710205,
+            0.2033049464225769,
+            0.17775893211364746,
+            0.14732816815376282
+          ],
+          [
+            0.25571689009666443,
+            0.3657076358795166,
+            0.42391109466552734,
+            0.47132211923599243,
+            0.49505746364593506,
+            0.49346116185188293,
+            0.4395276606082916,
+            0.38367390632629395
+          ]
+        ],
+        "step_bytes": 36,
+        "step_pointer": "0x200005d0",
+        "values_f32": [
+          [
+            0.1711871325969696,
+            0.23555484414100647,
+            0.23548518121242523,
+            0.23693668842315674,
+            0.22285473346710205,
+            0.2033049464225769,
+            0.17775893211364746,
+            0.14732816815376282,
+            0.13660812377929688
+          ],
+          [
+            0.25571689009666443,
+            0.3657076358795166,
+            0.42391109466552734,
+            0.47132211923599243,
+            0.49505746364593506,
+            0.49346116185188293,
+            0.4395276606082916,
+            0.38367390632629395,
+            0.3678824007511139
+          ],
+          [
+            0.24663665890693665,
+            0.29714539647102356,
+            0.30728480219841003,
+            0.30684328079223633,
+            0.3044578731060028,
+            0.29340609908103943,
+            0.2938024401664734,
+            0.2974965274333954,
+            0.29682493209838867
+          ],
+          [
+            0.316243052482605,
+            0.38574355840682983,
+            0.43655601143836975,
+            0.47311750054359436,
+            0.48826363682746887,
+            0.464780330657959,
+            0.40838295221328735,
+            0.42111700773239136,
+            0.33852070569992065
+          ],
+          [
+            0.29541200399398804,
+            0.3178621530532837,
+            0.33165353536605835,
+            0.33458125591278076,
+            0.32955002784729004,
+            0.3230990171432495,
+            0.3240453600883484,
+            0.3244016170501709,
+            0.27976304292678833
+          ],
+          [
+            0.3400713801383972,
+            0.38347771763801575,
+            0.4228402376174927,
+            0.4431953430175781,
+            0.43744736909866333,
+            0.40436282753944397,
+            0.4348369538784027,
+            0.3662719428539276,
+            0.26254576444625854
+          ],
+          [
+            0.16892097890377045,
+            0.21656569838523865,
+            0.25780704617500305,
+            0.30416592955589294,
+            0.34189021587371826,
+            0.35232263803482056,
+            0.3459068834781647,
+            0.3195992410182953,
+            0.22363512217998505
+          ]
+        ]
+      }
+    }
+  },
+  "ae_exact_claim": false,
+  "answer": {
+    "actual_aex": "The Mac-only Unicorn witness reaches the shared tail after the Mode4 recurrence and leaves a changed CV_32FC1 destination buffer; this bounds scalar-buffer output writeback.",
+    "limit": "The actual-AEX witness does not execute the full AE-host caller, color parameter binding, or final PF pixel store, so AE-exact output is not claimed.",
+    "static": "The caller normalizes RGB by accumulated alpha and combines five layers with source-over alpha union; Mode4 also squares the scalar gain twice after its three blur calls."
+  },
+  "binary": {
+    "path": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+    "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+  },
+  "checks": {
+    "actual_aex_mode4_output_writeback": true,
+    "actual_aex_mode4_tail": true,
+    "actual_mode_selector_overridden_only_in_harness": true,
+    "no_production_edit": true,
+    "static_asm": true,
+    "static_decomp": true
+  },
+  "date": "2026-07-18",
+  "kind": "olmkirakira_mode4_highlight_writeback_normalization",
+  "limits": [
+    "Mac-only Unicorn execution of the checked-in Windows PE; no Windows or AE-host claim.",
+    "Mode selector 4 is changed only in the harness; input reports blur_mode 3 as requested by the base probe.",
+    "Static caller normalization/combination is not an actual full-caller witness and does not prove final PF pixel encoding.",
+    "No production source or AEX bytes were patched."
+  ],
+  "production_edit": false,
+  "question": "What final Mode4 Highlight normalization/combination or scalar output writeback is bounded across decomp, asm, and actual AEX?",
+  "schema": 1,
+  "static": {
+    "asm": {
+      "mode4_gain_writeback": true,
+      "mode4_three_blur_calls": true,
+      "normalization_function": true,
+      "shared_tail": true
+    },
+    "decomp": {
+      "alpha_union": true,
+      "five_layer_combination": true,
+      "mode4_gain_square_then_square": true,
+      "mode4_three_blur_calls": true,
+      "rgb_normalization": true
+    }
+  },
+  "status": "PASS_MODE4_BOUNDED_WRITEBACK_NORMALIZATION"
+}
