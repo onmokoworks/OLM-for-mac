@@ -1,5 +1,21 @@
 # OLM Conformance Ledger
 
+- 2026-07-25 `AEXCompat deep actual-AEX execution` (latest override): no Mac
+  correctness status is promoted. AEXCompat commits `ae5cbcc`, `59e002c`, and
+  `3adba76` isolate large PF Handles, emulate a deterministic positive OpenMP
+  thread count, transport slot-qualified ARGB8 colors, and implement
+  PF ColorParamSuite v1. Full-size RadialBlur random case 01 now passes the
+  former `0x2d52`, `0x9ff9`, and `0x5bac` host stops and reaches sampler RVA
+  `0x9e35`; its approximately 9.87-million x coordinate is classified as an
+  unresolved render-context/ABI witness. Smoother2
+  `legacy_case_0008_current_aex` now completes the unchanged AEX Smart Render
+  with all 15 editable parameters applied (`render_error=0`), but remains
+  non-exact (`max_diff=255`, 22,711 differing pixels). Next allowed actions:
+  capture RadialBlur sampler-entry/context fields on both runtimes and localize
+  Smoother2's first differing stage. Forbidden: PNG-only tuning or any
+  `AE exact`/`CLI exact` promotion from these runs. Evidence:
+  `refs/conformance/aexcompat_olm_execution_pilot_20260725.md`.
+
 - 2026-07-25 `AEXCompat OLM host-suite closeout` (latest override): no Mac
   correctness status is promoted. Integrated AEXCompat commit `1fe322b`
   adds AEGP Memory Suite v1, PF World Suite v2, PF PointParamSuite v1,

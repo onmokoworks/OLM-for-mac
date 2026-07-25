@@ -218,6 +218,62 @@ raise SystemExit(main())
             ["Center@2=720,805", "Strength@4=917", "Strength@10=1222"],
         )
 
+    def test_case_parameters_converts_rgba_float_to_slot_qualified_argb8(self) -> None:
+        case = {
+            "id": "case_color",
+            "effects": [
+                {
+                    "params": [
+                        {
+                            "path": ["OLM Smoother2", "Color Key"],
+                            "name": "Color Key",
+                            "property_index": 2,
+                            "value": [1, 0, 0.47058817744255, 1],
+                        }
+                    ]
+                }
+            ],
+        }
+        surface = [{"slot": 2, "name": "Color Key", "param_type": 5}]
+
+        values = self.module.case_parameters(case, surface)
+        self.assertEqual(values, [("Color Key", 2, (255, 255, 0, 120))])
+        self.assertEqual(
+            self.module.format_parameter_assignment(*values[0]),
+            "Color Key@2=255,255,0,120",
+        )
+
+    def test_color_conversion_rejects_non_normalized_values(self) -> None:
+        with self.assertRaisesRegex(ValueError, "outside 0..1"):
+            self.module.rgba_float_to_argb8([1, 0, 1.01, 1])
+
+    def test_missing_parameter_error_keeps_slot_name_and_type(self) -> None:
+        case = {
+            "id": "case_missing",
+            "effects": [
+                {
+                    "params": [
+                        {
+                            "path": ["OLM Blur", "Repeat"],
+                            "name": "Repeat",
+                            "property_index": 2,
+                            "value": 1,
+                        }
+                    ]
+                }
+            ],
+        }
+        surface = [
+            {"slot": 1, "name": "Blur Amount", "param_type": 1},
+            {"slot": 2, "name": "Repeat", "param_type": 4},
+        ]
+
+        with self.assertRaisesRegex(
+            ValueError,
+            r"case_missing: manifest is missing AEX parameters: \['1:Blur Amount:slider'\]",
+        ):
+            self.module.case_parameters(case, surface)
+
     def test_parameter_format_round_trips_without_six_digit_rounding(self) -> None:
         value = 0.12345678901234566
 

@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import subprocess
 import sys
 import tempfile
@@ -16,9 +17,18 @@ from typing import Any
 
 from PIL import Image, ImageChops
 
-SUPPORTED_PARAMETER_TYPES = {1, 2, 3, 4, 6, 7, 10}
-
-
+SUPPORTED_PARAMETER_TYPES = {1, 2, 3, 4, 5, 6, 7, 10}
+REPORTED_PARAMETER_TYPES = SUPPORTED_PARAMETER_TYPES
+PARAMETER_TYPE_NAMES = {
+    1: "slider",
+    2: "fixed_slider",
+    3: "angle",
+    4: "checkbox",
+    5: "color",
+    6: "point",
+    7: "popup",
+    10: "float_slider",
+}
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--request", type=Path, required=True, help="Reference request ZIP or extracted directory.")
@@ -76,7 +86,9 @@ def format_parameter_value(value: float) -> str:
 
 
 def format_parameter_assignment(
-    name: str, slot: int | None, value: float | tuple[float, float]
+    name: str,
+    slot: int | None,
+    value: float | tuple[float, float] | tuple[int, int, int, int],
 ) -> str:
     if isinstance(value, tuple):
         encoded = ",".join(format_parameter_value(component) for component in value)
@@ -84,6 +96,31 @@ def format_parameter_assignment(
         encoded = format_parameter_value(value)
     selector = f"{name}@{slot}" if slot is not None else name
     return f"{selector}={encoded}"
+
+
+def describe_parameter_type(param_type: int | None) -> str:
+    if param_type is None:
+        return "unknown"
+    return PARAMETER_TYPE_NAMES.get(param_type, f"type_{param_type}")
+
+
+def rgba_float_to_argb8(value: Any) -> tuple[int, int, int, int]:
+    if not (
+        isinstance(value, (list, tuple))
+        and len(value) == 4
+        and all(
+            isinstance(component, (int, float)) and not isinstance(component, bool)
+            for component in value
+        )
+    ):
+        raise ValueError(f"color value must be four normalized RGBA components: {value!r}")
+    rgba = []
+    for component in value:
+        if not 0.0 <= float(component) <= 1.0:
+            raise ValueError(f"color component is outside 0..1: {component!r}")
+        rgba.append(min(255, math.floor(float(component) * 255.0 + 0.5)))
+    red, green, blue, alpha = rgba
+    return alpha, red, green, blue
 
 
 def find_manifest(root: Path) -> Path:
@@ -126,21 +163,43 @@ def setup_parameters(
 
 def case_parameters(
     case: dict[str, Any], accepted_parameters: set[str] | list[dict[str, Any]]
-) -> list[tuple[str, int | None, float | tuple[float, float]]]:
+) -> list[
+    tuple[
+        str,
+        int | None,
+        float | tuple[float, float] | tuple[int, int, int, int],
+    ]
+]:
     effects = case.get("effects", [])
     if len(effects) != 1:
         raise ValueError(f"{case.get('id')}: expected one effect, found {len(effects)}")
     legacy_names = accepted_parameters if isinstance(accepted_parameters, set) else None
-    surface_by_slot = (
+    all_surface_by_slot = (
         {}
         if legacy_names is not None
         else {
             row["slot"]: row
             for row in accepted_parameters
+            if isinstance(row.get("slot"), int)
+            and row.get("param_type") in REPORTED_PARAMETER_TYPES
+        }
+    )
+    editable_surface_by_slot = (
+        {}
+        if legacy_names is not None
+        else {
+            slot: row
+            for slot, row in all_surface_by_slot.items()
             if row.get("param_type") in SUPPORTED_PARAMETER_TYPES
         }
     )
-    result: list[tuple[str, int | None, float | tuple[float, float]]] = []
+    result: list[
+        tuple[
+            str,
+            int | None,
+            float | tuple[float, float] | tuple[int, int, int, int],
+        ]
+    ] = []
     for param in effects[0].get("params", []):
         name = param.get("name")
         slot: int | None = None
@@ -152,15 +211,20 @@ def case_parameters(
             if isinstance(path, list) and len(path) > 2:
                 continue
             property_index = param.get("property_index")
-            surface = surface_by_slot.get(property_index)
+            surface = all_surface_by_slot.get(property_index)
             if surface is None:
+                continue
+            param_type = surface.get("param_type")
+            if param_type not in SUPPORTED_PARAMETER_TYPES:
                 continue
             slot = property_index
             name = surface["name"]
         value = param.get("value")
         if isinstance(value, bool):
             value = int(value)
-        if isinstance(value, (list, tuple)) and len(value) == 2 and all(
+        if legacy_names is None and param_type == 5:
+            result.append((name, slot, rgba_float_to_argb8(value)))
+        elif isinstance(value, (list, tuple)) and len(value) == 2 and all(
             isinstance(component, (int, float)) and not isinstance(component, bool)
             for component in value
         ):
@@ -172,10 +236,18 @@ def case_parameters(
     missing = (
         legacy_names.difference(name for name, _, _ in result)
         if legacy_names is not None
-        else set(surface_by_slot).difference(slot for _, slot, _ in result)
+        else set(editable_surface_by_slot).difference(slot for _, slot, _ in result)
     )
     if missing:
-        raise ValueError(f"{case.get('id')}: manifest is missing AEX parameters: {sorted(missing)}")
+        missing_details = (
+            sorted(missing)
+            if legacy_names is not None
+            else [
+                f"{slot}:{editable_surface_by_slot[slot]['name']}:{describe_parameter_type(editable_surface_by_slot[slot].get('param_type'))}"
+                for slot in sorted(missing)
+            ]
+        )
+        raise ValueError(f"{case.get('id')}: manifest is missing AEX parameters: {missing_details}")
     return result
 
 

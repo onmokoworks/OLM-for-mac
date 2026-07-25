@@ -8,10 +8,17 @@ not promote any Mac plug-in lane to `AE exact`.
 
 ## Provenance
 
-- AEXCompat integrated commit: `1fe322b`
+- AEXCompat integrated commits: `1fe322b`, `ae5cbcc`, `59e002c`,
+  and `3adba76`
   (`codex/olm-suite-followup`)
 - `aex-guest-worker` SHA-256:
   `4d0018c95cb26dc32261c56969566db7deeace9b6c39c6daaa3f9773adbc214f`
+- post-expansion `aex-guest-worker` SHA-256:
+  `bc4cb0d6aa38b67a3e6d0f7df1c252724f8ac720a15b346b48e291940338c6db`
+- OLMRadialBlur 2025 AEX SHA-256:
+  `ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb`
+- OLMSmoother2 2025 AEX SHA-256:
+  `7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7`
 - Windows AEX: OLMBlur 2025
 - Windows AEX SHA-256:
   `f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b`
@@ -75,6 +82,11 @@ The following guest host boundaries were added and independently reviewed:
 - point default materialization from percentage defaults to source coordinates
 - `Name@slot=value` parameter selection for duplicate AE-visible names
 - scalar, angle, and two-dimensional point CLI assignments
+- PF Handle allocations in a separate 64-bit address range, including the
+  observed 333,294,848-byte RadialBlur request
+- deterministic `vcomp140.dll!omp_get_max_threads` emulation returning one
+- strict slot-qualified ARGB8 color transport and PF ColorParamSuite v1 in
+  Unicorn and the native carrier
 
 The integrated worker completed local 32x32 Smart Render calls for the
 unchanged 2025 `OLMSmoother2.aex` and `OLMRadialBlur.aex` with
@@ -85,9 +97,20 @@ conformance.
 
 A non-default RadialBlur random reference case now receives all direct effect
 parameters by property slot, including the duplicate `Strength` and `Offset`
-names and the `Center` point. It advances into the real kernel and currently
-stops at RVA `0x2d52` on an unmapped write. This is the next AEXCompat boundary,
-not a PointParam or manifest-routing failure.
+names and the `Center` point. The separate PF Handle arena closed the null-base
+write at RVA `0x2d52` and the later allocation stop at `0x9ff9`.
+`omp_get_max_threads=1` then closed the divide-by-zero at RVA `0x5bac`.
+The same full-size case now reaches the float4 bilinear sampler at RVA
+`0x9e35`, where a generated x coordinate of about 9,874,418 causes an unmapped
+read. Handle allocation failures are empty. Static analysis classifies this as
+an unresolved render-context/ABI witness, not a manifest value or a proven
+RadialBlur algorithm defect.
+
+The current-AEX Smoother2 `legacy_case_0008_current_aex` reference now receives
+all 15 editable parameters, including six RGBA color properties converted to
+slot-qualified ARGB8. The unchanged AEX completes full-size Smart Render with
+`render_error=0`. It is not exact: `max_diff=255` with 22,711 differing pixels.
+This is a usable local actual-AEX differential, not an `AE exact` promotion.
 
 ## Plug-in setup sweep
 
@@ -119,7 +142,10 @@ Suite blocker is closed.
    at least one Windows Software reference calibration with `max_diff=0`.
 4. Keep property-slot addressing for manifests with duplicate visible names;
    bare ambiguous names fail closed.
-5. Investigate RadialBlur RVA `0x2d52` as the next host/emulation boundary.
-6. AEXCompat's PNG reference runner is currently ARGB8-only. It cannot close
+5. Capture the RadialBlur RVA `0x9d80` sampler-entry values and caller
+   render-context fields on AEXCompat and Windows before changing the port.
+6. Use the now-completing Smoother2 current-AEX case to localize the first
+   differing stage; do not tune the Mac output from the final PNG alone.
+7. AEXCompat's PNG reference runner is currently ARGB8-only. It cannot close
    16bpc or 32bpc lanes
    until PF_Pixel16 and PF_PixelFloat worlds and suitable file I/O are added.
