@@ -15,6 +15,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+import numpy as np
 from PIL import Image, ImageChops
 
 SUPPORTED_PARAMETER_TYPES = {1, 2, 3, 4, 5, 6, 7, 10}
@@ -138,6 +139,103 @@ def resolve_case_image(root: Path, directory: str, filename: str) -> Path:
     if flat.is_file():
         return flat
     return nested
+
+
+def resolve_manifest_file(root: Path, filename: str) -> Path:
+    normalized = Path(filename.replace("\\", "/"))
+    if normalized.is_absolute() or ".." in normalized.parts:
+        raise ValueError(f"unsafe manifest file path: {filename!r}")
+    candidates = [
+        root / normalized,
+        root / filename,
+        root / normalized.name,
+        root / "input" / normalized.name,
+        root / f"input\\{normalized.name}",
+    ]
+    root_resolved = root.resolve()
+    matches = [
+        path
+        for path in candidates
+        if path.is_file() and path.resolve().is_relative_to(root_resolved)
+    ]
+    unique = list(dict.fromkeys(path.resolve() for path in matches))
+    if len(unique) == 1:
+        return unique[0]
+    if len(unique) > 1:
+        hashes = {sha256(path) for path in unique}
+        if len(hashes) == 1:
+            return unique[0]
+        raise ValueError(f"ambiguous manifest file {filename!r}: {unique}")
+    return candidates[0]
+
+
+def source_input_for_case(
+    manifest_root: Path,
+    manifest: dict[str, Any],
+    case: dict[str, Any],
+) -> tuple[Path, dict[str, Any]] | None:
+    input_id = case.get("input_id")
+    if not isinstance(input_id, str):
+        return None
+    matches = [
+        row
+        for row in manifest.get("source_inputs", [])
+        if isinstance(row, dict) and row.get("id") == input_id
+    ]
+    if len(matches) != 1:
+        raise ValueError(
+            f"{case.get('id')}: expected one source_inputs entry for {input_id!r}, "
+            f"found {len(matches)}"
+        )
+    source = matches[0]
+    filename = source.get("file")
+    if not isinstance(filename, str):
+        raise ValueError(f"{case.get('id')}: source input {input_id!r} has no file")
+    path = resolve_manifest_file(manifest_root, filename)
+    if not path.is_file():
+        raise FileNotFoundError(f"{case.get('id')}: source input is missing: {path}")
+    expected_hash = source.get("sha256")
+    actual_hash = sha256(path)
+    if isinstance(expected_hash, str) and actual_hash.lower() != expected_hash.lower():
+        raise ValueError(
+            f"{case.get('id')}: source input SHA-256 mismatch: "
+            f"expected {expected_hash.lower()}, got {actual_hash}"
+        )
+    return path, source
+
+
+def write_ae_png_premultiplied(raw_path: Path, output_path: Path) -> None:
+    with Image.open(raw_path) as image:
+        rgba = np.asarray(image.convert("RGBA"), dtype=np.uint16)
+    alpha = rgba[..., 3:4]
+    rgb = (rgba[..., :3] * alpha + 127) // 255
+    output = np.concatenate((rgb, alpha), axis=2).astype(np.uint8)
+    Image.fromarray(output, mode="RGBA").save(output_path)
+
+
+def require_source_matches_before_effects(source_path: Path, before_path: Path) -> None:
+    with tempfile.NamedTemporaryFile(suffix=".png") as handle:
+        normalized = Path(handle.name)
+        write_ae_png_premultiplied(source_path, normalized)
+        comparison = pixel_diff(normalized, before_path)
+    if not comparison.get("exact"):
+        raise ValueError(
+            "source input does not reproduce before_effects_frame through "
+            "AE ARGB8 premultiply; refusing an unproven host-I/O normalization "
+            f"(max_diff={comparison.get('max_diff')}, "
+            f"nonzero_pixels={comparison.get('nonzero_pixels')})"
+        )
+
+
+def require_lossless_before_effects_input(path: Path) -> None:
+    with Image.open(path) as image:
+        alpha = image.convert("RGBA").getchannel("A")
+        minimum, maximum = alpha.getextrema()
+    if minimum != 255 or maximum != 255:
+        raise ValueError(
+            "manifest has no original source input and before_effects_frame "
+            "contains non-opaque alpha; refusing an irreversible 8bpc host input"
+        )
 
 
 def setup_parameters(
@@ -287,6 +385,7 @@ def run_case(
     worker: Path,
     aex: Path,
     manifest_root: Path,
+    manifest: dict[str, Any],
     case: dict[str, Any],
     accepted_parameters: set[str] | list[dict[str, Any]],
     output_dir: Path,
@@ -295,13 +394,23 @@ def run_case(
     timeout: int,
 ) -> dict[str, Any]:
     case_id = case["id"]
-    input_path = resolve_case_image(
+    before_path = resolve_case_image(
         manifest_root, "input", case["before_effects_frame"]
     )
     expected_path = resolve_case_image(manifest_root, "expected", case["frame"])
-    if not input_path.is_file() or not expected_path.is_file():
+    if not before_path.is_file() or not expected_path.is_file():
         raise FileNotFoundError(f"{case_id}: missing input or expected image")
+    source_input = source_input_for_case(manifest_root, manifest, case)
+    if source_input is None:
+        input_path = before_path
+        require_lossless_before_effects_input(input_path)
+        host_io_mode = "before_effects_raw"
+    else:
+        input_path, _ = source_input
+        require_source_matches_before_effects(input_path, before_path)
+        host_io_mode = "straight_source_ae_png_premultiply_round"
     require_8bit_png(input_path)
+    require_8bit_png(before_path)
     require_8bit_png(expected_path)
     with Image.open(input_path) as image:
         dimensions = image.size
@@ -312,6 +421,11 @@ def run_case(
         )
 
     output_png = output_dir / f"{case_id}.png"
+    raw_output_png = (
+        output_dir / f"{case_id}.raw.png"
+        if source_input is not None
+        else output_png
+    )
     report_json = output_dir / f"{case_id}.{'dossier' if trace else 'render'}.json"
     stderr_path = output_dir / f"{case_id}.stderr.txt"
     params = case_parameters(case, accepted_parameters)
@@ -320,7 +434,7 @@ def run_case(
         "render-trace-png" if trace else "render-png",
         str(aex),
         str(input_path),
-        str(output_png),
+        str(raw_output_png),
         *[
             format_parameter_assignment(name, slot, value)
             for name, slot, value in params
@@ -344,6 +458,8 @@ def run_case(
         raise RuntimeError(
             f"{case_id}: worker reported render_error={report.get('render_error')!r}"
         )
+    if source_input is not None:
+        write_ae_png_premultiplied(raw_output_png, output_png)
     comparison = pixel_diff(output_png, expected_path)
     truncation = [
         {"selector": trace_row.get("selector"), "truncation": trace_row.get("truncation")}
@@ -358,15 +474,37 @@ def run_case(
         },
         "render_error": report.get("render_error"),
         "render_mode": report.get("render_mode"),
+        "host_io_mode": host_io_mode,
+        "normalization": {
+            "applied": source_input is not None,
+            "mode": (
+                "ae_export_premultiply_u8_round"
+                if source_input is not None
+                else "none"
+            ),
+            "formula": (
+                "(rgb * alpha + 127) // 255"
+                if source_input is not None
+                else None
+            ),
+            "boundary_proof": (
+                "premultiplied source input equals before_effects_frame"
+                if source_input is not None
+                else None
+            ),
+        },
         "trace_truncation": truncation,
         "comparison": comparison,
         "artifacts": {
             "input_sha256": sha256(input_path),
+            "before_effects_sha256": sha256(before_path),
             "reference_sha256": sha256(expected_path),
             "output_sha256": sha256(output_png),
+            "raw_output_sha256": sha256(raw_output_png),
             "worker_report": report_json.name,
             "stderr": stderr_path.name,
             "output_png": output_png.name,
+            "raw_output_png": raw_output_png.name,
         },
     }
 
@@ -420,6 +558,7 @@ def main() -> int:
                         worker=worker,
                         aex=aex,
                         manifest_root=manifest_path.parent,
+                        manifest=manifest,
                         case=case,
                         accepted_parameters=accepted_parameters,
                         output_dir=output_dir,

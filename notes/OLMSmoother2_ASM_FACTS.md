@@ -344,22 +344,16 @@ cross-checked against the render/writeback flow.
 - It then checks byte `(param_8 + 0x19)`.
 - When that byte is nonzero and output alpha is not `1.0`, RGB is multiplied
   by output alpha before quantizing/writing the AE pixel.
-- The current Windows reference PNGs show this behavior even in no-key
-  `case_0001`: low-alpha pixels such as reference `[1,1,1,1]` were previously
-  emitted by the port as straight-looking `[224,224,224,27]`.
-- Therefore the port keeps the final writeback premultiply path enabled for
-  AE/CLI output. Do not tie this byte to the UI `Enable Color Key` gate.
+- The current Windows trace reads this flag as zero. At witness `(712,406)`,
+  the AEX writer emits straight ARGB `[135,200,200,200]`; AE later exports
+  premultiplied RGBA `[106,106,106,135]`.
+- Therefore the port leaves the final writeback premultiply path disabled.
+  Do not infer the internal writer flag from AE-exported PNG pixels.
 
-Porting result:
-
-- `case_0001`: `max=255 mean=0.4304 -> max=131 mean=0.1832`
-- `case_0002`: unchanged at `max=75 mean=0.0216`
-- `case_0003`: unchanged exact
-- `case_0004`: unchanged at `max=95 mean=0.0189`
-
-Remaining `case_0001` residual after the writeback-premul fix is no longer a
-gross straight-vs-premultiplied PNG mismatch. Continue with polygon/sample
-generation, frame setup, or finer color-space/writeback details.
+The earlier improvement from enabling this branch was an invalid host-I/O
+comparison: an AE-premultiplied before-effects PNG was used as AEX input and a
+raw writer plane was compared directly with an AE export. It is superseded by
+`refs/conformance/olmsmoother2_aexcompat_host_io_exact_20260725.md`.
 
 ## FUN_18000bb10 / Gamma Mode Caution
 

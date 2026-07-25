@@ -243,10 +243,9 @@ FetchParams(PF_InData *in_data, PF_ParamDef *params[], SMParams *p)
 	p->gamma_mode       = params[SM_GAMMA_MODE]->u.pd.value;   // 1/2/3
 	p->gamma_value      = (float)params[SM_GAMMA_VALUE]->u.fs_d.value;
 	p->num_gamma_colors = params[SM_NUM_GAMMA_COLORS]->u.sd.value;
-	// Win writeback checks byte param_8+0x19, independent of the Color Key UI
-	// gate. The Windows PNG refs are premultiplied at low alpha even in no-key
-	// cases, so keep the writeback premul path enabled for the AE/CLI output.
-	p->keep_premul      = true;
+	// The current Windows AEX leaves param_8+0x19 clear. Its PF8 writer emits
+	// straight RGB; AE premultiplies later when exporting the PNG.
+	p->keep_premul      = false;
 
 	PF_ColorParamSuite1 *cps = suites.ColorParamSuite1();
 	cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,

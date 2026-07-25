@@ -44,8 +44,16 @@ class RunAexcompatReferenceTests(unittest.TestCase):
         (root / "expected").mkdir(parents=True, exist_ok=True)
         return root
 
-    def _write_reference_manifest(self, root: Path, cases: list[dict]) -> Path:
+    def _write_reference_manifest(
+        self,
+        root: Path,
+        cases: list[dict],
+        *,
+        source_inputs: list[dict] | None = None,
+    ) -> Path:
         manifest = {"project": {"bits_per_channel": 8}, "cases": cases}
+        if source_inputs is not None:
+            manifest["source_inputs"] = source_inputs
         path = root / "reference_manifest.json"
         path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
         return path
@@ -305,6 +313,37 @@ raise SystemExit(main())
             flat,
         )
 
+    def test_resolve_manifest_file_accepts_literal_windows_separator(self) -> None:
+        root = self.tmp / "request"
+        literal = root / "input\\source.png"
+        self._write_png(literal, size=(1, 1), color=(0, 0, 0, 255))
+
+        self.assertEqual(
+            self.module.resolve_manifest_file(root, "input/source.png"),
+            literal.resolve(),
+        )
+
+    def test_resolve_manifest_file_rejects_parent_traversal(self) -> None:
+        with self.assertRaisesRegex(ValueError, "unsafe manifest file path"):
+            self.module.resolve_manifest_file(self.tmp / "request", "../outside.png")
+
+    def test_ae_png_premultiply_uses_round_to_nearest(self) -> None:
+        raw = self.tmp / "raw.png"
+        output = self.tmp / "output.png"
+        self._write_png(raw, size=(1, 1), color=(200, 200, 200, 135))
+
+        self.module.write_ae_png_premultiplied(raw, output)
+
+        with Image.open(output) as image:
+            self.assertEqual(image.convert("RGBA").getpixel((0, 0)), (106, 106, 106, 135))
+
+    def test_before_effects_without_source_must_be_opaque(self) -> None:
+        path = self.tmp / "before.png"
+        self._write_png(path, size=(1, 1), color=(106, 106, 106, 135))
+
+        with self.assertRaisesRegex(ValueError, "irreversible 8bpc host input"):
+            self.module.require_lossless_before_effects_input(path)
+
     def test_run_case_rejects_16bit_png_before_worker_execution(self) -> None:
         root = self._request_root()
         for directory in ("input", "expected"):
@@ -321,6 +360,7 @@ raise SystemExit(main())
                 worker=self.tmp / "missing-worker",
                 aex=self.tmp / "missing.aex",
                 manifest_root=root,
+                manifest={"cases": [case]},
                 case=case,
                 accepted_parameters=set(),
                 output_dir=self.tmp / "out",
@@ -369,6 +409,7 @@ raise SystemExit(main())
                 worker=self.tmp / "missing-worker",
                 aex=self.tmp / "missing.aex",
                 manifest_root=root,
+                manifest={"cases": [case]},
                 case=case,
                 accepted_parameters=set(),
                 output_dir=self.tmp / "out",
@@ -405,6 +446,7 @@ raise SystemExit(main())
                 worker=worker,
                 aex=fake_aex,
                 manifest_root=root,
+                manifest={"cases": [case]},
                 case=case,
                 accepted_parameters={"Blur Amount", "Legacy"},
                 output_dir=output_dir,
@@ -514,6 +556,115 @@ raise SystemExit(main())
             diff_report["received_params"],
             ["Blur Amount@1=2", "Legacy@2=1"],
         )
+
+    def test_cli_uses_original_source_and_normalizes_ae_png_output(self) -> None:
+        request_root = self._request_root()
+        source = request_root / "input\\source.png"
+        before = request_root / "input" / "before.png"
+        expected = request_root / "expected" / "effect.png"
+        self._write_png(source, size=(1, 1), color=(200, 200, 200, 135))
+        self._write_png(before, size=(1, 1), color=(106, 106, 106, 135))
+        shutil.copyfile(before, expected)
+        case = {
+            "id": "case_source",
+            "input_id": "source",
+            "before_effects_frame": "before.png",
+            "frame": "effect.png",
+            "effects": [
+                {
+                    "params": [
+                        {"name": "Blur Amount", "property_index": 1, "value": 1},
+                        {"name": "Legacy", "property_index": 2, "value": False},
+                    ]
+                }
+            ],
+        }
+        self._write_reference_manifest(
+            request_root,
+            [case],
+            source_inputs=[
+                {
+                    "id": "source",
+                    "file": "input/source.png",
+                    "sha256": self.module.sha256(source).upper(),
+                }
+            ],
+        )
+        fake_aex = self.tmp / "OLMBlur.aex"
+        fake_aex.write_bytes(b"fake-aex\n")
+        worker = self._write_fake_worker(self.tmp / "fake-worker.py")
+        output_dir = self.tmp / "output"
+
+        proc = subprocess.run(
+            [
+                sys.executable,
+                str(SCRIPT_PATH),
+                "--request",
+                str(request_root),
+                "--aex",
+                str(fake_aex),
+                "--worker",
+                str(worker),
+                "--output-dir",
+                str(output_dir),
+                "--timeout",
+                "30",
+            ],
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+
+        self.assertEqual(proc.returncode, 0, msg=proc.stderr)
+        summary = json.loads(
+            (output_dir / "AEXCOMPAT_REFERENCE_RESULT.json").read_text(encoding="utf-8")
+        )
+        row = summary["cases"][0]
+        self.assertTrue(row["comparison"]["exact"])
+        self.assertEqual(
+            row["host_io_mode"],
+            "straight_source_ae_png_premultiply_round",
+        )
+        self.assertNotEqual(
+            row["artifacts"]["raw_output_png"],
+            row["artifacts"]["output_png"],
+        )
+
+    def test_source_normalization_fails_closed_when_before_frame_disagrees(self) -> None:
+        root = self._request_root()
+        source = root / "source.png"
+        before = root / "input" / "before.png"
+        expected = root / "expected" / "effect.png"
+        self._write_png(source, size=(1, 1), color=(200, 200, 200, 135))
+        self._write_png(before, size=(1, 1), color=(105, 106, 106, 135))
+        shutil.copyfile(before, expected)
+        case = {
+            "id": "case_bad_boundary",
+            "input_id": "source",
+            "before_effects_frame": "before.png",
+            "frame": "effect.png",
+            "effects": [{"params": []}],
+        }
+        manifest = {
+            "cases": [case],
+            "source_inputs": [
+                {"id": "source", "file": "source.png", "sha256": self.module.sha256(source)}
+            ],
+        }
+
+        with self.assertRaisesRegex(ValueError, "refusing an unproven host-I/O normalization"):
+            self.module.run_case(
+                worker=self.tmp / "missing-worker",
+                aex=self.tmp / "missing.aex",
+                manifest_root=root,
+                manifest=manifest,
+                case=case,
+                accepted_parameters=set(),
+                output_dir=self.tmp / "out",
+                trace=False,
+                allow_large_trace=False,
+                timeout=1,
+            )
 
 
 if __name__ == "__main__":

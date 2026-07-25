@@ -111,18 +111,28 @@ RadialBlur algorithm defect.
 The current-AEX Smoother2 `legacy_case_0008_current_aex` reference now receives
 all 15 editable parameters, including six RGBA color properties converted to
 slot-qualified ARGB8. The unchanged AEX completes full-size Smart Render with
-`render_error=0`. It is not exact: `max_diff=255` with 22,711 differing pixels.
-That no-op was traced to unresolved `VCOMP140!_vcomp_fork` plus a generic import
-stub that overwrote `_vcomp_for_dynamic_next`'s work-available return value.
+`render_error=0`. Its initial direct comparison reported `max_diff=255` with
+22,711 differing pixels. The earlier no-op was traced to unresolved
+`VCOMP140!_vcomp_fork` plus a generic import stub that overwrote
+`_vcomp_for_dynamic_next`'s work-available return value.
 AEXCompat commit `f6b488f` now marshals outlined workers synchronously and
 emulates static and dynamic loop scheduling in one deterministic thread.
 Census reaches RVA `0x3370` once, `0xcce0` and `0xc280` 2,073,600 times each,
 and the block containing final writer RVA `0x360e` 2,073,600 times. The output
-now differs from the before-effects input at 22,451 pixels. The Windows
-Software residual improves to `max_diff=255` with 18,326 differing pixels, so
-this is a usable actual-AEX differential but not an exact result. Compact
-census evidence is preserved in
-`refs/conformance/olmsmoother2_aexcompat_case0008_census_20260725.json`.
+differs from the before-effects input at 22,451 pixels. The old raw comparison
+reported `max_diff=255` with 18,326 differing pixels; that number is not an
+algorithm residual.
+
+The runner now selects the SHA-pinned original straight-RGBA source through
+`case.input_id` / `source_inputs`, proves the host boundary by requiring source
+premultiplication to reproduce `before_effects_frame`, preserves raw AEX
+output, and compares an AE-style normalized plane using
+`(rgb * alpha + 127) // 255`. With that contract, all 12 current-AEX legacy
+cases are exact against Windows AE Software: `pixel_exact=12/12`,
+`render_success=12/12`, `max_diff=0`. Census evidence is preserved in
+`refs/conformance/olmsmoother2_aexcompat_case0008_census_20260725.json`;
+host-I/O exact evidence is in
+`refs/conformance/olmsmoother2_aexcompat_host_io_exact_20260725.md`.
 
 ## Plug-in setup sweep
 
@@ -156,9 +166,9 @@ Suite blocker is closed.
    bare ambiguous names fail closed.
 5. Capture the RadialBlur RVA `0x9d80` sampler-entry values and caller
    render-context fields on AEXCompat and Windows before changing the port.
-6. Use the executing Smoother2 actual-AEX case to localize the first remaining
-   stage differential. Preserve the VCOMP host fix and do not tune from the
-   final PNG alone.
+6. Use the 12/12-exact Smoother2 actual-AEX execution as the local oracle for
+   the Mac native implementation. Do not request more Windows intermediate
+   traces for these covered cases unless the oracle becomes inconsistent.
 7. AEXCompat's PNG reference runner is currently ARGB8-only. It cannot close
    16bpc or 32bpc lanes
    until PF_Pixel16 and PF_PixelFloat worlds and suitable file I/O are added.
