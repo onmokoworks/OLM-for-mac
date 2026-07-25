@@ -9,12 +9,14 @@ not promote any Mac plug-in lane to `AE exact`.
 ## Provenance
 
 - AEXCompat integrated commits: `1fe322b`, `ae5cbcc`, `59e002c`,
-  and `3adba76`
+  `3adba76`, and `f6b488f`
   (`codex/olm-suite-followup`)
 - `aex-guest-worker` SHA-256:
   `4d0018c95cb26dc32261c56969566db7deeace9b6c39c6daaa3f9773adbc214f`
 - post-expansion `aex-guest-worker` SHA-256:
   `bc4cb0d6aa38b67a3e6d0f7df1c252724f8ac720a15b346b48e291940338c6db`
+- post-VCOMP `aex-guest-worker` SHA-256:
+  `2e8c58081c7db6ef7ac847b955e239f48c3469bc573b5501ac0d280b4b997fe7`
 - OLMRadialBlur 2025 AEX SHA-256:
   `ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb`
 - OLMSmoother2 2025 AEX SHA-256:
@@ -110,7 +112,17 @@ The current-AEX Smoother2 `legacy_case_0008_current_aex` reference now receives
 all 15 editable parameters, including six RGBA color properties converted to
 slot-qualified ARGB8. The unchanged AEX completes full-size Smart Render with
 `render_error=0`. It is not exact: `max_diff=255` with 22,711 differing pixels.
-This is a usable local actual-AEX differential, not an `AE exact` promotion.
+That no-op was traced to unresolved `VCOMP140!_vcomp_fork` plus a generic import
+stub that overwrote `_vcomp_for_dynamic_next`'s work-available return value.
+AEXCompat commit `f6b488f` now marshals outlined workers synchronously and
+emulates static and dynamic loop scheduling in one deterministic thread.
+Census reaches RVA `0x3370` once, `0xcce0` and `0xc280` 2,073,600 times each,
+and the block containing final writer RVA `0x360e` 2,073,600 times. The output
+now differs from the before-effects input at 22,451 pixels. The Windows
+Software residual improves to `max_diff=255` with 18,326 differing pixels, so
+this is a usable actual-AEX differential but not an exact result. Compact
+census evidence is preserved in
+`refs/conformance/olmsmoother2_aexcompat_case0008_census_20260725.json`.
 
 ## Plug-in setup sweep
 
@@ -144,8 +156,9 @@ Suite blocker is closed.
    bare ambiguous names fail closed.
 5. Capture the RadialBlur RVA `0x9d80` sampler-entry values and caller
    render-context fields on AEXCompat and Windows before changing the port.
-6. Use the now-completing Smoother2 current-AEX case to localize the first
-   differing stage; do not tune the Mac output from the final PNG alone.
+6. Use the executing Smoother2 actual-AEX case to localize the first remaining
+   stage differential. Preserve the VCOMP host fix and do not tune from the
+   final PNG alone.
 7. AEXCompat's PNG reference runner is currently ARGB8-only. It cannot close
    16bpc or 32bpc lanes
    until PF_Pixel16 and PF_PixelFloat worlds and suitable file I/O are added.

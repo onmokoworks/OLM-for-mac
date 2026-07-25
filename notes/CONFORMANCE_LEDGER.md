@@ -9,11 +9,16 @@
   `0x9e35`; its approximately 9.87-million x coordinate is classified as an
   unresolved render-context/ABI witness. Smoother2
   `legacy_case_0008_current_aex` now completes the unchanged AEX Smart Render
-  with all 15 editable parameters applied (`render_error=0`), but remains
-  non-exact (`max_diff=255`, 22,711 differing pixels). Next allowed actions:
-  capture RadialBlur sampler-entry/context fields on both runtimes and localize
-  Smoother2's first differing stage. Forbidden: PNG-only tuning or any
-  `AE exact`/`CLI exact` promotion from these runs. Evidence:
+  with all 15 editable parameters applied (`render_error=0`). AEXCompat commit
+  `f6b488f` supplies deterministic single-thread VCOMP execution: census reaches
+  `0x3370` once, `0xcce0`/`0xc280` 2,073,600 times each, and the block containing
+  writer RVA `0x360e` 2,073,600 times. The candidate now differs from the
+  before-effects input at 22,451 pixels and improves the Windows differential
+  from 22,711 to 18,326 pixels (`max_diff=255`); it is still not exact. Next
+  allowed actions: capture RadialBlur sampler-entry/context fields on both
+  runtimes and localize Smoother2's remaining first stage differential with the
+  actual-AEX witness. Forbidden: PNG-only tuning or any `AE exact`/`CLI exact`
+  promotion from these runs. Evidence:
   `refs/conformance/aexcompat_olm_execution_pilot_20260725.md`.
 
 - 2026-07-25 `AEXCompat OLM host-suite closeout` (latest override): no Mac

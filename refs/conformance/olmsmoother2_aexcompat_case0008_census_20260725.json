@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "kind": "olmsmoother2_aexcompat_block_census_summary",
+  "case_id": "legacy_case_0008_current_aex",
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "aexcompat_commit": "f6b488f",
+  "render_error": 0,
+  "render_mode": "smart-cpu",
+  "width": 1920,
+  "height": 1080,
+  "unsupported_suite_calls": [],
+  "candidate_vs_input": {
+    "max_diff": 255,
+    "nonzero_pixels": 22451
+  },
+  "candidate_vs_windows_reference": {
+    "max_diff": 255,
+    "nonzero_pixels": 18326
+  },
+  "census": {
+    "distinct_blocks": 1614,
+    "total_block_executions": 193767716,
+    "rva_0x3d00_executions": 1,
+    "rva_0x3370_executions": 1,
+    "rva_0xcce0_executions": 2073600,
+    "rva_0xc280_executions": 2073600,
+    "writer_block_start_rva": "0x35ad",
+    "writer_block_contains_rva": "0x360e",
+    "writer_block_executions": 2073600
+  },
+  "classification": "actual_aex_processing_body_reached_residual_unresolved"
+}
