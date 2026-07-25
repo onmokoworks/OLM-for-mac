@@ -1,5 +1,33 @@
 # OLM Conformance Ledger
 
+- 2026-07-25 `AEXCompat OLM host-suite closeout` (latest override): no Mac
+  correctness status is promoted. Integrated AEXCompat commit `1fe322b`
+  adds AEGP Memory Suite v1, PF World Suite v2, PF PointParamSuite v1,
+  signed 16.16 point/angle handling, and property-slot parameter assignment.
+  All ten 2025 AEX files now complete `GLOBAL_SETUP` and `PARAMS_SETUP` with
+  zero errors and no unsupported suite calls. Unchanged `OLMSmoother2.aex`
+  and default `OLMRadialBlur.aex` complete bounded 32x32 Smart Renders with
+  `render_error=0`; a fully parameterized RadialBlur random case now advances
+  to RVA `0x2d52`, where an unmapped write is the next AEXCompat boundary.
+  These are host-execution facts, not AE exact or CLI exact. Evidence:
+  `refs/conformance/aexcompat_olm_execution_pilot_20260725.md`.
+
+- 2026-07-25 `AEXCompat execution-oracle pilot` (latest override): no Mac
+  correctness status is promoted. The unchanged 2025 OLMBlur AEX now executes
+  locally through the Unicorn `render-png` path and is decoded-pixel exact
+  against the normalized Windows AE Software 8bpc references for
+  `case_0001` and `case_0002` (`max_diff=0`). A bounded 32x32 dossier also
+  maps Blur Amount to the concrete `expf` path at call-site RVA `0x3710`,
+  including XMM arguments and observation counts. Heavy Legacy
+  `case_0003` exhausts the current worker instruction budget. The broader
+  2025 AEX setup sweep identifies one common host blocker: eight plug-ins
+  require `AEGP Utility Suite` v13 / `AEGP_RegisterWithAEGP`, which the
+  current Unicorn suite router does not yet supply. Full-frame rendering and
+  small-probe tracing must remain separate, and AEXCompat remains ARGB8-only;
+  it cannot prove 16/32bpc conformance yet. Evidence:
+  `refs/conformance/aexcompat_olm_execution_pilot_20260725.md` and
+  `scripts/run_aexcompat_reference.py`.
+
 - 2026-07-18 `Windows entry-to-core tracing pivot` (latest override): no
   correctness status is promoted. Repeated pixel-local CDB requests are no
   longer the default discovery path. The common Windows witness framework now

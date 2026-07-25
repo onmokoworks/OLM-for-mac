@@ -1,0 +1,413 @@
+#!/usr/bin/env python3
+"""Run Windows AEX reference cases through AEXCompat and compare pixels."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import subprocess
+import sys
+import tempfile
+import zipfile
+from datetime import datetime
+from pathlib import Path
+from typing import Any
+
+from PIL import Image, ImageChops
+
+SUPPORTED_PARAMETER_TYPES = {1, 2, 3, 4, 6, 7, 10}
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--request", type=Path, required=True, help="Reference request ZIP or extracted directory.")
+    parser.add_argument("--aex", type=Path, required=True, help="Windows x64 AEX to execute.")
+    parser.add_argument("--worker", type=Path, required=True, help="AEXCompat aex-guest-worker executable.")
+    parser.add_argument("--case", action="append", default=[], help="Case ID to run; repeat or omit for all cases.")
+    parser.add_argument("--output-dir", type=Path)
+    parser.add_argument("--timeout", type=int, default=1200)
+    parser.add_argument("--trace", action="store_true", help="Emit execution dossiers; intended for small probe images.")
+    parser.add_argument(
+        "--allow-large-trace",
+        action="store_true",
+        help="Permit tracing inputs larger than 128x128; dossier size can grow dramatically.",
+    )
+    return parser.parse_args()
+
+
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def load_json(path: Path) -> dict[str, Any]:
+    data = json.loads(path.read_text(encoding="utf-8-sig"))
+    if not isinstance(data, dict):
+        raise ValueError(f"JSON root must be an object: {path}")
+    return data
+
+
+def require_argb8_manifest(manifest: dict[str, Any]) -> None:
+    bits_per_channel = manifest.get("project", {}).get("bits_per_channel")
+    if bits_per_channel not in (None, 8):
+        raise ValueError(
+            "AEXCompat reference runner currently accepts only 8bpc manifests; "
+            f"got bits_per_channel={bits_per_channel!r}"
+        )
+
+
+def require_8bit_png(path: Path) -> None:
+    header = path.read_bytes()[:25]
+    if len(header) < 25 or header[:8] != b"\x89PNG\r\n\x1a\n":
+        raise ValueError(f"AEXCompat ARGB8 runner requires PNG input: {path}")
+    if header[24] != 8:
+        raise ValueError(
+            f"AEXCompat ARGB8 runner requires an 8-bit PNG; "
+            f"{path.name} has PNG bit depth {header[24]}"
+        )
+
+
+def format_parameter_value(value: float) -> str:
+    return format(value, ".17g")
+
+
+def format_parameter_assignment(
+    name: str, slot: int | None, value: float | tuple[float, float]
+) -> str:
+    if isinstance(value, tuple):
+        encoded = ",".join(format_parameter_value(component) for component in value)
+    else:
+        encoded = format_parameter_value(value)
+    selector = f"{name}@{slot}" if slot is not None else name
+    return f"{selector}={encoded}"
+
+
+def find_manifest(root: Path) -> Path:
+    candidates = sorted(root.rglob("reference_manifest.json"))
+    if len(candidates) != 1:
+        raise ValueError(f"expected exactly one reference_manifest.json under {root}, found {len(candidates)}")
+    return candidates[0]
+
+
+def resolve_case_image(root: Path, directory: str, filename: str) -> Path:
+    nested = root / directory / filename
+    if nested.is_file():
+        return nested
+    flat = root / filename
+    if flat.is_file():
+        return flat
+    return nested
+
+
+def setup_parameters(
+    worker: Path, aex: Path, timeout: int
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    proc = subprocess.run(
+        [str(worker), "setup", str(aex)],
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        timeout=timeout,
+    )
+    if proc.returncode != 0:
+        raise RuntimeError(f"AEX setup failed ({proc.returncode}): {proc.stderr.strip()}")
+    report = json.loads(proc.stdout)
+    parameters = [
+        row
+        for row in report.get("parameters", [])
+        if isinstance(row.get("name"), str) and isinstance(row.get("slot"), int)
+    ]
+    return report, parameters
+
+
+def case_parameters(
+    case: dict[str, Any], accepted_parameters: set[str] | list[dict[str, Any]]
+) -> list[tuple[str, int | None, float | tuple[float, float]]]:
+    effects = case.get("effects", [])
+    if len(effects) != 1:
+        raise ValueError(f"{case.get('id')}: expected one effect, found {len(effects)}")
+    legacy_names = accepted_parameters if isinstance(accepted_parameters, set) else None
+    surface_by_slot = (
+        {}
+        if legacy_names is not None
+        else {
+            row["slot"]: row
+            for row in accepted_parameters
+            if row.get("param_type") in SUPPORTED_PARAMETER_TYPES
+        }
+    )
+    result: list[tuple[str, int | None, float | tuple[float, float]]] = []
+    for param in effects[0].get("params", []):
+        name = param.get("name")
+        slot: int | None = None
+        if legacy_names is not None:
+            if name not in legacy_names:
+                continue
+        else:
+            path = param.get("path")
+            if isinstance(path, list) and len(path) > 2:
+                continue
+            property_index = param.get("property_index")
+            surface = surface_by_slot.get(property_index)
+            if surface is None:
+                continue
+            slot = property_index
+            name = surface["name"]
+        value = param.get("value")
+        if isinstance(value, bool):
+            value = int(value)
+        if isinstance(value, (list, tuple)) and len(value) == 2 and all(
+            isinstance(component, (int, float)) and not isinstance(component, bool)
+            for component in value
+        ):
+            result.append((name, slot, (float(value[0]), float(value[1]))))
+        elif isinstance(value, (int, float)):
+            result.append((name, slot, float(value)))
+        else:
+            raise ValueError(f"{case.get('id')}: unsupported value for {name}: {value!r}")
+    missing = (
+        legacy_names.difference(name for name, _, _ in result)
+        if legacy_names is not None
+        else set(surface_by_slot).difference(slot for _, slot, _ in result)
+    )
+    if missing:
+        raise ValueError(f"{case.get('id')}: manifest is missing AEX parameters: {sorted(missing)}")
+    return result
+
+
+def pixel_diff(actual_path: Path, expected_path: Path) -> dict[str, Any]:
+    with Image.open(actual_path) as actual_image, Image.open(expected_path) as expected_image:
+        actual = actual_image.convert("RGBA")
+        expected = expected_image.convert("RGBA")
+        if actual.size != expected.size:
+            return {
+                "exact": False,
+                "actual_size": list(actual.size),
+                "expected_size": list(expected.size),
+                "error": "size_mismatch",
+            }
+        difference = ImageChops.difference(actual, expected)
+        extrema = difference.getextrema()
+        max_diff = max(high for _, high in extrema)
+        pixels = (
+            difference.get_flattened_data()
+            if hasattr(difference, "get_flattened_data")
+            else difference.getdata()
+        )
+        nonzero_pixels = sum(1 for pixel in pixels if any(pixel))
+        return {
+            "exact": max_diff == 0,
+            "actual_size": list(actual.size),
+            "expected_size": list(expected.size),
+            "max_diff": max_diff,
+            "nonzero_pixels": nonzero_pixels,
+            "total_pixels": actual.width * actual.height,
+            "per_channel_max": [high for _, high in extrema],
+        }
+
+
+def run_case(
+    *,
+    worker: Path,
+    aex: Path,
+    manifest_root: Path,
+    case: dict[str, Any],
+    accepted_parameters: set[str] | list[dict[str, Any]],
+    output_dir: Path,
+    trace: bool,
+    allow_large_trace: bool,
+    timeout: int,
+) -> dict[str, Any]:
+    case_id = case["id"]
+    input_path = resolve_case_image(
+        manifest_root, "input", case["before_effects_frame"]
+    )
+    expected_path = resolve_case_image(manifest_root, "expected", case["frame"])
+    if not input_path.is_file() or not expected_path.is_file():
+        raise FileNotFoundError(f"{case_id}: missing input or expected image")
+    require_8bit_png(input_path)
+    require_8bit_png(expected_path)
+    with Image.open(input_path) as image:
+        dimensions = image.size
+    if trace and not allow_large_trace and (dimensions[0] > 128 or dimensions[1] > 128):
+        raise ValueError(
+            f"{case_id}: refusing {dimensions[0]}x{dimensions[1]} trace; "
+            "use a small probe or pass --allow-large-trace"
+        )
+
+    output_png = output_dir / f"{case_id}.png"
+    report_json = output_dir / f"{case_id}.{'dossier' if trace else 'render'}.json"
+    stderr_path = output_dir / f"{case_id}.stderr.txt"
+    params = case_parameters(case, accepted_parameters)
+    command = [
+        str(worker),
+        "render-trace-png" if trace else "render-png",
+        str(aex),
+        str(input_path),
+        str(output_png),
+        *[
+            format_parameter_assignment(name, slot, value)
+            for name, slot, value in params
+        ],
+    ]
+    with report_json.open("w", encoding="utf-8") as stdout_handle, stderr_path.open(
+        "w", encoding="utf-8"
+    ) as stderr_handle:
+        proc = subprocess.run(
+            command,
+            text=True,
+            stdout=stdout_handle,
+            stderr=stderr_handle,
+            timeout=timeout,
+        )
+    if proc.returncode != 0:
+        error_text = stderr_path.read_text(encoding="utf-8").strip()
+        raise RuntimeError(f"{case_id}: worker failed ({proc.returncode}): {error_text}")
+    report = load_json(report_json)
+    if report.get("render_error") != 0:
+        raise RuntimeError(
+            f"{case_id}: worker reported render_error={report.get('render_error')!r}"
+        )
+    comparison = pixel_diff(output_png, expected_path)
+    truncation = [
+        {"selector": trace_row.get("selector"), "truncation": trace_row.get("truncation")}
+        for trace_row in report.get("execution_traces", [])
+        if trace_row.get("truncation")
+    ]
+    return {
+        "case_id": case_id,
+        "parameters": {
+            f"{name}@{slot}" if slot is not None else name: value
+            for name, slot, value in params
+        },
+        "render_error": report.get("render_error"),
+        "render_mode": report.get("render_mode"),
+        "trace_truncation": truncation,
+        "comparison": comparison,
+        "artifacts": {
+            "input_sha256": sha256(input_path),
+            "reference_sha256": sha256(expected_path),
+            "output_sha256": sha256(output_png),
+            "worker_report": report_json.name,
+            "stderr": stderr_path.name,
+            "output_png": output_png.name,
+        },
+    }
+
+
+def main() -> int:
+    args = parse_args()
+    worker = args.worker.resolve()
+    aex = args.aex.resolve()
+    request = args.request.resolve()
+    for path, label in ((worker, "worker"), (aex, "AEX"), (request, "request")):
+        if not path.exists():
+            print(f"[FAIL] {label} not found: {path}", file=sys.stderr)
+            return 1
+
+    output_dir = (
+        args.output_dir.resolve()
+        if args.output_dir
+        else Path("/tmp") / f"olm_aexcompat_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    )
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    with tempfile.TemporaryDirectory(prefix="olm_aexcompat_request_") as temporary:
+        if request.is_file():
+            if not zipfile.is_zipfile(request):
+                print(f"[FAIL] request is not a ZIP: {request}", file=sys.stderr)
+                return 1
+            with zipfile.ZipFile(request) as archive:
+                archive.extractall(temporary)
+            request_root = Path(temporary)
+        else:
+            request_root = request
+
+        try:
+            manifest_path = find_manifest(request_root)
+            manifest = load_json(manifest_path)
+            require_argb8_manifest(manifest)
+            setup_report, accepted_parameters = setup_parameters(
+                worker, aex, args.timeout
+            )
+            selected = set(args.case)
+            cases = [case for case in manifest.get("cases", []) if not selected or case.get("id") in selected]
+            missing = selected.difference(case.get("id") for case in cases)
+            if missing:
+                raise ValueError(f"case IDs not found: {sorted(missing)}")
+            if not cases:
+                raise ValueError("manifest contains no selected cases")
+            results: list[dict[str, Any]] = []
+            for case in cases:
+                try:
+                    result = run_case(
+                        worker=worker,
+                        aex=aex,
+                        manifest_root=manifest_path.parent,
+                        case=case,
+                        accepted_parameters=accepted_parameters,
+                        output_dir=output_dir,
+                        trace=args.trace,
+                        allow_large_trace=args.allow_large_trace,
+                        timeout=args.timeout,
+                    )
+                except (OSError, ValueError, RuntimeError, subprocess.TimeoutExpired, json.JSONDecodeError) as error:
+                    result = {
+                        "case_id": case.get("id"),
+                        "status": "error",
+                        "error": str(error),
+                        "comparison": {"exact": False},
+                    }
+                results.append(result)
+        except (OSError, ValueError, RuntimeError, subprocess.TimeoutExpired, json.JSONDecodeError) as error:
+            print(f"[FAIL] {error}", file=sys.stderr)
+            print(f"[INFO] output_dir: {output_dir}")
+            return 1
+
+    summary = {
+        "schema": 1,
+        "kind": "olm_aexcompat_reference_run",
+        "created_at": datetime.now().astimezone().isoformat(),
+        "request_name": request.name,
+        "aex_sha256": sha256(aex),
+        "worker_sha256": sha256(worker),
+        "setup": setup_report,
+        "trace": args.trace,
+        "counts": {
+            "total": len(results),
+            "pixel_exact": sum(row["comparison"].get("exact") is True for row in results),
+            "render_success": sum(row.get("render_error") == 0 for row in results),
+            "truncated": sum(bool(row.get("trace_truncation")) for row in results),
+            "errors": sum(row.get("status") == "error" for row in results),
+        },
+        "cases": results,
+    }
+    summary_path = output_dir / "AEXCOMPAT_REFERENCE_RESULT.json"
+    summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    for row in results:
+        comparison = row["comparison"]
+        if row.get("status") == "error":
+            print(f"[ERROR] {row['case_id']} {row['error']}")
+            continue
+        print(
+            f"[{'EXACT' if comparison.get('exact') else 'DIFF'}] {row['case_id']} "
+            f"max={comparison.get('max_diff', 'n/a')} "
+            f"pixels={comparison.get('nonzero_pixels', 'n/a')}"
+        )
+    print(
+        f"[SUMMARY] exact={summary['counts']['pixel_exact']}/{summary['counts']['total']} "
+        f"render_success={summary['counts']['render_success']}/{summary['counts']['total']} "
+        f"truncated={summary['counts']['truncated']}"
+    )
+    print(f"[INFO] result: {summary_path}")
+    if summary["counts"]["errors"]:
+        return 1
+    return 0 if summary["counts"]["pixel_exact"] == summary["counts"]["total"] else 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
