@@ -1,0 +1,19 @@
+.logopen /t C:\Users\optim\Documents\Codex\2026-07-26\olm_pf32_entry_aerender_probe\cdb_trace.log
+.symfix
+.effmach amd64
+.expr /s masm
+sxi 80000003
+sxi epr
+sxe ld:OLMSmoother2
+g
+.echo OLM_PF32_MODULE_LOAD_STOP
+lm m OLMSmoother2
+bp OLMSmoother2+0x4270
+g
+.printf "OLM_PF32_ENTRY pid=%u descriptor=%p data=%p width=%u height=%u rowbytes=%u\n", @$tpid, @rdx, poi(@rdx), dwo(@rdx+8), dwo(@rdx+0xc), dwo(@rdx+0x10)
+j ((dwo(@rdx+8)==0x780) & (dwo(@rdx+0xc)==0x438) & (dwo(@rdx+0x10)==0x7800)) '.echo OLM_PF32_DESCRIPTOR_ACCEPT' '.echo OLM_PF32_DESCRIPTOR_REJECT; q'
+r @$t0=poi(@rdx)
+r @$t1=@$t0+0x1fa3fff
+.echo OLM_PF32_READY_FOR_READ_PROCESS_MEMORY
+.sleep 600
+qd

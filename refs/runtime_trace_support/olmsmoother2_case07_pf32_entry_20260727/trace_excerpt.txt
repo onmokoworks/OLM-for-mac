@@ -1,0 +1,11 @@
+CommandLine: "C:\Program Files\Adobe\Adobe After Effects 2026\Support Files\aerender.exe" -project C:\Users\optim\Documents\Codex\2026-07-26\olm_pf32_entry_aerender_probe\olmsmoother2_case07_preserve_rgb_exr_entry_probe.aep -comp final_random10_olm_smoother_v2_07 -s 0 -e 0 -RStemplate "Best Settings" -output C:\Users\optim\Documents\Codex\2026-07-26\olm_pf32_entry_aerender_probe\output\windows_embedded_mac_om_effect_on_witness.exr -v ERRORS_AND_PROGRESS
+ModLoad: 00007ffd`05d50000 00007ffd`05d82000   C:\Program Files\Adobe\Common\Plug-ins\7.0\MediaCore\OLM\OLMSmoother2.aex
+OLM_PF32_MODULE_LOAD_STOP
+PROGRESS:  Profile: Preserve RGB (disable color management conversions for this item)
+OLM_PF32_ENTRY pid=46428 descriptor=000000b7192fa290 data=0000023395760100 width=1920 height=1080 rowbytes=30720
+OLM_PF32_DESCRIPTOR_ACCEPT
+OLM_PF32_READY_FOR_READ_PROCESS_MEMORY
+READ_PROCESS_MEMORY pid=46428 address=0x0000023395760100 length=33177600
+SHA256=133a9447f8d722a7add9a5c7fc63bcf16b7e77c21cab9aa7c48d84df8677685b
+PROGRESS: finished composition final_random10_olm_smoother_v2_07 at 2026-07-27 01:06:29
+PROGRESS:  Total Time Elapsed: 3 Seconds

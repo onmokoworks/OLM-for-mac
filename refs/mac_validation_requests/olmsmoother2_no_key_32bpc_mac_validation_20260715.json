@@ -1,7 +1,7 @@
 {
   "schema": "olm-smoother2-mac-float-validation-v1",
   "request_id": "olmsmoother2_no_key_32bpc_mac_validation_20260715",
-  "status": "blocked_pending_windows_artifact_attestation",
+  "status": "candidate_return_verified_effect_mismatch",
   "ae_exact_claim": false,
   "effect": {
     "name": "OLM Smoother v2",
@@ -101,6 +101,27 @@
       "manifest records channel order, sample type, dimensions, color space, and alpha mode",
       "existing verifier passes without --allow-unrendered"
     ]
+  },
+  "windows_preserve_rgb_reference": {
+    "manifest": "refs/conformance/olmsmoother2_case07_windows_preserve_rgb_reference_20260727.json",
+    "artifact_root": "refs/win_references/20260727_010629__ae26_3_32bpc_smoother2_preserve_rgb_case07",
+    "source_input": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMSmootherv2/olm_bitdepth_32bpc_olmsmoother2_exr_20260710__software_32bpc__fr24__final_random10_olm_smoother_v2_07_before_effects.exr",
+    "source_input_sha256": "366eb9e01e7c3c60df59dbcf6fb549a57d2156e95105fbea397de5353736c9fb",
+    "no_effect_frame": "windows_preserve_rgb_no_effect.exr",
+    "no_effect_sha256": "046850a4587ef5ca07f120cdd1a990bbac8186accd4f65d7f8f8ec1b0d0d3292",
+    "effect_frame": "windows_preserve_rgb_effect_on.exr",
+    "effect_sha256": "404d2b5732adf9bbbc6aadab4a1f0dd075e4e0f911b29076339f6f0e17479cc0",
+    "effect_aep_path": "refs/fixtures/olmsmoother2_case07_preserve_rgb_effect_20260727.aep",
+    "effect_aep_sha256": "689da9c07512f821c869e0e17031db3d05953896e50b6b2385762f26afcf2f0d",
+    "pf32_input_entry_path": "refs/conformance/fixtures/olmsmoother2_case07_pf32_entry_20260727/pf32_input_entry_argb.bin.gz",
+    "pf32_input_entry_stored_sha256": "f29cad40b4f0081fa5f279da0e875198a2970ea2d9c1161db7cc2058acf4044c",
+    "pf32_input_entry_uncompressed_sha256": "133a9447f8d722a7add9a5c7fc63bcf16b7e77c21cab9aa7c48d84df8677685b",
+    "capture_contract": {
+      "same_effect_render_entry_and_output": true,
+      "aerender_omtemplate_override": false,
+      "output_profile": "Preserve RGB (disable color management conversions for this item)",
+      "raw_float32_epsilon": 0
+    }
   },
   "case": {
     "id": "final_random10_olm_smoother_v2_07",

@@ -1,21 +1,20 @@
 # OLM Conformance Ledger
 
-- 2026-07-26 `OLMSmoother2 no-key 32bpc case-07 Preserve RGB split`
-  (latest override): Mac AE `26.3x87` on macOS `15.7.2 (24G325)` rendered the
-  hash-bound case through the Preserve-RGB AEP template as uncompressed
-  `A,B,G,R` FLOAT EXRs under `32bpc`/`SOFTWARE`/working-space raw
-  `None`/linear blending `false`, using loaded Mach-O SHA-256
-  `d7abbd9d...b957d18`. Windows before-effects vs Mac no-effect is semantic
-  raw FLOAT32 exact (`0` mismatches, `max_raw_u32_delta=0`); effect-on differs
-  at `2,268,734` words (`max_raw_u32_delta=991,472,415`). The result is still
-  `blocked_input_entry_identity`, not `AE exact`: the Windows effect reference
-  came from the original PNG import while the Mac effect run re-imports the
-  Windows before-effects EXR with Preserve RGB, and no same-run Windows PF32
-  input-entry witness proves those plugin inputs identical. The Windows
-  manifest also lacks admissible per-artifact hash/header attestation. A
-  second Mac render is semantic raw-sample exact with the first for both
-  branches despite different EXR container hashes. Result: 32bpc remains
-  unproven; do not retune the closed 8bpc core. Evidence:
+- 2026-07-27 `OLMSmoother2 no-key 32bpc case-07 attributable Preserve RGB
+  residual` (latest override): Windows and Mac AE `26.3x87` now use the same
+  hash-bound Preserve RGB FLOAT EXR source, full case parameters,
+  `32bpc`/`SOFTWARE`/working-space raw `None`/linear blending `false`, and
+  AEP-embedded Preserve RGB output settings. The exact Windows AEX
+  (`7d42c00f...18b744c7`) hit PF32 entry RVA `0x4270`; its `1920x1080`,
+  `rowbytes=30720` ARGB float world is raw exact with the source
+  (`0/8,294,400` mismatches, max raw delta `0`). Windows no-effect vs Mac
+  no-effect is also raw exact. A same-render Windows effect artifact is
+  deterministic across a repeat (`0` mismatches), while Windows effect-on vs
+  Mac effect-on differs at `3,108,911` words with max raw u32 delta `1,583`.
+  The reporter now passes both Windows artifact and PF32-entry attestations
+  and returns `candidate_return_verified_effect_mismatch`. This residual is an
+  admissible 32bpc tuning oracle but is not `AE exact`; the frozen 8bpc core
+  must not change. Evidence:
   `refs/conformance/olmsmoother2_no_key_32bpc_case07_mac_ae_20260726.md`.
 
 - 2026-07-26 `OLMSmoother2 legacy/key/gamma 8bpc AE exact closeout` (latest

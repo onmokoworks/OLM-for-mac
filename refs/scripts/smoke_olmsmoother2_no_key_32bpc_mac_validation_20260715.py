@@ -1,12 +1,24 @@
 #!/usr/bin/env python3
 """Smoke the OLMSmoother2 Mac request/runner without launching AE."""
 from __future__ import annotations
-import hashlib, json, subprocess, sys, tempfile
+import gzip, hashlib, json, subprocess, sys, tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]; RUNNER=ROOT/"scripts/run_olmsmoother2_no_key_32bpc_mac_validation_20260715.py"; REQUEST=ROOT/"refs/mac_validation_requests/olmsmoother2_no_key_32bpc_mac_validation_20260715.json"
 def main()->int:
     d=json.loads(REQUEST.read_text()); assert d["effect"]=={"name":"OLM Smoother v2","match_name":"OLM Smoother v2"}; assert d["scope"]["plugin_version_mode"]==2; assert len(d["cases"])==1; c=d["cases"][0]; assert c["params_full"][0]["value"]==0 and c["params_full"][6]["value"]==2; assert d["mac_run_contract"]["comparison"]["epsilon"]==0 and not d["mac_run_contract"]["comparison"]["normalization"]
     assert any("PF32 input-entry witness" in item for item in d["fail_closed"])
+    win=d["windows_preserve_rgb_reference"]; manifest_path=ROOT/win["manifest"]; manifest=json.loads(manifest_path.read_text())
+    assert manifest["kind"]=="olmsmoother2_case07_windows_ae_preserve_rgb_reference" and manifest["ae_exact_claim"] is False
+    assert manifest["case_contract_sha256"]=="e8870b11b7a072b84fe8e4554c9e058468f15f7daf5b4be0d576d6b00a980403"
+    assert manifest["output_module"]["aerender_omtemplate_override"] is False
+    assert manifest["output_module"]["profile_observed"]==win["capture_contract"]["output_profile"]
+    assert manifest["pf32_input_entry"]["same_run"] is True
+    assert manifest["pf32_input_entry"]["same_run_effect_sha256"]==win["effect_sha256"]
+    for key,name,sha in (("no_effect_control",win["no_effect_frame"],win["no_effect_sha256"]),("effect_on",win["effect_frame"],win["effect_sha256"])):
+        assert manifest["artifacts"][key]["path"]==name and manifest["artifacts"][key]["sha256"]==sha
+    entry=ROOT/win["pf32_input_entry_path"]; assert entry.is_file() and hashlib.sha256(entry.read_bytes()).hexdigest()==win["pf32_input_entry_stored_sha256"]
+    with gzip.open(entry,"rb") as stream: entry_raw=stream.read()
+    assert len(entry_raw)==33177600 and hashlib.sha256(entry_raw).hexdigest()==win["pf32_input_entry_uncompressed_sha256"]
     interpretation=d["mac_run_contract"]["input_interpretation"]; template=ROOT/interpretation["template"]; assert interpretation["preserve_rgb"] is True and template.is_file(); assert hashlib.sha256(template.read_bytes()).hexdigest()==interpretation["template_sha256"]
     with tempfile.TemporaryDirectory(prefix="olmsmoother2_mac_smoke_") as t:
         root=Path(t); dump=root/"wrapper.jsx"; wrong=root/"wrong.plugin"; p=subprocess.run([sys.executable,str(RUNNER),"--plugin-path",str(wrong),"--dump-js",str(dump)],cwd=ROOT,text=True,capture_output=True); assert p.returncode==2 and not dump.exists()

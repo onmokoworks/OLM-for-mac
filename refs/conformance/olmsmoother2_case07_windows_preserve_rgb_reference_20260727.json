@@ -1,0 +1,146 @@
+{
+  "kind": "olmsmoother2_case07_windows_ae_preserve_rgb_reference",
+  "schema_version": 1,
+  "status": "captured_effect_mismatch",
+  "ae_exact_claim": false,
+  "case_id": "final_random10_olm_smoother_v2_07",
+  "case_contract_sha256": "e8870b11b7a072b84fe8e4554c9e058468f15f7daf5b4be0d576d6b00a980403",
+  "host": {
+    "platform": "Windows",
+    "ae_version": "26.3x87",
+    "renderer": "SOFTWARE",
+    "gpu_accel_type_raw": 1816,
+    "bits_per_channel": 32,
+    "working_space": "None",
+    "working_space_raw": "None",
+    "linear_blending": false,
+    "comp": {
+      "width": 1920,
+      "height": 1080,
+      "frame_rate": 24,
+      "frame": 0
+    }
+  },
+  "binaries": {
+    "aex": {
+      "path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\OLMSmoother2.aex",
+      "sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+    },
+    "aerender": {
+      "path": "C:\\Program Files\\Adobe\\Adobe After Effects 2026\\Support Files\\aerender.exe",
+      "sha256": "711859d183bdabec7c358a344208323bbbd665fffd7e88e42b9b234f9b99692a"
+    },
+    "cdb": {
+      "path": "C:\\Program Files (x86)\\Windows Kits\\10\\Debuggers\\x64\\cdb.exe",
+      "sha256": "b806eaea373d6add99fd9825a34820eb0779b9045cf71eecd7d070d58b8b6f6d"
+    }
+  },
+  "source": {
+    "path": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMSmootherv2/olm_bitdepth_32bpc_olmsmoother2_exr_20260710__software_32bpc__fr24__final_random10_olm_smoother_v2_07_before_effects.exr",
+    "sha256": "366eb9e01e7c3c60df59dbcf6fb549a57d2156e95105fbea397de5353736c9fb",
+    "interpretation": "Preserve RGB",
+    "template_path": "refs/fixtures/olmsmoother2_32bpc_preserve_rgb_input_template_20260726.aep",
+    "template_sha256": "51fd5403b0a43825f0f6d189c49154ad756f4c565498f733c1fb725377583679"
+  },
+  "project": {
+    "path": "refs/fixtures/olmsmoother2_case07_preserve_rgb_effect_20260727.aep",
+    "sha256": "689da9c07512f821c869e0e17031db3d05953896e50b6b2385762f26afcf2f0d",
+    "built_by": "Mac AE 26.3x87 from the hash-bound Preserve RGB template",
+    "effect_enabled": true,
+    "full_parameter_binding": true
+  },
+  "output_module": {
+    "template_name": "OLM EXR 32 Float",
+    "source": "AEP-embedded settings",
+    "aerender_omtemplate_override": false,
+    "profile_observed": "Preserve RGB (disable color management conversions for this item)",
+    "format": "OpenEXR",
+    "compression": "none",
+    "physical_channel_order": ["A", "B", "G", "R"],
+    "sample_types": [2, 2, 2, 2],
+    "dimensions": [1920, 1080],
+    "alpha_mode": "premultiplied"
+  },
+  "artifacts": {
+    "no_effect_control": {
+      "path": "windows_preserve_rgb_no_effect.exr",
+      "sha256": "046850a4587ef5ca07f120cdd1a990bbac8186accd4f65d7f8f8ec1b0d0d3292",
+      "header_metadata": {
+        "dimensions": [1920, 1080],
+        "physical_channel_order": ["A", "B", "G", "R"],
+        "sample_types": [2, 2, 2, 2],
+        "compression": 0,
+        "finite_sample_count": 8294400,
+        "nonfinite_sample_count": 0,
+        "alpha_mode": "premultiplied",
+        "color_profile": "Preserve RGB"
+      }
+    },
+    "effect_on": {
+      "path": "windows_preserve_rgb_effect_on.exr",
+      "sha256": "404d2b5732adf9bbbc6aadab4a1f0dd075e4e0f911b29076339f6f0e17479cc0",
+      "same_render_as_pf32_entry": true,
+      "header_metadata": {
+        "dimensions": [1920, 1080],
+        "physical_channel_order": ["A", "B", "G", "R"],
+        "sample_types": [2, 2, 2, 2],
+        "compression": 0,
+        "finite_sample_count": 8294400,
+        "nonfinite_sample_count": 0,
+        "alpha_mode": "premultiplied",
+        "color_profile": "Preserve RGB"
+      }
+    }
+  },
+  "pf32_input_entry": {
+    "path": "refs/conformance/fixtures/olmsmoother2_case07_pf32_entry_20260727/pf32_input_entry_argb.bin.gz",
+    "stored_sha256": "f29cad40b4f0081fa5f279da0e875198a2970ea2d9c1161db7cc2058acf4044c",
+    "uncompressed_sha256": "133a9447f8d722a7add9a5c7fc63bcf16b7e77c21cab9aa7c48d84df8677685b",
+    "uncompressed_size": 33177600,
+    "channel_order": ["A", "R", "G", "B"],
+    "width": 1920,
+    "height": 1080,
+    "rowbytes": 30720,
+    "word_count": 8294400,
+    "same_run": true,
+    "same_run_effect_sha256": "404d2b5732adf9bbbc6aadab4a1f0dd075e4e0f911b29076339f6f0e17479cc0",
+    "process_id": 46428,
+    "descriptor_address": "0x000000b7192fa290",
+    "data_address": "0x0000023395760100",
+    "aex_pf32_entry_rva": "0x4270",
+    "capture_method": "CDB entry breakpoint plus read-only ReadProcessMemory",
+    "source_comparison": {
+      "status": "raw_float32_exact",
+      "mismatched_words": 0,
+      "max_raw_u32_delta": 0
+    }
+  },
+  "raw_float32_comparisons": {
+    "source_vs_windows_no_effect": {
+      "mismatched_values": 0,
+      "max_raw_u32_delta": 0
+    },
+    "first_windows_effect_capture_vs_same_run_witness": {
+      "mismatched_values": 0,
+      "max_raw_u32_delta": 0
+    },
+    "windows_effect_vs_mac_effect": {
+      "mismatched_values": 3108911,
+      "max_raw_u32_delta": 1583
+    }
+  },
+  "support": {
+    "cdb_script": {
+      "path": "refs/runtime_trace_support/olmsmoother2_case07_pf32_entry_20260727/capture_case07_pf32_entry.cdb",
+      "sha256": "8fac4d71796d23171d43695cb031c837d547075f78b4b01d6b2e5e3606a7590a"
+    },
+    "read_process_memory_script": {
+      "path": "refs/runtime_trace_support/olmsmoother2_case07_pf32_entry_20260727/read_process_memory.ps1",
+      "sha256": "21f60de11793651edcbbbe8157464197c718afb393e0204d191e2a2dbcced574"
+    },
+    "trace_excerpt": {
+      "path": "refs/runtime_trace_support/olmsmoother2_case07_pf32_entry_20260727/trace_excerpt.txt",
+      "sha256": "dfc2fcdfcce103d77a4ca3b172cfab69cb3de3c5bb760c8574b2c5409f6a8c26"
+    }
+  }
+}
