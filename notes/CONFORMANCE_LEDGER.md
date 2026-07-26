@@ -1,18 +1,20 @@
 # OLM Conformance Ledger
 
-- 2026-07-26 `OLMSmoother2 native writer-boundary correction` (latest
-  override): no Mac `AE exact` status is promoted. The 12/12-exact actual-AEX
-  oracle proves that Windows writes straight PF8 RGB with
-  `param_8+0x19 == 0`; AE premultiplies the later PNG export. Removing the
-  Mac port's forced internal premultiply changes native-vs-oracle case 0002
-  from a broad `3,247px / max=64` normalized residual to exact and leaves case
-  0003 exact. Remaining normalized residuals are sparse: 0001 `271px`,
-  0004 `304px`, 0005 `129px`, 0006 `139px`, 0007 `532px`, 0008 `439px`,
-  0009 `722px`, 0010 `2,114px`, 0011 `2,038px`, 0012 `177px`. At case 0001
-  witness `(1612,455)`, actual-AEX alpha is `2/3`, while the Mac case-`0x10`
-  cardinal polygon contains weights `1/6 + 1/3 = 1/2`. Next allowed action:
-  close that missing `1/6` polygon contribution against decomp/actual-AEX
-  evidence. Forbidden: writer, export, or global alpha retuning. Evidence:
+- 2026-07-26 `OLMSmoother2 native leaf/gamma closeout` (latest override): no
+  Mac `AE exact` status is promoted. AEX-decompiled `1.0f` defaults correct
+  four long-leaf scale initializers; the internal v2 gamma flag and exact
+  five-color CLI parser are also corrected. Against the 12/12-exact
+  actual-AEX oracle, every native case is now `max_diff<=1`: raw exact `2/12`,
+  AE-normalized exact `3/12`. Remaining differing pixel counts are 0001 `83`,
+  0004 `108`, 0005 `7`, 0006 `113`, 0007 `34`, 0008 raw `1`, 0009 `42`,
+  0010 `41`, 0011 raw `46` / normalized `45`, and 0012 `18`. A 9x9 case-0001
+  witness proves the native cce0 alpha is `0x3f242423` versus actual-AEX
+  `0x3f242424`; the first observed difference is already present at `ab00`
+  center input (`0x3f41c1c2` versus `0x3f41c1c3`). Global reciprocal-input and
+  global positive-ULP compensation experiments were both rejected by the full
+  suite. Next allowed action: prove the precise PF8 host conversion/arithmetic
+  boundary per operation, then perform Mac AE validation. Forbidden: global
+  input, writer, export, or alpha retuning. Evidence:
   `refs/conformance/olmsmoother2_native_vs_actual_aex_20260726.md`.
 
 - 2026-07-25 `OLMSmoother2 actual-AEX host-I/O closeout` (latest override):

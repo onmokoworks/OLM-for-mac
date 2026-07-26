@@ -168,6 +168,27 @@ bool find_param_color(const std::string &json, const std::string &key, PF_Pixel8
 	return true;
 }
 
+bool find_nth_named_param_color(const std::string &json, const std::string &name,
+                                int target_index, PF_Pixel8 &out) {
+	size_t search_from = 0;
+	int matched = 0;
+	while (true) {
+		size_t name_key = json.find("\"name\"", search_from);
+		if (name_key == std::string::npos) return false;
+		size_t colon = json.find(':', name_key);
+		size_t quote = colon == std::string::npos ? std::string::npos : json.find('"', colon + 1);
+		size_t end = quote == std::string::npos ? std::string::npos : json.find('"', quote + 1);
+		if (end == std::string::npos) return false;
+		if (json.substr(quote + 1, end - quote - 1) == name) {
+			if (matched == target_index) {
+				return find_param_color(json.substr(name_key), name, out);
+			}
+			++matched;
+		}
+		search_from = end + 1;
+	}
+}
+
 }  // namespace
 
 int main(int argc, char **argv) {
@@ -185,6 +206,9 @@ int main(int argc, char **argv) {
 	int skip_index = -1;
 	int trace_x = -1;
 	int trace_y = -1;
+	int writer_frame_x = -1;
+	int writer_frame_y = -1;
+	std::string writer_frame_json;
 	for (int i = 1; i < argc; ++i) {
 		std::string a = argv[i];
 		auto next = [&]() -> std::string { return (i + 1 < argc) ? argv[++i] : std::string(); };
@@ -212,9 +236,20 @@ int main(int argc, char **argv) {
 			trace_x = std::stoi(xy.substr(0, comma));
 			trace_y = std::stoi(xy.substr(comma + 1));
 		}
+		else if (a == "--writer-frame") {
+			std::string xy = next();
+			size_t comma = xy.find(',');
+			if (comma == std::string::npos) {
+				std::fprintf(stderr, "--writer-frame must be x,y\n");
+				return 2;
+			}
+			writer_frame_x = std::stoi(xy.substr(0, comma));
+			writer_frame_y = std::stoi(xy.substr(comma + 1));
+		}
+		else if (a == "--writer-frame-json") writer_frame_json = next();
 	}
 	if (in_path.empty() || out_path.empty()) {
-		std::fprintf(stderr, "usage: olmsmoother2_cli --input in.png --params case.json --output out.png [--force-version 1|2] [--idx0-mode none|suppress|half|quarter|double] [--idx18-mode none|skip-cardinal3|skip-cardinal12] [--plane-split-mode none|sample-pre-setup|class-pre-setup|sample-pre-gamma|class-pre-gamma] [--cplane-read-mode normal|south2-se1|south0-se1] [--class-threshold-mode normal|smooth-range|zero|key-predicate] [--curve-idx-override N] [--leaf-diag-mode normal|suppress-f270] [--index-hist out.csv] [--idx18-key-hist out.csv] [--skip-index 0..255] [--trace-pixel x,y]\n");
+		std::fprintf(stderr, "usage: olmsmoother2_cli --input in.png --params case.json --output out.png [--writer-frame x,y --writer-frame-json report.json] [diagnostic options...]\n");
 		return 2;
 	}
 	if (idx0_mode == "none") g_olmsmoother2_idx0_diag_mode = 0;
@@ -274,6 +309,14 @@ int main(int argc, char **argv) {
 	}
 	g_olmsmoother2_skip_index_diag = skip_index;
 	OLMSmoother2SetTracePixel(trace_x, trace_y);
+	const bool writer_frame_requested =
+	    writer_frame_x >= 0 || writer_frame_y >= 0 || !writer_frame_json.empty();
+	if (writer_frame_requested &&
+	    (writer_frame_x < 0 || writer_frame_y < 0 || writer_frame_json.empty())) {
+		std::fprintf(stderr, "--writer-frame x,y and --writer-frame-json must be supplied together with non-negative coordinates\n");
+		return 2;
+	}
+	if (writer_frame_requested) OLMSmoother2SetWriterFrameProbe(writer_frame_x, writer_frame_y, writer_frame_json.c_str());
 	OLMSmoother2ResetIndexHistogram(!index_hist_path.empty());
 	OLMSmoother2ResetIdx18KeyHistogram(!idx18_key_hist_path.empty());
 
@@ -303,16 +346,7 @@ int main(int argc, char **argv) {
 			find_param_number(json, "Gamma Value", gamma_value);
 			find_param_number(json, "Number of Gamma Colors", num_gamma);
 			for (int i = 0; i < NUM_GAMMA_COLORS; ++i) {
-				size_t search_from = 0;
-				for (int k = 0; k <= i; ++k) {
-					search_from = json.find("\"Gamma Color\"", search_from);
-					if (search_from == std::string::npos) break;
-					if (k != i) ++search_from;
-				}
-				if (search_from != std::string::npos) {
-					std::string sub = json.substr(search_from);
-					find_param_color(sub, "Gamma Color", gamma_colors[i]);
-				}
+				find_nth_named_param_color(json, "Gamma Color", i, gamma_colors[i]);
 			}
 		}
 		if (force_version > 0.0) version = force_version;
@@ -384,6 +418,10 @@ int main(int argc, char **argv) {
 			d[0] = s[1]; d[1] = s[2]; d[2] = s[3]; d[3] = s[0];
 		}
 		write_png(out_path, res);
+		if (writer_frame_requested && !std::filesystem::is_regular_file(writer_frame_json)) {
+			std::fprintf(stderr, "writer-frame probe did not produce %s\n", writer_frame_json.c_str());
+			return 1;
+		}
 		std::printf("wrote: %s (OLMSmoother2 smoothness=%d extra=%d range=%d version=%d gamma=%d)\n",
 		            out_path.c_str(), (int)p_smooth.u.sd.value, (int)p_extra.u.sd.value,
 		            (int)p_range.u.sd.value, (int)p_version.u.pd.value,

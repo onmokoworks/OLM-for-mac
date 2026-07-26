@@ -484,6 +484,34 @@ struct SmootherPolygon {
 	int32_t bound_y() const { return cplane_h; }
 };
 
+// CLI-only same-state bridge probe. The AE path leaves this disabled.
+struct WriterFrameProbe {
+	int x = -1;
+	int y = -1;
+	const char *json_path = nullptr;
+	bool captured = false;
+	FPix cce0{};
+	SmootherPolygon polygon{};
+	uint8_t expected[4] = {};
+	uint8_t actual[4] = {};
+};
+static WriterFrameProbe g_olmsmoother2_writer_frame_probe;
+
+static uint32_t olmsmoother2_f32_u32(float value)
+{
+	uint32_t bits;
+	std::memcpy(&bits, &value, sizeof(bits));
+	return bits;
+}
+
+static void OLMSmoother2SetWriterFrameProbe(int x, int y, const char *json_path)
+{
+	g_olmsmoother2_writer_frame_probe = WriterFrameProbe{};
+	g_olmsmoother2_writer_frame_probe.x = x;
+	g_olmsmoother2_writer_frame_probe.y = y;
+	g_olmsmoother2_writer_frame_probe.json_path = json_path;
+}
+
 // ---- helpers for plane access (NN at integer grid) ----
 static inline float fplane_alpha(const FPlane &plane, int x, int y, int w, int h) {
 	if (x < 0 || x >= w || y < 0 || y >= h) return 0.0f;
@@ -837,7 +865,7 @@ static bool win_leaf_ec40(SmootherPolygon &poly, const int *p2) {
 	int total = p2[3] - p2[0] + 1;
 	int cur_span = span_end - p2[0];
 	float fmul   = poly.extra_n * K_DD8 + K_HALF;
-	float wscale_h = K_HALF;
+	float wscale_h = K_ONE;
 	if (((c - 3) & ~4) == 0) {
 		int x = p2[0];
 		int y = p2[1];
@@ -919,7 +947,7 @@ static bool win_leaf_e640(SmootherPolygon &poly, const int *p2) {
 	int cur_span = p2[3] - span_end;
 	int total = p2[3] - p2[0] + 1;
 	float fmul = poly.extra_n * K_DD8 + K_HALF;
-	float wscale_h = K_HALF;
+	float wscale_h = K_ONE;
 	if (((c - 3) & ~4) == 0) {
 		int x = p2[3]; int y = p2[4];
 		while (true) {
@@ -2874,13 +2902,15 @@ static bool win_leaf_f540(SmootherPolygon &poly, const int *p2) {
 }
 static bool win_leaf_ef20(SmootherPolygon &poly, const int *p2) {
 	int c = win_e200(poly, p2);
+	const bool trace_this_pixel =
+	    poly.cur_x == g_olmsmoother2_trace_x && poly.cur_y == g_olmsmoother2_trace_y;
 	if (((c - 1) & ~6) != 0 || c == 5) return false;
 	GridDesc g = grid_of(poly);
 	int s[3]; int in0[2] = { p2[0], p2[1] }; scan_d800(s, &g, in0);
 	int span = s[0] - p2[0];
 	int total = p2[3] - p2[0];
 	float fmul = poly.extra_n * K_DD8 + K_HALF;
-	float wsh = K_HALF;
+	float wsh = K_ONE;
 	if (((c - 3) & ~4) == 0) {
 		int x = p2[0], y = p2[1];
 		while (true) {
@@ -2889,6 +2919,11 @@ static bool win_leaf_ef20(SmootherPolygon &poly, const int *p2) {
 			if (px < 0 || px >= poly.cplane_w || y < 0 || y >= poly.cplane_h) break;
 			int s2[3]; int in2[2] = { px, y }; scan_d520(s2, &g, in2);
 			wsh = K_ONE;
+			if (trace_this_pixel) {
+				std::fprintf(stderr,
+				             "trace ef20 chase in=(%d,%d) out=(%d,%d,%d) scale=%.8g\n",
+				             px, y, s2[0], s2[1], s2[2], wsh);
+			}
 			if (s2[2] == 2) break;
 			wsh = K_HALF;
 			x = s2[0]; y = s2[1];
@@ -2896,6 +2931,11 @@ static bool win_leaf_ef20(SmootherPolygon &poly, const int *p2) {
 		}
 	}
 	float w = (float)(span + 1) * fmul / (float)(total + 1);
+	if (trace_this_pixel) {
+		std::fprintf(stderr,
+		             "trace ef20 c=%d d800=(%d,%d,%d) span=%d total=%d fmul=%.8g scale=%.8g weight=%.8g\n",
+		             c, s[0], s[1], s[2], span, total, fmul, wsh, w);
+	}
 	return win_e430(poly, p2, w, wsh);
 }
 static bool win_leaf_f890(SmootherPolygon &poly, const int *p2) {
@@ -2939,7 +2979,7 @@ static bool win_leaf_e950(SmootherPolygon &poly, const int *p2) {
 	int span = p2[3] - s[0];
 	int total = p2[3] - p2[0];
 	float fmul = poly.extra_n * K_DD8 + K_HALF;
-	float wsh = K_HALF;
+	float wsh = K_ONE;
 	if (((c - 3) & ~4) == 0) {
 		int x = p2[3], y = p2[4];
 		while (true) {
@@ -3721,11 +3761,13 @@ static float win_FUN_18000bb10_adaptive_gamma(const FPix &center,
 	// UI "Gamma Colors" maps here. FUN_18000a9c0 compares RGB only using
 	// DAT_18002268c; only the zero-valued internal config uses output transfer.
 	if (win_gamma_mode == 3 && p.num_gamma_colors > 0) {
+		const bool trace_this_pixel =
+		    poly.cur_x == g_olmsmoother2_trace_x && poly.cur_y == g_olmsmoother2_trace_y;
 		auto matches_gamma_color = [&](float r, float g, float b) -> bool {
-			// FUN_18000a9c0 converts through the output transfer only when the
-			// low 32-bit version/config field is zero. Normal v1/v2 values are
-			// already in the comparison space and must not be re-encoded.
-			if (p.version == 0) {
+			// FUN_18000cce0 receives the setup struct at +8. Its low 32-bit
+			// field is the internal version flag: v1=1, v2=0. a9c0 applies the
+			// output transfer when that flag is zero, so UI v2 must re-encode.
+			if (p.version != SMOOTHER_V1) {
 				r = (float)win_FUN_180004d70_literal(r);
 				g = (float)win_FUN_180004d70_literal(g);
 				b = (float)win_FUN_180004d70_literal(b);
@@ -3733,6 +3775,11 @@ static float win_FUN_18000bb10_adaptive_gamma(const FPix &center,
 			const int n = std::min(p.num_gamma_colors, NUM_GAMMA_COLORS);
 			for (int i = 0; i < n; ++i) {
 				const PF_PixelFloat &key = p.gamma_colors[i];
+				if (trace_this_pixel) {
+					std::fprintf(stderr,
+					             "trace a9c0 candidate=(%.8g,%.8g,%.8g) key[%d]=(%.8g,%.8g,%.8g)\n",
+					             r, g, b, i, key.red, key.green, key.blue);
+				}
 				if (fabs_bits(r - key.red)   < K_COLOR_TOL &&
 				    fabs_bits(g - key.green) < K_COLOR_TOL &&
 				    fabs_bits(b - key.blue)  < K_COLOR_TOL) {
@@ -3845,6 +3892,10 @@ static void win_FUN_18000cce0_orchestrate(FPix &out_pixel,
 	const bool trace_this_pixel =
 	    (x == g_olmsmoother2_trace_x && y == g_olmsmoother2_trace_y);
 	build_polygon(poly, plane_in, x, y, p);
+	if (g_olmsmoother2_writer_frame_probe.json_path &&
+	    x == g_olmsmoother2_writer_frame_probe.x && y == g_olmsmoother2_writer_frame_probe.y) {
+		g_olmsmoother2_writer_frame_probe.polygon = poly;
+	}
 
 	if (trace_this_pixel) {
 		std::fprintf(stderr,
@@ -3860,6 +3911,11 @@ static void win_FUN_18000cce0_orchestrate(FPix &out_pixel,
 
 	if (poly.count == 0) {
 		out_pixel = center;
+		if (g_olmsmoother2_writer_frame_probe.json_path &&
+		    x == g_olmsmoother2_writer_frame_probe.x && y == g_olmsmoother2_writer_frame_probe.y) {
+			g_olmsmoother2_writer_frame_probe.cce0 = out_pixel;
+			g_olmsmoother2_writer_frame_probe.captured = true;
+		}
 		if (trace_this_pixel) {
 			std::fprintf(stderr,
 			             "trace cce0_exit_passthrough out=%.8f,%.8f,%.8f,%.8f\n",
@@ -3929,6 +3985,11 @@ static void win_FUN_18000cce0_orchestrate(FPix &out_pixel,
 	}
 
 	out_pixel = accum;
+	if (g_olmsmoother2_writer_frame_probe.json_path &&
+	    x == g_olmsmoother2_writer_frame_probe.x && y == g_olmsmoother2_writer_frame_probe.y) {
+		g_olmsmoother2_writer_frame_probe.cce0 = out_pixel;
+		g_olmsmoother2_writer_frame_probe.captured = true;
+	}
 }
 
 // ============================================================================
@@ -3950,6 +4011,47 @@ static inline double win_FUN_180004d70_literal(double v)
 	if (v >= S_ONE) return S_ONE;
 	if (v < S_BREAK) return v * S_1292;
 	return pow(v, S_INV24) * S_1055 - S_OFFSET2;
+}
+
+static void OLMSmoother2WriteWriterFrameProbe(bool apply_inverse_gamma, bool keep_premul)
+{
+	WriterFrameProbe &probe = g_olmsmoother2_writer_frame_probe;
+	if (!probe.json_path || !probe.captured) return;
+	FPix px = probe.cce0;
+	float r = px.r, g = px.g, b = px.b, a = px.a;
+	if (apply_inverse_gamma) {
+		r = (float)win_FUN_180004d70_literal((double)r);
+		g = (float)win_FUN_180004d70_literal((double)g);
+		b = (float)win_FUN_180004d70_literal((double)b);
+	}
+	if (keep_premul && a != K_ONE) {
+		r *= a; g *= a; b *= a;
+	}
+	probe.expected[0] = clamp8(a);
+	probe.expected[1] = clamp8(r);
+	probe.expected[2] = clamp8(g);
+	probe.expected[3] = clamp8(b);
+	FILE *fp = std::fopen(probe.json_path, "w");
+	if (!fp) return;
+	std::fprintf(fp, "{\"x\":%d,\"y\":%d,\"cce0_rgba\":[%.9g,%.9g,%.9g,%.9g],\"cce0_rgba_u32\":[%u,%u,%u,%u],\"polygon_count\":%d,\"polygon\":[",
+	             probe.x, probe.y, probe.cce0.r, probe.cce0.g, probe.cce0.b, probe.cce0.a,
+	             olmsmoother2_f32_u32(probe.cce0.r), olmsmoother2_f32_u32(probe.cce0.g),
+	             olmsmoother2_f32_u32(probe.cce0.b), olmsmoother2_f32_u32(probe.cce0.a),
+	             probe.polygon.count);
+	for (int i = 0; i < probe.polygon.count; ++i) {
+		const PolyVertex &v = probe.polygon.samples[i];
+		if (i) std::fputc(',', fp);
+		std::fprintf(fp, "{\"rgba_u32\":[%u,%u,%u,%u],\"weight_u32\":%u}",
+		             olmsmoother2_f32_u32(v.r), olmsmoother2_f32_u32(v.g),
+		             olmsmoother2_f32_u32(v.b), olmsmoother2_f32_u32(v.a),
+		             olmsmoother2_f32_u32(v.w));
+	}
+	const bool equal = std::memcmp(probe.expected, probe.actual, sizeof(probe.expected)) == 0;
+	std::fprintf(fp, "],\"expected_pf8_argb_memory\":[%u,%u,%u,%u],\"actual_pf8_argb_memory\":[%u,%u,%u,%u],\"invariant\":\"cce0_to_pf8_writer_bytes_equal\",\"writer_bytes_equal\":%s}\n",
+	             probe.expected[0], probe.expected[1], probe.expected[2], probe.expected[3],
+	             probe.actual[0], probe.actual[1], probe.actual[2], probe.actual[3],
+	             equal ? "true" : "false");
+	std::fclose(fp);
 }
 
 // FUN_180004c30 — LUT-based inverse via linear interpolation over a user LUT.
@@ -4231,6 +4333,13 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 			if (std::is_same<P, PF_Pixel8>::value) {
 				PF_Pixel8 *q = (PF_Pixel8 *)&dst[x];
 				q->alpha = clamp8(a); q->red = clamp8(r); q->green = clamp8(g); q->blue = clamp8(b);
+				if (g_olmsmoother2_writer_frame_probe.json_path &&
+				    x == g_olmsmoother2_writer_frame_probe.x && y == g_olmsmoother2_writer_frame_probe.y) {
+					g_olmsmoother2_writer_frame_probe.actual[0] = q->alpha;
+					g_olmsmoother2_writer_frame_probe.actual[1] = q->red;
+					g_olmsmoother2_writer_frame_probe.actual[2] = q->green;
+					g_olmsmoother2_writer_frame_probe.actual[3] = q->blue;
+				}
 			} else if (std::is_same<P, PF_Pixel16>::value) {
 				PF_Pixel16 *q = (PF_Pixel16 *)&dst[x];
 				q->alpha = clamp16(a); q->red = clamp16(r); q->green = clamp16(g); q->blue = clamp16(b);
@@ -4247,6 +4356,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 			}
 		}
 	}
+	OLMSmoother2WriteWriterFrameProbe(apply_inverse_gamma, p.keep_premul);
 
 	return err;
 }
