@@ -5,8 +5,8 @@
 - Plug-in: OLM Smoother v2
 - Feature/path: 8bpc cel-line smoother, color-key, gamma/color-space, v1/v2
   compatibility
-- Bit depth: 8bpc exact for the covered lanes; 16bpc still needs expansion.
-  The bound 32bpc no-key case-07 Preserve-RGB slice is also AE exact.
+- Bit depth: 8bpc exact for the covered lanes. The bound no-key case-07
+  Preserve-RGB slice is also AE exact at both 16bpc and 32bpc.
 - Current reference target: current Windows AEX Software recaptures.
 - Retired reference set: `refs/win_references/20260605_extra/OLMSmoother2`
   is reference-only for legacy cases because `case_0001` does not match the
@@ -22,6 +22,9 @@
   32bpc case is promoted: the exact-AEX Windows Preserve RGB recapture and Mac
   use the same FLOAT EXR source, the Windows PF32 entry is word-exact with that
   source, and both the no-effect and effect-on outputs are raw FLOAT32 exact.
+  The declared 16bpc case-07 slice is also exact: runtime evidence proves PF16
+  uses the captured Windows decode and inverse LUTs, and both required raw
+  FLOAT32 AE comparisons are exact.
 
 ## Source Evidence
 
@@ -60,6 +63,7 @@
 | A bounded 16x16 Unicorn run now executes the checked-in current Windows AEX naturally from the audited PF8 adapter through key removal, sRGB decode, class-plane generation, `cce0 -> c280 -> fef0 -> f270 -> f130`, and the compact two-vertex cce0 input. The post-boost builder polygon is float32-word identical to the compact polygon consumed by cce0; the AEX returns `[0.85751957,0.85751957,0.85751957,0.93870682]`. The runner still manually constructs the crop and render config and lacks a full worker-to-writer bridge, so this proves bounded AEX ownership/reachability rather than equality with the full live Windows host context. The retained 3-ULP source difference is not attributable to UCRT `pow`: Darwin libm and a high-precision oracle agree, and forcing the retained word does not change this witness downstream. | `refs/conformance/olmsmoother2_case0012_natural_post_f130_20260718.md`, `refs/conformance/olmsmoother2_case0012_bounded_assumption_audit_20260718.md`, `refs/conformance/olmsmoother2_imported_pow_boundary_20260718.md`. | bounded actual-AEX natural chain / config-host-writer audit pending |
 | The corrected PF8 load, `1/12.92` decode constant, and optimized conformance build close the full current-AEX legacy/key/gamma 8bpc set: native raw output is `12/12` byte-exact with the actual AEX plane and Mac AE is `12/12`, `max_diff=0` against Windows AE Software. | `refs/conformance/olmsmoother2_native_vs_actual_aex_20260726.md`. | AE exact / actual-AEX exact |
 | The hash-bound Preserve-RGB 32bpc no-key case-07 contract is Windows/Mac AE `26.3x87` exact. Exact Windows AEX RVA `0x4270` receives a `1920x1080`, `rowbytes=30720` PF32 ARGB world that is word-exact with the bound source (`0/8,294,400`). Runtime capture localizes the final divergence to AA coverage weight generation (`0x3c83df6f` Windows vs pre-fix `0x3c83df70` Mac at `(738,287)`); PF32-only separate scalar rounding and captured gamma LUTs make both no-effect and effect-on raw FLOAT32 exact. The final binary also preserves the frozen 8bpc suite at `12/12`, `max_diff=0`. | `refs/conformance/olmsmoother2_case07_32bpc_mac_ae_exact_20260727.md`, `refs/conformance/olmsmoother2_case07_windows_preserve_rgb_reference_20260727.json`. | binary/runtime-grounded / AE exact |
+| The hash-bound Preserve-RGB 16bpc no-key case-07 contract is Windows/Mac AE `26.3x87` exact. The initial effect residual was 71 max-1 FLOAT32 words. PF16 inverse-LUT routing reduced it to 21 R words. CDB at `(477,897)` then proved the polygon weight already matched (`0x3b8bf256`) while pre-composite center/sample words differed by 1–3 ULP because Windows PF16 frame decode uses the captured 10,000-entry LUT and Mac still used the literal transform. Routing PF16 decode through that same LUT makes both no-effect and effect-on raw exact (`0/8,294,400`, max raw delta `0`). The experimental composite/FMA split was removed as unnecessary, and PF8 remains unchanged. | `refs/conformance/olmsmoother2_case07_16bpc_mac_ae_exact_20260727.md`. | binary/runtime-grounded / AE exact |
 
 ## Parameters
 
@@ -747,7 +751,8 @@ filter.
 | no-key grid | 8bpc | AE exact for packaged grid | 12/12 exact in 2026-06-19 and 2026-06-20 AE pixel returns | Optional runtime trace for binary-grounding; do not PNG-tune |
 | key/gamma paths | 8bpc | guarded / writer-grounded residual | Full current-AEX recapture imported. With AE-saved premultiplied before frames, `legacy_case_0002` and `0003` are exact. Smooth Range threshold promotion makes the `0004 (501,1055)` target cce0 value match the Windows final writer floats, and reduces the 11-case mean-sum from `1.3008` to `0.0589`. Remaining localized residuals include `0004 max=113 mean=0.0045` and `0012 max=91 mean=0.0151`; the `0012` max witness is now `(91,841)` and is isolated to `cardinal6 key=50 -> f270/e170/e3a0`. Decision matrix `refs/reports/olmsmoother2_current_aex_decision_matrix_20260624/decision_matrix.md` rejects `bb10/curve_idx` as inert and global `f270` suppression as worse. | Keep the Smooth Range threshold fix. Next proof should be binary/runtime evidence for `d3b0/da50/e170/f270/e3a0` on `(91,841)` and a polygon/no-polygon proof for `0004 (1903,519)`; broad alpha/index/curve-index/f270-suppression probes were worse or inert |
 | standalone v1 | 8bpc | AE exact for packaged v1 slices | 3/3 exact in corrected 960x540 2026-06-20 AE pixel rerun | Decide whether v1 stays independent or maps to v2 compatibility |
-| no-key case-07 | 32bpc | AE exact | Preserve-RGB PF32 entry, no-effect, and effect-on are all raw FLOAT32 exact (`0/8,294,400`, max raw delta `0`); final binary keeps 8bpc `12/12`, `max_diff=0` | Freeze this declared slice and expand 16bpc |
+| no-key case-07 | 16bpc | AE exact | Preserve-RGB no-effect and effect-on are raw FLOAT32 exact (`0/8,294,400`, max raw delta `0`); PF16 decode/inverse use the captured Windows runtime LUTs and the final binary preserves 8bpc/32bpc exactness | Freeze this declared slice; expand only under independent 16bpc contracts |
+| no-key case-07 | 32bpc | AE exact | Preserve-RGB PF32 entry, no-effect, and effect-on are all raw FLOAT32 exact (`0/8,294,400`, max raw delta `0`); final binary keeps 8bpc `12/12`, `max_diff=0` | Freeze this declared slice; expand only under independent 32bpc contracts |
 
 ## Open Questions
 

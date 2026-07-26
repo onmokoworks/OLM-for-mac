@@ -123,15 +123,19 @@ Default next-action priority:
 
 - The current-AEX legacy/key/gamma 8bpc suite is Mac AE `12/12`,
   `max_diff=0`.
+- The declared no-key 16bpc case-07 Preserve-RGB slice is raw FLOAT32 exact
+  for both its no-effect control and effect-on output: `0/8,294,400`
+  mismatched words and max raw u32 delta `0`.
 - The declared no-key 32bpc case-07 Preserve-RGB slice is raw FLOAT32 exact
   for both its no-effect control and effect-on output: `0/8,294,400`
   mismatched words and max raw u32 delta `0`.
-- Both results use the same final `-O2` Mac binary
-  `63c1b84f7df409f8789da962b40b737fe76e470a8684b4b79f35a3d446cb2377`.
-- This does not promote 16bpc or untested 32bpc cases. The next work lane is
-  `bitdepth-expand`, with the exact 8bpc and declared 32bpc slices frozen.
+- All three results use the same final `-O2` Mac binary
+  `45227dd84cad09eb483c8ce534132df1b80322e4ac1d6f32320d3887b1a35c3d`.
+- This does not promote untested 16bpc or 32bpc cases. The next work lane is
+  `bitdepth-expand`, with the exact 8bpc and declared case-07 slices frozen.
 
 Evidence:
+`refs/conformance/olmsmoother2_case07_16bpc_mac_ae_exact_20260727.md` and
 `refs/conformance/olmsmoother2_case07_32bpc_mac_ae_exact_20260727.md`.
 
 ## Reference Path

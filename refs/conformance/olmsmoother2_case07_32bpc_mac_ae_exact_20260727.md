@@ -6,7 +6,7 @@ Software renderer, 32bpc project, working space `None`, disabled linear
 blending, and uncompressed FLOAT RGBA EXR output contract.
 
 The final Mac plug-in binary is
-`63c1b84f7df409f8789da962b40b737fe76e470a8684b4b79f35a3d446cb2377`
+`45227dd84cad09eb483c8ce534132df1b80322e4ac1d6f32320d3887b1a35c3d`
 and is built with the sole Xcode configuration at `-O2`.
 
 | Gate | Compared words | Mismatches | Max raw u32 delta |
@@ -38,5 +38,6 @@ binary passed the complete 8bpc Mac AE request
 
 The machine-readable attestation is
 `refs/conformance/olmsmoother2_case07_32bpc_mac_ae_exact_20260727.json`.
-This promotes only the declared 32bpc case-07 slice. It does not promote
-16bpc or untested 32bpc cases.
+This promotes only the declared 32bpc case-07 slice. The independently
+declared 16bpc case-07 slice is documented separately; untested 16bpc and
+32bpc cases remain unpromoted.

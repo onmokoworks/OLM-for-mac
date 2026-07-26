@@ -1,8 +1,23 @@
 # OLM Conformance Ledger
 
+- 2026-07-27 `OLMSmoother2 no-key 16bpc case-07 AE exact closeout` (latest
+  override): the hash-bound 16bpc Software/working-space-None Preserve RGB
+  contract is Mac AE `26.3x87` `AE exact` against the unchanged Windows AEX.
+  The no-effect control and effect-on output are each raw exact at all
+  `8,294,400` FLOAT32 words (`max raw u32 delta 0`). Runtime CDB evidence
+  localized the former 71-word max-1 residual to PF16 gamma routing: Windows
+  uses its captured 10,000-entry runtime LUT for both frame decode and inverse
+  write, while Mac used literal transforms. The inverse-LUT correction reduced
+  the residual to 21 words; the decode-LUT correction made the pre-composite
+  center/sample words exact and closed the lane. The final `-O2` Mac binary
+  (`45227dd8...a35c3d`) preserves the frozen 8bpc suite at `12/12`,
+  `max_diff=0`, and the declared 32bpc case-07 PF32/no-effect/effect gates at
+  raw exact. Do not promote untested 16/32bpc cases. Evidence:
+  `refs/conformance/olmsmoother2_case07_16bpc_mac_ae_exact_20260727.md`.
+
 - 2026-07-27 `OLMSmoother2 no-key 32bpc case-07 AE exact closeout` (latest
   override): the hash-bound Preserve RGB contract is now Mac AE `26.3x87`
-  `AE exact`. The final `-O2` Mac binary (`63c1b84f...2377`) matches the
+  `AE exact`. The current final `-O2` Mac binary (`45227dd8...a35c3d`) matches the
   unchanged Windows AEX for both the no-effect control and effect-on output at
   all `8,294,400` FLOAT32 words (`max raw u32 delta 0`). The same-render
   Windows PF32 entry remains exact with the bound source. Binary/runtime
@@ -12,7 +27,8 @@
   `0x3c83df70`. PF32-only separated rounding plus the two 40,000-byte
   runtime-captured gamma LUTs closes the slice. The final binary was also
   regressed through Mac AE on the frozen 8bpc suite and is `12/12`,
-  `max_diff=0`. 16bpc remains unpromoted. Evidence:
+  `max_diff=0`. The later declared 16bpc case-07 closeout above supersedes the
+  former unpromoted status. Evidence:
   `refs/conformance/olmsmoother2_case07_32bpc_mac_ae_exact_20260727.md`.
 
 - 2026-07-27 `OLMSmoother2 no-key 32bpc case-07 attributable Preserve RGB

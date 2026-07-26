@@ -4332,7 +4332,8 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	if (p.version != SMOOTHER_V1) {
 		win_FUN_180002ba0_gamma_encode(
 		    scratch.data(), w, h, p,
-		    std::is_same<P, PF_PixelFloat>::value);
+		    std::is_same<P, PF_PixelFloat>::value ||
+		    std::is_same<P, PF_Pixel16>::value);
 	}
 
 	// Build an FPlane alias for the per-pixel orchestrator.
@@ -4507,7 +4508,8 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 			float r = px.r, g = px.g, b = px.b, a = px.a;
 
 			if (apply_inverse_gamma) {
-				if (std::is_same<P, PF_PixelFloat>::value) {
+				if (std::is_same<P, PF_PixelFloat>::value ||
+				    std::is_same<P, PF_Pixel16>::value) {
 					// Windows AE supplies a 10,000-entry inverse LUT at
 					// gamma_ctx+0x18. FUN_180004c30 interpolates it in double.
 					r = win_srgb_lut_interpolate(
@@ -4517,8 +4519,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 					b = win_srgb_lut_interpolate(
 					    _tmp_smoother2_inverse_lut_10000_bin, b);
 				} else {
-					// Preserve the already-exact 8bpc path. 16bpc remains a
-					// separate undeclared conformance lane.
+					// Preserve the already-exact 8bpc path.
 					r = (float)win_FUN_180004d70_literal((double)r);
 					g = (float)win_FUN_180004d70_literal((double)g);
 					b = (float)win_FUN_180004d70_literal((double)b);

@@ -1,0 +1,126 @@
+{
+  "kind": "olmsmoother2_case07_16bpc_mac_ae_exact_attestation",
+  "schema_version": 1,
+  "status": "ae_exact",
+  "ae_exact_claim": true,
+  "case_id": "final_random10_olm_smoother_v2_07",
+  "mac_host": {
+    "ae_version": "26.3x87",
+    "macos_version": "15.7.2",
+    "renderer_raw": 1816,
+    "bits_per_channel": 16,
+    "working_space_raw": "None",
+    "linear_blending": false
+  },
+  "binaries": {
+    "windows_aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "mac_plugin_sha256": "45227dd84cad09eb483c8ce534132df1b80322e4ac1d6f32320d3887b1a35c3d",
+    "mac_optimization_level": 2
+  },
+  "project": {
+    "path": "refs/fixtures/olmsmoother2_case07_preserve_rgb_effect_20260727.aep",
+    "sha256": "689da9c07512f821c869e0e17031db3d05953896e50b6b2385762f26afcf2f0d"
+  },
+  "source": {
+    "sha256": "366eb9e01e7c3c60df59dbcf6fb549a57d2156e95105fbea397de5353736c9fb"
+  },
+  "raw_float32_comparisons": {
+    "no_effect_control": {
+      "word_count": 8294400,
+      "mismatched_words": 0,
+      "max_raw_u32_delta": 0
+    },
+    "effect_on": {
+      "word_count": 8294400,
+      "mismatched_words": 0,
+      "max_raw_u32_delta": 0
+    }
+  },
+  "runtime_first_divergence": {
+    "stage": "PF16 frame decode",
+    "pixel": [477, 897],
+    "windows_center_rgba_float32_bits": [
+      "0x3bc26935",
+      "0x38d500cb",
+      "0x3b84ee21",
+      "0x3f800000"
+    ],
+    "mac_before_fix_center_rgba_float32_bits": [
+      "0x3bc26932",
+      "0x38d500cb",
+      "0x3b84ee1f",
+      "0x3f800000"
+    ],
+    "windows_sample_rgba_float32_bits": [
+      "0x3f800000",
+      "0x3f4de220",
+      "0x3ba6d7ad",
+      "0x3f800000"
+    ],
+    "mac_before_fix_sample_rgba_float32_bits": [
+      "0x3f800000",
+      "0x3f4de221",
+      "0x3ba6d7ab",
+      "0x3f800000"
+    ],
+    "shared_weight_float32_bits": "0x3b8bf256",
+    "resolution": "Route PF16 frame decode and PF16 inverse write through the same captured 10000-entry Windows runtime LUT interpolation already used by PF32; preserve the frozen PF8 literal path."
+  },
+  "captured_runtime_luts": {
+    "decode": {
+      "byte_count": 40000,
+      "sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba"
+    },
+    "inverse": {
+      "byte_count": 40000,
+      "sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc"
+    }
+  },
+  "artifacts": {
+    "windows_no_effect": {
+      "path": "refs/conformance/fixtures/olmsmoother2_case07_16bpc_ae_exact_20260727/windows_no_effect.exr.gz",
+      "stored_sha256": "c617c3f2a6163a4c4b184eb56f857e9a2ffc220265cc9b4327cb1b259a691472",
+      "stored_size": 355653,
+      "uncompressed_sha256": "58c0ecf1b9b3755d731168c3c57a1678c6e92dd255691966d2423ed52e887385",
+      "uncompressed_size": 33195419
+    },
+    "windows_effect_on": {
+      "path": "refs/conformance/fixtures/olmsmoother2_case07_16bpc_ae_exact_20260727/windows_effect_on.exr.gz",
+      "stored_sha256": "9ba8451f91fe64a8825474a9e9b4834fbdac481797b98252ee52251496fb7f4f",
+      "stored_size": 442244,
+      "uncompressed_sha256": "e7101ebc9c20d44f12f6a1ab78d413f4ff513c32a6548dd4831c3cbef1c15b8b",
+      "uncompressed_size": 33195419
+    },
+    "mac_no_effect": {
+      "path": "refs/conformance/fixtures/olmsmoother2_case07_16bpc_ae_exact_20260727/mac_no_effect.exr.gz",
+      "stored_sha256": "180128674c2991f2be0d9f8d47384852f332a479d14c0b88cd560fe64b1032f0",
+      "stored_size": 355651,
+      "uncompressed_sha256": "5188fa1579b9bca4150edb985a2f04dc07ff254665ce39ef6ad18a68201f99de",
+      "uncompressed_size": 33195419
+    },
+    "mac_effect_on": {
+      "path": "refs/conformance/fixtures/olmsmoother2_case07_16bpc_ae_exact_20260727/mac_effect_on.exr.gz",
+      "stored_sha256": "30f8ac77e83cff969d26dba3a3d81f01c0c420a7159bece61184b60df241b355",
+      "stored_size": 442242,
+      "uncompressed_sha256": "6b043ea9d352b7d50c55e812ddfcc6df94bde3f315e2f01e3eff5891ca90768f",
+      "uncompressed_size": 33195419
+    }
+  },
+  "regressions": {
+    "mac_8bpc": {
+      "request_id": "ae_pixel_olmsmoother2_current_aex_20260726_r3",
+      "exact_cases": 12,
+      "case_count": 12,
+      "max_diff": 0,
+      "report_sha256": "284d3f68bbbf57892e79b3221b102258ec73d0c8e6921630eb6cb9a946fa8ede"
+    },
+    "mac_32bpc_case07": {
+      "status": "raw_float32_exact",
+      "no_effect_mismatched_words": 0,
+      "effect_on_mismatched_words": 0,
+      "max_raw_u32_delta": 0,
+      "report_sha256": "cf19c58ce0939d0f6a56e4f1331d04ac846cd354114979720fda608ae24f4821"
+    }
+  },
+  "next_gate": "Preserve the exact 8bpc, declared 16bpc case-07, and declared 32bpc case-07 slices; expand 16/32bpc only under independent case contracts."
+}
