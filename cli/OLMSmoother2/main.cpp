@@ -146,7 +146,8 @@ bool find_param_color(const std::string &json, const std::string &key, PF_Pixel8
 	std::vector<double> vals;
 	size_t i = 0;
 	while (i < s.size() && vals.size() < 4) {
-		while (i < s.size() && (s[i] == ' ' || s[i] == '\t' || s[i] == ',')) ++i;
+		while (i < s.size() &&
+		       (s[i] == ' ' || s[i] == '\t' || s[i] == '\r' || s[i] == '\n' || s[i] == ',')) ++i;
 		size_t j = i;
 		while (j < s.size() && (std::isdigit((unsigned char)s[j]) || s[j] == '-' || s[j] == '+' || s[j] == '.' || s[j] == 'e' || s[j] == 'E')) ++j;
 		if (j == i) break;

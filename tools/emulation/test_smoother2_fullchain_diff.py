@@ -109,24 +109,34 @@ def call_cce0_entry(loader: AexLoader, ss: SmootherStruct, x: int, y: int, gamma
     loader.write_bytes(xy, struct.pack("<ii", x, y))
     config = loader.bump_alloc(0x80, align=16)
     loader.write_bytes(config, b"\x00" * 0x80)
-    loader.write_bytes(config, struct.pack("<i", 2))
+    # The AEX config stores the internal version flag, not the UI popup value:
+    # current v2 is 0 and legacy v1 is 1.
+    loader.write_bytes(config, struct.pack("<i", 0))
     loader.write_bytes(config + 0x20, struct.pack("<ii", 65536, 65536))
     # bb10 reads mode at (param5 + 10 floats) + 24 bytes == config + 0x40.
     mode = 3 if gamma_colors else 0
     if gamma_colors:
         colors = loader.bump_alloc(16, align=16)
-        loader.write_bytes(colors, struct.pack("<4f", 0.8, 0.1, 0.1, 1.0))
+        # White is invariant under a9c0's v2 output transfer, so this exercises
+        # the Gamma Colors apply path without mixing UI and internal versions.
+        loader.write_bytes(colors, struct.pack("<4f", 1.0, 1.0, 1.0, 1.0))
         loader.write_bytes(config + 0x28, struct.pack("<f", 2.1695473))
         loader.write_bytes(config + 0x30, struct.pack("<Q", 1))
         loader.write_bytes(config + 0x38, struct.pack("<Q", colors))
     loader.write_bytes(config + 0x40, bytes([mode]))
+    transfer_context = loader.bump_alloc(0x18, align=8)
+    loader.write_bytes(transfer_context, b"\x00" * 0x18)
     bb10_after: list[dict] = []
     def capture_bb10_after(uc, _address, _size, _user):
         rsp = uc.reg_read(UC_X86_REG_RSP)
         pair = bytes(uc.mem_read(rsp + 0x40, 16))
         bb10_after.append({"gamma": struct.unpack("<f", pair[:4])[0], "apply": pair[4]})
     hook = loader.uc.hook_add(UC_HOOK_CODE, capture_bb10_after, begin=0x18000CDE0, end=0x18000CDE0)
-    result = loader.call_function(FCCE0, int_args=[out, src, cls, xy, config, 0], max_instructions=10_000_000)
+    result = loader.call_function(
+        FCCE0,
+        int_args=[out, src, cls, xy, config, transfer_context],
+        max_instructions=10_000_000,
+    )
     loader.uc.hook_del(hook)
     return {
         "returned_pointer": result["rax"],

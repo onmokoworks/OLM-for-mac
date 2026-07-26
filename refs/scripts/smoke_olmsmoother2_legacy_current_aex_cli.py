@@ -1,18 +1,8 @@
 #!/usr/bin/env python3
-"""Measure OLMSmoother2 legacy cases against the current-AEX recapture.
-
-This is not an AE-exact completion gate. It preserves the current important
-facts from the 2026-06-21 Windows Software recapture:
-
-- legacy case 0001 is closest when the returned source input is used.
-- legacy cases 0002 and 0003 are exact when the AE-saved premultiplied
-  before-effects PNGs are used.
-- the remaining legacy key/gamma cases are localized residual measurements.
-"""
+"""Verify the native OLMSmoother2 PF8 plane through the proven AE export boundary."""
 
 from __future__ import annotations
 
-import csv
 import json
 import shutil
 import subprocess
@@ -20,20 +10,18 @@ import sys
 from pathlib import Path
 from typing import Any
 
+import numpy as np
+from PIL import Image, ImageChops
+
 from check_reference_request_status import load_status_rows
 
 
 REQUEST_ID = "smoother2_legacy_full_current_aex_recapture_20260621"
 EXPECTED_EFFECT = "OLM Smoother v2"
-
-SOURCE_GATE = {
-    "legacy_case_0001_current_aex": {"max_diff": 43, "mean_diff": 0.0021},
-}
-BEFORE_EXACT_GATE = {
+CASE_IDS = [
+    "legacy_case_0001_current_aex",
     "legacy_case_0002_current_aex",
     "legacy_case_0003_current_aex",
-}
-BEFORE_RESIDUAL_CASES = [
     "legacy_case_0004_current_aex",
     "legacy_case_0005_current_aex",
     "legacy_case_0006_current_aex",
@@ -74,12 +62,11 @@ def source_input_path(manifest_path: Path) -> Path:
         name = entry.get("file")
         if not isinstance(name, str) or not name:
             continue
-        candidates = [
+        for candidate in [
             manifest_path.parent / name,
             manifest_path.parent / name.replace("/", "\\"),
             manifest_path.parent / name.replace("\\", "/"),
-        ]
-        for candidate in candidates:
+        ]:
             if candidate.exists():
                 return candidate
     matches = [path for path in manifest_path.parent.iterdir() if path.name.startswith("input")]
@@ -88,11 +75,10 @@ def source_input_path(manifest_path: Path) -> Path:
     raise FileNotFoundError(f"could not find source input PNG for {manifest_path}")
 
 
-def run_probe(root: Path, manifest_dir: Path, label: str, case_ids: list[str], input_override: Path | None) -> Path:
-    run_dir = Path(f"/tmp/olmsmoother2_legacy_current_aex_{label}")
+def render_cases(root: Path, manifest_dir: Path, source_png: Path) -> Path:
+    run_dir = Path("/tmp/olmsmoother2_legacy_current_aex_exact")
     if run_dir.exists():
         shutil.rmtree(run_dir)
-
     command = '"cli/OLMSmoother2/olmsmoother2_cli" --input "{input}" --params "{params}" --output "{output}"'
     args = [
         sys.executable,
@@ -104,6 +90,8 @@ def run_probe(root: Path, manifest_dir: Path, label: str, case_ids: list[str], i
         EXPECTED_EFFECT,
         "--command",
         command,
+        "--input",
+        str(source_png),
         "--max-diff",
         "255",
         "--mean-diff",
@@ -111,75 +99,36 @@ def run_probe(root: Path, manifest_dir: Path, label: str, case_ids: list[str], i
         "--nonzero-px-percent",
         "100",
     ]
-    if input_override is not None:
-        args.extend(["--input", str(input_override)])
-    for case_id in case_ids:
+    for case_id in CASE_IDS:
         args.extend(["--case-id", case_id])
-
-    result = subprocess.run(args, cwd=root)
-    if result.returncode != 0:
-        raise RuntimeError(f"{label} probe failed with exit {result.returncode}")
-    csv_path = run_dir / "reports" / "diff.csv"
-    if not csv_path.exists():
-        raise FileNotFoundError(f"{label} probe did not produce {csv_path}")
-    return csv_path
+    subprocess.run(args, cwd=root, check=True)
+    return run_dir
 
 
-def read_rows(csv_path: Path) -> list[dict[str, str]]:
-    with csv_path.open(newline="", encoding="utf-8") as handle:
-        return list(csv.DictReader(handle))
+def write_ae_export_plane(raw_path: Path, output_path: Path) -> None:
+    with Image.open(raw_path) as image:
+        rgba = np.asarray(image.convert("RGBA"), dtype=np.uint16)
+    alpha = rgba[..., 3:4]
+    rgb = (rgba[..., :3] * alpha + 127) // 255
+    output = np.concatenate((rgb, alpha), axis=2).astype(np.uint8)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    Image.fromarray(output, mode="RGBA").save(output_path)
 
 
-def row_by_id(rows: list[dict[str, str]]) -> dict[str, dict[str, str]]:
-    return {row["id"]: row for row in rows}
-
-
-def print_rows(title: str, rows: list[dict[str, str]]) -> None:
-    print(f"=== {title} ===")
-    for row in rows:
-        print(
-            f"{row['id']}: max={row['max_diff']} "
-            f"mean={float(row['mean_diff']):.4f} "
-            f"nz%={float(row['nonzero_px_percent']):.4f}"
+def exact_diff(actual_path: Path, expected_path: Path) -> tuple[int, int]:
+    with Image.open(actual_path) as actual_image, Image.open(expected_path) as expected_image:
+        actual = actual_image.convert("RGBA")
+        expected = expected_image.convert("RGBA")
+        if actual.size != expected.size:
+            return 255, actual.width * actual.height
+        difference = ImageChops.difference(actual, expected)
+        max_diff = max(high for _, high in difference.getextrema())
+        pixels = (
+            difference.get_flattened_data()
+            if hasattr(difference, "get_flattened_data")
+            else difference.getdata()
         )
-
-
-def check_source_gate(rows: list[dict[str, str]]) -> int:
-    by_id = row_by_id(rows)
-    failures = 0
-    for case_id, gate in SOURCE_GATE.items():
-        row = by_id.get(case_id)
-        if row is None:
-            print(f"[FAIL] missing source-gate row: {case_id}", file=sys.stderr)
-            failures += 1
-            continue
-        max_diff = int(row["max_diff"])
-        mean_diff = float(row["mean_diff"])
-        if max_diff > gate["max_diff"] or mean_diff > gate["mean_diff"]:
-            print(
-                f"[FAIL] {case_id}: max={max_diff} mean={mean_diff:.6f} "
-                f"exceeds gate max<={gate['max_diff']} mean<={gate['mean_diff']}",
-                file=sys.stderr,
-            )
-            failures += 1
-    return failures
-
-
-def check_before_exact(rows: list[dict[str, str]]) -> int:
-    by_id = row_by_id(rows)
-    failures = 0
-    for case_id in sorted(BEFORE_EXACT_GATE):
-        row = by_id.get(case_id)
-        if row is None:
-            print(f"[FAIL] missing before-exact row: {case_id}", file=sys.stderr)
-            failures += 1
-            continue
-        max_diff = int(row["max_diff"])
-        mean_diff = float(row["mean_diff"])
-        if max_diff != 0 or mean_diff != 0.0:
-            print(f"[FAIL] {case_id}: expected exact, got max={max_diff} mean={mean_diff}", file=sys.stderr)
-            failures += 1
-    return failures
+        return max_diff, sum(1 for pixel in pixels if any(pixel))
 
 
 def main() -> int:
@@ -189,27 +138,37 @@ def main() -> int:
         print(f"[SKIP] {REQUEST_ID} is still pending; import the Windows recapture first.")
         return 0
 
-    build = subprocess.run([str(root / "refs" / "scripts" / "build_olmsmoother2_cli.sh")], cwd=root)
-    if build.returncode != 0:
-        return build.returncode
+    subprocess.run([str(root / "refs" / "scripts" / "build_olmsmoother2_cli.sh")], cwd=root, check=True)
+    run_dir = render_cases(root, manifest_path.parent, source_input_path(manifest_path))
+    manifest = load_json(manifest_path)
+    by_id = {
+        case["id"]: case
+        for case in manifest.get("cases", [])
+        if isinstance(case, dict) and case.get("id") in CASE_IDS
+    }
 
-    source_png = source_input_path(manifest_path)
-    source_csv = run_probe(root, manifest_path.parent, "source_input", list(SOURCE_GATE), source_png)
-    before_cases = sorted(BEFORE_EXACT_GATE) + BEFORE_RESIDUAL_CASES
-    before_csv = run_probe(root, manifest_path.parent, "before_frames", before_cases, None)
+    failures = 0
+    for case_id in CASE_IDS:
+        case = by_id.get(case_id)
+        if case is None:
+            print(f"[FAIL] manifest is missing {case_id}", file=sys.stderr)
+            failures += 1
+            continue
+        frame = case["frame"]
+        raw_path = run_dir / "candidate" / frame
+        normalized_path = run_dir / "normalized" / frame
+        expected_path = manifest_path.parent / frame
+        write_ae_export_plane(raw_path, normalized_path)
+        max_diff, differing = exact_diff(normalized_path, expected_path)
+        print(f"{case_id}: max={max_diff} differing_px={differing}")
+        if max_diff != 0 or differing != 0:
+            failures += 1
 
-    source_rows = read_rows(source_csv)
-    before_rows = read_rows(before_csv)
-    print_rows("source input gate", source_rows)
-    print_rows("AE-saved before frame gate/measurements", before_rows)
-
-    failures = check_source_gate(source_rows)
-    failures += check_before_exact(before_rows)
     if failures:
+        print(f"[FAIL] OLMSmoother2 legacy exact cases: {failures}/{len(CASE_IDS)}", file=sys.stderr)
         return 1
-    print("[OK] OLMSmoother2 legacy current-AEX CLI smoke")
-    print(f"source_csv={source_csv}")
-    print(f"before_csv={before_csv}")
+    print(f"[OK] OLMSmoother2 legacy current-AEX CLI exact {len(CASE_IDS)}/{len(CASE_IDS)}")
+    print(f"run_dir={run_dir}")
     return 0
 
 

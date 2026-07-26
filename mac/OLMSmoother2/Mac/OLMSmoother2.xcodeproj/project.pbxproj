@@ -199,6 +199,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 2;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "OLMSmoother2.plugin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";

@@ -60,7 +60,7 @@ def main() -> int:
         "trace cardinal6 cplane y=841 x=92 bytes=255,255,0,255",
         "trace cardinal6 desc=(92,841,1,92,842,2) key=20",
         "trace e170 p2=(92,841,1,92,842,2) bits Axy-1=1 R x-1y=1 Axy=1 -> c=7",
-        "trace append src=(92,840) dst_center=(92,841) rgba=(0.18447499,0.18447499,0.18447499,0.68235296) w=0.28448275",
+        "trace append src=(92,840) dst_center=(92,841) rgba=(0.18447502,0.18447502,0.18447502,0.68235296) w=0.28448275",
     )
     missing = [line for line in required if line not in proc.stdout]
     if missing:

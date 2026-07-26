@@ -249,6 +249,23 @@
         var inputPath = requestRoot.fsName + "/" + requestManifest.input_dir + "/" + caseSpec.before_effects_frame;
         var outputPath = resultRoot.fsName + "/" + caseSpec.frame;
         var footage = importFootage(inputPath);
+        var inputAlphaMode = requestManifest.input_alpha_mode || "default";
+        if (inputAlphaMode !== "default") {
+            try {
+                if (inputAlphaMode === "premultiplied") {
+                    footage.mainSource.alphaMode = AlphaMode.PREMULTIPLIED;
+                    footage.mainSource.premulColor = [0, 0, 0];
+                } else if (inputAlphaMode === "straight") {
+                    footage.mainSource.alphaMode = AlphaMode.STRAIGHT;
+                } else if (inputAlphaMode === "ignore") {
+                    footage.mainSource.alphaMode = AlphaMode.IGNORE;
+                } else {
+                    throw new Error("unsupported input alpha mode " + inputAlphaMode);
+                }
+            } catch (alphaModeError) {
+                throw new Error("input alpha interpretation failed: " + alphaModeError.toString());
+            }
+        }
         var compInfo = referenceManifest.comp || {};
         var sourceWidth = Number(footage.width || compInfo.width || 1920);
         var sourceHeight = Number(footage.height || compInfo.height || 1080);
@@ -339,7 +356,10 @@
         var referenceManifest = parseJson(requestRoot.fsName + "/" + requestManifest.reference_manifest);
         var requestedBits = null;
         var requestedBitsSource = "";
-        if (referenceManifest.project && referenceManifest.project.bits_per_channel) {
+        if (requestManifest.bits_per_channel) {
+            requestedBits = Number(requestManifest.bits_per_channel);
+            requestedBitsSource = "request.bits_per_channel";
+        } else if (referenceManifest.project && referenceManifest.project.bits_per_channel) {
             requestedBits = Number(referenceManifest.project.bits_per_channel);
             requestedBitsSource = "project.bits_per_channel";
         } else if (referenceManifest.comp && referenceManifest.comp.bpc) {
@@ -352,6 +372,15 @@
                 appendText(progressLog, "bits_per_channel " + requestedBits + " source=" + requestedBitsSource + "\n");
             } catch (bitsError) {
                 appendText(progressLog, "bits_per_channel_warning " + bitsError.toString() + "\n");
+            }
+        }
+        if (requestManifest.disable_project_color_management) {
+            try {
+                app.project.workingSpace = "";
+                app.project.linearBlending = false;
+                appendText(progressLog, "project_color_management disabled\n");
+            } catch (colorManagementError) {
+                throw new Error("project color management setup failed: " + colorManagementError.toString());
             }
         }
         var alias = requestManifest.request_id.replace(/^ae_pixel_/, "").replace(/_20[0-9][0-9][0-9][0-9][0-9][0-9]$/, "");

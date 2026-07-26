@@ -13,8 +13,11 @@
 - Current status: no-key grid has packaged 8bpc `AE exact` evidence from the
   2026-06-19/2026-06-20 AE pixel returns. Standalone OLMSmoother v1
   `case_0001..0003` is also 8bpc `AE exact` after the corrected 960x540 rerun.
-  Smoother2 legacy key/gamma slices remain guarded residuals, so Smoother2 as
-  a whole is not complete.
+  The current Smoother2 legacy/key/gamma implementation is byte-exact with the
+  unchanged AEXCompat AEX plane for all 12 cases, and the optimized Mac AE
+  plug-in is `AE exact 12/12` against the Windows AE Software references.
+  The Xcode conformance build must use optimization level 2; its former `-O0`
+  build left 104 max-1 pixels through compiler float sequencing.
 
 ## Source Evidence
 
@@ -25,6 +28,9 @@
 | `Smoother Version` v1/v2 mainly affects Gamma Correction / linearization. | Official v2 manual says v1 does not linearize prior to processing. | manual-backed |
 | Parameter setter initializes mode/key/palette/gamma fields and routes invert-key through the active palette. | `notes/OLMSmoother2_ASM_FACTS.md`, `FUN_180004e10`. | binary-grounded |
 | Frame setup order is setup, optional unpremultiply, active-palette filter, non-invert scalar-key filter, then optional sRGB decode. | `notes/OLMSmoother2_ASM_FACTS.md`, `FUN_180002e90`. | binary-grounded |
+| PF8 source loading performs integer-to-float conversion followed by multiplication with `DAT_180022690` (`float32(1/255)`), not floating-point division by 255. | `FUN_1800024c0` disassembly and the 12-case actual-AEX differential. | binary-grounded / exact-suite-confirmed |
+| The sRGB decode linear branch multiplies by `DAT_1800226c0 = 0.07739938080495357 = 1/12.92`. The previous `1/12.9216` interpretation was incorrect. | AEX `.rdata` bytes `80b5492172d0b33f`, `FUN_180002ba0`, and the focused case-0011 c0d0/ab00/b120 witness. | binary-grounded / runtime-confirmed |
+| The covered 8bpc conformance build uses optimization level 2. The former Xcode `-O0` build placed case-0001 ab00/cce0 alpha one ULP above AEX (`0x3f3b3b3b` vs `0x3f3b3b3a`) and left 104 max-1 AE pixels; `-O2` is Mac AE exact for all 12 cases. | AEXCompat occurrence watches at c0d0/ab00/b120/cce0, exact no-effect control, and Mac AE request `ae_pixel_olmsmoother2_current_aex_20260726_r3`. | binary-grounded / AE exact |
 | Active-palette filter compares RGB against palette entries using threshold `0.001960922` and zeroes alpha for non-matches. | `notes/OLMSmoother2_ASM_FACTS.md`, `FUN_180002930`. | binary-grounded |
 | Non-invert scalar-key filter compares RGB against scalar key with threshold `0.001960922` and zeroes alpha for matches. | `notes/OLMSmoother2_ASM_FACTS.md`, `FUN_180002a70`. | binary-grounded |
 | Class-plane generation uses Smooth Range in the no-key path as `SmoothRange / 100.0 + 0.001`. | `notes/OLMSmoother2_ASM_FACTS.md`, no-key grid finding. | binary-grounded / reference-confirmed |
@@ -48,6 +54,7 @@
 | A bounded direct-call fixture now captures both sides immediately after `f270` and after unconditional `f130`. Actual AEX and the current portable path agree on descriptor/key, `e170 c=7`, return bytes, counts `1 -> 2`, and both RGBA/weight payloads within `1e-6`; neither side enters `cce0`. This closes the synthetic two-leaf polygon state only. The accepted live Windows trace still stops after the first vertex, so live post-`f130` state entering `cce0` remains the next context-bound proof. | `refs/conformance/olmsmoother2_case0012_post_leaf_20260716.md` / `.json`. | bounded actual-AEX/portable post-leaf exact / live context unresolved |
 | The Mac AE boundary probe exposed a separate PF8 host-input contract before frame setup. At `(92,840)`, the retained raw PNG is `[174,174,174,174]` while the Windows before-effects frame is `[119,119,119,174]`. Native-code nearest premultiplication `(rgb*alpha+127)//255` gives `119`; loading that byte and applying the grounded sRGB decode reproduces the accepted Windows first append (`Mac 0.18447499`, Windows 0.18447503), class bytes, descriptor, `e170 c=7`, and first weight. This diagnostic closes the first causal chain but is not yet a permanent plug-in policy: the full candidate remains known-red and the live Windows post-`f130` polygon is still missing. | `refs/conformance/olmsmoother2_pf8_host_adapter_chain_20260718.md`, `refs/scripts/smoke_olmsmoother2_pf8_host_adapter_chain_20260718.py`. | host-boundary binary-grounded / first append matched / live post-leaf unresolved |
 | A bounded 16x16 Unicorn run now executes the checked-in current Windows AEX naturally from the audited PF8 adapter through key removal, sRGB decode, class-plane generation, `cce0 -> c280 -> fef0 -> f270 -> f130`, and the compact two-vertex cce0 input. The post-boost builder polygon is float32-word identical to the compact polygon consumed by cce0; the AEX returns `[0.85751957,0.85751957,0.85751957,0.93870682]`. The runner still manually constructs the crop and render config and lacks a full worker-to-writer bridge, so this proves bounded AEX ownership/reachability rather than equality with the full live Windows host context. The retained 3-ULP source difference is not attributable to UCRT `pow`: Darwin libm and a high-precision oracle agree, and forcing the retained word does not change this witness downstream. | `refs/conformance/olmsmoother2_case0012_natural_post_f130_20260718.md`, `refs/conformance/olmsmoother2_case0012_bounded_assumption_audit_20260718.md`, `refs/conformance/olmsmoother2_imported_pow_boundary_20260718.md`. | bounded actual-AEX natural chain / config-host-writer audit pending |
+| The corrected PF8 load, `1/12.92` decode constant, and optimized conformance build close the full current-AEX legacy/key/gamma 8bpc set: native raw output is `12/12` byte-exact with the actual AEX plane and Mac AE is `12/12`, `max_diff=0` against Windows AE Software. | `refs/conformance/olmsmoother2_native_vs_actual_aex_20260726.md`. | AE exact / actual-AEX exact |
 
 ## Parameters
 

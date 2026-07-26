@@ -2,86 +2,142 @@
 
 ## Status
 
-This is a local native-port differential against the 12/12-exact AEXCompat
-oracle. It is not Mac AE `AE exact`.
+The optimized Mac 8bpc implementation is byte-exact against the unchanged
+Windows `OLMSmoother2.aex` and Windows AE Software for all 12 current-AEX
+legacy/key/gamma cases.
 
-The Mac port previously forced the internal writer premultiply flag on.
-Windows runtime evidence reads `param_8+0x19 == 0`: the AEX writer emits
-straight RGB and AE premultiplies the later PNG export. Disabling the duplicate
-writer premultiply removes the broad residual and makes cases 0002 and 0003
-exact against both preserved actual-AEX raw output and AE-normalized output.
+- native CLI vs AEXCompat raw AEX plane: `12/12`, `max_diff=0`
+- AEXCompat normalized AEX plane vs Windows AE Software PNG: `12/12`,
+  `max_diff=0`
+- Mac AE 26.3x87 vs Windows AE Software PNG: `12/12`, `max_diff=0`
 
-## Result After Binary-Grounded Leaf and Gamma Fixes
+This promotes the covered 8bpc lane to `AE exact`.
 
-Four long-leaf scale initializers now match the AEX's `1.0f` default before
-their optional half-scale chase:
+## Binary-Grounded Fix
 
-- `win_leaf_ec40`
-- `win_leaf_e640`
-- `win_leaf_ef20`
-- `win_leaf_e950`
+The remaining low-code residual came from an incorrect sRGB linear-branch
+constant. The AEX `.rdata` bytes at `0x1800226c0` are:
 
-The v2 gamma-color comparison now uses the internal setup flag encoded by
-`FUN_180004e10` (`v1=1`, `v2=0`) instead of treating the UI version number as
-that flag. The CLI also selects the five exact `"Gamma Color"` parameter
-records instead of counting unrelated textual occurrences.
-
-| Case | raw max | raw differing px | normalized max | normalized differing px |
-| --- | ---: | ---: | ---: | ---: |
-| 0001 | 1 | 83 | 1 | 83 |
-| 0002 | 0 | 0 | 0 | 0 |
-| 0003 | 0 | 0 | 0 | 0 |
-| 0004 | 1 | 108 | 1 | 108 |
-| 0005 | 1 | 7 | 1 | 7 |
-| 0006 | 1 | 113 | 1 | 113 |
-| 0007 | 1 | 34 | 1 | 34 |
-| 0008 | 1 | 1 | 0 | 0 |
-| 0009 v1 mode | 1 | 42 | 1 | 42 |
-| 0010 gamma 3 | 1 | 41 | 1 | 41 |
-| 0011 gamma 5 blue | 1 | 46 | 1 | 45 |
-| 0012 gamma 5 red/blue | 1 | 18 | 1 | 18 |
-
-Before the fix, every case had a broad raw residual with `max_diff=255`; the
-AE-normalized case 0002 residual alone covered 3,247 pixels. The fixed case
-0002 is `max_diff=0`. Current native status is raw exact `2/12`, normalized
-exact `3/12`, and all remaining cases have `max_diff=1`. This is not
-Mac AE `AE exact`.
-
-## Current PF8 Boundary
-
-Case 0001 witness `(1699,8)` was reduced to a 9x9 input without changing the
-target residual. The native writer probe and AEXCompat execution dossier show:
-
-- native raw RGBA: `[204,204,204,163]`
-- actual-AEX raw RGBA: `[204,204,204,164]`
-- native cce0 alpha bits: `0x3f242423`
-- actual-AEX cce0/ab00 alpha bits: `0x3f242424`
-- native cce0-to-PF8 writer replay matches its produced bytes exactly
-- actual-AEX `ab00` center alpha bits: `0x3f41c1c3`
-- native `ab00` center alpha bits: `0x3f41c1c2`
-
-The first observed difference is therefore upstream of the final writer and
-already present at the `ab00` center input. For byte value 193,
-`float32(193 / 255)` gives `0x3f41c1c2`, while
-`float32(193 * float32(1/255))` gives `0x3f41c1c3`.
-
-Applying reciprocal multiplication to the entire PF8 input was rejected:
-classification topology changed broadly. Applying a global positive one-ULP
-output adjustment was also rejected: it improved the representative witness
-but increased residual counts in cases 0004 and 0006. The next proof must
-identify the exact Windows host conversion/arithmetic boundary per operation;
-neither global input nor writer retuning is allowed.
-
-## Reproduction
-
-The native CLI was rebuilt from the current source:
-
-```sh
-refs/scripts/build_olmsmoother2_cli.sh \
-  /tmp/olmsmoother2_cli_keep_premul0_20260725
+```text
+80 b5 49 21 72 d0 b3 3f
 ```
 
-Inputs and parameters came from the same manifest and SHA-pinned original
-source used by:
+Decoded as little-endian binary64, this is `0.07739938080495357`, exactly
+`1 / 12.92`. The native port used `1 / 12.9216`.
 
-`refs/conformance/olmsmoother2_aexcompat_host_io_exact_20260725.md`
+The focused case 0011 witness at crop coordinate `(32,32)` showed:
+
+| Stage | Actual AEX bits | Native before fix | Native after fix |
+| --- | ---: | ---: | ---: |
+| c0d0 input blue | `966730420` | `966729129` | `966730420` |
+| c0d0 output blue | `1019468804` | `1019468071` | `1019468803` |
+| ab00 output blue | `1055903576` | `1055903551` | `1055903576` |
+| b120/cce0 output blue | `1044744467` | `1044744422` | `1044744467` |
+| PF8 blue byte | `122` | `121` | `122` |
+
+The one-ULP c0d0 intermediate difference cancels before the exact ab00 and
+final results; no compensation was added.
+
+The PF8 source load also follows the AEX instruction sequence
+`CVTDQ2PS` then `MULSS DAT_180022690`, using float reciprocal
+multiplication rather than division.
+
+## Mac AE Optimization Boundary
+
+The first Mac AE run used the Xcode project's only configuration at `-O0`.
+It produced three exact cases and nine cases with `max_diff=1`, totalling 104
+different pixels. A no-effect control was exact, so the residual was inside
+the plug-in rather than PNG import/export.
+
+AEXCompat occurrence watches then captured case 0001 source coordinate
+`(21,129)` using an equivalent 9x9 crop:
+
+| Stage | Windows AEX float32 bits | Mac `-O0` observation |
+| --- | --- | --- |
+| c0d0 input RGB | `0x3f337b6b` | one ULP higher |
+| c0d0 output RGB | `0x3f19708a` | one ULP higher |
+| ab00 output alpha | `0x3f3b3b3a` | `0x3f3b3b3b` |
+| cce0 output alpha | `0x3f3b3b3a` | `0x3f3b3b3b` |
+
+The optimized native CLI already produced AEX alpha `0x3f3b3b3a`. Rebuilding
+the same AE plug-in source with `GCC_OPTIMIZATION_LEVEL=2` removed all 104
+residual pixels. The Xcode project's sole configuration is therefore pinned
+to optimization level 2; `-O0` is not a conformance build.
+
+## Trace Infrastructure
+
+AEXCompat Issue `#542` / PR `#545` added one-based
+`--watch ...,occurrence=N`. The real AEX run selected only cce0 occurrence
+2113, consumed one memory witness, and reported
+`dropped_memory_witnesses=0`. The target output was ARGB
+`[255,0,0,122]`.
+
+The gamma-only inner stages were then captured independently. The target was
+the 106th of 143 calls to c0d0, ab00, and b120.
+
+## Harness Fix
+
+The CLI color-array parser now accepts CR/LF whitespace inside pretty-printed
+JSON arrays. Previously only compact one-line arrays loaded the five Gamma
+Color values.
+
+## Verification
+
+```sh
+refs/scripts/build_olmsmoother2_cli.sh
+```
+
+The 12 cases were rendered from the SHA-pinned straight source and compared
+to:
+
+```text
+/tmp/olmsmoother2_aexcompat_oracle_20260726_c/*.raw.png
+```
+
+Result:
+
+```text
+legacy_case_0001_current_aex                  max=0 differing_px=0
+legacy_case_0002_current_aex                  max=0 differing_px=0
+legacy_case_0003_current_aex                  max=0 differing_px=0
+legacy_case_0004_current_aex                  max=0 differing_px=0
+legacy_case_0005_current_aex                  max=0 differing_px=0
+legacy_case_0006_current_aex                  max=0 differing_px=0
+legacy_case_0007_current_aex                  max=0 differing_px=0
+legacy_case_0008_current_aex                  max=0 differing_px=0
+legacy_case_0009_v1mode_current_aex           max=0 differing_px=0
+legacy_case_0010_gamma3_current_aex           max=0 differing_px=0
+legacy_case_0011_gamma5_blue_current_aex      max=0 differing_px=0
+legacy_case_0012_gamma5_red_blue_current_aex  max=0 differing_px=0
+```
+
+The AEXCompat oracle's own
+`AEXCOMPAT_REFERENCE_RESULT.json` records `comparison.exact=true`,
+`max_diff=0` for all 12 normalized Windows AE comparisons.
+
+The Mac AE validation used request
+`ae_pixel_olmsmoother2_current_aex_20260726_r3`, explicit 8bpc, disabled
+project color management, straight-alpha source input SHA-256
+`9d96a359d987774a398ec27e224650fda83fa00ae3c14bd04b87e2402ea34265`,
+and installed binary SHA-256
+`d7abbd9dc16cc168f2c8ee8178d262f6fd8fceb618febf906e301e405b957d18`.
+
+```text
+legacy_case_0001_current_aex                  max=0
+legacy_case_0002_current_aex                  max=0
+legacy_case_0003_current_aex                  max=0
+legacy_case_0004_current_aex                  max=0
+legacy_case_0005_current_aex                  max=0
+legacy_case_0006_current_aex                  max=0
+legacy_case_0007_current_aex                  max=0
+legacy_case_0008_current_aex                  max=0
+legacy_case_0009_v1mode_current_aex           max=0
+legacy_case_0010_gamma3_current_aex           max=0
+legacy_case_0011_gamma5_blue_current_aex      max=0
+legacy_case_0012_gamma5_red_blue_current_aex  max=0
+```
+
+## Next Action
+
+Freeze the covered 8bpc implementation and expand the same contract to
+16bpc, then 32bpc FLOAT EXR. Do not use `-O0` builds for conformance.

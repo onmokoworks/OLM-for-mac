@@ -106,9 +106,9 @@ int smoother2_fullchain_port_adapter_main(int argc, char **argv) {
   gamma_params.gamma_mode = GAMMA_COLORS_ONLY;
   gamma_params.gamma_value = 2.1695473f;
   gamma_params.num_gamma_colors = 1;
-  gamma_params.gamma_colors[0].red = 0.8f;
-  gamma_params.gamma_colors[0].green = 0.1f;
-  gamma_params.gamma_colors[0].blue = 0.1f;
+  gamma_params.gamma_colors[0].red = 1.0f;
+  gamma_params.gamma_colors[0].green = 1.0f;
+  gamma_params.gamma_colors[0].blue = 1.0f;
   gamma_params.gamma_colors[0].alpha = 1.0f;
   FPix builder_gamma_colors{};
   win_FUN_18000cce0_orchestrate(builder_gamma_colors, plane, plane, x, y, gamma_params);

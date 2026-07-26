@@ -89,6 +89,20 @@ OLMSMOOTHER2_LEGACY_CASES = [
     "case_0011",
     "case_0012",
 ]
+OLMSMOOTHER2_CURRENT_AEX_CASES = [
+    "legacy_case_0001_current_aex",
+    "legacy_case_0002_current_aex",
+    "legacy_case_0003_current_aex",
+    "legacy_case_0004_current_aex",
+    "legacy_case_0005_current_aex",
+    "legacy_case_0006_current_aex",
+    "legacy_case_0007_current_aex",
+    "legacy_case_0008_current_aex",
+    "legacy_case_0009_v1mode_current_aex",
+    "legacy_case_0010_gamma3_current_aex",
+    "legacy_case_0011_gamma5_blue_current_aex",
+    "legacy_case_0012_gamma5_red_blue_current_aex",
+]
 OLMSMOOTHER2_NO_KEY_GRID_CASES = [
     "sm2_no_key_s000_r1",
     "sm2_no_key_s025_r1",
@@ -129,6 +143,7 @@ PRESETS = [
     "olmdistancegradation_blur_exact",
     "olmsmoother",
     "olmsmoother2",
+    "olmsmoother2_current_aex",
     "olmsmoother2_no_key_grid",
     "bitdepth16_olmblur_exact",
     "bitdepth16_olmcolorkey_exact",
@@ -479,6 +494,38 @@ def preset_config(root: Path, preset: str, reference: Path | None, reference_pro
                 },
             ],
         },
+        "olmsmoother2_current_aex": {
+            "request_id": "ae_pixel_olmsmoother2_current_aex_20260726_r3",
+            "effect_name": "OLM Smoother v2",
+            "effect_match_name": "OLM Smoother v2",
+            "bits_per_channel": 8,
+            "disable_project_color_management": True,
+            "input_alpha_mode": "straight",
+            "reference": (
+                root
+                / "refs"
+                / "win_references"
+                / "olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621"
+                / "OLMSmootherv2"
+            ),
+            "input_override": (
+                root
+                / "refs"
+                / "win_references"
+                / "olm_reference_return_windows_smoother2_legacy_full_current_aex_recapture_20260621"
+                / "OLMSmootherv2"
+                / "input\\current_olm_cells.png"
+            ),
+            "threshold_groups": [
+                {
+                    "name": "current_aex_8bpc_exact",
+                    "case_ids": OLMSMOOTHER2_CURRENT_AEX_CASES,
+                    "max_diff": 0,
+                    "mean_diff": 0.0,
+                    "nonzero_px_percent": 0.0,
+                },
+            ],
+        },
         "olmsmoother2_no_key_grid": {
             "request_id": "ae_pixel_olmsmoother2_no_key_grid_20260619",
             "effect_name": "OLM Smoother v2",
@@ -639,6 +686,9 @@ def write_json(path: Path, data: dict) -> None:
 
 def package_request(config: dict, output: Path) -> None:
     reference = Path(config["reference"]).resolve()
+    input_override = Path(config["input_override"]).resolve() if config.get("input_override") else None
+    if input_override is not None and not input_override.is_file():
+        raise FileNotFoundError(f"missing input override: {input_override}")
     manifest = load_manifest(reference)
     effect_name = config["effect_name"]
     cases = []
@@ -671,7 +721,8 @@ def package_request(config: dict, output: Path) -> None:
 
         shutil.copy2(reference / "reference_manifest.json", stage / "reference_manifest.json")
         for case in cases:
-            shutil.copy2(find_png(reference, case["before_effects_frame"]), input_dir / case["before_effects_frame"])
+            input_path = input_override or find_png(reference, case["before_effects_frame"])
+            shutil.copy2(input_path, input_dir / case["before_effects_frame"])
             shutil.copy2(find_png(reference, case["frame"]), expected_dir / case["frame"])
 
         request_manifest = {
@@ -686,6 +737,17 @@ def package_request(config: dict, output: Path) -> None:
             "input_dir": "input",
             "expected_dir": "expected",
             "candidate_dir_hint": "candidate",
+            "bits_per_channel": config.get("bits_per_channel"),
+            "disable_project_color_management": bool(config.get("disable_project_color_management", False)),
+            "input_alpha_mode": config.get("input_alpha_mode", "default"),
+            "input_provenance": (
+                {
+                    "kind": "shared_source_override",
+                    "source_name": input_override.name,
+                }
+                if input_override is not None
+                else {"kind": "before_effects_frame"}
+            ),
             "cases": cases,
             "threshold_groups": config["threshold_groups"],
         }

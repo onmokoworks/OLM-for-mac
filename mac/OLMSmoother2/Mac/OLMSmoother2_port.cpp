@@ -29,6 +29,7 @@ constexpr float  W_20        = 2.0f;      // DAT_180022de4
 constexpr float  W_QUARTER   = 0.25f;     // DAT_180022ddc
 constexpr uint32_t NEG_ZERO  = 0x80000000u; // DAT_180022df0 (sign mask)
 constexpr float  V255        = 255.0f;    // DAT_180022700
+constexpr float  INV255      = 1.0f / 255.0f; // DAT_180022690
 constexpr float  V32768      = 32768.0f;  // DAT_180022704
 constexpr uint32_t ABSMASK   = 0x7FFFFFFFu; // DAT_180022710
 constexpr float  COLOR_TOL   = 0.001960922f; // DAT_18002268c (3B008081h)
@@ -36,7 +37,7 @@ constexpr float  COLOR_TOL   = 0.001960922f; // DAT_18002268c (3B008081h)
 // sRGB piecewise constants (doubles, matching the Win literal bit patterns)
 constexpr double SRGB_BREAK   = 0.00313066844250060782; // DAT_180022698
 constexpr double SRGB_BOUND   = 0.04045;                // DAT_1800226a8
-constexpr double SRGB_INVSCALE= 1.0 / 12.9216;          // DAT_1800226c0
+constexpr double SRGB_INVSCALE= 1.0 / 12.92;            // DAT_1800226c0
 constexpr double SRGB_INV24   = 1.0 / 2.4;              // DAT_1800226c8
 constexpr double SRGB_INV1055 = 1.0 / 1.055;            // DAT_1800226d0
 constexpr double SRGB_ONE     = 1.0;                    // DAT_1800226d8
@@ -54,6 +55,7 @@ constexpr double SRGB_OFFSET2 = 0.055;                  // DAT_1800226b8
 #define K_W025      k_olm::W_QUARTER
 #define K_NEGZ      k_olm::NEG_ZERO
 #define K_255       k_olm::V255
+#define K_INV255    k_olm::INV255
 #define K_32768     k_olm::V32768
 #define K_ABSMASK   k_olm::ABSMASK
 #define K_COLOR_TOL k_olm::COLOR_TOL
@@ -262,7 +264,11 @@ FetchParams(PF_InData *in_data, PF_ParamDef *params[], SMParams *p)
 // ============================================================================
 template<typename P> static inline void load_rgba(const P *p, float &a, float &r, float &g, float &b);
 template<> inline void load_rgba<PF_Pixel8>(const PF_Pixel8 *p, float &a, float &r, float &g, float &b) {
-	a = p->alpha / K_255; r = p->red / K_255; g = p->green / K_255; b = p->blue / K_255;
+	// FUN_1800024c0: CVTDQ2PS followed by MULSS with DAT_180022690.
+	a = (float)p->alpha * K_INV255;
+	r = (float)p->red   * K_INV255;
+	g = (float)p->green * K_INV255;
+	b = (float)p->blue  * K_INV255;
 }
 template<> inline void load_rgba<PF_Pixel16>(const PF_Pixel16 *p, float &a, float &r, float &g, float &b) {
 	a = p->alpha / K_32768; r = p->red / K_32768; g = p->green / K_32768; b = p->blue / K_32768;
@@ -394,7 +400,7 @@ static void win_FUN_180002a70_invert_key(FPix *scratch, int32_t w, int32_t h,
 // shows this is actually sRGB DECODE (sRGB-coded input -> linear light):
 //   v <= 0           -> 0
 //   v >= 1           -> 1
-//   v < 0.04045      -> v * (1/12.9216)                  [linear branch]
+//   v < 0.04045      -> v * (1/12.92)                    [linear branch]
 //   else             -> pow(v/1.055 + 0.055/1.055, 2.4) ≈ ((v+0.055)/1.055)^2.4
 // This turns inputs into linear space so the smoother math operates on
 // linear light; the per-pixel write-back (FUN_180004d70) then re-applies
@@ -404,7 +410,7 @@ static inline float win_srgb_decode_one(float v) {
 	double d = (double)v;
 	if (d <= 0.0) return 0.0f;
 	if (d >= S_ONE) return (float)S_ONE;
-	if (d < S_BOUND) return (float)(d * S_INVSCALE);      // v * (1/12.9216)
+	if (d < S_BOUND) return (float)(d * S_INVSCALE);      // v * DAT_1800226c0
 	// Ghidra literal: pow(v * (1/1.055) + 0.055/1.055, 2.4)
 	const double offset_over_1055 = 0.055 / 1.055;        // DAT_1800226b0 ≈ 0.05213
 	return (float)pow(d * S_INV1055 + offset_over_1055, S_24);
@@ -490,6 +496,12 @@ struct WriterFrameProbe {
 	int y = -1;
 	const char *json_path = nullptr;
 	bool captured = false;
+	bool bb10_apply = false;
+	bool gamma_enable = false;
+	float adaptive_gamma = 0.0f;
+	FPix center{};
+	FPix after_c0d0{};
+	FPix after_ab00{};
 	FPix cce0{};
 	SmootherPolygon polygon{};
 	uint8_t expected[4] = {};
@@ -3894,6 +3906,7 @@ static void win_FUN_18000cce0_orchestrate(FPix &out_pixel,
 	build_polygon(poly, plane_in, x, y, p);
 	if (g_olmsmoother2_writer_frame_probe.json_path &&
 	    x == g_olmsmoother2_writer_frame_probe.x && y == g_olmsmoother2_writer_frame_probe.y) {
+		g_olmsmoother2_writer_frame_probe.center = center;
 		g_olmsmoother2_writer_frame_probe.polygon = poly;
 	}
 
@@ -3955,6 +3968,13 @@ static void win_FUN_18000cce0_orchestrate(FPix &out_pixel,
 		             bb10_apply ? 1 : 0, adaptive_gamma, curve_idx);
 	}
 	gamma_decode_premul(working, poly, gamma_enable, adaptive_gamma);
+	if (g_olmsmoother2_writer_frame_probe.json_path &&
+	    x == g_olmsmoother2_writer_frame_probe.x && y == g_olmsmoother2_writer_frame_probe.y) {
+		g_olmsmoother2_writer_frame_probe.bb10_apply = bb10_apply;
+		g_olmsmoother2_writer_frame_probe.gamma_enable = gamma_enable;
+		g_olmsmoother2_writer_frame_probe.adaptive_gamma = adaptive_gamma;
+		g_olmsmoother2_writer_frame_probe.after_c0d0 = working;
+	}
 	if (trace_this_pixel) {
 		std::fprintf(stderr,
 		             "trace cce0_after_c0d0 center=%.8f,%.8f,%.8f,%.8f\n",
@@ -3970,6 +3990,10 @@ static void win_FUN_18000cce0_orchestrate(FPix &out_pixel,
 	// Stage 4: composite.
 	FPix accum;
 	composite(accum, working, poly);
+	if (g_olmsmoother2_writer_frame_probe.json_path &&
+	    x == g_olmsmoother2_writer_frame_probe.x && y == g_olmsmoother2_writer_frame_probe.y) {
+		g_olmsmoother2_writer_frame_probe.after_ab00 = accum;
+	}
 	if (trace_this_pixel) {
 		std::fprintf(stderr,
 		             "trace cce0_after_ab00 accum=%.8f,%.8f,%.8f,%.8f\n",
@@ -4033,8 +4057,19 @@ static void OLMSmoother2WriteWriterFrameProbe(bool apply_inverse_gamma, bool kee
 	probe.expected[3] = clamp8(b);
 	FILE *fp = std::fopen(probe.json_path, "w");
 	if (!fp) return;
-	std::fprintf(fp, "{\"x\":%d,\"y\":%d,\"cce0_rgba\":[%.9g,%.9g,%.9g,%.9g],\"cce0_rgba_u32\":[%u,%u,%u,%u],\"polygon_count\":%d,\"polygon\":[",
-	             probe.x, probe.y, probe.cce0.r, probe.cce0.g, probe.cce0.b, probe.cce0.a,
+	std::fprintf(fp, "{\"x\":%d,\"y\":%d,\"bb10_apply\":%s,\"gamma_enable\":%s,\"adaptive_gamma\":%.9g,"
+	             "\"center_rgba_u32\":[%u,%u,%u,%u],\"after_c0d0_rgba_u32\":[%u,%u,%u,%u],"
+	             "\"after_ab00_rgba_u32\":[%u,%u,%u,%u],\"cce0_rgba\":[%.9g,%.9g,%.9g,%.9g],"
+	             "\"cce0_rgba_u32\":[%u,%u,%u,%u],\"polygon_count\":%d,\"polygon\":[",
+	             probe.x, probe.y, probe.bb10_apply ? "true" : "false",
+	             probe.gamma_enable ? "true" : "false", probe.adaptive_gamma,
+	             olmsmoother2_f32_u32(probe.center.r), olmsmoother2_f32_u32(probe.center.g),
+	             olmsmoother2_f32_u32(probe.center.b), olmsmoother2_f32_u32(probe.center.a),
+	             olmsmoother2_f32_u32(probe.after_c0d0.r), olmsmoother2_f32_u32(probe.after_c0d0.g),
+	             olmsmoother2_f32_u32(probe.after_c0d0.b), olmsmoother2_f32_u32(probe.after_c0d0.a),
+	             olmsmoother2_f32_u32(probe.after_ab00.r), olmsmoother2_f32_u32(probe.after_ab00.g),
+	             olmsmoother2_f32_u32(probe.after_ab00.b), olmsmoother2_f32_u32(probe.after_ab00.a),
+	             probe.cce0.r, probe.cce0.g, probe.cce0.b, probe.cce0.a,
 	             olmsmoother2_f32_u32(probe.cce0.r), olmsmoother2_f32_u32(probe.cce0.g),
 	             olmsmoother2_f32_u32(probe.cce0.b), olmsmoother2_f32_u32(probe.cce0.a),
 	             probe.polygon.count);

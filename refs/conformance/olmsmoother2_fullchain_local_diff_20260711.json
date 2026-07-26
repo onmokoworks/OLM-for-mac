@@ -91,8 +91,8 @@
               65536
             ]
           },
-          "output_pointer": 536877184,
-          "returned_pointer": 536877184,
+          "output_pointer": 536877216,
+          "returned_pointer": 536877216,
           "rgba": [
             0.8971925377845764,
             0.4243943989276886,
@@ -163,13 +163,13 @@
         "append": true,
         "builder_count": 1,
         "builder_gamma_colors_float": [
-          0.897192419,
+          0.897192538,
           0.424394399,
           0.424394399,
           0.998039246
         ],
         "builder_orchestrated_float": [
-          0.900196671,
+          0.900196731,
           0.550885141,
           0.550885141,
           0.998039246
@@ -290,8 +290,8 @@
               65536
             ]
           },
-          "output_pointer": 536877184,
-          "returned_pointer": 536877184,
+          "output_pointer": 536877216,
+          "returned_pointer": 536877216,
           "rgba": [
             1.0,
             1.0,
@@ -478,8 +478,8 @@
               65536
             ]
           },
-          "output_pointer": 536877184,
-          "returned_pointer": 536877184,
+          "output_pointer": 536877216,
+          "returned_pointer": 536877216,
           "rgba": [
             0.8000009655952454,
             0.10000166296958923,
@@ -550,15 +550,15 @@
         "append": true,
         "builder_count": 2,
         "builder_gamma_colors_float": [
-          0.800001085,
+          0.800000966,
           0.100001663,
           0.100001663,
           0.996078372
         ],
         "builder_orchestrated_float": [
-          0.800000906,
-          0.100003675,
-          0.100003675,
+          0.800000846,
+          0.100003667,
+          0.100003667,
           0.996078372
         ],
         "builder_vertices": [
@@ -686,8 +686,8 @@
               65536
             ]
           },
-          "output_pointer": 536877184,
-          "returned_pointer": 536877184,
+          "output_pointer": 536877216,
+          "returned_pointer": 536877216,
           "rgba": [
             1.0,
             1.0,
