@@ -1,0 +1,81 @@
+{
+  "kind": "olmsmoother2_case07_32bpc_mac_ae_exact_attestation",
+  "schema_version": 1,
+  "status": "ae_exact",
+  "ae_exact_claim": true,
+  "case_id": "final_random10_olm_smoother_v2_07",
+  "case_contract_sha256": "e8870b11b7a072b84fe8e4554c9e058468f15f7daf5b4be0d576d6b00a980403",
+  "mac_host": {
+    "ae_version": "26.3x87",
+    "macos_version": "15.7.2",
+    "renderer": "SOFTWARE",
+    "bits_per_channel": 32,
+    "working_space": "None",
+    "linear_blending": false
+  },
+  "binaries": {
+    "windows_aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "mac_plugin_sha256": "63c1b84f7df409f8789da962b40b737fe76e470a8684b4b79f35a3d446cb2377",
+    "mac_optimization_level": 2
+  },
+  "windows_pf32_entry": {
+    "width": 1920,
+    "height": 1080,
+    "rowbytes": 30720,
+    "channel_order": ["A", "R", "G", "B"],
+    "word_count": 8294400,
+    "mismatched_words": 0,
+    "max_raw_u32_delta": 0
+  },
+  "raw_float32_comparisons": {
+    "no_effect_control": {
+      "word_count": 8294400,
+      "mismatched_words": 0,
+      "max_raw_u32_delta": 0
+    },
+    "effect_on": {
+      "word_count": 8294400,
+      "mismatched_words": 0,
+      "max_raw_u32_delta": 0
+    }
+  },
+  "runtime_first_divergence": {
+    "stage": "polygon antialias coverage weight generation",
+    "windows_instruction_model": "separate SSE scalar multiply and add/subtract",
+    "mac_before_fix": "arm64 FMA contraction",
+    "direct_witness": {
+      "pixel": [738, 287],
+      "windows_weight_float32_bits": "0x3c83df6f",
+      "mac_before_fix_weight_float32_bits": "0x3c83df70"
+    }
+  },
+  "captured_runtime_luts": {
+    "decode": {
+      "byte_count": 40000,
+      "sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba"
+    },
+    "inverse": {
+      "byte_count": 40000,
+      "sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc"
+    }
+  },
+  "frozen_8bpc_regression": {
+    "request_id": "ae_pixel_olmsmoother2_current_aex_20260726_r3",
+    "case_count": 12,
+    "exact_cases": 12,
+    "max_diff": 0,
+    "mac_plugin_sha256": "63c1b84f7df409f8789da962b40b737fe76e470a8684b4b79f35a3d446cb2377"
+  },
+  "local_run_reports": {
+    "mac_32bpc_validation_report_sha256": "2f28357ce991c7850042058013608bbc4a78eade69935ee237f4803d3a1ac21a",
+    "mac_32bpc_return_sha256": "bd73dd8e39f9e943cb6a7bb1eaf923daff4e9a4c7bd4acc7df93324e3b300cee",
+    "mac_8bpc_exact_report_sha256": "284d3f68bbbf57892e79b3221b102258ec73d0c8e6921630eb6cb9a946fa8ede",
+    "mac_8bpc_batch_result_sha256": "ced81cdcf2c21060d5dbc9b7ffe6753450b11d07ffa450acac6d65d500211560"
+  },
+  "source_evidence": [
+    "refs/conformance/olmsmoother2_case07_windows_preserve_rgb_reference_20260727.json",
+    "refs/conformance/fixtures/olmsmoother2_case07_pf32_entry_20260727/pf32_input_entry_argb.bin.gz",
+    "refs/mac_validation_requests/olmsmoother2_no_key_32bpc_mac_validation_20260715.json"
+  ],
+  "next_gate": "16bpc expansion; do not retune the exact 8bpc or case-07 32bpc slices"
+}

@@ -14,6 +14,17 @@
 #include <algorithm>
 #include <cstdint>
 #include <cstdio>
+#include "OLMSmoother2_decode_lut_10000.h"
+#include "OLMSmoother2_encode_lut_10000.h"
+
+// Byte-for-byte runtime captures from the Windows AE 26.3 OLMSmoother2.aex
+// gamma contexts used by the attested 32bpc case_07 run:
+//   decode  SHA-256 11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba
+//   inverse SHA-256 b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc
+static_assert(sizeof(_tmp_smoother2_decode_lut_10000_bin) == 40000,
+              "captured decode LUT size drift");
+static_assert(sizeof(_tmp_smoother2_inverse_lut_10000_bin) == 40000,
+              "captured inverse LUT size drift");
 
 // ============================================================================
 // Constants read directly from the Windows binary (see DAT_180022xxx).
@@ -208,6 +219,7 @@ struct SMParams {
 
 	// Runtime scratch
 	int32_t       w, h;
+	bool          pf32_runtime;
 
 	// Win analogue of FUN_180002930's output: 1 byte per pixel, nonzero means
 	// "foreground"/"edge source".  Built at frame setup; read by the cardinal
@@ -416,8 +428,31 @@ static inline float win_srgb_decode_one(float v) {
 	return (float)pow(d * S_INV1055 + offset_over_1055, S_24);
 }
 
+static inline float win_srgb_lut_interpolate(const unsigned char *table_bytes,
+                                             float v)
+{
+	if (v <= 0.0f) return 0.0f;
+	if (v >= 1.0f) return 1.0f;
+
+	constexpr uint64_t kLutLength = 10000;
+	const double scaled = (double)v * (double)(kLutLength - 1);
+	const uint64_t index = (uint64_t)scaled;
+	const double fraction = scaled - (double)index;
+	float lower_f = 0.0f;
+	float upper_f = 0.0f;
+	memcpy(&lower_f, table_bytes + index * sizeof(float), sizeof(float));
+	memcpy(&upper_f, table_bytes + (index + 1) * sizeof(float), sizeof(float));
+
+	// Windows FUN_180004c30/FUN_180004cd0 use separate MULSD/MULSD/ADDSD
+	// operations. Volatile intermediates prohibit an FMA contraction here.
+	volatile double upper_term = (double)upper_f * fraction;
+	volatile double lower_term = (double)lower_f * (1.0 - fraction);
+	return (float)(upper_term + lower_term);
+}
+
 static void win_FUN_180002ba0_gamma_encode(FPix *scratch, int32_t w, int32_t h,
-                                           const SMParams &p)
+                                           const SMParams &p,
+                                           bool use_windows_runtime_lut)
 {
 	// For Session B we always take the built-in sRGB branch (param_6 == 0 in Win).
 	// The custom-LUT branch (FUN_180004cd0) would honor p.gamma_value explicitly
@@ -438,9 +473,18 @@ static void win_FUN_180002ba0_gamma_encode(FPix *scratch, int32_t w, int32_t h,
 	for (int32_t y = 0; y < h; ++y) {
 		FPix *row = scratch + (size_t)y * w;
 		for (int32_t x = 0; x < w; ++x) {
-			row[x].r = win_srgb_decode_one(row[x].r);
-			row[x].g = win_srgb_decode_one(row[x].g);
-			row[x].b = win_srgb_decode_one(row[x].b);
+			if (use_windows_runtime_lut) {
+				row[x].r = win_srgb_lut_interpolate(
+				    _tmp_smoother2_decode_lut_10000_bin, row[x].r);
+				row[x].g = win_srgb_lut_interpolate(
+				    _tmp_smoother2_decode_lut_10000_bin, row[x].g);
+				row[x].b = win_srgb_lut_interpolate(
+				    _tmp_smoother2_decode_lut_10000_bin, row[x].b);
+			} else {
+				row[x].r = win_srgb_decode_one(row[x].r);
+				row[x].g = win_srgb_decode_one(row[x].g);
+				row[x].b = win_srgb_decode_one(row[x].b);
+			}
 		}
 	}
 }
@@ -484,6 +528,7 @@ struct SmootherPolygon {
 	// --- vertex buffer (Win +0x40 .. +0x130) ---
 	PolyVertex    samples[12];    // kept name 'samples' for downstream stages
 	int32_t       count;          // Win uses a longlong; int is enough in port
+	bool          preserve_pf32_scalar_rounding;
 
 	// Convenience alias: Win bound_x/bound_y === cplane_w/cplane_h (same data).
 	int32_t bound_x() const { return cplane_w; }
@@ -1604,10 +1649,29 @@ static inline int win_floor_int(float x) {
 	return t;
 }
 
+static inline float win_pf32_mul_add(float a, float b, float c)
+{
+	volatile float product = a * b;
+	return product + c;
+}
+
+static inline float win_pf32_mul_sub(float a, float b, float c)
+{
+	volatile float product = a * b;
+	return product - c;
+}
+
+static inline float win_pf32_sub_mul(float c, float a, float b)
+{
+	volatile float product = a * b;
+	return c - product;
+}
+
 // FUN_180013700 — line vs scanline band coverage rasterizer.
 //   param_2 = (x0,y0), param_3 = (x1,y1), param_4 = scan_y (int).
 //   Returns two coverage floats in out[0]/out[1] (top/bottom half).
-static float *win_FUN_180013700(float *out, const float *p2, const float *p3, int scan_y)
+static float *win_FUN_180013700(float *out, const float *p2, const float *p3,
+                                int scan_y, bool preserve_pf32_scalar_rounding)
 {
 	float y0  = p2[1];
 	float dy  = p3[1] - y0;
@@ -1661,15 +1725,24 @@ static float *win_FUN_180013700(float *out, const float *p2, const float *p3, in
 
 	if (cVar4 == 3) {
 		if (cVar5 == 2) {
-			fVar7 = K_ONE - (scanHi - fVar9) * fracH * K_HALF;
+			float product = (scanHi - fVar9) * fracH;
+			fVar7 = preserve_pf32_scalar_rounding
+			    ? win_pf32_sub_mul(K_ONE, product, K_HALF)
+			    : K_ONE - product * K_HALF;
 			fVar6 = 0.0f; done = true;
 		} else if (cVar5 == 1) {
-			fVar7 = (fVar9 + f10) * K_HALF - scanLo;
+			fVar7 = preserve_pf32_scalar_rounding
+			    ? win_pf32_mul_sub(fVar9 + f10, K_HALF, scanLo)
+			    : (fVar9 + f10) * K_HALF - scanLo;
 			fVar6 = (scanHi - f10) * fracH * K_HALF;
 			done = true;
 		} else if (cVar5 == 0) {
-			fVar7 = (fVar9 + f10) * K_HALF - scanLo;
-			fVar6 = scanHi - (f10 + f13) * K_HALF;
+			fVar7 = preserve_pf32_scalar_rounding
+			    ? win_pf32_mul_sub(fVar9 + f10, K_HALF, scanLo)
+			    : (fVar9 + f10) * K_HALF - scanLo;
+			fVar6 = preserve_pf32_scalar_rounding
+			    ? win_pf32_sub_mul(scanHi, f10 + f13, K_HALF)
+			    : scanHi - (f10 + f13) * K_HALF;
 			done = true;
 		} else {
 			// cVar5 == 3 (or other) → fall through to fVar7=1, fVar6=0
@@ -1690,7 +1763,10 @@ static float *win_FUN_180013700(float *out, const float *p2, const float *p3, in
 		} else {
 			// cVar5 == 3 → fall through to LAB_180013b69 via post-else (Win) where
 			// fVar12 = (fVar9-scanLo)*fracL_orig and fVar7 = 1.0 - fVar12 * 0.5.
-			fVar7 = K_ONE - (fVar9 - scanLo) * fracL * K_HALF;
+			float product = (fVar9 - scanLo) * fracL;
+			fVar7 = preserve_pf32_scalar_rounding
+			    ? win_pf32_sub_mul(K_ONE, product, K_HALF)
+			    : K_ONE - product * K_HALF;
 			fVar6 = 0.0f; done = true;
 		}
 	} else if (cVar4 == 1) {
@@ -1704,31 +1780,45 @@ static float *win_FUN_180013700(float *out, const float *p2, const float *p3, in
 			done = true;
 		} else if (cVar5 == 0) {
 			fVar7 = 0.0f;
-			fVar6 = K_ONE - (f13 - scanLo) * (K_ONE - fracL) * K_HALF;
+			float product = (f13 - scanLo) * (K_ONE - fracL);
+			fVar6 = preserve_pf32_scalar_rounding
+			    ? win_pf32_sub_mul(K_ONE, product, K_HALF)
+			    : K_ONE - product * K_HALF;
 			done = true;
 		} else {
 			// cVar5 == 3 → fall through path: fVar6 = (f10-scanLo)*fracL*0.5, fVar7=scanHi-(fVar9+f10)*0.5
 			fVar6 = (f10 - scanLo) * fracL * K_HALF;
-			fVar7 = scanHi - (fVar9 + f10) * K_HALF;
+			fVar7 = preserve_pf32_scalar_rounding
+			    ? win_pf32_sub_mul(scanHi, fVar9 + f10, K_HALF)
+			    : scanHi - (fVar9 + f10) * K_HALF;
 			done = true;
 		}
 	} else {
 		// cVar4 == 0
 		if (cVar5 == 2) {
 			fVar7 = (scanHi - f13) * (K_ONE - fracH) * K_HALF;
-			fVar6 = (f10 + f13) * K_HALF - scanLo;
+			fVar6 = preserve_pf32_scalar_rounding
+			    ? win_pf32_mul_sub(f10 + f13, K_HALF, scanLo)
+			    : (f10 + f13) * K_HALF - scanLo;
 			done = true;
 		} else if (cVar5 == 1) {
 			fVar7 = 0.0f;
-			fVar6 = K_ONE - (scanLo - f13) * (K_ONE - fracH) * K_HALF;
+			float product = (scanLo - f13) * (K_ONE - fracH);
+			fVar6 = preserve_pf32_scalar_rounding
+			    ? win_pf32_sub_mul(K_ONE, product, K_HALF)
+			    : K_ONE - product * K_HALF;
 			done = true;
 		} else if (cVar5 == 0) {
 			fVar7 = 0.0f;
 			fVar6 = K_ONE; done = true;
 		} else {
 			// cVar5 == 3 → fall through: fVar6 = (f10+f13)*0.5 - scanLo,  fVar7 = scanHi - (fVar9+f10)*0.5
-			fVar6 = (f10 + f13) * K_HALF - scanLo;
-			fVar7 = scanHi - (fVar9 + f10) * K_HALF;
+			fVar6 = preserve_pf32_scalar_rounding
+			    ? win_pf32_mul_sub(f10 + f13, K_HALF, scanLo)
+			    : (f10 + f13) * K_HALF - scanLo;
+			fVar7 = preserve_pf32_scalar_rounding
+			    ? win_pf32_sub_mul(scanHi, fVar9 + f10, K_HALF)
+			    : scanHi - (fVar9 + f10) * K_HALF;
 			done = true;
 		}
 	}
@@ -1745,7 +1835,8 @@ static float *win_FUN_180013700(float *out, const float *p2, const float *p3, in
 // x-intercepts of A and B at scanLo/scanHi, clips at lines' crossing point,
 // then forwards a cleaned-up 2-point segment to FUN_180013700.
 static float *win_FUN_180013bc0(float *out, const float *pA0, const float *pA1,
-                                const float *pB0, const float *pB1, int scan_y)
+                                const float *pB0, const float *pB1, int scan_y,
+                                bool preserve_pf32_scalar_rounding)
 {
 	float ax = pA0[0], ay = pA0[1];
 	float adx = pA1[0] - ax, ady = pA1[1] - ay;
@@ -1756,15 +1847,28 @@ static float *win_FUN_180013bc0(float *out, const float *pA0, const float *pA1,
 	float scanHi = scanLo + K_ONE;
 
 	// y-coordinate where lines A and B cross (Win's fVar7).
-	float crossY = (((ax / adx) * ady - ay) - ((bx / bdx) * bdy - by)) /
-	               (ady / adx - bdy / bdx);
+	float a_term = preserve_pf32_scalar_rounding
+	    ? win_pf32_mul_sub(ax / adx, ady, ay)
+	    : (ax / adx) * ady - ay;
+	float b_term = preserve_pf32_scalar_rounding
+	    ? win_pf32_mul_sub(bx / bdx, bdy, by)
+	    : (bx / bdx) * bdy - by;
+	float crossY = (a_term - b_term) / (ady / adx - bdy / bdx);
 	float yLo, yHi;
 	yLo = (crossY <= scanLo)
-	      ? (((scanLo - bx) / bdx) * bdy + by)
-	      : (((scanLo - ax) / adx) * ady + ay);
+	      ? (preserve_pf32_scalar_rounding
+	         ? win_pf32_mul_add((scanLo - bx) / bdx, bdy, by)
+	         : ((scanLo - bx) / bdx) * bdy + by)
+	      : (preserve_pf32_scalar_rounding
+	         ? win_pf32_mul_add((scanLo - ax) / adx, ady, ay)
+	         : ((scanLo - ax) / adx) * ady + ay);
 	yHi = (crossY <= scanHi)
-	      ? (((scanHi - bx) / bdx) * bdy + by)
-	      : (((scanHi - ax) / adx) * ady + ay);
+	      ? (preserve_pf32_scalar_rounding
+	         ? win_pf32_mul_add((scanHi - bx) / bdx, bdy, by)
+	         : ((scanHi - bx) / bdx) * bdy + by)
+	      : (preserve_pf32_scalar_rounding
+	         ? win_pf32_mul_add((scanHi - ax) / adx, ady, ay)
+	         : ((scanHi - ax) / adx) * ady + ay);
 
 	// Clip endpoints.  Asm at 180013d0e-d56 unconditionally initializes
 	//   p2 = (scanLo, yLo), p3 = (scanHi, yHi)
@@ -1783,14 +1887,16 @@ static float *win_FUN_180013bc0(float *out, const float *pA0, const float *pA1,
 
 	float seg2[2] = { p2x, p2y };
 	float seg3[2] = { p3x, p3y };
-	return win_FUN_180013700(out, seg2, seg3, scan_y);
+	return win_FUN_180013700(
+	    out, seg2, seg3, scan_y, preserve_pf32_scalar_rounding);
 }
 
 // FUN_180012850 — 16-case (clsR + clsL*4) switch.  Each case fills a small
 // local frame with either 4 floats (line → 13700) or 8 floats (trapezoid →
 // 13bc0).  Default = {0,0}.  param_2 = total span length (becomes a base x).
 static float *win_FUN_180012850(float *out, int span_total, int scan_y,
-                                int clsL, int clsR)
+                                int clsL, int clsR,
+                                bool preserve_pf32_scalar_rounding)
 {
 	float fVar1 = (float)span_total;
 	float L[8] = {0,0,0,0,0,0,0,0};
@@ -1873,7 +1979,9 @@ static float *win_FUN_180012850(float *out, int span_total, int scan_y,
 		L[4] = fVar1 + K_ONE;
 		L[1] = fVar1 + 0.0f;
 		L[0] = fVar1 + K_HALF;
-		win_FUN_180013bc0(out, &L[6], &L[4], &L[2], &L[0], scan_y);
+		win_FUN_180013bc0(
+		    out, &L[6], &L[4], &L[2], &L[0], scan_y,
+		    preserve_pf32_scalar_rounding);
 		return out;
 	case 9:
 		L[1] = K_HALF;
@@ -1937,9 +2045,12 @@ static float *win_FUN_180012850(float *out, int span_total, int scan_y,
 		return out;
 	}
 	if (useTrap) {
-		win_FUN_180013bc0(out, &L[0], &L[2], &L[4], &L[6], scan_y);
+		win_FUN_180013bc0(
+		    out, &L[0], &L[2], &L[4], &L[6], scan_y,
+		    preserve_pf32_scalar_rounding);
 	} else {
-		win_FUN_180013700(out, &L[4], &L[6], scan_y);
+		win_FUN_180013700(
+		    out, &L[4], &L[6], scan_y, preserve_pf32_scalar_rounding);
 	}
 	return out;
 }
@@ -1952,11 +2063,13 @@ static float *win_FUN_180012850(float *out, int span_total, int scan_y,
 //                        weights at every call site that uses append_weighted.
 //   case_key           → split into clsL = key>>2, clsR = key & 3.
 static inline void win_weight_pair(float *out_ab, int span_len, int offset_from_center,
-                                   int case_key)
+                                   int case_key, bool preserve_pf32_scalar_rounding)
 {
 	int clsL = (case_key >> 2) & 3;
 	int clsR = case_key & 3;
-	win_FUN_180012850(out_ab, span_len, offset_from_center, clsL, clsR);
+	win_FUN_180012850(
+	    out_ab, span_len, offset_from_center, clsL, clsR,
+	    preserve_pf32_scalar_rounding);
 }
 
 // ---------------------------------------------------------------------------
@@ -2045,7 +2158,9 @@ static inline void append_weighted(SmootherPolygon &poly, int ex, int ey,
                                    int slot = 1)
 {
 	float wp[2];
-	win_weight_pair(wp, span_len, ep_offset, case_key);
+	win_weight_pair(
+	    wp, span_len, ep_offset, case_key,
+	    poly.preserve_pf32_scalar_rounding);
 	float fscale = poly.extra_n * K_W025 + poly.smoothness_n;
 	wp[0] *= fscale; wp[1] *= fscale;
 	win_FUN_1800104d0_append(poly, ex, ey, wp[slot]);
@@ -2512,7 +2627,9 @@ static bool win_FUN_1800125c0(SmootherPolygon &poly) {
 	int clsR = endpoint_cls_right_P1(&g, R[0], R[1]);
 	if (trace_this_pixel) {
 		float wp[2];
-		win_weight_pair(wp, span, R[0] - cx, clsR * 4 + clsL);
+		win_weight_pair(
+		    wp, span, R[0] - cx, clsR * 4 + clsL,
+		    poly.preserve_pf32_scalar_rounding);
 		float fscale = poly.extra_n * K_W025 + poly.smoothness_n;
 		std::fprintf(stderr,
 		             "trace 0125c0 emit ex=%d ey=%d offset=%d clsL=%d clsR=%d key=%d raw=(%.8f,%.8f) scaled=(%.8f,%.8f)\n",
@@ -3294,6 +3411,7 @@ static void build_polygon(SmootherPolygon &poly,
 	poly.smoothness_n  = (float)p.smoothness_raw   / 100.0f;  // DAT_180022dd0
 	poly.extra_n       = (float)p.extra_smooth_raw / 100.0f;
 	poly.count         = 0;
+	poly.preserve_pf32_scalar_rounding = p.pf32_runtime;
 
 	// Zero smoothness → pass-through (matches FUN_18000c280 early-out).
 	if (poly.smoothness_n == 0.0f) return;
@@ -3841,7 +3959,9 @@ static void gamma_decode_premul(FPix &center, SmootherPolygon &poly,
 	}
 }
 
-// Stage 4: accumulate weighted blend.
+// Stage 4: accumulate weighted blend. Keep the already-exact 8bpc body
+// source-identical to the frozen implementation; even a runtime-false PF32
+// branch here changes arm64 contraction/inlining decisions at -O2.
 static void composite(FPix &out, const FPix &center, const SmootherPolygon &poly) {
 	if (poly.count == 0) { out = center; return; }
 	float W = 0.0f;
@@ -3859,6 +3979,34 @@ static void composite(FPix &out, const FPix &center, const SmootherPolygon &poly
 		out.g += s.w * s.g;
 		out.b += s.w * s.b;
 		out.a += s.w * s.a;
+	}
+}
+
+static void composite_pf32(FPix &out, const FPix &center,
+                           const SmootherPolygon &poly) {
+	if (poly.count == 0) { out = center; return; }
+	float W = 0.0f;
+	for (int i = 0; i < poly.count; ++i) W += poly.samples[i].w;
+	if (W < 0.0f) W = 0.0f;
+	if (W > 1.0f) W = 1.0f;
+	float blend = 1.0f - W;
+	out.r = blend * center.r;
+	out.g = blend * center.g;
+	out.b = blend * center.b;
+	out.a = blend * center.a;
+	for (int i = 0; i < poly.count; ++i) {
+		const PolySample &s = poly.samples[i];
+		// Windows FUN_18000ab00 uses MULSS followed by ADDSS. arm64 O2
+		// otherwise contracts these expressions into FMADD and moves the
+		// PF32 result by one or two ULPs.
+		volatile float weighted_r = s.w * s.r;
+		volatile float weighted_g = s.w * s.g;
+		volatile float weighted_b = s.w * s.b;
+		volatile float weighted_a = s.w * s.a;
+		out.r = out.r + weighted_r;
+		out.g = out.g + weighted_g;
+		out.b = out.b + weighted_b;
+		out.a = out.a + weighted_a;
 	}
 }
 
@@ -3989,7 +4137,11 @@ static void win_FUN_18000cce0_orchestrate(FPix &out_pixel,
 
 	// Stage 4: composite.
 	FPix accum;
-	composite(accum, working, poly);
+	if (p.pf32_runtime) {
+		composite_pf32(accum, working, poly);
+	} else {
+		composite(accum, working, poly);
+	}
 	if (g_olmsmoother2_writer_frame_probe.json_path &&
 	    x == g_olmsmoother2_writer_frame_probe.x && y == g_olmsmoother2_writer_frame_probe.y) {
 		g_olmsmoother2_writer_frame_probe.after_ab00 = accum;
@@ -4117,6 +4269,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	const int32_t w = output->width;
 	const int32_t h = output->height;
 	p.w = w; p.h = h;
+	p.pf32_runtime = std::is_same<P, PF_PixelFloat>::value;
 
 	// Allocate float scratch (matches Win FUN_180002600 copy target layout).
 	std::vector<FPix> scratch((size_t)w * (size_t)h);
@@ -4177,7 +4330,9 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	// decode in the default v2/None UI state and produced a 1px sRGB-roundtrip
 	// ring vs the Win reference.)
 	if (p.version != SMOOTHER_V1) {
-		win_FUN_180002ba0_gamma_encode(scratch.data(), w, h, p);
+		win_FUN_180002ba0_gamma_encode(
+		    scratch.data(), w, h, p,
+		    std::is_same<P, PF_PixelFloat>::value);
 	}
 
 	// Build an FPlane alias for the per-pixel orchestrator.
@@ -4352,10 +4507,22 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 			float r = px.r, g = px.g, b = px.b, a = px.a;
 
 			if (apply_inverse_gamma) {
-				// Win branch: param_9 (gamma ctx) + 0x10 LUT ptr == 0 -> FUN_180004d70.
-				r = (float)win_FUN_180004d70_literal((double)r);
-				g = (float)win_FUN_180004d70_literal((double)g);
-				b = (float)win_FUN_180004d70_literal((double)b);
+				if (std::is_same<P, PF_PixelFloat>::value) {
+					// Windows AE supplies a 10,000-entry inverse LUT at
+					// gamma_ctx+0x18. FUN_180004c30 interpolates it in double.
+					r = win_srgb_lut_interpolate(
+					    _tmp_smoother2_inverse_lut_10000_bin, r);
+					g = win_srgb_lut_interpolate(
+					    _tmp_smoother2_inverse_lut_10000_bin, g);
+					b = win_srgb_lut_interpolate(
+					    _tmp_smoother2_inverse_lut_10000_bin, b);
+				} else {
+					// Preserve the already-exact 8bpc path. 16bpc remains a
+					// separate undeclared conformance lane.
+					r = (float)win_FUN_180004d70_literal((double)r);
+					g = (float)win_FUN_180004d70_literal((double)g);
+					b = (float)win_FUN_180004d70_literal((double)b);
+				}
 			}
 
 			// Win: if param_8[0x19] != 0 AND a != 1.0 -> RGB *= a  (re-premul)

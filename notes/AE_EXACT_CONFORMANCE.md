@@ -119,6 +119,21 @@ Default next-action priority:
 6. Manual AE checks are useful only at `host-debuggable` or better, and should
    be tied to a witness unless the slice is `host-stable`.
 
+## Current OLMSmoother2 Exact Slices
+
+- The current-AEX legacy/key/gamma 8bpc suite is Mac AE `12/12`,
+  `max_diff=0`.
+- The declared no-key 32bpc case-07 Preserve-RGB slice is raw FLOAT32 exact
+  for both its no-effect control and effect-on output: `0/8,294,400`
+  mismatched words and max raw u32 delta `0`.
+- Both results use the same final `-O2` Mac binary
+  `63c1b84f7df409f8789da962b40b737fe76e470a8684b4b79f35a3d446cb2377`.
+- This does not promote 16bpc or untested 32bpc cases. The next work lane is
+  `bitdepth-expand`, with the exact 8bpc and declared 32bpc slices frozen.
+
+Evidence:
+`refs/conformance/olmsmoother2_case07_32bpc_mac_ae_exact_20260727.md`.
+
 ## Reference Path
 
 - The canonical reference path is Windows AE Software render.

@@ -1,7 +1,23 @@
 # OLM Conformance Ledger
 
+- 2026-07-27 `OLMSmoother2 no-key 32bpc case-07 AE exact closeout` (latest
+  override): the hash-bound Preserve RGB contract is now Mac AE `26.3x87`
+  `AE exact`. The final `-O2` Mac binary (`63c1b84f...2377`) matches the
+  unchanged Windows AEX for both the no-effect control and effect-on output at
+  all `8,294,400` FLOAT32 words (`max raw u32 delta 0`). The same-render
+  Windows PF32 entry remains exact with the bound source. Binary/runtime
+  localization placed the last divergence in antialias coverage weight
+  arithmetic: Windows separate SSE scalar operations produced weight
+  `0x3c83df6f` at `(738,287)`, while ARM64 FMA contraction produced
+  `0x3c83df70`. PF32-only separated rounding plus the two 40,000-byte
+  runtime-captured gamma LUTs closes the slice. The final binary was also
+  regressed through Mac AE on the frozen 8bpc suite and is `12/12`,
+  `max_diff=0`. 16bpc remains unpromoted. Evidence:
+  `refs/conformance/olmsmoother2_case07_32bpc_mac_ae_exact_20260727.md`.
+
 - 2026-07-27 `OLMSmoother2 no-key 32bpc case-07 attributable Preserve RGB
-  residual` (latest override): Windows and Mac AE `26.3x87` now use the same
+  residual` (superseded by the exact closeout above): Windows and Mac AE
+  `26.3x87` now use the same
   hash-bound Preserve RGB FLOAT EXR source, full case parameters,
   `32bpc`/`SOFTWARE`/working-space raw `None`/linear blending `false`, and
   AEP-embedded Preserve RGB output settings. The exact Windows AEX
