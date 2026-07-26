@@ -125,6 +125,13 @@
   },
   "mac_run_contract": {
     "input": "re-import the Windows case-07 before-effects FLOAT EXR unchanged; do not use PNG",
+    "input_interpretation": {
+      "method": "open hash-bound AEP template, then FootageItem.replace() the placeholder with the Windows FLOAT EXR",
+      "preserve_rgb": true,
+      "template": "refs/fixtures/olmsmoother2_32bpc_preserve_rgb_input_template_20260726.aep",
+      "template_sha256": "51fd5403b0a43825f0f6d189c49154ad756f4c565498f733c1fb725377583679",
+      "runtime_gate": "Windows before-effects EXR vs Mac no-effect EXR semantic raw FLOAT32 words must be exact"
+    },
     "outputs": ["no_effect_control.exr", "effect_on.exr"],
     "project_bits_per_channel": 32,
     "renderer": "SOFTWARE",
@@ -158,6 +165,8 @@
     "reject if any parameter differs from params_full",
     "reject PNG, HALF, compressed, non-RGBA, or non-FLOAT outputs",
     "reject missing Mac no-effect control or loaded plugin SHA-256",
+    "reject a missing/hash-mismatched Preserve RGB AEP template or a nonzero no-effect raw FLOAT32 delta",
+    "reject effect attribution until a same-run Windows PF32 input-entry witness proves equivalence, or Windows is recaptured from the identical Preserve RGB FLOAT EXR source contract",
     "reject exactness on any host/control mismatch",
     "never infer AE exactness from CLI, runtime trace, PNG, or visual similarity"
   ]

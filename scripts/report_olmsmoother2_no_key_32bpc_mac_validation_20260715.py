@@ -20,14 +20,19 @@ def main() -> int:
     if d.get("platform")!="macOS" or not d.get("macos_product_version") or not d.get("macos_build_version") or not d.get("ae_version"): fail.append("host OS/AE identity missing")
     expected_project={"bits_per_channel":32,"renderer":"SOFTWARE","working_space":"None","linear_blending":False}
     if {k:d.get("project",{}).get(k) for k in expected_project} != expected_project: fail.append("project/renderer/color contract drift")
+    expected_interpretation=request["mac_run_contract"]["input_interpretation"]; template=ROOT/expected_interpretation["template"]; interpretation=d.get("input_interpretation",{})
+    if interpretation.get("method")!="hash_bound_aep_template_footage_replace" or interpretation.get("preserve_rgb") is not True or interpretation.get("verification")!="no_effect_raw_float32_gate": fail.append("input Preserve RGB interpretation contract drift")
+    if interpretation.get("template_path")!=str(template.resolve()) or interpretation.get("template_sha256")!=expected_interpretation["template_sha256"] or not template.is_file() or (template.is_file() and digest(template)!=expected_interpretation["template_sha256"]): fail.append("input Preserve RGB template identity missing/mismatched")
     om=d.get("output_module",{})
-    if om.get("template_name")!="OLM EXR 32 Float" or om.get("capture_api")!="OutputModule.getSettings(GetSettingsFormat.STRING)" or om.get("sample_type")!="FLOAT" or om.get("compression")!="none" or om.get("channels")!= ["A","B","G","R"]: fail.append("output contract drift")
+    expected_output_template=request["mac_run_contract"]["output_template"]
+    if om.get("template_name")!=expected_output_template or om.get("capture_api")!="OutputModule.getSettings(GetSettingsFormat.STRING)" or om.get("sample_type")!="FLOAT" or om.get("compression")!="none" or om.get("channels")!= ["A","B","G","R"]: fail.append("output contract drift")
     plugin=d.get("plugin",{}); pp=Path(plugin.get("path","")); pb=Path(plugin.get("binary_path",""))
     if plugin.get("filename")!="OLMSmoother2.plugin" or not pp.is_dir() or pb != pp/"Contents"/"MacOS"/"OLMSmoother2" or len(plugin.get("sha256",""))!=64 or not pb.is_file() or (pb.is_file() and plugin.get("sha256")!=digest(pb)): fail.append("loaded plugin bundle/binary identity or hash missing/mismatched")
-    expected_contract=canonical({"request_id":request["request_id"],"case":request["cases"][0],"common_setup":request["common_setup"],"mac_run_contract":request["mac_run_contract"]})
+    reference=request["windows_reference"]; expected_input={"filename":reference["before_effects_frame"],"sha256":reference["before_effects_sha256"]}; expected_case={**request["cases"][0],"input":expected_input}
+    expected_contract=canonical({"request_id":request["request_id"],"case":expected_case,"common_setup":request["common_setup"],"mac_run_contract":request["mac_run_contract"],"output_template":expected_output_template})
     if d.get("case_contract_sha256")!=expected_contract: fail.append("case/parameter contract hash missing or mismatched")
     cases=d.get("cases",[]); case=cases[0] if len(cases)==1 else {}
-    if case.get("id")!=request["cases"][0]["id"] or case.get("no_effect_control_passed") is not True: fail.append("case/control missing")
+    if case.get("id")!=request["cases"][0]["id"] or case.get("input")!=expected_input or case.get("no_effect_control_passed") is not True: fail.append("case/input/control missing")
     expected_params=request["cases"][0]["params_full"]
     if case.get("params_full")!=expected_params: fail.append("full parameter binding drift")
     for p in case.get("params_full",[]):
@@ -50,6 +55,7 @@ def main() -> int:
     if fail: print("[FAIL_CLOSED] "+"; ".join(fail)); return 1
     ref=request["windows_reference"]; manifest=ROOT/ref["manifest"]; md=json.loads(manifest.read_text()) if manifest.is_file() else {}; wc=next((x for x in md.get("cases",[]) if x.get("id")==case["id"]),{})
     attested=bool(wc.get("sha256") and wc.get("before_effects_sha256") and wc.get("header_metadata"))
+    entry=wc.get("pf32_input_entry",{}); entry_attested=bool(entry.get("sha256") and entry.get("same_run") is True and entry.get("case_contract_sha256")==d.get("case_contract_sha256") and entry.get("channel_order")==["alpha","red","green","blue"] and entry.get("width")==1920 and entry.get("height")==1080)
     ref_root=ROOT/ref["artifact_root"]; win_control=ref_root/ref["before_effects_frame"]; win_effect=ref_root/ref["effect_frame"]
     if not win_control.is_file() or digest(win_control)!=ref["before_effects_sha256"]: print("[FAIL_CLOSED] Windows no-effect artifact missing/hash mismatch"); return 1
     if not win_effect.is_file() or digest(win_effect)!=ref["effect_sha256"]: print("[FAIL_CLOSED] Windows effect artifact missing/hash mismatch"); return 1
@@ -59,16 +65,21 @@ def main() -> int:
     except (VerificationError,OSError,ValueError) as e: print(f"[FAIL_CLOSED] raw FLOAT32 comparison failed: {e}"); return 1
     control_exact=comparisons["no_effect_control"]["mismatched_values"]==0
     effect_exact=comparisons["effect_on"]["mismatched_values"]==0
-    exact=attested and control_exact and effect_exact
+    exact=attested and entry_attested and control_exact and effect_exact
     if not control_exact: status="blocked_no_effect_control_mismatch"
+    elif not entry_attested: status="blocked_input_entry_identity"
     elif not attested: status="blocked_pending_windows_artifact_attestation"
     elif not effect_exact: status="candidate_return_verified_effect_mismatch"
     else: status="raw_float32_exact"
     reasons=[]
     if not attested: reasons.append("Windows manifest lacks admissible per-artifact SHA-256/header metadata")
+    if not entry_attested: reasons.append("Windows original-PNG effect run lacks a same-run PF32 input-entry witness equivalent to the Mac Preserve RGB FLOAT EXR source contract")
     if not control_exact: reasons.append("Windows before-effects vs Mac no-effect raw FLOAT32 control mismatch blocks effect attribution")
     if control_exact and not effect_exact: reasons.append("no-effect control is exact but effect-on raw FLOAT32 words differ")
     if exact: reasons.append("both raw FLOAT32 gates and Windows artifact attestation pass")
-    report={"kind":"olmsmoother2_no_key_32bpc_mac_validation_report","schema_version":1,"status":status,"ae_exact_claim":exact,"case_count":1,"result_json":str(a.result),"mac_candidate_return_verified":True,"windows_artifact_attestation_present":attested,"raw_float32_comparisons":comparisons,"control_gate_passed":control_exact,"effect_gate_passed":effect_exact,"reason":"; ".join(reasons),"next_gate":"repair/aligned-capture the no-effect host/export path before attributing the effect output" if not control_exact else "attest Windows artifacts and eliminate any effect-on raw FLOAT32 residual"}
+    if not control_exact: next_gate="repair/aligned-capture the no-effect host/export path before attributing the effect output"
+    elif not entry_attested: next_gate="capture the Windows PF32 input entry in the original-PNG run, or recapture Windows from the identical Preserve RGB FLOAT EXR; then attest artifacts and compare effect-on"
+    else: next_gate="attest Windows artifacts and eliminate any effect-on raw FLOAT32 residual"
+    report={"kind":"olmsmoother2_no_key_32bpc_mac_validation_report","schema_version":1,"status":status,"ae_exact_claim":exact,"case_count":1,"result_json":str(a.result),"mac_candidate_return_verified":True,"windows_artifact_attestation_present":attested,"windows_pf32_input_entry_attestation_present":entry_attested,"raw_float32_comparisons":comparisons,"control_gate_passed":control_exact,"effect_gate_passed":effect_exact,"reason":"; ".join(reasons),"next_gate":next_gate}
     target=out/"validation_report.json"; target.write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8"); print(f"[OK] wrote {target}"); return 0 if exact else 1
 if __name__=="__main__": raise SystemExit(main())

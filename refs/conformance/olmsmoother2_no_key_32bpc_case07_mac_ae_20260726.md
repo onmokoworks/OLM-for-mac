@@ -4,9 +4,14 @@ Date: 2026-07-26
 
 ## Verdict
 
-`AE exact` is not proven. The same-contract no-effect control differs before
-the effect can be attributed, and the retained Windows manifest does not bind
-the per-artifact hashes and header metadata required by the request.
+`AE exact` is not proven. The Preserve-RGB no-effect output gate is raw
+FLOAT32 exact, but plugin-input equivalence is not: the retained Windows
+effect reference starts from the original PNG import, while this Mac effect
+run re-imports the Windows before-effects EXR through a hash-bound Preserve
+RGB AEP template. No same-run Windows PF32 input-entry witness proves that the
+two effect invocations receive identical float worlds. The retained Windows
+manifest also does not bind the per-artifact hashes and header metadata
+required by the request.
 
 The covered 8bpc implementation remains frozen and exact. This result does not
 authorize any 8bpc core change.
@@ -17,13 +22,19 @@ authorize any 8bpc core change.
   `refs/mac_validation_requests/olmsmoother2_no_key_32bpc_mac_validation_20260715.json`
 - Case: `final_random10_olm_smoother_v2_07`
 - Case-contract SHA-256:
-  `9ac98538107d520686870917718882d2ae593a94032f071a34430cf222e3f8af`
+  `e8870b11b7a072b84fe8e4554c9e058468f15f7daf5b4be0d576d6b00a980403`
 - macOS: `15.7.2` build `24G325`
 - After Effects: `26.3x87`
 - Project: `32bpc`, `SOFTWARE`, working space raw `None`, linear blending
   `false`, `1920x1080`, `24 fps`
 - Loaded Mach-O SHA-256:
   `d7abbd9dc16cc168f2c8ee8178d262f6fd8fceb618febf906e301e405b957d18`
+- Input interpretation: hash-bound
+  `refs/fixtures/olmsmoother2_32bpc_preserve_rgb_input_template_20260726.aep`,
+  SHA-256
+  `51fd5403b0a43825f0f6d189c49154ad756f4c565498f733c1fb725377583679`;
+  `FootageItem.replace()` preserves RGB for the Windows before-effects FLOAT
+  EXR and rejects template/effect contamination
 - Output: uncompressed scanline OpenEXR, physical channels `A,B,G,R`, all
   sample type `FLOAT`, `8,294,400` finite samples per file, no NaN or Inf
 
@@ -39,10 +50,10 @@ EXR output fail-closed.
 | --- | --- |
 | Windows before-effects | `366eb9e01e7c3c60df59dbcf6fb549a57d2156e95105fbea397de5353736c9fb` |
 | Windows effect-on | `95f0339e428e85803b3f6c806632938827b70574a88392abd3ab9c1af22af1c5` |
-| Mac no-effect control | `c3f1b49307adffe5a68270893fd02a42b84ecb7d168b8b91ecaded89a3e185d7` |
-| Mac effect-on | `c68c38aed1ab7f7b8183f4071f81c8f0cf7fa59e2a05ed38a6859e57f5e145d2` |
-| Mac return JSON | `9348ee733ae72a9b251c5f77096f159a1ca90b3b8555112f3463933657424947` |
-| Validation report | `cc1e19683c45bd68f494956ba1b7e7f2fb05ef0a00184645db087be692b819bc` |
+| Mac no-effect control | `d8fed18b95255511a4622c12e294361cecd2acb1cd93e7e6ebbc87453b7603e3` |
+| Mac effect-on | `0231ac0e9a8e960a4e439d0f07ce3f6f017af3b73b300ec21e17eeec61b42d26` |
+| Mac return JSON | `81c1d3f0e09e185c141f8b941161a242fdf8dd48a411129f490a3b9174ed1b2f` |
+| Validation report | `582ac600094725b366937c630fa301e46ff689e6fd50b511c5fab3a9374c9529` |
 
 EXR container hashes changed on a second Mac render, but raw semantic FLOAT32
 comparison between the two Mac runs was exact for both control and effect
@@ -53,17 +64,23 @@ repeatable; container-byte identity is not used as the pixel oracle.
 
 | Gate | Mismatched values | Max raw u32 delta | Result |
 | --- | ---: | ---: | --- |
-| Windows before-effects vs Mac no-effect | 6,106,918 | 94,228,095 | fail |
-| Windows effect-on vs Mac effect-on | 6,108,445 | 94,228,099 | fail, not attributable |
+| Windows before-effects vs Mac no-effect | 0 | 0 | exact output/control gate |
+| Windows effect-on vs Mac effect-on | 2,268,734 | 991,472,415 | fail |
 
-The control failure is evaluated first. Therefore the effect-on mismatch is a
-cross-host result under an already-red host/export path, not evidence that the
-Mac smoothing algorithm is wrong.
+The exact no-effect gate proves the Preserve-RGB Mac import/export path can
+round-trip the retained Windows before-effects EXR. It does not prove that the
+Windows original-PNG effect run and the Mac Preserve-RGB EXR effect run enter
+OLMSmoother2 with identical `PF_PixelFloat` words. The effect residual is
+therefore measured but is not yet safe as a tuning oracle.
+
+Reporter status is `blocked_input_entry_identity`; both
+`windows_pf32_input_entry_attestation_present` and admissible Windows artifact
+attestation are false.
 
 ## Next allowed action
 
-Obtain an aligned Windows/Mac no-effect capture whose project color state,
-source interpretation, output-module settings, artifact attestation, and raw
-FLOAT32 words all match. Only after that control passes may the effect-on
-residual be attributed. Do not tune the closed 8bpc core from this 32bpc
-result.
+Capture the Windows PF32 input entry in the original-PNG case-07 run, or
+recapture Windows from the identical Preserve-RGB FLOAT EXR source contract.
+Bind that witness and both Windows artifacts to same-run hashes/header
+metadata, then compare effect-on raw FLOAT32 words. Do not tune the closed
+8bpc core from the current residual.
