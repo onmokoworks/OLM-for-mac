@@ -46,7 +46,14 @@ def main() -> int:
         expected_ids = [case["id"] for case in expected_cases]
         if result.get("kind") != "olmcolorkey_32bpc_mac_validation_return": errors.append("wrong return kind")
         if result.get("ae_exact_claim") is not False: errors.append("ae_exact_claim must be false")
-        if result.get("project") != {"bits_per_channel": 32, "working_space": "None", "linear_blending": False, "renderer": "SOFTWARE"}: errors.append("project/color/renderer contract drift")
+        project = result.get("project", {})
+        if project.get("bits_per_channel") != 32 \
+                or project.get("working_space") != "None" \
+                or project.get("working_space_raw") not in ("", "None") \
+                or project.get("linear_blending") is not False \
+                or project.get("renderer") != "SOFTWARE" \
+                or project.get("renderer_raw") != 1816:
+            errors.append("project/color/renderer contract drift")
         if result.get("output_module", {}).get("template_name") != "OLM EXR 32 Float" or result.get("output_module", {}).get("capture_api") != "OutputModule.getSettings(GetSettingsFormat.STRING)": errors.append("output module contract drift")
         plugin = result.get("plugin", {})
         plugin_path = Path(plugin.get("path", ""))

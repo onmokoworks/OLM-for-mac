@@ -53,7 +53,14 @@ def verify(result_path: Path, expected_cases: list[dict], output_dir: Path) -> d
     result = json.loads(result_path.read_text(encoding="utf-8"))
     if result.get("kind") != "olmcolorkey_32bpc_mac_validation_return": raise ValueError("wrong return kind")
     if result.get("ae_exact_claim") is not False: raise ValueError("return must explicitly forbid AE exact")
-    if result.get("project") != {"bits_per_channel": 32, "working_space": "None", "linear_blending": False, "renderer": "SOFTWARE"}: raise ValueError("project contract drift")
+    project = result.get("project", {})
+    if project.get("bits_per_channel") != 32 \
+            or project.get("working_space") != "None" \
+            or project.get("working_space_raw") not in ("", "None") \
+            or project.get("linear_blending") is not False \
+            or project.get("renderer") != "SOFTWARE" \
+            or project.get("renderer_raw") != 1816:
+        raise ValueError("project contract drift")
     if result.get("output_module", {}).get("template_name") != "OLM EXR 32 Float": raise ValueError("output template drift")
     if result.get("output_module", {}).get("capture_api") != "OutputModule.getSettings(GetSettingsFormat.STRING)": raise ValueError("settings API drift")
     returned = result.get("cases")

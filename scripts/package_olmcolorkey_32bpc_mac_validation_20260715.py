@@ -151,18 +151,19 @@ def jsx_source(cases: list[dict]) -> str:
     }
     function render(comp, outputDir, name, enabled, effect, caseId) {
         effect.enabled = enabled;
+        var requestedPath = outputDir + "/" + name.replace(/\.exr$/i, "_[#####].exr");
+        var renderedPath = outputDir + "/" + name.replace(/\.exr$/i, "_00000.exr");
         var item = app.project.renderQueue.items.add(comp);
         item.timeSpanStart = 0; item.timeSpanDuration = 1.0 / comp.frameRate;
         var module = item.outputModule(1);
         module.applyTemplate(OUTPUT_TEMPLATE);
-        var outputPath = outputDir + "/" + name;
-        var captureRecord = capture(module, outputPath, caseId, enabled ? "effect_on" : "no_effect");
-        module.file = new File(outputPath);
+        var captureRecord = capture(module, renderedPath, caseId, enabled ? "effect_on" : "no_effect");
+        module.file = new File(requestedPath);
         app.project.renderQueue.render();
-        if (!new File(outputPath).exists) fail("missing rendered output " + outputPath);
-        var outputHash = hash(outputPath);
+        if (!new File(renderedPath).exists) fail("missing rendered output " + renderedPath);
+        var outputHash = hash(renderedPath);
         item.remove();
-        return { path: outputPath, sha256: outputHash, output_module_settings: captureRecord };
+        return { path: renderedPath, requested_path: requestedPath, sha256: outputHash, output_module_settings: captureRecord };
     }
     function resolvePluginIdentity(value) {
         var suppliedFile = new File(value), bundle;
@@ -193,9 +194,12 @@ def jsx_source(cases: list[dict]) -> str:
     project.bitsPerChannel = 32;
     if (Number(project.bitsPerChannel) !== 32) fail("project is not 32bpc");
     try { project.gpuAccelType = GpuAccelType.SOFTWARE; } catch (e) { fail("cannot set SOFTWARE renderer: " + e.toString()); }
-    if (String(project.gpuAccelType).toUpperCase() !== "SOFTWARE") fail("renderer is not SOFTWARE");
+    var rendererRaw = Number(project.gpuAccelType);
+    if (rendererRaw !== Number(GpuAccelType.SOFTWARE)) fail("renderer is not SOFTWARE: raw=" + rendererRaw);
     project.linearBlending = false;
-    if (project.workingSpace !== "None") fail("working space is not None");
+    project.workingSpace = "";
+    var workingSpaceRaw = String(project.workingSpace);
+    if (workingSpaceRaw !== "" && workingSpaceRaw !== "None") fail("working space is not None: raw=" + workingSpaceRaw);
     for (var c = 0; c < cases.length; c++) {
         var spec = cases[c], compSpec = spec.comp;
         var input = new File(env("OLM_AE_MAC_INPUT_DIR") + "/" + spec.input);
@@ -215,7 +219,8 @@ def jsx_source(cases: list[dict]) -> str:
     }
     var result = { kind: "olmcolorkey_32bpc_mac_validation_return", schema_version: 1, status: "candidate_return_only",
         ae_exact_claim: false, ae_exact_claim_reason: "Mac/Windows raw-float comparison has not been returned", platform: "macOS", ae_version: app.version,
-        project: { bits_per_channel: project.bitsPerChannel, working_space: "None", linear_blending: project.linearBlending, renderer: "SOFTWARE" },
+        project: { bits_per_channel: project.bitsPerChannel, working_space: "None", working_space_raw: workingSpaceRaw,
+            linear_blending: project.linearBlending, renderer: "SOFTWARE", renderer_raw: rendererRaw },
         output_module: { template_name: OUTPUT_TEMPLATE, capture_api: CAPTURE_API, semantic_intent: SEMANTIC_INTENT }, plugin: plugin, cases: results };
     write(manifestPath, stable(result) + "\n");
     try { project.close(CloseOptions.DO_NOT_SAVE_CHANGES); } catch (e) {}
