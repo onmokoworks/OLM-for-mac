@@ -1,0 +1,115 @@
+{
+  "kind": "olmcolorkey_32bpc_case0002_ae_exact",
+  "schema_version": 1,
+  "status": "ae_exact",
+  "case_id": "olmcolorkey__case_0002",
+  "scope": "declared 32bpc default-parameter no-op case only",
+  "ae_version": "26.3x87",
+  "project_contract": {
+    "bits_per_channel": 32,
+    "renderer": "SOFTWARE",
+    "renderer_raw": 1816,
+    "working_space_raw": "None",
+    "linear_blending": false,
+    "output_module": "OLM EXR 32 Float",
+    "format": "OpenEXR",
+    "compression": "none",
+    "channels": "RGBA",
+    "sample_type": "FLOAT",
+    "dimensions": [1920, 1080],
+    "profile": "Preserve RGB"
+  },
+  "input": {
+    "sha256": "918ec046892f851d4693d5e1f8ad7a13b622c371b824e3a2bd5315a0fa84c5e7",
+    "source": "supplied second-generation before-effects EXR"
+  },
+  "request_binding": {
+    "package": "refs/reference_requests/olm_windows_32bpc_second_generation_parity_20260713.zip",
+    "package_sha256": "50217fec245b464c1bbc1a2731ec253ad54db54dda07f17d6ac52f7d67239de1",
+    "case_reference_manifest_sha256": "af633fee8fd47e8f2df2be2e9368e106a99e4f121347ea68c5356079f17a756c",
+    "fixture_jsx_sha256": "33d48dd01397a5152427619c05d8629ae2b6c5a94f4dd995f48a4025da1dd160"
+  },
+  "project_binding": {
+    "mac_aepx_sha256": "858529201454e2871c327dc0f77e1b11e3604f11493135711eac81b48deabb42",
+    "windows_aepx_sha256": "c70e355457a6486e5851be3d568065af9488eec31e917c3a2bc42d45ee19ce85",
+    "file_reference_normalization": "replace each AEPX fileReference element with one canonical marker",
+    "file_reference_normalized_sha256": "2bd8754d393a33e7b00f8338ef38f3e299833fc1815d7dfa19b1a7486ab83234",
+    "normalized_files_byte_identical": true,
+    "effect_comp": "olmcolorkey_case0002_effect",
+    "control_comp": "olmcolorkey_case0002_control",
+    "render_queue_item_count": 2
+  },
+  "parameter_contract": {
+    "effect_match_name": "OLM Color Key",
+    "captured_parameter_count": 219,
+    "built_in_parameter_count": 2,
+    "render_parameter_count": 217,
+    "all_render_parameters_are_declared_defaults": true,
+    "critical_defaults": {
+      "Color Keep": 0,
+      "Threshold": 0,
+      "Force Lower Precision": 1,
+      "Edge Thin Amount": 0,
+      "Edge Blur Amount": 0,
+      "Number of Colors": 1,
+      "Use Color 1": 1,
+      "all_per_color_thresholds": 0
+    },
+    "windows_aerender_conversion_warning": true,
+    "warning_text": "effect control conversion required; some effect controls will be reset",
+    "warning_disposition": "bounded to this case: the Windows-captured request vector is the plugin default vector, so reset-to-default preserves the declared parameters; do not reuse this disposition for any non-default ColorKey case"
+  },
+  "mac": {
+    "after_effects_pid": 36364,
+    "process_started_local": "2026-07-27 16:38:48 +0900",
+    "plugin_macho_sha256": "c3026c5facbdf227bec55c24e7257f0f94db5ddf94ce26cfb5b593681b5ed0ae",
+    "vmmap_sha256": "6e00ca02769b7ab25ff6ca6aa7784f3e4ca5c79621865e77d04c038d226c6044",
+    "control_exr_sha256": "3a0309fddf12570ad597d890a4c51f900c695d67de625ccfd0eeac5fd243462f",
+    "effect_exr_sha256": "d1b0a89477bf3f4d3089894286230830e5e96816370a13a437a4fc780948336f"
+  },
+  "windows": {
+    "aerender_pid": 31472,
+    "afterfx_com_pid": 42568,
+    "aex_image_event_pid": 42568,
+    "aerender_sha256": "711859d183bdabec7c358a344208323bbbd665fffd7e88e42b9b234f9b99692a",
+    "plugin_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "etl_sha256": "04734022321a43e5579bf18758dcd7fbc10ea0af2a57ca4a8eaa2585f565fdbd",
+    "trace_csv_sha256": "dc8f1a36a9c9dfb9e492b0f02fd2641376a12869811bcdb2bb793160f969b481",
+    "aerender_log_sha256": "93de77350a6dca337221c9d47fba34bd16a8575c622494b86f80b6af9c24172e",
+    "image_load_event_count": 2,
+    "render_exit_code": 0,
+    "control_exr_sha256": "e0c46a1465f67e51706f665335aca814ddac57a9fb12c828522eeae574ba0afe",
+    "effect_exr_sha256": "e0c46a1465f67e51706f665335aca814ddac57a9fb12c828522eeae574ba0afe"
+  },
+  "raw_float32_comparisons": {
+    "sample_words_per_frame": 8294400,
+    "windows_control_vs_mac_control": {
+      "mismatched_values": 0,
+      "max_raw_u32_delta": 0
+    },
+    "windows_effect_vs_mac_effect": {
+      "mismatched_values": 0,
+      "max_raw_u32_delta": 0
+    },
+    "windows_effect_vs_control": {
+      "mismatched_values": 0,
+      "max_raw_u32_delta": 0
+    },
+    "mac_effect_vs_control": {
+      "mismatched_values": 0,
+      "max_raw_u32_delta": 0
+    }
+  },
+  "attribution": {
+    "case_behavior": "declared no-op",
+    "effect_loaded_on_both_hosts": true,
+    "same_contract_control_and_effect_required": true,
+    "cli_exact_used_as_ae_substitute": false,
+    "old_bulk_windows_reference_rejected": "its no-effect control differs before plugin attribution"
+  },
+  "limitations": [
+    "This promotes only case_0002.",
+    "The default-vector conversion-warning disposition is invalid for non-default ColorKey cases.",
+    "The remaining eight declared 32bpc cases still require fresh same-contract control/effect raw comparison."
+  ]
+}

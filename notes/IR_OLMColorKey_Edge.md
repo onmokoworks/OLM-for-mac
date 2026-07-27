@@ -5,8 +5,8 @@
 - Plug-in: OLM Color Key
 - Feature/path: 8bpc Edge Thin erode/dilate and Edge Blur after core keying
 - Bit depth: 8bpc normalized Software is documented here; the covered 16bpc
-  slice is AE exact; 32bpc has returned only as PNG/non-float-preserving probe
-  evidence
+  slice is AE exact; declared 32bpc default/no-op `case_0002` is AE exact,
+  while the other eight 32bpc cases remain unpromoted
 - Current status: packaged 8bpc AE-host return is exact for core RGB,
   Edge Thin, and Edge Blur against the 20260618 normalized Software reference
   generation. The apparent Edge Blur stress `case_0009` residual is now a
@@ -19,14 +19,16 @@
   ColorKey 16bpc slice is 9/9 `AE exact` with `max_diff=0`. The formerly
   remaining case was `case_0009` with Lab76, `Force Lower Precision=3`,
   `Edge Thin Amount=25`, `Edge Thin Distance Type=2`, and `Edge Blur Amount=0`;
-  keep the older analysis below as provenance only. For 32bpc, use
-  `refs/conformance/bitdepth_32bpc_probe_status_20260703.md`: returned PNG-only
-  probes are not exact evidence.
+  keep the older analysis below as provenance only. For 32bpc, the earlier
+  PNG-only probes remain non-exact evidence, but the supplied-EXR
+  second-generation `case_0002` has since closed at both raw AE gates; see
+  `refs/conformance/olmcolorkey_32bpc_case0002_ae_exact_20260727.md`.
 
 ## Source Evidence
 
 | Rule | Evidence | Confidence |
 | --- | --- | --- |
+| The declared 32bpc default/no-op `case_0002` is Windows/Mac AE exact at both control/effect raw FLOAT32 gates. Windows ETW binds the current AEX to the render PID and Mac `vmmap` binds the current Mach-O. The AEPX conversion-warning disposition is limited to this all-default parameter vector and cannot be reused for non-default cases. | `refs/conformance/olmcolorkey_32bpc_case0002_ae_exact_20260727.json`. | runtime-bound / AE exact |
 | Core RGB/color-space/Replace is separate from the current residual. | `notes/OLMColorKey_ASM_FACTS.md`; core and Replace/color-space smokes exact or guarded independently. | reference-backed |
 | Edge Blur distance type dispatch is read from `ctx+0x44`. | `FUN_1800094b0` dispatch to `FUN_180006e20`, `FUN_180005d60`, `FUN_180007ec0`. | binary-grounded |
 | Edge Blur seed world is produced by `FUN_180008c90`, which marks keep-side inner boundary seeds. | Static Ghidra facts in `notes/OLMColorKey_ASM_FACTS.md`. | binary-grounded |

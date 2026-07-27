@@ -193,6 +193,29 @@ Evidence:
 `refs/conformance/olmblur_32bpc_case0006_ae_exact_20260727.md` and
 `refs/conformance/olmblur_32bpc_case0007_ae_exact_20260727.md`.
 
+## Current OLMColorKey Exact Slices
+
+- The covered 8bpc and 16bpc slices retain their existing exact status.
+- The declared 32bpc default-parameter no-op `case_0002` is AE exact on
+  Windows/Mac AE `26.3x87`. The same supplied FLOAT EXR is used by both
+  hosts, and both the no-effect control and effect-on raw gates are exact at
+  `0/8,294,400` mismatched words with max raw u32 delta `0`.
+- Windows Kernel Process ETW binds `aerender` PID `31472` to
+  `AfterFX.com` PID `42568` and the same PID's load/unload of
+  `OLMColorKey.aex` SHA-256 `9c6cca22...bb2cf2c`. Mac `vmmap` binds AE PID
+  `36364` to Mach-O SHA-256 `c3026c5f...5ed0ae`.
+- Windows warns that the Mac-created AEPX needs effect-control conversion.
+  This is accepted only for `case_0002`: all 217 declared render parameters
+  are the Windows-captured default vector, so reset-to-default preserves this
+  no-op contract. Non-default ColorKey cases must use a native or otherwise
+  parameter-attested Windows project and cannot inherit this disposition.
+- The older bulk nine-case Windows pair remains rejected because its
+  no-effect controls differ before effect attribution. The other eight 32bpc
+  cases remain unpromoted.
+
+Evidence:
+`refs/conformance/olmcolorkey_32bpc_case0002_ae_exact_20260727.md`.
+
 ## Reference Path
 
 - The canonical reference path is Windows AE Software render.
