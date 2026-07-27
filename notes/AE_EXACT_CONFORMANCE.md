@@ -129,14 +129,21 @@ Default next-action priority:
 - The declared no-key 32bpc case-07 Preserve-RGB slice is raw FLOAT32 exact
   for both its no-effect control and effect-on output: `0/8,294,400`
   mismatched words and max raw u32 delta `0`.
-- All three results use the same final `-O2` Mac binary
-  `45227dd84cad09eb483c8ce534132df1b80322e4ac1d6f32320d3887b1a35c3d`.
+- The declared no-key 32bpc case-09 Preserve-RGB slice is also raw FLOAT32
+  exact for both gates. Its final `-O2` binary is
+  `c14bb3424b8b8ce58d09fe372a443f844319d18fec5db5ef1cfc1019e3e839eb`;
+  actual-AEX `DIVSS` reciprocal sequencing is preserved before exponent
+  promotion.
+- The case-09 final binary preserves the same frozen 8bpc suite at `12/12`,
+  `max_diff=0`.
 - This does not promote untested 16bpc or 32bpc cases. The next work lane is
-  `bitdepth-expand`, with the exact 8bpc and declared case-07 slices frozen.
+  `bitdepth-expand`, with the exact 8bpc and declared case-07/case-09 slices
+  frozen.
 
 Evidence:
 `refs/conformance/olmsmoother2_case07_16bpc_mac_ae_exact_20260727.md` and
-`refs/conformance/olmsmoother2_case07_32bpc_mac_ae_exact_20260727.md`.
+`refs/conformance/olmsmoother2_case07_32bpc_mac_ae_exact_20260727.md`, and
+`refs/conformance/olmsmoother2_case09_32bpc_mac_ae_exact_20260727.md`.
 
 ## Reference Path
 

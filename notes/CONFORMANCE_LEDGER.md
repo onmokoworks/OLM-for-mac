@@ -1,5 +1,20 @@
 # OLM Conformance Ledger
 
+- 2026-07-27 `OLMSmoother2 no-key 32bpc case-09 AE exact closeout` (latest
+  override): the hash-bound Preserve RGB case-09 contract is Mac AE
+  `26.3x87` `AE exact` against the unchanged Windows AEX. The no-effect
+  control and effect-on output are each raw exact at all `8,294,400` FLOAT32
+  words (`max raw u32 delta 0`). Actual-AEX runtime tracing proved
+  `FUN_18000c0d0` computes the gamma exponent with float32 `DIVSS` before
+  promoting the rounded value for `pow`; preserving that order closes the
+  former `14,927`-word, max-8 Mac-high residual. The final diagnostic-free
+  `-O2` Mac binary is `c14bb342...e839eb`. A fresh-path render proved PF32
+  full-frame execution and avoided stale AE frame reuse without changing
+  Adobe preferences/cache. The same binary preserves the frozen 8bpc suite
+  at `12/12`, `max_diff=0`. Do not promote other untested 32bpc cases.
+  Evidence:
+  `refs/conformance/olmsmoother2_case09_32bpc_mac_ae_exact_20260727.md`.
+
 - 2026-07-27 `OLMSmoother2 no-key 16bpc case-07 AE exact closeout` (latest
   override): the hash-bound 16bpc Software/working-space-None Preserve RGB
   contract is Mac AE `26.3x87` `AE exact` against the unchanged Windows AEX.

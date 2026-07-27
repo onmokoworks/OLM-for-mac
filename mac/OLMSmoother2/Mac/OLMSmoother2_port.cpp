@@ -3938,7 +3938,10 @@ static void gamma_decode_premul(FPix &center, SmootherPolygon &poly,
                                 bool gamma_enable, float gamma_value)
 {
 	if (gamma_enable && gamma_value > 0.0f) {
-		double e = 1.0 / (double)gamma_value;
+		// Win FUN_18000c0d0 computes 1.0f / gamma with DIVSS first, then
+		// promotes that rounded float32 exponent to double for imported pow.
+		const float exponent_f = K_ONE / gamma_value;
+		const double e = (double)exponent_f;
 		center.r = (float)pow((double)center.r, e);
 		center.g = (float)pow((double)center.g, e);
 		center.b = (float)pow((double)center.b, e);

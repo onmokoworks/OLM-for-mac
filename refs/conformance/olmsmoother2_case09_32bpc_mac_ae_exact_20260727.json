@@ -1,0 +1,77 @@
+{
+  "kind": "olmsmoother2_case09_32bpc_mac_ae_exact",
+  "schema_version": 1,
+  "date": "2026-07-27",
+  "case_id": "final_random10_olm_smoother_v2_09",
+  "status": "ae_exact",
+  "scope": "declared Preserve-RGB 32bpc no-key case-09 only",
+  "hosts": {
+    "windows_ae": "26.3x87",
+    "mac_ae": "26.3x87",
+    "renderer": "SOFTWARE",
+    "working_space": "None",
+    "linear_blending": false,
+    "bits_per_channel": 32
+  },
+  "plugins": {
+    "windows_aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "mac_plugin_binary_sha256": "c14bb3424b8b8ce58d09fe372a443f844319d18fec5db5ef1cfc1019e3e839eb",
+    "mac_build_optimization": "-O2"
+  },
+  "input": {
+    "sha256": "1399c49581cab9d76d612e5df189fdde750ed00e80698637b4e5ead0699f83de",
+    "width": 1920,
+    "height": 1080,
+    "sample_type": "FLOAT",
+    "preserve_rgb": true
+  },
+  "output_contract": {
+    "container": "OpenEXR",
+    "channels": ["A", "B", "G", "R"],
+    "sample_type": "FLOAT",
+    "compression": "none",
+    "compared_words_per_gate": 8294400
+  },
+  "comparisons": {
+    "no_effect_control": {
+      "windows_sha256": "b8977435890e47116f36da44996b834299c77915b757fa6ca000c6ca03ed3c4f",
+      "mac_sha256": "6c786d1cae42023589df8508245221aeac0fefc4ae496434d1de77d8697e38d9",
+      "mismatched_values": 0,
+      "max_raw_u32_delta": 0
+    },
+    "effect_on": {
+      "windows_sha256": "5bdce759371aecab22faf0a6ddb13cd36b9c0135abb1221c8bbaba6e5e905955",
+      "mac_sha256": "b36fd7bb6be7bdb01fcb76c000922edaf15b6876d244d80a2d378baf668a6729",
+      "mismatched_values": 0,
+      "max_raw_u32_delta": 0
+    }
+  },
+  "binary_grounded_fix": {
+    "windows_function": "FUN_18000c0d0",
+    "windows_rva": "0xc0d0",
+    "instruction_contract": "DIVSS computes 1.0f/gamma, then CVTPS2PD promotes the rounded float32 exponent for pow",
+    "source_contract": "const float exponent_f = K_ONE / gamma_value; const double e = (double)exponent_f;"
+  },
+  "runtime_evidence": {
+    "mac_renderbits_pixel_type": "PF_PixelFloat",
+    "input_world": {"width": 1920, "height": 1080, "rowbytes": 30720, "extent": [0, 0, 1920, 1080]},
+    "output_world": {"width": 1920, "height": 1080, "rowbytes": 30720, "extent": [0, 0, 1920, 1080]},
+    "witness_xy": [723, 0],
+    "after_c0d0_rgba_u32": [1025415550, 1051983194, 1035888241, 1065353216],
+    "after_ab00_rgba_u32": [1041251506, 1053915028, 1035490902, 1065353216],
+    "cce0_rgba_u32": [1018784351, 1043726452, 1008471117, 1065353216],
+    "final_pf32_argb_u32": [1065353216, 1042713209, 1055576803, 1036394430]
+  },
+  "cache_control": {
+    "method": "copy the hash-identical input to a fresh path before the final render",
+    "reason": "AE reused a prior cached frame after plug-in replacement; the fresh source path forced RenderBits execution without changing source bytes or Adobe preferences/cache"
+  },
+  "regression": {
+    "suite": "ae_pixel_olmsmoother2_current_aex_20260726_r3",
+    "bits_per_channel": 8,
+    "exact_cases": 12,
+    "total_cases": 12,
+    "max_diff": 0,
+    "report_sha256": "284d3f68bbbf57892e79b3221b102258ec73d0c8e6921630eb6cb9a946fa8ede"
+  }
+}
