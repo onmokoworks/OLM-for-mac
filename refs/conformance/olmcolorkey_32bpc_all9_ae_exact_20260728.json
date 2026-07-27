@@ -1,0 +1,253 @@
+{
+  "schema_version": 1,
+  "kind": "olmcolorkey_32bpc_all9_ae_exact",
+  "ae_exact_claim": true,
+  "classification": "windows_mac_ae_exact",
+  "contract": {
+    "ae_version": "26.3x87",
+    "bits_per_channel": 32,
+    "renderer": "SOFTWARE",
+    "renderer_raw": 1816,
+    "working_space_raw": "None",
+    "linear_blending": false,
+    "output": "OLM EXR 32 Float, RGB+Alpha, Preserve RGB",
+    "comparison": "semantic-channel raw FLOAT32 word equality",
+    "required_gates_per_case": [
+      "no_effect",
+      "effect_on"
+    ],
+    "word_count_per_gate": 8294400
+  },
+  "binaries": {
+    "windows_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "mac_macho_sha256": "410d6cd6b568f7d2ae5bb426451eb3d628998a716a83f0cdbe3c5c0bc028ed7f"
+  },
+  "mac": {
+    "evidence_root": "/private/tmp/olmcolorkey32_case9weight_20260728.5jxxb1",
+    "ae_pid": 60412,
+    "loaded_plugin_proof": "vmmap_exact_path",
+    "binary_predates_process_start": true
+  },
+  "new_windows_native_parameter_attested_cases": [
+    {
+      "case_id": "olmcolorkey__case_0001",
+      "source_aepx_sha256": "1ba1334c78e932d4a6ad0f43baf6d9748d18af558a5f168dc3c9cc738e555f1c",
+      "params_sha256": "ae8a5434db556b334ace698a4e2da6042a747ab0bb1045515d4e69b51fd58c84",
+      "parameter_count": 219,
+      "parameter_readback_exact": true,
+      "preparation_pid": 19476,
+      "aerender_pid": 48820,
+      "afterfx_pid": 43780,
+      "etw": {
+        "afterfx_process_start_line": 62118,
+        "aex_image_load_line": 77919,
+        "aex_image_unload_line": 94280
+      },
+      "gates": {
+        "no_effect": {
+          "windows_exr_sha256": "9d501f569470be9ee63db04f318736e2f5a93813ac6d4cab10b30f16968056c4",
+          "mac_exr_sha256": "1e6b91f7c1bde5d545cc206cabe303173a80d1d7c2985e7e5600cdc219e93f67",
+          "mismatched_float32_words": 0,
+          "max_raw_u32_delta": 0
+        },
+        "effect_on": {
+          "windows_exr_sha256": "f4620b65fc42e2b8f50d1605da292e3fec2749d8957a7d81007cb47c184ed31e",
+          "mac_exr_sha256": "4b409f429e861c5a449816768fea58aed912670ff7d2bd614d8ea5fc66d6b8af",
+          "mismatched_float32_words": 0,
+          "max_raw_u32_delta": 0
+        }
+      }
+    },
+    {
+      "case_id": "olmcolorkey__case_0003",
+      "source_aepx_sha256": "4a8b3238ab1580fb8b7bc06f91565a0250d2006fe0eb1df3042b36cdaa5d704d",
+      "params_sha256": "7162cc958d691529b871d7dc99a87b8c3b41bdae149f274cdfc67f119085e637",
+      "parameter_count": 219,
+      "parameter_readback_exact": true,
+      "preparation_pid": 10592,
+      "aerender_pid": 29548,
+      "afterfx_pid": 10192,
+      "etw": {
+        "afterfx_process_start_line": 62211,
+        "aex_image_load_line": 87822,
+        "aex_image_unload_line": 110259
+      },
+      "gates": {
+        "no_effect": {
+          "windows_exr_sha256": "4d0c56b0517e7cd1f8769e093ba739ff8be3fa06a51fb6683c024132ea63b254",
+          "mac_exr_sha256": "8c323628f9cb4734c1132005d91858049033e018de0a6809b1966ff543ae24f3",
+          "mismatched_float32_words": 0,
+          "max_raw_u32_delta": 0
+        },
+        "effect_on": {
+          "windows_exr_sha256": "3a33e08137b9210c470ea3afbfc14a5ddb79d26d1e5a8535358e0c09521ceb1d",
+          "mac_exr_sha256": "f5086351799dd92c1e28aa021acdf81699afe5dfb3e24a7e065deef57ba641a8",
+          "mismatched_float32_words": 0,
+          "max_raw_u32_delta": 0
+        }
+      }
+    },
+    {
+      "case_id": "olmcolorkey__case_0004",
+      "source_aepx_sha256": "9d3cba093b734090c7363e3354600e9000cd2f3db68224ad380c1eeca5dda785",
+      "params_sha256": "d23a85eca8bbcf79c78ae54403cf02fecc96421b5cf04892f014f44a13ae8176",
+      "parameter_count": 219,
+      "parameter_readback_exact": true,
+      "preparation_pid": 43452,
+      "aerender_pid": 40644,
+      "afterfx_pid": 39252,
+      "etw": {
+        "afterfx_process_start_line": 61333,
+        "aex_image_load_line": 87022,
+        "aex_image_unload_line": 99855
+      },
+      "gates": {
+        "no_effect": {
+          "windows_exr_sha256": "065c336c7866eec8e2993d84d74eccc0c5236a4ee4b7a3acfe05c023c84f2db4",
+          "mac_exr_sha256": "57f3c9ce3e6454e3e3526af6f3ae26e1c5393a96f86d1b491ebc9740f8c05683",
+          "mismatched_float32_words": 0,
+          "max_raw_u32_delta": 0
+        },
+        "effect_on": {
+          "windows_exr_sha256": "065c336c7866eec8e2993d84d74eccc0c5236a4ee4b7a3acfe05c023c84f2db4",
+          "mac_exr_sha256": "57f3c9ce3e6454e3e3526af6f3ae26e1c5393a96f86d1b491ebc9740f8c05683",
+          "mismatched_float32_words": 0,
+          "max_raw_u32_delta": 0
+        }
+      }
+    },
+    {
+      "case_id": "olmcolorkey__case_0005",
+      "source_aepx_sha256": "072a6715742bd222943d9add389d5c3ed5d3f91ec62c0e7f5c63e5d1512dc592",
+      "params_sha256": "0c048538f1304cbd5314958331d45495c964cde3a7a6049a561b9c6214af7aac",
+      "parameter_count": 219,
+      "parameter_readback_exact": true,
+      "preparation_pid": 49500,
+      "aerender_pid": 46168,
+      "afterfx_pid": 53092,
+      "etw": {
+        "afterfx_process_start_line": 63233,
+        "aex_image_load_line": 88350,
+        "aex_image_unload_line": 91651
+      },
+      "gates": {
+        "no_effect": {
+          "windows_exr_sha256": "2e975b5c13b9ee03bcad74f304971d328d81d77f5a5f77e8deb1bf058dc57be4",
+          "mac_exr_sha256": "2e58a431443f4d93ac30c00096be505887cb713dd1f3e3a3b4dc0468f948018c",
+          "mismatched_float32_words": 0,
+          "max_raw_u32_delta": 0
+        },
+        "effect_on": {
+          "windows_exr_sha256": "ea42a128855523085c41e5c3ca1fba95cdea538f11f0ad0533ddef4c7274fe2c",
+          "mac_exr_sha256": "1e2720d7f23feacd77e1ca65a5e69d5f6459c2d1ba94dc1ef4b148e1bb8affb3",
+          "mismatched_float32_words": 0,
+          "max_raw_u32_delta": 0
+        }
+      }
+    },
+    {
+      "case_id": "olmcolorkey__case_0006",
+      "source_aepx_sha256": "603f6da02f6a634acfacb1544b921eeae75fcc018b60da3cc49715a10a0d986d",
+      "params_sha256": "456a4c6f3dae31313e077727fc9789027c4dbd97a6c6d8cc00d14f1641b147f9",
+      "parameter_count": 219,
+      "parameter_readback_exact": true,
+      "preparation_pid": 53236,
+      "aerender_pid": 26224,
+      "afterfx_pid": 47132,
+      "etw": {
+        "afterfx_process_start_line": 64073,
+        "aex_image_load_line": 89106,
+        "aex_image_unload_line": 92046
+      },
+      "gates": {
+        "no_effect": {
+          "windows_exr_sha256": "2a66e87b10bb1d833791e3287f4082bc03a0ae98de2fb63b3c3eb2c365769b72",
+          "mac_exr_sha256": "004b63a340601cfc78ff68d84580c7898a8784e9b15302dbf7f62a7767d3134e",
+          "mismatched_float32_words": 0,
+          "max_raw_u32_delta": 0
+        },
+        "effect_on": {
+          "windows_exr_sha256": "2a66e87b10bb1d833791e3287f4082bc03a0ae98de2fb63b3c3eb2c365769b72",
+          "mac_exr_sha256": "004b63a340601cfc78ff68d84580c7898a8784e9b15302dbf7f62a7767d3134e",
+          "mismatched_float32_words": 0,
+          "max_raw_u32_delta": 0
+        }
+      }
+    },
+    {
+      "case_id": "olmcolorkey__case_0007",
+      "source_aepx_sha256": "620b3410257a15f196e651801633e0213e855d516f18464efc2aa7e4cc9c395f",
+      "params_sha256": "069d5b2373ddaa350decf4b0c3be6de766c7f1ffaf5c6b6c75bb0d902058d874",
+      "parameter_count": 219,
+      "parameter_readback_exact": true,
+      "preparation_pid": 41924,
+      "aerender_pid": 12904,
+      "afterfx_pid": 36172,
+      "etw": {
+        "afterfx_process_start_line": 62878,
+        "aex_image_load_line": 88569,
+        "aex_image_unload_line": 100956
+      },
+      "gates": {
+        "no_effect": {
+          "windows_exr_sha256": "1bc6234cc78a9712561a0f2e11aeceed8a5faca32221290ca8394c7c986822f3",
+          "mac_exr_sha256": "2519000179cb833ed2da00dcc2b86c3defc5814a16664a50f5432114a6e9b349",
+          "mismatched_float32_words": 0,
+          "max_raw_u32_delta": 0
+        },
+        "effect_on": {
+          "windows_exr_sha256": "1bc6234cc78a9712561a0f2e11aeceed8a5faca32221290ca8394c7c986822f3",
+          "mac_exr_sha256": "74913d7b2dbfb81432428a22b5c678dc0b1a7b39503f8e6a7198bd31557d9756",
+          "mismatched_float32_words": 0,
+          "max_raw_u32_delta": 0
+        }
+      }
+    },
+    {
+      "case_id": "olmcolorkey__case_0008",
+      "source_aepx_sha256": "84e34ba3593586e06b08620350af3e6ddbfc037c349f1ed367c20a8ac803dd29",
+      "params_sha256": "53664f9f4b1ee436e3840a21960e6aaeff03f59c3d2d027a7e71e41603de17de",
+      "parameter_count": 219,
+      "parameter_readback_exact": true,
+      "preparation_pid": 6108,
+      "aerender_pid": 43492,
+      "afterfx_pid": 14180,
+      "etw": {
+        "afterfx_process_start_line": 63891,
+        "aex_image_load_line": 87612,
+        "aex_image_unload_line": 90393
+      },
+      "gates": {
+        "no_effect": {
+          "windows_exr_sha256": "78579f5523abeef13685eebf5c7f6cc398e3f587cc351f15ddff1614ce2fbe03",
+          "mac_exr_sha256": "74913d7b2dbfb81432428a22b5c678dc0b1a7b39503f8e6a7198bd31557d9756",
+          "mismatched_float32_words": 0,
+          "max_raw_u32_delta": 0
+        },
+        "effect_on": {
+          "windows_exr_sha256": "78579f5523abeef13685eebf5c7f6cc398e3f587cc351f15ddff1614ce2fbe03",
+          "mac_exr_sha256": "bfd1fa969bcd2d1f668c5198635194945132b86f0ee466745e2b8afb521270c4",
+          "mismatched_float32_words": 0,
+          "max_raw_u32_delta": 0
+        }
+      }
+    }
+  ],
+  "previously_promoted_cases": [
+    {
+      "case_id": "olmcolorkey__case_0002",
+      "evidence": "refs/conformance/olmcolorkey_32bpc_case0002_ae_exact_20260727.json"
+    },
+    {
+      "case_id": "olmcolorkey__case_0009",
+      "evidence": "refs/conformance/olmcolorkey_32bpc_case0009_ae_exact_20260728.json"
+    }
+  ],
+  "summary": {
+    "declared_case_count": 9,
+    "raw_gate_count": 18,
+    "exact_gate_count": 18,
+    "max_raw_u32_delta": 0,
+    "old_bulk_windows_reference_disposition": "rejected; no-effect controls violate the cross-host source contract"
+  }
+}

@@ -320,11 +320,38 @@ scaling RGBA in the plug-in would apply the weight twice to RGB.
 Evidence:
 `refs/conformance/olmcolorkey_32bpc_case0009_ae_exact_20260728.md`.
 
-## BLOCKERS (edge-thin erode + edge-blur blend) — not guessed
+## Declared PF32 all-nine AE closeout (2026-07-28)
 
-These are independent of Replace (all the failing cases have Color Keep=0 so no
-replace pixel is written) and require decompiling the morphology/blend, not a
-constant guess; stopped per the byte-match-or-decomp-fact rule.
+Fresh Windows-native 219-parameter construction and AEPX-embedded
+Preserve-RGB rendering independently promote cases 0001 and 0003 through
+0008. Together with the earlier case-0002 and binary/runtime-grounded
+case-0009 closeouts, the complete declared 32bpc set is Windows/Mac AE
+`26.3x87` exact:
+
+- 9 declared cases
+- 18 independent no-effect/effect-on gates
+- `8,294,400` raw FLOAT32 words per gate
+- zero mismatches and max raw-u32 delta `0` at every gate
+- current Windows AEX `9c6cca22...bb2cf2c` bound by per-case ETW
+- current Mac Mach-O `410d6cd6...ed7f` bound by `vmmap_exact_path`
+
+The no-effect gate caught and rejected two invalid Windows constructions:
+using the pre-graft source AEPX changed all RGB words, and creating a new
+Windows-local output queue lost the embedded Preserve-RGB behavior. Neither
+was corrected in the plug-in. The accepted path preserves the AEPX-embedded
+output modules and runs them in a separate fresh `aerender` process.
+
+Evidence:
+`refs/conformance/olmcolorkey_32bpc_all9_ae_exact_20260728.md`.
+
+## Historical / AE-free Edge blockers — not current declared AE blockers
+
+The residuals below predate the declared PF32 all-nine AE closeout or belong to
+AE-free CLI models. They remain useful binary-analysis history, but they do
+not reopen the measured Windows/Mac AE-exact cases above. They are independent
+of Replace (the affected historical cases have Color Keep=0 so no replace
+pixel is written) and require decompiling the morphology/blend rather than a
+constant guess.
 
 ### 2026-06-19 Edge Blur Distance Type dispatch correction
 

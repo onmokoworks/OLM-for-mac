@@ -1,10 +1,26 @@
 # OLM Conformance Ledger
 
+- 2026-07-28 `OLMColorKey declared 32bpc all-nine AE exact closeout` (latest
+  override): cases `0001..0009` are Windows/Mac AE `26.3x87` exact at all 18
+  required raw FLOAT32 gates. Each no-effect and effect-on comparison covers
+  `8,294,400` words with zero mismatches and max raw-u32 delta `0`. Newly
+  promoted non-default cases `0001` and `0003..0008` use fresh Windows-native
+  effects with all 219 parameters written and read back exactly, followed by
+  a separate fresh `aerender` execution of the AEPX-embedded Preserve-RGB
+  queues. Per-case ETW binds the recorded `aerender.exe` PID to its
+  `AfterFX.com` child and that child's load/unload of current
+  `OLMColorKey.aex` SHA `9c6cca22...bb2cf2c`; the shared fresh Mac run remains
+  `vmmap`-bound to Mach-O `410d6cd6...ed7f`. Cases `0002` and `0009` retain
+  their independent earlier closeouts. The old bulk Windows pair remains
+  rejected and is not part of this promotion. Evidence:
+  `refs/conformance/olmcolorkey_32bpc_all9_ae_exact_20260728.md`.
+
 - 2026-07-28 `OLMColorKey 32bpc case_0009 AE exact closeout` (latest
-  override): the fresh Windows-native non-default effect pair and fresh Mac
-  AE `26.3x87` render are raw exact at both required gates. Windows control
-  vs Mac control and Windows effect vs Mac effect are each `0/8,294,400`
-  mismatched FLOAT32 words with max raw-u32 delta `0`. ETW binds
+  case-specific record; superseded as the overall ColorKey status by the
+  all-nine override above): the fresh Windows-native non-default effect pair
+  and fresh Mac AE `26.3x87` render are raw exact at both required gates.
+  Windows control vs Mac control and Windows effect vs Mac effect are each
+  `0/8,294,400` mismatched FLOAT32 words with max raw-u32 delta `0`. ETW binds
   `aerender` PID `34176` to `AfterFX.com` PID `10332` and the same PID's
   current AEX load/unload (`9c6cca22...bb2cf2c`); Mac `vmmap` binds PID
   `60412` to Mach-O `410d6cd6...ed7f`. Binary analysis corrects the PF32
@@ -12,12 +28,12 @@
   Amount-25 integral-shell FLOAT32 words, while the independently matched
   geometry remains zero `1,407,100`, one `357,380`, and partial `309,120`.
   All 16 case-0001..0008 Mac branches are unchanged raw-zero regressions.
-  The old bulk Windows controls remain rejected and do not promote those
-  cases. Evidence:
+  The old bulk Windows controls remain rejected. Evidence:
   `refs/conformance/olmcolorkey_32bpc_case0009_ae_exact_20260728.md`.
 
-- 2026-07-27 `OLMColorKey 32bpc case_0002 AE exact closeout` (latest
-  override): the supplied second-generation FLOAT EXR default/no-op case is
+- 2026-07-27 `OLMColorKey 32bpc case_0002 AE exact closeout` (case-specific
+  record; superseded as the overall ColorKey status by the all-nine override
+  above): the supplied second-generation FLOAT EXR default/no-op case is
   Windows/Mac AE `26.3x87` exact at both required gates. Windows control vs
   Mac control and Windows effect vs Mac effect are each `0/8,294,400`
   mismatched FLOAT32 words with max raw-u32 delta `0`; effect vs control is
@@ -29,7 +45,8 @@
   Windows' effect-control-conversion warning is bounded to this case because
   all 217 render parameters are the Windows-captured default vector; it must
   not be reused for non-default cases. The old bulk nine-case controls remain
-  rejected, and the other eight 32bpc cases remain unpromoted. Evidence:
+  rejected. The other eight cases were unpromoted at this checkpoint and are
+  closed by the later all-nine record above. Evidence:
   `refs/conformance/olmcolorkey_32bpc_case0002_ae_exact_20260727.md`.
 
 - 2026-07-27 `OLMSmoother2 16bpc case-01..10 AE exact closeout` (latest
@@ -3425,7 +3442,7 @@ runtime-captured or binary-built block, then replay the same portable core.
 | Plug-in / feature | correctness_status | host_status | work_lane | next allowed action | forbidden action |
 | --- | --- | --- | --- | --- | --- |
 | ColorKeep | `guarded` | `host-smoke` | `parked` | Keep as support/helper unless a real Windows Software reference is requested. | Treat synthetic helper output as OLM compatibility. |
-| OLMColorKey | 8bpc and 16bpc covered slices retain their prior status. The declared 32bpc default/no-op `case_0002` is now `AE exact` at both raw FLOAT32 control/effect gates with current AEX/Mach-O runtime binding. Edge Blur directions 1/2/3 are `9/9` binary-grounded at the typed apply boundary; combined Replace+Edge has exact bounded callback order and separately staged actual-AEX numerical matches, while natural same-run numerical orchestration remains unresolved. The other eight 32bpc cases are unpromoted; the old bulk controls are rejected. | `host-debuggable`; `host-stable` for covered 8/16bpc and 32bpc case_0002 | `bitdepth-expand` | Freeze the exact case_0002 default/no-op behavior. For each remaining 32bpc case, use identical supplied input, parameters, color state, output module, and plug-in identity; require fresh same-contract raw control/effect comparison. Because Windows reports effect-control conversion for Mac AEPX, non-default cases also require Windows-native or explicit parameter-attested project construction. | Reopen the exact case_0002 path; generalize its no-op result or default-vector conversion disposition; reopen grounded distance primitives/staged callback order; visual/look tuning; PNG-only promotion; compensate for host conversion in plug-in code; or promote when the no-effect control or parameter contract is not exact. |
+| OLMColorKey | 8bpc and 16bpc covered slices retain their prior status. The complete declared 32bpc `case_0001..0009` set is `AE exact` at all 18 raw FLOAT32 control/effect gates with current AEX/Mach-O runtime binding. Cases 0001/0003..0008 use fresh Windows-native 219-parameter construction plus AEPX-embedded Preserve-RGB queues; cases 0002/0009 retain their independent closeouts. Edge Blur directions 1/2/3 remain binary-grounded at the typed apply boundary. The old bulk controls are rejected and are not promotion evidence. | `host-stable` for covered 8/16bpc and the declared 32bpc all-nine set | `bitdepth-expand` | Freeze the exact declared behavior. Any additional ColorKey profile must use the same fresh identity, exact parameter readback, Preserve-RGB output, runtime module binding, and independent no-effect/effect raw gates. | Reopen the exact declared cases from visual or CLI evidence; reuse the rejected bulk pair; discard the no-effect control; use a Windows-local output template that changes Preserve-RGB; compensate for host conversion in plug-in code; or generalize beyond a separately declared and measured profile. |
 | OLMBlur | Packaged 8bpc slice `AE exact`; the declared normalized 16bpc seven-case slice is `7/7 AE exact` on Mac AE `26.3x87`. The declared 32bpc `case_0001..0005` set is also AE exact at both no-effect/effect FLOAT32 gates; cases 0003/0004 use binary-grounded float-exponent/binary64-`exp` coefficient paths, and case 0005 closes by fresh same-contract recapture with final Mach-O `c6a9e54b...e3d9d83e`. | `host-stable` for covered 8/16bpc and 32bpc cases 0001..0005 | `bitdepth-expand` | Freeze the exact covered behavior and expand the same fresh-project, identity-bound FLOAT EXR contract to 32bpc case 0006 next. | Reopen exact 8/16bpc behavior from CLI/PNG speculation; generalize beyond the five proven 32bpc cases; reuse stale reference generations or zero-second cached AEPX outputs; or promote without same-contract no-effect control and raw FLOAT comparison. |
 | OLMToonDilate | 8bpc `AE exact`; covered 16bpc slice is `AE exact`; the bounded PF16 AEX worker uses a five-argument copy callback and exact-opaque `32768` seeding. A true-`2x2` seven-alpha actual-AEX differential crosses the former callback boundary and exactly matches current PF16 source selection, four-word copies, and final typed output; host `PF_COPY` behavior is still an inference; the global seed/premultiply candidate is rejected because it broke two of three normalized regression gates; 32bpc has a fail-closed typed-procedural FLOAT EXR contract but no accepted cross-host compare. The Mac package provenance gate now binds the current build SHA at generation time and passes its AE-free smoke; no candidate EXR exists yet. | `host-debuggable` | `bitdepth-expand` | Keep the exact 8/16bpc slice, bounded PF16 2D kernel, and repaired OutFlags2 stable. Run the isolated Mac 32bpc same-comp effect/control package, capture localized output-module settings, and compare its raw FLOAT EXR samples with the matching Windows typed-procedural pair. | Reopen the 8bpc/PF16 two-pass dilation algorithm, promote PNG-only 32bpc evidence, treat the bounded PF_COPY model as a universal AE-host contract, apply the rejected global seed/premultiply candidate, attribute a control-world host split to ToonDilate, or claim PiPL repair/Mac no-op as cross-host conformance. |
 | OLMDistanceGradation | current 8bpc canonical batch is `known-red` (`0/29`); current 16bpc extended is `7/16 AE exact`; PF8 truncation and the source-linked alpha-mask/stride/field boundary are binary-grounded, while the PF16 writer remains `inactive_for_fixture` | `host-debuggable` | `cli-port` | Preserve reciprocal-multiply normalization, raw-threshold helper calls, the PF16 nearest-even field-world roundtrip, Power/Constant fixes, depth-gated source mask, and the existing exact set `0008/0010/0011/0020/0021/0022/0023`. The PF8 source-linked mirror matches the actual-AEX helper and OpenCV 4.5.5 at all `187/187` field words with padded rowbytes and fail-closed layout guards; bounded actual-AEX differentials also match current Mac compose/store for injected live-coordinate bytes. Next isolate the actual `RenderBits` host-world/resize staging between those closed boundaries without treating the mirror as the full host path. When the active AE session can be restarted safely, run the canonical Mac AE 8bpc cases with loaded-module identity; if residuals remain, assign them to that integration boundary rather than broad compose/store or EDT retuning. PF16 alpha-store samples remain Windows `3268/9876/28359` versus Mac `3267/9877/28360`; one global writer rule is rejected. Keep Layer/no-bg `0012/0013/0014/0016`, max-2, and outlier `0028` separate. | Treat the source-linked mirror as full `RenderBits` or `AE exact`; interrupt the active AE session; reintroduce threshold downsample scaling; repeat the closed depth-control request or zero-hit `(397,281)` condition; tune PF8 compose/store or the EDT/helper from broad residuals; revert the grounded PF16 boundary; call historical unbound 8bpc candidates current `AE exact`; use a runner without explicit depth or loaded-module identity; reopen `0010/0011`; apply global output rounding toggles; merge `0028` into the max-2 family; broad PNG tuning; or use CLI output as Windows-reference truth. |

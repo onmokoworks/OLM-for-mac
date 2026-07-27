@@ -151,8 +151,17 @@ Evidence:
 
 ## Current OLMColorKey Exact Slices
 
-- The independently contracted 32bpc cases 0002 and 0009 are Windows/Mac AE
-  `26.3x87` exact at both no-effect and effect-on raw FLOAT32 gates.
+- The complete declared 32bpc `case_0001..0009` set is Windows/Mac AE
+  `26.3x87` exact at all 18 no-effect/effect-on raw FLOAT32 gates. Every gate
+  covers `8,294,400` words with zero mismatches and max raw-u32 delta `0`.
+- Newly promoted cases 0001 and 0003 through 0008 use fresh Windows-native
+  effects with all 219 parameters written and read back exactly. A separate
+  fresh `aerender` process executes the AEPX-embedded Preserve-RGB queues;
+  each ETW capture binds that process to its `AfterFX.com` child and the
+  child's current AEX load/unload.
+- The shared fresh Mac run is `vmmap_exact_path`-bound to AE PID `60412` and
+  Mach-O `410d6cd6...ed7f`. Windows uses AEX
+  `9c6cca22...bb2cf2c`.
 - For case 0009, both comparisons cover `8,294,400` words with zero
   mismatches and max raw-u32 delta `0`. Windows ETW binds current AEX SHA
   `9c6cca22...bb2cf2c`; Mac `vmmap_exact_path` binds Mach-O
@@ -160,10 +169,11 @@ Evidence:
 - Case 0009's PF32 Edge Blur path is binary-grounded as
   `FUN_1800056f0 -> FUN_180008840`. The 24 Amount-25 integral L1 shell words
   are runtime-captured from the accepted Windows AE output.
-- The old nine-case Windows bulk controls remain rejected. Cases 0001 and
-  0003 through 0008 are not promoted by the Mac-only zero-regression result.
+- The old nine-case Windows bulk controls remain rejected. The all-nine
+  promotion uses independent same-contract Windows recaptures, not that pair.
 
 Evidence:
+`refs/conformance/olmcolorkey_32bpc_all9_ae_exact_20260728.md`,
 `refs/conformance/olmcolorkey_32bpc_case0002_ae_exact_20260727.md` and
 `refs/conformance/olmcolorkey_32bpc_case0009_ae_exact_20260728.md`.
 
@@ -210,29 +220,6 @@ Evidence:
 `refs/conformance/olmblur_32bpc_case0005_ae_exact_20260727.md` and
 `refs/conformance/olmblur_32bpc_case0006_ae_exact_20260727.md` and
 `refs/conformance/olmblur_32bpc_case0007_ae_exact_20260727.md`.
-
-## Current OLMColorKey Exact Slices
-
-- The covered 8bpc and 16bpc slices retain their existing exact status.
-- The declared 32bpc default-parameter no-op `case_0002` is AE exact on
-  Windows/Mac AE `26.3x87`. The same supplied FLOAT EXR is used by both
-  hosts, and both the no-effect control and effect-on raw gates are exact at
-  `0/8,294,400` mismatched words with max raw u32 delta `0`.
-- Windows Kernel Process ETW binds `aerender` PID `31472` to
-  `AfterFX.com` PID `42568` and the same PID's load/unload of
-  `OLMColorKey.aex` SHA-256 `9c6cca22...bb2cf2c`. Mac `vmmap` binds AE PID
-  `36364` to Mach-O SHA-256 `c3026c5f...5ed0ae`.
-- Windows warns that the Mac-created AEPX needs effect-control conversion.
-  This is accepted only for `case_0002`: all 217 declared render parameters
-  are the Windows-captured default vector, so reset-to-default preserves this
-  no-op contract. Non-default ColorKey cases must use a native or otherwise
-  parameter-attested Windows project and cannot inherit this disposition.
-- The older bulk nine-case Windows pair remains rejected because its
-  no-effect controls differ before effect attribution. The other eight 32bpc
-  cases remain unpromoted.
-
-Evidence:
-`refs/conformance/olmcolorkey_32bpc_case0002_ae_exact_20260727.md`.
 
 ## Reference Path
 
