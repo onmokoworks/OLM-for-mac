@@ -178,8 +178,11 @@ Evidence:
   identity and ETW-bound same-contract Windows recapture are exact at both
   gates; effect-on differs from control at the same `5,911,831` words on both
   hosts.
-- This is a six-case 32bpc promotion. It does not promote untested OLMBlur
-  32bpc cases or replace the existing 8/16bpc declared-case records.
+- Case 0007 closes the Legacy profile without another core change. Its fresh
+  ETW-bound same-contract capture is exact at both gates, and effect-on differs
+  from control at the same `1,176,535` words on both hosts.
+- This is a complete seven-case 32bpc promotion. It does not replace the
+  existing 8/16bpc declared-case records.
 
 Evidence:
 `refs/conformance/olmblur_32bpc_case0001_ae_exact_20260727.md` and
@@ -187,7 +190,8 @@ Evidence:
 `refs/conformance/olmblur_32bpc_case0003_ae_exact_20260727.md` and
 `refs/conformance/olmblur_32bpc_case0004_ae_exact_20260727.md` and
 `refs/conformance/olmblur_32bpc_case0005_ae_exact_20260727.md` and
-`refs/conformance/olmblur_32bpc_case0006_ae_exact_20260727.md`.
+`refs/conformance/olmblur_32bpc_case0006_ae_exact_20260727.md` and
+`refs/conformance/olmblur_32bpc_case0007_ae_exact_20260727.md`.
 
 ## Reference Path
 

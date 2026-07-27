@@ -1,0 +1,146 @@
+{
+  "ae_exact_claim": true,
+  "ae_version": "26.3x87",
+  "case_id": "OLMBlur/case_0007",
+  "comparison": {
+    "effect_on": {
+      "height": 1080,
+      "max_raw_u32_delta": 0,
+      "mismatched_values": 0,
+      "total_values": 8294400,
+      "width": 1920
+    },
+    "no_effect_control": {
+      "height": 1080,
+      "max_raw_u32_delta": 0,
+      "mismatched_values": 0,
+      "total_values": 8294400,
+      "width": 1920
+    }
+  },
+  "contract": {
+    "bits_per_channel": 32,
+    "frame": 0,
+    "frame_rate": 24,
+    "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+    "linear_blending": false,
+    "output": {
+      "channels": [
+        "A",
+        "B",
+        "G",
+        "R"
+      ],
+      "compression": "none",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "sample_type": "FLOAT",
+      "template": "OLM EXR 32 Float"
+    },
+    "params": {
+      "Bias Direction": 1,
+      "Blur Amount": 5,
+      "Blur Amount readback": 5,
+      "Blur Smoothness": 100,
+      "Legacy": 1,
+      "Number of Repeat": 1
+    },
+    "renderer": {
+      "name": "SOFTWARE",
+      "raw": 1816
+    },
+    "working_space_raw": "None"
+  },
+  "cross_host_contract_binding": {
+    "file_reference_normalization": "replace each AEPX fileReference element with one canonical marker",
+    "mac_creation": "fresh app.newProject JSX with contract readback and a fresh composition/effect identity",
+    "result": "same declared contract; canonicalized AEPX byte exact; raw no-effect control exact",
+    "windows_aepx_file_reference_normalized_sha256": "0dcb11e1315ba32f35423829df594f08c4d01352e61bf025861dd6d4166b89b3",
+    "windows_aepx_sha256": "3bc877a77dae6d78c24d0c90d3509f46f326f0e0eaaac91e816815057352e90c"
+  },
+  "effect_attribution": {
+    "mac_effect_vs_control": {
+      "max_raw_u32_delta": 1060570798,
+      "mismatched_values": 1176535
+    },
+    "windows_effect_vs_control": {
+      "max_raw_u32_delta": 1060570798,
+      "mismatched_values": 1176535
+    }
+  },
+  "kind": "olmblur_32bpc_case0007_ae_exact",
+  "mac": {
+    "loaded_plugin_proof": {
+      "after_effects_pid": 29205,
+      "method": "vmmap exact module path during the fresh-project effect render",
+      "module_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin/Contents/MacOS/OLMBlur",
+      "module_sha256": "c6a9e54b1760fc2c916f4551367666b58c100520b2c6644ebd809d60e3d9d83e",
+      "process_start_local": "Mon Jul 27 16:10:16 2026",
+      "vmmap_excerpt_sha256": "049f4954532c71b6fea7c88002863b858ca961cbe47a50e789cef44926164b2c"
+    },
+    "outputs": {
+      "effect_on": {
+        "sha256": "a7176881628a17d97e57268753adde5f6773a8721d5159114073a4398d6154d4"
+      },
+      "no_effect_control": {
+        "sha256": "392058a0719fc0cd2006ff329f4ed7e72f6cd1b928b5a53773655ce7744eda4a"
+      }
+    },
+    "project_sha256": "abf8e20b799837e0e8ed895674b4ceaeae0fdbad2efa2cf88bb026329e6d27f8",
+    "result_sha256": "2b9cf77ac5b17f4625ffe659f4d7d82c6600413b9d5bbea0c963243353e64f88"
+  },
+  "schema_version": 1,
+  "status": "raw_float32_ae_exact",
+  "verification": {
+    "core_change": "none after the case_0004 coefficient fix",
+    "fresh_identity_policy": "accepted Mac run uses a new project, composition names, effect instance, output root, and installed Mach-O identity",
+    "windows_runtime_intake": "the 10 ms Process.Modules poll missed the short-lived AfterFX.com child and stayed fail-closed; the retained ETW process-start plus image-load/unload chain independently binds PID 5160 to the hash-pinned AEX"
+  },
+  "windows": {
+    "aerender": {
+      "exit_code": 0,
+      "pid": 49120,
+      "sha256": "711859d183bdabec7c358a344208323bbbd665fffd7e88e42b9b234f9b99692a",
+      "stdout_sha256": "2621debf0f0c965244e242440b6bfe4f10db94a73e8774c58fbf7d64650f4a92"
+    },
+    "loaded_plugin_proof": {
+      "afterfx_pid": 5160,
+      "afterfx_process_path": "C:\\Program Files\\Adobe\\Adobe After Effects 2026\\Support Files\\AfterFX.com",
+      "aerender_parent_pid": 49120,
+      "aex_path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\OLMBlur.aex",
+      "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+      "etl_sha256": "c3e120cbb921b68fc7d4eeff0b74410dcb8f74af45767534f2855c3d66a55f40",
+      "event_count": 2,
+      "events": [
+        {
+          "event": "ImageLoad",
+          "image_base": "0x7FFE42C20000",
+          "image_size": "0x14000",
+          "pid": 5160,
+          "timestamp_raw": "134296099684312705"
+        },
+        {
+          "event": "ImageUnload",
+          "image_base": "0x7FFE42C20000",
+          "image_size": "0x14000",
+          "pid": 5160,
+          "timestamp_raw": "134296099691185576"
+        }
+      ],
+      "method": "Microsoft-Windows-Kernel-Process ETW process+image events",
+      "process_start_utc": "2026-07-27T07:12:40.756336100Z",
+      "trace_csv_sha256": "6b390c20ee9b9e31b594144f22421ffa7120866649be7b23df41ecc00b092107"
+    },
+    "outputs": {
+      "effect_on": {
+        "sha256": "97c488d64316544a6b4e121f44d989e216e91a20c8e3f57770a2869c6efed347"
+      },
+      "no_effect_control": {
+        "sha256": "22bf64aedfd528e7fb23cefe2b3ad93cbd99346db12ea2e4a6e64687929601fd"
+      }
+    },
+    "runtime_evidence_sha256": "2d9fad2eaaf6097fe0b3571014227eaa06f0567ec6d5f009d8c9c5a69d037501"
+  }
+}
