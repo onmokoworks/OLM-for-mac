@@ -316,6 +316,23 @@
   single declared case to untested OLMBlur 32bpc cases. Evidence:
   `refs/conformance/olmblur_32bpc_case0001_ae_exact_20260727.md`.
 
+- 2026-07-27 `OLMBlur 32bpc case_0002 AE exact` (latest override):
+  the declared `(Blur Amount=129.4, Smoothness=100, Repeat=2, Bias=2,
+  Legacy=0)` case is raw FLOAT32 exact. Mac and Windows AE `26.3x87` use the
+  same path-normalized AEPX contract at `32bpc`, Software raw `1816`,
+  working-space raw `None`, linear blending off, and the uncompressed
+  `OLM EXR 32 Float` output module. Windows Kernel Process ETW binds the
+  `aerender` child `AfterFX.com` PID to the loaded
+  `C:\Program Files\Adobe\Common\Plug-ins\7.0\MediaCore\OLM\OLMBlur.aex`,
+  SHA-256 `f0611785...e96e5b`; the Mac Mach-O is
+  `71df7efc...f4f0d72`. Both no-effect control and effect-on comparisons are
+  `0/8,294,400` mismatched FLOAT32 words with max raw u32 delta `0`.
+  Effect-on differs from control at the same `207,108` values on both hosts,
+  proving the exact result is not a pass-through. This promotes only
+  `case_0001` and `case_0002`; do not generalize to untested OLMBlur 32bpc
+  cases. Evidence:
+  `refs/conformance/olmblur_32bpc_case0002_ae_exact_20260727.md`.
+
 - 2026-07-18 `OLMBlur 32bpc red-only residual` (superseded for case_0001):
   the earlier retained Windows effect artifact lacked loaded-AEX provenance.
   Its core-tuning prohibition remains valid, but the missing same-run
