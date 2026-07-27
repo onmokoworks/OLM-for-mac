@@ -5,8 +5,8 @@
 - Plug-in: OLM Smoother v2
 - Feature/path: 8bpc cel-line smoother, color-key, gamma/color-space, v1/v2
   compatibility
-- Bit depth: 8bpc exact for the covered lanes. The bound no-key case-07
-  Preserve-RGB slice is also AE exact at both 16bpc and 32bpc.
+- Bit depth: 8bpc exact for the covered lanes. The declared Preserve-RGB
+  case-01..10 set is AE exact at both 16bpc and 32bpc.
 - Current reference target: current Windows AEX Software recaptures.
 - Retired reference set: `refs/win_references/20260605_extra/OLMSmoother2`
   is reference-only for legacy cases because `case_0001` does not match the
@@ -22,9 +22,10 @@
   32bpc case is promoted: the exact-AEX Windows Preserve RGB recapture and Mac
   use the same FLOAT EXR source, the Windows PF32 entry is word-exact with that
   source, and both the no-effect and effect-on outputs are raw FLOAT32 exact.
-  The declared 16bpc case-07 slice is also exact: runtime evidence proves PF16
-  uses the captured Windows decode and inverse LUTs, and both required raw
-  FLOAT32 AE comparisons are exact.
+  The full declared 16bpc case-01..10 set is also exact. Runtime evidence
+  proves PF16 uses the captured Windows decode and inverse LUTs and preserves
+  Windows scalar `MULSS` then `ADDSS` rounding at the composite boundary; all
+  20 required raw FLOAT32 AE comparisons are exact.
 
 ## Source Evidence
 
@@ -66,6 +67,7 @@
 | The independently declared Preserve-RGB 32bpc no-key case-09 contract is also Windows/Mac AE `26.3x87` exact. The former 14,927-word max-8 Mac-high residual came from exponent reciprocal sequencing: actual AEX `FUN_18000c0d0` executes float32 `DIVSS` and only then promotes the rounded exponent for `pow`, while Mac divided in binary64. Preserving the AEX order makes both no-effect and effect-on raw exact at all `8,294,400` words. A fresh hash-identical footage path was required to force AE past stale frame reuse; the final diagnostic-free binary `c14bb342...e839eb` keeps the 8bpc suite `12/12`, `max_diff=0`. | `refs/conformance/olmsmoother2_case09_32bpc_mac_ae_exact_20260727.md`. | binary/runtime-grounded / AE exact |
 | The full declared Preserve-RGB 32bpc case-01..10 set is Windows/Mac AE `26.3x87` exact with final binary `c14bb342...e839eb`. Cases 01–06/08/10 use exact hash-bound Mac inputs and one Windows aerender process per case with AEP-embedded no-effect/effect-on items; logs prove the FLOAT32 Preserve-RGB contract twice per process. Together with the independent case-07/09 closeouts, all 20 raw gates are `0/8,294,400` mismatches with max raw-u32 delta `0`. This supersedes the old bulk artifacts whose effect-entry contract was unproven. | `refs/conformance/olmsmoother2_32bpc_case01_10_ae_exact_20260727.md`, `refs/conformance/olmsmoother2_32bpc_case01_10_ae_exact_20260727.json`. | binary/runtime-grounded foundation / AE exact |
 | The hash-bound Preserve-RGB 16bpc no-key case-07 contract is Windows/Mac AE `26.3x87` exact. The initial effect residual was 71 max-1 FLOAT32 words. PF16 inverse-LUT routing reduced it to 21 R words. CDB at `(477,897)` then proved the polygon weight already matched (`0x3b8bf256`) while pre-composite center/sample words differed by 1–3 ULP because Windows PF16 frame decode uses the captured 10,000-entry LUT and Mac still used the literal transform. Routing PF16 decode through that same LUT makes both no-effect and effect-on raw exact (`0/8,294,400`, max raw delta `0`). The experimental composite/FMA split was removed as unnecessary, and PF8 remains unchanged. | `refs/conformance/olmsmoother2_case07_16bpc_mac_ae_exact_20260727.md`. | binary/runtime-grounded / AE exact |
+| The full declared Preserve-RGB 16bpc case-01..10 set is Windows/Mac AE `26.3x87` exact. The initial full sweep had 19/20 exact gates; case-02 effect-on differed at only G `(362,670)`, Windows PF16 code `2684` vs Mac `2683`. Windows CDB captured cce0 G `0x3da7b800` and stored ARGB words `8000 1792 0a7c 00cf`. The Mac AE center/sample/weight trace uniquely reconstructs ARM64 FMADD `0x3da7b7ff`; Windows `FUN_18000ab00` uses scalar `MULSS` then `ADDSS`, producing `0x3da7b800`. Routing PF16 through the existing separated scalar composite used by PF32 closes the boundary. Fresh-path Mac recapture makes all 20 cross-host raw gates exact and preserves frozen 8bpc `12/12` plus all declared 32bpc raw gates. | `refs/conformance/olmsmoother2_16bpc_case01_10_ae_exact_20260727.md`, `refs/conformance/olmsmoother2_16bpc_case01_10_ae_exact_20260727.json`. | binary/runtime/CPU-grounded / AE exact |
 
 ## Parameters
 

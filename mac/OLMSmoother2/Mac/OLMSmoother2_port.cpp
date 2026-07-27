@@ -219,6 +219,7 @@ struct SMParams {
 
 	// Runtime scratch
 	int32_t       w, h;
+	bool          pf16_runtime;
 	bool          pf32_runtime;
 
 	// Win analogue of FUN_180002930's output: 1 byte per pixel, nonzero means
@@ -3985,8 +3986,8 @@ static void composite(FPix &out, const FPix &center, const SmootherPolygon &poly
 	}
 }
 
-static void composite_pf32(FPix &out, const FPix &center,
-                           const SmootherPolygon &poly) {
+static void composite_separate_scalar(FPix &out, const FPix &center,
+                                      const SmootherPolygon &poly) {
 	if (poly.count == 0) { out = center; return; }
 	float W = 0.0f;
 	for (int i = 0; i < poly.count; ++i) W += poly.samples[i].w;
@@ -4001,7 +4002,7 @@ static void composite_pf32(FPix &out, const FPix &center,
 		const PolySample &s = poly.samples[i];
 		// Windows FUN_18000ab00 uses MULSS followed by ADDSS. arm64 O2
 		// otherwise contracts these expressions into FMADD and moves the
-		// PF32 result by one or two ULPs.
+		// PF16/PF32 result by one or two ULPs.
 		volatile float weighted_r = s.w * s.r;
 		volatile float weighted_g = s.w * s.g;
 		volatile float weighted_b = s.w * s.b;
@@ -4140,8 +4141,8 @@ static void win_FUN_18000cce0_orchestrate(FPix &out_pixel,
 
 	// Stage 4: composite.
 	FPix accum;
-	if (p.pf32_runtime) {
-		composite_pf32(accum, working, poly);
+	if (p.pf16_runtime || p.pf32_runtime) {
+		composite_separate_scalar(accum, working, poly);
 	} else {
 		composite(accum, working, poly);
 	}
@@ -4272,6 +4273,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	const int32_t w = output->width;
 	const int32_t h = output->height;
 	p.w = w; p.h = h;
+	p.pf16_runtime = std::is_same<P, PF_Pixel16>::value;
 	p.pf32_runtime = std::is_same<P, PF_PixelFloat>::value;
 
 	// Allocate float scratch (matches Win FUN_180002600 copy target layout).

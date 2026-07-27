@@ -1,5 +1,20 @@
 # OLM Conformance Ledger
 
+- 2026-07-27 `OLMSmoother2 16bpc case-01..10 AE exact closeout` (latest
+  override): the full declared Preserve-RGB 16bpc set is Windows/Mac AE
+  `26.3x87` exact with final diagnostic-free `-O2` Mac binary
+  `bad3472d...e2cd7b`. One Windows `aerender` process per case rendered an
+  AEP-embedded no-effect/effect-on pair; every log proves the 16bpc depth
+  warning, `Preserve RGB`, `OLM EXR 32 Float`, and FLOAT32 output twice. All
+  20 cross-host raw gates are exact at `0/8,294,400` mismatched words and max
+  raw-u32 delta `0`. The last residual was one PF16 G code at case-02
+  `(362,670)`: Windows CDB captured cce0 `0x3da7b800` after scalar `MULSS`
+  then `ADDSS`, while the Mac ARM64 trace uniquely reconstructs contracted
+  `0x3da7b7ff`. Routing PF16 through the existing separated scalar composite
+  path closes the word. Fresh-path regressions preserve the frozen 8bpc suite
+  at `12/12`, `max_diff=0`, and all 20 declared 32bpc raw gates. Evidence:
+  `refs/conformance/olmsmoother2_16bpc_case01_10_ae_exact_20260727.md`.
+
 - 2026-07-27 `OLMSmoother2 32bpc case-01..10 AE exact closeout` (latest
   override): the final diagnostic-free `-O2` Mac binary
   `c14bb342...e839eb` is Windows/Mac AE `26.3x87` `AE exact` for all ten

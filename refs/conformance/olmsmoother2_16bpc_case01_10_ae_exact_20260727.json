@@ -1,0 +1,620 @@
+{
+  "binaries": {
+    "mac_plugin_sha256": "bad3472d3ce808bdd69f0fa55be493c3d2f76cd7ad8c49b519f03347b3e2cd7b",
+    "windows_aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+  },
+  "case02_runtime_localization": {
+    "center_f32_u32": "0x3d1fc000",
+    "center_pf16_code": 1278,
+    "mac_arm64_fmadd_reconstruction_u32": "0x3da7b7ff",
+    "old_mac_pf16_g_code": 2683,
+    "pixel": {
+      "channel": "G",
+      "x": 362,
+      "y": 670
+    },
+    "sample_f32_u32": "0x3f689000",
+    "sample_pf16_code": 29768,
+    "weight_f32_u32": "0x3d4a1180",
+    "windows_and_fixed_mac_pf16_g_code": 2684,
+    "windows_cdb_cce0_g_u32": "0x3da7b800",
+    "windows_mulss_addss_reconstruction_u32": "0x3da7b800",
+    "windows_pf16_argb_words": [
+      "0x8000",
+      "0x1792",
+      "0x0a7c",
+      "0x00cf"
+    ]
+  },
+  "cases": [
+    {
+      "effect_on": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "4297a440a299409dd2e506df41b57bffea55c9804d3dabb2c7adbbae5bfc1542",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "c30e153176ac43a130878bf45d927c3d5f7f09b3f76b5b67f6a2bb7ce9bc78c3"
+      },
+      "id": "final_random10_olm_smoother_v2_01",
+      "input_sha256": "95a8f06c06b82204b5c3c1c668016c71308b9013e7a262619ea21abb216737a4",
+      "no_effect": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "fff26fe9c0ad44d32624aae0d23e1ca22fe472292205e19d54ef60fb6011e3fe",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "dad4cb359a56b2782f51cd38c56c26b9e8ec67cadf37cc3ddb515348533cbcbe"
+      },
+      "suffix": "01",
+      "windows_aep_sha256": "2a8f40e88623a44ab0d4717cbc465145809c4c8d457f4fc02d5f90578c6dea26",
+      "windows_aerender_pid": 4608,
+      "windows_stdout_sha256": "ac768e0880df35a2f8a73a0962bc2aa9651c4cb4a0fe162bce92a884f8aba44f"
+    },
+    {
+      "effect_on": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "77254ac0ccf6960daeb3fa7254bd23f34bf4707f87bd75f0db4f16e638e0fcd5",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "dcc0ff0ac4152cf33c8e88142f984d7bb8ca231a26058d5029b76861a2451c48"
+      },
+      "id": "final_random10_olm_smoother_v2_02",
+      "input_sha256": "dbf98902b6480c6350a098e5f08715c0e012e671e5b7feabada730b80d52184c",
+      "no_effect": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "cb12925e965feb326c8981afbcf52abae6fba4e7ed94a5cf1f500f93ec93ef34",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "eb8c71ad352b6ddbe8819263ce1ec293756b18a01f7a6d201094db090c290d79"
+      },
+      "suffix": "02",
+      "windows_aep_sha256": "c5135e9a0c740704f51c3b70b7fa0d8b6c710d9b4bfb855f630a479347841fab",
+      "windows_aerender_pid": 36396,
+      "windows_stdout_sha256": "e5fd8ab9fa36a5a8f2787331d3866c7cb8ce62bcb68376801d67568617f81dbe"
+    },
+    {
+      "effect_on": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "df68a8cee44c10858de553b1b3840dc0eab4a35f283dcdc734254698d7eab2d8",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "c99a63c43804218278e9a38d909c0c1b43d360a808a5147952fe49bb8b3048a4"
+      },
+      "id": "final_random10_olm_smoother_v2_03",
+      "input_sha256": "3d21329f5c3987ca06b34d9e1fd23be06da090dcad775b9062ed83e8367b8888",
+      "no_effect": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "f94c2e9c2d04690594efa6121bcf058a04dcee920ecf5d44299c4ae0400346cf",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "a99e46c3545e2c1d766975b4201d382eb850f65c11d26416c6f581597e5f43e5"
+      },
+      "suffix": "03",
+      "windows_aep_sha256": "918c85832c38edf0727dd47a7f3839fbd952d84cb7205b8a9bfe9cdfa4968233",
+      "windows_aerender_pid": 49076,
+      "windows_stdout_sha256": "c996dd2fbd687cbab79c977b3e20ef861ba1a1d47241b17e1ccb89fc34d7b97a"
+    },
+    {
+      "effect_on": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "157527a1c4253edc1db05d41f7893cb4ee776cb94e042971ca26cf6a11f26081",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "8fa07e70b787322b7c965c9f3f806f5ee46dfc2ad78436a5ccb6f8f1d83af708"
+      },
+      "id": "final_random10_olm_smoother_v2_04",
+      "input_sha256": "a832357062ef2be731d50e286539583bde87615ed7dc5841f99d895334f8f846",
+      "no_effect": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "8f165e5bee45b5a1667500a6d5eba0f3d115683cb5303dd259c1a933ba7ec7b2",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "a0a345bb07f0f0368982e3b8ac6d7afd79376788ba9b4a9bd6d072c374733510"
+      },
+      "suffix": "04",
+      "windows_aep_sha256": "ac74518535e3f49d8a5e50665b950a21352d281b70e2d2d094524aaff296fbd3",
+      "windows_aerender_pid": 50112,
+      "windows_stdout_sha256": "7e821312f6b4ecbbccaf1e75ba70c7d0841b20f383255e471912e791b53a58de"
+    },
+    {
+      "effect_on": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "4980c370d84bb5601b189dfef1e1143e0e5424bcf7f450ac782eb6fb7773ee5d",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "413fe9c450e257518447e17a2bf8e839d5acdcf7bf62dad6a5e9434d0df2bb08"
+      },
+      "id": "final_random10_olm_smoother_v2_05",
+      "input_sha256": "9c66ecf594e0ab3cca2ca2fbea3bc5f0cb96c3045470bde21da4e080f1fcf016",
+      "no_effect": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "65df741f1a7c95ee588371a41e66b2d7f498041075ef4d642fefc202e7413755",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "cc8b21ffbd87a178ebe371d606dc4be35e9d684ad4927c3b2e4ed41ae2b25d90"
+      },
+      "suffix": "05",
+      "windows_aep_sha256": "39e386e469383d50e1f3bf62e1effe05a4f0aa21ddfb843e884371923a99e13a",
+      "windows_aerender_pid": 32132,
+      "windows_stdout_sha256": "18c1054496db4a5fe494fa971831d52c4a9492295994ea7a78b9a8b15b69d04c"
+    },
+    {
+      "effect_on": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "9f2068e0ef1f2f5bf57cb17b95a32c2d1290317d8889e6ab2c7dc3eea3f79fb3",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "788066a03c9f3320deafefcedfc7698f2ba4196325a08048f0eeff9bb3bce1a9"
+      },
+      "id": "final_random10_olm_smoother_v2_06",
+      "input_sha256": "a9c1dbd919fcfc7fa60d8e7da46e7b24a6539ddde5f8b3c6e5a036149fa6aec9",
+      "no_effect": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "8aff807c930150ed582f3a78a493af527575396aa286306b7f882a384a62a119",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "77bda4454ac2140141980c25fe98f9b215afbc9454c8df43aee4886525b51051"
+      },
+      "suffix": "06",
+      "windows_aep_sha256": "e42fcc41dfaa5183af6807f1c91eafe5a01486f2a36430d0ee3223e07287de8f",
+      "windows_aerender_pid": 10176,
+      "windows_stdout_sha256": "17da99ca27935726c41c446a2930f4461dacc00453a2027a31e8ad5f6836fd7e"
+    },
+    {
+      "effect_on": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "b3b0e6b0cd721ef26f0b83abbf8420f1b7e4f829d8ef269311180f8a4328dc11",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "331748d7e0a2bcf028e39ab5cb10d8691e2462bcb56259d59e5979d8b197d2c4"
+      },
+      "id": "final_random10_olm_smoother_v2_07",
+      "input_sha256": "366eb9e01e7c3c60df59dbcf6fb549a57d2156e95105fbea397de5353736c9fb",
+      "no_effect": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "5b9190fc1289d391b82ce480888b95d1eab762e41c7b1e64586c7cdf061be8db",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "73c09cfc795e5d7dae2da602009911274a805a5543a5aa669ba6b0e8a4250e0b"
+      },
+      "suffix": "07",
+      "windows_aep_sha256": "f68fb5f3c578f9661f859c25c6bda97ac2809d010db165176b037701bce3a19c",
+      "windows_aerender_pid": 45296,
+      "windows_stdout_sha256": "750143e581668926e3ca40527780afc1d3edf3d109be81705e43a9ba2e15dcb8"
+    },
+    {
+      "effect_on": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "36a30087e5dbed0d004a4131fa7c97bf112cf918b97f32525383e9adee2ff460",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "3b11c77b4bd37d17b780c9c61adaed2deb3e8f130df9dab7a7f1fa01e14a6713"
+      },
+      "id": "final_random10_olm_smoother_v2_08",
+      "input_sha256": "ad91360f70596a2b3db8cecd436a5303e9ce923be9c0ce3dbf073c402d80e1ec",
+      "no_effect": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "8268563f78f97f838ddc845217fc59eb870906cab33e56011bb4ff47ca7216a4",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "2fb14e5da64cbede49a041ca34e10a0acee8272a218a343a8fdcb5d2aa3bbd8d"
+      },
+      "suffix": "08",
+      "windows_aep_sha256": "bf7d6a40e61a269010b88d10c14b2b898c4a1e630e561b9afe3d537b5ed5e47c",
+      "windows_aerender_pid": 44872,
+      "windows_stdout_sha256": "4ccce90fdf05ec1c55fe728dcf5f8abef341452e5a84fe4cbf2a90483e807e85"
+    },
+    {
+      "effect_on": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "a6983d370df26002f90a469ae73109c53368ba4ba437e505de4356a00a0e8b98",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "a0a36946e8277261756b4887349fd4bc9b1d2c855ac279dce0fcde67b4687682"
+      },
+      "id": "final_random10_olm_smoother_v2_09",
+      "input_sha256": "1399c49581cab9d76d612e5df189fdde750ed00e80698637b4e5ead0699f83de",
+      "no_effect": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "db5c35dbdbb2c777aad1bc70fe45ca866c0f97279e93164f015dcd51bab3555a",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "2cc493e8466b0d198fa8b956f59c50f6e1efd7beb2d80d690b8963e724a7b48f"
+      },
+      "suffix": "09",
+      "windows_aep_sha256": "7206e6458b7467da69ab89a3df6e5c64ff673006ad9daa576e2c3d55fe480bb6",
+      "windows_aerender_pid": 45728,
+      "windows_stdout_sha256": "cafcabf5bcdeae875edff460fa4b7d4253e71c16cd446e437568ec291568be48"
+    },
+    {
+      "effect_on": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "c473e038cabfb61347aed10526242043857cff7e045cf1b202cfb061ce951214",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "22fca1dee437e1d5ccefb47e1926ddaccdeee5b1177d1966e856555147c49cce"
+      },
+      "id": "final_random10_olm_smoother_v2_10",
+      "input_sha256": "7b939bccdf056230ff89950b80588a166a04f09ce53525a3fa6b027749d5a2d2",
+      "no_effect": {
+        "compared_float32_words": 8294400,
+        "dimensions": [
+          1920,
+          1080
+        ],
+        "mac_sha256": "694fa54f6e69fa7b1bb55bffc1f803e0f6ddcc8c98f0974baac3d10ae9b0b60f",
+        "max_raw_u32_delta": 0,
+        "max_raw_u32_delta_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "mismatched_values": 0,
+        "mismatched_values_by_channel": {
+          "A": 0,
+          "B": 0,
+          "G": 0,
+          "R": 0
+        },
+        "windows_sha256": "6b070d78ef0edb3ea6bb326b67054768c7923a239c5ab7ba5a0822862cf00b50"
+      },
+      "suffix": "10",
+      "windows_aep_sha256": "c8fdc12dd280be445b6afb36b6b563b132e5b38e622bbea18e17223183c641b4",
+      "windows_aerender_pid": 46020,
+      "windows_stdout_sha256": "560dfaa489f1b44c93cb41c113daf792a028c3dd6a8ea56fd85a7b71bbef71ed"
+    }
+  ],
+  "contract": {
+    "ae_version": "26.3x87",
+    "bits_per_channel": 16,
+    "compression": "none",
+    "input_interpretation": "Preserve RGB",
+    "linear_blending": false,
+    "output_template": "OLM EXR 32 Float",
+    "renderer": "SOFTWARE",
+    "sample_type": "FLOAT32",
+    "working_space": "None"
+  },
+  "date": "2026-07-27",
+  "implementation": {
+    "change": "PF16 now uses the existing volatile separated scalar MUL then ADD composite path already used by PF32; PF8 remains on the frozen composite body.",
+    "source": "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp"
+  },
+  "intake": {
+    "mac_manifest_sha256": "74c7e1bf94b39edc8e55c575b5244889199f752c29b4192b34414b83b41f7136",
+    "windows_manifest_sha256": "c789772ae2bbabe97e918334d8ca76679ad61067305b17a08641464d76319b81",
+    "windows_return_archive_sha256": "4ab10cb69e45cfec56c0d68116dc2263e34595f9800c91ed0c8f9a0745599187",
+    "windows_trace_sha256": "ee22375acb826def25acaa2a52dce71cf1307ef90cd63aea0d6e0f2acd6a7f1c"
+  },
+  "kind": "olmsmoother2_16bpc_case01_10_ae_exact",
+  "regressions": {
+    "32bpc": {
+      "cases": 10,
+      "exact_raw_gates": 20,
+      "max_raw_u32_delta": 0,
+      "raw_gates": 20,
+      "reference_chain": "fresh Mac planes vs prior Mac planes bound to refs/conformance/olmsmoother2_32bpc_case01_10_ae_exact_20260727.json",
+      "total_mismatched_values": 0
+    },
+    "8bpc": {
+      "cases": 12,
+      "exact_cases": 12,
+      "fresh_request_root": true,
+      "max_diff": 0
+    }
+  },
+  "schema_version": 1,
+  "status": "AE exact",
+  "summary": {
+    "cases": 10,
+    "exact_raw_gates": 20,
+    "float32_words_per_gate": 8294400,
+    "max_raw_u32_delta": 0,
+    "raw_gates": 20,
+    "total_mismatched_values": 0
+  }
+}

@@ -123,27 +123,28 @@ Default next-action priority:
 
 - The current-AEX legacy/key/gamma 8bpc suite is Mac AE `12/12`,
   `max_diff=0`.
-- The declared no-key 16bpc case-07 Preserve-RGB slice is raw FLOAT32 exact
-  for both its no-effect control and effect-on output: `0/8,294,400`
-  mismatched words and max raw u32 delta `0`.
+- The declared Preserve-RGB 16bpc case-01..10 set is raw FLOAT32 exact for
+  both its no-effect controls and effect-on outputs: all 20 gates are
+  `0/8,294,400` mismatched words with max raw u32 delta `0`. Each case uses
+  one Windows `aerender` process with two AEP-embedded render-queue items and
+  a hash-bound fresh Mac footage path.
 - The declared Preserve-RGB 32bpc case-01..10 set is raw FLOAT32 exact for
   both its no-effect controls and effect-on outputs: all 20 gates are
   `0/8,294,400` mismatched words with max raw u32 delta `0`. Cases 01–06,
   08, and 10 use one Windows `aerender` process per case with two
   AEP-embedded render-queue items and the exact hash-bound Mac input. Cases
   07 and 09 retain their independent binary/runtime-grounded closeouts.
-- The final 32bpc `-O2` binary is
-  `c14bb3424b8b8ce58d09fe372a443f844319d18fec5db5ef1cfc1019e3e839eb`;
+- The final 8/16/32bpc `-O2` binary is
+  `bad3472d3ce808bdd69f0fa55be493c3d2f76cd7ad8c49b519f03347b3e2cd7b`;
   among its grounded fixes, actual-AEX `DIVSS` reciprocal sequencing is
-  preserved before exponent promotion.
-- The case-09 final binary preserves the same frozen 8bpc suite at `12/12`,
-  `max_diff=0`.
-- This does not promote untested 16bpc cases. The next Smoother2 bit-depth
-  lane is 16bpc expansion with the exact 8bpc and full declared 32bpc sets
-  frozen.
+  preserved before exponent promotion, and PF16 composite accumulation uses
+  the Windows-separated scalar multiply/add order.
+- The final binary preserves the frozen 8bpc suite at `12/12`,
+  `max_diff=0`, and the declared 32bpc set at all 20 raw gates.
 
 Evidence:
-`refs/conformance/olmsmoother2_case07_16bpc_mac_ae_exact_20260727.md` and
+`refs/conformance/olmsmoother2_16bpc_case01_10_ae_exact_20260727.md`,
+`refs/conformance/olmsmoother2_case07_16bpc_mac_ae_exact_20260727.md`,
 `refs/conformance/olmsmoother2_case07_32bpc_mac_ae_exact_20260727.md`, and
 `refs/conformance/olmsmoother2_case09_32bpc_mac_ae_exact_20260727.md`, and
 `refs/conformance/olmsmoother2_32bpc_case01_10_ae_exact_20260727.md`.
