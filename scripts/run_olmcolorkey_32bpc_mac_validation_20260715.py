@@ -49,7 +49,7 @@ def ae_process_proof(plugin_binary: Path) -> dict[str, object]:
     }
 
 
-def verify(result_path: Path, expected_cases: list[dict], output_dir: Path) -> dict:
+def verify(result_path: Path, expected_cases: list[dict], output_dir: Path, expected_aepx: Path | None = None) -> dict:
     result = json.loads(result_path.read_text(encoding="utf-8"))
     if result.get("kind") != "olmcolorkey_32bpc_mac_validation_return": raise ValueError("wrong return kind")
     if result.get("ae_exact_claim") is not False: raise ValueError("return must explicitly forbid AE exact")
@@ -63,6 +63,13 @@ def verify(result_path: Path, expected_cases: list[dict], output_dir: Path) -> d
         raise ValueError("project contract drift")
     if result.get("output_module", {}).get("template_name") != "OLM EXR 32 Float": raise ValueError("output template drift")
     if result.get("output_module", {}).get("capture_api") != "OutputModule.getSettings(GetSettingsFormat.STRING)": raise ValueError("settings API drift")
+    aepx = result.get("aepx")
+    if expected_aepx is None:
+        if aepx is not None: raise ValueError("unexpected AEPX return")
+    else:
+        if not isinstance(aepx, dict) or aepx.get("path") != str(expected_aepx): raise ValueError("AEPX path drift")
+        if aepx.get("render_queue_item_count") != len(expected_cases) * 2: raise ValueError("AEPX render queue count drift")
+        if not expected_aepx.is_file() or aepx.get("sha256") != digest(expected_aepx): raise ValueError("AEPX hash mismatch")
     returned = result.get("cases")
     if not isinstance(returned, list) or [c.get("id") for c in returned] != [c["id"] for c in expected_cases]: raise ValueError("case set/order mismatch")
     for case in returned:
@@ -93,6 +100,7 @@ def main() -> int:
     parser.add_argument("--app-name", default="Adobe After Effects 2026")
     parser.add_argument("--timeout", type=int, default=7200)
     parser.add_argument("--dump-js", type=Path, default=None)
+    parser.add_argument("--aepx-path", type=Path, default=None)
     args = parser.parse_args()
     try:
         plugin_bundle, plugin_binary = resolve_plugin_binary(args.plugin_path)
@@ -101,6 +109,9 @@ def main() -> int:
     support = args.support_dir or Path(tempfile.mkdtemp(prefix=STEM + "_"))
     output_dir = (args.output_dir or (support / "return")).resolve(); output_dir.mkdir(parents=True, exist_ok=True)
     result_json = (args.result_json or (output_dir / "mac_validation_return.json")).resolve()
+    aepx_path = args.aepx_path.resolve() if args.aepx_path else None
+    if aepx_path:
+        aepx_path.parent.mkdir(parents=True, exist_ok=True)
     # The package archive must live outside support.  Putting it below support
     # makes build() discover the archive while it is being written and causes
     # an unbounded self-containing ZIP.
@@ -114,6 +125,8 @@ def main() -> int:
     wrapper = support / "run_mac_wrapper.jsx"
     expected_plugin_hash = digest(plugin_binary)
     env = {"OLM_AE_MAC_INPUT_DIR": str((support / "input").resolve()), "OLM_AE_MAC_OUTPUT_DIR": str(output_dir), "OLM_AE_MAC_RESULT_JSON": str(result_json), "OLM_AE_MAC_PLUGIN_PATH": str(args.plugin_path.resolve()), "OLM_AE_MAC_PLUGIN_SHA256": expected_plugin_hash}
+    if aepx_path:
+        env["OLM_AE_MAC_AEPX_PATH"] = str(aepx_path)
     error_path = result_json.with_suffix(result_json.suffix + ".error.txt")
     lines = [f"$.setenv({json.dumps(k)}, {json.dumps(v)});" for k, v in env.items()]
     lines.append(
@@ -130,7 +143,7 @@ def main() -> int:
     if proc.returncode != 0 or not result_json.exists():
         detail = error_path.read_text(encoding="utf-8", errors="replace").strip() if error_path.exists() else "no JSX error log"
         print(f"[FAIL_CLOSED] AE did not produce a return: {detail}", file=sys.stderr); return 1
-    try: result = verify(result_json, cases, output_dir)
+    try: result = verify(result_json, cases, output_dir, aepx_path)
     except (ValueError, json.JSONDecodeError) as exc:
         print(f"[FAIL_CLOSED] {exc}", file=sys.stderr); return 1
     try:

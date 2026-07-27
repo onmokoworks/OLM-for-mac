@@ -187,10 +187,11 @@ def jsx_source(cases: list[dict]) -> str:
     }
     var outputDir = env("OLM_AE_MAC_OUTPUT_DIR");
     var manifestPath = env("OLM_AE_MAC_RESULT_JSON");
+    var aepxPath = env("OLM_AE_MAC_AEPX_PATH");
     if (!outputDir || !manifestPath) fail("output and result paths are required");
     var folder = new Folder(outputDir); if (!folder.exists) folder.create();
     if (app.project && (app.project.numItems > 0 || app.project.file !== null || app.project.dirty === true)) fail("existing project must be closed before validation");
-    var plugin = identity(), results = [], project = app.newProject();
+    var plugin = identity(), results = [], savedComps = [], project = app.newProject();
     project.bitsPerChannel = 32;
     if (Number(project.bitsPerChannel) !== 32) fail("project is not 32bpc");
     try { project.gpuAccelType = GpuAccelType.SOFTWARE; } catch (e) { fail("cannot set SOFTWARE renderer: " + e.toString()); }
@@ -214,14 +215,44 @@ def jsx_source(cases: list[dict]) -> str:
         var noEffect = render(comp, outputDir, spec.id + "__no_effect.exr", false, effect, spec.id);
         var effectOn = render(comp, outputDir, spec.id + "__effect_on.exr", true, effect, spec.id);
         if (noEffect.output_module_settings.serialization !== effectOn.output_module_settings.serialization) fail("settings differ for " + spec.id);
+        effect.enabled = true;
+        comp.name = spec.id + "__effect_on";
+        var controlComp = comp.duplicate();
+        controlComp.name = spec.id + "__no_effect";
+        var controlParade = controlComp.layer(1).property("ADBE Effect Parade");
+        var controlEffect = findProperty(controlParade, spec.effect.match_name);
+        if (!controlEffect || controlEffect.matchName !== spec.effect.match_name) fail("control effect identity mismatch for " + spec.id);
+        controlEffect.enabled = false;
+        savedComps.push({ id: spec.id, no_effect: controlComp, effect_on: comp });
         results.push({ id: spec.id, input: spec.input, plugin: plugin, effect: { name: effect.name, match_name: effect.matchName, enabled: true, params: spec.effect.params },
             outputs: { no_effect: noEffect, effect_on: effectOn }, no_effect_control_passed: true });
+    }
+    var aepx = null;
+    if (aepxPath) {
+        while (project.renderQueue.numItems > 0) project.renderQueue.item(project.renderQueue.numItems).remove();
+        for (var s = 0; s < savedComps.length; s++) {
+            var branches = ["no_effect", "effect_on"];
+            for (var b = 0; b < branches.length; b++) {
+                var branch = branches[b], savedComp = savedComps[s][branch];
+                var savedItem = project.renderQueue.items.add(savedComp);
+                savedItem.timeSpanStart = 0;
+                savedItem.timeSpanDuration = 1.0 / savedComp.frameRate;
+                var savedModule = savedItem.outputModule(1);
+                savedModule.applyTemplate(OUTPUT_TEMPLATE);
+                savedModule.file = new File(outputDir + "/aepx_" + savedComps[s].id + "__" + branch + "_[#####].exr");
+            }
+        }
+        if (project.renderQueue.numItems !== savedComps.length * 2) fail("AEPX render queue item count mismatch");
+        var aepxFile = new File(aepxPath);
+        project.save(aepxFile);
+        if (!aepxFile.exists) fail("AEPX was not saved");
+        aepx = { path: aepxFile.fsName, sha256: hash(aepxFile.fsName), render_queue_item_count: project.renderQueue.numItems };
     }
     var result = { kind: "olmcolorkey_32bpc_mac_validation_return", schema_version: 1, status: "candidate_return_only",
         ae_exact_claim: false, ae_exact_claim_reason: "Mac/Windows raw-float comparison has not been returned", platform: "macOS", ae_version: app.version,
         project: { bits_per_channel: project.bitsPerChannel, working_space: "None", working_space_raw: workingSpaceRaw,
             linear_blending: project.linearBlending, renderer: "SOFTWARE", renderer_raw: rendererRaw },
-        output_module: { template_name: OUTPUT_TEMPLATE, capture_api: CAPTURE_API, semantic_intent: SEMANTIC_INTENT }, plugin: plugin, cases: results };
+        output_module: { template_name: OUTPUT_TEMPLATE, capture_api: CAPTURE_API, semantic_intent: SEMANTIC_INTENT }, plugin: plugin, aepx: aepx, cases: results };
     write(manifestPath, stable(result) + "\n");
     try { project.close(CloseOptions.DO_NOT_SAVE_CHANGES); } catch (e) {}
 }());

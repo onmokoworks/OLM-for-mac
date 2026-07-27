@@ -40,7 +40,7 @@ def main() -> int:
         assert not (ROOT / "refs/reference_requests/olmcolorkey_32bpc_mac_validation_20260715.json").exists()
         assert all((support / "input" / case["input"]).exists() for case in request["cases"])
         jsx = (support / "run_mac_olmcolorkey_32bpc_validation.jsx").read_text(encoding="utf-8")
-        for token in ("Number(project.gpuAccelType)", "Number(GpuAccelType.SOFTWARE)", "renderer_raw", "working_space_raw", 'workingSpaceRaw !== "" && workingSpaceRaw !== "None"', "_[#####].exr", "_00000.exr", "requested_path", "bitsPerChannel", "OLM_AE_MAC_PLUGIN_PATH", "OLM_AE_MAC_PLUGIN_SHA256", "Contents/MacOS/", "OLMColorKey", "workingSpace", "input_sha256", "OLM EXR 32 Float", "getSettings(GetSettingsFormat.STRING)", "existing project must be closed before validation", "no_effect", "effect_on", "FAIL_CLOSED"):
+        for token in ("Number(project.gpuAccelType)", "Number(GpuAccelType.SOFTWARE)", "renderer_raw", "working_space_raw", 'workingSpaceRaw !== "" && workingSpaceRaw !== "None"', "_[#####].exr", "_00000.exr", "requested_path", "bitsPerChannel", "OLM_AE_MAC_PLUGIN_PATH", "OLM_AE_MAC_PLUGIN_SHA256", "OLM_AE_MAC_AEPX_PATH", "render_queue_item_count", "project.save(aepxFile)", "savedComps.length * 2", "Contents/MacOS/", "OLMColorKey", "workingSpace", "input_sha256", "OLM EXR 32 Float", "getSettings(GetSettingsFormat.STRING)", "existing project must be closed before validation", "no_effect", "effect_on", "FAIL_CLOSED"):
             assert token in jsx, token
         subprocess.run([sys.executable, str(RUNNER), "--plugin-path", str(temp / "wrong.plugin"), "--support-dir", str(temp / "runner"), "--dump-js", str(dumped)], cwd=ROOT, check=False)
         assert not dumped.exists()
@@ -56,8 +56,13 @@ def main() -> int:
             assert hashlib.sha256(resolved_binary.read_bytes()).hexdigest() == expected_hash
         for plugin_path in (bundle, binary):
             runner_support = temp / ("runner_bundle" if plugin_path == bundle else "runner_binary")
-            subprocess.run([sys.executable, str(RUNNER), "--plugin-path", str(plugin_path), "--support-dir", str(runner_support), "--dump-js", str(dumped)], cwd=ROOT, check=True)
+            aepx = temp / ("bundle.aepx" if plugin_path == bundle else "binary.aepx")
+            subprocess.run([sys.executable, str(RUNNER), "--plugin-path", str(plugin_path), "--support-dir", str(runner_support), "--dump-js", str(dumped), "--aepx-path", str(aepx)], cwd=ROOT, check=True)
             assert dumped.exists()
+            assert (
+                f'$.setenv("OLM_AE_MAC_AEPX_PATH", {json.dumps(str(aepx.resolve()))});'
+                in dumped.read_text(encoding="utf-8")
+            )
             assert not (runner_support / f"{MAC_REQUEST_ID}.zip").exists()
         runner = RUNNER.read_text(encoding="utf-8")
         for token in ("vmmap_exact_path", "binary_predates_process_start", "modified after After Effects started", "loaded_plugin_proof", "re.escape(resolved)"):
