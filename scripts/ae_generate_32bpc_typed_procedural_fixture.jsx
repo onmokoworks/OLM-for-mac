@@ -92,6 +92,7 @@
         output_dir: outputDir,
         project: projectPath,
         manifest: "fixture_manifest.json",
+        parameters: [],
         outputs: [],
         error: ""
     };
@@ -113,21 +114,36 @@
 
         app.beginSuppressDialogs();
         suppressStarted = true;
-        if (!app.project) app.newProject();
+        if (app.project) app.project.close(CloseOptions.DO_NOT_SAVE_CHANGES);
+        app.newProject();
         project = app.project;
-        if (project.items.numItems !== 0) fail("fixture requires an empty AE project");
+        if (project.numItems !== 0) fail("fixture requires an empty AE project");
         if (project.renderQueue.numItems !== 0) fail("fixture requires an empty render queue");
         project.bitsPerChannel = 32;
         project.workingSpace = "";
         project.linearBlending = false;
+        try {
+            project.gpuAccelType = GpuAccelType.SOFTWARE;
+        } catch (gpuSetError) {
+            fail("cannot set SOFTWARE renderer: " + gpuSetError.toString());
+        }
         if (Number(project.bitsPerChannel) !== 32) fail("AE did not accept 32bpc");
-        if (String(project.workingSpace) !== "") fail("working space is not None");
+        if (Number(project.gpuAccelType) !== Number(GpuAccelType.SOFTWARE)) {
+            fail("renderer is not SOFTWARE: " + project.gpuAccelType);
+        }
+        var workingSpaceText = String(project.workingSpace);
+        if (workingSpaceText !== "" && workingSpaceText !== "None") {
+            fail("working space is not None: " + workingSpaceText);
+        }
         if (project.linearBlending) fail("linear blending is enabled");
 
         var width = 64;
         var height = 64;
         sourceComp = project.items.addComp("OLM_TYPED_SOURCE_64x64", width, height, 1.0, 1.0 / 24.0, 24.0);
-        sourceComp.layers.addSolid([0.0, 0.0, 0.0], "solid_background", width, height, 1.0, 1.0 / 24.0);
+        var backgroundAlpha = effectName === "OLM Toon Dilate" ? 0.0 : 1.0;
+        var backgroundLayer = sourceComp.layers.addSolid(
+            [0.0, 0.0, 0.0], "solid_background", width, height, 1.0, 1.0 / 24.0);
+        backgroundLayer.opacity.setValue(backgroundAlpha * 100.0);
         var rects = [
             {name: "rect_integer_a25", x: 4, y: 4, width: 20, height: 16, color: [1.0, 0.0, 0.0], alpha: 0.25},
             {name: "rect_integer_a50", x: 28, y: 4, width: 20, height: 16, color: [0.0, 1.0, 0.0], alpha: 0.50},
@@ -144,6 +160,23 @@
         if (sourceLayer.source !== effectLayer.source) fail("A/B layers do not share source comp");
         var effect = effectLayer.property("ADBE Effect Parade").addProperty(effectName);
         if (!effect) fail("AE could not add " + effectName);
+        if (effectName === "OLM Toon Dilate") {
+            var searchRadius = effect.property(1);
+            if (!searchRadius || String(searchRadius.matchName) !== "ADBE OLMToonDilate-0001") {
+                fail("Search Radius identity mismatch");
+            }
+            searchRadius.setValue(13.0);
+            var searchRadiusReadback = Number(searchRadius.value);
+            if (Math.abs(searchRadiusReadback - 13.0) > 0.0001) {
+                fail("Search Radius readback mismatch " + searchRadiusReadback);
+            }
+            result.parameters = [{
+                property_index: 1,
+                match_name: String(searchRadius.matchName),
+                requested: 13.0,
+                actual: searchRadiusReadback
+            }];
+        }
         sourceLayer.enabled = true;
         effectLayer.enabled = false;
         var noEffect = renderOne(renderComp, outputDir, "effect_no_effect.exr", template);
@@ -168,7 +201,7 @@
             "    \"effect_on\": \"effect_effect_on_00000.exr\"\n" +
             "  },\n" +
             "  \"source_layers\": [\n" +
-            "    {\"name\": \"solid_background\", \"kind\": \"solid\", \"bounds\": [0, 0, 64, 64], \"rgb\": [0, 0, 0], \"alpha\": 1.0},\n" +
+            "    {\"name\": \"solid_background\", \"kind\": \"solid\", \"bounds\": [0, 0, 64, 64], \"rgb\": [0, 0, 0], \"alpha\": " + backgroundAlpha + "},\n" +
             "    {\"name\": \"rect_integer_a25\", \"kind\": \"solid\", \"bounds\": [4, 4, 20, 16], \"rgb\": [1, 0, 0], \"alpha\": 0.25},\n" +
             "    {\"name\": \"rect_integer_a50\", \"kind\": \"solid\", \"bounds\": [28, 4, 20, 16], \"rgb\": [0, 1, 0], \"alpha\": 0.5},\n" +
             "    {\"name\": \"rect_integer_a75\", \"kind\": \"solid\", \"bounds\": [4, 28, 20, 16], \"rgb\": [0, 0, 1], \"alpha\": 0.75},\n" +
@@ -182,7 +215,7 @@
             "  ]\n" +
             "}\n";
         writeText(manifestPath, manifest);
-        project.saveAs(new File(projectPath));
+        project.save(new File(projectPath));
         result.outputs = [noEffect.fsName, effectOn.fsName];
         result.status = "ok";
     } catch (error) {
@@ -198,6 +231,9 @@
             "  \"ae_version\": " + quote(result.ae_version) + ",\n" +
             "  \"effect\": " + quote(result.effect) + ",\n" +
             "  \"manifest\": " + quote(result.manifest) + ",\n" +
+            "  \"parameters\": [" + (result.parameters.length ?
+                "{\"property_index\":1,\"match_name\":" + quote(result.parameters[0].match_name) +
+                ",\"requested\":13,\"actual\":" + result.parameters[0].actual + "}" : "") + "],\n" +
             "  \"outputs\": [" + (result.outputs.length ? quote(result.outputs[0]) + "," + quote(result.outputs[1]) : "") + "],\n" +
             "  \"error\": " + quote(result.error) + "\n}\n");
     }
