@@ -1,0 +1,66 @@
+{
+  "kind": "olmsmoother2_32bpc_case01_10_ae_exact",
+  "schema_version": 1,
+  "date": "2026-07-27",
+  "status": "ae_exact",
+  "scope": "declared Preserve-RGB 32bpc cases 01 through 10",
+  "hosts": {
+    "windows_ae": "26.3x87",
+    "mac_ae": "26.3x87",
+    "renderer": "SOFTWARE",
+    "working_space": "None",
+    "linear_blending": false,
+    "bits_per_channel": 32
+  },
+  "plugins": {
+    "windows_aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "mac_plugin_binary_sha256": "c14bb3424b8b8ce58d09fe372a443f844319d18fec5db5ef1cfc1019e3e839eb",
+    "mac_build_optimization": "-O2"
+  },
+  "acquisition": {
+    "windows_method": "one aerender process per case with two AEP-embedded render queue items",
+    "same_process_no_effect_and_effect_on": true,
+    "input_binding": "same hash-bound FLOAT EXR on Windows and Mac",
+    "input_interpretation": "Preserve RGB",
+    "output_template": "OLM EXR 32 Float",
+    "container": "OpenEXR",
+    "channels": ["A", "B", "G", "R"],
+    "sample_type": "FLOAT",
+    "compression": "none",
+    "compared_words_per_gate": 8294400,
+    "fail_closed_log_requirements_per_case": {
+      "ae_version": "26.3x87",
+      "preserve_rgb_occurrences": 2,
+      "output_module_occurrences": 2,
+      "float32_occurrences": 2
+    }
+  },
+  "cases": [
+    {"suffix":"01","id":"final_random10_olm_smoother_v2_01","input_sha256":"95a8f06c06b82204b5c3c1c668016c71308b9013e7a262619ea21abb216737a4","combined_aep_sha256":"70ef1898ee6e9ae23761d93b6b370de17582857d7113eb419d0c0a6dee155829","windows_aerender_pid":44692,"windows_stdout_sha256":"6b7d6d13451047aa6febbd99c7e607f20d21b9b6e1611a5939c7d7838fa55630","artifact_hash_finalization":"dedicated recapture with a two-second post-process file-finalization delay","no_effect":{"windows_sha256":"126cec90f7c9685d835827b56fdd9966dc684b225d97e4da688e8de5164861b2","mac_sha256":"804fb022d86f3a4b899db0714d8cfd307a7c0782b68cc84d706acdd222da47cb","mismatched_values":0,"max_raw_u32_delta":0},"effect_on":{"windows_sha256":"8d281c9de8dc3816db780c71b25e34211bd7096cfaff9e42910facfd6d86fb57","mac_sha256":"7e6ae86ed91f40160442704158a476cd5cb06370603ce825cc1ce0d3a9b6ffa2","mismatched_values":0,"max_raw_u32_delta":0}},
+    {"suffix":"02","id":"final_random10_olm_smoother_v2_02","input_sha256":"dbf98902b6480c6350a098e5f08715c0e012e671e5b7feabada730b80d52184c","combined_aep_sha256":"b71964661e54f483272f88b667259669e1e42d9a75a723572225224129123d81","windows_aerender_pid":28964,"windows_stdout_sha256":"96248d358e683d654ca6d884ef47485905c6e8c07fc5791666273ccfab83a90b","no_effect":{"windows_sha256":"0dec244b9aa6a9fa838583280d082a5d195751cb88921ec393a052e7e5e38641","mac_sha256":"527bdd5340a3832e2c50e5cef9dd73690bbe9207fcb65d8554e5fe18cd181783","mismatched_values":0,"max_raw_u32_delta":0},"effect_on":{"windows_sha256":"8321e40ba2e35a311c0d6dfc74de76752c45d9bbb12546ffd36bef69c3aad6f6","mac_sha256":"a39a9d9bc52ec7f5f2a2dd4ec483c6ac807ee04379297851911d9481bb2a3b63","mismatched_values":0,"max_raw_u32_delta":0}},
+    {"suffix":"03","id":"final_random10_olm_smoother_v2_03","input_sha256":"3d21329f5c3987ca06b34d9e1fd23be06da090dcad775b9062ed83e8367b8888","combined_aep_sha256":"fc49eb90d99e5e176414e778879e53097ab5b545c8a6278187491c869c27a6e4","windows_aerender_pid":46948,"windows_stdout_sha256":"6296633f35f9e1f12ae9e827aa6a56fe29f6cb40ccaca9b3b6d4ce780cfc2b0e","no_effect":{"windows_sha256":"5124e59421326548ba5dbb30fe2d24f08b6b39a50a6994554a3ea109ca625424","mac_sha256":"be6cb9f71165328d15589efc482e2d1dd024766ac09cb33dcd937606e8d5bd07","mismatched_values":0,"max_raw_u32_delta":0},"effect_on":{"windows_sha256":"85f63d0be3be5202d63271d63968ad2de5f1275c53158c2d955fee82df97dabf","mac_sha256":"c359b7ff468896d790fb59f602c598dbfef74dff554737ed6271372550386442","mismatched_values":0,"max_raw_u32_delta":0}},
+    {"suffix":"04","id":"final_random10_olm_smoother_v2_04","input_sha256":"a832357062ef2be731d50e286539583bde87615ed7dc5841f99d895334f8f846","combined_aep_sha256":"88432e264b487c7e1cb35c5174aab7306ade492f8e376cafdd216bb8be68e9e9","windows_aerender_pid":32332,"windows_stdout_sha256":"9025185311a540b0f39d0a4756c8521b6cb1f8c086d3e68ac903273f32f7cbfa","no_effect":{"windows_sha256":"48151704892f21d3f73c092078507961ecc74b1504ac24d54674f370d820b45b","mac_sha256":"0be43e4dff3c26f68a097889d3e60cde748ffe660c0e702e0baa61488d304bd3","mismatched_values":0,"max_raw_u32_delta":0},"effect_on":{"windows_sha256":"d2116f6b3bb59cf9353744091c0a4c02429878b98840070c52438675021ad29d","mac_sha256":"95d952382faed1db3ba683a95191cbc05cfa589122760166aea40a9345fc8b79","mismatched_values":0,"max_raw_u32_delta":0}},
+    {"suffix":"05","id":"final_random10_olm_smoother_v2_05","input_sha256":"9c66ecf594e0ab3cca2ca2fbea3bc5f0cb96c3045470bde21da4e080f1fcf016","combined_aep_sha256":"e1896703e44976a62d5b19d221f362aa92d5d8756776e956016c2643c69be64e","windows_aerender_pid":4016,"windows_stdout_sha256":"eb28cb21a4215dba84bbb9d07db3b30f690dcb19bec8b2ed8b2bd2054854d617","no_effect":{"windows_sha256":"165e5c7796e3552cea32ffbe23e91690c7c2aa8dac8dc7c32a983713dbaaf47c","mac_sha256":"d36a8cc2b10f64b8b73bb88f6f6bcbb7b1756e4ddaee187c70c4f9244252f3b5","mismatched_values":0,"max_raw_u32_delta":0},"effect_on":{"windows_sha256":"f520dab0b2d596d179bbabe055325a6f7e87784569fdaf22d554bb2c937935bb","mac_sha256":"a0d7aafcf43189511234754cf8be846f10d985712333539b05f6134686a57970","mismatched_values":0,"max_raw_u32_delta":0}},
+    {"suffix":"06","id":"final_random10_olm_smoother_v2_06","input_sha256":"a9c1dbd919fcfc7fa60d8e7da46e7b24a6539ddde5f8b3c6e5a036149fa6aec9","combined_aep_sha256":"2b37ed822db68585f5548ac9477cab2b1d5854d0eb0af683ea2ce3cfc78c73f7","windows_aerender_pid":49628,"windows_stdout_sha256":"812f9ff6db4893a3e8bddd4a812d11e7da645c2fed8550c779c27e749c019d11","no_effect":{"windows_sha256":"c9c0cae6f93b589afd0af9e6cd60c00f9c70f2706c7741a3896dc23bcc4c41c1","mac_sha256":"4f912f7e5a73537c7dc7196b7f2de4145945b17b19119b02b53552d94d53843d","mismatched_values":0,"max_raw_u32_delta":0},"effect_on":{"windows_sha256":"ad8c05fce2b67d0eb4167cb3b577ee82ed623568c62ab631b491606b2a1f982c","mac_sha256":"310777dde613032cce91ea25e6e498e237c00f696e22e0a71812f9e98d7ec5ef","mismatched_values":0,"max_raw_u32_delta":0}},
+    {"suffix":"07","id":"final_random10_olm_smoother_v2_07","independent_prior_evidence":"refs/conformance/olmsmoother2_case07_32bpc_mac_ae_exact_20260727.json","no_effect":{"mismatched_values":0,"max_raw_u32_delta":0},"effect_on":{"mismatched_values":0,"max_raw_u32_delta":0}},
+    {"suffix":"08","id":"final_random10_olm_smoother_v2_08","input_sha256":"ad91360f70596a2b3db8cecd436a5303e9ce923be9c0ce3dbf073c402d80e1ec","combined_aep_sha256":"72d9d1056d7e58c98dcecab8ad15e13844575454d945aeb3bf0c94df3c7b99b0","windows_aerender_pid":8260,"windows_stdout_sha256":"d2786f7b758540048bcf7de64db13677206fde891ed4f4185925703fddd6fcc9","no_effect":{"windows_sha256":"67f78c29aaa9a298ff16abd13b712b539ef074dcda95d4de186892a5e2d63c58","mac_sha256":"f463878bd3ec94f4d9706f8ce100eba146032de74c90fd6318e35e0f81fb7cc5","mismatched_values":0,"max_raw_u32_delta":0},"effect_on":{"windows_sha256":"f86b19603de3bb40606c33c66f8c68673cf878c037cf0e9e76b52435917ef42a","mac_sha256":"e3100ca09c971bc3cf5f249d5ce417a9b32abdcf62b13454b016d09f0b18ce6c","mismatched_values":0,"max_raw_u32_delta":0}},
+    {"suffix":"09","id":"final_random10_olm_smoother_v2_09","independent_prior_evidence":"refs/conformance/olmsmoother2_case09_32bpc_mac_ae_exact_20260727.json","no_effect":{"mismatched_values":0,"max_raw_u32_delta":0},"effect_on":{"mismatched_values":0,"max_raw_u32_delta":0}},
+    {"suffix":"10","id":"final_random10_olm_smoother_v2_10","input_sha256":"7b939bccdf056230ff89950b80588a166a04f09ce53525a3fa6b027749d5a2d2","combined_aep_sha256":"cfd09ffa122c926ae1d3abc5859826c182b70bb8a1300e40adb52286fc33e1cf","windows_aerender_pid":37340,"windows_stdout_sha256":"7db7575eee8bfe2d54c474699d4d9192751b07760d4645dc88a5fda4b94fb757","no_effect":{"windows_sha256":"7a6f944f38981acad22bf5a291167f7e90167dc797096098cac339baaf343454","mac_sha256":"9ee975585465d7417d9af31d25b80b83bfec2e93b7aa4ac8fe889d45fe75f352","mismatched_values":0,"max_raw_u32_delta":0},"effect_on":{"windows_sha256":"00a2cb0a5d1da0ff55b34b4f83fae13ad1af85584475ffcbca3492f3ce95d981","mac_sha256":"b1f0f59fb3ef91aeb328b7788f8bb245158ad4efa64619db67b7972f1bfed363","mismatched_values":0,"max_raw_u32_delta":0}}
+  ],
+  "summary": {
+    "exact_cases": 10,
+    "declared_cases": 10,
+    "raw_float32_gates": 20,
+    "zero_mismatch_gates": 20,
+    "max_raw_u32_delta": 0,
+    "old_bulk_reference_status": "superseded for cases 01 through 06, 08, and 10 by same-source Preserve-RGB recapture"
+  },
+  "regression": {
+    "suite": "ae_pixel_olmsmoother2_current_aex_20260726_r3",
+    "bits_per_channel": 8,
+    "exact_cases": 12,
+    "total_cases": 12,
+    "max_diff": 0,
+    "report_sha256": "284d3f68bbbf57892e79b3221b102258ec73d0c8e6921630eb6cb9a946fa8ede"
+  }
+}

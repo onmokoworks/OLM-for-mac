@@ -1,7 +1,23 @@
 # OLM Conformance Ledger
 
+- 2026-07-27 `OLMSmoother2 32bpc case-01..10 AE exact closeout` (latest
+  override): the final diagnostic-free `-O2` Mac binary
+  `c14bb342...e839eb` is Windows/Mac AE `26.3x87` `AE exact` for all ten
+  declared Preserve-RGB 32bpc cases. Cases 01–06/08/10 were independently
+  recaptured from the exact hash-bound FLOAT EXR used on Mac. One Windows
+  `aerender` process per case rendered an AEP-embedded no-effect/effect-on
+  pair, and each log proved `OLM EXR 32 Float`, `32-bit float`, and
+  `Preserve RGB` twice. All 20 cross-host raw gates are exact at
+  `0/8,294,400` mismatched words and max raw-u32 delta `0`. Cases 07/09 keep
+  their earlier binary/runtime-grounded closeouts. The old bulk artifacts are
+  superseded for the other eight exactness decisions because their PF32 entry
+  did not have the same-source contract. The frozen 8bpc suite remains
+  `12/12`, `max_diff=0`. Evidence:
+  `refs/conformance/olmsmoother2_32bpc_case01_10_ae_exact_20260727.md`.
+
 - 2026-07-27 `OLMSmoother2 32bpc case-01..10 Mac candidate audit` (latest
-  override): final binary `c14bb342...e839eb` has exact Mac no-effect controls
+  override superseded by the exact closeout above): final binary
+  `c14bb342...e839eb` has exact Mac no-effect controls
   for all ten cases. Against the old bulk Windows effect artifacts,
   04/06/08/10 are raw-zero candidates while 01/02/03/05 differ. None of those
   eight cases is promoted because the old Windows effect renders did not

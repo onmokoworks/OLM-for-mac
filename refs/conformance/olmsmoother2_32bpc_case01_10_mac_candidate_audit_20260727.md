@@ -1,5 +1,8 @@
 # OLMSmoother2 32bpc case-01..10 Mac candidate audit
 
+Superseded by the same-source Windows recapture and full exact closeout in
+`refs/conformance/olmsmoother2_32bpc_case01_10_ae_exact_20260727.md`.
+
 Mac AE `26.3x87` rendered all ten random Smoother2 cases with the final
 diagnostic-free binary
 `c14bb3424b8b8ce58d09fe372a443f844319d18fec5db5ef1cfc1019e3e839eb`.
