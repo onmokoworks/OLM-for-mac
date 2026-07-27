@@ -300,18 +300,27 @@
   Evidence:
   `refs/conformance/olmsmoother2_writer_frame_replay_20260718.md`.
 
-- 2026-07-18 `OLMBlur 32bpc red-only residual` (latest override): no
-  correctness status is promoted. The Windows/Mac no-op FLOAT32 planes are
-  word-exact in all channels. The effect residual has 201,576 differing
-  values, all in red, because the fixture itself has signal only in red; this
-  is not evidence of a channel-mapping fault. The complete Mac AE effect is
-  word-exact with the current PF32 core, and a bounded execution of the pinned
-  current AEX at `(129.4, repeat=1, bias=1, Legacy=0)` is also word-exact with
-  that core. Channel mapping, source stride, and the worker SIMD lane are
-  rejected locally. Do not change the core from this artifact. The required
-  next evidence is one same-run Windows Software effect/control FLOAT EXR
-  pair carrying the loaded AEX path/SHA-256 plus complete project color and
-  output-module readback. Evidence:
+- 2026-07-27 `OLMBlur 32bpc case_0001 AE exact` (latest override):
+  the declared `(Blur Amount=129.4, Smoothness=100, Repeat=1, Bias=1,
+  Legacy=0)` case is raw FLOAT32 exact. Mac and Windows AE `26.3x87` use the
+  same path-normalized AEPX contract at `32bpc`, Software raw `1816`,
+  working-space raw `None`, linear blending off, and the uncompressed
+  `OLM EXR 32 Float` output module. Windows Kernel Process ETW binds the
+  `aerender` child `AfterFX.com` PID to the loaded
+  `C:\Program Files\Adobe\Common\Plug-ins\7.0\MediaCore\OLM\OLMBlur.aex`,
+  SHA-256 `f0611785...e96e5b`; the Mac Mach-O is
+  `71df7efc...f4f0d72`. Both no-effect control and effect-on comparisons are
+  `0/8,294,400` mismatched FLOAT32 words with max raw u32 delta `0`.
+  Effect-on differs from control at the same `201,576` values on both hosts,
+  proving the exact result is not a pass-through. Do not generalize this
+  single declared case to untested OLMBlur 32bpc cases. Evidence:
+  `refs/conformance/olmblur_32bpc_case0001_ae_exact_20260727.md`.
+
+- 2026-07-18 `OLMBlur 32bpc red-only residual` (superseded for case_0001):
+  the earlier retained Windows effect artifact lacked loaded-AEX provenance.
+  Its core-tuning prohibition remains valid, but the missing same-run
+  Windows effect/control and AEX gate is now closed by the 2026-07-27
+  path-normalized AEPX/ETW recapture above. Evidence:
   `refs/conformance/olmblur_32bpc_red_only_residual_20260718.md`.
 
 - 2026-07-18 `OLMKiraKira previously-unconsumed parameters` (latest

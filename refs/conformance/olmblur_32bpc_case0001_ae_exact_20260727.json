@@ -1,0 +1,135 @@
+{
+  "ae_exact_claim": true,
+  "ae_version": "26.3x87",
+  "case_id": "OLMBlur/case_0001",
+  "comparison": {
+    "effect_on": {
+      "height": 1080,
+      "max_raw_u32_delta": 0,
+      "mismatched_values": 0,
+      "total_values": 8294400,
+      "width": 1920
+    },
+    "no_effect_control": {
+      "height": 1080,
+      "max_raw_u32_delta": 0,
+      "mismatched_values": 0,
+      "total_values": 8294400,
+      "width": 1920
+    }
+  },
+  "contract": {
+    "bits_per_channel": 32,
+    "frame": 0,
+    "frame_rate": 24,
+    "input_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+    "linear_blending": false,
+    "output": {
+      "channels": [
+        "A",
+        "B",
+        "G",
+        "R"
+      ],
+      "compression": "none",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "sample_type": "FLOAT",
+      "template": "OLM EXR 32 Float"
+    },
+    "params": {
+      "Bias Direction": 1,
+      "Blur Amount": 129.4,
+      "Blur Smoothness": 100,
+      "Legacy": 0,
+      "Number of Repeat": 1
+    },
+    "renderer": {
+      "name": "SOFTWARE",
+      "raw": 1816
+    },
+    "working_space_raw": "None"
+  },
+  "cross_host_project_binding": {
+    "file_reference_normalized_sha256": "cdb577c3b24ffe2063c045fedde9cdce3eceeedefb0a15f24cf20b86c0bd5a0c",
+    "mac_aepx_sha256": "f5ca6f9f09109832807eb8d054131167117d856f51005dffd892ea889d8b380a",
+    "normalization": "replace only the three input/output fileReference elements with role tokens",
+    "result": "identical_after_path_normalization",
+    "windows_aepx_sha256": "e09ad775aa0053ae71232b5dc217b2ed5507fbe8b6ac6d282e502af435257d85"
+  },
+  "effect_attribution": {
+    "mac_effect_vs_control": {
+      "max_raw_u32_delta": 1054076473,
+      "mismatched_values": 201576
+    },
+    "windows_effect_vs_control": {
+      "max_raw_u32_delta": 1054076473,
+      "mismatched_values": 201576
+    }
+  },
+  "kind": "olmblur_32bpc_case0001_ae_exact",
+  "mac": {
+    "aerender_exit_code": 0,
+    "aerender_log_sha256": "2884354e4dad22741ee1db89688b1fcba4692430b55c49e862e697e05d4f58a1",
+    "outputs": {
+      "effect_on": {
+        "sha256": "9fd050776bec978510763dcae12df43e906f9df1dfd5713b2eeb1d0c3ccef5aa"
+      },
+      "no_effect_control": {
+        "sha256": "528489da7e8d40810833dfeb60d55acf82eb6856b199e1539a099467de4af5fb"
+      }
+    },
+    "plugin": {
+      "binary_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin/Contents/MacOS/OLMBlur",
+      "sha256": "71df7efc027b463327fefa23575fff5f80d4b38ff529ae97418d79297f4f0d72"
+    }
+  },
+  "schema_version": 1,
+  "status": "raw_float32_ae_exact",
+  "windows": {
+    "aerender": {
+      "exit_code": 0,
+      "pid": 49884,
+      "sha256": "711859d183bdabec7c358a344208323bbbd665fffd7e88e42b9b234f9b99692a",
+      "stdout_sha256": "5b98d54867d8e1eea255abcc1261916603cab7234cac883c270948e009432d5d"
+    },
+    "loaded_plugin_proof": {
+      "afterfx_pid": 46424,
+      "afterfx_process_path": "C:\\Program Files\\Adobe\\Adobe After Effects 2026\\Support Files\\AfterFX.com",
+      "aerender_parent_pid": 49884,
+      "aex_path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\OLMBlur.aex",
+      "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+      "etl_sha256": "efd2a79bdc479cc2de90ba87d66788f5ebf784de99b12cce7d7abe7e22ca80cf",
+      "event_count": 2,
+      "events": [
+        {
+          "event": "ImageLoad",
+          "image_base": "0x7FFE44570000",
+          "image_size": "0x14000",
+          "pid": 46424,
+          "timestamp_raw": "134296027562756340"
+        },
+        {
+          "event": "ImageUnload",
+          "image_base": "0x7FFE44570000",
+          "image_size": "0x14000",
+          "pid": 46424,
+          "timestamp_raw": "134296027570931880"
+        }
+      ],
+      "method": "Microsoft-Windows-Kernel-Process ETW process+image events",
+      "process_start_utc": "2026-07-27T05:12:28.576769200Z",
+      "trace_csv_sha256": "6daa4a262a16ec6a6e01fe690f0acb5d3d9b0d4bc2d7c33fa1bc2634e863d9e0"
+    },
+    "outputs": {
+      "effect_on": {
+        "sha256": "16d1702eb9b702f280c2d05e3f0b19032da76ce4fb5eb425e2f8e867dbf50cc2"
+      },
+      "no_effect_control": {
+        "sha256": "98483e6d26127e0e4b89d655715ee81b564a534675bbe3b16b14321f29e48631"
+      }
+    }
+  }
+}

@@ -149,6 +149,23 @@ Evidence:
 `refs/conformance/olmsmoother2_case09_32bpc_mac_ae_exact_20260727.md`, and
 `refs/conformance/olmsmoother2_32bpc_case01_10_ae_exact_20260727.md`.
 
+## Current OLMBlur Exact Slices
+
+- The declared 32bpc `case_0001` profile at Blur Amount `129.4`, Smoothness
+  `100`, Repeat `1`, Bias `1`, and Legacy `0` is AE exact. Windows and Mac
+  AE `26.3x87` render the same path-normalized `32bpc` Software AEPX with
+  uncompressed FLOAT EXR effect/control queue items.
+- The no-effect control and effect-on comparisons are both
+  `0/8,294,400` mismatched FLOAT32 words with max raw u32 delta `0`.
+- Windows Kernel Process ETW binds the live `AfterFX.com` child to loaded
+  `OLMBlur.aex` SHA-256 `f0611785...e96e5b`; the Mac plug-in Mach-O SHA-256
+  is `71df7efc...f4f0d72`.
+- This is a single-case 32bpc promotion. It does not promote untested OLMBlur
+  32bpc cases or replace the existing 8/16bpc declared-case records.
+
+Evidence:
+`refs/conformance/olmblur_32bpc_case0001_ae_exact_20260727.md`.
+
 ## Reference Path
 
 - The canonical reference path is Windows AE Software render.
