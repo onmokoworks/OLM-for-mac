@@ -151,22 +151,28 @@ Evidence:
 
 ## Current OLMBlur Exact Slices
 
-- The declared 32bpc `case_0001` and `case_0002` profiles at Blur Amount
-  `129.4`, Smoothness `100`, Legacy `0`, and respectively Repeat/Bias `1/1`
-  and `2/2` are AE exact. Windows and Mac
-  AE `26.3x87` render the same path-normalized `32bpc` Software AEPX with
-  uncompressed FLOAT EXR effect/control queue items.
-- For each case, the no-effect control and effect-on comparisons are both
+- The declared 32bpc `case_0001`, `case_0002`, and `case_0003` profiles are
+  AE exact. Cases 0001/0002 are Non-Legacy Blur Amount `129.4`, Smoothness
+  `100`, with Repeat/Bias `1/1` and `2/2`; case 0003 is Legacy Blur Amount
+  `248.6`, Smoothness `100`, Repeat/Bias `10/1`.
+- Windows and Mac AE `26.3x87` use the same declared `32bpc`, Software raw
+  `1816`, working-space raw `None`, linear-off, uncompressed FLOAT EXR
+  effect/control contract. For each case, both raw gates are
   `0/8,294,400` mismatched FLOAT32 words with max raw u32 delta `0`.
 - Windows Kernel Process ETW binds the live `AfterFX.com` child to loaded
   `OLMBlur.aex` SHA-256 `f0611785...e96e5b`; the Mac plug-in Mach-O SHA-256
-  is `71df7efc...f4f0d72`.
-- This is a two-case 32bpc promotion. It does not promote untested OLMBlur
+  for case 0003 is `a0b3a138...495279d` and is mapped by exact path during
+  the accepted fresh-project render.
+- Case 0003 requires a fresh project/effect identity: saved-AEPX reruns that
+  finish in zero seconds without entering the dispatch are stale disk-cache
+  returns and cannot promote or reject a candidate.
+- This is a three-case 32bpc promotion. It does not promote untested OLMBlur
   32bpc cases or replace the existing 8/16bpc declared-case records.
 
 Evidence:
 `refs/conformance/olmblur_32bpc_case0001_ae_exact_20260727.md` and
-`refs/conformance/olmblur_32bpc_case0002_ae_exact_20260727.md`.
+`refs/conformance/olmblur_32bpc_case0002_ae_exact_20260727.md` and
+`refs/conformance/olmblur_32bpc_case0003_ae_exact_20260727.md`.
 
 ## Reference Path
 

@@ -46,7 +46,9 @@ void make_weights(std::vector<float>& weights, std::size_t radius,
     const float denominator = (sigma + sigma) * sigma;
     for (std::size_t distance = 1; distance <= radius; ++distance) {
         const float square = static_cast<float>(distance * distance);
-        const float value = std::exp(-square / denominator);
+        const float exponent = -square / denominator;
+        const float value =
+            static_cast<float>(std::exp(static_cast<double>(exponent)));
         weights[radius - distance] = value;
         weights[radius + distance] = value;
     }

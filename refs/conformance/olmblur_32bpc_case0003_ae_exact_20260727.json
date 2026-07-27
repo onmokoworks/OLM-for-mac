@@ -1,0 +1,179 @@
+{
+  "ae_exact_claim": true,
+  "ae_version": "26.3x87",
+  "case_id": "OLMBlur/case_0003",
+  "comparison": {
+    "effect_on": {
+      "height": 1080,
+      "max_raw_u32_delta": 0,
+      "mismatched_values": 0,
+      "total_values": 8294400,
+      "width": 1920
+    },
+    "no_effect_control": {
+      "height": 1080,
+      "max_raw_u32_delta": 0,
+      "mismatched_values": 0,
+      "total_values": 8294400,
+      "width": 1920
+    }
+  },
+  "contract": {
+    "bits_per_channel": 32,
+    "frame": 0,
+    "frame_rate": 24,
+    "input_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+    "linear_blending": false,
+    "output": {
+      "channels": [
+        "A",
+        "B",
+        "G",
+        "R"
+      ],
+      "compression": "none",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "sample_type": "FLOAT",
+      "template": "OLM EXR 32 Float"
+    },
+    "params": {
+      "Bias Direction": 1,
+      "Blur Amount": 248.6,
+      "Blur Amount readback": 248.600006103516,
+      "Blur Smoothness": 100,
+      "Legacy": 1,
+      "Number of Repeat": 10
+    },
+    "renderer": {
+      "name": "SOFTWARE",
+      "raw": 1816
+    },
+    "working_space_raw": "None"
+  },
+  "cross_host_contract_binding": {
+    "mac_creation": "fresh app.newProject JSX with contract readback and a fresh composition/effect identity",
+    "result": "same declared contract; raw no-effect control exact",
+    "windows_aepx_file_reference_normalized_sha256": "0b19ad80101a90c82e5af56917fae6878285599d60b5ecfcafc8dcf726524c00",
+    "windows_aepx_sha256": "8735806736a18519cbb5e13458b6aa4a16afebe67055fe0c04b77a5efbf64edd"
+  },
+  "effect_attribution": {
+    "mac_effect_vs_control": {
+      "max_raw_u32_delta": 1035178019,
+      "mismatched_values": 518400
+    },
+    "windows_effect_vs_control": {
+      "max_raw_u32_delta": 1035178019,
+      "mismatched_values": 518400
+    }
+  },
+  "kind": "olmblur_32bpc_case0003_ae_exact",
+  "mac": {
+    "loaded_plugin_proof": {
+      "after_effects_pid": 18283,
+      "method": "vmmap exact module path during the fresh-project effect render",
+      "module_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin/Contents/MacOS/OLMBlur",
+      "module_sha256": "a0b3a138007dbf0519773f41ba96e00f921f33f3db4d4923293d8f5fa495279d",
+      "process_start_local": "Mon Jul 27 15:26:39 2026"
+    },
+    "outputs": {
+      "effect_on": {
+        "sha256": "c7f9d6c847ac8497447b9e15dc05b8fb0457b2d9295090351bc9776d18a710a4"
+      },
+      "no_effect_control": {
+        "sha256": "a7d9e5a0e7a61fe67809c9898892a053ab36baad959f399efcf538b5dab2ac7b"
+      }
+    },
+    "project_result_sha256": "c30f275f50e0c219377101cc6151353543c74de51021b0159c2aca1dda1c97f9"
+  },
+  "root_cause": {
+    "aex_instruction": "FUN_180009e10 calls imported expf after float32 exponent formation",
+    "coefficient_word_count": 2490,
+    "mac_libsystem_expf_vs_windows_ucrtbase_expf": {
+      "max_raw_u32_delta": 1,
+      "mismatch_count": 8,
+      "mismatches_by_iteration": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        2,
+        3,
+        1,
+        0
+      ]
+    },
+    "mac_source_change": "preserve the float32 exponent and evaluate exp in binary64 before casting to float32",
+    "native_fullframe_discriminator": {
+      "mac_double_exp_vs_windows_ucrt_exp": {
+        "max_raw_u32_delta": 0,
+        "mismatched_values": 0,
+        "total_values": 33177600
+      },
+      "mac_float_exp_vs_windows_ucrt_exp": {
+        "max_raw_u32_delta": 4,
+        "mismatched_values": 54235
+      }
+    },
+    "windows_ucrtbase_expf_vs_double_exp_float_cast": {
+      "max_raw_u32_delta": 0,
+      "mismatch_count": 0
+    }
+  },
+  "schema_version": 1,
+  "status": "raw_float32_ae_exact",
+  "verification": {
+    "actual_aex_complete_worker_fixtures": "5/5 exact",
+    "mac_source_actual_aex_adapter": "12/12 exact",
+    "stale_cache_false_negative_rejected": "saved-AEPX aerender completed both frames in zero seconds without entering the instrumented dispatch; the accepted proof uses a fresh project/effect identity"
+  },
+  "windows": {
+    "aerender": {
+      "exit_code": 0,
+      "pid": 50036,
+      "sha256": "711859d183bdabec7c358a344208323bbbd665fffd7e88e42b9b234f9b99692a",
+      "stdout_sha256": "86a41db14998b98d5e10d572c77db20b92b80c8fb1856f388df62b662d78a7a3"
+    },
+    "loaded_plugin_proof": {
+      "afterfx_pid": 47780,
+      "afterfx_process_path": "C:\\Program Files\\Adobe\\Adobe After Effects 2026\\Support Files\\AfterFX.com",
+      "aerender_parent_pid": 50036,
+      "aex_path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\OLMBlur.aex",
+      "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+      "etl_sha256": "01315bfd8e1cc5fce5562653d25252b90be0433599916f158fc2487ac3ea3caf",
+      "event_count": 2,
+      "events": [
+        {
+          "event": "ImageLoad",
+          "image_base": "0x7FFE44730000",
+          "image_size": "0x14000",
+          "pid": 47780,
+          "timestamp_raw": "134296042624456904"
+        },
+        {
+          "event": "ImageUnload",
+          "image_base": "0x7FFE44730000",
+          "image_size": "0x14000",
+          "pid": 47780,
+          "timestamp_raw": "134296042721507409"
+        }
+      ],
+      "method": "Microsoft-Windows-Kernel-Process ETW process+image events",
+      "process_start_utc": "2026-07-27T05:37:34.810048000Z",
+      "trace_csv_sha256": "5b14307ffe162284b2700f7305dd7b4f9b619cb92423b84156b933dfe3412ba4"
+    },
+    "outputs": {
+      "effect_on": {
+        "sha256": "8cd9fe5ecdbdd797a8d6ec4ae27bc26254946fd3fe78c337dad587bad8cb7825"
+      },
+      "no_effect_control": {
+        "sha256": "7a768319313dd50189d803cfa06a9f64b262136933a557846574e1df52647024"
+      }
+    },
+    "runtime_evidence_sha256": "0e1fdf8c4284ade557a1bc235525fe02d8465a25418b9d0c5f62911ac52a508a"
+  }
+}
