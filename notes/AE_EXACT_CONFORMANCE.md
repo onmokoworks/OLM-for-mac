@@ -151,12 +151,12 @@ Evidence:
 
 ## Current OLMBlur Exact Slices
 
-- The declared 32bpc `case_0001`, `case_0002`, `case_0003`, and `case_0004`
-  profiles are
+- The declared 32bpc `case_0001..0005` profiles are
   AE exact. Cases 0001/0002 are Non-Legacy Blur Amount `129.4`, Smoothness
   `100`, with Repeat/Bias `1/1` and `2/2`; case 0003 is Legacy Blur Amount
   `248.6`, Smoothness `100`, Repeat/Bias `10/1`; case 0004 is Non-Legacy
-  Blur Amount `125.6`, Smoothness `100`, Repeat/Bias `4/1`.
+  Blur Amount `125.6`, Smoothness `100`, Repeat/Bias `4/1`; case 0005 is
+  Non-Legacy Blur Amount `5`, Smoothness `100`, Repeat/Bias `2/1`.
 - Windows and Mac AE `26.3x87` use the same declared `32bpc`, Software raw
   `1816`, working-space raw `None`, linear-off, uncompressed FLOAT EXR
   effect/control contract. For each case, both raw gates are
@@ -171,14 +171,18 @@ Evidence:
 - Case 0004 closes the old `5,439`-word, max-`4` effect residual with the
   binary-grounded float-exponent/binary64-`exp` Non-Legacy coefficient path;
   its no-effect control was already exact.
-- This is a four-case 32bpc promotion. It does not promote untested OLMBlur
+- Case 0005 requires no further core change. Its older retained reference pair
+  is rejected because the no-effect frame already differs by `63,644` words;
+  the fresh same-AEPX Windows recapture is exact at both gates.
+- This is a five-case 32bpc promotion. It does not promote untested OLMBlur
   32bpc cases or replace the existing 8/16bpc declared-case records.
 
 Evidence:
 `refs/conformance/olmblur_32bpc_case0001_ae_exact_20260727.md` and
 `refs/conformance/olmblur_32bpc_case0002_ae_exact_20260727.md` and
 `refs/conformance/olmblur_32bpc_case0003_ae_exact_20260727.md` and
-`refs/conformance/olmblur_32bpc_case0004_ae_exact_20260727.md`.
+`refs/conformance/olmblur_32bpc_case0004_ae_exact_20260727.md` and
+`refs/conformance/olmblur_32bpc_case0005_ae_exact_20260727.md`.
 
 ## Reference Path
 
