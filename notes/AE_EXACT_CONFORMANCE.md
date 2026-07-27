@@ -174,7 +174,11 @@ Evidence:
 - Case 0005 requires no further core change. Its older retained reference pair
   is rejected because the no-effect frame already differs by `63,644` words;
   the fresh same-AEPX Windows recapture is exact at both gates.
-- This is a five-case 32bpc promotion. It does not promote untested OLMBlur
+- Case 0006 also requires no further core change. A fresh project/effect
+  identity and ETW-bound same-contract Windows recapture are exact at both
+  gates; effect-on differs from control at the same `5,911,831` words on both
+  hosts.
+- This is a six-case 32bpc promotion. It does not promote untested OLMBlur
   32bpc cases or replace the existing 8/16bpc declared-case records.
 
 Evidence:
@@ -182,7 +186,8 @@ Evidence:
 `refs/conformance/olmblur_32bpc_case0002_ae_exact_20260727.md` and
 `refs/conformance/olmblur_32bpc_case0003_ae_exact_20260727.md` and
 `refs/conformance/olmblur_32bpc_case0004_ae_exact_20260727.md` and
-`refs/conformance/olmblur_32bpc_case0005_ae_exact_20260727.md`.
+`refs/conformance/olmblur_32bpc_case0005_ae_exact_20260727.md` and
+`refs/conformance/olmblur_32bpc_case0006_ae_exact_20260727.md`.
 
 ## Reference Path
 
