@@ -1,5 +1,19 @@
 # OLM Conformance Ledger
 
+- 2026-07-27 `OLMSmoother2 32bpc case-01..10 Mac candidate audit` (latest
+  override): final binary `c14bb342...e839eb` has exact Mac no-effect controls
+  for all ten cases. Against the old bulk Windows effect artifacts,
+  04/06/08/10 are raw-zero candidates while 01/02/03/05 differ. None of those
+  eight cases is promoted because the old Windows effect renders did not
+  import the exported Preserve-RGB EXRs and have no same-run PF32-entry
+  equality proof. Case-07 demonstrates the boundary: the independent
+  Preserve-RGB recapture is AE exact, but the current Mac render differs from
+  the old bulk case-07 artifact by `4,318,279` words. Only independently
+  contracted case-07 and case-09 remain promoted. Next gate: Windows
+  same-source Preserve-RGB effect/control recapture for 01–06/08/10.
+  Evidence:
+  `refs/conformance/olmsmoother2_32bpc_case01_10_mac_candidate_audit_20260727.md`.
+
 - 2026-07-27 `OLMSmoother2 no-key 32bpc case-09 AE exact closeout` (latest
   override): the hash-bound Preserve RGB case-09 contract is Mac AE
   `26.3x87` `AE exact` against the unchanged Windows AEX. The no-effect

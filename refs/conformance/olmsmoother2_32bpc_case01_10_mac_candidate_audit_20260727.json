@@ -1,0 +1,40 @@
+{
+  "kind": "olmsmoother2_32bpc_case01_10_mac_candidate_audit",
+  "schema_version": 1,
+  "date": "2026-07-27",
+  "mac_ae_version": "26.3x87",
+  "mac_plugin_binary_sha256": "c14bb3424b8b8ce58d09fe372a443f844319d18fec5db5ef1cfc1019e3e839eb",
+  "project_contract": {
+    "bits_per_channel": 32,
+    "renderer": "SOFTWARE",
+    "working_space": "None",
+    "linear_blending": false,
+    "input_interpretation": "Preserve RGB",
+    "output": "uncompressed FLOAT RGBA OpenEXR"
+  },
+  "control_gate": {
+    "exact_cases": 10,
+    "total_cases": 10,
+    "compared_words_per_case": 8294400,
+    "max_raw_u32_delta": 0
+  },
+  "case_results": [
+    {"case": "01", "effect_mismatched_values": 21511, "effect_max_raw_u32_delta": 102237492, "status": "candidate_effect_mismatch_against_old_bulk_reference"},
+    {"case": "02", "effect_mismatched_values": 134113, "effect_max_raw_u32_delta": 67108281, "status": "candidate_effect_mismatch_against_old_bulk_reference"},
+    {"case": "03", "effect_mismatched_values": 15288, "effect_max_raw_u32_delta": 110289668, "status": "candidate_effect_mismatch_against_old_bulk_reference"},
+    {"case": "04", "effect_mismatched_values": 0, "effect_max_raw_u32_delta": 0, "status": "candidate_exact_pending_windows_pf32_entry_or_preserve_rgb_recapture"},
+    {"case": "05", "effect_mismatched_values": 12058, "effect_max_raw_u32_delta": 106288799, "status": "candidate_effect_mismatch_against_old_bulk_reference"},
+    {"case": "06", "effect_mismatched_values": 0, "effect_max_raw_u32_delta": 0, "status": "candidate_exact_pending_windows_pf32_entry_or_preserve_rgb_recapture"},
+    {"case": "07", "effect_mismatched_values": 0, "effect_max_raw_u32_delta": 0, "status": "ae_exact_under_independent_preserve_rgb_contract"},
+    {"case": "08", "effect_mismatched_values": 0, "effect_max_raw_u32_delta": 0, "status": "candidate_exact_pending_windows_pf32_entry_or_preserve_rgb_recapture"},
+    {"case": "09", "effect_mismatched_values": 0, "effect_max_raw_u32_delta": 0, "status": "ae_exact_under_independent_preserve_rgb_contract"},
+    {"case": "10", "effect_mismatched_values": 0, "effect_max_raw_u32_delta": 0, "status": "candidate_exact_pending_windows_pf32_entry_or_preserve_rgb_recapture"}
+  ],
+  "reference_boundary": {
+    "old_bulk_reference_root": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMSmootherv2",
+    "finding": "A Mac no-effect match with the exported Windows before-effects EXR does not prove that the original Windows effect render consumed identical PF32 entry words.",
+    "counterexample": "case-07 compares exact under its independent Preserve-RGB recapture but differs by 4,318,279 words and max raw-u32 delta 991,472,415 against the old bulk effect artifact.",
+    "promotion_rule": "Require either same-run Windows PF32 effect-entry equality or a Windows effect/no-effect recapture that imports the same hash-bound Preserve-RGB EXR."
+  },
+  "next_gate": "Recapture cases 01-06,08,10 on Windows AE from their exact hash-bound before-effects EXRs under the same Preserve-RGB project/output contract."
+}
