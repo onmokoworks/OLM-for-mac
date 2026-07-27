@@ -221,6 +221,28 @@ Evidence:
 `refs/conformance/olmblur_32bpc_case0006_ae_exact_20260727.md` and
 `refs/conformance/olmblur_32bpc_case0007_ae_exact_20260727.md`.
 
+## Current OLMToonDilate Exact Slices
+
+- The packaged 8bpc cases and focused 16bpc `case_0001..0003` slice retain
+  their prior AE-exact status.
+- The declared 32bpc `olmtoondilate_typed_procedural_64x64` profile with
+  Search Radius `13` is Windows/Mac AE `26.3x87` exact.
+- Both hosts executed the identical fixture SHA
+  `665fa9f05fe652895cb7c7f94064f2471ef992c74751cd11a4254aeb00529d82`
+  with a transparent background and parameter readback `13/13`.
+- The Windows/Mac no-effect control and effect-on output are each exact at all
+  `16,384` raw FLOAT32 words with max raw-u32 delta `0`. Effect-on differs
+  from control at `6,448` words, excluding a no-op coincidence.
+- Runtime evidence binds the installed Mac Mach-O
+  `731798e1386f04afd181523e3fd55fbf5824a89b7ea97493281217ed5882c36e`
+  and Windows AEX
+  `c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3`.
+- This promotes only the declared typed-procedural profile, not all 32bpc
+  ToonDilate inputs or Search Radius values.
+
+Evidence:
+`refs/conformance/olmtoondilate_32bpc_typed_procedural_ae_exact_20260728.md`.
+
 ## Reference Path
 
 - The canonical reference path is Windows AE Software render.

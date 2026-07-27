@@ -1,0 +1,30 @@
+{
+  "kind": "olm_32bpc_typed_procedural_fixture",
+  "schema_version": 1,
+  "ae_version": "26.3x87",
+  "project_bits_per_channel": 32,
+  "working_space": "None",
+  "linear_blending": false,
+  "dimensions": [64, 64],
+  "frame": 0,
+  "effect": "OLM Toon Dilate",
+  "source_policy": "AE-generated solids only; no footage imported",
+  "render_policy": "same comp, only branch enabled state changes",
+  "outputs": {
+    "no_effect": "effect_no_effect_00000.exr",
+    "effect_on": "effect_effect_on_00000.exr"
+  },
+  "source_layers": [
+    {"name": "solid_background", "kind": "solid", "bounds": [0, 0, 64, 64], "rgb": [0, 0, 0], "alpha": 0},
+    {"name": "rect_integer_a25", "kind": "solid", "bounds": [4, 4, 20, 16], "rgb": [1, 0, 0], "alpha": 0.25},
+    {"name": "rect_integer_a50", "kind": "solid", "bounds": [28, 4, 20, 16], "rgb": [0, 1, 0], "alpha": 0.5},
+    {"name": "rect_integer_a75", "kind": "solid", "bounds": [4, 28, 20, 16], "rgb": [0, 0, 1], "alpha": 0.75},
+    {"name": "rect_integer_a100", "kind": "solid", "bounds": [28, 28, 20, 16], "rgb": [1, 1, 1], "alpha": 1.0}
+  ],
+  "fail_closed": [
+    "reject imported footage or missing source recipe",
+    "reject non-32bpc, working-space, or linear-blending drift",
+    "reject missing no-effect or effect-on EXR",
+    "reject comparison unless both outputs came from this same comp"
+  ]
+}

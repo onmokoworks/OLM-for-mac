@@ -4,8 +4,9 @@
 
 - Plug-in: OLM Toon Dilate
 - Feature/path: 8bpc Search Radius dilation path
-- Bit depth: 8bpc documented here; covered 16bpc slice is AE exact;
-  32bpc has returned only as PNG/non-float-preserving probe evidence
+- Bit depth: 8bpc documented here; covered 16bpc slice is AE exact; the
+  declared 32bpc `64x64` typed-procedural Search Radius `13` profile is AE
+  exact
 - Reference set:
   - `refs/win_references/20260604_olm/OLMToonDilate`
   - normalized Software refs under
@@ -14,9 +15,12 @@
   Python/C++ CLI are also exact against normalized Software refs for the same
   cases. The covered 16bpc Mac AE slice is also `AE exact` for the same three
   cases (`refs/conformance/bitdepth_16bpc_exact_manifest_20260703.md`).
-  32bpc is not exact evidence yet: the broad EXR-first rerun came back
-  PNG-only/non-float-preserving and is frozen as `probe-only-png-return` in
-  `refs/conformance/bitdepth_32bpc_probe_status_20260703.md`.
+  The narrow 32bpc typed-procedural profile is Windows/Mac AE exact at both
+  raw FLOAT32 gates (`0/16,384` mismatches for no-effect and effect-on);
+  evidence:
+  `refs/conformance/olmtoondilate_32bpc_typed_procedural_ae_exact_20260728.md`.
+  The older broad PNG-only return remains probe-only and is not part of this
+  promotion.
 
 ## Source Evidence
 
@@ -29,6 +33,7 @@
 | Effective radius is `ceil(SearchRadius * image_width / comp_width)`. | Python/C++ CLI implementation and half/full-res reference behavior. | binary-grounded / CLI-confirmed |
 | Relaxed pixels copy the current winner neighbor's RGBA immediately. | Python/C++ CLI implementation; `case_0003` distinguishes this from a global nearest-source lookup. | CLI-confirmed |
 | Remaining semi-alpha pixels are premultiplied on output with `(rgb * alpha + 127) / 255`. | Python/C++/Mac implementation and normalized exact result. | CLI-confirmed |
+| The declared PF32 host path matches Windows and Mac AE for a transparent-background `64x64` fixture at Search Radius `13`. Both no-effect and effect-on pairs are raw FLOAT32 exact, effect-on is non-no-op at `6,448` words, and the loaded AEX/Mach-O identities are recorded. | `refs/conformance/olmtoondilate_32bpc_typed_procedural_ae_exact_20260728.json` and retained EXRs. | AE exact / runtime-bound narrow profile |
 
 ## Parameters
 
@@ -100,11 +105,12 @@ synthetic, so this is binary-grounded kernel evidence rather than AE exact.
 | `case_0002` | 8bpc | `AE exact` for packaged Software ref | `max_diff=0` in 2026-06-19 AE pixel return; exact in Python/C++ normalized checks | Preserve exact behavior; next open depth is float-preserving 32bpc |
 | `case_0003` | 8bpc | `AE exact` for packaged Software ref | `max_diff=0` in 2026-06-19 AE pixel return; exact in Python/C++ normalized checks | Preserve exact behavior; next open depth is float-preserving 32bpc |
 | `case_0001..0003` | 16bpc | `AE exact` for covered Software slice | Live Mac AE verification against imported Windows Software 16bpc refs passes `3/3` with `max_diff=0` | Preserve exact behavior; broaden only with declared references |
+| `olmtoondilate_typed_procedural_64x64`, Search Radius `13` | 32bpc | `AE exact` for this declared profile | Windows/Mac no-effect and effect-on are each `0/16,384` mismatched raw FLOAT32 words; effect-on differs from control at `6,448` words | Freeze this profile; broaden only through independent raw control/effect pairs |
 
 ## Open Questions
 
-- 32bpc propagation/writeback behavior under a float-preserving EXR/TIFF/HDR
-  return.
+- 32bpc behavior beyond the one declared typed-procedural Search Radius `13`
+  profile. Do not generalize this exact result to arbitrary sources or radii.
 - Broader 16bpc behavior beyond the declared covered slice, if new ToonDilate
   parameters or inputs are introduced.
 - Whether non-normalized older residuals were stale reference drift or hidden AE

@@ -1,0 +1,144 @@
+{
+  "kind": "olmtoondilate_32bpc_typed_procedural_ae_exact",
+  "schema_version": 1,
+  "date": "2026-07-28",
+  "status": "ae_exact",
+  "claim_scope": {
+    "plugin": "OLMToonDilate",
+    "case_id": "olmtoondilate_typed_procedural_64x64",
+    "bit_depth": 32,
+    "effect": "OLM Toon Dilate",
+    "parameter": {
+      "name": "Search Radius",
+      "match_name": "ADBE OLMToonDilate-0001",
+      "property_index": 1,
+      "requested": 13,
+      "mac_readback": 13,
+      "windows_readback": 13
+    }
+  },
+  "shared_contract": {
+    "fixture": "scripts/ae_generate_32bpc_typed_procedural_fixture.jsx",
+    "fixture_git_commit": "7db4aa313fe319c26465ac1c78e1d042dce82fed",
+    "fixture_sha256": "665fa9f05fe652895cb7c7f94064f2471ef992c74751cd11a4254aeb00529d82",
+    "ae_version": "26.3x87",
+    "dimensions": [
+      64,
+      64
+    ],
+    "project_bits_per_channel": 32,
+    "renderer_gate": "Number(project.gpuAccelType) === Number(GpuAccelType.SOFTWARE)",
+    "working_space_gate": "raw string is empty or None",
+    "linear_blending": false,
+    "source_policy": "AE-generated solids only; no imported footage",
+    "transparent_background_alpha": 0,
+    "render_policy": "same generated source comp; toggle only no-effect/effect-on branches",
+    "output": {
+      "container": "OpenEXR",
+      "dimensions": [
+        64,
+        64
+      ],
+      "channel_order": [
+        "A",
+        "B",
+        "G",
+        "R"
+      ],
+      "sample_types": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "sample_type_name": "FLOAT",
+      "compression": 0,
+      "finite_samples_per_output": 16384,
+      "nan_samples_per_output": 0,
+      "positive_inf_samples_per_output": 0,
+      "negative_inf_samples_per_output": 0
+    }
+  },
+  "runtime_binding": {
+    "mac": {
+      "ae_pid": 75663,
+      "evidence": "vmmap",
+      "loaded_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate",
+      "mach_o_sha256": "731798e1386f04afd181523e3fd55fbf5824a89b7ea97493281217ed5882c36e"
+    },
+    "windows": {
+      "ae_pid": 40764,
+      "session_id": 1,
+      "ae_start_time": "2026-07-28T01:15:58.0015191+09:00",
+      "evidence": "System.Diagnostics.Process.Modules",
+      "loaded_path": "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM\\OLMToonDilate.aex",
+      "module_base": "0x2d005ef0000",
+      "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+      "aex_size_bytes": 3923456,
+      "aex_mtime": "2026-04-19T00:07:44.0000000+09:00"
+    }
+  },
+  "artifacts": {
+    "mac": {
+      "fixture_manifest": {
+        "path": "refs/conformance/olmtoondilate_32bpc_typed_procedural_ae_exact_20260728/mac_fixture_manifest.json",
+        "sha256": "8125744e53fcebdb3c554889bc4427cfe16a8a89982d6097c7dbee63244f62ad"
+      },
+      "fixture_result": {
+        "path": "refs/conformance/olmtoondilate_32bpc_typed_procedural_ae_exact_20260728/mac_fixture_result.json",
+        "sha256": "4bc59529708cd906b1ba795bd46778d54a859a2aed06de80ae40659e8a233b2d"
+      },
+      "no_effect": {
+        "path": "refs/conformance/olmtoondilate_32bpc_typed_procedural_ae_exact_20260728/mac_no_effect.exr",
+        "sha256": "00ac6170abefd2bb3fddb7a0f2904c933844597df31b4a039677e1300d5e2764"
+      },
+      "effect_on": {
+        "path": "refs/conformance/olmtoondilate_32bpc_typed_procedural_ae_exact_20260728/mac_effect_on.exr",
+        "sha256": "e31d15b4e2aef24d294c74695f6448d5f90aecc4a989a6c36ee263f4af82ea22"
+      }
+    },
+    "windows": {
+      "fixture_manifest": {
+        "path": "refs/conformance/olmtoondilate_32bpc_typed_procedural_ae_exact_20260728/windows_fixture_manifest.json",
+        "sha256": "fb865ad377713da3b623b80bc22aca925674aca40491d3c343fb66779c283159"
+      },
+      "fixture_result": {
+        "path": "refs/conformance/olmtoondilate_32bpc_typed_procedural_ae_exact_20260728/windows_fixture_result.json",
+        "sha256": "e7ebae3529b5c065cbfdceacdf625cd9e6c45ab3cd97cba57ae828801ac9fa16"
+      },
+      "no_effect": {
+        "path": "refs/conformance/olmtoondilate_32bpc_typed_procedural_ae_exact_20260728/windows_no_effect.exr",
+        "sha256": "e3b52eadaf5e819b13e003759bfc9695d9dd718567121690e356d63b807e9ce1"
+      },
+      "effect_on": {
+        "path": "refs/conformance/olmtoondilate_32bpc_typed_procedural_ae_exact_20260728/windows_effect_on.exr",
+        "sha256": "b02220e718e1f713b2c5f30ebfeaca69d5cd797c02637907c3b8b134a237fe9b"
+      }
+    }
+  },
+  "raw_float32_comparisons": {
+    "no_effect_control": {
+      "width": 64,
+      "height": 64,
+      "compared_words": 16384,
+      "mismatched_words": 0,
+      "max_raw_u32_delta": 0
+    },
+    "effect_on": {
+      "width": 64,
+      "height": 64,
+      "compared_words": 16384,
+      "mismatched_words": 0,
+      "max_raw_u32_delta": 0
+    },
+    "mac_effect_vs_control": {
+      "mismatched_words": 6448,
+      "max_raw_u32_delta": 1065353216
+    }
+  },
+  "decision": {
+    "ae_exact": true,
+    "reason": "The same hash-bound fixture and parameter readback produced raw-exact Windows/Mac no-effect controls and raw-exact effect-on outputs. The effect-on branch is non-no-op, and both hosts are bound to the loaded OLMToonDilate binary.",
+    "boundary": "This promotes only the declared 64x64 typed-procedural Search Radius 13 profile; it does not generalize all 32bpc inputs or parameter values."
+  }
+}
