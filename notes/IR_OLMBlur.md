@@ -4,8 +4,9 @@
 
 - Plug-in: OLM Blur
 - Feature/path: alpha-masked repeated blur, legacy and non-legacy paths
-- Bit depth: 8bpc AE exact against normalized Software refs; 16bpc Mac AE
-  validation is classified but not exact; 32bpc still needs references
+- Bit depth: 8bpc and the declared seven-case 16bpc slice are AE exact;
+  declared 32bpc `case_0001..0004` is AE exact against runtime-bound Windows
+  Software references
 - Reference set:
   - `refs/win_references/20260604_olm/OLMBlur`
   - normalized Software refs under
@@ -21,8 +22,11 @@
     previously reported 512-step family
   - `case_0007` keeps the same near-1LSB family plus a remaining
     Legacy border/seed anomaly (`max_diff=383` at the localized witness)
-  - not binary-complete for 16bpc writeback scaling, Legacy border seed, or
-    32bpc behavior
+  - historical 16bpc writeback/border investigations remain useful IR, while
+    untested 32bpc `case_0005..0007` remain unpromoted
+  - 2026-07-27 fresh-project FLOAT EXR comparison closes declared 32bpc
+    `case_0001..0004`; case 0003 and case 0004 require the binary-grounded
+    float-exponent/binary64-`exp` coefficient path
 - 2026-06-22 provenance audit confirms the packaged AE-host candidates are
   exact against the 20260618 normalized refs for all seven cases; the large
   differences in `case_0001..0004` are only against the older 20260604
@@ -84,6 +88,7 @@
 | 8bpc Non-Legacy `FUN_180003710` stages A,R,G,B bytes, splits each directional pass into six contiguous chunks, swaps float RGB planes, applies repeat decay/weights, and writes `floor(rgb+0.5)` while retaining copied alpha. | `core/olmblur_worker_orchestration.*`, `tools/emulation/fixtures/olmblur_worker_orchestration/`, and `refs/conformance/olmblur_worker_orchestration_20260711.md`: two complete A/R/G/B output buffers replay byte-exact against actual AEX, including a large-radius reverse-direction case. | binary-grounded / complete worker slice exact |
 | 32bpc Non-Legacy `FUN_180004b80` uses the same six-subpass orchestration on raw float32 A/R/G/B, treats any nonzero alpha (including negative) as active, preserves copied alpha, and writes RGB without clamp or quantization. | `core/olmblur_worker32_nonlegacy.*`, `tools/emulation/fixtures/olmblur_worker32_nonlegacy/`, and `refs/conformance/olmblur_worker32_nonlegacy_20260711.md`: two complete float buffers replay byte-exact against actual AEX without EXR oracle. | binary-grounded / complete worker slice exact |
 | 2026-07-27 fresh-project AE proof closes declared 32bpc Legacy `case_0003`. `FUN_180009e10` forms a float32 exponent and imports `expf`; Windows UCRT and macOS libSystem differ at 8/2490 coefficient words by one ULP, while Windows UCRT matches binary64 `exp` followed by a float32 cast at 2490/2490. The old Mac path reproduces 54,235 native full-frame word deltas (max 4), and the bounded float-exponent/double-`exp` path matches Windows at all 33,177,600 native words. With the final Mach-O `a0b3a138...495279d` mapped by `vmmap`, fresh Mac AE `26.3x87` matches the ETW-bound Windows AEX for both no-effect and effect-on at `0/8,294,400` FLOAT32 word mismatches. Saved-AEPX zero-second disk-cache returns were rejected because the instrumented dispatch was never entered. | `refs/conformance/olmblur_32bpc_case0003_ae_exact_20260727.md` / `.json`; `core/olmblur_worker32_legacy.cpp`. | binary-grounded CRT root cause / runtime-bound / AE exact |
+| 2026-07-27 fresh-project AE proof closes declared 32bpc Non-Legacy `case_0004`. The no-effect control is exact before the change, while the old effect output differs at 5,439/8,294,400 FLOAT32 words (max 4). The retained coefficient audit localizes the first old-path split to AEX-derived `0x3ecaa909` versus macOS `expf` `0x3ecaa908`; preserving the float32 exponent and evaluating binary64 `exp` before the float32 cast matches 177/177 declared coefficient words over radii `[125,36,10,2]`. With final Mach-O `c6a9e54b...e3d9d83e` mapped by `vmmap`, fresh Mac AE matches the ETW-bound Windows AEX for both no-effect and effect-on at `0/8,294,400`; seven complete actual-AEX Non-Legacy worker fixtures remain exact. | `refs/conformance/olmblur_32bpc_case0004_ae_exact_20260727.md` / `.json`; `core/olmblur_worker32_nonlegacy.cpp`. | binary-grounded coefficient boundary / runtime-bound / AE exact |
 | 16bpc Non-Legacy `FUN_180002280` uses PF_Pixel16 A/R/G/B staging, the exact `1000/1980` helpers in six subpasses, and a `+0.5` then truncating/clamped word writer. | `core/olmblur_worker16_nonlegacy.*`, `tools/emulation/fixtures/olmblur_worker16_nonlegacy/`, and `refs/conformance/olmblur_worker16_nonlegacy_complete_worker_20260711.md`: two complete PF16 buffers replay byte-exact against actual AEX. | binary-grounded / complete worker slice exact |
 | The PF16 writer is experimentally distinguished from nearest-even, not only inferred from asm. | `tools/emulation/test_olmblur_writer16_half_ties_20260713.py` executes actual AEX `0x1800030e2..0x180003123`; raw float32 `1100.5` stores `1101`, while nearest-even would store `1100`. See `refs/conformance/olmblur_writer16_half_ties_actual_aex_20260713.md`. This closes writer semantics but not the live pre-store float or AE host boundary. | binary-grounded / writer semantics closed |
 | 2026-07-13 actual-AEX dependency-cone worker replay for normalized 16bpc Non-Legacy `case_0006` returns from entry `0x180002280` with helper calls `[120,120]` (the expected six-chunk worker schedule per witness), and every retained source-staging, helper ABI/plane/origin/offset, helper-output, final pre-store float, and stored-word observation is bit-exact against the current portable worker at `(314,14)` and `(29,71)`. This is not full-frame equivalence evidence. | `refs/conformance/olmblur_case0006_actual_aex_fullworker_20260713.md` / `.json`; AEX SHA-256 `f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b`; dimensions `1920x1080`; parameters `blur=5.0`, `smoothness=100.0`, `repeat=10`, `bias=1`, `legacy=0`. | binary-grounded / actual-AEX dependency-cone fact |
@@ -130,7 +135,8 @@ Current implementation:
    - `radius = (long)radius_d`.
    - stop when radius is zero.
    - `sigma = float(radius_d) / 3.0`.
-   - build symmetric weights `exp(-(k*k) / (2*sigma*sigma))`.
+   - form the exponent in float32, evaluate binary64
+     `exp(static_cast<double>(exponent))`, and cast the result to float32.
    - run two 1D passes in the order selected by `Bias Direction`.
 
 ### Legacy Path

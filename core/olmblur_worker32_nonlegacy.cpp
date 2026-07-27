@@ -6,6 +6,8 @@
 #include <cstring>
 #include <vector>
 
+#pragma STDC FP_CONTRACT OFF
+
 namespace olm::blur::worker32 {
 namespace {
 
@@ -76,7 +78,10 @@ void render_nonlegacy(const float* source_argb, float* destination_argb,
         const float sigma = static_cast<float>(radius_value) / 3.0f;
         const float denominator = (sigma + sigma) * sigma;
         for (std::size_t k = 0; k <= radius; ++k) {
-            weights[k] = std::exp(-(static_cast<float>(k * k)) / denominator);
+            const float exponent =
+                -static_cast<float>(k * k) / denominator;
+            weights[k] = static_cast<float>(
+                std::exp(static_cast<double>(exponent)));
         }
         if (params.bias_direction == 1) {
             horizontal(flags.data(), plane_a.data(), plane_b.data(), weights.data(), width, height, radius);
