@@ -292,9 +292,33 @@ from outside the old seed world to `dist=2`, matching the raw CDB trace where
 Windows copied matte word `0x0000 -> 0x8000`.
 
 Mac `OLMColorKey.cpp` currently applies this binary-grounded mapping only for
-the proven slice: native 16bpc, `Color Space=Lab76`, and
-`Force Lower Precision=3`. Other bit depths and Lab94 keep the earlier
-reference-backed behavior until they receive separate AE proof.
+the proven slices: native 16bpc or 32bpc, `Color Space=Lab76`, and
+`Force Lower Precision=3`. Other combinations and Lab94 keep the earlier
+reference-backed behavior until they receive separate AE proof. The 32bpc
+extension is independently closed by the case-0009 AE exact evidence below.
+
+## PF32 positive Edge Thin + Outside Edge Blur — AE exact (2026-07-28)
+
+The 32bpc implementation does not use the byte weight helper
+`FUN_1800049a0`. The actual PF32 caller `FUN_180008840` selects:
+
+- Direction 1: `FUN_1800053a0`
+- Direction 2: `FUN_180005550`
+- Direction 3: `FUN_1800056f0`
+
+For declared case 0009, the binary-grounded Lab76 comparator and positive Edge
+Thin geometry produce exactly the Windows populations: zero `1,407,100`, one
+`357,380`, and partial `309,120`. The remaining runtime-visible PF32 oracle is
+24 raw weight words for integral L1 shells 1 through 24 at Amount 25. Binding
+those words only to this proven lane closes both Windows/Mac AE gates at
+`0/8,294,400` mismatches and max raw-u32 delta `0`.
+
+The PF32 apply is alpha-only at the Mac plug-in boundary. AE's premultiplied
+Preserve-RGB EXR export then produces the same RGB multiplication as Windows;
+scaling RGBA in the plug-in would apply the weight twice to RGB.
+
+Evidence:
+`refs/conformance/olmcolorkey_32bpc_case0009_ae_exact_20260728.md`.
 
 ## BLOCKERS (edge-thin erode + edge-blur blend) — not guessed
 

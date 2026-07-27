@@ -54,6 +54,22 @@ def main() -> int:
             assert resolved_bundle == bundle.resolve()
             assert resolved_binary == binary.resolve()
             assert hashlib.sha256(resolved_binary.read_bytes()).hexdigest() == expected_hash
+        dumped_without_aepx = temp / "wrapper_without_aepx.jsx"
+        subprocess.run(
+            [
+                sys.executable,
+                str(RUNNER),
+                "--plugin-path",
+                str(bundle),
+                "--support-dir",
+                str(temp / "runner_without_aepx"),
+                "--dump-js",
+                str(dumped_without_aepx),
+            ],
+            cwd=ROOT,
+            check=True,
+        )
+        assert '$.setenv("OLM_AE_MAC_AEPX_PATH", "");' in dumped_without_aepx.read_text(encoding="utf-8")
         for plugin_path in (bundle, binary):
             runner_support = temp / ("runner_bundle" if plugin_path == bundle else "runner_binary")
             aepx = temp / ("bundle.aepx" if plugin_path == bundle else "binary.aepx")

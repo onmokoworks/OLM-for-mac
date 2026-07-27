@@ -149,6 +149,24 @@ Evidence:
 `refs/conformance/olmsmoother2_case09_32bpc_mac_ae_exact_20260727.md`, and
 `refs/conformance/olmsmoother2_32bpc_case01_10_ae_exact_20260727.md`.
 
+## Current OLMColorKey Exact Slices
+
+- The independently contracted 32bpc cases 0002 and 0009 are Windows/Mac AE
+  `26.3x87` exact at both no-effect and effect-on raw FLOAT32 gates.
+- For case 0009, both comparisons cover `8,294,400` words with zero
+  mismatches and max raw-u32 delta `0`. Windows ETW binds current AEX SHA
+  `9c6cca22...bb2cf2c`; Mac `vmmap_exact_path` binds Mach-O
+  `410d6cd6...ed7f`.
+- Case 0009's PF32 Edge Blur path is binary-grounded as
+  `FUN_1800056f0 -> FUN_180008840`. The 24 Amount-25 integral L1 shell words
+  are runtime-captured from the accepted Windows AE output.
+- The old nine-case Windows bulk controls remain rejected. Cases 0001 and
+  0003 through 0008 are not promoted by the Mac-only zero-regression result.
+
+Evidence:
+`refs/conformance/olmcolorkey_32bpc_case0002_ae_exact_20260727.md` and
+`refs/conformance/olmcolorkey_32bpc_case0009_ae_exact_20260728.md`.
+
 ## Current OLMBlur Exact Slices
 
 - The declared 32bpc `case_0001..0005` profiles are

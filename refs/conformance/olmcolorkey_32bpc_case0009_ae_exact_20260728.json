@@ -1,0 +1,113 @@
+{
+  "ae_exact_claim": true,
+  "case_id": "olmcolorkey__case_0009",
+  "classification": "binary/runtime/CPU-grounded Windows/Mac AE exact",
+  "contract": {
+    "ae_version": "26.3x87",
+    "bits_per_channel": 32,
+    "linear_blending": false,
+    "output": "OLM EXR 32 Float, RGB+Alpha, Preserve RGB",
+    "renderer": "SOFTWARE",
+    "renderer_raw": 1816,
+    "working_space_raw": "None"
+  },
+  "exact_gates": {
+    "effect_on": {
+      "max_raw_u32_delta": 0,
+      "mismatched_float32_words": 0,
+      "word_count": 8294400
+    },
+    "no_effect": {
+      "max_raw_u32_delta": 0,
+      "mismatched_float32_words": 0,
+      "word_count": 8294400
+    }
+  },
+  "mac": {
+    "aepx_post_render_sha256": "23561dd649ab4e9c33a9816d634b25decb9585331ea2f0da4c5e2084dd4869d4",
+    "effect_on_exr_sha256": "13186625809c859d75f5ad6fcb69043c128fab5fdd56bf1bf81ee98798699911",
+    "loaded_plugin_proof": {
+      "binary_predates_process_start": true,
+      "method": "vmmap_exact_path",
+      "module_sha256": "410d6cd6b568f7d2ae5bb426451eb3d628998a716a83f0cdbe3c5c0bc028ed7f",
+      "pid": 60412
+    },
+    "no_effect_exr_sha256": "5fbae7ecac9783e01628f83293426295314564d671f47917f915d16ea96d4e4e",
+    "result_json_sha256": "88cf52d22558a31dc9375da7320bbf2ab7627718f15fe1bbadd58d2d510c5ef8",
+    "source_aepx_pre_render_sha256": "a1b247d0a9919071b2193c614c9c970ce72a769dda3cff8536d51d16045b2830"
+  },
+  "pf32_runtime_oracle": {
+    "distance_shell_counts": [
+      14720,
+      14560,
+      14400,
+      14240,
+      14080,
+      13920,
+      13760,
+      13600,
+      13440,
+      13280,
+      13120,
+      12960,
+      12800,
+      12640,
+      12480,
+      12320,
+      12160,
+      12000,
+      11840,
+      11680,
+      11520,
+      11360,
+      11200,
+      11040
+    ],
+    "path": "FUN_1800056f0 -> FUN_180008840",
+    "weight_words_by_integral_l1_shell_1_to_24": [
+      "0x3b813180",
+      "0x3c80af00",
+      "0x3d0fd160",
+      "0x3d7d52f0",
+      "0x3dc39110",
+      "0x3e0ac4a0",
+      "0x3e39a390",
+      "0x3e6da81c",
+      "0x3e930022",
+      "0x3eb0e444",
+      "0x3ed007c8",
+      "0x3eefecf8",
+      "0x3f080986",
+      "0x3f17fc1e",
+      "0x3f278ddf",
+      "0x3f367ff0",
+      "0x3f4495fa",
+      "0x3f51971d",
+      "0x3f5d4ed8",
+      "0x3f678ddf",
+      "0x3f702ad2",
+      "0x3f7702eb",
+      "0x3f7bfa89",
+      "0x3f7efd9e"
+    ]
+  },
+  "regression": {
+    "case_0001_through_0008_branches": 16,
+    "comparison": "fresh candidate vs immediately preceding same-AEPX Mac AE return",
+    "max_raw_u32_delta": 0,
+    "mismatched_float32_words": 0
+  },
+  "schema_version": 1,
+  "windows": {
+    "aepx_sha256": "f720491fe8b28926fb40eda73c81778e978aaaa27c5c8fa77bbcec31c638d069",
+    "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "effect_on_exr_sha256": "853f5d9f06eb9bd08247ef0b073e4af42e4a80bfa2310ac6a803071ee9f79391",
+    "etw": {
+      "aerender_pid": 34176,
+      "afterfx_pid": 10332,
+      "image_load_csv_line": 52341,
+      "image_unload_csv_line": 54956
+    },
+    "no_effect_exr_sha256": "e1197e5925d3c5ada85ac1ad05ebd21a7e715c593f6764c6e9860c01310afb0a"
+  }
+}

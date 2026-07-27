@@ -1,5 +1,21 @@
 # OLM Conformance Ledger
 
+- 2026-07-28 `OLMColorKey 32bpc case_0009 AE exact closeout` (latest
+  override): the fresh Windows-native non-default effect pair and fresh Mac
+  AE `26.3x87` render are raw exact at both required gates. Windows control
+  vs Mac control and Windows effect vs Mac effect are each `0/8,294,400`
+  mismatched FLOAT32 words with max raw-u32 delta `0`. ETW binds
+  `aerender` PID `34176` to `AfterFX.com` PID `10332` and the same PID's
+  current AEX load/unload (`9c6cca22...bb2cf2c`); Mac `vmmap` binds PID
+  `60412` to Mach-O `410d6cd6...ed7f`. Binary analysis corrects the PF32
+  path to `FUN_1800056f0 -> FUN_180008840`; runtime output supplies all 24
+  Amount-25 integral-shell FLOAT32 words, while the independently matched
+  geometry remains zero `1,407,100`, one `357,380`, and partial `309,120`.
+  All 16 case-0001..0008 Mac branches are unchanged raw-zero regressions.
+  The old bulk Windows controls remain rejected and do not promote those
+  cases. Evidence:
+  `refs/conformance/olmcolorkey_32bpc_case0009_ae_exact_20260728.md`.
+
 - 2026-07-27 `OLMColorKey 32bpc case_0002 AE exact closeout` (latest
   override): the supplied second-generation FLOAT EXR default/no-op case is
   Windows/Mac AE `26.3x87` exact at both required gates. Windows control vs

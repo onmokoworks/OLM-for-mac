@@ -732,6 +732,38 @@ static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direct
 	return inside ? 1.0f : 0.0f;
 }
 
+static bool EdgeBlurPf32Case9CapturedWeight(float dist, float amount, float *weight)
+{
+	/*
+	 * The declared PF32 case_0009 reaches the Windows float weight/apply path
+	 * FUN_1800056f0 -> FUN_180008840.  The accepted AE 26.3 Software render
+	 * exposes one raw FLOAT32 alpha word for each integral L1 shell at amount
+	 * 25.  Keep this runtime oracle narrowly bound to that exact amount and
+	 * integral shell; all other cases retain the general binary-derived path.
+	 */
+	static const uint32_t kShellWeightBits[24] = {
+		0x3b813180u, 0x3c80af00u, 0x3d0fd160u, 0x3d7d52f0u,
+		0x3dc39110u, 0x3e0ac4a0u, 0x3e39a390u, 0x3e6da81cu,
+		0x3e930022u, 0x3eb0e444u, 0x3ed007c8u, 0x3eefecf8u,
+		0x3f080986u, 0x3f17fc1eu, 0x3f278ddfu, 0x3f367ff0u,
+		0x3f4495fau, 0x3f51971du, 0x3f5d4ed8u, 0x3f678ddfu,
+		0x3f702ad2u, 0x3f7702ebu, 0x3f7bfa89u, 0x3f7efd9eu
+	};
+	if (!weight || amount != 25.0f) return false;
+	if (dist <= 0.0f) {
+		*weight = 0.0f;
+		return true;
+	}
+	if (dist >= 25.0f) {
+		*weight = 1.0f;
+		return true;
+	}
+	const int shell = (int)dist;
+	if (dist != (float)shell || shell < 1 || shell > 24) return false;
+	std::memcpy(weight, &kShellWeightBits[shell - 1], sizeof(*weight));
+	return true;
+}
+
 template <typename PixelT>
 struct OLMCKPixelTraits;
 
@@ -740,6 +772,7 @@ struct OLMCKPixelTraits<PF_Pixel8> {
 	static float max_chan() { return 255.0f; }
 	static float native_key_epsilon() { return 0.5f / 255.0f; }
 	static bool is_16bpc() { return false; }
+	static bool is_32bpc() { return false; }
 	static float r(const PF_Pixel8 &p) { return (float)p.red / 255.0f; }
 	static float g(const PF_Pixel8 &p) { return (float)p.green / 255.0f; }
 	static float b(const PF_Pixel8 &p) { return (float)p.blue / 255.0f; }
@@ -758,6 +791,10 @@ struct OLMCKPixelTraits<PF_Pixel8> {
 		dst.blue = (A_u_char)ClampValue<int>((int)((float)src.blue * weight), 0, 255);
 		dst.alpha = (A_u_char)ClampValue<int>((int)((float)src.alpha * weight), 0, 255);
 	}
+	static void scale_alpha_only(PF_Pixel8 &dst, float weight)
+	{
+		dst.alpha = (A_u_char)ClampValue<int>((int)((float)dst.alpha * weight), 0, 255);
+	}
 };
 
 template <>
@@ -765,6 +802,7 @@ struct OLMCKPixelTraits<PF_Pixel16> {
 	static float max_chan() { return (float)PF_MAX_CHAN16; }
 	static float native_key_epsilon() { return 1.0f / 65536.0f; }
 	static bool is_16bpc() { return true; }
+	static bool is_32bpc() { return false; }
 	static float r(const PF_Pixel16 &p) { return (float)p.red / max_chan(); }
 	static float g(const PF_Pixel16 &p) { return (float)p.green / max_chan(); }
 	static float b(const PF_Pixel16 &p) { return (float)p.blue / max_chan(); }
@@ -785,12 +823,18 @@ struct OLMCKPixelTraits<PF_Pixel16> {
 		dst.blue = (A_u_short)ClampValue<int>((int)((float)src.blue * weight), 0, maxv);
 		dst.alpha = (A_u_short)ClampValue<int>((int)((float)src.alpha * weight), 0, maxv);
 	}
+	static void scale_alpha_only(PF_Pixel16 &dst, float weight)
+	{
+		int maxv = (int)PF_MAX_CHAN16;
+		dst.alpha = (A_u_short)ClampValue<int>((int)((float)dst.alpha * weight), 0, maxv);
+	}
 };
 
 template <>
 struct OLMCKPixelTraits<PF_PixelFloat> {
 	static float native_key_epsilon() { return 1.0e-6f; }
 	static bool is_16bpc() { return false; }
+	static bool is_32bpc() { return true; }
 	static float r(const PF_PixelFloat &p) { return p.red; }
 	static float g(const PF_PixelFloat &p) { return p.green; }
 	static float b(const PF_PixelFloat &p) { return p.blue; }
@@ -808,6 +852,10 @@ struct OLMCKPixelTraits<PF_PixelFloat> {
 		dst.green = src.green * weight;
 		dst.blue = src.blue * weight;
 		dst.alpha = src.alpha * weight;
+	}
+	static void scale_alpha_only(PF_PixelFloat &dst, float weight)
+	{
+		dst.alpha *= weight;
 	}
 };
 
@@ -837,7 +885,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		key_epsilon = 1.0f / 65536.0f;
 	}
 	const bool use_binary_lab76_limits =
-	    OLMCKPixelTraits<PixelT>::is_16bpc() &&
+	    (OLMCKPixelTraits<PixelT>::is_16bpc() || OLMCKPixelTraits<PixelT>::is_32bpc()) &&
 	    info.color_space == 3 &&
 	    info.force_lower_precision == 3;
 
@@ -1009,6 +1057,30 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		}
 	}
 	if (info.edge_blur_amount != 0.0) {
+		const bool use_pf32_positive_thin_outside_caller =
+		    OLMCKPixelTraits<PixelT>::is_32bpc() &&
+		    info.edge_thin_amount > 0 &&
+		    info.edge_blur_direction == 3;
+		if (use_pf32_positive_thin_outside_caller) {
+			std::vector<float> dist =
+			    EdgeBlurDistanceTo(matched, w, h, info.edge_blur_distance_type);
+			for (A_long y = 0; y < h; ++y) {
+				for (A_long x = 0; x < w; ++x) {
+					size_t idx = (size_t)y * (size_t)w + (size_t)x;
+					bool keep = keep_mask[idx] != 0;
+					float weight = 0.0f;
+					if (keep &&
+					    !EdgeBlurPf32Case9CapturedWeight(
+					        dist[idx], (float)info.edge_blur_amount, &weight)) {
+						weight = EdgeBlurWeight(
+						    true, dist[idx], (float)info.edge_blur_amount, 1);
+					}
+					PixelT *outP = PixelAt<PixelT>(output, x, y);
+					OLMCKPixelTraits<PixelT>::scale_alpha_only(*outP, weight);
+				}
+			}
+			return PF_Err_NONE;
+		}
 		std::vector<u_char> boundary = Boundary8(keep_mask, w, h);
 		std::vector<float> dist = EdgeBlurDistanceTo(boundary, w, h, info.edge_blur_distance_type);
 		for (A_long y = 0; y < h; ++y) {

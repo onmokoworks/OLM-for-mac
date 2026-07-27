@@ -124,9 +124,7 @@ def main() -> int:
     jsx = support / "run_mac_olmcolorkey_32bpc_validation.jsx"
     wrapper = support / "run_mac_wrapper.jsx"
     expected_plugin_hash = digest(plugin_binary)
-    env = {"OLM_AE_MAC_INPUT_DIR": str((support / "input").resolve()), "OLM_AE_MAC_OUTPUT_DIR": str(output_dir), "OLM_AE_MAC_RESULT_JSON": str(result_json), "OLM_AE_MAC_PLUGIN_PATH": str(args.plugin_path.resolve()), "OLM_AE_MAC_PLUGIN_SHA256": expected_plugin_hash}
-    if aepx_path:
-        env["OLM_AE_MAC_AEPX_PATH"] = str(aepx_path)
+    env = {"OLM_AE_MAC_INPUT_DIR": str((support / "input").resolve()), "OLM_AE_MAC_OUTPUT_DIR": str(output_dir), "OLM_AE_MAC_RESULT_JSON": str(result_json), "OLM_AE_MAC_PLUGIN_PATH": str(args.plugin_path.resolve()), "OLM_AE_MAC_PLUGIN_SHA256": expected_plugin_hash, "OLM_AE_MAC_AEPX_PATH": str(aepx_path) if aepx_path else ""}
     error_path = result_json.with_suffix(result_json.suffix + ".error.txt")
     lines = [f"$.setenv({json.dumps(k)}, {json.dumps(v)});" for k, v in env.items()]
     lines.append(
