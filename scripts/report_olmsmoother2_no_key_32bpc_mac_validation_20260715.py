@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Validate an OLMSmoother2 v2/no-key Mac candidate return, fail closed."""
 from __future__ import annotations
-import argparse, hashlib, json, sys
+import argparse, hashlib, json, re, sys
+from datetime import datetime, timezone
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -11,12 +12,51 @@ from verify_32bpc_float_return import VerificationError, inspect_float_rgba_exr
 REQUEST = ROOT / "refs/mac_validation_requests/olmsmoother2_no_key_32bpc_mac_validation_20260715.json"
 def digest(p: Path) -> str: return hashlib.sha256(p.read_bytes()).hexdigest()
 def canonical(v: object) -> str: return hashlib.sha256(json.dumps(v, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()).hexdigest()
+def parse_time(value: object) -> datetime:
+    if not isinstance(value,str): raise ValueError("timestamp missing")
+    return datetime.fromisoformat(value.replace("Z","+00:00")).astimezone(timezone.utc)
+def resolve_return_paths(result: Path, output_dir: Path, case: dict) -> tuple[Path,dict[str,Path],dict[str,Path],dict]:
+    if output_dir.is_symlink() or result.is_symlink(): raise ValueError("result/output directory symlink forbidden")
+    base=output_dir.resolve(strict=True)
+    result=result.resolve(strict=True)
+    if result.parent != base: raise ValueError("result must be a non-symlink file directly in dedicated output directory")
+    challenge_path=base/"run_challenge.json"
+    if challenge_path.is_symlink(): raise ValueError("challenge symlink forbidden")
+    challenge=json.loads(challenge_path.read_text(encoding="utf-8"))
+    paths=[]; outputs={}; settings={}
+    for branch in ("no_effect_control","effect_on"):
+        item=case.get("outputs",{}).get(branch,{})
+        raw=Path(item.get("path",""))
+        p=raw.resolve(strict=True)
+        sp=Path(item.get("output_module_settings",{}).get("path","")).resolve(strict=True)
+        if raw.is_symlink() or sp.is_symlink() or p.parent != base or sp.parent != base:
+            raise ValueError(f"{branch} path escapes output directory or is symlink")
+        paths += [p,sp]; outputs[branch]=p; settings[branch]=sp
+    if len(set(paths+[result,challenge_path.resolve(strict=True)])) != 6:
+        raise ValueError("duplicate/basename-alias result, output, settings, or challenge path")
+    expected_roles={branch:{"exr":str(outputs[branch]),"settings":str(settings[branch])} for branch in ("no_effect_control","effect_on")}
+    if challenge.get("kind")!="olmsmoother2_mac_run_challenge" or challenge.get("result_path") != str(result) or challenge.get("output_paths") != expected_roles:
+        raise ValueError("challenge/output path split")
+    return result,outputs,settings,challenge
 def main() -> int:
     ap=argparse.ArgumentParser(); ap.add_argument("result",type=Path); ap.add_argument("--output-dir",type=Path); a=ap.parse_args()
     request=json.loads(REQUEST.read_text()); fail=[]
     try: d=json.loads(a.result.read_text(encoding="utf-8"))
     except (OSError,json.JSONDecodeError) as e: print(f"[FAIL_CLOSED] {e}"); return 1
     if d.get("kind")!="olmsmoother2_no_key_32bpc_mac_validation_return": fail.append("wrong return kind")
+    out=a.output_dir or a.result.parent
+    cases=d.get("cases",[]); case=cases[0] if len(cases)==1 else {}
+    try:
+        result_path,resolved_outputs,resolved_settings,challenge=resolve_return_paths(a.result,out,case)
+        nonce=d.get("run_nonce")
+        if not isinstance(nonce,str) or not re.fullmatch(r"[0-9a-f]{64}",nonce) or nonce!=challenge.get("run_nonce"): raise ValueError("run nonce/challenge mismatch")
+        challenge_start=parse_time(challenge.get("started_at")); started=parse_time(d.get("started_at")); ended=parse_time(d.get("ended_at"))
+        if not challenge_start <= started <= ended: raise ValueError("invalid run timestamp ordering")
+        for p in [result_path,*resolved_outputs.values(),*resolved_settings.values()]:
+            m=datetime.fromtimestamp(p.stat().st_mtime,tz=timezone.utc)
+            if m < challenge_start: raise ValueError(f"stale preexisting artifact: {p.name}")
+    except (OSError,ValueError,json.JSONDecodeError) as e:
+        print(f"[FAIL_CLOSED] output path/freshness binding failed: {e}"); return 1
     if d.get("ae_exact_claim") is not False: fail.append("ae_exact_claim must be false")
     if d.get("platform")!="macOS" or not d.get("macos_product_version") or not d.get("macos_build_version") or not d.get("ae_version"): fail.append("host OS/AE identity missing")
     expected_project={"bits_per_channel":32,"renderer":"SOFTWARE","working_space":"None","linear_blending":False}
@@ -32,26 +72,31 @@ def main() -> int:
     reference=request["windows_reference"]; expected_input={"filename":reference["before_effects_frame"],"sha256":reference["before_effects_sha256"]}; expected_case={**request["cases"][0],"input":expected_input}
     expected_contract=canonical({"request_id":request["request_id"],"case":expected_case,"common_setup":request["common_setup"],"mac_run_contract":request["mac_run_contract"],"output_template":expected_output_template})
     if d.get("case_contract_sha256")!=expected_contract: fail.append("case/parameter contract hash missing or mismatched")
-    cases=d.get("cases",[]); case=cases[0] if len(cases)==1 else {}
     if case.get("id")!=request["cases"][0]["id"] or case.get("input")!=expected_input or case.get("no_effect_control_passed") is not True: fail.append("case/input/control missing")
     expected_params=request["cases"][0]["params_full"]
     if case.get("params_full")!=expected_params: fail.append("full parameter binding drift")
     for p in case.get("params_full",[]):
         if p.get("match_name")=="OLM Smoother v2-0001" and p.get("value")!=0: fail.append("Enable Color Key is not exactly 0")
         if p.get("match_name")=="OLM Smoother v2-0006" and p.get("value")!=2: fail.append("Smoother Version is not exactly 2")
-    out=a.output_dir or a.result.parent; outputs=case.get("outputs",{}); setting_serial=[]
+    outputs=case.get("outputs",{}); setting_serial=[]
     for branch in ("no_effect_control","effect_on"):
-        item=outputs.get(branch,{}); path=Path(item.get("path","")); path=path if path.is_absolute() else out/path.name
+        item=outputs.get(branch,{}); path=resolved_outputs[branch]
         if path.suffix.lower()!=".exr" or not path.is_file(): fail.append(f"missing {branch} FLOAT EXR"); continue
         if item.get("sha256")!=digest(path): fail.append(f"{branch} hash mismatch")
         try:
             info=inspect_float_rgba_exr(path,(1920,1080)); counts=info.get("sample_counts",{})
             if counts.get("nan",0) or counts.get("+inf",0) or counts.get("-inf",0): fail.append(f"{branch} contains non-finite samples")
         except (VerificationError,OSError,ValueError) as e: fail.append(f"{branch} is not uncompressed FLOAT RGBA EXR: {e}")
-        settings=item.get("output_module_settings",{}); sp=Path(settings.get("path","")); sp=sp if sp.is_absolute() else out/sp.name
+        settings=item.get("output_module_settings",{}); sp=resolved_settings[branch]
         if not sp.is_file() or len(settings.get("sha256",""))!=64 or (sp.is_file() and settings["sha256"]!=digest(sp)): fail.append(f"{branch} settings capture missing/hash mismatch")
         setting_serial.append(settings.get("serialization"))
+        try:
+            captured=json.loads(sp.read_text(encoding="utf-8"))
+            if captured.get("kind")!="olm_output_module_settings_capture" or captured.get("run_nonce")!=nonce or captured.get("output_template")!=expected_output_template or captured.get("capture_api")!="OutputModule.getSettings(GetSettingsFormat.STRING)" or captured.get("output_path")!=str(path) or settings.get("output_path")!=str(path) or canonical(captured.get("settings"))!=canonical(settings.get("settings")): fail.append(f"{branch} settings capture semantics drift")
+        except (OSError,json.JSONDecodeError): fail.append(f"{branch} settings capture is not valid JSON")
         if item.get("effect_enabled") is not (branch=="effect_on"): fail.append(f"{branch} enabled-state drift")
+        expected_readback={"effect":{"name":"OLM Smoother v2","match_name":"OLM Smoother v2","enabled":branch=="effect_on"},"params":expected_params}
+        if item.get("readback_before_render")!=expected_readback or item.get("readback_after_render")!=expected_readback: fail.append(f"{branch} AE effect/parameter/enabled readback missing or forged")
     if len(setting_serial)==2 and setting_serial[0]!=setting_serial[1]: fail.append("control/effect settings differ")
     if fail: print("[FAIL_CLOSED] "+"; ".join(fail)); return 1
     ref=request["windows_preserve_rgb_reference"]; manifest=ROOT/ref["manifest"]; ref_root=ROOT/ref["artifact_root"]
@@ -103,7 +148,7 @@ def main() -> int:
     except (OSError,ValueError,VerificationError) as e: print(f"[FAIL_CLOSED] PF32 entry comparison failed: {e}"); return 1
     entry_attested=entry_attested and entry_comparison["raw"]["uncompressed_sha256"]==ref["pf32_input_entry_uncompressed_sha256"] and entry_comparison["mismatched_words"]==0 and entry_comparison["max_raw_u32_delta"]==0
     attested=entry_attested
-    mac_control=Path(outputs["no_effect_control"]["path"]); mac_effect=Path(outputs["effect_on"]["path"])
+    mac_control=resolved_outputs["no_effect_control"]; mac_effect=resolved_outputs["effect_on"]
     try:
         comparisons={"no_effect_control":compare(win_control,mac_control),"effect_on":compare(win_effect,mac_effect)}
     except (VerificationError,OSError,ValueError) as e: print(f"[FAIL_CLOSED] raw FLOAT32 comparison failed: {e}"); return 1
@@ -114,7 +159,7 @@ def main() -> int:
     elif not entry_attested: status="blocked_input_entry_identity"
     elif not attested: status="blocked_pending_windows_artifact_attestation"
     elif not effect_exact: status="candidate_return_verified_effect_mismatch"
-    else: status="raw_float32_exact"
+    else: status="raw_float32_exact_artifact_only_missing_process_proof"
     reasons=[]
     if not attested: reasons.append("Windows Preserve RGB manifest or same-run PF32 entry attestation is not admissible")
     if not entry_attested: reasons.append("Windows Preserve RGB effect run lacks an exact same-run PF32 input-entry witness")
@@ -123,7 +168,8 @@ def main() -> int:
     if exact: reasons.append("both raw FLOAT32 gates and Windows artifact attestation pass")
     if not control_exact: next_gate="repair/aligned-capture the no-effect host/export path before attributing the effect output"
     elif not entry_attested: next_gate="repair the same-run Windows PF32 input-entry witness before attributing effect residuals"
-    else: next_gate="eliminate the attributable 32bpc effect-on raw FLOAT32 residual without changing the frozen 8bpc core"
-    report={"kind":"olmsmoother2_no_key_32bpc_mac_validation_report","schema_version":1,"status":status,"ae_exact_claim":exact,"case_count":1,"result_json":str(a.result),"mac_candidate_return_verified":True,"windows_reference_manifest":str(manifest),"windows_artifact_attestation_present":attested,"windows_pf32_input_entry_attestation_present":entry_attested,"windows_pf32_input_entry_comparison":entry_comparison,"raw_float32_comparisons":comparisons,"control_gate_passed":control_exact,"effect_gate_passed":effect_exact,"reason":"; ".join(reasons),"next_gate":next_gate}
-    target=out/"validation_report.json"; target.write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8"); print(f"[OK] wrote {target}"); return 0 if exact else 1
+    elif not effect_exact: next_gate="eliminate the attributable 32bpc effect-on raw FLOAT32 residual without changing the frozen 8bpc core"
+    else: next_gate="capture exact same-run loaded-process/module proof on both hosts; raw artifact equality is not AE exact"
+    report={"kind":"olmsmoother2_no_key_32bpc_mac_validation_report","schema_version":2,"status":status,"ae_exact_claim":False,"raw_float32_exact_artifact_classification":exact,"case_count":1,"result_json":str(result_path),"mac_candidate_return_verified":True,"windows_reference_manifest":str(manifest),"windows_artifact_manifest_checks_passed":attested,"windows_same_run_process_proof_present":False,"windows_pf32_input_entry_attestation_present":entry_attested,"windows_pf32_input_entry_comparison":entry_comparison,"raw_float32_comparisons":comparisons,"control_gate_passed":control_exact,"effect_gate_passed":effect_exact,"missing_exact_process_proof":["macOS same-run loaded OLMSmoother2 module identity in the rendering After Effects process","Windows same-run AfterFX process and loaded OLMSmoother2.aex module identity bound to both compared renders"],"reason":"; ".join(reasons+["AE exact is forbidden without exact same-run loaded-process/module proof on both hosts"]),"next_gate":next_gate}
+    target=out/"validation_report.json"; target.write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8"); print(f"[INTERMEDIATE] wrote {target}; AE exact remains unproven"); return 2 if exact else 1
 if __name__=="__main__": raise SystemExit(main())

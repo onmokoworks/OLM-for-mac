@@ -54,6 +54,9 @@ def main()->int:
         assert str(template.resolve()) in wrapper
         assert interpretation["template_sha256"] in wrapper
         assert "OLM_AE_MAC_ERROR_PATH" in wrapper
+        assert "OLM_AE_MAC_RUN_NONCE" in wrapper
+        assert "run_nonce" in jsx and "run_nonce" in wrapper
+        assert "started_at" in wrapper and "ended_at" in wrapper
         assert "OLM_MACOS_PRODUCT_VERSION" in wrapper
         assert "OLM_MACOS_BUILD_VERSION" in wrapper
         assert str(binary.resolve()) in wrapper
@@ -66,6 +69,10 @@ def main()->int:
         assert '"comp":{"width":1920,"height":1080,"pixel_aspect":1,"frame_rate":24}' in jsx
         assert "rendered output cardinality" in jsx
         assert "cannot normalize rendered output" in jsx
+        assert "readback_before_render" in jsx and "readback_after_render" in jsx
+        assert "parameter readback" in jsx and "stale/preexisting" in jsx
+        challenge=json.loads((root/"support"/"return"/"run_challenge.json").read_text())
+        assert len(challenge["run_nonce"])==64 and challenge["result_path"].endswith("mac_validation_return.json")
         assert "--input-path" not in subprocess.run([sys.executable,str(RUNNER),"--help"],cwd=ROOT,text=True,capture_output=True,check=True).stdout
         assert "--output-template" not in subprocess.run([sys.executable,str(RUNNER),"--help"],cwd=ROOT,text=True,capture_output=True,check=True).stdout
         assert "app.open(templateFile)" in jsx
