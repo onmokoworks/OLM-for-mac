@@ -8,6 +8,42 @@ INPUT_TEMPLATE = ROOT / "refs/fixtures/olmsmoother2_32bpc_preserve_rgb_input_tem
 INPUT_TEMPLATE_SHA256 = "51fd5403b0a43825f0f6d189c49154ad756f4c565498f733c1fb725377583679"
 def sha256(p: Path) -> str: return hashlib.sha256(p.read_bytes()).hexdigest()
 def canonical(v: object) -> str: return hashlib.sha256(json.dumps(v, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()).hexdigest()
+def after_effects_processes() -> list[tuple[int, str]]:
+    """Return every visible AE process, failing closed if process inspection fails."""
+    try:
+        p = subprocess.run(
+            ["/bin/ps", "-axo", "pid=,comm=,args="],
+            text=True, capture_output=True, timeout=10,
+        )
+    except (OSError, subprocess.TimeoutExpired) as e:
+        raise RuntimeError(f"cannot inspect running processes: {e}") from e
+    if p.returncode:
+        raise RuntimeError(f"cannot inspect running processes: {p.stderr.strip() or 'ps failed'}")
+    found: list[tuple[int, str]] = []
+    for line in p.stdout.splitlines():
+        fields = line.strip().split(None, 1)
+        if len(fields) != 2 or not fields[0].isdigit():
+            continue
+        command = fields[1]
+        lowered = command.lower()
+        if "afterfx" in lowered or "adobe after effects" in lowered:
+            found.append((int(fields[0]), command))
+    return found
+def refuse_unsafe_direct_execution(wrapper: Path) -> int:
+    """Never address AE by app name: Apple events cannot bind this run to an owned PID."""
+    try:
+        running = after_effects_processes()
+    except RuntimeError as e:
+        print(f"[FAIL_CLOSED] {e}")
+        return 1
+    if running:
+        detail = ", ".join(f"pid {pid}: {command}" for pid, command in running)
+        print(f"[FAIL_CLOSED] After Effects is already running ({detail}); no Apple event was sent and no process was terminated.")
+        return 1
+    print("[FAIL_CLOSED] Direct execution is disabled: macOS osascript addresses After Effects by application name and cannot robustly bind DoScriptFile to a runner-owned PID.")
+    print("[SAFE_MANUAL] Keep all existing After Effects instances closed, launch a dedicated validation instance yourself, then use File > Scripts > Run Script File and select:")
+    print(f"[SAFE_MANUAL] {wrapper.resolve()}")
+    return 1
 def jsx_source(case: dict, contract_hash: str, output_template: str) -> str:
     setup = json.loads(REQUEST.read_text(encoding="utf-8"))["common_setup"]
     case = {**case, "comp": {"width": setup["comp_width"], "height": setup["comp_height"], "pixel_aspect": 1, "frame_rate": setup["frame_rate"]}}
@@ -35,17 +71,5 @@ def main() -> int:
     env["OLM_AE_MAC_ERROR_PATH"] = str(error_path.resolve())
     wrapper.write_text("\n".join("$.setenv(%s,%s);"%(json.dumps(k),json.dumps(v)) for k,v in env.items())+"\ntry {\n  var __olm_eval_result=$.evalFile(new File(%s));\n  if(__olm_eval_result instanceof Error){throw __olm_eval_result;}\n  __olm_eval_result;\n} catch(__olm_error) {\n  var __olm_error_file=new File($.getenv(\"OLM_AE_MAC_ERROR_PATH\"));\n  __olm_error_file.encoding=\"UTF-8\";\n  if(__olm_error_file.open(\"w\")){__olm_error_file.write(String(__olm_error)+\"\\nline=\"+String(__olm_error.line||\"\")+\"\\nfile=\"+String(__olm_error.fileName||\"\")+\"\\n\");__olm_error_file.close();}\n  throw __olm_error;\n}\n"%json.dumps(str(jsx.resolve())),encoding="utf-8")
     if a.dump_js: a.dump_js.write_text(wrapper.read_text(),encoding="utf-8"); print(f"[OK] wrote {a.dump_js}"); return 0
-    apple_script = (
-        f"tell application {json.dumps(a.app_name)}\n"
-        "  with timeout of 7200 seconds\n"
-        f"    DoScriptFile POSIX file {json.dumps(str(wrapper))} with override\n"
-        "  end timeout\n"
-        "end tell\n"
-    )
-    try: p=subprocess.run(["osascript"],input=apple_script,text=True,capture_output=True,timeout=7230)
-    except (OSError,subprocess.TimeoutExpired) as e: print(f"[FAIL_CLOSED] AE invocation failed: {e}"); return 1
-    if p.returncode or not result.exists():
-        detail=error_path.read_text(encoding="utf-8",errors="replace").strip() if error_path.is_file() else (p.stderr.strip() or p.stdout.strip() or "no AE error detail")
-        print(f"[FAIL_CLOSED] AE did not produce a return: {detail}"); return 1
-    report=subprocess.run([sys.executable,str(ROOT/"scripts/report_olmsmoother2_no_key_32bpc_mac_validation_20260715.py"),str(result),"--output-dir",str(out)],text=True); return report.returncode
+    return refuse_unsafe_direct_execution(wrapper)
 if __name__=="__main__": raise SystemExit(main())

@@ -1,9 +1,32 @@
 #!/usr/bin/env python3
 """Smoke the OLMSmoother2 Mac request/runner without launching AE."""
 from __future__ import annotations
-import gzip, hashlib, json, subprocess, sys, tempfile
+import gzip, hashlib, importlib.util, io, json, subprocess, sys, tempfile
+from contextlib import redirect_stdout
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]; RUNNER=ROOT/"scripts/run_olmsmoother2_no_key_32bpc_mac_validation_20260715.py"; REQUEST=ROOT/"refs/mac_validation_requests/olmsmoother2_no_key_32bpc_mac_validation_20260715.json"
+def smoke_preexisting_ae_is_never_controlled_or_terminated(root: Path) -> None:
+    spec=importlib.util.spec_from_file_location("olm_mac_runner_safety_smoke",RUNNER); assert spec and spec.loader
+    runner=importlib.util.module_from_spec(spec); spec.loader.exec_module(runner)
+    calls=[]
+    real_run=runner.subprocess.run
+    def adversarial_run(argv,*args,**kwargs):
+        calls.append((list(argv),dict(kwargs)))
+        if list(argv[:2])==["/bin/ps","-axo"]:
+            return subprocess.CompletedProcess(argv,0," 4242 /Applications/Adobe After Effects 2026/Adobe After Effects 2026.app/Contents/MacOS/AfterFX -psn_0_1\n","")
+        raise AssertionError(f"unexpected subprocess invocation: {argv}")
+    runner.subprocess.run=adversarial_run
+    try:
+        output=io.StringIO()
+        with redirect_stdout(output): rc=runner.refuse_unsafe_direct_execution(root/"never-dispatched-wrapper.jsx")
+    finally:
+        runner.subprocess.run=real_run
+    assert rc==1
+    assert len(calls)==1 and calls[0][0][:2]==["/bin/ps","-axo"]
+    flat=" ".join(calls[0][0]).lower()
+    assert "osascript" not in flat and "kill" not in flat and "pkill" not in flat and "terminate" not in flat
+    message=output.getvalue()
+    assert "already running" in message and "no Apple event was sent" in message and "no process was terminated" in message
 def main()->int:
     d=json.loads(REQUEST.read_text()); assert d["effect"]=={"name":"OLM Smoother v2","match_name":"OLM Smoother v2"}; assert d["scope"]["plugin_version_mode"]==2; assert len(d["cases"])==1; c=d["cases"][0]; assert c["params_full"][0]["value"]==0 and c["params_full"][6]["value"]==2; assert d["mac_run_contract"]["comparison"]["epsilon"]==0 and not d["mac_run_contract"]["comparison"]["normalization"]
     assert any("PF32 input-entry witness" in item for item in d["fail_closed"])
@@ -48,5 +71,9 @@ def main()->int:
         assert "app.open(templateFile)" in jsx
         assert "importFile" not in jsx and "app.newProject()" not in jsx
         assert "OLMBlur" not in jsx and "legacy" not in jsx.lower()
+        smoke_preexisting_ae_is_never_controlled_or_terminated(root)
+        runner_source=RUNNER.read_text()
+        assert 'subprocess.run(["osascript"]' not in runner_source
+        assert "Direct execution is disabled" in runner_source
     print("[OK] OLMSmoother2 no-key 32bpc Mac request smoke passed without launching AE"); return 0
 if __name__=="__main__": raise SystemExit(main())
